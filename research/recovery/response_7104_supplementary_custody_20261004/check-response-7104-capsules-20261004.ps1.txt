@@ -1,0 +1,53 @@
+param([switch]$InspectSchema,[string]$RecordRoot=$PSScriptRoot)
+$ErrorActionPreference='Stop'
+function CapsuleHash256([byte[]]$Bytes){[Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($Bytes)).ToLowerInvariant()}
+$specs=@(
+ [pscustomobject]@{name='R01';ids=@(5970341824,5970342213,5970342586,5970343014,5970343432,5970343856,5970344226,5970344616);members=72;gzip_bytes=244024;gzip_hash='001823edd92f299e04d0c8719ad530526032fe51aeb2f145d845f6ac5848e858';json_bytes=646798;json_hash='c07ce4e7159f8746fbb74a3fdb2c7839c0a98c224361e09727760b2224f16c9a'},
+ [pscustomobject]@{name='R02';ids=@(5970857883);members=14;gzip_bytes=12121;gzip_hash='71849dc3eac3b040f92c81a803176674c9ef5f1e380c3e68b53fcd3bc62d38f8';json_bytes=31503;json_hash='f6dbcba0b52984181d3c9d8e03e3e870b0834a1e11ce5864e3137c20d6c607cb'},
+ [pscustomobject]@{name='D01';ids=@(5971106953);members=18;gzip_bytes=20723;gzip_hash='4073774d1269fb8d5b467c5010a829865b7377ca68de398a2cae5989db59a1a8';json_bytes=79480;json_hash='2a51d3f63ca673b45b47868aca1eb8cec0125d0cb0185a31c90a9ef2d3bc67c2'}
+)
+$results=foreach($spec in $specs){
+ $blocks=[Collections.Generic.List[string]]::new();$records=[Collections.Generic.List[object]]::new()
+ for($i=0;$i -lt $spec.ids.Count;$i++){
+  $id=$spec.ids[$i];$record=Get-Content -Raw -LiteralPath "$RecordRoot/response-7104-comment-$id.json"|ConvertFrom-Json
+  if($record.id -ne $id -or $record.html_url -cne "https://github.com/Unjuno/agent-interface/pull/7104#issuecomment-$id"){throw 'Record identity differs'}
+  if($spec.name -ceq 'R01' -and !$record.body.Contains("Part $($i+1)/8:")){throw 'Part order differs'}
+  $matches=[regex]::Matches($record.body,'(?s)```base64\r?\n(.*?)\r?\n```')
+  if($matches.Count -ne 1){throw 'Expected exactly one Base64 fence'}
+  $blocks.Add($matches[0].Groups[1].Value)
+  $bodyBytes=[Text.UTF8Encoding]::new($false,$true).GetBytes($record.body)
+  $records.Add([pscustomobject]@{id=$id;url=$record.html_url;created_at=$record.created_at;updated_at=$record.updated_at;body_utf8_bytes=$bodyBytes.Length;body_sha256=(CapsuleHash256 $bodyBytes)})
+ }
+ $base64=($blocks -join '') -replace '\s','';$compressed=[Convert]::FromBase64String($base64)
+ if($compressed.Length -ne $spec.gzip_bytes -or (CapsuleHash256 $compressed) -cne $spec.gzip_hash){throw 'Compressed packet differs'}
+ $inputStream=[IO.MemoryStream]::new($compressed,$false);$gzip=[IO.Compression.GZipStream]::new($inputStream,[IO.Compression.CompressionMode]::Decompress);$outputStream=[IO.MemoryStream]::new()
+ try{
+  $buffer=[byte[]]::new(8192)
+  while(($count=$gzip.Read($buffer,0,$buffer.Length)) -gt 0){if($outputStream.Length+$count -gt $spec.json_bytes){throw 'Decoded bound exceeded'};$outputStream.Write($buffer,0,$count)}
+  $decoded=$outputStream.ToArray()
+ }finally{$gzip.Dispose();$inputStream.Dispose();$outputStream.Dispose()}
+ if($decoded.Length -ne $spec.json_bytes -or (CapsuleHash256 $decoded) -cne $spec.json_hash){throw 'Decoded packet differs'}
+ $payload=[Text.UTF8Encoding]::new($false,$true).GetString($decoded)|ConvertFrom-Json -AsHashtable
+ if($InspectSchema){
+  [pscustomobject]@{name=$spec.name;keys=@($payload.Keys);members_type=if($payload.ContainsKey('members')){$payload.members.GetType().FullName}else{'absent'};first_member_keys=if($payload.ContainsKey('members')){@($payload.members[0].Keys)}else{@()};gzip_bytes=$compressed.Length;json_bytes=$decoded.Length}
+ }else{
+  if($payload.members.Count -ne $spec.members){throw 'Member census differs'}
+  $seen=[Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+  $memberProof=foreach($member in $payload.members){
+   $name=if($spec.name -ceq 'R01'){$member.path}else{$member.name}
+   $length=if($spec.name -cne 'R02'){$member.public_bytes}else{$member.bytes}
+   $hash=if($spec.name -cne 'R02'){$member.public_sha256}else{$member.sha256}
+   $encoded=if($spec.name -ceq 'R01'){$member.data_base64}elseif($spec.name -ceq 'D01'){$member.base64}else{$member.content_base64}
+   if($name -isnot [string] -or !$seen.Add($name) -or [IO.Path]::IsPathRooted($name) -or $name -match '(^|[\\/])\.\.([\\/]|$)' -or $name -match ':'){throw 'Unsafe/duplicate member name'}
+   if($length -is [bool] -or $length -isnot [ValueType] -or $length -lt 0 -or $length -gt $spec.json_bytes -or $hash -notmatch '^[0-9a-f]{64}$' -or $encoded -isnot [string]){throw 'Invalid member data types'}
+   $bytes=[Convert]::FromBase64String($encoded)
+   if($bytes.Length -ne $length -or (CapsuleHash256 $bytes) -cne $hash){throw "Member bytes/hash differ: $name"}
+   if($spec.name -cne 'R02'){
+    if($member.original_bytes -is [bool] -or $member.original_bytes -isnot [ValueType] -or $member.original_bytes -lt 0 -or $member.original_sha256 -notmatch '^[0-9a-f]{64}$'){throw 'Invalid original declaration'}
+    [pscustomobject]@{name=$name;public_bytes=$length;public_sha256=$hash;display_projection=if($spec.name -ceq 'D01'){$member.projection}else{$member.display_projection};original_declared_bytes=$member.original_bytes;original_declared_sha256=$member.original_sha256;original_matches_retained_bytes=($member.original_bytes -eq $bytes.Length -and $member.original_sha256 -ceq $hash)}
+   }else{[pscustomobject]@{name=$name;bytes=$length;sha256=$hash}}
+  }
+  [pscustomobject]@{name=$spec.name;format=if($spec.name -cne 'R02'){$payload.format}else{$payload.schema};source_comments=@($records);base64_chars=$base64.Length;gzip_bytes=$compressed.Length;gzip_sha256=(CapsuleHash256 $compressed);json_bytes=$decoded.Length;json_sha256=(CapsuleHash256 $decoded);members_checked=$memberProof.Count;members=@($memberProof);local_git_stream_pins=if($spec.name -ceq 'R02'){$payload.local_git_stream_pins}elseif($spec.name -ceq 'D01'){$payload.local_native_stream_pins}else{$null};stream_limit=if($spec.name -ceq 'R02'){$payload.stream_limit}elseif($spec.name -ceq 'D01'){$payload.note}else{$null};files_extracted=0;archived_programs_executed=0;remote_writes=0}
+ }
+}
+$results|ConvertTo-Json -Depth 6

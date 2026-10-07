@@ -1,0 +1,262 @@
+"""Read retained data only; import no author verifier, producer or runtime."""
+import ast
+from datetime import datetime
+import hashlib
+import json
+import math
+from pathlib import Path
+
+WORK = Path(__file__).parent
+PACKAGE = WORK / 'export/research/doom/scorer_native_input_effect_59_20261003_b64b'
+ROOT = PACKAGE / 'formal_01/candidate/result'
+WIRE = bytes.fromhex('ceb10a46494e4953480a')
+
+class Invalid(Exception):
+    pass
+
+def need(condition, reason):
+    if not condition:
+        raise Invalid(reason)
+
+def integer(value, reason, lower=0):
+    need(type(value) is int and value >= lower, reason + ':INT')
+    return value
+
+def same(actual, expected, reason):
+    need(type(actual) is type(expected), reason + ':TYPE')
+    if type(expected) is dict:
+        need(actual.keys() == expected.keys(), reason + ':KEYS')
+        for key in expected:
+            same(actual[key], expected[key], reason + '/' + key)
+    elif type(expected) is list:
+        need(len(actual) == len(expected), reason + ':LENGTH')
+        for index, value in enumerate(expected):
+            same(actual[index], value, reason + '/' + str(index))
+    else:
+        need(actual == expected, reason + ':VALUE')
+
+def clock_sites(arm):
+    result = {}
+    for filename in ['main_thread_scorer_polling_v1.py', 'map01_scorer_stdio_adapter_v1.py']:
+        tree = ast.parse((PACKAGE / 'sources' / arm / filename).read_text())
+        functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
+        for node in ast.walk(tree):
+            if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                    and node.func.attr == 'clock_ns'):
+                continue
+            owners = [fn for fn in functions if fn.lineno <= node.lineno <= fn.end_lineno]
+            if owners:
+                owner = max(owners, key=lambda fn: fn.lineno)
+                result.setdefault(owner.name, set()).add(node.lineno)
+    return result
+
+CLOCK_SITES = {arm: clock_sites(arm) for arm in ['original', 'repair']}
+
+def roster():
+    rows = []
+    for adapter in ['polling', 'stdin']:
+        for sleep in [0, 8_000_000]:
+            for limit in [65536, 1]:
+                for arm in ['original', 'repair']:
+                    rows.append({'id': f'n{len(rows):02d}', 'arm': arm, 'adapter': adapter,
+                                 'sleep_ns': sleep, 'read_limit': limit, 'sample_budget': 64,
+                                 'sample_hz': 500, 'input_hex': WIRE.hex()})
+    return rows
+
+def verify(raw, root=ROOT):
+    same(raw['schema'], 'native-scorer-input-59-v1', 'SCHEMA')
+    need(len(raw['rows']) == 16, 'ROSTER')
+    outcomes = []
+    for row, case in zip(raw['rows'], roster()):
+        label = case['id']
+        same(row['case'], case, label + ':CASE')
+        stop = case['arm'] == 'original' and case['sleep_ns'] != 0
+        expected_count = 64 if stop else (10 if case['sleep_ns'] and case['read_limit'] == 1 else 1)
+        same(row['disposition'], 'sample_budget' if stop else 'finish', label + ':DISPOSITION')
+        same(row['commands'], [] if stop else ['α', 'FINISH'], label + ':COMMANDS')
+        same(row['error'], 'finite completed-sample diagnostic cap' if stop else None, label + ':ERROR')
+        integer(row['owner_thread'], label + ':OWNER', 1)
+        integer(row['pipe_inode'], label + ':PIPE_INODE', 1)
+        same(row['pipe_is_fifo'], True, label + ':FIFO')
+        same(row['read_fd_closed'], True, label + ':CLOSED')
+        same(row['period_ns'], 2_000_000, label + ':PERIOD')
+        start = integer(row['start_ns'], label + ':START', 1)
+        end = integer(row['end_ns'], label + ':END', 1)
+        need(start <= end, label + ':WALL')
+        runtime = row['runtime']
+        integer(runtime['pid'], label + ':PID', 1)
+        same(runtime['machine'], 'aarch64', label + ':MACHINE')
+        same(runtime['perf_counter']['monotonic'], True, label + ':MONOTONIC')
+        for key, value in [('cpu.max', '100000 100000'), ('memory.max', '268435456'), ('pids.max', '64')]:
+            same(runtime[key], value, label + ':CGROUP/' + key)
+        receipt = row['process_receipt']
+        same(receipt['exit_code'], 0, label + ':EXIT')
+        need(datetime.fromisoformat(receipt['utc_start']) <= datetime.fromisoformat(row['utc_start'])
+             <= datetime.fromisoformat(row['utc_end']) <= datetime.fromisoformat(receipt['utc_end']), label + ':UTC')
+        same(json.loads(receipt['argv'][4]), case, label + ':ARGV_CASE')
+        expected_paths = {label + '/row.json', label + '/scorer/scorer-samples.jsonl'}
+        if not stop:
+            expected_paths.add(label + '/effect.json')
+        same(sorted(row['artifacts']), sorted(expected_paths), label + ':ARTIFACT_ROSTER')
+        for relative, pin in row['artifacts'].items():
+            data = (root / relative).read_bytes()
+            integer(pin['bytes'], label + ':ARTIFACT_SIZE')
+            need(len(data) == pin['bytes'] and hashlib.sha256(data).hexdigest() == pin['sha256'], label + ':ARTIFACT_BYTES')
+        same(json.loads((root / label / 'row.json').read_text()),
+             {k: v for k, v in row.items() if k not in ('artifacts', 'process_receipt')}, label + ':ROW_TYPED_JOIN')
+        scorer = [json.loads(line) for line in (root / label / 'scorer/scorer-samples.jsonl').read_text().splitlines()]
+        need(not (root / label / 'scorer/scorer-events.jsonl').exists(), label + ':ZERO_POSITIVE_EVENTS')
+        need(len(row['samples']) == len(scorer) == expected_count, label + ':SAMPLE_COUNT')
+        events = row['events']
+        same(events[0]['kind'], 'prequeued', label + ':FIRST_EVENT')
+        same(events[-1]['kind'], 'closed', label + ':LAST_EVENT')
+        clocks = []
+        schedule = None
+        missed_total = 0
+        active_sample = None
+        active_sink = None
+        samples_done = 0
+        waits = 0
+        reads = 0
+        wait_ready = None
+        wait_open = False
+        received = b''
+        buffer = b''
+        commands = []
+        effects = 0
+        budgets = 0
+        previous_ns = 0
+        for position, event in enumerate(events):
+            stamp = integer(event['ns'], label + ':EVENT_NS', 1)
+            need(stamp >= previous_ns, label + ':EVENT_ORDER')
+            previous_ns = stamp
+            same(event['thread_id'], row['owner_thread'], label + ':EVENT_OWNER')
+            kind = event['kind']
+            if kind == 'prequeued':
+                need(position == 0 and stamp <= start, label + ':PREQUEUE_ORDER')
+                same(event['hex'], WIRE.hex(), label + ':PREQUEUE')
+                same(event['written'], 10, label + ':PREQUEUE_BYTES')
+                same(event['writer_closed'], True, label + ':WRITER_CLOSED')
+            elif kind == 'clock':
+                integer(event['line'], label + ':CLOCK_LINE', 1)
+                need(event['line'] in CLOCK_SITES[case['arm']].get(event['caller'], set()), label + ':CLOCK_SOURCE')
+                clocks.append(stamp)
+                if schedule is None:
+                    schedule = stamp
+                    need(start <= stamp, label + ':LOOP_START')
+            elif kind == 'sample_begin':
+                need(active_sample is None and active_sink is None and len(clocks) >= 2, label + ':SAMPLE_BEGIN_ORDER')
+                same(event['index'], samples_done, label + ':SAMPLE_INDEX')
+                decision, sample_start = clocks[-2:]
+                need(schedule <= decision <= sample_start <= stamp, label + ':DUE_SAMPLE_CLOCKS')
+                skipped = (decision - schedule) // row['period_ns']
+                active_sample = {'index': samples_done, 'begin_ns': stamp,
+                                 'scheduled': schedule, 'started': sample_start, 'skipped': skipped}
+                schedule += (skipped + 1) * row['period_ns']
+                missed_total += skipped
+            elif kind == 'sample_end':
+                need(active_sample is not None and 'payload' not in active_sample, label + ':SAMPLE_END_ORDER')
+                same(event['index'], samples_done, label + ':SAMPLE_INDEX')
+                payload = integer(event['payload_ns'], label + ':PAYLOAD_NS', 1)
+                need(active_sample['begin_ns'] <= payload <= stamp and stamp - active_sample['begin_ns'] >= case['sleep_ns'], label + ':SAMPLE_COST')
+                active_sample.update(payload=payload, end_ns=stamp)
+                same(row['samples'][samples_done], {'index': samples_done, 'payload_ns': payload}, label + ':SAMPLE_TYPED_JOIN')
+            elif kind == 'sink_begin':
+                need(active_sample is not None and 'payload' in active_sample and active_sink is None, label + ':SINK_BEGIN_ORDER')
+                need(active_sample['end_ns'] <= clocks[-1] <= stamp, label + ':SINK_FINISH_CLOCK')
+                receipt_expected = {'scheduled_ns': active_sample['scheduled'], 'sample_started_ns': active_sample['started'],
+                                    'sample_finished_ns': clocks[-1],
+                                    'start_lateness_ns': active_sample['started'] - active_sample['scheduled'],
+                                    'missed_periods_before': active_sample['skipped']}
+                same(event['receipt'], receipt_expected, label + ':EXACT_FINISH_CLOCK')
+                expected_scorer = dict(receipt_expected, controller_visible=False,
+                    payload={'schema': 'independent-progress-sample-v2', 'sample_ns': active_sample['payload'],
+                             'kill_count': 0, 'death_count': 0, 'episode_finished': False, 'player_dead': False, 'map_exit': False})
+                same(scorer[samples_done], expected_scorer, label + ':SCORER_TYPED_JOIN')
+                active_sink = stamp
+            elif kind == 'sink_end':
+                need(active_sink is not None and stamp >= active_sink, label + ':SINK_END_ORDER')
+                same(event['count'], samples_done + 1, label + ':SINK_COUNT')
+                samples_done += 1
+                active_sample = active_sink = None
+            elif kind == 'wait_start':
+                need(not wait_open and active_sample is None and active_sink is None, label + ':WAIT_ORDER')
+                timeout = event['timeout_s']
+                need(type(timeout) in (float, int) and math.isfinite(timeout) and timeout >= 0, label + ':WAIT_TYPE')
+                need(timeout == max(0, (schedule - clocks[-1]) / 1e9), label + ':WAIT_DEADLINE')
+                wait_open = True
+                wait_ready = None
+                waits += 1
+            elif kind == 'wait_end':
+                need(wait_open, label + ':WAIT_END_ORDER')
+                need(type(event['ready']) is bool, label + ':WAIT_READY_TYPE')
+                wait_open = False
+                wait_ready = event['ready']
+            elif kind == 'read':
+                need(wait_ready is True and not wait_open, label + ':READ_AFTER_READY')
+                wait_ready = None
+                same(event['requested'], 65536, label + ':READ_REQUEST')
+                same(event['limit'], case['read_limit'], label + ':READ_LIMIT')
+                chunk = bytes.fromhex(event['hex'])
+                same(chunk, WIRE[len(received):len(received) + case['read_limit']], label + ':READ_BYTES')
+                need(chunk != b'', label + ':NO_EOF_BEFORE_FINISH')
+                received += chunk
+                buffer += chunk
+                reads += 1
+            elif kind == 'command':
+                need(b'\n' in buffer, label + ':COMMAND_AFTER_READ')
+                line, buffer = buffer.split(b'\n', 1)
+                same(event['line'], line.decode('utf-8'), label + ':COMMAND_DECODE')
+                need(event['line'] == ['α', 'FINISH'][len(commands)], label + ':COMMAND_SEQUENCE')
+                commands.append(event['line'])
+            elif kind == 'effect_saved':
+                need(commands == ['α', 'FINISH'] and effects == 0 and not stop, label + ':EFFECT_AFTER_COMMAND')
+                effects += 1
+            elif kind == 'sample_budget':
+                need(stop and samples_done == 64 and active_sample is None and budgets == 0, label + ':BUDGET_ORDER')
+                same(event['completed'], 64, label + ':BUDGET_COUNT')
+                need(len(clocks) >= 2 and schedule <= clocks[-2], label + ':BUDGET_CLOCK')
+                missed_total += (clocks[-2] - schedule) // row['period_ns']
+                budgets += 1
+            elif kind == 'closed':
+                need(position == len(events) - 1 and stamp >= end and active_sample is None and active_sink is None, label + ':CLOSE_ORDER')
+                same(event['read_fd_closed'], True, label + ':CLOSE_VALUE')
+            else:
+                raise Invalid(label + ':UNKNOWN_EVENT/' + str(kind))
+        need(samples_done == expected_count and not wait_open, label + ':TERMINAL_SAMPLES')
+        same(commands, row['commands'], label + ':COMMAND_TYPED_JOIN')
+        need(effects == (0 if stop else 1) and budgets == (1 if stop else 0), label + ':TERMINAL_EFFECT_BUDGET')
+        need(reads == (0 if stop else (1 if case['read_limit'] == 65536 else 10)), label + ':TERMINAL_READS')
+        if not stop:
+            same(received, WIRE, label + ':COMPLETE_WIRE')
+            same(json.loads((root / label / 'effect.json').read_text()),
+                 {'schema': 'disposable-finish-effect-v1', 'cell_id': label, 'commands': ['α', 'FINISH'], 'finished': True}, label + ':EFFECT_TYPED_JOIN')
+        else:
+            need(not (root / label / 'effect.json').exists(), label + ':NO_EFFECT')
+        stats = row['stats']
+        if not (stop and case['adapter'] == 'polling'):
+            expected_stats = {'samples': expected_count, 'commands': len(commands),
+                              'missed_sample_periods': missed_total, 'owner_thread_id': row['owner_thread'], 'eof': False}
+            if case['adapter'] == 'polling':
+                expected_stats.update(started_ns=clocks[0], ended_ns=clocks[-1], stopped_by_command=True)
+            else:
+                expected_stats['sample_hz'] = 500.0
+            same(stats, expected_stats, label + ':STATS_TYPED_JOIN')
+        else:
+            same(stats, None, label + ':POLLING_CENSOR_STATS')
+        same(json.loads((root / (label + '.stdout')).read_text()),
+             {'id': label, 'disposition': row['disposition'], 'samples': expected_count}, label + ':STDOUT')
+        same((root / (label + '.stderr')).read_bytes(), b'', label + ':STDERR')
+        outcomes.append({'id': label, 'arm': case['arm'], 'adapter': case['adapter'], 'samples': samples_done,
+                         'read_limit': case['read_limit'], 'reads': reads, 'effects': effects,
+                         'disposition': row['disposition'], 'missed_periods': missed_total, 'recorded_wall_ns': end - start})
+    return outcomes
+
+if __name__ == '__main__':
+    raw = json.loads((ROOT / 'RAW.json').read_text())
+    outcomes = verify(raw)
+    report = {'kind': 'independent_retained_data_reconstruction', 'rows': len(outcomes), 'outcomes': outcomes,
+              'samples': sum(row['samples'] for row in outcomes), 'reads': sum(row['reads'] for row in outcomes),
+              'effects': sum(row['effects'] for row in outcomes), 'author_code_imports': 0, 'native_invocations': 0}
+    (WORK / 'independent-original-result.json').write_text(json.dumps(report, indent=2) + '\n')
+    print(json.dumps({key: value for key, value in report.items() if key != 'outcomes'}))

@@ -54,6 +54,10 @@ Do not infer PASS/FAIL/currentness from a directory name or version suffix; open
 3. Treat PASS/FAIL/HOLD/STOP as scoped to the experiment's declared H/T/D/C/U and environment.
 4. Do not infer runtime or product support from a measurement directory alone.
 
+## Recent measured evidence
+
+- [Issue #7459 OrbStack COW artifact-workspace T0](cow_artifact_workspace_7459_t0_20261004/RESULT.md) — container COW retained exact synthetic file changes, while the independent whole-layer audit found un-attributed CA-file mutations; HOLD, no GUI/host-APFS qualification.
+
 The large number of child directories is intentional retained evidence. Repository cleanup should add navigation or archival explanation rather than merge/rename completed evidence paths without a provenance-preserving reason.
 
 ## Retained application-capture transfer

@@ -1,0 +1,41 @@
+{
+  "schema": "issue7424-a04-pareto-preregistration-v1",
+  "frozen_at_utc": "2026-10-04T06:24:00Z",
+  "base_main_sha": "bbed04b9bf5ad7d94e20fcea212b98d19dfa6395",
+  "issue": 7424,
+  "predecessor": {
+    "allocation": "A03",
+    "pr": 7500,
+    "head": "2d1c10fcdd3e0263170ba98a08dc5d1c854da9a9",
+    "raw_git_blob": "720a314e1859ddca9580c1fc46b751cd515ec65c",
+    "result": "CONTINUITY_PASS_TRACKING_TRADEOFF"
+  },
+  "H": "Under the same monotone, rate-limited scalar plant and intent, the best possible admissible action sequence constrained to reduce first applied-command discontinuity by at least 25% cannot also achieve integrated absolute tracking error no worse than the frozen A03 cold-start baseline.",
+  "T": "Use an independent greedy upper-envelope oracle: require the first receiving applied command to be within 0.15 of the actually applied 0.60; at every later tick choose the largest actuator-admissible command toward reference 1.0. Simulate the pinned first-order plant for 20 updates in the two eligible A03 cases. Compare to A03's saved cold-start IAE (6.0238 and 5.65); saturation-at-switch is ineligible because its baseline jump is zero.",
+  "D": "A04 infeasibility supported only if the oracle reaches the smallest possible IAE subject to the continuity bound, its IAE is strictly above A03 cold-start in both eligible cases, it passes the 25% first-jump reduction, and independent recurrence/corruption audits pass. Otherwise report the actual outcome without claiming structural infeasibility.",
+  "C": "The monotonicity argument may fail outside the pinned first-order positive-error region. The A03 cold baseline is a saved synthetic comparator, not task evidence.",
+  "U": "No nonlinear/discontinuous plant, model, application, GUI/game, physical actuator, live allocation, or user benefit is tested. Result applies only to these two parameterized eligible cases and this finite-horizon simulator.",
+  "source_constants": {
+    "alpha": 0.25,
+    "kp": 2.0,
+    "ki_per_tick": 0.1,
+    "rate_limit_per_tick": 0.2,
+    "output_bounds": [0.0, 1.0],
+    "integrator_bounds": [-1.0, 1.0],
+    "reference": 1.0,
+    "horizon_updates": 20,
+    "continuity_minimum_reduction": 0.25,
+    "first_jump_max": 0.15
+  },
+  "cases": [
+    {"name": "no-disturbance", "initial_y": 0.4, "actually_applied_u": 0.6, "cold_iae": 6.0238},
+    {"name": "step-disturbance-at-switch", "initial_y": 0.5, "actually_applied_u": 0.6, "cold_iae": 5.65}
+  ],
+  "execution": {
+    "run_count": 1,
+    "retry": false,
+    "run": "python3 run_a04.py --raw raw.json",
+    "analysis": "python3 audit_a04.py",
+    "runtime_intent": "local Ubuntu WSL2 CPU-only deterministic construction; no external allocation"
+  }
+}

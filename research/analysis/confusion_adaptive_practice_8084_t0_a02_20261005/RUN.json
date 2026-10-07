@@ -1,0 +1,17 @@
+{
+  "allocation": "CONFUSION-ADAPTIVE-PRACTICE-8084-A02-20261005-01",
+  "candidate_command": "docker run --pull=never --rm --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop=ALL --security-opt=no-new-privileges -v <package>/candidate.py:/work/candidate.py:ro -v <package>/cases.json:/work/cases.json:ro -v <package>/results:/work/results:rw -w /work <python-image-digest> sh -c 'python candidate.py > results/candidate.raw.json'",
+  "candidate_exit": 0,
+  "auditor_command": "docker run --pull=never --rm --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop=ALL --security-opt=no-new-privileges -v <package>:/work:ro -v <package>/results:/results:rw -w /work <python-image-digest> sh -c 'python auditor.py /results/candidate.raw.json > /results/AUDIT.json'",
+  "auditor_exit": 0,
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "decision": "METHOD_PASS_SCOPED",
+  "matrix_cases": 6,
+  "schedule_rows": 12,
+  "audit_errors": [],
+  "raw_sha256": "6ecef00fe64689133428c19fadb326ca26da3af22b8aaace16e1c6d84ef38ca3",
+  "audit_sha256": "fc184b146a5003d8802e82a42a9f9a45e76e745cebd35be5bd74b39c736d8bdf",
+  "scope": "synthetic schedule and scorer method readiness only"
+}

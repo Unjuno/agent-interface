@@ -38,7 +38,7 @@ jobs:
         with:
           fetch-depth: 1
           # Contract tests use top-level research sources and fresh test fixtures.
-          # Exclude nested historical result bundles from this test checkout.
+          # Exclude nested historical bundles except the two inert receipt fixtures.
           sparse-checkout: |
             /runtime/__init__.py
             /runtime/backends/__init__.py
@@ -53,6 +53,10 @@ jobs:
             /runtime/guarded_x11_v1/
             /research/live_control/*
             !/research/live_control/*/
+            /research/live_control/caller_uncertain_tail_I13/
+            !/research/live_control/caller_uncertain_tail_I13/*
+            /research/live_control/caller_uncertain_tail_I13/LIVE_CALLER.json
+            /research/live_control/caller_uncertain_tail_I13/RESPONSE3.json
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
@@ -65,13 +69,24 @@ jobs:
         with:
           node-version: '22'
       - name: Test the persistent host relay adapter
-        run: node --test research/live_control/test_native_relay_client_v1.mjs research/live_control/test_relay_host_timeline_v1.mjs runtime/host_v1/test_relay_client.mjs runtime/host_v1/test_relay_host.mjs runtime/host_v1/test_evidence_capacity.mjs runtime/host_v1/test_text_acknowledgment.mjs runtime/host_v1/test_primary_caller.mjs runtime/host_v1/test_primary_mint.mjs runtime/host_v1/test_primary_mint_many.mjs runtime/host_v1/test_primary_input.mjs runtime/host_v1/test_primary_window_review.mjs runtime/host_v1/test_primary_exchange.mjs runtime/host_v1/test_primary_stdio.mjs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p results-local/primary-owner
+          evidence="$(mktemp -d "$PWD/results-local/primary-owner/run.XXXXXX")"
+          PRIMARY_FAILURE_EVIDENCE="$evidence" node --test research/live_control/test_native_relay_client_v1.mjs research/live_control/test_relay_host_timeline_v1.mjs runtime/host_v1/test_relay_client.mjs runtime/host_v1/test_relay_host.mjs runtime/host_v1/test_evidence_capacity.mjs runtime/host_v1/test_text_acknowledgment.mjs runtime/host_v1/test_primary_caller.mjs runtime/host_v1/test_primary_mint.mjs runtime/host_v1/test_primary_mint_many.mjs runtime/host_v1/test_primary_input.mjs runtime/host_v1/test_primary_window_review.mjs runtime/host_v1/test_primary_exchange.mjs runtime/host_v1/test_primary_stdio.mjs runtime/host_v1/test_primary_stdio_backpressure.mjs runtime/host_v1/test_primary_stdio_failure_order.mjs runtime/host_v1/test_primary_output_close.mjs runtime/host_v1/test_primary_output_close_owner.mjs
+      - name: Test terminal first-failure precedence without launching a host
+        run: node --experimental-vm-modules --test runtime/host_v1/test_primary_terminal_failure.mjs
       - name: Run the shared local and CI integration checks
         run: python runtime/integration_checks/native.py --output results-local/native-ci
+      - name: Test strict primary stdio UTF-8 admission
+        run: node --test runtime/host_v1/test_primary_stdio_utf8.mjs
       - name: Retain contract results and full logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: native-contract-checks
-          path: results-local/native-ci
+          path: |
+            results-local/native-ci
+            results-local/primary-owner
           if-no-files-found: warn

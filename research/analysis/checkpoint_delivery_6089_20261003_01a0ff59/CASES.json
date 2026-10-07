@@ -1,0 +1,497 @@
+{
+  "schema": "checkpoint-delivery-assay-v1",
+  "cases": [
+    {
+      "context": "k0",
+      "encoding": "empty",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "k0__empty",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 0,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [],
+        "target_invalidated": false
+      }
+    },
+    {
+      "context": "k0",
+      "encoding": "missing",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "k0__missing",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 0,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "target_invalidated": false
+      }
+    },
+    {
+      "context": "k0",
+      "encoding": "fresh",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "k0__fresh",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 0,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "FRESH",
+            "generation": 5,
+            "age": 0
+          }
+        ],
+        "target_invalidated": false
+      }
+    },
+    {
+      "context": "k0",
+      "encoding": "stale",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "k0__stale",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 0,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "STALE_OLD_GENERATION",
+            "generation": 4,
+            "age": 1
+          }
+        ],
+        "target_invalidated": false
+      }
+    },
+    {
+      "context": "k1_boundary",
+      "encoding": "empty",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "k1_boundary__empty",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 1,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [],
+        "target_invalidated": false
+      }
+    },
+    {
+      "context": "k1_boundary",
+      "encoding": "missing",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "k1_boundary__missing",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 1,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "target_invalidated": false
+      }
+    },
+    {
+      "context": "k1_boundary",
+      "encoding": "fresh",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "k1_boundary__fresh",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 1,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "FRESH",
+            "generation": 5,
+            "age": 0
+          }
+        ],
+        "target_invalidated": false
+      }
+    },
+    {
+      "context": "k1_boundary",
+      "encoding": "stale",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "k1_boundary__stale",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 1,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "STALE_OLD_GENERATION",
+            "generation": 4,
+            "age": 1
+          }
+        ],
+        "target_invalidated": false
+      }
+    },
+    {
+      "context": "invalidated",
+      "encoding": "empty",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "invalidated__empty",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 1,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [],
+        "target_invalidated": true
+      }
+    },
+    {
+      "context": "invalidated",
+      "encoding": "missing",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "invalidated__missing",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 1,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "MISSING"
+          }
+        ],
+        "target_invalidated": true
+      }
+    },
+    {
+      "context": "invalidated",
+      "encoding": "fresh",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "invalidated__fresh",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 1,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "FRESH",
+            "generation": 5,
+            "age": 0
+          }
+        ],
+        "target_invalidated": true
+      }
+    },
+    {
+      "context": "invalidated",
+      "encoding": "stale",
+      "first_checkpoint_is_due": true,
+      "case": {
+        "id": "invalidated__stale",
+        "initial_states": [
+          0
+        ],
+        "action": 1,
+        "disturbances": [
+          -1,
+          0,
+          1
+        ],
+        "boundary_by_step": [
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18,
+          18
+        ],
+        "max_horizon": 5,
+        "release_lag": 1,
+        "observation_interval": 1,
+        "max_consecutive_misses": 1,
+        "loss_bound_supported": true,
+        "source_generation": 5,
+        "max_receipt_age": 0,
+        "checkpoint_events": [
+          {
+            "kind": "STALE_OLD_GENERATION",
+            "generation": 4,
+            "age": 1
+          }
+        ],
+        "target_invalidated": true
+      }
+    }
+  ]
+}

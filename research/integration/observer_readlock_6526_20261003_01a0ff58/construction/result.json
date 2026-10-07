@@ -1,0 +1,54 @@
+[
+  {
+    "journal": "DELETE",
+    "readonly_mutation_error": 8,
+    "scorer": {
+      "closed": true,
+      "in_transaction": false,
+      "pid": 26912,
+      "query_only": 1,
+      "rows": [
+        [
+          1,
+          "old",
+          0
+        ]
+      ],
+      "sql_trace": [
+        "PRAGMA query_only=ON",
+        "PRAGMA query_only",
+        "SELECT task_id, value, revision FROM task ORDER BY task_id"
+      ],
+      "sqlite_version": "3.45.1",
+      "total_changes": 0,
+      "uri_mode": "ro"
+    },
+    "child_exit": 0
+  },
+  {
+    "journal": "WAL",
+    "readonly_mutation_error": 8,
+    "scorer": {
+      "closed": true,
+      "in_transaction": false,
+      "pid": 5896,
+      "query_only": 1,
+      "rows": [
+        [
+          1,
+          "old",
+          0
+        ]
+      ],
+      "sql_trace": [
+        "PRAGMA query_only=ON",
+        "PRAGMA query_only",
+        "SELECT task_id, value, revision FROM task ORDER BY task_id"
+      ],
+      "sqlite_version": "3.45.1",
+      "total_changes": 0,
+      "uri_mode": "ro"
+    },
+    "child_exit": 0
+  }
+]

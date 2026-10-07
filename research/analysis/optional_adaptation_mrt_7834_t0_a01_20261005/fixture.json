@@ -1,0 +1,31 @@
+{
+  "fixture_id": "mrt-optional-adaptation-finite-v1",
+  "sessions": [
+    {"session_id": "cluster-0", "latent_stratum": 0},
+    {"session_id": "cluster-1", "latent_stratum": 1}
+  ],
+  "horizon": 4,
+  "availability": {
+    "t0": "always",
+    "t1": "prior_z0_equals_0",
+    "t2": "always",
+    "t3": "prior_z2_equals_0"
+  },
+  "assignment_probability": {
+    "t0": 0.5,
+    "t1_t2_t3_if_prior_z0_0": 0.25,
+    "t1_t2_t3_if_prior_z0_1": 0.75
+  },
+  "adherence": "executed = assigned only in latent_stratum_1; otherwise not executed",
+  "proximal_outcome": "clip(0.20 + 0.24*latent_stratum + 0.30*current_execution + 0.10*sum(prior_executions), 0, 1)",
+  "distal_episode_outcome": "1 iff no adaptation executed anywhere in episode; otherwise 0",
+  "mandatory_controls": ["required_observation", "freshness_gate", "release_guard"],
+  "adaptations": "optional, reversible, non-authoritative presentation only",
+  "control_cases": [
+    "zero_propensity_history",
+    "eligibility_stamped_after_assignment",
+    "missing_proximal_window",
+    "cross_session_interference",
+    "proximal_distal_inversion"
+  ]
+}

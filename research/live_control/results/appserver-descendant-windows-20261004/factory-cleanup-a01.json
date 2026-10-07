@@ -1,0 +1,25 @@
+{
+  "started_utc": "2026-10-04T01:12:17.873837+00:00",
+  "factory_source_sha256": "d182aa759cdc8c243d7389e7031757bef67e39fdaf182a32e7f708f44244aac1",
+  "expect_cleanup_leak": true,
+  "setinfo_failure": "OSError: [Errno 87] SetInformationJobObject",
+  "setinfo_job_closed": true,
+  "cleanup_failure_exception": "OSError: injected Popen.kill cleanup failure",
+  "pid": 51340,
+  "job_handle_open_after_factory_error": true,
+  "child_state_after_factory_error": {
+    "exists": true,
+    "exit_code": 259
+  },
+  "job_close_attempted_by_factory": false,
+  "leak_observed": true,
+  "setinfo_error_path_closed_handle": true,
+  "expected_observation_matches": true,
+  "job_closed_after_harness_cleanup": true,
+  "child_state_after_harness_cleanup": {
+    "exists": false,
+    "exit_code": 0
+  },
+  "pass": true,
+  "completed_utc": "2026-10-04T01:12:17.900878+00:00"
+}

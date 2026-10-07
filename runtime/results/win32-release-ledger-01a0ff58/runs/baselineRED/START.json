@@ -1,0 +1,26 @@
+{
+  "kind": "ordinary inert-API regression",
+  "argv": [
+    "<python311-install>\\python.exe",
+    "-X",
+    "utf8",
+    "-m",
+    "unittest",
+    "-v",
+    "runtime.backends.win32_v1.test_release_ledger",
+    "runtime.backends.win32_v1.test_integration.PureWin32HelperTests"
+  ],
+  "cwd": "<worker-workspace>\\work\\win32-release-ledger-01\\original",
+  "source_sha256": {
+    "runtime/backends/win32_v1/backend.py": "4cf87d6cecab9a84c4e9cdce83adbe8b58f93227eb64526740c029342bbdd6dd",
+    "runtime/backends/win32_v1/session.py": "7e81a5b5cec01dc43da7a0ff4acebd0dd33bd67b9dd7c600ced431f61166af77",
+    "runtime/backends/win32_v1/test_integration.py": "3f0dd4fda3583e246a1746db2ca0edc96743ae19ec4b46d9038c1be8138a9f07",
+    "runtime/backends/win32_v1/test_release_ledger.py": "6b94a19bdced3735da62f3117a4cad67e480e6efd083d482914feecf1eff516e",
+    "runtime/backends/win32_v1/__init__.py": "0a21627e9fd4e50a9418335422d45d9ae89f598678ca0ddccc1edc7a4ef5a12b",
+    "runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+    "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+  },
+  "started_utc": "2026-10-03T06:41:42.826315+00:00",
+  "no_live_native_integration_class": true
+}

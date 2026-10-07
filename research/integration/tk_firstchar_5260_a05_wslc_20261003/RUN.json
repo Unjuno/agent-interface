@@ -1,0 +1,55 @@
+{
+  "schema": "issue5260-a05-construction-run-v1",
+  "allocation": "5260-a05-wslc-focus-ack-construction01-20261003",
+  "source_freeze_commit": "4cec7d7153f5e91879e87047904b7cb863952535",
+  "freeze_sha256": "5f93116bec7def619f93f3027fb251aa58dccb5cc8115a0a54e9328deca55d1a",
+  "disposition": "METHOD_PASS_CONSTRUCTION_ONLY",
+  "hypothesis": "H_FAIL_FINITE_FIXTURE_ONLY",
+  "rows": 10,
+  "groups": {
+    "ACK_TARGET": {
+      "admitted": 3,
+      "decoy_empty": 4,
+      "exact_hxy": 3,
+      "n": 4,
+      "pre_key_focus_drift": 0,
+      "refused_no_input": 1
+    },
+    "ACK_WRONG_TARGET": {
+      "admitted": 0,
+      "decoy_empty": 2,
+      "exact_hxy": 0,
+      "n": 2,
+      "pre_key_focus_drift": 0,
+      "refused_no_input": 2
+    },
+    "NOW_TARGET": {
+      "admitted": 4,
+      "decoy_empty": 0,
+      "exact_hxy": 0,
+      "n": 4,
+      "pre_key_focus_drift": 0,
+      "refused_no_input": 0
+    }
+  },
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "candidate_raw_sha256": "8b3dd535fd6d7137bf58a71592fcfa5d3f7fc0fa0f45e6bd6485be49f997f7b3",
+  "auditor_raw_sha256": "3c6214e2e97573530be3fa31222087803b443b3ac593cc70777d21498a923d4c",
+  "target_refusal_index": 9,
+  "target_refusal_last_errors": [
+    "receipt_expired"
+  ],
+  "first_invalid_poll_samples_retained": false,
+  "scope": "construction/private instrumented Tk focus oracle; no general sensor or performance claim",
+  "prospective_issue_comment": 5970445861,
+  "prospective_resource_comment": 5970446028,
+  "resource_completion_comment": 5970456121,
+  "candidate_started_utc": "2026-10-03T15:11:43.316880+00:00",
+  "candidate_finished_utc": "2026-10-03T15:12:03.913035+00:00",
+  "candidate_wall_seconds": 20.595558999993955,
+  "auditor_started_utc": "2026-10-03T15:12:21.073962+00:00",
+  "auditor_finished_utc": "2026-10-03T15:12:21.638261+00:00",
+  "auditor_wall_seconds": 0.5640245999966282
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "map01-v39-xvfb-client-release-timing-invocation-a01-v1",
+  "allocation_id": "MAP01-V39-XVFB-CLIENT-RELEASE-TIMING-A01-20261004-01",
+  "candidate_invocations": 1,
+  "argv": ["sh", "src/run_candidate.sh"],
+  "working_directory": "/home/taka/xvfb-client-release-timing-a01-20261004",
+  "candidate_argv": ["python3", "src/candidate.py", "--source", "src/input_owner_v10.py", "--out", "results/A01/output", "--cycles", "30"],
+  "candidate_stdout": "CANDIDATE_COMPLETE\n",
+  "candidate_stderr": "",
+  "candidate_exit": 0,
+  "guest_raw_sha256": "af889efa99631997afe775dd927fcf9fa805139a2e1f4020b82bc0c918d5689f",
+  "host_raw_sha256": "af889efa99631997afe775dd927fcf9fa805139a2e1f4020b82bc0c918d5689f",
+  "raw_copy_verified_byte_identical": true,
+  "guest_raw_path": "/home/taka/xvfb-client-release-timing-a01-20261004/results/A01/output/raw.json",
+  "host_runner_exit_observed": 0,
+  "source_delivery": "base64 over the isolated OrbStack guest command channel; candidate network disabled by VM configuration and candidate source inspection",
+  "wall_clock_start_end_utc": "not captured by the frozen runner; guest monotonic start/finish values are retained in RAW.json",
+  "cleanup": {
+    "owner_closed_and_release_verified": true,
+    "receiver_thread_stopped": true,
+    "xvfb_exit": 0,
+    "orb_guest_stopped_after_readback": true
+  },
+  "no_retry": true
+}

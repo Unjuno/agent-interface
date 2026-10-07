@@ -1,0 +1,62 @@
+import ast
+import hashlib
+import json
+import subprocess
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+REPO = ROOT / 'agent-interface'
+OUT = ROOT / 'v12-owner-record-cleanup'
+BASE = '9c26e204c0475bee30919e3d0e6681f393078ef1'
+SOURCE = 'research/doom/session_map01_v12.py'
+
+def git(*args):
+    return subprocess.check_output(['git', '-C', str(REPO), *args])
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def source_path(node):
+    if isinstance(node, ast.Name) and node.id == 'HERE':
+        return Path('research/doom')
+    if isinstance(node, ast.Attribute) and node.attr == 'parent':
+        return source_path(node.value).parent
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
+        if not isinstance(node.right, ast.Constant) or not isinstance(node.right.value, str):
+            raise ValueError('nonliteral source path')
+        return source_path(node.left) / node.right.value
+    if (isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+            and node.func.id == 'Path' and len(node.args) == 1
+            and isinstance(node.args[0], ast.Name) and node.args[0].id == '__file__'):
+        return Path(SOURCE)
+    raise ValueError(ast.dump(node))
+
+def main():
+    OUT.mkdir(exist_ok=False)
+    data = git('show', f'{BASE}:{SOURCE}')
+    tree = ast.parse(data)
+    main_node = next(x for x in tree.body if isinstance(x, ast.FunctionDef) and x.name == 'main')
+    source_loop = next(x for x in main_node.body if isinstance(x, ast.For) and isinstance(x.iter, ast.Tuple))
+    paths = [source_path(x).as_posix() for x in source_loop.iter.elts]
+    if len(paths) != 20 or SOURCE not in paths:
+        raise ValueError('literal provenance set changed')
+    paths.append('research/live_control/executor_v3.py')
+    manifest = {}
+    for name in sorted(set(paths)):
+        raw = git('show', f'{BASE}:{name}')
+        target = OUT / 'original-source' / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(raw)
+        manifest[name] = {'git_blob': git('rev-parse', f'{BASE}:{name}').decode().strip(),
+                          'sha256': sha(raw), 'bytes': len(raw)}
+        if target.read_bytes() != raw:
+            raise ValueError('export mismatch')
+    receipt = {'base': BASE, 'source': SOURCE, 'utc': datetime.now(timezone.utc).isoformat(),
+               'literal_session_provenance_count': 20, 'export_count': len(manifest), 'files': manifest,
+               'claim': 'https://github.com/Unjuno/agent-interface/issues/59#issuecomment-5965906951'}
+    (OUT / 'SOURCE-EXPORT.json').write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8', newline='\n')
+    print(json.dumps({'base': BASE, 'count': len(manifest), 'source_sha256': manifest[SOURCE]['sha256']}))
+
+if __name__ == '__main__':
+    main()

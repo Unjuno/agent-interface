@@ -1,0 +1,40 @@
+{
+  "schema": "issue-6053-pcaa-stage-propagation-t1-freeze-v1",
+  "issue": 6053,
+  "target_issue": 4695,
+  "main_sha": "9590ee9e0c74f7438306e8efb48b2af813f7a86b",
+  "allocation": "T1 read-only source eligibility audit; no runtime allocation",
+  "decision_rule": "If the current PCAA source has no matched exogenous perturbation/re-grounding arms or cannot establish held-out controller/evaluator isolation, retain HOLD_NO_ELIGIBLE_CHAIN; do not invent or execute a T2 trial.",
+  "inputs": {
+    "research/procedural_control_arena_v1/arena.py": {
+      "git_blob": "b216fe02f50d1e492781603053f5052608b1482f",
+      "sha256": "71cca77a943e3cdb74ded27ceaf3164655c2a28e394027441ed2976b2aabdc00"
+    },
+    "research/procedural_control_arena_v1/engine.py": {
+      "git_blob": "4511e6de387ae25ac7291ea45d60a4b0222ab3d5",
+      "sha256": "2fa077d9cf9cb75836480a6fe0cd80d903ee3388288cc1428c3fa54a444478af"
+    },
+    "research/procedural_control_arena_v1/test_engine.py": {
+      "git_blob": "a3ab2df4c52e2e6c9d24d541e3c547b52fe17f59",
+      "sha256": "af0ac46dd24a97c44f2330217dcfa80e85b6600740b59b35752556f45a8da9c8"
+    },
+    "research/procedural_control_arena_v1/EVALUATION_CRITERIA.md": {
+      "git_blob": "cd6ea8b0e4661167dcf278cc8018b340ac9ed39f",
+      "sha256": "3a1dc2d696876f4f06984b9575cc03fdedb8b62b5247f225c5076488383533e8"
+    },
+    "research/procedural_control_arena_v1/README.md": {
+      "git_blob": "20de59c2bccd8f4aa9d3f48ad08afc19e5fce757",
+      "sha256": "e216e3d09fbfcc893e5d3fb209a7ffed78144150023d20d1c99d7dded7add84f"
+    }
+  },
+  "invocations": {
+    "source_audit": 1,
+    "arena_gui_or_game": 0,
+    "agent_model": 0,
+    "live_input": 0,
+    "container_or_vm": 0,
+    "formal_pair": 0,
+    "retries": 0
+  },
+  "scope": "Static source eligibility audit of the current PCAA v1 implementation for Issue #6053 T1 only; no performance or GUI behavior inference."
+}

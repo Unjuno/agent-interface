@@ -1,0 +1,24 @@
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+ROOT = Path(__file__).resolve().parent
+OUT = ROOT / 'mcp-shutdown-evidence'
+REPO = ROOT / 'mcp-shutdown-repo'
+name = sys.argv[1]
+dest = OUT / ('source-' + name)
+dest.mkdir(exist_ok=False)
+records = []
+for relative in ('runtime/cli_v1/mcp_server.py', 'runtime/cli_v1/test_mcp_session.py'):
+    data = (REPO / relative).read_bytes()
+    output = dest / (Path(relative).name + '.txt')
+    output.write_bytes(data)
+    records.append(dict(path=relative, bytes=len(data), sha256=hashlib.sha256(data).hexdigest(),
+                        snapshot_path=output.relative_to(OUT).as_posix(),
+                        git_filtered_blob=subprocess.check_output(['git', 'hash-object', relative], cwd=REPO).decode().strip()))
+(dest / 'manifest.json').write_text(json.dumps(dict(observed_utc=datetime.now(timezone.utc).isoformat(),
+    classification='ordinary executed-source snapshot, not formal freeze', sources=records), indent=2)+'\n', encoding='utf-8')
+print(json.dumps(records))

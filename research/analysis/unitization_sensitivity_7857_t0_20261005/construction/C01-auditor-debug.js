@@ -1,0 +1,26 @@
+const fs=require("fs"),f=JSON.parse(fs.readFileSync("./fixture.json","utf8")),got=JSON.parse(fs.readFileSync(process.env.CANDIDATE_PATH||"/input/candidate.json","utf8"));
+const A=f.segmentations.A,B=f.segmentations.B;
+function canonical(x){return JSON.stringify([...x].map(r=>Object.keys(r).sort().map(k=>[k,r[k]])).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))))}
+function exactRows(x,y){return Array.isArray(x)&&canonical(x)===canonical(y)}
+function occupancy(rows,s){const xs=rows.filter(x=>x.phase==="train"&&x.stratum===s),counts={};for(const x of xs)counts[x.mode]=(counts[x.mode]||0)+1;const v=Object.values(counts);return {units:xs.length,mode_counts:counts,singletons:v.filter(n=>n===1).length,doubletons:v.filter(n=>n===2).length}}
+function newRate(rows){const known=new Set(rows.filter(x=>x.phase==="train").map(x=>x.mode)),h=rows.filter(x=>x.phase==="heldout"),n=h.filter(x=>!known.has(x.mode)).length;return {units:h.length,new_units:n,rate:n/h.length}}
+function f1(a,b,trace){const x=a.filter(r=>r.trace===trace),y=b.filter(r=>r.trace===trace),ys=new Set(y.map(r=>r.start+":"+r.end));let m=0;for(const r of x)if(ys.has(r.start+":"+r.end))m++;return x.length+y.length?2*m/(x.length+y.length):1}
+function globalF1(a,b){const y=new Set(b.map(r=>r.trace+":"+r.start+":"+r.end));let m=0;for(const r of a)if(y.has(r.trace+":"+r.start+":"+r.end))m++;return 2*m/(a.length+b.length)}
+const strata=["S1","S2"],expectedOcc={A:Object.fromEntries(strata.map(s=>[s,occupancy(A,s)])),B:Object.fromEntries(strata.map(s=>[s,occupancy(B,s)]))},expectedHeld={A:newRate(A),B:newRate(B)};
+const perTrace=Object.fromEntries(f.traces.map(t=>[t.id,f1(A,B,t.id)]));
+const category={agreements:f.aligned_category_pairs.filter(x=>x.a===x.b).length,total:f.aligned_category_pairs.length,rate:f.aligned_category_pairs.filter(x=>x.a===x.b).length/f.aligned_category_pairs.length};
+const changed=strata.some(s=>expectedOcc.A[s].singletons!==expectedOcc.B[s].singletons||expectedOcc.A[s].doubletons!==expectedOcc.B[s].doubletons),sensitive=changed||Math.abs(expectedHeld.A.rate-expectedHeld.B.rate)>f.thresholds.heldout_new_rate_delta_flag;
+const saturation=Object.fromEntries(["A","B"].map(k=>[k,(strata.reduce((n,s)=>n+expectedOcc[k][s].singletons,0)/strata.reduce((n,s)=>n+expectedOcc[k][s].units,0)<=f.thresholds.saturation_singleton_fraction)&&(expectedHeld[k].rate<=f.thresholds.saturation_new_mode_rate)]));
+function close(a,b){return Number.isFinite(a)&&Math.abs(a-b)<1e-12}
+const expected={occupancy:expectedOcc,heldout:expectedHeld,unitizing:{exact_span_match_f1:globalF1(A,B),per_trace:perTrace},category_agreement:category,occupancy_changed:changed,sensitivity_gate:sensitive,control_flag:perTrace.control<f.thresholds.max_unitizing_f1_for_control_flag,saturation};
+const mutations=[
+ x=>{x.annotationsB=JSON.parse(JSON.stringify(x.annotationsA))},
+ x=>{x.annotationsA=x.annotationsA.filter(r=>!(r.trace==="adjacent"&&r.start===22))},
+ x=>{x.annotationsA.push({trace:"control",stratum:"S1",phase:"train",mode:"D",start:15,end:20,censored:false,boundary_basis:"pre-outcome telemetry"})},
+ x=>{x.annotationsA=x.annotationsA.filter(r=>r.trace!=="censor");x.annotationsB=x.annotationsB.filter(r=>r.trace!=="censor")},
+ x=>{x.annotationsA.find(r=>r.trace==="adjacent").boundary_basis="post-outcome boundary tuning"}
+];
+let rejected=0;for(const mutate of mutations){const x=JSON.parse(JSON.stringify(got));mutate(x);if(!exactRows(x.annotationsA,A)||!exactRows(x.annotationsB,B))rejected++}
+const audit=got.allocation===f.allocation&&exactRows(got.annotationsA,A)&&exactRows(got.annotationsB,B)&&JSON.stringify(got.occupancy)===JSON.stringify(expectedOcc)&&JSON.stringify(got.heldout)===JSON.stringify(expectedHeld)&&close(got.unitizing.exact_span_match_f1,expected.unitizing.exact_span_match_f1)&&JSON.stringify(got.unitizing.per_trace)===JSON.stringify(expected.unitizing.per_trace)&&JSON.stringify(got.category_agreement)===JSON.stringify(expected.category_agreement)&&got.occupancy_changed===expected.occupancy_changed&&got.sensitivity_gate===expected.sensitivity_gate&&got.control_flag===expected.control_flag&&JSON.stringify(got.saturation)===JSON.stringify(expected.saturation)&&rejected===mutations.length;
+console.log(JSON.stringify({checks:{alloc:got.allocation===f.allocation,rowsA:exactRows(got.annotationsA,A),rowsB:exactRows(got.annotationsB,B),occupancy:JSON.stringify(got.occupancy)===JSON.stringify(expectedOcc),heldout:JSON.stringify(got.heldout)===JSON.stringify(expectedHeld),f1:close(got.unitizing.exact_span_match_f1,expected.unitizing.exact_span_match_f1),traceF1:JSON.stringify(got.unitizing.per_trace)===JSON.stringify(expected.unitizing.per_trace),category:JSON.stringify(got.category_agreement)===JSON.stringify(expected.category_agreement),changed:got.occupancy_changed===expected.occupancy_changed,sensitivity:got.sensitivity_gate===expected.sensitivity_gate,control:got.control_flag===expected.control_flag,saturation:JSON.stringify(got.saturation)===JSON.stringify(expected.saturation),mutation:rejected===mutations.length},audit,trace_count:f.traces.length,annotation_counts:{A:A.length,B:B.length},expected,mutations_rejected:rejected,mutations_total:mutations.length}));
+

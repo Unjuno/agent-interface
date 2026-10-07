@@ -1,0 +1,276 @@
+{
+  "base": "f1416985d4ff9ce5bbf9f0f4be1be3d0ee669549",
+  "source_sha256": "4ad7e4426148688b8ece0ffbc4e95527b3697c08c84e5d0ab23a84f364574dc2",
+  "question": "Issue #57 malformed current-context refusal at core admission boundary",
+  "ordinary_engineering_probe": true,
+  "backend_opened": false,
+  "input_dispatched": false,
+  "program": {
+    "authority": {
+      "expires_at_ns": 100,
+      "lease_id": "test-only"
+    },
+    "ops": [
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "manifest-test",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "observation_seq": 1,
+      "binding_revision": 1
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "manifest": {
+    "backend_id": "manifest-boundary",
+    "capabilities": {
+      "input.release_all": {
+        "state": "supported"
+      }
+    },
+    "clock": {
+      "monotonic": true,
+      "unit": "ns"
+    },
+    "coordinate_frames": [
+      "screen_physical_px"
+    ],
+    "permissions": [],
+    "platform": {
+      "backend": "no-device",
+      "os": "linux"
+    },
+    "schema": "agent-interface/backend-v1"
+  },
+  "rows": [
+    {
+      "id": "valid",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": 1,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": true,
+        "error": null
+      }
+    },
+    {
+      "id": "now_ns:bool",
+      "context": {
+        "now_ns": true,
+        "current_observation_seq": 1,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": true,
+        "error": null
+      }
+    },
+    {
+      "id": "now_ns:float",
+      "context": {
+        "now_ns": 1.0,
+        "current_observation_seq": 1,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": true,
+        "error": null
+      }
+    },
+    {
+      "id": "now_ns:negative",
+      "context": {
+        "now_ns": -1,
+        "current_observation_seq": 1,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": true,
+        "error": null
+      }
+    },
+    {
+      "id": "now_ns:string",
+      "context": {
+        "now_ns": "1",
+        "current_observation_seq": 1,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "exception": "TypeError"
+      }
+    },
+    {
+      "id": "now_ns:null",
+      "context": {
+        "now_ns": null,
+        "current_observation_seq": 1,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "exception": "TypeError"
+      }
+    },
+    {
+      "id": "now_ns:list",
+      "context": {
+        "now_ns": [],
+        "current_observation_seq": 1,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "exception": "TypeError"
+      }
+    },
+    {
+      "id": "current_observation_seq:bool",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": true,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": true,
+        "error": null
+      }
+    },
+    {
+      "id": "current_observation_seq:float",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": 1.0,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": true,
+        "error": null
+      }
+    },
+    {
+      "id": "current_observation_seq:negative",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": -1,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": false,
+        "error": "STALE_OBSERVATION"
+      }
+    },
+    {
+      "id": "current_observation_seq:string",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": "1",
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": false,
+        "error": "STALE_OBSERVATION"
+      }
+    },
+    {
+      "id": "current_observation_seq:null",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": null,
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": false,
+        "error": "STALE_OBSERVATION"
+      }
+    },
+    {
+      "id": "current_observation_seq:list",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": [],
+        "current_binding_revision": 1
+      },
+      "outcome": {
+        "accepted": false,
+        "error": "STALE_OBSERVATION"
+      }
+    },
+    {
+      "id": "current_binding_revision:bool",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": 1,
+        "current_binding_revision": true
+      },
+      "outcome": {
+        "accepted": true,
+        "error": null
+      }
+    },
+    {
+      "id": "current_binding_revision:float",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": 1,
+        "current_binding_revision": 1.0
+      },
+      "outcome": {
+        "accepted": true,
+        "error": null
+      }
+    },
+    {
+      "id": "current_binding_revision:negative",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": 1,
+        "current_binding_revision": -1
+      },
+      "outcome": {
+        "accepted": false,
+        "error": "STALE_BINDING"
+      }
+    },
+    {
+      "id": "current_binding_revision:string",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": 1,
+        "current_binding_revision": "1"
+      },
+      "outcome": {
+        "accepted": false,
+        "error": "STALE_BINDING"
+      }
+    },
+    {
+      "id": "current_binding_revision:null",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": 1,
+        "current_binding_revision": null
+      },
+      "outcome": {
+        "accepted": false,
+        "error": "STALE_BINDING"
+      }
+    },
+    {
+      "id": "current_binding_revision:list",
+      "context": {
+        "now_ns": 1,
+        "current_observation_seq": 1,
+        "current_binding_revision": []
+      },
+      "outcome": {
+        "accepted": false,
+        "error": "STALE_BINDING"
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "core-admission-composition-freeze-v1",
+  "frozen_at_utc": "2026-10-03T01:32:40.951331+00:00",
+  "worker_id": "01a0ff59-2f23-7ff0-ba99-cc5cb8d494fc",
+  "policy_version": "FINAL-v5",
+  "allocation_type": "finite analytical / ordinary engineering; no formal allocation",
+  "case_count_per_arm": 9000,
+  "rows": 36000,
+  "invocations": 1,
+  "environment": {
+    "platform": "win32",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "threads": "one Python main thread; no worker pool",
+    "shared_resources": "none acquired",
+    "fleet_deadline": "unavailable"
+  },
+  "source_sha256": {
+    ".gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    "audit_matrix.py": "0a48c64a9bc8a17140fcc5d3fe4d1556b1d2621e624fd80b14da070b8d68a28c",
+    "check_controls.py": "4f810468618a835b6d72e762e984d2819c40491cd3548fee7b9baf3f83866b9b",
+    "PROTOCOL.md": "9d83c24719efd6f9f8a721ce0c77dd2e022cd60003c7bb27886e13aa3abb5aa2",
+    "regressions/test_admission_current_evidence.py": "3b0f53b59e5b07a7092e8d187b3ff73e01d3c0c23bb49d0105be04653c8f1f30",
+    "regressions/test_manifest_enum_types.py": "97b9cfabdfec9ebcf9e0e7ad747533b4e34e252af5385163e3a8821a6281093a",
+    "run_matrix.py": "643e5d04adeb551d3d84b32b4ab0ceb10bf64f6e0b01401f487a2b164c6463c9",
+    "SOURCE_MANIFEST.json": "9d8e64258f48851d6d72329efa2793472a92612737b14b329c18154e78b800c4",
+    "sources/combined.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/enum.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+    "sources/main.py": "4ad7e4426148688b8ece0ffbc4e95527b3697c08c84e5d0ab23a84f364574dc2",
+    "sources/scalar.py": "e0320ae7853cdadfd5820577cc7e166a60210b822afc8b6ca910eb64fd1b5965"
+  },
+  "decision": "combined 9000/9000 strict oracle match; no exception/mutation; effective negative controls; core regressions"
+}

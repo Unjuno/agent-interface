@@ -1,0 +1,9 @@
+# B01 same-created-reference candidate, scoped support
+
+Base4d42238694c55aaa29bf47cb13a5b8d4c5d4074a. Six NEW disposable Draw documents, one invocation/no retry. Exact reference created and inserted as A is retained through current tuple check and setter; names alone are insufficient. Separate writer changes real A1000→1700/B2000→2700 while recording locked. No model or Undo.
+
+Four positive cases set A1900 and preserve B2700, size500×500/y1000, verified by separate read-only UNO observer and saved XML. Stale expected1000 case refuses with setter0; detached fake namedA at1700 also refuses with setter0 because it is not the retained created reference; both preserve actualA1700/B2700. Producer/parent0/errors[]; saved auditor0/errors[]/SUPPORT_BOUND_REFERENCE_SCOPED. No all-abstain compensation success. Setter receipt explicitly SETTER_RETURNED_EFFECT_UNVERIFIED, independent effect still required. Old E02/L01/E01 failures untouched.
+
+This is local fixture-created-reference custody, not authenticated application identity/generation or a universal solution for externally existing objects. A deleted/replaced object, ABA, document replacement, future writer between read and setter or internal native association failure is untested. Read-check-write remains non-atomic. Never promote this scoped result to general recovery safety, root-cause resolution, model value or production adoption. No shared runtime changed. Stop additional proxy variants; actual model cost comparison remains unmatched and broader2122 gates open.
+
+Pinnedbab4dc0 image/LO25.2.3.2; source/plan/writer/observer/auditor/copiedE02 source frozen before run. CPU100000100000/memory536870912/pidsmax sampled; swapwarning retained; source bindreadonly/networknone/user65534. No nativeGUI/GPU/userdocument/provider/authenticatedexternalownership/wholehostenforcement or descendant custody proof. FullROADMAP remainsopen.

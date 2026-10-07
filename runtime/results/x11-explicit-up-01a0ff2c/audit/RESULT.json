@@ -1,0 +1,213 @@
+{
+  "pid": 17860,
+  "started_utc": "2026-10-03T14:43:39.903976+00:00",
+  "argv": [
+    "work\\x11-explicit-up-01a0ff2c\\audit.py"
+  ],
+  "reader_sha256": "be722965a7aa180cfd3f435b956c54c9fc2d978445d20a77948497217fb98224",
+  "producer_execution": 0,
+  "native_calls": 0,
+  "status": "PASS_SCOPED_SAVED_DATA",
+  "checks": [
+    "original status baselineRED",
+    "source stable/finite baselineRED",
+    "whole stream baselineRED/stdout.txt",
+    "whole stream baselineRED/stderr.txt",
+    "8 full methods baselineRED",
+    "first results preserved baselineRED",
+    "original status baselineRED-corrected",
+    "source stable/finite baselineRED-corrected",
+    "whole stream baselineRED-corrected/stdout.txt",
+    "whole stream baselineRED-corrected/stderr.txt",
+    "8 full methods baselineRED-corrected",
+    "first results preserved baselineRED-corrected",
+    "original status firstGREEN",
+    "source stable/finite firstGREEN",
+    "whole stream firstGREEN/stdout.txt",
+    "whole stream firstGREEN/stderr.txt",
+    "8 full methods firstGREEN",
+    "first results preserved firstGREEN",
+    "independent ledger/status/ownership oracle firstGREEN",
+    "original status optimizedGREEN",
+    "source stable/finite optimizedGREEN",
+    "whole stream optimizedGREEN/stdout.txt",
+    "whole stream optimizedGREEN/stderr.txt",
+    "8 full methods optimizedGREEN",
+    "first results preserved optimizedGREEN",
+    "independent ledger/status/ownership oracle optimizedGREEN",
+    "original status activeRED",
+    "source stable/finite activeRED",
+    "whole stream activeRED/stdout.txt",
+    "whole stream activeRED/stderr.txt",
+    "8 full methods activeRED",
+    "first results preserved activeRED",
+    "original status activeGREEN",
+    "source stable/finite activeGREEN",
+    "whole stream activeGREEN/stdout.txt",
+    "whole stream activeGREEN/stderr.txt",
+    "8 full methods activeGREEN",
+    "first results preserved activeGREEN",
+    "independent ledger/status/ownership oracle activeGREEN",
+    "original status activeGREEN-optimized",
+    "source stable/finite activeGREEN-optimized",
+    "whole stream activeGREEN-optimized/stdout.txt",
+    "whole stream activeGREEN-optimized/stderr.txt",
+    "8 full methods activeGREEN-optimized",
+    "first results preserved activeGREEN-optimized",
+    "independent ledger/status/ownership oracle activeGREEN-optimized",
+    "all candidate literal rows equal across loader and optimized conditions",
+    "corrected construction and portable baseline exact rows",
+    "corrected comparison same test definition",
+    "portable comparison same test definition",
+    "four first baseline false completions",
+    "baseline button detected but owned retry obligation lost",
+    "followup zero emissions key_pair",
+    "followup zero emissions key_chord",
+    "followup zero emissions ascii_text",
+    "followup zero emissions button_pair",
+    "copy negative lost_key",
+    "copy negative false_completed",
+    "copy negative wrong_physical_code",
+    "copy negative lost_button",
+    "copy negative query_fault_ledger",
+    "copy negative recovery_task_replay"
+  ],
+  "candidate_rows": 32,
+  "all_candidate_endpoints": 4,
+  "receipts": [
+    {
+      "phase": "baselineRED",
+      "pid": 25800,
+      "started_utc": "2026-10-03T14:36:17.109305+00:00",
+      "ended_utc": "2026-10-03T14:36:17.334142+00:00",
+      "exit_code": 1,
+      "streams": {
+        "stdout.txt": {
+          "bytes": 17891,
+          "sha256": "6cc4658dbe24dfd6abcb8b57cff3a53d15ab4410e272c68e84fc5d4de9f3e3e8"
+        },
+        "stderr.txt": {
+          "bytes": 7129,
+          "sha256": "3296a735a2efca76acfac49f6a086db3f46db2602b95c4bde25bb47bb22402e3"
+        }
+      }
+    },
+    {
+      "phase": "baselineRED-corrected",
+      "pid": 27608,
+      "started_utc": "2026-10-03T14:37:33.038231+00:00",
+      "ended_utc": "2026-10-03T14:37:33.231626+00:00",
+      "exit_code": 1,
+      "streams": {
+        "stdout.txt": {
+          "bytes": 18414,
+          "sha256": "35beb827b4968194f2191a99d5b6a33709fed82c6bb633f9b1ba9fb960c6b35e"
+        },
+        "stderr.txt": {
+          "bytes": 6418,
+          "sha256": "b67201d2b8c676dc4825d7496e2dfa6bcd2ef5de9044e60f8b14e4ea8bb381a5"
+        }
+      }
+    },
+    {
+      "phase": "firstGREEN",
+      "pid": 26264,
+      "started_utc": "2026-10-03T14:38:01.663669+00:00",
+      "ended_utc": "2026-10-03T14:38:01.858598+00:00",
+      "exit_code": 0,
+      "streams": {
+        "stdout.txt": {
+          "bytes": 27601,
+          "sha256": "be5cf08befc1d9bd760d50390de0a911ed60c24accaa9ab3f88865c97e3c5d4a"
+        },
+        "stderr.txt": {
+          "bytes": 857,
+          "sha256": "fbae767437a605197c43b3eda794870b41ba9790d8e45460fe86f7de112f8c11"
+        }
+      }
+    },
+    {
+      "phase": "optimizedGREEN",
+      "pid": 1740,
+      "started_utc": "2026-10-03T14:38:02.678344+00:00",
+      "ended_utc": "2026-10-03T14:38:02.894622+00:00",
+      "exit_code": 0,
+      "streams": {
+        "stdout.txt": {
+          "bytes": 27601,
+          "sha256": "be5cf08befc1d9bd760d50390de0a911ed60c24accaa9ab3f88865c97e3c5d4a"
+        },
+        "stderr.txt": {
+          "bytes": 857,
+          "sha256": "fbae767437a605197c43b3eda794870b41ba9790d8e45460fe86f7de112f8c11"
+        }
+      }
+    },
+    {
+      "phase": "activeRED",
+      "pid": 1740,
+      "started_utc": "2026-10-03T14:40:38.798005+00:00",
+      "ended_utc": "2026-10-03T14:40:38.994187+00:00",
+      "exit_code": 1,
+      "streams": {
+        "stdout.txt": {
+          "bytes": 18414,
+          "sha256": "35beb827b4968194f2191a99d5b6a33709fed82c6bb633f9b1ba9fb960c6b35e"
+        },
+        "stderr.txt": {
+          "bytes": 6733,
+          "sha256": "49cbda0e484ae2be935ae07c4f552b64d32b70891a39802cbfd08466bc083649"
+        }
+      }
+    },
+    {
+      "phase": "activeGREEN",
+      "pid": 29584,
+      "started_utc": "2026-10-03T14:40:39.779266+00:00",
+      "ended_utc": "2026-10-03T14:40:39.971125+00:00",
+      "exit_code": 0,
+      "streams": {
+        "stdout.txt": {
+          "bytes": 27601,
+          "sha256": "be5cf08befc1d9bd760d50390de0a911ed60c24accaa9ab3f88865c97e3c5d4a"
+        },
+        "stderr.txt": {
+          "bytes": 857,
+          "sha256": "fbae767437a605197c43b3eda794870b41ba9790d8e45460fe86f7de112f8c11"
+        }
+      }
+    },
+    {
+      "phase": "activeGREEN-optimized",
+      "pid": 29572,
+      "started_utc": "2026-10-03T14:40:40.774367+00:00",
+      "ended_utc": "2026-10-03T14:40:40.961422+00:00",
+      "exit_code": 0,
+      "streams": {
+        "stdout.txt": {
+          "bytes": 27601,
+          "sha256": "be5cf08befc1d9bd760d50390de0a911ed60c24accaa9ab3f88865c97e3c5d4a"
+        },
+        "stderr.txt": {
+          "bytes": 857,
+          "sha256": "fbae767437a605197c43b3eda794870b41ba9790d8e45460fe86f7de112f8c11"
+        }
+      }
+    }
+  ],
+  "negative_controls": [
+    "lost_key",
+    "false_completed",
+    "wrong_physical_code",
+    "lost_button",
+    "query_fault_ledger",
+    "recovery_task_replay"
+  ],
+  "baseline_false_completions": 4,
+  "baseline_button_custody_loss": true,
+  "first_fixture_failure_retained": true,
+  "physical_release": false,
+  "main_sends": 0,
+  "ended_utc": "2026-10-03T14:43:40.073114+00:00",
+  "exit_code": 0
+}

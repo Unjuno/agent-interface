@@ -1,0 +1,7 @@
+# M01 authored noncompleted mapping contract
+
+The unchanged pending PR7234 caller was invoked once in offline WSLc for three explicit authored decisions. Input-before-refusal0/False gives EXECUTION_INCOMPLETE/execution_refused/not_attempted and authority none. Partial1/True execution_failed and completed-prefix33/True delivery_uncertain both remain EXECUTION_INCOMPLETE, delivery_uncertain and consumed_by_recorded_execute_stage. Full decision including typed prefix count is retained as execution_progress. One execute callback, zero verifier/model/native calls, one final event each.
+
+These are candidates for projection semantics, not an automatic native converter or observed failures. In particular completed_actions must have a declared operation/action unit; native33operation entries cannot silently become another backend's logical task count. Ordinary input emission and cleanup emission must be distinguished; sticky recovery/current-owner context must remain in the original source-bound receipt/envelope. Absence of verifier calls does not itself prove release, safety, effect or no physical input.
+
+SUPPORT_CALLER_TYPED_NONCOMPLETED_CONTRACT; HOLD_NATIVE_CONVERTER. First raw/source freeze unchanged; separate saved-data audit required. Local prospective registration only; creation restricted. No runtime source edits, original actor replay, shared sourceowner takeover, task cost/quality benefit or ROADMAP completion claim. Do not add more manual variants as a substitute for source-authenticated real adapter qualification.

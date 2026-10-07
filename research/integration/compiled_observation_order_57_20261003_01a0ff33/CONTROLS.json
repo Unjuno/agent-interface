@@ -1,0 +1,4568 @@
+[
+  {
+    "changed": null,
+    "name": "drop_row",
+    "original": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 5,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          5,
+          30,
+          "1"
+        ],
+        "id": "final-string",
+        "site": "final"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "exception_type": "ValueError",
+        "kind": "exception",
+        "message": "nonnegative captured_ns required"
+      },
+      "source": "candidate",
+      "source_sha256": "68012e3ec68bda6dfe7d3a3d74cc0a37d1f820f27229cdd7df76498aafc17444",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 5,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": "1",
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "row_index": 65
+  },
+  {
+    "changed": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 5,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          5,
+          30,
+          0.0
+        ],
+        "id": "final-float",
+        "site": "final"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "exception_type": "ValueError",
+        "kind": "exception",
+        "message": "nonnegative captured_ns required"
+      },
+      "source": "candidate",
+      "source_sha256": "68012e3ec68bda6dfe7d3a3d74cc0a37d1f820f27229cdd7df76498aafc17444",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 5,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0.0,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "name": "duplicate_case",
+    "original": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 5,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          5,
+          30,
+          "1"
+        ],
+        "id": "final-string",
+        "site": "final"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "exception_type": "ValueError",
+        "kind": "exception",
+        "message": "nonnegative captured_ns required"
+      },
+      "source": "candidate",
+      "source_sha256": "68012e3ec68bda6dfe7d3a3d74cc0a37d1f820f27229cdd7df76498aafc17444",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 5,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": "1",
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "row_index": 65
+  },
+  {
+    "changed": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "name": "source_hash",
+    "original": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "row_index": 0
+  },
+  {
+    "changed": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          false,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "name": "capture_type",
+    "original": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "row_index": 0
+  },
+  {
+    "changed": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2.0,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "name": "completed_type",
+    "original": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "row_index": 0
+  },
+  {
+    "changed": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": true,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "name": "execute_sequence_type",
+    "original": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "row_index": 0
+  },
+  {
+    "changed": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "altered",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "name": "latest_reference",
+    "original": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "row_index": 0
+  },
+  {
+    "changed": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20.0
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "name": "execution_clock_type",
+    "original": {
+      "calls": {
+        "admit": [
+          {
+            "action": "enter",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1,
+              "surface": "form"
+            },
+            "operation": "enter",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          },
+          {
+            "action": "save",
+            "interface_id": "test",
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            },
+            "operation": "save",
+            "session_scope": "private",
+            "symbol": {
+              "dependencies": [
+                "phase"
+              ],
+              "identity_predicate": "phase",
+              "kind": "target_reference",
+              "target_reference": "field"
+            }
+          }
+        ],
+        "execute": [
+          {
+            "action": "enter",
+            "authorization": "one-use",
+            "expected_sequence": 1,
+            "operation": "enter",
+            "valid_until_ns": 1000000
+          },
+          {
+            "action": "save",
+            "authorization": "one-use",
+            "expected_sequence": 2,
+            "operation": "save",
+            "valid_until_ns": 1000000
+          }
+        ],
+        "observe": [
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "empty"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "filled"
+          },
+          {
+            "required_predicates": [
+              "phase"
+            ],
+            "state": "done"
+          }
+        ],
+        "verify_effect": [
+          {
+            "action": "enter",
+            "effect_ref": "effect-1",
+            "expected_effect": {
+              "phase": 1
+            },
+            "observation": {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2,
+              "surface": "form"
+            }
+          },
+          {
+            "action": "save",
+            "effect_ref": "effect-2",
+            "expected_effect": {
+              "phase": 2
+            },
+            "observation": {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3,
+              "surface": "form"
+            }
+          }
+        ]
+      },
+      "case": {
+        "captures": [
+          0,
+          30,
+          120
+        ],
+        "id": "initial-old_capture",
+        "site": "initial"
+      },
+      "freeze_sha256": "3a0e00362741bfc728117ffef2d1467a08c07206260eebc78ef029c0d44d9297",
+      "input_unchanged": true,
+      "result": {
+        "kind": "receipt",
+        "receipt": {
+          "completed_transitions": 2,
+          "critical_events": [
+            {
+              "action": "enter",
+              "event": "branch_selected",
+              "evidence_ref": "frame-1",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "outcome": "action",
+              "state": "empty"
+            },
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "enter",
+              "event": "effect_checked",
+              "evidence_ref": "frame-2",
+              "status": "succeeded"
+            },
+            {
+              "action": "save",
+              "event": "branch_selected",
+              "evidence_ref": "frame-2",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "outcome": "action",
+              "state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "event": "action_terminal",
+              "release_verified": true,
+              "status": "completed"
+            },
+            {
+              "action": "save",
+              "event": "effect_checked",
+              "evidence_ref": "frame-3",
+              "status": "succeeded"
+            },
+            {
+              "action": null,
+              "event": "branch_selected",
+              "evidence_ref": "frame-3",
+              "matched_conditions": {
+                "phase": 2
+              },
+              "outcome": "complete",
+              "state": "done"
+            },
+            {
+              "completed_transitions": 2,
+              "event": "runtime_finished",
+              "outcome": "TASK_SUCCEEDED",
+              "reason": "method_complete"
+            }
+          ],
+          "elapsed_ns": 200,
+          "ended_ns": 200,
+          "format": "compiled-gui-runtime-receipt-v1",
+          "frontier_model_resumptions": 0,
+          "input_authority": "admission_per_action_only",
+          "interface_id": "test",
+          "latest_evidence_ref": "frame-3",
+          "method": "two-steps",
+          "method_version": "1",
+          "observations": [
+            {
+              "captured_ns": 0,
+              "evidence_digest": "digest-1",
+              "evidence_ref": "frame-1",
+              "predicates": {
+                "phase": 0
+              },
+              "sequence": 1
+            },
+            {
+              "captured_ns": 30,
+              "evidence_digest": "digest-2",
+              "evidence_ref": "frame-2",
+              "predicates": {
+                "phase": 1
+              },
+              "sequence": 2
+            },
+            {
+              "captured_ns": 120,
+              "evidence_digest": "digest-3",
+              "evidence_ref": "frame-3",
+              "predicates": {
+                "phase": 2
+              },
+              "sequence": 3
+            }
+          ],
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "raw_evidence_retention": "adapter_responsibility_unverified",
+          "reason": "method_complete",
+          "session_scope": "private",
+          "started_ns": 0,
+          "transitions": [
+            {
+              "action": "enter",
+              "action_id": "action-1",
+              "effect_ref": "effect-1",
+              "evidence_ref": "frame-1",
+              "from_state": "empty",
+              "matched_conditions": {
+                "phase": 0
+              },
+              "observation_sequence": 1,
+              "release_verified": true,
+              "to_state": "filled"
+            },
+            {
+              "action": "save",
+              "action_id": "action-2",
+              "effect_ref": "effect-2",
+              "evidence_ref": "frame-2",
+              "from_state": "filled",
+              "matched_conditions": {
+                "phase": 1
+              },
+              "observation_sequence": 2,
+              "release_verified": true,
+              "to_state": "done"
+            }
+          ]
+        }
+      },
+      "source": "baseline",
+      "source_sha256": "a20c7ef88ca3c103a8b2bcea4056e8e714bb4baa41474a4d4bac6c937d3110c7",
+      "timeline": [
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 0,
+            "evidence_digest": "digest-1",
+            "evidence_ref": "frame-1",
+            "predicates": {
+              "phase": 0
+            },
+            "sequence": 1,
+            "surface": "form"
+          },
+          "returned_ns": 10
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 20
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 30,
+            "evidence_digest": "digest-2",
+            "evidence_ref": "frame-2",
+            "predicates": {
+              "phase": 1
+            },
+            "sequence": 2,
+            "surface": "form"
+          },
+          "returned_ns": 100
+        },
+        {
+          "callback": "execute",
+          "returned_ns": 110
+        },
+        {
+          "callback": "observe",
+          "response": {
+            "captured_ns": 120,
+            "evidence_digest": "digest-3",
+            "evidence_ref": "frame-3",
+            "predicates": {
+              "phase": 2
+            },
+            "sequence": 3,
+            "surface": "form"
+          },
+          "returned_ns": 200
+        }
+      ]
+    },
+    "row_index": 0
+  }
+]

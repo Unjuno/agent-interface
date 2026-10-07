@@ -1,0 +1,72 @@
+test_bad_batch_shape_fails (test_audit_map01_measurement_integration_v1.Tests.test_bad_batch_shape_fails) ... ok
+test_leak_fails (test_audit_map01_measurement_integration_v1.Tests.test_leak_fails) ... ok
+test_malformed_scheduler_fails_closed (test_audit_map01_measurement_integration_v1.Tests.test_malformed_scheduler_fails_closed) ... 
+  test_malformed_scheduler_fails_closed (test_audit_map01_measurement_integration_v1.Tests.test_malformed_scheduler_fails_closed) (scheduler=True) ... ERROR
+  test_malformed_scheduler_fails_closed (test_audit_map01_measurement_integration_v1.Tests.test_malformed_scheduler_fails_closed) (scheduler=[0]) ... ERROR
+  test_malformed_scheduler_fails_closed (test_audit_map01_measurement_integration_v1.Tests.test_malformed_scheduler_fails_closed) (scheduler='unknown') ... ERROR
+test_missed_scorer_period_fails (test_audit_map01_measurement_integration_v1.Tests.test_missed_scorer_period_fails) ... ok
+test_missed_scorer_periods_require_an_integer_count (test_audit_map01_measurement_integration_v1.Tests.test_missed_scorer_periods_require_an_integer_count) ... 
+  test_missed_scorer_periods_require_an_integer_count (test_audit_map01_measurement_integration_v1.Tests.test_missed_scorer_periods_require_an_integer_count) (missed=False) ... FAIL
+  test_missed_scorer_periods_require_an_integer_count (test_audit_map01_measurement_integration_v1.Tests.test_missed_scorer_periods_require_an_integer_count) (missed=0.0) ... FAIL
+test_pass_zero_events (test_audit_map01_measurement_integration_v1.Tests.test_pass_zero_events) ... ok
+test_unverified_transition_fails (test_audit_map01_measurement_integration_v1.Tests.test_unverified_transition_fails) ... ok
+test_current_schema_proxy_trace_is_rejected (test_analyze_map01_direct_retained_input_v1.Tests.test_current_schema_proxy_trace_is_rejected) ... ok
+test_direct_transition_is_measurable (test_analyze_map01_direct_retained_input_v1.Tests.test_direct_transition_is_measurable) ... ok
+test_unverified_release_is_rejected (test_analyze_map01_direct_retained_input_v1.Tests.test_unverified_release_is_rejected) ... ok
+
+======================================================================
+ERROR: test_malformed_scheduler_fails_closed (test_audit_map01_measurement_integration_v1.Tests.test_malformed_scheduler_fails_closed) (scheduler=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-workspace>\outputs\measurement-count-01a0ff2c\before-source\test_audit_map01_measurement_integration_v1.py", line 50, in test_malformed_scheduler_fails_closed
+    result=audit(root,rr)
+           ^^^^^^^^^^^^^^
+  File "<private-workspace>\outputs\measurement-count-01a0ff2c\before-source\audit_map01_measurement_integration_v1.py", line 75, in audit
+    elif (summary.get('scheduler') or {}).get('missed_sample_periods')!=0:fail.append('scorer scheduler missed sample periods')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'bool' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_scheduler_fails_closed (test_audit_map01_measurement_integration_v1.Tests.test_malformed_scheduler_fails_closed) (scheduler=[0])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-workspace>\outputs\measurement-count-01a0ff2c\before-source\test_audit_map01_measurement_integration_v1.py", line 50, in test_malformed_scheduler_fails_closed
+    result=audit(root,rr)
+           ^^^^^^^^^^^^^^
+  File "<private-workspace>\outputs\measurement-count-01a0ff2c\before-source\audit_map01_measurement_integration_v1.py", line 75, in audit
+    elif (summary.get('scheduler') or {}).get('missed_sample_periods')!=0:fail.append('scorer scheduler missed sample periods')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'get'
+
+======================================================================
+ERROR: test_malformed_scheduler_fails_closed (test_audit_map01_measurement_integration_v1.Tests.test_malformed_scheduler_fails_closed) (scheduler='unknown')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-workspace>\outputs\measurement-count-01a0ff2c\before-source\test_audit_map01_measurement_integration_v1.py", line 50, in test_malformed_scheduler_fails_closed
+    result=audit(root,rr)
+           ^^^^^^^^^^^^^^
+  File "<private-workspace>\outputs\measurement-count-01a0ff2c\before-source\audit_map01_measurement_integration_v1.py", line 75, in audit
+    elif (summary.get('scheduler') or {}).get('missed_sample_periods')!=0:fail.append('scorer scheduler missed sample periods')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+======================================================================
+FAIL: test_missed_scorer_periods_require_an_integer_count (test_audit_map01_measurement_integration_v1.Tests.test_missed_scorer_periods_require_an_integer_count) (missed=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-workspace>\outputs\measurement-count-01a0ff2c\before-source\test_audit_map01_measurement_integration_v1.py", line 42, in test_missed_scorer_periods_require_an_integer_count
+    self.assertFalse(result['pass'],result)
+AssertionError: True is not false : {'schema': 'map01-measurement-integration-audit-v3', 'pass': True, 'failures': [], 'controller_scorer_leak_count': 0, 'completed_hold_count': 1, 'interrupted_hold_count': 0, 'direct_retained_input': {'schema': 'map01-direct-retained-input-v1', 'measurement_ready': True, 'hold_count': 2, 'unmatched_admission_count': 0, 'invalid_release_count': 0, 'holds': [{'intent_token': 't', 'key': 'a', 'retained_lower_ms': 8e-06, 'retained_upper_ms': 1.1e-05, 'censor_width_ms': 3e-06, 'source_events': ['input_admission', 'input_release_transition']}, {'intent_token': 't', 'key': 'd', 'retained_lower_ms': 9e-06, 'retained_upper_ms': 1.2e-05, 'censor_width_ms': 3e-06, 'source_events': ['input_admission', 'input_release_transition']}], 'decision': 'PASS: direct bounded release evidence available'}, 'release_transition_count': 2, 'release_batch_window_us': {'min': 0.005, 'median': 0.005, 'max': 0.005}, 'scorer_sample_count': 4, 'scorer_event_count': 0, 'positive_useful_event_count': 0, 'zero_positive_events_allowed': True, 'decision': 'PASS measurement integration'}
+
+======================================================================
+FAIL: test_missed_scorer_periods_require_an_integer_count (test_audit_map01_measurement_integration_v1.Tests.test_missed_scorer_periods_require_an_integer_count) (missed=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-workspace>\outputs\measurement-count-01a0ff2c\before-source\test_audit_map01_measurement_integration_v1.py", line 42, in test_missed_scorer_periods_require_an_integer_count
+    self.assertFalse(result['pass'],result)
+AssertionError: True is not false : {'schema': 'map01-measurement-integration-audit-v3', 'pass': True, 'failures': [], 'controller_scorer_leak_count': 0, 'completed_hold_count': 1, 'interrupted_hold_count': 0, 'direct_retained_input': {'schema': 'map01-direct-retained-input-v1', 'measurement_ready': True, 'hold_count': 2, 'unmatched_admission_count': 0, 'invalid_release_count': 0, 'holds': [{'intent_token': 't', 'key': 'a', 'retained_lower_ms': 8e-06, 'retained_upper_ms': 1.1e-05, 'censor_width_ms': 3e-06, 'source_events': ['input_admission', 'input_release_transition']}, {'intent_token': 't', 'key': 'd', 'retained_lower_ms': 9e-06, 'retained_upper_ms': 1.2e-05, 'censor_width_ms': 3e-06, 'source_events': ['input_admission', 'input_release_transition']}], 'decision': 'PASS: direct bounded release evidence available'}, 'release_transition_count': 2, 'release_batch_window_us': {'min': 0.005, 'median': 0.005, 'max': 0.005}, 'scorer_sample_count': 4, 'scorer_event_count': 0, 'positive_useful_event_count': 0, 'zero_positive_events_allowed': True, 'decision': 'PASS measurement integration'}
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.682s
+
+FAILED (failures=2, errors=3)

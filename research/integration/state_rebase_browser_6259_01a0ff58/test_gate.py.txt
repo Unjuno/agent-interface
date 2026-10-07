@@ -1,0 +1,68 @@
+import copy
+import unittest
+from gate import classify
+
+
+class ContractTests(unittest.TestCase):
+    def setUp(self):
+        self.c = dict(namespace="test", session="test-only", case_id="T",
+                      desired="ready", kind="STATE", protected_sibling="keep",
+                      max_notifications=0, release_required=False)
+        self.p = dict(namespace="test", session="test-only", case_id="T",
+                      target_value="ready", protected_sibling="keep", notifications=0,
+                      release_status="NO_INPUT_OBLIGATION", read_complete=True,
+                      covered_fields=["target_value", "protected_sibling", "notifications", "release_status"])
+
+    def test_complete_extensional_state_accepts_without_origin_claim(self):
+        self.assertEqual(classify(self.c, self.p), dict(task_state="SATISFIED",
+            cause="state_predicate", request_origin="UNKNOWN", next_action="NONE"))
+
+    def test_event_equality_cannot_discharge_request(self):
+        self.c["kind"] = "EVENT"
+        self.assertEqual(classify(self.c, self.p)["task_state"], "NOT_ELIGIBLE")
+
+    def test_forbidden_collateral(self):
+        self.p["notifications"] = 1
+        self.assertEqual(classify(self.c, self.p)["task_state"], "NOT_SATISFIED")
+
+    def test_protected_sibling(self):
+        self.p["protected_sibling"] = "clobbered"
+        self.assertEqual(classify(self.c, self.p)["task_state"], "NOT_SATISFIED")
+
+    def test_binding_and_each_required_field(self):
+        for k in ("namespace", "session", "case_id"):
+            p = dict(self.p, **{k: "other"})
+            self.assertEqual(classify(self.c, p)["cause"], "binding")
+        for k in self.p["covered_fields"]:
+            p = copy.deepcopy(self.p)
+            p.pop(k)
+            self.assertEqual(classify(self.c, p)["task_state"], "UNKNOWN")
+
+    def test_incomplete_and_duplicate_coverage(self):
+        self.assertEqual(classify(self.c, dict(self.p, read_complete=False))["cause"], "coverage")
+        self.p["covered_fields"].append("notifications")
+        self.assertEqual(classify(self.c, self.p)["cause"], "coverage")
+
+    def test_bool_is_not_integer_count(self):
+        self.p["notifications"] = False
+        self.assertEqual(classify(self.c, self.p)["cause"], "typed_state")
+
+    def test_untyped_coverage_is_unknown(self):
+        self.p["covered_fields"] = [["notifications"]]
+        self.assertEqual(classify(self.c, self.p)["task_state"], "UNKNOWN")
+
+    def test_release_obligation(self):
+        self.c["release_required"] = True
+        self.p["release_status"] = "UNVERIFIED"
+        self.assertEqual(classify(self.c, self.p)["cause"], "release_unverified")
+
+    def test_contract_is_unchanged_and_no_private_truth_needed(self):
+        before = copy.deepcopy((self.c, self.p))
+        classify(self.c, self.p)
+        self.assertEqual((self.c, self.p), before)
+        with self.assertRaises(ValueError):
+            classify(dict(self.c, max_notifications=False), self.p)
+
+
+if __name__ == "__main__":
+    unittest.main()

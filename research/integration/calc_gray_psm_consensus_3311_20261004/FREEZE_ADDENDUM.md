@@ -1,0 +1,5 @@
+# Freeze clarification after first candidate result
+
+The pre-run `FREEZE.md` used “numeric cells” ambiguously in its D line. The G20 oracle schema is eleven frame rows, each with three cells: five numeric frames contain fifteen numeric cells, and six blank frames contain eighteen blank cells. The intended gate remains exact unanimous output for every numeric cell and abstention for every blank cell, with no tolerance or threshold change. This addendum clarifies counting only; it does not change the candidate, corpus, or decision rule.
+
+The first saved-data audit (`AUDIT.json`) failed because it incorrectly required PNG byte hashes generated in five separate ImageMagick invocations to match. PNG metadata can vary even when the frozen preprocessing argv and pixels are intended to match. Its failure is preserved. `audit_v2.py` removes that unsupported byte-identity requirement while continuing to check the fixed argv and each crop hash's syntax; it writes a separate `AUDIT_V2.json` and does not overwrite the first audit or rerun candidate OCR.

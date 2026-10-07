@@ -1,0 +1,86 @@
+[
+  {
+    "phase": "healthy",
+    "root": "<OWN_WORKSPACE>/work/current-primary-successor/check-first/cases/healthy",
+    "hookCalls": 1,
+    "errorObserved": false,
+    "statuses": [
+      "ready",
+      "terminal"
+    ],
+    "rows": [
+      {
+        "schema": "agent-interface/primary-stdio-v1",
+        "status": "ready",
+        "state": {
+          "next_id": 1,
+          "busy": false,
+          "stopped": null,
+          "caller_state": {
+            "stopped": null
+          }
+        }
+      },
+      {
+        "schema": "agent-interface/primary-stdio-v1",
+        "status": "terminal",
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "state": {
+          "next_id": 1,
+          "busy": false,
+          "stopped": null,
+          "caller_state": {
+            "stopped": null
+          }
+        }
+      }
+    ],
+    "hostExit": {
+      "code": 0,
+      "signal": null
+    },
+    "fixtureStart": {
+      "pid": 54178,
+      "ppid": 54176
+    },
+    "fixtureExit": {
+      "pid": 54178,
+      "code": 0,
+      "bytes": 0
+    },
+    "childAbsent": true,
+    "listeners": {
+      "input": 0,
+      "output": 0
+    }
+  },
+  {
+    "phase": "fault",
+    "root": "<OWN_WORKSPACE>/work/current-primary-successor/check-first/cases/fault",
+    "hookCalls": 1,
+    "errorObserved": true,
+    "statuses": [],
+    "rows": [],
+    "hostExit": {
+      "code": 0,
+      "signal": null
+    },
+    "fixtureStart": {
+      "pid": 54180,
+      "ppid": 54179
+    },
+    "fixtureExit": {
+      "pid": 54180,
+      "code": 0,
+      "bytes": 0
+    },
+    "childAbsent": true,
+    "listeners": {
+      "input": 0,
+      "output": 0
+    }
+  }
+]

@@ -1,0 +1,68 @@
+✖ reply reader failure before a request blocks delivery without consuming an ID (63.32ms)
+✖ reply reader failure rejects the same outstanding promise and forbids replay (87.9457ms)
+✖ reply reader failure preserves an already settled result and blocks future delivery (86.489ms)
+✔ reply reader retains fragmented multilingual responses and normal EOF (92.3859ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 379.5076
+
+✖ failing tests:
+
+test at test_relay_client.mjs:199:1
+✖ reply reader failure before a request blocks delivery without consuming an ID (63.32ms)
+  AssertionError [ERR_ASSERTION]: {"error":"undefined","signal":null,"stdout":"{\"stage\":\"created\",\"child_pid\":5816,\"scenario\":\"idle\"}\n","stderr":"node:events:487\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: injected relay reply read fault\r\n    at fault (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/[eval1]:33:42)\r\n    at file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/[eval1]:38:3\r\nEmitted 'error' event on Interface instance at:\r\n    at Socket.onerror (node:internal/readline/interface:259:10)\r\n    at Socket.emit (node:events:521:24)\r\n    at emitErrorNT (node:internal/streams/destroy:170:8)\r\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\n\r\nNode.js v24.19.0\r\n"}
+  
+  1 !== 0
+  
+      at runReplyReaderCase (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/test_relay_client.mjs:190:10)
+      at async TestContext.<anonymous> (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/test_relay_client.mjs:200:15)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test_relay_client.mjs:208:1
+✖ reply reader failure rejects the same outstanding promise and forbids replay (87.9457ms)
+  AssertionError [ERR_ASSERTION]: {"error":"undefined","signal":null,"stdout":"{\"stage\":\"created\",\"child_pid\":6508,\"scenario\":\"pending\"}\n{\"stage\":\"committed\",\"scenario\":\"pending\",\"state\":{\"nextId\":1,\"attempts\":1,\"pending\":true,\"blocked\":null,\"terminal\":null,\"closing\":false}}\n","stderr":"node:events:487\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: injected relay reply read fault\r\n    at fault (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/[eval1]:33:42)\r\n    at file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/[eval1]:52:5\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\r\nEmitted 'error' event on Interface instance at:\r\n    at Socket.onerror (node:internal/readline/interface:259:10)\r\n    at Socket.emit (node:events:509:28)\r\n    at emitErrorNT (node:internal/streams/destroy:170:8)\r\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\n\r\nNode.js v24.19.0\r\n"}
+  
+  1 !== 0
+  
+      at runReplyReaderCase (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/test_relay_client.mjs:190:10)
+      at async TestContext.<anonymous> (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/test_relay_client.mjs:209:15)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test_relay_client.mjs:219:1
+✖ reply reader failure preserves an already settled result and blocks future delivery (86.489ms)
+  AssertionError [ERR_ASSERTION]: {"error":"undefined","signal":null,"stdout":"{\"stage\":\"created\",\"child_pid\":31000,\"scenario\":\"settled\"}\n{\"stage\":\"committed\",\"scenario\":\"settled\",\"state\":{\"nextId\":1,\"attempts\":1,\"pending\":true,\"blocked\":null,\"terminal\":null,\"closing\":false}}\n","stderr":"node:events:487\r\n      throw er; // Unhandled 'error' event\r\n      ^\r\n\r\nError: injected relay reply read fault\r\n    at fault (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/[eval1]:33:42)\r\n    at file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/[eval1]:59:7\r\nEmitted 'error' event on Interface instance at:\r\n    at Socket.onerror (node:internal/readline/interface:259:10)\r\n    at Socket.emit (node:events:521:24)\r\n    at emitErrorNT (node:internal/streams/destroy:170:8)\r\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\r\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\r\n\r\nNode.js v24.19.0\r\n"}
+  
+  1 !== 0
+  
+      at runReplyReaderCase (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/test_relay_client.mjs:190:10)
+      at async TestContext.<anonymous> (file:///<USER_HOME>/Documents/Codex/2026-10-03/new-chat-6/work/relay-output-read-error/test_relay_client.mjs:220:15)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

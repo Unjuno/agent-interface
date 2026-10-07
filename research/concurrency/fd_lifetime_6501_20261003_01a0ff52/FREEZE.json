@@ -1,0 +1,38 @@
+{
+  "allocation": "6501-FD-LIFETIME-ORBSTACK-A01-20261003-01a0ff52-70ab",
+  "policy": "FINAL-v5",
+  "prepared_utc": "2026-10-03T05:33:35.327626+00:00",
+  "main_source_base": "9c26e204c0475bee30919e3d0e6681f393078ef1",
+  "prefreeze_observed_main": "7ff81c3e05dd04116dc402fe43ea22709c7e003e",
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "guest": "research-6501-async-01a0ff52-70ab",
+  "source_sha256": {
+    "PLAN.md": "eb3c1d90882ca1865a18420608be2a34876f65d06256478ccdb020d5e884a5c7",
+    "audit.py": "3df33b23d140e238fe081772a418a577937eae81d1b58fbd7bdb73bf189f09ce",
+    "candidate.py": "fd6a56fbbc091f1112108314418abe20d1f267fc93e1efd42d664485f542d8a8",
+    "conftest.py": "30287b676ba5a8c049165b58d0d0367d4f2b20bdf84ffe6a859fb591173aea5e",
+    "construction/INTAKE.json": "5f49a66fecaad24bf2a0b812fc9cbbdb4c01fc12337a18540f4bbaf57259896c",
+    "construction/PROVENANCE.json": "2fd203310c206818a1b15aa1f3432b74759591e9f303ef3d233dd83e8786cbc3",
+    "construction/local-tests.public.receipt.json": "e2ba70f86b7c8c25ebb559aed26d9910c5090497744f927e3af681a732449768",
+    "construction/local-tests.stderr": "4bcf777e0a310dea3e455c6cdf24fd176ff14628a827e71297cdc5544ca5dab7",
+    "construction/local-tests.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/preflight.receipt.json": "b1723324820a7b0e701f004dc348c3de15887c0663a971c61c467b4256b2cc4a",
+    "construction/preflight.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "construction/preflight.stdout": "3b8fa7b326b6d8e24bf51e2bb8fc9d7288f62f4ba57ef709db8965e50c4b2f07",
+    "driver.py": "41898d40858d7559bb1755e9b5b3b521e2b7a66323d6f7797ea44ab8d277d3c3",
+    "environment.json": "f218f239bba8c1f31ff077d5adb0b4cfc9b8f77154e215f106c3a2d544db3d08",
+    "input.json": "aff2e74652bca0cfe691aaad00dbde9855fca7612d2344f29086f8cebc153458",
+    "launch_once.py": "19ed55a4573911afb78d847a8501a757e60e9780565c6710337896e4479d31a9",
+    "negative_controls.py": "257ff494fa7cf4d8f25f73b13cd9047778863a16d845bd3da92e69a215cc1888",
+    "ownership.py": "824e34b75cc7df7ccb25f82ba50e174df3d4a8fbe7e7d8ed78ad0c4bf43a0cba",
+    "preflight_environment.py": "7535aeec9833f886c03f4b3e79779e1c173356b103df8875b3f66e5b4f9794a6",
+    "test_construction.py": "d7b7291bf60db67aabc88e1ffbd6311087ffcfed421d357866f43309ec408a67"
+  },
+  "formal_counts": {
+    "candidate_cap": 1,
+    "auditor_cap": 1,
+    "retries": 0
+  },
+  "scope": "6 directed actual Linux pipe FD-lifetime rows; new formal allocation, no previous replay or runtime adoption",
+  "decision": "fixed PLAN/input typed ledger plus two integer hazard failures/zero once-owner failures/two normal positives/all native joins and closed FDs/8 effective copied controls"
+}

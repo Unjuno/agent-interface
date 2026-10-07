@@ -1,0 +1,69 @@
+test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) ... 
+  test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_int_server_sent') ... FAIL
+  test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_int_client_received') ... FAIL
+  test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_int_client_received_server_sent') ... FAIL
+  test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_float_server_sent') ... FAIL
+  test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_float_client_received') ... FAIL
+  test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_float_client_received_server_sent') ... FAIL
+test_original_eight_corruptions_still_reject_for_their_reason (test_audit_v2.WireBindingTests.test_original_eight_corruptions_still_reject_for_their_reason) ... ok
+test_original_numeric_alias_acceptances_are_preserved (test_audit_v2.WireBindingTests.test_original_numeric_alias_acceptances_are_preserved) ... ok
+test_unchanged_retained_counts (test_audit_v2.WireBindingTests.test_unchanged_retained_counts) ... ok
+
+======================================================================
+FAIL: test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_int_server_sent')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<POSTHOC>/test_audit_v2.py", line 33, in test_added_six_wire_type_aliases_are_rejected
+    with self.assertRaisesRegex(ValueError, reason):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_int_client_received')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<POSTHOC>/test_audit_v2.py", line 33, in test_added_six_wire_type_aliases_are_rejected
+    with self.assertRaisesRegex(ValueError, reason):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_int_client_received_server_sent')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<POSTHOC>/test_audit_v2.py", line 33, in test_added_six_wire_type_aliases_are_rejected
+    with self.assertRaisesRegex(ValueError, reason):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_float_server_sent')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<POSTHOC>/test_audit_v2.py", line 33, in test_added_six_wire_type_aliases_are_rejected
+    with self.assertRaisesRegex(ValueError, reason):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_float_client_received')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<POSTHOC>/test_audit_v2.py", line 33, in test_added_six_wire_type_aliases_are_rejected
+    with self.assertRaisesRegex(ValueError, reason):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_added_six_wire_type_aliases_are_rejected (test_audit_v2.WireBindingTests.test_added_six_wire_type_aliases_are_rejected) (control='wire_answer_float_client_received_server_sent')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<POSTHOC>/test_audit_v2.py", line 33, in test_added_six_wire_type_aliases_are_rejected
+    with self.assertRaisesRegex(ValueError, reason):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.062s
+
+FAILED (failures=6)

@@ -1,0 +1,31 @@
+name: Issue 5260 A11 retained private GUI drift evidence
+on:
+  pull_request:
+    paths:
+      - 'research/integration/tk_focus_drift_5260_a11_wslc_20261004/**'
+      - '.github/workflows/tk-drift-5260-a11-retained.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/integration/tk_focus_drift_5260_a11_wslc_20261004/**'
+      - '.github/workflows/tk-drift-5260-a11-retained.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  retained-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            research/integration/tk_focus_drift_5260_a11_wslc_20261004
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source and retention tests
+        working-directory: research/integration/tk_focus_drift_5260_a11_wslc_20261004
+        run: python -B -m unittest discover -s . -p 'test_*.py' -q
+      - name: Read-only first outcome verification
+        run: python -B research/integration/tk_focus_drift_5260_a11_wslc_20261004/verify_packet.py

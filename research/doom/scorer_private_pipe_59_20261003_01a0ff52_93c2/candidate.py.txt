@@ -1,0 +1,165 @@
+"""One fixed private-pipe observation; sources are loaded from exact archived bytes."""
+import dataclasses
+import hashlib
+import importlib.machinery
+import importlib.util
+import json
+import os
+from pathlib import Path
+import select
+import sys
+import threading
+import time
+
+ROOT = Path(__file__).resolve().parent
+MESSAGE = b'{"op":"finish"}\n'
+LIMIT = 4
+
+class DiagnosticLimit(RuntimeError):
+    pass
+
+def load(name, path):
+    loader = importlib.machinery.SourceFileLoader(name, str(path))
+    spec = importlib.util.spec_from_loader(name, loader)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    loader.exec_module(module)
+    return module
+
+def sources(variant):
+    directory = ROOT / 'sources' / variant
+    load('independent_progress_clock_v2', directory / 'independent_progress_clock_v2.py.txt')
+    polling = load('main_thread_scorer_polling_v1', directory / 'main_thread_scorer_polling_v1.py.txt')
+    stdin = load('map01_scorer_stdio_adapter_v1', directory / 'map01_scorer_stdio_adapter_v1.py.txt')
+    return polling.MainThreadScorerPolling, stdin.MainThreadScorerStdin
+
+class Stream:
+    def __init__(self, fd):
+        self.fd = fd
+    def fileno(self):
+        return self.fd
+
+def observe(case, allocation):
+    events = []
+    owner = threading.get_ident()
+    count = 0
+    commands = []
+    receipts = []
+    rfd, wfd = os.pipe()
+    def event(kind, **data):
+        row = {'kind': kind, 'ns': time.perf_counter_ns(), 'owner': threading.get_ident() == owner, **data}
+        events.append(row)
+        return row['ns']
+    def clock():
+        return event('clock')
+    def wait(fd, timeout):
+        event('wait_enter', timeout=timeout)
+        ready = bool(select.select([fd], [], [], timeout)[0])
+        event('wait_exit', ready=ready)
+        return ready
+    def read(fd, size):
+        event('read_enter', size=size)
+        chunk = os.read(fd, size)
+        event('read_exit', hex=chunk.hex())
+        return chunk
+    def sample():
+        nonlocal count
+        event('sample_enter', ordinal=count + 1)
+        if count == LIMIT:
+            event('sample_budget', completed=count)
+            raise DiagnosticLimit('four completed samples without command service')
+        if case['condition'] == 'sample_sleep':
+            time.sleep(0.040)
+        count += 1
+        payload = {'private_scorer': 17, 'ordinal': count}
+        event('sample_exit', payload=payload)
+        return payload
+    def sink(receipt):
+        event('sink_enter', receipt=receipt)
+        if case['condition'] == 'sink_sleep':
+            time.sleep(0.040)
+        receipts.append(receipt)
+        event('sink_exit')
+    def command(line):
+        event('command_enter', line=line)
+        commands.append(line)
+        event('command_exit')
+        return False
+    stats = None
+    outcome = None
+    modules = sources(case['variant']) if case['variant'] != 'read_first' else None
+    try:
+        event('write_enter', hex=MESSAGE.hex())
+        written = os.write(wfd, MESSAGE)
+        event('write_exit', bytes=written)
+        event('precheck_enter')
+        ready = bool(select.select([rfd], [], [], 0)[0])
+        event('precheck_exit', ready=ready)
+        if not ready or written != len(MESSAGE):
+            raise RuntimeError('private pipe readiness precondition failed')
+        event('run_enter')
+        if case['variant'] == 'read_first':
+            if not wait(rfd, 0):
+                raise RuntimeError('read-first precondition changed')
+            command(read(rfd, 65536).decode('utf-8', errors='strict').removesuffix('\n'))
+            stats = {'samples': 0, 'commands': len(commands), 'owner': threading.get_ident() == owner}
+            outcome = 'SERVED'
+        else:
+            Polling, Stdin = modules
+            loop = Polling(sample_hz=50, clock_ns=clock, wait_readable=wait, read_fn=read)
+            if case['adapter'] == 'polling':
+                actual = loop.run(rfd, sample_fn=sample, scorer_sink=sink, command_handler=command, max_samples=LIMIT)
+                stats = dataclasses.asdict(actual)
+                stats['owner'] = stats.pop('owner_thread_id') == owner
+                outcome = 'SERVED' if actual.stopped_by_command else 'CENSORED_CAP'
+            else:
+                adapter = Stdin(Stream(rfd), sample, sink, loop=loop)
+                try:
+                    command(next(adapter))
+                    outcome = 'SERVED'
+                except DiagnosticLimit:
+                    outcome = 'CENSORED_DIAGNOSTIC'
+                stats = adapter.stats()
+                stats['owner'] = stats.pop('owner_thread_id') == owner
+        event('run_exit', outcome=outcome)
+        event('postcheck_enter')
+        leftover = bool(select.select([rfd], [], [], 0)[0])
+        event('postcheck_exit', ready=leftover)
+        unread = read(rfd, 65536) if leftover else b''
+    finally:
+        os.close(rfd)
+        os.close(wfd)
+        event('private_pipe_closed')
+    return {**case, 'allocation_id': allocation, 'period_ns': 20_000_000, 'load_ns': 40_000_000,
+            'sample_limit': LIMIT, 'events': events, 'commands': commands, 'receipts': receipts,
+            'stats': stats, 'outcome': outcome, 'unread_hex': unread.hex()}
+
+def main():
+    mode, output = sys.argv[1:]
+    protocol = json.loads((ROOT / 'PROTOCOL.json').read_text())
+    if mode == 'formal':
+        freeze = json.loads((ROOT / 'FREEZE.json').read_text())
+        for item in freeze['inputs']:
+            if hashlib.sha256((ROOT / item['path']).read_bytes()).hexdigest() != item['sha256']:
+                raise ValueError('frozen input mismatch')
+        cases = protocol['cases']
+        allocation = protocol['allocation_id']
+    elif mode == 'construction':
+        cases = [protocol['cases'][0], next(c for c in protocol['cases'] if c['variant']=='v2' and c['adapter']=='stdin' and c['condition']=='sample_sleep')]
+        allocation = 'construction-2-distinct-not-formal'
+    else:
+        raise ValueError('unknown mode')
+    start = time.perf_counter_ns()
+    with Path(output).open('x', encoding='utf-8', newline='\n') as f:
+        for case in cases:
+            if time.perf_counter_ns() - start > 15_000_000_000:
+                raise RuntimeError('finite global budget before next row')
+            row = observe(case, allocation)
+            f.write(json.dumps(row, sort_keys=True, separators=(',', ':')) + '\n')
+            f.flush()
+            if f.tell() > 5_000_000:
+                raise RuntimeError('finite raw output budget')
+    print(json.dumps({'mode': mode, 'rows': len(cases), 'allocation_id': allocation}))
+
+if __name__ == '__main__':
+    main()

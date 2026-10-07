@@ -1,0 +1,462 @@
+{
+  "started_utc": "2026-10-03T03:23:36.460082+00:00",
+  "ended_utc": "2026-10-03T03:23:36.470497+00:00",
+  "source_sha256": "cc2ad31f32c251000ee96804ac18404efc9325c93562f3497cc9e0746b62b3be",
+  "initial_sha256": "34d77899877d08dc840228e308862a13ddce1da5233b0486518f72dd287efe24",
+  "repair_sha256": "f008994d45d0dd14dfaec1565d6ec24228057ec529e678d624e352ae2b32735c",
+  "ui_trace_sha256": "f3bc3647fa328b04c8662fe319ed19e4156dcd31443a2a0053d0c3f42bbdeb6a",
+  "raw_matches": [
+    {
+      "trial_id": "C001",
+      "phase": "initial",
+      "truth": "CONFIRMED"
+    },
+    {
+      "trial_id": "C002",
+      "phase": "initial",
+      "truth": "UNKNOWN"
+    },
+    {
+      "trial_id": "C003",
+      "phase": "initial",
+      "truth": "UNKNOWN"
+    },
+    {
+      "trial_id": "C004",
+      "phase": "initial",
+      "truth": "UNKNOWN"
+    },
+    {
+      "trial_id": "C005",
+      "phase": "initial",
+      "truth": "CONFIRMED"
+    },
+    {
+      "trial_id": "C006",
+      "phase": "initial",
+      "truth": "UNKNOWN"
+    },
+    {
+      "trial_id": "C007",
+      "phase": "initial",
+      "truth": "UNKNOWN"
+    },
+    {
+      "trial_id": "C008",
+      "phase": "initial",
+      "truth": "UNKNOWN"
+    },
+    {
+      "trial_id": "C002",
+      "phase": "repair",
+      "truth": "CONFIRMED"
+    },
+    {
+      "trial_id": "C003",
+      "phase": "repair",
+      "truth": "CONFIRMED"
+    },
+    {
+      "trial_id": "C004",
+      "phase": "repair",
+      "truth": "CONFIRMED"
+    },
+    {
+      "trial_id": "C006",
+      "phase": "repair",
+      "truth": "CONFIRMED"
+    },
+    {
+      "trial_id": "C007",
+      "phase": "repair",
+      "truth": "CONFIRMED"
+    },
+    {
+      "trial_id": "C008",
+      "phase": "repair",
+      "truth": "CONFIRMED"
+    }
+  ],
+  "copied_raw_mutations": [
+    {
+      "name": "actual_target",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "requested_target": "A",
+          "actual_target": "B",
+          "applied_pre": 0,
+          "applied_post": 1,
+          "written": 1,
+          "text": "alpha-5442",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "intent_target",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "B",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "requested_target": "A",
+          "actual_target": "A",
+          "applied_pre": 0,
+          "applied_post": 1,
+          "written": 1,
+          "text": "alpha-5442",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "preversion",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "requested_target": "A",
+          "actual_target": "A",
+          "applied_pre": 1,
+          "applied_post": 1,
+          "written": 1,
+          "text": "alpha-5442",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "post_bool_alias",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "requested_target": "A",
+          "actual_target": "A",
+          "applied_pre": 0,
+          "applied_post": true,
+          "written": 1,
+          "text": "alpha-5442",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "saved_value",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "requested_target": "A",
+          "actual_target": "A",
+          "applied_pre": 0,
+          "applied_post": 1,
+          "written": 1,
+          "text": "alpha-5442",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "other"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "missing_event",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": null,
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "collateral_B",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "requested_target": "A",
+          "actual_target": "A",
+          "applied_pre": 0,
+          "applied_post": 1,
+          "written": 1,
+          "text": "alpha-5442",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 1,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "event_text",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "requested_target": "A",
+          "actual_target": "A",
+          "applied_pre": 0,
+          "applied_post": 1,
+          "written": 1,
+          "text": "other",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "nonce",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "owned-endpoint-5442-01a0ff58",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "other",
+          "requested_target": "A",
+          "actual_target": "A",
+          "applied_pre": 0,
+          "applied_post": 1,
+          "written": 1,
+          "text": "alpha-5442",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    },
+    {
+      "name": "namespace",
+      "decision": "UNKNOWN",
+      "copied_row": {
+        "trial_id": "C001",
+        "phase": "initial",
+        "intent": {
+          "namespace": "other",
+          "target": "A",
+          "desired_text": "alpha-5442",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "expected_pre_version": 0
+        },
+        "event": {
+          "room": "C001",
+          "phase": "initial",
+          "nonce": "5442-01a0ff58-C001:initial",
+          "requested_target": "A",
+          "actual_target": "A",
+          "applied_pre": 0,
+          "applied_post": 1,
+          "written": 1,
+          "text": "alpha-5442",
+          "observed_ns": 10776124557400
+        },
+        "state": {
+          "A": {
+            "version": 1,
+            "value": "alpha-5442"
+          },
+          "B": {
+            "version": 0,
+            "value": ""
+          }
+        },
+        "dispatch_status": "accepted",
+        "semantic_status": "CONFIRMED"
+      }
+    }
+  ],
+  "result": "PASS_APPLICATION_ENDPOINT_SCOPED"
+}

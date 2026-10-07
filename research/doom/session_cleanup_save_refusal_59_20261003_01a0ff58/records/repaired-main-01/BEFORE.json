@@ -1,0 +1,18 @@
+{
+  "kind": "ordinary construction/regression, no formal allocation",
+  "utc": "2026-10-03T05:29:31.500396+00:00",
+  "phase": "repaired-main-01",
+  "cases": [
+    "normal",
+    "owner-file-refusal"
+  ],
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "helper_sha256": "6b6d161f302bf73f03108c4b4f4875eb99c1a3c795a88916a94576d27d65c632",
+  "session_source_sha256": "1a7de3da4d5d305d0d7dfbb40ddcd839d66bdd70505e020ef03fba53e0beb304",
+  "predicates": {
+    "normal": "no main error; game/session/backend close1; child0 at main return; tmp removed",
+    "original_fault": "OSError at owner file; backend close1; game/session close0; child live at main return; outer EOF child0",
+    "repaired_fault": "same OSError preserved; backend/game/session close1; child0 at main return; tmp removed"
+  },
+  "limits": "one private inert child at a time; child self cap12s; subprocess capture deadline18s; no GUI/input"
+}

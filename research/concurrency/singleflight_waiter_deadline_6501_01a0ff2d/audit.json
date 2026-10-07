@@ -1,0 +1,86 @@
+{
+  "corruption_controls": [
+    {
+      "control": "omit_row",
+      "errors": [
+        "denominator"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "scalar_type",
+      "errors": [
+        "decision_event:direct/fresh/0",
+        "outcome:direct/fresh/0"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "unsafe_guard",
+      "errors": [
+        "decision_event:shield_deadline/decision_delay/0",
+        "outcome:shield_deadline/decision_delay/0"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "fabricate_fresh",
+      "errors": [
+        "decision_event:direct/timeout/1",
+        "late_clock_not_eligible:direct/timeout/1"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "omit_cancel",
+      "errors": [
+        "event_shape:direct/timeout/0"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "cleanup",
+      "errors": [
+        "cleanup:direct/fresh/0"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "source",
+      "errors": [
+        "source_identity"
+      ],
+      "rejected": true
+    },
+    {
+      "control": "authority",
+      "errors": [
+        "authority"
+      ],
+      "rejected": true
+    }
+  ],
+  "errors": [],
+  "independent_implementation_same_author": true,
+  "raw_sha256": "52501217edc60fbe8ba8e55872f567aa45d18a09f212a0406274aff197d80f12",
+  "rows": 30,
+  "status": "PASS_WAITER_DEADLINE_CONSTRUCTION_SCOPED",
+  "summary": {
+    "direct": {
+      "companion_cancelled": 2,
+      "late_admissions": 4,
+      "rows": 10
+    },
+    "shield": {
+      "companion_cancelled": 0,
+      "late_admissions": 2,
+      "rows": 10
+    },
+    "shield_deadline": {
+      "companion_cancelled": 0,
+      "late_admissions": 0,
+      "rows": 10
+    }
+  },
+  "waiter_outcomes": 60
+}

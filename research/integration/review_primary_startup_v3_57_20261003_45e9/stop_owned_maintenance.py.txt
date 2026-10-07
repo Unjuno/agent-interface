@@ -1,0 +1,32 @@
+"""Terminate only the exact own auto-maintenance pack child; preserve observations and primary index."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json
+import psutil
+root=Path(__file__).resolve().parent;repo=(root.parent/'agent-interface').resolve()
+p=psutil.Process(28884)
+chain=[p,psutil.Process(3068),psutil.Process(32156),psutil.Process(38480)]
+expected=[['pack-objects','--local','--delta-base-offset'],['repack','-d','-l'],['maintenance','run','--auto'],['-c','fetch.negotiationAlgorithm=noop','fetch']]
+records=[]
+for process,args in zip(chain,expected):
+ cmd=process.cmdline()
+ assert Path(process.cwd()).resolve()==repo
+ assert all(x in cmd for x in args),(process.pid,cmd)
+ created=datetime.fromtimestamp(process.create_time(),timezone.utc)
+ assert datetime(2026,10,3,8,51,0,tzinfo=timezone.utc)<=created<=datetime(2026,10,3,8,51,5,tzinfo=timezone.utc)
+ records.append({'pid':process.pid,'ppid':process.ppid(),'cwd':str(repo),'argv':cmd,'created_utc':created.isoformat(),'cpu':list(process.cpu_times()[:2]),'io':list(process.io_counters()[:4])})
+assert p.ppid()==3068 and chain[1].ppid()==32156 and chain[2].ppid()==38480
+assert any('.tmp-3068-pack' in x for x in p.cmdline())
+before=hashlib.sha256((repo/'.git/index').read_bytes()).hexdigest()
+receipt={'verified_utc':datetime.now(timezone.utc).isoformat(),'target_pid':p.pid,'verified_owned_creation_chain':records,
+ 'reason':'Own bounded metadata fetch launched automatic maintenance/repack;the timeout killed its first launcher but orphan child kept stdout/stderr handles open. Not a formal/native producer.',
+ 'operation':'terminate exact pack-objects child only','pre_primary_index_sha256':before}
+(root/'AUTO_MAINTENANCE_STOP_INTENT.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n')
+p.terminate()
+receipt['actual_child_terminal_code']=p.wait(timeout=15)
+receipt['ended_utc']=datetime.now(timezone.utc).isoformat()
+receipt['post_primary_index_sha256']=hashlib.sha256((repo/'.git/index').read_bytes()).hexdigest()
+assert receipt['post_primary_index_sha256']==before
+(root/'AUTO_MAINTENANCE_STOP_RESULT.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n')
+print(json.dumps({'target_pid':p.pid,'terminal_code':receipt['actual_child_terminal_code'],'primary_index_unchanged':True}))
+

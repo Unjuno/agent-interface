@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { evaluate } from './candidate.mjs';
+import { corruptionControls, validate } from './audit.mjs';
+
+const spec = JSON.parse(fs.readFileSync(new URL('./spec.json', import.meta.url)));
+const result = evaluate(spec);
+assert.equal(result.rows.length, 16);
+assert.equal(result.summaries.length, 3);
+const shared = result.summaries.find(row => row.scenario === 'shared_pad');
+const fresh = result.summaries.find(row => row.scenario === 'fresh_independent_pad');
+const constant = result.summaries.find(row => row.scenario === 'constant_output');
+assert.equal(shared.marginal_only_decision, 'ACCEPT_ZERO_DISCLOSURE');
+assert.equal(shared.conditional_kernel_decision, 'REJECT_CONDITIONAL_DISCLOSURE');
+assert.deepEqual(shared.conditional_kernel_b_given_a_and_secret['0']['0'], { '0': '1/1' });
+assert.deepEqual(shared.conditional_kernel_b_given_a_and_secret['0']['1'], { '1': '1/1' });
+assert.equal(fresh.conditional_kernel_decision, 'ACCEPT_ZERO_DISCLOSURE');
+assert.deepEqual(fresh.conditional_kernel_b_given_a_and_secret['0']['0'], { '0': '1/2', '1': '1/2' });
+assert.deepEqual(fresh.conditional_kernel_b_given_a_and_secret['0']['1'], { '0': '1/2', '1': '1/2' });
+assert.equal(constant.conditional_kernel_decision, 'ACCEPT_ZERO_DISCLOSURE');
+assert.deepEqual(constant.conditional_kernel_b_given_a_and_secret['1']['0'], { '0': '1/1' });
+const records = [{ type: 'candidate_meta', allocation_id: spec.allocation_id, row_count: result.rows.length, summary_count: result.summaries.length }, ...result.rows, ...result.summaries];
+assert.deepEqual(validate(records, spec), []);
+const mutations = corruptionControls(records, spec);
+assert.equal(mutations.length, 4);
+assert.ok(mutations.every(item => item.rejected), JSON.stringify(mutations));
+process.stdout.write(`construction_test=PASS rows=16 scenarios=3 audit_errors=0 mutations=${mutations.length}/4 node=${process.version}\n`);

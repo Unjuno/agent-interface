@@ -1,0 +1,57 @@
+import subprocess, pathlib, hashlib, json, datetime, sys
+ROOT=pathlib.Path(__file__).resolve().parents[2]
+OUT=pathlib.Path(__file__).resolve().parent
+REPO=ROOT/'work/effect-boundary'
+WORK=ROOT/'work/primary-startup-utf8-union-01a0ff32'
+BASE='6d7ce9693caae8c123fda532da64888f6006dcb9'
+V3='fdef9c7243e80cfe02bb2659606d317d2142a9a3'
+UTF8='ba95f01edc122c1d4c3f8e368534222578570bfa'
+def git(*args,allowed=(0,)):
+    began=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    p=subprocess.Popen(['git','-C',str(REPO),*args],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    so,se=p.communicate(timeout=60)
+    ended=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    n=len(records); (OUT/'git-records').mkdir(exist_ok=True)
+    (OUT/'git-records'/f'{n:03}.stdout').write_bytes(so)
+    (OUT/'git-records'/f'{n:03}.stderr').write_bytes(se)
+    records.append({'argv':['git','-C',str(REPO),*args],'pid':p.pid,'start':began,'end':ended,'exit':p.returncode,'stdout_bytes':len(so),'stdout_sha256':hashlib.sha256(so).hexdigest(),'stderr_bytes':len(se),'stderr_sha256':hashlib.sha256(se).hexdigest()})
+    (OUT/'git-receipts.json').write_text(json.dumps(records,indent=2)+'\n',encoding='utf8')
+    if p.returncode not in allowed: raise RuntimeError(f'git exit{p.returncode}: {se.decode("utf8",errors="replace")}')
+    return so
+records=[]
+if WORK.exists(): raise RuntimeError('exclusive new work path occupied')
+git('worktree','add','--no-checkout','-b','research/primary-startup-utf8-union-01a0ff32',str(WORK),BASE)
+paths=git('ls-tree','-r','--name-only',BASE,'--','runtime/host_v1').decode().splitlines()
+images=[]
+def blob(rev,path): return git('show',rev+':'+path)
+def write(path,data,rev):
+    dest=WORK/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(data)
+    images.append({'path':path,'source':rev,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+for path in paths: write(path,blob(BASE,path),BASE)
+stdio='runtime/host_v1/primary_stdio.mjs'
+original=blob(BASE,stdio);v3=blob(V3,stdio);utf8=blob(UTF8,stdio)
+for name,data in [('base.mjs.txt',original),('v3.mjs.txt',v3),('utf8.mjs.txt',utf8)]: (OUT/name).write_bytes(data)
+# Explicit source union: retain all fatal-byte source, add the exact V3
+# readline error listener, replace the unchanged whole-owner base function
+# with its exact V3 whole-owner function. No third production implementation.
+marker=b'export async function runPrimaryStdio('
+end=b'\nif(process.argv[1]'
+def owner(data): return data[data.index(marker):data.index(end)]
+assert owner(original)==owner(utf8), 'UTF8 changed owner region; refuse speculative merge'
+assert original.count(b'  const lines=createInterface({input,terminal:false});')==1
+assert utf8.count(b'  lines=createInterface({input,terminal:false});\n')==1
+assert v3.count(b"  lines.on('error',failed);\n")==1
+candidate=utf8.replace(b'  lines=createInterface({input,terminal:false});\n',b"  lines=createInterface({input,terminal:false});\n  lines.on('error',failed);\n",1).replace(owner(original),owner(v3),1)
+assert owner(candidate)==owner(v3)
+# Removing only that exact listener from candidate's prefix yields the exact
+# UTF8 prefix. The suffix after the owner is identical in all source images.
+assert candidate[:candidate.index(marker)].replace(b"  lines.on('error',failed);\n",b'',1)==utf8[:utf8.index(marker)]
+assert candidate[candidate.index(end):]==original[original.index(end):]==v3[v3.index(end):]==utf8[utf8.index(end):]
+write(stdio,candidate,'literal UTF8 prefix + exact V3 error listener + exact V3 owner function')
+write('runtime/host_v1/test_primary_stdio.mjs',blob(V3,'runtime/host_v1/test_primary_stdio.mjs'),V3)
+write('runtime/host_v1/test_primary_stdio_utf8.mjs',blob(UTF8,'runtime/host_v1/test_primary_stdio_utf8.mjs'),UTF8)
+manifest={i['path']:i for i in images}
+(OUT/'source-images.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf8')
+(OUT/'candidate.mjs.txt').write_bytes(candidate)
+(OUT/'PREPARATION.json').write_text(json.dumps({'base':BASE,'v3':V3,'utf8':UTF8,'candidate_sha256':hashlib.sha256(candidate).hexdigest(),'candidate_bytes':len(candidate),'images':len(manifest),'composition':'exact source-region union; no whole Git merge-tree or application certificate','runtime_invocations':0},indent=2)+'\n',encoding='utf8')
+print(json.dumps({'state':'PREPARED_SOURCE_UNION','images':len(manifest),'candidate_bytes':len(candidate),'candidate_sha256':hashlib.sha256(candidate).hexdigest(),'runtime_invocations':0}))

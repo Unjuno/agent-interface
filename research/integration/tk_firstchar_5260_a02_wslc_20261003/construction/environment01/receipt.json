@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "C:\\Program Files\\WSL\\wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--name",
+    "ai-5260-a02-env-20261003",
+    "--network",
+    "none",
+    "--cpus",
+    "0.5",
+    "--memory",
+    "512M",
+    "sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "/usr/bin/python3",
+    "-B",
+    "-c",
+    "import json,sys,platform,tkinter,subprocess; print(json.dumps({\"python\":sys.version,\"platform\":platform.platform(),\"tk\":tkinter.TkVersion,\"packages\":subprocess.run([\"dpkg-query\",\"-W\",\"python3\",\"python3-tk\",\"python3-xlib\",\"xvfb\",\"openbox\",\"x11-apps\",\"imagemagick\",\"tesseract-ocr\"],capture_output=True,text=True).stdout}))"
+  ],
+  "exit_code": 0,
+  "finished_utc": "2026-10-03T12:27:26.836764+00:00",
+  "launch_error": null,
+  "output_sha256": {
+    "attempt.json": "3738d8d8d3fbdcdc295a739e14ce4dad5fcfe8689730a1649e6c4d0f49776f00",
+    "stderr.bin": "2562006e62622bcf41c809d627cdc2c6250516b8cf1c9ccd28072c331fcc4096",
+    "stdout.bin": "5f9688ab3c4323f7ea5e652dab7b31a9f756a4eea8ecc806e8fd935382561c60"
+  },
+  "started_utc": "2026-10-03T12:27:26.290256+00:00",
+  "wall_seconds": 0.5465339000002132
+}
