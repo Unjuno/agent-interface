@@ -13,14 +13,17 @@ import sys
 HERE = Path(__file__).resolve().parent
 RESULT = HERE / "RESULT.json"
 APPLICABILITY = HERE / "CURRENT_MAIN_APPLICABILITY.json"
+MERGE_RECHECK = HERE / "CURRENT_MAIN_MERGE_RECHECK.json"
 EXPECTED_FILES = {
     "CURRENT_MAIN_APPLICABILITY.json",
+    "CURRENT_MAIN_MERGE_RECHECK.json",
     "README.md",
     "audit-attempt-v1-failure.txt",
     "audit_recheck.py",
     "frozen_test.py",
     "raw/base.txt",
     "raw/candidate.txt",
+    "raw/current-main-merged-candidate.txt",
     "RESULT.json",
     "run_independent_recheck.py",
     "write_manifest.py",
@@ -62,6 +65,24 @@ def main() -> int:
         return fail("current_main_source_identity")
     if applicability.get("main_preexisting_test_git_blob") == applicability.get("candidate_frozen_eight_case_test_git_blob"):
         return fail("test_identity_distinction")
+    try:
+        merge_recheck = json.loads(MERGE_RECHECK.read_text(encoding="utf-8"))
+        merge_raw = (HERE / merge_recheck["raw_stdout"]).read_bytes()
+    except Exception as exc:
+        return fail(f"merge_recheck_read:{type(exc).__name__}")
+    if merge_recheck.get("format") != "appserver-eof-reap-current-main-merge-recheck-v1":
+        return fail("merge_recheck_format")
+    if merge_recheck.get("merge_tree") != "5892b52e95e6e5a0f1ded3477ae0ac74aede7d04":
+        return fail("merge_tree_identity")
+    if merge_recheck.get("current_main_source_blob") != "338b5fbdf436e14768274b9de6a3d3bb13fd274c":
+        return fail("merge_current_source_identity")
+    if len(merge_raw) != merge_recheck.get("raw_stdout_bytes") or sha256(merge_raw) != merge_recheck.get("raw_stdout_sha256"):
+        return fail("merge_raw_hash")
+    merge_text = merge_raw.decode("utf-8")
+    if not re.search(r"Ran 8 tests in [^\n]+\n\nOK", merge_text):
+        return fail("merge_test_summary")
+    if merge_recheck.get("exit_code") != 0 or merge_recheck.get("tests_passed") != 8:
+        return fail("merge_test_disposition")
     frozen_test = HERE / "frozen_test.py"
     try:
         test_data = frozen_test.read_bytes()

@@ -37,6 +37,12 @@ The frozen eight-case test itself comes from the PR candidate; main still has
 its earlier three-case test file (`fd0d8dfd7dbfa50c767f108487295fd4fec25a34`).
 These distinct identities are recorded in `CURRENT_MAIN_APPLICABILITY.json`.
 
+The PR candidate was also merged virtually onto the then-current main
+`074f00a0db5baf48a42ed446043f7e1081a40ed7` (merge tree
+`5892b52e95e6e5a0f1ded3477ae0ac74aede7d04`) and its eight-case suite passed
+8/8 in a detached temporary worktree. Raw stdout and the exact tree/source
+identities are recorded in `CURRENT_MAIN_MERGE_RECHECK.json`.
+
 This is a local regression recheck of one app-server client cleanup path. It is
 not a live GUI, native-input, game, model, task-effect, useful-feedback,
 recovery-efficacy, or OS shutdown worst-case result. It does not independently

@@ -11,12 +11,14 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 FILES = [
     "CURRENT_MAIN_APPLICABILITY.json",
+    "CURRENT_MAIN_MERGE_RECHECK.json",
     "README.md",
     "audit-attempt-v1-failure.txt",
     "audit_recheck.py",
     "frozen_test.py",
     "raw/base.txt",
     "raw/candidate.txt",
+    "raw/current-main-merged-candidate.txt",
     "RESULT.json",
     "run_independent_recheck.py",
     "write_manifest.py",
