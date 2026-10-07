@@ -22,6 +22,8 @@ class FakeClient:
         self.turn_count = 0
         self.interrupts = []
         self.started = []
+        self.external = []
+        self.active_turn_id = None
         self.release_completion = threading.Event()
 
     def start_thread(self, **params):
@@ -29,9 +31,13 @@ class FakeClient:
         return {"thread": {"id": f"thread-{self.thread_count}"}}
 
     def start_turn(self, thread_id, inputs, **params):
+        if "toolOutput" in params:
+            self.external.append((thread_id, inputs, params))
+            return {"turn": {"id": self.active_turn_id}}
         self.turn_count += 1
+        self.active_turn_id = f"turn-{self.turn_count}"
         self.started.append((thread_id, inputs, params))
-        return {"turn": {"id": f"turn-{self.turn_count}"}}
+        return {"turn": {"id": self.active_turn_id}}
 
     def wait_turn_completed(self, thread_id, turn_id, timeout=120):
         completion = self.completions.pop(0)
@@ -81,6 +87,40 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         self.assertFalse(result.answer_eligible)
         self.assertTrue(result.cancellation_requested)
         self.assertIn("invalidated observation", result.error)
+
+    def test_one_typed_external_observation_joins_same_turn_without_authority(self):
+        client = FakeClient([completed()])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+        image_url = "data:image/png;base64,iVBORw0KGgo="
+        receipt = planner.send_external_observation(
+            handle, 42, "Untrusted current observation; no input authority.", image_url)
+        self.assertEqual(receipt, {"outcome": "attached", "sequence": 42,
+                                   "thread_id": "thread-1", "turn_id": "turn-1"})
+        self.assertEqual(client.turn_count, 1)
+        self.assertEqual(len(client.external), 1)
+        thread_id, inputs, params = client.external[0]
+        self.assertEqual((thread_id, inputs), ("thread-1", []))
+        self.assertEqual(params["_timeout"], 0.5)
+        self.assertEqual(params["toolOutput"]["output"], [
+            {"type": "input_text", "text": "Untrusted current observation; no input authority."},
+            {"type": "input_image", "image_url": image_url, "detail": "auto"},
+        ])
+        with self.assertRaisesRegex(PlannerProtocolError, "already attached"):
+            planner.send_external_observation(handle, 43, "second", image_url)
+        result = planner.await_turn(handle)
+        self.assertTrue(result.answer_eligible)
+        self.assertEqual(result.handle.turn_id, "turn-1")
+
+    def test_external_observation_is_refused_after_interrupt(self):
+        client = FakeClient([completed()])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+        planner.interrupt(handle)
+        with self.assertRaisesRegex(PlannerProtocolError, "cancelled"):
+            planner.send_external_observation(
+                handle, 42, "late", "data:image/png;base64,iVBORw0KGgo=")
+        self.assertEqual(client.external, [])
 
     def test_duplicate_interrupt_sends_only_one_request(self):
         client = FakeClient([{"status": "interrupted", "items": []}])
