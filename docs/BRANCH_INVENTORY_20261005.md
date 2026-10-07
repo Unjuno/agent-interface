@@ -239,3 +239,9 @@ This remains a reference census, not a unique-commit audit. No branch is classif
 ---
 
 ## Follow-up API snapshot and evidence rescue — 2026-10-05 18:40 JST
+
+## Current paginated branch and open-PR counts — 2026-10-07 09:35 UTC
+
+A fresh read observed 423 remote branch refs with `git ls-remote --heads origin`; GitHub branch search pagination also returned 423 branch names across six pages. A separately paginated search returned 359 open PRs, split by creation date to stay below its 100-result cap: 63 on October 3; 130 on October 4; 142 on October 5 (67 from 00:00–05:59 UTC, 57 from 06:00–11:59 UTC, and 18 from 12:00–23:59 UTC); 10 on October 6; and 14 on October 7. Earlier date partitions returned no open PRs.
+
+The branch and PR reads are not an atomic snapshot, and the branch-name listing does not map refs to PR heads/bases, owners, unique commits, experiments, or active allocations. This updates backlog counts only; it classifies no branch as safe to delete. The all-ref custody audit remains incomplete.
