@@ -1,0 +1,29 @@
+diff --git a/research/doom/project_v39_release_measurement_v1.py b/research/doom/project_v39_release_measurement_v1.py
+index 3683534757..b5e7b20bc7 100644
+--- a/research/doom/project_v39_release_measurement_v1.py
++++ b/research/doom/project_v39_release_measurement_v1.py
+@@ -74,7 +74,7 @@ def _valid_pair(admission, release):
+         start, sync, sample = (attempt.get("keyrelease_started_ns"),
+                                attempt.get("sync_returned_ns"),
+                                attempt.get("keymap_sampled_ns"))
+-        if (attempt.get("attempt") != index or not all(_is_int(t) for t in (start, sync, sample))
++        if ((not _is_int(attempt.get("attempt")) or attempt.get("attempt") != index) or not all(_is_int(t) for t in (start, sync, sample))
+                 or not start <= sync <= sample
+                 or type(attempt.get("server_key_down_before")) is not bool
+                 or type(attempt.get("server_key_down_after")) is not bool
+diff --git a/research/doom/test_project_v39_release_measurement_v1.py b/research/doom/test_project_v39_release_measurement_v1.py
+index 28e3466342..ff7ba400f1 100644
+--- a/research/doom/test_project_v39_release_measurement_v1.py
++++ b/research/doom/test_project_v39_release_measurement_v1.py
+@@ -71,6 +71,11 @@ class StrictProjectionTests(unittest.TestCase):
+         records[1]["owner_thread_keyup_receipt"]["owner_sync_returned_ns"] = 139
+         self.assertFalse(project(records)["measurement_ready"])
+ 
++    def test_rejects_boolean_attempt_ordinal(self):
++        records = valid_pair()
++        records[1]["owner_thread_keyup_receipt"]["server_keyup_attempts"][0]["attempt"] = True
++        self.assertFalse(project(records)["measurement_ready"])
++
+     def test_rejects_missing_expiration_and_discontinuous_retry_state(self):
+         records = valid_pair()
+         del records[1]["valid_until_ns"]

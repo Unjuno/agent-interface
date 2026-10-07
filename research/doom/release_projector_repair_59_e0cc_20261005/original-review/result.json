@@ -1,0 +1,156 @@
+{
+  "finding": "FAIL: two distinct admissions (A and B) with two valid-looking releases for A produce measurement_ready=true and two projected A rows; B is unconsumed.",
+  "forged_case": {
+    "admissions": [
+      {
+        "admitted_ns": 100,
+        "event": "input_admission",
+        "id": "plan-a",
+        "intent_token": "token-1",
+        "key": "space",
+        "operation": "down",
+        "owner_id": "owner-1",
+        "step": 2
+      },
+      {
+        "admitted_ns": 101,
+        "event": "input_admission",
+        "id": "plan-a",
+        "intent_token": "token-1",
+        "key": "w",
+        "operation": "down",
+        "owner_id": "owner-1",
+        "step": 2
+      }
+    ],
+    "expected_measurement_ready": false,
+    "measurement_ready": true,
+    "projected_keys": [
+      "space",
+      "space"
+    ],
+    "releases": [
+      {
+        "backend_owned_before_release": true,
+        "event": "input_release_transition",
+        "id": "plan-a",
+        "intent_token": "token-1",
+        "key": "space",
+        "operation": "up",
+        "ordinary_release_candidate": true,
+        "owned_keycodes_after_batch": [],
+        "owner_id": "owner-1",
+        "owner_sample_after_batch_available": true,
+        "owner_sample_after_finished_ns": 185,
+        "owner_sample_after_started_ns": 180,
+        "owner_thread_keyup_history_complete": true,
+        "owner_thread_keyup_receipt": {
+          "cancel_requested_after_sync": false,
+          "event": "owner_explicit_keyup",
+          "intent_token": "token-1",
+          "key": "space",
+          "key_state_source": "x11_query_keymap",
+          "operation": "up",
+          "owner_id": "owner-1",
+          "owner_keymap_sampled_ns": 165,
+          "owner_keyrelease_started_ns": 150,
+          "owner_sync_returned_ns": 160,
+          "physical_verification_authoritative": false,
+          "server_key_down_after_keyup": false,
+          "server_keyup_attempt_count": 1,
+          "server_keyup_attempts": [
+            {
+              "attempt": 1,
+              "keymap_sampled_ns": 165,
+              "keyrelease_started_ns": 150,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_returned_ns": 160
+            }
+          ],
+          "server_keyup_verified": true,
+          "server_sync_completed": true
+        },
+        "owner_thread_keyup_receipt_count": 1,
+        "owner_thread_keyup_verified": true,
+        "owner_transition_verified": true,
+        "physical_verification_authoritative": false,
+        "release_batch_complete": true,
+        "release_batch_identifier": "plan-a",
+        "release_batch_position": 0,
+        "release_batch_size": 2,
+        "release_batch_step": 2,
+        "release_call_returned_ns": 170,
+        "release_call_started_ns": 140,
+        "step": 2
+      },
+      {
+        "backend_owned_before_release": true,
+        "event": "input_release_transition",
+        "id": "plan-a",
+        "intent_token": "token-1",
+        "key": "space",
+        "operation": "up",
+        "ordinary_release_candidate": true,
+        "owned_keycodes_after_batch": [],
+        "owner_id": "owner-1",
+        "owner_sample_after_batch_available": true,
+        "owner_sample_after_finished_ns": 185,
+        "owner_sample_after_started_ns": 180,
+        "owner_thread_keyup_history_complete": true,
+        "owner_thread_keyup_receipt": {
+          "cancel_requested_after_sync": false,
+          "event": "owner_explicit_keyup",
+          "intent_token": "token-1",
+          "key": "space",
+          "key_state_source": "x11_query_keymap",
+          "operation": "up",
+          "owner_id": "owner-1",
+          "owner_keymap_sampled_ns": 165,
+          "owner_keyrelease_started_ns": 150,
+          "owner_sync_returned_ns": 160,
+          "physical_verification_authoritative": false,
+          "server_key_down_after_keyup": false,
+          "server_keyup_attempt_count": 1,
+          "server_keyup_attempts": [
+            {
+              "attempt": 1,
+              "keymap_sampled_ns": 165,
+              "keyrelease_started_ns": 150,
+              "server_key_down_after": false,
+              "server_key_down_before": true,
+              "sync_returned_ns": 160
+            }
+          ],
+          "server_keyup_verified": true,
+          "server_sync_completed": true
+        },
+        "owner_thread_keyup_receipt_count": 1,
+        "owner_thread_keyup_verified": true,
+        "owner_transition_verified": true,
+        "physical_verification_authoritative": false,
+        "release_batch_complete": true,
+        "release_batch_identifier": "plan-a",
+        "release_batch_position": 1,
+        "release_batch_size": 2,
+        "release_batch_step": 2,
+        "release_call_returned_ns": 170,
+        "release_call_started_ns": 140,
+        "step": 2
+      }
+    ]
+  },
+  "positive_control": {
+    "measurement_ready": true,
+    "projected_keys": [
+      "space"
+    ]
+  },
+  "schema": "v39-projector-duplicate-release-counterexample-v1",
+  "scope": "single pure-projector unit fixture; no V39/V15 session, owner, X, controller, or game execution",
+  "source_commit": "3ceac8ba779b7b8a43c7a29f135e040dc637b1f8",
+  "source_sha256": {
+    "project_v39_release_measurement_v1.py": "e88d0d40cd01cf4097aa1ee1664406942ad7dcc47d3e22a42a937a483f4db3df",
+    "test_project_v39_release_measurement_v1.py": "baf3ea6e262c887d52bc35a1b93c2c07460090ed5294f225e6d30f16178a331c"
+  }
+}
