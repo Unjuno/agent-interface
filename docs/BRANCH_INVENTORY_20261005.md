@@ -188,9 +188,9 @@ The closed, unmerged #8163 branch contained a dated record of the #7698 A03 evid
 
 Deleted `maintenance/inventory-followup-clean-20261005-r2` after confirming the closed-unmerged #8163 exact remote tip was `2cc24ae42ac79994e9b84fac93159427f9a99f25`, its only unique 7-line inventory addition had been carried into this branch, no open PR used it as head or base, and no worktree had the branch checked out. The exact-tip lease succeeded; the branch head is absent and `refs/pull/8163/head` remains at the former tip. A later non-atomic remote-head read observed 421 refs; concurrent updates may change this count.
 
-## Hold — closed #8122 inventory branch still carries unmatched history — 2026-10-07
+## Closed #8122 source-ref cleanup — 2026-10-07
 
-As of this note, retain `maintenance/inventory-followup-20261005` at exact remote tip `3b1c12ca6ebc01101aad443c71601efbc17c85c0`. PR #8122 is closed-unmerged and `refs/pull/8122/head` remains at that SHA; exact head/base REST searches found no open PR dependents. The 29 historical lines unique to the remote tip have been carried forward below. The attached local worktree is clean but at older, divergent commit `23783e605820eedbb5cdd40d1e324586f599d850`; its distinct 18:40 JST historical section has also been carried forward below. Confirm exact tip, all dependents, and ownership once more before any source-ref deletion.
+After carrying the distinct remote-tip and local-worktree historical records into this inventory, rechecked PR #8122 as closed-unmerged under the repository owner `Unjuno`, confirmed no open PR head/base dependents, and confirmed the remote source tip and closed pull-head both resolved to `3b1c12ca6ebc01101aad443c71601efbc17c85c0`. The clean local worktree remains at divergent commit `23783e605820eedbb5cdd40d1e324586f599d850` as a retained recovery copy. Deleted only remote branch `maintenance/inventory-followup-20261005` using an exact-tip lease. The source head is now absent, while `refs/pull/8122/head` remains fetchable at the former tip. A subsequent non-atomic remote-head read observed 423 branches.
 ## Follow-up review and current state — 2026-10-05 17:54 JST
 
 This note supplements the frozen 08:16:25Z CSVs and the 08:32:24Z state above; it does not replace either snapshot.
