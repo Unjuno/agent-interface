@@ -1,0 +1,29 @@
+{
+  "allocation_id": "ISSUE59-V39-TYPED-EPOCH-ALIAS-A01-20261005",
+  "auditor_invocations": 1,
+  "candidate_invocations": 1,
+  "command": [
+    "python -B run_probe.py",
+    "python -B audit.py"
+  ],
+  "decision_gate": "control accepted and all eight bool/float row sequence/capture aliases rejected; otherwise FAIL_CLOSED_EPOCH_IDENTITY_GAP",
+  "formal_live_allocation_invocations": 0,
+  "pre_execution_sha256": {
+    "PREREGISTRATION.md": "317950cead9cf55d0d1c5d2dec7ee2a471f67384c3c70202a0e87c63bc68d072",
+    "SOURCE_MAP.json": "28e2e768a71b87df4451962d162c1239335a43a495d850dc7197671cfc882c6a",
+    "audit.py": "35a6b145b67a6ba2ec04c2d2b80ff4c1bb70db885332287dbe1cb7bae26b1db3",
+    "fixture.json": "7c2be32beae53af95f9561239c75d8b36d5660c86278250b659edf1760fdfdbb",
+    "run_probe.py": "ae3365583dbde63cc5deb05d7dea2fc312498d2ff92c12a0eb463e11daa975cf",
+    "source/research/doom/doom_typed_observation_v1.py": "7268d2ccd291096f2372fe5d624165a55205ebaf7085ccc0daff7870579b30d8",
+    "source/research/live_control/action_validity_admission_v1.py": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a"
+  },
+  "retry_limit": 0,
+  "runtime": "CPython 3.12.14, macOS arm64, Pillow 12.3.0; host-only, no isolation claim",
+  "schema": "issue59-v39-typed-epoch-alias-freeze-v1",
+  "scope": "host-only synthetic exact-main extractor/snapshot pipeline; no runtime/game/model/GUI/input/task-effect claim",
+  "selected_main": "e561b25b700680df4e6ffd2b92faf1dde1682ef7",
+  "source_sha256": {
+    "research/doom/doom_typed_observation_v1.py": "7268d2ccd291096f2372fe5d624165a55205ebaf7085ccc0daff7870579b30d8",
+    "research/live_control/action_validity_admission_v1.py": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a"
+  }
+}
