@@ -137,9 +137,12 @@ class ReleaseLedgerTests(unittest.TestCase):
             return session.dispatch(program, current_observation_seq=7,
                                     current_binding_revision=3, now_ns=1)
         first = self.row(obj, lambda: dispatch("first"))
+        emissions_after_first = obj.emissions
         second = self.row(obj, lambda: dispatch("second"))
         self.assertEqual(first["status"], "release_unverified")
-        self.assertEqual(second["status"], "release_unverified")
+        self.assertEqual(second["status"], "refused")
+        self.assertEqual(second["error"], "INPUT_RECOVERY_REQUIRED")
+        self.assertEqual(obj.emissions, emissions_after_first)
 
     def test_confirmed_up_and_empty_controls_verify_without_unrelated_scan(self):
         obj = self.make_backend({"Q": 81}, {"left"}, down=(81, 1, 90))
