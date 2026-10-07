@@ -31,7 +31,7 @@ class AnalysisIndexTests(unittest.TestCase):
         self.assertEqual(len(union), 203)
         self.assertEqual(merged, checker.render_block(union))
 
-    def run_checker(self, indexed_names, actual_names, mutate=None, sparse=False):
+    def run_checker(self, indexed_names, actual_names, mutate=None, sparse=False, strict=False):
         with tempfile.TemporaryDirectory() as directory:
             checkout = Path(directory) / "checkout"
             root = checkout / "research" / "analysis"
@@ -49,8 +49,12 @@ class AnalysisIndexTests(unittest.TestCase):
                 text = mutate(text)
             readme = root / "README.md"
             readme.write_text(text + "\n", encoding="utf-8")
-            with patch.object(checker, "ROOT", root), patch.object(checker, "README", readme), patch("sys.argv", ["check_index.py"]), contextlib.redirect_stdout(io.StringIO()) as output:
-                code = checker.main()
+            argv = ["check_index.py"] + (["--strict"] if strict else [])
+            with patch.object(checker, "ROOT", root), patch.object(checker, "README", readme), patch("sys.argv", argv), contextlib.redirect_stdout(io.StringIO()) as output, contextlib.redirect_stderr(output):
+                try:
+                    code = checker.main()
+                except SystemExit as exc:
+                    code = exc.code
             self.assertEqual(readme.read_text(encoding="utf-8"), text + "\n")
             return code, output.getvalue()
 
@@ -92,6 +96,29 @@ class AnalysisIndexTests(unittest.TestCase):
 
     def test_sparse_checkout_duplicate_entries_still_fail(self):
         code, _ = self.run_checker(["a", "a", "b"], ["a"], sparse=True)
+        self.assertEqual(code, 1)
+
+
+    def test_strict_sparse_complete_membership_passes(self):
+        code, _ = self.run_checker(["a", "b"], ["a", "b"], sparse=True, strict=True)
+        self.assertEqual(code, 0)
+
+    def test_strict_sparse_missing_retained_entry_fails(self):
+        code, output = self.run_checker(["a"], ["a", "b"], sparse=True, strict=True)
+        self.assertEqual(code, 1)
+        self.assertIn("Missing retained result/failure directories", output)
+
+    def test_strict_sparse_absent_sibling_entry_fails(self):
+        code, output = self.run_checker(["a", "b"], ["a"], sparse=True, strict=True)
+        self.assertEqual(code, 1)
+        self.assertIn("Generated entries point to missing directories", output)
+
+    def test_strict_sparse_unsorted_entries_fail(self):
+        code, _ = self.run_checker(["b", "a"], ["a", "b"], sparse=True, strict=True)
+        self.assertEqual(code, 1)
+
+    def test_strict_sparse_duplicate_entries_fail(self):
+        code, _ = self.run_checker(["a", "a"], ["a"], sparse=True, strict=True)
         self.assertEqual(code, 1)
 
 

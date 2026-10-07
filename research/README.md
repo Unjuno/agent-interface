@@ -6,6 +6,15 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #6358 C01: [private service-capacity transfer](integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) — 24 synthetic requests across six arms; explicit static routing matches ample-capacity effects under the authored held-slot fixture. No production congestion, latency, task-effect, or H_PASS claim.
+
+- Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+
+- Issue #7944 successor T0 A01: [bounded offline bandwidth inheritance](analysis/bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) — finite-model PASS_METHOD_SCOPED/H_PASS_SCOPED; OrbStack unavailable, host-only; no full-CBS or runtime claim. [Issue #7979](https://github.com/Unjuno/agent-interface/issues/7979).
+
+- Issue #6367 T0: [matched protective-adaptation method fixture](analysis/protective_local_adaptation_6367_t0_20261004/REPORT.md) — synthetic `METHOD_PASS_SCOPED` only; host-only after OrbStack inspection failed; not live #59 evidence. [Post-review top-level audit](analysis/protective_local_adaptation_6367_reaudit_v1/README.md) rejects the frozen V1 auditor's top-level safety-disposition blind spot.
+
+- Issue #7834 T0 A01: [carryover-aware optional-adaptation estimator](analysis/optional_adaptation_mrt_7834_t0_a01_20261005/REPORT.md) — exact two-cluster finite enumeration passed its scoped oracle/audit gate; host-only because OrbStack's content store was unavailable; no live-interface or user-effect claim.
 - Issue #17: [notification identity R03 arrival-before-wait evidence](concurrency/notification_identity_r03_17_20261004_b64b/RESCUE_20261004.md) — preserves R01/R02/R03 evidence and failures as inert archive; active client patch is excluded, and all FINAL-v5 vote/applicability/application gates remain open.
 - Issue #17: [cancellation-token handoff finite model](concurrency/cancel_token_handoff_17_20261003_70ab/REPORT.md) — all 23 declared atomic orders preserved; shared-flag counterexamples and the fresh per-operation-token comparison are scoped to the sequentially consistent abstract model, not production concurrency.
 
@@ -14,6 +23,7 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #7728 T0: [client energy-counter eligibility](analysis/client_energy_per_effect_7728_t0_20261005/REPORT.md) — unprivileged macOS probe requires superuser; estimated power/process proxy is not a joule counter; HOLD, no GUI task/route run.
 
 - Issue #57: [incomplete-frame byte-frontier A01](integration/frame_byte_frontier_57_20261003_45e9/REPORT.md) — eight-cell construction PASS preserved; production cap and typed-stop integration remain HOLD, with current-main custody checks in [`RESCUE_20261004.md`](integration/frame_byte_frontier_57_20261003_45e9/RESCUE_20261004.md).
+- Issue #57: [historical stock TodoMVC D01 task-creation STOP](integration/stock_todomvc_durable_57_D01_20261003_01a0ff35/README.md) — immutable 44-member evidence archive; first create effect stopped with zero rows, no reload/durability claim, and no replay.
 - Issue #6526 C03: [WAL snapshot/write recovery boundary](integration/wal_snapshot_recovery_6526_01a0ff58_c03/REPORT.md) — six native compatibility cells preserved; original audit PASS and its SQL-copy gap remain alongside the separately versioned V2 audit that rejects all eight effective controls. No runtime recovery policy or task authority follows.
 
 - Issue #7459: [OrbStack COW artifact-workspace T0](measurement/cow_artifact_workspace_7459_t0_20261004/RESULT.md) — Docker-managed COW retained the synthetic artifact edits, but the independent whole-layer audit detected un-attributed OrbStack CA-file mutations; disposition HOLD, no GUI or host-APFS claim.
@@ -118,6 +128,7 @@ Prefer the narrowest existing namespace. The diagram is a placement guide; retai
 
 ## Analytical studies
 
+- [`analysis/pcaa_stage_propagation_6053_t1_20261004/REPORT.md`](analysis/pcaa_stage_propagation_6053_t1_20261004/REPORT.md) — Issue #6053 T1 read-only PCAA eligibility audit: `HOLD_NO_ELIGIBLE_CHAIN`; Arena v1 has stage diagnostics but no matched upstream perturbation/re-grounding contrast or hardened held-out source isolation.
 - [`analysis/action_bound_residual_6619_t0_v1/REPORT.md`](analysis/action_bound_residual_6619_t0_v1/REPORT.md) — Issue #6619 WSLc T0 retained as audit-control STOP; no scientific PASS or live-control claim.
 - [Cyclic grounding #4431 / Draft PR #4443 published-byte archive](analysis/cyclic_justification_grounding_delivery_t6g2_v1/ARCHIVAL_QUALIFICATION.md) — nine exact published files (25,174 bytes); reported `PASS_LOCAL_CYCLIC_GROUNDING_CONTRACT` remains separate from `HOLD_REMOTE_RAW_DELIVERY`; full raw/audit/control/process bundle absent, no independent reproduction or runtime promotion.
 

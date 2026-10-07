@@ -1,0 +1,34 @@
+{
+  "schema": "looming-yield-freeze-a03-v1",
+  "allocation": "LOOMING-YIELD-5905-T0.2-IMAGE-ONLY-20261005-A03",
+  "issue": 5905,
+  "branch": "research/5905-image-only-cues-a02-20261005",
+  "base_main": null,
+  "prereg_comment": null,
+  "prior_allocations": [
+    {
+      "allocation": "LOOMING-YIELD-5905-T0-ISOLATED-ORB-20261001-01",
+      "disposition": "STOP_MAIN_ADVANCED_AFTER_FREEZE"
+    },
+    {
+      "allocation": "LOOMING-YIELD-5905-T0.2-IMAGE-ONLY-20261005",
+      "disposition": "STOP_MAIN_ADVANCED_AFTER_FREEZE; method audit incomplete; candidate/auditor 0/0"
+    }
+  ],
+  "candidate_invocations": 1,
+  "independent_auditor_invocations": 1,
+  "retry_budget": 0,
+  "container": {
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_config_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "gpu": "none",
+    "cpus_requested": 1,
+    "network": "none",
+    "runtime": "WSLc 3.0.1.0",
+    "memory_requested": "512m",
+    "platform": "linux/amd64"
+  },
+  "execution_state": "STOPPED_PRE_FORMAL",
+  "hashes": "populate before freeze",
+  "construction_stop": "STOP_CONSTRUCTION_GATE_REJECTS_ALL_RASTER_CIRCLES"
+}

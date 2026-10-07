@@ -1,0 +1,20 @@
+{
+  "schema": "blocked-interleaved-8080-independent-scorer-v1",
+  "heldout_variants": ["heldout_delta", "heldout_echo"],
+  "expected_effects": {
+    "procedure_alpha": {"kind": "in_memory_flag", "object": "procedure_alpha", "value": true},
+    "procedure_bravo": {"kind": "in_memory_flag", "object": "procedure_bravo", "value": true},
+    "procedure_charlie": {"kind": "in_memory_flag", "object": "procedure_charlie", "value": true}
+  },
+  "expected_inverse_effects": {
+    "procedure_alpha": {"kind": "in_memory_flag", "object": "procedure_alpha", "value": false},
+    "procedure_bravo": {"kind": "in_memory_flag", "object": "procedure_bravo", "value": false},
+    "procedure_charlie": {"kind": "in_memory_flag", "object": "procedure_charlie", "value": false}
+  },
+  "scoring_controls": [
+    {"id": "valid", "intent": "procedure_alpha", "observed_target": "procedure_alpha", "observed_effect": {"kind": "in_memory_flag", "object": "procedure_alpha", "value": true}, "success_claim": true},
+    {"id": "wrong_target", "intent": "procedure_alpha", "observed_target": "procedure_bravo", "observed_effect": {"kind": "in_memory_flag", "object": "procedure_bravo", "value": true}, "success_claim": true},
+    {"id": "false_success", "intent": "procedure_bravo", "observed_target": "procedure_bravo", "observed_effect": {"kind": "in_memory_flag", "object": "procedure_bravo", "value": false}, "success_claim": true},
+    {"id": "outside_family", "intent": "heldout_delta", "observed_target": "heldout_delta", "observed_effect": null, "success_claim": true}
+  ]
+}

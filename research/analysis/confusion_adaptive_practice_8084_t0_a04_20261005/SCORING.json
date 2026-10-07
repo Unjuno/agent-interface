@@ -1,0 +1,14 @@
+{
+  "schema": "issue8084-a03-scoring-v1",
+  "strata": [
+    {"id":"stratum-01","rates":[0.90,0.20,0.20],"expected_top_pair":0,"eligible":true},
+    {"id":"stratum-02","rates":[0.78,0.52,0.32],"expected_top_pair":0,"eligible":true},
+    {"id":"stratum-03","rates":[0.68,0.60,0.55],"expected_top_pair":0,"eligible":false},
+    {"id":"stratum-04","rates":[0.40,0.40,0.40],"expected_top_pair":0,"eligible":false}
+  ],
+  "sample_sizes":[5,20,100],
+  "replicates":500,
+  "minimum_span":0.25,
+  "minimum_peak":0.70,
+  "pair_order":["AB","AC","BC"]
+}

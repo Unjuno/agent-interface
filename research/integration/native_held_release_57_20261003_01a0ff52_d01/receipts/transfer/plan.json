@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/opt/homebrew/bin/orbctl",
+    "run",
+    "-m",
+    "unjuno-57-5884-debian-a02-20261003",
+    "-u",
+    "root",
+    "/bin/bash",
+    "-c",
+    "test ! -e /home/study/57-held-d01 && mkdir -m 700 /home/study/57-held-d01 && tar -xf - -C /home/study/57-held-d01 && chown -R study:study /home/study/57-held-d01"
+  ],
+  "timeout_seconds": 30,
+  "stdin_sha256": "dae3f7762f58395d14201d09d5840ac026ab4998b7ed035269548777e6967978",
+  "started_utc": "2026-10-03T14:27:19.843827+00:00"
+}

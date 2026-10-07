@@ -1,0 +1,142 @@
+Current-main post-r135 replay A07
+Current main: bfd182727aebd9636c6a84fb437848c1dfe66be8
+Candidate source commit: cd2e73a63 (persist per-key release evidence before aggregate reconciliation).
+Execution tree: disposable overlay checked out at exact current main with the candidate package applied; locked upstream files materialized from that commit.
+Complete suites and independent audit:
+
+===== candidate-suite; exit=0; command=python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release -v =====
+test_cancel_cleanup_emits_up_receipt_joined_to_admission_context (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_cancel_cleanup_emits_up_receipt_joined_to_admission_context) ... ok
+test_each_cancelled_key_keeps_its_own_admission_context (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_each_cancelled_key_keeps_its_own_admission_context) ... ok
+test_executor_cancel_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_cancel_terminal_contains_one_verified_cleanup_receipt) ... ok
+test_executor_expiry_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_terminal_contains_one_verified_cleanup_receipt) ... ok
+test_expired_program_exit_drains_owner_cleanup_without_cancel_event (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_expired_program_exit_drains_owner_cleanup_without_cancel_event) ... ok
+test_keymap_reconciliation_error_preserves_confirmed_release_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_keymap_reconciliation_error_preserves_confirmed_release_receipt) ... ok
+test_ordinary_up_still_emits_one_matching_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_ordinary_up_still_emits_one_matching_receipt) ... ok
+test_pointer_reconciliation_error_preserves_confirmed_release_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_pointer_reconciliation_error_preserves_confirmed_release_receipt) ... ok
+test_reconciliation_error_does_not_drop_recorded_release_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_reconciliation_error_does_not_drop_recorded_release_receipt) ... ok
+test_unavailable_per_key_samples_never_claim_confirmed_up (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_unavailable_per_key_samples_never_claim_confirmed_up) ... ok
+test_verified_async_cleanup_reconciles_bridge_held_state (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_verified_async_cleanup_reconciles_bridge_held_state) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.069s
+
+OK
+
+===== executor-v12-expiry-suite; exit=0; command=python3 -m unittest research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition -v =====
+test_expiry_publishes_contextual_up_before_verified_terminal (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_expiry_publishes_contextual_up_before_verified_terminal) ... ok
+test_v12_expiry_retains_keyup_when_owner_keymap_query_fails (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_v12_expiry_retains_keyup_when_owner_keymap_query_fails) ... ok
+test_v12_expiry_retains_keyup_when_owner_pointer_query_fails (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_v12_expiry_retains_keyup_when_owner_pointer_query_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.107s
+
+OK
+
+===== owner-compat-suite; exit=0; command=python3 research/doom/map01_v39_cancel_release_fix_a01_20261005/run_owner_compat_suite.py =====
+test_clean_down_up_and_composable_identity (input_owner_v12_harness.Tests.test_clean_down_up_and_composable_identity) ... ok
+test_foreign_up_rejects_before_sampling (input_owner_v12_harness.Tests.test_foreign_up_rejects_before_sampling) ... ok
+test_missing_intent_does_not_reject_but_blocks_lineage (input_owner_v12_harness.Tests.test_missing_intent_does_not_reject_but_blocks_lineage) ... ok
+test_noop_up_already_up_no_identity (input_owner_v12_harness.Tests.test_noop_up_already_up_no_identity) ... ok
+test_preexisting_physical_down_does_not_mint (input_owner_v12_harness.Tests.test_preexisting_physical_down_does_not_mint) ... ok
+test_repeated_down_reuses_id_without_new_interval (input_owner_v12_harness.Tests.test_repeated_down_reuses_id_without_new_interval) ... ok
+test_sample_failure_does_not_change_down_control (input_owner_v12_harness.Tests.test_sample_failure_does_not_change_down_control) ... ok
+test_sequential_holds_advance_generation (input_owner_v12_harness.Tests.test_sequential_holds_advance_generation) ... ok
+test_sync_failure_matches_control_error_and_no_receipt (input_owner_v12_harness.Tests.test_sync_failure_matches_control_error_and_no_receipt) ... ok
+test_verified_cleanup_terminates_identity_without_edge_receipt (input_owner_v12_harness.Tests.test_verified_cleanup_terminates_identity_without_edge_receipt) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.003s
+
+OK
+
+===== existing-bridge-suite; exit=0; command=python3 -m unittest discover -s research/doom/map01_v39_perkey_bridge_a01 -p test_*.py -v =====
+test_backend_emits_same_intent_per_key_verified_up_edge (test_bridge.PerKeyBridgeConstructionTests.test_backend_emits_same_intent_per_key_verified_up_edge) ... ok
+test_missing_program_context_refuses_before_owner_call (test_bridge.PerKeyBridgeConstructionTests.test_missing_program_context_refuses_before_owner_call) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK
+
+===== audit; exit=0; command=python3 research/doom/map01_v39_cancel_release_fix_a01_20261005/audit.py =====
+AUDIT_PASS_SOURCE_LOCK_AND_26_TEST_RECEIPTS
+
+===== package checksums; exit=0; command=shasum -a 256 -c SHA256SUMS =====
+COMMANDS.txt: OK
+README.md: OK
+RESULT.json: OK
+RESULT.md: OK
+SOURCE_LOCK.json: OK
+TDD_RED_RECEIPT.md: OK
+aggregate-query-green.exit: OK
+aggregate-query-green.log: OK
+aggregate-query-red.exit: OK
+aggregate-query-red.log: OK
+audit-attempt01.exit: OK
+audit-attempt01.log: OK
+audit-attempt02.exit: OK
+audit-attempt02.log: OK
+audit-attempt03.exit: OK
+audit-attempt03.log: OK
+audit-attempt04.exit: OK
+audit-attempt04.log: OK
+audit-attempt05.exit: OK
+audit-attempt05.log: OK
+audit-attempt06.exit: OK
+audit-attempt06.log: OK
+audit.exit: OK
+audit.log: OK
+audit.py: OK
+bridge_v2_candidate.py: OK
+candidate-suite.exit: OK
+candidate-suite.log: OK
+compat-suite-attempt01.exit: OK
+compat-suite-attempt01.log: OK
+current-main-post-r135-replay-a04.exit: OK
+current-main-post-r135-replay-a04.log: OK
+current-main-post-r135-replay-a05.exit: OK
+current-main-post-r135-replay-a05.log: OK
+current-main-post-r135-replay-a06.exit: OK
+current-main-post-r135-replay-a06.log: OK
+current-main-r135-replay-a02.exit: OK
+current-main-r135-replay-a02.log: OK
+current-main-r135-replay-a03.exit: OK
+current-main-r135-replay-a03.log: OK
+current-main-r135-replay.exit: OK
+current-main-r135-replay.log: OK
+current-main-replay.exit: OK
+current-main-replay.log: OK
+executor-expiry-green.exit: OK
+executor-expiry-green.log: OK
+executor-expiry-red.exit: OK
+executor-expiry-red.log: OK
+executor-integration-attempt01.exit: OK
+executor-integration-attempt01.log: OK
+executor-integration-attempt02.exit: OK
+executor-integration-attempt02.log: OK
+executor-v12-expiry-suite.exit: OK
+executor-v12-expiry-suite.log: OK
+executor-v12-query-fault-green.exit: OK
+executor-v12-query-fault-green.log: OK
+executor-v12-query-fault-red.exit: OK
+executor-v12-query-fault-red.log: OK
+existing-bridge-suite.exit: OK
+existing-bridge-suite.log: OK
+expiry-drain-green.exit: OK
+expiry-drain-green.log: OK
+expiry-drain-red.exit: OK
+expiry-drain-red.log: OK
+input_owner_v13_candidate.py: OK
+owner-compat-suite.exit: OK
+owner-compat-suite.log: OK
+reconciliation-error-green.exit: OK
+reconciliation-error-green.log: OK
+reconciliation-error-red.exit: OK
+reconciliation-error-red.log: OK
+run_owner_compat_suite.py: OK
+test_cancel_release.py: OK
+test_executor_v12_expiry_composition.py: OK
+No X server, game, GUI, or OS input was used. Fake-display evidence only.
+
+Final regenerated package checksum verification exit: 0.
+Follow-up after TDD receipt whitespace normalization: regenerated SHA256SUMS and verified all entries; exit=0, entries=76.
