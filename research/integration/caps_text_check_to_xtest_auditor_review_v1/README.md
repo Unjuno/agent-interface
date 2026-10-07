@@ -8,7 +8,8 @@ This additive review artifact supplies a reproducible patch proposal for the unp
 - Draft `FREEZE.json` SHA-256: `0bab3d9a741e7dbe0ce09c2d3d4e9278da81f5386ab0294a119b971c8977a9bd`
 - Pre-patch `audit_formal.py` SHA-256: `a466e81c257468fdac745192e5af1e0fd71beeeb7374fcfa26c433e249db568b`
 - Pre-patch `test_audit_formal.py` SHA-256: `edb66e120faa009d813c73f7821539ae58ffafcebf441f4a60c703a8a9395879`
-- Publication base for this artifact: main `b8bec9a05da31ae722968bd49a30879b07df1a2e`
+- Branch creation base: main `b8bec9a05da31ae722968bd49a30879b07df1a2e` (ancestor of current main)
+- Current main/PR base at PR creation: `a273aa14c0d188cd385fbcec09d4585b2b61fea6`
 
 ## Review finding and proposed correction
 
