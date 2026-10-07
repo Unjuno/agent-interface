@@ -10,6 +10,18 @@ ALLOCATION = "5947-MULTI-UPDATE-PROVENANCE-T0-A02-20261008"
 QUERY_TEXT = {"current_value": b"what-is-current-value", "baseline_change": b"did-value-change-from-baseline", "unsupported": b"unsupported-field-without-source-evidence"}
 
 
+def expected_history(row):
+    depth, arm = row["depth"], row["arm"]
+    if arm == "CURRENT_ONLY" or depth == 0: return b""
+    if arm == "FULL_CONFLICTING_HISTORY":
+        return b";".join(f"episode={i};value=old{i};source=obs/{i}".encode("ascii") for i in range(depth))
+    if arm == "NONCONFLICTING_HISTORY":
+        return b";".join(f"episode={i};value=neutral{i};source=obs/{i}".encode("ascii") for i in range(depth))
+    if arm == "SOURCE_LINKED_DELTA":
+        return b";".join(f"episode={i};observed=old{i};superseded_by=current/source-22;kind=INFERRED".encode("ascii") for i in range(depth))
+    return b"<invalid-arm>"
+
+
 def audit_corpus(rows):
     errors = []
     matched = [r for r in rows if r.get("kind") == "matched"]
@@ -33,6 +45,8 @@ def audit_corpus(rows):
             if bytes.fromhex(r["query_bytes"]) != QUERY_TEXT[r["condition"]]: errors.append("query bytes/condition")
             if QUERY_TEXT[r["condition"]] not in prefix: errors.append("query absent from serialized prefix")
             if len(slot) != 2048: errors.append("history slot byte budget")
+            history = expected_history(r)
+            if slot != history + b" " * (2048 - len(history)): errors.append("history arm/depth/lineage bytes")
         except (KeyError, TypeError, ValueError):
             errors.append("malformed byte fields")
         try:
