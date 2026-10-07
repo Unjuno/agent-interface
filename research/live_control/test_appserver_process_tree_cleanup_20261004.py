@@ -7,11 +7,68 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import Mock, patch
 
 from codex_app_server_client_v2 import CodexAppServerClient
 
 
 class AppServerProcessTreeCleanupTests(unittest.TestCase):
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process-group ownership only')
+    def test_close_reaps_eof_leader_without_prior_poll(self):
+        client = CodexAppServerClient([sys.executable, '-c', 'pass'])
+        try:
+            client._reader.join(timeout=3)
+            self.assertFalse(client._reader.is_alive())
+            self.assertIsNone(client.process.returncode)
+            client.close(timeout=1)
+            self.assertEqual(client.process.returncode, 0)
+            self.assertTrue(all(stream.closed for stream in (
+                client.process.stdin, client.process.stdout, client.process.stderr)))
+        finally:
+            client.process.wait(timeout=3)
+            client.close(timeout=1)
+
+    def owned_client(self, polls):
+        client = CodexAppServerClient.__new__(CodexAppServerClient)
+        client._owns_process_group = True
+        client.process = Mock(pid=4567)
+        client.process.poll.side_effect = polls
+        return client
+
+    def test_signal_reaps_exited_leader_and_still_signals_descendants(self):
+        client = self.owned_client([0])
+        def signal_group(pid, signum):
+            self.assertTrue(client.process.poll.called)
+        with patch('codex_app_server_client_v2.os.killpg', side_effect=signal_group) as killpg:
+            client._signal_owned_group(signal.SIGTERM)
+        killpg.assert_called_once_with(4567, signal.SIGTERM)
+
+    def test_signal_reaps_exit_race_then_observes_absent_group(self):
+        client = self.owned_client([None, 0])
+        with patch('codex_app_server_client_v2.os.killpg', side_effect=[
+                PermissionError('unreaped leader'), ProcessLookupError('gone')]) as killpg:
+            client._signal_owned_group(signal.SIGTERM)
+        self.assertEqual(killpg.call_count, 2)
+
+    def test_signal_retains_permission_failure_for_live_leader(self):
+        client = self.owned_client([None, None])
+        error = PermissionError('live group denied')
+        with patch('codex_app_server_client_v2.os.killpg', side_effect=error) as killpg:
+            with self.assertRaises(PermissionError) as raised:
+                client._signal_owned_group(signal.SIGTERM)
+        self.assertIs(raised.exception, error)
+        self.assertEqual(killpg.call_count, 1)
+
+    def test_signal_retains_persistent_permission_failure_after_exit(self):
+        client = self.owned_client([None, 0])
+        error = PermissionError('surviving group denied')
+        with patch('codex_app_server_client_v2.os.killpg', side_effect=[
+                PermissionError('first denial'), error]) as killpg:
+            with self.assertRaises(PermissionError) as raised:
+                client._signal_owned_group(signal.SIGTERM)
+        self.assertIs(raised.exception, error)
+        self.assertEqual(killpg.call_count, 2)
+
     @staticmethod
     def pid_exists(pid):
         # Linux may retain orphaned grandchildren as zombies after SIGKILL.

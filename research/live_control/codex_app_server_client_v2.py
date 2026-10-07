@@ -1,9 +1,12 @@
 """Journaled synchronous client for the Codex app-server JSONL protocol."""
 from collections import deque
 import json
+import math
 import os
+import select
 import signal
 import subprocess
+import sys
 import threading
 import time
 
@@ -12,8 +15,37 @@ class AppServerError(RuntimeError):
     pass
 
 
+class AppServerUnsupportedRuntime(AppServerError):
+    """The interpreter cannot provide the required bounded pipe-send API."""
+
+
+def _require_pipe_runtime():
+    if os.name == "nt" and sys.version_info[:2] < (3, 12):
+        raise AppServerUnsupportedRuntime(
+            "app-server bounded pipe sends require Python 3.12 or later on Windows")
+    if not callable(getattr(os, "set_blocking", None)):
+        raise AppServerUnsupportedRuntime(
+            "app-server bounded pipe sends require callable os.set_blocking")
+
+
+class AppServerWriteUncertain(AppServerError):
+    """A pipe send failed; sent bytes are not proof of server acceptance."""
+
+    def __init__(self, sent, total, reason):
+        self.sent, self.total, self.reason = sent, total, reason
+        super().__init__(f"app-server write uncertain: {sent}/{total} bytes ({reason})")
+
+
+def _deadline(timeout):
+    if (type(timeout) not in (int, float) or not 0 <= timeout <= threading.TIMEOUT_MAX
+            or not math.isfinite(timeout)):
+        raise ValueError("timeout must be finite, nonnegative and within the lock wait range")
+    return time.monotonic() + timeout
+
+
 class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
+        _require_pipe_runtime()
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
         self._owns_process_group = os.name == "posix" and process_factory is subprocess.Popen
@@ -27,6 +59,9 @@ class CodexAppServerClient:
         self.process = process_factory(command, **process_options)
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
+        self._send_uncertain = False
+        self._stdin_fd = None
+        self._closing = False
         self._responses = {}
         self._pending = set()
         self._notifications = deque()
@@ -54,18 +89,74 @@ class CodexAppServerClient:
                 self._closed = True
                 self._condition.notify_all()
 
-    def _write(self, message, *, request_id=None):
-        with self._write_lock:
-            wire = json.dumps(message, separators=(",", ":")) + "\n"
-            self._record("sent", message)
+    def _write(self, message, *, deadline=None, request_id=None):
+        # This client exclusively owns stdin. Never mix buffered TextIO writes
+        # with these direct descriptor writes; retain the wrapper only for close.
+        deadline = _deadline(30) if deadline is None else deadline
+        data = (json.dumps(message, separators=(",", ":")) + "\n").encode("utf-8")
+        remaining = max(0, deadline - time.monotonic())
+        if not self._write_lock.acquire(timeout=remaining):
+            raise TimeoutError("app-server write lock timed out; no send attempted")
+        try:
+            if self._send_uncertain:
+                raise AppServerWriteUncertain(0, 0, "previous send failure")
+            if deadline <= time.monotonic():
+                raise TimeoutError("app-server send budget expired; no send attempted")
+            with self._condition:
+                if self._closed or self._closing:
+                    raise AppServerError("app-server closed before send: stderr not drained")
+            if self._stdin_fd is None:
+                try:
+                    fd = self.process.stdin.fileno()
+                except (AttributeError, OSError) as error:
+                    raise AppServerUnsupportedRuntime(
+                        "app-server stdin must expose a nonblocking-capable pipe descriptor") from error
+                # Unsupported pipe modes fail before journaling or sending.
+                # Windows pipe support requires Python 3.12 or later.
+                os.set_blocking(fd, False)
+                self._stdin_fd = fd
+            self._record("sent", json.loads(data))
+            if deadline <= time.monotonic():
+                raise TimeoutError("app-server send budget expired; no send attempted")
             if request_id is not None:
-                # Admit only after obtaining the write slot and preparing the
-                # frame. Do not hold the condition across blocking stream I/O:
-                # an immediate reply may need the reader before write returns.
+                # Preserve reply ownership only after serialized send preparation.
                 with self._condition:
                     self._pending.add(request_id)
-            self.process.stdin.write(wire)
-            self.process.stdin.flush()
+            sent = 0
+            view = memoryview(data)
+            try:
+                while sent < len(data):
+                    if self._closing:
+                        raise AppServerError("app-server closed during pipe send")
+                    if deadline <= time.monotonic():
+                        raise TimeoutError("app-server pipe send timed out")
+                    try:
+                        # Bound each syscall, not the size of the JSON record.
+                        count = os.write(self._stdin_fd, view[sent:sent + 65536])
+                        if count <= 0:
+                            raise OSError("app-server pipe write made no progress")
+                        sent += count
+                    except BlockingIOError:
+                        remaining = deadline - time.monotonic()
+                        if remaining <= 0:
+                            raise TimeoutError("app-server pipe send timed out")
+                        if os.name == "nt":
+                            # Windows select accepts sockets, not pipe handles.
+                            time.sleep(min(.01, remaining))
+                        else:
+                            # poll has no select FD_SETSIZE descriptor limit.
+                            # Cap each millisecond wait to avoid poll integer
+                            # overflow for otherwise valid large timeouts.
+                            waiter = select.poll()
+                            waiter.register(self._stdin_fd, select.POLLOUT)
+                            waiter.poll(min(remaining, 1) * 1000)
+            except BaseException as error:
+                self._send_uncertain = True
+                if not isinstance(error, Exception):
+                    raise
+                raise AppServerWriteUncertain(sent, len(data), type(error).__name__) from error
+        finally:
+            self._write_lock.release()
 
     def _record(self, direction, message):
         if self._journal is None:
@@ -77,6 +168,7 @@ class CodexAppServerClient:
             self._journal.flush()
 
     def request(self, method, params=None, timeout=30):
+        deadline = _deadline(timeout)
         with self._condition:
             identifier = self._next_id
             self._next_id += 1
@@ -84,8 +176,7 @@ class CodexAppServerClient:
         if params is not None:
             message["params"] = params
         try:
-            self._write(message, request_id=identifier)
-            deadline = time.monotonic() + timeout
+            self._write(message, deadline=deadline, request_id=identifier)
             with self._condition:
                 while identifier not in self._responses:
                     remaining = deadline - time.monotonic()
@@ -104,11 +195,12 @@ class CodexAppServerClient:
                 self._pending.discard(identifier)
                 self._responses.pop(identifier, None)
 
-    def notify(self, method, params=None):
+    def notify(self, method, params=None, timeout=30):
+        deadline = _deadline(timeout)
         message = {"method": method}
         if params is not None:
             message["params"] = params
-        self._write(message)
+        self._write(message, deadline=deadline)
 
     def wait_notification(self, predicate, timeout=120):
         deadline = time.monotonic() + timeout
@@ -161,10 +253,22 @@ class CodexAppServerClient:
     def _signal_owned_group(self, signum):
         if not getattr(self, "_owns_process_group", False):
             return
+        # Reap an exited leader before signaling: Darwin may return EPERM for
+        # its unreaped, otherwise empty group. Still signal surviving children.
+        self.process.poll()
         try:
             os.killpg(self.process.pid, signum)
         except ProcessLookupError:
             pass
+        except PermissionError:
+            # The leader can exit between poll and killpg. Reap that race and
+            # retry once; a live leader or persistent denial remains an error.
+            if self.process.poll() is None:
+                raise
+            try:
+                os.killpg(self.process.pid, signum)
+            except ProcessLookupError:
+                pass
 
     def _wait_owned_group(self, timeout):
         if not getattr(self, "_owns_process_group", False):
@@ -181,6 +285,8 @@ class CodexAppServerClient:
             time.sleep(0.01 if remaining is None else min(0.01, remaining))
 
     def close(self, timeout=5):
+        self._closing = True
+        deadline = None if timeout is None else time.monotonic() + max(0, timeout)
         owns_process_group = getattr(self, "_owns_process_group", False)
         if owns_process_group:
             # The leader may have exited while descendants still own its pipes.
@@ -210,10 +316,20 @@ class CodexAppServerClient:
         # Custom process factories own their stream wrappers and may provide
         # lightweight proxies without the IOBase ``closed``/``close`` API.
         if owns_process_group:
-            for stream_name in ("stdin", "stdout", "stderr"):
-                stream = getattr(self.process, stream_name, None)
-                if stream is not None and not stream.closed:
-                    stream.close()
+            # Terminate first so a backpressured writer can finish. Never close
+            # or recycle its raw descriptor while that writer still owns it.
+            write_lock = self._write_lock
+            remaining = -1 if deadline is None else max(0, deadline - time.monotonic())
+            if not write_lock.acquire(timeout=remaining):
+                raise TimeoutError("app-server writer close timed out")
+            try:
+                for stream_name in ("stdin", "stdout", "stderr"):
+                    stream = getattr(self.process, stream_name, None)
+                    if stream is not None and not stream.closed:
+                        stream.close()
+                self._stdin_fd = None
+            finally:
+                write_lock.release()
         if self._journal is not None and not self._journal.closed:
             if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
                 raise TimeoutError("app-server journal close timed out")

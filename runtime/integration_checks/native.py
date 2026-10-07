@@ -24,6 +24,11 @@ SUITES['protocol'].append('test_app_server_reply_id_5156')
 SUITES['protocol'].append('test_appserver_write_admission_e0cc')
 SUITES['protocol'].append('test_app_server_utf8')
 SUITES['protocol'].append('test_appserver_process_tree_cleanup_20261004')
+SUITES['protocol'].append('test_codex_app_server_send_deadline_v1')
+SUITES['protocol'].append('test_app_server_known_eof')
+SUITES['protocol'].append('test_app_server_runtime_eligibility')
+SUITES['protocol'].append('test_app_server_send_snapshot')
+SUITES['protocol'].append('test_appserver_bounded_close_e0cc')
 
 SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive_acquisition_caller_custody_v3', 'test_adaptive_acquisition_caller_terminal_v3', 'test_adaptive_acquisition_invocation_93c2'])
 

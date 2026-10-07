@@ -1,10 +1,13 @@
-"""Bounded inert-stream tests for response ownership at write admission."""
+"""Response admission over fd-backed transport with controlled peer replies."""
 import io
 import json
+import os
 import queue
 import threading
 import unittest
+from unittest.mock import patch
 
+import codex_app_server_client_v2 as module
 from codex_app_server_client_v2 import AppServerError, CodexAppServerClient
 
 
@@ -34,32 +37,46 @@ class Lines:
         self.rows.put((None, None))
 
 
-class Sink:
-    def __init__(self, process):
-        self.process = process
-        self.flush_error = None
+class FdInput:
+    """The client writes through os.write; this owns only a real pipe fd."""
+    def __init__(self, fd):
+        self._fd = fd
+        self.closed = False
 
-    def write(self, text):
-        row = json.loads(text)
-        self.process.sent.append(row)
-        self.process.reply(row)
-        return len(text)
+    def fileno(self):
+        if self.closed:
+            raise ValueError("I/O operation on closed pipe")
+        return self._fd
 
-    def flush(self):
-        if self.flush_error is not None:
-            raise self.flush_error
+    def close(self):
+        if not self.closed:
+            self.closed = True
+            os.close(self._fd)
 
 
 class Process:
     def __init__(self):
+        self.read_fd, write_fd = os.pipe()
         self.stdout = Lines()
-        self.stdin = Sink(self)
+        self.stdin = FdInput(write_fd)
         self.stderr = io.StringIO()
         self.sent = []
+        self.wire = bytearray()
         self.reply = lambda row: None
+        self.dispatch_fault = None
 
     def poll(self):
+        # This inert custom factory has no child to terminate.
         return 0
+
+    def consume_written_bytes(self, data):
+        self.wire.extend(data)
+        while b"\n" in self.wire:
+            line, _, rest = self.wire.partition(b"\n")
+            self.wire = bytearray(rest)
+            row = json.loads(line)
+            self.sent.append(row)
+            self.reply(row)
 
 
 class ObservedLock:
@@ -67,23 +84,59 @@ class ObservedLock:
         self.lock = threading.Lock()
         self.entered = threading.Event()
 
-    def __enter__(self):
+    def acquire(self, timeout=-1):
         self.entered.set()
-        self.lock.acquire()
+        if timeout is None or timeout < 0:
+            return self.lock.acquire()
+        return self.lock.acquire(timeout=timeout)
+
+    def release(self):
+        return self.lock.release()
+
+    def locked(self):
+        return self.lock.locked()
+
+    def __enter__(self):
+        self.acquire()
+        return self
 
     def __exit__(self, *_):
-        self.lock.release()
+        self.release()
 
 
 class WriteAdmissionTests(unittest.TestCase):
     def client(self):
         process = Process()
         client = CodexAppServerClient([], process_factory=lambda *a, **k: process)
+        real_write = os.write
+
+        def observed_write(fd, data):
+            if fd != process.stdin.fileno():
+                return real_write(fd, data)
+            fault = process.dispatch_fault
+            if fault == "before-write":
+                raise OSError("fixture pre-write failure")
+            count = real_write(fd, data)
+            process.consume_written_bytes(os.read(process.read_fd, count))
+            if fault == "after-write":
+                raise OSError("fixture post-write failure")
+            if fault == "interrupt-after-write":
+                raise KeyboardInterrupt("fixture interrupt")
+            return count
+
+        patcher = patch.object(module.os, "write", side_effect=observed_write)
+        patcher.start()
 
         def close():
-            process.stdout.finish()
-            client.close(timeout=1)
-            self.assertFalse(client._reader.is_alive())
+            try:
+                process.stdout.finish()
+                client.close(timeout=1)
+                self.assertFalse(client._reader.is_alive())
+            finally:
+                process.stdin.close()
+                process.stderr.close()
+                os.close(process.read_fd)
+                patcher.stop()
 
         self.addCleanup(close)
         return client, process
@@ -109,6 +162,7 @@ class WriteAdmissionTests(unittest.TestCase):
         client, process = self.client()
         process.reply = lambda row: process.stdout.emit({"id": float(row["id"]), "result": "proper"})
         self.assertEqual(client.request("fixture/float", timeout=1), "proper")
+        self.assertEqual(process.sent, [{"method": "fixture/float", "id": 1}])
         self.assert_retired(client)
 
     def test_numeric_float_error_preserves_original_server_error(self):
@@ -222,11 +276,18 @@ class WriteAdmissionTests(unittest.TestCase):
     def test_concurrent_requests_accept_reverse_response_order(self):
         client, process = self.client()
         issued = threading.Event()
-        process.reply = lambda row: issued.set() if len(process.sent) == 2 else None
+        rows = []
+
+        def reply(message):
+            rows.append(message)
+            if len(rows) == 2:
+                issued.set()
+
+        process.reply = reply
         calls = [self.launch(client, label) for label in ("first", "second")]
         try:
             self.assertTrue(issued.wait(1))
-            for row in reversed(process.sent):
+            for row in reversed(rows):
                 process.stdout.emit({"id": float(row["id"]), "result": row["method"]})
         finally:
             for thread, _, _ in calls:
@@ -249,7 +310,7 @@ class WriteAdmissionTests(unittest.TestCase):
 
     def test_eof_retires_request(self):
         client, process = self.client()
-        process.reply = lambda row: process.stdout.finish()
+        process.reply = lambda _row: process.stdout.finish()
         with self.assertRaisesRegex(AppServerError, "closed during"):
             client.request("fixture/eof", timeout=1)
         self.assert_retired(client)
@@ -268,26 +329,24 @@ class WriteAdmissionTests(unittest.TestCase):
                 self.assertEqual(process.sent, [])
                 self.assert_retired(client)
 
-    def test_write_flush_and_baseexception_retire_without_resend(self):
-        for fault in ("write", "flush", "interrupt"):
+    def test_prewrite_postwrite_and_baseexception_retire_without_resend(self):
+        for fault in ("before-write", "after-write", "interrupt-after-write"):
             with self.subTest(fault=fault):
                 client, process = self.client()
-                error = KeyboardInterrupt("fixture interrupt") if fault == "interrupt" else OSError("fixture failure")
-
-                def reply(row):
-                    process.stdout.emit({"id": row["id"], "result": "arrived-before-failure"})
-                    if fault != "flush":
-                        raise error
-
-                process.reply = reply
-                if fault == "flush":
-                    process.stdin.flush_error = error
-                with self.assertRaises(type(error)):
+                process.dispatch_fault = fault
+                process.reply = lambda row: process.stdout.emit({"id": row["id"], "result": "arrived-before-failure"})
+                expected = KeyboardInterrupt if fault == "interrupt-after-write" else module.AppServerWriteUncertain
+                with self.assertRaises(expected) as raised:
                     client.request("fixture/failure", timeout=1)
+                if fault == "after-write":
+                    self.assertIsInstance(raised.exception.__cause__, OSError)
+                if fault == "interrupt-after-write":
+                    self.assertIsInstance(raised.exception, KeyboardInterrupt)
                 self.assert_retired(client)
+                process.dispatch_fault = None
                 process.stdout.emit({"id": 1, "result": "late"})
                 self.assert_retired(client)
-                self.assertEqual(len(process.sent), 1)
+                self.assertEqual(len(process.sent), 1 if fault != "before-write" else 0)
 
 
 if __name__ == "__main__":
