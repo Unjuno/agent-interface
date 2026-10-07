@@ -1,0 +1,38 @@
+{
+  "allocation": "5749-ACTION-ONLY-A01-20261007",
+  "base_commit": "75bfe2badd49376ac33cd8a87030e7a6a3396ecf",
+  "freeze_commit": "0185454d0f5f35506fefffce3e908838e17e675b",
+  "candidate": {
+    "command": "python -B candidate.py fixture.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_sha256": "0e5f7a4d4685298da3c0e24eff021e0ccf1ea605c605191a6e12323c6284ee3d"
+  },
+  "auditor": {
+    "command": "python -B auditor.py results/formal01/raw.json fixture.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "disposition": "PASS_METHOD_SCOPED",
+    "rows": 78,
+    "errors": [],
+    "mutations_rejected": "7/7",
+    "stdout_sha256": "114886457fe3ce6d765d8e978373bbf15e1bdaf2f9bd3069418cd18b5ab2a9cb"
+  },
+  "retries": 0,
+  "summary": {
+    "stable_B_wrong_proposals": {"static_default": 6, "clarify_each_turn": 0, "action_only_adaptive": 1},
+    "stable_B_queries": {"static_default": 0, "clarify_each_turn": 6, "action_only_adaptive": 0},
+    "all_episode_wrong_proposals": {"static_default": 17, "clarify_each_turn": 0, "action_only_adaptive": 6},
+    "all_episode_queries": {"static_default": 0, "clarify_each_turn": 26, "action_only_adaptive": 0}
+  },
+  "runtime": {
+    "platform": "macOS 27.0 arm64",
+    "python": "3.12.13",
+    "container": null,
+    "container_isolation_claimed": false,
+    "network_isolation_claimed": false,
+    "deviation": "OrbStack image content-store inspection remains unavailable per GitHub Issue #8200 comment 6033982148; this pure-stdlib synthetic state-machine run used host Python."
+  },
+  "instrumentation_caveat": "The policy transition branches use target only after route/proposal selection to emit wrong_proposal scoring metadata. The candidate is not process-isolated from evaluator labels; this label use did not control policy state or proposals, but a future confirmatory successor should separate the scorer process and provide a target-stripped policy fixture.",
+  "interpretation": "Finite authored method/state-machine comparison only; no human, GUI, consent UX, privacy, safety, effect, or transfer claim."
+}
