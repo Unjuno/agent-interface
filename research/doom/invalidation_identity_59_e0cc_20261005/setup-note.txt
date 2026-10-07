@@ -1,0 +1,1 @@
+Before any regression invocation: the runner creation script referenced a workspace-relative manifest path from the worktree and raised FileNotFoundError. Runner did not exist, so Python exited 2 without running tests. Corrected to the absolute private manifest path; no production changes or formal allocation.

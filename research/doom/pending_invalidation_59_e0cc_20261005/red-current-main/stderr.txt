@@ -1,0 +1,44 @@
+test_pending_health_invalidation_interrupts_before_completion (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_pending_health_invalidation_interrupts_before_completion) ... ERROR
+test_pending_unknown_health_interrupts_before_completion (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_pending_unknown_health_interrupts_before_completion) ... ERROR
+test_pending_invalidation_does_not_replan_without_neutral_release (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_pending_invalidation_does_not_replan_without_neutral_release) ... ok
+
+======================================================================
+ERROR: test_pending_health_invalidation_interrupts_before_completion (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_pending_health_invalidation_interrupts_before_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repository>/research/doom/test_map01_overlap_controller_v39.py", line 167, in test_pending_health_invalidation_interrupts_before_completion
+    self._exercise_invalidation_handoff(health_mode="hard", pending=True)
+  File "<repository>/research/doom/test_map01_overlap_controller_v39.py", line 466, in _exercise_invalidation_handoff
+    controller.main()
+  File "<repository>/research/doom/map01_overlap_controller_v39.py", line 947, in main
+    latest = wait_for_invalidation_frame(latest, invalidation, wait)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repository>/research/doom/test_map01_overlap_controller_v39.py", line 411, in checked_frame_barrier
+    result = frame_barrier(latest, invalidation, wait, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repository>/research/doom/map01_overlap_controller_v39.py", line 404, in wait_for_invalidation_frame
+    raise RuntimeError("policy invalidation lacks a valid observation identity")
+RuntimeError: policy invalidation lacks a valid observation identity
+
+======================================================================
+ERROR: test_pending_unknown_health_interrupts_before_completion (research.doom.test_map01_overlap_controller_v39.Map01V39CoastTests.test_pending_unknown_health_interrupts_before_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<repository>/research/doom/test_map01_overlap_controller_v39.py", line 170, in test_pending_unknown_health_interrupts_before_completion
+    self._exercise_invalidation_handoff(health_mode="unknown", pending=True)
+  File "<repository>/research/doom/test_map01_overlap_controller_v39.py", line 466, in _exercise_invalidation_handoff
+    controller.main()
+  File "<repository>/research/doom/map01_overlap_controller_v39.py", line 947, in main
+    latest = wait_for_invalidation_frame(latest, invalidation, wait)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repository>/research/doom/test_map01_overlap_controller_v39.py", line 411, in checked_frame_barrier
+    result = frame_barrier(latest, invalidation, wait, timeout)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repository>/research/doom/map01_overlap_controller_v39.py", line 404, in wait_for_invalidation_frame
+    raise RuntimeError("policy invalidation lacks a valid observation identity")
+RuntimeError: policy invalidation lacks a valid observation identity
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.051s
+
+FAILED (errors=2)

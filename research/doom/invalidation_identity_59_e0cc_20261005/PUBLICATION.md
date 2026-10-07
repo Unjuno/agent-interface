@@ -1,0 +1,5 @@
+# Publication conditions
+
+This is a stacked repair on PR #7963, not a merge into main or a live allocation. Before publication, all 249 YAML workflows at the dependency head were inspected for push, pull-request, create and PR-target triggers. This branch does not match either exact-ref formal job (#4242 or #5716). No pull-request-target trigger was found. Relevant automatic work is the Native MCP push/PR contract suite, golden IPC source audit, replay gate and conservative navigation/index candidates; no workflow is changed or manually dispatched.
+
+The GitHub CLI protection/ruleset refresh returned primary API rate-limit 403 on 2026-10-05 at 05:59 UTC (core remaining 0, reset 06:10:25 UTC). No repeated refresh or protection bypass was attempted. Because current mandatory-check status could not be reconfirmed for the stacked base, the publication commit does not request CI skipping. Optional remote CI is not used to substitute for or delay the completed local regressions. Main integration remains gated on live protection checks and FINAL-v5 nonauthor quorum/integration.

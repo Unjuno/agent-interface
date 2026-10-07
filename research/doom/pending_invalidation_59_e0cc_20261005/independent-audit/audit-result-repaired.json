@@ -1,0 +1,93 @@
+{
+  "all_raw_assertions_passed": true,
+  "cases": {
+    "hard-buttons-down.json": {
+      "bad_release": {
+        "buttons_down": [
+          1
+        ],
+        "keys_down": [],
+        "verified": true
+      },
+      "commands": [
+        "submit:cover-0",
+        "cancel:cover-0"
+      ],
+      "gate": "rejected before barrier/replan",
+      "planner_calls": 1
+    },
+    "hard-keys-down.json": {
+      "bad_release": {
+        "buttons_down": [],
+        "keys_down": [
+          "W"
+        ],
+        "verified": true
+      },
+      "commands": [
+        "submit:cover-0",
+        "cancel:cover-0"
+      ],
+      "gate": "rejected before barrier/replan",
+      "planner_calls": 1
+    },
+    "hard-neutral.json": {
+      "barrier_image": "fresh.png",
+      "discarded_actions": 1,
+      "invalidation_sequence_capture": [
+        11,
+        110
+      ],
+      "invalidation_status": "HARD_INVALIDATED",
+      "planner_interruptions": 1,
+      "planner_turns": 2,
+      "program_admissions": 0,
+      "trace_order_pass": true
+    },
+    "hard-unverified.json": {
+      "bad_release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "verified": false
+      },
+      "commands": [
+        "submit:cover-0",
+        "cancel:cover-0"
+      ],
+      "gate": "rejected before barrier/replan",
+      "planner_calls": 1
+    },
+    "unknown-neutral.json": {
+      "barrier_image": "fresh.png",
+      "discarded_actions": 1,
+      "invalidation_sequence_capture": [
+        11,
+        110
+      ],
+      "invalidation_status": "UNKNOWN",
+      "planner_interruptions": 1,
+      "planner_turns": 2,
+      "program_admissions": 0,
+      "trace_order_pass": true
+    }
+  },
+  "focused_receipt_exit_code": 0,
+  "focused_source_hashes_checked": [
+    "research/doom/test_map01_overlap_controller_v39.py",
+    "research/doom/map01_overlap_controller_v39.py"
+  ],
+  "limitations": [
+    "Synthetic process, executor, planner, observations, and release receipts; no live/model/game evidence.",
+    "Planner future is observed pending at invalidation, but the fake transport later returns an eligible completed answer after interrupt; controller discard is the tested gate, not real planner cancellation semantics.",
+    "Health-only invalidation is triggered by a full observation row, which also updates latest. The fixture source is hash-pinned and queues wrong-binding/stale-capture frames before fresh.png; the trace timeline records only event plus sequence, not each candidate identity, so rejection details rely on the pinned fixture and returned fresh image rather than a self-contained raw candidate log.",
+    "Bad-release runs abort before report serialization; their raw trace preserves one planner call, cancel, no barrier/replan, and the injected bad release, but no normal decision report."
+  ],
+  "scope": "independent raw JSON verification only; controller and tests were not rerun",
+  "trace_sha256": {
+    "hard-buttons-down.json": "d19db2cecac6ae45af5417482097e43cf5c768d2c831756fb03e4f1029dff762",
+    "hard-keys-down.json": "bb912cba3d0d86bcaf78602150326317cd1f7451d13d9f4b8f1ba841667e4e25",
+    "hard-neutral.json": "1f1027a1110ef5b53c94a07f27156ba931f97925c0d34bdc579113f814816d46",
+    "hard-unverified.json": "6261cd3312dc4d27b950d7d9b60feecc2c792fdb58fac9cfa7487622b5c0f331",
+    "unknown-neutral.json": "8b8dfcdeee0b49a6371d1a443e986bc1bfab1ffcf9c3edb3b5c1991d89438130"
+  }
+}

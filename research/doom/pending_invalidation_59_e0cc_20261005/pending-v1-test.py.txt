@@ -134,51 +134,6 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(interruption, {"status": "interrupted"})
         self.assertIn('"op": "cancel"', process.stdin.writes[0])
 
-    def test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral(self):
-        class Stdin:
-            def write(self, value): pass
-            def flush(self): pass
-        class Process:
-            stdin = Stdin()
-        class Planner:
-            def interrupt(self, handle): return {"status": "interrupted"}
-
-        def wait_for_matching_terminal(terminal):
-            unrelated = dict(terminal, id="other-cover")
-            rows = (unrelated, terminal)
-
-            def wait(predicate):
-                return next((row for row in rows if predicate(row)), None)
-
-            return wait
-
-        for status in ("completed", "expired"):
-            neutral_terminal = {
-                "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
-            result = controller.cancel_invalidated_cover(
-                Planner(), object(), Process(), wait_for_matching_terminal(neutral_terminal),
-                "cover-0")
-            self.assertIs(result[1], neutral_terminal)
-
-            held_terminal = {
-                "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": ["space"], "buttons_down": []}}
-            with self.assertRaisesRegex(RuntimeError, "verify empty release"):
-                controller.cancel_invalidated_cover(
-                    Planner(), object(), Process(), wait_for_matching_terminal(held_terminal),
-                    "cover-0")
-
-        for status in ("failed", "needs_decision"):
-            terminal = {
-                "event": "terminal", "id": "cover-0", "status": status,
-                "release": {"verified": True, "keys_down": [], "buttons_down": []}}
-            with self.subTest(status=status):
-                with self.assertRaisesRegex(RuntimeError, "verify empty release"):
-                    controller.cancel_invalidated_cover(
-                        Planner(), object(), Process(), wait_for_matching_terminal(terminal),
-                        "cover-0")
-
     def test_running_invalidation_rejects_nonempty_or_unverified_release(self):
         class Stdin:
             def write(self, value): pass
@@ -241,8 +196,7 @@ class Map01V39CoastTests(unittest.TestCase):
                 if health_mode == "unknown" and observation["sequence"] == 11:
                     raise ValueError("unreadable health fixture")
                 health = 60 if observation["sequence"] == 11 else 90
-                return {"format": "observable-signal-v1",
-                        "status": "observed", "value": health if self.signal_id == "health" else 20,
+                return {"status": "observed", "value": health if self.signal_id == "health" else 20,
                         "signal_id": self.signal_id,
                         "binding": observation["pointer_binding"],
                         "sequence": observation["sequence"], "capture_ns": observation["capture_ns"]}
@@ -282,21 +236,13 @@ class Map01V39CoastTests(unittest.TestCase):
                     action = {"state": "active",
                               "commands": [{"action": "forward", "extent": "short"}],
                               "action_validity": [{"critical_health_minimum": 35,
-                                  "maximum_health_loss": 12, "minimum_ammo": 0,
-                                  "max_current_age_ms": 1000}],
+                                  "maximum_health_loss": 12, "max_source_age_ms": 30000}],
                               "contingencies": [],
                               "next_cover": [{"action": "strafe_left", "extent": "short"}],
                               "next_cover_validity": [{"signal_id": "health",
                                   "critical_health_minimum": 35, "maximum_health_loss": 12,
                                   "max_source_age_ms": 30000}]}
                     controller.validate_action(action)
-                    source = Reader(signal_id="health").read(observations[1])
-                    controller.build_action_contract(
-                        action["commands"], action["action_validity"][0], source)
-                    testcase.assertTrue(controller.bindings_equal_exact(
-                        source["binding"], {"focus": 7, "surface": 7,
-                                            "geometry": [0, 0, 640, 480]}))
-                    timeline.append("active_answer_contract_validated")
                 return SimpleNamespace(answer=action, usage={}, handle=handle,
                     status="completed", answer_eligible=True, cancellation_requested=False,
                     error=None)
@@ -354,9 +300,6 @@ class Map01V39CoastTests(unittest.TestCase):
                      "image": "fresh.png", "step": 0,
                      "pointer_binding": {"focus": 7, "surface": 7}}
             observations = observations[:4] + [wrong, terminal, stale, fresh] + observations[6:]
-            for row in observations:
-                if "pointer_binding" in row:
-                    row["pointer_binding"]["geometry"] = [0, 0, 640, 480]
         # Controller wait() normally consumes the reader thread's queue. Feed
         # the same order deterministically without a process or GUI.
         import queue
@@ -460,8 +403,6 @@ class Map01V39CoastTests(unittest.TestCase):
                 if health_mode is not None:
                     self.assertEqual(invalidation["outcome"]["status"],
                                      "HARD_INVALIDATED" if health_mode == "hard" else "UNKNOWN")
-                if pending:
-                    self.assertEqual(Path(result["image"]).name, "fresh.png")
                 timeline.append("frame_barrier_pass:" + Path(result["image"]).name)
                 return result
 
@@ -529,7 +470,6 @@ class Map01V39CoastTests(unittest.TestCase):
             with trace_path.open("x") as handle:
                 json.dump(trace, handle, indent=2)
         if pending:
-            self.assertIn("active_answer_contract_validated", timeline)
             self.assertIn("observe_invalidation_while_pending", timeline)
             self.assertLess(timeline.index("observe_invalidation_while_pending"), timeline.index("interrupt:turn-1"))
             self.assertLess(timeline.index("interrupt:turn-1"), timeline.index("planner_completed_after_interrupt"))
