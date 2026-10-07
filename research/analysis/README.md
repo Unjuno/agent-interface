@@ -1109,6 +1109,8 @@ The checker compares the generated block against every child directory with a re
 
 ## Retained construction archives
 
+- [Issue #7993 A02 superpopulation IPCW construction archive](verifier_maturity_censoring_7993_superpopulation_a02_construction_20261005/RESULTS.md) — `PASS_CONSTRUCTION_SCOPED` only: 32 synthetic cohorts × 40 assignments (1,280 total), 11/11 host construction tests in ordinary and optimized mode; no formal 20,000-cohort allocation or independent external review. Separate from PR #8045’s exact 64-state expectation subgate; no production, calibration, safety, or authority claim.
+
 - [Issue #8022 T0 protocol audit A01](recording_salience_8022_protocol_audit_a01_20261005/RESULT.md) — document-only `HOLD_NO_AUDITABLE_PROTOCOL`; the Issue lacked inspectable consent, capture-parity, task/scoring, and analysis artifacts. No participant study or human outcome was run or inferred, and no study authorization follows.
 
 
