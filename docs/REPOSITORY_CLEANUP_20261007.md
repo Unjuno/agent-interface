@@ -87,3 +87,10 @@ Read-only GitHub REST API inventory, cross-checked against fetched Git refs. Mai
 
 - PR #8301 refreshed onto current main `798ac5ad709168ff1d27b115f10f4f96b126bb71`; current head `7951d1996a6de31af505e595eacb3e07d69797ca`. A13B's frozen package and all outcome files are unchanged; the analysis index adds A13B while retaining A09–A13. Static analysis-index (769 entries) and diff checks pass. Candidate/environment/auditor were not rerun because this result is explicitly one-shot.
 - Current-head checks: public-navigation, research-workspace-index, replay-gate pass; analysis-index and three method-contract checks are still running. PR remains open for independent review; no reviewer was requested and no merge was attempted.
+
+## 2026-10-07 live inventory follow-up (14:31Z)
+
+- Current `main` is `d6b3376aaabb6738dbf8e6a8184fe10e66aa937d` (includes merged PR #8307). Open PR inventory: 394 total; 346 target main, 48 are stacked; 344/346 main-targeted PRs record an older base SHA; 45 are ready for review. These counts are a point-in-time capture; do not bulk-refresh stacked or frozen-input experiments.
+- Direct `git ls-remote --heads origin` returned 461 refs before the retirement below. PR #8307 is merged; its exact head `61d20e52b8d20cc2ba8247d8cbce15ad935a5f73` is an ancestor of current main, branch protection is false, no open PR head/base depends on the ref, and no worktree owns it. Deleted `rescue/windows-pipe-7446-7456-evidence-currentmain-20261007` with an expected-tip lease. The archived evidence remains reachable from main.
+- PR #8301 current-head checks for `7951d1996a6de31af505e595eacb3e07d69797ca` are all green (7/7). It remains open for independent review; no merge or reviewer request was made.
+- Sampled oldest-updated open PRs include explicit HOLDs, source-bound evidence and unresolved successor dependencies; they are preserved rather than closed or deleted without a full dependency/evidence audit.
