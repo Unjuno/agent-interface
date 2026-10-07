@@ -1,6 +1,11 @@
 """Construction contract tests; never run after a formal CLI invocation."""
 import copy
+import json
+import subprocess
+import sys
+import tempfile
 import unittest
+from pathlib import Path
 
 from candidate import build_corpus
 from auditor import audit_corpus
@@ -45,6 +50,31 @@ class ContractTests(unittest.TestCase):
             with self.subTest(mutation=name):
                 self.assertEqual(audit_corpus(apply_mutation(build_corpus(), name))["result"], "FAIL")
 
+    def test_cli_pass_fail_and_no_overwrite_contract(self):
+        root = Path(__file__).resolve().parent
+        with tempfile.TemporaryDirectory(prefix="a02-construction-") as tmp:
+            tmp = Path(tmp)
+            raw, audit = tmp / "raw.json", tmp / "audit.json"
+            candidate_cmd = [sys.executable, str(root / "candidate.py"), str(raw)]
+            first = subprocess.run(candidate_cmd, capture_output=True, text=True)
+            self.assertEqual(first.returncode, 0, first.stderr)
+            parsed = json.loads(raw.read_text(encoding="utf-8"))
+            self.assertEqual(len(parsed), 50)
+            second = subprocess.run(candidate_cmd, capture_output=True, text=True)
+            self.assertNotEqual(second.returncode, 0)
+            auditor_cmd = [sys.executable, str(root / "auditor.py"), str(raw), str(audit)]
+            checked = subprocess.run(auditor_cmd, capture_output=True, text=True)
+            self.assertEqual(checked.returncode, 0, checked.stderr)
+            self.assertEqual(json.loads(audit.read_text(encoding="utf-8"))["result"], "PASS")
+            changed = apply_mutation(parsed, "final_truth")
+            bad_raw, bad_audit = tmp / "bad.json", tmp / "bad-audit.json"
+            bad_raw.write_text(json.dumps(changed), encoding="utf-8")
+            rejected = subprocess.run([sys.executable, str(root / "auditor.py"), str(bad_raw), str(bad_audit)], capture_output=True, text=True)
+            self.assertNotEqual(rejected.returncode, 0)
+            self.assertEqual(json.loads(bad_audit.read_text(encoding="utf-8"))["result"], "FAIL")
+            no_overwrite = subprocess.run(auditor_cmd, capture_output=True, text=True)
+            self.assertNotEqual(no_overwrite.returncode, 0)
+
 def apply_mutation(rows, name):
     out = copy.deepcopy(rows)
     target = next(r for r in out if r["kind"] == "matched")
@@ -52,7 +82,9 @@ def apply_mutation(rows, name):
     elif name == "baseline_identity": target["baseline_source_id"] = "forged/source"
     elif name == "common_byte": target["prefix_hex"] = ("00" if target["prefix_hex"][:2] != "00" else "01") + target["prefix_hex"][2:]
     elif name == "cue_offset": target["current_cue_offset"] += 1
-    elif name == "lineage": target["lineage"] = []
+    elif name == "lineage":
+        target = next(r for r in out if r["kind"] == "matched" and r["depth"] == 1)
+        target["lineage"] = []
     elif name == "observed_inference":
         target = next(r for r in out if r["arm"] == "SOURCE_LINKED_DELTA" and r["depth"] > 0)
         target["delta_evidence"] = "OBSERVED"
