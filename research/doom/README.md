@@ -430,3 +430,36 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 ## V39 feedback-onset custody audit A01 (#8213)
 
 - [Preserved five-file audit package](feedback_onset_audit_a01_20261005/README.md) — 634 retained events, 39 admissions, no per-key release measurement/transition or independently timestamped in-run task-effect event; one post-control score does not locate effect onset. [Original #7602 README](feedback_onset_a01_8213_SOURCE_README.md) preserves the pre-correction replay path. Construction STOP retained; no new audit or live run.
+
+## Historical V39 release-telemetry rescue (#7378/#7385/#7395)
+
+This is an evidence-only successor. The old PRs' source, test, and selector
+edits are not copied: current-main versions of the overlapping paths differ,
+and the old three-way merge conflicts in those paths. These archives remain
+bound to their frozen historical sources and do not qualify current-main
+runtime behavior.
+
+- [First live-allocation STOP](map01-v39-per-key-release-live-t0-20261004/results/MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01/RUN_RESULT.md) — one candidate invocation exited before X11 session/input because of a malformed network-precondition expression; zero input actions/processes and no auditor invocation. This consumed allocation is not retried.
+- [Split-step release telemetry construction](results/map01-v39-per-key-release-telemetry-port-v1/README.md) — the frozen regression first reproduced a missing earlier-key receipt; corrected host-side focused suites passed 18/18 backend, 11/11 retained adapter, and 8/8 owner-wrapper tests. No container, X11, live input, or application-effect run is claimed.
+- [Cleanup-overlap construction and retained WSLc outcome](map01-v39-release-cleanup-overlap-v1/README.md) — execute-path host candidate passed 21/21 with owner-wrapper 8/8; saved-log audit 12/12 and mutation controls 5/5. The earlier lower-boundary WSLc outcome and swap/cgroup warning remain unchanged.
+- [Malformed cleanup/bracket follow-up](map01-v39-release-cleanup-followup-v1/RESULT.md) — exact historical parents retain their expected REDs; current-parent candidate reported 26/26 backend and 8/8 owner tests, with saved-log audit 14/14. Construction-only; no live allocation or physical-release claim.
+
+The historical saved-log auditors were rerun from this current-main checkout
+without modifying their original outputs. The overlap auditor reports 11/12:
+its execute-path assertion is tied to a test-name/assertion no longer present
+in current main. Its separate five mutation tests pass. The follow-up auditor
+reports 13/14: its three historical malformed-test names are absent from the
+current-main test file. These are source-drift re-audit FAILs, not replacements
+for the historical 12/12 and 14/14 records; no candidate or live allocation
+was rerun. See
+[`CURRENT_MAIN_REAUDIT.md`](results/map01-v39-per-key-release-telemetry-port-v1/CURRENT_MAIN_REAUDIT.md).
+
+**H/T/D/C/U:** H — per-key release receipts must survive successful steps of
+one program, while cleanup overlap or malformed timing/history cannot be
+accepted as an ordinary verified release. T — preserve the first STOP and the
+separately frozen synthetic RED/GREEN follow-ups without repeating the consumed
+allocation. D — these are source-bound construction/audit results only. C —
+fake owners and retained logs do not establish physical key state, application
+consumption, or useful feedback; the historical WSLc run also records
+unavailable swap isolation. U — current-main live V39 telemetry and task-effect
+gates remain open; this archive makes no code promotion.
