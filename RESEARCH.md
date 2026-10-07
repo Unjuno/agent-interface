@@ -2336,3 +2336,36 @@ The frozen candidate and separate raw-only audit passed the declared authored fi
 # Issue #7986 T0 A01 — action-conditioned incorrect-belief exposure (2026-10-05)
 
 Eight authored event intervals passed the frozen method gate: exposure is zero for an old-but-correct belief (age 10), positive for stale and freshly misbound beliefs (6 and 5 ticks; the latter age 1), excluded outside live authority/opportunity, and distinct from one realized unsafe effect. Missing truth and ambiguous clock return `UNKNOWN`. Candidate receives no truth sidecar. This is a finite method result only—not harm reduction, safety, human, GUI, live, or runtime evidence. See [report and frozen artifacts](research/analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) and [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+
+# Issue #57 — native existing-runtime B01–B03 construction boundary (2026-10-03)
+
+On one owned isolated Debian 12/ARM64 guest, B01 retained a driver-template
+syntax failure, B02 retained authenticated-Xvfb readiness failure, and B03
+completed setup plus one 1280×800 capture with verified empty input release.
+No input-down, model turn, or task attempt occurred; the consumed formal
+allocation was not invoked. The independent saved-data auditor passed and all
+221 manifest entries were rechecked against byte length and SHA-256. This is
+construction/readiness evidence only, not current-main route qualification,
+application effect, release under held input, or efficiency. Private cookie
+contents were excluded, all first failures and Openbox exit 1 remain retained,
+and no historical script was replayed. See the [B01–B03 archive](research/integration/native_existing_runtime_57_20261003_01a0ff52_b01/REPORT.md)
+and [Issue #57](https://github.com/Unjuno/agent-interface/issues/57).
+
+## Issue #57 D01 — retained native held-input cancellation
+
+The same rescue also preserves 58 D01 archival files from 2026-10-03: one authenticated Debian 12/ARM64 virtual-display XTEST Shift_L hold, an independent down witness, cancellation, verified owner release, and an independent clear key/button witness. The terminal remained cancelled with zero completed steps; Xvfb -9 and Openbox 1 exits and all scope limits remain retained. No model/task attempt or original run was replayed. This is one virtual-display cancellation condition, not physical-hardware release, general GUI reliability, current-main runtime qualification, or an efficiency claim. See the [D01 report and retained raw evidence](research/integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md).
+
+# Issue #57 — Firecrawl remote-browser and compiled release-boundary archive (2026-10-03)
+
+This archive preserves one bounded ordinary remote-browser task (T01) with
+provider-reported app effects and one compiled-core bridge boundary (I01).
+T01's finite task effect was independently checked in the retained public
+evidence; this does not establish a general GUI result. I01's add action changed
+the application, but the provider supplied no release/neutral-state telemetry:
+the outcome remains `RUNTIME_FAILED` / `HOLD_RELEASE_TELEMETRY` with zero
+completed transitions and release `UNVERIFIED`. Do not infer no effect from
+zero completed transitions and do not resend the action. The prior sessions,
+source pins, raw responses, projections, hashes, and first failures are
+preserved; no consumed remote task was rerun for rescue. See the [complete
+archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
+and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).
