@@ -1,0 +1,5 @@
+python -m unittest discover -s research/doom/v39_ammo_cover_epoch_join_59_a03_20261005 -v
+python research/doom/v39_ammo_cover_epoch_join_59_a03_20261005/probe.py
+python research/doom/v39_ammo_cover_epoch_join_59_a03_20261005/audit.py
+python -m compileall -q research/doom/v39_ammo_cover_epoch_join_59_a03_20261005
+git diff --check
