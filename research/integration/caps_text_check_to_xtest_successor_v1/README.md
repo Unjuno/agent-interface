@@ -39,6 +39,26 @@ list directly (not a reply object with `.map`). This construction failure is
 preserved here; the probe now reads the returned list. The private Xvfb ended
 with its wrapper, so no shared keyboard state survived.
 
+### Construction-only first outcomes
+
+Two new TCP-disabled Xvfb sessions completed with the corrected probe, whose
+source SHA-256 is
+`5f625cf4d41b942d5d9863b209ee979272ea5c00e64628d27c2aec93f473dc47`:
+
+| Arm | Display | LockMask sample | Actor ack / post-lock | Entry value | Held keycodes |
+|---|---|---|---|---|---:|
+| stable | `:99` | 0 | none / 0 | `aB2` | 0 |
+| interposed | `:100` | 0 | `[1,1]` / 1 | `Ab2` | 0 |
+
+The interposition arm called `XkbLockModifiers` over a second X connection,
+performed `XSync`, and independently observed LockMask=1 before the input
+connection's first XTEST key event. The Entry journal shows first key `a` was
+received as `A`; Shift+B was received as lowercase `b`; digit `2` was unchanged.
+This establishes the fixture's deterministic ordering and Caps Lock effect only.
+It did not execute the #8255 `TEXT_LOCK_GUARD`, public dispatch, a separate
+controller process/IPC barrier, or any formal schedule. No source freeze or
+formal case count is claimed.
+
 ## Next gates
 
 1. Run the excluded `construction_probe.py` in two fresh private Xvfb sessions
