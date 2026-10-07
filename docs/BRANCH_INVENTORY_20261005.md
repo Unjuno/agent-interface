@@ -347,13 +347,13 @@ Merged PR #8253's source-ref cleanup is also verified: `fix/ci-preview-analysis-
 These 66 refs remain unclassified. Several are explicitly research/rescue branches; before deleting any, resolve closed-PR history, unique commit/path custody, active allocations, and worktree ownership. Preserve experiment raw data and STOP outcomes.
 
 
-## Current open-PR branch map and merged-ref cleanup — 2026-10-07 09:41 UTC
+## Current open-PR crosswalk and #8217 evidence custody — 2026-10-07 09:54 UTC
 
-A complete date-partitioned search and metadata fetch resolved 360 open PRs to 360 distinct head branch names and 36 distinct base branch names; 32 base names are also open heads, and four are base-only. The branch-name pagination read initially returned 424 refs. After deleting merged PR #8253's source ref below, a fresh count was 423. Of these current refs, 59 are neither an open PR head nor an open PR base. This is only an initial candidate set: each still needs closed-PR history, tip/content custody, owner/allocation, and local worktree review.
+After the #8217 cleanup, a fresh remote read found 434 branch refs and the complete open-PR REST collection contained 363 PRs. All 363 have distinct head refs. Thirty-seven branch names are open PR bases; 33 overlap with open heads and four are base-only. Sixty-seven refs are neither open heads nor bases. These counts and lists come from overlapping reads and remain a working snapshot, not a deletion classification.
 
-Deleted `fix/ci-preview-analysis-checkout-20261006` at exact tip `0756e73a24c0f1f5ac869063b08bebe1e89dad7b`. PR #8253 is closed-merged; its live branch tip matched the PR head and is an ancestor of main (main is 39 commits ahead). Open PR head/base mapping showed no dependents, the branch was unprotected, and no local worktree had it checked out. The exact-tip lease succeeded. The branch head is absent and `refs/pull/8253/head` remains fetchable at the former tip.
+Deleted closed-unmerged #8217's `research/7799-pairwise-eligibility-t0-a01-20261005` source ref at exact tip `165fa3e21949328606adfede46aea04681d05883`. All eight package entries, including the results subtree, match main by Git blob ID. The package directory link is present on main, and main's broader .gitattributes rule supersedes the source branch's narrower rule. The analytical summary row remains proposed on Draft PR #8263. The branch was unprotected, owned by `Unjuno`, had no open head/base dependencies or checked-out worktree, and its closed pull-head remains fetchable. No experiment, candidate, auditor, or test was rerun.
 
-### Remote refs outside current open-PR heads and bases
+### Current refs outside open PR heads and bases
 
 - `codex/fix-7997-evidence-wording`
 - `fix/compiled-observation-exception-propagation-20261005`
@@ -370,15 +370,24 @@ Deleted `fix/ci-preview-analysis-checkout-20261006` at exact tip `0756e73a24c0f1
 - `fix/59-windows-anonymous-pipe-readiness-20261005`
 - `fix/7974-release-lockout-a01-20261005`
 - `fix/8243-verifier-r2p6-20261006`
+- `rescue/caller-terminal-journal-e01-currentmain-20261007`
 - `rescue/constructor-close-fdfd-20261004`
+- `rescue/cost-value-e02-currentmain-20261007`
+- `rescue/gil-x11-currentmain-20261007`
+- `rescue/http-edit-evidence-s07-currentmain-20261007`
+- `rescue/native-three-arm-p01-currentmain-20261007`
+- `rescue/primary-mint-sparse-currentmain-20261007`
+- `rescue/primary-release-shape-e01-currentmain-20261007`
+- `rescue/todomvc-browser-b01-currentmain-20261007`
 - `rescue/wal-snapshot-6526-20261004`
+- `rescue/win32-release-retain-7772-currentmain-20261007`
+- `rescue/windows-reuse-causality-currentmain-20261007`
 - `rescue/59-per-key-interval-a01-a02-20261005`
 - `rescue/7838-a02-current-main-20261005`
 - `research/cli-report-persistence-retained-p4n7-20261006`
 - `research/held-chord-h7k3-20261007`
 - `research/predictive-display-t0-5935-20261006-v1`
 - `research/primary-uncertain-ba92-v1`
-- `research/reversal-geometry-20261006-g8m2`
 - `research/scorer-endpoint-readback-type-20261005`
 - `research/strict-attempt-ordinal-v39-20261005`
 - `research/v15-perkey-owner-evidence-only-20261005`
@@ -405,7 +414,6 @@ Deleted `fix/ci-preview-analysis-checkout-20261006` at exact tip `0756e73a24c0f1
 - `research/59-xvfb-audit-v3-a02-20261005`
 - `research/4435-complete-custody-20261007-k9r2`
 - `research/6576-runtime-envelope-a04-20261006`
-- `research/7799-pairwise-eligibility-t0-a01-20261005`
 - `research/7993-superpopulation-ipcw-a02-construction-20261005`
 - `research/8150-threat-profiled-runtime-eligibility-t0-20261005`
 - `research/8157-prefix-audit-a03-20261005`
@@ -415,4 +423,4 @@ Deleted `fix/ci-preview-analysis-checkout-20261006` at exact tip `0756e73a24c0f1
 - `test/59-v39-adapter-edge-cardinality-a01-20261005`
 - `test/59-v39-observation-step-alias-20261005`
 
-These 59 refs are unclassified. Names and open-PR relationships alone do not justify deletion; preserve any unique experiment evidence and STOP/raw outcomes before considering cleanup.
+These 67 refs remain unclassified. Several are research/rescue branches. Resolve closed-PR history, unique commit/path custody, owner/allocation, and worktree status before any further deletion; preserve experiment raw data and STOP outcomes.
