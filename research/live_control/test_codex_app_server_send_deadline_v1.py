@@ -278,6 +278,55 @@ class AppServerSendDeadlineTests(unittest.TestCase):
             self.assertEqual(rows[1]["message"]["sent_bytes"], 0)
             self.assertFalse(any(row["direction"] == "sent" for row in rows))
 
+    def test_sent_marker_holds_receive_journal_order_lock(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal_path = os.path.join(directory, "protocol.jsonl")
+            with owned_client(journal_path=journal_path) as (client, _read_fd):
+                reached_send_marker = threading.Event()
+                allow_send_marker = threading.Event()
+                original_record = client._record
+                receive_waiting = threading.Event()
+                received_done = threading.Event()
+
+                def delayed_send_marker(direction, message):
+                    if direction == "sent":
+                        reached_send_marker.set()
+                        self.assertTrue(allow_send_marker.wait(3))
+                    original_record(direction, message)
+
+                client._record = delayed_send_marker
+                client._closed = False
+
+                def receive():
+                    receive_waiting.set()
+                    with client._journal_order_lock:
+                        original_record("received", {"id": 1, "result": {}})
+                    received_done.set()
+
+                sender = threading.Thread(target=lambda: client._write(
+                    {"method": "fast-reply", "id": 1},
+                    deadline=time.monotonic() + 1))
+                sender.start()
+                try:
+                    self.assertTrue(reached_send_marker.wait(1))
+                    receiver = threading.Thread(target=receive)
+                    receiver.start()
+                    self.assertTrue(receive_waiting.wait(1))
+                    receiver.join(timeout=.05)
+                    self.assertTrue(receiver.is_alive())
+                finally:
+                    allow_send_marker.set()
+                    sender.join(timeout=1)
+                self.assertFalse(sender.is_alive())
+                receiver.join(timeout=1)
+                self.assertFalse(receiver.is_alive())
+                self.assertTrue(received_done.is_set())
+
+            with open(journal_path, encoding="utf-8") as stream:
+                rows = [json.loads(line) for line in stream]
+            directions = [row["direction"] for row in rows]
+            self.assertLess(directions.index("sent"), directions.index("received"), rows)
+
     def test_request_spends_one_budget_on_send_and_response_wait(self):
         clock = Clock()
         captured = []

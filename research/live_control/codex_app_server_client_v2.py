@@ -59,6 +59,7 @@ class CodexAppServerClient:
         self.process = process_factory(command, **process_options)
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
+        self._journal_order_lock = threading.Lock()
         self._send_uncertain = False
         self._stdin_fd = None
         self._closing = False
@@ -74,7 +75,8 @@ class CodexAppServerClient:
         try:
             for line in self.process.stdout:
                 message = json.loads(line)
-                self._record("received", message)
+                with self._journal_order_lock:
+                    self._record("received", message)
                 with self._condition:
                     if ("id" in message and "method" not in message and
                             type(message["id"]) in (int, float) and
@@ -155,7 +157,8 @@ class CodexAppServerClient:
                             waiter = select.poll()
                             waiter.register(self._stdin_fd, select.POLLOUT)
                             waiter.poll(min(remaining, 1) * 1000)
-                self._record("sent", snapshot)
+                with self._journal_order_lock:
+                    self._record("sent", snapshot)
             except BaseException as error:
                 self._send_uncertain = True
                 if write_attempted:
@@ -175,9 +178,9 @@ class CodexAppServerClient:
     def _record(self, direction, message):
         if self._journal is None:
             return
-        row = {"direction": direction, "observed_ns": time.perf_counter_ns(),
-               "message": message}
         with self._journal_lock:
+            row = {"direction": direction, "observed_ns": time.perf_counter_ns(),
+                   "message": message}
             self._journal.write(json.dumps(row, separators=(",", ":")) + "\n")
             self._journal.flush()
 
