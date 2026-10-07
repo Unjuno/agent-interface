@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "case": "select-first",
+      "keymap_down_seen": null,
+      "keymap_up_seen": null,
+      "press": {
+        "events": [
+          {"detail": -1, "type": 34, "window": null},
+          {"detail": -1, "type": 34, "window": null},
+          {"detail": 38, "type": 2, "window": 2097152}
+        ],
+        "expected_event_found": true,
+        "expected_keycode": 38,
+        "expected_type": 2,
+        "expected_window": 2097152,
+        "fd_select_ready": true,
+        "xlib_pending_before_drain": 3
+      },
+      "query_mode": null,
+      "release": {
+        "events": [{"detail": 38, "type": 3, "window": 2097152}],
+        "expected_event_found": true,
+        "expected_keycode": 38,
+        "expected_type": 3,
+        "expected_window": 2097152,
+        "fd_select_ready": true,
+        "xlib_pending_before_drain": 1
+      },
+      "setup_events_drained": []
+    },
+    {
+      "case": "same-connection-query-first",
+      "keymap_down_seen": true,
+      "keymap_up_seen": true,
+      "press": {
+        "events": [{"detail": 38, "type": 2, "window": 2097152}],
+        "expected_event_found": true,
+        "expected_keycode": 38,
+        "expected_type": 2,
+        "expected_window": 2097152,
+        "fd_select_ready": false,
+        "xlib_pending_before_drain": 1
+      },
+      "query_mode": "same",
+      "release": {
+        "events": [{"detail": 38, "type": 3, "window": 2097152}],
+        "expected_event_found": true,
+        "expected_keycode": 38,
+        "expected_type": 3,
+        "expected_window": 2097152,
+        "fd_select_ready": false,
+        "xlib_pending_before_drain": 1
+      },
+      "setup_events_drained": []
+    },
+    {
+      "case": "separate-query-connection-first",
+      "keymap_down_seen": true,
+      "keymap_up_seen": true,
+      "press": {
+        "events": [{"detail": 38, "type": 2, "window": 2097152}],
+        "expected_event_found": true,
+        "expected_keycode": 38,
+        "expected_type": 2,
+        "expected_window": 2097152,
+        "fd_select_ready": true,
+        "xlib_pending_before_drain": 1
+      },
+      "query_mode": "separate",
+      "release": {
+        "events": [{"detail": 38, "type": 3, "window": 2097152}],
+        "expected_event_found": true,
+        "expected_keycode": 38,
+        "expected_type": 3,
+        "expected_window": 2097152,
+        "fd_select_ready": true,
+        "xlib_pending_before_drain": 1
+      },
+      "setup_events_drained": []
+    }
+  ],
+  "display": ":189",
+  "error": null,
+  "python": "3.12.3",
+  "python_xlib": [0, 33],
+  "schema": "xvfb-xlib-select-buffering-a03-v1",
+  "scope": "private Xvfb; synthetic XTEST only; no game/model/physical input/task effect",
+  "source_sha256": "26969978bfdbde8275084856e35f64f48d168a7b0338328507aaa9f17d6411ac",
+  "status": "PASS_METHOD_SCOPED",
+  "xvfb_exit": 0,
+  "xvfb_stopped": true,
+  "xvfb_version": ["Unrecognized option: -version", "use: X [:<display>] [option]"]
+}

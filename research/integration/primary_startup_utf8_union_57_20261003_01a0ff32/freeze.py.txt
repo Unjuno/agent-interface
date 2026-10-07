@@ -1,0 +1,21 @@
+import pathlib,json,hashlib,datetime,subprocess
+ROOT=pathlib.Path(__file__).resolve().parents[2]
+OUT=pathlib.Path(__file__).resolve().parent
+WORK=ROOT/'work/primary-startup-utf8-union-01a0ff32'
+NODE=pathlib.Path(r'<PRIVATE_RUNTIME>\node\bin\node.exe')
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+pins={str(p.relative_to(ROOT)).replace('\\','/'):{'bytes':p.stat().st_size,'sha256':sha(p)} for p in [OUT/'prepare.py',OUT/'probe.cjs',OUT/'fixture.cjs',OUT/'INTAKE.json',OUT/'source-images.json',OUT/'candidate.mjs.txt',*sorted((WORK/'runtime/host_v1').glob('*'))] if p.is_file()}
+plan={
+ 'run_id':'primary-startup-utf8-union-57-01a0ff32-20261003-a01','worker':'01a0ff32-f520-79d2-b8cd-110e05130103','frozen_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+ 'type':'new ordinary engineering integration and fault-order boundary; not a formal/live/model allocation',
+ 'base':'6d7ce9693caae8c123fda532da64888f6006dcb9','v3':'fdef9c7243e80cfe02bb2659606d317d2142a9a3','utf8':'ba95f01edc122c1d4c3f8e368534222578570bfa',
+ 'candidate_sha256':sha(WORK/'runtime/host_v1/primary_stdio.mjs'),
+ 'runtime':{'node':str(NODE),'node_sha256':sha(NODE),'node_version':subprocess.check_output([str(NODE),'--version'],text=True).strip(),'os':'Windows11Home10.0.26300','cpu':'i7-12700H,14core20logical','ram_total_KiB':33288572,'ram_free_before_KiB':12454784,'disk_free_before_B':66247774208,'resource_snapshot_utc':'2026-10-03T08:52:01Z','during_run_load':'unmeasured; no performance claim'},
+ 'H':'The exact source union retains fatal-byte admission, first-known fatal diagnosis, whole-owner original-request custody, original relay exit and owned-listener retirement together.',
+ 'T':{'affected_modules':['runtime/host_v1/test_primary_stdio.mjs','runtime/host_v1/test_primary_stdio_utf8.mjs','runtime/host_v1/test_relay_client.mjs'],'expected_methods':51,'concurrency':1,'cases':['healthy_split','malformed_pending','malformed_then_stream','stream_then_malformed'],'case_processes':4,'held_original_fixture_per_case':1,'expected_requests_per_case':1,'fixture_guard_s':5,'parent_capture_timeout_s':12,'case_runtime_invocations':1,'source_change_after_freeze':'none; any failure is retained and routed to owners'},
+ 'D':{'component_regression':'all51 methods pass with0fail/skip/cancel','custody':'each case same original request1/result1/exchange request1/fixture response1, settledBeforeRelease false, original fixture and host exit0, fixture PID absent, guard false, owned listeners removed and foreign input observer retained','diagnosis':'healthy resolves; malformed_pending and malformed_then_stream retain the actual first decoder TypeError by identity or cause/aggregate; stream_then_malformed retains first actual stream error; classification separates diagnostic fault from exactly-once custody','whole_union':'PASS only if both custody and diagnosis and component regressions pass; FAIL is not repaired/retried into PASS'},
+ 'C':['Both component suites may pass while independent observer failure cells shadow one another; shared account/model agreement is not independent evidence.','Controlled real relay fixture has no backend or task authority. TextDecoder prototype hook only logs/rethrows the actual original decode; no diagnostic replacement is injected.','Mkdir startup regressions remain controlled builtin hooks; not actual device fault or atomic readiness.'],
+ 'U':['One Windows Node24.19 source composition, four non-independent engineered cases, no distribution/error bound.','No public CLI, physical release, GUI/backend/model tokens, performance or hard whole-call deadline proof.','Source-region union is not a Git merged tree/current-main certificate; source owners/committees unchanged.'],
+ 'pins':pins,'allocation':{'common_N':'unavailable; root only','deadline':'unavailable; unextended','shared_resources':'none claimed','output_cap_B':5*1024*1024,'max_fixture_children':1,'model_calls_launched':0,'main_sends':0,'content_votes':0}}
+(OUT/'FREEZE.json').write_text(json.dumps(plan,ensure_ascii=True,indent=2)+'\n',encoding='utf8')
+print(json.dumps({'state':'FROZEN','utc':plan['frozen_utc'],'pins':len(pins),'node':plan['runtime']['node_version'],'freeze_sha256':sha(OUT/'FREEZE.json')}))

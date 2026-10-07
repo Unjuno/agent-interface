@@ -1,0 +1,132 @@
+import importlib.machinery
+import importlib.util
+import os
+import unittest
+from collections import deque
+from unittest.mock import patch
+
+loader = importlib.machinery.SourceFileLoader('subject', os.environ['BOUNDARY_SOURCE'])
+spec = importlib.util.spec_from_loader(loader.name, loader)
+module = importlib.util.module_from_spec(spec)
+loader.exec_module(module)
+
+
+class WaitReached(Exception):
+    pass
+
+
+class ConditionProbe:
+    def __init__(self, queue):
+        self.queue = queue
+        self.waits = []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_):
+        return False
+
+    def wait(self, remaining):
+        self.waits.append((remaining, tuple(deque.__iter__(self.queue))))
+        raise WaitReached()
+
+
+class CountedDeque(deque):
+    def __init__(self, rows):
+        super().__init__(rows)
+        self.visits = 0
+
+    def __iter__(self):
+        for row in super().__iter__():
+            self.visits += 1
+            yield row
+
+
+def client_for(rows):
+    client = module.CodexAppServerClient.__new__(module.CodexAppServerClient)
+    client._notifications = CountedDeque(rows)
+    client._condition = ConditionProbe(client._notifications)
+    client._notification_consumptions = 0
+    client._closed = False
+    return client
+
+
+class Boundary(unittest.TestCase):
+    def test_unchanged_queue_wait_once_linear(self):
+        for size in (0, 16, 64, 256, 1024):
+            with self.subTest(size=size):
+                rows = [{'intent': '保持した意図', 'row': i} for i in range(size)]
+                client = client_for(rows)
+                examined = []
+                def predicate(row):
+                    examined.append(row)
+                    return False
+                with patch.object(module.time, 'monotonic', return_value=0):
+                    with self.assertRaises(WaitReached):
+                        client.wait_notification(predicate, timeout=1)
+                self.assertEqual(client._notifications.visits <= 2 * size, True)
+                self.assertEqual([id(x) for x in examined], [id(x) for x in rows])
+                self.assertEqual(len(client._condition.waits), 1)
+                remaining, queued = client._condition.waits[0]
+                self.assertEqual(remaining, 1)
+                self.assertEqual([id(x) for x in queued], [id(x) for x in rows])
+                self.assertEqual(client._notification_consumptions, 0)
+
+    def test_expired_fresh_arrival_stops_before_restart(self):
+        old = {'row': 'old'}
+        fresh = {'row': 'fresh', 'intent': '保持した意図'}
+        client = client_for([old])
+        calls = []
+        def predicate(row):
+            calls.append(row)
+            client._notifications.append(fresh)  # reader schedule proxy
+            return False
+        with patch.object(module.time, 'monotonic', side_effect=[0, 1]):
+            with self.assertRaises(TimeoutError):
+                client.wait_notification(predicate, timeout=1)
+        self.assertEqual(calls, [old])
+        self.assertEqual(client._condition.waits, [])
+        self.assertEqual([id(x) for x in client._notifications], [id(old), id(fresh)])
+        self.assertEqual(client._notification_consumptions, 0)
+
+    def test_new_match_consumed_before_wait(self):
+        old = {'row': 'old'}
+        fresh = {'row': 'fresh', 'intent': '保持した意図'}
+        client = client_for([old])
+        calls = []
+        def predicate(row):
+            calls.append(row)
+            if row is old:
+                self.assertIs(client.wait_notification(lambda x: x is old, timeout=0), old)
+                client._notifications.append(fresh)  # reader schedule proxy
+            return True
+        with patch.object(module.time, 'monotonic', return_value=0):
+            self.assertIs(client.wait_notification(predicate, timeout=1), fresh)
+        self.assertEqual([id(x) for x in calls], [id(old), id(fresh)])
+        self.assertEqual(client._condition.waits, [])
+        self.assertEqual(list(client._notifications), [])
+        self.assertEqual(client._notification_consumptions, 2)
+
+    def test_continuous_fresh_rows_stop_at_fake_deadline(self):
+        original = {'row': 0, 'intent': '保持した意図'}
+        client = client_for([original])
+        produced = [original]
+        calls = []
+        def predicate(row):
+            calls.append(row)
+            fresh = {'row': len(produced), 'intent': '保持した意図'}
+            produced.append(fresh)
+            client._notifications.append(fresh)  # reader schedule proxy
+            return False
+        with patch.object(module.time, 'monotonic', side_effect=[0, 1, 2, 3]):
+            with self.assertRaises(TimeoutError):
+                client.wait_notification(predicate, timeout=3)
+        self.assertEqual(len(calls), 7)  # snapshot lengths 1 + 2 + 4
+        self.assertEqual(client._condition.waits, [])
+        self.assertEqual([id(x) for x in client._notifications], [id(x) for x in produced])
+        self.assertEqual(client._notification_consumptions, 0)
+        self.assertEqual(len(produced), 8)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

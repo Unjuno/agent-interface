@@ -1,0 +1,588 @@
+{
+  "accepted": 2,
+  "argv": [
+    "python3",
+    "run.py"
+  ],
+  "candidate_sha256": "fcb8d4d5dacd01a62fa7870323bf61faaa2c34629ab2e225022bc64fc6072550",
+  "case_count": 80,
+  "environment_scope": "in-memory callbacks only; no socket, GUI, game, model, Docker, or OS input",
+  "finished_utc": "2026-10-04T16:39:56.272792+00:00",
+  "main_sha": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+  "python": "3.14.5",
+  "rejected": 78,
+  "release_pr_head": "1d7bb20bcde67333f58e41a24f8dce68f8561ffd",
+  "release_source_blob": "52275025737d12c9a87a319eab05fa9b5ff65ce6",
+  "rows": [
+    {
+      "observed": "accepted",
+      "receipt": {
+        "released": true,
+        "request_id": "composition-a01-action",
+        "terminal": true
+      },
+      "release_case": "minimal_empty",
+      "status_case": "completed"
+    },
+    {
+      "observed": "accepted",
+      "receipt": {
+        "released": true,
+        "request_id": "composition-a01-action",
+        "terminal": true
+      },
+      "release_case": "source_owner_release",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_key",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_button",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_keys",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_buttons",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unverified",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_release",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unknown_field",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "malformed_metadata",
+      "status_case": "completed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "minimal_empty",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "source_owner_release",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_key",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_button",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_keys",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_buttons",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unverified",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_release",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unknown_field",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "malformed_metadata",
+      "status_case": "failed"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "minimal_empty",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "source_owner_release",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_key",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_button",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_keys",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_buttons",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unverified",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_release",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unknown_field",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "malformed_metadata",
+      "status_case": "cancelled"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "minimal_empty",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "source_owner_release",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_key",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_button",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_keys",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_buttons",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unverified",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_release",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unknown_field",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "malformed_metadata",
+      "status_case": "needs_decision"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "minimal_empty",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "source_owner_release",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_key",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_button",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_keys",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_buttons",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unverified",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_release",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unknown_field",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "malformed_metadata",
+      "status_case": "explicit_null"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "minimal_empty",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "source_owner_release",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_key",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_button",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_keys",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_buttons",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unverified",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_release",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unknown_field",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "malformed_metadata",
+      "status_case": "missing"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "minimal_empty",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "source_owner_release",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_key",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_button",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_keys",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_buttons",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unverified",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_release",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unknown_field",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "malformed_metadata",
+      "status_case": "boolean_true"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "minimal_empty",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "source_owner_release",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_key",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "held_button",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_keys",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_buttons",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unverified",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "missing_release",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "unknown_field",
+      "status_case": "uppercase"
+    },
+    {
+      "error_type": "SocketSubmitStop",
+      "observed": "rejected",
+      "receipt": null,
+      "release_case": "malformed_metadata",
+      "status_case": "uppercase"
+    }
+  ],
+  "schema": "mindustry_terminal_release_composition_raw_v1",
+  "started_utc": "2026-10-04T16:39:56.263595+00:00",
+  "status_pr_head": "bd0ba260acf885d7b859d665571b2c3260666642",
+  "status_source_blob": "e3de478fc51ef8ba8beafd108c3da9a7c396ea6b"
+}

@@ -1,0 +1,17 @@
+W="<OWN_FIRST_ERROR_WORK>"
+import pathlib,json,hashlib,subprocess,datetime,platform
+w=pathlib.Path(W);src=w/'source';node=pathlib.Path('/opt/homebrew/Cellar/node/26.7.0/bin/node');name='red-first';out=w/name;out.mkdir(exist_ok=False);cases=out/'cases'
+pins=[]
+for p in sorted(src.rglob('*')):
+ if p.is_file():pins.append({'path':str(p.relative_to(src)),'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+argv=[str(node),'--test','--test-concurrency=1','--test-reporter=tap','runtime/host_v1/test_primary_stdio_failure_order.mjs']
+freeze={'frozen_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'argv':argv,'cwd':str(src),'environment_delta':{'PRIMARY_FAILURE_EVIDENCE':str(cases)},'node_binary_sha256':hashlib.sha256(node.read_bytes()).hexdigest(),'node_version':subprocess.check_output([str(node),'--version']).decode().strip(),'platform':platform.platform(),'source':pins,'plan_sha256':hashlib.sha256((w/'PLAN.json').read_bytes()).hexdigest(),'scope':'two NEW ordinary owned inert fixture cases, no consumed/formal/native/peer producer or auditor'}
+(out/'FREEZE.json').write_text(json.dumps(freeze,indent=2)+'\n')
+import os
+env=dict(os.environ);env.update(freeze['environment_delta'])
+start=datetime.datetime.now(datetime.timezone.utc).isoformat();r=subprocess.run(argv,cwd=src,env=env,capture_output=True,timeout=30);end=datetime.datetime.now(datetime.timezone.utc).isoformat()
+for n,b in [('stdout',r.stdout),('stderr',r.stderr)]: (out/(n+'.txt')).write_bytes(b)
+unchanged=all((src/a['path']).stat().st_size==a['bytes'] and hashlib.sha256((src/a['path']).read_bytes()).hexdigest()==a['sha256'] for a in pins)
+receipt={'started_utc':start,'ended_utc':end,'argv':argv,'cwd':str(src),'exit_code':r.returncode,'source_unchanged':unchanged,'source_pins':len(pins),'stdout_bytes':len(r.stdout),'stderr_bytes':len(r.stderr),'stdout_sha256':hashlib.sha256(r.stdout).hexdigest(),'stderr_sha256':hashlib.sha256(r.stderr).hexdigest()}
+(out/'RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt));print(r.stdout.decode());print(r.stderr.decode());assert unchanged
+raise SystemExit(r.returncode)

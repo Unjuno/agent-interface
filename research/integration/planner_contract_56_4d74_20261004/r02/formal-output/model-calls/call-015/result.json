@@ -1,0 +1,136 @@
+{
+  "requested_model": "gpt-5.6-luna",
+  "requested_effort": "low",
+  "thread_ids": [
+    "01a10501-e937-7fe3-9317-513112d0e2ed"
+  ],
+  "exit": 0,
+  "timeout": false,
+  "wait_ns": 11480398600,
+  "visible_images_submitted": 0,
+  "usage": {
+    "input_tokens": 12619,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 381,
+    "reasoning_output_tokens": 88
+  },
+  "parse_errors": [],
+  "tool_items": [],
+  "output": {
+    "field_point": [
+      285,
+      400
+    ],
+    "submit_point": [
+      376,
+      400
+    ],
+    "contract": {
+      "interface_id": "endpoint-schema-compatibility",
+      "symbols": [
+        {
+          "name": "field",
+          "role": "field"
+        },
+        {
+          "name": "submit",
+          "role": "submit"
+        }
+      ],
+      "actions": [
+        {
+          "name": "enter_token",
+          "target_symbol": "field",
+          "operation": "enter_token",
+          "expected_effect": [
+            {
+              "predicate": "exact_token_visible",
+              "value": true
+            }
+          ]
+        },
+        {
+          "name": "submit_form",
+          "target_symbol": "submit",
+          "operation": "submit_form",
+          "expected_effect": [
+            {
+              "predicate": "exact_saved_title",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "method": {
+        "name": "bounded-token-submit",
+        "version": "1.0",
+        "initial_state": "enter",
+        "max_transitions": 3,
+        "max_runtime_ms": 1000,
+        "states": [
+          {
+            "name": "enter",
+            "branches": [
+              {
+                "when": [
+                  {
+                    "predicate": "exact_token_visible",
+                    "value": false
+                  }
+                ],
+                "outcome": "action",
+                "action": "enter_token",
+                "next_state": "submit",
+                "reason": null
+              }
+            ]
+          },
+          {
+            "name": "submit",
+            "branches": [
+              {
+                "when": [
+                  {
+                    "predicate": "exact_token_visible",
+                    "value": true
+                  }
+                ],
+                "outcome": "action",
+                "action": "submit_form",
+                "next_state": "complete",
+                "reason": null
+              }
+            ]
+          },
+          {
+            "name": "complete",
+            "branches": [
+              {
+                "when": [
+                  {
+                    "predicate": "exact_saved_title",
+                    "value": true
+                  }
+                ],
+                "outcome": "complete",
+                "action": null,
+                "next_state": null,
+                "reason": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "value_crop": [
+      0,
+      0,
+      1,
+      1
+    ]
+  },
+  "transport_ok": true,
+  "image_sha256": null,
+  "schema_sha256": "1b79d332398ea3e9d816c4982c441a34b4536a79d4fc0be2a9fac7457876d964"
+}

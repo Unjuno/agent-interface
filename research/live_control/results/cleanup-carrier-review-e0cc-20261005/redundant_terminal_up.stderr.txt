@@ -1,0 +1,14 @@
+test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap) ... FAIL
+
+======================================================================
+FAIL: test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-evidence>/source/research/live_control/test_input_owner_v12_explicit_up_cancel.py", line 276, in test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap
+    self.assertEqual(display_instance.keyrelease_attempts, 2)
+AssertionError: 3 != 2
+
+----------------------------------------------------------------------
+Ran 1 test in 0.013s
+
+FAILED (failures=1)

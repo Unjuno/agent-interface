@@ -1,0 +1,19 @@
+{
+  "allocation": "UNJUNO-7765-IMAGE-JACOBIAN-T0B-CAL-20261005-01",
+  "issue": 7765,
+  "source_commit": "3b307da1af94d40c68b11c3edfcb75e93f43023d",
+  "predecessor": "T0 HOLD_METHOD_DESIGN_CONFOUNDED; predecessor outcomes are not reused for calibration or held-out testing.",
+  "source_sha256": {
+    "CALIBRATION_PROTOCOL.json": "29f7f1ee817d09e1af9c79a4add5e1e879c2d26097fec242f371c1a4b95de7c1",
+    "calibrate.py": "a55088f6ef07827c29816a6248ad923fed3cf11bae295f85c0cc85f7f229452c",
+    "audit_calibration.py": "983cabe5cb30cc60e74c4774cc6c3b14234f4c71bc8f548a9b2f5bd0f77e7195",
+    "test_calibration.py": "3b2e4946858dce549aac915be8df123ca52a92103e9c8b72ddcbae8981e1c241"
+  },
+  "H": "A fixed proportional gain selected on 40 separate drift/coupling training seeds provides a fair comparator for an online Jacobian controller on disjoint held-out seeds.",
+  "T": "Execute calibrate.py once: grid [0.4,0.5,0.6,0.7,0.8,0.9], 20 seeds 1000-1019 each for gain_drift/cross_coupling. Select minimum total correction count among all-goal, zero-violation candidates; ties choose smaller gain. No held-out seed is read or run during calibration.",
+  "D": "Calibration eligible only if every grid point has complete 40 rows and raw receipts; selected gain is deterministic minimum over eligible gains, else STOP_CALIBRATION_NO_ELIGIBLE_GAIN.",
+  "C": "Every gain uses identical frozen start/plant seeds and the same fixed-gain controller; source and grid frozen before calibration.",
+  "U": "Only the authored synthetic plant; calibration yields a comparator parameter, not controller efficacy. The later held-out experiment requires a separate freeze after this calibration outcome.",
+  "runtime": "Use OrbStack if digest-pinned image is readable; prior T0 encountered content-store failure. Host fallback may be used only with explicit disclosure and no host timing/resource claim.",
+  "invocation_budget": {"calibrator": 1, "auditor": 1, "retry": 0}
+}

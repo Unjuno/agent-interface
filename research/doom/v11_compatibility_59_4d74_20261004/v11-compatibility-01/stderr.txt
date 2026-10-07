@@ -1,0 +1,69 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_button_up_uses_same_receipt_contract (__main__.InputOwnerV11Tests.test_button_up_uses_same_receipt_contract) ... ERROR
+test_key_up_is_bracketed_around_existing_v10_call (__main__.InputOwnerV11Tests.test_key_up_is_bracketed_around_existing_v10_call) ... ERROR
+test_non_release_operation_preserves_v10_result (__main__.InputOwnerV11Tests.test_non_release_operation_preserves_v10_result) ... ERROR
+test_underlying_release_failure_does_not_fabricate_receipt (__main__.InputOwnerV11Tests.test_underlying_release_failure_does_not_fabricate_receipt) ... ERROR
+test_unexpected_v10_release_payload_fails_closed (__main__.InputOwnerV11Tests.test_unexpected_v10_release_payload_fails_closed) ... ERROR
+
+======================================================================
+ERROR: test_button_up_uses_same_receipt_contract (__main__.InputOwnerV11Tests.test_button_up_uses_same_receipt_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test_input_owner_v11.py", line 43, in test_button_up_uses_same_receipt_contract
+    receipt = owner.call("button_up", Lease(), 1)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/source/input_owner_v11.py", line 47, in call
+    if self.closed or self.stopped.is_set() or self.stop_requested.is_set():
+       ^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'closed'. Did you mean: 'close'?
+
+======================================================================
+ERROR: test_key_up_is_bracketed_around_existing_v10_call (__main__.InputOwnerV11Tests.test_key_up_is_bracketed_around_existing_v10_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test_input_owner_v11.py", line 24, in test_key_up_is_bracketed_around_existing_v10_call
+    receipt = owner.call("up", Lease(), "space")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/source/input_owner_v11.py", line 47, in call
+    if self.closed or self.stopped.is_set() or self.stop_requested.is_set():
+       ^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'closed'. Did you mean: 'close'?
+
+======================================================================
+ERROR: test_non_release_operation_preserves_v10_result (__main__.InputOwnerV11Tests.test_non_release_operation_preserves_v10_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test_input_owner_v11.py", line 53, in test_non_release_operation_preserves_v10_result
+    actual = owner.call("down", Lease(), "a")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/source/input_owner_v11.py", line 47, in call
+    if self.closed or self.stopped.is_set() or self.stop_requested.is_set():
+       ^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'closed'. Did you mean: 'close'?
+
+======================================================================
+ERROR: test_underlying_release_failure_does_not_fabricate_receipt (__main__.InputOwnerV11Tests.test_underlying_release_failure_does_not_fabricate_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test_input_owner_v11.py", line 63, in test_underlying_release_failure_does_not_fabricate_receipt
+    owner.call("up", Lease(), "a")
+  File "/source/input_owner_v11.py", line 47, in call
+    if self.closed or self.stopped.is_set() or self.stop_requested.is_set():
+       ^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'closed'. Did you mean: 'close'?
+
+======================================================================
+ERROR: test_unexpected_v10_release_payload_fails_closed (__main__.InputOwnerV11Tests.test_unexpected_v10_release_payload_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test_input_owner_v11.py", line 72, in test_unexpected_v10_release_payload_fails_closed
+    owner.call("up", Lease(), "a")
+  File "/source/input_owner_v11.py", line 47, in call
+    if self.closed or self.stopped.is_set() or self.stop_requested.is_set():
+       ^^^^^^^^^^^
+AttributeError: 'InputOwner' object has no attribute 'closed'. Did you mean: 'close'?
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.012s
+
+FAILED (errors=5)

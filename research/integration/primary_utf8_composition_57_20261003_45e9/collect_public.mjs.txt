@@ -1,0 +1,51 @@
+/* Three new public-CLI controls; every original output/endpoint retained. */
+import {spawn} from 'node:child_process';
+import {readFile,writeFile,access} from 'node:fs/promises';
+import {join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('.',import.meta.url)),plan=JSON.parse(await readFile(join(root,'PUBLIC_PLAN.json'),'utf8'));
+const put=async(p,v)=>writeFile(p,JSON.stringify(v,null,2)+'\n',{flag:'wx'});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function alive(pid){try{process.kill(pid,0);return true;}catch(e){if(e.code==='ESRCH')return false;throw e;}}
+async function exists(p){try{await access(p);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}}
+const results=[];
+for(const c of plan.cells){
+ const dir=join(root,'public-first',c.name),argv=[join(root,'source/runtime/host_v1/primary_stdio.mjs'),'--config',join(dir,'config.json')];
+ const start=new Date().toISOString(),child=spawn(process.execPath,argv,{windowsHide:true,stdio:['pipe','pipe','pipe']});
+ let out=[],err=[],text='',sent=false,timed=false,errors=[],events=[];
+ const guard=setTimeout(()=>{timed=true;child.kill();},7000);
+ child.on('error',e=>errors.push(String(e)));child.stdin.on('error',e=>errors.push(String(e)));
+ child.stderr.on('data',b=>err.push(Buffer.from(b)));
+ async function writeChunks(chunks){for(const h of chunks){await new Promise((r,j)=>child.stdin.write(Buffer.from(h,'hex'),e=>e?j(e):r()));await new Promise(r=>setImmediate(r));}}
+ async function send(){
+  try{
+   await writeChunks(c.initial_hex);events.push({kind:'initial-written',utc:new Date().toISOString()});
+   if(c.name==='accepted-before-byte-stop'){
+    const deadline=Date.now()+2000;
+    while(!await exists(join(dir,'fixture-request-1.json'))){if(Date.now()>deadline)throw Error('own original request endpoint unavailable');await sleep(5);}
+    const original=JSON.parse(await readFile(join(dir,'fixture-request-1.json'),'utf8'));
+    events.push({kind:'original-fixture-request-observed',utc:new Date().toISOString(),request:original});
+    await writeChunks(c.later_hex);events.push({kind:'malformed-written-before-release',utc:new Date().toISOString()});
+    await sleep(25);await put(join(dir,'release.json'),{nonce:c.nonce,utc:new Date().toISOString(),after_malformed_writer:true});
+    events.push({kind:'own-held-fixture-released',utc:new Date().toISOString()});
+   }
+  }catch(e){errors.push(String(e));}
+  finally{child.stdin.end();}
+ }
+ child.stdout.on('data',b=>{out.push(Buffer.from(b));text+=b.toString('utf8');if(!sent&&text.includes('\n')){
+  const first=JSON.parse(text.slice(0,text.indexOf('\n')));if(first.status!=='ready')errors.push('first status not ready');sent=true;void send();}});
+ const endpoint=await new Promise(r=>child.once('close',(code,signal)=>r({code,signal})));clearTimeout(guard);
+ const stdout=Buffer.concat(out),stderr=Buffer.concat(err);
+ for(const [name,b] of [['stdout',stdout],['stderr',stderr]]){await writeFile(join(dir,`cli.${name}.txt`),b,{flag:'wx'});await writeFile(join(dir,`cli.${name}.hex.txt`),b.toString('hex')+(b.length?'\n':''),{flag:'wx'});}
+ let fs=null,fe=null,he=null,cleanup=null;
+ try{fs=JSON.parse(await readFile(join(dir,'fixture-start.json'),'utf8'));if(fs.nonce!==c.nonce||fs.ppid!==child.pid)throw Error('own child mismatch');
+  if(alive(fs.pid)){process.kill(fs.pid);cleanup='guard-owned-fixture-kill';await sleep(100);}
+  fe=JSON.parse(await readFile(join(dir,'fixture-exit.json'),'utf8'));he=JSON.parse(await readFile(join(dir,'host/exit.json'),'utf8'));
+ }catch(e){cleanup=String(e);}
+ const row={case:c.name,argv:[process.execPath,...argv],pid:child.pid,started_utc:start,ended_utc:new Date().toISOString(),...endpoint,timed_out:timed,
+  errors,events,fixture_start:fs,fixture_exit:fe,host_exit:he,cleanup,cli_absent:!alive(child.pid),fixture_absent:fs?!alive(fs.pid):null,
+  stdout_bytes:stdout.length,stderr_bytes:stderr.length};
+ await put(join(dir,'CLI_RECEIPT.json'),row);results.push(row);
+}
+await put(join(root,'public-first/COLLECTOR.json'),{actual_cases:3,results});
+console.log(JSON.stringify({status:'CAPTURED_NOT_ADJUDICATED',cases:3,codes:results.map(x=>x.code),requests:results.map(x=>x.fixture_exit?.requests),guards:results.map(x=>x.timed_out)}));

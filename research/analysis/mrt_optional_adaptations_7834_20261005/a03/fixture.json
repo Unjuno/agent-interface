@@ -1,0 +1,23 @@
+{
+  "allocation": "MRT-7834-A03-20261005",
+  "clusters": [
+    { "session": 0, "latent_type": 0 },
+    { "session": 1, "latent_type": 1 }
+  ],
+  "policy": {
+    "t1_p_treat": 0.5,
+    "t2_eligible_if_t1_treat": true,
+    "t2_p_treat_by_latent_type": { "0": 0.25, "1": 0.75 }
+  },
+  "outcomes": {
+    "proximal": "2*U + previous_A + I(executed)*(2+2*U+2*previous_A)",
+    "execution": "assigned_A == U",
+    "distal": "10-2*A; larger is better"
+  },
+  "controls": [
+    { "id": "zero_propensity", "propensities": [0, 1], "missing_window": false, "eligibility_stage": "pre", "interference": false },
+    { "id": "missing_window", "propensities": [0.5, 0.5], "missing_window": true, "eligibility_stage": "pre", "interference": false },
+    { "id": "post_treatment_eligibility", "propensities": [0.5, 0.5], "missing_window": false, "eligibility_stage": "post", "interference": false },
+    { "id": "session_interference", "propensities": [0.5, 0.5], "missing_window": false, "eligibility_stage": "pre", "interference": true }
+  ]
+}

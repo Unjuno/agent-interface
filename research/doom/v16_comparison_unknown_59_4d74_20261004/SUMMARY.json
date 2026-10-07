@@ -1,0 +1,305 @@
+{
+  "coast": {
+    "observations": 68,
+    "events": 189,
+    "host": {
+      "container_exit": 0,
+      "host_exit": 0,
+      "reader_alive": false,
+      "requests_forwarded": 6,
+      "responses_forwarded": 497,
+      "error": null,
+      "elapsed_s": 32.48399999999674,
+      "provider_calls": "derive requested turn/start count from retained requests",
+      "game_sessions": "derive from runtime events",
+      "input_emissions": "derive from owner raw evidence",
+      "sharing_waits": []
+    },
+    "report_present": true,
+    "commands": [
+      {
+        "op": "submit",
+        "id": "cover-0",
+        "expected_sequence": 1,
+        "valid_until_ns": 35392571629,
+        "steps": [
+          {
+            "op": "coast",
+            "duration_ms": 5000,
+            "sample_ms": 250
+          },
+          {
+            "op": "coast",
+            "duration_ms": 5000,
+            "sample_ms": 250
+          }
+        ]
+      },
+      {
+        "op": "cancel",
+        "id": "cover-0"
+      },
+      {
+        "op": "submit",
+        "id": "plan-0-primary-0-0",
+        "expected_sequence": 24,
+        "valid_until_ns": 42582810023,
+        "steps": [
+          {
+            "op": "hold",
+            "keys": [
+              "Up",
+              "Shift_L",
+              "space"
+            ],
+            "duration_ms": 350
+          }
+        ]
+      },
+      {
+        "op": "submit",
+        "id": "cover-1",
+        "expected_sequence": 28,
+        "valid_until_ns": 43193584796,
+        "steps": [
+          {
+            "op": "coast",
+            "duration_ms": 5000,
+            "sample_ms": 250
+          },
+          {
+            "op": "coast",
+            "duration_ms": 5000,
+            "sample_ms": 250
+          }
+        ]
+      },
+      {
+        "op": "cancel",
+        "id": "cover-1"
+      },
+      {
+        "op": "submit",
+        "id": "cover-2",
+        "expected_sequence": 46,
+        "valid_until_ns": 48532071928,
+        "steps": [
+          {
+            "op": "coast",
+            "duration_ms": 5000,
+            "sample_ms": 250
+          },
+          {
+            "op": "coast",
+            "duration_ms": 5000,
+            "sample_ms": 250
+          }
+        ]
+      },
+      {
+        "op": "cancel",
+        "id": "cover-2"
+      },
+      {
+        "op": "submit",
+        "id": "plan-2-primary-0-0",
+        "expected_sequence": 64,
+        "valid_until_ns": 53774032029,
+        "steps": [
+          {
+            "op": "hold",
+            "keys": [
+              "Down",
+              "space"
+            ],
+            "duration_ms": 300
+          }
+        ]
+      },
+      {
+        "op": "finish"
+      }
+    ]
+  },
+  "guarded": {
+    "observations": 35,
+    "events": 111,
+    "host": {
+      "container_exit": 1,
+      "host_exit": 0,
+      "reader_alive": false,
+      "requests_forwarded": 6,
+      "responses_forwarded": 175,
+      "error": null,
+      "elapsed_s": 15.593999999997322,
+      "provider_calls": "derive requested turn/start count from retained requests",
+      "game_sessions": "derive from runtime events",
+      "input_emissions": "derive from owner raw evidence",
+      "sharing_waits": []
+    },
+    "report_present": false,
+    "commands": [
+      {
+        "op": "submit",
+        "id": "cover-0",
+        "expected_sequence": 1,
+        "valid_until_ns": 71248219335,
+        "steps": [
+          {
+            "op": "coast",
+            "duration_ms": 5000,
+            "sample_ms": 250
+          },
+          {
+            "op": "coast",
+            "duration_ms": 5000,
+            "sample_ms": 250
+          }
+        ]
+      },
+      {
+        "op": "cancel",
+        "id": "cover-0"
+      },
+      {
+        "op": "submit",
+        "id": "plan-0-primary-0-1",
+        "expected_sequence": 24,
+        "valid_until_ns": 78095437819,
+        "steps": [
+          {
+            "op": "hold",
+            "keys": [
+              "space"
+            ],
+            "duration_ms": 180
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "Up",
+              "Shift_L"
+            ],
+            "duration_ms": 350
+          }
+        ]
+      },
+      {
+        "op": "submit",
+        "id": "cover-1",
+        "expected_sequence": 31,
+        "valid_until_ns": 79027532042,
+        "steps": [
+          {
+            "op": "hold",
+            "keys": [
+              "a"
+            ],
+            "duration_ms": 350
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "d"
+            ],
+            "duration_ms": 350
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "space"
+            ],
+            "duration_ms": 100
+          },
+          {
+            "op": "coast",
+            "duration_ms": 1700,
+            "sample_ms": 250
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "a"
+            ],
+            "duration_ms": 350
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "d"
+            ],
+            "duration_ms": 350
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "space"
+            ],
+            "duration_ms": 100
+          },
+          {
+            "op": "coast",
+            "duration_ms": 1700,
+            "sample_ms": 250
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "a"
+            ],
+            "duration_ms": 350
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "d"
+            ],
+            "duration_ms": 350
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "space"
+            ],
+            "duration_ms": 100
+          },
+          {
+            "op": "coast",
+            "duration_ms": 1700,
+            "sample_ms": 250
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "a"
+            ],
+            "duration_ms": 350
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "d"
+            ],
+            "duration_ms": 350
+          },
+          {
+            "op": "hold",
+            "keys": [
+              "space"
+            ],
+            "duration_ms": 100
+          },
+          {
+            "op": "coast",
+            "duration_ms": 1700,
+            "sample_ms": 250
+          }
+        ]
+      },
+      {
+        "op": "cancel",
+        "id": "cover-1"
+      }
+    ]
+  }
+}

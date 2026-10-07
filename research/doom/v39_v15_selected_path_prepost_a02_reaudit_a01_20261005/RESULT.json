@@ -1,0 +1,25 @@
+{
+  "schema": "issue59-v39-v15-prepost-keymap-reaudit-a01-v1",
+  "issue": 59,
+  "disposition": "SECONDARY_SYNTHETIC_TRACE_RECONCILED_ORIGINAL_AUDIT_FAIL_PRESERVED",
+  "source_pr": 7926,
+  "source_pr_head": "6bbdc0a70",
+  "source_base": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "current_main_at_reanalysis": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "candidate_invocations": 0,
+  "original_auditor_invocations": 0,
+  "secondary_audit_a01": "FAIL_34_OF_35_ABSENT_NESTED_AUTHORITY_OBJECT",
+  "secondary_audit_a02": "PASS_35_OF_35",
+  "timing_rows": 4,
+  "retries": 0,
+  "original_candidate_and_audit_modified": false,
+  "summary": "The immutable synthetic trace reconciles normal dual-key UP delivery with an injected suppressed SPACE UP detected by the fake server keymap. Per-key admission-to-UP and UP-call/XSync brackets are reconstructible, but exact key-down time is absent.",
+  "scope": [
+    "fake server state only",
+    "no physical keyboard state",
+    "no application or game input effect",
+    "no useful-feedback or recovery efficacy",
+    "no live MAP01 run or completion",
+    "private live-game allocation remains unassigned"
+  ]
+}
