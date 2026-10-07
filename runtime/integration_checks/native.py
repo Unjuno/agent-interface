@@ -16,11 +16,13 @@ SUITES = {
                  'test_native_primary_review_v1', 'test_native_brief_review_v1', 'test_native_guarded_form_v1', 'test_guarded_source_dependencies_v1', 'test_appserver_journal_close_01a0ff2d', 'test_appserver_reader_retirement_01a0ff2d'],
     'harness': ['runtime.guarded_x11_v1.test_input_dependency', 'runtime.guarded_x11_v1.test_compiled', 'runtime.guarded_x11_v1.test_move', 'runtime.guarded_x11_v1.test_reference_lifetime', 'runtime.guarded_x11_v1.test_activation', 'runtime.guarded_x11_v1.test_deadline', 'runtime.guarded_x11_v1.test_history', 'runtime.backends.x11_v1.test_focus', 'runtime.cli_v1.test_x11_target_review', 'runtime.backends.x11_v1.test_mapping_boundary', 'runtime.backends.x11_v1.test_text_plan', 'runtime.backends.x11_v1.test_partial_execution', 'test_native_finish_after_v1', 'test_native_cleanup_v1',
                 'test_native_handle_bridge_v1', 'test_native_tail_v1', 'runtime.distribution_v2.test_distribution', 'runtime.guarded_x11_v1.test_archive', 'runtime.distribution_v2.test_compiled_archive'],
+    'win32': ['runtime.guarded_win32_v1.test_effect', 'runtime.guarded_win32_v1.test_effect_quarantine', 'runtime.guarded_win32_v1.test_fixture_cleanup', 'runtime.guarded_win32_v1.test_kill_failure', 'runtime.guarded_win32_v1.test_late_state', 'runtime.guarded_win32_v1.test_move', 'runtime.guarded_win32_v1.test_recovery', 'runtime.guarded_win32_v1.test_sparse_effect', 'runtime.guarded_win32_v1.test_unicode_neutral', 'runtime.guarded_win32_v1.test_verifier_pending', 'runtime.guarded_win32_v1.test_worker_effect', 'runtime.backends.win32_v1.test_integration'],
 }
 
 SUITES['protocol'].append('test_app_server_eof_stop')
 SUITES['protocol'].append('test_appserver_utf8_2d0b')
 SUITES['protocol'].append('test_app_server_reply_id_5156')
+SUITES['protocol'].append('test_appserver_write_admission_e0cc')
 SUITES['protocol'].append('test_app_server_utf8')
 SUITES['protocol'].append('test_appserver_process_tree_cleanup_20261004')
 
