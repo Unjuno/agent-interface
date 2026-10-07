@@ -1,6 +1,8 @@
 """Journaled synchronous client for the Codex app-server JSONL protocol."""
 from collections import deque
 import json
+import os
+import signal
 import subprocess
 import threading
 import time
@@ -14,12 +16,19 @@ class CodexAppServerClient:
     def __init__(self, command, cwd=None, process_factory=subprocess.Popen, journal_path=None):
         self._journal = None if journal_path is None else open(journal_path, "x", encoding="utf-8")
         self._journal_lock = threading.Lock()
-        self.process = process_factory(
-            command, cwd=cwd, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE, text=True, encoding="utf-8", bufsize=1)
+        self._owns_process_group = os.name == "posix" and process_factory is subprocess.Popen
+        process_options = {
+            "cwd": cwd, "stdin": subprocess.PIPE, "stdout": subprocess.PIPE,
+            "stderr": subprocess.PIPE, "text": True, "encoding": "utf-8",
+            "errors": "strict", "bufsize": 1,
+        }
+        if self._owns_process_group:
+            process_options["start_new_session"] = True
+        self.process = process_factory(command, **process_options)
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
         self._responses = {}
+        self._pending = set()
         self._notifications = deque()
         self._next_id = 1
         self._closed = False
@@ -32,9 +41,10 @@ class CodexAppServerClient:
                 message = json.loads(line)
                 self._record("received", message)
                 with self._condition:
-                    if "id" in message:
-                        if type(message["id"]) is bool:
-                            continue
+                    if ("id" in message and "method" not in message and
+                            type(message["id"]) in (int, float) and
+                            message["id"] in self._pending and
+                            message["id"] not in self._responses):
                         self._responses[message["id"]] = message
                     else:
                         self._notifications.append(message)
@@ -44,10 +54,17 @@ class CodexAppServerClient:
                 self._closed = True
                 self._condition.notify_all()
 
-    def _write(self, message):
+    def _write(self, message, *, request_id=None):
         with self._write_lock:
+            wire = json.dumps(message, separators=(",", ":")) + "\n"
             self._record("sent", message)
-            self.process.stdin.write(json.dumps(message, separators=(",", ":")) + "\n")
+            if request_id is not None:
+                # Admit only after obtaining the write slot and preparing the
+                # frame. Do not hold the condition across blocking stream I/O:
+                # an immediate reply may need the reader before write returns.
+                with self._condition:
+                    self._pending.add(request_id)
+            self.process.stdin.write(wire)
             self.process.stdin.flush()
 
     def _record(self, direction, message):
@@ -66,20 +83,26 @@ class CodexAppServerClient:
         message = {"method": method, "id": identifier}
         if params is not None:
             message["params"] = params
-        self._write(message)
-        deadline = time.monotonic() + timeout
-        with self._condition:
-            while identifier not in self._responses:
-                remaining = deadline - time.monotonic()
-                if remaining <= 0:
-                    raise TimeoutError(f"app-server request timed out: {method}")
-                if self._closed:
-                    raise AppServerError(f"app-server closed during {method}: stderr not drained")
-                self._condition.wait(remaining)
-            response = self._responses.pop(identifier)
-        if "error" in response:
-            raise AppServerError(f"{method}: {json.dumps(response['error'], sort_keys=True)}")
-        return response["result"]
+        try:
+            self._write(message, request_id=identifier)
+            deadline = time.monotonic() + timeout
+            with self._condition:
+                while identifier not in self._responses:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise TimeoutError(f"app-server request timed out: {method}")
+                    if self._closed:
+                        raise AppServerError(f"app-server closed during {method}: stderr not drained")
+                    self._condition.wait(remaining)
+                response = self._responses.pop(identifier)
+                self._pending.discard(identifier)
+            if "error" in response:
+                raise AppServerError(f"{method}: {json.dumps(response['error'], sort_keys=True)}")
+            return response["result"]
+        finally:
+            with self._condition:
+                self._pending.discard(identifier)
+                self._responses.pop(identifier, None)
 
     def notify(self, method, params=None):
         message = {"method": method}
@@ -135,8 +158,42 @@ class CodexAppServerClient:
                        row.get("params", {}).get("turnId") == turn_id]
         return None if not matches else matches[-1]["params"]["tokenUsage"]
 
+    def _signal_owned_group(self, signum):
+        if not getattr(self, "_owns_process_group", False):
+            return
+        try:
+            os.killpg(self.process.pid, signum)
+        except ProcessLookupError:
+            pass
+
+    def _wait_owned_group(self, timeout):
+        if not getattr(self, "_owns_process_group", False):
+            return True
+        deadline = None if timeout is None else time.monotonic() + max(0, timeout)
+        while True:
+            try:
+                os.killpg(self.process.pid, 0)
+            except ProcessLookupError:
+                return True
+            remaining = None if deadline is None else deadline - time.monotonic()
+            if remaining is not None and remaining <= 0:
+                return False
+            time.sleep(0.01 if remaining is None else min(0.01, remaining))
+
     def close(self, timeout=5):
-        if self.process.poll() is None:
+        owns_process_group = getattr(self, "_owns_process_group", False)
+        if owns_process_group:
+            # The leader may have exited while descendants still own its pipes.
+            self._signal_owned_group(signal.SIGTERM)
+            if self.process.poll() is None:
+                try:
+                    self.process.wait(timeout=timeout)
+                except subprocess.TimeoutExpired:
+                    self._signal_owned_group(signal.SIGKILL)
+                    self.process.wait(timeout=timeout)
+            if not self._wait_owned_group(timeout):
+                self._signal_owned_group(signal.SIGKILL)
+        elif self.process.poll() is None:
             self.process.terminate()
             try:
                 self.process.wait(timeout=timeout)
@@ -145,7 +202,18 @@ class CodexAppServerClient:
                 self.process.wait(timeout=timeout)
         self._reader.join(timeout=timeout)
         if self._reader.is_alive():
-            raise TimeoutError("app-server reader close timed out")
+            if owns_process_group:
+                self._signal_owned_group(signal.SIGKILL)
+                self._reader.join(timeout=timeout)
+            if self._reader.is_alive():
+                raise TimeoutError("app-server reader close timed out")
+        # Custom process factories own their stream wrappers and may provide
+        # lightweight proxies without the IOBase ``closed``/``close`` API.
+        if owns_process_group:
+            for stream_name in ("stdin", "stdout", "stderr"):
+                stream = getattr(self.process, stream_name, None)
+                if stream is not None and not stream.closed:
+                    stream.close()
         if self._journal is not None and not self._journal.closed:
             if not self._journal_lock.acquire(timeout=-1 if timeout is None else timeout):
                 raise TimeoutError("app-server journal close timed out")

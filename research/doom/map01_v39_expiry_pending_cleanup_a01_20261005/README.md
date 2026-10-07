@@ -1,0 +1,7 @@
+# V39 expiry cleanup pending across execute-exit A01/A02
+
+This one-shot fake-display study tests the exact lifecycle gap left open by PR #7805: its bridge drains owner records in `execute()`'s `finally`, but a cleanup record is appended only after per-key release `sync()` returns. The protocol holds that sync after the fake key-up and lets ExecutorV12 exit the expired step before the owner record exists. It then checks whether the eventual verified per-key receipt reaches the bridge event stream before the terminal.
+
+The current PR #7805 bridge source is pinned to its exact head blob. A01 is the immutable baseline. A02 adds only a subclass `release_all()` finally-drain and repeats the same fake-Xlib ordering with a distinct run ID/output. The current-main ExecutorV12 and the mainline V39 fake-Xlib harness are pinned in `SOURCE_LOCK.json`. The test `release_all` seam mirrors current `research/live_control/session_v5.py` exactly: enqueue owner `release`, then clear the bridge held set. No live display/game/OS input is used.
+
+Read `PROTOCOL.md` and `RESULT.md` before interpreting the result. A01 reproduces a narrow missing-bridge-event gap despite owner-confirmed per-key release; A02's scoped PASS shows the release_all-finally drain delivered that receipt in this synthetic schedule. Neither result establishes live application consumption, useful feedback, recovery, threat-control, latency, MAP01 progress, or Issue #59 completion.

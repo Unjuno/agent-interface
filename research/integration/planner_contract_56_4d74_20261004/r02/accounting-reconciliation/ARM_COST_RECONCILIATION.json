@@ -1,0 +1,179 @@
+{
+  "arms": {
+    "A": {
+      "all_attempt_input_plus_output": 187847,
+      "all_attempt_input_plus_output_per_planned_task": 15653.916666666666,
+      "attempt_count": 14,
+      "exact_submissions": 12,
+      "graph_safe_yields": 0,
+      "graph_successes": 0,
+      "preflight": {
+        "count": 2,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 22016,
+          "input_tokens": 24582,
+          "output_tokens": 151,
+          "reasoning_output_tokens": 97
+        },
+        "wait_ns": 15332765700
+      },
+      "preflight_wait_seconds": 15.3327657,
+      "task_elapsed_ns": 121012630225,
+      "task_elapsed_seconds": 121.012630225,
+      "task_input_plus_output": 163114,
+      "task_model_wait_ns": 91363174400,
+      "task_models": 12,
+      "task_plus_preflight_wait_seconds": 136.345395925,
+      "task_plus_preflight_wait_seconds_per_planned_task": 11.362116327083333,
+      "task_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 133120,
+        "input_tokens": 162072,
+        "output_tokens": 1042,
+        "reasoning_output_tokens": 718
+      },
+      "tasks": 12
+    },
+    "B": {
+      "all_attempt_input_plus_output": 79018,
+      "all_attempt_input_plus_output_per_planned_task": 6584.833333333333,
+      "attempt_count": 6,
+      "exact_submissions": 12,
+      "graph_safe_yields": 0,
+      "graph_successes": 0,
+      "preflight": {
+        "count": 2,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 22016,
+          "input_tokens": 24582,
+          "output_tokens": 129,
+          "reasoning_output_tokens": 75
+        },
+        "wait_ns": 13087787300
+      },
+      "preflight_wait_seconds": 13.0877873,
+      "task_elapsed_ns": 99856917373,
+      "task_elapsed_seconds": 99.856917373,
+      "task_input_plus_output": 54307,
+      "task_model_wait_ns": 28015003700,
+      "task_models": 4,
+      "task_plus_preflight_wait_seconds": 112.944704673,
+      "task_plus_preflight_wait_seconds_per_planned_task": 9.41205872275,
+      "task_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 34048,
+        "input_tokens": 54024,
+        "output_tokens": 283,
+        "reasoning_output_tokens": 177
+      },
+      "tasks": 12
+    },
+    "C": {
+      "all_attempt_input_plus_output": 127449,
+      "all_attempt_input_plus_output_per_planned_task": 10620.75,
+      "attempt_count": 9,
+      "exact_submissions": 10,
+      "graph_safe_yields": 3,
+      "graph_successes": 9,
+      "preflight": {
+        "count": 2,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 25238,
+          "output_tokens": 730,
+          "reasoning_output_tokens": 145
+        },
+        "wait_ns": 23557128000
+      },
+      "preflight_wait_seconds": 23.557128,
+      "task_elapsed_ns": 186108809801,
+      "task_elapsed_seconds": 186.108809801,
+      "task_input_plus_output": 101481,
+      "task_model_wait_ns": 100433343900,
+      "task_models": 7,
+      "task_plus_preflight_wait_seconds": 209.665937801,
+      "task_plus_preflight_wait_seconds_per_planned_task": 17.472161483416667,
+      "task_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 24064,
+        "input_tokens": 98049,
+        "output_tokens": 3432,
+        "reasoning_output_tokens": 1185
+      },
+      "tasks": 12
+    },
+    "D": {
+      "all_attempt_input_plus_output": 0,
+      "all_attempt_input_plus_output_per_planned_task": 0.0,
+      "attempt_count": 0,
+      "exact_submissions": 12,
+      "graph_safe_yields": 0,
+      "graph_successes": 0,
+      "preflight": {
+        "count": 0,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "wait_ns": 0
+      },
+      "preflight_wait_seconds": 0.0,
+      "task_elapsed_ns": 21708032311,
+      "task_elapsed_seconds": 21.708032311,
+      "task_input_plus_output": 0,
+      "task_model_wait_ns": 0,
+      "task_models": 0,
+      "task_plus_preflight_wait_seconds": 21.708032311,
+      "task_plus_preflight_wait_seconds_per_planned_task": 1.8090026925833333,
+      "task_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "tasks": 12
+    }
+  },
+  "comparisons": {
+    "B_vs_A_all_attempt_input_plus_output_reduction": 0.5793491511708997,
+    "B_vs_A_task_plus_preflight_wait_reduction": 0.1716280266982546,
+    "C_vs_B_all_attempt_input_plus_output_change": 0.6129109823078287,
+    "C_vs_B_task_plus_preflight_wait_change": 0.856359166266621
+  },
+  "experimental_source_snapshot": "13bab54ea6d91978247ecc1b70e5060db752367a",
+  "limits": [
+    "Task plus preflight wait excludes process startup and final scoring time.",
+    "Cached input and reasoning output are provider-reported subsets, not additive token totals.",
+    "C has 10/12 exact independent submissions but only 9/12 graph successes; it is not eligible for a benefit claim.",
+    "D human setup cost is unavailable; task-scope elapsed is not full setup-to-effect latency.",
+    "This is retained-JSON arithmetic, not original-host provenance, collateral-content, authority, or privacy verification.",
+    "Do not pool this separately seeded allocation with compiled-comparison A05; it remains its own descriptive two-block result."
+  ],
+  "reconciled_all_attempt_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 235264,
+    "input_tokens": 388547,
+    "output_tokens": 5767,
+    "reasoning_output_tokens": 2397
+  },
+  "reconciled_model_attempts": 29,
+  "schema": "planner_contract_r02_per_arm_all_attempt_reconciliation_v1",
+  "scope": "read-only reconciliation of the separately frozen planner-contract r02 task rows and six arm/block schema preflights; no provider, GUI, or formal allocation",
+  "source_paths": [
+    "research/integration/planner_contract_56_4d74_20261004/r02/RETAINED_EVIDENCE_AUDIT.json",
+    "research/integration/planner_contract_56_4d74_20261004/r02/formal-output/block-1/A/schema-preflight.json",
+    "research/integration/planner_contract_56_4d74_20261004/r02/formal-output/block-1/B/schema-preflight.json",
+    "research/integration/planner_contract_56_4d74_20261004/r02/formal-output/block-1/C/schema-preflight.json",
+    "research/integration/planner_contract_56_4d74_20261004/r02/formal-output/block-2/A/schema-preflight.json",
+    "research/integration/planner_contract_56_4d74_20261004/r02/formal-output/block-2/B/schema-preflight.json",
+    "research/integration/planner_contract_56_4d74_20261004/r02/formal-output/block-2/C/schema-preflight.json"
+  ],
+  "source_revision": "510c98fe46889461dce2a4c0e14e261eaa47e8ed"
+}

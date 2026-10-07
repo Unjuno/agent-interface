@@ -1,0 +1,21 @@
+{
+  "audit_command": "python3 audit.py",
+  "candidate_command": "python3 candidate.py",
+  "decision_gate": "METHOD_PASS_SCOPED only for exact clean deltas, unchanged base, and all planted uncertainty/effect cases refused; otherwise FAIL/HOLD/STOP per README.",
+  "docker": "29.5.2/29.4.0 linux/arm64",
+  "driver": "linux/aarch64 overlayfs",
+  "files_sha256": {
+    ".dockerignore": "4685e82b589d00677fc964118caae06d331ac687ca1660ea8aa880feab521803",
+    "Dockerfile": "76a835220228d2da3537b26561428747b7727276c90778231b79a28d9169a32f",
+    "README.md": "44f093f835c8e25fe1e40547b2b8ab9c1d29022cbc4b4596aa3e9b6cf84fad86",
+    "audit.py": "b1d0f29ec3d7be2483a5b726ab7ac31830602c0f4393dd469e818ad1b5e6cfc7",
+    "base/alpha.txt": "7e328a22d686c5868275c2a5803276cc01699b506cc758faa63ea523f1e9056c",
+    "base/beta.txt": "4e0d29f86a6845176283023ee2eff5b740aaaf69d71adbe5b4aee99eb43e5876",
+    "base/single.txt": "60deaa11263ed205688d63682a115078a9fe0b20523e23e7e31333a80b5a8be0",
+    "candidate.py": "b8b2a260698eb19883f5df501f416e039ccb362214a2d750f364f94d324288e5",
+    "freeze.py": "6f5243fd3eead33e2799cda58eddf2f182aabd71a0f66309793b7568b49b2c91"
+  },
+  "pinned_image": "sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8 [\"alpine@sha256:5291449c3df73caf6ed85e649dec1b9e818b39a5d8c871e97afc13e9cd5e8fa8\"]",
+  "repository_head": "93090bcbf0c9eb0cd5f6feeb4abd2477e8453202",
+  "schema": "cow-7459-t0-freeze-v1"
+}

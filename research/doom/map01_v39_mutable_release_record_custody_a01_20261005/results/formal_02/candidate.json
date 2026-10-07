@@ -1,0 +1,840 @@
+{
+  "cases": [
+    {
+      "case": "baseline",
+      "cursor_after_partial_drain": 1,
+      "events_after_final_drain": [
+        {
+          "admitted_ns": 166354253133781,
+          "event": "input_admission",
+          "id": "mutable-record-baseline",
+          "input_ack_ns": 166354253140698,
+          "intent_token": "intent-baseline",
+          "key": "F8",
+          "owner_id": "44578dc4f3214b598e220d427a986a2c",
+          "physical_key_measurement": {
+            "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+            "adapter_edge": {
+              "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+              "edge": "down",
+              "grants_input_authority": false,
+              "intent_token": "intent-baseline",
+              "interval": [
+                166354253137365,
+                166354253142865
+              ],
+              "key": "F8",
+              "owner_id": "44578dc4f3214b598e220d427a986a2c",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-baseline",
+              "key": "F8",
+              "owner_id": "44578dc4f3214b598e220d427a986a2c",
+              "physical_down_interval": [
+                166354253137365,
+                166354253142865
+              ],
+              "press_id": "44578dc4f3214b598e220d427a986a2c:r1:down:74",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "edge": "down",
+            "grants_input_authority": false,
+            "identity_status": "MINTED",
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354253142865,
+              "started_ns": 166354253141073
+            },
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 166354253137365,
+              "started_ns": 166354253134198
+            },
+            "press_request_ns": 166354253138781,
+            "sync_return_ns": 166354253140698
+          },
+          "step": 0,
+          "valid_until_ns": 166364253092448
+        },
+        {
+          "event": "input_release_measurement",
+          "grants_input_authority": false,
+          "id": "mutable-record-baseline",
+          "intent_token": "intent-baseline",
+          "key": "F8",
+          "owner_id": "44578dc4f3214b598e220d427a986a2c",
+          "physical_key_measurement": {
+            "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+            "adapter_edge": null,
+            "application_consumption_observed": false,
+            "bracket": null,
+            "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+            "post_sample": {
+              "available": false,
+              "down": null,
+              "error": "RuntimeError",
+              "finished_ns": 166354253329574,
+              "started_ns": 166354253328032
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354253323032,
+              "started_ns": 166354253319949
+            },
+            "release_attempted": true,
+            "release_request_ns": 166354253324157,
+            "sync_return_ns": 166354253327949
+          },
+          "reason": "release",
+          "step": 0
+        }
+      ],
+      "events_after_partial_drain": [
+        {
+          "admitted_ns": 166354253133781,
+          "event": "input_admission",
+          "id": "mutable-record-baseline",
+          "input_ack_ns": 166354253140698,
+          "intent_token": "intent-baseline",
+          "key": "F8",
+          "owner_id": "44578dc4f3214b598e220d427a986a2c",
+          "physical_key_measurement": {
+            "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+            "adapter_edge": {
+              "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+              "edge": "down",
+              "grants_input_authority": false,
+              "intent_token": "intent-baseline",
+              "interval": [
+                166354253137365,
+                166354253142865
+              ],
+              "key": "F8",
+              "owner_id": "44578dc4f3214b598e220d427a986a2c",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-baseline",
+              "key": "F8",
+              "owner_id": "44578dc4f3214b598e220d427a986a2c",
+              "physical_down_interval": [
+                166354253137365,
+                166354253142865
+              ],
+              "press_id": "44578dc4f3214b598e220d427a986a2c:r1:down:74",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "edge": "down",
+            "grants_input_authority": false,
+            "identity_status": "MINTED",
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354253142865,
+              "started_ns": 166354253141073
+            },
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 166354253137365,
+              "started_ns": 166354253134198
+            },
+            "press_request_ns": 166354253138781,
+            "sync_return_ns": 166354253140698
+          },
+          "step": 0,
+          "valid_until_ns": 166364253092448
+        },
+        {
+          "event": "input_release_measurement",
+          "grants_input_authority": false,
+          "id": "mutable-record-baseline",
+          "intent_token": "intent-baseline",
+          "key": "F8",
+          "owner_id": "44578dc4f3214b598e220d427a986a2c",
+          "physical_key_measurement": {
+            "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+            "adapter_edge": null,
+            "application_consumption_observed": false,
+            "bracket": null,
+            "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+            "post_sample": {
+              "available": false,
+              "down": null,
+              "error": "RuntimeError",
+              "finished_ns": 166354253329574,
+              "started_ns": 166354253328032
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354253323032,
+              "started_ns": 166354253319949
+            },
+            "release_attempted": true,
+            "release_request_ns": 166354253324157,
+            "sync_return_ns": 166354253327949
+          },
+          "reason": "release",
+          "step": 0
+        }
+      ],
+      "events_before_final_drain": [
+        {
+          "admitted_ns": 166354253133781,
+          "event": "input_admission",
+          "id": "mutable-record-baseline",
+          "input_ack_ns": 166354253140698,
+          "intent_token": "intent-baseline",
+          "key": "F8",
+          "owner_id": "44578dc4f3214b598e220d427a986a2c",
+          "physical_key_measurement": {
+            "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+            "adapter_edge": {
+              "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+              "edge": "down",
+              "grants_input_authority": false,
+              "intent_token": "intent-baseline",
+              "interval": [
+                166354253137365,
+                166354253142865
+              ],
+              "key": "F8",
+              "owner_id": "44578dc4f3214b598e220d427a986a2c",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-baseline",
+              "key": "F8",
+              "owner_id": "44578dc4f3214b598e220d427a986a2c",
+              "physical_down_interval": [
+                166354253137365,
+                166354253142865
+              ],
+              "press_id": "44578dc4f3214b598e220d427a986a2c:r1:down:74",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "edge": "down",
+            "grants_input_authority": false,
+            "identity_status": "MINTED",
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354253142865,
+              "started_ns": 166354253141073
+            },
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 166354253137365,
+              "started_ns": 166354253134198
+            },
+            "press_request_ns": 166354253138781,
+            "sync_return_ns": 166354253140698
+          },
+          "step": 0,
+          "valid_until_ns": 166364253092448
+        },
+        {
+          "event": "input_release_measurement",
+          "grants_input_authority": false,
+          "id": "mutable-record-baseline",
+          "intent_token": "intent-baseline",
+          "key": "F8",
+          "owner_id": "44578dc4f3214b598e220d427a986a2c",
+          "physical_key_measurement": {
+            "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+            "adapter_edge": null,
+            "application_consumption_observed": false,
+            "bracket": null,
+            "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+            "post_sample": {
+              "available": false,
+              "down": null,
+              "error": "RuntimeError",
+              "finished_ns": 166354253329574,
+              "started_ns": 166354253328032
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354253323032,
+              "started_ns": 166354253319949
+            },
+            "release_attempted": true,
+            "release_request_ns": 166354253324157,
+            "sync_return_ns": 166354253327949
+          },
+          "reason": "release",
+          "step": 0
+        }
+      ],
+      "final_bridge_held": [
+        "F8"
+      ],
+      "final_cursor": 1,
+      "final_drain_added_event_count": 0,
+      "final_fake_physical_keys": [],
+      "final_owner_held_codes": [],
+      "final_owner_records": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "event": "input_release_measurement",
+              "grants_input_authority": false,
+              "id": "mutable-record-baseline",
+              "intent_token": "intent-baseline",
+              "key": "F8",
+              "owner_id": "44578dc4f3214b598e220d427a986a2c",
+              "physical_key_measurement": {
+                "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+                "adapter_edge": null,
+                "application_consumption_observed": false,
+                "bracket": null,
+                "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+                "edge": "up",
+                "grants_input_authority": false,
+                "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+                "post_sample": {
+                  "available": false,
+                  "down": null,
+                  "error": "RuntimeError",
+                  "finished_ns": 166354253329574,
+                  "started_ns": 166354253328032
+                },
+                "pre_sample": {
+                  "available": true,
+                  "down": true,
+                  "error": null,
+                  "finished_ns": 166354253323032,
+                  "started_ns": 166354253319949
+                },
+                "release_attempted": true,
+                "release_request_ns": 166354253324157,
+                "sync_return_ns": 166354253327949
+              },
+              "reason": "release",
+              "step": 0
+            }
+          ],
+          "reason": "release",
+          "valid_until_ns": 166364253092448,
+          "verified": true,
+          "verified_ns": 166354253425074
+        }
+      ],
+      "held_after_partial_drain": [
+        "F8"
+      ],
+      "owner_error": [],
+      "query_before_release": 2,
+      "query_fail_indices": [
+        4
+      ],
+      "snapshot_at_aggregate_gate": [
+        {
+          "event": "owner_release",
+          "per_key_release_measurements": [
+            {
+              "event": "input_release_measurement",
+              "grants_input_authority": false,
+              "id": "mutable-record-baseline",
+              "intent_token": "intent-baseline",
+              "key": "F8",
+              "owner_id": "44578dc4f3214b598e220d427a986a2c",
+              "physical_key_measurement": {
+                "actuation_id": "44578dc4f3214b598e220d427a986a2c:g1:F8",
+                "adapter_edge": null,
+                "application_consumption_observed": false,
+                "bracket": null,
+                "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+                "edge": "up",
+                "grants_input_authority": false,
+                "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+                "post_sample": {
+                  "available": false,
+                  "down": null,
+                  "error": "RuntimeError",
+                  "finished_ns": 166354253329574,
+                  "started_ns": 166354253328032
+                },
+                "pre_sample": {
+                  "available": true,
+                  "down": true,
+                  "error": null,
+                  "finished_ns": 166354253323032,
+                  "started_ns": 166354253319949
+                },
+                "release_attempted": true,
+                "release_request_ns": 166354253324157,
+                "sync_return_ns": 166354253327949
+              },
+              "reason": "release",
+              "step": 0
+            }
+          ],
+          "reason": "release",
+          "valid_until_ns": 166364253092448,
+          "verified": false
+        }
+      ]
+    },
+    {
+      "case": "neutral_revisit_probe",
+      "cursor_after_partial_drain": 1,
+      "events_after_final_drain": [
+        {
+          "admitted_ns": 166354254082535,
+          "event": "input_admission",
+          "id": "mutable-record-neutral_revisit_probe",
+          "input_ack_ns": 166354254087035,
+          "intent_token": "intent-neutral_revisit_probe",
+          "key": "F8",
+          "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+          "physical_key_measurement": {
+            "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+            "adapter_edge": {
+              "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+              "edge": "down",
+              "grants_input_authority": false,
+              "intent_token": "intent-neutral_revisit_probe",
+              "interval": [
+                166354254084035,
+                166354254088077
+              ],
+              "key": "F8",
+              "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-neutral_revisit_probe",
+              "key": "F8",
+              "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+              "physical_down_interval": [
+                166354254084035,
+                166354254088077
+              ],
+              "press_id": "de210ea8172c4622a80e1326c2c7c4e8:r1:down:74",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "edge": "down",
+            "grants_input_authority": false,
+            "identity_status": "MINTED",
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354254088077,
+              "started_ns": 166354254087202
+            },
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 166354254084035,
+              "started_ns": 166354254082868
+            },
+            "press_request_ns": 166354254085660,
+            "sync_return_ns": 166354254087035
+          },
+          "step": 0,
+          "valid_until_ns": 166364254042326
+        },
+        {
+          "event": "input_release_measurement",
+          "grants_input_authority": false,
+          "id": "mutable-record-neutral_revisit_probe",
+          "intent_token": "intent-neutral_revisit_probe",
+          "key": "F8",
+          "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+          "physical_key_measurement": {
+            "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+            "adapter_edge": null,
+            "application_consumption_observed": false,
+            "bracket": null,
+            "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+            "post_sample": {
+              "available": false,
+              "down": null,
+              "error": "RuntimeError",
+              "finished_ns": 166354254233911,
+              "started_ns": 166354254232286
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354254228786,
+              "started_ns": 166354254226369
+            },
+            "release_attempted": true,
+            "release_request_ns": 166354254229661,
+            "sync_return_ns": 166354254232119
+          },
+          "reason": "release",
+          "step": 0
+        }
+      ],
+      "events_after_partial_drain": [
+        {
+          "admitted_ns": 166354254082535,
+          "event": "input_admission",
+          "id": "mutable-record-neutral_revisit_probe",
+          "input_ack_ns": 166354254087035,
+          "intent_token": "intent-neutral_revisit_probe",
+          "key": "F8",
+          "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+          "physical_key_measurement": {
+            "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+            "adapter_edge": {
+              "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+              "edge": "down",
+              "grants_input_authority": false,
+              "intent_token": "intent-neutral_revisit_probe",
+              "interval": [
+                166354254084035,
+                166354254088077
+              ],
+              "key": "F8",
+              "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-neutral_revisit_probe",
+              "key": "F8",
+              "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+              "physical_down_interval": [
+                166354254084035,
+                166354254088077
+              ],
+              "press_id": "de210ea8172c4622a80e1326c2c7c4e8:r1:down:74",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "edge": "down",
+            "grants_input_authority": false,
+            "identity_status": "MINTED",
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354254088077,
+              "started_ns": 166354254087202
+            },
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 166354254084035,
+              "started_ns": 166354254082868
+            },
+            "press_request_ns": 166354254085660,
+            "sync_return_ns": 166354254087035
+          },
+          "step": 0,
+          "valid_until_ns": 166364254042326
+        },
+        {
+          "event": "input_release_measurement",
+          "grants_input_authority": false,
+          "id": "mutable-record-neutral_revisit_probe",
+          "intent_token": "intent-neutral_revisit_probe",
+          "key": "F8",
+          "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+          "physical_key_measurement": {
+            "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+            "adapter_edge": null,
+            "application_consumption_observed": false,
+            "bracket": null,
+            "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+            "post_sample": {
+              "available": false,
+              "down": null,
+              "error": "RuntimeError",
+              "finished_ns": 166354254233911,
+              "started_ns": 166354254232286
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354254228786,
+              "started_ns": 166354254226369
+            },
+            "release_attempted": true,
+            "release_request_ns": 166354254229661,
+            "sync_return_ns": 166354254232119
+          },
+          "reason": "release",
+          "step": 0
+        }
+      ],
+      "events_before_final_drain": [
+        {
+          "admitted_ns": 166354254082535,
+          "event": "input_admission",
+          "id": "mutable-record-neutral_revisit_probe",
+          "input_ack_ns": 166354254087035,
+          "intent_token": "intent-neutral_revisit_probe",
+          "key": "F8",
+          "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+          "physical_key_measurement": {
+            "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+            "adapter_edge": {
+              "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+              "edge": "down",
+              "grants_input_authority": false,
+              "intent_token": "intent-neutral_revisit_probe",
+              "interval": [
+                166354254084035,
+                166354254088077
+              ],
+              "key": "F8",
+              "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "grants_input_authority": false,
+              "intent_token": "intent-neutral_revisit_probe",
+              "key": "F8",
+              "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+              "physical_down_interval": [
+                166354254084035,
+                166354254088077
+              ],
+              "press_id": "de210ea8172c4622a80e1326c2c7c4e8:r1:down:74",
+              "status": "CONFIRMED_PHYSICAL_DOWN"
+            },
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "edge": "down",
+            "grants_input_authority": false,
+            "identity_status": "MINTED",
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354254088077,
+              "started_ns": 166354254087202
+            },
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 166354254084035,
+              "started_ns": 166354254082868
+            },
+            "press_request_ns": 166354254085660,
+            "sync_return_ns": 166354254087035
+          },
+          "step": 0,
+          "valid_until_ns": 166364254042326
+        },
+        {
+          "event": "input_release_measurement",
+          "grants_input_authority": false,
+          "id": "mutable-record-neutral_revisit_probe",
+          "intent_token": "intent-neutral_revisit_probe",
+          "key": "F8",
+          "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+          "physical_key_measurement": {
+            "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+            "adapter_edge": null,
+            "application_consumption_observed": false,
+            "bracket": null,
+            "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+            "post_sample": {
+              "available": false,
+              "down": null,
+              "error": "RuntimeError",
+              "finished_ns": 166354254233911,
+              "started_ns": 166354254232286
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 166354254228786,
+              "started_ns": 166354254226369
+            },
+            "release_attempted": true,
+            "release_request_ns": 166354254229661,
+            "sync_return_ns": 166354254232119
+          },
+          "reason": "release",
+          "step": 0
+        }
+      ],
+      "final_bridge_held": [],
+      "final_cursor": 1,
+      "final_drain_added_event_count": 0,
+      "final_fake_physical_keys": [],
+      "final_owner_held_codes": [],
+      "final_owner_records": [
+        {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "per_key_release_measurements": [
+            {
+              "event": "input_release_measurement",
+              "grants_input_authority": false,
+              "id": "mutable-record-neutral_revisit_probe",
+              "intent_token": "intent-neutral_revisit_probe",
+              "key": "F8",
+              "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+              "physical_key_measurement": {
+                "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+                "adapter_edge": null,
+                "application_consumption_observed": false,
+                "bracket": null,
+                "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+                "edge": "up",
+                "grants_input_authority": false,
+                "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+                "post_sample": {
+                  "available": false,
+                  "down": null,
+                  "error": "RuntimeError",
+                  "finished_ns": 166354254233911,
+                  "started_ns": 166354254232286
+                },
+                "pre_sample": {
+                  "available": true,
+                  "down": true,
+                  "error": null,
+                  "finished_ns": 166354254228786,
+                  "started_ns": 166354254226369
+                },
+                "release_attempted": true,
+                "release_request_ns": 166354254229661,
+                "sync_return_ns": 166354254232119
+              },
+              "reason": "release",
+              "step": 0
+            }
+          ],
+          "reason": "release",
+          "valid_until_ns": 166364254042326,
+          "verified": true,
+          "verified_ns": 166354254323536
+        }
+      ],
+      "held_after_partial_drain": [
+        "F8"
+      ],
+      "owner_error": [],
+      "query_before_release": 2,
+      "query_fail_indices": [
+        4
+      ],
+      "snapshot_at_aggregate_gate": [
+        {
+          "event": "owner_release",
+          "per_key_release_measurements": [
+            {
+              "event": "input_release_measurement",
+              "grants_input_authority": false,
+              "id": "mutable-record-neutral_revisit_probe",
+              "intent_token": "intent-neutral_revisit_probe",
+              "key": "F8",
+              "owner_id": "de210ea8172c4622a80e1326c2c7c4e8",
+              "physical_key_measurement": {
+                "actuation_id": "de210ea8172c4622a80e1326c2c7c4e8:g1:F8",
+                "adapter_edge": null,
+                "application_consumption_observed": false,
+                "bracket": null,
+                "classification": "PHYSICAL_SAMPLE_UNAVAILABLE",
+                "edge": "up",
+                "grants_input_authority": false,
+                "identity_status": "UNCONFIRMED_UP_NO_CHANGE",
+                "post_sample": {
+                  "available": false,
+                  "down": null,
+                  "error": "RuntimeError",
+                  "finished_ns": 166354254233911,
+                  "started_ns": 166354254232286
+                },
+                "pre_sample": {
+                  "available": true,
+                  "down": true,
+                  "error": null,
+                  "finished_ns": 166354254228786,
+                  "started_ns": 166354254226369
+                },
+                "release_attempted": true,
+                "release_request_ns": 166354254229661,
+                "sync_return_ns": 166354254232119
+              },
+              "reason": "release",
+              "step": 0
+            }
+          ],
+          "reason": "release",
+          "valid_until_ns": 166364254042326,
+          "verified": false
+        }
+      ]
+    }
+  ],
+  "run_label": "formal_02",
+  "schema": "map01-v39-mutable-release-record-custody-a01-v1",
+  "source_sha256": {
+    "bridge_v2_candidate.py": "81e759b0484ac5b7854da0ebcffa917035f56b83a3dbfda40cafbb7f9f5138d1",
+    "input_owner_v13_candidate.py": "0e3c65aadfba76b644f1ca99afa267bc873bc120320a4b0cac67dafb82cfa814"
+  }
+}

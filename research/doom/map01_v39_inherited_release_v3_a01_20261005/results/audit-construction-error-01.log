@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "audit.py", line 19, in <module>
+    runtime_path = ROOT / item["repo_path"]
+NameError: name 'ROOT' is not defined
+Disposition: auditor construction error. Added the repository-root derivation from the package path before the successful raw-only audit; candidate was not executed by this failed audit.

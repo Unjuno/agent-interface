@@ -1,0 +1,19 @@
+{
+  "status": "PROSPECTIVE_SCORER_DESIGN_NOT_EXECUTED",
+  "source_tag": "1.3.0",
+  "findings": [
+    "advance_action(0,True) delegates to zero-iteration tics loop, so it is not a refresh",
+    "advance_action(1,True) requests TIC_AND_UPDATE and waits for acknowledgment",
+    "engine message UPDATE directly updates variables; TIC_AND_UPDATE sets update and next-tic flags",
+    "Python public direct UPDATE entry not established"
+  ],
+  "selected_candidate": "Explicit one-tic scoring refresh only at verified neutral program boundaries, before and after the recovery action interval; retain before/after host ns and episode tic; score values remain private and are unavailable to controller/model.",
+  "qualification_required": [
+    "prove no active input at each checkpoint",
+    "record added wait/tic overhead, do not subtract it from control latency",
+    "reject missing/failed refresh and incomplete checkpoint pairs",
+    "use same checkpoint schedule in any comparison arms",
+    "qualify wheel/runtime behavior in separate eligible no-retry allocation"
+  ],
+  "limits": "Checkpoint interval bounds effect onset; it does not establish causal advantage or exact kill timestamp. No hidden scoring value may decide runtime actions."
+}

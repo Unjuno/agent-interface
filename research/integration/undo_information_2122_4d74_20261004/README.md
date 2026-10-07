@@ -1,0 +1,1 @@
+Read REPORT.md. Analytical unchanged-view Undo admission bound from exact saved actual R02 worlds; no new native/model sample or all-action impossibility. Extra identical-view inference cannot identify missing provenance.

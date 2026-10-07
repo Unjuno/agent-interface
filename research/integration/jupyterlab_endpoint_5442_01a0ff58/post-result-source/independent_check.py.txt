@@ -1,0 +1,110 @@
+"""Post-result separate implementation over retained bytes; never starts a producer."""
+import base64,hashlib,json,shutil
+from datetime import datetime,timezone
+from pathlib import Path
+root=Path(__file__).resolve().parent;run=root/'primary-J01';dest=root/'independent-01';dest.mkdir()
+start=datetime.now(timezone.utc).isoformat()
+def require(x,label):
+    if not x:raise ValueError(label)
+def load(p):return json.loads(p.read_bytes())
+freeze=load(root/'FREEZE.json')
+for name,pin in freeze['sources'].items():
+    b=(root/name).read_bytes();require(len(b)==pin['bytes'] and hashlib.sha256(b).hexdigest()==pin['sha256'],'source '+name)
+env=root/'env/Lib/site-packages'
+for name,pin in freeze['installed_assets'].items():
+    b=(env/name).read_bytes();require(len(b)==pin['bytes'] and hashlib.sha256(b).hexdigest()==pin['sha256'],'asset '+name)
+inputs=load(root/'INPUTS.json');cases=inputs['cases']
+require([(c['id'],c['file'],c['actor']) for c in cases]==[('J001','agenda-stable.md','none'),('J002','agenda-newmtime.md','newmtime'),('J003','agenda-samemtime.md','samemtime')],'input typed binding')
+names={c['file'] for c in cases}|{inputs['sibling']['file']}
+def disk(stage):
+    r=load(run/'observations'/stage/'disk.json');require(r['stage']==stage,'stage join')
+    out={}
+    for row in r['rows']:
+        require(row['file'] not in out,'row duplicate')
+        b=base64.b64decode(row['content_b64'],validate=True)
+        require(type(row['bytes']) is int and len(b)==row['bytes'] and hashlib.sha256(b).hexdigest()==row['sha256'],'byte custody')
+        require(row['stable'] is True and row['before_size']==len(b) and row['before_mtime_ns']==row['mtime_ns'],'stable observation')
+        require(type(row['mtime_ns']) is int,'mtime integer')
+        out[row['file']]=(b,row['mtime_ns'])
+    require(set(out)==names,'exact four file rows')
+    return out,r
+baseline,base_rec=disk('initial')
+ui=[json.loads(x) for x in (run/'ui.jsonl').read_text(encoding='utf-8').splitlines()]
+require([r['seq'] for r in ui]==list(range(1,len(ui)+1)) and len(ui)<=64,'full UI sequence')
+require(all(type(r['seq']) is int for r in ui),'UI typed seq')
+require([r['utc'] for r in ui]==sorted(r['utc'] for r in ui),'UI time order')
+prefs=load(run/'START_PUBLIC.json')
+require(prefs['installed_versions']['jupyterlab']=='4.6.4' and prefs['ready'] is True,'app ready/version')
+require(hashlib.sha256((run/'config/jupyter_server_config.py').read_bytes()).hexdigest()==prefs['config_sha256'],'actual config')
+require((run/'settings/@jupyterlab/docmanager-extension/plugin.jupyterlab-settings').read_bytes()==(root/'AUTOSAVE_OFF.jupyterlab-settings').read_bytes(),'actual autosave config')
+autosave=next(r for r in ui if r['phase']=='autosave-observed')['dom']
+require('menuitem "Autosave Documents"' in autosave and 'menuitemcheckbox "Autosave Documents" [checked]' not in autosave,'visible autosave off')
+summary=[]
+for i,c in enumerate(cases):
+    ident=c['id'];name=c['file'];external=i>0
+    require(baseline[name][0]==c['initial'].encode(),'initial exact')
+    pre,pre_rec=disk(ident+'-pre-save');first,first_rec=disk(ident+'-first-save');final,final_rec=disk(ident+'-final')
+    subset=[r for r in ui if r['case']==ident]
+    save=[r for r in subset if r['phase']=='before' and r['action']=='save']
+    require(len(save)==1+int(external),'intent count')
+    check=next(r for r in subset if r['phase']=='first-save-observed')
+    require(pre_rec['ended_utc']<save[0]['utc']<check['utc']<first_rec['started_utc'],'pre-save/dispatch/UI/disk order')
+    require(pre[name][0]==(c['initial']+c['note']).encode(),'actor pre-save effect')
+    require(first[name][0]==((c['initial']+c['note']) if external else c['goal']).encode(),'first save did not clobber')
+    require(('dialog "File Changed' in check['dom'])==external,'stock conflict witness')
+    if external:
+        a=load(run/'actors'/ident/'RESULT.json');pending=load(run/'actors'/ident/'REQUEST.json')
+        require(a['id']==ident and a['file']==name and a['actor']==c['actor'] and type(a['writes']) is int and a['writes']==1,'actor identity/write count')
+        require(all(a[k]==v for k,v in pending.items()),'actor request/result join')
+        edited=next(r for r in subset if r['phase']=='edited')
+        require(edited['utc']<a['started_utc']<=a['ended_utc']<pre_rec['started_utc'],'serialized actor after edit')
+        require(a['before_mtime_ns']==baseline[name][1] and a['after_mtime_ns']==pre[name][1],'actor actual mtime join')
+        delta=a['after_mtime_ns']-a['before_mtime_ns']
+        require(delta>500_000_000 if c['actor']=='newmtime' else delta==0,'actual mtime predicate; do not trust flag')
+        require(a['before_sha256']!=a['after_sha256'] and a['after_sha256']==hashlib.sha256(pre[name][0]).hexdigest(),'actual content changed')
+        reverted=next(r for r in subset if r['phase']=='revert-observed')
+        require(first_rec['ended_utc']<reverted['utc']<save[1]['utc'],'first disk then Revert then second intent')
+        require(all(line in reverted['dom'] for line in (c['initial']+c['note']).splitlines()),'visible fresh body')
+    else:delta=None
+    require(final[name][0]==(c['goal']+c['note']).encode(),'whole goal plus note')
+    for state in [pre,first,final]:require(state[inputs['sibling']['file']]==baseline[inputs['sibling']['file']],'sibling bytes/mtime')
+    summary.append(dict(id=ident,save_intents=len(save),conflict=external,actor_mtime_delta_ns=delta,goal=True,note_preserved=True))
+last,_=disk('J003-final')
+require(all(last[c['file']][0]==(c['goal']+c['note']).encode() for c in cases),'all final goals')
+closure=load(run/'CLOSURE.json');require(closure['launches']==1 and closure['returncode']==0 and closure['reason']=='actual child exit','actual normal closure')
+require(ui[-1]['phase']=='closed' and ui[-1]['action']=='close-owned-tab','tab closed record')
+from audit_raw import audit
+controls=[]
+for name in ['goal','note','sibling','duplicate','bytehash','boolwrites','actor_mtime_join','missing_conflict']:
+    copied=dest/name;shutil.copytree(run/'observations',copied/'observations');shutil.copytree(run/'actors',copied/'actors');shutil.copyfile(run/'ui.jsonl',copied/'ui.jsonl')
+    if name in ['boolwrites','actor_mtime_join']:
+        p=copied/'actors/J003/RESULT.json';v=load(p);v['writes']=True if name=='boolwrites' else v['writes']
+        if name=='actor_mtime_join':v['after_mtime_ns']+=100
+        p.write_text(json.dumps(v),encoding='utf-8')
+    elif name=='missing_conflict':
+        p=copied/'ui.jsonl';rows=[json.loads(x) for x in p.read_text(encoding='utf-8').splitlines()]
+        for r in rows:
+            if r['case']=='J003' and r['phase']=='first-save-observed':r['dom']=r['dom'].replace('File Changed','No conflict')
+        p.write_text('\n'.join(json.dumps(r) for r in rows)+'\n',encoding='utf-8')
+    else:
+        p=copied/'observations/J003-final/disk.json';v=load(p)
+        if name=='duplicate':v['rows'].append(v['rows'][0].copy())
+        else:
+            target=inputs['sibling']['file'] if name=='sibling' else cases[2]['file'];row=next(r for r in v['rows'] if r['file']==target)
+            if name=='bytehash':row['sha256']='0'*64
+            else:
+                body=base64.b64decode(row['content_b64']).decode()
+                body=body.replace('14:00','10:30') if name=='goal' else body.replace(cases[2]['note'],'') if name=='note' else body+'changed'
+                b=body.encode();row.update(content_b64=base64.b64encode(b).decode(),bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+        p.write_text(json.dumps(v),encoding='utf-8')
+    try:audit(root,copied)
+    except Exception as e:controls.append(dict(control=name,rejected=True,error_type=type(e).__name__,error=str(e)))
+    else:raise ValueError('accepted corruption '+name)
+token=load(run/'CONTROL_PRIVATE.json')['token'];redacted=[]
+public=dest/'public-server-logs';public.mkdir()
+for p in run.glob('server.*.private.txt'):
+    b=p.read_bytes();sanitized=b.replace(token.encode(),b'<PRIVATE_AUTH_REDACTED>');target=public/p.name.replace('.private.','.redacted.')
+    target.write_bytes(sanitized);redacted.append(dict(original_bytes=len(b),original_sha256=hashlib.sha256(b).hexdigest(),public_file=target.name,public_bytes=len(sanitized),public_sha256=hashlib.sha256(sanitized).hexdigest(),token_occurrences=b.count(token.encode()),original_retained_private=True))
+result=dict(started_utc=start,ended_utc=datetime.now(timezone.utc).isoformat(),decision='PASS_RETAINED_STOCK_RAW_AND_CUSTODY',cases=summary,source_pins_checked=len(freeze['sources']),installed_assets_checked=len(freeze['installed_assets']),ui_records=len(ui),disk_snapshots=10,copied_controls=controls,server_log_redaction=redacted,primary_replays=0,actual_child_exit=closure['returncode'],scope='retained raw separate implementation, not a second actor/app run or runtime promotion')
+with (dest/'RESULT.json').open('x',encoding='utf-8') as f:json.dump(result,f,ensure_ascii=False,indent=2)
+print(json.dumps(result,ensure_ascii=False,indent=2))

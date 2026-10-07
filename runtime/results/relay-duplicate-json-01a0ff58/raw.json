@@ -1,0 +1,1375 @@
+{
+  "cases_sha256": "b3479515fa6b3710c617e276a2431f0bdacdaa23576a106c17fb48353f7721fb",
+  "ended_at": "2026-10-03T02:16:49.201707+00:00",
+  "mcp": "1.30.0",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "rows": [
+    {
+      "case": "duplicate_id_conflicting",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":0,\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "duplicate_id_equal",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "duplicate_tool",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_close\",\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "duplicate_arguments",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"first\":1},\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "duplicate_nested_input_state",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "program": {
+              "ops": [
+                {
+                  "down": true,
+                  "key": "x",
+                  "op": "key_state"
+                }
+              ]
+            }
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "program": {
+              "ops": [
+                {
+                  "down": true,
+                  "key": "x",
+                  "op": "key_state"
+                }
+              ]
+            }
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"program\":{\"ops\":[{\"op\":\"key_state\",\"key\":\"x\",\"down\":false,\"down\":true}]}}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "duplicate_escaped_id",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"\\u0069d\":0,\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "duplicate_escaped_nested_key",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "key": true
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "key": true
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"key\":false,\"\\u006bey\":true}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "duplicate_after_null",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "flag": true
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "flag": true
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"flag\":null,\"flag\":true}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "unique_empty",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "unique_distinct_case",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "Key": 2,
+            "key": 1
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "Key": 2,
+            "key": 1
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"key\":1,\"Key\":2}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "unique_sibling_objects",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "left": {
+              "key": 1
+            },
+            "right": {
+              "key": 2
+            }
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "left": {
+              "key": 1
+            },
+            "right": {
+              "key": 2
+            }
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"left\":{\"key\":1},\"right\":{\"key\":2}}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "unique_array_objects",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "array": [
+              {
+                "key": 1
+              },
+              {
+                "key": 2
+              }
+            ]
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "array": [
+              {
+                "key": 1
+              },
+              {
+                "key": 2
+              }
+            ]
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"array\":[{\"key\":1},{\"key\":2}]}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "unique_escaped_id",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"\\u0069d\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "unique_escaped_argument",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "key": true
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "key": true
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"\\u006bey\":true}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "unique_finite_numbers",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "values": [
+              1e+308,
+              -1e+308,
+              5e-324,
+              0.0,
+              18446744073709551616
+            ]
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "values": [
+              1e+308,
+              -1e+308,
+              5e-324,
+              0.0,
+              18446744073709551616
+            ]
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"values\":[1e308,-1e308,5e-324,0.0,18446744073709551616]}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "unique_duplicate_text_in_string",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "text": "\"key\":0,\"key\":1"
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "text": "\"key\":0,\"key\":1"
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"text\": \"\\\"key\\\":0,\\\"key\\\":1\"}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "baseline"
+    },
+    {
+      "case": "duplicate_id_conflicting",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 0,
+      "initial_calls": [],
+      "line": "{\"id\":0,\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "dispatched": false,
+        "error": "duplicate JSON object key",
+        "next_id": 1,
+        "status": "refused"
+      },
+      "same_id_followup": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "duplicate_id_equal",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 0,
+      "initial_calls": [],
+      "line": "{\"id\":1,\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "dispatched": false,
+        "error": "duplicate JSON object key",
+        "next_id": 1,
+        "status": "refused"
+      },
+      "same_id_followup": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "duplicate_tool",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 0,
+      "initial_calls": [],
+      "line": "{\"id\":1,\"tool\":\"interface_close\",\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "dispatched": false,
+        "error": "duplicate JSON object key",
+        "next_id": 1,
+        "status": "refused"
+      },
+      "same_id_followup": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "duplicate_arguments",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 0,
+      "initial_calls": [],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"first\":1},\"arguments\":{}}",
+      "response": {
+        "dispatched": false,
+        "error": "duplicate JSON object key",
+        "next_id": 1,
+        "status": "refused"
+      },
+      "same_id_followup": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "duplicate_nested_input_state",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 0,
+      "initial_calls": [],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"program\":{\"ops\":[{\"op\":\"key_state\",\"key\":\"x\",\"down\":false,\"down\":true}]}}}",
+      "response": {
+        "dispatched": false,
+        "error": "duplicate JSON object key",
+        "next_id": 1,
+        "status": "refused"
+      },
+      "same_id_followup": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "duplicate_escaped_id",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 0,
+      "initial_calls": [],
+      "line": "{\"\\u0069d\":0,\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "dispatched": false,
+        "error": "duplicate JSON object key",
+        "next_id": 1,
+        "status": "refused"
+      },
+      "same_id_followup": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "duplicate_escaped_nested_key",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 0,
+      "initial_calls": [],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"key\":false,\"\\u006bey\":true}}",
+      "response": {
+        "dispatched": false,
+        "error": "duplicate JSON object key",
+        "next_id": 1,
+        "status": "refused"
+      },
+      "same_id_followup": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "duplicate_after_null",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 0,
+      "initial_calls": [],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"flag\":null,\"flag\":true}}",
+      "response": {
+        "dispatched": false,
+        "error": "duplicate JSON object key",
+        "next_id": 1,
+        "status": "refused"
+      },
+      "same_id_followup": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "unique_empty",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "unique_distinct_case",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "Key": 2,
+            "key": 1
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "Key": 2,
+            "key": 1
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"key\":1,\"Key\":2}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "unique_sibling_objects",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "left": {
+              "key": 1
+            },
+            "right": {
+              "key": 2
+            }
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "left": {
+              "key": 1
+            },
+            "right": {
+              "key": 2
+            }
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"left\":{\"key\":1},\"right\":{\"key\":2}}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "unique_array_objects",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "array": [
+              {
+                "key": 1
+              },
+              {
+                "key": 2
+              }
+            ]
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "array": [
+              {
+                "key": 1
+              },
+              {
+                "key": 2
+              }
+            ]
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"array\":[{\"key\":1},{\"key\":2}]}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "unique_escaped_id",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {},
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"\\u0069d\":1,\"tool\":\"interface_dispatch\",\"arguments\":{}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "unique_escaped_argument",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "key": true
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "key": true
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"\\u006bey\":true}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "unique_finite_numbers",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "values": [
+              1e+308,
+              -1e+308,
+              5e-324,
+              0.0,
+              18446744073709551616
+            ]
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "values": [
+              1e+308,
+              -1e+308,
+              5e-324,
+              0.0,
+              18446744073709551616
+            ]
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"values\":[1e308,-1e308,5e-324,0.0,18446744073709551616]}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "candidate"
+    },
+    {
+      "case": "unique_duplicate_text_in_string",
+      "final_call_count": 1,
+      "final_calls": [
+        {
+          "arguments": {
+            "text": "\"key\":0,\"key\":1"
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "initial_call_count": 1,
+      "initial_calls": [
+        {
+          "arguments": {
+            "text": "\"key\":0,\"key\":1"
+          },
+          "tool": "interface_dispatch"
+        }
+      ],
+      "line": "{\"id\":1,\"tool\":\"interface_dispatch\",\"arguments\":{\"text\": \"\\\"key\\\":0,\\\"key\\\":1\"}}",
+      "response": {
+        "id": 1,
+        "next_id": 2,
+        "result": {
+          "content": [],
+          "isError": false,
+          "meta": null,
+          "structuredContent": null
+        },
+        "sdk_entry_ns": 6834937000000,
+        "sdk_return_ns": 6834937000000,
+        "status": "returned",
+        "tool": "interface_dispatch"
+      },
+      "same_id_followup": {
+        "dispatched": false,
+        "error": "next id must be 2; never resend an accepted id",
+        "next_id": 2,
+        "status": "refused"
+      },
+      "variant": "candidate"
+    }
+  ],
+  "schema": "relay-duplicate-json-construction-v1",
+  "sources": {
+    "baseline_relay.py": "1616f410a3058660056cb9e7d72ab023a6ea50e5217fd1008ab571ddbd0a1d50",
+    "candidate_relay.py": "1bca85dcfadc436574b298009a05e304613cbd64b3b0976f3b61460667ed829c"
+  },
+  "started_at": "2026-10-03T02:16:49.197705+00:00"
+}

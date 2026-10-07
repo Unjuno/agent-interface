@@ -1,0 +1,3 @@
+import pathlib
+p=pathlib.Path(__file__).parent;s=(p/'build_probe.py').read_text(encoding='utf-8');assert s.endswith("'''\n")
+(p/'build_probe_v2.py').write_text(s[:-4],encoding='utf-8')

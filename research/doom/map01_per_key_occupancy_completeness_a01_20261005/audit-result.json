@@ -1,0 +1,33 @@
+{
+  "allocation": "MAP01-PER-KEY-OCCUPANCY-COMPLETENESS-A01-20261005",
+  "cases": {
+    "complete": {
+      "intervals": [
+        {
+          "action_id": "act-1",
+          "epoch": 7,
+          "key": "SPACE",
+          "lower_ns": 32,
+          "upper_ns": 50
+        },
+        {
+          "action_id": "act-1",
+          "epoch": 7,
+          "key": "W",
+          "lower_ns": 70,
+          "upper_ns": 90
+        }
+      ],
+      "reasons": [],
+      "status": "BOUNDED"
+    },
+    "space_row_omitted": {
+      "intervals": [],
+      "reasons": [
+        "expected_key_inventory_mismatch"
+      ],
+      "status": "UNKNOWN"
+    }
+  },
+  "independent": true
+}

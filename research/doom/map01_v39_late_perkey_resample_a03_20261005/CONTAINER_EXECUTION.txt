@@ -1,0 +1,14 @@
+Command:
+docker run --rm --network none --cpus=1 --memory=1g --pids-limit=64 -e PR_ROOT=/pr -v /private/tmp/agent-interface-59-late-resample-a03:/work:ro -v /private/tmp/agent-interface-pr7829:/pr:ro -w /work python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python research/doom/map01_v39_late_perkey_resample_a03_20261005/test_late_resample.py
+
+Container platform: linux/aarch64 (OrbStack host reported linux/aarch64)
+Cgroup observations: cpu.max=100000 100000; memory.max=1073741824; memory.swap.max=1073741824; pids.max=64.
+Host disk observation: 3.6 TiB volume, 14 GiB available, 100% capacity, inode use 17%.
+
+Final rerun output summary:
+Ran 3 tests in 0.065s; OK.
+test_exact_candidate_baseline_keeps_receipt_unconfirmed ... ok
+test_late_owner_resample_and_deferred_drain_recover_bracket ... ok
+test_retry_sample_unavailable_does_not_fabricate_confirmed_up ... ok
+
+Exact stdout/stderr, including all structured OBSERVATION JSON records, is retained in CONTAINER_RAW.log. Wall-clock-like harness timestamps are monotonic synthetic values, not UTC timestamps.

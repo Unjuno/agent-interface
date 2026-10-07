@@ -1,0 +1,31 @@
+test_cancelled_release_watcher_and_v12_terminal_barrier_share_deduplication (__main__.ExecutorV13Tests.test_cancelled_release_watcher_and_v12_terminal_barrier_share_deduplication) ... ok
+test_focus_surface_and_expiry_publish_before_terminal (__main__.ExecutorV13Tests.test_focus_surface_and_expiry_publish_before_terminal) ... ok
+test_normal_completion_has_no_release_interruption_event (__main__.ExecutorV13Tests.test_normal_completion_has_no_release_interruption_event) ... ok
+test_release_sink_error_is_reported_by_terminal_without_retry (__main__.ExecutorV13Tests.test_release_sink_error_is_reported_by_terminal_without_retry) ... Exception in thread Thread-12 (_watch_release):
+Traceback (most recent call last):
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\live_control\executor_v13.py", line 69, in _watch_release
+    self._publish_cause_once(identifier, lease)
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\live_control\executor_v13.py", line 63, in _publish_cause_once
+    self.emit(event)
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-sink-error-c10-20261004\test_executor_v13_against_main.py", line 131, in emit
+    raise OSError("release acknowledgement lost")
+OSError: release acknowledgement lost
+ERROR
+
+======================================================================
+ERROR: test_release_sink_error_is_reported_by_terminal_without_retry (__main__.ExecutorV13Tests.test_release_sink_error_is_reported_by_terminal_without_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-3\work\current-main-map01-integration\research\doom\results\map01-executor-v13-main-vs-pr7429-sink-error-c10-20261004\test_executor_v13_against_main.py", line 144, in test_release_sink_error_is_reported_by_terminal_without_retry
+    self.assertEqual(terminal["input_release_publication"],
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'input_release_publication'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.157s
+
+FAILED (errors=1)

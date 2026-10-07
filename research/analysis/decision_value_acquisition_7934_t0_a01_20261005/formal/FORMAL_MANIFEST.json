@@ -1,0 +1,24 @@
+{
+  "schema": "issue7934-t0-a01-formal-transport-v1",
+  "raw_observations": {
+    "transport": "raw_observations.jsonl.gz",
+    "uncompressed_bytes": 37760,
+    "uncompressed_sha256": "881fa989a1d009590a31d0fab0e0095c46be6f91a6fd2cfa3e8c9e205161a7d1",
+    "gzip_bytes": 1613,
+    "gzip_sha256": "6a88258f7c96c72e77206ae6bad888db99534484e05376509599d418cec19b05"
+  },
+  "candidate_result": {
+    "transport": "candidate_result.json.gz",
+    "uncompressed_bytes": 340167,
+    "uncompressed_sha256": "8b6a928ed5b8c37acb368eae8f206d5b7c4311979ea722c8d06a04a5190c780c",
+    "gzip_bytes": 7597,
+    "gzip_sha256": "f440a5452fd63d40c347a11463813f85293203a6f431d708ddc81ed00d05f2fe"
+  },
+  "child_streams": {
+    "simulator.stdout.txt": {"bytes": 461, "sha256": "cb402cd8770ef98c7a157fe5bb9cfeccdc7cd2e9858be5f1b68eae12efb0a696"},
+    "simulator.stderr.txt": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},
+    "auditor.stdout.txt": {"bytes": 59, "sha256": "9a1c6bacedaf34d3727d5f23abbe6c34d064171b89abdc4a45cf4decc57cc038"},
+    "auditor.stderr.txt": {"bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+  },
+  "reconstruction": "gzip-decompress each transport file; the resulting bytes must match uncompressed length and SHA-256 above."
+}

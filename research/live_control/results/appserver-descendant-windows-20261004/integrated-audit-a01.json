@@ -1,0 +1,31 @@
+{
+  "audit": "saved Windows integration probe review only; no process launch or signal sent",
+  "baseline_pid_state_now": {
+    "exists": false,
+    "error": 87
+  },
+  "a01_pid_state_now": {
+    "exists": false,
+    "error": 87
+  },
+  "a02_pid_state_now": {
+    "exists": false,
+    "error": 87
+  },
+  "checks": {
+    "baseline_exact_client_source": true,
+    "baseline_descendant_live_after_default_close": true,
+    "baseline_reader_timeout": true,
+    "factory_hash_matches_a02": true,
+    "job_assigned_before_resume_in_source": true,
+    "a01_client_close_passed": true,
+    "a01_harness_cleanup_accessor_error_disclosed": true,
+    "a02_client_close_passed": true,
+    "a02_reader_ended_at_return": true,
+    "a02_descendant_dead_after_client_close": true,
+    "a02_reader_ended_after_cleanup": true,
+    "a02_descendant_absent_at_audit": true,
+    "a01_descendant_absent_at_audit": true
+  },
+  "pass": true
+}
