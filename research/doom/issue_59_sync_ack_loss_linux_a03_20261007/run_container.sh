@@ -20,7 +20,7 @@ fi
 touch "$OUT/RUN-STARTED"
 
 cat > "$OUT/COMMANDS.txt" <<EOF
-candidate_source_commit=ca8f411351d5f85193b89e1ec4b34063be5d8db1
+candidate_source_commit=ca8f4113510b4b01a8e7d001dfe812dcc7b640a9
 freeze_commit=$(git -C "$REPO_ROOT" rev-parse HEAD)
 docker_cli=$ENGINE
 host_uid=$(id -u)

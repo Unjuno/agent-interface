@@ -4,7 +4,7 @@ A03 is a frozen successor to A02, which is preserved as `FAIL_TESTS`. Static imp
 
 ## H / T / D / C / U
 
-**H.** At candidate source `ca8f411351d5f85193b89e1ec4b34063be5d8db1`, the delivered-DOWN/failed-`sync()` regression and related owner measurement tests remain reproducible in the repository's pinned Python 3.12 Linux container. The scoped outcome is `KEYMAP_EDGE_UNCONFIRMED`, with no bracket or actuation identity, followed by verified cleanup to a neutral fake-X state.
+**H.** At candidate source `ca8f4113510b4b01a8e7d001dfe812dcc7b640a9`, the delivered-DOWN/failed-`sync()` regression and related owner measurement tests remain reproducible in the repository's pinned Python 3.12 Linux container. The scoped outcome is `KEYMAP_EDGE_UNCONFIRMED`, with no bracket or actuation identity, followed by verified cleanup to a neutral fake-X state.
 
 **T.** Build one image from the pinned Python base digest, install exact dependencies from `requirements.lock`, then run the 11 focused tests once. Mount the exact source/dependency trees read-only and output read-write. Runtime gets one CPU, 1 GiB memory, 64 pids, no network, display, game, or GPU. Run the saved-data auditor once. No build, run, or audit retry.
 
@@ -14,4 +14,4 @@ A03 is a frozen successor to A02, which is preserved as `FAIL_TESTS`. Static imp
 
 **U.** This validates Linux/Python dependency reproducibility over fake-X state only. It proves no real X11, physical keyboard, GUI/application effect, threat response, recovery efficacy, Doom progress, or live #59 gate completion.
 
-Candidate source commit: `ca8f411351d5f85193b89e1ec4b34063be5d8db1`. Base image digest: `python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016`. Result directory: `results/a03/`.
+Candidate source commit: `ca8f4113510b4b01a8e7d001dfe812dcc7b640a9`. Base image digest: `python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016`. Result directory: `results/a03/`.

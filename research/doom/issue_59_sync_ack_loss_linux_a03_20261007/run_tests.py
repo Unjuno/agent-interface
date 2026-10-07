@@ -20,7 +20,7 @@ SOURCE_PATHS = (
     'research/doom/doom_owner_thread_release_batch_backend_v1.py',
     'research/live_control/test_batch_key_measurement_composition.py',
 )
-EXPECTED_COMMIT = 'ca8f411351d5f85193b89e1ec4b34063be5d8db1'
+EXPECTED_COMMIT = 'ca8f4113510b4b01a8e7d001dfe812dcc7b640a9'
 BASE_IMAGE = ('python@sha256:'
               'dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016')
 
