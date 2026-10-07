@@ -10,10 +10,13 @@ import uuid
 from Xlib import X, XK, display, error
 from Xlib.ext import xtest
 from executor_v3 import Cancelled, DecisionRequired
+from key_edge_measurement_v1 import KeyEdgeMeasurements, key_sample
+from lease import Expired
 
 
 class InputOwner:
-    def __init__(self, display_name):
+    def __init__(self, display_name, *, measure_key_edges=False):
+        self.measure_key_edges = measure_key_edges is True
         self.requests = queue.Queue()
         self.owner_id = uuid.uuid4().hex
         self.records = []
@@ -85,10 +88,12 @@ class InputOwner:
         buttons = {}
         touched_buttons = set()
         active = None
+        last_cleanup = None  # exact lease object and verified interruption reason
         active_pointer = False
         revision = 0
         fault = None
         release_pending = False
+        measurement = KeyEdgeMeasurements(self.owner_id) if self.measure_key_edges else None
         self.ready.set()
 
         def key_is_down(code):
@@ -101,9 +106,10 @@ class InputOwner:
             except Exception as exc:
                 return None, {"type": type(exc).__name__, "message": str(exc)[:200]}, time.perf_counter_ns()
 
-        def release_key(code, *, max_attempts=3, force_first=False):
+        def release_key(code, *, max_attempts=3, force_first=False, capture_measurement=False):
             attempts = []
-            server_down, before_error, _ = sample_key_down(code)
+            before_started_ns = time.perf_counter_ns() if capture_measurement else None
+            server_down, before_error, before_finished_ns = sample_key_down(code)
             for attempt in range(1, max_attempts + 1):
                 if server_down is False and not (force_first and attempt == 1):
                     break
@@ -120,6 +126,7 @@ class InputOwner:
                 except Exception as exc:
                     sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
                 sync_returned_ns = time.perf_counter_ns() if sync_error is None else None
+                after_started_ns = time.perf_counter_ns() if capture_measurement else None
                 server_down, after_error, sampled_ns = sample_key_down(code)
                 attempts.append({
                     "attempt": attempt,
@@ -133,10 +140,31 @@ class InputOwner:
                     "keyrelease_error": release_error,
                     "sync_error": sync_error,
                 })
+                if capture_measurement:
+                    # Retain observations already required for release/retry.
+                    # Do not insert another keymap request into cleanup.
+                    attempts[-1].update(
+                        measurement_pre_sample=dict(
+                            available=observed_down_before is not None and before_error is None,
+                            down=observed_down_before, error=before_error,
+                            started_ns=before_started_ns, finished_ns=before_finished_ns),
+                        measurement_post_sample=dict(
+                            available=server_down is not None and after_error is None,
+                            down=server_down, error=after_error,
+                            started_ns=after_started_ns, finished_ns=sampled_ns))
+                before_started_ns, before_finished_ns = after_started_ns, sampled_ns
                 before_error = after_error
                 if server_down is False:
                     break
             return attempts, server_down is False
+
+        def measured_sample(code):
+            started = time.perf_counter_ns()
+            try:
+                bitmap, sample_error = d.query_keymap(), None
+            except Exception as exc:
+                bitmap, sample_error = None, {"type": type(exc).__name__, "message": str(exc)[:200]}
+            return key_sample(bitmap, sample_error, started, time.perf_counter_ns(), code)
 
         def release_keys_batch(lease, keys):
             nonlocal fault,release_pending
@@ -145,6 +173,18 @@ class InputOwner:
                     len(set(keys)) != len(keys)):
                 raise ValueError('unique non-empty key list required for up_batch')
             if active is not lease or lease is None:
+                # The owner watchdog can finish cleanup before the caller's
+                # finally-path UP batch arrives. Preserve that exact lease's
+                # interruption; do not inject or manufacture explicit-UP rows.
+                if (active is None and last_cleanup is not None
+                        and last_cleanup[0] is lease):
+                    reason = last_cleanup[1]
+                    if reason == 'cancelled':
+                        raise Cancelled()
+                    if reason == 'expired':
+                        raise Expired()
+                    if reason in ('focus_changed', 'surface_changed'):
+                        raise DecisionRequired(reason)
                 raise ValueError('up_batch requires the active input lease')
             codes = []
             for key in keys:
@@ -153,15 +193,23 @@ class InputOwner:
                     raise ValueError('up_batch key is unavailable or not owned')
                 codes.append((key, code))
 
+            # Different key names can resolve to one physical key. Reject the
+            # collision before sampling or sending UPs, preserving cleanup ownership.
+            if len({code for _, code in codes}) != len(codes):
+                raise ValueError("up_batch keys must resolve to distinct keycodes")
+
             # The pre-sample occurs before the ordered UP sequence. Send every
             # original explicit UP before sampling again; this preserves the
             # release-batch no-query-between-UPs contract.
+            before_started_ns = time.perf_counter_ns() if measurement else None
             try:
                 before_bitmap = d.query_keymap()
                 before_error = None
             except Exception as exc:
                 before_bitmap = None
                 before_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+            before_finished_ns = time.perf_counter_ns() if measurement else None
+            batch_id = f"{self.owner_id}:batch:{revision}"
             attempt_rows = {}
             for key, code in codes:
                 started_ns = time.perf_counter_ns()
@@ -191,23 +239,27 @@ class InputOwner:
                     'sync_error': sync_error,
                 }]
 
+            # Keep the shared initial snapshot separate from per-key retry samples.
+            batch_started_ns = time.perf_counter_ns() if measurement else None
             try:
-                bitmap = d.query_keymap()
-                sample_error = None
-                sampled_ns = time.perf_counter_ns()
+                batch_bitmap = d.query_keymap()
+                batch_sample_error = None
+                batch_sampled_ns = time.perf_counter_ns()
             except Exception as exc:
-                bitmap = None
-                sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
-                sampled_ns = time.perf_counter_ns()
+                batch_bitmap = None
+                batch_sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                batch_sampled_ns = time.perf_counter_ns()
             receipts = []
             for key, code in codes:
                 attempts = attempt_rows[code]
+                final_started_ns = batch_started_ns
+                final_bitmap, final_error, final_ns = batch_bitmap, batch_sample_error, batch_sampled_ns
                 server_down = (
-                    bool(bitmap[code // 8] & (1 << (code % 8)))
-                    if bitmap is not None else None)
-                attempts[0]['keymap_sampled_ns'] = sampled_ns
+                    bool(batch_bitmap[code // 8] & (1 << (code % 8)))
+                    if batch_bitmap is not None else None)
+                attempts[0]['keymap_sampled_ns'] = batch_sampled_ns
                 attempts[0]['server_key_down_after'] = server_down
-                attempts[0]['keymap_after_error'] = sample_error
+                attempts[0]['keymap_after_error'] = batch_sample_error
                 while server_down is True and len(attempts) < 3:
                     started_ns = time.perf_counter_ns()
                     release_error = None
@@ -221,6 +273,7 @@ class InputOwner:
                     except Exception as exc:
                         sync_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
                     sync_ns = time.perf_counter_ns() if sync_error is None else None
+                    retry_started_ns = time.perf_counter_ns() if measurement else None
                     try:
                         bitmap = d.query_keymap()
                         sample_error = None
@@ -229,6 +282,8 @@ class InputOwner:
                         bitmap = None
                         sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
                         sampled_ns = time.perf_counter_ns()
+                    final_started_ns = retry_started_ns
+                    final_bitmap, final_error, final_ns = bitmap, sample_error, sampled_ns
                     server_down = (
                         bool(bitmap[code // 8] & (1 << (code % 8)))
                         if bitmap is not None else None)
@@ -267,11 +322,32 @@ class InputOwner:
                     physical_verification_authoritative=False,
                     release_batch_initial_up_count=len(codes),
                     release_batch_key_order=[item[0] for item in codes])
+                if measurement:
+                    receipt['physical_key_measurement'] = measurement.edge(
+                        'up', code, key, getattr(lease, 'intent_token', None),
+                        key_sample(before_bitmap, before_error, before_started_ns, before_finished_ns, code),
+                        key_sample(final_bitmap, final_error, final_started_ns, final_ns, code),
+                        attempts[0]['keyrelease_started_ns'], attempts[-1]['sync_returned_ns'],
+                        operation_ok=verified and all(
+                            row['keyrelease_error'] is None and row['sync_error'] is None
+                            and row['keymap_before_error'] is None and row['keymap_after_error'] is None
+                            for row in attempts),
+                        batch_id=batch_id,
+                        post_sample_basis='shared_batch' if len(attempts) == 1 else 'key_retry')
                 self.records.append(receipt)
                 receipts.append(receipt)
             if any(not receipt["server_keyup_verified"] for receipt in receipts):
                 fault = RuntimeError("input owner failed closed after unverified key-up")
                 release_pending = True
+            if measurement and any(
+                    receipt['physical_key_measurement']['classification'] != 'CONFIRMED_PHYSICAL_UP'
+                    for receipt in receipts):
+                # Key state can be neutral even when a send/sync raised. Keep
+                # cleanup state separate from the certainty of the batch edges.
+                for receipt in receipts:
+                    data = receipt['physical_key_measurement']
+                    data.update(classification='BATCH_RELEASE_UNCONFIRMED', bracket=None,
+                                adapter_edge=None, actuation_id=None, identity_status='UNAVAILABLE')
             return receipts
 
         def focus_id():
@@ -357,7 +433,7 @@ class InputOwner:
                 raise Cancelled()
 
         def release(reason):
-            nonlocal active,revision,fault,release_pending
+            nonlocal active,revision,fault,release_pending,last_cleanup
             revision += 1
             release_pending = True
             key_release_attempts = {}
@@ -367,10 +443,26 @@ class InputOwner:
             release_codes = list(held)
             release_codes.extend(sorted(set(touched) - set(held)))
             for code in release_codes:
-                attempts, verified = release_key(code)
+                lineage = measurement.active.get(code) if measurement else None
+                owned_lease = held.get(code)
+                attempts, verified = release_key(code, capture_measurement=measurement is not None)
                 key_release_attempts[str(code)] = {
                     "attempts": attempts, "verified": verified,
                 }
+                if lineage is not None and attempts:
+                    key_release_attempts[str(code)]["physical_key_measurement"] = measurement.edge(
+                        'up', code, lineage[0], getattr(owned_lease, 'intent_token', None),
+                        attempts[0]['measurement_pre_sample'],
+                        attempts[-1]['measurement_post_sample'],
+                        attempts[0]['keyrelease_started_ns'], attempts[-1]['sync_returned_ns'],
+                        owned_before=owned_lease is not None,
+                        operation_ok=owned_lease is not None and verified and all(
+                            a['keyrelease_error'] is None and a['sync_error'] is None
+                            for a in attempts), cleanup=True)
+            if measurement:
+                # Any no-op, failed or unobserved lineage ends at this cleanup
+                # boundary too. It must not be reused by a later explicit UP.
+                measurement.clear()
             # An explicit ButtonRelease may be acknowledged by XSync while
             # the server still reports the button down. Retry every touched
             # button that remains down, including one removed from `buttons`.
@@ -436,6 +528,8 @@ class InputOwner:
             touched_buttons.clear()
             held.clear()
             touched.clear()
+            if active is not None:
+                last_cleanup = (active, reason)
             active = None
             fault = None
             release_pending = False
@@ -575,18 +669,41 @@ class InputOwner:
                             if lease.cancel.is_set():
                                 raise Cancelled()
                             admitted = time.perf_counter_ns()
+                            owned_before = code in held
+                            if measurement:
+                                measurement.forget(code)
+                                pre_sample = measured_sample(code)
+                                # The extra round trip must not weaken admission.
+                                if getattr(lease, 'focus_invalid', False) or invalid_focus(lease):
+                                    lease.focus_invalid = True
+                                    raise DecisionRequired()
+                                lease.check()
+                                if time.perf_counter_ns() >= lease.deadline:
+                                    raise DecisionRequired('input lease expired during measurement')
+                                if lease.cancel.is_set():
+                                    raise Cancelled()
                             active = lease
+                            last_cleanup = None
                             active_pointer = False
                             touched.add(code)
                             held[code] = lease
+                            press_request_ns = time.perf_counter_ns() if measurement else None
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
+                            ack_ns = time.perf_counter_ns()
                             result = dict(event='input_admission', key=key, admitted_ns=admitted,
-                                          input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
+                                          input_ack_ns=ack_ns, valid_until_ns=lease.deadline)
+                            if measurement:
+                                result['physical_key_measurement'] = measurement.edge(
+                                    'down', code, key, getattr(lease, 'intent_token', None),
+                                    pre_sample, measured_sample(code), press_request_ns, ack_ns,
+                                    owned_before=owned_before)
                         else:
                             # Cleanup from an old intent must never release a newer hold.
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
+                            if measurement:
+                                measurement.forget(code)
                             if code in held:
                                 key_release_attempts, server_keyup_verified = release_key(
                                     code, force_first=True)

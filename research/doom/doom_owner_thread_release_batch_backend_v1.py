@@ -10,10 +10,10 @@ from input_transition_owner_v4 import InputOwner
 class Backend(Previous):
     """Opt-in release composition; controller and default backend are unchanged."""
 
-    def __init__(self, session, out, emit, signal_readers):
+    def __init__(self, session, out, emit, signal_readers, *, _owner_cls=InputOwner):
         super().__init__(session, out, emit, signal_readers)
         self.owner.close()
-        self.owner = InputOwner(session.name)
+        self.owner = _owner_cls(session.name)
         self._release_batch = threading.local()
         self._last_release_batch_delivery = None
 

@@ -113,6 +113,8 @@ class InputOwner(Previous):
                         "original UP sequence and verify X-server state only"
                     ),
                 })
+                if receipt is not None and isinstance(receipt.get("physical_key_measurement"), dict):
+                    row["physical_key_measurement"] = dict(receipt["physical_key_measurement"])
                 joined.append(row)
             return joined
         if operation != "up":
