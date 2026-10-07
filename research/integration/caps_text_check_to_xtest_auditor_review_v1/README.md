@@ -24,3 +24,8 @@ No public dispatch, GUI case, or formal allocation was run. This is a constructi
 ## Integration conditions
 
 Apply from repository root with `patch -p1 < auditor_event_contract.patch` only after the exact target files match the hashes above. Then rerun the complete v2 suite, add all new predicates to `FREEZE.json` mutation_controls and audit_event_contract, regenerate SOURCE_MANIFEST and freeze identities, test the instrumented construction path (including autorepeat behavior), and get independent review/readback before any A02 allocation. The per-key state machine is scoped to the fixed short XTEST fixture and is not claimed to handle general X11 autorepeat journals.
+
+
+## Container execution gate
+
+A later read-only OrbStack check found Docker Engine 29.4.0 Linux/ARM64 responds, but inspecting the locally named `python:3.12-slim` image stops on missing/unreadable containerd blob `sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f` (`operation not supported`). No container test was started, and no pull, prune, reset, or daemon repair was attempted. The 8/8 suite above was host-only construction validation performed before this fresh container gate check; it is preserved but does not satisfy the repository's preferred isolated-container execution rung. Do not rerun it on the host as a substitute. Recheck only after the container content store becomes usable or an explicitly applicable frozen protocol authorizes a different environment.
