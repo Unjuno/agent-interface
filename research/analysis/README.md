@@ -390,6 +390,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`blackwell_observation_dominance_6678_t1_orbstack_a02_20261003/`](blackwell_observation_dominance_6678_t1_orbstack_a02_20261003/)
 - [`blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/`](blackwell_observation_dominance_6678_t1_orbstack_a03_20261003/)
 - [`blocked_interleaved_practice_8080_t0_a01_20261005/`](blocked_interleaved_practice_8080_t0_a01_20261005/)
+- [`boundary_blame_5313_receipt_a01_20261007/`](boundary_blame_5313_receipt_a01_20261007/)
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
