@@ -1,0 +1,117 @@
+"""NEW ordinary acquisition-boundary cells. Real candidate methods, own virtual APIs only."""
+from pathlib import Path
+import sys,os,json,time,hashlib,datetime,ast
+from unittest.mock import patch
+O=Path(__file__).resolve().parent;E=O/'export'
+FREEZE=json.loads((O/'ACQUISITION-FREEZE.json').read_bytes())
+def need(ok,msg):
+    if not ok:raise ValueError(msg)
+def sha(b):return hashlib.sha256(b).hexdigest()
+for p in FREEZE['source']:
+    b=(E/p['path']).read_bytes();need(len(b)==p['bytes'] and sha(b)==p['sha256'],'frozen source '+p['path'])
+need(sha(Path(__file__).read_bytes())==FREEZE['probe_sha256'],'frozen own probe')
+need(sha((O/'ACQUISITION-PLAN.json').read_bytes())==FREEZE['plan_sha256'],'frozen own plan')
+sys.path.insert(0,str(E))
+native_calls=[];constructor_calls=[]
+def forbidden_native(*args,**kwargs):
+    native_calls.append(repr(args));raise AssertionError('native library forbidden')
+def forbidden_constructor(*args,**kwargs):
+    constructor_calls.append(True);raise AssertionError('backend constructor forbidden')
+with patch('ctypes.CDLL',side_effect=forbidden_native):
+    from runtime.backends.quartz_v1 import backend as B
+    from runtime.backends.quartz_v1.session import QuartzRuntimeSession
+    from runtime.core_v1.contract import SCHEMA_PROGRAM,validate_program
+    imported=[m for name,m in list(sys.modules.items()) if name.startswith('runtime') and getattr(m,'__file__',None)]
+    need(all(Path(m.__file__).resolve().is_relative_to(E.resolve()) for m in imported),'closed isolated source modules')
+    def ast_methods(path):
+        node=ast.parse(path.read_bytes());c=next(x for x in node.body if isinstance(x,ast.ClassDef) and x.name=='QuartzBackend')
+        return {x.name:ast.dump(x,include_attributes=False) for x in c.body if isinstance(x,ast.FunctionDef)}
+    hm=ast_methods(E/'runtime/backends/quartz_v1/backend.py')
+    bm=ast_methods(O/'baseline/runtime/backends/quartz_v1/backend.py')
+    inherited={name:hm[name]==bm[name] for name in ['_post','key_state','pointer_button']}
+    cells=[]
+    for label,mode,kind in [('healthy_key','none','key'),('key_disposal_after_post','dispose','key'),('pointer_disposal_after_post','dispose','button'),('key_partial_post_then_raises','after_post','key'),('key_post_before_effect_control','before_post','key')]:
+        trace=[];fault=OSError('own '+label+' injected boundary');captured=[]
+        def log(name,**data):
+            trace.append({'seq':len(trace)+1,'monotonic_ns':time.monotonic_ns(),'event':name,**data})
+        class VirtualApis:
+            def __init__(self):self.keys=set();self.buttons=set();self.posted=set();self.used=False
+            def state(self):return {'keys':sorted(self.keys),'buttons':sorted(self.buttons)}
+            def CGMainDisplayID(self):log('display_id');return 1
+            def CGDisplayBounds(self,display):log('display_bounds',display=display);return B.CGRect(B.CGPoint(0,0),B.CGSize(100,100))
+            def CGEventCreateKeyboardEvent(self,source,code,down):
+                e=('key',code,down);log('create',kind=e[0],target=code,down=down);return e
+            def CGEventCreateMouseEvent(self,source,event_kind,point,number):
+                down=event_kind in [B.KCG_EVENT_LEFT_MOUSE_DOWN,B.KCG_EVENT_RIGHT_MOUSE_DOWN,B.KCG_EVENT_OTHER_MOUSE_DOWN]
+                e=('button',number,down);log('create',kind='button',target=number,down=down,quartz_type=event_kind);return e
+            def CGEventCreate(self,source):log('position_create');return ('position',)
+            def CGEventGetLocation(self,event):log('position_read');return B.CGPoint(10,20)
+            def acquiring(self,e):return len(e)==3 and e[0]==kind and e[1]==0 and e[2] is True
+            def CGEventPost(self,tap,e):
+                if mode=='before_post' and not self.used and self.acquiring(e):
+                    self.used=True;log('post_before_effect_fault',kind=e[0],target=e[1],down=e[2],state=self.state());raise fault
+                state=self.keys if e[0]=='key' else self.buttons
+                if e[2]:state.add(e[1])
+                else:state.discard(e[1])
+                self.posted.add(id(e));log('post_effect',kind=e[0],target=e[1],down=e[2],state=self.state())
+                if mode=='after_post' and not self.used and self.acquiring(e):
+                    self.used=True;log('post_after_effect_fault',kind=e[0],target=e[1],down=e[2],state=self.state());raise fault
+            def CFRelease(self,e):
+                log('dispose',item=list(e))
+                if mode=='dispose' and not self.used and id(e) in self.posted and self.acquiring(e):
+                    self.used=True;log('dispose_after_effect_fault',kind=e[0],target=e[1],down=e[2],state=self.state());raise fault
+            def CGEventSourceKeyState(self,source,code):
+                value=code in self.keys;log('key_probe',target=code,down=value);return value
+            def CGEventSourceButtonState(self,source,number):
+                value=number in self.buttons;log('button_probe',target=number,down=value);return value
+        cg=VirtualApis()
+        with patch.object(B.QuartzBackend,'__init__',side_effect=forbidden_constructor),patch.object(B.time,'sleep',side_effect=lambda seconds:log('sleep_mocked',seconds=seconds)):
+            backend=object.__new__(B.QuartzBackend)
+            backend.cg=cg;backend.cf=cg;backend.targets={};backend.held_keys={};backend.held_buttons=set();backend.emissions=0
+            backend.accessibility_granted=True;backend.screen_recording_granted=True
+            original_execute=backend.execute
+            def observing_execute(program):
+                try:return original_execute(program)
+                except B.QuartzExecutionError as error:
+                    captured.append({'cause_is_original_fault':error.__cause__ is fault,'failed_op':error.execution.get('failed_op'),'completed_ops':list(error.execution.get('completed_ops',[]))})
+                    raise
+            backend.execute=observing_execute
+            session=QuartzRuntimeSession(backend)
+            def program(ops,seq,rev,suffix):
+                return {'schema':SCHEMA_PROGRAM,'program_id':'own6938-'+label+'-'+suffix,'source':{'observation_seq':seq,'binding_revision':rev},'authority':{'lease_id':'own-inert-only','expires_at_ns':2000000},'terminal':{'release_all_required':True},'ops':ops+[{'op':'release_all'}]}
+            first_op={'op':'key_state','key':'A','down':True} if kind=='key' else {'op':'pointer_button','button':'left','down':True}
+            first_program=program([first_op],7,3,'first')
+            fresh_program=program([{'op':'key_state','key':'CTRL','down':True}],8,4,'fresh')
+            validate_program(first_program);validate_program(fresh_program)
+            started=datetime.datetime.now(datetime.timezone.utc).isoformat();log('first_dispatch_start',program=first_program)
+            first=session.dispatch(first_program,current_observation_seq=7,current_binding_revision=3,now_ns=1000000)
+            first_state=cg.state();first_tracking={'keys':dict(backend.held_keys),'buttons':sorted(backend.held_buttons)}
+            flag=session.recovery_required;before_posts=sum(x['event']=='post_effect' for x in trace);before_emissions=backend.emissions
+            log('first_dispatch_end',row=first,state=first_state,tracking=first_tracking,recovery_required=flag,emissions=before_emissions)
+            start_followup=len(trace);log('fresh_dispatch_start',program=fresh_program)
+            second=session.dispatch(fresh_program,current_observation_seq=8,current_binding_revision=4,now_ns=1000000)
+            after_posts=sum(x['event']=='post_effect' for x in trace);second_state=cg.state()
+            log('fresh_dispatch_end',row=second,state=second_state,emissions=backend.emissions)
+            releases=first.get('execution',{}).get('releases',[])
+            neutral_claim=bool(releases) and all(r.get('verified') is True for r in releases)
+            down=bool(first_state['keys'] or first_state['buttons'])
+            false_neutral=down and neutral_claim
+            safety_FAIL=false_neutral and (after_posts>before_posts or second.get('status')=='completed')
+            need(first.get('status') in ['completed','execution_failed'],'valid admitted first source path')
+            need(second.get('status') in ['completed','refused'],'valid followup source result')
+            if mode=='none':
+                need(first['status']=='completed' and not down and flag is False and second['status']=='completed','healthy control')
+            else:
+                need(first['status']=='execution_failed' and len(captured)==1 and captured[0]['cause_is_original_fault'] and captured[0]['failed_op']==0 and captured[0]['completed_ops']==[] and cg.used,'original operation fault/prefix custody')
+                if mode=='before_post':need(not down and not false_neutral and second['status']=='completed','before-effect neutral control')
+                else:need(down,'fault actually follows own virtual acquiring effect')
+            row={'label':label,'mode':mode,'kind':kind,'started_utc':started,'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'first_program':first_program,'fresh_program':fresh_program,'first_return':first,'fresh_return':second,'first_virtual_state':first_state,'first_owner_tracking':first_tracking,'first_recovery_required':flag,'first_emissions':before_emissions,'original_exception_custody':captured,'followup_post_effects':after_posts-before_posts,'followup_emissions_delta':backend.emissions-before_emissions,'final_virtual_state':second_state,'false_verified_neutral':false_neutral,'safety_result':'FAIL' if safety_FAIL else 'PASS','trace':trace}
+            cells.append(row);(O/'ACQUISITION-CELLS.partial.json').write_text(json.dumps(cells,indent=2)+'\n',encoding='utf-8')
+    need(not native_calls and not constructor_calls,'native/construction guards untouched')
+    before_after=[]
+    for p in FREEZE['source']:
+        b=(E/p['path']).read_bytes();need(len(b)==p['bytes'] and sha(b)==p['sha256'],'source unchanged');before_after.append(p)
+    result={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'worker':'01a0ff32-f520-79d2-b8cd-110e05130103','head':FREEZE['head'],'python':sys.version,'platform':sys.platform,'pid':os.getpid(),'ppid':os.getppid(),'cells':cells,'imported_runtime_paths':[Path(m.__file__).relative_to(E).as_posix() for m in imported],'baseline_tracking_methods_AST_identical':inherited,'product_safety_failures':sum(x['safety_result']=='FAIL' for x in cells),'native_calls':native_calls,'constructor_calls':constructor_calls,'source_before_after_exact':before_after,'original_author_peer_native_formal_deck_replays':0,'physical_input_invocations':0,'main_writes':0}
+    raw=(json.dumps(result,sort_keys=True,separators=(',',':'),ensure_ascii=True)+'\n').encode();need(len(raw)<1048576,'bounded raw output')
+    (O/'ACQUISITION-RAW.json').write_bytes(raw)
+    print(json.dumps({'head':result['head'],'cells':[{'label':c['label'],'first_status':c['first_return']['status'],'first_state':c['first_virtual_state'],'tracking':c['first_owner_tracking'],'claimed_verified':c['first_return'].get('execution',{}).get('releases',[]),'recovery_required':c['first_recovery_required'],'followup_status':c['fresh_return']['status'],'followup_posts':c['followup_post_effects'],'safety':c['safety_result']} for c in cells],'baseline_tracking_methods_AST_identical':inherited,'native_calls':0,'constructor_calls':0,'source_before_after_count':len(before_after),'raw_bytes':len(raw),'raw_sha256':sha(raw)}))
