@@ -1,0 +1,34 @@
+{
+  "allocation": "8072-FACTORIAL-AUDIT-8319-A02-20261007",
+  "formal_candidate_invocations": 0,
+  "formal_audit_cli_invocations": 1,
+  "formal_audit_command": "python3 auditor.py inputs/a01_candidate.json results/audit.json",
+  "formal_audit_exit_code": 0,
+  "formal_retries": 0,
+  "formal_outcome": "PASS_AUDIT_ONLY",
+  "audit_summary": {
+    "status": "PASS",
+    "rows_observed": 400,
+    "rows_reconstructed": 400,
+    "reconstruction_errors": 0,
+    "mutation_controls": 6,
+    "mutations_rejected": 6,
+    "mutations_not_rejected": 0
+  },
+  "input_sha256": "ecffd8121a289d3533c94373c8f7aba50d9c349ffd5db534e46db16522897e9d",
+  "audit_output_sha256": "a1fa82a600f901303c00c44e826342f03d79be4f22ffad8b1a15792baced191f",
+  "freeze_sha256": "ea6b0021e6cadf1b75674845ae81251a89982d2e113e0bd149c0a20f70b40b91",
+  "runtime": "macOS arm64, CPython 3.14.5, standard library only; no isolation claim",
+  "local_ci": {
+    "audit_successor_construction": "4/4 PASS",
+    "analysis_index": "PASS; 769 retained result/failure directories indexed",
+    "analysis_index_unit_tests": "22/22 PASS",
+    "analysis_checkout_tests": "3/3 PASS",
+    "workspace_index_unit_tests": "22/22 PASS",
+    "workspace_index": "PASS; 160 top-level directories reachable",
+    "ci_python_3_12": "successor construction 4/4; analysis-index unit tests 22/22; analysis-checkout tests 3/3",
+    "git_diff_check": "PASS",
+    "analysis_workflow_yaml_parse": "PASS"
+  },
+  "validation_note": "One ad-hoc combined unittest command used an invalid dotted import for the workspace suite and reported ModuleNotFoundError; no source change followed. Switched to the repository workflow's documented unittest discover invocation, which passed 22/22 workspace tests."
+}

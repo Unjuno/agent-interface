@@ -1,0 +1,47 @@
+{
+  "allocation": "8072-FACTORIAL-AUDIT-8319-A02-20261007",
+  "issue": 8327,
+  "successor_to": "8319 A01",
+  "base_main": "798ac5ad709168ff1d27b115f10f4f96b126bb71",
+  "branch": "research/8319-audit-8327-a01-20261007",
+  "path": "research/analysis/controlled_feedback_audit_8319_a02_20261007/",
+  "input": {
+    "source_branch": "research/8072-factorial-8319-20261007",
+    "source_commit": "5e23f00fb98e24c078077ba4869a292d4120f7ab",
+    "source_path": "research/analysis/controlled_feedback_factorial_8072_a01_20261007/results/candidate.json",
+    "local_path": "inputs/a01_candidate.json",
+    "sha256": "ecffd8121a289d3533c94373c8f7aba50d9c349ffd5db534e46db16522897e9d",
+    "mutated": false
+  },
+  "source_sha256": {
+    "auditor.py": "56c819bec9d1c63252f22bfd1d6b063d5683ef48ac7389d2e942b3d774b1b0b3",
+    "test_auditor.py": "17cfa554d2c77b6e4ddd07858a13823944209f7a65affc7135e2baf1a2825315",
+    "inputs/a01_candidate.json": "ecffd8121a289d3533c94373c8f7aba50d9c349ffd5db534e46db16522897e9d"
+  },
+  "runtime": "macOS arm64, CPython 3.14.5, standard library only; no container isolation claim",
+  "formal_invocations_before_freeze": {
+    "candidate": 0,
+    "audit_cli": 0,
+    "retries": 0
+  },
+  "construction": {
+    "command": "python3 -m unittest -v test_auditor.py",
+    "tests": "4/4 PASS",
+    "py_compile": "PASS",
+    "git_diff_check": "PASS",
+    "decision_gate_controls": [
+      "400 rows, no reconstruction errors, no undetected mutations => PASS",
+      "wrong row count => FAIL",
+      "any reconstruction error => FAIL",
+      "six undetected mutations => FAIL"
+    ]
+  },
+  "formal": {
+    "command": "python3 auditor.py inputs/a01_candidate.json results/audit.json",
+    "invocations": 1,
+    "retries": 0,
+    "required_rows": 400,
+    "required_mutation_controls": 6,
+    "gate": "PASS iff row count is 400, reconstruction errors are empty, and undetected mutation names are empty"
+  }
+}
