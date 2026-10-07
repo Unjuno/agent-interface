@@ -1,0 +1,45 @@
+{
+  "schema": "5749-action-only-fixture-a01-v1",
+  "allocation": "5749-ACTION-ONLY-A01-20261007",
+  "policies": ["static_default", "clarify_each_turn", "action_only_adaptive"],
+  "default": "A",
+  "choices": ["A", "B"],
+  "episodes": [
+    {"id":"stable_B", "turns":[
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"}
+    ]},
+    {"id":"one_off_conflict", "turns":[
+      {"scope":"doc-v1", "consent":true, "target":"A", "observed_action":"B", "answer":"A"},
+      {"scope":"doc-v1", "consent":true, "target":"A", "observed_action":"A", "answer":"A"},
+      {"scope":"doc-v1", "consent":true, "target":"A", "observed_action":null, "answer":"A"},
+      {"scope":"doc-v1", "consent":true, "target":"A", "observed_action":"A", "answer":"A"}
+    ]},
+    {"id":"preference_change", "turns":[
+      {"scope":"doc-v1", "consent":true, "target":"A", "observed_action":"A", "answer":"A"},
+      {"scope":"doc-v1", "consent":true, "target":"A", "observed_action":"A", "answer":"A"},
+      {"scope":"doc-v1", "consent":true, "target":"A", "observed_action":"A", "answer":"A"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"}
+    ]},
+    {"id":"scope_change", "turns":[
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v2", "consent":true, "target":"A", "observed_action":"A", "answer":"A"},
+      {"scope":"doc-v2", "consent":true, "target":"A", "observed_action":"A", "answer":"A"}
+    ]},
+    {"id":"consent_revoked", "turns":[
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":true, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":false, "target":"B", "observed_action":"B", "answer":"B"},
+      {"scope":"doc-v1", "consent":false, "target":"B", "observed_action":"B", "answer":"B"}
+    ]}
+  ]
+}
