@@ -2369,3 +2369,18 @@ read cancellation, task effect, authority, recovery, portability, or performance
 Later #6501 T02/T03/P02 allocations are distinct and remain separate. Do not
 replay the archived probe. See the [C01 report and receipts](research/concurrency/windows_pending_method_6501_01a0ff58_c01/README.md)
 and [Issue #6501](https://github.com/Unjuno/agent-interface/issues/6501).
+
+# Issue #57 — Firecrawl remote-browser and compiled release-boundary archive (2026-10-03)
+
+This archive preserves one bounded ordinary remote-browser task (T01) with
+provider-reported app effects and one compiled-core bridge boundary (I01).
+T01's finite task effect was independently checked in the retained public
+evidence; this does not establish a general GUI result. I01's add action changed
+the application, but the provider supplied no release/neutral-state telemetry:
+the outcome remains `RUNTIME_FAILED` / `HOLD_RELEASE_TELEMETRY` with zero
+completed transitions and release `UNVERIFIED`. Do not infer no effect from
+zero completed transitions and do not resend the action. The prior sessions,
+source pins, raw responses, projections, hashes, and first failures are
+preserved; no consumed remote task was rerun for rescue. See the [complete
+archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
+and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).

@@ -416,6 +416,16 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 - [Retained V39 ammo-timeline audit mutation evidence](v39_fire_cover_ammo_timeline_audit_a01_20261005/README.md) — rescued from closed PR #7737 as audit-integrity evidence: A02 rejects all six saved-result corruptions. It does not duplicate the separate repair in #7726 or upgrade the underlying observation.
 | Astra decision-4 dense HUD replay (#59) | [`map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md`](map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md) — 60 encoded frames and independent pixel-delta audit bound the first health-HUD change to game 46.8–47.0 s during model wait; the final 94→87 change straddles the observed return boundary. Posthoc single-run evidence only; no causal or live-control claim. |
 
+| Scorer endpoint readback type A03 (#7698 evidence rescue) | [`scorer_endpoint_read_type_7685_a03_20261005/README.md`](scorer_endpoint_read_type_7685_a03_20261005/README.md) — preserves the closed PR's original report, source/test snapshots and historical checksums; the fix and equivalent combined regression are already on main through #7685; stub-only, no live scorer/game claim.
+
 ## V15 per-key owner evidence (#8102)
 
 - [Frozen-source reproduction correction](v15_perkey_owner_evidence_only_20261005_REPRODUCTION_CORRECTION.md) — verify the frozen candidate commit is present in the fetched PR history without requiring the mutable PR tip to equal that commit. No experiment rerun.
+
+## A05 raw-bound health negative control (#8214)
+
+- [Retained A05 audit and outputs](map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/README.md) — the saved auditor binds source/monitor sequences 204/216 to raw health and capture-time evidence; 25 recorded checks over 45 observations in one posthoc trace. No live run or interruption-effect claim. [Preservation qualification](map01_v39_health_threshold_a05_8214_QUALIFICATION.md) distinguishes the original source/output hash label and the limits of the saved control record.
+
+## V39 feedback-onset custody audit A01 (#8213)
+
+- [Preserved five-file audit package](feedback_onset_audit_a01_20261005/README.md) — 634 retained events, 39 admissions, no per-key release measurement/transition or independently timestamped in-run task-effect event; one post-control score does not locate effect onset. [Original #7602 README](feedback_onset_a01_8213_SOURCE_README.md) preserves the pre-correction replay path. Construction STOP retained; no new audit or live run.
