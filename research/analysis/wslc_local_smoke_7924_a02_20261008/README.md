@@ -16,4 +16,4 @@ The container receives only the package directory mounted read-only at `/src`; `
 
 ## Result
 
-Pending frozen one-shot execution.
+Result: **FAIL_AUDITOR_CONTRACT**. The single candidate invocation passed the scoped read-only/offline WSLc probe; exact fixture SHA matched and a source write failed with EROFS. The independent auditor invocation failed with `KeyError: 'sha256'` because its frozen code expects a field absent from FREEZE.json (`source_sha256`). The allocation gate therefore did not pass; no `AUDIT.json` was produced. Both unique containers were confirmed absent by exact-CID inspection after `--rm`. The WSL cgroup/swap warning means the requested 512M is not a proven effective limit. See `REPORT.md`, `RUN_RECEIPT.json`, and `AUDIT_ATTEMPT.json`. No retry or frozen-source edit occurred.
