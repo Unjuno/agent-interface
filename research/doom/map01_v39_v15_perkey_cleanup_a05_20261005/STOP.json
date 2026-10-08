@@ -1,0 +1,18 @@
+{
+  "candidate_raw_created": false,
+  "candidate_sha256": "defd06ef5f5c6ba3616e670f0d51d00042424f07a440ab5b5b25403aa646abcc",
+  "cases_started": 0,
+  "classification": "STOP_HARNESS_SETUP_BEFORE_CASES",
+  "command": "wslc.exe run --rm --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534 --env PYTHONDONTWRITEBYTECODE=1 --volume C:\\a05src:/src:ro --volume C:\\a05out:/out:rw python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /src/research/doom/map01_v39_v15_perkey_cleanup_a05_20261005/candidate.py",
+  "disposition": "STOP. Candidate must not be rerun under this run ID; preserve as construction failure.",
+  "exit_code": 1,
+  "frozen_commit": "97e4166dfb241def068df0fa78069cba114e6881",
+  "native_calls": false,
+  "retry": "forbidden by predeclared plan",
+  "run_id": "a05-current-main-f1d7dd1-20261005-one-shot",
+  "schema": "v39-v15-perkey-cleanup-a05-stop-v1",
+  "source_commit": "f1d7dd1da44cad3e5fd22a65d7bec21d40289d1d",
+  "static_diagnosis": "Harness assumes ProductionTransitionOwner exposes owner._inner._inner.display_name, but construction returned InputOwner without _inner. Failure occurred before run_case entered experimental actions.",
+  "stdout_stderr_combined": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\nTraceback (most recent call last):\n  File \"/src/research/doom/map01_v39_v15_perkey_cleanup_a05_20261005/candidate.py\", line 306, in <module>\n    main()\n  File \"/src/research/doom/map01_v39_v15_perkey_cleanup_a05_20261005/candidate.py\", line 290, in main\n    results = [run_case(False), run_case(True)]\n               ^^^^^^^^^^^^^^^\n  File \"/src/research/doom/map01_v39_v15_perkey_cleanup_a05_20261005/candidate.py\", line 230, in run_case\n    backend.owner = install_production_owner(\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/src/research/doom/map01_v39_v15_perkey_cleanup_a05_20261005/candidate.py\", line 120, in install_production_owner\n    owner._inner._inner.display_name = \"FAKE\"\n    ^^^^^^^^^^^^^^^^^^^\nAttributeError: 'InputOwner' object has no attribute '_inner'\nexit_code=1",
+  "transcript_sha256": "8d3d10742d754a845d1e0fa0f50940576ddea688fbb8758e9678159fc74b5dcf"
+}
