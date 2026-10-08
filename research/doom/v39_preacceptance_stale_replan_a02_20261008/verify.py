@@ -25,7 +25,7 @@ def blob(path):
 def main():
     freeze = json.loads((HERE / "FREEZE.json").read_text())
     result = json.loads((HERE / "RESULT.json").read_text())
-    require(freeze["main_sha"] == "99f2521811df790db3c96cdfa9313a6296f247f7", "wrong frozen main")
+    require(freeze["main_sha"] == "437db9f8c8e77e3ad38a61c2e6a42f5cdb06fcb2", "wrong frozen main")
     require(result["main_sha"] == freeze["main_sha"], "result/freeze main mismatch")
     require(result["disposition"] == "PASS_CANDIDATE_CONTROLLER_RECOVERY", "unexpected result disposition")
     require(result["source_blobs"] == freeze["sources"], "source blob pins differ")
