@@ -9,7 +9,7 @@
     "queued_event_skipped_by_outer_loop": true
   },
   "patched_helper": {
-    "tests_passed": 5,
+    "tests_passed": 6,
     "hard_crossing_invalidates": true,
     "queued_terminal_retained": true,
     "soft_observation_preserves_answer_path": true,
@@ -17,7 +17,8 @@
     "integration_call_order_check": true,
     "completed_future_discard_branch_precedes_eligibility_check": true,
     "arrival_after_snapshot_remains_queued": true,
-    "test_git_blob": "9136d705f1f2e871c7c0b35ff0a4e3931fd9249a"
+    "test_git_blob": "1ba3950be3b5cb9a6bf4d0e5b5c308a285f0a44b",
+    "production_monitor_typed_hard_crossing_invalidates": true
   },
   "integration": "When drain reports invalidation, the existing controller invalidation path cancels any still-active cover and the existing planner-result branch discards the answer.",
   "scope": "Focused source-boundary construction only; no production event-frequency, live, or efficacy claim.",
@@ -25,12 +26,12 @@
     "main_commit": "a537c80de21ba24d774fb332e34fcd415db51b7d",
     "controller_git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
     "official_test_command": "python -B -m unittest -v test_map01_v39_pending_observation_drain.py",
-    "ast_extracted_helper_suite": "PASS 5/5 in initial extraction harness; then confirmed with full controller import",
+    "ast_extracted_helper_suite": "PASS 6/6; confirmed with full controller import and production paired signal monitor",
     "full_controller_imported": true,
     "baseline_main_test_git_blob": "af01126e613c6b1c51e218cab6f199eb56e57efe",
-    "pr_regression_test_git_blob": "9136d705f1f2e871c7c0b35ff0a4e3931fd9249a",
+    "pr_regression_test_git_blob": "1ba3950be3b5cb9a6bf4d0e5b5c308a285f0a44b",
     "full_module_test_command": "python -B -m unittest -v test_map01_v39_pending_observation_drain.py",
-    "full_module_test_result": "PASS 5/5 with controller and proposed test imported normally",
+    "full_module_test_result": "PASS 6/6 with complete controller and actual paired signal monitor imported",
     "initial_empty_scratch_import_failure": "ModuleNotFoundError: map01_stagnation_v1; preserved as setup failure, resolved by staging pinned current-main dependencies",
     "dependency_blob_count": 18,
     "dependency_blobs": {
