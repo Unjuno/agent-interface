@@ -1,0 +1,26 @@
+{
+  "schema": "v39-final-empty-recovery-integration-freeze-v1",
+  "issue": 59,
+  "execution_id": "v39-final-empty-recovery-integration-a01-20261008",
+  "baseline_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "71344443fbb72a5f055cca4417e26207aaabbdf3",
+  "sources": {
+    "baseline": {
+      "research/doom/map01_overlap_controller_v39.py": {
+        "blob": "fec805219fec1155beb0e2608024663bc8c7e127",
+        "sha256": "e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754"
+      },
+      "research/live_control/executor_v12.py": {
+        "blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+        "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+      }
+    },
+    "candidate": {
+      "research/doom/map01_overlap_controller_v39.py": {
+        "blob": "e9e49f46a102c830e147c90f5a573b44c76aab13",
+        "sha256": "a74b36487a823ecf774ba9cf76c266f4b730b238d1561025aedaf84a5bbc5af3"
+      }
+    }
+  },
+  "decision_gate": "The frozen late event remains queued after the final empty check and stale submit is rejected before admission; candidate stale-rejection recovery must consume that exact queued event, require no retry/input authority, and return sequence 12 for a new decision."
+}
