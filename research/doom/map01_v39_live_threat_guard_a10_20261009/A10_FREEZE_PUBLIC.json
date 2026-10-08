@@ -226,37 +226,6 @@
       "xauth\t1:1.1.2-1build1",
       "xvfb\t2:21.1.12-1ubuntu1.8"
     ],
-    "machine_info": {
-      "record": {
-        "id": "01M4E7Q0TA0NQKJNNTS49CZRX1",
-        "name": "issue59-live-v39-a01-20261009",
-        "image": {
-          "distro": "ubuntu",
-          "version": "noble",
-          "arch": "arm64",
-          "variant": "default"
-        },
-        "config": {
-          "isolated": true,
-          "forward_ssh_agent": false,
-          "isolate_network": false,
-          "default_username": "taka",
-          "http_port": 0,
-          "https_port": 0,
-          "mounts": [
-            {
-              "source": "<HOST_MOUNT_ROOT>",
-              "destination": "/mnt/source"
-            }
-          ]
-        },
-        "builtin": false,
-        "state": "running"
-      },
-      "disk_size": 2608656384,
-      "ip4": "192.168.139.217",
-      "ip6": "fd07:b51a:cc66:0:58aa:94ff:feb0:5fea"
-    },
     "free_memory_bytes": "               total        used        free      shared  buff/cache   available\nMem:     16808173568  1049411584 15700299776   293253120   599879680 15758761984\nSwap:    17881907200           0 17881907200\n",
     "memory_available_bytes": 15758761984,
     "minimum_memory_available_bytes": 2147483648,
@@ -293,5 +262,9 @@
     "A09 reached a hard-health guard at seed 990620 within 10 decisions, but useful scorer feedback occurred only outside pending inference",
     "this descriptive joint follow-up changes both seed and exposure horizon; it does not estimate either factor's causal effect",
     "separate allocation; no retry of A03-A09 outputs"
+  ],
+  "redactions": [
+    "experiment_tree_commit",
+    "guest_environment.machine_info"
   ]
 }
