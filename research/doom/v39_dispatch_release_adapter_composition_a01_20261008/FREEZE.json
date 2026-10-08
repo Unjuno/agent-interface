@@ -1,0 +1,60 @@
+{
+  "schema": "v39-dispatch-release-adapter-composition-freeze-v1",
+  "experiment": "v39-dispatch-release-adapter-composition-a01-20261008",
+  "latest_main_at_freeze": "e678e9e0b7ffbc949ee5670637519d0af48288ac",
+  "local_main_source_check_ref": "origin/main",
+  "source_commit_used_by_existing_candidates": "e627b8954ecfbdd90ccfe35a81441a00d88047c8",
+  "main_advance_check": "Current main at the A02 packaging recheck is e678e9e0b7ffbc949ee5670637519d0af48288ac; all 13 production source blobs still match this freeze.",
+  "existing_candidate_prs": {
+    "dispatch_pr": 8524,
+    "dispatch_head": "53913d500cd42dde1206b4f39cf1d4f07f8c598d",
+    "release_pr": 8519,
+    "release_head": "dd4d8baef726ca113d5c73f3f5ba5564c6ec0524"
+  },
+  "production_source_blobs": {
+    "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "research/doom/session_map01_v15.py": "f71ca01426a703e4160c9403395fed03416c772e",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2",
+    "research/doom/main_thread_scorer_polling_v1.py": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+    "research/doom/independent_progress_clock_v2.py": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py": "193c2bd231795e7ee57de64aedfd741c8b814013",
+    "research/doom/doom_typed_release_backend_v2.py": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+    "research/live_control/input_transition_owner_v4.py": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55",
+    "research/live_control/input_transition_owner_v3.py": "0a1772d1687d49bd49f048b9d7ba659ed18247a5",
+    "research/live_control/input_owner_v12.py": "d11a9b1328bf76e5045022c581d6a9a721bf9585",
+    "research/live_control/input_owner_v11.py": "842071284156d3ccc647f47135ee62a9e512cb56",
+    "research/live_control/executor_v13.py": "9eb5ed4dcd42cae07bea69530136f78f9e65fb33",
+    "research/live_control/executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9"
+  },
+  "candidate_inputs": {
+    "research/doom/v39_measurement_dispatch_a01_20261008/run.py": "9b02c5ed6171797710b132cb549f82462df2924328a5bdb3c8a74e4420ed6e97",
+    "research/doom/v39_measurement_dispatch_a01_20261008/FREEZE.json": "681cf61b871ec5464076157b1faa527d76efbfbbb22ef3204a2f289d965659fd",
+    "research/doom/v15_release_batch_t6_20261008/run.py": "59a8409582a91a2639aeea7c032afa275d2d6bc703af50508f7e6a1e2756a62b",
+    "research/doom/v15_release_batch_t6_20261008/FREEZE.json": "f0f2ddbee27deca5e06ab1eac0c053cecd58661fa3ca99516e2aa63c1d41d3c3",
+    "research/doom/v15_release_batch_t7_20261008/run.py": "6b2bcd90a10aeb969d922b9bc2230072fe7c676c8c5156cbc01abaa2a846e43a",
+    "research/doom/v15_release_batch_t7_20261008/FREEZE.json": "41f3a8991c418bab9151c9190792d04ecc151f56358ccef139603ed7d023a319",
+    "research/doom/v15_release_batch_t6_20261008/candidate/adapter.py": "6f0ad1eb378b8269d596b6d7f38ec21c3e447c7f41814b974f6aa19a7250b58c",
+    "research/doom/v15_release_batch_t6_20261008/candidate/scorer_feedback_attribution_v1.py": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b"
+  },
+  "per_key_source_manifest_keys": [
+    "doom/doom_owner_thread_release_batch_backend_v1.py",
+    "doom/doom_typed_release_backend_v2.py",
+    "live_control/input_transition_owner_v4.py",
+    "live_control/input_owner_v12.py"
+  ],
+  "v15_manifest_source_keys": [
+    "research/doom/session_map01_v15.py",
+    "research/doom/map01_scorer_stdio_adapter_v1.py",
+    "research/doom/main_thread_scorer_polling_v1.py",
+    "research/doom/independent_progress_clock_v2.py",
+    "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+    "research/doom/doom_typed_release_backend_v2.py",
+    "research/live_control/executor_v13.py",
+    "research/live_control/executor_v12.py",
+    "research/live_control/input_transition_owner_v4.py",
+    "research/live_control/input_transition_owner_v3.py",
+    "research/live_control/input_owner_v12.py",
+    "research/live_control/input_owner_v11.py"
+  ],
+  "no_retry_live_allocation": true
+}
