@@ -172,6 +172,64 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertIs(after_admission["cover_cancel_terminal"], terminal)
         self.assertEqual(after_admission["ack"]["event"], "accepted")
 
+    def test_observations_consumed_during_executor_ack_are_replayed_after_admission(self):
+        class Monitor:
+            event_types = {"typed_observation"}
+            def __init__(self): self.seen = []
+            def observe(self, row):
+                self.seen.append(row["sequence"])
+                if row["sequence"] == 12:
+                    return {"event": "running_action_invalidation",
+                            "reason": "health:below_hard_minimum",
+                            "source_event": row}
+                return None
+
+        monitor = Monitor()
+        consumed = [
+            {"event": "typed_observation", "sequence": 12},
+            {"event": "accepted", "id": "plan-0"},
+        ]
+
+        boundary = controller.replay_action_observations_before_wait(
+            consumed, monitor)
+
+        self.assertEqual(boundary["event"], "running_action_invalidation")
+        self.assertEqual(monitor.seen, [12])
+
+    def test_soft_ack_observation_is_replayed_without_false_invalidation(self):
+        class Monitor:
+            event_types = {"typed_observation"}
+            def __init__(self): self.seen = []
+            def observe(self, row):
+                self.seen.append(row["sequence"])
+                return None
+
+        monitor = Monitor()
+        consumed = [
+            {"event": "typed_observation", "sequence": 12},
+            {"event": "accepted", "id": "plan-0"},
+        ]
+
+        boundary = controller.replay_action_observations_before_wait(
+            consumed, monitor)
+
+        self.assertIsNone(boundary)
+        self.assertEqual(monitor.seen, [12])
+
+    def test_production_action_ack_replay_follows_guard_admission_before_terminal_wait(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        execute = source.index("def execute_segment(")
+        ack_buffer = source.index("ack_wait_events=[]", execute)
+        accepted_wait = source.index("consumed_events=ack_wait_events", ack_buffer)
+        guard_admission = source.index("running_guard.admit_program(", accepted_wait)
+        replay = source.index("replay_action_observations_before_wait(", guard_admission)
+        terminal_wait = source.index('r["event"]=="terminal"', replay)
+
+        self.assertLess(ack_buffer, accepted_wait)
+        self.assertLess(accepted_wait, guard_admission)
+        self.assertLess(guard_admission, replay)
+        self.assertLess(replay, terminal_wait)
+
     def test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral(self):
         class Stdin:
             def write(self, value): pass

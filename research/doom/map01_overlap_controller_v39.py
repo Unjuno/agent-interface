@@ -605,6 +605,17 @@ class DoomRunningActionMonitor:
         return None
 
 
+def replay_action_observations_before_wait(events, observation_monitor):
+    """Recheck observations consumed before the action guard was admitted."""
+    event_types = getattr(observation_monitor, "event_types", {"observation"})
+    for row in events:
+        if row.get("event") in event_types:
+            invalidation = observation_monitor.observe(row)
+            if invalidation is not None:
+                return invalidation
+    return None
+
+
 def persist_running_invalidation(root, identifier, boundary):
     """Persist the exact decision before terminal validation can fail."""
     guard = boundary.get("running_action_guard") if type(boundary) is dict else None
@@ -1532,8 +1543,10 @@ def main():
                   "expected_sequence":latest["sequence"],"valid_until_ns":clock_ns+25_000_000_000,
                   "steps":steps}
                 process.stdin.write(json.dumps(submit_command)+"\n");process.stdin.flush()
+                ack_wait_events=[]
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                              (r.get("id")==identifier or r["event"]=="rejected"))
+                              (r.get("id")==identifier or r["event"]=="rejected"),
+                              consumed_events=ack_wait_events)
                 if accepted["event"]!="accepted":
                     if accepted.get("reason") != \
                             "latest observation sequence required before input":
@@ -1572,8 +1585,12 @@ def main():
                 final_action_admission=running_guard.final_admission
                 if first_accepted is None:
                     first_accepted=accepted["accepted_ns"]
-                boundary=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier,
-                              observation_monitor=action_monitor)
+                boundary=replay_action_observations_before_wait(
+                    ack_wait_events, action_monitor)
+                if boundary is None:
+                    boundary=wait(lambda r:r["event"]=="terminal" and
+                                  r.get("id")==identifier,
+                                  observation_monitor=action_monitor)
                 invalidated=boundary["event"]=="running_action_invalidation"
                 cancel_event=None
                 physical_release_event=None
