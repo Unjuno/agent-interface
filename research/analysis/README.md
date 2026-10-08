@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8587 T0 A01 multi-source event reconciliation](multisource_event_reconciliation_8587_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 8 identifiable boundary faults localized; 2 cases remain UNKNOWN; zero false localizations on 5 benign controls; 5/5 mutations rejected. Authored finite trace fixture only, no real-source completeness or action-authority claim.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -822,6 +824,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`multicursor_target_handle_regrounding_r0_v1/`](multicursor_target_handle_regrounding_r0_v1/)
 - [`multifidelity_control_variate_6155_t0f_integrity_stop_20261003/`](multifidelity_control_variate_6155_t0f_integrity_stop_20261003/)
 - [`multifidelity_route_contrast_6155_t0_v1/`](multifidelity_route_contrast_6155_t0_v1/)
+- [`multisource_event_reconciliation_8587_t0_a01_20261009/`](multisource_event_reconciliation_8587_t0_a01_20261009/)
 - [`multistate_stop_recovery_5593_t0_20261002_01/`](multistate_stop_recovery_5593_t0_20261002_01/)
 - [`multistate_stop_recovery_5593_t1_20261002_02/`](multistate_stop_recovery_5593_t1_20261002_02/)
 - [`native_wsl2_migration_6389_audit_repair_v1_20261002/`](native_wsl2_migration_6389_audit_repair_v1_20261002/)
