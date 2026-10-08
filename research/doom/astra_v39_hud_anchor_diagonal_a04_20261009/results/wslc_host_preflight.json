@@ -4,22 +4,26 @@
   "commands": [
     "wsl.exe --version",
     "wsl.exe --list --quiet",
-    "Get-Command wslc.exe -ErrorAction SilentlyContinue"
+    "wsl.exe --list --running",
+    "Get-Command wslc.exe -ErrorAction SilentlyContinue",
+    "wslc.exe --list --quiet"
   ],
   "observed": {
+    "wsl_version": "2.7.13.0",
+    "kernel": "6.18.33.2-2",
+    "wslg": "1.0.73.2",
     "registered_distributions": [
-      "U\u0000b\u0000u\u0000n\u0000t\u0000u\u0000",
-      "\u0000",
-      "\u0000d\u0000o\u0000c\u0000k\u0000e\u0000r\u0000-\u0000d\u0000e\u0000s\u0000k\u0000t\u0000o\u0000p\u0000",
-      "\u0000",
-      "\u0000"
+      "Ubuntu",
+      "docker-desktop"
     ],
-    "wslc_version_command_attempted": true,
-    "wslc_executable": "wslc.exe unavailable on PATH (Get-Command returned no command)",
-    "wsl_version_output": "W\u0000S\u0000L\u0000 \u0000�0�0�0�0�0:\u0000 \u00002\u0000.\u00007\u0000.\u00001\u00003\u0000.\u00000\u0000\r\n\u0000\r\n\u0000�0�0�0�0 \u0000�0�0�0�0�0:\u0000 \u00006\u0000.\u00001\u00008\u0000.\u00003\u00003\u0000.\u00002\u0000-\u00002\u0000\r\n\u0000\r\n\u0000W\u0000S\u0000L\u0000g\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u0000.\u00000\u0000.\u00007\u00003\u0000.\u00002\u0000\r\n\u0000\r\n\u0000M\u0000S\u0000R\u0000D\u0000C\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u0000.\u00002\u0000.\u00007\u00002\u00001\u00004\u0000\r\n\u0000\r\n\u0000D\u0000i\u0000r\u0000e\u0000c\u0000t\u00003\u0000D\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u0000.\u00006\u00001\u00001\u0000.\u00001\u0000-\u00008\u00001\u00005\u00002\u00008\u00005\u00001\u00001\u0000\r\n\u0000\r\n\u0000D\u0000X\u0000C\u0000o\u0000r\u0000e\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u00000\u0000.\u00000\u0000.\u00002\u00006\u00001\u00000\u00000\u0000.\u00001\u0000-\u00002\u00004\u00000\u00003\u00003\u00001\u0000-\u00001\u00004\u00003\u00005\u0000.\u0000g\u0000e\u0000-\u0000r\u0000e\u0000l\u0000e\u0000a\u0000s\u0000e\u0000\r\n\u0000\r\n\u0000W\u0000i\u0000n\u0000d\u0000o\u0000w\u0000s\u0000 \u0000�0�0�0�0�0:\u0000 \u00001\u00000\u0000.\u00000\u0000.\u00002\u00006\u00003\u00000\u00000\u0000.\u00009\u00005\u00005\u00000\u0000\r\n\u0000\r\n\u0000"
+    "running_distributions": [
+      "Ubuntu"
+    ],
+    "wslc_executable": "not found on PATH",
+    "wslc_probe": "PowerShell command-not-found; CLI did not start"
   },
   "outcome": "HOLD_WSLc_UNAVAILABLE",
   "repository_runbook_minimum": "WSL 2.9.3+",
-  "action_taken": "No WSL update or restart performed; shared distributions were left untouched.",
-  "impact": "A04 remains a one-shot Windows CPython exploratory result and does not satisfy the preferred WSLc execution path."
+  "action_taken": "No WSL update, shutdown, or restart performed because Ubuntu remained active after the check; preserve shared distribution state.",
+  "impact": "A04 remains a one-shot Windows CPython exploratory result and does not satisfy the preferred WSLc execution path. WSLc successor preflight must wait until host update can proceed without interrupting active work."
 }
