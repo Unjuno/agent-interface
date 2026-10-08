@@ -18,6 +18,8 @@ On base main `99f2521811df790db3c96cdfa9313a6296f247f7`, the exact drain returns
 
 The earlier late-observation A01 package is frozen to an older controller blob and its runner requires the retired `qsize()` drain. This A01 re-executes the final-empty interleaving against the updated current-main bounded drain. The four source blob IDs and SHA-256 values are in `FREEZE.json`.
 
+The current-main pending-observation drain regression suite also passes all 12 tests (raw output: `BASELINE_TESTS.stdout.txt`; test source blob: `b59590ab6816e0acca20426af2fb08675246ddb6`). In particular, `test_stale_executor_rejection_recovers_then_admits_fresh_sequence` confirms that recovery succeeds when a hard crossing is visible to the drain. The final-empty schedule above isolates the later-arrival window, where that recovery gate is missed; it does not imply that recovery generally fails.
+
 ## Reproduction
 
 From the repository root:
