@@ -47,6 +47,11 @@ SUITES['protocol'].append('test_adaptive_acquisition_failure_metadata_93c2')
 
 SUITES["protocol"].append("test_adaptive_acquisition_caller_verify_progress_v3")
 
+SUITES['protocol'].append('test_integrated_efficiency_startup_v1')
+SUITES['protocol'].append('test_integrated_efficiency_pending_v1')
+SUITES['protocol'].extend(['test_durable_invalid_response_v1', 'test_integrated_efficiency_custody_v1'])
+SUITES['protocol'].append('test_integrated_efficiency_staging_v1')
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol-python', default=sys.executable)
