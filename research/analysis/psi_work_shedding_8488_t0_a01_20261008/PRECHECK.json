@@ -1,0 +1,20 @@
+{
+  "branch": "research/psi-shedding-8488-t0-a01-20261008",
+  "base_commit": "bfcc14e08fbfe5f2f04cd0237d13559e5d62538b",
+  "container_preflight": {
+    "context": "orbstack",
+    "daemon": "29.4.0 linux aarch64 overlayfs",
+    "image_inventory": "STOP: containerd content-store operation not supported while reading blob cb4e…",
+    "container_started": false,
+    "cleanup_or_prune_attempted": false
+  },
+  "execution_scope": "deterministic in-process Python standard-library finite event model only; no host pressure, PSI access, GUI, model, application, network, or resource mutation",
+  "platform": "macOS arm64; CPython 3.14.5",
+  "pre_freeze_checks": {
+    "json_parse": "PASS",
+    "construction_unittest": "PASS (2 tests)",
+    "python_compile": "PASS",
+    "candidate_formal_run": "NOT YET RUN",
+    "auditor_formal_run": "NOT YET RUN"
+  }
+}

@@ -33,6 +33,8 @@ The arrows show research lineage only. They do not rewrite the retained decision
 
 ## Concurrency boundary
 
+Retained hot-drain ownership audit correction: [audit-v2](hot_drain_cancel_17_20261003_01a0ff52/audit-v2/README.md). The historical v1 PASS has demonstrated negative-FD and additional-open detection gaps; v2 preserves the original15 rows/75 closure witnesses and corrects only finite copied ownership records. Original RED and publication/whitespace failures remain. Neither original PASS nor this saved-data repair grants production, new native allocation, latency, GUI/task or private-original authenticity claims. Fresh scoped rescue checks are [recorded separately](../../runtime/results/hot_drain_rescue_3115/README.md).
+
 ```mermaid
 flowchart TD
     I[Intent]
@@ -60,10 +62,15 @@ This is a navigation model derived from the retained studies, not a new runtime 
 
 ## Read next
 
+- [FD lifetime and late cleanup](fd_lifetime_6501_20261003_01a0ff52/REPORT.md): six retained Linux pipe rows distinguish unsafe integer-only closure from shared one-time ownership; harness release is cleanup, not cancellation success.
+
 - Owned Linux pipe read cancellation evidence: [`owned_pipe_cancel_6501_20261003_01a0ff52/REPORT.md`](owned_pipe_cancel_6501_20261003_01a0ff52/REPORT.md) distinguishes wrapper cancellation, caller descriptor close and actual owned callable/resource completion in six frozen conditions; this is scoped construction, with no production/runtime or GUI claim.
 
 - Current research method: [`../../docs/RESEARCH_METHOD.md`](../../docs/RESEARCH_METHOD.md)
+- [Native Mac read completion and reader-close boundary](macos_read_cancel_6501_20261003_01a0ff52_93c2/REPORT.md) — eight saved native rows; wrapper cancellation is not native completion, no general portability or physical-release claim.
 - Evidence ledger: [`../../RESEARCH.md`](../../RESEARCH.md)
 - Integration studies: [`../integration/`](../integration/)
 - Measurement/concurrency handback studies: [`../measurement/`](../measurement/)
 - Research workspace map: [`../README.md`](../README.md)
+- [Expired predicate retry and deadline-first qualification](predicate_retry_deadline_17_20261003_b64b/REPORT.md): retained finite counterexample and fresh-match tradeoff; private comparator only, no production adoption or hard-deadline claim.
+- [Shared-result custody and retained delivery-to-return audit repair](singleflight_result_custody_6501_01a0ff35/REPORT.md) — original finite Windows characterization and later causal-join correction; not runtime adoption or native-effect proof.

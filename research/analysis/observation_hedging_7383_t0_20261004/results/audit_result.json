@@ -1,0 +1,226 @@
+{
+  "checks": {
+    "all_winners_complete_current_unique": true,
+    "arms_per_row": 3,
+    "generation_transition_fail_closed": true,
+    "loser_work_reconstructed": true,
+    "rows_reconstructed": 1000
+  },
+  "conditions": {
+    "correlated_tail": {
+      "delayed_hedge": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.6358231140839836,
+        "delayed_secondary_work_ms": 1711,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 89,
+        "p99_ms": 97,
+        "timely_current_effects": 180
+      },
+      "immediate_duplicate": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.6358231140839836,
+        "delayed_secondary_work_ms": 1711,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 89,
+        "p99_ms": 97,
+        "timely_current_effects": 180
+      },
+      "single": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.6358231140839836,
+        "delayed_secondary_work_ms": 1711,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 89,
+        "p99_ms": 97,
+        "timely_current_effects": 180
+      }
+    },
+    "delayed_cancellation": {
+      "delayed_hedge": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 0,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 12,
+        "p99_ms": 13,
+        "timely_current_effects": 200
+      },
+      "immediate_duplicate": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 0,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 6,
+        "p99_ms": 7,
+        "timely_current_effects": 200
+      },
+      "single": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 89,
+        "p99_ms": 97,
+        "timely_current_effects": 180
+      }
+    },
+    "generation_between_captures": {
+      "delayed_hedge": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 0,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 12,
+        "p99_ms": 13,
+        "timely_current_effects": 200
+      },
+      "immediate_duplicate": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 7,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 193,
+        "p50_ms": 5,
+        "p95_ms": 5,
+        "p99_ms": 6,
+        "timely_current_effects": 193
+      },
+      "single": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 180,
+        "p50_ms": 5,
+        "p95_ms": 6,
+        "p99_ms": 6,
+        "timely_current_effects": 180
+      }
+    },
+    "iid_heavy_tail": {
+      "delayed_hedge": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 0,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 12,
+        "p99_ms": 13,
+        "timely_current_effects": 200
+      },
+      "immediate_duplicate": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 0,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 6,
+        "p99_ms": 7,
+        "timely_current_effects": 200
+      },
+      "single": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.044593088071348944,
+        "delayed_secondary_work_ms": 120,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 89,
+        "p99_ms": 97,
+        "timely_current_effects": 180
+      }
+    },
+    "shared_queue_saturation": {
+      "delayed_hedge": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.014864362690449646,
+        "delayed_secondary_work_ms": 40,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 89,
+        "p99_ms": 97,
+        "timely_current_effects": 180
+      },
+      "immediate_duplicate": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.014864362690449646,
+        "delayed_secondary_work_ms": 40,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 89,
+        "p99_ms": 97,
+        "timely_current_effects": 180
+      },
+      "single": {
+        "baseline_primary_work_ms": 2691,
+        "deadline_misses": 20,
+        "delayed_duplicate_work_ratio": 0.014864362690449646,
+        "delayed_secondary_work_ms": 40,
+        "n": 200,
+        "n_current": 200,
+        "p50_ms": 5,
+        "p95_ms": 89,
+        "p99_ms": 97,
+        "timely_current_effects": 180
+      }
+    }
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "iid_heavy_tail_deadline_misses": {
+    "delayed_hedge": 0,
+    "single": 20
+  },
+  "iid_heavy_tail_p95_relative_gain": 0.8651685393258427,
+  "iid_heavy_tail_work_ratio": 0.044593088071348944,
+  "mutation_controls": [
+    {
+      "name": "partial_bytes",
+      "rejected": true
+    },
+    {
+      "name": "old_epoch_arrived_first",
+      "rejected": true
+    },
+    {
+      "name": "double_admission",
+      "rejected": true
+    },
+    {
+      "name": "loser_work_omitted",
+      "rejected": true
+    }
+  ]
+}

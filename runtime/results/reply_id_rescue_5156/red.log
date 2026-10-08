@@ -1,0 +1,21 @@
+test_boolean_noise_preserves_numeric_reply_and_notification (test_app_server_reply_id_5156.ReplyIdRegression.test_boolean_noise_preserves_numeric_reply_and_notification) ... FAIL
+test_matching_server_error_is_preserved (test_app_server_reply_id_5156.ReplyIdRegression.test_matching_server_error_is_preserved) ... ok
+
+======================================================================
+FAIL: test_boolean_noise_preserves_numeric_reply_and_notification (test_app_server_reply_id_5156.ReplyIdRegression.test_boolean_noise_preserves_numeric_reply_and_notification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_app_server_reply_id_5156.py", line 57, in test_boolean_noise_preserves_numeric_reply_and_notification
+    self.exercise('fixture/result')
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/research/live_control/test_app_server_reply_id_5156.py", line 40, in exercise
+    self.assertEqual(client.request(method, timeout=1), {'payload':'valid Number'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'payload': 'Boolean true must not correlate'} != {'payload': 'valid Number'}
+- {'payload': 'Boolean true must not correlate'}
++ {'payload': 'valid Number'}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.070s
+
+FAILED (failures=1)

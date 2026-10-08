@@ -1,0 +1,8 @@
+Initial supplemental test command: python -m unittest -v test_repeat.py
+
+4 tests passed; 1 test failed because the duplicate-actuation mutation used the
+different literal "duplicate-g1-F8" for episode two, which remained distinct
+from episode one's original identity. The candidate correctly accepted that
+two-identity input. This is a mutation-test construction error, not a candidate
+failure. The original test and output are retained unchanged; corrected
+mutation verification is in test_repeat_v2.py and its separate result file.

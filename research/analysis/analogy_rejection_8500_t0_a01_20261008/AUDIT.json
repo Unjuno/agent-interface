@@ -1,0 +1,85 @@
+{
+  "base_metrics_v1": {
+    "no_memory": {
+      "invalid_candidates": 14,
+      "invalid_proposal_rate": 0.5714285714285714,
+      "invalid_proposed": 8,
+      "valid_candidates": 10,
+      "valid_proposed": 8,
+      "valid_recall": 0.8
+    },
+    "prose": {
+      "invalid_candidates": 14,
+      "invalid_proposal_rate": 0.35714285714285715,
+      "invalid_proposed": 5,
+      "valid_candidates": 10,
+      "valid_proposed": 8,
+      "valid_recall": 0.8
+    },
+    "structured": {
+      "invalid_candidates": 14,
+      "invalid_proposal_rate": 0.14285714285714285,
+      "invalid_proposed": 2,
+      "valid_candidates": 10,
+      "valid_proposed": 8,
+      "valid_recall": 0.8
+    }
+  },
+  "changed_envelope_controls_structured_passed": 4,
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "gates": {
+    "changed_envelope_controls_reopened": true,
+    "input_output_integrity": true,
+    "structured_invalid_lower_than_no_memory": true,
+    "structured_invalid_lower_than_prose": true,
+    "structured_valid_recall_not_lower_than_controls": true
+  },
+  "mutation_controls": [
+    {
+      "error_count": 7,
+      "name": "omit_counterexample",
+      "rejected": true
+    },
+    {
+      "error_count": 5,
+      "name": "flip_changed_boundary",
+      "rejected": true
+    },
+    {
+      "error_count": 1,
+      "name": "relabel_or_omit_target_update",
+      "rejected": true
+    },
+    {
+      "error_count": 2,
+      "name": "duplicate_rejection_row",
+      "rejected": true
+    },
+    {
+      "error_count": 1,
+      "name": "leak_arm_identity",
+      "rejected": true
+    }
+  ],
+  "mutation_controls_passed": 5,
+  "mutation_controls_total": 5,
+  "row_count": 84,
+  "valid_recall_with_change_controls": {
+    "no_memory": {
+      "valid_candidates": 14,
+      "valid_proposed": 12,
+      "valid_recall": 0.8571428571428571
+    },
+    "prose": {
+      "valid_candidates": 14,
+      "valid_proposed": 11,
+      "valid_recall": 0.7857142857142857
+    },
+    "structured": {
+      "valid_candidates": 14,
+      "valid_proposed": 12,
+      "valid_recall": 0.8571428571428571
+    }
+  }
+}

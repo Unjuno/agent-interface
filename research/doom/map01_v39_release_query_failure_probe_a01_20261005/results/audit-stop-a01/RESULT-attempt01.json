@@ -1,0 +1,43 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-result-v1",
+  "disposition": "FAIL_AUDIT_MISMATCH",
+  "source_commit": "1ef5611356ff217f0981843ae854ef871967e999",
+  "base_main": "16c74566b64f32d7fe035c7724bcfe3865863a91",
+  "cases": {
+    "control": {
+      "owner_release_records": 1,
+      "owner_measurement_rows": 1,
+      "bridge_release_rows": 1,
+      "physical_keys": [],
+      "owner_keycodes": [],
+      "bridge_held": []
+    },
+    "pointer_failure": {
+      "owner_release_records": 0,
+      "owner_measurement_rows": 0,
+      "bridge_release_rows": 0,
+      "physical_keys": [],
+      "owner_keycodes": [
+        74
+      ],
+      "bridge_held": [
+        "F8"
+      ]
+    },
+    "keymap_failure": {
+      "owner_release_records": 0,
+      "owner_measurement_rows": 0,
+      "bridge_release_rows": 0,
+      "physical_keys": [],
+      "owner_keycodes": [
+        74
+      ],
+      "bridge_held": [
+        "F8"
+      ]
+    }
+  },
+  "claim": "Both injected aggregate-query failures occurred after fake physical key-up but before owner_release append, losing the per-key row and leaving stale owner/bridge held ledgers; the uninjected control retained one row and reconciled neutral.",
+  "limits": "fake-display owner/bridge ordering only; no real X11, application, task effect, useful feedback, recovery, live frequency, or gameplay",
+  "audit": "AUDIT.json"
+}

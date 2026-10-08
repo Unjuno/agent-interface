@@ -1,0 +1,24 @@
+{
+  "base_commit": "33f354c27408bce88abb705397b3e260eb2faa51",
+  "decision": "PASS only for V4 batch composition with two confirmed V12 down/up edges, matched actuation identities, V4 post-batch verification, empty final hold state, and false input-authority flags. Record the V12 inter-release keymap queries and local release-call gap; do not infer a latency bound.",
+  "hypothesis": "The actual retained V4 execute/raw methods can carry the V12 transition adapter's per-key physical-edge measurements through a two-key release batch without losing V4 post-batch verification or granting input authority.",
+  "output_path": "research/doom/map01_v39_perkey_bridge_a02_20261005/results/construction-a02",
+  "run_id": "MAP01-V39-PERKEY-BRIDGE-CONSTRUCTION-A02-20261005",
+  "schema": "map01-v39-v4-v12-composition-freeze-v1",
+  "scope": "Fake-display construction. V4 capture superclass is stubbed by the pinned component test fixture. No production startup, live X11, GUI, OS input, ViZDoom, model, application effect, task benefit, or latency qualification.",
+  "source_sha256": {
+    "research/doom/doom_retained_input_backend_v4.py": "0e307af96760d7c70e1d2ed7f7810530d38deddec51062c8057c78d7db57b0e0",
+    "research/doom/test_doom_retained_input_backend_v4.py": "4050bf44a64498c8200d3b930280834cd8bf37a4d1dd3601e7d44108b1ffa14e",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/source/map01_v12_transition_owner.py": "3626281eb6066fa71e500160c671a3946c11fd7abb3a624d4f05d5cbed2f0db1",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+    "research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+    "research/live_control/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "research/doom/map01_v39_perkey_bridge_a01/test_bridge.py": "6e63390e5fa5a9dc7cf0fe2cd040ceaa3a21e0fc86366dbe67c21c41e6f937d7",
+    "research/doom/map01_v39_perkey_bridge_a02_20261005/README.md": "7dfcc3884dbcaaca789589a10738a3eb538021998c3db2780e93f295efaced6e",
+    "research/doom/map01_v39_perkey_bridge_a02_20261005/composition.py": "b0efd7d5a74d8769bb9114d9bf7ef4ce5cd2f8e09c7f01d48a8673592d84e4c0",
+    "research/doom/map01_v39_perkey_bridge_a02_20261005/test_v4_composition.py": "899026d66575d9a7547aaaa12de69ffcc861ad06187a272fb3207475e254f8b7",
+    "research/doom/map01_v39_perkey_bridge_a02_20261005/run_construction.py": "1429c769f55ed9fba63840ebfff927573b636d1b66960bb4fb34263ff89535aa",
+    "research/doom/map01_v39_perkey_bridge_a02_20261005/audit.py": "6506be82fe4bf120d1b82b4c24975f78e2e36bc648e87a1126f2aa282a67b552"
+  },
+  "test": "One fresh fake V12 owner; distinct fake F8/SPACE keycodes; one press and reverse-order release batch; retain the event stream and owner operation trace; no candidate retry."
+}

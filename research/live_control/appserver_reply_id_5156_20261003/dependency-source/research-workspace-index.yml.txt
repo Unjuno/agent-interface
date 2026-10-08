@@ -1,0 +1,52 @@
+name: Research Workspace Index
+
+on:
+  pull_request:
+    paths:
+      - 'research/README.md'
+      - 'research/ROOT_NAMESPACE_MAP.md'
+      - 'research/check_workspace_index.py'
+      - 'research/test_check_workspace_index.py'
+      - 'research/test_workspace_git_tree.py'
+      - 'research/*/*'
+      - '.github/workflows/research-workspace-index.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'research/README.md'
+      - 'research/ROOT_NAMESPACE_MAP.md'
+      - 'research/check_workspace_index.py'
+      - 'research/test_check_workspace_index.py'
+      - 'research/test_workspace_git_tree.py'
+      - 'research/*/*'
+      - '.github/workflows/research-workspace-index.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research-workspace-index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.gitattributes
+            /research/__init__.py
+            /research/test_check_workspace_index.py
+            /research/test_workspace_git_tree.py
+            /research/README.md
+            /research/ROOT_NAMESPACE_MAP.md
+            /research/check_workspace_index.py
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test current and strict workspace namespace inventory
+        run: python -B -m unittest discover -s research -p 'test_*workspace*.py' -v
+      - name: Check top-level research directories are indexed
+        run: python research/check_workspace_index.py --git-tree

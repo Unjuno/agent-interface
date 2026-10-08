@@ -1,0 +1,43 @@
+"""Inert archive, reversible non-UTF8 bytes, explicit own-prefix projections."""
+import pathlib,json,hashlib,datetime,re,sys
+ROOT=pathlib.Path(__file__).resolve().parents[2];OUT=pathlib.Path(__file__).resolve().parent
+WORK=ROOT/'work/primary-startup-utf8-union-01a0ff32'
+ARCHIVE=OUT/'archive-stage'
+PREFIX='research/integration/primary_startup_utf8_union_57_20261003_01a0ff32'
+if ARCHIVE.exists():raise RuntimeError('exclusive archive path occupied')
+ARCHIVE.mkdir()
+def sha(b):return hashlib.sha256(b).hexdigest()
+# The exact original source/raw is preserved locally. Public paths are explicitly
+# projected; the manifest records both hashes, not a claim of original-byte equality.
+replacements=[]
+for before,after in [(str(ROOT),'<PRIVATE_ROOT>'),(str(ROOT).replace('\\','/'),'<PRIVATE_ROOT>'),(str(pathlib.Path.home()/'.cache/codex-runtimes/codex-primary-runtime/dependencies'),'<PRIVATE_RUNTIME>'),(str(pathlib.Path.home()/'.cache/codex-runtimes/codex-primary-runtime/dependencies').replace('\\','/'),'<PRIVATE_RUNTIME>')]:
+ replacements.extend([(before,after),(before.replace('\\','\\\\'),after)])
+replacements=sorted(set(replacements),key=lambda p:-len(p[0]))
+images=[]
+paths=sorted(p for p in OUT.rglob('*') if p.is_file() and ARCHIVE not in p.parents and p.name not in ('tree-elements.json','publication-intent.json'))
+paths.extend(sorted(p for p in (WORK/'runtime/host_v1').glob('*') if p.is_file()))
+for p in paths:
+ rel=('source/'+str(p.relative_to(WORK)).replace('\\','/')) if WORK in p.parents else str(p.relative_to(OUT)).replace('\\','/')
+ b=p.read_bytes();original_sha=sha(b)
+ try:
+  text=b.decode('utf8')
+  for before,after in replacements:text=text.replace(before,after)
+  public=text.encode('utf8');encoding='utf8';projection=(public!=b)
+ except UnicodeDecodeError:
+  public=(b.hex()+'\n').encode('ascii');encoding='hex';projection=False;rel+='.hex'
+ # Every original source/script/stream is inert .txt; raw JSON/README stay data.
+ if rel!='REPORT.md' and not rel.endswith('.json') and not rel.endswith('.jsonl') and not rel.endswith('.hex'):rel+='.txt'
+ dest=ARCHIVE/rel;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(public)
+ images.append({'path':rel,'original_path':str(p.relative_to(ROOT)).replace('\\','/'),'original_bytes':len(b),'original_sha256':original_sha,'public_bytes':len(public),'public_sha256':sha(public),'encoding':encoding,'prefix_projected':projection,'mode':'100644','git_blob':sha(b'blob '+str(len(public)).encode()+b'\0'+public) if False else hashlib.sha1(b'blob '+str(len(public)).encode()+b'\0'+public).hexdigest()})
+attrs=b'*.txt -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol\n*.hex -text\n'
+(ARCHIVE/'.gitattributes').write_bytes(attrs)
+images.append({'path':'.gitattributes','original_path':None,'original_bytes':None,'original_sha256':None,'public_bytes':len(attrs),'public_sha256':sha(attrs),'encoding':'utf8','prefix_projected':False,'mode':'100644','git_blob':hashlib.sha1(b'blob '+str(len(attrs)).encode()+b'\0'+attrs).hexdigest()})
+manifest={'format':'inert-archive-public-original-custody-v1','prefix':PREFIX,'source_union_sha256':'a69c1d09f9bc00d1766d67679d20580a2a929c47a5591e9c5e15e236e61cc569','scientific_disposition':'FAIL_FIRST_DECODER_ERROR_MASKED;4custodyPASS/3diagnosticPASS/1diagnosticFAIL','files':images,'projection_policy':'Only exact own workspace/runtime prefix replacements. This is a derivative, not unchanged original byte equality. NonUTF8 hex rows decode to exact original bytes; all original files retained.'}
+(ARCHIVE/'MANIFEST.json').write_text(json.dumps(manifest,ensure_ascii=True,indent=2)+'\n',encoding='utf8')
+tree=[]
+for p in sorted(ARCHIVE.rglob('*')):
+ if not p.is_file():continue
+ rel=str(p.relative_to(ARCHIVE)).replace('\\','/');b=p.read_bytes();tree.append({'path':PREFIX+'/'+rel,'mode':'100644','type':'blob','content':b.decode('utf8')})
+(OUT/'tree-elements.json').write_text(json.dumps(tree,ensure_ascii=True,separators=(',',':'))+'\n',encoding='utf8')
+(OUT/'publication-intent.json').write_text(json.dumps({'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'repository':'Unjuno/agent-interface','branch':'research/primary-startup-utf8-union-01a0ff32','base':'6d7ce9693caae8c123fda532da64888f6006dcb9','base_tree':'7ac983946bf232ec8db1a5e000628265e60efc63','prefix':PREFIX,'files':len(tree),'manifest_targets':len(images),'prefix_projections':sum(x['prefix_projected'] for x in images),'hex_rows':sum(x['encoding']=='hex' for x in images),'tree_elements_bytes':(OUT/'tree-elements.json').stat().st_size,'source_byte_total':sum(p.stat().st_size for p in paths),'public_byte_total':sum(p.stat().st_size for p in ARCHIVE.rglob('*') if p.is_file()),'active_runtime_changes':0,'main_sends':0,'content_votes':0,'scientific_disposition':manifest['scientific_disposition']},indent=2)+'\n',encoding='utf8')
+print((OUT/'publication-intent.json').read_text(encoding='utf8'))

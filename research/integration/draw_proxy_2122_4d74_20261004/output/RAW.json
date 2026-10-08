@@ -1,0 +1,2333 @@
+{
+  "rows": [
+    {
+      "case": "hold_False_0",
+      "arm": "fresh_read_reference",
+      "id": "hold_False_0__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": false,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 40,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 65961,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "setter_start_ns": 3784590627,
+      "setter_name": "",
+      "setter_type": "com.sun.star.drawing.RectangleShape",
+      "setter_proxy_position": [
+        1900,
+        1000
+      ],
+      "setter_end_ns": 3786964828,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "first_final_ns": 3790843607,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 45,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "3f9617fdcd9b1e9a081e4c1c8b1c36659a427320e26c18ca5704278147ae5511",
+      "elapsed_ns": 1314916640
+    },
+    {
+      "case": "hold_True_1",
+      "arm": "fresh_read_reference",
+      "id": "hold_True_1__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": true,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 51,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 72171,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "setter_start_ns": 5056035344,
+      "setter_name": "A",
+      "setter_type": "com.sun.star.drawing.RectangleShape",
+      "setter_proxy_position": [
+        1900,
+        1000
+      ],
+      "setter_end_ns": 5056905168,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "first_final_ns": 5060822957,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 56,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1900,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "05cd149269393f2ea91aa2453972372eee16fd69ef3919606a3a65a6d51cad17",
+      "elapsed_ns": 1268002852
+    },
+    {
+      "case": "hold_True_2",
+      "arm": "fresh_read_reference",
+      "id": "hold_True_2__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": true,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 62,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 71865,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "setter_start_ns": 6326188393,
+      "setter_name": "A",
+      "setter_type": "com.sun.star.drawing.RectangleShape",
+      "setter_proxy_position": [
+        1900,
+        1000
+      ],
+      "setter_end_ns": 6327063793,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "first_final_ns": 6329857676,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 67,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1900,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "26110df775c4f2e08db1ab4cdf53fc4045497831cec5a1f3524468d5739cf2a0",
+      "elapsed_ns": 1220431677
+    },
+    {
+      "case": "hold_False_3",
+      "arm": "fresh_read_reference",
+      "id": "hold_False_3__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": false,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 73,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 65158,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "setter_start_ns": 7554581563,
+      "setter_name": "A",
+      "setter_type": "com.sun.star.drawing.RectangleShape",
+      "setter_proxy_position": [
+        1900,
+        1000
+      ],
+      "setter_end_ns": 7558228268,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "first_final_ns": 7562375617,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 78,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1900,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "b3798f1f1681fd5d1f613646ce84c9058352962fa4fc57305ace385c8c28c626",
+      "elapsed_ns": 1218825362
+    },
+    {
+      "case": "hold_True_4",
+      "arm": "fresh_read_reference",
+      "id": "hold_True_4__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": true,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 84,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 65536,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "setter_start_ns": 8781454651,
+      "setter_name": "A",
+      "setter_type": "com.sun.star.drawing.RectangleShape",
+      "setter_proxy_position": [
+        1900,
+        1000
+      ],
+      "setter_end_ns": 8782403840,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "first_final_ns": 8785563126,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 89,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1900,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "6ab48d31c8a752f4a61b4834b89a334b428d13c98af9e103196ac41ea20778bc",
+      "elapsed_ns": 1229433894
+    },
+    {
+      "case": "hold_False_5",
+      "arm": "fresh_read_reference",
+      "id": "hold_False_5__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": false,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 95,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 72920,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "setter_start_ns": 10029504159,
+      "setter_name": "",
+      "setter_type": "com.sun.star.drawing.RectangleShape",
+      "setter_proxy_position": [
+        1900,
+        1000
+      ],
+      "setter_end_ns": 10033231525,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "first_final_ns": 10037373112,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 100,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "0e9ad4ca410b42a9f0d0dcd26df4026eff7d83ddccf53572859bb33c4fbe293b",
+      "elapsed_ns": 1253548952
+    },
+    {
+      "case": "hold_False_6",
+      "arm": "fresh_read_reference",
+      "id": "hold_False_6__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": false,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 106,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 73617,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "setter_start_ns": 11300950378,
+      "setter_name": "A",
+      "setter_type": "com.sun.star.drawing.RectangleShape",
+      "setter_proxy_position": [
+        1900,
+        1000
+      ],
+      "setter_end_ns": 11303688345,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "first_final_ns": 11308135966,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 111,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1900,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "5ce45dbfea4bf41ea8efe3b7de2257bc267f403f73d991644f1aa05203752041",
+      "elapsed_ns": 1249567635
+    },
+    {
+      "case": "hold_True_7",
+      "arm": "fresh_read_reference",
+      "id": "hold_True_7__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": true,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 117,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 66396,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "setter_start_ns": 12550098980,
+      "setter_name": "A",
+      "setter_type": "com.sun.star.drawing.RectangleShape",
+      "setter_proxy_position": [
+        1900,
+        1000
+      ],
+      "setter_end_ns": 12551107651,
+      "input_mutations": 1,
+      "disposition": "APPLIED",
+      "first_final_ns": 12554578279,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 122,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1900,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ]
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "f6034317de03a30bf93ff38ed182b95004564486b348b7bffd811580ee10efcd",
+      "elapsed_ns": 1242462133
+    }
+  ],
+  "errors": [],
+  "parent_exit": 0,
+  "controller_pid": 1,
+  "version": "LibreOffice 25.2.3.2 520(Build:2)",
+  "cgroup": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "archived_a01_owner_sha256": "b63e8a925a5ff741385fb69b8cf20ac07e01a520f34607778d8d28a0256c1508",
+  "follow_up_a04_a05": {
+    "a04": "STOP_CONSTRUCTOR_BEFORE_CASES",
+    "a05": "HOLD_INFRASTRUCTURE_UNRUN",
+    "host_observation": "docker images --digests failed reading pinned containerd blob: operation not supported",
+    "interpretation": "No per-program cleanup evidence added; A05 candidate and auditor remain unrun until an authorized isolated runtime is available"
+  },
+  "forbidden_xtest_calls": 0,
+  "interpretation": "The archived A01 InputOwner cannot be substituted directly under current V39 release-batch Backend: the latter calls owner.call('up_batch', lease, keys), which the archived owner rejects. A purpose-built compatibility adapter or a different production instrumentation design is required; this result does not prove either can preserve release semantics.",
+  "main_sha": "7754ef4e268fcb5166ece66ad821ef1af57cabd6",
+  "observed_exception": "ValueError: unknown input operation",
+  "owner_thread_closed_and_joined": true,
+  "required_owner_operation": "up_batch",
+  "schema": "v15_releasebatch_legacy_owner_compat_a01_result_v1",
+  "scope": "Inert fake-X owner API compatibility only. No input-down admission, native XTest, live X server, GUI, game, model, physical release, ordering, useful feedback, task effect, recovery, timing, or live threat exposure.",
+  "status": "FAIL_COMPATIBILITY"
+}

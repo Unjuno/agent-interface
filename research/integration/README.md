@@ -7,6 +7,12 @@ Child directories are retained integration studies. Their existence does not imp
 
 ## Composition path
 
+Retained [primary first-error author packet](current_primary_first_error_57_20261003_01a0ff53/REPORT.md) and [V2 review](review_current_primary_v2_57_20261003_45e9/README.md): original RED/GREEN, controlled decoder composition and first environment/export/audit failures remain unchanged. [Rescue verification](../../runtime/results/primary_v2_rescue_9720/README.md) separates public byte integrity and current two-case regression from historical producer replay or adoption authority.
+
+Retained [primary V1 author packet](current_primary_57_20261003_01a0ff53/README.md) and [corrected review/disposition](review_current_primary_57_20261003_45e9/README.md): later OUTPUT masks the first backlog diagnosis in two historical cells; V1 adoption remains cancelled/HOLD. Author overlap and first preparation/audit errors are preserved. [Rescue checks](../../runtime/results/primary_review_rescue_9726/README.md) verify saved bytes only, not a successor adoption or experiment replay.
+
+Retained C01 callback-custody profile and versioned audit correction: [compiled custody v4 cycles](compiled_custody_v4_cycles_C01_20261003_01a0ff35/README.md). Original v1 missed27 complete callback-schedule corruptions; v2 preserves all original timing/raw/results and rejects those copies. `CPU_SECONDS_UNRESOLVED` remains, and counter reads outside wall endpoints are not subtracted or converted. Fresh [saved-data rescue checks](../../runtime/results/compiled_custody_rescue_5775/README.md) are not a measurement replay, clock calibration, practical efficiency or adoption certificate.
+
 ```mermaid
 flowchart LR
     C[Scoped component evidence]
@@ -35,6 +41,8 @@ Integration work should make the composed boundary explicit: runtime + caller, a
 | Recovery/durability | Pending work, replay/idempotency, restart, durable outcome reconciliation. |
 
 Child directory names are retained provenance, not a canonical architecture tree. Use each experiment's report for the exact composition and decision rule.
+
+- [#3311 A01 saved click-to-text boundary audit](calc3311_click_text_boundary_20261004_01a0ff51/README.md) — frozen source hashes and saved FODS agree; the first key follows the click without a selected-cell acknowledgement. The saved effect failure is independently reproduced, but native key-to-cell routing and causal attribution remain unobserved. No GUI, input, model, or formal allocation was rerun.
 
 - [Primary stdio busy-bound evidence rescue (#57)](primary_stdio_busy_rescue_20261003/README.md) — PR #6902's finite Windows/Node evidence and CI-selection records are preserved without integrating its unverified runtime/workflow changes; scope remains `PASS_PRIMARY_BUSY_BOUND_SCOPED`.
 
@@ -122,3 +130,5 @@ Historical and superseded integration paths remain in place when their exact nam
 - [Retired primary stream source #6919 and independent reviews](../recovery/retired_primary_stream_source_20261004/README.md) — 649 exact archive files plus full source/review histories; failed constructions and V2 CONTENT_HOLD retained, current runtime unchanged, no adoption or transfer of #6979 application authority.
 
 - [Retired primary review supplements #6919](../recovery/retired_primary_review_supplements_20261004/README.md) — 324 exact review files and two source histories; Windows output-pipe witnesses and the original accepted-transport FAIL retained, no old vote transfer or current runtime adoption.
+
+- [Retired checkpoint and nominal-record reviews #6918 / #6923](../recovery/retired_record_review_custody_20261004/README.md) — 64 exact review files and two source histories; first reviewer failures and old preparation tuples retained, no current runtime adoption or historical vote transfer.

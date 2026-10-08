@@ -1,0 +1,15 @@
+from pathlib import Path
+import hashlib,json
+r=Path(__file__).resolve().parent;records=[];corrections=[]
+for row in json.loads((r/'ADDITIONAL_PINS.json').read_bytes()):
+ p=r/'source'/row['path'];b=p.read_bytes()
+ def oid(x):return hashlib.sha1(b'blob '+str(len(x)).encode()+b'\0'+x).hexdigest()
+ if oid(b)!=row['git_blob']:
+  assert b.endswith(b'\n') and oid(b[:-1])==row['git_blob'],(row['path'],oid(b))
+  old=r/'input-staging-first'/(row['path']+'.txt');old.parent.mkdir(parents=True,exist_ok=True);old.write_bytes(b)
+  corrections.append({'path':row['path'],'first_extra_final_LF_sha256':hashlib.sha256(b).hexdigest(),'no_test_invocation_on_this_image':True})
+  b=b[:-1];p.write_bytes(b)
+ assert oid(b)==row['git_blob']
+ records.append(dict(row,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()))
+(r/'ADDITIONAL_INPUTS_VERIFIED.json').write_text(json.dumps({'exact_inputs':records,'staging_corrections':corrections},indent=2)+'\n',encoding='utf-8',newline='\n')
+print(json.dumps({'exact_git_inputs':len(records),'corrected_extra_final_LF':len(corrections)}))

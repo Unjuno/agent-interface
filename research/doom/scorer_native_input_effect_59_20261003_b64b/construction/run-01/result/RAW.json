@@ -1,0 +1,495 @@
+{
+  "rows": [
+    {
+      "artifacts": {
+        "m00/row.json": {
+          "bytes": 5774,
+          "sha256": "9f4b6c5e481e6fed497cbad1d2c7295bcba0e001fae40285c66f18adfa53105f"
+        },
+        "m00/scorer/scorer-samples.jsonl": {
+          "bytes": 1149,
+          "sha256": "be166382f961eb19b4bdbfd1a673046861c35c460d0313da7208e4078e93c040"
+        }
+      },
+      "case": {
+        "adapter": "stdin",
+        "arm": "original",
+        "id": "m00",
+        "input_hex": "ceb10a46494e4953480a",
+        "read_limit": 65536,
+        "sample_budget": 3,
+        "sample_hz": 500,
+        "sleep_ns": 8000000
+      },
+      "commands": [],
+      "disposition": "sample_budget",
+      "end_ns": 11380297368162,
+      "error": "finite completed-sample diagnostic cap",
+      "events": [
+        {
+          "hex": "ceb10a46494e4953480a",
+          "kind": "prequeued",
+          "ns": 11380267353991,
+          "thread_id": 281473291568352,
+          "writer_closed": true,
+          "written": 10
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 41,
+          "ns": 11380267391199,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380267396283,
+          "thread_id": 281473291568352
+        },
+        {
+          "index": 0,
+          "kind": "sample_begin",
+          "ns": 11380267398574,
+          "thread_id": 281473291568352
+        },
+        {
+          "index": 0,
+          "kind": "sample_end",
+          "ns": 11380279063050,
+          "payload_ns": 11380279051717,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380279065634,
+          "thread_id": 281473291568352
+        },
+        {
+          "kind": "sink_begin",
+          "ns": 11380279075175,
+          "receipt": {
+            "missed_periods_before": 0,
+            "sample_finished_ns": 11380279065634,
+            "sample_started_ns": 11380267396283,
+            "scheduled_ns": 11380267391199,
+            "start_lateness_ns": 5084
+          },
+          "thread_id": 281473291568352
+        },
+        {
+          "count": 1,
+          "kind": "sink_end",
+          "ns": 11380279222676,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 41,
+          "ns": 11380279224259,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380279226676,
+          "thread_id": 281473291568352
+        },
+        {
+          "index": 1,
+          "kind": "sample_begin",
+          "ns": 11380279228467,
+          "thread_id": 281473291568352
+        },
+        {
+          "index": 1,
+          "kind": "sample_end",
+          "ns": 11380288979649,
+          "payload_ns": 11380288970899,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380288982274,
+          "thread_id": 281473291568352
+        },
+        {
+          "kind": "sink_begin",
+          "ns": 11380288991774,
+          "receipt": {
+            "missed_periods_before": 4,
+            "sample_finished_ns": 11380288982274,
+            "sample_started_ns": 11380279226676,
+            "scheduled_ns": 11380269391199,
+            "start_lateness_ns": 9835477
+          },
+          "thread_id": 281473291568352
+        },
+        {
+          "count": 2,
+          "kind": "sink_end",
+          "ns": 11380289090524,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 41,
+          "ns": 11380289091649,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380289093649,
+          "thread_id": 281473291568352
+        },
+        {
+          "index": 2,
+          "kind": "sample_begin",
+          "ns": 11380289095191,
+          "thread_id": 281473291568352
+        },
+        {
+          "index": 2,
+          "kind": "sample_end",
+          "ns": 11380297290661,
+          "payload_ns": 11380297286411,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380297291870,
+          "thread_id": 281473291568352
+        },
+        {
+          "kind": "sink_begin",
+          "ns": 11380297295745,
+          "receipt": {
+            "missed_periods_before": 4,
+            "sample_finished_ns": 11380297291870,
+            "sample_started_ns": 11380289093649,
+            "scheduled_ns": 11380279391199,
+            "start_lateness_ns": 9702450
+          },
+          "thread_id": 281473291568352
+        },
+        {
+          "count": 3,
+          "kind": "sink_end",
+          "ns": 11380297354245,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 41,
+          "ns": 11380297354912,
+          "thread_id": 281473291568352
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380297356078,
+          "thread_id": 281473291568352
+        },
+        {
+          "completed": 3,
+          "kind": "sample_budget",
+          "ns": 11380297357495,
+          "thread_id": 281473291568352
+        },
+        {
+          "kind": "closed",
+          "ns": 11380297373912,
+          "read_fd_closed": true,
+          "thread_id": 281473291568352
+        }
+      ],
+      "owner_thread": 281473291568352,
+      "period_ns": 2000000,
+      "pipe_inode": 102118,
+      "pipe_is_fifo": true,
+      "process_receipt": {
+        "argv": [
+          "/usr/local/bin/python",
+          "-B",
+          "/src/candidate.py",
+          "--child",
+          "{\"id\": \"m00\", \"arm\": \"original\", \"adapter\": \"stdin\", \"sleep_ns\": 8000000, \"read_limit\": 65536, \"sample_budget\": 3, \"sample_hz\": 500, \"input_hex\": \"ceb10a46494e4953480a\"}",
+          "--out",
+          "/out/result/m00"
+        ],
+        "exit_code": 0,
+        "utc_end": "2026-10-03T04:19:29.169592+00:00",
+        "utc_start": "2026-10-03T04:19:28.954206+00:00"
+      },
+      "read_fd_closed": true,
+      "runtime": {
+        "cpu.max": "100000 100000",
+        "machine": "aarch64",
+        "memory.max": "268435456",
+        "perf_counter": {
+          "adjustable": false,
+          "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+          "monotonic": true,
+          "resolution": 1e-09
+        },
+        "pid": 7,
+        "pids.max": "64",
+        "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+        "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "payload_ns": 11380279051717
+        },
+        {
+          "index": 1,
+          "payload_ns": 11380288970899
+        },
+        {
+          "index": 2,
+          "payload_ns": 11380297286411
+        }
+      ],
+      "start_ns": 11380267387283,
+      "stats": {
+        "commands": 0,
+        "eof": false,
+        "missed_sample_periods": 11,
+        "owner_thread_id": 281473291568352,
+        "sample_hz": 500.0,
+        "samples": 3
+      },
+      "utc_end": "2026-10-03T04:19:29.163025+00:00",
+      "utc_start": "2026-10-03T04:19:29.132058+00:00"
+    },
+    {
+      "artifacts": {
+        "m01/effect.json": {
+          "bytes": 130,
+          "sha256": "7347f4afa2f79fb5bf729a2fee499b2b9761d69b27502391165988cd69144a34"
+        },
+        "m01/row.json": {
+          "bytes": 3762,
+          "sha256": "1388d2a41ed48c1eef5c8c91a4b4463f09d022e201cee54569b723288f7c9bde"
+        },
+        "m01/scorer/scorer-samples.jsonl": {
+          "bytes": 381,
+          "sha256": "6027cd5d888b1c7b312f83bef8a3a8b9d6c989c0aeb010f495efd4c34855ebc9"
+        }
+      },
+      "case": {
+        "adapter": "stdin",
+        "arm": "repair",
+        "id": "m01",
+        "input_hex": "ceb10a46494e4953480a",
+        "read_limit": 65536,
+        "sample_budget": 3,
+        "sample_hz": 500,
+        "sleep_ns": 8000000
+      },
+      "commands": [
+        "α",
+        "FINISH"
+      ],
+      "disposition": "finish",
+      "end_ns": 11380478065729,
+      "error": null,
+      "events": [
+        {
+          "hex": "ceb10a46494e4953480a",
+          "kind": "prequeued",
+          "ns": 11380466247627,
+          "thread_id": 281473480725728,
+          "writer_closed": true,
+          "written": 10
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 41,
+          "ns": 11380466279586,
+          "thread_id": 281473480725728
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380466284336,
+          "thread_id": 281473480725728
+        },
+        {
+          "index": 0,
+          "kind": "sample_begin",
+          "ns": 11380466286502,
+          "thread_id": 281473480725728
+        },
+        {
+          "index": 0,
+          "kind": "sample_end",
+          "ns": 11380477752228,
+          "payload_ns": 11380477731228,
+          "thread_id": 281473480725728
+        },
+        {
+          "caller": "_sample_due",
+          "kind": "clock",
+          "line": 45,
+          "ns": 11380477758645,
+          "thread_id": 281473480725728
+        },
+        {
+          "kind": "sink_begin",
+          "ns": 11380477771728,
+          "receipt": {
+            "missed_periods_before": 0,
+            "sample_finished_ns": 11380477758645,
+            "sample_started_ns": 11380466284336,
+            "scheduled_ns": 11380466279586,
+            "start_lateness_ns": 4750
+          },
+          "thread_id": 281473480725728
+        },
+        {
+          "count": 1,
+          "kind": "sink_end",
+          "ns": 11380477955562,
+          "thread_id": 281473480725728
+        },
+        {
+          "caller": "__next__",
+          "kind": "clock",
+          "line": 58,
+          "ns": 11380477957603,
+          "thread_id": 281473480725728
+        },
+        {
+          "kind": "wait_start",
+          "ns": 11380477961062,
+          "thread_id": 281473480725728,
+          "timeout_s": 0
+        },
+        {
+          "kind": "wait_end",
+          "ns": 11380477967478,
+          "ready": true,
+          "thread_id": 281473480725728
+        },
+        {
+          "hex": "ceb10a46494e4953480a",
+          "kind": "read",
+          "limit": 65536,
+          "ns": 11380477973728,
+          "requested": 65536,
+          "thread_id": 281473480725728
+        },
+        {
+          "kind": "command",
+          "line": "α",
+          "ns": 11380477981770,
+          "thread_id": 281473480725728
+        },
+        {
+          "kind": "command",
+          "line": "FINISH",
+          "ns": 11380477984478,
+          "thread_id": 281473480725728
+        },
+        {
+          "kind": "effect_saved",
+          "ns": 11380478058979,
+          "thread_id": 281473480725728
+        },
+        {
+          "kind": "closed",
+          "ns": 11380478074895,
+          "read_fd_closed": true,
+          "thread_id": 281473480725728
+        }
+      ],
+      "owner_thread": 281473480725728,
+      "period_ns": 2000000,
+      "pipe_inode": 103083,
+      "pipe_is_fifo": true,
+      "process_receipt": {
+        "argv": [
+          "/usr/local/bin/python",
+          "-B",
+          "/src/candidate.py",
+          "--child",
+          "{\"id\": \"m01\", \"arm\": \"repair\", \"adapter\": \"stdin\", \"sleep_ns\": 8000000, \"read_limit\": 65536, \"sample_budget\": 3, \"sample_hz\": 500, \"input_hex\": \"ceb10a46494e4953480a\"}",
+          "--out",
+          "/out/result/m01"
+        ],
+        "exit_code": 0,
+        "utc_end": "2026-10-03T04:19:29.349743+00:00",
+        "utc_start": "2026-10-03T04:19:29.170075+00:00"
+      },
+      "read_fd_closed": true,
+      "runtime": {
+        "cpu.max": "100000 100000",
+        "machine": "aarch64",
+        "memory.max": "268435456",
+        "perf_counter": {
+          "adjustable": false,
+          "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+          "monotonic": true,
+          "resolution": 1e-09
+        },
+        "pid": 9,
+        "pids.max": "64",
+        "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+        "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]"
+      },
+      "samples": [
+        {
+          "index": 0,
+          "payload_ns": 11380477731228
+        }
+      ],
+      "start_ns": 11380466274961,
+      "stats": {
+        "commands": 2,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 281473480725728,
+        "sample_hz": 500.0,
+        "samples": 1
+      },
+      "utc_end": "2026-10-03T04:19:29.343504+00:00",
+      "utc_start": "2026-10-03T04:19:29.330946+00:00"
+    }
+  ],
+  "runtime": {
+    "cpu.max": "100000 100000",
+    "machine": "aarch64",
+    "memory.max": "268435456",
+    "perf_counter": {
+      "adjustable": false,
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "resolution": 1e-09
+    },
+    "pid": 1,
+    "pids.max": "64",
+    "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+    "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]"
+  },
+  "schema": "native-scorer-input-59-v1",
+  "utc_end": "2026-10-03T04:19:29.350094+00:00",
+  "utc_start": "2026-10-03T04:19:28.954147+00:00"
+}

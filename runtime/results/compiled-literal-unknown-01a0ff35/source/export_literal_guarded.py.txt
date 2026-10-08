@@ -1,0 +1,28 @@
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+WORK = Path(__file__).resolve().parent
+REPO = WORK/'agent-interface'
+OUT = WORK/'compiled-literal-unknown-01a0ff35'
+BASE = json.loads((OUT/'SOURCE_FREEZE.json').read_bytes())['base']
+paths = ['runtime/guarded_x11_v1/__init__.py','runtime/guarded_x11_v1/compiled.py',
+         'runtime/guarded_x11_v1/handles.py','runtime/guarded_x11_v1/handles_texture.py',
+         'runtime/guarded_x11_v1/handles_base.py','runtime/guarded_x11_v1/frames.py',
+         'runtime/guarded_x11_v1/test_compiled.py']
+manifest = []
+for path in paths:
+    data = subprocess.check_output(['git','show',BASE+':'+path],cwd=REPO)
+    oid = subprocess.check_output(['git','rev-parse',BASE+':'+path],cwd=REPO).decode().strip()
+    if hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()!=oid:
+        raise RuntimeError('guarded-source')
+    for variant in ['baseline','candidate']:
+        target=OUT/variant/path
+        target.parent.mkdir(exist_ok=True,parents=True)
+        if target.exists():
+            raise RuntimeError('guarded-output-already-exists')
+        target.write_bytes(data)
+    manifest.append({'path':path,'git_blob':oid,'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data)})
+(OUT/'GUARDED_SOURCE.json').write_bytes((json.dumps({'base':BASE,'files':manifest},sort_keys=True,indent=2)+'\n').encode())
+print(json.dumps({'guarded_sources':len(manifest),'candidate_runtime_changed':False}))

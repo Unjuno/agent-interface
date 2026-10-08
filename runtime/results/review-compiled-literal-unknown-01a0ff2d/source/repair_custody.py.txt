@@ -1,0 +1,20 @@
+import pathlib
+root=pathlib.Path(__file__).resolve().parent
+old=(root/'audit_custody.py').read_text(encoding='utf-8')
+old=old.replace("if dependency.read_bytes() != dependency_copy.read_bytes(): raise ValueError('dependency source mismatch')",
+"# The published dependency copy is the composed source, not the raw old head.")
+old=old.replace("if dependency.read_bytes().count(old) != 1: raise ValueError('dependency old delta')\ncomposed_bytes = dependency.read_bytes().replace(old,new)",
+"""sequence_guard = b'                type(admission[\"expected_sequence\"]) is not int or\\n'
+effect_guard = b'            if effect[\"status\"] == \"succeeded\":\\n                _name(effect[\"evidence_ref\"], \"effect evidence reference\")\\n'
+insert_at = b'            emit({\"event\": \"effect_checked\", \"action\": pending_effect[\"action\"],\\n                  \"status\": effect[\"status\"], \"evidence_ref\": effect[\"evidence_ref\"]})\\n'
+if dependency.read_bytes().count(effect_guard) != 1 or baseline.read_bytes().count(sequence_guard) != 1 or baseline.read_bytes().count(insert_at) != 1: raise ValueError('exact bridge blocks')
+if dependency.read_bytes().replace(effect_guard,b'') != baseline.read_bytes().replace(sequence_guard,b''): raise ValueError('dependency contains unexpected functional/code delta')
+projected_dependency = baseline.read_bytes().replace(insert_at,effect_guard+insert_at)
+if hashlib.sha256(projected_dependency).hexdigest() != '419535945ae81eba8b08b1e231923b1b0cdc2253dfae36cdb861b528c1f36de1': raise ValueError('projected dependency identity')
+composed_bytes = projected_dependency.replace(old,new)
+if composed_bytes != dependency_copy.read_bytes(): raise ValueError('published composed byte mismatch')""")
+if old == (root/'audit_custody.py').read_text():raise ValueError('repair absent')
+target=root/'audit_custody-v2.py'
+if target.exists():raise ValueError('repair file already exists')
+target.write_text(old,encoding='utf-8')
+print('First wrapper unchanged; separate v2 verifies the exact two dependency hunks, existing sequence guard and published joint bytes.')

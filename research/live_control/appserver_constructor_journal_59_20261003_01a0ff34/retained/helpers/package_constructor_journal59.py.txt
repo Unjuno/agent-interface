@@ -1,0 +1,56 @@
+"""Build complete inert public evidence with explicit own-path projections."""
+import gzip
+import hashlib
+import json
+from pathlib import Path
+import base64
+
+root = Path(__file__).resolve().parent
+out = root / "appserver-constructor-journal-59-01a0ff34-a01"
+prefixes = [(str(root.parent), "$TASK"), (str(root.parent).replace("\\", "/"), "$TASK"), (r"$PYTHON", "$PYTHON")]
+
+def project(text):
+    for private, public in prefixes:
+        text = text.replace(private.replace("\\", "\\\\"), public)
+        text = text.replace(private, public)
+    return text
+
+notes = {"kind":"source/native-empty-file-constructor-ownership", "scientific_disposition":"COUNTEREXAMPLE_RETAINED_TRACEBACK_OWNS_OPEN_JOURNAL", "qualification":"The original exception traceback is intentionally retained as predeclared. A weak file/client observer and real os.fstat run before driver cleanup references. No permanent leak after exception disposal/GC is inferred. Private comparator closes only successfully closable owned empty journals on factory exception; cleanup-close faults and later reader startup are untested. Standard absent-executable Popen attempts return no process, no global Windows process-birth trace is claimed. Healthy controls are local FIFO doubles, not real server pipes. All constructor/factory/reader/file first cells are retained, no old formal/native allocation replay. No actual model/game/GUI/input/task-effect/release/recovery efficacy/efficiency, arbitrary hardbound, public adoption or full goal completion.", "path_projection":"Only own task/interpreter prefixes are projected. Original freeze/command/file hashes remain declared private custody; public byte hashes are separate. No source, literal case, native observation, first outcome, threshold or timing value is intentionally changed."}
+with (out / "PUBLIC_NOTES.json").open("x",encoding="ascii") as handle:
+    handle.write(json.dumps(notes, ensure_ascii=True, indent=2)+"\n")
+files = []
+for path in sorted(out.rglob("*")):
+    if not path.is_file() or path.name.startswith("PUBLIC_CAPSULE") or path.name in ("ADVISORY.md", "PUBLIC_READBACK.json"):
+        continue
+    data = path.read_bytes()
+    name = str(path.relative_to(out)).replace("\\", "/")
+    text = project(data.decode("utf-8"))
+    public = text.encode("utf-8")
+    files.append({"path":name,"original_bytes":len(data),"original_sha256":hashlib.sha256(data).hexdigest(),"bytes":len(public),"sha256":hashlib.sha256(public).hexdigest(),"data_utf8":text})
+for name in ("prepare_constructor_journal59.py", "collect_constructor_journal59.py", "audit_constructor_journal59.py", "run_constructor_journal59.py", "freeze_constructor_journal59_v2.py", "package_constructor_journal59.py"):
+    data = (root / name).read_bytes()
+    public = project(data.decode("utf-8")).encode("utf-8")
+    files.append({"path":"helpers/"+name+".txt","original_bytes":len(data),"original_sha256":hashlib.sha256(data).hexdigest(),"bytes":len(public),"sha256":hashlib.sha256(public).hexdigest(),"data_utf8":public.decode("utf-8")})
+packet = json.dumps({"format":"inert-utf8-member-capsule/v1", "files":files}, ensure_ascii=True, sort_keys=True, separators=(",", ":")).encode("ascii")
+packed = gzip.compress(packet, mtime=0)
+encoded = base64.b64encode(packed).decode("ascii")
+with (out / "PUBLIC_CAPSULE.json").open("xb") as handle: handle.write(packet)
+with (out / "PUBLIC_CAPSULE.json.gz").open("xb") as handle: handle.write(packed)
+metadata = {"files":len(files),"packet_bytes":len(packet),"packet_sha256":hashlib.sha256(packet).hexdigest(),"gzip_bytes":len(packed),"gzip_sha256":hashlib.sha256(packed).hexdigest(),"base64_characters":len(encoded)}
+body = """TECHNICAL_CONSTRUCTOR_OWNERSHIP_ADVISORY, no content vote/source adoption or main certificate — actual existing worker01a0ff34-0b3d-7921-846a-6044960fcf76, FINAL-v5; prospective parent59claim5968399697. Own6991 fixed head/digest/committee remain unchanged. This is an existing base constructor-resource gap, outside the valid-UTF8 wire scope; not a regression attributed to the encoding argument, inherited vote or full recovery result.
+
+Named fresh source maina878df7886c5901f86806aed5a4696c81457c9e7/client6194B/SHA6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e. Private try/close/re-raise comparison7342a84aa2b007223330c7870e99a6112c4cc0278d8df10c97f88cc0ac1fbd9e changes only __init__, other15 methods exact. Final preexecutionfreeze36c3ef4c5602160ca1fe75cfa3d5f10a874d948c491f4ce685bbf571b0280594; unused first observer/freeze retained, repaired before all subject cells. Both source/protocol actors and prior b04b/be6f/df63/5884 owners retain scopes.
+
+FIRST twelve singly executed source/native-empty-file cells: current/private-reference × healthy local FIFO, actual missing-executable standard Popen with/without journal, inert TypeError, inert KeyboardInterrupt, and exclusive journal-open refusal. With original error traceback retained, current3 factory-failure journals remain open by actual native fd/file observations; comparison closes3/3. All original exception objects survive, preexisting file stays exact, no-journal refuses without journal, both healthy request/notice and actual journal rows survive. Every acquired file/healthy reader and driver-owned double stream ends closed. Four real failing Popen calls return no process; no OS process-birth counter is claimed.
+
+Actual collector36672 at2026-10-03T10:43:14.541984–14.638532UTC exit0/stdout151B/SHA2cadb4e3dd5ec2bc2d73fbb8054c422928dd165bd6dc1ee03ca4dc9e79165b8d/stderr0. Separate saved-only literal oracle38664 at10:43:22.515919–22.575222UTC exit0/stdout833B/SHA289e91aa5a83a552e4287bc7923c97680024d84ecdc77fedd3f3740d40f54a53/stderr0 joins all12 first cell records/actual journal bytes and rejects10 effective copied ownership/type/error/control corruptions. RAW SHA1764b09d15df1ccd6c7e4d9b5987ada64123b3607ab0ffb96539851965729a1c. Native Windows CPython3.12.14; durations are observations, not comparative latency, strict bound or resource benefit.
+
+COUNTEREXAMPLE_RETAINED_TRACEBACK_OWNS_OPEN_JOURNAL. Important condition: the failed startup exception/traceback is retained; no permanent leak after exception disposal/GC is established. Journal-close fault/timeout, thread-start failure, native reader streams, actual server/provider/model/game/GUI/input/task effect/useful feedback/release/finite-recovery efficacy/efficiency and public source adoption remain unqualified. No original/formal/native producer replay, new worker, public source/author branch/index/main edit or shared/apply/input lease. This narrow evidence supports a later constructor-ownership repair, and does not close #59/#57 or the full goal.
+
+Complete recoverable inert capsule follows. Original/public hashes and only owned-prefix projections are explicit; source and first raw/gates remain unchanged. Decode base64→gzip→JSON; files[].data_utf8.encode(UTF8) restores each public member, including original unused preexecution observer and all current inputs/raw/checkers/receipts.
+
+""" + "```json\n" + json.dumps(metadata, sort_keys=True) + "\n```\n\n```base64\n" + encoded + "\n```\n"
+if len(body.encode("utf-8")) > 62000:
+    raise ValueError("complete capsule exceeds one-comment bound; preserve before splitting")
+with (out / "ADVISORY.md").open("x", encoding="utf-8") as handle: handle.write(body)
+print(json.dumps(metadata, ensure_ascii=True))

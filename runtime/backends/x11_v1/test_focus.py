@@ -121,6 +121,7 @@ class ActivationTests(unittest.TestCase):
 class ProgramLocalTargetTests(unittest.TestCase):
     def test_prior_preflight_does_not_supply_next_program_target(self):
         backend = X11Backend.__new__(X11Backend)
+        backend.held_keycodes = {}
         backend._target = Mock()
         backend.preflight({'ops': [{'op': 'focus', 'target': 'app'},
                                     {'op': 'observe'}]})
@@ -132,6 +133,7 @@ class ProgramLocalTargetTests(unittest.TestCase):
 
     def test_explicit_activation_supplies_program_target(self):
         backend = X11Backend.__new__(X11Backend)
+        backend.held_keycodes = {}
         backend._target = Mock()
         backend._activation_target = Mock()
         backend.preflight({'ops': [{'op': 'activate', 'target': 'app'},

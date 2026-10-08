@@ -1,6 +1,7 @@
 # Frozen research hashes describe exact on-disk bytes, including line endings.
 # Preserve sources, manifests and raw evidence across Windows/Linux checkouts.
 research/analysis/README.md text eol=lf
+research/integration/http_absolute_s07_57_20261004_01a0ff35/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/observation_gating/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/observation_tiles/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 research/live_control/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
@@ -148,8 +149,15 @@ research/analysis/quiet_supervision_vigilance_6503_t0b_20261002/** -text -whites
 research/analysis/planner_hysteresis_5352_effect_qualified_t0_20261003/** -text -whitespace
 research/analysis/planner_hysteresis_5352_effect_qualified_t15_20261003/** -text -whitespace
 
+# Keep Mindustry construction captures byte-exact across Windows/Linux checkouts.
+research/integration/mindustry_three_arm_economics_20260928/construction/raw_target_dispatch_lifecycle_20261004_*/** -text -whitespace
+research/integration/mindustry_three_arm_economics_20260928/construction/raw_target_socket_submit_20261004_*/** -text -whitespace
+
 # Preserve the exact #5156 T3 construction package and retained synthetic outputs.
 research/live_control/owner_keyup_keymap_witness_5156_t3_v1/** -text -whitespace
+
+# Preserve exact source, JSONL, and result bytes for the #5156 terminality probe.
+research/analysis/owner_keyup_completion_sentinel_terminality_5156_20261003/** -text -whitespace
 
 # Preserve exact source and raw outputs for the #5442 T4 mechanical-boundary archive.
 research/analysis/semantic_receipt_runtime_boundary_5442_t4/** -text -whitespace
@@ -174,3 +182,29 @@ research/integration/tk_probe_effect_5260_a07_wslc_20261003/** -text -whitespace
 
 # Preserve exact #5260 A08 owned-cache successor source and first outcome.
 research/integration/tk_private_cache_5260_a08_wslc_20261003/** -text -whitespace -filter -ident
+
+# Preserve exact #5260 A09 private-pipe source and first outcome.
+research/integration/tk_focus_pipe_5260_a09_wslc_20261004/** -text -whitespace -filter -ident
+# Keep byte-audited Mindustry composition evidence stable across Windows/Linux checkouts.
+research/integration/mindustry_three_arm_economics_20260928/construction/terminal_release_composition_a01_20261005/** text eol=lf
+
+# Preserve exact frozen source and raw bytes for Issue #7799 T0.
+research/analysis/pairwise_interaction_7799_t0_a01_20261005/** -text -whitespace -filter -ident
+
+# Preserve exact #5156 T5 timestamp-order construction evidence bytes.
+research/analysis/owner_keyup_timestamp_order_5156_t5_20261005/** -text -whitespace -filter -ident
+
+# Preserve exact #59 typed epoch alias A01 raw and audit bytes.
+research/doom/v39_typed_epoch_alias_59_a01_20261005/** -text -whitespace -filter -ident
+
+# Keep the archived #6944 startup-cleanup experiment bytes exact.
+research/doom/v39_startup_composition_b04b_v2/** -text -whitespace -filter -ident
+research/doom/v39_startup_diagnostics_b04b_v3/** -text -whitespace -filter -ident
+
+# Preserve the exact Issue #7712 T0/T1 raw, correction and audit bytes.
+research/analysis/gui_modality_pid_7712_t0_20261005/** -text -whitespace -filter -ident
+
+# Preserve byte-exact one-shot evidence packages whose manifests include CRLF bytes.
+# The normalized copy is byte-mapped to its original one-shot commit in MANIFEST_V3.
+research/doom/v39_ammo_completed_future_drain_a07_20261008/** whitespace=cr-at-eol
+research/doom/v39_ammo_completed_future_drain_a08_20261008/** whitespace=cr-at-eol

@@ -1,0 +1,67 @@
+"""Exact immutable image/map/patch custody and bounded export; no source execution."""
+from pathlib import Path
+import json,hashlib,subprocess,os,datetime
+O=Path(__file__).resolve().parent;R=O.parent.parent/'work/effect-boundary'
+D=json.loads((O/'PROPOSAL.json').read_bytes());head=D['head_sha'];base=D['review_base_sha']
+def need(ok,msg):
+    if not ok:raise ValueError(msg)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def git(*args,input=None):
+    return subprocess.check_output(['git','-c','gc.auto=0','-c','maintenance.auto=false',*args],cwd=R,input=input,env=dict(os.environ,GIT_NO_LAZY_FETCH='1',GIT_TERMINAL_PROMPT='0'))
+canonical=json.dumps(D,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+need(sha(canonical)=='cac4dfbb798d2bd72606798207047c278074c9617e064c83be620cdc2bb7d022','exact full descriptor')
+paths=json.loads((O/'changed-paths.json').read_bytes())
+need(paths==git('diff','--name-only','--no-renames',base,head).decode().splitlines() and len(paths)==93,'complete93 paths')
+scopes=['runtime/backends/quartz_v1','runtime/core_v1','runtime/__init__.py','runtime/backends/__init__.py','.github/workflows','research/integration/quartz_release_fault_57_20261003_01a0ff52','research/integration/quartz_release_quarantine_2437_20261003_01a0ff52']
+def meta(ref):
+    m={}
+    for line in git('ls-tree','-r',ref,'--',*scopes).decode().splitlines():
+        attrs,p=line.split('\t',1);mode,kind,blob=attrs.split();m[p]={'mode':mode,'kind':kind,'blob':blob}
+    return m
+hm=meta(head);bm=meta(base);old=meta('4dbc9898449eb9ba90bf9561c822700ecfd96641')
+header=git('cat-file','-p',head).decode().split('\n\n',1)[0].splitlines()
+parents=[x[7:] for x in header if x.startswith('parent ')];tree=header[0].split()[1]
+need(tree=='f84be951886bc5e05e31117a88b792ac55c5a2fa' and parents==['e06e9a333ce77cd1632777fd6d8c63606d9da4df'],'actual full tree/ordered parents')
+rows=json.loads((O/'actual-image-reads.json').read_bytes())['rows'];images=[];bykey={}
+for row in rows:
+    metadata=hm if row['ref']==head else bm;p=row['path'];m=metadata[p]
+    need(m['mode']=='100644' and m['kind']=='blob','regular blob '+p)
+    if row['isError']:
+        need(m['blob']=='e69de29bb2d1d6434b8b29ae775ad8c2e48c5391' and 'HTTPError: 400:' in row['error'][0]['text'],'unsupported exact0B only')
+        b=git('cat-file','blob',m['blob']);need(b==b'','native exact empty')
+    else:
+        need(isinstance(row['data'],str),'complete actual text')
+        b=row['data'].encode()
+        need(hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==m['blob'],'actual MCP Git blob '+p)
+        need(git('hash-object','-w','--stdin',input=b).decode().strip()==m['blob'],'bounded own verified cache')
+    dest=O/('export' if row['ref']==head else 'baseline')/p;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b)
+    e={'ref':row['ref'],'path':p,**m,'bytes':len(b),'sha256':sha(b),'via':'native-exact0B' if row['isError'] else 'actual-MCP-UTF8'}
+    images.append(e);bykey[(row['ref'],p)]=e
+changed=[{k:bykey[(head,p)][k] for k in ['path','mode','blob','bytes','sha256']} for p in paths]
+changed_raw=json.dumps(changed,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+need(len(changed_raw)==24831 and sha(changed_raw)==D['delta']['changed_blobs_canonical_sha256'],'exact93 portable map')
+leaf='research/integration/quartz_release_fault_57_20261003_01a0ff52/'
+original=[p for p in paths if p.startswith(leaf)];need(len(original)==26,'all original26 archive')
+need(all(hm[p]==old[p] for p in original),'original26 leaf unchanged from V1')
+for item in D['artifacts']:
+    b=(O/'export'/item['path']).read_bytes();need(len(b)==item['bytes'] and sha(b)==item['sha256'],'fixed artifact '+item['path'])
+for stem,targets in [('quartz_release_fault_57_20261003_01a0ff52',25),('quartz_release_quarantine_2437_20261003_01a0ff52',61)]:
+    folder=O/'export/research/integration'/stem
+    manifest=json.loads((folder/'MANIFEST.json').read_bytes())
+    entries=manifest['entries'] if stem=='quartz_release_fault_57_20261003_01a0ff52' else manifest
+    if isinstance(entries,dict):entries=[{'path':p,**e} for p,e in entries.items()]
+    need(len(entries)==targets,'manifest target count')
+    for e in entries:
+        p=folder/e['path'];need(p.resolve().is_relative_to(folder.resolve()),'manifest contained')
+        b=p.read_bytes();need(len(b)==e['bytes'] and sha(b)==e['sha256'],'manifest member '+e['path'])
+rawdiff=git(*D['diff_recipe']);need(len(rawdiff)==D['diff_bytes'] and sha(rawdiff)==D['diff_sha256'],'exact full diff recipe')
+(O/'retained-full-index.diff').write_bytes(rawdiff)
+(O/'93-CHANGED-IMAGES.canonical.json').write_bytes(changed_raw)
+(O/'ACTUAL-101-IMAGES.json').write_text(json.dumps(images,indent=2)+'\n',encoding='utf-8')
+(O/'SCOPED-GIT-METADATA.json').write_text(json.dumps({'head':hm,'base':bm,'priorV1':old},indent=2)+'\n',encoding='utf-8')
+(O/'PROPOSAL.canonical.json').write_bytes(canonical)
+active=[p for p in paths if p.startswith('runtime/')];need(len(active)==5,'exact five active')
+(O/'active.diff').write_bytes(git('diff','--full-index','--no-ext-diff','--no-renames',base,head,'--',*active))
+need(all(hm.get(p)==bm.get(p)==None for p in ['runtime/__init__.py','runtime/backends/__init__.py']),'actual namespace roots absent; do not fabricate empty init')
+result={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':head,'tree':tree,'actual_ordered_parents':parents,'review_base':base,'descriptor_bytes':len(canonical),'proposal_digest':sha(canonical),'changed_paths':93,'changed_map_bytes':len(changed_raw),'changed_map_sha256':sha(changed_raw),'actual_images':len(images),'native_exact_empty_images':sum(x['isError'] for x in rows),'originalV1_leaf_exact_images':26,'manifest_targets':[25,61],'full_diff_bytes':len(rawdiff),'full_diff_sha256':sha(rawdiff),'active_paths':active,'missing_namespace_init_paths':['runtime/__init__.py','runtime/backends/__init__.py'],'reviewed_source_test_fixture_or_producer_executions':0,'main_writes':0}
+(O/'SOURCE-RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))

@@ -1,0 +1,31 @@
+{
+  "audited_main": "d6a3fe646d6a8ea92a8688a1f7c54b89261f56f6",
+  "crop_manifest_sha256": "d92a334c9bd99b0ca603ba1cd3edfc07ec70b0e81b62c6623c6ab1116d759b4a",
+  "limits": [
+    "No OCR invocation was run by this audit; the local Tesseract result is checked only as a recorded field.",
+    "The near-miss cases change the expected token and apply strict string equality; they do not perturb image pixels or measure OCR false acceptance.",
+    "The audit verifies retained Git blob identities and record consistency, not the original live adapter or historical Tesseract environment.",
+    "The source screenshots are pinned to the stated source revision; the derived crop manifest and previews are later main-branch artifacts identified by SHA-256."
+  ],
+  "pr_head": "473c913c2a0baa0acebd11539c9be5eaffbdc97b",
+  "source_revision": "58bcbb4c45501880db8782158ddd3add3b765984",
+  "status": "PASS_RETAINED_BLOB_LINKAGES",
+  "tesseract_on_path": false,
+  "verified_archived_ocr_input_count": 3,
+  "verified_crop_previews": [
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/independent-readback/crop-previews/block-1-task-5-candidate.png",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/independent-readback/crop-previews/block-1-task-5-frozen.png",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/independent-readback/crop-previews/block-1-task-6-candidate.png",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/independent-readback/crop-previews/block-1-task-6-frozen.png",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/independent-readback/crop-previews/block-2-task-6-candidate.png",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/independent-readback/crop-previews/block-2-task-6-frozen.png"
+  ],
+  "verified_historical_diagnostic_rows": 3,
+  "verified_local_ocr_rows": 6,
+  "verified_near_miss_predicate_rows": 3,
+  "verified_source_screenshots": [
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/C/client/runtime/124.png",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/C/client/runtime/143.png",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/C/client/runtime/150.png"
+  ]
+}

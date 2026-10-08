@@ -1,0 +1,76 @@
+{
+  "audit": "a02-publication-integrity-v1",
+  "checks": [
+    {
+      "check": "published raw hash events.jsonl",
+      "pass": true
+    },
+    {
+      "check": "published raw hash stderr.txt",
+      "pass": true
+    },
+    {
+      "check": "published raw hash invocation.json",
+      "pass": true
+    },
+    {
+      "check": "published raw hash version-preflight.json",
+      "pass": true
+    },
+    {
+      "check": "published raw hash final.txt",
+      "pass": true
+    },
+    {
+      "check": "published raw hash exit-code.txt",
+      "pass": true
+    },
+    {
+      "check": "published raw hash prompt.stdin.txt",
+      "pass": true
+    },
+    {
+      "check": "frozen asset hash source.png",
+      "pass": true
+    },
+    {
+      "check": "frozen asset hash source_events.jsonl",
+      "pass": true
+    },
+    {
+      "check": "frozen asset hash prompt.txt",
+      "pass": true
+    },
+    {
+      "check": "frozen asset hash output.schema.json",
+      "pass": true
+    },
+    {
+      "check": "frozen asset hash run_once.py",
+      "pass": true
+    },
+    {
+      "check": "frozen asset hash audit.py",
+      "pass": true
+    },
+    {
+      "check": "source-event private original hash",
+      "pass": true
+    },
+    {
+      "check": "frozen allocation audit disposition STOP",
+      "pass": true
+    },
+    {
+      "check": "recorded single invocation",
+      "pass": true
+    },
+    {
+      "check": "public files contain no local home or ephemeral thread identifiers",
+      "pass": true
+    }
+  ],
+  "path_scan_findings": [],
+  "gate": "PASS",
+  "scope": "integrity and redaction validation only; does not change the frozen candidate STOP"
+}

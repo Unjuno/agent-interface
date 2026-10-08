@@ -1,0 +1,396 @@
+[
+  {
+    "calls": [
+      "execute",
+      "verify"
+    ],
+    "effect": "failed",
+    "events": [
+      {
+        "event": "stage_started",
+        "stage": "reuse_revalidate",
+        "started_ns": 0
+      },
+      {
+        "ended_ns": 1,
+        "event": "stage_completed",
+        "stage": "reuse_revalidate"
+      },
+      {
+        "event": "stage_started",
+        "stage": "final_revalidate",
+        "started_ns": 2
+      },
+      {
+        "ended_ns": 3,
+        "event": "stage_completed",
+        "stage": "final_revalidate"
+      },
+      {
+        "event": "stage_started",
+        "stage": "execute",
+        "started_ns": 4
+      },
+      {
+        "ended_ns": 5,
+        "event": "stage_completed",
+        "stage": "execute"
+      },
+      {
+        "event": "stage_started",
+        "stage": "verify_effect",
+        "started_ns": 6
+      },
+      {
+        "ended_ns": 7,
+        "event": "stage_completed",
+        "stage": "verify_effect"
+      },
+      {
+        "attempted_calls": 0,
+        "event": "adaptive_route_finished",
+        "outcome": "TASK_NOT_VERIFIED",
+        "reason": "failed",
+        "repair_path": "none"
+      }
+    ],
+    "journal_fails": false,
+    "result": {
+      "accounting": {
+        "attempted_calls": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 0,
+        "cost": 0,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 0,
+        "model_wait_ns": 0,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "visible_image_coverage": 0,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [],
+      "cache_update": {
+        "id": "A"
+      },
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "comparable_to_full_cold": false,
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ]
+      },
+      "delivery": "confirmed",
+      "execution_progress": null,
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [],
+      "outcome": "TASK_NOT_VERIFIED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 1,
+          "ended_ns": 1,
+          "stage": "reuse_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 1,
+          "ended_ns": 3,
+          "stage": "final_revalidate",
+          "started_ns": 2
+        },
+        {
+          "elapsed_ns": 1,
+          "ended_ns": 5,
+          "stage": "execute",
+          "started_ns": 4
+        },
+        {
+          "elapsed_ns": 1,
+          "ended_ns": 7,
+          "stage": "verify_effect",
+          "started_ns": 6
+        }
+      ],
+      "reason": "failed",
+      "repair_path": "none",
+      "repair_trace": [
+        {
+          "stage": "reuse_revalidate",
+          "status": "revalidated"
+        }
+      ],
+      "route": "reuse",
+      "selected_target": {
+        "id": "A"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "coarse_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "failed"
+    }
+  },
+  {
+    "calls": [
+      "execute",
+      "verify"
+    ],
+    "effect": "unavailable",
+    "events": [
+      {
+        "event": "stage_started",
+        "stage": "reuse_revalidate",
+        "started_ns": 0
+      },
+      {
+        "ended_ns": 1,
+        "event": "stage_completed",
+        "stage": "reuse_revalidate"
+      },
+      {
+        "event": "stage_started",
+        "stage": "final_revalidate",
+        "started_ns": 2
+      },
+      {
+        "ended_ns": 3,
+        "event": "stage_completed",
+        "stage": "final_revalidate"
+      },
+      {
+        "event": "stage_started",
+        "stage": "execute",
+        "started_ns": 4
+      },
+      {
+        "ended_ns": 5,
+        "event": "stage_completed",
+        "stage": "execute"
+      },
+      {
+        "event": "stage_started",
+        "stage": "verify_effect",
+        "started_ns": 6
+      },
+      {
+        "ended_ns": 7,
+        "event": "stage_completed",
+        "stage": "verify_effect"
+      },
+      {
+        "attempted_calls": 0,
+        "event": "adaptive_route_finished",
+        "outcome": "TASK_NOT_VERIFIED",
+        "reason": "unavailable",
+        "repair_path": "none"
+      }
+    ],
+    "journal_fails": false,
+    "result": {
+      "accounting": {
+        "attempted_calls": 0,
+        "cached_input_semantics": "subset of input_tokens; never added to input total",
+        "completed_calls": 0,
+        "cost": 0,
+        "duplicate_call_ids": [],
+        "model_wait_coverage": 0,
+        "model_wait_ns": 0,
+        "usage_coverage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "usage_totals": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "visible_image_coverage": 0,
+        "visible_images_submitted": 0
+      },
+      "attempt_ledger": [],
+      "cache_update": {
+        "id": "A"
+      },
+      "coarse_origin": "caller_provided",
+      "comparison": {
+        "class": "warm_reuse",
+        "comparable_to_full_cold": false,
+        "omitted_stages": [
+          "observe_source",
+          "coarse_model",
+          "acquire_anchor",
+          "anchor_model"
+        ]
+      },
+      "delivery": "confirmed",
+      "execution_progress": null,
+      "input_authority": "consumed_by_recorded_execute_stage",
+      "model_call_ledger": [],
+      "outcome": "TASK_NOT_VERIFIED",
+      "phase_timings": [
+        {
+          "elapsed_ns": 1,
+          "ended_ns": 1,
+          "stage": "reuse_revalidate",
+          "started_ns": 0
+        },
+        {
+          "elapsed_ns": 1,
+          "ended_ns": 3,
+          "stage": "final_revalidate",
+          "started_ns": 2
+        },
+        {
+          "elapsed_ns": 1,
+          "ended_ns": 5,
+          "stage": "execute",
+          "started_ns": 4
+        },
+        {
+          "elapsed_ns": 1,
+          "ended_ns": 7,
+          "stage": "verify_effect",
+          "started_ns": 6
+        }
+      ],
+      "reason": "unavailable",
+      "repair_path": "none",
+      "repair_trace": [
+        {
+          "stage": "reuse_revalidate",
+          "status": "revalidated"
+        }
+      ],
+      "route": "reuse",
+      "selected_target": {
+        "id": "A"
+      },
+      "stages": {
+        "acquire_anchor": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "acquire_expansion": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "anchor_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "coarse_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "execute": {
+          "reason": null,
+          "status": "completed"
+        },
+        "expanded_model": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "final_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "local_repair": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "observe_source": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_observe": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "post_model_revalidate": {
+          "reason": "branch_not_reached",
+          "status": "skipped"
+        },
+        "reuse_revalidate": {
+          "reason": null,
+          "status": "completed"
+        },
+        "verify_effect": {
+          "reason": null,
+          "status": "completed"
+        }
+      },
+      "task_effect": "unavailable"
+    }
+  }
+]

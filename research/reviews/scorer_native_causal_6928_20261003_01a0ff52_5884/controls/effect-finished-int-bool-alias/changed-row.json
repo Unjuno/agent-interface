@@ -1,0 +1,212 @@
+{
+  "artifacts": {
+    "n00/effect.json": {
+      "bytes": 109,
+      "sha256": "063093131f22f0923eafbb22af00d06ee8ba097145eb64dbb5c53f07f8ba86e7"
+    },
+    "n00/row.json": {
+      "bytes": 4115,
+      "sha256": "5d64a82fccca9196f05f0a4f8a8c8ab2f4cd77266b9e78bc2164746d1ab3691f"
+    },
+    "n00/scorer/scorer-samples.jsonl": {
+      "bytes": 381,
+      "sha256": "0a8538899a643a79f5730f0b391ae61471d9336f42722c73b92d387c02fa26f9"
+    }
+  },
+  "case": {
+    "adapter": "polling",
+    "arm": "original",
+    "id": "n00",
+    "input_hex": "ceb10a46494e4953480a",
+    "read_limit": 65536,
+    "sample_budget": 64,
+    "sample_hz": 500,
+    "sleep_ns": 0
+  },
+  "commands": [
+    "α",
+    "FINISH"
+  ],
+  "disposition": "finish",
+  "end_ns": 11769326855797,
+  "error": null,
+  "events": [
+    {
+      "hex": "ceb10a46494e4953480a",
+      "kind": "prequeued",
+      "ns": 11769326646463,
+      "thread_id": 281472883877088,
+      "writer_closed": true,
+      "written": 10
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 86,
+      "ns": 11769326677546,
+      "thread_id": 281472883877088
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11769326681005,
+      "thread_id": 281472883877088
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 97,
+      "ns": 11769326683755,
+      "thread_id": 281472883877088
+    },
+    {
+      "index": 0,
+      "kind": "sample_begin",
+      "ns": 11769326685005,
+      "thread_id": 281472883877088
+    },
+    {
+      "index": 0,
+      "kind": "sample_end",
+      "ns": 11769326688171,
+      "payload_ns": 11769326685546,
+      "thread_id": 281472883877088
+    },
+    {
+      "caller": "sample_once",
+      "kind": "clock",
+      "line": 99,
+      "ns": 11769326688630,
+      "thread_id": 281472883877088
+    },
+    {
+      "kind": "sink_begin",
+      "ns": 11769326691046,
+      "receipt": {
+        "missed_periods_before": 0,
+        "sample_finished_ns": 11769326688630,
+        "sample_started_ns": 11769326683755,
+        "scheduled_ns": 11769326677546,
+        "start_lateness_ns": 6209
+      },
+      "thread_id": 281472883877088
+    },
+    {
+      "count": 1,
+      "kind": "sink_end",
+      "ns": 11769326785796,
+      "thread_id": 281472883877088
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 111,
+      "ns": 11769326786880,
+      "thread_id": 281472883877088
+    },
+    {
+      "kind": "wait_start",
+      "ns": 11769326788671,
+      "thread_id": 281472883877088,
+      "timeout_s": 0.001890666
+    },
+    {
+      "kind": "wait_end",
+      "ns": 11769326794088,
+      "ready": true,
+      "thread_id": 281472883877088
+    },
+    {
+      "hex": "ceb10a46494e4953480a",
+      "kind": "read",
+      "limit": 65536,
+      "ns": 11769326796671,
+      "requested": 65536,
+      "thread_id": 281472883877088
+    },
+    {
+      "kind": "command",
+      "line": "α",
+      "ns": 11769326802255,
+      "thread_id": 281472883877088
+    },
+    {
+      "kind": "command",
+      "line": "FINISH",
+      "ns": 11769326804171,
+      "thread_id": 281472883877088
+    },
+    {
+      "kind": "effect_saved",
+      "ns": 11769326845922,
+      "thread_id": 281472883877088
+    },
+    {
+      "caller": "run",
+      "kind": "clock",
+      "line": 154,
+      "ns": 11769326846547,
+      "thread_id": 281472883877088
+    },
+    {
+      "kind": "closed",
+      "ns": 11769326860755,
+      "read_fd_closed": true,
+      "thread_id": 281472883877088
+    }
+  ],
+  "owner_thread": 281472883877088,
+  "period_ns": 2000000,
+  "pipe_inode": 104290,
+  "pipe_is_fifo": true,
+  "process_receipt": {
+    "argv": [
+      "/usr/local/bin/python",
+      "-B",
+      "/src/candidate.py",
+      "--child",
+      "{\"id\": \"n00\", \"arm\": \"original\", \"adapter\": \"polling\", \"sleep_ns\": 0, \"read_limit\": 65536, \"sample_budget\": 64, \"sample_hz\": 500, \"input_hex\": \"ceb10a46494e4953480a\"}",
+      "--out",
+      "/out/result/n00"
+    ],
+    "exit_code": 0,
+    "utc_end": "2026-10-03T04:25:58.199444+00:00",
+    "utc_start": "2026-10-03T04:25:58.017072+00:00"
+  },
+  "read_fd_closed": true,
+  "runtime": {
+    "cpu.max": "100000 100000",
+    "machine": "aarch64",
+    "memory.max": "268435456",
+    "perf_counter": {
+      "adjustable": false,
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "resolution": 1e-09
+    },
+    "pid": 7,
+    "pids.max": "64",
+    "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.41",
+    "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]"
+  },
+  "samples": [
+    {
+      "index": 0,
+      "payload_ns": 11769326685546
+    }
+  ],
+  "start_ns": 11769326676130,
+  "stats": {
+    "commands": 2,
+    "ended_ns": 11769326846547,
+    "eof": false,
+    "missed_sample_periods": 0,
+    "owner_thread_id": 281472883877088,
+    "samples": 1,
+    "started_ns": 11769326677546,
+    "stopped_by_command": true
+  },
+  "utc_end": "2026-10-03T04:25:58.192534+00:00",
+  "utc_start": "2026-10-03T04:25:58.191347+00:00"
+}

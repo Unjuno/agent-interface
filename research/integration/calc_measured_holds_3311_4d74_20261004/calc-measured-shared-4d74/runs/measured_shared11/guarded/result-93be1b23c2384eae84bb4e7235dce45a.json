@@ -1,0 +1,269 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "display.geometry",
+    "event.feedback",
+    "input.keyboard",
+    "input.pointer",
+    "input.release_all",
+    "input.text",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 11847084394,
+    "ended_ns": 12432793023,
+    "emissions": 41,
+    "program_emissions": 41,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 12432789833
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 6,
+        "requested_ms": 20,
+        "started_ns": 11981340706,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 12001470011
+      },
+      {
+        "operation_index": 10,
+        "requested_ms": 20,
+        "started_ns": 12003000901,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 12023159031
+      },
+      {
+        "operation_index": 14,
+        "requested_ms": 20,
+        "started_ns": 12024716127,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 12044867994
+      },
+      {
+        "operation_index": 16,
+        "requested_ms": 20,
+        "started_ns": 12045874459,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 12065999660
+      },
+      {
+        "operation_index": 18,
+        "requested_ms": 20,
+        "started_ns": 12066690946,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 12086851101
+      },
+      {
+        "operation_index": 20,
+        "requested_ms": 20,
+        "started_ns": 12088381978,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 12108490738
+      },
+      {
+        "operation_index": 22,
+        "requested_ms": 20,
+        "started_ns": 12109680559,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 12129850719
+      },
+      {
+        "operation_index": 26,
+        "requested_ms": 300,
+        "started_ns": 12132134525,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 12432254040
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "a1_primary",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "a1_primary",
+      "point": [
+        80,
+        151
+      ],
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 13290607995,
+      "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 4,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "a1_primary",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "a1_primary",
+      "point": [
+        80,
+        151
+      ],
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 4,
+      "valid_until_ns": 13347315679,
+      "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_move",
+      "observation_sequence": 5,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "a1_primary",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "a1_primary",
+      "point": [
+        80,
+        151
+      ],
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 5,
+      "valid_until_ns": 13392515792,
+      "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_press",
+      "observation_sequence": 6,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "a1_primary",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "a1_primary",
+      "point": [
+        80,
+        151
+      ],
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 6,
+      "valid_until_ns": 13436941716,
+      "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

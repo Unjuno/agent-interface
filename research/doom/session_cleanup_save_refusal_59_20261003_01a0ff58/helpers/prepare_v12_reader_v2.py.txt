@@ -1,0 +1,16 @@
+from pathlib import Path
+
+root = Path(__file__).resolve().parent
+first = root / 'check_v12_cleanup_records.py'
+target = root / 'check_v12_cleanup_records_v2.py'
+if target.exists():
+    raise SystemExit('reader v2 already exists')
+text = first.read_text(encoding='utf-8')
+text = text.replace("OUT = E / 'record-check-01.json'", "OUT = E / 'record-check-02-path-separators.json'")
+needle = "        for short, digest in provenance.items():\n            full = 'research/' + short\n"
+replacement = "        normalized = {short.replace('\\\\', '/'): digest for short, digest in provenance.items()}\n        check(len(normalized) == len(provenance), 'duplicate normalized provenance path')\n        for short, digest in normalized.items():\n            full = 'research/' + short\n"
+if text.count(needle) != 1:
+    raise SystemExit('reader repair match count differs')
+text = text.replace(needle, replacement)
+target.write_text(text, encoding='utf-8', newline='\n')
+print('created separate read-only v2; first reader/source and all records unchanged')

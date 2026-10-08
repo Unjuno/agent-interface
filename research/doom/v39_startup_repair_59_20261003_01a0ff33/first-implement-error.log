@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+AssertionError
+
+Captured exec b355a1, exit1. The first inline source editor chose CRLF because the historical source has trailing CRLF blank lines, then failed to find def main with CRLF. Its baseline snapshots were written, but the controller source remained exact cbc44c171f9d83417380af4fb5c06ef7dbf9bb2862c2c40a997bd66f3a985e5e. The dependent green-normal runner was mistakenly invoked anyway: it actually ran the unchanged baseline and returned6methods/4failures/1error, not GREEN. This original receipt/source/outputs remain preserved without renaming or rewriting. Ordinary repair checks are allowed to continue; no formal trial/input/resource allocation was replayed. The originally planned four total owned-child invocations is no longer the actual count: first-red1 + this unchanged-source suite3 =4 so far; subsequent repaired-source regressions add their own explicit invocations, one live child at a time. The concurrent-resource envelope remains unchanged.
