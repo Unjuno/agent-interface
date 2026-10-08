@@ -46,6 +46,41 @@ test('refused IDs can remain unchanged while attempt records never overwrite',as
  assert.equal(JSON.parse(await readFile(join(evidenceDirectory,'request-2.json'))).id,1);
  await client.close();
 });
+test('mismatched refusal next id is retained as uncertain and blocks replay',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'native-relay-bad-refusal-'));
+ const evidenceDirectory=join(root,'evidence');
+ const malformed=fixture.replace('dispatched:false,next_id:next}',
+   'dispatched:false,next_id:next+1}');
+ assert.notEqual(malformed,fixture,'fixture mutation must alter the refusal response');
+ const client=await createRelayClient({command:process.execPath,args:['-e',malformed],evidenceDirectory});
+ const pending=client.send('refuse');
+ await assert.rejects(pending,/delivery is uncertain.*never replay/);
+ assert.equal(client.wait(),pending);
+ assert.equal(client.state().nextId,1);
+ assert.equal(client.state().attempts,1);
+ assert.throws(()=>client.send('native_status'),/identity\/status mismatch/);
+ assert.deepEqual(JSON.parse(await readFile(join(evidenceDirectory,'reply-1.json'))),
+   {status:'refused',dispatched:false,next_id:2});
+ assert.deepEqual(JSON.parse(await readFile(join(evidenceDirectory,'request-1.json'))),
+   {id:1,tool:'refuse',arguments:{}});
+ assert.equal((await client.close()).code,0);
+});
+test('malformed returned isError is retained but never released as a response',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'native-relay-invalid-result-shape-'));
+ const evidenceDirectory=join(root,'evidence');
+ const malformed=fixture.replace('result:{content:',"result:{isError:'false',content:");
+ assert.notEqual(malformed,fixture,'fixture mutation must alter the response result');
+ const client=await createRelayClient({command:process.execPath,args:['-e',malformed],evidenceDirectory});
+ try {
+  await assert.rejects(client.send('native_submit'),/isError must be boolean/);
+  const retained=JSON.parse(await readFile(join(evidenceDirectory,'reply-1.json'),'utf8'));
+  assert.equal(retained.result.isError,'false','keep original malformed response for diagnosis');
+  assert.match(client.state().blocked,/isError must be boolean/);
+  assert.throws(()=>client.send('native_status'),/isError must be boolean/);
+  assert.deepEqual((await readdir(evidenceDirectory)).filter(name=>name.startsWith('request-')),
+    ['request-1.json']);
+ } finally {await client.close();}
+});
 test('process loss makes delivery uncertain and blocks new sends',async()=>{
  const {client}=await setup();
  await assert.rejects(client.send('die'),/delivery is uncertain/);
