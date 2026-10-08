@@ -21,3 +21,7 @@ The original A07 auditor's FAIL was too broad for the four pre-admission cancell
 The 49 raw `input_release_transition` rows all mark physical verification as non-authoritative. The five cleanup key-up attempts use `x11_query_keymap`; these are server-side receipts, not proof of physical hardware state or game consumption. A07 had 10 planner turns, no hard-health guard exposure, zero positive useful scorer events, and ended alive but unfinished with no MAP01 exit. Thus the fresh live threat-control gate remains HOLD. No VM, GUI, app-server, model, or input was started by this audit.
 
 The A07 raw set remains in its original local, ignored allocation directory and is not included here. To reproduce, pass that unchanged directory as `RAW_ROOT`; the auditor fails closed if the pinned manifest or event-stream hash differs.
+
+## Output safety follow-up
+
+The initial CLI accepted an output path inside `RAW_ROOT`, which could overwrite the evidence it had just audited. The follow-up validates the resolved output path before reading the manifest and rejects paths inside the raw allocation, including symlinked paths. It writes results through a temporary sibling file and atomic replacement so an external hard link cannot mutate a raw file. Three synthetic tests cover an in-root path, a symlink into the raw root, and an external hard link. This follow-up did not access the saved A07 raw directory or rerun the audit; the retained `RESULT.json` remains the original result.

@@ -11,8 +11,10 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
 import sys
+import tempfile
 
 EXPECTED_MANIFEST_SHA256 = "a7ed0abe21ad1571131511abfb1b248a61ed5d13e7eaafd196caf2a741ef5844"
 EXPECTED_EVENTS_SHA256 = "7b462e6c13277901adeef2ea69234a5e9f3ee0fead69c6dc6846397538404c6e"
@@ -34,6 +36,37 @@ def load_json(path: Path):
 
 def load_jsonl(path: Path):
     return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+
+
+def validate_output_path(root: Path, output: Path) -> Path:
+    raw_root = root.resolve()
+    output = output.expanduser()
+    if not output.is_absolute():
+        output = Path.cwd() / output
+    resolved_output = output.resolve(strict=False)
+    try:
+        resolved_output.relative_to(raw_root)
+    except ValueError:
+        return output
+    raise ValueError(f"output must be outside the raw allocation: {output}")
+
+
+def write_result_atomically(output: Path, result: dict) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path = None
+    try:
+        with tempfile.NamedTemporaryFile(
+                mode="w", encoding="utf-8", dir=output.parent,
+                prefix=f".{output.name}.", suffix=".tmp", delete=False) as stream:
+            temporary_path = Path(stream.name)
+            json.dump(result, stream, indent=2)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary_path, output)
+    finally:
+        if temporary_path is not None and temporary_path.exists():
+            temporary_path.unlink()
 
 
 def verify_manifest(root: Path) -> dict:
@@ -316,6 +349,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     root = args.raw_root.resolve()
+    output = validate_output_path(root, args.output)
     manifest_check = verify_manifest(root)
     events_path = root / "episode/runtime/events.jsonl"
     events_hash = digest(events_path)
@@ -347,8 +381,7 @@ def main() -> int:
     if not all(controls.values()):
         result["status"] = "FAIL_AUDIT_MUTATION_CONTROL"
         result["failures"].append("one or more audit mutation controls were not detected")
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(result, indent=2) + "\n")
+    write_result_atomically(output, result)
     print(json.dumps({k: result[k] for k in (
         "status", "research_gate", "cancellations", "covers_with_input",
         "covers_without_input", "held_key_events", "explicit_keyups_verified",
