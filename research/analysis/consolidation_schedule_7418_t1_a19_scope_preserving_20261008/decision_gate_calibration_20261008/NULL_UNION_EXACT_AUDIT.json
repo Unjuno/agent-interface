@@ -1,0 +1,28 @@
+{
+  "cases": [
+    {
+      "difference_in_monte_carlo_standard_errors": 0.13408195421616545,
+      "exact_three_seed_six_pair_rate": 0.041555124343718,
+      "monte_carlo_six_pair_rate": 0.041615,
+      "monte_carlo_standard_error": 0.00044656014026668345,
+      "null_structure": "iid_answers",
+      "one_seed_directed_mask_count": 183,
+      "one_seed_probability_sum": 0.9999999999999848,
+      "within_five_monte_carlo_standard_errors": true
+    },
+    {
+      "difference_in_monte_carlo_standard_errors": 0.7314083371436005,
+      "exact_three_seed_six_pair_rate": 0.43598382045902195,
+      "monte_carlo_six_pair_rate": 0.436795,
+      "monte_carlo_standard_error": 0.0011090652099290646,
+      "null_structure": "perfect_prefix_clusters",
+      "one_seed_directed_mask_count": 75,
+      "one_seed_probability_sum": 1.0,
+      "within_five_monte_carlo_standard_errors": true
+    }
+  ],
+  "method": "enumerate four independent Binomial arm counts into directed pair masks, then intersect masks across three seeds",
+  "scope": "exact equal-accuracy null crosscheck only; does not verify non-null power scenarios or actual model dependence",
+  "simulation_result_sha256": "32e78a6b53388ca61ab7d878e5d1e7242e282eb7b269eb243ed23f29613c3b10",
+  "status": "PASS_EXACT_NULL_UNION_CROSSCHECK"
+}
