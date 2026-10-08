@@ -1,0 +1,41 @@
+{
+  "allocation": "UNJUNO-8533-TACTIC-INOCULATION-T0-A01-20261009",
+  "base_branch": "main",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8533-tactic-inoculation-method-t0-20261009",
+  "construction": {
+    "candidate_auditor_replay": "METHOD_PASS_SCOPED; 12 training cases; 16 test cases; 94 checks; mutations 7/7 rejected",
+    "formal_auditor_invocations_before_freeze": 0,
+    "formal_candidate_invocations_before_freeze": 0,
+    "formal_outputs_absent": true,
+    "tests": "4/4 PASS"
+  },
+  "decision_gate": "PLAN.md",
+  "environment": {
+    "dependencies": "standard library only",
+    "machine": "arm64",
+    "model_GUI": "none",
+    "network": "not used",
+    "participants": "none",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+    "runtime": "host CPython; deterministic CPU method fixture"
+  },
+  "formal_commands": {
+    "auditor": "python3.12 research/analysis/tactic_inoculation_8533_t0_20261009/auditor.py --spec research/analysis/tactic_inoculation_8533_t0_20261009/spec.json --raw research/analysis/tactic_inoculation_8533_t0_20261009/results/candidate.raw.json --output research/analysis/tactic_inoculation_8533_t0_20261009/results/audit.raw.json",
+    "candidate": "python3.12 research/analysis/tactic_inoculation_8533_t0_20261009/candidate.py --spec research/analysis/tactic_inoculation_8533_t0_20261009/spec.json --output research/analysis/tactic_inoculation_8533_t0_20261009/results/candidate.raw.json",
+    "invocation_limit": "one candidate, one auditor, zero retries"
+  },
+  "frozen_at_utc": "2026-10-08T21:26:19+00:00",
+  "package_path": "research/analysis/tactic_inoculation_8533_t0_20261009/",
+  "preregistration_gate": "Push frozen commit and preregister exact commit and FREEZE hash on Issue #8533. Verify the remote FREEZE bytes before execution.",
+  "schema": "issue-8533-inoculation-t0-freeze-v1",
+  "source_sha256": {
+    "PLAN.md": "d46c7d61a3779d81195b57ecc3ddadabeba06311197e79c422bb1597cab3d114",
+    "README.md": "1411767c8242a4919e03d3b1f775726af3476789828a4697dcbf125b8f72a2af",
+    "auditor.py": "2cea7cdf01941383eff88a59045aff8fc8c4ac063a5c75cbb11a646e89821873",
+    "candidate.py": "6f6fc827a0b3daa954710b8da4be014fd074c0541261972eeb3a6e90808fdb40",
+    "spec.json": "f95fcb65c19695952a0b7bafe869d30c9fb62dd877b880a2d18cda6f6262d647",
+    "tests/test_construction.py": "b991db9dab28ce3e0d755bf80709cb3450d081c2f14c99e2cfd0070a1d349152"
+  }
+}

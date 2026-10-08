@@ -1107,6 +1107,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`switched_dwell_stability_8471_t0_a01_20261008/`](switched_dwell_stability_8471_t0_a01_20261008/)
 - [`symmetry_reduction_6251_t0_host_20261002/`](symmetry_reduction_6251_t0_host_20261002/)
 - [`system_carbon_rebound_8421_t0_20261008/`](system_carbon_rebound_8421_t0_20261008/)
+- [`tactic_inoculation_8533_t0_20261009/`](tactic_inoculation_8533_t0_20261009/)
 - [`tail_regret_censoring_8598_t0_a01_20261008/`](tail_regret_censoring_8598_t0_a01_20261008/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
