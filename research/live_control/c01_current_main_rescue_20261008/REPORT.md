@@ -1,7 +1,7 @@
 # Issue #6501 C01 current-main evidence rescue
 
 Date: 2026-10-08 JST
-Base: `fabdb1de8273e8a87dfb2bea53856079da997998`
+Base: `1aaa633c4f1aeec25e4b4617d92dd93af3b20603`
 
 ## H/T/D/C/U
 

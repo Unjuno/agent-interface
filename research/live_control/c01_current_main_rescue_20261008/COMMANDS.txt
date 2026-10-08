@@ -1,10 +1,10 @@
-Base: fabdb1de8273e8a87dfb2bea53856079da997998
+Base: 1aaa633c4f1aeec25e4b4617d92dd93af3b20603
 Source archive: closed PR #8232 rescue head 29bee582ebb4b367e4dc28e14102a2bb5d047d97
 
 Local checks:
 - `sha256sum -c SHA256SUMS` from the packet directory: 32/32 PASS.
 - `python3 research/check_workspace_index.py --git-tree`: PASS, 161 top-level directories reachable.
-- `python3 research/analysis/check_index.py --strict`: PASS, 780 retained result/failure directories indexed.
+- `python3 research/analysis/check_index.py --strict`: PASS, 783 retained result/failure directories indexed.
 - `git diff --check`: PASS for the staged rescue diff.
 - Staged C01 packet subtree compared with source rescue head `29bee582ebb4b367e4dc28e14102a2bb5d047d97`: byte-identical Git blobs.
 
