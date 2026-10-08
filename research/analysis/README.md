@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8614 T0 A01 adaptive holdout feedback](adaptive_holdout_feedback_8614_t0_a01_20261009/REPORT.md) — `PASS_ADAPTIVE_FEEDBACK_METHOD_SCOPED`: 13,312 synthetic rows independently reconstructed; 16-query reusable feedback lowered null optimism and false superiority while retaining 95.3% planted discovery power. No repository-bias or formal DP claim.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -381,6 +383,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`action_only_correction_adaptation_5749_a01_20261007/`](action_only_correction_adaptation_5749_a01_20261007/)
 - [`action_only_label_blind_5749_a02_20261007/`](action_only_label_blind_5749_a02_20261007/)
 - [`active_automata_learning_5385_t0_v1/`](active_automata_learning_5385_t0_v1/)
+- [`adaptive_holdout_feedback_8614_t0_a01_20261009/`](adaptive_holdout_feedback_8614_t0_a01_20261009/)
 - [`adaptive_privacy_filter_5420_t1_v1/`](adaptive_privacy_filter_5420_t1_v1/)
 - [`adaptive_screen_5722_t0_v1/`](adaptive_screen_5722_t0_v1/)
 - [`adaptive_screen_5739_t0_v1/`](adaptive_screen_5739_t0_v1/)
