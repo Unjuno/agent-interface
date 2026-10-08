@@ -1,5 +1,5 @@
-Posthoc command, run once against the retained A14 raw file:
-  python -B analyze.py
+From this addendum directory, using the raw event stream retained in PR #8403:
+  python -B analyze.py <A14-package>/raw/runtime/events.jsonl
   python -B audit.py
 
-The source path points to the local A14 evidence package. The source file SHA-256 and byte count are pinned in FREEZE.json. The reduced trace retains only ordered typed-observation id/sequence/time, whole-frame hash, health, and ammo values.
+The analyst verifies byte count and SHA-256 before extracting the reduced trace. The exact original local source path is intentionally not embedded in the analysis script. The retained candidate was executed with the A14 event stream from the local package; the event-stream hash and size are pinned in FREEZE.json.
