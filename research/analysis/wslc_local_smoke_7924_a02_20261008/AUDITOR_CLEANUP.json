@@ -1,0 +1,19 @@
+{
+  "container_name": "unjuno-7924-a02-audit-6da5dc94",
+  "container_id": "8ded2ea2d93dd3aad7d019d205a43fd6f8a3f8890afbce1e9ddceb9953125bee",
+  "run_requested_auto_remove": true,
+  "targeted_inspect_checks": [
+    {
+      "attempt": "first transcription had a mistyped ID",
+      "exit_code": 1,
+      "used_for_verification": false
+    },
+    {
+      "attempt": "exact CID from AUDITOR_CID.txt",
+      "exit_code": 1,
+      "output": "コンテナー '8ded2ea2d93dd3aad7d019d205a43fd6f8a3f8890afbce1e9ddceb9953125bee' が見つかりません。\r\n[]\r\n",
+      "absence_verified": true
+    }
+  ],
+  "global_container_list_calls": 0
+}

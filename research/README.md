@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #59 client custody, PR #7275: [additive packet-integrity recheck](doom/client_custody_private_e0cc_20261004/RECHECK_20261008.md) — Exact 47-member packet integrity verified; the saved peer/candidate code is not rerun. Source-owner and application gates remain HOLD.
+
 - Issue #6358 C01: [private service-capacity transfer](integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) — 24 synthetic requests across six arms; explicit static routing matches ample-capacity effects under the authored held-slot fixture. No production congestion, latency, task-effect, or H_PASS claim.
 
 - Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
@@ -308,3 +310,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.
 
 - [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.- [Issue #6156 escrowed optional-resource budget T0](analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md) — Docker PASS_METHOD_SCOPED over 9,988 reachable states / 27,748 transitions; balanced coordination benefit and skew/crash stranded-right cost retained; no runtime claim.
+
+- [Issue #8386 A05 byte-bound carbon-window comparator replay](carbon_window_7794_a05_bytebound_recheck_20261008/REPORT.md) — `PASS_BYTEBOUND_REPLAY_SCOPED` (auditor JSON: `PASS_DIAGNOSTIC_SCOPED`): exact-byte successor replay reconstructed 10/10 finite cases with zero A02 differences and the declared discriminator; unresolved A04 freeze metadata discrepancies remain. Native Windows stdlib only; no Docker/WSLc or operational scheduler/emissions claim.

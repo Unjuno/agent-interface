@@ -11,7 +11,8 @@ def _identity(row):
 
 
 def _valid_pair(admission, release):
-    if admission.get("event") != "input_admission" or admission.get("operation") != "down":
+    if (admission.get("event") != "input_admission"
+            or ("operation" in admission and admission.get("operation") != "down")):
         return False
     if release.get("event") != "input_release_transition" or release.get("operation") != "up":
         return False
@@ -19,6 +20,12 @@ def _valid_pair(admission, release):
     if (not all(isinstance(value, str) and value for value in
                 (identity[0], identity[2], identity[3], identity[4]))
             or not _is_int(identity[1]) or identity != _identity(release)):
+        return False
+    # Successful release-batch-v3 rows carry the post-batch sample timestamps
+    # and key state, but omit this availability flag. When present (as on
+    # incomplete rows), it must still be explicitly true.
+    if ("owner_sample_after_batch_available" in release
+            and release.get("owner_sample_after_batch_available") is not True):
         return False
     if (release.get("release_batch_identifier") != admission.get("id")
             or release.get("release_batch_step") != admission.get("step")
@@ -32,7 +39,6 @@ def _valid_pair(admission, release):
             or release.get("owner_thread_keyup_history_complete") is not True
             or release.get("owner_thread_keyup_verified") is not True
             or release.get("owner_transition_verified") is not True
-            or release.get("owner_sample_after_batch_available") is not True
             or release.get("owned_keycodes_after_batch") != []
             or release.get("physical_verification_authoritative") is not False):
         return False

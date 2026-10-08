@@ -1,0 +1,49 @@
+{
+  "allocation": "CARBON-WINDOW-7794-A05-BYTEBOUND-20261008-01",
+  "issue": 8386,
+  "base_main": "f72cd82d62c9d9f3860d4fa40980c56618bf5aaf",
+  "predecessor_pr": 8183,
+  "source_branch": "research/carbon-window-7794-comparator-a04-20261005",
+  "sources": {
+    "input": {
+      "path": "a02_frozen_cases.json",
+      "git_blob": "fc8f717c700e248198a5c8387ba9f85f5ea7e05e",
+      "a05_git_blob": "507549e09a38d4b7da601fc7c7f095a0a900bf65",
+      "a04_git_sha1": "fc8f717c700e248198a5c8387ba9f85f5ea7e05e",
+      "sha256": "782cc4f8d85364a6bed2de55ad2b399ba9ecbbf1b43cff9a494ddacd6ab019b5",
+      "reconstruction": "checked-in exact Git blob + one LF byte"
+    },
+    "candidate": {
+      "path": "candidate.py",
+      "git_blob": "1724b00b63bbf48dbbe253e9a1890728fa66ed65",
+      "a05_git_blob": "6ac1e1aa2dd7b5a410d4747737def48d41689c54",
+      "a04_git_sha1": "1724b00b63bbf48dbbe253e9a1890728fa66ed65",
+      "sha256": "edf7c02f77859c67c6e5911a082e2eef456dec8d8c1b7bdbd5f835585a455022",
+      "reconstruction": "checked-in exact Git blob + one LF byte"
+    },
+    "auditor": {
+      "path": "auditor.py",
+      "git_blob": "85cffb6475655260db209d3998cdbcc1b88f6f7a",
+      "a05_git_blob": "f4c15e5d69a326bc61ef860bbdec36ebcc8d7593",
+      "a04_git_sha1": "85cffb6475655260db209d3998cdbcc1b88f6f7a",
+      "sha256": "ee79d184e4a89e2aee62ee43cb908a92332e27417ef48fa95d3ec83d5a710452",
+      "reconstruction": "checked-in exact Git blob + one LF byte"
+    },
+    "construction_test": {
+      "path": "test_construction.py",
+      "git_blob": "cf7743670b303732ada4d721a5fa84e217acf1c3",
+      "a05_git_blob": "54c012e1a239ae06e10a4714419828cd846877b7",
+      "a04_git_sha1": "cf7743670b303732ada4d721a5fa84e217acf1c3",
+      "sha256": "17db8c837b9800731ff5eb6de932af92c32533709097801a3634ea4557219b05",
+      "reconstruction": "checked-in exact Git blob + one LF byte"
+    }
+  },
+  "python": "3.12.10",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "machine": "AMD64",
+  "candidate_invocations_before_freeze": 0,
+  "auditor_invocations_before_freeze": 0,
+  "retries": 0,
+  "runtime": "native task-host Python stdlib CPU-only fallback; not Docker or WSLc",
+  "status": "FROZEN_NOT_RUN"
+}
