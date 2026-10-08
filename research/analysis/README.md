@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8466 source-time expiry across negative-evidence handoff T0 A01](negative_handoff_expiry_5865_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 10 finite logical-time cases reconstructed; sliding TTL accepted the expired C02 receipt, while absolute source-time expiry rejected it; 6/6 mutations rejected. No live cache, clock, task, GUI, or safety claim.
+
 - [Issue #7650 T0 A01/A02 machine-gate audit chain](crosslingual_visual_injection_7650_t0_a01_20261008/REPORT.md) — Preserve A01's recorded `PASS_MACHINE_GATE_SCOPED` as history; review found it insufficient for row-to-UID binding, which read-only A02 passes with 7/7 metadata controls on the exact raw. Full Issue T0 remains HOLD: no bilingual semantic adjudication or pixel review.
 
 - [Issue #6600 practice-order discriminator T0 A01](faded_demonstration_practice_order_6600_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: fixed-dose blocked/mixed six-task ledgers independently reconstructed; 6/6 mutations rejected. Host-only stdlib method evidence; no participants or learning claim.
@@ -751,6 +753,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`negative_evidence_delivery_5865_t0a_20261005/`](negative_evidence_delivery_5865_t0a_20261005/)
 - [`negative_evidence_delivery_5865_t0a_a02_20261005/`](negative_evidence_delivery_5865_t0a_a02_20261005/)
 - [`negative_evidence_delivery_5865_t0a_a03_20261005/`](negative_evidence_delivery_5865_t0a_a03_20261005/)
+- [`negative_handoff_expiry_5865_t0_a01_20261008/`](negative_handoff_expiry_5865_t0_a01_20261008/)
 - [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
 - [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`network_adoption_shared_verifier_7741_t0c_20261005/`](network_adoption_shared_verifier_7741_t0c_20261005/)
