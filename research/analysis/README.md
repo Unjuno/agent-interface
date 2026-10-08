@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #5826 A02 WSLc container-transfer replication](ascertainment_5826_wslc_transfer_a02_20261008/REPORT.md) — `PASS_WSLc_TRANSFER_SCOPED`: exact A01 source/input hashes reproduced in WSLc; candidate 18 opportunities/72 rows; audit 9/12, F02/F04/F08 all-channel misses; two-list estimates 7.5/7.0; 5/5 mutations rejected. Legacy HOST/HOLD text labels retained and explained; synthetic-only, no enforcement or live safety claim.
+
 - [Issue #8470 compositional gain margin T0 A01](coupled_visual_control_6195_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 exact-rational rows independently reconstructed; 3/3 gain mutations rejected; synthetic CPU method evidence only, no GUI/runtime claim.
 
 - [Issue #8466 source-time expiry across negative-evidence handoff T0 A01](negative_handoff_expiry_5865_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 10 finite logical-time cases reconstructed; sliding TTL accepted the expired C02 receipt, while absolute source-time expiry rejected it; 6/6 mutations rejected. No live cache, clock, task, GUI, or safety claim.
@@ -369,6 +371,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`artifact_changeability_6610_6624_t0_20261002/`](artifact_changeability_6610_6624_t0_20261002/)
 - [`artifact_viability_cutsets_6468_t0_20261002/`](artifact_viability_cutsets_6468_t0_20261002/)
 - [`artifact_viability_cutsets_6468_t0b_20261002/`](artifact_viability_cutsets_6468_t0b_20261002/)
+- [`ascertainment_5826_wslc_transfer_a02_20261008/`](ascertainment_5826_wslc_transfer_a02_20261008/)
 - [`assay_sensitivity_5850_t0_v1/`](assay_sensitivity_5850_t0_v1/)
 - [`assistive_cue_noninterference_5800_t0_v1/`](assistive_cue_noninterference_5800_t0_v1/)
 - [`attention_budgeting_successor_1940_v1/`](attention_budgeting_successor_1940_v1/)
