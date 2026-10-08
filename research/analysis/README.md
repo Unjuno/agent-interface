@@ -1,5 +1,11 @@
 # Analytical research
 
+- [Issue #8502 T0 A03 corrected paired-cutpoint successor](measurement_invariance_8502_t0_a03_20261008/RESULT.md) — `PASS_METHOD_SCOPED`: fresh five-case seed set independently reconstructed with zero errors; 6/6 mutations rejected. This is synthetic method evidence only; A01 `FAIL_METHOD` and A02 `FAIL_AUDIT_ONLY` remain unchanged, with no human-workload comparability claim.
+
+- [Issue #8502 T0 A02 audit-only result](measurement_invariance_8502_t0_a02_20261008/RESULT.md) — `FAIL_AUDIT_ONLY`: saved-data reconstruction emitted the five fixture labels and rejected six controls, but A02's own README source digest was frozen incorrectly; do not promote its diagnostic map.
+
+- [Issue #8502 T0 A01 result](measurement_invariance_8502_t0_a01_20261008/RESULT.md) — `FAIL_METHOD`: candidate output emitted the five planned labels, but the frozen independent auditor miscomputed the between-group threshold difference for F02. No `METHOD_PASS_SCOPED` or human-workload conclusion.
+
 - [Issue #5826 A02 WSLc container-transfer replication](ascertainment_5826_wslc_transfer_a02_20261008/REPORT.md) — `PASS_WSLc_TRANSFER_SCOPED`: exact A01 source/input hashes reproduced in WSLc; candidate 18 opportunities/72 rows; audit 9/12, F02/F04/F08 all-channel misses; two-list estimates 7.5/7.0; 5/5 mutations rejected. Legacy HOST/HOLD text labels retained and explained; synthetic-only, no enforcement or live safety claim.
 
 - [Issue #8470 compositional gain margin T0 A01](coupled_visual_control_6195_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 exact-rational rows independently reconstructed; 3/3 gain mutations rejected; synthetic CPU method evidence only, no GUI/runtime claim.
@@ -481,6 +487,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`confusion_adaptive_practice_8084_t0_a09_20261005/`](confusion_adaptive_practice_8084_t0_a09_20261005/)
 - [`confusion_adaptive_practice_8084_t0_a10_20261005/`](confusion_adaptive_practice_8084_t0_a10_20261005/)
 - [`consent_scoped_preparation_5793_t0_v1/`](consent_scoped_preparation_5793_t0_v1/)
+- [`consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/`](consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/)
+- [`consolidation_schedule_7418_t1_a12_private_preflight_20261008/`](consolidation_schedule_7418_t1_a12_private_preflight_20261008/)
+- [`consolidation_schedule_7418_t1_a13_schema_constrained_20261008/`](consolidation_schedule_7418_t1_a13_schema_constrained_20261008/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`constrained_sequence_coverage_6206_t0_v1/`](constrained_sequence_coverage_6206_t0_v1/)
@@ -488,6 +497,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/)
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/)
 - [`context_return_renewal_8432_t0_a01_20261008/`](context_return_renewal_8432_t0_a01_20261008/)
+- [`context_return_renewal_8432_t0_a02_20261008/`](context_return_renewal_8432_t0_a02_20261008/)
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
 - [`controlled_feedback_8072_a02_20261005/`](controlled_feedback_8072_a02_20261005/)
