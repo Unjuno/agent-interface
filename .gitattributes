@@ -198,3 +198,9 @@ research/doom/v39_typed_epoch_alias_59_a01_20261005/** -text -whitespace -filter
 
 # Preserve the exact Issue #7712 T0/T1 raw, correction and audit bytes.
 research/analysis/gui_modality_pid_7712_t0_20261005/** -text -whitespace -filter -ident
+
+# Preserve byte-exact one-shot evidence packages whose manifests include CRLF bytes.
+# The A08 candidate also retains its post-run terminal blank lines; do not rewrite it.
+research/doom/v39_ammo_completed_future_drain_a07_20261008/** whitespace=cr-at-eol
+research/doom/v39_ammo_completed_future_drain_a08_20261008/** whitespace=cr-at-eol
+research/doom/v39_ammo_completed_future_drain_a08_20261008/candidate.py whitespace=cr-at-eol,-blank-at-eof
