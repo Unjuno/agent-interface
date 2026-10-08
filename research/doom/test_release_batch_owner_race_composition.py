@@ -36,6 +36,8 @@ class Display:
         self.down = set()
         self.keyrelease_attempts = 0
         self.trace = []
+        self.keypress_delivered = threading.Event()
+        self.release_cleanup_finished = threading.Event()
         self.root = types.SimpleNamespace(
             query_pointer=lambda: types.SimpleNamespace(mask=0, root_x=0, root_y=0)
         )
@@ -57,6 +59,8 @@ class Display:
 
     def sync(self):
         self.trace.append(("sync", tuple(sorted(self.down))))
+        if not self.down and self.keypress_delivered.is_set():
+            self.release_cleanup_finished.set()
 
     def close(self):
         pass
@@ -111,6 +115,7 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
         def fake_input(_display, event, keycode):
             if event == xlib.X.KeyPress:
                 display.down.add(keycode)
+                display.keypress_delivered.set()
             elif event == xlib.X.KeyRelease:
                 display.keyrelease_attempts += 1
                 display.down.discard(keycode)
@@ -144,8 +149,16 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             )
             lease = Lease()
             backend.lease = lease
-            real_call = backend.owner.call
             raced = []
+            # Block only the owner's response to the admitted key-down. This
+            # lets the real backend append its UP and enqueue up_batch before
+            # cancellation cleanup is allowed to win V12's request loop.
+            entered_admission = threading.Event()
+            permit_admission_return = threading.Event()
+            real_call = backend.owner.call
+            original_inner_call = backend.owner._inner.call
+
+            queued_before_cancel = threading.Event()
 
             def cancel_after_backend_precheck(operation, call_lease=None, key=None):
                 if operation == "up_batch" and not raced:
@@ -155,10 +168,53 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
                         raise AssertionError("owner cleanup did not complete")
                 return real_call(operation, call_lease, key)
 
+            # Hold the actual V12 batch RPC after V3 has admitted it. The
+            # cancellation watcher can then release the key before V12
+            # dequeues the already-enqueued up_batch request.
+            def hold_queued_batch(operation, call_lease=None, key=None):
+                if operation == "up_batch":
+                    queued_before_cancel.set()
+                    if not permit_queued_batch.wait(1):
+                        raise AssertionError("test did not release queued up_batch")
+                return original_inner_call(operation, call_lease, key)
+
+            permit_queued_batch = threading.Event()
+            backend.owner._inner.call = hold_queued_batch
+
+            def hold_admission_reply(operation, call_lease=None, key=None):
+                result = real_call(operation, call_lease, key)
+                if operation == "down":
+                    entered_admission.set()
+                    if not permit_admission_return.wait(1):
+                        raise AssertionError("test did not release admitted key-down")
+                return result
+
+            backend.owner.call = hold_admission_reply
+            execution_error = []
+
+            def run_execute():
+                try:
+                    backend.execute({}, lease.cancel, "program-race", 0)
+                except BaseException as exc:
+                    execution_error.append(exc)
+
+            worker = threading.Thread(target=run_execute)
+            worker.start()
+            self.assertTrue(entered_admission.wait(1), "key-down did not reach owner")
             backend.owner.call = cancel_after_backend_precheck
-            backend.execute({}, lease.cancel, "program-race", 0)
+            permit_admission_return.set()
+            self.assertTrue(queued_before_cancel.wait(1), "up_batch was not enqueued")
+            self.assertTrue(lease.interrupted.wait(1), "cancellation cleanup did not finish")
+            permit_queued_batch.set()
+            worker.join(2)
+            self.assertFalse(worker.is_alive(), "backend execution did not finish")
+
+            self.assertFalse(execution_error, execution_error)
 
             self.assertEqual(raced, ["up_batch"])
+            self.assertTrue(queued_before_cancel.is_set())
+            self.assertTrue(display.keypress_delivered.is_set())
+            self.assertTrue(display.release_cleanup_finished.is_set())
             self.assertTrue(lease.interruptions[-1]["verified"])
             self.assertEqual(lease.interruptions[-1]["keys_down"], [])
             self.assertEqual(display.down, set())
