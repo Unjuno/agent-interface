@@ -42,18 +42,19 @@ verified.
 It accepts recovery only with an integer fresh sequence after the guard and
 `model_action_discarded is False`. It validates unique positive decision
 iterations within the declared decision cap, preserves right-censoring when
-the follow-up horizon is not fully observed, and reports malformed discarded
-flags as invalid auditor input when the horizon is complete. It intentionally
-does not claim plan admission; correlate each proposed recovery with the
-independent admission and cancellation-custody receipts before assigning the
-preregistered scoped PASS.
+the follow-up horizon is not fully observed and observed candidates are
+well-formed, and reports any candidate follow-up with a missing or non-boolean
+discard flag as invalid auditor input. It intentionally does not claim plan
+admission; correlate each proposed recovery with the independent admission and
+cancellation-custody receipts before assigning the preregistered scoped PASS.
 
-Six tests passed under CPython 3.11.9 in normal and optimized (`python -O`)
+Seven tests passed under CPython 3.11.9 in normal and optimized (`python -O`)
 mode. They cover the production hard-guard shape, missing and null flags,
-explicit discarded plans, explicit non-discarded fresh plans, right
-censoring, duplicate iterations, and cap violations. The test constructs a
-counterexample where the frozen predicate labels malformed evidence as
-recovery while the strict classifier does not.
+missing flags across a complete follow-up horizon, explicit discarded plans,
+explicit non-discarded fresh plans, right censoring, duplicate iterations, and
+cap violations. The test constructs a counterexample where the frozen
+predicate labels malformed evidence as recovery while the strict classifier
+does not.
 
 ## Applicability to the A16 outcome
 
@@ -72,6 +73,16 @@ death. A discriminating next live test must expose a hard guard while health
 is still in the supported positive domain and retain the ordering of guard,
 cancellation/release, and any fresh follow-up plan. It needs a distinct,
 pre-registered allocation and confirmed lane availability.
+
+The separately frozen A17 package at commit
+`defe7f0d1ec8ea3716cc64b92f79720aa7a01c92` uses the same permissive recovery
+predicate and a positive test fixture with the discard field omitted. A static
+check of its exact base controller found that all seven decision-row creation
+paths include a boolean `model_action_discarded` field; this does not show that
+an eventual well-formed A17 report would be misclassified. It does show that
+the A17 auditor lacks a fail-closed check for malformed/missing follow-up
+fields. The strict classifier can serve as an additive post-run check on a
+retained A17 report without changing its freeze or allocation.
 
 ## Disposition
 

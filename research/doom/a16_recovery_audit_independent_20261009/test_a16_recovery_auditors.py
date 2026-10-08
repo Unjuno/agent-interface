@@ -42,6 +42,14 @@ class FrozenAuditorCounterexamples(unittest.TestCase):
         self.assertEqual(classification(strict_analyze(decisions, 10),
                                         "recovered_within_two_decisions"), 0)
 
+    def test_missing_discarded_field_invalidates_complete_followup_window(self):
+        decisions = [exposed_guard(),
+                     {"iteration": 3, "fresh_sequence_at_plan": 51},
+                     {"iteration": 4, "fresh_sequence_at_plan": 52}]
+        result = strict_analyze(decisions, 10)
+        self.assertEqual(classification(result, "recovered_within_two_decisions"), 0)
+        self.assertEqual(classification(result, "auditor_input_invalid"), 1)
+
     def test_true_discarded_plan_is_not_recovery(self):
         decisions = [exposed_guard(), {"iteration": 3, "fresh_sequence_at_plan": 51,
                                "model_action_discarded": True},
