@@ -1,0 +1,29 @@
+{
+  "allocation": "DISCRIMINATOR-CONTEXT-7165-A02-20261009-01",
+  "base_sha": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/7165-discriminator-a02-20261009",
+  "construction_command": "python3 -m unittest -v test_construction.py",
+  "decision_gate": "PASS_METHOD_SCOPED only if raw rows equal the independent full-revalidation oracle, all invalid/incomplete memory paths fall back, conflicts/missing cues return UNKNOWN, all rows are unique/covered, and every audit control passes; otherwise preserve FAIL.",
+  "environment": {
+    "native_gui_or_model": false,
+    "network_used": false,
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "expected_case_count": 2304,
+  "formal_commands": [
+    "python3 candidate.py",
+    "python3 auditor.py"
+  ],
+  "formal_retries": 0,
+  "frozen_source_commit": "7d773a5bd68ec198d5c65c764afb21ebc8553161",
+  "issue": 7165,
+  "scope": "finite contract fixture; no native GUI, runtime, model, task-effect, or efficiency claim",
+  "source_sha256": {
+    "PLAN.md": "5e8b1ef01eba67073433505f02b1b4223e81b53cd428deee87b53cc5dc43790a",
+    "README.md": "04053e488785f7280a0ac4ec33bf32e8635d62293329842432819b1d28b66238",
+    "auditor.py": "f1da40606b19ea27ae931cf2c12f05c586e4e02f49700afd6de68a9a6879d6b1",
+    "candidate.py": "25bf578a9b544a878e9d606252767cbd181aafc23f5594b7c895b0495e872b9f",
+    "test_construction.py": "2356ba540c935d10b07f83a79f1b5a90a23ff38064f149d96fefe5b010ef85b1"
+  }
+}
