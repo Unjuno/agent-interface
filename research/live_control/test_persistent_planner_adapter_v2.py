@@ -166,6 +166,20 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         self.assertIn("synthetic executor write failure", result["before_transport_error"])
         self.assertEqual(client.interrupts, [("thread-1", "turn-1")])
 
+    def test_base_exception_from_before_transport_still_interrupts_planner(self):
+        client = FakeClient([{"status": "interrupted", "items": []}])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+
+        def interrupt_input():
+            raise KeyboardInterrupt("synthetic cancellation interruption")
+
+        result = planner.interrupt(handle, before_transport=interrupt_input)
+
+        self.assertEqual(result["outcome"], "requested")
+        self.assertIn("synthetic cancellation interruption", result["before_transport_error"])
+        self.assertEqual(client.interrupts, [("thread-1", "turn-1")])
+
     def test_completion_wins_race_before_interrupt(self):
         client = FakeClient([completed()])
         planner = adapter(client)

@@ -129,7 +129,7 @@ class PersistentPlannerAdapter:
         if before_transport is not None:
             try:
                 before_transport()
-            except Exception as error:
+            except BaseException as error:
                 before_transport_error = error
 
         if terminal_status is not None:
