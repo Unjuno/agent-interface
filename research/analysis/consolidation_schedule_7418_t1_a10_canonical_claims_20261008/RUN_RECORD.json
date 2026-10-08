@@ -1,10 +1,10 @@
 {
   "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A10-CANONICAL-CLAIMS-20261008",
-  "auditor_invocations": 0,
-  "candidate_invocations": 0,
+  "auditor_invocations": 1,
+  "candidate_invocations": 1,
   "consolidation_output_cap": 2048,
   "expected_calls": 390,
-  "formal_model_calls_observed": 0,
+  "formal_model_calls_observed": 390,
   "formal_retries": 0,
   "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
   "predecessor_stops": [
@@ -21,5 +21,14 @@
     "T1 A05 answer endpoint scoped; transition audit failed"
   ],
   "raw_path": "results/FORMAL_T1_A10/RAW.jsonl",
-  "terminal_disposition": "FROZEN_NOT_STARTED"
+  "terminal_disposition": "FAIL_METHOD_CANONICAL_TRANSITION_VIOLATIONS",
+  "candidate_exit_code": 0,
+  "auditor_exit_code": 0,
+  "auditor_status": "FAIL_METHOD",
+  "auditor_decision": "FAIL_METHOD",
+  "auditor_errors": 54,
+  "result_path": "RESULTS.md",
+  "stop_path": "STOP.md",
+  "raw_sha256": "9736080c6ad3b86e3d1377d2b5ec38b9759a03c86327aad0a1497f61f42ae2c3",
+  "audit_sha256": "20ed2a53238a60acc603bdb591aa2830eb64cb607e7384757d86e50d0477f327"
 }
