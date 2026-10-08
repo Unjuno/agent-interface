@@ -1,0 +1,32 @@
+{
+  "format": "context-return-renewal-t0-freeze-v1",
+  "allocation_id": "8432-context-return-method-t0-a01",
+  "issue": 8432,
+  "parent_issue": 8200,
+  "branch": "research/8432-context-return-t0-a01-20261008",
+  "additive_path": "research/analysis/context_return_renewal_8432_t0_a01_20261008/",
+  "created_utc": "2026-10-08",
+  "main_sha": "6f747cf88ea750e403e7897e78e51b7e293cf795",
+  "runtime": {
+    "platform": "Ubuntu on WSL",
+    "wsl_package_version": "3.0.1",
+    "kernel": "6.18.40.1-microsoft-standard-WSL2",
+    "python": "3.12.3"
+  },
+  "execution_boundary": {
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "model_calls": 0,
+    "gui_calls": 0,
+    "game_calls": 0,
+    "os_input": 0,
+    "external_network_calls": 0
+  },
+  "protocol_sha256": "3fc3d8bfc5c6546199cf215b1f2a2261c75730b9284d7cf740d2f7551cdf92fe",
+  "candidate_sha256": "31e191f8659959efd5adfe2ca4c5023335ee3b31f8eab73680072804145263b8",
+  "auditor_sha256": "c9252e0f3fa3a88726be9c9c23c2d34317ca46c5fdfec63a17b52f582e1f6074",
+  "stop_rule": "One candidate materialization followed by one independent audit. First result, including failure, is final. No rerun/retry or model/GUI follow-up under this allocation.",
+  "decision_gate": "PASS_METHOD_SCOPED only if the independent audit reconstructs all frozen episodes, matched supports/counts and B mapping; both scorer controls behave as specified; and all four mutation controls are rejected."
+}
+
