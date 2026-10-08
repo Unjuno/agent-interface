@@ -27,7 +27,7 @@ def git(*args: str) -> str:
         ["git", "-C", str(ROOT), *args], text=True).strip()
 
 
-def main() -> None:
+def main() -> int:
     assert git("cat-file", "-t", FREEZE) == "commit"
     actual_base_blobs = {
         path: git("rev-parse", f"{FREEZE}:{path}")
@@ -65,14 +65,58 @@ def main() -> None:
     )
     assert all(case in test_source for case in required_cases)
 
-    log = (HERE / "unittest.log").read_text(encoding="utf-8")
-    match = re.search(r"Ran (\d+) tests in ([0-9.]+)s", log)
-    assert match and match.group(1) == "48" and log.rstrip().endswith("OK")
-
     manifest = json.loads((HERE / "sha256.json").read_text(encoding="utf-8"))
+    missing = []
+    mismatched = []
     for relative_path, expected in manifest.items():
         path = ROOT / relative_path
-        assert sha256(path) == expected, relative_path
+        if not path.is_file():
+            missing.append({"path": relative_path, "expected_sha256": expected})
+        else:
+            actual = sha256(path)
+            if actual == expected:
+                continue
+            mismatched.append({"path": relative_path,
+                               "expected_sha256": expected,
+                               "actual_sha256": actual})
+
+    log_path = HERE / "unittest.log"
+    if not log_path.is_file() and not mismatched and len(missing) == 1:
+        print(json.dumps({
+            "status": "AUDIT_HOLD_MISSING_RETAINED_TEST_LOG",
+            "freeze": FREEZE,
+            "base_blobs": actual_base_blobs,
+            "baseline_and_source_checks": "PASS",
+            "missing_manifest_entries": missing,
+            "mismatched_manifest_entries": mismatched,
+            "historical_test_result": "UNVERIFIED",
+            "scope": "The package claims 48 tests passed, but the retained raw unittest.log is absent; no test result is inferred from the manifest digest alone.",
+        }, indent=2))
+        return 2
+
+    if not log_path.is_file():
+        print(json.dumps({
+            "status": "AUDIT_FAIL",
+            "freeze": FREEZE,
+            "missing_manifest_entries": missing,
+            "mismatched_manifest_entries": mismatched,
+            "test_log_valid": False,
+        }, indent=2))
+        return 1
+
+    log = log_path.read_text(encoding="utf-8")
+    match = re.search(r"Ran (\d+) tests in ([0-9.]+)s", log)
+    if (missing or mismatched or not match or match.group(1) != "48" or
+            not log.rstrip().endswith("OK")):
+        print(json.dumps({
+            "status": "AUDIT_FAIL",
+            "freeze": FREEZE,
+            "missing_manifest_entries": missing,
+            "mismatched_manifest_entries": mismatched,
+            "test_log_valid": bool(match and match.group(1) == "48" and
+                                   log.rstrip().endswith("OK")),
+        }, indent=2))
+        return 1
 
     print(json.dumps({
         "status": "AUDIT_PASS",
@@ -83,7 +127,8 @@ def main() -> None:
         "checked_hashes": len(manifest),
         "scope": "provenance, pinned baseline outcome, bounded-recovery wiring, and retained unit-test result; not a live runtime audit",
     }, indent=2))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

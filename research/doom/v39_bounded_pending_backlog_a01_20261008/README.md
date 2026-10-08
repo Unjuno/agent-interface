@@ -35,7 +35,11 @@ $env:PYTHONPATH = "$(Get-Location)\research\doom;$(Get-Location)\research\live_c
 python -m unittest discover -s research/doom -p 'test_map01*.py' -v
 ```
 
-Outcome: **48 tests passed** in 0.114 s. See `unittest.log`. New cases cover a boundary hard crossing, a harmless event arriving while drain is active, the 256-event cap, a replenishing producer exhausting exactly four recovery batches, fresh-sequence recovery, and exact ExecutorV12 stale rejection followed by fresh-sequence admission. `git diff --check` and `py_compile` also passed. `sha256.json` records the source and raw artifact hashes; `audit.py` checks provenance and outcome.
+The original PR reported **48 tests passed** in 0.114 s. Its manifest records the expected `unittest.log` digest, but the raw file is absent from current main, so that historical count is presently unverified. The reported new cases cover a boundary hard crossing, a harmless event arriving while drain is active, the 256-event cap, a replenishing producer exhausting exactly four recovery batches, fresh-sequence recovery, and exact ExecutorV12 stale rejection followed by fresh-sequence admission. The PR also reported `git diff --check` and `py_compile` passing.
+
+## Audit availability correction (2026-10-08)
+
+At current main `99f2521811df790db3c96cdfa9313a6296f247f7`, `sha256.json` still names `unittest.log` with digest `d51642c47c687fac66271eb9d83107e3a8d8540587b8dc0628109a74edd7b499`, but the file is absent from the committed package tree. The source, test, baseline reproducer, and baseline result hashes match their manifest entries. The audit now reports `AUDIT_HOLD_MISSING_RETAINED_TEST_LOG` and exits 2 instead of raising `FileNotFoundError` or treating the expected digest as proof of the 48-test result. `AUDIT_RECHECK_20261008.json` preserves this check, and the manifest includes the recheck and corrected auditor. The historical test outcome remains unverified until the original bytes are restored from an authoritative retained source.
 
 ## Limits and next gate
 
