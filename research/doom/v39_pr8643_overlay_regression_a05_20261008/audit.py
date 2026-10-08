@@ -27,6 +27,6 @@ assert RESULT["optimized"]["exit_code"] == 0
 for name in ("normal", "optimized"):
     output = (ROOT / f"{name}.stderr.txt").read_text(encoding="utf-8")
     match = re.search(r"Ran (\d+) tests? in", output)
-    assert match and int(match.group(1)) == 15, (name, match.group(0) if match else "missing")
+    assert match and int(match.group(1)) == 16, (name, match.group(0) if match else "missing")
     assert output.rstrip().endswith("OK"), name
-print("audit: PASS (7 frozen overlay files; normal and -O each ran 15 tests)")
+print("audit: PASS (7 frozen overlay files; normal and -O each ran 16 tests)")
