@@ -44,6 +44,10 @@ unassigned and untouched.
 
 ## Reproduction
 
+Executed on Windows 10.0.26300 with CPython 3.11.9 (64-bit). Both runner and
+independent verifier were run normally and under `-O`; raw outputs and exit
+codes are retained in this directory.
+
 From repository root:
 
 ```powershell

@@ -26,7 +26,11 @@ def main():
     freeze = json.loads((HERE / "FREEZE.json").read_text())
     result = json.loads((HERE / "RESULT.json").read_text())
     require(freeze["main_sha"] == "437db9f8c8e77e3ad38a61c2e6a42f5cdb06fcb2", "wrong frozen main")
+    merge_base = subprocess.check_output(["git", "-C", str(REPO), "merge-base", "HEAD", freeze["main_sha"]], text=True).strip()
+    require(merge_base == freeze["main_sha"], "frozen main is not the branch's exact base")
     require(result["main_sha"] == freeze["main_sha"], "result/freeze main mismatch")
+    require(result["runtime"]["python"].startswith("3.11.9 ") and "Windows" in result["runtime"]["platform"],
+            "runtime environment provenance mismatch")
     require(result["disposition"] == "PASS_CANDIDATE_CONTROLLER_RECOVERY", "unexpected result disposition")
     require(result["source_blobs"] == freeze["sources"], "source blob pins differ")
     actual = {name: blob(REPO / name) for name in freeze["sources"]}
@@ -58,7 +62,7 @@ def main():
         require(sha(HERE / name) == digest, f"hash mismatch: {name}")
     require(set(manifest) == {"FREEZE.json", "README.md", "RESULT.json", "run.py",
                               "raw-normal.stdout.txt", "raw-optimized.stdout.txt",
-                              "normal.exit", "optimized.exit"}, "manifest path set mismatch")
+                              "normal.exit", "optimized.exit", "verify.py"}, "manifest path set mismatch")
     require((HERE / "normal.exit").read_text().strip() == "0", "normal run failed")
     require((HERE / "optimized.exit").read_text().strip() == "0", "optimized run failed")
     require(b"PASS_CANDIDATE_CONTROLLER_RECOVERY" in (HERE / "raw-normal.stdout.txt").read_bytes(),

@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import io
 import json
+import platform
 import queue
 import subprocess
 import sys
@@ -269,6 +270,7 @@ def run_case():
 
     return {"format": "v39-preacceptance-stale-replan-a02", "disposition": "PASS_CANDIDATE_CONTROLLER_RECOVERY",
             "main_sha": FREEZE["main_sha"], "source_blobs": {name: blob(REPO / name) for name in expected},
+            "runtime": {"python": sys.version, "platform": platform.platform()},
             "production_branch": source_shape,
             "production_reproduction": production_reproduction,
             "trigger": {"submitted_sequence": 1, "producer_sequence": 2,
