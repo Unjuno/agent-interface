@@ -1,0 +1,38 @@
+{
+  "allocation": "UNJUNO-59-V39-CURRENT-MAIN-SOURCE-IDENTITY-A01-20261009",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/59",
+  "issue_state_at_freeze": "open",
+  "issue_assignees_at_freeze": [],
+  "current_main_sha": "8b04b87394973edee9308dbd62283017479554ee",
+  "historical_comparison_sha": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "branch": "research/59-v39-main-source-identity-a01-20261009",
+  "worktree": "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/worktrees/59-v39-main-source-identity-a01",
+  "package": "research/doom/v39_current_main_source_identity_audit_a01_20261009",
+  "source_sha256": {
+    "README.md": "cdbcee34373a30f33e45fd19ed6a44384019860382bab9763416aa00978e6465",
+    "PROTOCOL.md": "52c468f3a81c382923f2a9f1f7a004c60cf1a1b50b00115c9e51272159b1d071",
+    "audit_current_main.py": "4957e9722d3c0c5d69bec5379eed92cf6502edb6f28f62cde72e3be846069a48"
+  },
+  "current_main_input_sha256": {
+    "research/doom/map01_overlap_controller_v39.py": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/doom/MAP01_ASTRA_SYSTEM_FAILURE_TRIAGE_V1.md": "4af4a25cdb4dc2cd1c035e7faef05d676284e0fd34542989a1371652147d2796",
+    "docs/CURRENT_GOAL.md": "740ea41efb1136b0a6e7ef66eab4505d22829b361524d214da8c640beef8d1c3"
+  },
+  "historical_input_sha256": {
+    "research/doom/map01_overlap_controller_v39.py": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+  },
+  "expected_from_r139": {
+    "controller": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "session": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+  },
+  "audit_invocations_before_freeze": 0,
+  "command": "python3 -B audit_current_main.py --main-sha 8b04b87394973edee9308dbd62283017479554ee",
+  "execution_scope": "read-only Git object access and Python AST inspection; no controller import/execution, game, GUI, model, input, or container",
+  "runtime": {
+    "python": "Python 3.14.5",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "cpu_count": 10
+  }
+}
