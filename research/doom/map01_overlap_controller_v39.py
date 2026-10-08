@@ -389,9 +389,12 @@ def require_cover_terminal(terminal, *, cancellation_requested=False):
 
 
 def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
-    planner_interrupt = planner.interrupt(planner_handle)
-    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
-    process.stdin.flush()
+    def cancel_executor_program():
+        process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+        process.stdin.flush()
+
+    planner_interrupt = planner.interrupt(
+        planner_handle, before_transport=cancel_executor_program)
     terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
     release = terminal.get("release", {})
     # The bounded cover can naturally finish or lease-expire between policy
@@ -401,6 +404,10 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
             release.get("verified") is not True or
             release.get("buttons_down") != [] or release.get("keys_down") != []):
         raise RuntimeError("invalidated cover did not verify empty release")
+    if "before_transport_error" in planner_interrupt:
+        raise RuntimeError(
+            "executor cancel write failed before planner interruption: "
+            + planner_interrupt["before_transport_error"])
     return planner_interrupt, terminal
 
 
