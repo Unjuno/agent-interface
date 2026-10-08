@@ -40,6 +40,17 @@ class RetainedAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "matching terminal and verified empty release"):
             audit_payload(raw, self.freeze, self.source_sha)
 
+    def test_final_admission_authority_mutations_rejected(self):
+        ready = copy.deepcopy(self.raw)
+        ready["final_admission"]["status"] = "READY_FOR_ACTION_VALIDITY"
+        with self.assertRaisesRegex(ValueError, "final gate rejects invalidated answer"):
+            audit_payload(ready, self.freeze, self.source_sha)
+
+        authorized = copy.deepcopy(self.raw)
+        authorized["final_admission"]["input_authority_admitted"] = True
+        with self.assertRaisesRegex(ValueError, "final gate rejects invalidated answer"):
+            audit_payload(authorized, self.freeze, self.source_sha)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
