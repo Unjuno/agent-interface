@@ -1,0 +1,18 @@
+{
+  "schema": "lens-law-real-tk-input-v1",
+  "cases": [
+    {"id": "valid_text", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": [], "expected": "bravo"},
+    {"id": "valid_checked", "kind": "set_checked", "target": "checked", "requests": [true], "faults": [], "expected": true},
+    {"id": "idempotent_noop", "kind": "set_text", "target": "primary", "requests": ["alpha"], "faults": [], "expected": "alpha"},
+    {"id": "wrong_field", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": ["wrong_field"], "expected": "bravo"},
+    {"id": "ignored_input", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": ["ignored"], "expected": "bravo"},
+    {"id": "duplicate_callback", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": ["duplicate_callback"], "expected": "bravo"},
+    {"id": "first_write_wins", "kind": "set_text", "target": "primary", "requests": ["bravo", "charlie"], "faults": ["first_write_wins"], "expected": "charlie"},
+    {"id": "stale_epoch", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": [], "precondition": "stale_epoch", "expected": "bravo"},
+    {"id": "delayed_pending", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": ["delayed"], "precondition": "pending_decision", "expected": "bravo"},
+    {"id": "delayed_completed", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": ["delayed"], "precondition": "wait_for_completion", "expected": "bravo"},
+    {"id": "focus_decoy", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": [], "precondition": "focus_decoy", "expected": "bravo"},
+    {"id": "non_idempotent", "kind": "increment_button", "target": "counter", "requests": [null], "faults": [], "expected": null},
+    {"id": "wrong_field_duplicate", "kind": "set_text", "target": "primary", "requests": ["bravo"], "faults": ["wrong_field", "duplicate_callback"], "expected": "bravo"}
+  ]
+}

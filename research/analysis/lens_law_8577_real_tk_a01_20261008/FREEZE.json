@@ -1,0 +1,44 @@
+{
+  "schema": "lens-law-real-tk-freeze-v1",
+  "run_id": "8577-real-tk-lens-law-a01-20261008",
+  "source_main": "0e50fc59a737f58cb72db5bac4a5d845df00badf",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "construction_suite": {
+    "normal": "2 tests passed",
+    "optimized": "2 tests passed",
+    "runtime": "WSLc container, Python 3.12.14, Tk 8.6, Xvfb directly started on display :99",
+    "note": "xvfb-run is unavailable in this image because xauth is absent; direct Xvfb startup is the frozen route."
+  },
+  "runtime": {
+    "wslc": "3.0.1.0",
+    "image_tag": "ai-x20-tk-5260:20261003-a02",
+    "image_id": "sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "architecture": "linux/amd64",
+    "python": "3.12.14",
+    "tk": "8.6",
+    "gui": "Xvfb :99 -screen 0 1024x768x24 -nolisten tcp"
+  },
+  "sha256": {
+    "input.json": "5e861bb34772f6540279cb71d9fc8bf512eca6154fc7978fb5372dc8fbecf3d4",
+    "truth.json": "2d86739dbc1452f392f518c8d374bad3683164507ba02ebd3374dbe2f4ba10be",
+    "fixture.py": "d150a33031f9bb9b304e1457326ed9546505897e7802ea2eccc8df697128204b",
+    "candidate.py": "ec89bb32238d195e63f70af2b912e9a4ee70fcb9aa198f7412dc26ffc3a32195",
+    "auditor.py": "07dcef79d09147b4a177eb0673dcb6e8f81073e950e36348a837426edb5c6112",
+    "test_candidate.py": "ab191c801bcfd0b148fffdb1c00d158769a66c60980259d2f889a2061c386e6c",
+    "test_audit.py": "933066821ea5c0b0489765da23f38408fc190f4c425fd577f52932500ade1e3d",
+    "PROTOCOL.md": "aa419d2215b311670c31c90a08eec8ece9ff7fb83f320687d043278a490f8980",
+    "README.md": "5dce48c6aa5c7bee54f44d5fab8ea7d828bc60accef012ed3ff9bb45250437ad",
+    "CONSTRUCTION_LOG.md": "b09a15c3015c7c0653821b1c1d9b10a7aa51cf0e7e3620e5b7f956792c9fa8ad"
+  },
+  "reserved_formal_outputs": [
+    "results/candidate_raw.json",
+    "results/audit.json"
+  ],
+  "formal_command": "Xvfb :99 -screen 0 1024x768x24 -nolisten tcp >/tmp/xvfb.log 2>&1 & sleep 1; DISPLAY=:99 python3 -B candidate.py --input input.json --output results/candidate_raw.json; only on exit 0: DISPLAY=:99 python3 -B auditor.py --input input.json --candidate results/candidate_raw.json --truth truth.json --output results/audit.json",
+  "limitations": [
+    "The GUI interaction uses synthesized Tk toolkit events; no physical OS input or production application.",
+    "Container resource limits are not claimed.",
+    "The construction tests are not formal candidate or auditor outputs."
+  ]
+}

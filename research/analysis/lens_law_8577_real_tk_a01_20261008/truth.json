@@ -1,0 +1,18 @@
+{
+  "schema": "lens-law-real-tk-sealed-truth-v1",
+  "rows": [
+    {"id": "valid_text", "status": "PASS", "faults": []},
+    {"id": "valid_checked", "status": "PASS", "faults": []},
+    {"id": "idempotent_noop", "status": "PASS", "faults": []},
+    {"id": "wrong_field", "status": "VIOLATION", "faults": ["wrong_field"]},
+    {"id": "ignored_input", "status": "VIOLATION", "faults": ["ignored"]},
+    {"id": "duplicate_callback", "status": "VIOLATION", "faults": ["duplicate_callback"]},
+    {"id": "first_write_wins", "status": "VIOLATION", "faults": ["first_write_wins"]},
+    {"id": "stale_epoch", "status": "UNKNOWN", "faults": []},
+    {"id": "delayed_pending", "status": "UNKNOWN", "faults": ["delayed"]},
+    {"id": "delayed_completed", "status": "PASS", "faults": ["delayed"]},
+    {"id": "focus_decoy", "status": "UNKNOWN", "faults": []},
+    {"id": "non_idempotent", "status": "NOT_APPLICABLE", "faults": []},
+    {"id": "wrong_field_duplicate", "status": "VIOLATION", "faults": ["wrong_field", "duplicate_callback"]}
+  ]
+}

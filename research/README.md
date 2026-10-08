@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8577 A01: [real Tk widget lens-law transfer](analysis/lens_law_8577_real_tk_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: WSLc/Tk 8.6 disposable fixture, 13 cases independently reconstructed, 4 mutations rejected. Toolkit-synthesized events only; no physical OS input, production GUI, or resource-limit claim.
+
 - Issue #8571 A01: [service-debt representation invariance custody HOLD](analysis/service_debt_alias_8571_a01_20261008/CUSTODY_NOTE.md) — first-run trace and independent replay retained, but formal promotion withheld because the freeze was not committed before execution; no rerun. Synthetic diagnostic only.
 
 - Issue #8406 T0 A01, companion to #7418: [episodic-memory consolidation schedule fixture](analysis/consolidation_schedule_7418_t0_a01_20261008/REPORT.md) — `PASS_T0_METHOD_SCOPED`: four schedules and 24 source-bound snapshots independently reconstructed; no model, GUI, task-effect, or cadence-benefit claim.
