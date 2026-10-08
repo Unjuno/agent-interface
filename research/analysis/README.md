@@ -848,6 +848,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_intervention_6526_a02_orbstack_20261003/`](observation_intervention_6526_a02_orbstack_20261003/)
 - [`observation_intervention_6526_a03_deadline_audit_only_20261003/`](observation_intervention_6526_a03_deadline_audit_only_20261003/)
 - [`observation_intervention_6526_t0_20261002/`](observation_intervention_6526_t0_20261002/)
+- [`observation_load_cue_information_8665_t0_a01_20261009/`](observation_load_cue_information_8665_t0_a01_20261009/)
 - [`observation_loss_robust_tube_6089_t0b_20261002/`](observation_loss_robust_tube_6089_t0b_20261002/)
 - [`observation_manipulate_dynamic_certificate_v1/`](observation_manipulate_dynamic_certificate_v1/)
 - [`observation_manipulate_support_union_v1/`](observation_manipulate_support_union_v1/)

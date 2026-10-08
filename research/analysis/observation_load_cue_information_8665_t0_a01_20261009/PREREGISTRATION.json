@@ -1,0 +1,59 @@
+{
+  "schema": "issue8665-load-information-response-factorial-v1",
+  "freeze_id": "8665-T0-A01-20261009",
+  "issue": 8665,
+  "source_main_sha": "23d1807ffad8359e0f89421ee2b9bf5783c9d5f4",
+  "claim_type": "finite deterministic synthetic method discriminator",
+  "hypothesis": "The frozen fixture contains a load-only deadline effect in FIXED_REPLAY and a separate cue-content-by-response effect in the transient-cue regime; stable and no-information controls have zero interactions. This is a test of factorial identification and audit mechanics, not a GUI effect estimate.",
+  "design": {
+    "factors": {
+      "observation_load": ["MINIMAL", "LOADED"],
+      "cue_content": ["INFORMATIVE", "SHAM"],
+      "response_rule": ["FIXED_REPLAY", "OBSERVATION_REACTIVE"]
+    },
+    "seeds_per_regime": 8,
+    "base_seed": 8665,
+    "order": "Eight cyclic rotations of the canonical 8-cell order are shuffled with random.Random(base_seed + regime_index); seed position selects one row. This balances every cell at every position within each regime.",
+    "regimes": [
+      {"name": "load_only_tight_deadline", "seeds": [0,1,2,3,4,5,6,7], "cue_state": "NEUTRL", "deadline_s": 1.0, "cue_valid_until_s": null},
+      {"name": "transient_urgent_cue", "seeds": [8,9,10,11,12,13,14,15], "cue_state": "URGENT", "deadline_s": 1.4, "cue_valid_until_s": 2.2},
+      {"name": "stable_urgent_cue", "seeds": [16,17,18,19,20,21,22,23], "cue_state": "URGENT", "deadline_s": 5.0, "cue_valid_until_s": null},
+      {"name": "no_decision_information", "seeds": [24,25,26,27,28,29,30,31], "cue_state": "NEUTRL", "deadline_s": 1.4, "cue_valid_until_s": null}
+    ]
+  },
+  "simulator": {
+    "time_unit": "seconds from reset",
+    "reset": "Each regime/seed/cell begins from the same immutable reset identity; all 8 cells in a seed block share exogenous state.",
+    "observation_request_s": 0.0,
+    "observation_cost_s": {"MINIMAL": 0.2, "LOADED": 0.2},
+    "observer_work_units": {"MINIMAL": 1, "LOADED": 6},
+    "queue_delay_s": {"MINIMAL": 0.0, "LOADED": 1.0},
+    "single_event_loop": "Observation blocks the event loop for queue_delay_s + observation_cost_s. Cue delivery completes at that time; content level cannot change its schedule or byte length.",
+    "cue_codes": {"URGENT": "URGENT", "NEUTRL": "NEUTRL", "SHAM": "MASKED"},
+    "cue_payload": "Canonical ASCII JSON {\"cue\":<code>}; all three codes have equal byte length. INFORMATIVE returns the regime cue_state; SHAM always returns MASKED and conveys no task state.",
+    "fixed_action_nominal_s": 0.5,
+    "reactive_rule": "URGENT evidence triggers exactly one confirmation observation only if its completion plus release and persistence delays fit before both task deadline and cue validity; otherwise YIELD. NEUTRL or MASKED uses the already-authorized nominal submission schedule. The rule reads only delivered cue codes.",
+    "allowed_action": "SUBMIT",
+    "input_release_delay_s": 0.05,
+    "persisted_effect_delay_after_release_s": 0.1,
+    "effect_oracle": "SUBMIT produces the synthetic persisted target effect only when its confirmation/release trace is complete; task_success additionally requires persisted_effect_at <= task_deadline. No effect follows a YIELD or an action that missed admission before deadline."
+  },
+  "estimands": {
+    "load_only": "In load_only_tight_deadline, mean task_success(LOADED - MINIMAL), pooled over cue_content and response_rule.",
+    "content_response": "In transient_urgent_cue, [INFORMATIVE - SHAM under OBSERVATION_REACTIVE] - [INFORMATIVE - SHAM under FIXED_REPLAY], pooled equally over load levels.",
+    "controls": "The same content_response contrast in stable_urgent_cue and no_decision_information must be within 0.10 of zero.",
+    "classification": "load-dominant if |load_only| >= 0.50 and |content_response| < 0.25; content-response-dominant if |content_response| >= 0.25 and |load_only| < 0.50; mixed if both thresholds are met; no-replication otherwise. Report the exact finite fixture contrasts and never infer a live effect."
+  },
+  "gates": {
+    "method_pass": "All 256 attempts reconstruct independently; all 8 cells and balanced order positions are present per seed block; truthful/sham payload size and delivery slot match within each load; decisions follow the declared evidence; releases/effects/deadlines reconcile; all five mutations are rejected.",
+    "first_outcome": "Retain PASS_METHOD_SCOPED or the first HOLD/STOP/FAIL unchanged. No candidate rerun after an outcome; audit-only repair must use a new version and the original raw bytes."
+  },
+  "scope": {
+    "no_model": true,
+    "no_live_gui": true,
+    "no_external_service": true,
+    "no_os_input": true,
+    "runtime": "Python standard library on the local host; CPU-only deterministic enumeration.",
+    "limitations": ["Synthetic deterministic timing and cue logic only.", "The designed signature is not a causal estimate or evidence that real GUI observation load changes task outcomes.", "No claim about OS scheduling, screenshot/accessibility APIs, controller quality, safety, user tempo, or product behavior."]
+  }
+}
