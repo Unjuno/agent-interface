@@ -1,0 +1,22 @@
+{
+  "experiment": "8622-A02",
+  "red": {
+    "status": "PASS_EXPECTED_RED",
+    "test_suite_invocations": 1,
+    "exit_code": 1,
+    "cause": "ModuleNotFoundError: No module named 'candidate' (implementation absent after the test/spec freeze commit)"
+  },
+  "green": {
+    "status": "PASS",
+    "test_suite_invocations": 1,
+    "tests_passed": 3,
+    "tests_failed": 0,
+    "python": "CPython 3.12.10",
+    "mode": "in-memory source loading; -B; no file writes"
+  },
+  "formal": {
+    "candidate_invocations": 0,
+    "auditor_invocations": 0,
+    "retries": 0
+  }
+}
