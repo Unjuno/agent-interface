@@ -199,6 +199,40 @@ class AppServerSendDeadlineTests(unittest.TestCase):
                 client._write_lock.release()
             client._write({"method": "later"}, deadline=time.monotonic() + 1)
 
+    def test_final_order_lock_timeout_does_not_reacquire_while_logging_uncertainty(self):
+        with tempfile.TemporaryDirectory() as directory:
+            journal_path = os.path.join(directory, "protocol.jsonl")
+            with owned_client(journal_path=journal_path) as (client, _read_fd):
+                acquired, release = threading.Event(), threading.Event()
+
+                def hold_order_lock():
+                    with client._journal_order_lock:
+                        acquired.set()
+                        if not release.wait(2):
+                            raise AssertionError("order-lock fixture was not released")
+
+                locker = threading.Thread(target=hold_order_lock)
+                locker.start()
+                try:
+                    self.assertTrue(acquired.wait(1))
+                    message = {"method": "lock-expiry", "params": {"x": "y" * 70000}}
+                    started = time.monotonic()
+                    with patch.object(module.os, "write", side_effect=lambda _fd, data: len(data)):
+                        self.assert_uncertain(
+                            lambda: client._write(message, deadline=time.monotonic() + .025),
+                            65536, len(wire(message)))
+                    self.assertLess(time.monotonic() - started, .5)
+                finally:
+                    release.set()
+                    locker.join(timeout=1)
+                self.assertFalse(locker.is_alive())
+
+            with open(journal_path, encoding="utf-8") as stream:
+                rows = [json.loads(line) for line in stream]
+            self.assertEqual([row["direction"] for row in rows],
+                             ["send_prepared", "send_uncertain"])
+            self.assertEqual(rows[1]["message"]["sent_bytes"], 65536)
+
     def test_expired_prewrite_budget_does_not_poison(self):
         with owned_client() as (client, _read_fd), patch.object(module.os, "write") as write:
             with self.assertRaises(TimeoutError):

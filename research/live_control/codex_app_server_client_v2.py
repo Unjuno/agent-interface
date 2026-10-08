@@ -146,6 +146,7 @@ class CodexAppServerClient:
                     self._pending.add(request_id)
             sent = 0
             write_attempted = False
+            journal_order_timeout = False
             view = memoryview(data)
             try:
                 while sent < len(data):
@@ -158,8 +159,15 @@ class CodexAppServerClient:
                     if final_write_attempt:
                         # The reader queues journal rows while continuing to
                         # drain and dispatch a response produced by this write.
-                        with self._journal_order_lock:
+                        remaining = deadline - time.monotonic()
+                        if remaining <= 0 or not self._journal_order_lock.acquire(timeout=max(0, remaining)):
+                            journal_order_timeout = True
+                            raise TimeoutError(
+                                "app-server journal ordering lock timed out; no final send attempted")
+                        try:
                             self._send_marker_pending = True
+                        finally:
+                            self._journal_order_lock.release()
                     try:
                         # Bound each syscall, not the size of the JSON record.
                         write_attempted = True
@@ -206,20 +214,24 @@ class CodexAppServerClient:
             except BaseException as error:
                 self._send_uncertain = True
                 try:
-                    with self._journal_order_lock:
-                        try:
-                            if write_attempted:
-                                uncertain = {
-                                    "message": snapshot, "sent_bytes": sent,
-                                    "total_bytes": len(data), "reason": type(error).__name__,
-                                }
+                    if write_attempted:
+                        uncertain = {
+                            "message": snapshot, "sent_bytes": sent,
+                            "total_bytes": len(data), "reason": type(error).__name__,
+                        }
+                        if journal_order_timeout:
+                            # The final write was never attempted. Do not wait
+                            # on the ordering lock again just to journal that
+                            # partial transmission is uncertain.
+                            self._record("send_uncertain", uncertain)
+                        else:
+                            with self._journal_order_lock:
                                 self._record("send_uncertain", uncertain)
-                        finally:
-                            if self._send_marker_pending or self._deferred_received:
-                                try:
-                                    self._flush_deferred_received()
-                                finally:
-                                    self._send_marker_pending = False
+                                if self._send_marker_pending or self._deferred_received:
+                                    try:
+                                        self._flush_deferred_received()
+                                    finally:
+                                        self._send_marker_pending = False
                 except Exception:
                     pass
                 if not isinstance(error, Exception):
