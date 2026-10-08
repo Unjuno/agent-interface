@@ -1,0 +1,44 @@
+"""Prepare exact private v3 bytes and unchanged prospective copy; no shared edit."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import subprocess
+
+here = Path(__file__).resolve().parent
+root = here.parent / "agent-interface-compiled-custody"
+head = "a58ffc635cc25d4acae6c80bbb49fc21e039817d"
+git = r"C:\Program Files\Git\cmd\git.exe"
+pins = json.loads((here.parent / "combined6934-6900/exact-export.json").read_text(encoding="utf-8"))["exports"]["combined"]["files"]
+records = []
+for label in ("red", "green"):
+    target = here / label
+    target.mkdir(exist_ok=False)
+    for row in pins:
+        path = row["path"]
+        oid = subprocess.check_output([git, "-C", str(root), "rev-parse", head + ":" + path]).decode().strip()
+        raw = subprocess.check_output([git, "-C", str(root), "cat-file", "blob", oid])
+        dest = target / path
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        with dest.open("xb") as file:
+            file.write(raw)
+        records.append({"label": label, "path": path, "oid": oid, "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()})
+    for name in ("test_compiled_admission_custody_01a0ff35.py", "test_compiled_custody_effect_join_01a0ff35.py"):
+        if name.startswith("test_compiled_admission"):
+            raw = (here / name).read_bytes()
+        else:
+            raw = subprocess.check_output([git, "-C", str(root), "show", head + ":runtime/core_v1/" + name])
+        dest = target / "runtime/core_v1" / name
+        if dest.exists():
+            if dest.read_bytes() != raw:
+                raise RuntimeError("different previously exported test")
+        else:
+            with dest.open("xb") as file:
+                file.write(raw)
+        records.append({"label": label, "path": "runtime/core_v1/" + name, "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()})
+record = {"source_head": head, "prepared_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          "kind": "ordinary prospective regression; not a formal allocation", "files": records}
+with (here / "source-preparation.json").open("x", encoding="utf-8") as file:
+    json.dump(record, file, sort_keys=True, indent=2)
+    file.write("\n")
+print(json.dumps({"source_head": head, "prepared_utc": record["prepared_utc"], "exported_footprint": len(pins), "labels": ["red", "green"]}))

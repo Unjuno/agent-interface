@@ -1,0 +1,29 @@
+{
+  "schema": "map01-startup-cleanup-v1",
+  "session_exit_code": 1,
+  "reader_joined": true,
+  "client_closed": true,
+  "input_release_verified": false,
+  "errors": [],
+  "escalations": [
+    "terminate"
+  ],
+  "stderr_complete": true,
+  "stderr_bytes": 0,
+  "stderr_reader_joined": true,
+  "startup_error": {
+    "type": "RuntimeError",
+    "message": "v28 requires a loaded fixture receipt"
+  },
+  "startup_events": [
+    {
+      "event": "ready",
+      "fixture": null
+    },
+    {
+      "event": "observation",
+      "sequence": 1,
+      "capture_to_artifact_ready_ms": 0
+    }
+  ]
+}

@@ -60,6 +60,24 @@ class DoomActionSnapshotTests(unittest.TestCase):
                 OBSERVATION, contract({"enemy_visible": {}}),
                 {"enemy_visible": Reader("enemy_visible")})
 
+    def test_observed_health_and_ammo_values_must_be_in_domain(self):
+        for signal_id, value in (("health", 0), ("health", 201),
+                                 ("ammo", -1), ("ammo", 1000),
+                                 ("health", True), ("ammo", 1.0)):
+            with self.subTest(signal_id=signal_id, value=value):
+                with self.assertRaises(ValueError):
+                    build_action_snapshot(
+                        OBSERVATION, contract({signal_id: {}}),
+                        {signal_id: Reader(signal_id, value=value)})
+
+    def test_in_domain_endpoints_are_preserved(self):
+        value = build_action_snapshot(
+            OBSERVATION, contract({"health": {}, "ammo": {}}),
+            {"health": Reader("health", value=200),
+             "ammo": Reader("ammo", value=999)})
+        self.assertEqual(value["signals"]["health"]["value"], 200)
+        self.assertEqual(value["signals"]["ammo"]["value"], 999)
+
 
 if __name__ == "__main__":
     unittest.main()
