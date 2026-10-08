@@ -1,5 +1,5 @@
 {
-  "schema": "map01-v39-live-a14-audit-v2",
+  "schema": "map01-v39-live-a14-audit-v3",
   "status": "EXPLORATORY_PROTOCOL_DEVIATION",
   "freeze_source_main": "9d9c42c80f946762e8742ddb2739d07d33db136d",
   "frozen_purpose": "identify startup stage under exact V39 AppServer-initialized, V15 session path; no planner turn or model call",
@@ -84,6 +84,16 @@
   "diagnostic_adapter_executed": false,
   "raw_file_count": 370,
   "raw_total_bytes": 49603380,
+  "raw_checksum_report": {
+    "manifest_sha256": "e8b14fabebbf877eebbaf45f44fc2302f189a9a1969f507e3321ba0936ac7112",
+    "manifest_entries": 370,
+    "raw_file_count": 370,
+    "matched_files": 370,
+    "missing_paths": [],
+    "unlisted_paths": [],
+    "mismatched_paths": [],
+    "passed": true
+  },
   "raw_report_sha256": "cf089fa6119f0ca6d2174adff9503cd0b200115d5d2f6255ee11f050b0a4d121",
   "runtime_event_stream_sha256": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a",
   "planner_protocol_sha256": "97d7c38290dbc0254a1d1fcc139a055a2b1e3afc9be5f8a5f7795c1ceea12a91",
@@ -98,7 +108,8 @@
     "later_turn_4_action_admitted": true,
     "terminal_score_no_death_kill_or_map_exit": true,
     "original_freeze_mismatch_detected": true,
-    "runtime_source_hashes_match_staged_manifest_or_diagnostic_adapter": true
+    "runtime_source_hashes_match_staged_manifest_or_diagnostic_adapter": true,
+    "all_raw_files_match_checksum_manifest": true
   },
   "scope": "Raw consistency audit only. The freeze mismatch invalidates preregistered efficacy claims; the threat-triggered health/ammo gate was not reached."
 }

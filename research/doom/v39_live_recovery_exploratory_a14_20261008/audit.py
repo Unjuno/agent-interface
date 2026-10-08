@@ -22,6 +22,60 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def verify_raw_checksums(root: Path, manifest_path: Path):
+    root = Path(root).resolve()
+    raw_root = (root / "raw").resolve()
+    manifest_path = Path(manifest_path)
+    if not manifest_path.is_absolute():
+        manifest_path = root / manifest_path
+    manifest_path = manifest_path.resolve()
+    expected = {}
+    for line_number, line in enumerate(manifest_path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        parts = line.split(maxsplit=1)
+        if len(parts) != 2:
+            raise ValueError(f"invalid checksum manifest row {line_number}")
+        digest, relative = parts
+        relative = relative.lstrip("*")
+        relative_path = Path(relative)
+        if (len(digest) != 64 or any(char not in "0123456789abcdefABCDEF" for char in digest)
+                or relative_path.is_absolute() or ".." in relative_path.parts):
+            raise ValueError(f"invalid checksum manifest entry {line_number}")
+        resolved_path = (root / relative_path).resolve()
+        try:
+            resolved_path.relative_to(raw_root)
+        except ValueError as error:
+            raise ValueError(f"checksum path outside raw directory: {relative}") from error
+        if relative in expected:
+            raise ValueError(f"duplicate checksum manifest path: {relative}")
+        expected[relative] = digest.lower()
+
+    actual_paths = set()
+    for path in raw_root.rglob("*"):
+        if path.is_symlink():
+            raise ValueError(f"symlink is not allowed in raw evidence: {path}")
+        if path.is_file():
+            actual_paths.add(path.relative_to(root).as_posix())
+    missing = sorted(set(expected) - actual_paths)
+    unlisted = sorted(actual_paths - set(expected))
+    mismatched = sorted(
+        relative for relative, digest in expected.items()
+        if relative in actual_paths and sha256(root / relative) != digest
+    )
+    matched = len(expected) - len(missing) - len(mismatched)
+    return {
+        "manifest_sha256": sha256(manifest_path),
+        "manifest_entries": len(expected),
+        "raw_file_count": len(actual_paths),
+        "matched_files": matched,
+        "missing_paths": missing,
+        "unlisted_paths": unlisted,
+        "mismatched_paths": mismatched,
+        "passed": not (missing or unlisted or mismatched),
+    }
+
+
 def classify_protocol_deviation(freeze, adapter, runtime_sources, actual_turn_count):
     no_turn_expected = "no planner turn or model call" in freeze.get("purpose", "")
     diagnostic = freeze.get("diagnostic_adapter", {})
@@ -157,6 +211,7 @@ def main() -> int:
         classify_protocol_deviation(freeze, adapter, runtime_sources, actual_turn_count)
     )
     score = report.get("score", {})
+    raw_checksum_report = verify_raw_checksums(ROOT, ROOT / "RAW_SHA256SUMS.txt")
     decisions_by_iteration = {d["iteration"]: d for d in report["decisions"]}
     recovery_3 = decisions_by_iteration.get(3, {})
     recovery_4 = decisions_by_iteration.get(4, {})
@@ -188,6 +243,7 @@ def main() -> int:
         and score.get("map_exit") is False,
         "original_freeze_mismatch_detected": protocol_deviation,
         "runtime_source_hashes_match_staged_manifest_or_diagnostic_adapter": not source_mismatches,
+        "all_raw_files_match_checksum_manifest": raw_checksum_report["passed"],
     }
     if not all(checks.values()):
         status = "AUDIT_CHECK_FAILED"
@@ -197,7 +253,7 @@ def main() -> int:
         status = "BOUNDED_OBSERVATION"
 
     audit = {
-        "schema": "map01-v39-live-a14-audit-v2",
+        "schema": "map01-v39-live-a14-audit-v3",
         "status": status,
         "freeze_source_main": freeze.get("source_main"),
         "frozen_purpose": freeze.get("purpose"),
@@ -223,6 +279,7 @@ def main() -> int:
         and runtime_sources.get("doom/session_map01_v12.py") == adapter["diagnostic_sha256"],
         "raw_file_count": sum(1 for path in RAW.rglob("*") if path.is_file()),
         "raw_total_bytes": sum(path.stat().st_size for path in RAW.rglob("*") if path.is_file()),
+        "raw_checksum_report": raw_checksum_report,
         "raw_report_sha256": sha256(RAW / "report.json"),
         "runtime_event_stream_sha256": sha256(RAW / "runtime" / "events.jsonl"),
         "planner_protocol_sha256": sha256(RAW / "planner-protocol.jsonl"),

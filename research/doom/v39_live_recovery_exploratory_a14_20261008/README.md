@@ -18,6 +18,8 @@ The script `audit.py` independently recomputes these classifications from the re
 
 Audit schema v2 also treats the declared diagnostic adapter hash as part of protocol validity. A model-free run with a missing or different startup source is classified as an exploratory protocol deviation even if zero planner turns occur. `test_audit.py` covers matching source, forbidden planner turns, and wrong/missing source cases.
 
+Audit schema v3 additionally verifies every path and SHA-256 in `RAW_SHA256SUMS.txt`, rejects unlisted raw files, and records the checksum-manifest hash. This runs as part of the audit instead of relying on a separate manual checksum command.
+
 ## Earlier construction attempts
 
 Related first outcomes are kept outside this directory in the local A05/A06/A09/A10/A11/A12/A13b output folders. A05 stopped before any model call because its container command omitted the `/out` mount (exit 127). A06 and A10 stopped during controller session startup before `turn/start`; A13b reproduced that stop. Separate V12 and V15 model-free session/fixture tests passed, including a same-seed construction check. These construction records do not authorize retrying or relabeling a consumed live run.
