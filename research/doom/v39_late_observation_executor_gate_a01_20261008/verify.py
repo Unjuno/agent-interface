@@ -8,7 +8,9 @@ for name,want in f['source_sha256'].items():
 assert r['main_commit']==f['main_commit']
 assert r['scenario']==f['scenario']
 assert r['exact_executor_method_result']=={'rejected':True,'reason':'latest observation sequence required before input','accepted_or_input_events':0}
-assert r['decision']=='PASS_FAIL_CLOSED_NO_STALE_EXECUTOR_ADMISSION; SESSION_CONTINUITY_NOT_ESTABLISHED'
+assert r['decision']=='PASS_FAIL_CLOSED_NO_STALE_EXECUTOR_ADMISSION; CONTROLLER_SEGMENT_ABORTS; SESSION_CONTINUITY_NOT_ESTABLISHED'
+assert r['controller_rejection_disposition']['rejection_propagates_as_runtime_error'] is True
+assert r['controller_rejection_disposition']['retry_or_accept_event_count']==0
 source=(p/'executor_v12.py').read_text()
 assert source.index('expected_sequence != self.backend.sequence') < source.index('self.backend.validate(copied)')
 assert 'if accepted["event"]!="accepted":raise RuntimeError(accepted)' in (p/'map01_overlap_controller_v39.py').read_text()

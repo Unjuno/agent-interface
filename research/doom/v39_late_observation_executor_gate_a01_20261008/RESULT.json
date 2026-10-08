@@ -18,7 +18,13 @@
     "reason": "latest observation sequence required before input",
     "accepted_or_input_events": 0
   },
-  "controller_rejection_disposition": "RuntimeError(accepted); escapes execute_segment to controller failure cleanup; no automatic fresh plan in this branch",
-  "decision": "PASS_FAIL_CLOSED_NO_STALE_EXECUTOR_ADMISSION; SESSION_CONTINUITY_NOT_ESTABLISHED",
-  "scope": "Synthetic late-event schedule; exact current-main Executor.submit AST. No full Doom backend, queue process, GUI, model, OS input, game, or live threat/recovery run."
+  "controller_rejection_disposition": {
+    "rejection_propagates_as_runtime_error": true,
+    "submitted_expected_sequence": 1,
+    "submit_attempts": 1,
+    "retry_or_accept_event_count": 0,
+    "disposition": "segment aborts into controller failure cleanup"
+  },
+  "decision": "PASS_FAIL_CLOSED_NO_STALE_EXECUTOR_ADMISSION; CONTROLLER_SEGMENT_ABORTS; SESSION_CONTINUITY_NOT_ESTABLISHED",
+  "scope": "Synthetic late-event schedule; exact current-main Executor.submit and nested execute_segment ASTs. No full Doom backend, queue process, GUI, model, OS input, game, or live threat/recovery run."
 }
