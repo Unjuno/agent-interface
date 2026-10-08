@@ -22,7 +22,8 @@ class RetiredReader:
 
 
 class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
-    def run_cleanup(self, release_token=OMIT_TOKEN):
+    def run_cleanup(self, release_token=OMIT_TOKEN, release_overrides=None,
+                    missing_release_fields=()):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
             accepted = {
@@ -39,6 +40,9 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             }
             if release_token is not OMIT_TOKEN:
                 release["intent_token"] = release_token
+            release.update(release_overrides or {})
+            for field in missing_release_fields:
+                release.pop(field, None)
             terminal = {
                 "event": "terminal",
                 "id": "source-refresh-0",
@@ -150,6 +154,27 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             receipt = json.loads(
                 (output / "controller-failure.json").read_text())
             self.assertFalse(receipt["input_release_verified_empty"])
+
+    def test_release_state_mutation_matrix_fails_closed(self):
+        mutations = [
+            ("down_key", {"keys_down": ["KEY_W"]}, ()),
+            ("down_button", {"buttons_down": [1]}, ()),
+            ("unknown_key", {"keys_unknown": ["KEY_W"]}, ()),
+            ("state_error", {"key_state_errors": [{"source": "keymap_after"}]}, ()),
+            ("unverified", {"verified": False}, ()),
+            ("missing_verified", {}, ("verified",)),
+            ("missing_keys_down", {}, ("keys_down",)),
+            ("missing_buttons_down", {}, ("buttons_down",)),
+            ("missing_keys_unknown", {}, ("keys_unknown",)),
+            ("missing_key_state_errors", {}, ("key_state_errors",)),
+        ]
+        for name, overrides, missing in mutations:
+            with self.subTest(name=name):
+                receipt = self.run_cleanup(
+                    release_token="accepted-lease",
+                    release_overrides=overrides,
+                    missing_release_fields=missing)
+                self.assertFalse(receipt["input_release_verified_empty"])
 
 
 if __name__ == "__main__":
