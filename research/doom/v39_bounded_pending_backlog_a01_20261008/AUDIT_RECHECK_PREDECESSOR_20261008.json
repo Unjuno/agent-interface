@@ -1,0 +1,29 @@
+{
+  "schema": "v39-bounded-pending-backlog-a01-audit-recheck-v1",
+  "checked_main_commit": "99f2521811df790db3c96cdfa9313a6296f247f7",
+  "auditor_sha256": "b6d47fb292c0c1ce7a6f9c0ef6138c171d550c81a734098534870d463e096442",
+  "command": [
+    "python",
+    "research/doom/v39_bounded_pending_backlog_a01_20261008/audit.py"
+  ],
+  "exit_code": 2,
+  "result": {
+    "status": "AUDIT_HOLD_MISSING_RETAINED_TEST_LOG",
+    "freeze": "6ea1269defb6d48a607f13b08f1aa2d223ba06e9",
+    "base_blobs": {
+      "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+      "research/live_control/executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9"
+    },
+    "baseline_and_source_checks": "PASS",
+    "missing_manifest_entries": [
+      {
+        "path": "research/doom/v39_bounded_pending_backlog_a01_20261008/unittest.log",
+        "expected_sha256": "d51642c47c687fac66271eb9d83107e3a8d8540587b8dc0628109a74edd7b499"
+      }
+    ],
+    "mismatched_manifest_entries": [],
+    "historical_test_result": "UNVERIFIED",
+    "scope": "The package claims 48 tests passed, but the retained raw unittest.log is absent; no test result is inferred from the manifest digest alone."
+  },
+  "stderr": ""
+}
