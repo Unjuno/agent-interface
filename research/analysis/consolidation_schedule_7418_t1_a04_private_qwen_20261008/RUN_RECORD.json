@@ -1,16 +1,22 @@
 {
   "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A04-PRIVATE-QWEN-20261008",
-  "candidate_invocations": 0,
+  "auditor_exit": null,
   "auditor_invocations": 0,
-  "formal_model_calls_observed": 0,
-  "formal_retries": 0,
+  "candidate_exit": 1,
+  "candidate_invocations": 1,
   "expected_calls": 390,
+  "formal_model_calls_observed": 61,
+  "formal_retries": 0,
   "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
-  "raw_path": "results/FORMAL_T1_A04/RAW.jsonl",
-  "terminal_disposition": "FROZEN_NOT_STARTED",
   "predecessor_stops": [
     "T1 A01",
     "T1 A02",
     "T1 A03"
-  ]
+  ],
+  "raw_bytes": 308767,
+  "raw_path": "results/FORMAL_T1_A04/RAW.jsonl",
+  "raw_sha256": "f9270f529b167e7bb3001fe00a10c0668ef2e145b65734ecd4aaba7d71f9043a",
+  "stderr_sha256": "d2e1c7c0c6c51fdb6a5ad864e2e7c7e0cc7d31986ebe2dd235aa246072115e97",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "terminal_disposition": "STOP_INVALID_CONSOLIDATION_JSON"
 }
