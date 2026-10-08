@@ -9,24 +9,27 @@
     "queued_event_skipped_by_outer_loop": true
   },
   "patched_helper": {
-    "tests_passed": 4,
+    "tests_passed": 5,
     "hard_crossing_invalidates": true,
     "queued_terminal_retained": true,
     "soft_observation_preserves_answer_path": true,
     "empty_queue_returns_without_wait": true,
     "integration_call_order_check": true,
-    "completed_future_discard_branch_precedes_eligibility_check": true
+    "completed_future_discard_branch_precedes_eligibility_check": true,
+    "arrival_after_snapshot_remains_queued": true,
+    "test_git_blob": "9136d705f1f2e871c7c0b35ff0a4e3931fd9249a"
   },
   "integration": "When drain reports invalidation, the existing controller invalidation path cancels any still-active cover and the existing planner-result branch discards the answer.",
   "scope": "Focused source-boundary construction only; no production event-frequency, live, or efficacy claim.",
   "mainline_retest": {
     "main_commit": "a537c80de21ba24d774fb332e34fcd415db51b7d",
     "controller_git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
-    "test_git_blob": "af01126e613c6b1c51e218cab6f199eb56e57efe",
     "official_test_command": "python -B -m unittest -v test_map01_v39_pending_observation_drain.py",
     "official_test_result": "failed_before_test_collection: ModuleNotFoundError map01_stagnation_v1",
-    "ast_extracted_helper_suite": "PASS 4/4; exact helper AST from the frozen main controller blob, regression test file unchanged",
-    "full_controller_imported": false
+    "ast_extracted_helper_suite": "PASS 5/5; exact helper AST from the frozen main controller blob with the proposed PR regression file",
+    "full_controller_imported": false,
+    "baseline_main_test_git_blob": "af01126e613c6b1c51e218cab6f199eb56e57efe",
+    "pr_regression_test_git_blob": "9136d705f1f2e871c7c0b35ff0a4e3931fd9249a"
   }
 }
 
