@@ -1,0 +1,15 @@
+# V39 HUD bounded anchor search A01/A02
+
+This package tests an offline reader fallback against the exact 13 retained V39 HUD frames and the frozen synthetic transforms. A01 searched all nearby anchors unconditionally and failed: it matched only 5/13 baseline frames and 40/104 translated frames. Its independent audit passed 5/5 mutation controls. The failure was traced to right-aligned values with blank leading slots being rejected. A01 artifacts remain immutable.
+
+A02 freezes an exact-center-first policy: accept a valid center read unchanged; search within ±2 pixels only when the center reports pixel-content uncertainty (`invalid_right_aligned_number` or `ambiguous_digit`); return unknown for metadata/binding failures and conflicting offsets. Candidate `analyze_a02.py` was run once on current-main source `5f1761cec6b6b8cb4513aef6dbe0429d35569e97`, 13 historical frames, and the 14 preregistered image variants.
+
+A02 result: `PASS_BOUNDED_ANCHOR_SEARCH`; 13/13 baseline labels and 104/104 translated labels matched; there were 0 wrong observed values across 182 perturbations, with 78 unknown and 104 correct observed. Blank-ROI controls were 13/13 unknown. End-to-end p95 CPU time was 16.37× the exact reader p95 in this single local run. That cost is material and the image availability remains limited: all brightness, contrast, and JPEG cases returned unknown.
+
+After PR #8670 merged, current main advanced to `d66ee6cd4f9c09387845bc0765855cbede0c0874`. The three reader modules, transfer freeze, and frame corpus were byte-identical to the candidate's frozen source (`results/current_main_continuity.json`); no candidate rerun was made.
+
+The first A02 auditor run failed its mutation suite (3/5) because two mutations were not checked. It is retained at `results/audit_a02.json`. Auditor v2 independently replayed the frozen images and transformations, checked every row and summary metric, and passed all 5/5 mutations at `results/audit_a02_v2.json`. The earlier A01 candidate failure and audit remain at `results/a01.json` and `results/audit.json`. `results/preflight_hold.json` records a prerequisite-only invocation that stopped before loading frames because the initial predecessor pointer was incorrect; the corrected freeze was established before the single A02 candidate measurement.
+
+All measurements are offline CPU construction. No game/GUI, model call, OS input, live capture, binding fault, guard, input release, environment feedback, task effect, finite recovery, survival, or MAP01 progress was exercised. A02 is evidence for a narrow software recovery property on retained and synthetic pixels, not a live computer-control gate. The added scan also imposes a substantial measured CPU cost.
+
+Reproduction uses the bundled Python 3.12.14, Pillow 12.3.0, NumPy 2.3.5 runtime and the hash-bound Freedoom WAD. The candidate's single execution and corrected read-only auditor command are recorded in `results/RUN_RECORD_A02.json`; hashes are in `SHA256SUMS.txt`.
