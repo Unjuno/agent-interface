@@ -1,0 +1,32 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c04-first-six",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && test ! -e /root/17-x11-c04-70ab/out/RAW.json && docker run --pull never --network none --cpus 0.25 --memory 128m --memory-swap 128m --pids-limit 32 --tmpfs /tmp:rw,size=32m -v /root/17-x11-c04-70ab/src:/src:ro -v /root/17-x11-c04-70ab/out:/out --name 17-x11-c04-first-six-70ab sha256:f9b71334f027006dd318eb947a40358f02118657641b35611fa360fcdb74637f python -B /src/probe.py"
+  ],
+  "launcher_pid": 65089,
+  "start_utc": "2026-10-03T16:08:34.402902+00:00",
+  "start_ns": 54679232069083,
+  "pid": 65094,
+  "exit_code": 1,
+  "end_utc": "2026-10-03T16:08:38.272146+00:00",
+  "end_ns": 54683101031875,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "bytes": 386,
+      "sha256": "3e3fa21fdf8d36c046f68a820f419274e230c3e0003a2248cb5969623795730e"
+    }
+  }
+}

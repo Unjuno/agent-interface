@@ -1,0 +1,17 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c04-terminal-readback",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "docker inspect 17-x11-c04-first-six-70ab --format \"{{json .State}}\" && docker ps --format \"{{.Names}}\" && cat /root/17-x11-c04-70ab/out/RAW.json"
+  ],
+  "launcher_pid": 65350,
+  "start_utc": "2026-10-03T16:09:38.045881+00:00",
+  "start_ns": 54742874572625
+}

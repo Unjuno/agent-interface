@@ -1,0 +1,17 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/gil-boundary-c02-source",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "tar -xf - -C /root/17-gil-native-boundary-c02-70ab/source && sha256sum /root/17-gil-native-boundary-c02-70ab/source/FREEZE.json && test -z \"$(docker ps -q)\""
+  ],
+  "launcher_pid": 40210,
+  "start_utc": "2026-10-03T15:05:22.769100+00:00",
+  "start_ns": 50887635262458
+}

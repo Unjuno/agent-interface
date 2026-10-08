@@ -1,0 +1,39 @@
+{
+  "verdict": "PASS_FINITE_NATIVE_BOUNDARY",
+  "cases": 4,
+  "measurements": [
+    {
+      "case": 0,
+      "mode": "released",
+      "cancel_after_to_close_ns": 300376,
+      "closed_before_native_end": true
+    },
+    {
+      "case": 1,
+      "mode": "held",
+      "cancel_after_to_close_ns": 241986958,
+      "closed_before_native_end": false
+    },
+    {
+      "case": 2,
+      "mode": "held",
+      "cancel_after_to_close_ns": 244041715,
+      "closed_before_native_end": false
+    },
+    {
+      "case": 3,
+      "mode": "released",
+      "cancel_after_to_close_ns": 129792,
+      "closed_before_native_end": true
+    }
+  ],
+  "corruption_rejections": [
+    "missing",
+    "wrong_mode",
+    "outside",
+    "unclosed",
+    "bad_return"
+  ],
+  "producer_replays": 0,
+  "scope": "finite Linux dummy-FD stress fixture; no physical release/GUI/hard deadline/reliability rate"
+}

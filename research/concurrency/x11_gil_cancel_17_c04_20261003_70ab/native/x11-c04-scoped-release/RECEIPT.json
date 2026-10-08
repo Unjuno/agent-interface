@@ -1,0 +1,32 @@
+{
+  "cwd": "<WORKSPACE>",
+  "receipt_directory": "<WORKSPACE>/work/continuation-20261003-1250/operations/x11-c04-scoped-release",
+  "argv": [
+    "orb",
+    "-m",
+    "research-6501-async-01a0ff52-70ab",
+    "-u",
+    "root",
+    "bash",
+    "-c",
+    "test -z \"$(docker ps -q)\" && docker inspect 17-x11-c04-ready-diagnosis-70ab --format \"{{json .State}}\" && date -u +%FT%TZ > /root/17-x11-c04-70ab/RELEASED"
+  ],
+  "launcher_pid": 65882,
+  "start_utc": "2026-10-03T16:12:03.047096+00:00",
+  "start_ns": 54887874788375,
+  "pid": 65883,
+  "exit_code": 0,
+  "end_utc": "2026-10-03T16:12:03.192782+00:00",
+  "end_ns": 54888020292208,
+  "source_sha256": "d63bd38401f3c366f145aada93d78d71eaf23216b896f6874d01f0741dfd15fa",
+  "outputs": {
+    "stdout": {
+      "bytes": 224,
+      "sha256": "3bd3f48ac1a2d01edce476277fdb0d3ca258212cdaab224f07985377871f11c4"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

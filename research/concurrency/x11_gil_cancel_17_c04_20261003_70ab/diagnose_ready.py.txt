@@ -1,0 +1,64 @@
+"""Ordinary no-input readiness diagnosis; does not rerun C04."""
+import ctypes.util
+import json
+import multiprocessing as M
+import pathlib
+import subprocess
+import sys
+import time
+sys.path.insert(0, '/src')
+from probe import X
+
+
+def child(pipe):
+    def trace(stage):
+        pipe.send({'stage': stage, 'ns': time.monotonic_ns()})
+    trace('child_function_entry')
+    old = ctypes.util.find_library
+    def find(name):
+        trace('find_library_'+name+'_before')
+        value = old(name)
+        trace('find_library_'+name+'_after')
+        return value
+    ctypes.util.find_library = find
+    x = X()
+    trace('display_connection_ready')
+    q = x.query()
+    assert q['hex'] == '00'*32
+    trace('neutral_query_done')
+    x.close()
+    pipe.close()
+
+
+def main():
+    server = subprocess.Popen(['Xvfb', ':77', '-screen', '0', '64x64x24', '-nolisten', 'tcp', '-noreset'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = None
+    raw = {'scope':'ordinary construction, zero XTEST/input/native wait/GIL contrast/formal cells', 'trace':[], 'start_ns':time.monotonic_ns()}
+    try:
+        end = time.monotonic()+2
+        while not pathlib.Path('/tmp/.X11-unix/X77').exists() and time.monotonic()<end: time.sleep(.01)
+        ctx=M.get_context('spawn')
+        receiver,sender=ctx.Pipe(False)
+        p=ctx.Process(target=child,args=(sender,))
+        raw['spawn_before_ns']=time.monotonic_ns();p.start();raw['spawn_after_ns']=time.monotonic_ns()
+        deadline=time.monotonic()+10
+        while time.monotonic()<deadline:
+            if receiver.poll(.05):
+                raw['trace'].append(receiver.recv())
+                if raw['trace'][-1]['stage']=='neutral_query_done': break
+            elif not p.is_alive(): break
+        p.join(1)
+        raw['pid']=p.pid;raw['exit']=p.exitcode;raw['alive']=p.is_alive()
+        raw['status']='PASS_ORDINARY_READY' if raw['trace'] and raw['trace'][-1]['stage']=='neutral_query_done' and p.exitcode==0 else 'HOLD_ORDINARY_READY'
+        receiver.close();sender.close()
+    finally:
+        if p:
+            if p.is_alive():p.terminate()
+            p.join(2);raw['retired_exit']=p.exitcode;p.close()
+        server.terminate();so,se=server.communicate(timeout=2)
+        raw['server']={'exit':server.returncode,'stdout':so.decode(),'stderr':se.decode()}
+        pathlib.Path('/out/DIAGNOSE_READY.json').write_text(json.dumps(raw,indent=2)+'\n')
+        print(json.dumps(raw))
+
+
+if __name__=='__main__':main()
