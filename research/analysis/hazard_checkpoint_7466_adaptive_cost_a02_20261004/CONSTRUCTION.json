@@ -1,0 +1,36 @@
+{
+  "classification": "construction-only; excluded from formal disposition",
+  "issue": 7466,
+  "base_commit": "41df296f3ce4d03c801c998d38f6e537e64a83ab",
+  "host_runtime": "CPython 3.14.5",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "formal_status": "STOP_PREFORMAL_SOURCE_UNFROZEN",
+  "stop_reason": "The exploratory candidate preview ran before a complete source/input freeze manifest existed. Preserve it as construction evidence only; do not reuse its seeds. A successor requires a new allocation/path, fresh seeds, a pre-run freeze, and revised horizon/calibration design.",
+  "preview": {
+    "episodes_and_cost_rows": 432,
+    "streamed_ticks": 63424,
+    "candidate_exit": 0,
+    "auditor_status": "FAIL_UNSAFE_RESUME",
+    "auditor_errors": [],
+    "mutations_rejected": 4,
+    "informative_benefit": false,
+    "uninformative_disabled_by_tick_48": false,
+    "same_seed_retry_permitted": false
+  },
+  "sha256": {
+    "README.md": "fc81c39e219f269a0c27c46a5331002912f970bac3d7a09b7b93a9689bb319c8",
+    "CONSTRUCTION_STOP.md": "9167eb4c5258e21a30ace011190fe19d103ac2a8081f2e4c8ad1e36f921b023a",
+    "construction_pre_freeze/NOTE.md": "badd95fb005e09cf62223f5c725d46dbaae8ce56430680bd2089cc75acabef50",
+    "construction_pre_freeze/candidate.json.gz": "046bb8179a51378aacc10670b1a0bccece36d79bffce1ccf3da3bb366a126f57",
+    "construction_pre_freeze/candidate.stdout.json": "9bd1dcf076172d1b7aa8882bb4b7c718bf76e578d3870239cd423a04c2c4f9ab",
+    "construction_pre_freeze/audit.json": "ab40b4dbc306f0dd0ae7d957c6b42137c2a94ba2ea24cc80dbcec10727ff7043",
+    "construction_pre_freeze/audit.stdout.json": "d0372adf561e0362c93705eadbaac99f221c31e6ecb1a346b0da1b97390acb76",
+    "construction_pre_freeze/source_snapshot/candidate.py": "ec853d0eb42065bf6b254c54c57a37bcb49bae8006da6eda3f8e526b94b1d8e4",
+    "construction_pre_freeze/source_snapshot/oracle.json": "7bbe12d515110621bd1161b5f1383d3abc3305f019b14d14cb34bb13509b68e4",
+    "construction_pre_freeze/source_snapshot/policy.py": "fd891876f1273f66b6ca918127016590d86dfe31b52de3ba7f5d387cf32e734e",
+    "construction_pre_freeze/source_snapshot/prepare.py": "da4f799d27e2d7793fab88b81216f838bfb6eec016866ddf82faff67efd2853a",
+    "construction_pre_freeze/source_snapshot/public.json": "07c8fce5ef08b7463032498de8d7f42de0d1bf4af7fd1d859c01c30affe43719",
+    "construction_pre_freeze/source_snapshot/training.json": "7c9ddf1209ef4632eec912a5b4fa1f0e59814c24bc5aad7a687025736e2b5109"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "run_id": "gui-reversibility-7949-external-transition-a05-20261007",
+  "issue": 7949,
+  "base_commit": "9fb2dd6782d1d1477a00d14be870487fd4c54fa2",
+  "candidate_command": "python3 -B research/analysis/gui_reversibility_7949_external_transition_a05_20261007/run_candidate.py > research/analysis/gui_reversibility_7949_external_transition_a05_20261007/results/candidate.raw.json 2> research/analysis/gui_reversibility_7949_external_transition_a05_20261007/results/candidate.stderr.txt",
+  "auditor_command": "python3 -B research/analysis/gui_reversibility_7949_external_transition_a05_20261007/audit.py",
+  "max_candidate_invocations": 1,
+  "max_auditor_invocations": 1,
+  "retries": 0,
+  "preformal": {"unit_tests": "3/3 PASS", "py_compile": "PASS", "git_diff_check": "PASS", "candidate": 0, "auditor": 0},
+  "frozen_sha256": {
+    "PROTOCOL.md": "a2c5a48b8072e7e1c8b497b2a45345ee9c5ce925169dc5b87375cc7dd745df9a",
+    "model.json": "c9b04a967746207f95ac5e048e3564e93d76a9c6cdcb6bb9458be97b68cf9381",
+    "candidate.py": "660ff8e3da8d1079c380f12eb9c34f5cf1daff6c040fa6fde54782949cd59495",
+    "run_candidate.py": "ca65ee085845a7dffa7bedfb96401f8bc7b71a48adadf1f065dabd44b4c09d66",
+    "audit.py": "3755f9fc8ace6ba493bb6369ba47e70cc509ff9e390f35a50b6d0f75aa389a60",
+    "audit_core.py": "e54229824c4ac743691bda68b5cd27c40437ebe1b948a23e8284ec0a2908d02d",
+    "test_protocol.py": "07f930f6087123e542e687f880980243a54de1ca5c2bae57071762411155928c"
+  }
+}

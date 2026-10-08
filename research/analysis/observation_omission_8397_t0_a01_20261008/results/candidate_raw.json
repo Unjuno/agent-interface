@@ -1,0 +1,384 @@
+{
+  "scenarios": [
+    {
+      "arms": [
+        {
+          "arm_id": "baseline",
+          "effect": "target_saved",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 11,
+              "delivered": true,
+              "event_id": "setup_0",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 13,
+              "delivered": true,
+              "event_id": "setup_1",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 17,
+              "delivered": true,
+              "event_id": "decision_cue",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            }
+          ],
+          "exact_effect": true,
+          "model_visible_bytes": 41,
+          "model_visible_count": 3,
+          "regret_vs_baseline": false,
+          "safe_stop": false,
+          "stop_reason": "verified_completion"
+        },
+        {
+          "arm_id": "omit_before_decision",
+          "effect": "target_saved",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": true,
+              "event_id": "setup_0",
+              "model_visible": false,
+              "omitted": true,
+              "requested_omission": true
+            },
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": true,
+              "event_id": "setup_1",
+              "model_visible": false,
+              "omitted": true,
+              "requested_omission": true
+            },
+            {
+              "captured": true,
+              "counted_bytes": 17,
+              "delivered": true,
+              "event_id": "decision_cue",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            }
+          ],
+          "exact_effect": true,
+          "model_visible_bytes": 17,
+          "model_visible_count": 1,
+          "regret_vs_baseline": false,
+          "safe_stop": false,
+          "stop_reason": "verified_completion"
+        }
+      ],
+      "scenario_id": "before_sensitive_decision"
+    },
+    {
+      "arms": [
+        {
+          "arm_id": "baseline",
+          "effect": "target_saved",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 12,
+              "delivered": true,
+              "event_id": "baseline_context",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 19,
+              "delivered": true,
+              "event_id": "transition_cue",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 15,
+              "delivered": true,
+              "event_id": "post_transition",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            }
+          ],
+          "exact_effect": true,
+          "model_visible_bytes": 46,
+          "model_visible_count": 3,
+          "regret_vs_baseline": false,
+          "safe_stop": false,
+          "stop_reason": "verified_completion"
+        },
+        {
+          "arm_id": "omit_across_transition",
+          "effect": "target_missed",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 12,
+              "delivered": true,
+              "event_id": "baseline_context",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": true,
+              "event_id": "transition_cue",
+              "model_visible": false,
+              "omitted": true,
+              "requested_omission": true
+            },
+            {
+              "captured": true,
+              "counted_bytes": 15,
+              "delivered": true,
+              "event_id": "post_transition",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            }
+          ],
+          "exact_effect": false,
+          "model_visible_bytes": 27,
+          "model_visible_count": 2,
+          "regret_vs_baseline": true,
+          "safe_stop": false,
+          "stop_reason": "task_effect_missing"
+        }
+      ],
+      "scenario_id": "crosses_relevant_transition"
+    },
+    {
+      "arms": [
+        {
+          "arm_id": "baseline",
+          "effect": "task_complete",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 16,
+              "delivered": true,
+              "event_id": "pre_completion_cue",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": true,
+              "event_id": "post_completion_capture",
+              "model_visible": false,
+              "omitted": false,
+              "requested_omission": false
+            }
+          ],
+          "exact_effect": true,
+          "model_visible_bytes": 16,
+          "model_visible_count": 1,
+          "regret_vs_baseline": false,
+          "safe_stop": false,
+          "stop_reason": "verified_completion"
+        },
+        {
+          "arm_id": "omit_after_completion",
+          "effect": "task_complete",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 16,
+              "delivered": true,
+              "event_id": "pre_completion_cue",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": true,
+              "event_id": "post_completion_capture",
+              "model_visible": false,
+              "omitted": false,
+              "requested_omission": true
+            }
+          ],
+          "exact_effect": true,
+          "model_visible_bytes": 16,
+          "model_visible_count": 1,
+          "regret_vs_baseline": false,
+          "safe_stop": false,
+          "stop_reason": "verified_completion"
+        }
+      ],
+      "scenario_id": "after_verified_completion"
+    },
+    {
+      "arms": [
+        {
+          "arm_id": "baseline",
+          "effect": "target_missed",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": false,
+              "event_id": "undelivered_cue",
+              "model_visible": false,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 9,
+              "delivered": true,
+              "event_id": "visible_context",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            }
+          ],
+          "exact_effect": false,
+          "model_visible_bytes": 9,
+          "model_visible_count": 1,
+          "regret_vs_baseline": false,
+          "safe_stop": false,
+          "stop_reason": "task_effect_missing"
+        },
+        {
+          "arm_id": "omit_undelivered_window",
+          "effect": "target_missed",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": false,
+              "event_id": "undelivered_cue",
+              "model_visible": false,
+              "omitted": false,
+              "requested_omission": true
+            },
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": true,
+              "event_id": "visible_context",
+              "model_visible": false,
+              "omitted": true,
+              "requested_omission": true
+            }
+          ],
+          "exact_effect": false,
+          "model_visible_bytes": 0,
+          "model_visible_count": 0,
+          "regret_vs_baseline": false,
+          "safe_stop": false,
+          "stop_reason": "task_effect_missing"
+        }
+      ],
+      "scenario_id": "captured_but_undelivered"
+    },
+    {
+      "arms": [
+        {
+          "arm_id": "baseline",
+          "effect": "safe_stop",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 10,
+              "delivered": true,
+              "event_id": "optional_before",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 7,
+              "delivered": true,
+              "event_id": "mandatory_revoke",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            },
+            {
+              "captured": true,
+              "counted_bytes": 14,
+              "delivered": true,
+              "event_id": "optional_after",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": false
+            }
+          ],
+          "exact_effect": true,
+          "model_visible_bytes": 31,
+          "model_visible_count": 3,
+          "regret_vs_baseline": false,
+          "safe_stop": true,
+          "stop_reason": "mandatory_safety_cue"
+        },
+        {
+          "arm_id": "omit_optional_around_safety",
+          "effect": "safe_stop",
+          "events": [
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": true,
+              "event_id": "optional_before",
+              "model_visible": false,
+              "omitted": true,
+              "requested_omission": true
+            },
+            {
+              "captured": true,
+              "counted_bytes": 7,
+              "delivered": true,
+              "event_id": "mandatory_revoke",
+              "model_visible": true,
+              "omitted": false,
+              "requested_omission": true
+            },
+            {
+              "captured": true,
+              "counted_bytes": 0,
+              "delivered": true,
+              "event_id": "optional_after",
+              "model_visible": false,
+              "omitted": true,
+              "requested_omission": true
+            }
+          ],
+          "exact_effect": true,
+          "model_visible_bytes": 7,
+          "model_visible_count": 1,
+          "regret_vs_baseline": false,
+          "safe_stop": true,
+          "stop_reason": "mandatory_safety_cue"
+        }
+      ],
+      "scenario_id": "mandatory_safety_cue"
+    }
+  ],
+  "schema": "observation-omission-8397-t0-a01-raw-v1"
+}

@@ -1,0 +1,33 @@
+{
+  "adapter_head": "67d0e19800b8c2d2d8ccb27dcf37547130271de2",
+  "adapter_source_sha256": {
+    "adapter.py": "03b49b2547950b4d07ede4f926902b6b57dde989ce93f4198e90d8e35530a038",
+    "scorer_feedback_attribution_v1.py": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b"
+  },
+  "attributions": [],
+  "counts": {
+    "candidate_key_intervals": 1,
+    "input_admissions": 1,
+    "integrity_flags": [],
+    "key_release_receipts": 1,
+    "scorer_events": 0,
+    "scorer_samples": 17,
+    "unverified_or_censored_key_intervals": 0
+  },
+  "interpretation": "The adapter joins the actual retained admission and synchronized release receipt. Its release_sync_ns is an owner XSync boundary with physical_verification_authoritative=false; this does not certify physical key-up timing. Zero actual positive scorer events means attribution was not exercised.",
+  "release_identity": {
+    "id": "native-left-01",
+    "intent_token": "078673ca2b284d028a816d47dc87c1de",
+    "key": "Left",
+    "owner_id": "388a6e2c74604c289196d5f5f781ec8a",
+    "physical_verification_authoritative": false,
+    "release_batch_identifier": "native-left-01",
+    "step": 0
+  },
+  "source_summary": {
+    "event_count": 0,
+    "positive_useful_events": 0,
+    "sample_count": 17
+  },
+  "trace_integrity": "SOURCE_ROWS_JOINED"
+}

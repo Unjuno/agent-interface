@@ -1,0 +1,23 @@
+{
+  "schema": "issue59-v39-paired-ammo-cover-a03-freeze-v1",
+  "allocation_id": "ISSUE59-V39-AMMO-COVER-PAIR-GUARD-A03-20261005",
+  "frozen_before_execution": true,
+  "base_commit": "e561b25b700680df4e6ffd2b92faf1dde1682ef7",
+  "runtime": "CPython 3.14.5, macOS arm64, stdlib-only; no isolation/resource-enforcement claim",
+  "formal_live_allocation_invocations": 0,
+  "probe_invocations": 1,
+  "auditor_invocations": 1,
+  "retry_limit": 0,
+  "input_sha256": {
+    "fixture.json": "cb89b560bde448cc96e8fa8698fae6ea73f7c503c56f069fffa5bfcc6f871432"
+  },
+  "prototype_sha256": {
+    "probe.py": "3d702c2202919119d92b5cc5cdd63c3ff5b16e8ee7934766ffe9f6201d8d4a6d",
+    "audit.py": "fe8a43a8a46d521f721bbf36e654d6fc39ce8f5163730377cc98363f5035a924"
+  },
+  "current_main_source_sha256": {
+    "research/live_control/observable_signal_guard_v2.py": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+  },
+  "decision_gate": "PASS only if coherent positive ammo including 1 preserves; coherent ammo 0 and health below floor invalidate; every missing, split-sequence, split-time, binding-mismatched, boolean, or float-typed pair invalidates; independent audit reconstructs every case. Otherwise FAIL.",
+  "scope": "paired signal guard construction only; no current controller integration or live/game/input behavior"
+}

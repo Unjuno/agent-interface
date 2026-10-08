@@ -1,0 +1,20 @@
+{
+  "allocation_id": "7748-DUPLICATE-ID-A02-20261005-01",
+  "docker_context": "orbstack",
+  "fallback": "host-only deterministic standard-library execution, matching the explicit host fallback in Issue #8061",
+  "host": "macOS arm64",
+  "limits": [
+    "no container isolation claim",
+    "no CPU or memory enforcement claim",
+    "no GUI, model, OS scheduler, runtime, user, or physical-release test"
+  ],
+  "provenance_note": "A02 is a fresh allocation; A01 STOP_AUDITOR_EXIT_MISMATCH and all A01 artifacts are preserved separately. Uses previously observed read-only container preflight failure and preregistered host fallback; no repair/retry.",
+  "read_only_container_preflight": {
+    "candidate_started_in_container": false,
+    "command": "docker image ls --format '{{.Repository}}:{{.Tag}} {{.ID}}'",
+    "exit_code": 1,
+    "mutation_attempted": false,
+    "stderr": "Error response from daemon: rpc error: code = Unknown desc = blob sha256:0637e54d4b04b0fb3b1eae5829b7616bee43ddb4fa9019628a76219d3466e9de expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/0637e54d4b04b0fb3b1eae5829b7616bee43ddb4fa9019628a76219d3466e9de: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/0637e54d4b04b0fb3b1eae5829b7616bee43ddb4fa9019628a76219d3466e9de: operation not supported"
+  },
+  "runtime": "CPython 3.14.5"
+}

@@ -1,0 +1,3 @@
+# Post-run freeze qualification
+
+Prospective comment 5986448843 says five controls, but frozen fixture dd30196595561d9f0d1fe59e05086f09c40bded7 contains six: zero arm support, zero observation support, unknown missing window, post-treatment eligibility, session interference, and beyond-horizon carryover. The candidate and auditor each ran once on this exact fixture; all six returned NONIDENTIFIABLE. The literal five-control minimum was exceeded. Preserve this discrepancy and comment 5986498125; no rewriting or rerun.

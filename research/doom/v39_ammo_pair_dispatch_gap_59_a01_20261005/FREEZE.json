@@ -1,0 +1,14 @@
+{
+  "record_type": "exploratory_construction_probe",
+  "preregistered": false,
+  "issue": "Unjuno/agent-interface#59",
+  "pull_request": 7717,
+  "hypothesis": "At PR head 40f118fef7757744f09c0683870517e94ff5109f, the controller wait dispatch can silently skip the paired health/ammo monitor's ordinary-observation fallback when a typed companion is absent.",
+  "source_commit": "40f118fef7757744f09c0683870517e94ff5109f",
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "source_blob": "41c1f9744c65704b6f55b8826c010552d6325998",
+  "candidate_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512m --mount type=bind,source=<this-directory>,target=/src,readonly --workdir /src post-guard-game-59-4d74:20261004 python -B dispatch_probe.py",
+  "decision_rule": "Counterexample if an ordinary observation with a same-epoch zero-ammo reader result returns as observation while the exact frozen wait() leaves the monitor at source sequence 10; controls require typed delivery and ordinary delivery enabled in the monitor event set to invalidate with ammo:below_hard_minimum.",
+  "stop_rule": "One candidate execution; preserve first output and do not repeat candidate execution.",
+  "scope": "Synthetic controller construction only; no game, GUI, model, OS input, live allocation, cancellation, physical release, task effect, or end-to-end recovery."
+}

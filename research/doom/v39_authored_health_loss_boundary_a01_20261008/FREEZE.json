@@ -1,0 +1,28 @@
+{
+  "schema": "issue59-authored-health-loss-boundary-freeze-v1",
+  "experiment": "issue59-authored-health-loss-boundary-a01-20261008",
+  "kind": "one-shot synthetic construction boundary; no live allocation",
+  "main_commit": "bb476976d887bb0194a64a1c6ab1e7ac45d72e24",
+  "controller": {
+    "path": "research/doom/map01_overlap_controller_v39.py",
+    "git_blob": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a",
+    "sha256": "c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95"
+  },
+  "guard": {
+    "path": "research/live_control/observable_signal_guard_v2.py",
+    "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+    "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+  },
+  "motivating_evidence": {
+    "path": "research/doom/MAP01_ASTRA_SYSTEM_FAILURE_TRIAGE_V1.md",
+    "git_blob": "99f807b68a782f95836a2f32130ea24967e60a61",
+    "sha256": "4af4a25cdb4dc2cd1c035e7faef05d676284e0fd34542989a1371652147d2796",
+    "observation": "The retained triage associates a surrounding decision window with sampled health falling 100 to 84 during a slow answer/cover interval; exact damage timing is unresolved."
+  },
+  "hypothesis": "V39 computes the authored health floor as max(critical_health_minimum, source_health - maximum_health_loss); a typed health value of 84 from source 100 will invalidate only when it is below that floor.",
+  "test": "Exercise the current-main build_cover_monitor and paired health/ammo observer with maximum_health_loss values 0 through 20, and at each setting probe health 84, the exact derived floor, and one point below the floor.",
+  "decision": "Construction passes only if the real source path agrees at every point with strict-below threshold semantics and never grants input authority. This can show the configured guard boundary, not live timing or policy efficacy.",
+  "counterhypothesis": "The authored validity floor may not interrupt at the expected point due to pair binding, event ordering, threshold comparison, or controller integration behavior.",
+  "uncertainty": "Synthetic typed observations do not establish threat classification, damage timing, when a real HUD value becomes available, interruption latency, key release, useful feedback, recovery, survival, or task effect.",
+  "retry_policy": "Run the packaged candidate once after this freeze. Do not run a game/model allocation or repeat the candidate to seek a preferred result."
+}

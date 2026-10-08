@@ -1,0 +1,22 @@
+test_blind_inverse_loses_the_disjoint_external_write (test_model.CompensationHistoryTests.test_blind_inverse_loses_the_disjoint_external_write) ... FAIL
+test_compensation_never_claims_literal_rollback (test_model.CompensationHistoryTests.test_compensation_never_claims_literal_rollback) ... ok
+test_conflict_and_unidentifiable_histories_fail_closed (test_model.CompensationHistoryTests.test_conflict_and_unidentifiable_histories_fail_closed) ... ok
+test_field_policy_is_strictly_more_selective_on_disjoint_write (test_model.CompensationHistoryTests.test_field_policy_is_strictly_more_selective_on_disjoint_write) ... ok
+test_footprint_corruption_is_rejected_by_independent_oracle (test_model.CompensationHistoryTests.test_footprint_corruption_is_rejected_by_independent_oracle) ... ok
+test_independent_oracle_reconstructs_every_policy_trace (test_model.CompensationHistoryTests.test_independent_oracle_reconstructs_every_policy_trace) ... ok
+test_revision_corruption_is_rejected_by_independent_oracle (test_model.CompensationHistoryTests.test_revision_corruption_is_rejected_by_independent_oracle) ... ok
+
+======================================================================
+FAIL: test_blind_inverse_loses_the_disjoint_external_write (test_model.CompensationHistoryTests.test_blind_inverse_loses_the_disjoint_external_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/t0/test_model.py", line 16, in test_blind_inverse_loses_the_disjoint_external_write
+    self.assertEqual("x", model.trace("disjoint")["state"]["fields"]["body"])
+AssertionError: 'x' != 'y'
+- x
++ y
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=1)

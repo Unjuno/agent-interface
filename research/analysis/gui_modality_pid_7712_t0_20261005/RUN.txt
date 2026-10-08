@@ -1,0 +1,18 @@
+python --version
+Python 3.12.10
+candidate: python candidate.py (exit 0)
+{"case_count": 6, "result": "candidate_complete"}
+audit: python audit.py (exit 0)
+{"checks": 6, "disposition": "PASS_METHOD_SCOPED", "passed": true, "schema": "issue7712_pid_t0_audit_v1"}
+mutations: python -B -m unittest -v test_audit (exit 0)
+test_joint_distribution_change_is_rejected (test_audit.RawAuditMutationTests.test_joint_distribution_change_is_rejected) ... ok
+test_missing_probability_mass_is_rejected (test_audit.RawAuditMutationTests.test_missing_probability_mass_is_rejected) ... ok
+test_source_target_relabel_is_rejected (test_audit.RawAuditMutationTests.test_source_target_relabel_is_rejected) ... ok
+test_unmodified_record_passes (test_audit.RawAuditMutationTests.test_unmodified_record_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.006s
+
+OK
+started_utc=2026-10-04T17:31:16.8985874Z
+finished_utc=2026-10-04T17:31:18.3220037Z

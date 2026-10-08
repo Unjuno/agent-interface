@@ -1,0 +1,51 @@
+{
+  "experiment": "V39 current-main ExecutorV13 cross-layer cancellation ordering replay",
+  "date": "2026-10-08",
+  "main_commit": "708ca59a8128f07fdb7e13a36704c6b2f79c9fb6",
+  "status": "PASS_SOFTWARE_CROSS_LAYER_ORDERING",
+  "scope": {
+    "exact_current_main_v39_helper": true,
+    "exact_planner_adapter_methods": true,
+    "exact_appserver_client_request_and_interrupt_methods": true,
+    "exact_executor_v13_software_stack": true,
+    "simulated_backend_and_owner": true,
+    "live_game_or_os_input_test": false
+  },
+  "observed_event_order": {
+    "current": [
+      "accepted",
+      "step_started",
+      "appserver_interrupt_request_written",
+      "appserver_interrupt_response_injected",
+      "controller_cancel_write",
+      "cancel_requested",
+      "controller_cancel_flush",
+      "input_released",
+      "terminal"
+    ],
+    "cancel_first_counterfactual": [
+      "accepted",
+      "step_started",
+      "controller_cancel_write",
+      "cancel_requested",
+      "controller_cancel_flush",
+      "appserver_interrupt_request_written",
+      "input_released",
+      "terminal",
+      "appserver_interrupt_response_injected"
+    ]
+  },
+  "verification": {
+    "focused_tests_passed": 6,
+    "source_audit_passed": true,
+    "python_compile_passed": true,
+    "git_diff_check_passed": true
+  },
+  "limitations": [
+    "The backend and owner are simulated; the held-key set is in memory.",
+    "No physical or OS-level key release was established.",
+    "No live game task effect, threat exposure, or production latency was measured.",
+    "The counterfactual is a test harness only and is not a production fix."
+  ],
+  "decision": "Retain as software ordering evidence. Keep the fresh live threat exposure gate before any controller repair."
+}

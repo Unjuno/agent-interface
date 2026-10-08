@@ -1,0 +1,54 @@
+import base64,hashlib,http.server,json,pathlib,sqlite3,threading,time,urllib.request,os,datetime
+P=pathlib.Path(__file__).resolve().parent; OUT=P/'native-first';OUT.mkdir(exist_ok=False)
+sha=lambda b:hashlib.sha256(b).hexdigest();utc=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+deck=[('SHARED_GENERIC',2,False,False,False),('SHARED_ROUTED',2,True,False,False),('AMPLE_GENERIC',4,False,False,False),('AMPLE_ROUTED',4,True,False,False),('EXPIRED_ROUTED',2,True,True,False),('FORBIDDEN_ROUTED',2,True,False,True)]
+arms=[]
+for name,capacity,routed,expired,forbidden in deck:
+    db=OUT/(name+'.sqlite');cx=sqlite3.connect(db);cx.execute('CREATE TABLE effects(intent TEXT PRIMARY KEY, recipient INTEGER, route INTEGER, value TEXT)');cx.commit();cx.close()
+    lock=threading.Lock();slots=[threading.BoundedSemaphore(capacity) for _ in range(2)];held=[];events=[];receipts=[]
+    def record(kind,**fields):
+        events.append(dict(seq=len(events),kind=kind,monotonic_ns=time.monotonic_ns(),**fields))
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def log_message(self,*args):pass
+        def do_POST(self):
+            body=self.rfile.read(int(self.headers['Content-Length']));q=json.loads(body)
+            with lock:
+                now=time.monotonic_ns();recipient=q['recipient'];route=q['route'];intent=q['intent']
+                assert type(recipient) is int and 0<=recipient<4 and type(route) is int and route in (0,1)
+                allowed=(0,) if forbidden and recipient==3 else (0,1)
+                reason='EXPIRED' if now>=q['expires_ns'] else 'FORBIDDEN' if route not in allowed else None
+                record('OFFER',request=q,request_sha256=sha(body),received_ns=now)
+                if reason is None and not slots[route].acquire(blocking=False):reason='CAPACITY'
+                if reason is None:
+                    held.append(route);record('SLOT_ACQUIRED',intent=intent,route=route)
+                    c=sqlite3.connect(db);c.execute('INSERT INTO effects VALUES(?,?,?,?)',(intent,recipient,route,'DONE'));c.commit();c.close();record('EFFECT_COMMITTED',intent=intent,recipient=recipient,route=route)
+                response={'intent':intent,'recipient':recipient,'route':route,'status':'APPLIED' if reason is None else 'REFUSED','reason':reason}
+                record('RESPONSE',response=response)
+            b=(json.dumps(response,sort_keys=True)+'\n').encode();self.send_response(200);self.send_header('Content-Length',str(len(b)));self.end_headers();self.wfile.write(b)
+    server=http.server.ThreadingHTTPServer(('127.0.0.1',0),Handler);server.daemon_threads=False
+    thread=threading.Thread(target=server.serve_forever,name=name);thread.start()
+    expiry=time.monotonic_ns()+30_000_000_000 if not expired else time.monotonic_ns()-1
+    barrier=threading.Barrier(4); errors=[]
+    def client(recipient):
+        q={'intent':name+'-'+str(recipient),'recipient':recipient,'route':recipient%2 if routed else 0,'expires_ns':expiry}
+        body=json.dumps(q,sort_keys=True).encode();start=utc()
+        try:
+            barrier.wait(timeout=5)
+            request=urllib.request.Request('http://127.0.0.1:'+str(server.server_port)+'/',data=body,method='POST',headers={'Content-Type':'application/json'})
+            with urllib.request.urlopen(request,timeout=10) as response:b=response.read();code=response.status
+            with lock:receipts.append({'recipient':recipient,'request':q,'request_bytes':len(body),'request_sha256':sha(body),'response_bytes':len(b),'response_sha256':sha(b),'response_utf8':b.decode(),'http_status':code,'started_utc':start,'ended_utc':utc()})
+        except BaseException as e:
+            with lock:errors.append({'recipient':recipient,'error':repr(e),'utc':utc()})
+    clients=[threading.Thread(target=client,args=(i,),name='client-'+str(i)) for i in range(4)]
+    for t in clients:t.start()
+    for t in clients:t.join(timeout=12)
+    with lock:
+        for route in held:slots[route].release();record('SLOT_RELEASED',route=route)
+    server.shutdown();server.server_close();thread.join(timeout=5)
+    terminal={'server_thread_alive':thread.is_alive(),'client_threads_alive':[t.is_alive() for t in clients],'errors':errors}
+    # Reopen closed fixture DB only after service teardown. This is authoritative saved-state readback, not GUI truth.
+    c=sqlite3.connect(db.as_uri()+'?mode=ro&immutable=1',uri=True);rows=c.execute('SELECT intent,recipient,route,value FROM effects ORDER BY intent').fetchall();integrity=c.execute('PRAGMA integrity_check').fetchone()[0];c.close()
+    image=db.read_bytes();arms.append({'name':name,'capacity_each':capacity,'routed':routed,'expired':expired,'forbidden_recipient3':forbidden,'events':events,'receipts':sorted(receipts,key=lambda r:r['recipient']),'terminal':terminal,'closed_rows':rows,'integrity':integrity,'db':{'name':db.name,'bytes':len(image),'sha256':sha(image),'base64':base64.b64encode(image).decode()}})
+    assert not thread.is_alive() and not any(t.is_alive() for t in clients) and not errors
+raw={'allocation':'6358-PRIVATE-CAPACITY-C01-20261003','producer_pid':os.getpid(),'arms':arms,'requests':sum(len(a['receipts']) for a in arms)}
+(OUT/'RAW.json').write_text(json.dumps(raw,sort_keys=True,indent=2)+'\n',encoding='utf-8');print(json.dumps({'arms':len(arms),'requests':raw['requests'],'effects':[len(a['closed_rows']) for a in arms],'raw_sha256':sha((OUT/'RAW.json').read_bytes())}))

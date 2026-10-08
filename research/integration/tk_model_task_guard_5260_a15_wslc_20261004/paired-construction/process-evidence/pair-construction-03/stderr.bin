@@ -1,0 +1,23 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_combined_wrong_answer_and_focus_drift_does_not_click_or_claim_focus_only (test_live_pair.LivePairTests.test_combined_wrong_answer_and_focus_drift_does_not_click_or_claim_focus_only) ... ok
+test_file_exchange_runner_keeps_first_wrong_answer_and_one_changed_evidence_recovery (test_live_pair.LivePairTests.test_file_exchange_runner_keeps_first_wrong_answer_and_one_changed_evidence_recovery) ... ok
+test_guard_exception_after_actual_prefix_is_terminal_not_replayed (test_live_pair.LivePairTests.test_guard_exception_after_actual_prefix_is_terminal_not_replayed) ... ok
+test_independent_apps_identical_initial_pixels_and_exact_supplied_prefix_files (test_live_pair.LivePairTests.test_independent_apps_identical_initial_pixels_and_exact_supplied_prefix_files) ... ok
+test_post_answer_focus_drift_yields_then_one_native_click_and_new_ack_recovers (test_live_pair.LivePairTests.test_post_answer_focus_drift_yields_then_one_native_click_and_new_ack_recovers) ... FAIL
+test_wrong_no_repair_saves_wrong_control_file_but_guard_yields_without_input (test_live_pair.LivePairTests.test_wrong_no_repair_saves_wrong_control_file_but_guard_yields_without_input) ... ok
+
+======================================================================
+FAIL: test_post_answer_focus_drift_yields_then_one_native_click_and_new_ack_recovers (test_live_pair.LivePairTests.test_post_answer_focus_drift_yields_then_one_native_click_and_new_ack_recovers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/integration/tk_model_task_guard_5260_a15_wslc_20261004/test_live_pair.py", line 72, in test_post_answer_focus_drift_yields_then_one_native_click_and_new_ack_recovers
+    self.assertEqual(recovered['status'], 'SAVE_DISPATCHED', recovered)
+AssertionError: 'YIELD' != 'SAVE_DISPATCHED'
+- YIELD
++ SAVE_DISPATCHED
+ : {'status': 'YIELD', 'reason': 'MIXED_SEMANTIC_FOCUS_YIELD', 'task_complete': False, 'native_calls': []}
+
+----------------------------------------------------------------------
+Ran 6 tests in 14.837s
+
+FAILED (failures=1)

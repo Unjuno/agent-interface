@@ -1,0 +1,23 @@
+{
+  "audit": "saved construction failure-path outcomes only; Win32 query, no signal or child launch",
+  "checks": {
+    "factory_hash_matches_saved_result": true,
+    "all_three_cases_recorded": true,
+    "all_cases_passed": true,
+    "job_closed_once_per_created_handle": true,
+    "assign_failure_child_stopped": true,
+    "resume_failure_child_stopped": true,
+    "all_recorded_child_pids_inactive_now": true
+  },
+  "pid_states_now": {
+    "55016": {
+      "exists": false,
+      "error": 87
+    },
+    "21348": {
+      "exists": false,
+      "error": 87
+    }
+  },
+  "pass": true
+}

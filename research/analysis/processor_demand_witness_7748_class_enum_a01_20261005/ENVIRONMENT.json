@@ -1,0 +1,36 @@
+{
+  "allocation_id": "7748-CLASS-ENUM-A01-20261005-01",
+  "intake_main": "3239217f54c199b582924ee69c7c80402f418a63",
+  "date": "2026-10-05",
+  "host": {
+    "os": "macOS 27.0.1",
+    "architecture": "arm64",
+    "python": "CPython 3.14.5",
+    "execution": "host-only deterministic standard-library model after explicit OrbStack OCI preflight STOP"
+  },
+  "orbstack": {
+    "machine": "obs-5905-a04-20261005",
+    "machine_use": "previously allocated private research VM; not a shared Docker daemon",
+    "kernel": "Linux 7.0.5-orbstack-00330-ge3df4e19b0a0-dirty aarch64",
+    "podman": "4.9.3",
+    "image": "docker.io/library/python@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d",
+    "image_config_id": "sha256:04e0b4721883a7b878e91662548cd04ddbc2f256cfa86f43920b92557198c1c3",
+    "image_architecture": "arm64",
+    "preflight_command": "podman run --rm --network none --read-only --user 1000:1000 docker.io/library/python@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d python --version",
+    "preflight_result": "STOP_OCI_BPF_PERMISSION_DENIED",
+    "preflight_stderr": "crun: bpf create: Operation not permitted: OCI permission denied",
+    "candidate_started_in_container": false,
+    "auditor_started_in_container": false,
+    "image_or_daemon_mutations_attempted": 0
+  },
+  "formal_invocations_at_environment_freeze": {
+    "candidate": 0,
+    "raw_only_auditor": 0,
+    "retries": 0
+  },
+  "claims": [
+    "No container execution or isolation is claimed.",
+    "Host-only execution is allowed for this standard-library finite model by Issue #8061 and PROTOCOL.md.",
+    "No OS scheduler, GUI, model, GPU, user, or physical-input operation is part of the test."
+  ]
+}

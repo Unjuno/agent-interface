@@ -1,0 +1,187 @@
+{
+  "pid": 6060,
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "source_sha256": "ec095c3911fd3e3172aff1a95b3ceea58547affb38f1e1740e7322cca1ffd288",
+  "rows": [
+    {
+      "case": "stderr_pending",
+      "same_primary": false,
+      "cleanup": null,
+      "stdout_closed_before_release": false,
+      "stderr_closed_before_release": false,
+      "admitted_before_release": true,
+      "callback_removed": false,
+      "stdout_accesses": [],
+      "all_controlled_workers_retired": true,
+      "all_streams_closed_after_teardown": true
+    },
+    {
+      "case": "stderr_refused",
+      "same_primary": true,
+      "cleanup": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": 0,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [
+          "stderr reader start: RuntimeError('controlled no-admission stderr refusal')"
+        ],
+        "escalations": [],
+        "stderr_complete": false,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true,
+        "startup_error": {
+          "type": "ValueError",
+          "message": "original startup failure"
+        },
+        "startup_events": []
+      },
+      "stdout_closed_before_release": true,
+      "stderr_closed_before_release": true,
+      "admitted_before_release": false,
+      "callback_removed": true,
+      "stdout_accesses": [],
+      "all_controlled_workers_retired": true,
+      "all_streams_closed_after_teardown": true
+    },
+    {
+      "case": "stdout_join_interrupted",
+      "same_primary": false,
+      "cleanup": null,
+      "stdout_closed_before_release": false,
+      "stderr_closed_before_release": false,
+      "admitted_before_release": false,
+      "callback_removed": false,
+      "stdout_accesses": [],
+      "all_controlled_workers_retired": true,
+      "all_streams_closed_after_teardown": true
+    },
+    {
+      "case": "stdout_live",
+      "same_primary": true,
+      "cleanup": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": 0,
+        "reader_joined": false,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [
+          "stdout reader still running"
+        ],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true,
+        "startup_error": {
+          "type": "ValueError",
+          "message": "original startup failure"
+        },
+        "startup_events": []
+      },
+      "stdout_closed_before_release": false,
+      "stderr_closed_before_release": true,
+      "admitted_before_release": false,
+      "callback_removed": true,
+      "stdout_accesses": [],
+      "all_controlled_workers_retired": true,
+      "all_streams_closed_after_teardown": true
+    },
+    {
+      "case": "stdout_pending",
+      "same_primary": true,
+      "cleanup": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": 0,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true,
+        "startup_error": {
+          "type": "ValueError",
+          "message": "original startup failure"
+        },
+        "startup_events": []
+      },
+      "stdout_closed_before_release": true,
+      "stderr_closed_before_release": true,
+      "admitted_before_release": true,
+      "callback_removed": true,
+      "stdout_accesses": [
+        {
+          "closed_at_access": true
+        }
+      ],
+      "all_controlled_workers_retired": true,
+      "all_streams_closed_after_teardown": true
+    },
+    {
+      "case": "stdout_refused",
+      "same_primary": true,
+      "cleanup": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": 0,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true,
+        "startup_error": {
+          "type": "ValueError",
+          "message": "original startup failure"
+        },
+        "startup_events": []
+      },
+      "stdout_closed_before_release": true,
+      "stderr_closed_before_release": true,
+      "admitted_before_release": false,
+      "callback_removed": true,
+      "stdout_accesses": [],
+      "all_controlled_workers_retired": true,
+      "all_streams_closed_after_teardown": true
+    },
+    {
+      "case": "stdout_retired",
+      "same_primary": true,
+      "cleanup": {
+        "schema": "map01-startup-cleanup-v1",
+        "session_exit_code": 0,
+        "reader_joined": true,
+        "client_closed": true,
+        "input_release_verified": false,
+        "errors": [],
+        "escalations": [],
+        "stderr_complete": true,
+        "stderr_bytes": 0,
+        "stderr_reader_joined": true,
+        "startup_error": {
+          "type": "ValueError",
+          "message": "original startup failure"
+        },
+        "startup_events": []
+      },
+      "stdout_closed_before_release": true,
+      "stderr_closed_before_release": true,
+      "admitted_before_release": false,
+      "callback_removed": true,
+      "stdout_accesses": [
+        {
+          "closed_at_access": false
+        }
+      ],
+      "all_controlled_workers_retired": true,
+      "all_streams_closed_after_teardown": true
+    }
+  ],
+  "tests_run": 7,
+  "failures": 5,
+  "errors": 0,
+  "result": "FAIL"
+}

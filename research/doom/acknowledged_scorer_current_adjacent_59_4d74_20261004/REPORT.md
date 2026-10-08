@@ -1,0 +1,5 @@
+# Current V16 adjacent construction validation
+
+At f34e5fa70a7775f413441645b3335ca17c5ed206 (source unchanged603f7b70), five separate-process modules passed in one cached WSLc CPU/network-none/nonroot container, outer exit0. Counts: V15 session8, progress clock15, polling12, adapter5, acknowledged sampler10:50 total. Individual stdout/stderr/results and exact argv/source hashes are preserved. No native game/model/GPU/positive input or original scientific run was replayed. Requested memory enforcement is qualified by retained kernel warning.
+
+Canonical source staging inherited every Python file from frozen75fb0f7, replacing only the three paths listed in FREEZE with exact current Git bytes; runner also hashed. Thus this tests the current V16 modification with that frozen adjacent dependency set, not all latest-main peer changes. All member hashes permit reconstructing the staged source; it is retained locally, while this archive stores runner/output/hash metadata. Existing failure/repair/native namespaces remain unchanged. This is construction compatibility only; full V16 main/controller/timing/useful task and broader roadmap remain incomplete.

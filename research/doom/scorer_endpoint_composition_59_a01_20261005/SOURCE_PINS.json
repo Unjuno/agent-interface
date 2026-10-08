@@ -1,0 +1,45 @@
+{
+  "schema": "scorer-endpoint-composition-source-pins-v1",
+  "sources": [
+    {
+      "path": "research/doom/scorer_checkpoint_tic_ack_t0_v1/candidate_helper.py",
+      "role": "prior exact-one-tic repaired helper",
+      "sha256": "d35d21d4ec37ff2814be52c309df1518158a77e2e78a7658ea1053711743750e"
+    },
+    {
+      "path": "research/doom/scorer_async_spectator_59_t0_a01_20261004/candidate_snapshot.py",
+      "role": "coherent multi-tic snapshot candidate",
+      "sha256": "9d8c9b2e22b88f2e405f37dea9eaf19d312791bb036e7f758954f450081eab03"
+    },
+    {
+      "path": "research/doom/scorer_async_spectator_59_t0_a01_20261004/raw.json",
+      "role": "retained ASYNC_SPECTATOR runtime counterexample",
+      "sha256": "05afecc5acf43de27e451a0ba8deef4c2ea52e662ad10a6751aaaf8715a040f4"
+    },
+    {
+      "path": "research/doom/acknowledged_scorer_59_4d74_20261004/source/acknowledged_scorer_v1.py",
+      "role": "actual V16 producer acknowledgment sampler composed by tests",
+      "sha256": "859137577553ec2eea168ca79ce3d1b04b0da23c21efe76814582a89c2de1ecc"
+    },
+    {
+      "path": "research/doom/acknowledged_scorer_59_4d74_20261004/source/independent_progress_clock_v2.py",
+      "role": "actual V16 ProgressSample and ProgressClock",
+      "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+    },
+    {
+      "path": "research/doom/acknowledged_scorer_59_4d74_20261004/source/map01_scorer_stdio_adapter_v1.py",
+      "role": "actual V16 ScorerFileSink composed by tests",
+      "sha256": "626abae869c3c77fa76333347ee247eb9ce6ef25baf6d7e692fc59ff131180ab"
+    },
+    {
+      "path": "research/doom/acknowledged_scorer_59_4d74_20261004/source/session_map01_v15.py",
+      "role": "existing session whose scorer callback is replaced by opt-in V17",
+      "sha256": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+    },
+    {
+      "path": "research/doom/acknowledged_scorer_59_4d74_20261004/source/session_map01_v16.py",
+      "role": "retained opt-in acknowledged session wrapper used as integration reference",
+      "sha256": "4f640bc61de6759730b6cb1e1903a90a3d22bdc1df6edb7d4a1927aa8217eb0e"
+    }
+  ]
+}

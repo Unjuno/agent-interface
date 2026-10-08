@@ -1,0 +1,71 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "win32",
+  "source_sha256": "d182aa759cdc8c243d7389e7031757bef67e39fdaf182a32e7f708f44244aac1",
+  "cases": [
+    {
+      "case": "popen-startup-failure",
+      "fail_site": "popen",
+      "started_utc": "2026-10-04T01:06:42.320169+00:00",
+      "exception": "OSError: injected Popen startup failure",
+      "job_handles_created": [
+        592
+      ],
+      "job_handles_closed": [
+        592
+      ],
+      "job_close_count_matches_create": true,
+      "factory_failed_as_injected": true,
+      "child_stopped": true,
+      "pass": true,
+      "completed_utc": "2026-10-04T01:06:42.324169+00:00"
+    },
+    {
+      "case": "job-assignment-failure",
+      "fail_site": "assign",
+      "started_utc": "2026-10-04T01:06:42.324169+00:00",
+      "exception": "OSError: [Errno 5] AssignProcessToJobObject",
+      "pid": 55016,
+      "returncode_after_factory_failure": 1,
+      "process_state_after_factory_failure": {
+        "exists": false,
+        "exit_code": 1
+      },
+      "job_handles_created": [
+        592
+      ],
+      "job_handles_closed": [
+        592
+      ],
+      "job_close_count_matches_create": true,
+      "factory_failed_as_injected": true,
+      "child_stopped": true,
+      "pass": true,
+      "completed_utc": "2026-10-04T01:06:42.342890+00:00"
+    },
+    {
+      "case": "primary-thread-resume-failure",
+      "fail_site": "resume",
+      "started_utc": "2026-10-04T01:06:42.342890+00:00",
+      "exception": "RuntimeError: injected primary-thread resume failure",
+      "pid": 21348,
+      "returncode_after_factory_failure": 1,
+      "process_state_after_factory_failure": {
+        "exists": false,
+        "exit_code": 1
+      },
+      "job_handles_created": [
+        788
+      ],
+      "job_handles_closed": [
+        788
+      ],
+      "job_close_count_matches_create": true,
+      "factory_failed_as_injected": true,
+      "child_stopped": true,
+      "pass": true,
+      "completed_utc": "2026-10-04T01:06:42.355404+00:00"
+    }
+  ],
+  "pass": true
+}

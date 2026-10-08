@@ -1,0 +1,20 @@
+{
+  "schema": "logical-time-fixed-overhead-audit-freeze-v1",
+  "issue": 7327,
+  "allocation": "LOGICAL-TIME-SYMMETRY-7327-FIXED-OVERHEAD-T5-AUDIT-20261004-01",
+  "main_commit": "68e0378362b5ce6775f253064eaad63a2da6cda9",
+  "purpose": "audit-only successor for retained T4 raw; no candidate invocation",
+  "input_sha256": {
+    "audit_input.json": "56ed6752a9944f8750592f84ebe2d2198548e7ca19648b3984d587bd48fd6340",
+    "t4_spec.json": "beb62eb9d68fe2e44a6a820dea1141d83e965abb63770350730e216f03972a4f",
+    "t4_raw.json": "f7e462942ac1ecbc426e0bb48e87b1a8e3c74831613d9493c4e1ab3e2d0f27f3",
+    "t4_candidate_source.py": "1010d02d72667784b96a16285dc29388095eeac7b238dd4ebf947b6fcf7935b6"
+  },
+  "auditor_sha256": "38c2c27a7a6a500def0268e048950e7f19d26c6430710fd64f0b39c7b1277379",
+  "preflight_sha256": "f16a2ecd4a2325d6aebb795d148ca767478010e2c6db13b55d3bf0a87124286e",
+  "preflight": "PASS 3/3: exact raw reconstruction, scientific checks, four mutation rejections",
+  "invocation_budget": {"candidate": 0, "auditor": 1, "retry": 0},
+  "runtime": "CPython 3.14.5; standard library only",
+  "container": false,
+  "scope": "offline synthetic audit only; no physical, GUI, game, model, safety, or speed result"
+}

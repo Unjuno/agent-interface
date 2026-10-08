@@ -1,0 +1,16 @@
+{
+  "schema": "xvfb-xlib-select-buffering-audit-expectations-v2",
+  "provenance": "post-run corrective contract authored after review found a digest-recomputed event-identity mutation accepted by audit-v1; these values were not part of the preregistration freeze",
+  "scope": "bind the identity asserted by this one retained diagnostic; this correction does not upgrade the experiment or its independence claim",
+  "keysym_from_frozen_probe": "a",
+  "expected_keycode": 38,
+  "expected_window": 2097152,
+  "expected_edges": [
+    {"case": "select-first", "edge": "press", "type": 2},
+    {"case": "select-first", "edge": "release", "type": 3},
+    {"case": "same-connection-query-first", "edge": "press", "type": 2},
+    {"case": "same-connection-query-first", "edge": "release", "type": 3},
+    {"case": "separate-query-connection-first", "edge": "press", "type": 2},
+    {"case": "separate-query-connection-first", "edge": "release", "type": 3}
+  ]
+}
