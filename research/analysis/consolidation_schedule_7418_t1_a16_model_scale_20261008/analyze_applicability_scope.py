@@ -47,6 +47,7 @@ def main():
                 scope_complete = False
 
     outcomes = Counter()
+    evidence_limited_outcomes = Counter()
     scoped_prefix_classes = Counter()
     examples = {}
     for seed in (5601, 5602, 5603):
@@ -59,6 +60,14 @@ def main():
                            and response.get("answer") == expected["answer"]
                            and sorted(response.get("source_ids", [])) == sorted(expected["source_ids"]))
                 outcomes[(arm, "correct" if correct else "incorrect")] += 1
+                evidence_expected = (expected if arm == "episodic_only" else
+                                     {"classification": "UNKNOWN", "answer": None, "source_ids": []})
+                evidence_correct = (
+                    response.get("classification") == evidence_expected["classification"]
+                    and response.get("answer") == evidence_expected["answer"]
+                    and sorted(response.get("source_ids", [])) == sorted(evidence_expected["source_ids"])
+                )
+                evidence_limited_outcomes[(arm, "correct" if evidence_correct else "incorrect")] += 1
                 if prefix >= 3:
                     scoped_prefix_classes[(arm, response.get("classification", "INVALID"))] += 1
                 selected_examples = {("per_episode", 1), ("per_episode", 3),
@@ -86,6 +95,16 @@ def main():
         "query_family": "q_common_save",
         "correct_by_arm": {arm: outcomes[(arm, "correct")] for arm in
                             ("episodic_only", "per_episode", "batch_2", "terminal")},
+        "evidence_limited_correct_by_arm": {
+            arm: evidence_limited_outcomes[(arm, "correct")] for arm in
+            ("episodic_only", "per_episode", "batch_2", "terminal")
+        },
+        "evidence_limited_scoring_rule": (
+            "For q_common_save, episodic_only retains the source episodes and uses the registered "
+            "oracle; for every summary arm, require UNKNOWN because no summary claim carries the "
+            "editor/draft/standard applicability context requested by the query. Descriptive "
+            "posthoc sensitivity only; not the preregistered endpoint."
+        ),
         "total_per_arm": 18,
         "q_common_save_classification_prefixes_3_to_6": {
             arm: {label: scoped_prefix_classes[(arm, label)] for label in

@@ -26,7 +26,7 @@ Figures below are means per seed-arm over three seeds except rates explicitly sh
 | batch_2 | 33 | 9177 | 4711 | 13888 | 79.1 | 3.0; 744/1213 | 8/12 | 3/51 |
 | terminal | 31 | 7123 | 1851 | 8974 | 51.2 | 1.0; 1213/1213 | 0/12 | 0/51 |
 
-The exact answer to the rare-exception query was correct in 3/12 episodic-only, 9/12 per-episode, 8/12 batch-2, and 0/12 terminal checks at prefixes 3–6. The transition auditor verified exception value/source fidelity under the frozen mapping, but did not verify applicability context; it therefore does not establish scope-preserving memory faithfulness. Across the full 360 queries, false non-UNKNOWN answers on oracle-UNKNOWN cases numbered 6/51 episodic-only, 15/51 per-episode, 3/51 batch-2, and 0/51 terminal. See `APPLICABILITY_SCOPE_DIAGNOSTIC.md` for the reproducible raw-only analysis.
+The exact answer to the rare-exception query was correct in 3/12 episodic-only, 9/12 per-episode, 8/12 batch-2, and 0/12 terminal checks at prefixes 3–6. The transition auditor verified exception value/source fidelity under the frozen mapping, but did not verify applicability context; it therefore does not establish scope-preserving memory faithfulness. Across the full 360 queries, false non-UNKNOWN answers on oracle-UNKNOWN cases numbered 6/51 episodic-only, 15/51 per-episode, 3/51 batch-2, and 0/51 terminal. For q_common_save alone, a posthoc evidence-limited score (UNKNOWN expected on context-free summary arms) changes the family counts from registered 15/18, 3/18, 9/18, 3/18 to 15/18, 0/18, 3/18, 15/18. This is a descriptive endpoint sensitivity and does not replace the frozen metric. See `APPLICABILITY_SCOPE_DIAGNOSTIC.md` for the reproducible raw-only analysis.
 
 ## Interpretation and limits
 

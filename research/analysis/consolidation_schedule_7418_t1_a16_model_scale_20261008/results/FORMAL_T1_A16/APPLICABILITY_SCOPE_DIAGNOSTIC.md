@@ -19,6 +19,15 @@ The `q_common_save` oracle asks for the `editor/draft/standard` effect. It uses 
 
 Across all six prefixes, the existing exact-answer totals remain episodic-only 15/18, per-episode 3/18, batch-2 9/18, and terminal 3/18. The per-episode and batch-2 `CONFLICT` outputs cite the common-save and publish-exception sources as conflicting even though their ledger contexts differ. This pattern is consistent with lost applicability scope. At prefix 1, per-episode also answers `SUPPORTED` from a single common episode where the oracle requires `UNKNOWN`; terminal's pre-update UNKNOWN answers at prefixes 3–5 reflect schedule visibility delay. Thus the observed schedule contrast combines cadence, context-free representation, and exposure timing.
 
+A descriptive evidence-limited sensitivity re-score treats the requested `editor/draft/standard` answer as `UNKNOWN` for summary arms at every prefix, because none of their visible claims identifies the applicability scope. Episodic-only retains full episode context and keeps the registered oracle. Exact correct counts for this one query family become:
+
+| Scoring rule | Episodic-only | Per-episode | Batch-2 | Terminal |
+|---|---:|---:|---:|---:|
+| Registered full-ledger oracle | 15/18 | 3/18 | 9/18 | 3/18 |
+| Evidence-limited for summary arms | 15/18 | 0/18 | 3/18 | 15/18 |
+
+This is a posthoc endpoint sensitivity, not a replacement for the preregistered score. It shows that apparent terminal performance on this family depends on scoring against latent ledger truth versus answerability from the memory actually supplied to the model. The family has one authored query repeated 18 times, so these counts are descriptive and not independent observations.
+
 ## Interpretation boundary
 
 This finding does not alter A16's registered `PASS_METHOD` or its measured schedule-dependent exact-answer contrast under the frozen context-free mapping. It narrows what those results establish: the transition audit did not test the context-preservation property present in T0, and the query oracle uses contextual truth while consolidated evidence omits that context. The contrast is scoped to this particular lossy representation and schedule protocol; it does not show how schedules compare under a context-preserving memory design. No GUI, deployed memory, or action-effect claim follows.
