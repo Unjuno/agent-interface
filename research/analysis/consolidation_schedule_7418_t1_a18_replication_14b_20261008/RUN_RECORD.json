@@ -1,6 +1,6 @@
 {
   "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A18-REPLICATION-14B-20261008",
-  "status": "FROZEN_PREREGISTERED_NOT_RUN",
+  "status": "STOP_INCOMPLETE",
   "created_utc": "2026-10-08",
   "package": "research/analysis/consolidation_schedule_7418_t1_a18_replication_14b_20261008",
   "fixture_source": "research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/model.json",
@@ -41,5 +41,12 @@
   "preflight_path": "results/FORMAL_T1_A18/PREFLIGHT.json",
   "raw_path": "results/FORMAL_T1_A18/raw.jsonl",
   "audit_path": "results/FORMAL_T1_A18/audit.json",
-  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406"
+  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406",
+  "candidate_invocations": 1,
+  "auditor_invocations": 0,
+  "persisted_rows": 231,
+  "candidate_exit_code": 1,
+  "stop_record": "STOP_RECORD.json",
+  "raw_sha256": "b6baad54c447ccbe34b3c4a0f70e1d727f37acb92c85eff98796ca34dffc50c8",
+  "candidate_error": "OSError: [Errno 28] No space left on device"
 }
