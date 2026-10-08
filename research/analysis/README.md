@@ -1,6 +1,6 @@
 # Analytical research
 
-- [Issue #8544 T0 A02 crowding-inspired endpoint scorer](crowding_target_flanker_8544_t0_a02_20261009/README.md) — fresh successor after A01 stopped before the candidate process; adds output-custody wrapper tests and binds each fixture ID to its row payload. Synthetic no-model method check only; no crowding/VLM transfer claim.
+- [Issue #8544 T0 A02 crowding-inspired endpoint scorer](crowding_target_flanker_8544_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 5,632 planted cases, 128 factor strata, 6,341 checks and 7/7 mutations rejected. Scorer/factor/custody method only; no human, VLM, crowding, or transfer claim. A01 launch STOP preserved.
 
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
@@ -554,6 +554,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
 - [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
 - [`crosslingual_visual_injection_7650_t0_a02_20261008/`](crosslingual_visual_injection_7650_t0_a02_20261008/)
+- [`crowding_target_flanker_8544_t0_a02_20261009/`](crowding_target_flanker_8544_t0_a02_20261009/)
 - [`cue_reliability_8654_c07_20261009/`](cue_reliability_8654_c07_20261009/)
 - [`cue_triggered_intention_7162_t0_20261004/`](cue_triggered_intention_7162_t0_20261004/)
 - [`cutoff_local_guard_audit_6451_t0_v1/`](cutoff_local_guard_audit_6451_t0_v1/)
