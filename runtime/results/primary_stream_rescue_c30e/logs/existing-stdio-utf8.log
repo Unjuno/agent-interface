@@ -1,0 +1,35 @@
+✔ numbered commands return exact file/text descriptors with no image encoding (2.865458ms)
+✔ commands arriving while outstanding are rejected rather than queued (1.206417ms)
+✔ EOF waits for the already committed command without replaying it (0.554917ms)
+✔ malformed JSON is refused without invoking exchange or consuming a command (0.573208ms)
+✔ command error reports uncertainty and state without retry (0.6165ms)
+✔ output failure rejects the stream owner after one completed command (0.790542ms)
+✔ config refuses unknown routes and fields before starting a host (0.19525ms)
+✔ terminal output refuses before starting a relay or allocating its evidence (0.143042ms)
+✔ startup output failure keeps original exception, closes one relay and never writes again (50.632958ms)
+✔ failed review is correlated to its consumed command without a host call or replay (2.904458ms)
+✔ pre-admission envelope error keeps requested id distinct from unconsumed next id (0.518416ms)
+✔ malformed command identity stays bounded and does not become a valid correlation (0.273ms)
+✔ illegal-ff (3.525083ms)
+✔ incomplete-e3-in-string (0.521375ms)
+✔ lone-continuation (0.36175ms)
+✔ overlong-slash (0.5035ms)
+✔ utf8-surrogate (0.357625ms)
+✔ incomplete-byte-at-EOF (0.616959ms)
+✔ ordinary-ascii-is-unchanged (0.667125ms)
+✔ split-valid-multibyte-survives-byte-boundaries (0.804541ms)
+✔ literal-replacement-character-is-valid (0.489833ms)
+✔ already-decoded-text-caller-is-preserved (0.522417ms)
+✔ existing-malformed-JSON-is-refused-without-consuming (0.558208ms)
+✔ accepted-same-promise-finishes-before-malformed-byte-rejection (1.012917ms)
+✔ unaccepted-valid-prefix-in-corrupted-chunk-is-refused (0.314125ms)
+✔ existing-BOM-JSON-refusal-is-preserved (0.3655ms)
+✔ owned-validation-listeners-retire-and-foreign-observers-stay (0.454667ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 125.043291

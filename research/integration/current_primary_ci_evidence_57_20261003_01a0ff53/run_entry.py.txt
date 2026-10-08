@@ -1,0 +1,82 @@
+import datetime
+import hashlib
+import json
+import os
+import pathlib
+import re
+import subprocess
+
+W=pathlib.Path('<OWN_WORKSPACE>/work/current-primary-ci-entry-v3')
+S=W/'source'
+P=json.loads((W/'PLAN.json').read_bytes())
+NODE=pathlib.Path(P['node_executable'])
+digest=lambda b:hashlib.sha256(b).hexdigest()
+pins=lambda:{str(p.relative_to(S)):{'bytes':len(b),'sha256':digest(b)} for p in sorted(S.rglob('*')) if p.is_file() for b in [p.read_bytes()]}
+before=pins()
+(W/'SOURCE_PINS.before.json').write_text(json.dumps(before,indent=2)+'\n')
+new=(S/'.github/workflows/native-mcp-v1.yml').read_text()
+old=(W/'original-workflow.yml.txt').read_text()
+cmd=next(x.split('run: ',1)[1] for x in old.splitlines() if x.startswith('        run: node --test '))
+block=new.split('      - name: Test the persistent host relay adapter\n        run: |\n',1)[1].split('      - name: Run the shared local and CI integration checks',1)[0]
+actual='\n'.join(x[10:] for x in block.splitlines())+'\n'
+prefix=(W/'allocation-prefix.sh.txt').read_text()
+assert actual==prefix+cmd+'\n' and cmd.split()==P['full_workflow_node_argv']
+assert new.replace('          path: |\n            results-local/native-ci\n            ${{ env.PRIMARY_FAILURE_EVIDENCE }}\n','          path: results-local/native-ci\n').replace('        run: |\n'+''.join('          '+x+'\n' for x in actual.splitlines()),'        run: '+cmd+'\n')==old
+assert digest(NODE.read_bytes())==P['node_sha256']
+env=dict(os.environ)
+env.pop('PRIMARY_FAILURE_EVIDENCE',None)
+env['PATH']=str(NODE.parent)+os.pathsep+env.get('PATH','')
+env['RUNNER_TEMP']=str(W/'runner-temp')
+env['GITHUB_ENV']=str(W/'github-env.txt')
+receipts=[]
+def capture(label,script,environment):
+    out=W/label;out.mkdir(exist_ok=False)
+    start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    process=subprocess.Popen(['/bin/bash','-c',script],cwd=S,env=environment,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    stdout,stderr=process.communicate(timeout=30)
+    end=datetime.datetime.now(datetime.timezone.utc).isoformat()
+    (out/'stdout.raw.txt').write_bytes(stdout);(out/'stderr.raw.txt').write_bytes(stderr)
+    receipt={'label':label,'argv':['/bin/bash','-c',script],'cwd':str(S),'pid':process.pid,'started_utc':start,'ended_utc':end,'actual_exit':process.returncode,'environment_delta':{k:environment.get(k) for k in ['RUNNER_TEMP','GITHUB_ENV','PRIMARY_FAILURE_EVIDENCE','PATH']},'stdout_bytes':len(stdout),'stdout_sha256':digest(stdout),'stderr_bytes':len(stderr),'stderr_sha256':digest(stderr)}
+    (out/'RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n')
+    receipts.append(receipt)
+    return receipt,stdout,stderr
+
+assert not list((W/'runner-temp').iterdir()) and (W/'github-env.txt').read_bytes()==b''
+for label,key,empty in [('negative-no-runner-temp','RUNNER_TEMP',False),('negative-empty-runner-temp','RUNNER_TEMP',True),('negative-no-github-env','GITHUB_ENV',False)]:
+    changed=dict(env)
+    if empty:changed[key]=''
+    else:changed.pop(key,None)
+    receipt,stdout,stderr=capture(label,prefix,changed)
+    assert receipt['actual_exit']!=0 and stdout==b'' and stderr and not list((W/'runner-temp').iterdir()) and (W/'github-env.txt').read_bytes()==b''
+
+receipt,stdout,stderr=capture('selected-entry-first',(W/'selected-ci-entry.sh.txt').read_text(),env)
+assert receipt['actual_exit']==0 and stderr==b''
+roots=list((W/'runner-temp').iterdir())
+assert len(roots)==1 and roots[0].is_dir() and roots[0].name.startswith('primary-failure-order.')
+root=roots[0]
+assert (W/'github-env.txt').read_text()=='PRIMARY_FAILURE_EVIDENCE='+str(root)+'\n'
+text=stdout.decode()
+for key,value in [('tests',2),('pass',2),('fail',0),('cancelled',0),('skipped',0),('todo',0)]:
+    assert re.search(r'^# '+key+' '+str(value)+r'$',text,re.M),key
+witnesses=[]
+for channel in ['input','output']:
+    d=root/channel
+    witness=json.loads((d/'WITNESS.json').read_bytes())
+    assert witness['later_channel']==channel and witness['before_release_settled'] is False
+    assert witness['fixture_exit']['code']==0 and witness['fixture_exit']['requests']==1 and witness['fixture_exit']['request_bytes']==72
+    assert witness['host_exit']=={'code':0,'signal':None} and witness['fixture_absent'] is True
+    assert witness['owned_error_listeners']=={'input':0,'output':0} and witness['statuses']==['ready','busy','returned']
+    assert 'primary busy response backlog' in witness['error']['message']
+    pid=witness['fixture_start']['pid']
+    try:os.kill(pid,0)
+    except ProcessLookupError:pass
+    else:raise AssertionError('actual owned fixture PID still present')
+    rows=[json.loads(x) for x in (d/'output.raw.txt').read_bytes().splitlines()]
+    assert rows==witness['rows'] and rows[2]['result']['id']==1 and rows[2]['result']['next_id']==2
+    witnesses.append({'later_channel':channel,'fixture_pid':pid,'original_request_bytes':72,'original_requests':1,'returned_results':1,'same_pending_before_release':True,'host_exit':0,'fixture_exit':0,'owned_error_listeners':0,'fixture_pid_absent_after_runner':True})
+assert pins()==before and digest(NODE.read_bytes())==P['node_sha256']
+(W/'SOURCE_PINS.after.json').write_text(json.dumps(pins(),indent=2)+'\n')
+result={'run_id':P['run_id'],'workflow_sha256':P['workflow_after_sha256'],'workflow_full_node_argv_preserved':True,'actual_full_workflow_executed':False,'actual_selected_tests':2,'actual_selected_pass':2,'actual_selected_exit':0,'negative_configuration_cases':3,'negative_configuration_cases_reject_before_allocation':True,'allocated_evidence_root':str(root),'exact_persisted_github_env_row':True,'artifact_reference_added':True,'used_source_pins_unchanged':len(before),'node_pin_unchanged':True,'cases':witnesses,'original_red2_green41_replayed':False,'formal_or_native_producer_replayed':False,'main_sends':0,'limits':'Actual literal allocation/persistence prefix plus selected unchanged module only; macOSNode26.7.0/Bash. HostedLinuxNode22/fullCI and physical/task/performance/release remain unexecuted.'}
+(W/'RESULT.json').write_text(json.dumps(result,indent=2)+'\n')
+(W/'COMMAND_RECEIPTS.json').write_text(json.dumps(receipts,indent=2)+'\n')
+print(json.dumps(result))

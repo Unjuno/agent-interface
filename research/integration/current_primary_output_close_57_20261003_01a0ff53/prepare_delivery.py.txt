@@ -1,0 +1,82 @@
+"""V4 source-only candidate in isolated index; no ref mutation or main send."""
+from pathlib import Path
+import subprocess,hashlib,json,os,datetime
+W=Path(__file__).resolve().parent;R=W.parent/'agent-interface'
+OLD='2732dafc4fed0328ff332e05621521543c747628';BASE='bd1697d99d5db1d1b3040de2614992776b8f81a6'
+BRANCH='repair/primary-current-01a0ff53-20261003'
+LEAF='research/integration/current_primary_output_close_57_20261003_01a0ff53'
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def git(*args,stdin=None,env=None):return subprocess.run(['git',*args],cwd=R,input=stdin,env=env,capture_output=True,check=True).stdout
+read=lambda p:json.loads(p.read_bytes())
+assert git('rev-parse','refs/heads/'+BRANCH).decode().strip()==OLD
+assert read(W/'AUDIT_RECEIPT.json')['exit_code']==0
+active=['runtime/host_v1/primary_stdio.mjs','runtime/host_v1/test_primary_output_close.mjs','runtime/host_v1/test_primary_output_close_owner.mjs','.github/workflows/native-mcp-v1.yml']
+for p in (W/'source').rglob('*'):
+ if p.is_file() and '__pycache__' not in p.parts and str(p.relative_to(W/'source')) not in active:assert p.read_bytes()==git('show',OLD+':'+str(p.relative_to(W/'source')))
+before=(W/'primary_stdio.before.mjs.txt').read_bytes();after=(W/'source/runtime/host_v1/primary_stdio.mjs').read_bytes()
+assert before==git('show',OLD+':runtime/host_v1/primary_stdio.mjs')
+assert before.split(b'function emit(output,value)',1)[0]==after.split(b'function emit(output,value)',1)[0]
+assert before.split(b'export async function servePrimaryLines',1)[1]==after.split(b'export async function servePrimaryLines',1)[1]
+workflow=git('show',OLD+':.github/workflows/native-mcp-v1.yml')
+needle=b'runtime/host_v1/test_primary_stdio_failure_order.mjs\n'
+assert workflow.count(needle)==1
+assert (W/'source/.github/workflows/native-mcp-v1.yml').read_bytes()==workflow.replace(needle,b'runtime/host_v1/test_primary_stdio_failure_order.mjs runtime/host_v1/test_primary_output_close.mjs runtime/host_v1/test_primary_output_close_owner.mjs\n')
+report='''# Primary output close observation repair (V4)
+Peer45e9 published a separately frozen real-Writable error-free close counterexample5969086616. V3 has genuine scoped votes45e95968973041 and61785400710604; author0975 nevertheless placed main adoption on HOLD5969141382. No vote transfers to this changed source. V1/V2/V3 first outcomes, bytes, leaves and conditional source history remain immutable.
+
+This new ordinary source-owned unit primary-output-close-entry-57-0975-20261003-a01 uses private macOSNode26.7.0, pinned in every prospective runtime PLAN. It executes only own new tests and necessary affected existing regressions; received peer producer, consumed original units, formal/native/shared backend/GUI/physical input were not run. The peer's four-cell saved evidence is causal guidance, not our producer outcome.
+
+NEW actual WindowsNode24 OS-pipe qualification5969261994/5969240693/5969242508 narrows practical applicability: original V3 and peer private emit both pass four healthy/closed cells via ECANCELED callback, without an error event. No observed benefit from close repair on that pipe; partial returned bytes are not successful delivery. Root data-only restores/verifies135 public members/28 exact source aliases/seven original Git images and joins the saved four-cell stdout/receipt rows; root executes no peer helper/binary/producer and does not independently authenticate their private Node/PID. Author decision: the independently reproduced generic public Writable-injection boundary still warrants this minimal scoped close observer, without claiming a real OS-pipe failure, performance benefit or broad practical necessity. The first unpublished local candidate0afa6245 is retained separately; it had no source publication/votes, and its report lacked this newly read qualification. Production/test definitions stay identical; only evidence/report construction changes before final proposal.
+
+The sole production delta is emit: observe actual close, reject PRIMARY_OUTPUT_CLOSED, settle once and retire only the owned close listener. Already destroyed/closed/ended output rejects before another write call. Original callback error identity, first-failure observer, accepted command promise and outer host cleanup are preserved; no retry, timer, queue, action, threshold or transport refactor. The workflow only appends the two new modules to the existing catalogue and retains the V3 fresh evidence allocation/persistence/upload unchanged.
+
+Before modifying production, the five direct tests ran12:39:57.467460–12:39:57.609032UTC/exit1: silent returned/busy pending at observed close plus three setImmediate turns and preclosed output another write call; two controls passed. Identical frozen definitions after the minimal repair ran12:40:21.622708–12:40:21.769290/exit0,5PASS. Changed-source affected41+new5 ran12:40:21.845451–12:40:24.473529/exit0,46PASS. Additional two real-owner definitions were frozen before baseline run12:41:40.601040–12:41:46.885248/exit1: each failed the same withheld-callback boundary at bounded three-second observation, and both original processes were reconciled in finally. Same two definitions plus repair ran12:41:55.458514–12:41:55.754869/exit0,2PASS. These are seven distinct new checks and41 affected checks across recorded invocations, not one aggregate48-test run. Both first red outcomes and full raw streams are retained, with no cancelled/skipped/todo cells.
+
+Both repaired real-owner histories retain one original72B request, one attempt/reply/presentation, ordered five host events, fixture/host exit0 and sampled same fixture PID absence. Busy close keeps the original accepted promise pending until release, then rejects without waiting for the held busy callback. Returned close rejects without waiting for its held callback. Later original callback reconciliation does not settle again. Owned listeners retire; original foreign error/close listener identities remain. Busy returned data remains in original exchange/host custody even though no returned line is attempted on the dead channel. No output delivery claim.
+
+Saved-data audit12:44:45.127969–12:44:45.166561/exit0 verifies five full runtime receipts/streams/TAP summaries, fixed test byte identity, the two request/result/event/cleanup histories and rejects ten effective semantic mutations. It invokes no runtime producer. Earlier same data reader result was not surrounded by a separate UTC receipt; it is retained as first-unreceipted, never relabeled. Runner helper versions were not independently pinned inside early receipts; full current helper and source/test/Node/argv freezes are preserved. PLAN C states an8MiB output cap, but the outer driver only redirects to files and does not enforce that live cap; actual outputs are small and independently measured. This discrepancy is preserved/qualified, not a retrospective bound or reason to rerun producers.
+
+Public derivatives replace only this workspace prefix, with original/public sizes and hashes separate. Private originals stay local. Full tracked source snapshots/scripts are inert .txt, with archive-local whitespace attributes; no executable archive. First construction attempt stopped before leaf/candidate creation because an inherited untracked Python cache was treated as a Git source. That failure and helper are preserved; SOURCE_AUXILIARY pins the private retained caches excluded from publication, and only the data construction excludes them. Node producers are not rerun. Original archives are untouched. Main sends0/apply_idNULL/binding_count0. A new V4 fixed descriptor/epoch and fresh prospective committee acceptances/2 eligible decisions are required. Hosted Node22/Ubuntu/full workflow, WindowsV4, unresponsive backend hard deadline, emitClose:false streams, delivery, device/physical release, general environment/task correctness, performance and whole goal remain unproved. Do not treat this source repair or its scoped tests as full-goal completion.
+'''
+(W/'REPORT.md').write_text(report)
+archive=W/'public-leaf';archive.mkdir(exist_ok=False)
+root=str(W.parent.parent).encode();provenance=[]
+for p in sorted(W.rglob('*')):
+ if not p.is_file() or 'public-leaf' in p.relative_to(W).parts or '__pycache__' in p.parts or p.name.endswith('.index'):continue
+ rel=str(p.relative_to(W));b=p.read_bytes();public=b.replace(root,b'<OWN_WORKSPACE>')
+ if p.suffix in ['.py','.mjs','.yml'] or rel.startswith(('source/','baseline-source/')):rel+='.txt'
+ dest=archive/rel;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(public)
+ provenance.append({'path':rel,'original_bytes':len(b),'original_sha256':sha(b),'public_bytes':len(public),'public_sha256':sha(public),'workspace_prefix_projected':root in b,'original_retained':True})
+(archive/'PROVENANCE.json').write_text(json.dumps({'files':provenance,'projection':'own workspace prefix only; original/public identities separate'},indent=2)+'\n')
+exceptions=[]
+for p in sorted(archive.rglob('*')):
+ if p.is_file():
+  b=p.read_bytes()
+  if b.endswith(b'\n\n') or any(x.endswith((b' ',b'\t')) for x in b.splitlines()):exceptions.append(str(p.relative_to(archive)))
+(archive/'.gitattributes').write_text('* -text whitespace=cr-at-eol\n'+''.join(x+' -whitespace\n' for x in exceptions))
+manifest=[{'path':str(p.relative_to(archive)),'bytes':len(p.read_bytes()),'sha256':sha(p.read_bytes())} for p in sorted(archive.rglob('*')) if p.is_file()]
+(archive/'MANIFEST.json').write_text(json.dumps({'files':manifest,'historical_byte_whitespace_exceptions':exceptions},indent=2)+'\n')
+env=dict(os.environ,GIT_INDEX_FILE=str(W/'source.index'));git('read-tree',OLD,env=env)
+updates=[(p,W/'source'/p) for p in active]+[(LEAF+'/'+str(p.relative_to(archive)),p) for p in sorted(archive.rglob('*')) if p.is_file()]
+for path,p in updates:
+ oid=git('hash-object','-w','--no-filters','--stdin',stdin=p.read_bytes()).decode().strip();git('update-index','--add','--cacheinfo','100644,'+oid+','+path,env=env)
+tree=git('write-tree',env=env).decode().strip()
+check=subprocess.run(['git','--attr-source='+tree,'diff','--check',OLD,tree],cwd=R,env=env,capture_output=True)
+(W/'diff-check.stdout.raw.txt').write_bytes(check.stdout);(W/'diff-check.stderr.raw.txt').write_bytes(check.stderr);assert check.returncode==0
+head=git('commit-tree',tree,'-p',OLD,stdin=b'fix(primary): observe output close without replaying accepted work [skip ci]\n').decode().strip()
+raw=git('cat-file','commit',head);(W/'candidate-commit.raw.txt').write_bytes(raw)
+assert [x for x in raw.splitlines() if x.startswith(b'parent ')]==[('parent '+OLD).encode()]
+assert git('diff','--name-only',OLD,head).decode().splitlines()==sorted(p for p,_ in updates)
+for oldleaf in ['current_primary_57_20261003_01a0ff53','current_primary_first_error_57_20261003_01a0ff53','current_primary_ci_evidence_57_20261003_01a0ff53']:
+ assert not git('diff','--name-only',OLD,head,'--','research/integration/'+oldleaf).strip()
+rows=[]
+for path in git('diff','--name-only','--no-renames',BASE,head).decode().splitlines():
+ row={'path':path}
+ for side,revision in [('before',BASE),('after',head)]:
+  item=git('ls-tree',revision,'--',path).decode().strip()
+  if not item:row[side]=None;continue
+  mode,kind,oid=item.split('\t')[0].split();b=git('cat-file','blob',oid);row[side]={'mode':mode,'kind':kind,'blob':oid,'bytes':len(b),'sha256':sha(b)}
+ rows.append(row)
+(W/'CHANGED_IMAGES.json').write_text(json.dumps(rows,indent=2)+'\n');delta=git('diff','--binary','--full-index',BASE,head);(W/'actual.diff').write_bytes(delta)
+delivery={'head':head,'tree':tree,'first_parent':OLD,'review_base':BASE,'branch':BRANCH,'leaf':LEAF,'leaf_files':len(manifest)+1,'manifest_targets':len(manifest),'provenance_rows':len(provenance),'workspace_derivatives':sum(x['workspace_prefix_projected'] for x in provenance),'changed_paths':len(rows),'image_map_sha256':sha(json.dumps(rows,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()),'full_diff_bytes':len(delta),'full_diff_sha256':sha(delta),'manifest_bytes':(archive/'MANIFEST.json').stat().st_size,'manifest_sha256':sha((archive/'MANIFEST.json').read_bytes()),'active_changes':active,'old_leaves_unchanged':True,'diff_check_exit':0,'main_sends':0,'source_ref_sent':False}
+(W/'DELIVERY.json').write_text(json.dumps(delivery,indent=2)+'\n');print(json.dumps(delivery))
