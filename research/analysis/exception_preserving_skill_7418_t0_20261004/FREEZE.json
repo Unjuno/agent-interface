@@ -1,0 +1,20 @@
+{
+  "schema": "unjuno.issue7418.t0.freeze.v1",
+  "issue": 7418,
+  "base_main_sha": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "runtime": "CPython 3.12.13, standard library, host",
+  "container": "not required by Issue #7418; no model, GUI, network, GPU, or user data",
+  "candidate_command": "python3.12 -B candidate.py --out formal_01/raw.json",
+  "auditor_command": "python3.12 -B auditor.py --raw formal_01/raw.json --out formal_01/audit.json",
+  "formal_invocation_limit": {"candidate": 1, "auditor": 1, "retries": 0},
+  "formal_outputs_absent_at_freeze": true,
+  "source_sha256": {
+    "README.md": "90b5ca0e453f36c00629a085732e7484c5a77516101ba55867f17245e01350c6",
+    "PROTOCOL.md": "53b93b0a19fd4683238be5d716c789ee8667ea090025c63874fa572c5fe72598",
+    "fixture.json": "1c8b74dfdd8ec7c5a5950133709ae95e40cc687edb12ac128d66f696c79e54fb",
+    "candidate.py": "0d62d1caca18656b50aca326d5bdeae3a8aef98dc7ce4f6fae149cc79ae10774",
+    "auditor.py": "ee5725f4a44ad1e6e9687b2e7ab24e3e87afd01c086eb7fca69043e9cefc240b",
+    "test_contract.py": "71805d3327a56d5762d7f89a66cf0b06596d22ca01c0a8ece296130da9a3fd81",
+    "research/analysis/test_analysis_checkout.py": "0e76d1d0447a9ef64a7ab8996bda5dd0f59616749712ccdafca390d5eee8ed81"
+  }
+}

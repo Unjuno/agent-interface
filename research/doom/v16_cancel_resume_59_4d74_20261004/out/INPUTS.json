@@ -1,0 +1,71 @@
+[
+  {
+    "host_ns": 114362513745100,
+    "command": {
+      "op": "submit",
+      "id": "cancel-left-01",
+      "expected_sequence": 1,
+      "valid_until_ns": 40189973593,
+      "steps": [
+        {
+          "op": "hold",
+          "keys": [
+            "Left"
+          ],
+          "duration_ms": 1000
+        },
+        {
+          "op": "observe"
+        }
+      ]
+    }
+  },
+  {
+    "host_ns": 114362554937800,
+    "command": {
+      "op": "cancel",
+      "id": "cancel-left-01"
+    }
+  },
+  {
+    "host_ns": 114362650024600,
+    "command": {
+      "op": "submit",
+      "id": "fresh-observe-01",
+      "expected_sequence": 2,
+      "valid_until_ns": 40308374957,
+      "steps": [
+        {
+          "op": "observe"
+        }
+      ]
+    }
+  },
+  {
+    "host_ns": 114362738235900,
+    "command": {
+      "op": "submit",
+      "id": "resume-right-01",
+      "expected_sequence": 3,
+      "valid_until_ns": 40413989465,
+      "steps": [
+        {
+          "op": "hold",
+          "keys": [
+            "Right"
+          ],
+          "duration_ms": 250
+        },
+        {
+          "op": "observe"
+        }
+      ]
+    }
+  },
+  {
+    "host_ns": 114363173015300,
+    "command": {
+      "op": "finish"
+    }
+  }
+]

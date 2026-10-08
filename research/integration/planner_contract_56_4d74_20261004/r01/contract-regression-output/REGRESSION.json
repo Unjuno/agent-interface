@@ -1,0 +1,395 @@
+{
+  "scope": "construction/test-double consumption; no model/GUI/provider/task success",
+  "authored_graph": {
+    "name": "omega",
+    "target_symbol": "commit",
+    "operation": "submit_form",
+    "expected_effect": [
+      {
+        "predicate": "exact_saved_title",
+        "value": true
+      }
+    ]
+  },
+  "changed_initial_state": {
+    "receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "fixture-planner-shaped",
+      "method": "authored",
+      "method_version": "1",
+      "session_scope": "construction",
+      "outcome": "SAFE_YIELD",
+      "reason": "unknown_state",
+      "completed_transitions": 0,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 4278687968,
+          "evidence_ref": "1",
+          "evidence_digest": "1",
+          "predicates": {
+            "target_valid": true,
+            "exact_token_visible": false,
+            "exact_saved_title": false
+          }
+        }
+      ],
+      "transitions": [],
+      "critical_events": [
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "unknown_state",
+          "completed_transitions": 0
+        }
+      ],
+      "latest_evidence_ref": "1",
+      "pending_effect": null,
+      "started_ns": 4278686146,
+      "ended_ns": 4278707310,
+      "elapsed_ns": 21164,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "operations": [],
+    "compiled": {
+      "format": "compiled-gui-interface-v1",
+      "interface_id": "fixture-planner-shaped",
+      "session_scope": "construction",
+      "surface": "integrated-form",
+      "predicates": [
+        "target_valid",
+        "exact_token_visible",
+        "exact_saved_title"
+      ],
+      "symbols": {
+        "entry": {
+          "kind": "target_reference",
+          "target_reference": "minted-field",
+          "identity_predicate": "target_valid",
+          "dependencies": [
+            "target_valid"
+          ]
+        },
+        "commit": {
+          "kind": "target_reference",
+          "target_reference": "minted-submit",
+          "identity_predicate": "target_valid",
+          "dependencies": [
+            "target_valid"
+          ]
+        }
+      },
+      "actions": {
+        "write_value": {
+          "target_symbol": "entry",
+          "operation": "enter_token",
+          "expected_effect": {
+            "exact_token_visible": true
+          }
+        },
+        "commit_value": {
+          "target_symbol": "commit",
+          "operation": "submit_form",
+          "expected_effect": {
+            "exact_saved_title": true
+          }
+        }
+      },
+      "method": {
+        "name": "authored",
+        "version": "1",
+        "initial_state": "done",
+        "max_transitions": 2,
+        "max_runtime_ms": 10000,
+        "states": {
+          "start": {
+            "branches": [
+              {
+                "when": {
+                  "target_valid": true
+                },
+                "outcome": "action",
+                "action": "write_value",
+                "next_state": "ready",
+                "reason": null
+              }
+            ]
+          },
+          "ready": {
+            "branches": [
+              {
+                "when": {
+                  "exact_token_visible": true
+                },
+                "outcome": "action",
+                "action": "commit_value",
+                "next_state": "done",
+                "reason": null
+              }
+            ]
+          },
+          "done": {
+            "branches": [
+              {
+                "when": {
+                  "exact_saved_title": true
+                },
+                "outcome": "complete",
+                "action": null,
+                "next_state": null,
+                "reason": null
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "renamed_graph": {
+    "receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "fixture-planner-shaped",
+      "method": "authored",
+      "method_version": "1",
+      "session_scope": "construction",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "completed_transitions": 2,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 1,
+          "captured_ns": 4279005314,
+          "evidence_ref": "1",
+          "evidence_digest": "1",
+          "predicates": {
+            "target_valid": true,
+            "exact_token_visible": false,
+            "exact_saved_title": false
+          }
+        },
+        {
+          "sequence": 2,
+          "captured_ns": 4279051490,
+          "evidence_ref": "2",
+          "evidence_digest": "2",
+          "predicates": {
+            "target_valid": true,
+            "exact_token_visible": true,
+            "exact_saved_title": false
+          }
+        },
+        {
+          "sequence": 3,
+          "captured_ns": 4279102623,
+          "evidence_ref": "3",
+          "evidence_digest": "3",
+          "predicates": {
+            "target_valid": true,
+            "exact_token_visible": true,
+            "exact_saved_title": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "fresh_scene",
+          "to_state": "token_written",
+          "action": "alpha",
+          "matched_conditions": {
+            "target_valid": true
+          },
+          "observation_sequence": 1,
+          "evidence_ref": "1",
+          "action_id": "1",
+          "effect_ref": "1",
+          "release_verified": true
+        },
+        {
+          "from_state": "token_written",
+          "to_state": "receipt_seen",
+          "action": "omega",
+          "matched_conditions": {
+            "exact_token_visible": true
+          },
+          "observation_sequence": 2,
+          "evidence_ref": "2",
+          "action_id": "2",
+          "effect_ref": "2",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "fresh_scene",
+          "outcome": "action",
+          "action": "alpha",
+          "matched_conditions": {
+            "target_valid": true
+          },
+          "evidence_ref": "1"
+        },
+        {
+          "event": "action_terminal",
+          "action": "alpha",
+          "status": "completed",
+          "action_id": "1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "alpha",
+          "status": "succeeded",
+          "evidence_ref": "2"
+        },
+        {
+          "event": "branch_selected",
+          "state": "token_written",
+          "outcome": "action",
+          "action": "omega",
+          "matched_conditions": {
+            "exact_token_visible": true
+          },
+          "evidence_ref": "2"
+        },
+        {
+          "event": "action_terminal",
+          "action": "omega",
+          "status": "completed",
+          "action_id": "2",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "omega",
+          "status": "succeeded",
+          "evidence_ref": "3"
+        },
+        {
+          "event": "branch_selected",
+          "state": "receipt_seen",
+          "outcome": "complete",
+          "action": null,
+          "matched_conditions": {
+            "exact_saved_title": true
+          },
+          "evidence_ref": "3"
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "TASK_SUCCEEDED",
+          "reason": "method_complete",
+          "completed_transitions": 2
+        }
+      ],
+      "latest_evidence_ref": "3",
+      "pending_effect": null,
+      "started_ns": 4279003577,
+      "ended_ns": 4279134016,
+      "elapsed_ns": 130439,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "operations": [
+      "enter_token",
+      "submit_form"
+    ],
+    "compiled": {
+      "format": "compiled-gui-interface-v1",
+      "interface_id": "fixture-planner-shaped",
+      "session_scope": "construction",
+      "surface": "integrated-form",
+      "predicates": [
+        "target_valid",
+        "exact_token_visible",
+        "exact_saved_title"
+      ],
+      "symbols": {
+        "entry": {
+          "kind": "target_reference",
+          "target_reference": "minted-field",
+          "identity_predicate": "target_valid",
+          "dependencies": [
+            "target_valid"
+          ]
+        },
+        "commit": {
+          "kind": "target_reference",
+          "target_reference": "minted-submit",
+          "identity_predicate": "target_valid",
+          "dependencies": [
+            "target_valid"
+          ]
+        }
+      },
+      "actions": {
+        "alpha": {
+          "target_symbol": "entry",
+          "operation": "enter_token",
+          "expected_effect": {
+            "exact_token_visible": true
+          }
+        },
+        "omega": {
+          "target_symbol": "commit",
+          "operation": "submit_form",
+          "expected_effect": {
+            "exact_saved_title": true
+          }
+        }
+      },
+      "method": {
+        "name": "authored",
+        "version": "1",
+        "initial_state": "fresh_scene",
+        "max_transitions": 2,
+        "max_runtime_ms": 10000,
+        "states": {
+          "fresh_scene": {
+            "branches": [
+              {
+                "when": {
+                  "target_valid": true
+                },
+                "outcome": "action",
+                "action": "alpha",
+                "next_state": "token_written",
+                "reason": null
+              }
+            ]
+          },
+          "token_written": {
+            "branches": [
+              {
+                "when": {
+                  "exact_token_visible": true
+                },
+                "outcome": "action",
+                "action": "omega",
+                "next_state": "receipt_seen",
+                "reason": null
+              }
+            ]
+          },
+          "receipt_seen": {
+            "branches": [
+              {
+                "when": {
+                  "exact_saved_title": true
+                },
+                "outcome": "complete",
+                "action": null,
+                "next_state": null,
+                "reason": null
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "unguarded_submit_rejected": true
+}

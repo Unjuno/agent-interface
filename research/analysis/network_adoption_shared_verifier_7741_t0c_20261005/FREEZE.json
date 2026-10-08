@@ -1,0 +1,19 @@
+{
+  "experiment_id":"UNJUNO-7741-ADOPTION-QUEUE-T0C-20261005-01",
+  "predecessors":["T0 v1 METHOD_FAIL_OR_INCONCLUSIVE; retained at network_adoption_shared_verifier_7741_t0_20261005/","T0b STOP_CANDIDATE_RUNTIME; retained at network_adoption_shared_verifier_7741_t0b_20261005/"],
+  "issue":7741,
+  "source_commit":"d1a19b6929569a291c210a680c7e22c31732b949",
+  "hypothesis":"At predeclared low-capacity cells, reduced per-task interaction cost plus verified peer-mediated adoption can raise shared-verifier p95 latency relative to matched frozen adoption, while no-imitation, nonbinding shared capacity, and per-principal queues remove the population-level reversal.",
+  "protocol_file":"protocol.json",
+  "frozen_sha256":{
+    "protocol.json":"ccf62d168f22a7359097228609caf08fdf4dd43962d7effaed6f206992bd48c5",
+    "candidate.py":"f31b90c862718f32099b9e89eb123d0b7a7401ce1970b059ef49be429202e31e",
+    "auditor.py":"1c07ead07c6c1a472c6a4cb0f9a3b2b1f262abec651612d1d36ee72711bba1da",
+    "test_method.py":"61e878cfd52f32a979c3c982b23497d9a526cdb65ecfdaa5475dbd958eb7ba88",
+    "run_formal.py":"5ad4ca5dcc107889c8ce0f8b5bd98a15b59f96c17bf348aedba741d1addef6b4"
+  },
+  "candidate_and_auditor_invocations":1,
+  "container":"Not used: deterministic integer-tick state enumeration with no host-timing, filesystem-isolation, Engine-API, or resource-enforcement variable; local CPython only.",
+  "mutation_controls":["drop opportunity", "alter adoption transition", "alter queue admission order", "alter completion latency", "omit unfinished obligation"],
+  "prior_outcomes_immutable":true
+}

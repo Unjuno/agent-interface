@@ -1,0 +1,2340 @@
+[
+  {
+    "label": "healthy_key",
+    "mode": "none",
+    "kind": "key",
+    "started_utc": "2026-10-03T11:35:55.239384+00:00",
+    "ended_utc": "2026-10-03T11:35:55.239384+00:00",
+    "first_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-healthy_key-first",
+      "source": {
+        "observation_seq": 7,
+        "binding_revision": 3
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "A",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "fresh_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-healthy_key-fresh",
+      "source": {
+        "observation_seq": 8,
+        "binding_revision": 4
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "CTRL",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "first_return": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 2,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [
+          0,
+          1
+        ]
+      },
+      "recovery_required": false
+    },
+    "fresh_return": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [
+          0,
+          1
+        ]
+      },
+      "recovery_required": false
+    },
+    "first_virtual_state": {
+      "keys": [],
+      "buttons": []
+    },
+    "first_owner_tracking": {
+      "keys": {},
+      "buttons": []
+    },
+    "first_recovery_required": false,
+    "first_emissions": 2,
+    "original_exception_custody": [],
+    "followup_post_effects": 2,
+    "followup_emissions_delta": 2,
+    "final_virtual_state": {
+      "keys": [],
+      "buttons": []
+    },
+    "false_verified_neutral": false,
+    "safety_result": "PASS",
+    "trace": [
+      {
+        "seq": 1,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-healthy_key-first",
+          "source": {
+            "observation_seq": 7,
+            "binding_revision": 3
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "A",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 2,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 3,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 4,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 5,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 6,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 0,
+        "down": true
+      },
+      {
+        "seq": 7,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 0,
+        "down": true,
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 8,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          0,
+          true
+        ]
+      },
+      {
+        "seq": 9,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 0,
+        "down": false
+      },
+      {
+        "seq": 10,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 0,
+        "down": false,
+        "state": {
+          "keys": [],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 11,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          0,
+          false
+        ]
+      },
+      {
+        "seq": 12,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 13,
+        "monotonic_ns": 36616203000000,
+        "event": "key_probe",
+        "target": 0,
+        "down": false
+      },
+      {
+        "seq": 14,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_end",
+        "row": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [
+              0,
+              1
+            ]
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [],
+          "buttons": []
+        },
+        "tracking": {
+          "keys": {},
+          "buttons": []
+        },
+        "recovery_required": false,
+        "emissions": 2
+      },
+      {
+        "seq": 15,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-healthy_key-fresh",
+          "source": {
+            "observation_seq": 8,
+            "binding_revision": 4
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "CTRL",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 16,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 17,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 18,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 19,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 20,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": true
+      },
+      {
+        "seq": 21,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": true,
+        "state": {
+          "keys": [
+            59
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 22,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          true
+        ]
+      },
+      {
+        "seq": 23,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 24,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": false,
+        "state": {
+          "keys": [],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 25,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          false
+        ]
+      },
+      {
+        "seq": 26,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 27,
+        "monotonic_ns": 36616203000000,
+        "event": "key_probe",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 28,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_end",
+        "row": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 4,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [
+              0,
+              1
+            ]
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [],
+          "buttons": []
+        },
+        "emissions": 4
+      }
+    ]
+  },
+  {
+    "label": "key_disposal_after_post",
+    "mode": "dispose",
+    "kind": "key",
+    "started_utc": "2026-10-03T11:35:55.239384+00:00",
+    "ended_utc": "2026-10-03T11:35:55.239384+00:00",
+    "first_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-key_disposal_after_post-first",
+      "source": {
+        "observation_seq": 7,
+        "binding_revision": 3
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "A",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "fresh_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-key_disposal_after_post-fresh",
+      "source": {
+        "observation_seq": 8,
+        "binding_revision": 4
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "CTRL",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "first_return": {
+      "status": "execution_failed",
+      "error": "BACKEND_EXECUTION",
+      "detail": "OSError('own key_disposal_after_post injected boundary')",
+      "backend_emissions": 1,
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 1,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [],
+        "error": "OSError('own key_disposal_after_post injected boundary')",
+        "failed_op": 0,
+        "failed_op_effect": "unknown; may have emitted partial input"
+      },
+      "recovery_required": false
+    },
+    "fresh_return": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [
+          0,
+          1
+        ]
+      },
+      "recovery_required": false
+    },
+    "first_virtual_state": {
+      "keys": [
+        0
+      ],
+      "buttons": []
+    },
+    "first_owner_tracking": {
+      "keys": {},
+      "buttons": []
+    },
+    "first_recovery_required": false,
+    "first_emissions": 1,
+    "original_exception_custody": [
+      {
+        "cause_is_original_fault": true,
+        "failed_op": 0,
+        "completed_ops": []
+      }
+    ],
+    "followup_post_effects": 2,
+    "followup_emissions_delta": 2,
+    "final_virtual_state": {
+      "keys": [
+        0
+      ],
+      "buttons": []
+    },
+    "false_verified_neutral": true,
+    "safety_result": "FAIL",
+    "trace": [
+      {
+        "seq": 1,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-key_disposal_after_post-first",
+          "source": {
+            "observation_seq": 7,
+            "binding_revision": 3
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "A",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 2,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 3,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 4,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 5,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 6,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 0,
+        "down": true
+      },
+      {
+        "seq": 7,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 0,
+        "down": true,
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 8,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          0,
+          true
+        ]
+      },
+      {
+        "seq": 9,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose_after_effect_fault",
+        "kind": "key",
+        "target": 0,
+        "down": true,
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 10,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 11,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_end",
+        "row": {
+          "status": "execution_failed",
+          "error": "BACKEND_EXECUTION",
+          "detail": "OSError('own key_disposal_after_post injected boundary')",
+          "backend_emissions": 1,
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 1,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [],
+            "error": "OSError('own key_disposal_after_post injected boundary')",
+            "failed_op": 0,
+            "failed_op_effect": "unknown; may have emitted partial input"
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        },
+        "tracking": {
+          "keys": {},
+          "buttons": []
+        },
+        "recovery_required": false,
+        "emissions": 1
+      },
+      {
+        "seq": 12,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-key_disposal_after_post-fresh",
+          "source": {
+            "observation_seq": 8,
+            "binding_revision": 4
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "CTRL",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 13,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 14,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 15,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 16,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 17,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": true
+      },
+      {
+        "seq": 18,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": true,
+        "state": {
+          "keys": [
+            0,
+            59
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 19,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          true
+        ]
+      },
+      {
+        "seq": 20,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 21,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": false,
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 22,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          false
+        ]
+      },
+      {
+        "seq": 23,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 24,
+        "monotonic_ns": 36616203000000,
+        "event": "key_probe",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 25,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_end",
+        "row": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 3,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [
+              0,
+              1
+            ]
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        },
+        "emissions": 3
+      }
+    ]
+  },
+  {
+    "label": "pointer_disposal_after_post",
+    "mode": "dispose",
+    "kind": "button",
+    "started_utc": "2026-10-03T11:35:55.239384+00:00",
+    "ended_utc": "2026-10-03T11:35:55.239384+00:00",
+    "first_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-pointer_disposal_after_post-first",
+      "source": {
+        "observation_seq": 7,
+        "binding_revision": 3
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "fresh_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-pointer_disposal_after_post-fresh",
+      "source": {
+        "observation_seq": 8,
+        "binding_revision": 4
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "CTRL",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "first_return": {
+      "status": "execution_failed",
+      "error": "BACKEND_EXECUTION",
+      "detail": "OSError('own pointer_disposal_after_post injected boundary')",
+      "backend_emissions": 1,
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 1,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [],
+        "error": "OSError('own pointer_disposal_after_post injected boundary')",
+        "failed_op": 0,
+        "failed_op_effect": "unknown; may have emitted partial input"
+      },
+      "recovery_required": false
+    },
+    "fresh_return": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [
+          0,
+          1
+        ]
+      },
+      "recovery_required": false
+    },
+    "first_virtual_state": {
+      "keys": [],
+      "buttons": [
+        0
+      ]
+    },
+    "first_owner_tracking": {
+      "keys": {},
+      "buttons": []
+    },
+    "first_recovery_required": false,
+    "first_emissions": 1,
+    "original_exception_custody": [
+      {
+        "cause_is_original_fault": true,
+        "failed_op": 0,
+        "completed_ops": []
+      }
+    ],
+    "followup_post_effects": 2,
+    "followup_emissions_delta": 2,
+    "final_virtual_state": {
+      "keys": [],
+      "buttons": [
+        0
+      ]
+    },
+    "false_verified_neutral": true,
+    "safety_result": "FAIL",
+    "trace": [
+      {
+        "seq": 1,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-pointer_disposal_after_post-first",
+          "source": {
+            "observation_seq": 7,
+            "binding_revision": 3
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "pointer_button",
+              "button": "left",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 2,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 3,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 4,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 5,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 6,
+        "monotonic_ns": 36616203000000,
+        "event": "position_create"
+      },
+      {
+        "seq": 7,
+        "monotonic_ns": 36616203000000,
+        "event": "position_read"
+      },
+      {
+        "seq": 8,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "position"
+        ]
+      },
+      {
+        "seq": 9,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "button",
+        "target": 0,
+        "down": true,
+        "quartz_type": 1
+      },
+      {
+        "seq": 10,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "button",
+        "target": 0,
+        "down": true,
+        "state": {
+          "keys": [],
+          "buttons": [
+            0
+          ]
+        }
+      },
+      {
+        "seq": 11,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "button",
+          0,
+          true
+        ]
+      },
+      {
+        "seq": 12,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose_after_effect_fault",
+        "kind": "button",
+        "target": 0,
+        "down": true,
+        "state": {
+          "keys": [],
+          "buttons": [
+            0
+          ]
+        }
+      },
+      {
+        "seq": 13,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 14,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_end",
+        "row": {
+          "status": "execution_failed",
+          "error": "BACKEND_EXECUTION",
+          "detail": "OSError('own pointer_disposal_after_post injected boundary')",
+          "backend_emissions": 1,
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 1,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [],
+            "error": "OSError('own pointer_disposal_after_post injected boundary')",
+            "failed_op": 0,
+            "failed_op_effect": "unknown; may have emitted partial input"
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [],
+          "buttons": [
+            0
+          ]
+        },
+        "tracking": {
+          "keys": {},
+          "buttons": []
+        },
+        "recovery_required": false,
+        "emissions": 1
+      },
+      {
+        "seq": 15,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-pointer_disposal_after_post-fresh",
+          "source": {
+            "observation_seq": 8,
+            "binding_revision": 4
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "CTRL",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 16,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 17,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 18,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 19,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 20,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": true
+      },
+      {
+        "seq": 21,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": true,
+        "state": {
+          "keys": [
+            59
+          ],
+          "buttons": [
+            0
+          ]
+        }
+      },
+      {
+        "seq": 22,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          true
+        ]
+      },
+      {
+        "seq": 23,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 24,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": false,
+        "state": {
+          "keys": [],
+          "buttons": [
+            0
+          ]
+        }
+      },
+      {
+        "seq": 25,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          false
+        ]
+      },
+      {
+        "seq": 26,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 27,
+        "monotonic_ns": 36616203000000,
+        "event": "key_probe",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 28,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_end",
+        "row": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 3,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [
+              0,
+              1
+            ]
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [],
+          "buttons": [
+            0
+          ]
+        },
+        "emissions": 3
+      }
+    ]
+  },
+  {
+    "label": "key_partial_post_then_raises",
+    "mode": "after_post",
+    "kind": "key",
+    "started_utc": "2026-10-03T11:35:55.245446+00:00",
+    "ended_utc": "2026-10-03T11:35:55.245446+00:00",
+    "first_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-key_partial_post_then_raises-first",
+      "source": {
+        "observation_seq": 7,
+        "binding_revision": 3
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "A",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "fresh_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-key_partial_post_then_raises-fresh",
+      "source": {
+        "observation_seq": 8,
+        "binding_revision": 4
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "CTRL",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "first_return": {
+      "status": "execution_failed",
+      "error": "BACKEND_EXECUTION",
+      "detail": "OSError('own key_partial_post_then_raises injected boundary')",
+      "backend_emissions": 0,
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 0,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [],
+        "error": "OSError('own key_partial_post_then_raises injected boundary')",
+        "failed_op": 0,
+        "failed_op_effect": "unknown; may have emitted partial input"
+      },
+      "recovery_required": false
+    },
+    "fresh_return": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 2,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [
+          0,
+          1
+        ]
+      },
+      "recovery_required": false
+    },
+    "first_virtual_state": {
+      "keys": [
+        0
+      ],
+      "buttons": []
+    },
+    "first_owner_tracking": {
+      "keys": {},
+      "buttons": []
+    },
+    "first_recovery_required": false,
+    "first_emissions": 0,
+    "original_exception_custody": [
+      {
+        "cause_is_original_fault": true,
+        "failed_op": 0,
+        "completed_ops": []
+      }
+    ],
+    "followup_post_effects": 2,
+    "followup_emissions_delta": 2,
+    "final_virtual_state": {
+      "keys": [
+        0
+      ],
+      "buttons": []
+    },
+    "false_verified_neutral": true,
+    "safety_result": "FAIL",
+    "trace": [
+      {
+        "seq": 1,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-key_partial_post_then_raises-first",
+          "source": {
+            "observation_seq": 7,
+            "binding_revision": 3
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "A",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 2,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 3,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 4,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 5,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 6,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 0,
+        "down": true
+      },
+      {
+        "seq": 7,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 0,
+        "down": true,
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 8,
+        "monotonic_ns": 36616203000000,
+        "event": "post_after_effect_fault",
+        "kind": "key",
+        "target": 0,
+        "down": true,
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 9,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          0,
+          true
+        ]
+      },
+      {
+        "seq": 10,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 11,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_end",
+        "row": {
+          "status": "execution_failed",
+          "error": "BACKEND_EXECUTION",
+          "detail": "OSError('own key_partial_post_then_raises injected boundary')",
+          "backend_emissions": 0,
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 0,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [],
+            "error": "OSError('own key_partial_post_then_raises injected boundary')",
+            "failed_op": 0,
+            "failed_op_effect": "unknown; may have emitted partial input"
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        },
+        "tracking": {
+          "keys": {},
+          "buttons": []
+        },
+        "recovery_required": false,
+        "emissions": 0
+      },
+      {
+        "seq": 12,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-key_partial_post_then_raises-fresh",
+          "source": {
+            "observation_seq": 8,
+            "binding_revision": 4
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "CTRL",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 13,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 14,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 15,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 16,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 17,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": true
+      },
+      {
+        "seq": 18,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": true,
+        "state": {
+          "keys": [
+            0,
+            59
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 19,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          true
+        ]
+      },
+      {
+        "seq": 20,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 21,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": false,
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 22,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          false
+        ]
+      },
+      {
+        "seq": 23,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 24,
+        "monotonic_ns": 36616203000000,
+        "event": "key_probe",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 25,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_end",
+        "row": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [
+              0,
+              1
+            ]
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [
+            0
+          ],
+          "buttons": []
+        },
+        "emissions": 2
+      }
+    ]
+  },
+  {
+    "label": "key_post_before_effect_control",
+    "mode": "before_post",
+    "kind": "key",
+    "started_utc": "2026-10-03T11:35:55.247599+00:00",
+    "ended_utc": "2026-10-03T11:35:55.247599+00:00",
+    "first_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-key_post_before_effect_control-first",
+      "source": {
+        "observation_seq": 7,
+        "binding_revision": 3
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "A",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "fresh_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "own6938-key_post_before_effect_control-fresh",
+      "source": {
+        "observation_seq": 8,
+        "binding_revision": 4
+      },
+      "authority": {
+        "lease_id": "own-inert-only",
+        "expires_at_ns": 2000000
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "key_state",
+          "key": "CTRL",
+          "down": true
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "first_return": {
+      "status": "execution_failed",
+      "error": "BACKEND_EXECUTION",
+      "detail": "OSError('own key_post_before_effect_control injected boundary')",
+      "backend_emissions": 0,
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 0,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [],
+        "error": "OSError('own key_post_before_effect_control injected boundary')",
+        "failed_op": 0,
+        "failed_op_effect": "unknown; may have emitted partial input"
+      },
+      "recovery_required": false
+    },
+    "fresh_return": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "input.keyboard",
+        "input.release_all"
+      ],
+      "execution": {
+        "started_ns": 36616203000000,
+        "ended_ns": 36616203000000,
+        "emissions": 2,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "keys_unknown": [],
+            "buttons_unknown": [],
+            "errors": [],
+            "verified": true,
+            "monotonic_ns": 36616203000000
+          }
+        ],
+        "completed_ops": [
+          0,
+          1
+        ]
+      },
+      "recovery_required": false
+    },
+    "first_virtual_state": {
+      "keys": [],
+      "buttons": []
+    },
+    "first_owner_tracking": {
+      "keys": {},
+      "buttons": []
+    },
+    "first_recovery_required": false,
+    "first_emissions": 0,
+    "original_exception_custody": [
+      {
+        "cause_is_original_fault": true,
+        "failed_op": 0,
+        "completed_ops": []
+      }
+    ],
+    "followup_post_effects": 2,
+    "followup_emissions_delta": 2,
+    "final_virtual_state": {
+      "keys": [],
+      "buttons": []
+    },
+    "false_verified_neutral": false,
+    "safety_result": "PASS",
+    "trace": [
+      {
+        "seq": 1,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-key_post_before_effect_control-first",
+          "source": {
+            "observation_seq": 7,
+            "binding_revision": 3
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "A",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 2,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 3,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 4,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 5,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 6,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 0,
+        "down": true
+      },
+      {
+        "seq": 7,
+        "monotonic_ns": 36616203000000,
+        "event": "post_before_effect_fault",
+        "kind": "key",
+        "target": 0,
+        "down": true,
+        "state": {
+          "keys": [],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 8,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          0,
+          true
+        ]
+      },
+      {
+        "seq": 9,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 10,
+        "monotonic_ns": 36616203000000,
+        "event": "first_dispatch_end",
+        "row": {
+          "status": "execution_failed",
+          "error": "BACKEND_EXECUTION",
+          "detail": "OSError('own key_post_before_effect_control injected boundary')",
+          "backend_emissions": 0,
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 0,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [],
+            "error": "OSError('own key_post_before_effect_control injected boundary')",
+            "failed_op": 0,
+            "failed_op_effect": "unknown; may have emitted partial input"
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [],
+          "buttons": []
+        },
+        "tracking": {
+          "keys": {},
+          "buttons": []
+        },
+        "recovery_required": false,
+        "emissions": 0
+      },
+      {
+        "seq": 11,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_start",
+        "program": {
+          "schema": "agent-interface/program-v1",
+          "program_id": "own6938-key_post_before_effect_control-fresh",
+          "source": {
+            "observation_seq": 8,
+            "binding_revision": 4
+          },
+          "authority": {
+            "lease_id": "own-inert-only",
+            "expires_at_ns": 2000000
+          },
+          "terminal": {
+            "release_all_required": true
+          },
+          "ops": [
+            {
+              "op": "key_state",
+              "key": "CTRL",
+              "down": true
+            },
+            {
+              "op": "release_all"
+            }
+          ]
+        }
+      },
+      {
+        "seq": 12,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 13,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 14,
+        "monotonic_ns": 36616203000000,
+        "event": "display_id"
+      },
+      {
+        "seq": 15,
+        "monotonic_ns": 36616203000000,
+        "event": "display_bounds",
+        "display": 1
+      },
+      {
+        "seq": 16,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": true
+      },
+      {
+        "seq": 17,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": true,
+        "state": {
+          "keys": [
+            59
+          ],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 18,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          true
+        ]
+      },
+      {
+        "seq": 19,
+        "monotonic_ns": 36616203000000,
+        "event": "create",
+        "kind": "key",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 20,
+        "monotonic_ns": 36616203000000,
+        "event": "post_effect",
+        "kind": "key",
+        "target": 59,
+        "down": false,
+        "state": {
+          "keys": [],
+          "buttons": []
+        }
+      },
+      {
+        "seq": 21,
+        "monotonic_ns": 36616203000000,
+        "event": "dispose",
+        "item": [
+          "key",
+          59,
+          false
+        ]
+      },
+      {
+        "seq": 22,
+        "monotonic_ns": 36616203000000,
+        "event": "sleep_mocked",
+        "seconds": 0.02
+      },
+      {
+        "seq": 23,
+        "monotonic_ns": 36616203000000,
+        "event": "key_probe",
+        "target": 59,
+        "down": false
+      },
+      {
+        "seq": 24,
+        "monotonic_ns": 36616203000000,
+        "event": "fresh_dispatch_end",
+        "row": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 36616203000000,
+            "ended_ns": 36616203000000,
+            "emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "keys_unknown": [],
+                "buttons_unknown": [],
+                "errors": [],
+                "verified": true,
+                "monotonic_ns": 36616203000000
+              }
+            ],
+            "completed_ops": [
+              0,
+              1
+            ]
+          },
+          "recovery_required": false
+        },
+        "state": {
+          "keys": [],
+          "buttons": []
+        },
+        "emissions": 2
+      }
+    ]
+  }
+]

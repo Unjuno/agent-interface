@@ -1,0 +1,40 @@
+{
+  "allocation": "8471-T0-A01",
+  "base_main": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "formal_run_state": "FROZEN_READY_FOR_ONE_SHOT",
+  "gate": "PASS_METHOD_SCOPED only under README.md D; otherwise FAIL/HOLD",
+  "host": "Darwin arm64; CPython stdlib; no third-party dependencies",
+  "inputs": {
+    "horizon": 12,
+    "initial": ["1/1", "1/2"],
+    "modes": {
+      "A": [["1/2", "1/1"], ["0/1", "1/2"]],
+      "B": [["1/2", "0/1"], ["1/1", "1/2"]]
+    },
+    "envelope_infinity_norm_strictly_greater_than": "4/1",
+    "lyapunov_alpha": "5/6",
+    "switch_comparison_mu": "5/1",
+    "minimum_dwell_ticks": 10,
+    "hysteresis_enter_B_at_or_above": "2/3",
+    "hysteresis_return_A_at_or_below": "1/3",
+    "disturbance_per_tick": ["1/100", "(-1)^tick/100"],
+    "disturbance_observation_bound_strictly_less_than": "16/1",
+    "reset_on_switch": "identity, before applying the next mode",
+    "emergency_override": "immediate abstract policy override, independent of dwell"
+  },
+  "formal_commands": ["python3 candidate.py", "python3 audit.py"],
+  "source_sha256": {
+    "protocol.py": "87091edc7603d1606dcebea5d9b4a3d7e4e8a0c2015b3df8a671de36fbd26efb",
+    "candidate.py": "3ccd9191e4d685ab740453706c0437caa08536f8255a11be840411bbb5244571",
+    "audit.py": "067ed04836a4df105d959d2cad6bb2b6eae8417e590028cf2df6e98d5f07c54d",
+    "README.md": "18825196f36c09a7161c3a6925246a54eee8efe8b913278b265b6049da56f0af",
+    "test_construction.py": "3c68eaa5a0d7fc0d5352faf080246e1369ed3c7a057137f4102fd3a9fa5397c0"
+  },
+  "one_shot": {"candidate": 1, "independent_auditor": 1},
+  "construction_tests_passed": 4,
+  "construction_test_failures_repaired_before_freeze": [
+    "independent expected minimum-dwell schedule count corrected from 4 to 16",
+    "construction Lyapunov matrix multiplication order corrected"
+  ],
+  "scope_exclusions": ["container setup per issue", "runtime", "hardware", "GUI", "actuator", "physical safety", "ISS/robust stability"]
+}

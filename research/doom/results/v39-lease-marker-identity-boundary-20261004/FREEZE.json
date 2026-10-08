@@ -1,0 +1,32 @@
+{
+  "schema": "v39-lease-marker-identity-boundary-freeze-v1",
+  "pre_fix_commit": "cf4904c678830ebe1de84ec34c07df01f8be8b34",
+  "pre_fix_source_path": "research/live_control/input_transition_owner_v3.py",
+  "pre_fix_source_blob": "99dfc7c9907b018e7473bc2ba8a7393a5b221f51",
+  "pre_fix_test_blob": "009a42b475c8c3f811f53c273e0dba7c01ca5da1",
+  "red_test_base_commit": "92b1c5f1c1a3f9565d88bd7ab0536811ac678d1c",
+  "red_test_source_blob": "0ae95b4e901aa47f8ccd1cb033eea11989ea0cc2",
+  "red_test_current_base_commit": "cf4904c678830ebe1de84ec34c07df01f8be8b34",
+  "red_test_current_source_blob": "99dfc7c9907b018e7473bc2ba8a7393a5b221f51",
+  "red_test_current_test_sha256": "51f1e22e5473eda7f6597e46333bd2643bcbe21aa9d2bec1249716043946a043",
+  "real_owner_queue_test_path": "research/live_control/test_input_transition_owner_v3_owner_queue.py",
+  "real_owner_queue_test_sha256": "866ef33ed5589f8b31f09613a948fb023af58974599c03b3a88723c564e5670a",
+  "real_owner_source_path": "research/live_control/input_owner_v10.py",
+  "real_owner_source_sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+  "environment": {
+    "os": "Windows 11 Pro 10.0.26300",
+    "python": "3.11.9"
+  },
+  "input": {
+    "lease_objects": 2,
+    "key": "w",
+    "operations": ["down(old lease)", "up(distinct new lease with no admission)"],
+    "forced_id_collision": true,
+    "inner_owner": "deterministic in-memory fake",
+    "gui_or_os_input": false
+  },
+  "decision": {
+    "unsafe_if": "ordinary_release_candidate is true for the distinct lease that had no matching admission",
+    "fixed_pass_if": "owner_release_history_complete and ordinary_release_candidate are both false"
+  }
+}

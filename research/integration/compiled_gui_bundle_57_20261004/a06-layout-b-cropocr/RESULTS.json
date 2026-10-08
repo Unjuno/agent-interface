@@ -1,0 +1,74 @@
+{
+  "status": "PASS_LAYOUT_B_FIT_ONLY",
+  "tesseract_version": "tesseract 5.5.0",
+  "leptonica_version": "leptonica-1.84.1",
+  "pillow_version": "12.3.0",
+  "layout": "B",
+  "crop_box_xyxy": [
+    495,
+    541,
+    803,
+    577
+  ],
+  "crop_output_size": [
+    1848,
+    216
+  ],
+  "resampling": "Lanczos",
+  "psm": 7,
+  "filled_exact": 3,
+  "filled_total": 3,
+  "blank_token_false_positives": 0,
+  "blank_total": 3,
+  "formal_comparison_credit": false,
+  "frames": [
+    {
+      "frame": "068.png",
+      "sha256": "e1416a9e8e5c084dbc888af20f7d43c2475163fe01879ebd748bb4c4ac71ad2f",
+      "expected": null,
+      "ocr_stdout": "",
+      "exact": false,
+      "crop_sha256": "b50ad631ed1492af3bad922621f05b36f88926b519c2ce2320ef7c7cd3705ca0"
+    },
+    {
+      "frame": "077.png",
+      "sha256": "f07a6655e0f633db72a37450690282704cfa490aa2feb8f8e36c2524d4e8a185",
+      "expected": "t991028-4",
+      "ocr_stdout": "t991028-4\n",
+      "exact": true,
+      "crop_sha256": "76b0c609c6b6cc43455a7a070efa3183a973bb4555c9f0a523f60d073a4c6e32"
+    },
+    {
+      "frame": "093.png",
+      "sha256": "fb66e465daa52f78dfd34b10d51f3afefb1c1f08691c13605d3d20fdc34ff143",
+      "expected": null,
+      "ocr_stdout": "ee\n",
+      "exact": false,
+      "crop_sha256": "1d5f06a56d2c8d111f73fcd9951b7abdccba34c2e2112f9fc269b536308e5d5a"
+    },
+    {
+      "frame": "100.png",
+      "sha256": "4c783c14eb9be98ce36119f338d3f76505b4e71953786a7a53ca8ac7888188c5",
+      "expected": "t991028-5",
+      "ocr_stdout": "t991028-5\n",
+      "exact": true,
+      "crop_sha256": "c7f13b96b9b376b4bc235cc30fe77a2c15e80b54c567117dbc7e8fb78a3b3c69"
+    },
+    {
+      "frame": "115.png",
+      "sha256": "b44309dec6b19a13e9aad0578d1dae5143c0c27883190e70b50681644f435843",
+      "expected": null,
+      "ocr_stdout": "ee\n",
+      "exact": false,
+      "crop_sha256": "1d5f06a56d2c8d111f73fcd9951b7abdccba34c2e2112f9fc269b536308e5d5a"
+    },
+    {
+      "frame": "121.png",
+      "sha256": "df091f2154717c726740ea9a5f0c22b2f88a6c8ced35cb24752450d95dc68961",
+      "expected": "t991028-6",
+      "ocr_stdout": "t991028-6\n",
+      "exact": true,
+      "crop_sha256": "3a88437bf6693560f8cadd723561f86a3a41609c762843f01c2cd6a3ccd412c9"
+    }
+  ]
+}

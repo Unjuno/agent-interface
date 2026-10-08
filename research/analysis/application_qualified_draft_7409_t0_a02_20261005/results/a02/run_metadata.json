@@ -1,0 +1,45 @@
+{
+  "allocation_id": "APPLICATION-QUALIFIED-DRAFT-7409-T0-A02-20261005-01",
+  "docker_client": "29.5.2",
+  "docker_server": "29.4.0",
+  "image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "invocations": {
+    "auditor": {
+      "audit_sha256": "7fa89cf29251bc63c2f1074736f97513acbad78a7348a06ea7ac2009c4ff1198",
+      "command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount frozen:/src:ro --mount results/a02:/out --entrypoint python <pinned-image> /src/auditor.py /src/cases.json /out/candidate.raw.json /out/audit.json",
+      "condition": "candidate exit 0",
+      "count": 1,
+      "exit_code": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "cb43ca649f4cfe8c8b5f6dfcd5108492ddc28e46d8bf04447ba83a5646a2ef0e"
+    },
+    "candidate": {
+      "command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount frozen:/src:ro --mount results/a02:/out --entrypoint python <pinned-image> /src/candidate.py /src/cases.json /out/candidate.raw.json",
+      "count": 1,
+      "exit_code": 0,
+      "raw_sha256": "4d2dbe22bceef1041e7253c551974ca171330b6835d9db7024a5d995751ae374",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "d4eec518070961159e9fb926d766630e3fbb4c7c57487d209aca2f0ecf84b679"
+    },
+    "retries": 0
+  },
+  "platform": "linux/arm64",
+  "postrun_running_containers": [],
+  "remote_main_at_formal_run": "406b4dee3df22c0ea9156ef5793e790be278f22d",
+  "runtime": {
+    "cpu_enforcement_verified": false,
+    "cpus_requested": 1,
+    "network": "none",
+    "rootfs_read_only": true,
+    "separate_output_mount": true,
+    "source_read_only": true,
+    "swap_assessed": false,
+    "tmpfs": "16 MiB,noexec,nosuid"
+  },
+  "source_freeze_commit": "ab7dcd4a7baec266d7d467e9cd9be5e645c70203",
+  "warnings": [
+    "DOCKER_INSECURE_NO_IPTABLES_RAW is set",
+    "cgroup v2; CPU limit requested but enforcement not verified",
+    "swap not assessed"
+  ]
+}

@@ -1,0 +1,5 @@
+Fetched after the prior source refresh:
+main=c9a02437e8565b340464ed9cde736fa9e5642ab4
+pr7429_head=8f6d92cd2f8bd1081b047bc272f10ff900bb2026
+current_main_plus_pr_merge_tree=973e4b0b49b2bb9fe279394f979173feea2ebea2
+All eight latest PR blobs match the merge-tree blobs. Seven of the eight match the A03 source snapshot byte-for-byte. `executor_v12.py` is blob dd4f2d619b60e63a0fa7b3aa81d7492f8995702a (SHA-256 0706510718f1ebb01c6658b559d7120ccc1513ad14514e63ebb967edd702f0fc); the A03 snapshot is blob cfd7a3f5979e2067b797ddb3dc7a48fcfc25de7d (SHA-256 11ed8e63fffa45bba52d8be2a926a1b5a09b20cfcbb0be0b02defc4b8a1e038b). Comparing both file byte strings after stripping terminal CR/LF gives exact equality; the only change is removal of a final blank CRLF line. The `submit` and `close` bodies and all executable source lines are unchanged. No candidate rerun was made for this whitespace-only change.

@@ -4,6 +4,10 @@
 
 ## Navigate
 
+Retained [ExecutorV13 release-custody BaseException boundary experiment](baseexception_release_custody_59_20261005/README.md): synthetic worker-step result with custody-preserving terminal behavior, independent source audit, and scoped limits; the implementation is historical evidence, not a runtime adoption.
+
+Retained [ExecutorV13 `release_all()` BaseException custody-boundary experiment](executor_v13_release_cleanup_baseexception_59_20261005/README.md): the frozen parent regressions demonstrate the no-terminal failure; the synthetic candidate/AST audit passes, and the later integrated #7635 repair supersedes the candidate implementation. Historical evidence only; no live-control or task-effect claim.
+
 Retained [constructor-journal ownership comparison](appserver_constructor_journal_59_20261003_01a0ff34/REPORT.md): original twelve cells and traceback-retention counterexample, not a production repair or permanent-leak/cleanup-bound claim. [Saved-data rescue checks](../../runtime/results/constructor_journal_rescue_f4cc/README.md) do not replay the original factory/collector or certify current source.
 
 Retained [late/unowned response boundary](appserver_late_reply_59_20261003_df63/README.md): original Queue-backed construction, pending-ID counterfactual and first publication failures, not a production repair or real-server certificate. [Saved-data rescue](../../runtime/results/late_reply_rescue_d5ab/README.md) does not replay the original subject/collector or certify current-main behavior.
@@ -19,6 +23,8 @@ Retained [predicate Condition boundary](appserver_predicate_condition_17_2026100
 | Current Linux research caller | [CURRENT_CLIENT.md](CURRENT_CLIENT.md) |
 | EOF regression protocol registration (#59/#6953 follow-up) | [Selected-module verification and limits](appserver_eof_registration_59_01a0ff51/REPORT.md) |
 | App-server stdout-EOF stop repair (#59; native inert child scope) | [Comparison and limits](appserver_eof_stop_59_01a0ff51/REPORT.md) |
+| #8290 exited-leader process-group reap repair — historical test/archive evidence | [Original result and 285-member archive](appserver_eof_reap_59_e0cc_20261007/README.md) — host process-tree tests only; the implementation has since evolved on main, so this is not a current-head retest. |
+| #8302 independent recheck of #8290 — historical source snapshot | [A/B result and source applicability](appserver_eof_reap_independent_recheck_a01_20261007/README.md) — saved raw audit passes (base 2 failures/2 errors; candidate 8/8), but its tested main is older than current main; no live app-server or current-head claim. |
 | Project evidence ledger | [../../RESEARCH.md](../../RESEARCH.md) |
 | Retained raw result artifacts | [results/README.md](results/README.md) |
 | Recycled-XID process-incarnation guard (Issue #3555; scoped, provenance-limited) | [XRes guard report](x11_xres_incarnation_guard_3555_v1/REPORT.md) |
@@ -645,6 +651,8 @@ or human-tempo claim.
 - [Issue #5156 / source PR #5298 archival qualification](owner_keyup_owner_integration_5156_v1/ARCHIVAL_QUALIFICATION.md) — preserves four exact Allocation-03 owner-v11 files and the historical 14-test fake-Xlib construction record. The original baseline auditor is retained with its empty/omitted-inventory fail-open limitation; [#5415](https://github.com/Unjuno/agent-interface/pull/5415) is a separate synthetic successor. No real X11, physical key-up, MAP01, formal-gate completion, or runtime promotion is established; the source PR remains Draft and #5156 remains open.
 
 - [#5630 T3 keymap witness recovery qualification](owner_keyup_keymap_witness_5156_t3_v1/RESCUE_QUALIFICATION_20261003.md) — preserves 106 exact construction-package files; synthetic contract tests 35/35 and retained SHA256SUMS manifests 11/11 pass. Known runner-completion cardinality defect remains unresolved; no formal X11/Docker/host receipt or MAP01 claim.
+
+- [#5156 synthetic completion-sentinel terminality probe](../analysis/owner_keyup_completion_sentinel_terminality_5156_20261003/REPORT.md) — current T3 raw-only CLI accepts the same 25-row synthetic audit with the successful completion row last or first. Independent row/order/hash audit passes; no formal receipt, X11, physical input, or application effect was tested.
 
 
 - [#2802 allocation 04 source-only qualification](app_event_obligation_keying_2802_v1/ARCHIVAL_QUALIFICATION.md): ten exact preformal source/freeze files; formal 0/18. The reported macOS/CPython 3.14.5 host policy check (4/4) is supplemental only; the frozen Linux/CPython 3.13.5 gate remains open. Original freeze and branch retained; no execution or runtime promotion.

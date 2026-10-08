@@ -1,0 +1,57 @@
+{
+  "description": "Synthetic, internally well-formed adapter edges. The default fixture reverses chronology; the audit substitutes ordered, touching, overlapping, and reversed intervals.",
+  "events": [
+    {
+      "event": "input_admission",
+      "id": "synthetic-program",
+      "step": 0,
+      "key": "F8",
+      "intent_token": "synthetic-token",
+      "owner_id": "synthetic-owner",
+      "grants_input_authority": false,
+      "physical_key_measurement": {
+        "classification": "CONFIRMED_PHYSICAL_DOWN",
+        "identity_status": "MINTED",
+        "actuation_id": "synthetic-actuation",
+        "grants_input_authority": false,
+        "application_consumption_observed": false,
+        "adapter_edge": {
+          "edge": "down",
+          "interval": [200, 210],
+          "actuation_id": "synthetic-actuation",
+          "owner_id": "synthetic-owner",
+          "key": "F8",
+          "intent_token": "synthetic-token",
+          "grants_input_authority": false,
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        }
+      }
+    },
+    {
+      "event": "input_release_measurement",
+      "id": "synthetic-program",
+      "step": 0,
+      "key": "F8",
+      "intent_token": "synthetic-token",
+      "owner_id": "synthetic-owner",
+      "grants_input_authority": false,
+      "physical_key_measurement": {
+        "classification": "CONFIRMED_PHYSICAL_UP",
+        "identity_status": "RETIRED",
+        "actuation_id": "synthetic-actuation",
+        "grants_input_authority": false,
+        "application_consumption_observed": false,
+        "adapter_edge": {
+          "edge": "up",
+          "interval": [100, 110],
+          "actuation_id": "synthetic-actuation",
+          "owner_id": "synthetic-owner",
+          "key": "F8",
+          "intent_token": "synthetic-token",
+          "grants_input_authority": false,
+          "status": "CONFIRMED_PHYSICAL_UP"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "FAIL_AUDIT",
+  "checks": {
+    "posthoc_status_preserved": true,
+    "source_identity_pinned": true,
+    "typed_row_count": true,
+    "sequences_strictly_advance": true,
+    "all_frame_hashes_change": true,
+    "stable_hud_on_changed_frame_count": true,
+    "health_and_ammo_transition_counts": true,
+    "scope_excludes_live_wait_correlation": false
+  },
+  "diagnosis": "Auditor implementation error: attempted substring membership directly on the freeze limits list. The underlying counts were correct; corrected audit joins the limit strings and passes. Preserved as first audit outcome."
+}

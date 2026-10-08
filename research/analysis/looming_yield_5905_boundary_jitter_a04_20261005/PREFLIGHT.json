@@ -1,0 +1,31 @@
+{
+  "auditor_invocations": 0,
+  "candidate_invocations": 0,
+  "command": [
+    "docker",
+    "run",
+    "--pull=never",
+    "--rm",
+    "--network=none",
+    "--read-only",
+    "--tmpfs",
+    "/tmp:rw,noexec,nosuid,size=16m",
+    "--cap-drop=ALL",
+    "--security-opt=no-new-privileges",
+    "--cpus=1",
+    "--memory=1g",
+    "--mount",
+    "type=bind,src=/Users/taka/Documents/Codex/2026-09-19/new-chat-2/work/issue7834-mrt-t0-a01-20261005/research/analysis/looming_yield_5905_image_only_t0_9_a09_20261005/candidate.py,dst=/src/candidate.py,readonly",
+    "python@sha256:c3e521df8b2b498a7a682e7e18676771cb80c6b75b8699af886b2d554ce40151",
+    "python",
+    "-B",
+    "-c",
+    "from pathlib import Path; print('bytes='+str(Path('/src/candidate.py').stat().st_size))"
+  ],
+  "exit": 0,
+  "kind": "CONTAINER_PREFLIGHT_NOT_EXPERIMENT",
+  "source_sha256": "caf4a7078edde9164a17ab70d9f59ad868536dc841a33c8840f5784399690465",
+  "stderr": "",
+  "stdout": "bytes=2836\n",
+  "timestamp_utc": "2026-10-05T09:10:46.884859+00:00"
+}

@@ -1,0 +1,24 @@
+{
+  "case": "erase_failed_receipt_strengthened",
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_lost_explicit_keyup_is_retried_and_receipt_uses_server_keymap",
+    "-v"
+  ],
+  "cwd": "<private-evidence>/source",
+  "PYTHONPATH": "<private-evidence>/source/research/live_control:<private-evidence>/source/research/doom",
+  "started_unix_ns": 1791182124455766000,
+  "finished_unix_ns": 1791182124534447000,
+  "exit_code": 1,
+  "expected_exit": 1,
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "owner_sha256": "1478579756bd613e9a84738999e6ae641717eb2914fee951f23ed493a938de27",
+  "test_sha256": "3874517abfd04987beef136f8a24a53036fd4725c02c6c145ccd33476420971f",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "f32352aaab74ee75a6417bff80ea2762637d2aa302deea750c60c6a662d3d983",
+  "owner_unchanged": true,
+  "test_unchanged": true
+}

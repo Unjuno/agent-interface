@@ -1,0 +1,117 @@
+{
+  "schema": "a15_transition_abstention_manifest_v1",
+  "batch": "A15",
+  "base_main_sha": "af6d0f9842a2377fba736d2d65643b02690f99d9",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "codex_cli_version": "codex-cli 0.146.1",
+  "per_case_attempts": 1,
+  "timeout_seconds": 90,
+  "case_order": [
+    "transition_053",
+    "ready_054"
+  ],
+  "inputs": {
+    "transition_053": {
+      "file": "inputs/transition_053.png",
+      "original_main_path": "research/integration/planner_contract_56_4d74_20261004/r02/formal-output/block-2/C/client/runtime/053.png",
+      "sha256": "7b680b95a2b9d1a1719d48e322becfe62b57156aa17ad807eb4a5e270ee70269",
+      "size_bytes": 45966,
+      "dimensions": [
+        1280,
+        800
+      ]
+    },
+    "ready_054": {
+      "file": "inputs/ready_054.png",
+      "original_main_path": "research/integration/planner_contract_56_4d74_20261004/r02/formal-output/block-2/C/client/runtime/054.png",
+      "sha256": "a8bbea511d0dc2e28317a0146f0b8463a17adf5ca89650dee50ae07b186a0961",
+      "size_bytes": 39028,
+      "dimensions": [
+        1280,
+        800
+      ]
+    }
+  },
+  "sources": {
+    "candidate.py": {
+      "upstream_ref": "e8f7c02cb98d849312a4889fa4d52ec424088732:research/integration/compiled_gui_bundle_57_20261004/a12-predicate-lifecycle-guard/candidate.py",
+      "sha256": "48549d1000a0a307436479fe64ae47fb0322d1e42f2a90a70e613691445526a7",
+      "file": "sources/candidate.py"
+    },
+    "planner_contract_schema.py": {
+      "upstream_ref": "af6d0f9842a2377fba736d2d65643b02690f99d9:research/integration/planner_contract_56_4d74_20261004/r02/planner_contract_schema.py",
+      "sha256": "c6b6ee14f9504c658e51128d35c150a830981c33773093ec01d4b83190271936",
+      "file": "sources/r02/planner_contract_schema.py"
+    },
+    "compiled_gui_interface_v1.py": {
+      "upstream_ref": "af6d0f9842a2377fba736d2d65643b02690f99d9:research/integration/planner_contract_56_4d74_20261004/source/research/live_control/compiled_gui_interface_v1.py",
+      "sha256": "3cfce9fbb9d85a0f425b49efd2e284e14f3358c69ff8226e82c80db30e8cc13e",
+      "file": "sources/tree/research/live_control/compiled_gui_interface_v1.py"
+    },
+    "compiled_gui.py": {
+      "upstream_ref": "af6d0f9842a2377fba736d2d65643b02690f99d9:research/integration/planner_contract_56_4d74_20261004/source/runtime/core_v1/compiled_gui.py",
+      "sha256": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014",
+      "file": "sources/tree/runtime/core_v1/compiled_gui.py"
+    }
+  },
+  "predecessor": {
+    "pr": "https://github.com/Unjuno/agent-interface/pull/7353",
+    "commit": "e8f7c02cb98d849312a4889fa4d52ec424088732",
+    "a14_visual_review_path": "research/integration/compiled_gui_bundle_57_20261004/a14-lifecycle-cross-task-construction/VISUAL_REVIEW.md",
+    "a14_task3_answer_path": "research/integration/compiled_gui_bundle_57_20261004/a14-lifecycle-cross-task-construction/task-3/answer.json",
+    "a14_claim": "A14 VISUAL_REVIEW says sequence-054 task3 screenshot is blank; exact hash-pinned image visibly shows the current form, and the recorded points land on field/save. Sequence-053 is the adjacent no-control navigation frame.",
+    "task3_screenshot_sha256": "a8bbea511d0dc2e28317a0146f0b8463a17adf5ca89650dee50ae07b186a0961",
+    "task3_recorded_points": {
+      "field": [
+        250,
+        401
+      ],
+      "submit": [
+        376,
+        401
+      ],
+      "crop": [
+        121,
+        394,
+        331,
+        409
+      ]
+    }
+  },
+  "aliases": {
+    "field": "pctask2_field",
+    "submit": "pctask2_submit"
+  },
+  "authorized_token": "t991079-3",
+  "positive_regions_xyxy": {
+    "field": [
+      117,
+      390,
+      336,
+      414
+    ],
+    "submit": [
+      352,
+      389,
+      401,
+      415
+    ],
+    "text_interior": [
+      119,
+      393,
+      333,
+      410
+    ]
+  },
+  "scope": "model-only construction on retained screenshot inputs; no GUI or formal allocation",
+  "frozen_files": {
+    "PROMPT.txt": "00342c9e39534ebf61ade4cf95444068419ce3b03be11c6e8e145fbdeb10a05b",
+    "result-schema.json": "f7c8a5f70cf468dac18d82364062c88678359e51d3eb76f2fffabe61ded10cc2",
+    "PLAN.md": "3ed4c2bde73b88cbf4686d6bcd5167c948a5b4224c7ef733979615a356bdeeaf",
+    "A14_TASK3_VISUAL_REVIEW.md": "8fbde4696aa6240b17be57d3bc929f61c5a2a63d7e63fe4eacfa1546e5531e02",
+    "A14_TASK3_ANSWER.json": "f4fc899a2364e13dcde092853483459119d43554b5c12749690db1b91d5b2208",
+    "run.py": "04ff8424c0a4088159a6a71bd955396c081352b70b465597167413e50cd04177",
+    "audit.py": "9ddb648610aa9d5ff63e738491dc8194080a5e461167d670f1975e966dbb246f"
+  }
+}

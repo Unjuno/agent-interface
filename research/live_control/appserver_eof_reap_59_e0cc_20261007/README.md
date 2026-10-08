@@ -1,0 +1,124 @@
+# Reap an exited app-server leader before signaling its group
+
+On macOS 27.0.1 arm64 / bundled Python 3.12.14, an inert app-server child
+could exit and wake its notification waiter, yet `close()` raised
+`PermissionError` at `os.killpg(SIGTERM)` before reaping that child. A separate
+unpatched-client diagnostic reproduced the error after reader EOF; explicitly
+reaping the child first made close succeed. This was discovered while checking
+the real transport composition of [#8280](https://github.com/Unjuno/agent-interface/pull/8280).
+It is a client cleanup defect, not evidence of a leaked child or failed wakeup.
+
+The patch polls the owned leader before signaling and still signals the group
+to retire surviving descendants. If the leader exits between poll and signal,
+one recheck/reap and signal attempt handles that race. A live leader's denial
+and a persistent group denial remain errors. Custom process factories retain
+their existing cleanup path. No controller, planner, timeout, or permission
+policy is changed.
+
+Base main: `9fb2dd6782d1d1477a00d14be870487fd4c54fa2`. The client and existing
+process-tree test module are the only executable files changed. That module is
+already registered in `runtime/integration_checks/native.py`. The archive here
+is passive evidence and is not imported or discovered as tests.
+
+## Validation
+
+- Before repair, five added tests produced two failures, two errors and one
+  pass; the actual EOF-child error and first traceback are retained.
+- After repair, all eight process-tree methods passed, including the existing
+  three real POSIX descendant cases with ignored SIGTERM/inherited or detached
+  pipes. Deterministic controls retain live and persistent permission denials.
+- Seven focused client modules passed 29 methods normally and 29 under `-O`.
+  Compile and diff whitespace passed. The first index invocation had 21 passes
+  and one loader error because its import path omitted `research`; its failure
+  was initially misreported by reading the following shell command's status.
+  The exact workflow discovery command then passed all 22 methods with its own
+  exit status checked. `INDEX_RECHECK.json` and `index-recheck.log` retain that
+  correction and result; the first failure remains in the original archive.
+- Existing bugbot reviewed the change and independently audited the original
+  controller raw records, passing 18 checks. This is helper verification, not
+  the required whole-PR nonauthor quorum.
+
+The original eight controller cells use the exact #8280 predecessor
+`6ec463eb907377ba41191127f4ea569d9ecfe142` and follow-up
+`029064c797768183f63c79bbedbe3aca18f85dbb`. They exercise actual V39 main,
+ThreadPoolExecutor, planner adapter, default Popen client and a local inert
+JSONL peer, with a synthetic application session, observations and cleanup spy.
+
+| Interrupt response | Predecessor | #8280 follow-up |
+|---|---|---|
+| Error, no completion | External close required | Transport abort wakes waiter |
+| Acknowledgment and completed answer | Answer ineligible | Answer ineligible |
+| EOF | Waiter wakes | Waiter wakes; close reports the retained EPERM |
+| Acknowledgment, no completion | External close required | External close required |
+
+Two additional ordinary regression cells overlay only the repaired client on
+the 67-file #8280 export. EOF and interrupt-error cases both preserve the original
+cover failure, make no further submission, reach cleanup, and retire the future,
+reader, actual child and process group without external rescue or abort error.
+The remotely advanced #8280 branch and all original evidence remain unchanged.
+
+## Evidence and reproduction
+
+`MANIFEST.json` hashes all 285 members of `evidence.tar.xz`, including the
+original 8-cell protocol/freeze, exact source exports, portable harness and peer,
+wire logs, traces, execution records, independent auditor, unreaped/reaped
+diagnostic, failing regression, repair diff, test logs and two repaired cells.
+Archive readback checked every member. `RESULT.json` records the scoped result
+and source/test hashes. Only absolute workspace/runtime prefixes in 24 text
+members were projected for publication; the manifest retains original and
+published hashes. Original local files are preserved.
+
+A separate helper readback of the two repaired cells passed 20/20 checks.
+`repair-audit.tar.xz` and `REPAIR_AUDIT_MANIFEST.json` retain its v1 path error,
+v2 audit-predicate false negative, and corrected v3 report. No producer was
+rerun, and the original 285-member archive remains unchanged. This additional
+readback is not a quorum vote.
+
+From repository root, with `research/live_control` on `PYTHONPATH`, run:
+
+```sh
+python -m unittest -v test_appserver_process_tree_cleanup_20261004
+```
+
+The other focused modules are `test_app_server_eof_stop`,
+`test_app_server_reply_id_5156`, `test_app_server_utf8`,
+`test_appserver_utf8_2d0b`, `test_appserver_reader_retirement_01a0ff2d`, and
+`test_appserver_journal_close_01a0ff2d`. Exact execution commands are retained.
+In an extracted evidence directory, `python audit-bugbot.py` re-audits the eight
+original cells and rewrites only its derived audit outputs; inspect its JSON
+`overall_pass` field. No producer execution is needed for that audit.
+
+## Limits and disposition
+
+These are ordinary repair tests, not a consumed live-game allocation. No Codex
+model, external app-server, GUI, game, native input, VM or shared model service
+was used. Process lifecycle checks used real host OS children. The synthetic
+cleanup spy proves handler entry, not production cleanup or physical release.
+One schedule per controller condition and fixed arm order do not establish a
+latency distribution or OS shutdown worst-case bound. The one-second external
+watchdog censored incomplete controls; no full 90-second wait was measured.
+An acknowledged interrupt without completion remains outside this repair.
+Persistent close failures remain reportable.
+
+## POSIX test portability follow-up
+
+The four added mocked `os.killpg` tests now carry the existing POSIX-only skip
+condition. The historical `RESULT.json` and its original test hash are unchanged;
+`portability-followup-20261007/` records the new test hash and full normal and
+optimized Darwin logs. The updated test module passes 8/8 in both modes on macOS
+27.0.1 arm64 / CPython 3.14.5. No Windows host run is claimed. No production
+runtime, scientific allocation, model, GUI, or task-effect behavior changed.
+
+## Current integration status — 2026-10-07
+
+The PR branch was updated from latest main `074f00a0db5baf48a42ed446043f7e1081a40ed7`
+by merge commit `8b7d4bc56719cf1895363f36ed13673cd949f5e2`; the four original
+repair/evidence commits remain unchanged. GitHub exact-head checks `replay-gate`,
+`audit`, `native-mcp`, and `research-workspace-index` all pass. The full native
+integration job exercises this POSIX process-tree module on Ubuntu. The Windows
+runtime workflows target other modules and do not invoke this test module.
+
+The PR remains Draft pending the required genuine nonauthor review. The
+portability helper audit and local checks are not quorum. Peer response-ownership
+and lifecycle proposals, including #8186, remain separate. Live task-effect,
+recovery, physical release, and OS shutdown worst-case claims remain untested.

@@ -1,0 +1,20 @@
+{
+  "run_id": "MAP01-EXECUTOR-V13-MAIN-VS-PR7429-SINK-ERROR-C10-20261004",
+  "base_main": "911e7b6ec0fba10d9367e45499d13a63232e9434",
+  "comparison_ref": "origin/research/59-cancel-release-publication-20261004",
+  "comparison_head": "5f3e24d3c177bf32f04c9282750f37b413de816b",
+  "kind": "local source-level construction regression",
+  "hypothesis": "The PR #7429 executor_v12/v13 source closure preserves sink-error publication accounting when composed with unchanged current-main executor_v3 dependencies; current-main same-named executor_v12/v13 does not.",
+  "test": "Run the exact current PR #7429 test_executor_v13.py against (a) current-main research/live_control imports and (b) exact PR #7429 executor_v12.py/executor_v13.py with current-main support modules.",
+  "decision": "PASS_SCOPED only if the main source run exposes the sink-error regression and the exact PR source run passes all four tests.",
+  "environment": {
+    "host": "Windows local Python 3.11",
+    "network_during_tests": false,
+    "game_or_x11": false,
+    "model_or_input": false,
+    "container": false,
+    "formal_allocation": false
+  },
+  "retry_policy": "Preserve each first saved invocation; no retries.",
+  "limitations": "Synthetic backend and fake release records only. This establishes one source-level compatibility difference; it does not establish runtime input release, useful gameplay feedback, recovery, matched performance, or Issue #59 completion."
+}

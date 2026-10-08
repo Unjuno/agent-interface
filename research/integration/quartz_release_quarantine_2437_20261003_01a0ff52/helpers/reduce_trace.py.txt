@@ -1,0 +1,37 @@
+"""Literal data-only outcome check; imports no runtime/session/fixture code."""
+import hashlib
+import json
+from pathlib import Path
+
+WORK = Path(__file__).parent
+blob = (WORK/'trace-six-rows.json').read_bytes()
+raw = json.loads(blob)
+expected = [
+    ('prior_quartz', False, 'completed', 'completed', 2, True),
+    ('prior_quartz', True, 'release_unverified', 'release_unverified', 3, True),
+    ('existing_x11_policy', False, 'completed', 'completed', 2, True),
+    ('existing_x11_policy', True, 'release_unverified', 'refused', 0, False),
+    ('quartz_transfer', False, 'completed', 'completed', 2, True),
+    ('quartz_transfer', True, 'release_unverified', 'refused', 0, False),
+]
+if len(raw['rows']) != len(expected):
+    raise ValueError('literal six-cell roster mismatch')
+for row, want in zip(raw['rows'], expected):
+    values=(row['arm'], row['sticky_A'], row['first']['status'], row['second']['status'],
+            row['followup_emissions'], row['ordinary_followup_key_created'])
+    if any(type(a) is not type(b) or a != b for a,b in zip(values,want)):
+        raise ValueError('literal trace outcome mismatch')
+    if row['sticky_A']:
+        if row['remaining_physical_stub_keys'] != [0] or row['tracked_keys'] != {'A': 0}:
+            raise ValueError('sticky physical/tracked evidence differs')
+        if row['arm'] != 'prior_quartz':
+            if row['followup_api_calls'] != [] or row['second']['error'] != 'INPUT_RECOVERY_REQUIRED':
+                raise ValueError('forbidden follow-up accessed backend')
+    elif row['remaining_physical_stub_keys'] != [] or row['tracked_keys'] != {}:
+        raise ValueError('healthy control not neutral')
+result={'decision':'SCOPED_STICKY_QUARANTINE_TRANSFER_PASS','raw_sha256':hashlib.sha256(blob).hexdigest(),
+        'rows':6,'prior_quartz_sticky_followup_emissions':3,'transfer_sticky_followup_emissions':0,
+        'existing_x11_policy_sticky_followup_emissions':0,
+        'scope':'Same inert backend/stub state, exact session sources, one sequential dispatch pair/cell; no physical/X11/native effect, host failure, cross-session reset or verified recovery proof'}
+(WORK/'trace-reduction.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))
