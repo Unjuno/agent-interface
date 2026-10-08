@@ -32,4 +32,15 @@ python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/audi
 python -B -m unittest -v research.doom.v39_release_trace_completeness_posthoc_a01_20261008.test_audit
 ```
 
+The original `audit_result.py` oracle checks selected result fields. Review found that it could accept altered provenance, the full cancellation table, per-key measurement count, feedback-timestamp claim, and decision text. `audit_result_v2.py` is an additive full-field oracle: it reconstructs every result field directly from the `FREEZE.json`-pinned raw events, owner events, report, and prior audit, then requires exact object equality. It also binds the audit output to the exact result bytes and frozen source commit. The original `RESULT.json`, `AUDIT.json`, and historical evidence are preserved unchanged.
+
+Run the full-field correction with:
+
+```sh
+python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/audit_result_v2.py --output AUDIT_V2.json
+python -B -m unittest -v research.doom.v39_release_trace_completeness_posthoc_a01_20261008.test_audit_v2
+```
+
+The mutation tests alter each previously unchecked claim and add an unknown field; every mutation must be rejected. `AUDIT_V2.json` records the successful full-field reconstruction separately from the original audit.
+
 The initial output blobs from commit `5604a1add0cf8d36902e185d7060e438270c76b5` remain in this branch's history. Current `RESULT.json` / `AUDIT.json` were regenerated from the exact same frozen inputs with the independent check strengthened for per-ID timing and task outcome; only JSON line endings changed, and the stronger audit hash binds the current result bytes. The first output and audit were not a new game/model allocation. Input provenance and checksums are in `FREEZE.json`; the original live allocation remains unchanged. No image, model, game, X11, OS input, container, or GPU was used in this posthoc run.
