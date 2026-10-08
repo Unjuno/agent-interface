@@ -1,0 +1,32 @@
+{
+  "allocation": "FAILURE-DETECTOR-5531-REGIME-TRACE-A01-20261005-01",
+  "auditor": "independent raw-only structural and timing reconstruction",
+  "coverage_by_regime": {
+    "elevated": {
+      "first_half_rows": 2991,
+      "interval_rows": 5991,
+      "meets_frozen_coverage_floor": true,
+      "observer_interval_max_ms": 104.705,
+      "observer_interval_p50_ms": 100.002,
+      "second_half_rows": 3000,
+      "worker_interval_p50_ms": 99.999
+    },
+    "ordinary": {
+      "first_half_rows": 0,
+      "interval_rows": 0,
+      "meets_frozen_coverage_floor": false,
+      "observer_interval_max_ms": null,
+      "observer_interval_p50_ms": null,
+      "second_half_rows": 0,
+      "worker_interval_p50_ms": null
+    }
+  },
+  "errors": [],
+  "heartbeat_rows": 6000,
+  "host_sample_rows": 595,
+  "progress_rows": 600,
+  "regime_comparison_eligibility": "HOLD_INSUFFICIENT_REGIME_COVERAGE",
+  "schema": "failure-detector-5531-regime-trace-audit-v1",
+  "scope": "One controlled healthy child process; not detector validation or a performance comparison.",
+  "trace_capture_disposition": "PASS_TRACE_CAPTURE_SCOPED"
+}
