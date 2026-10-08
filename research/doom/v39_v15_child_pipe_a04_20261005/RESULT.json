@@ -1,0 +1,138 @@
+{
+  "arms": [
+    {
+      "arm": "baseline",
+      "bootstrap_command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\bootstrap.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\baseline\\research\\doom\\session_map01_v15.py",
+        "--out",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\results\\baseline\\scorer",
+        "--seed",
+        "990605",
+        "--timeout-seconds",
+        "600",
+        "--skill",
+        "1",
+        "--load-fixture-manifest",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\fixture.json"
+      ],
+      "command_events": [],
+      "exit_code": 1,
+      "pid": 40648,
+      "ready_event": {
+        "event": "ready",
+        "owner_thread_id": 38356,
+        "polling_type": "MainThreadScorerStdin"
+      },
+      "scheduler": {
+        "commands": 0,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 38356,
+        "sample_hz": 34.99999947500001,
+        "samples": 1
+      },
+      "selected_command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\baseline\\research\\doom\\session_map01_v15.py",
+        "--out",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\results\\baseline\\scorer",
+        "--seed",
+        "990605",
+        "--timeout-seconds",
+        "600",
+        "--skill",
+        "1",
+        "--load-fixture-manifest",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\fixture.json"
+      ],
+      "sent_delayed_command": false,
+      "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\bootstrap.py\", line 37, in <module>\n    runpy.run_path(str(script),run_name='__main__')\n  File \"<frozen runpy>\", line 291, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\baseline\\research\\doom\\session_map01_v15.py\", line 128, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\baseline\\research\\doom\\session_map01_v15.py\", line 124, in main\n    try:base.main()\n        ^^^^^^^^^^^\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\bootstrap.py\", line 23, in fake_session_main\n    for line in polling:\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\baseline\\research\\doom\\map01_scorer_stdio_adapter_v1.py\", line 59, in __next__\n    if not self.loop.wait_readable(self.fd,timeout):continue\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\baseline\\research\\doom\\main_thread_scorer_polling_v1.py\", line 24, in _wait_readable\n    ready, _, _ = select.select([fd], [], [], timeout_s)\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nOSError: [WinError 10093] \u30a2\u30d7\u30ea\u30b1\u30fc\u30b7\u30e7\u30f3\u304c WSAStartup \u3092\u547c\u3073\u51fa\u3057\u3066\u3044\u306a\u3044\u304b\u3001\u307e\u305f\u306f WSAStartup \u304c\u5931\u6557\u3057\u307e\u3057\u305f\u3002\n",
+      "stdout_lines": [
+        "{\"event\": \"ready\", \"owner_thread_id\": 38356, \"polling_type\": \"MainThreadScorerStdin\"}"
+      ]
+    },
+    {
+      "arm": "candidate",
+      "bootstrap_command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\bootstrap.py",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\candidate\\research\\doom\\session_map01_v15.py",
+        "--out",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\results\\candidate\\scorer",
+        "--seed",
+        "990605",
+        "--timeout-seconds",
+        "600",
+        "--skill",
+        "1",
+        "--load-fixture-manifest",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\fixture.json"
+      ],
+      "command_events": [
+        {
+          "command_thread_id": 42812,
+          "event": "command",
+          "line": "{\"op\":\"finish\"}\r",
+          "parsed_command": {
+            "op": "finish"
+          },
+          "periodic_samples": 4,
+          "polling_owner_thread_id": 42812,
+          "sample_thread_ids": [
+            42812,
+            42812,
+            42812,
+            42812,
+            42812,
+            42812,
+            42812,
+            42812
+          ]
+        }
+      ],
+      "exit_code": 0,
+      "pid": 45300,
+      "ready_event": {
+        "event": "ready",
+        "owner_thread_id": 42812,
+        "polling_type": "MainThreadScorerStdin"
+      },
+      "scheduler": {
+        "commands": 1,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 42812,
+        "sample_hz": 34.99999947500001,
+        "samples": 4
+      },
+      "selected_command": [
+        "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\candidate\\research\\doom\\session_map01_v15.py",
+        "--out",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\results\\candidate\\scorer",
+        "--seed",
+        "990605",
+        "--timeout-seconds",
+        "600",
+        "--skill",
+        "1",
+        "--load-fixture-manifest",
+        "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-6\\outputs\\v39-v15-child-pipe-7860-a04\\fixture.json"
+      ],
+      "sent_delayed_command": true,
+      "stderr": "",
+      "stdout_lines": [
+        "{\"event\": \"ready\", \"owner_thread_id\": 42812, \"polling_type\": \"MainThreadScorerStdin\"}",
+        "{\"event\": \"command\", \"line\": \"{\\\"op\\\":\\\"finish\\\"}\\r\", \"parsed_command\": {\"op\": \"finish\"}, \"command_thread_id\": 42812, \"polling_owner_thread_id\": 42812, \"periodic_samples\": 4, \"sample_thread_ids\": [42812, 42812, 42812, 42812, 42812, 42812, 42812, 42812]}"
+      ]
+    }
+  ],
+  "candidate_sha": "4aaffba7fc970f64a4575de792c046cf880b509f",
+  "decision": "PASS_V39_SELECTION_V15_CHILD_PIPE_SCOPED",
+  "main_sha": "17b9d8b20d01f097a2054694398168dc2bc12000",
+  "platform": "win32",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "schema": "v39-v15-real-child-pipe-construction-result-v1"
+}

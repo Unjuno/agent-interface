@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\outputs\v39-v15-child-pipe-7860-a04\bootstrap.py", line 37, in <module>
+    runpy.run_path(str(script),run_name='__main__')
+  File "<frozen runpy>", line 291, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\outputs\v39-v15-child-pipe-7860-a04\baseline\research\doom\session_map01_v15.py", line 128, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\outputs\v39-v15-child-pipe-7860-a04\baseline\research\doom\session_map01_v15.py", line 124, in main
+    try:base.main()
+        ^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\outputs\v39-v15-child-pipe-7860-a04\bootstrap.py", line 23, in fake_session_main
+    for line in polling:
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\outputs\v39-v15-child-pipe-7860-a04\baseline\research\doom\map01_scorer_stdio_adapter_v1.py", line 59, in __next__
+    if not self.loop.wait_readable(self.fd,timeout):continue
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-6\outputs\v39-v15-child-pipe-7860-a04\baseline\research\doom\main_thread_scorer_polling_v1.py", line 24, in _wait_readable
+    ready, _, _ = select.select([fd], [], [], timeout_s)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10093] アプリケーションが WSAStartup を呼び出していないか、または WSAStartup が失敗しました。
