@@ -218,6 +218,26 @@ These latency values are simulated—not measured CPU, runtime, GUI, or end-to-e
 
 The preserved Windows 11 / CPython 3.12.14 one-shot comparison retains three frozen cells: ordinary completion returned one byte; cancelling the asyncio wrapper left the underlying native read unfinished through its declared 500 ms observation window; `CancelSynchronousIo` returned success and the distinct `ReadFile` completion reported `ERROR_OPERATION_ABORTED` with no data. All cells exited 0 without timeout, and owned threads, handles, and descriptors were joined/closed. The first saved-data auditor falsely accepted two of nine mutations; a separately retained v2 auditor rejected all nine against the unchanged data. This is a scoped native cancellation characterization, distinct from C01 pending-state sampling and from asyncio/Linux evidence. The allocation was consumed and was not replayed. No arbitrary-I/O, pooled-thread, application-effect, portability, performance, or runtime-adoption claim follows. See the [checksummed archival report and original outputs](research/concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) and [#6501](https://github.com/Unjuno/agent-interface/issues/6501).
 
+## Issue #6501 — owned Windows pending-I/O observation C01 (2026-10-03)
+
+One native Windows 11 / CPython 3.12.14 method allocation retained 27 events
+with three sampled `GetThreadIOPendingFlag` pairs for an owned `os.pipe` reader
+and an `Event.wait` control, followed by one normal byte transfer, cooperative
+joins, and verified handle/FD closure. A separately versioned raw-only auditor
+reconstructed the retained events and rejected ten serialized corruptions; the
+first auditor's Windows-path lookup failure remains preserved. A subsequent
+static qualification review found that `wait_enter` is signaled before the
+control calls `wait_release.wait()`, with no evidence that the control had
+entered its blocking call when sampled. Thus the observed false control flag
+does not establish a blocked-control contrast. Disposition is
+`HOLD_CONTROL_STATE_UNESTABLISHED`; the original `PASS_OWNED_THREAD_PENDING_METHOD_ONLY`
+record remains unchanged but is not a qualified method-pass claim. The archive
+is retained as a record of sampled values, not as cancellation efficacy. Later
+#6501 T02/T03/P02 allocations are distinct and remain separate. Do not replay
+the archived probe. See the [C01 receipts](research/concurrency/windows_pending_method_6501_01a0ff58_c01/README.md),
+[additive control-state review](research/analysis/windows_pending_method_6501_c01_control_review_20261008/REPORT.md),
+and [Issue #6501](https://github.com/Unjuno/agent-interface/issues/6501).
+
 # Issue #6509: claim-scoped partial verdicts T0 (2026-10-02)
 
 One frozen OrbStack candidate evaluated 15 verifier traces under three policies (45 rows); a separate raw-only auditor reconstructed all 45 and returned `PASS_METHOD_SCOPED`, errors `[]`. The claim ladder returned 4 complete, 2 counterexample, 9 unknown; it produced no partial-positive ALLOW and no consumer side effects. The deliberately unsafe scalar comparator produced 11 partial-positive ALLOW rows. On the authored decisive identity-negative case, logical decision time was 1 ms for claim-ladder versus 11 ms all-or-nothing; these are stipulated simulation times, not measured latency. Contradictory, stale, wrong-scope, torn-receipt and crash/replay controls were included. No actual journal crash, GUI, live verifier, authority, safety or product claim. See [report, preregistration, raw output and audit](research/analysis/claim_scoped_partial_verdict_6509_t0_20261002/REPORT.md) and [Issue #6509](https://github.com/Unjuno/agent-interface/issues/6509).
