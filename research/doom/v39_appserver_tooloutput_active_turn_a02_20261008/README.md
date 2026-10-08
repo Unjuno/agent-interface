@@ -18,7 +18,7 @@ The `turn/start` parameter shape is documented by the [official App Server `Turn
 
 ## Reproduction and retained follow-up
 
-`run.py` is the exact A02 script retained with the first outcome. `run_portable.py` is the corrected portable runner. A03 is retained as a harness failure: the release event was set before the first request, so steering arrived after the initial turn had finished and returned a different turn ID. Its process receipt was 0, but its result failed the same-turn condition; its Python runner then returned 1 because Windows still held the temporary Codex home open during cleanup. Do not treat A03 as a reproduction.
+The exact A02 script is retained locally with the first outcome (SHA-256 `fa13b080b05c579c14f5422622449554a99b0819a460699cd75784623bdb6c6a`) but omitted from the public package because it embeds the local absolute workspace path. `run_a02_redacted.py` changes only that output-root expression. `run_portable.py` is the corrected portable runner. A03 is retained as a harness failure: the release event was set before the first request, so steering arrived after the initial turn had finished and returned a different turn ID. Its process receipt was 0, but its result failed the same-turn condition; its Python runner then returned 1 because Windows still held the temporary Codex home open during cleanup. Do not treat A03 as a reproduction.
 
 A04 is the corrected replay using a fresh output directory. The app-server process and runner both exited 0; the independent receipt auditor passed all eight checks, including mutation controls. Its second request began 16 ms after the held first response completed. This reproduces the queued follow-up behavior while allowing normal scheduling delay.
 
