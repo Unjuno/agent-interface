@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1-a03/research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/candidate.py", line 133, in <module>
+    main()
+    ~~~~^^
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1-a03/research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/candidate.py", line 128, in main
+    count = run(model, prompts, queries, Path(args.raw), args.base_url, args.model_digest)
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1-a03/research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/candidate.py", line 112, in run
+    invoke(record,payload)
+    ~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/taka/Documents/Codex/2026-10-08/agent-interface-8406-t1-a03/research/analysis/consolidation_schedule_7418_t1_a03_gemma4_20261008/candidate.py", line 88, in invoke
+    raise RuntimeError("loaded model digest changed after generation")
+RuntimeError: loaded model digest changed after generation
