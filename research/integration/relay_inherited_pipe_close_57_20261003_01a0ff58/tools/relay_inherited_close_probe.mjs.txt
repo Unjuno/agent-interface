@@ -1,0 +1,110 @@
+import cp from 'node:child_process';
+import {syncBuiltinESMExports} from 'node:module';
+import {createInterface} from 'node:readline';
+import {readFile,writeFile,access,mkdir} from 'node:fs/promises';
+import {join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+
+const [modulePath,root,nonce]=process.argv.slice(2);
+const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+const stamp=()=>process.hrtime.bigint().toString();
+const emit=row=>console.log(JSON.stringify({...row,observed_ns:stamp()}));
+const control=createInterface({input:process.stdin});
+const controls=[];let waiter;
+control.on('line',line=>{const row=JSON.parse(line);if(waiter){const w=waiter;waiter=null;w(row);}else controls.push(row);});
+function nextControl(){return controls.length?Promise.resolve(controls.shift()):new Promise(resolve=>waiter=resolve);}
+let child;
+const originalSpawn=cp.spawn;
+cp.spawn=(...args)=>{child=originalSpawn(...args);return child;};
+syncBuiltinESMExports();
+const {createRelayClient}=await import(pathToFileURL(modulePath));
+const watchdog=setTimeout(()=>{emit({stage:'driver_watchdog',exit_intended:92});process.exit(92);},12000);
+const descendantSource=String.raw`
+const fs=require('node:fs'),path=require('node:path');
+const [dir,token,mode,parentPid]=process.argv.slice(1);
+const ready=path.join(dir,'descendant-ready.json');
+fs.writeFileSync(ready+'.tmp',JSON.stringify({role:'descendant',pid:process.pid,parent_pid:Number(parentPid),token,mode}),{flag:'wx'});
+fs.renameSync(ready+'.tmp',ready);
+let done=false;
+function finish(reason,code){
+ if(done)return;done=true;clearInterval(poll);clearTimeout(guard);
+ fs.writeFileSync(path.join(dir,'descendant-exit-intent.json'),JSON.stringify({role:'descendant',pid:process.pid,token,reason,exit_code_intended:code}),{flag:'wx'});
+ process.exit(code);
+}
+const poll=setInterval(()=>{
+ try {const r=JSON.parse(fs.readFileSync(path.join(dir,'release.json'),'utf8'));if(r.token===token)finish('owned_release',0);}catch(e){if(e.code!=='ENOENT')finish('release_read_error',93);}
+},10);
+const guard=setTimeout(()=>finish('fixture_selfcap',91),3000);
+`;
+const parentSource=`
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
+const [mode,dir,token]=process.argv.slice(1);
+const guard=setTimeout(()=>process.exit(94),3000);
+process.stdin.resume();
+process.stdin.on('end',()=>{clearTimeout(guard);process.exit(0);});
+if(mode!=='healthy'){
+ const descendant=cp.spawn(process.execPath,['-e',${JSON.stringify(descendantSource)},dir,token,mode,String(process.pid)],
+  {windowsHide:true,stdio:['ignore',mode==='stdout'?'inherit':'ignore',mode==='stderr'?'inherit':'ignore']});
+ descendant.on('error',()=>process.exit(95));
+}
+const ready=path.join(dir,'parent-ready.json');
+fs.writeFileSync(ready+'.tmp',JSON.stringify({role:'parent',pid:process.pid,token,mode}),{flag:'wx'});
+fs.renameSync(ready+'.tmp',ready);
+`;
+async function ready(path,token){
+ const deadline=Date.now()+2000;
+ while(Date.now()<deadline){
+  try{const row=JSON.parse(await readFile(path,'utf8'));if(row.token!==token)throw new Error('owned token mismatch');return row;}
+  catch(e){if(e.code!=='ENOENT')throw e;await delay(10);}
+ }
+ throw new Error('fixture readiness missing at2000ms');
+}
+async function exists(path){try{await access(path);return true;}catch(e){if(e.code==='ENOENT')return false;throw e;}}
+
+try{
+ for(const mode of ['healthy','stdout','stderr']){
+  const directory=join(root,mode);await mkdir(directory);
+  const token=nonce+'-'+mode;
+  const client=await createRelayClient({command:process.execPath,
+    args:['-e',parentSource,mode,directory,token],evidenceDirectory:join(directory,'client')});
+  const originalChild=child;
+  let parentExit=null,parentClose=null;
+  const exited=new Promise(resolve=>originalChild.once('exit',(code,signal)=>{
+    parentExit={code,signal,observed_ns:stamp()};emit({stage:'parent_exit',case:mode,pid:originalChild.pid,...parentExit});resolve(parentExit);
+  }));
+  originalChild.once('close',(code,signal)=>{parentClose={code,signal,observed_ns:stamp()};emit({stage:'parent_close',case:mode,pid:originalChild.pid,...parentClose});});
+  const parent=await ready(join(directory,'parent-ready.json'),token);
+  const descendant=mode==='healthy'?null:await ready(join(directory,'descendant-ready.json'),token);
+  if(parent.pid!==originalChild.pid||(descendant&&descendant.parent_pid!==parent.pid))throw new Error('ancestry mismatch');
+  emit({stage:'prepared',case:mode,parent,descendant,directory});
+  const go=await nextControl();
+  if(go.case!==mode||go.token!==token||go.go!==true)throw new Error('owned capture handshake mismatch');
+  let closeSettled=false,closeOutcome=null;
+  const calledNs=stamp();
+  const closePromise=client.close().then(row=>{closeSettled=true;closeOutcome=row;emit({stage:'host_close_resolved',case:mode,outcome:row});return row;});
+  await exited;
+  const observer=await Promise.race([
+    closePromise.then(()=>({result:'original_close_resolved'})),
+    delay(100).then(()=>({result:'observer_checkpoint_elapsed',interval_ms:100}))
+  ]);
+  emit({stage:'checkpoint',case:mode,called_ns:calledNs,parent_exit:parentExit,
+    parent_close:parentClose,observer,close_settled:closeSettled,close_outcome:closeOutcome,
+    state:client.state(),exit_receipt_exists:await exists(join(directory,'client','exit.json')),
+    release_written:false,descendant_pid:descendant?.pid??null,token});
+  const captured=await nextControl();
+  if(captured.case!==mode||captured.token!==token||captured.checkpoint_captured!==true)throw new Error('checkpoint capture handshake mismatch');
+  if(descendant){
+    await writeFile(join(directory,'release.json'),JSON.stringify({token}),{flag:'wx'});
+    emit({stage:'owned_release',case:mode,token});
+  }
+  const outcome=await closePromise;
+  const intent=descendant?JSON.parse(await readFile(join(directory,'descendant-exit-intent.json'),'utf8')):null;
+  const files=await readFile(join(directory,'client','exit.json'),'utf8');
+  emit({stage:'result',case:mode,parent_pid:parent.pid,descendant_pid:descendant?.pid??null,
+    parent_exit:parentExit,parent_close:parentClose,outcome,descendant_exit_intent:intent,
+    final_state:client.state(),exit_receipt:JSON.parse(files),same_original_close_promise:true,
+    request_count:0,token});
+ }
+ emit({stage:'done',cases:3});
+}catch(error){emit({stage:'driver_error',error:String(error)});process.exitCode=1;}
+finally{clearTimeout(watchdog);control.close();process.stdin.destroy();}
