@@ -19,14 +19,13 @@ executor-admitted plan. The preregistered rule calls for a fresh, non-discarded
 plan; independent admission evidence must therefore be checked before
 interpreting recovery as an admitted reaction.
 
-The frozen recovery unit test does not contain the production hard-health
-guard shape: it sets `policy_invalidation.reason` to
-`health:below_hard_minimum`, whereas both the recovery helper and live auditor
-recognize either top-level reason `health:below_hard_minimum` or the nested
-`outcomes.health = {status: HARD_INVALIDATED, reason: below_hard_minimum}`.
-Consequently, the nominal positive test never executes the recovery branch.
-This is a test-coverage gap; it does not establish that the live auditor's
-other checks accepted malformed data.
+The frozen recovery unit test uses the production-recognized top-level hard
+guard reason `policy_invalidation.reason = health:below_hard_minimum`; it does
+execute the recovery branch. Its positive fixture omits
+`model_action_discarded`, so the test explicitly codifies the permissive
+missing-evidence behavior rather than detecting it. The nested
+`outcomes.health = {status: HARD_INVALIDATED, reason: below_hard_minimum}`
+shape is also recognized by the production helper.
 
 The frozen `audit_live.py` duplicates the permissive predicate in its
 `bounded_fresh_recovery_after_guard` calculation. `audit_a16_health_guard_result.py`
