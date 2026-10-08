@@ -1,5 +1,6 @@
 """Best-effort owned cleanup preserving the controller's primary failure."""
 import atexit,json,os,select,threading,time
+from collections import Counter
 
 def send_failure_finish(stream, timeout=0.25):
     """Attempt finish on an owned POSIX pipe without an unbounded flush.
@@ -127,16 +128,41 @@ class ControllerFailureCleanup:
                 receipt['stdout_reader_retired']=not receipt['stages'][-1]['result']
         receipt['stdout_reader_errors']=list(self.reader_errors)
         events=self.events if type(self.events) is list else []
-        accepted_ids={row.get('id') for row in events if type(row) is dict and
-                      row.get('event')=='accepted' and type(row.get('id')) is str}
+        accepted_rows=[row for row in events if type(row) is dict and
+                       row.get('event')=='accepted']
+        terminal_rows=[row for row in events if type(row) is dict and
+                       row.get('event')=='terminal']
+        accepted_id_counts=Counter(row.get('id') for row in accepted_rows
+                                   if type(row.get('id')) is str and row.get('id'))
+        terminal_id_counts=Counter(row.get('id') for row in terminal_rows
+                                   if type(row.get('id')) is str and row.get('id'))
+        duplicate_accepted_ids=sorted(identifier for identifier,count in
+                                      accepted_id_counts.items() if count>1)
+        duplicate_terminal_ids=sorted(identifier for identifier,count in
+                                      terminal_id_counts.items() if count>1)
+        invalid_accepted_ids=sum(not (type(row.get('id')) is str and row.get('id'))
+                                 for row in accepted_rows)
+        invalid_terminal_ids=sum(not (type(row.get('id')) is str and row.get('id'))
+                                 for row in terminal_rows)
+        accepted_ids=set(accepted_id_counts)
+        terminal_ids=set(terminal_id_counts)
         accepted_by_id={row.get('id'):row for row in events if type(row) is dict and
                         row.get('event')=='accepted' and type(row.get('id')) is str}
         terminal_by_id={row.get('id'):row for row in events if type(row) is dict and
                         row.get('event')=='terminal' and type(row.get('id')) is str}
+        identities_unambiguous=(not duplicate_accepted_ids and
+                                not duplicate_terminal_ids and
+                                invalid_accepted_ids==0 and invalid_terminal_ids==0 and
+                                accepted_ids==terminal_ids)
+        receipt['duplicate_accepted_ids']=duplicate_accepted_ids
+        receipt['duplicate_terminal_ids']=duplicate_terminal_ids
+        receipt['invalid_accepted_event_id_count']=invalid_accepted_ids
+        receipt['invalid_terminal_event_id_count']=invalid_terminal_ids
+        receipt['input_event_identities_unambiguous']=identities_unambiguous
         event_set_complete=(receipt['stdout_reader_retired'] and
                             not receipt['stdout_reader_errors'])
         receipt['input_terminals_complete']=(event_set_complete and
-                                              accepted_ids.issubset(terminal_by_id))
+                                              identities_unambiguous)
         receipt['input_releases_verified_empty']=(
             receipt['input_terminals_complete'] and all(
                 type(terminal_by_id[identifier].get('release')) is dict and

@@ -22,41 +22,33 @@ class RetiredReader:
 
 
 class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
-    def run_cleanup(self, release_token=OMIT_TOKEN, release_overrides=None,
-                    missing_release_fields=()):
+    def run_cleanup_events(self, events):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
-            accepted = {
-                "event": "accepted",
-                "id": "source-refresh-0",
-                "intent_token": "accepted-lease",
-            }
-            release = {
-                "verified": True,
-                "keys_down": [],
-                "buttons_down": [],
-                "keys_unknown": [],
-                "key_state_errors": [],
-            }
-            if release_token is not OMIT_TOKEN:
-                release["intent_token"] = release_token
-            release.update(release_overrides or {})
-            for field in missing_release_fields:
-                release.pop(field, None)
-            terminal = {
-                "event": "terminal",
-                "id": "source-refresh-0",
-                "release": release,
-            }
             scope = ControllerFailureCleanup(Planner(), output)
             scope.observe_output(
-                [accepted, terminal], RetiredReader(),
+                events, RetiredReader(),
                 lambda predicate, timeout: None, None, [])
             with self.assertRaisesRegex(RuntimeError, "refresh refused"):
                 with scope:
                     scope.set_stage("source_refresh")
                     raise RuntimeError("refresh refused: release token mismatch")
             return json.loads((output / "controller-failure.json").read_text())
+
+    def run_cleanup(self, release_token=OMIT_TOKEN, release_overrides=None,
+                    missing_release_fields=()):
+        accepted = {"event": "accepted", "id": "source-refresh-0",
+                    "intent_token": "accepted-lease"}
+        release = {"verified": True, "keys_down": [], "buttons_down": [],
+                   "keys_unknown": [], "key_state_errors": []}
+        if release_token is not OMIT_TOKEN:
+            release["intent_token"] = release_token
+        release.update(release_overrides or {})
+        for field in missing_release_fields:
+            release.pop(field, None)
+        terminal = {"event": "terminal", "id": "source-refresh-0",
+                    "release": release}
+        return self.run_cleanup_events([accepted, terminal])
 
     def test_matching_release_token_is_retained_as_empty(self):
         receipt = self.run_cleanup("accepted-lease")
@@ -175,6 +167,47 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                     release_overrides=overrides,
                     missing_release_fields=missing)
                 self.assertFalse(receipt["input_release_verified_empty"])
+
+    def test_duplicate_accepted_id_cannot_be_collapsed_to_one_terminal(self):
+        terminal = {"event": "terminal", "id": "duplicate-command",
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": [],
+                                "intent_token": "lease-B"}}
+        accepts = [
+            {"event": "accepted", "id": "duplicate-command",
+             "intent_token": "lease-A"},
+            {"event": "accepted", "id": "duplicate-command",
+             "intent_token": "lease-B"},
+        ]
+        for ordered_accepts in (accepts, list(reversed(accepts))):
+            with self.subTest(accept_tokens=[row["intent_token"] for row in ordered_accepts]):
+                receipt = self.run_cleanup_events([*ordered_accepts, terminal])
+                self.assertFalse(receipt["input_terminals_complete"])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertEqual(receipt["duplicate_accepted_ids"],
+                                 ["duplicate-command"])
+
+    def test_duplicate_terminal_id_fails_closed_in_either_row_order(self):
+        accepted = {"event": "accepted", "id": "duplicate-command",
+                    "intent_token": "lease-A"}
+        terminals = [
+            {"event": "terminal", "id": "duplicate-command",
+             "release": {"verified": True, "keys_down": [],
+                         "buttons_down": [], "keys_unknown": [],
+                         "key_state_errors": [], "intent_token": "lease-A"}},
+            {"event": "terminal", "id": "duplicate-command",
+             "release": {"verified": False, "keys_down": ["KEY_W"],
+                         "buttons_down": [], "keys_unknown": [],
+                         "key_state_errors": [], "intent_token": "lease-A"}},
+        ]
+        for ordered_terminals in (terminals, list(reversed(terminals))):
+            with self.subTest(first_verified=ordered_terminals[0]["release"]["verified"]):
+                receipt = self.run_cleanup_events([accepted, *ordered_terminals])
+                self.assertFalse(receipt["input_terminals_complete"])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertEqual(receipt["duplicate_terminal_ids"],
+                                 ["duplicate-command"])
 
 
 if __name__ == "__main__":
