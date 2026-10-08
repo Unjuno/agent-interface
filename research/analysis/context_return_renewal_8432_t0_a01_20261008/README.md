@@ -24,5 +24,5 @@ Runtime: Ubuntu WSL, Python 3.12.3, WSL package 3.0.1. No Docker daemon, model, 
 Source commit and protocol/candidate/auditor hashes are pinned in `FREEZE.json`.
 First outcome is final. No candidate rerun or retry.
 
-Result: PENDING (not yet executed).
+Result: FAIL_METHOD_GATE. Candidate exited 0 and wrote `RAW.json` (SHA-256 `8e448a60072da2e53822da417d32446c4910a262b3da56c92c55a2af296eaa2f`), but the single auditor invocation exited 1 with `ValueError: expected 12 matched episodes`. The raw contains 9 episodes total (3 each for chronological, context_tagged, and none), hence 6 matched episodes. The frozen protocol defines 3 tracks and 3 history treatments; it does not define a design capable of yielding 12 matched episodes. Candidate stdout's `episodes: 18` is inconsistent with the retained raw. No `AUDIT.json` was produced. This is a method-package failure, not a behavioral result. No frozen code was edited and neither script was rerun. See [REPORT.md](REPORT.md), [RUN_RECEIPT.json](RUN_RECEIPT.json), and [MANIFEST.json](MANIFEST.json).
 
