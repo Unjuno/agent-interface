@@ -1,0 +1,15 @@
+{
+  "schema": "observation-omission-8397-t0-a01-freeze-v1",
+  "allocation": "8397-T0-A01",
+  "repository": "Unjuno/agent-interface",
+  "base_main_sha": "2f36f501f11931e052dbc3fb0000a9200bff7f50",
+  "fixture": {"path":"fixture.json","sha256":"16ADCB771CF50B296A83CFF423B642C66418FAD0ED1CF519D2530E922AB6833A"},
+  "candidate": {"path":"candidate.py","sha256":"EF378832E571D4A3A4AE03351422669252E7E9C265B7901A790E722AD01F5CE7"},
+  "independent_auditor": {"path":"auditor.py","sha256":"269FEBA23A72B78398C8A29813260EF999233DE53E824A3C1C40D5C2BE13F892"},
+  "construction_tests": {"path":"test_contract.py","sha256":"0EC8CD41F1D52DE7530582D50651F3A608254083C7149742FACCE8D65D60D6A3"},
+  "protocol": {"path":"PROTOCOL.md","sha256":"277F1020529025C346A59657A9A893E7246BE53ABB9981D591B4F0A645EC570B"},
+  "formal_invocations": {"candidate":1,"independent_auditor":1,"retry":0},
+  "execution_boundary": "native Windows CPython; method-only, deterministic; no WSL/WSLc/Docker/GUI/model/OS input/game/network/GPU",
+  "decision_gate": "PASS_METHOD_SCOPED iff all five discriminator checks pass and independent raw audit rejects all five preregistered mutations; otherwise FAIL_METHOD",
+  "scope_note": "T0 contract evidence only; does not test the parent issue's empirical H or establish observation value, GUI safety, task benefit, or runtime policy."
+}
