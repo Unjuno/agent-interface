@@ -13,3 +13,10 @@ Date: 2026-10-08 JST
 ## Commands
 
 Focused module names and exact commands are in `COMMANDS.txt`. Local native runner invocation is recorded there; its raw output is preserved next to this report.
+
+## Latest-main composition addendum (2026-10-08 JST)
+
+- Current `main` was `bfcc14e08fbfe5f2f04cd0237d13559e5d62538b`; local merge commit `8319fe2025a45bd1fe8556b9e523ba867b6424e2` has the preserved successor head and that main commit as ordered parents. Predecessor #7087 and the original evidence files were not changed.
+- Re-ran the eight focused modules on this exact tree: 39/39 PASS normally and 39/39 PASS under `python -O` (CPython 3.12.13). SHA256SUMS verified 16/16. Workspace index: 161 top-level directories PASS; strict analysis index: 791 retained-result directories PASS.
+- Scoped `git diff --check` over the active client, two regression modules, this report/command record, and the archived evidence subtree passed. An unrestricted check also reports trailing whitespace in lines of the preserved historical `harness.stderr.log`; those raw logs were left byte-identical.
+- The historical full native runner result remains FAIL as specified above; it was not rerun after this main update. This addendum does not upgrade that result or claim whole-runner PASS. PR #8334 still has no formal reviews; keep the current-main successor unmerged pending its required independent review and hosted checks.

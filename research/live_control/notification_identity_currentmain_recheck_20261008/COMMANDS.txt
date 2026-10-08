@@ -31,3 +31,5 @@ PASS: 775 retained result/failure directories indexed
 
 git diff --check origin/main...HEAD
 PASS
+
+Latest-main composition (main bfcc14e08fbfe5f2f04cd0237d13559e5d62538b; local merge 8319fe2025a45bd1fe8556b9e523ba867b6424e2): the same two unittest commands above were rerun on this exact tree; both returned 39/39 PASS. Archive checksum command: `(cd research/concurrency/notification_identity_repair_17_20261003_b64b && sha256sum -c SHA256SUMS)`; 16/16 PASS. Current workspace and strict analysis indexes: 161 and 791 PASS. Scoped diff check covered the active client, the two new tests, this report/command record, and the archive subtree. The unrestricted diff check flags trailing whitespace in the preserved historical `harness.stderr.log`; it was not edited.
