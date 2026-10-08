@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8592 T0 A03 bounded DPOR validation](bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`: 45,360 exhaustive schedules matched against 217 DPOR representatives; 5/5 auditor rejection controls passed in construction tests. WSLc finite authored-model evidence only; no runtime-speed or live-safety claim. A01/A02 execution STOPs preserved.
+
 - [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 12 finite cases independently reconstructed, 6/6 output mutations rejected; WSLc CPU method evidence only, no human-benefit claim.
 
 - [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 cases independently reconstructed, 5/5 mutations rejected, zero dispatches; synthetic DAG only, no GUI/runtime/effect-dispatch claim.
@@ -442,6 +444,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
+- [`bounded_dpor_8592_t0_a03_20261008/`](bounded_dpor_8592_t0_a03_20261008/)
 - [`bounded_path_class_switching_6586_t0_20261002/`](bounded_path_class_switching_6586_t0_20261002/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
