@@ -1,0 +1,43 @@
+{
+  "schema": "agent-interface/v39-stale-rejection-continue-freeze-v2",
+  "origin_main_sha": "dd377fb550ec7d1843627316d720f3c85a4780e2",
+  "tested_pr_head_before_addition": "cf9760efc7a96d8984714f954108f3ff0a32c7d0",
+  "source": {
+    "path": "research/doom/map01_overlap_controller_v39.py",
+    "git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+    "sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+    "bytes": 112524
+  },
+  "test": {
+    "path": "research/doom/test_map01_v39_stale_rejection_continue_static.py",
+    "git_blob": "dfcd9dcebd297142e0078fcdd15efba807fe8179",
+    "sha256": "6433b3f24415cbd52fcd6788bc83d9dfb279c1279cf46499c2af0ba694430777",
+    "bytes": 2010
+  },
+  "mutation": {
+    "deleted_line_number": 1798,
+    "deleted_line": "                continue",
+    "meaning": "remove the outer stale_rejection branch continue"
+  },
+  "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "runs": {
+    "pass-normal": {
+      "exit_code": 0,
+      "assertion_observed": false
+    },
+    "pass-optimized": {
+      "exit_code": 0,
+      "assertion_observed": false
+    },
+    "mutation-normal": {
+      "exit_code": 1,
+      "assertion_observed": true
+    },
+    "mutation-optimized": {
+      "exit_code": 1,
+      "assertion_observed": true
+    }
+  },
+  "scope": "AST-only loop-control regression; no controller runtime, live/game/GUI behavior, model, OS input, physical release, or task effect"
+}
