@@ -1,0 +1,73 @@
+{
+  "format": "v39-preacceptance-stale-replan-a02",
+  "disposition": "PASS_CANDIDATE_CONTROLLER_RECOVERY",
+  "main_sha": "99f2521811df790db3c96cdfa9313a6296f247f7",
+  "source_blobs": {
+    "research/doom/map01_overlap_controller_v39.py": "fec805219fec1155beb0e2608024663bc8c7e127",
+    "research/live_control/executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "research/live_control/persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15"
+  },
+  "production_branch": {
+    "raises_on_nonaccepted": true,
+    "acceptance_wait_includes_rejections": true,
+    "no_recovery_after_rejection": true
+  },
+  "production_reproduction": {
+    "result": "raises_on_rejection",
+    "message": "{'event': 'rejected', 'reason': 'latest observation sequence required before input'}",
+    "submit_count": 1,
+    "submitted_expected_sequence": 1,
+    "state_before_any_admission": [
+      0,
+      null
+    ],
+    "latest_after_production_wait": {
+      "event": "observation",
+      "sequence": 2,
+      "capture_ns": 200,
+      "image": "fixture/sequence-2.png",
+      "health": 86,
+      "ammo": 11,
+      "pointer_binding": {
+        "focus": 1,
+        "surface": 7,
+        "geometry": [
+          0,
+          0,
+          640,
+          480
+        ]
+      }
+    }
+  },
+  "trigger": {
+    "submitted_sequence": 1,
+    "producer_sequence": 2,
+    "current_main_order": [
+      "typed_observation",
+      "observation",
+      "rejected"
+    ],
+    "candidate_also_passed_rejection_before_full_observation": true
+  },
+  "recovery": {
+    "fresh_sequence": 2,
+    "health": 86,
+    "ammo": 11,
+    "planner_turns": 1,
+    "image": "C:\\Users\\user\\AppData\\Local\\Temp\\v39-stale-replan-a02-xjzfdcgn\\sequence-2.png",
+    "post_rejection_submits": 0
+  },
+  "negative_controls": {
+    "other_rejection": "refused",
+    "binding_changed": "refused",
+    "same_sequence": "refused",
+    "invalid_health": "refused",
+    "invalid_ammo": "refused",
+    "missing_image": "refused",
+    "old_capture": "refused",
+    "timeout": "refused",
+    "process_exit": "refused"
+  },
+  "scope": "offline synthetic construction; production branch observed but candidate recovery not merged or executed live"
+}
