@@ -1,0 +1,35 @@
+{
+  "run_id": "map01-v39-cancel-cleanup-jsonl-transport-a09-20261005",
+  "base_commit": "ea55efd073950804933275e761f3e02cf0076142",
+  "python_version": "3.11.9",
+  "sources": {
+    "session_map01_v12.py": {
+      "sha256": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2",
+      "git_blob": "e701035302da4802e0db463035c4d653a7e7618b",
+      "path": "research/doom/session_map01_v12.py"
+    },
+    "map01_overlap_controller_v39.py": {
+      "sha256": "df4d90bf8cf9972955bfe13a9303432ab83c5c60e7ee2a587425881033dbf663",
+      "git_blob": "304ec68c03eb5f10e9130d40f8af8d2bcf5c889f",
+      "path": "research/doom/map01_overlap_controller_v39.py"
+    },
+    "a08_published_event.jsonl": {
+      "sha256": "4028ca3a1dc908dc6375f840e2acd6d05f294ca67b1dc7696b4359fd085f59d7",
+      "git_blob": "0a17bfa98f4ffbb63fd2d08995a5eb290a462918",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/results/a08/published-events.jsonl"
+    },
+    "run_a09.py": {
+      "sha256": "010fcd3a93479a9f4a27384b6d70c08914ea0b7af23d3f21cd3aa7289e107b8b",
+      "git_blob": "8fddd27beb56265ec35d56d22562f8d040c563ca",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/run_a09.py"
+    },
+    "audit_a09.py": {
+      "sha256": "f9836f1bc8fbad57aba710337120de7eab3022810cb29746f33cb8f790a20366",
+      "git_blob": "70a26e7b4c7d314354029ec41f88acc234b8e6dd",
+      "path": "research/doom/map01_v39_cancel_cleanup_bracket_a01_20261005/audit_a09.py"
+    }
+  },
+  "method": "source-extract exact V12 session emit and V39 controller reader/wait; pass retained A08 release event through in-memory pipes",
+  "retries": 0,
+  "scope": "offline JSONL writer/reader composition only; session main and OS/game runtime are not invoked"
+}

@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import importlib.util
 import sys
+import time
 import types
 import unittest
 from pathlib import Path
@@ -13,12 +14,14 @@ LIVE_CONTROL = WORKTREE / "research" / "live_control"
 OBSERVATION_TILES = WORKTREE / "research" / "observation_tiles"
 OBSERVATION_GATING = WORKTREE / "research" / "observation_gating"
 V12 = DOOM / "map01_attack_onset_phase_allocation_02_v1" / "dependencies" / "v12"
+V13 = DOOM / "map01_v39_cancel_cleanup_bracket_a01_20261005"
 sys.path.insert(0, str(WORKTREE))
 sys.path.insert(0, str(OBSERVATION_TILES))
 sys.path.insert(0, str(OBSERVATION_GATING))
 sys.path.insert(0, str(DOOM))
 sys.path.insert(0, str(LIVE_CONTROL))
 sys.path.insert(0, str(V12))
+sys.path.insert(0, str(V13))
 
 
 def install_import_stubs():
@@ -88,6 +91,54 @@ def run_bridge():
 
 
 class PerKeyBridgeConstructionTests(unittest.TestCase):
+    def test_emergency_cleanup_retains_per_key_release_brackets_and_lineage(self):
+        harness_module = load_v12_test_harness()
+        owner_module = harness_module.load(
+            "input_owner_v13_for_bridge", V13 / "input_owner_v13.py")
+        harness = harness_module.Harness(owner_module)
+        keysym = owner_module.XK
+        original_string_to_keysym = keysym.string_to_keysym
+        keysym.string_to_keysym = lambda key: {"a": 11, "space": 12}.get(key, 0)
+        harness.d.keysym_to_keycode = lambda sym: {11: 74, 12: 65}.get(sym, 0)
+        lease = harness_module.Lease(intent="intent-cleanup-v13")
+        admissions = {}
+        try:
+            for key in ("a", "space"):
+                result = harness.owner.call("down", lease, key)
+                measurement = result["physical_key_measurement"]
+                self.assertEqual(measurement["classification"],
+                                 "CONFIRMED_PHYSICAL_DOWN")
+                admissions[key] = measurement["actuation_id"]
+
+            lease.cancel.set()
+            cleanup = None
+            for _ in range(1000):
+                cleanup = next((row for row in harness.owner.records
+                                if row.get("event") == "owner_release"
+                                and row.get("reason") == "cancelled"), None)
+                if cleanup is not None:
+                    break
+                time.sleep(0.001)
+            self.assertIsNotNone(cleanup, "owner cancellation cleanup did not arrive")
+            self.assertTrue(cleanup["verified"])
+            measurements = {row["key"]: row
+                            for row in cleanup["per_key_release_measurements"]}
+            self.assertEqual(set(measurements), {"a", "space"})
+            for key, row in measurements.items():
+                interval = row["bracket"]["physical_up_interval"]
+                self.assertEqual(row["classification"], "CONFIRMED_PHYSICAL_UP")
+                self.assertEqual(row["identity_status"], "RETIRED")
+                self.assertEqual(row["actuation_id"], admissions[key])
+                self.assertEqual(interval[0], row["pre_sample"]["finished_ns"])
+                self.assertEqual(interval[1], row["post_sample"]["finished_ns"])
+                self.assertLessEqual(interval[0], interval[1])
+                self.assertFalse(row["grants_input_authority"])
+                self.assertFalse(row["application_consumption_observed"])
+            self.assertEqual(harness.d.physical, set())
+        finally:
+            harness.close()
+            keysym.string_to_keysym = original_string_to_keysym
+
     def test_backend_emits_same_intent_per_key_verified_up_edge(self):
         result = run_bridge()
         events = result["events"]
