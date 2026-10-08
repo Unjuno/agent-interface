@@ -40,3 +40,16 @@ Outcome: **48 tests passed** in 0.114 s. See `unittest.log`. New cases cover a b
 ## Limits and next gate
 
 This is a deterministic construction and code-level recovery check. It does not prove that the session writer produces this interleaving, that the 256/4 limits are optimal, that every race after the final empty-queue check recovers, or that useful local control succeeds during MAP01 threat exposure. The separate Issue #59 live allocation remains unassigned and must not be invoked here. Next: reviewer-run the patch, then under an explicitly granted, newly frozen allocation instrument whether the production writer exhibits the schedule and measure recovery/release/per-key timing plus useful feedback and MAP01 outcome.
+
+## Current-main package audit correction (2026-10-08)
+
+The merged package's original `audit.py` crashed because `unittest.log` is absent, although `sha256.json` listed its expected digest (`d51642c4…`). That historical 48-test output was not recovered. The gap is now explicit in `historical_artifact_gap.json`; no 12-test output is substituted for it.
+
+A separate current-main revalidation ran the focused `test_map01_v39_pending_observation_drain.py` suite at commit `76eefd0e53da2243d1e2ab45776db7761f4366ee`: 12/12 passed on Windows Python 3.11.9 in 0.003 s. The current log, Python environment, main commit, source Git blobs/SHA-256 values, and the 12 exact-main modules needed to complete this sparse checkout are retained in this package. Two earlier import-closure setup failures are preserved as `current_main_regression.log` and `current_main_regression_retry01.log`; neither reached a test case.
+
+The corrected auditor verifies the baseline/provenance, the complete 12-test current-main log and source pins, and returns `AUDIT_HOLD_HISTORICAL_LOG_MISSING_CURRENT_MAIN_REGRESSION_PASS`. This validates the current deterministic recovery regression while keeping the original raw-custody limitation visible. It does not establish live writer ordering, physical input/release, useful feedback, MAP01 task outcome, or #59 completion.
+
+
+The packaged import overlay was replayed once after staging, again yielding 12/12; its raw output is `package_overlay_replay.log` and is covered by the updated manifest.
+
+Auditor hardening: every gate now uses explicit runtime checks instead of `assert`, so optimization cannot disable validation. `py_compile`, normal audit, and `python -O` audit pass; both audit modes return the same explicit historical-log HOLD.

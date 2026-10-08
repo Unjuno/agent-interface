@@ -1,0 +1,25 @@
+test_map01_v39_pending_observation_drain (unittest.loader._FailedTest.test_map01_v39_pending_observation_drain) ... ERROR
+
+======================================================================
+ERROR: test_map01_v39_pending_observation_drain (unittest.loader._FailedTest.test_map01_v39_pending_observation_drain)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_map01_v39_pending_observation_drain
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\unittest\loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "D:\codex-research\worktrees\pending-observation-drain-audit-20261008\research\doom\test_map01_v39_pending_observation_drain.py", line 9, in <module>
+    from executor_v12 import Executor as ExecutorV12
+  File "D:\codex-research\worktrees\pending-observation-drain-audit-20261008\research\live_control\executor_v12.py", line 6, in <module>
+    from executor_v5 import Executor as Previous
+  File "D:\codex-research\worktrees\pending-observation-drain-audit-20261008\research\live_control\executor_v5.py", line 7, in <module>
+    from lease import Expired
+ModuleNotFoundError: No module named 'lease'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
