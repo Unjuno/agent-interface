@@ -1,0 +1,158 @@
+{
+  "schema": "retained-hud-reader-regression-manifest-v1",
+  "purpose": "Bounded cross-episode regression of V3 and proposed V4 against existing manually reviewed labels.",
+  "claim_boundary": "These archived frames were selected from already reviewed examples; this is regression evidence, not an independently selected held-out accuracy study or live-control validation.",
+  "source_ref": "origin/main",
+  "source_commit": "6860b585305e539ec93896f5adcbf658cbbd8592",
+  "label_sources": [
+    {
+      "path": "research/doom/test_doom_hud_signal_v1.py",
+      "blob": "c7876902430455b288c1ecaa1e43ab1bf3b06685",
+      "sha256": "621a556d6c3674a170b9569828f971f2fbdd1826cd058d16e6b9aff3ff3c6788",
+      "test": "DoomHudSignalTests.test_retained_exact_health_sequence",
+      "label_origin": "manually reviewed retained health sequence values"
+    },
+    {
+      "path": "research/doom/test_doom_hud_signal_v2.py",
+      "blob": "3426d2b99344c614cd49ead0e7bf3ea70414941a",
+      "sha256": "e23e632e7e1f008862aa054e712d01efd5444abd1c5c232a085ec6a8beea8d84",
+      "test": "DoomHudSignalV2Tests.test_ammo_matches_independent_manual_decision_review",
+      "label_origin": "independent manual ammo decision review"
+    }
+  ],
+  "wad": "_vizdoom/vizdoom/freedoom2.wad",
+  "episodes": [
+    {
+      "id": "map01-fixed-threat-v28-live-01",
+      "runtime": "research/doom/results/map01-fixed-threat-v28-live-01/runtime",
+      "events": "research/doom/results/map01-fixed-threat-v28-live-01/runtime/events.jsonl",
+      "events_sha256": "5be74bb0c3bc9f321760f8b7c7dfacd9c86f5f4ecc0ffdce032e20780ffee0dc",
+      "signal": "health",
+      "label_source": "research/doom/test_doom_hud_signal_v1.py",
+      "cases": [
+        {
+          "sequence": 1,
+          "value": 100,
+          "png_sha256": "b51e54a222d4ac2b94b2134f458e18be042e95b0dc1c96b7e73f6bc829abb5c8",
+          "rgb_sha256": "bbad76889b419ea0bdcf7db88b4e69cf5b1a500b1923449b6e8b00c6331e63b5"
+        },
+        {
+          "sequence": 11,
+          "value": 97,
+          "png_sha256": "ca8c601f2bddb710d2e4dafdb8a7b9ae4a1584d06d687bf0dca1a37295c3035d",
+          "rgb_sha256": "82340389d0867820374af819c5d2230b2a1445e7b94280860d2e36f3102b9dea"
+        },
+        {
+          "sequence": 33,
+          "value": 100,
+          "png_sha256": "d02726c50426d7099b4edb1970e76e3df8dfb1225074e46c6075337d763193e7",
+          "rgb_sha256": "4d424d4aebf642d358cf5adf0366eb47d640662cd093d366c5cf12f2207f5165"
+        },
+        {
+          "sequence": 36,
+          "value": 93,
+          "png_sha256": "5cf2ec2ab411c7025196abd81caae3c489d44a1f714bb6b4291b16cb769198c5",
+          "rgb_sha256": "1b7a4428dac98d5ce8e133a809c2af5e78893d723e48fc986ec8c7ac1a974449"
+        },
+        {
+          "sequence": 37,
+          "value": 93,
+          "png_sha256": "096a476df5f0580c8e8faa217cf2a87f4386fd79de6e0b6e4b4aafbdd78d41e8",
+          "rgb_sha256": "04fa2e5251dad50f1961f56f09460e064493c8c2dc922dc10cb3804cea2a6c42"
+        },
+        {
+          "sequence": 51,
+          "value": 87,
+          "png_sha256": "c4c0dea94263721fca0cb2c641b9f989355640a71d8c84094ed5bb598184ede3",
+          "rgb_sha256": "8e6d90552c3c3b49195b54988d32911a81ab1f3995fffd7c2d0add17536618e5"
+        },
+        {
+          "sequence": 60,
+          "value": 81,
+          "png_sha256": "641108183488d2ceda0a77905d428314b034d339523fa1399db997d0dac4ecf9",
+          "rgb_sha256": "c2033dfed65d65ac45ec91aee2e0b5e1fe1c3eca82a12a78bd25c544e61689f3"
+        },
+        {
+          "sequence": 68,
+          "value": 79,
+          "png_sha256": "292679e853690f7759a859e78520cd319d3b6609ad77bd6b8d1ecd105c54f73d",
+          "rgb_sha256": "856ed2640fcda73e3e413c119cd5c36a53f5a8705bd9cb20aa2fa32d21bda1b2"
+        },
+        {
+          "sequence": 70,
+          "value": 73,
+          "png_sha256": "3f7d0d657d653f164115ccca5e6b39db5a60fe5c0f061ffa7c207cb6f0528e18",
+          "rgb_sha256": "51c9de3c5421140dd37676f61a85954ea2eb234272259640c588cca718eba843"
+        }
+      ]
+    },
+    {
+      "id": "map01-soft-context-v31-live-01",
+      "runtime": "research/doom/results/map01-soft-context-v31-live-01/runtime",
+      "events": "research/doom/results/map01-soft-context-v31-live-01/runtime/events.jsonl",
+      "events_sha256": "5761191a34a1d35fc88786f1b95abb7d9bb5137f0f3c8980d5b3b7e01dabe6a3",
+      "signal": "ammo",
+      "label_source": "research/doom/test_doom_hud_signal_v2.py",
+      "cases": [
+        {
+          "sequence": 1,
+          "value": 48,
+          "png_sha256": "8b339b7b0f7e7d198d8fc0bcd0ac2bfd49ca123a5b1fc02604e9817de36af9bc",
+          "rgb_sha256": "fd427af0c6bb2a3b20a90cbd89db6e7bc41f815e040d1144d1511d70ef7613ea"
+        },
+        {
+          "sequence": 33,
+          "value": 48,
+          "png_sha256": "ab06460c7782c54db2dea7d1717ef61b967d078780673a218eb03973574dc9ab",
+          "rgb_sha256": "e18a31f22365da2de130594c4ce8f09b3a76f1148689e223c625da775bd9472d"
+        },
+        {
+          "sequence": 59,
+          "value": 47,
+          "png_sha256": "f47330730f4e49d74b90bedf2146dddcf1091e95b1e901614bb682dea2006fce",
+          "rgb_sha256": "f21b03c30af429ffda297935a2f08aba91d6c8a31acf4803b7aa5fbeda3df8f7"
+        },
+        {
+          "sequence": 92,
+          "value": 47,
+          "png_sha256": "2f9560e0a063ed938a9aec1c6aaebcf6921a71a2a6e6ad2e91df4ad13fcd2696",
+          "rgb_sha256": "fe22a241ff59aa3de5890313e560b93c985cfafd416135a57bbd14e899395e86"
+        },
+        {
+          "sequence": 139,
+          "value": 46,
+          "png_sha256": "45d238c00c5361c933d7ae62e411e35565b04e0b6ca2a72b4eddaf94add1547c",
+          "rgb_sha256": "a10e7e5d871c8be7a88c434bb409b6fdc89bc81e08639e947088d2def749ca1b"
+        },
+        {
+          "sequence": 181,
+          "value": 45,
+          "png_sha256": "c219b44126af5aa7c23e5b83a9981dd50a5e2e9efe282751ab881db9d21da2be",
+          "rgb_sha256": "1ead39e0e2a795fec6cf6b50d497b587570a79a2125b95f8c7c7b80cf5ab4d2e"
+        },
+        {
+          "sequence": 227,
+          "value": 45,
+          "png_sha256": "57673d68f6ccc5c19da1a65f4d3ce5da751fb7e01caf6efba25efc96f5b92162",
+          "rgb_sha256": "b68e251d6ed8d35f0a361477a5915f4f1b70d1929f8af88876c08c3aa311e1c0"
+        },
+        {
+          "sequence": 233,
+          "value": 45,
+          "png_sha256": "688be91551fa4751a11c6ac5240eca51c568a70fbdc5efd9db17185dc17154ba",
+          "rgb_sha256": "3d1601462826485ec867cc3ee2fc36a3a4d0693cb54c80e66ec2bce3e8e8ac19"
+        }
+      ]
+    }
+  ],
+  "reader_modules": [
+    "doom_hud_signal_v3",
+    "doom_hud_signal_v4"
+  ],
+  "required_checks": [
+    "each source event resolves uniquely by observation sequence",
+    "each selected retained PNG hash agrees with the frame_rgb_sha256 event identity",
+    "read(frame metadata with retained image) equals read_frame(frame) for each reader",
+    "each read result is observed and equals the manually reviewed value"
+  ]
+}
