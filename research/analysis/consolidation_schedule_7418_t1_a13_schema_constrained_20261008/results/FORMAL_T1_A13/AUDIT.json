@@ -1,0 +1,157 @@
+{
+  "accuracies": {
+    "5301/batch_2": 0.6,
+    "5301/episodic_only": 0.26666666666666666,
+    "5301/per_episode": 0.5333333333333333,
+    "5301/terminal": 0.6666666666666666,
+    "5302/batch_2": 0.6,
+    "5302/episodic_only": 0.26666666666666666,
+    "5302/per_episode": 0.5333333333333333,
+    "5302/terminal": 0.6666666666666666,
+    "5303/batch_2": 0.6,
+    "5303/episodic_only": 0.3,
+    "5303/per_episode": 0.5333333333333333,
+    "5303/terminal": 0.6666666666666666
+  },
+  "consolidation_rows": 30,
+  "consolidation_updates_per_seed_arm": {
+    "5301/batch_2": 3,
+    "5301/episodic_only": 0,
+    "5301/per_episode": 6,
+    "5301/terminal": 1,
+    "5302/batch_2": 3,
+    "5302/episodic_only": 0,
+    "5302/per_episode": 6,
+    "5302/terminal": 1,
+    "5303/batch_2": 3,
+    "5303/episodic_only": 0,
+    "5303/per_episode": 6,
+    "5303/terminal": 1
+  },
+  "decision": "FAIL_METHOD",
+  "errors": [
+    "transition coverage mismatch (5301, 'batch_2', 6): ['ep01', 'ep02', 'ep03', 'ep04', 'ep05', 'ep06'] != ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04', 'ep05', 'ep06']",
+    "explicit conflict claim mismatch (5301, 'batch_2', 6)",
+    "transition coverage mismatch (5302, 'batch_2', 6): ['ep01', 'ep02', 'ep03', 'ep04', 'ep05', 'ep06'] != ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04', 'ep05', 'ep06']",
+    "explicit conflict claim mismatch (5302, 'batch_2', 6)",
+    "transition coverage mismatch (5303, 'batch_2', 6): ['ep01', 'ep02', 'ep03', 'ep04', 'ep05', 'ep06'] != ['conflict:revision-r7-mode', 'ep01', 'ep02', 'ep03', 'ep04', 'ep05', 'ep06']",
+    "explicit conflict claim mismatch (5303, 'batch_2', 6)"
+  ],
+  "max_abs_accuracy_difference": 0.4,
+  "paired_accuracy_differences": {
+    "5301:batch_2-terminal": -0.066667,
+    "5301:episodic_only-batch_2": -0.333333,
+    "5301:episodic_only-per_episode": -0.266667,
+    "5301:episodic_only-terminal": -0.4,
+    "5301:per_episode-batch_2": -0.066667,
+    "5301:per_episode-terminal": -0.133333,
+    "5302:batch_2-terminal": -0.066667,
+    "5302:episodic_only-batch_2": -0.333333,
+    "5302:episodic_only-per_episode": -0.266667,
+    "5302:episodic_only-terminal": -0.4,
+    "5302:per_episode-batch_2": -0.066667,
+    "5302:per_episode-terminal": -0.133333,
+    "5303:batch_2-terminal": -0.066667,
+    "5303:episodic_only-batch_2": -0.3,
+    "5303:episodic_only-per_episode": -0.233333,
+    "5303:episodic_only-terminal": -0.366667,
+    "5303:per_episode-batch_2": -0.066667,
+    "5303:per_episode-terminal": -0.133333
+  },
+  "per_seed_arm_metrics": {
+    "5301/batch_2": {
+      "calls": 30,
+      "completion_tokens": 625,
+      "duration_ms": 22972,
+      "errors": 0,
+      "prompt_tokens": 8246
+    },
+    "5301/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 668,
+      "duration_ms": 26067,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5301/per_episode": {
+      "calls": 30,
+      "completion_tokens": 643,
+      "duration_ms": 27269,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5301/terminal": {
+      "calls": 30,
+      "completion_tokens": 468,
+      "duration_ms": 16146,
+      "errors": 0,
+      "prompt_tokens": 6611
+    },
+    "5302/batch_2": {
+      "calls": 30,
+      "completion_tokens": 625,
+      "duration_ms": 21066,
+      "errors": 0,
+      "prompt_tokens": 8246
+    },
+    "5302/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 670,
+      "duration_ms": 22423,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5302/per_episode": {
+      "calls": 30,
+      "completion_tokens": 644,
+      "duration_ms": 21257,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5302/terminal": {
+      "calls": 30,
+      "completion_tokens": 468,
+      "duration_ms": 15757,
+      "errors": 0,
+      "prompt_tokens": 6611
+    },
+    "5303/batch_2": {
+      "calls": 30,
+      "completion_tokens": 625,
+      "duration_ms": 20894,
+      "errors": 0,
+      "prompt_tokens": 8246
+    },
+    "5303/episodic_only": {
+      "calls": 30,
+      "completion_tokens": 668,
+      "duration_ms": 22829,
+      "errors": 0,
+      "prompt_tokens": 10431
+    },
+    "5303/per_episode": {
+      "calls": 30,
+      "completion_tokens": 643,
+      "duration_ms": 22265,
+      "errors": 0,
+      "prompt_tokens": 9116
+    },
+    "5303/terminal": {
+      "calls": 30,
+      "completion_tokens": 468,
+      "duration_ms": 16709,
+      "errors": 0,
+      "prompt_tokens": 6611
+    }
+  },
+  "qualifying_consistent_contrasts": [
+    "episodic_only vs per_episode: [-0.266667, -0.266667, -0.233333]",
+    "episodic_only vs batch_2: [-0.333333, -0.333333, -0.3]",
+    "episodic_only vs terminal: [-0.4, -0.4, -0.366667]",
+    "per_episode vs terminal: [-0.133333, -0.133333, -0.133333]"
+  ],
+  "query_rows": 360,
+  "rows": 390,
+  "scope": "single synthetic ledger, one local model family, three fixed seeds; no GUI/product/action inference",
+  "status": "FAIL_METHOD"
+}

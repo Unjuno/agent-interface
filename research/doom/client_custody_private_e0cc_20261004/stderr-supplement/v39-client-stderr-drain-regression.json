@@ -1,0 +1,44 @@
+{
+  "source_sha256": "3a784bc3d1d68876871ac9425adc245026c208e36041a12f0eddd84e1334d1a1",
+  "cases": [
+    {
+      "retained_tail_bytes": 512,
+      "drained_bytes": 512,
+      "stderr_reader_retired": true,
+      "stderr_bytes": 512,
+      "outcome": "response",
+      "peer_alive_at_outcome": true,
+      "reader_alive_at_outcome": true,
+      "owned_pid": 77968,
+      "terminal_exit": -15,
+      "reader_journal_pipes_retired": true
+    },
+    {
+      "retained_tail_bytes": 65536,
+      "drained_bytes": 1048576,
+      "stderr_reader_retired": true,
+      "stderr_bytes": 1048576,
+      "outcome": "response",
+      "peer_alive_at_outcome": true,
+      "reader_alive_at_outcome": true,
+      "owned_pid": 77969,
+      "terminal_exit": -15,
+      "reader_journal_pipes_retired": true
+    }
+  ],
+  "scope": "new ordinary owned Python peers; private bounded-tail stderr drain regression; no formal/native/model/input run",
+  "finding": "Both finite diagnostic output sizes return with private stderr drain; bounded tail and exact bytes separately asserted.",
+  "limits": [
+    "No hard whole-call deadline or descendant proof",
+    "No production adoption or actual app-server task effect",
+    "Binary stderr requires Popen TextIOWrapper.buffer; alternate process factories are not qualified.",
+    "Both stdout and stderr Thread-start interruption recovery remains incomplete.",
+    "Bounded retained tail is verified; total diagnostic production and inherited-handle lifetime are not bounded by this mechanism."
+  ],
+  "raw_members": {
+    "1048576-intent.json": "1a8b9347f648fd7eddf12f55b584346f32862d1e566530d895ae4c73f607503d",
+    "512-intent.json": "4220b2f86f8bc21f3d205d21666f598c6867fda1792d115c67811a821116b377",
+    "1048576-journal.jsonl": "c9183ce508441b22829d6cf98d89a5931a493dec0eba9bf68bee625b9baf03ff",
+    "512-journal.jsonl": "8b775a0690828ab003f4b7b3ae2733f938ec77e2cb2538b5ff123d4e4099d8d1"
+  }
+}

@@ -24,7 +24,8 @@ canceled on `health:source_expired` while health stayed 30→30. The audit now
 joins its reported source sequence 204 and monitor sequence 216, including
 capture times and health values, to unique raw `typed_observation` events. A
 loss-based threshold would not have fired on that sample. This single quiet
-interval does not estimate a false-trigger rate.
+interval does not estimate a false-trigger rate. A06 adds explicit sequence
+and timestamp ordering to this join without changing the candidate or raw.
 
 ## H / T / D / C / U
 
@@ -82,7 +83,9 @@ independent PR comment then identified that the decision-4 negative-control
 assertions trusted report values without joining raw observations. A05 keeps
 the same candidate and trace, strengthens only the auditor, and is the latest
 retained verification: 25 checks, including the raw join at sequences 204 and
-216.
+216. A06/A07 add a versioned audit correction and report-reference ordering
+control under their own result directories; they do not change A05's first
+outcome or rerun the candidate.
 
 | Health-loss trigger | First sampled health | Time from planner start | Time remaining to original terminal |
 |---:|---:|---:|---:|
@@ -115,6 +118,25 @@ The checked source diff is retained in `CURRENT_MAIN_SOURCE_DIFF.txt`: the only
 V39 controller change between A04's base and selected main is the terminal
 release race accepting `completed`/`expired` only with independently verified
 empty release. This replay invokes neither controller version.
+
+### Audit-only correction A06 and report-swap control A07
+
+The PR self-review found that A05 joined decision-4 source and monitor
+references independently but did not assert their temporal order. A06 keeps
+the same 45 raw observations and reads the immutable A05 candidate; it adds
+sequence and capture-time ordering assertions. A06 passes 27 checks. It does
+not run `candidate.py`, repeat a live allocation, adopt a threshold, or alter
+the retained A05 result.
+
+A06's first negative-control harness attempt is retained as a setup failure:
+the legacy auditor's `RESULT_DIR` pointed at a temporary directory where the
+copied A05 candidate was initially absent. A separately frozen A07 control
+corrects that fixture path. It swaps the report's source and monitor
+references in a temporary copy and updates the copied raw, package, and freeze
+manifests. The legacy A05 auditor exits 0 with `PASS_A04_TRACE_REPLAY_AUDIT`;
+A06 exits 1 with `AssertionError` before creating output. Both controls leave
+retained A04/A05 files unchanged. See each version's `AUDIT_FREEZE.json`, the
+control JSON, and `SHA256SUMS.txt`.
 
 The computer-control live lane remains unassigned. No live game, model, GUI,
 X11, or OS input was invoked by this replay. The A04 episode itself ended

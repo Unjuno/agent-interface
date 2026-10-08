@@ -1,0 +1,21 @@
+{
+  "schema": "issue8566-reconcile-alias-a01-unit-optimized-freeze-v1",
+  "invocations": 2,
+  "candidate_rerun": false,
+  "test_rerun": "same exact registered test bytes, Python -O optimized mode",
+  "runner": "run_unit_suite_optimized.py",
+  "runner_sha256": "1e2e096d55618d241b62b7005bc74a2d233729d89c61494fb1ebf50ca612451b",
+  "unit_test_sha256": "2936162c2942a6de7a31c50cf130422d4cb0305e89c1ac08bf51fdcb34d19d00",
+  "candidate_source_sha256": "fbe3d85b1777a92595faa556a580417ba42a7ce1b8b8b65de98fb2e9bf983441",
+  "normal_baseline_sha256": "931a48e8bb4a9bfebb220e208eb6f400f93532c50754d2d0cfc2711856861c16",
+  "normal_candidate_sha256": "c20bdd4a21ffa660aa226b0a0136738f69268fdc8c5333bd7bff59b7ea8fd0cc",
+  "commands": [
+    "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --env SOURCE_ROOT=/src --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/run_unit_suite_optimized.py baseline",
+    "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --env SOURCE_ROOT=/src --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/run_unit_suite_optimized.py candidate"
+  ],
+  "runtime": "wslc 3.0.1.0; agent-interface/native-suite-wslc-a08:20261004 (image ID 1b4a8bd7c0fe); CPython 3.12.14; Pillow 10.2.0",
+  "network": "none",
+  "cpu_limit_requested": 1,
+  "memory_limit_requested": "1G",
+  "memory_enforcement_note": "WSL reports swap/cgroup swap-limit unsupported; do not claim swap-limited execution."
+}

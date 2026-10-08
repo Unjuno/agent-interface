@@ -11,6 +11,24 @@ from action_validity_admission_v1 import CONTRACT_FORMAT, SNAPSHOT_FORMAT
 SCHEMA = "doom-typed-observation-v1"
 SUPPORTED = {"health", "ammo"}
 
+def _same_exact_json_value(left, right):
+    """Compare JSON-shaped identity values without Python's bool/int aliases."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        if (not all(type(key) is str for key in left) or
+                left.keys() != right.keys()):
+            return False
+        return all(_same_exact_json_value(left[key], right[key])
+                   for key in left)
+    if type(left) is list:
+        return (len(left) == len(right) and
+                all(_same_exact_json_value(a, b)
+                    for a, b in zip(left, right)))
+    if type(left) not in (str, int, float, bool, type(None)):
+        return False
+    return left == right
+
 
 def _valid_pointer_binding(value):
     return (
@@ -135,9 +153,16 @@ def reconcile_artifact(typed, observation, readers):
         "full_observation": type(observation) is dict and
                             observation.get("event") == "observation" and
                             observation.get("exact") is True,
-        "same_epoch": all(typed.get(key) == observation.get(key)
-                          for key in ("id", "step", "sequence", "capture_ns")),
-        "same_binding": typed.get("pointer_binding") == observation.get("pointer_binding"),
+        "same_epoch": (
+            type(typed) is dict and type(observation) is dict and
+            all(key in typed and key in observation and
+                _same_exact_json_value(typed[key], observation[key])
+                for key in ("id", "step", "sequence", "capture_ns"))),
+        "same_binding": (
+            type(typed) is dict and type(observation) is dict and
+            "pointer_binding" in typed and "pointer_binding" in observation and
+            _same_exact_json_value(typed["pointer_binding"],
+                                   observation["pointer_binding"])),
     }
     try:
         with Image.open(Path(observation["image"])) as opened:
