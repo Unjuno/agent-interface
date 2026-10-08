@@ -22,7 +22,7 @@ class RetiredReader:
 
 
 class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
-    def run_cleanup(self, release_token=OMIT_TOKEN):
+    def run_cleanup(self, release_token=OMIT_TOKEN, events=None):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
             accepted = {
@@ -44,7 +44,7 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             }
             scope = ControllerFailureCleanup(Planner(), output)
             scope.observe_output(
-                [accepted, terminal], RetiredReader(),
+                [accepted, terminal] if events is None else events, RetiredReader(),
                 lambda predicate, timeout: None, None, [])
             with self.assertRaisesRegex(RuntimeError, "refresh refused"):
                 with scope:
@@ -63,6 +63,57 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
     def test_release_without_optional_token_keeps_legacy_id_binding(self):
         receipt = self.run_cleanup()
         self.assertTrue(receipt["input_release_verified_empty"])
+
+    def test_duplicate_acceptance_identity_is_ambiguous(self):
+        first = {"event": "accepted", "id": "source-refresh-0",
+                 "intent_token": "accepted-lease-a"}
+        second = {"event": "accepted", "id": "source-refresh-0",
+                  "intent_token": "accepted-lease-b"}
+        terminal = {"event": "terminal", "id": "source-refresh-0",
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": [], "intent_token": "accepted-lease-b"}}
+
+        receipt = self.run_cleanup(events=[first, second, terminal])
+
+        self.assertFalse(receipt["input_terminals_complete"])
+        self.assertFalse(receipt["input_releases_verified_empty"])
+        self.assertFalse(receipt["input_release_verified_empty"])
+
+    def test_conflicting_duplicate_terminals_are_order_independent(self):
+        accepted = {"event": "accepted", "id": "source-refresh-0",
+                    "intent_token": "accepted-lease"}
+        released = {"event": "terminal", "id": "source-refresh-0",
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": [], "intent_token": "accepted-lease"}}
+        unreleased = {"event": "terminal", "id": "source-refresh-0",
+                      "release": {"verified": False, "keys_down": [38],
+                                  "buttons_down": []}}
+
+        for terminal_rows in ([released, unreleased], [unreleased, released]):
+            with self.subTest(order=[row["release"]["verified"] for row in terminal_rows]):
+                receipt = self.run_cleanup(events=[accepted, *terminal_rows])
+                self.assertFalse(receipt["input_terminals_complete"])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertFalse(receipt["input_release_verified_empty"])
+
+
+    def test_orphan_terminal_id_makes_event_set_ambiguous(self):
+        accepted = {"event": "accepted", "id": "source-refresh-0",
+                    "intent_token": "accepted-lease"}
+        terminal = {"event": "terminal", "id": "source-refresh-0",
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": [], "intent_token": "accepted-lease"}}
+        orphan = {"event": "terminal", "id": "orphan-terminal",
+                  "release": {"verified": True, "keys_down": [],
+                              "buttons_down": []}}
+
+        for terminal_rows in ([terminal, orphan], [orphan, terminal]):
+            with self.subTest(order=[row["id"] for row in terminal_rows]):
+                receipt = self.run_cleanup(events=[accepted, *terminal_rows])
+                self.assertFalse(receipt["input_terminals_complete"])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertFalse(receipt["input_release_verified_empty"])
+
 
 
 if __name__ == "__main__":

@@ -127,16 +127,33 @@ class ControllerFailureCleanup:
                 receipt['stdout_reader_retired']=not receipt['stages'][-1]['result']
         receipt['stdout_reader_errors']=list(self.reader_errors)
         events=self.events if type(self.events) is list else []
-        accepted_ids={row.get('id') for row in events if type(row) is dict and
-                      row.get('event')=='accepted' and type(row.get('id')) is str}
-        accepted_by_id={row.get('id'):row for row in events if type(row) is dict and
-                        row.get('event')=='accepted' and type(row.get('id')) is str}
-        terminal_by_id={row.get('id'):row for row in events if type(row) is dict and
-                        row.get('event')=='terminal' and type(row.get('id')) is str}
+        accepted_rows=[row for row in events if type(row) is dict and
+                       row.get('event')=='accepted' and type(row.get('id')) is str]
+        terminal_rows=[row for row in events if type(row) is dict and
+                       row.get('event')=='terminal' and type(row.get('id')) is str]
+        accepted_counts={}
+        for row in accepted_rows:
+            accepted_counts[row['id']]=accepted_counts.get(row['id'],0)+1
+        terminal_counts={}
+        for row in terminal_rows:
+            terminal_counts[row['id']]=terminal_counts.get(row['id'],0)+1
+        accepted_duplicate_ids=sorted(identifier for identifier,count in accepted_counts.items()
+                                       if count>1)
+        terminal_duplicate_ids=sorted(identifier for identifier,count in terminal_counts.items()
+                                       if count>1)
+        accepted_ids=set(accepted_counts)
+        accepted_by_id={row['id']:row for row in accepted_rows}
+        terminal_by_id={row['id']:row for row in terminal_rows}
+        event_identity_ambiguous=bool(accepted_duplicate_ids or terminal_duplicate_ids)
+        receipt['event_identity_ambiguous']=event_identity_ambiguous
+        receipt['accepted_duplicate_ids']=accepted_duplicate_ids
+        receipt['terminal_duplicate_ids']=terminal_duplicate_ids
         event_set_complete=(receipt['stdout_reader_retired'] and
-                            not receipt['stdout_reader_errors'])
+                            not receipt['stdout_reader_errors'] and
+                            not event_identity_ambiguous)
         receipt['input_terminals_complete']=(event_set_complete and
-                                              accepted_ids.issubset(terminal_by_id))
+                                              accepted_ids.issubset(terminal_by_id) and
+                                              set(terminal_counts).issubset(accepted_ids))
         receipt['input_releases_verified_empty']=(
             receipt['input_terminals_complete'] and all(
                 type(terminal_by_id[identifier].get('release')) is dict and
