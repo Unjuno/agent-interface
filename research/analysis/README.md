@@ -1,5 +1,8 @@
 # Analytical research
 
+- [Issue #8624 T0 A02 negative-query responsibility method](negative_query_responsibility_8624_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 2,120 assignments in seven authored systems independently reconstructed; A01 CLI STOP preserved. Dense parity candidate prime analysis explicitly returns `UNKNOWN_TOO_LARGE`; no live GUI/product inference.
+- [Issue #8624 T0 A01 candidate execution STOP](negative_query_responsibility_8624_t0_a01_20261009/REPORT.md) — emitted output followed by CLI exit 1; auditor 0 invocations; no retry or scientific result.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -836,6 +839,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`negative_evidence_delivery_5865_t0a_a02_20261005/`](negative_evidence_delivery_5865_t0a_a02_20261005/)
 - [`negative_evidence_delivery_5865_t0a_a03_20261005/`](negative_evidence_delivery_5865_t0a_a03_20261005/)
 - [`negative_handoff_expiry_5865_t0_a01_20261008/`](negative_handoff_expiry_5865_t0_a01_20261008/)
+- [`negative_query_responsibility_8624_t0_a01_20261009/`](negative_query_responsibility_8624_t0_a01_20261009/)
+- [`negative_query_responsibility_8624_t0_a02_20261009/`](negative_query_responsibility_8624_t0_a02_20261009/)
 - [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
 - [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`network_adoption_shared_verifier_7741_t0c_20261005/`](network_adoption_shared_verifier_7741_t0c_20261005/)

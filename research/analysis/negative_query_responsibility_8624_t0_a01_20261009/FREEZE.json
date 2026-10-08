@@ -1,0 +1,40 @@
+{
+  "allocation": "8624-T0-A01-20261009",
+  "auditor_command": "python3 -B auditor.py model.json results/candidate.raw.json FREEZE.json",
+  "candidate_command": "python3 -B candidate.py model.json FREEZE.json",
+  "case_ids": [
+    "monotone_positive_control",
+    "negative_absent_prerequisite_with_contingency",
+    "present_exception_direct_cause",
+    "same_support_flip_different_responsibility",
+    "same_support_flip_independent_response",
+    "unit_robustness_large_named_contingency",
+    "dense_parity_complexity_control"
+  ],
+  "construction_tests_sha256": "9f33957755fb4ca781d9b7bdfe1e4a194df83465510fc793d5faff95d9fdf180",
+  "cube_scan_limit": 100000,
+  "decision": "PASS_METHOD_SCOPED only on exact exhaustive agreement, preserved signed-fact semantics, all frozen mutation rejection, and explicit dense-prime UNKNOWN_TOO_LARGE; otherwise FAIL_METHOD or STOP as specified in PROTOCOL.md.",
+  "environment": {
+    "container_reason": "Frozen protocol requires no Engine API, GUI, model, external data, or user-data isolation.",
+    "container_required": false,
+    "formal_runtime": "host standard-library Python",
+    "os": "macOS 27.0.1 arm64",
+    "python": "CPython 3.14.5"
+  },
+  "environment_probe_sha256": "416bdbef25fe87fde2ddb7e523a0e5b1700f02152a89d72a5e9f923a70b5df0c",
+  "expected_assignment_rows": 2120,
+  "expected_case_count": 7,
+  "formal_order": "Candidate exactly once; proceed only on exit 0 and nonempty raw; then raw-only auditor exactly once; no retries.",
+  "frozen_at_utc": "2026-10-08T20:33:29Z",
+  "issue": 8624,
+  "issue_body_sha256": "903d78a1b5e2f2844f3bdf837cd5abef1c3a16606794fcc2aa1090da0fa1b4c8",
+  "main_sha": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "max_formal_auditor_invocations": 1,
+  "max_formal_candidate_invocations": 1,
+  "schema": "negative-query-responsibility-freeze-v1",
+  "source_hashes": {
+    "auditor.py": "dffe4ef210275ce40633e92c380aa9bbdebf2aa2b03d03ca1277fb416c3185f8",
+    "candidate.py": "575407e5e27371e98e0dae7932594b5715bae094d248189609ecb25ff9827619",
+    "model.json": "7e2f500c8ffe48a1b855d918c3d6ed6129193e39252ed357a54fa251bfac23f1"
+  }
+}

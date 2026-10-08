@@ -1,0 +1,51 @@
+{
+  "schema": "negative-query-responsibility-run-record-v1",
+  "allocation": "8624-T0-A02-20261009",
+  "successor_to": {
+    "allocation": "8624-T0-A01-20261009",
+    "disposition": "STOP_CANDIDATE_EXIT_AFTER_OUTPUT",
+    "preserved_commit": "10cb992d37974b423bc8a2d0afb90a2aae347e99"
+  },
+  "main_sha": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "freeze_sha256": "fba6c5b9a576b5f0ca41f934117aba82839a821478ba3a9cf03bc06bad53cf2a",
+  "protocol_sha256_at_formal_run": "dcf53e8bd6edee466b29a67b472338d1286f721c5ff3dc87a8339ae74317058d",
+  "environment": {
+    "os": "macOS 27.0.1 arm64",
+    "python": "CPython 3.14.5",
+    "runtime": "host standard-library Python",
+    "container_required": false
+  },
+  "candidate": {
+    "command": "python3 -B candidate.py model.json FREEZE.json",
+    "invocation_count": 1,
+    "exit_code": 0,
+    "stdout_path": "results/candidate.raw.json",
+    "stdout_bytes": 17181,
+    "stdout_sha256": "00320645d9c41d956adc93ba0955875993bbc6f042bdfe1075f3b40b4b299a9f",
+    "stderr_path": "results/candidate.stderr.txt",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "raw_status": "CANDIDATE_COMPLETE",
+    "case_count": 7,
+    "assignment_rows": 2120
+  },
+  "auditor": {
+    "command": "python3 -B auditor.py model.json results/candidate.raw.json FREEZE.json",
+    "invocation_count": 1,
+    "exit_code": 0,
+    "stdout_path": "results/audit.json",
+    "stdout_sha256": "a75381067c07912432d699b2a114bf6eb00b31970c1be9ed362b385e2bfaca31",
+    "stderr_path": "results/auditor.stderr.txt",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "status": "PASS_METHOD_SCOPED",
+    "errors": [],
+    "case_count": 7,
+    "assignment_rows": 2120
+  },
+  "construction_tests": {
+    "normal": "13/13 PASS",
+    "optimized": "13/13 PASS",
+    "construction_only": true
+  },
+  "retry_count": 0,
+  "scope": "Finite authored stratified-rule fixtures only; no GUI, screenshot completeness, live causation, query freshness, action authority, production probability, or product benefit is tested."
+}

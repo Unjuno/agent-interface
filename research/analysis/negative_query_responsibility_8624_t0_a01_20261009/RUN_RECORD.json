@@ -1,0 +1,26 @@
+{
+  "allocation": "8624-T0-A01-20261009",
+  "allocation_disposition": "STOP_CANDIDATE_EXIT_AFTER_OUTPUT",
+  "auditor": {
+    "invocation_count": 0,
+    "reason_not_invoked": "Frozen protocol required candidate exit 0; candidate exited 1."
+  },
+  "candidate": {
+    "command": "python3 -B candidate.py model.json FREEZE.json",
+    "exit_code": 1,
+    "invocation_count": 1,
+    "process_error": "NameError: name 'errors' is not defined in main return after JSON output",
+    "raw_status_field": "CANDIDATE_COMPLETE",
+    "started_at_utc": "2026-10-08T20:34:52Z",
+    "stderr_path": "results/candidate.stderr.txt",
+    "stderr_sha256": "b51e29257ce68836a16edbcca1a5cd10404384198dec378f3687b0a1c2defa2f",
+    "stdout_path": "results/candidate.raw.json",
+    "stdout_sha256": "70da66bafbc86f094591517ecb9af8c90b56534d915ce9b5ccafe644ee6d641b"
+  },
+  "formal_result": null,
+  "freeze_sha256": "eb0e95b29cea51742c5b90f1f2ae027fade8927125e5c6df0aa21977a8c11374",
+  "main_sha": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "retry_count": 0,
+  "schema": "negative-query-responsibility-run-record-v1",
+  "scope": "No GUI, screenshot, model, user data, external effect, action dispatch, or live control was used."
+}

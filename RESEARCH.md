@@ -1,3 +1,7 @@
+# Issue #8624 T0 A02 — negative-query responsibility method (2026-10-09)
+
+`PASS_METHOD_SCOPED`: the separately frozen candidate and independent raw-only auditor each ran once; all 2,120 assignments across seven authored rule systems reconstructed with zero errors. A01's `STOP_CANDIDATE_EXIT_AFTER_OUTPUT` remains preserved and unchanged. The dense 11-fact parity case exceeded the 100,000-cube budget and returned explicit `UNKNOWN_TOO_LARGE`; auditor-only exhaustive checks do not complete that candidate prime analysis. This is finite authored-rule evidence only, not live GUI causation, screenshot completeness, freshness, safety, or product benefit. See [A02 report and checksums](research/analysis/negative_query_responsibility_8624_t0_a02_20261009/REPORT.md), [A01 STOP](research/analysis/negative_query_responsibility_8624_t0_a01_20261009/REPORT.md), and [Issue #8624](https://github.com/Unjuno/agent-interface/issues/8624).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)
