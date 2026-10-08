@@ -56,16 +56,17 @@ class Map01V39CoastTests(unittest.TestCase):
         guard = RunningActionGuardV3(
             action, admission, compiler, "test-compiler-v1")
         incoming = queue.Queue()
+        recovery_signals = {key: dict(value, sequence=5, capture_ns=500)
+                            for key, value in fresh["signals"].items()}
+        recovery_signals["ammo"].update(status="unknown", value=None)
         incoming.put({"event": "observation", "sequence": 5,
                       "capture_ns": 500, "pointer_binding": binding,
                       "image": "fresh.png", "frame_rgb_sha256": "b" * 64,
-                      "signals": {key: dict(value, sequence=5, capture_ns=500)
-                                  for key, value in fresh["signals"].items()}})
+                      "signals": recovery_signals})
         incoming.put({"event": "typed_observation", "sequence": 5,
                       "capture_ns": 500, "pointer_binding": binding,
                       "image": "fresh.png", "frame_rgb_sha256": "b" * 64,
-                      "signals": {key: dict(value, sequence=5, capture_ns=500)
-                                  for key, value in fresh["signals"].items()}})
+                      "signals": recovery_signals})
         recovered = controller.recover_stale_executor_rejection(
             {"event": "rejected", "reason":
              "latest observation sequence required before input"},
@@ -85,11 +86,39 @@ class Map01V39CoastTests(unittest.TestCase):
             from unittest.mock import patch
             from PIL import Image
             root = Path(directory)
-            for name, color in (("old.png", (1, 2, 3)), ("fresh.png", (4, 5, 6))):
+            for name, color in (("old.png", (1, 2, 3)), ("fresh.png", (4, 5, 6)),
+                                ("refreshed.png", (7, 8, 9))):
                 Image.new("RGB", (2, 2), color).save(root / name)
             model_root = root / "decision-1"
             model_root.mkdir()
-            source = dict(recovered["latest"])
+            recovered_source = dict(recovered["latest"])
+            refresh_source = dict(recovered_source, sequence=6, capture_ns=600,
+                image="refreshed.png", frame_rgb_sha256="c" * 64)
+            refresh_source["signals"] = {
+                key: dict(value, status="observed", sequence=6, capture_ns=600,
+                          value=(60 if key == "health" else 8))
+                for key, value in recovered_source["signals"].items()}
+            sent = []
+            replies = [
+                {"event": "accepted", "id": "refresh-0", "intent_token": "refresh-lease"},
+                dict(refresh_source, event="observation", id="refresh-0"),
+                {"event": "terminal", "id": "refresh-0", "status": "completed",
+                 "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                             "intent_token": "refresh-lease"}},
+            ]
+            def refresh_wait(predicate, **kwargs):
+                row = replies.pop(0)
+                self.assertTrue(predicate(row))
+                return row
+            source, refresh_receipt = controller.refresh_source(
+                recovered_source,
+                type("HealthReader", (), {"read": lambda self, row: row["signals"]["health"]})(),
+                type("AmmoReader", (), {"read": lambda self, row: row["signals"]["ammo"]})(),
+                sent.append, refresh_wait, "refresh", clock=lambda: 1.0,
+                lease_clock=lambda: 1_000_000_000)
+            self.assertEqual(refresh_receipt["status"], "recovered")
+            self.assertEqual(sent[0]["expected_sequence"], 5)
+            self.assertEqual(source["sequence"], 6)
             health = source["signals"]["health"]["value"]
             ammo = source["signals"]["ammo"]["value"]
             planner = type("Planner", (), {"begin_turn": lambda self, prompt_text,
@@ -97,9 +126,30 @@ class Map01V39CoastTests(unittest.TestCase):
             with patch.object(controller, "win", side_effect=lambda path: str(path)):
                 turn = controller.begin_model_turn(
                     planner, model_root, root / source["image"], [], health, ammo, {}, {})
-            self.assertEqual(Path(turn[1]), root / "fresh.png")
-            self.assertIn("health: 61", turn[0])
-            self.assertIn("ammo: 9", turn[0])
+            self.assertEqual(Path(turn[1]), root / "refreshed.png")
+            self.assertIn("health: 60", turn[0])
+            self.assertIn("ammo: 8", turn[0])
+
+            from doom_source_refresh_v1 import SourceRefreshRefused
+            bad_replies = [
+                {"event": "accepted", "id": "bad-refresh-0", "intent_token": "lease-a"},
+                dict(refresh_source, event="observation", id="bad-refresh-0"),
+                {"event": "terminal", "id": "bad-refresh-0", "status": "completed",
+                 "release": {"verified": True, "keys_down": [], "buttons_down": [],
+                             "intent_token": "different-lease"}},
+            ]
+            def bad_refresh_wait(predicate, **kwargs):
+                row = bad_replies.pop(0)
+                self.assertTrue(predicate(row))
+                return row
+            with self.assertRaises(SourceRefreshRefused) as refused:
+                controller.refresh_source(
+                    recovered_source,
+                    type("HealthReader", (), {"read": lambda self, row: row["signals"]["health"]})(),
+                    type("AmmoReader", (), {"read": lambda self, row: row["signals"]["ammo"]})(),
+                    lambda command: None, bad_refresh_wait, "bad-refresh",
+                    clock=lambda: 1.0, lease_clock=lambda: 1_000_000_000)
+            self.assertEqual(refused.exception.receipt["reason"], "refresh_release_unqualified")
 
         source = Path(controller.__file__).read_text(encoding="utf-8")
         rejected = source.index('if accepted["event"]!="accepted":')
