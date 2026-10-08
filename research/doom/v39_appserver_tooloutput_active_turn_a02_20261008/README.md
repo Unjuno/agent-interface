@@ -33,9 +33,24 @@ The replay uses a local loopback HTTP server, a fresh isolated `CODEX_HOME` nami
 
 App Server 0.160.0 created local state databases and managed skill copies in that isolated home. Those generated runtime files are excluded from the evidence package; `.gitignore` excludes both `codex-home/` and `cwd/`.
 
+## Explicit-interrupt follow-up (A05/A06)
+
+The A05 hypothesis and acceptance rule were fixed in [`PLAN_A05.md`](PLAN_A05.md) before the probe. A05 is a retained HOLD: App Server rejected its new turn because the top-level image input used `image_url`; the v2 `UserInput` schema expects `{ "type": "image", "url": ... }`. The first turn had already been interrupted, but the fresh-image turn was rejected, so A05 proves no behavior beyond that schema rejection. App Server exited 0; the runner exited 1. Its first audit is preserved in `results/a05-interrupt/audit.json`.
+
+A06 applies that protocol correction under a separately fixed plan in [`PLAN_A06.md`](PLAN_A06.md). With the first mock response held open, `turn/interrupt` completed turn 1 as `interrupted`; a second `turn/start` on the same thread carrying fresh text and a valid PNG reached the loopback mock before the runner released response 1. Turn 2 completed, exactly two mock requests were made, and both App Server and runner exited 0. The current official [v2 `UserInput` schema](https://github.com/openai/codex/blob/main/codex-rs/app-server-protocol/schema/typescript/v2/UserInput.ts) encodes inline images with `type: "image"` and `url`.
+
+The retained A06 clock readings tie at 1 ms host precision. Auditor v1 therefore failed its strict `<` timestamp check; its failure is retained as `audit_v1.json`. Auditor v2 accepts equality only when the recorded event barrier says the second request was observed before the first response was released; it also passes seven other ordering, content, exit, and mutation checks. This proves request ordering in this harness, not a latency distribution.
+
+Reproduce A06 from Windows PowerShell with Python 3.11 and Codex CLI 0.160.0:
+
+```powershell
+python .\run_interrupt_probe_a06.py --out-dir .\results\a06-interrupt
+python .\audit_interrupt_result_v2.py .\results\a06-interrupt
+```
+
 The evidence branch was fast-forwarded from `ea2af10f1111ba614311e354dfecde1bbf653981` to current `main` `f59b2494f403b33349cbf202b49d76caef3d6d82` before files were added. The intervening main commit was unrelated; this package adds non-runtime research evidence only.
 
 ## Scope and disposition
 
-This is App Server transport construction evidence only. A02 and the corrected A04 support the conclusion that active-turn delivery is queued for a follow-up inference rather than interrupting the currently pending inference in the tested App Server. It may affect the eventual turn answer, but does not show reaction before the slow inference returns or reduced waiting. Keep the #59 live threat-exposure/per-key-release/useful-feedback/recovery/progress/terminal gate open. No runtime or controller source was modified by this probe.
+This is App Server transport construction evidence only. A02 and corrected A04 show that active-turn delivery is queued for a follow-up inference rather than interrupting the currently pending inference. A06 shows that explicitly interrupting the turn can admit a fresh observation-driven turn before the held response is released. That restart may discard useful work and requires another inference; no end-to-end latency, model decision quality, V39 interruption safety, live feedback, earlier per-key release, recovery, progress, or game outcome was measured. Keep the #59 live threat-exposure/per-key-release/useful-feedback/recovery/progress/terminal gate open. No runtime or controller source was modified by these probes.
 
