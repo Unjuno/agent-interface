@@ -71,17 +71,28 @@ try {
         throw "Could not verify WSLc cleanup for this run's container ID (exit code $LASTEXITCODE)."
     }
     $listing = ($matchingContainers -join "`n").Trim()
-    if (-not $listing -or -not $listing.StartsWith('[')) {
-        throw 'The scoped WSLc cleanup query did not return a JSON array; cleanup is unverified.'
+    if ($listing -notmatch '^\[\s*\]
+
+    Write-Output 'WSLc local runtime probe: PASS'
+    Write-Output "Image: $image"
+    Write-Output 'Network: none; memory: 512M; CPUs: 1; source mount: read-only; exact-ID cleanup: verified'
+    Write-Output 'Note: WSL may report that swap/cgroup memory limits are unavailable; this probe does not test swap isolation or peak-memory enforcement.'
+}
+finally {
+    if (Test-Path -LiteralPath $probePath) {
+        Remove-Item -LiteralPath $probePath -Recurse -Force
     }
-    try {
-        $listedContainers = @(ConvertFrom-Json -InputObject $listing -ErrorAction Stop)
-    }
-    catch {
-        throw 'The scoped WSLc cleanup query returned malformed JSON; cleanup is unverified.'
-    }
-    if ($listedContainers.Count -gt 0) {
-        throw 'The scoped WSLc cleanup query returned a container; cleanup is not verified.'
+}
+) {
+        try {
+            $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
+        }
+        catch {
+            throw 'The scoped WSLc cleanup query did not return valid empty-array JSON; cleanup is unverified.'
+        }
+        if ($null -eq $listedContainers -or @($listedContainers).Count -gt 0) {
+            throw 'The scoped WSLc cleanup query did not return an empty JSON array; cleanup is unverified.'
+        }
     }
 
     Write-Output 'WSLc local runtime probe: PASS'
