@@ -497,6 +497,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
 - [`controlled_feedback_8072_a02_20261005/`](controlled_feedback_8072_a02_20261005/)
 - [`controlled_feedback_factorial_8319_a03_20261008/`](controlled_feedback_factorial_8319_a03_20261008/)
+- [`controlled_feedback_factorial_8319_a04_20261008/`](controlled_feedback_factorial_8319_a04_20261008/)
 - [`cost_predicate_order_4258_v1/`](cost_predicate_order_4258_v1/)
 - [`counterexample_guard_coverage_gate_6645_t1_v1/`](counterexample_guard_coverage_gate_6645_t1_v1/)
 - [`counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/`](counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/)
