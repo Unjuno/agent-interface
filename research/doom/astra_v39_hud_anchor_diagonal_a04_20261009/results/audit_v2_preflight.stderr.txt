@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "D:\codex-research\issue59-current-main-cb3fb7\research\doom\astra_v39_hud_anchor_diagonal_a04_20261009\audit_a04_v2.py", line 20, in <module>
+    AUDIT_V2_FREEZE = json.loads((HERE / "FREEZE_AUDIT_V2.json").read_text(encoding="utf-8"))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 340, in decode
+    raise JSONDecodeError("Extra data", s, end)
+json.decoder.JSONDecodeError: Extra data: line 8 column 2 (char 575)

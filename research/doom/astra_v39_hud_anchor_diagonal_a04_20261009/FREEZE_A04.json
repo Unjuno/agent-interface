@@ -1,0 +1,243 @@
+{
+  "schema": "v39-hud-anchor-diagonal-a04-freeze-v1",
+  "execution_id": "v39-hud-anchor-diagonal-a04-20261009",
+  "classification": "one-shot offline synthetic pixel construction comparison",
+  "base_commit": "677e95fce6e5d7357d3c4c16588cdedfa31bfd69",
+  "source_freeze_path": "research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json",
+  "source_freeze_sha256": "3b4d846d79cf9e284188c04587deff30e83cff02ef80508bd52809914096ead2",
+  "reader_blobs": {
+    "research/doom/doom_hud_signal_v1.py": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+    "research/doom/doom_hud_signal_v2.py": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+    "research/doom/doom_hud_signal_v3.py": "083338b4565176aaea560d800ce0210f17b6852f"
+  },
+  "prior_a03_result_path": "research/doom/astra_v39_hud_anchor_search_a01_20261009/results/a03.json",
+  "prior_a03_result_sha256": "319bad83ba8840d3a8f78c21ac179b4d28c6b7e33bbb8044751034ffcdb9e338",
+  "prior_a03_audit_path": "research/doom/astra_v39_hud_anchor_search_a01_20261009/results/audit_a03.json",
+  "prior_a03_audit_sha256": "a6236a5dfef42e93ab31ef6691b1214cd18ae1addc81047f14e214292a3293cb",
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "wad_path": "D:/issue59-v39-release-rescue/tmp/verified-current-main/research/doom/freedoom2.wad",
+  "runtime_versions": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "pillow": "10.2.0"
+  },
+  "runtime_platform": "Windows-10-10.0.26300-SP0",
+  "frame_count": 13,
+  "diagonal_translations": [
+    [
+      -2,
+      -2
+    ],
+    [
+      -1,
+      -2
+    ],
+    [
+      1,
+      -2
+    ],
+    [
+      2,
+      -2
+    ],
+    [
+      -2,
+      -1
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      -2,
+      1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      -2,
+      2
+    ],
+    [
+      -1,
+      2
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      2
+    ]
+  ],
+  "expected_diagonal_rows": 208,
+  "axis_offsets": [
+    [
+      -2,
+      0
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      2
+    ]
+  ],
+  "square_offsets": [
+    [
+      -2,
+      -2
+    ],
+    [
+      -1,
+      -2
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      1,
+      -2
+    ],
+    [
+      2,
+      -2
+    ],
+    [
+      -2,
+      -1
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      -2,
+      0
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      -2,
+      1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      -2,
+      2
+    ],
+    [
+      -1,
+      2
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      2,
+      2
+    ]
+  ],
+  "square_offset_count": 24,
+  "slots": 3,
+  "glyph_size": [
+    26,
+    38
+  ],
+  "health_local_anchor": [
+    102,
+    411
+  ],
+  "candidate_sha256": "2138f736a13b304ef30329767da0d9c30cd656528a1310fb43e9cc2d890d4a06",
+  "auditor_sha256": "320e9f7f6d8112649dad4e3f422ef92df67ae7f334e28fdc4f81d907f2276ad3",
+  "H": "On the 13 retained health frames, expanding the existing exact-center-first eight-axis fallback to all 24 nonzero offsets in a radius-2 square recovers diagonally translated HUD values without false observed values.",
+  "T": "Compare current-main A03 eight-axis fallback and A04 24-square fallback on 13 baseline frames, all 16 nonzero diagonal translations in {-2,-1,1,2}^2 (208 cases), and 13 blank-ROI controls. Record per-arm scan elapsed time descriptively.",
+  "D": "PASS only if both arms read 13/13 baseline labels, A04 reads all 208/208 diagonal labels correctly, A04 has zero wrong observed values, and A04 returns UNKNOWN on all 13 blank controls. Otherwise preserve FAIL; no threshold changes after execution.",
+  "C": "The corpus is historical and fixed; transformations are synthetic pixel shifts, not live capture jitter. Neighboring HUD numerals or partial glyph matches may create conflicts, which should fail closed.",
+  "U": "One local machine/runtime and one finite 13-frame corpus. No brightness/contrast/JPEG, diagonal generality beyond the frozen offsets, live capture, GUI/game, input, physical release, model, task effect, or MAP01 progress is measured.",
+  "decision": "A04 is an offline successor candidate only. Passing does not authorize runtime adoption; any performance decision must consider measured added scan cost and later live capture evidence."
+}

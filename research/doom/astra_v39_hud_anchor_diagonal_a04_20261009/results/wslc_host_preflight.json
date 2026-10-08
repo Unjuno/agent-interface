@@ -1,0 +1,29 @@
+{
+  "schema": "wslc-host-preflight-v1",
+  "checked_at": "2026-10-09",
+  "commands": [
+    "wsl.exe --version",
+    "wsl.exe --list --quiet",
+    "wsl.exe --list --running",
+    "Get-Command wslc.exe -ErrorAction SilentlyContinue",
+    "wslc.exe --list --quiet"
+  ],
+  "observed": {
+    "wsl_version": "2.7.13.0",
+    "kernel": "6.18.33.2-2",
+    "wslg": "1.0.73.2",
+    "registered_distributions": [
+      "Ubuntu",
+      "docker-desktop"
+    ],
+    "running_distributions": [
+      "Ubuntu"
+    ],
+    "wslc_executable": "not found on PATH",
+    "wslc_probe": "PowerShell command-not-found; CLI did not start"
+  },
+  "outcome": "HOLD_WSLc_UNAVAILABLE",
+  "repository_runbook_minimum": "WSL 2.9.3+",
+  "action_taken": "No WSL update, shutdown, or restart performed because Ubuntu remained active after the check; preserve shared distribution state.",
+  "impact": "A04 remains a one-shot Windows CPython exploratory result and does not satisfy the preferred WSLc execution path. WSLc successor preflight must wait until host update can proceed without interrupting active work."
+}
