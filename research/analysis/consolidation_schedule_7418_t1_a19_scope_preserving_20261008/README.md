@@ -1,0 +1,7 @@
+# Consolidation schedule T1-A19 — scope-preserving successor
+
+This package prepares a distinct #8406 T1 allocation to address two A16 limitations exposed by its retained raw: missing app/mode/surface in derived effect claims and a hidden-ledger answer oracle for summary arms. It also uses two query items per family and a second synthetic episode fixture. A16 remains unchanged and its scoped outcome is not pooled with A19.
+
+`PROTOCOL.md` records H/T/D/C/U and the required gates. `candidate.py` is a one-shot runner; `auditor.py` independently reconstructs transitions and scores answers from request-visible evidence. `test_construction.py` uses mocked model calls only. Passing it is a construction result, not a model result. The pre-freeze decision-gate calibration in `decision_gate_calibration_20261008/` found that the current labels need descriptive-only interpretation; it does not alter thresholds or supply model evidence. Its Monte Carlo result has a separate exact single-pair lower-bound audit.
+
+**Current disposition: PREPARED / NO MODEL CALLS.** The construction suite passed 13/13 on host CPython 3.14.5 on 2026-10-08. OrbStack's Docker Engine `_ping` timed out, and no container image digest or runtime preflight is frozen. Do not run inference from this package until `FREEZE.json` is complete and the image/model/resource preflight passes. This is not a T1 result and makes no cadence, GUI, product, or action-effect claim.

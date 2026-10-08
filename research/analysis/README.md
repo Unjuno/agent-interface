@@ -521,6 +521,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/`](consolidation_schedule_7418_t1_a11_placeholder_mapping_20261008/)
 - [`consolidation_schedule_7418_t1_a12_private_preflight_20261008/`](consolidation_schedule_7418_t1_a12_private_preflight_20261008/)
 - [`consolidation_schedule_7418_t1_a13_schema_constrained_20261008/`](consolidation_schedule_7418_t1_a13_schema_constrained_20261008/)
+- [`consolidation_schedule_7418_t1_a19_scope_preserving_20261008/`](consolidation_schedule_7418_t1_a19_scope_preserving_20261008/)
 - [`constrained_interaction_testing_5330_t0_supplemental_raw_20260930/`](constrained_interaction_testing_5330_t0_supplemental_raw_20260930/)
 - [`constrained_interaction_testing_5330_t0_v1/`](constrained_interaction_testing_5330_t0_v1/)
 - [`constrained_sequence_coverage_6206_t0_v1/`](constrained_sequence_coverage_6206_t0_v1/)
