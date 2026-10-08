@@ -6,10 +6,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 SOURCE = ROOT.parent / "map01_astra_wait_hud_dense_replay_59_a01_20261005" / "VISUAL_READOUT.json"
 OUT = ROOT / "RESULT.json"
+EXPECTED_SOURCE_SHA256 = "610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724"
 
 
 def main():
-    readout = json.loads(SOURCE.read_text(encoding="utf-8"))
+    source_bytes = SOURCE.read_bytes()
+    source_sha256 = hashlib.sha256(source_bytes).hexdigest()
+    if source_sha256 != EXPECTED_SOURCE_SHA256:
+        raise ValueError(
+            f"source digest mismatch: expected {EXPECTED_SOURCE_SHA256}, got {source_sha256}")
+    readout = json.loads(source_bytes)
     samples = readout["samples"]
     wait = [s for s in samples if s["phase"] == "MODEL THINKING + LOCAL COVER"]
     h0 = wait[0]["health"]
@@ -23,30 +29,46 @@ def main():
                              "first_invalidating_sample": None if not hits else {
                                  "game_seconds": float(hits[0]["game_clock"].removesuffix("s")),
                                  "health": hits[0]["health"]}})
-    count_wait = sum(p["first_invalidating_sample"] is not None for p in policies)
     by_first = {}
     for p in policies:
         first = p["first_invalidating_sample"]
         key = "never_during_wait" if first is None else str(first["game_seconds"])
         by_first[key] = by_first.get(key, 0) + 1
-    # Independent closed-form oracle: floor >= 97 trips at health 96;
-    # floor >= 95 but <97 first trips at 94; lower floors do not trip in-wait.
-    first_damage_count = sum(max(c, h0 - loss) >= 97
-                             for c in range(1, min(h0, 200) + 1)
-                             for loss in range(21))
-    later_count = sum(95 <= max(c, h0 - loss) < 97
-                      for c in range(1, min(h0, 200) + 1)
-                      for loss in range(21))
-    never_count = sum(max(c, h0 - loss) < 95
-                      for c in range(1, min(h0, 200) + 1)
-                      for loss in range(21))
-    assert (len(policies), first_damage_count, later_count, never_count) == (2100, 468, 222, 1410)
+    by_first.setdefault("never_during_wait", 0)
+    # Independent oracle groups parameter pairs by floor, then counts each
+    # floor only when the running minimum health first crosses it.
+    floor_counts = {}
+    for c in range(1, min(h0, 200) + 1):
+        for loss in range(21):
+            floor = max(c, h0 - loss)
+            floor_counts[floor] = floor_counts.get(floor, 0) + 1
+    oracle_by_first = {}
+    previous_minimum = h0
+    for sample in wait:
+        health = sample["health"]
+        crossing_count = sum(
+            count for floor, count in floor_counts.items()
+            if health < floor <= previous_minimum)
+        if crossing_count:
+            key = str(float(sample["game_clock"].removesuffix("s")))
+            oracle_by_first[key] = oracle_by_first.get(key, 0) + crossing_count
+        previous_minimum = min(previous_minimum, health)
+    oracle_by_first["never_during_wait"] = sum(
+        count for floor, count in floor_counts.items() if floor <= previous_minimum)
+    if len(policies) != 2100 or sum(oracle_by_first.values()) != 2100:
+        raise ValueError(f"unexpected policy count: {len(policies)}")
+    if by_first != oracle_by_first:
+        raise ValueError(
+            f"enumeration/oracle mismatch: {by_first!r} != {oracle_by_first!r}")
+    never_count = by_first["never_during_wait"]
+    later_count = sum(count for key, count in by_first.items()
+                      if key not in ("47.0", "never_during_wait"))
     result = {
         "schema": "map01-v39-guard-crossing-retained-replay-a01-v1",
         "status": "PASS_CONDITIONAL_FINITE_ENUMERATION",
         "scope": "Posthoc application of current-main V39 health guard contract to one prior run's manual HUD readouts; no deployment or live efficacy claim.",
         "source": "research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/VISUAL_READOUT.json",
-        "source_sha256": hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
+        "source_sha256": source_sha256,
         "assumptions": {
             "source_health": h0,
             "valid_critical_minimum": "integer 1..min(source_health, 200)",
@@ -57,14 +79,12 @@ def main():
         },
         "enumeration": {
             "policy_count": len(policies),
-            "policies_invalidating_on_first_damage_sample_47_0": sum(p["first_invalidating_sample"] is not None and p["first_invalidating_sample"]["game_seconds"] == 47.0 for p in policies),
-            "policies_invalidating_later_during_wait": sum(p["first_invalidating_sample"] is not None and p["first_invalidating_sample"]["game_seconds"] > 47.0 for p in policies),
-            "policies_never_invalidating_during_wait": len(policies) - count_wait,
+            "policies_invalidating_on_first_damage_sample_47_0": by_first.get("47.0", 0),
+            "policies_invalidating_later_during_wait": later_count,
+            "policies_never_invalidating_during_wait": never_count,
             "first_sample_distribution": by_first,
-            "independent_closed_form_oracle": {
-                "health_floor_at_least_97_first_trips_at_47_0_count": first_damage_count,
-                "health_floor_95_or_96_first_trips_at_54_8_count": later_count,
-                "health_floor_below_95_never_trips_in_wait_count": never_count
+            "independent_threshold_oracle": {
+                "first_sample_distribution": oracle_by_first
             }
         },
         "observations": [{"game_seconds": float(s["game_clock"].removesuffix("s")),
