@@ -48,13 +48,15 @@ discard flag as invalid auditor input. It intentionally does not claim plan
 admission; correlate each proposed recovery with the independent admission and
 cancellation-custody receipts before assigning the preregistered scoped PASS.
 
-Seven tests passed under CPython 3.11.9 in normal and optimized (`python -O`)
-mode. They cover the production hard-guard shape, missing and null flags,
-missing flags across a complete follow-up horizon, explicit discarded plans,
-explicit non-discarded fresh plans, right censoring, duplicate iterations, and
-cap violations. The test constructs a counterexample where the frozen
-predicate labels malformed evidence as recovery while the strict classifier
-does not.
+Eight strict-classifier tests passed under CPython 3.11.9 in normal and
+optimized (`python -O`) mode. They cover the production hard-guard shape,
+missing and null flags, missing flags across a complete follow-up horizon,
+explicit discarded plans, explicit non-discarded fresh plans, right censoring,
+duplicate iterations, the preserved-test import alias, and cap violations.
+The test constructs a counterexample where the frozen predicate labels
+malformed evidence as recovery while the strict classifier does not. Full
+package discovery also passes 11/11 in both modes, including the three
+byte-preserved frozen tests.
 
 ## Applicability to the A16 outcome
 
