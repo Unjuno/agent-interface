@@ -1,0 +1,40 @@
+{
+  "format": "issue59-red-component-cross-episode-a02-freeze-v1",
+  "date": "2026-10-08",
+  "classification": "offline, retained positive-only holdout; no live allocation",
+  "repository": "Unjuno/agent-interface",
+  "current_main": "dd9c2cde511a52cf21e80ecbb2eb9edb0dd6f2f8",
+  "source_episode": "map01-fixed-threat-v28-live-01",
+  "source_files": {
+    "retention_manifest_sha256": "f14709f16fa432805d18abc1b0d6c11abc87d83758132d451fa086cd03208eaa",
+    "events_sha256": "5be74bb0c3bc9f321760f8b7c7dfacd9c86f5f4ecc0ffdce032e20780ffee0dc",
+    "audit_sha256": "bbdbc7b687317cb96e8a3e3ce968bd06368becf4727bcfa2ae120b765d6704e1"
+  },
+  "candidate_provenance": {
+    "a01_result_schema": "EXPLORATORY_OFFLINE_COMPONENT_FEATURE_SCREEN_NOT_DETECTOR_VALIDATION",
+    "a01_candidate_sha256": "4bb9bbb31dc816ffc26145cc3db77728fbb3c59090cc9453422a873c605ff2e0",
+    "threshold": 51.5,
+    "direction": "less",
+    "a01_rows": 12
+  },
+  "evaluation": {
+    "sequences": [
+      1,
+      11,
+      28,
+      51,
+      60,
+      68,
+      70
+    ],
+    "threshold_unchanged": true,
+    "pass_criterion": "at least 6/7 positive frames trigger",
+    "observed": "0/7"
+  },
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "pillow": "10.2.0"
+  },
+  "controls": "No game, model, GUI, physical input, container, GPU, or allocation; read-only retained artifacts"
+}

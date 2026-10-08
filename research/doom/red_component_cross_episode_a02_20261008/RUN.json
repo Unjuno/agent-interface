@@ -1,0 +1,13 @@
+{
+  "classification": "POSTHOC_DETERMINISTIC_READ_ONLY_REPLAY",
+  "commands": [
+    "python -B research/doom/red_component_cross_episode_a02_20261008/probe.py --repo-root .",
+    "python -B research/doom/red_component_cross_episode_a02_20261008/audit.py --repo-root ."
+  ],
+  "local_execution_equivalent": "python -B <package>/probe.py --repo-root <checkout>; python -B <package>/audit.py --repo-root <checkout>",
+  "candidate_invocations": 1,
+  "audit_invocations": 1,
+  "retry_count": 0,
+  "run_root": "research/doom/results/map01-fixed-threat-v28-live-01/",
+  "status": "FAIL_SCOPED; independent evidence audit PASS"
+}

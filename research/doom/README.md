@@ -476,3 +476,8 @@ gates remain open; this archive makes no code promotion.
 ## App Server interrupt cancellation portability (#59)
 
 - [macOS 0.146.1 stream-cancel A01](v39_appserver_interrupt_stream_macos_a01_20261008/README.md) — interrupted turn completed promptly, but no provider-socket EOF/reset was observed before the held mock response release; unexpected featured-plugin metadata egress makes the overall environment disposition HOLD. One bounded run; no live/game/input claim.
+
+
+## Red-component cross-episode screen A02 (#59)
+
+- [Fixed A01 cue on retained V28 threat frames](red_component_cross_episode_a02_20261008/README.md) — independently audited counts and provenance; fixed cue fired on 0/7 inspected enemy-visible frames, failing the scoped transfer screen. Positive-only, single-worker labels; no detector, specificity, or live-control claim.
