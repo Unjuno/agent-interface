@@ -19,6 +19,6 @@ This evidence-only rescue carries two original packages from closed PR [#7904](h
 
 ## Provenance and disposition
 
-The package files are copied from exact PR #7904 head `1403c822609395f9ab21e0cdbb36b7b4c8ee044d`; the original FREEZE, baseline/candidate snapshots, raw outputs, audit scripts, and manifests are unchanged. Only these evidence directories and this index/summary are in the rescue change; no production source or tests are changed. No container or candidate experiment was run.
+The package files are copied from exact PR #7904 head `1403c822609395f9ab21e0cdbb36b7b4c8ee044d`; the original FREEZE, baseline/candidate snapshots, raw outputs, audit scripts, and manifests are unchanged. Each directory adds only a `.gitattributes` rule to preserve CRLF bytes and keep `git diff --check` from treating them as trailing spaces; the rule does not rewrite the evidence. Only these evidence directories and this index/summary are in the rescue change; no production source or tests are changed. No container or candidate experiment was run.
 
 Keep the old #7904 branch until this rescue is reviewed and the current-main implementation question is resolved through #8018. The old PR and branch history remain the provenance for the original candidate; this page does not promote its construction result to current runtime behavior.
