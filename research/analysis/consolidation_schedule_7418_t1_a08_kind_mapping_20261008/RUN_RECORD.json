@@ -1,10 +1,26 @@
 {
   "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A08-KIND-MAPPING-20261008",
+  "artifacts": {
+    "RAW.jsonl": {
+      "bytes": 335139,
+      "sha256": "7a7feffb3b93b13b5b7cee6b70e8ee05fd2b8c40683b795f9e06a6f849a27618"
+    },
+    "candidate.stderr.txt": {
+      "bytes": 3556,
+      "sha256": "f0b60082aaf9388cb0b9fdac5bcf66252b0d558ee5c7c3026a5ba06dbbb001e5"
+    },
+    "candidate.stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "auditor_exit": null,
   "auditor_invocations": 0,
-  "candidate_invocations": 0,
+  "candidate_exit": 130,
+  "candidate_invocations": 1,
   "consolidation_output_cap": 2048,
   "expected_calls": 390,
-  "formal_model_calls_observed": 0,
+  "formal_model_calls_observed": 67,
   "formal_retries": 0,
   "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
   "predecessor_stops": [
@@ -19,5 +35,5 @@
     "T1 A05 answer endpoint scoped; transition audit failed"
   ],
   "raw_path": "results/FORMAL_T1_A08/RAW.jsonl",
-  "terminal_disposition": "FROZEN_NOT_STARTED"
+  "terminal_disposition": "STOP_FALSE_CONFLICT_AND_PRIOR_CLAIM_DROPS"
 }
