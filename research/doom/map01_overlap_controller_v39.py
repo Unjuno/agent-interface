@@ -855,15 +855,15 @@ def recover_stale_cover_submission(rejected, *, identifier, expected_sequence,
 
 
 def submit_initial_cover_with_recovery(submit, *, identifier, latest_reader,
-                                       event_log, incoming, wait,
+                                       incoming, wait,
                                        observation_monitor):
     """Bind stale-cover recovery to the exact sequence sent before its ACK wait."""
     source = latest_reader()
     if type(source) is not dict or type(source.get("sequence")) is not int:
         raise ValueError("initial cover requires a source observation")
     submitted_sequence = source["sequence"]
-    event_start = len(event_log)
-    ack = submit()
+    consumed_events = []
+    ack = submit(consumed_events)
     if type(ack) is not dict or ack.get("event") not in ("accepted", "rejected"):
         raise ValueError("initial cover submit returned an invalid acknowledgement")
     if ack["event"] == "accepted":
@@ -872,7 +872,7 @@ def submit_initial_cover_with_recovery(submit, *, identifier, latest_reader,
                 "recovery": None}
     recovery = recover_stale_cover_submission(
         ack, identifier=identifier, expected_sequence=submitted_sequence,
-        consumed_events=event_log[event_start:], latest=latest_reader(),
+        consumed_events=consumed_events, latest=latest_reader(),
         incoming=incoming, wait=wait,
         observation_monitor=observation_monitor)
     return {"ack": ack, "submitted_sequence": submitted_sequence,
@@ -961,7 +961,8 @@ def main():
         latest = None
         reader_thread = threading.Thread(target=reader, daemon=True)
         reader_thread.start()
-        def wait(predicate, timeout=40, observation_monitor=None):
+        def wait(predicate, timeout=40, observation_monitor=None,
+                 consumed_events=None):
             nonlocal latest
             end = time.monotonic() + timeout
             while time.monotonic() < end:
@@ -972,6 +973,8 @@ def main():
                         detail="stderr not synchronously drained"
                         raise RuntimeError(f"session exited before expected event: {detail}")
                     continue
+                if consumed_events is not None:
+                    consumed_events.append(row)
                 if row["event"] == "observation":
                     latest = row
                 event_types = (getattr(observation_monitor, "event_types", {"observation"})
@@ -1033,20 +1036,21 @@ def main():
             cover_steps=compile_cover(cover_semantic)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             cover_submission_recovery=None
-            def submit_cover(identifier):
+            def submit_cover(identifier, consumed_events=None):
                 nonlocal clock_ns
                 clock_ns=time.perf_counter_ns()
                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
                 process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                              (r.get("id")==identifier or r["event"]=="rejected"))
+                              (r.get("id")==identifier or r["event"]=="rejected"),
+                              consumed_events=consumed_events)
                 if accepted["event"]!="accepted":return accepted
                 cover_ids.append(identifier);return accepted
             failure_cleanup.set_stage("cover_program_admission")
             cover_result = submit_initial_cover_with_recovery(
-                lambda:submit_cover(cover), identifier=cover,
-                latest_reader=lambda:latest, event_log=all_events,
+                lambda consumed:submit_cover(cover, consumed), identifier=cover,
+                latest_reader=lambda:latest,
                 incoming=incoming, wait=wait,
                 observation_monitor=validity_monitor)
             cover_ack=cover_result["ack"]

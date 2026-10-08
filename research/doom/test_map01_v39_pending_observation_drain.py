@@ -50,6 +50,14 @@ class SignalGuard:
                 "requires_new_decision": invalid}
 
 
+class SignalReader:
+    def read(self, observation):
+        return observation["signals"][self.signal_id]
+
+    def __init__(self, signal_id):
+        self.signal_id = signal_id
+
+
 def typed_signal(signal_id, value, sequence, capture_ns, binding):
     return {"status": "observed", "signal_id": signal_id, "value": value,
             "sequence": sequence, "capture_ns": capture_ns,
@@ -86,17 +94,19 @@ class PendingObservationDrainTests(unittest.TestCase):
         rejected = {"event": "rejected", "id": "cover-0",
                     "reason": "latest observation sequence required before input"}
 
-        def submit():
-            events.extend([
+        def submit(consumed_events):
+            rows = [
                 {"event": "typed_observation", "sequence": 11},
                 {"event": "observation", "sequence": 12, "image": "frame-12"},
-            ])
+            ]
+            events.extend(rows)
+            consumed_events.extend(rows)
             latest.update(sequence=12, image="frame-12")
             return rejected
 
         result = submit_initial_cover_with_recovery(
             submit, identifier="cover-0", latest_reader=lambda: latest,
-            event_log=events, incoming=queue.Queue(), wait=lambda predicate: self.fail(
+            incoming=queue.Queue(), wait=lambda predicate: self.fail(
                 "already received fresh observation must not trigger another wait"),
             observation_monitor=monitor)
 
@@ -104,6 +114,46 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(result["latest"]["sequence"], 12)
         self.assertEqual(result["ack"], rejected)
         self.assertEqual(monitor.seen, [11, 12])
+
+    def test_reader_lookahead_rows_are_not_mistaken_for_ack_wait_consumption(self):
+        binding = {"focus": 7, "surface": 9,
+                   "geometry": [0, 0, 640, 480]}
+        signals = {
+            "health": typed_signal("health", 95, 12, 1_100_000_000, binding),
+            "ammo": typed_signal("ammo", 4, 12, 1_100_000_000, binding),
+        }
+        typed = {"event": "typed_observation", "sequence": 12,
+                 "capture_ns": 1_100_000_000, "pointer_binding": binding,
+                 "frame_rgb_sha256": "a" * 64, "signals": signals}
+        full = dict(typed, event="observation")
+        latest = {"sequence": 11}
+        event_log = []
+        incoming = queue.Queue()
+        monitor = DoomCoverSignalPairMonitor(
+            {"health": SignalGuard("health", 100, 11, 1_000_000_000, 60),
+             "ammo": SignalGuard("ammo", 4, 11, 1_000_000_000, 1)},
+            health_reader=SignalReader("health"),
+            ammo_reader=SignalReader("ammo"))
+        rejected = {"event": "rejected", "id": "cover-0",
+                    "reason": "latest observation sequence required before input"}
+
+        def submit(consumed_events):
+            # The reader has logged both rows, but the ACK wait only consumed
+            # the typed row; the full observation is still in the queue.
+            event_log.extend([typed, full])
+            consumed_events.append(typed)
+            incoming.put(full)
+            return rejected
+
+        result = submit_initial_cover_with_recovery(
+            submit, identifier="cover-0", latest_reader=lambda: latest,
+            incoming=incoming,
+            wait=lambda predicate: self.fail("the queued full frame is sufficient"),
+            observation_monitor=monitor)
+
+        self.assertIsNone(result["invalidation"])
+        self.assertEqual(monitor.soft_event_count, 1)
+        self.assertTrue(incoming.empty())
 
     def test_queued_hard_crossing_precedes_completed_answer(self):
         incoming = queue.Queue()
@@ -261,7 +311,7 @@ class PendingObservationDrainTests(unittest.TestCase):
             {"event": "observation", "sequence": 12, "image": "frame-12"},
         ]
 
-        def submit_stale_cover():
+        def submit_stale_cover(consumed_events):
             with self.assertRaisesRegex(
                     ValueError, "latest observation sequence required before input"):
                 executor.submit("stale-plan", [{"op": "observe"}], 11, deadline)
@@ -270,6 +320,7 @@ class PendingObservationDrainTests(unittest.TestCase):
             while rows:
                 row = rows.pop(0)
                 all_events.append(row)
+                consumed_events.append(row)
                 if row["event"] == "observation":
                     latest.update(row)
             return {"event": "rejected", "id": "stale-plan",
@@ -278,7 +329,7 @@ class PendingObservationDrainTests(unittest.TestCase):
         with patch("executor_v12.threading.Thread", NoInputThread):
             recovered = submit_initial_cover_with_recovery(
                 submit_stale_cover, identifier="stale-plan",
-                latest_reader=lambda: latest, event_log=all_events,
+                latest_reader=lambda: latest,
                 incoming=incoming,
                 wait=lambda predicate: self.fail(
                     "sequence 12 was already consumed by the ACK wait"),
@@ -302,7 +353,7 @@ class PendingObservationDrainTests(unittest.TestCase):
         rejected = {"event": "rejected", "id": "cover-21",
                     "reason": "latest observation sequence required before input"}
 
-        def submit():
+        def submit(_consumed_events):
             attempts.append(21)
             return rejected
 
@@ -312,7 +363,7 @@ class PendingObservationDrainTests(unittest.TestCase):
         with self.assertRaisesRegex(TimeoutError, "no newer full observation"):
             submit_initial_cover_with_recovery(
                 submit, identifier="cover-21", latest_reader=lambda: latest,
-                event_log=[], incoming=queue.Queue(), wait=wait,
+                incoming=queue.Queue(), wait=wait,
                 observation_monitor=Monitor())
 
         self.assertEqual(attempts, [21])
