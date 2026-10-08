@@ -1,0 +1,22 @@
+{
+  "schema": "issue-7804-quotient-first-v1",
+  "actors": ["requester", "verifier_a", "verifier_b"],
+  "targets": ["record_x", "record_y"],
+  "symmetric_permutations": [
+    {"requester":"requester","verifier_a":"verifier_a","verifier_b":"verifier_b"},
+    {"requester":"requester","verifier_a":"verifier_b","verifier_b":"verifier_a"}
+  ],
+  "safety_predicates": [
+    "requester_committed",
+    "commit_without_lease_owner",
+    "commit_on_stale_observation",
+    "wrong_effect_target",
+    "receipt_target_mismatch"
+  ],
+  "controls": {
+    "verifier_owner_specific": {"fixed_verifier":"verifier_a","fixed_lease_holder":null,"named_property_actor":null,"omit_effect_target":false},
+    "lease_holder_identity_bound": {"fixed_verifier":null,"fixed_lease_holder":"verifier_a","named_property_actor":null,"omit_effect_target":false},
+    "property_names_verifier": {"fixed_verifier":null,"fixed_lease_holder":null,"named_property_actor":"verifier_a","omit_effect_target":false},
+    "effect_target_omitted_from_key": {"fixed_verifier":null,"fixed_lease_holder":null,"named_property_actor":null,"omit_effect_target":true}
+  }
+}
