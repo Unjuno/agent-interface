@@ -46,6 +46,7 @@ New work should normally use a category directory. Existing direct-root paths re
 - [`audits/`](audits/) — retained independent audit/review bundles; use the referenced source snapshot and allocation to interpret each result.
 - [`recovery/`](recovery/) — preserved source/evidence recovery capsules for interrupted or parallel research allocations; each status file records provenance and disposition without replacing the original result.
 - [`reviews/`](reviews/) — retained author preparation and review evidence; consult each packet's failure, custody and authority qualifications, not a current integration or native-effect certificate.
+- [`carbon_window_7794_a05_bytebound_recheck_20261008/`](carbon_window_7794_a05_bytebound_recheck_20261008/) — Issue #8386 A05 exact-byte successor replay; diagnostic-scoped 10/10 reconstruction with zero A02 differences, while A04 freeze metadata discrepancies remain unresolved.
 
 - [`x11/`](x11/)
 
