@@ -1,0 +1,33 @@
+{
+  "action_or_effect_dispatch": false,
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A02-20261009",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/1998-focused-payload-a02-20261009",
+  "container_execution": false,
+  "decision_gate": "PASS_METHOD_SCOPED iff all 14 rows reconstruct exactly, 6/6 mutations reject, 9 valid requests preserve exact crop, 5 planted invalid requests abstain, focused selection occurs only for strictly smaller serialized payload, and positive byte savings occur. HOLD_NO_SIZE_GAIN if method checks pass but no valid crop saves bytes.",
+  "formal_invocations": {
+    "auditor": 0,
+    "candidate": 0,
+    "retries": 0
+  },
+  "frozen_at_utc": "2026-10-08T21:36:46Z",
+  "gui_or_model_calls": false,
+  "hypothesis": "For at least one valid unique current ROI, a canonical focused payload including metadata is smaller than FULL_FRAME while preserving exact source bytes; invalid focus requests never emit a focused payload, and valid no-gain cases fall back to FULL_FRAME.",
+  "issue": 1998,
+  "measurement": "UTF-8 bytes of canonical sorted compact JSON payload including identity, epoch, geometry, encoding, and base64 pixels. No token or latency inference.",
+  "predecessor": {
+    "coverage": "256 request validity rows; exact crop reconstruction; no FULL_FRAME serialized-byte comparison",
+    "path": "research/analysis/focused_observation_request_successor_1935_v1/",
+    "status": "already present in frozen current main"
+  },
+  "source_sha256": {
+    "ENVIRONMENT.json": "52977e24a3789b120bde6369bcfa3514465efa044e7df99bc9ee153b16d861e8",
+    "PROTOCOL.md": "e029d58ced24833a1a82ae8badbbc0f4f7533d216fd37128ebd93aa1e652af2a",
+    "README.md": "0d09ff408a9f00ed4bdd6ebce61e8594cfcab0ebf51d60c5c34fe6f00b790f74",
+    "auditor.py": "74fc0e2290792b191b15e9099c395d3729d66a7170440bc947345a6b63b4f0eb",
+    "candidate.py": "c7fcb87f7302e2b8417f852025bc826259fdb2b9f80853862773659d100a5c8d",
+    "design.json": "7c8613e92145ef564e11d7eee91a06782302db3890e64abfbc2eb137cf0e1a21",
+    "source/frame.bin": "f80e767c6a22828698f51f8ad551ade7236ae0ce69220a3addc57a93363ab5a4",
+    "test_construction.py": "5bde8a382925cf1f69e26411d1c60ec9c3eac9b1c7d95cdd8278f10019c49db3"
+  }
+}

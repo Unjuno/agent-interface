@@ -1,0 +1,23 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A02-20261009",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "freeze_commit": "e75a7c2e8d5dcba3175b3e10eb5c6d6b5906a218",
+  "freeze_sha256": "eb3403c1b83c62af5205fca16d69533ac994ab2d364c21ed8389cf9fe47418c7",
+  "candidate_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > results/candidate_raw.json 2> results/candidate.stderr",
+  "candidate_exit_code": 0,
+  "candidate_invocations": 1,
+  "candidate_raw_sha256": "72d6f3f30a5643ebb2bd32e7de66f2ac3771c8ce9173a9ddfa5cc750169b7cbf",
+  "auditor_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py > results/audit.json 2> results/auditor.stderr",
+  "auditor_exit_code": 0,
+  "auditor_invocations": 1,
+  "audit_sha256": "a6dd2e0e307ac5e669312076e997df634f89b2614ec3d127543a2a495630ea9a",
+  "retries": 0,
+  "construction_tests": {"normal_passed": 4, "optimized_passed": 4},
+  "cases": 14,
+  "mutations_rejected": 6,
+  "full_frame_total_bytes": 78890,
+  "selected_total_bytes": 55957,
+  "selected_total_bytes_saved": 22933,
+  "container_execution": false,
+  "gui_or_effect_dispatch": false
+}
