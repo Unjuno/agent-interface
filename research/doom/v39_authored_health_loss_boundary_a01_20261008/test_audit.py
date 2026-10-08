@@ -24,6 +24,10 @@ class AuthoredHealthBoundaryAuditTests(unittest.TestCase):
             lambda r: r["rows"][16]["triage_value_84"].update(status="HARD_INVALIDATED"),
             lambda r: r["rows"][16]["exact_floor"].update(requires_new_decision=True),
             lambda r: r["rows"].append(copy.deepcopy(r["rows"][-1])),
+            lambda r: r.update(pending_model=1),
+            lambda r: r.update(synthetic_typed_health_source=100.0),
+            lambda r: r.update(maximum_health_loss_values=[0.0, 20.0]),
+            lambda r: r["rows"][1].update(maximum_health_loss=True),
         ]
         for mutate in mutations:
             with self.subTest(mutation=mutate):
