@@ -3,6 +3,10 @@ export PRIMARY_FAILURE_EVIDENCE
 node --experimental-vm-modules --test runtime/host_v1/test_*.mjs
 PASS: 416 tests, 0 failures, 0 skipped (Node 24)
 
+Repeated after merging current main 6ee21b2 with a new PRIMARY_FAILURE_EVIDENCE root:
+node --experimental-vm-modules --test runtime/host_v1/test_*.mjs
+PASS: 416 tests, 0 failures, 0 skipped (Node 24)
+
 python research/check_workspace_index.py --git-tree
 PASS: 161 top-level directories reachable
 
