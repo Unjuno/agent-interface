@@ -1,0 +1,38 @@
+{
+  "allocation": "7934-T0-A02",
+  "issue": 7934,
+  "main_base": "53ec001a334e4077caf665ff56372cd4b0ccb068",
+  "preregistration_comment_id": 5987491119,
+  "a01_predecessor_pr": 7943,
+  "source_sha256": {
+    "profiles.json": "c5a57acf32359a489185fc8938f8ae7028e74262763faf14bff5393b5e90fda9",
+    "protocol.md": "fa51238a9761acef642458c2c47563612edcf49f9304c9132ec30aa8cb392242",
+    "simulator.py": "fcf52f0207b1ea84ddd0462470e229b7db02685d806aac8bdecfd6e5b5dc81fa",
+    "audit.py": "a634ee5d43db78360f276c1916d34825c52473dafdc3a93e4cb5c6a09352552e",
+    "runner.py": "e7cf9ca485a78755428909aef4fccc30c9e6f2a98010681d63f445805f932c15"
+  },
+  "container": {
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "local_tag": "python:3.12-slim",
+    "local_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "runtime_expected": "Python 3.12.15",
+    "engine": "WSLc 3.0.1.0",
+    "network": "none",
+    "configured_cpus": 1,
+    "cpu_enforcement_measured": false,
+    "source_mount": "read-only",
+    "output_mount": "read-write",
+    "formal_launches": 1,
+    "retries": 0
+  },
+  "design": {
+    "q_values": [0.2, 0.4, 0.6, 0.8],
+    "direct_costs": [0.02, 0.12],
+    "nuisance_cost": 0.001,
+    "budget": 0.15,
+    "seed_start": 79342000,
+    "seed_count_per_cell": 128,
+    "cells": 32,
+    "expected_observations": 4096
+  }
+}

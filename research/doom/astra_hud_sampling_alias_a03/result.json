@@ -1,0 +1,23 @@
+{
+  "protocol": "A03: phase-swept periodic downsampling of A01 visual-mask excursions",
+  "source_commit": "5e5fa2e697109dc68a605bbfcb04e523e3103698",
+  "source_csv_sha256": "0b585a3671a10ba2a3e4f634b32cddc7f3fb83aa85013eb75faff8a128cd7e97",
+  "rows": 780,
+  "source_sample_interval_seconds": 0.2,
+  "source_rate_hz": 5,
+  "event_definition": "source_control_elapsed_s > 31 and red_mask_xor_from_previous > 60",
+  "event_count": 30,
+  "stride_2_interval_seconds": 0.4,
+  "stride_2_phases": [
+    {"phase":0,"observed":14,"missed":16,"frames":[274,282,302,318,326,360,370,402,408,426,506,532,606,618]},
+    {"phase":1,"observed":16,"missed":14,"frames":[235,285,311,337,357,385,413,437,495,519,535,547,557,571,581,703]}
+  ],
+  "stride_4_interval_seconds": 0.8,
+  "stride_4_phases": [
+    {"phase":0,"observed":3,"missed":27,"frames":[360,408,532]},
+    {"phase":1,"observed":8,"missed":22,"frames":[285,337,357,385,413,437,557,581]},
+    {"phase":2,"observed":11,"missed":19,"frames":[274,282,302,318,326,370,402,426,506,606,618]},
+    {"phase":3,"observed":8,"missed":22,"frames":[235,311,495,519,535,547,571,703]}
+  ],
+  "interpretation": "Periodic decimation at 2.5 or 1.25 Hz undersamples the defined mask excursions in a phase-dependent way. Visual-mask samples are not semantic events or proof of utility."
+}

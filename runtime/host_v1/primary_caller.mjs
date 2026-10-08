@@ -5,6 +5,13 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   const consumed = new Set();
   const observationArguments = route === 'guarded-local' ? {} :
     structuredClone(options.observationArguments);
+  const maxExplicitObservations = options.maxExplicitObservations;
+  if (maxExplicitObservations !== undefined &&
+      (!Number.isSafeInteger(maxExplicitObservations) || maxExplicitObservations < 0)) {
+    throw TypeError('maxExplicitObservations must be a nonnegative safe integer');
+  }
+  let explicitObservations = 0;
+  const observationTools = new Set(['interface_guarded_observe', 'interface_observe']);
   const reviewWindowId = options.reviewWindowId;
   const canonical = value => JSON.stringify(value, (_key, v) => v && typeof v === 'object' && !Array.isArray(v)
     ? Object.fromEntries(Object.keys(v).sort().map(k => [k,v[k]])) : v);
@@ -138,10 +145,21 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         }
         consumed.add(controlId);
       }
+      if (observationTools.has(tool) && maxExplicitObservations !== undefined) {
+        if (explicitObservations >= maxExplicitObservations) {
+          stop('explicit observation budget exhausted');
+          throw Error(stopped);
+        }
+        explicitObservations++;
+      }
       let reply;
       try { reply = await host.sendPresented(tool, args, sinks); }
       catch (error) { stop('transport or presentation failure'); throw error; }
       try {
+        if (reply?.status === 'unknown_requires_reconciliation') {
+          stop('relay delivery uncertain; reconciliation required');
+          return reply;
+        }
         if (reply.result.isError === true && !expected) {
           stop('unexpected MCP refusal');
           return reply; // Framework errors may contain free text, not typed JSON.

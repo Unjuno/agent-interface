@@ -1,0 +1,7 @@
+# A02 construction log
+
+- Initial selected alternatives were a Welch–Satterthwaite t interval and a stratified percentile bootstrap of the observed IPW contributions. Four separate 30,000-cohort construction seeds were kept out of the formal seed. Bootstrap coverage ranged 0.94810–0.95243; t-interval coverage ranged 0.94130–0.94520. This motivated freezing the bootstrap recipe, but is not formal evidence and does not alter A01's FAIL.
+- First boundary suite exposed two candidate/auditor issues before freeze: the candidate's binomial recurrence underflowed when initialized at the far tail (`k=199/200`), and a zero-variance bootstrap distribution needed both quantiles to share the same support point. Candidate PMFs now recur outward from the mode, normalize, and resolve both cutpoints at each support point. The auditor independently evaluates binomial-coefficient CDFs.
+- First mutation-unit test also used one row while mutation code assumed index 123; the frozen mutation probe now selects a valid row for both unit and formal cohorts. No formal candidate/auditor invocation occurred in these construction attempts.
+- After corrections, the six construction tests passed, including 22 candidate/auditor endpoint comparisons spanning extreme and seeded interior error counts. The four-seed pilot was rerun from `pilot.py`; results are retained in `PILOT_RESULTS.json`.
+- Formal seed 8049020, candidate/auditor sources and public/oracle fixtures remain uninvoked until `FROZEN.json` is written and the freeze receipt is posted to Issue #8049.

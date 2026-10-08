@@ -1,0 +1,26 @@
+{
+  "schema": "map01-v39-cancel-order-temporal-a01-audit-v1",
+  "status": "PASS_INDEPENDENT_TEMPORAL_AUDIT",
+  "source_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+  "rows": 634,
+  "orphan": {
+    "index": 449,
+    "id": "cover-4",
+    "step": 10,
+    "key": "Down",
+    "admitted_ns": 55539824242850,
+    "input_ack_ns": 55539824580162
+  },
+  "checks": {
+    "admitted_before_cancel_command": true,
+    "ack_before_cancel_request": true,
+    "cleanup_after_ack": true,
+    "empty_cleanup": true
+  },
+  "delta_ns": {
+    "cancel_command_minus_admitted": 180689,
+    "cancel_request_minus_ack": 10219409,
+    "owner_cleanup_minus_ack": 12871816
+  },
+  "scope": "Independent backward-context reconstruction of saved timestamps and owner cleanup ledger; no per-key physical up or application delivery inferred"
+}

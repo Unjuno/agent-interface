@@ -1,0 +1,55 @@
+{
+  "candidate": {
+    "application_effect_observed": false,
+    "authority_granted": false,
+    "episode_count": 2,
+    "episodes": [
+      {
+        "actuation_id": "14516f1944ff48bb8a05bc16e5de8a79:g1:F8",
+        "context": {
+          "id": "cover-7",
+          "intent_token": "intent-v39-a01",
+          "key": "F8",
+          "owner_id": "14516f1944ff48bb8a05bc16e5de8a79",
+          "step": 2
+        },
+        "down_state_interval_ns": [
+          87811364890958,
+          87811364895916
+        ],
+        "hold_duration_lower_bound_ns": 50417,
+        "hold_duration_upper_bound_ns": 58458,
+        "up_state_interval_ns": [
+          87811364946333,
+          87811364949416
+        ]
+      },
+      {
+        "actuation_id": "14516f1944ff48bb8a05bc16e5de8a79:g2:F8",
+        "context": {
+          "id": "cover-7",
+          "intent_token": "intent-v39-a01",
+          "key": "F8",
+          "owner_id": "14516f1944ff48bb8a05bc16e5de8a79",
+          "step": 2
+        },
+        "down_state_interval_ns": [
+          87811365890958,
+          87811365895916
+        ],
+        "hold_duration_lower_bound_ns": 50417,
+        "hold_duration_upper_bound_ns": 58458,
+        "up_state_interval_ns": [
+          87811365946333,
+          87811365949416
+        ]
+      }
+    ],
+    "same_key": "F8",
+    "schema": "map01-v39-perkey-repeat-episode-a01",
+    "scope": "deterministic duplicated fake-display rows; not physical/task occupancy"
+  },
+  "freeze_sha256": "b9fcba7610429056dc48a0ac16ffd0a3859496bfb968e6496a437ac6611c5c5f",
+  "input_sha256": "e1f9ee6d0f7c4291042a5892cbd0ce1e9eeb9696dab71269d88560a1de2acad0",
+  "status": "PASS_MULTI_EPISODE_CONSTRUCTION_SCOPED"
+}

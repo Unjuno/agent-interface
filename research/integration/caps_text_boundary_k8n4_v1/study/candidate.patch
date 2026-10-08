@@ -1,0 +1,16 @@
+--- a/runtime/backends/x11_v1/backend.py
++++ b/runtime/backends/x11_v1/backend.py
+@@ -312,8 +312,11 @@
+         return plan
+ 
+     def text(self, value: str) -> None:
+-        # Resolve the entire supported payload before emitting its first key.
+-        for keys in self._text_plan(value):
++        # Research candidate k8n4: this query is not atomic with later input.
++        plan = self._text_plan(value)
++        if value and self.root.query_pointer().mask & X.LockMask:
++            raise X11BackendError("CAPS_LOCK_ACTIVE: literal text refused; lock unchanged")
++        for keys in plan:
+             self.key_chord(keys)
+ 
+     def scroll(self, dx: int, dy: int) -> None:

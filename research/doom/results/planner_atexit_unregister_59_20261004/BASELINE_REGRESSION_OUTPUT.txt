@@ -1,0 +1,14 @@
+test_timed_out_planner_close_unregisters_atexit_callback (test_controller_failure_cleanup_v1.Tests.test_timed_out_planner_close_unregisters_atexit_callback) ... FAIL
+
+======================================================================
+FAIL: test_timed_out_planner_close_unregisters_atexit_callback (test_controller_failure_cleanup_v1.Tests.test_timed_out_planner_close_unregisters_atexit_callback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat\issue7367-context-liveness-20261004\issue59-cleanup-integration\research\doom\results\planner_atexit_unregister_59_20261004\baseline\test_controller_failure_cleanup_v1.py", line 188, in test_timed_out_planner_close_unregisters_atexit_callback
+    self.assertNotIn(callback,callbacks)
+AssertionError: <bound method Tests.test_timed_out_planner_close_unregisters_atexit_callback.<locals>.StuckPlanner.close of <test_controller_failure_cleanup_v1.Tests.test_timed_out_planner_close_unregisters_atexit_callback.<locals>.StuckPlanner object at 0x000001C233ECE190>> unexpectedly found in [<bound method Tests.test_timed_out_planner_close_unregisters_atexit_callback.<locals>.StuckPlanner.close of <test_controller_failure_cleanup_v1.Tests.test_timed_out_planner_close_unregisters_atexit_callback.<locals>.StuckPlanner object at 0x000001C233ECE190>>, <bound method finalize._exitfunc of <class 'weakref.finalize'>>]
+
+----------------------------------------------------------------------
+Ran 1 test in 1.012s
+
+FAILED (failures=1)

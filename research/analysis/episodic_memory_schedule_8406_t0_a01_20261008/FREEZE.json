@@ -1,0 +1,34 @@
+{
+  "freeze_id": "ISSUE-8406-T0-A01-20261008-F1",
+  "issue": 8406,
+  "main_sha": "a0d0602b89b1f5a05f851728fe90684ec4bfeff5",
+  "parent_evidence": {
+    "issue": 7418,
+    "source_path": "research/analysis/exception_preserving_skill_7418_t0_20261004/fixture.json",
+    "source_sha256": "1c8b74dfdd8ec7c5a5950133709ae95e40cc687edb12ac128d66f696c79e54fb",
+    "preservation": "Read-only reuse; parent result, source, query oracle, and PR remain unchanged."
+  },
+  "input_sha256": {
+    "README.md": "6b60f639faf9f25a20bcf3c210ad489d9a7d84ce000454deafc79e832b0702ec",
+    "PROTOCOL.md": "33db80b116ae90a696d64da31b4b787656d9b65c29f85fc1ef9b97f7bd816aa1",
+    "model.json": "72fc0e86716f11f52336c99ca98674e093a3977d2d8081134d033a8ad79e3cac",
+    "candidate.py": "b26b0c0efb7d490485232908adcd51063d4000900b74f87026873a6cf4639ebe",
+    "audit.py": "9d6ad732ce4f455a1165fb2f9fd710ee3c14655dbbc04d7a3b8d21f8bbb9b7d4",
+    "test_contract.py": "899ced4b3032af66b8a88b38e77fd9ca32529998159f460cdcd1e12203083b64"
+  },
+  "execution": {
+    "environment": "macOS host, CPython 3.12.13, standard library; offline local file-processing protocol; no model, GUI, OS input, user data, or network call",
+    "container": "not used; no external dependency, and same-host OrbStack content-store failure is recorded in current Issue #8328 preflight evidence; no image pull or daemon mutation",
+    "preformal_tests": "python -m unittest discover -s research/analysis/episodic_memory_schedule_8406_t0_a01_20261008 -v (3 passed)",
+    "candidate_command": "python research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/candidate.py research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/formal_01/RAW.json",
+    "audit_command": "python research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/audit.py research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/formal_01/RAW.json research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/formal_01/AUDIT.json",
+    "invocation_counts": {"candidate": 1, "auditor": 1, "retries": 0}
+  },
+  "expected_gate": {
+    "source_episodes": 12,
+    "query_visibility_rows": {"each_arm": 16, "total": 64},
+    "updates": {"episodic_only": 0, "per_episode": 12, "batch_4": 3, "terminal": 1},
+    "hostile_controls_rejected": ["forged_provenance", "omit_rare_exception", "collapse_conflict_as_safe", "mutate_episode", "misalign_checkpoint"],
+    "claim": "PASS_METHOD_SCOPED_T0 only for deterministic schedule construction, exact source visibility, provenance, checkpoints, and auditor controls. No semantic memory or cadence-sensitivity finding."
+  }
+}

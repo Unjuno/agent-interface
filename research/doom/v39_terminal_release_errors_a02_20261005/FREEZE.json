@@ -1,0 +1,21 @@
+{
+  "schema": "v39-terminal-release-errors-a02-freeze-v1",
+  "candidate_commit": "6c257dc0e5dbedffcf7c7634279f29bbe3e8e4d8",
+  "baseline_main_sha": "1eac6ea9f5b91cc10a8c3dc20374b9d79ffcf179",
+  "baseline_source_git_blob_oid": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+  "source_manifest_sha256": "29a41ee5cf0469c3d3ceaf3ffe05808876eb852fcc3bc0eb4ea8987d2352382a",
+  "baseline_manifest_sha256": "1564dc5960a54c63ce9947ea1072d661b27a04286b0cdb42376a3c92cefd894b",
+  "source_file_count": 10,
+  "expected_candidate_tests": 24,
+  "expected_baseline_tests": 1,
+  "candidate_tests": [
+    "test_input_owner_v12_explicit_up_cancel",
+    "test_input_transition_owner_v3",
+    "test_input_transition_owner_v3_owner_queue",
+    "test_input_transition_owner_v4"
+  ],
+  "runner_sha256": "a9adcc5bfca812a3c11dd6a91e61498ada2be2a517d24686d5aceba4d679b630",
+  "auditor_sha256": "05d294fcab2fb2ecf8dc9a457e9eb1fea1600405020c78f2f6729a597ffbf812",
+  "runtime": "bundled workspace Python 3.12.14; Pillow not required",
+  "classification": "post-hoc deterministic local regression replay; not a formal experiment"
+}

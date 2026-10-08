@@ -14,6 +14,8 @@ class DeadlineTests(unittest.TestCase):
         self.backend.owner = SimpleNamespace(active=('field',[0,0]), deadline=11_000_000)
         self.backend.owner._focus_within_target = Mock(return_value=True)
         self.backend.emissions = 0
+        self.backend.held_keycodes = {}
+        self.backend._keycode = Mock(side_effect={'CTRL':1,'a':2}.__getitem__)
         self.backend.preflight = Mock()
         # This fixture isolates expiry at physical emission, without an X server.
         self.backend._refresh_keyboard_mapping = Mock(return_value=False)

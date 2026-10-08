@@ -1,0 +1,8 @@
+Ran the new regression against the unmodified #7635 candidate ddff6ebf8cea186accaae5dca98750ac16bb6a4b.
+
+FAIL: test_base_exception_fails_terminal_before_propagating_publication_custody
+AssertionError: 'completed' != 'failed'
+- completed
++ failed
+
+The failure was at the terminal status assertion; the executor thread propagated the KeyboardInterrupt after publishing a false-completion terminal.

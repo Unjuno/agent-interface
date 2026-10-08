@@ -1,0 +1,33 @@
+{
+  "schema": "decision-value-7934-runtime-preflight-v1",
+  "allocation": "7934-DECISION-VALUE-ACQUISITION-A01-20261007",
+  "observed_host": {
+    "os": "macOS Darwin",
+    "architecture": "arm64",
+    "python": "CPython 3.14.5"
+  },
+  "orbstack": {
+    "context_show": "orbstack",
+    "docker_info": "29.4.0 linux/arm64",
+    "image_inspect": {
+      "command": "docker image inspect python:3.12-slim --format '{{.Id}}'",
+      "result": "STOP_CONTAINERD_CONTENT_UNAVAILABLE",
+      "error": "rpc error: code = Unknown desc = blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported"
+    },
+    "image_list": {
+      "result": "STOP_CONTAINERD_CONTENT_UNAVAILABLE",
+      "error": "blob sha256:57620741e6db7e21761e035aa768a6f7cf4132e246330b8c7c9df1e262d6d780: operation not supported"
+    },
+    "running_containers": 0,
+    "historical_containers": "docker ps -a showed pre-existing stopped/created containers; none were modified"
+  },
+  "actions_not_taken": [
+    "pull",
+    "build",
+    "restart",
+    "prune",
+    "repair",
+    "modify unrelated containers"
+  ],
+  "execution_boundary": "CPU-only stdlib T0 has no container-specific semantics; native fallback is permitted by Issue #7934 and explicitly makes no container/isolation claim"
+}

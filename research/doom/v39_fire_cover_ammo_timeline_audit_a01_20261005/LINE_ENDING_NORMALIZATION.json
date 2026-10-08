@@ -1,0 +1,64 @@
+{
+  "files": [
+    {
+      "crlf_lines": 1,
+      "new_sha256": "e753cac39f5733ef0cd21db08a2438ba458a95dd4529b00118e189ee15873178",
+      "old_git_blob": "840821a4d73ac127c338a7d92d63f67b4dd0f9ae",
+      "old_sha256": "30d7d6806bd846edbe3a7915870e22a037c59a2918a8f220b9520cae6e781bd5",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_audit_a01_20261005/AUDIT.json"
+    },
+    {
+      "crlf_lines": 1,
+      "new_sha256": "eb5c90dad9f1e7ad4a04ddcce6ff573825125597de938bc021fab649337e2399",
+      "old_git_blob": "ec20d83008f17685da7c86cfca0d3a47515caa86",
+      "old_sha256": "1f83284cc568d294d884f166c5f4f6adf23af5fb7245b68c1cebf5344d2732a9",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_audit_a01_20261005/AUDIT_A02.json"
+    },
+    {
+      "crlf_lines": 1,
+      "new_sha256": "01c490846e5e9aad30c5a824a0aa351c5fe89988db6c189df07e4c9b8532011d",
+      "old_git_blob": "ab875c4b466e45b2fff433cb22e389cfe10cea55",
+      "old_sha256": "6b712f915b8f6fac0907f9378f80584d458fbb55d6e383710bbce227fb0915ae",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_audit_a01_20261005/CANDIDATE.json"
+    },
+    {
+      "crlf_lines": 1,
+      "new_sha256": "a55b28f0a005e96ecafe5d8895636aac7701ffedc6c76f45b290d2312857a7d8",
+      "old_git_blob": "dc90ca3aad896609967eb403a42ea4c8f14af415",
+      "old_sha256": "eb05e54bde511c5b53edd6a2929079bf570504265271b1ca9df0b2a491730a77",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_audit_a01_20261005/CANDIDATE_A02.json"
+    },
+    {
+      "crlf_lines": 127,
+      "new_sha256": "9c038a30bb8730d4cd8c3afc91fe9a7e02c1796fb9e4eb155f75ce71e1a0de88",
+      "old_git_blob": "45e9ef60fddd270e657ebf2dc02768a8040475f9",
+      "old_sha256": "38577e86a90339be92ee7855861427c6441dcf91e0dea1d6e7883db9d96838bd",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_audit_a01_20261005/FREEZE_A02.json"
+    },
+    {
+      "crlf_lines": 1,
+      "new_sha256": "016e00e1e64ac754ddc538e13f67010361560afe67fa3d4f3249f62d1bb2bc44",
+      "old_git_blob": "59c2c316c1130af09731bd1fe79be28db5709b4b",
+      "old_sha256": "3da8355644367c1c86f78b0d887894b22b6416bbfba4ecbca3361046f6e5b942",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_audit_a01_20261005/MUTATION_TEST.json"
+    },
+    {
+      "crlf_lines": 1,
+      "new_sha256": "6d34986a9111f99394f4db58017b7a8a273339ee170aa822eace9e4848eb80b1",
+      "old_git_blob": "8df022ad26ebd5ff1ee396562f9afe495c9dceeb",
+      "old_sha256": "1df4c4ae19f26b7bee07dcc3c44c53e728ec8f35a60fc291694e0df0890bcbc5",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_audit_a01_20261005/MUTATION_TEST_A02.json"
+    },
+    {
+      "crlf_lines": 1,
+      "new_sha256": "5fcf073c2f7d3d199c5387e5b9ffa6dedcbedf4faed8c20a71c36fb76840734f",
+      "old_git_blob": "ac49b77b3ebab9e761fe1b1d997b632ee23000a3",
+      "old_sha256": "bf209d9500b72c2084d668de02eed895e76a9e2403899e3182b047583b1990be",
+      "path": "research/doom/v39_fire_cover_ammo_timeline_audit_a01_20261005/MUTATION_TEST_FINAL.json"
+    }
+  ],
+  "format": "issue59-v39-audit-output-line-ending-normalization-v1",
+  "reason": "Repository research artifacts preserve bytes (text attribute unset). The recorded A01/A02 JSON outcomes had Windows CRLF endings, which git diff --check flagged as CR-at-EOL. Their exact pre-normalization bytes remain in source_commit; this follow-up changes line endings only. The checksum manifest is regenerated for the normalized files and is excluded from its own normalization record.",
+  "semantic_payload_changed": false,
+  "source_commit": "a48281b9aaa433c6d0a93df9d35c9b2011994b9d"
+}
