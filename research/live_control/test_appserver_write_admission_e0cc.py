@@ -208,7 +208,7 @@ class WriteAdmissionTests(unittest.TestCase):
         entered, release = threading.Event(), threading.Event()
 
         def record(direction, _message):
-            if direction == "sent":
+            if direction == "send_prepared":
                 entered.set()
                 if not release.wait(2):
                     raise TimeoutError("fixture journal not released")

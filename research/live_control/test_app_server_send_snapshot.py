@@ -1,4 +1,4 @@
-"""Sent-journal snapshot must match serialized wire despite later caller edits."""
+"""Send journal snapshots must match serialized wire despite later caller edits."""
 import json
 import os
 import unittest
@@ -29,7 +29,7 @@ class SendSnapshotTests(unittest.TestCase):
             client._write(message)
             raw = os.read(read_fd, 4096)
             self.assertEqual(raw, (json.dumps(expected, separators=(',', ':'))+'\n').encode())
-            self.assertEqual(recorded, [('sent', expected)])
+            self.assertEqual(recorded, [('send_prepared', expected), ('sent', expected)])
             self.assertEqual(json.loads(raw), recorded[0][1])
             self.assertFalse(client._send_uncertain)
 

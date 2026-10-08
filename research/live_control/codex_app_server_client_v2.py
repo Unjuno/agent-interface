@@ -59,6 +59,7 @@ class CodexAppServerClient:
         self.process = process_factory(command, **process_options)
         self._condition = threading.Condition()
         self._write_lock = threading.Lock()
+        self._journal_order_lock = threading.Lock()
         self._send_uncertain = False
         self._stdin_fd = None
         self._closing = False
@@ -74,7 +75,8 @@ class CodexAppServerClient:
         try:
             for line in self.process.stdout:
                 message = json.loads(line)
-                self._record("received", message)
+                with self._journal_order_lock:
+                    self._record("received", message)
                 with self._condition:
                     if ("id" in message and "method" not in message and
                             type(message["id"]) in (int, float) and
@@ -115,7 +117,10 @@ class CodexAppServerClient:
                 # Windows pipe support requires Python 3.12 or later.
                 os.set_blocking(fd, False)
                 self._stdin_fd = fd
-            self._record("sent", json.loads(data))
+            snapshot = json.loads(data)
+            # The durable preparation row gates admission and the pipe write,
+            # but does not claim bytes reached the peer.
+            self._record("send_prepared", snapshot)
             if deadline <= time.monotonic():
                 raise TimeoutError("app-server send budget expired; no send attempted")
             if request_id is not None:
@@ -123,6 +128,7 @@ class CodexAppServerClient:
                 with self._condition:
                     self._pending.add(request_id)
             sent = 0
+            write_attempted = False
             view = memoryview(data)
             try:
                 while sent < len(data):
@@ -132,6 +138,7 @@ class CodexAppServerClient:
                         raise TimeoutError("app-server pipe send timed out")
                     try:
                         # Bound each syscall, not the size of the JSON record.
+                        write_attempted = True
                         count = os.write(self._stdin_fd, view[sent:sent + 65536])
                         if count <= 0:
                             raise OSError("app-server pipe write made no progress")
@@ -150,8 +157,18 @@ class CodexAppServerClient:
                             waiter = select.poll()
                             waiter.register(self._stdin_fd, select.POLLOUT)
                             waiter.poll(min(remaining, 1) * 1000)
+                with self._journal_order_lock:
+                    self._record("sent", snapshot)
             except BaseException as error:
                 self._send_uncertain = True
+                if write_attempted:
+                    try:
+                        self._record("send_uncertain", {
+                            "message": snapshot, "sent_bytes": sent,
+                            "total_bytes": len(data), "reason": type(error).__name__,
+                        })
+                    except Exception:
+                        pass
                 if not isinstance(error, Exception):
                     raise
                 raise AppServerWriteUncertain(sent, len(data), type(error).__name__) from error
@@ -161,9 +178,9 @@ class CodexAppServerClient:
     def _record(self, direction, message):
         if self._journal is None:
             return
-        row = {"direction": direction, "observed_ns": time.perf_counter_ns(),
-               "message": message}
         with self._journal_lock:
+            row = {"direction": direction, "observed_ns": time.perf_counter_ns(),
+                   "message": message}
             self._journal.write(json.dumps(row, separators=(",", ":")) + "\n")
             self._journal.flush()
 
