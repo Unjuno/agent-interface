@@ -39,6 +39,10 @@ The candidate rejects the explicit mismatch and preserves both exact-match and
 legacy token-omission behavior (3/3). Cleanup/source-refresh tests passed 20/20
 in both modes; V39 controller tests passed 16/16 in both modes; pending drain
 tests passed 21/21 in both modes. `py_compile` and `git diff --check` passed.
+After main advanced, the full regression matrix was rerun on validation head
+`2ffad7d9b130bf9d51c5d4c336365bed7443d210`, which contains current main
+`677e95fce6e5d7357d3c4c16588cdedfa31bfd69`; the cleanup helper is unchanged
+from the original `d66ee6c` comparison source.
 The original POSIX pipe cleanup test was excluded from the Windows regression
 matrix because its contract is POSIX-specific; its earlier Windows run failed
 at the platform guard, not at a candidate assertion.
