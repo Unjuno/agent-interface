@@ -9,7 +9,7 @@
     "queued_event_skipped_by_outer_loop": true
   },
   "patched_helper": {
-    "tests_passed": 6,
+    "tests_passed": 7,
     "hard_crossing_invalidates": true,
     "queued_terminal_retained": true,
     "soft_observation_preserves_answer_path": true,
@@ -17,8 +17,10 @@
     "integration_call_order_check": true,
     "completed_future_discard_branch_precedes_eligibility_check": true,
     "arrival_after_snapshot_remains_queued": true,
-    "test_git_blob": "1ba3950be3b5cb9a6bf4d0e5b5c308a285f0a44b",
-    "production_monitor_typed_hard_crossing_invalidates": true
+    "test_git_blob": "604a4d137499508770e25ffa49efeea4780bdfb2",
+    "production_monitor_typed_hard_crossing_invalidates": true,
+    "production_monitor_soft_typed_health_preserves_cover": true,
+    "typed_only_soft_event_does_not_update_screenshot_latest": true
   },
   "integration": "When drain reports invalidation, the existing controller invalidation path cancels any still-active cover and the existing planner-result branch discards the answer.",
   "scope": "Focused source-boundary construction only; no production event-frequency, live, or efficacy claim.",
@@ -29,9 +31,9 @@
     "ast_extracted_helper_suite": "PASS 6/6; confirmed with full controller import and production paired signal monitor",
     "full_controller_imported": true,
     "baseline_main_test_git_blob": "af01126e613c6b1c51e218cab6f199eb56e57efe",
-    "pr_regression_test_git_blob": "1ba3950be3b5cb9a6bf4d0e5b5c308a285f0a44b",
+    "pr_regression_test_git_blob": "604a4d137499508770e25ffa49efeea4780bdfb2",
     "full_module_test_command": "python -B -m unittest -v test_map01_v39_pending_observation_drain.py",
-    "full_module_test_result": "PASS 6/6 with complete controller and actual paired signal monitor imported",
+    "full_module_test_result": "PASS 7/7 with complete controller and actual paired signal monitor imported",
     "initial_empty_scratch_import_failure": "ModuleNotFoundError: map01_stagnation_v1; preserved as setup failure, resolved by staging pinned current-main dependencies",
     "dependency_blob_count": 18,
     "dependency_blobs": {
@@ -54,7 +56,8 @@
       "research/live_control/running_action_guard_v2.py": "4e1a36c1dbd3d78aea795a292bc4e0bf9db0b75b",
       "research/live_control/running_action_guard_v3.py": "bbefdba8edfd83e886baf556caf28aca66ac88fb"
     },
-    "initial_empty_scratch_import_result": "failed_before_test_collection: ModuleNotFoundError map01_stagnation_v1"
+    "initial_empty_scratch_import_result": "failed_before_test_collection: ModuleNotFoundError map01_stagnation_v1",
+    "behavioral_boundary": "Typed hard health crossing invalidates; typed soft health change within the guard envelope preserves current cover and is retained as soft-event context. This does not establish whether that preserved policy is unsafe in a live threat."
   }
 }
 
