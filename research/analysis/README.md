@@ -22,6 +22,7 @@
 - [Successor #7452 A01 reset-faithful context × event-order coverage](ordered_context_event_coverage_7452_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent reconstruction validated 4 mixed reset-bounded episodes/32 rows against 128 exhaustive episodes/256 rows; all seeded mutants detected only with the combined suite; host CPU-only, synthetic method evidence.
 
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
+- [Issue #5309 A08 effect-witness preservation](dual_control_5309_witness_a08_20261007/REPORT.md) — `PASS_WITNESS_BOUNDARY_SCOPED`: isolated candidate/oracle mounts; 56 rows independently reconstructed. A04–A07 STOP/method-failure lineage remains preserved; synthetic-only, no GUI/runtime/product claim.
 
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
 
@@ -535,6 +536,11 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
 - [`dual_control_5309_precapture_control_a13b_20261007/`](dual_control_5309_precapture_control_a13b_20261007/)
+- [`dual_control_5309_witness_a04_20261007/`](dual_control_5309_witness_a04_20261007/)
+- [`dual_control_5309_witness_a05_20261007/`](dual_control_5309_witness_a05_20261007/)
+- [`dual_control_5309_witness_a06_20261007/`](dual_control_5309_witness_a06_20261007/)
+- [`dual_control_5309_witness_a07_20261007/`](dual_control_5309_witness_a07_20261007/)
+- [`dual_control_5309_witness_a08_20261007/`](dual_control_5309_witness_a08_20261007/)
 - [`dual_control_5309_witness_a09_20261007/`](dual_control_5309_witness_a09_20261007/)
 - [`dual_control_5309_witness_a10_20261007/`](dual_control_5309_witness_a10_20261007/)
 - [`dual_control_5309_witness_a11_20261007/`](dual_control_5309_witness_a11_20261007/)
