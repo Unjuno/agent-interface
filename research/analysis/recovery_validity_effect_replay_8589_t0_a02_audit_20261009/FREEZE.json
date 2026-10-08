@@ -1,0 +1,25 @@
+{
+  "a01_records_mutated": false,
+  "allocation": "8589-A01-LEFT-GATE-AUDIT-ONLY-20261009",
+  "auditor_sha256": "6adbcbd4395aadf6e23e5d172cba56d678879fe1905bd05c297da1daff95e123",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8589-audit-a02-20261009",
+  "container_or_gui": false,
+  "decision_gate": "PASS_AUDIT_ONLY_LEFT_GATE iff all PROTOCOL.md conditions are independently reconstructed from copied freeze, input, and raw.",
+  "formal_invocations": {
+    "a01_auditor": 0,
+    "candidate": 0,
+    "new_auditor": 1,
+    "retries": 0
+  },
+  "frozen_at_utc": "2026-10-09",
+  "issue": 8589,
+  "live_effect_dispatch": false,
+  "protocol_sha256": "aa2b8127ac7102a167a9aac3229bcd84bfdc42f3351f7febf083d7d9191cdf03",
+  "scope": "Independent audit-only check of the retained A01 revision_left complete-schedule gate; no candidate or A01 auditor execution.",
+  "sources_sha256": {
+    "source/A01_FREEZE.json": "4d2dc3795ac0651c39678a635d280c12327fcaec5ff56026c615e0641c90e3d3",
+    "source/A01_candidate_raw.json": "013fdf7bc73a62a55b5b4a23aabb6d8d23ea0a21a99562d33b768bee47aa0b48",
+    "source/A01_input.json": "32873910b3c189b9291121ac73179c5bc8c8561b87ea2ad87b36bb276930b707"
+  }
+}
