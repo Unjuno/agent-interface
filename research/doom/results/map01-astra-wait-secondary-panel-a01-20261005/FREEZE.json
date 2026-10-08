@@ -1,0 +1,30 @@
+{
+  "schema": "map01-astra-wait-secondary-panel-freeze-v1",
+  "experiment_id": "map01-astra-wait-secondary-panel-a01-20261005",
+  "repository_main": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "video_path": "research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4",
+  "video_blob": "983e2f43e878b56d0d05cd4d7db5125a55566cc8",
+  "video_sha256": "201ab6aaa8ab5823285b44864ad1df899ebe5a19c97ec6e84b8cc5db063f6be4",
+  "video_bytes": 10069690,
+  "interval": {
+    "video_seconds_start": 22.3,
+    "video_seconds_end": 28.2,
+    "game_seconds_multiplier": 2,
+    "expected_frames": 60,
+    "frame_step_seconds": 0.1
+  },
+  "hypothesis": "Within the retained cover-4 wait video, an apparent enemy is visible in a secondary panel while the primary player viewport is directed at a wall; the panel's provenance and controller availability are not established by existing metadata.",
+  "method": "Decode all 60 video frames from the pinned Git blob with installed PyAV 18.1.0, retain decoded RGB hashes and contact sheets, and manually review the full frames. This is a posthoc visual audit; an exploratory view preceded the freeze and is recorded as such.",
+  "decision": {
+    "OBSERVED_PANEL_ONLY": "An apparent enemy is visible in the secondary panel during the model-pending cover interval, but it is not proven to be a controller-consumed observation.",
+    "NOT_OBSERVED": "No unambiguous enemy is visible in the reviewed frames.",
+    "SOURCE_OR_DECODE_HOLD": "Pinned video bytes, time interval, or frame count do not match."
+  },
+  "limits": [
+    "The video is an edited/labelled posthoc artifact; metadata does not define the origin of its secondary panel.",
+    "No claim is made that V39, the model, or the local guard received the secondary panel.",
+    "This does not establish threat onset, input availability, policy appropriateness, damage causality, response efficacy, task effect, recovery, or MAP01 progress.",
+    "No live game, model, GUI, OS input, Docker/container, or allocation is used."
+  ],
+  "exploratory_pilot_before_freeze": true
+}

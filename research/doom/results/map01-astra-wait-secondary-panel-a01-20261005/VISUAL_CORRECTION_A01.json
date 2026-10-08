@@ -1,0 +1,33 @@
+{
+  "schema": "map01-astra-wait-visual-correction-v1",
+  "supersedes": "MANUAL_REVIEW.json semantic labels only",
+  "preserves_unchanged": [
+    "FREEZE.json",
+    "raw.json",
+    "audit.py",
+    "audit-result.json",
+    "all decoded frame hashes and retained images"
+  ],
+  "correction": {
+    "prior_error": "The initial review treated the upper scene area as a secondary panel and the lower foreground as a separate primary viewport.",
+    "revised_visual_read": "Full-resolution review shows one continuous 640x480 first-person Doom view; the upper region is the distant room and the lower region is foreground floor, weapon, and HUD.",
+    "decision_frame_context": "The retained decision-4 desktop screenshot is 1280x800 and contains one 640x480 Doom window, with no second panel.",
+    "frame_252": {
+      "video_frame": 252,
+      "video_seconds": 25.2,
+      "game_seconds": 50.4,
+      "overlay": "MODEL THINKING + LOCAL COVER; input cover-4",
+      "apparent_enemy": "visible at the right side of the single primary game scene",
+      "hud": {"health": 96, "ammo": 41}
+    }
+  },
+  "controller_observation_join": {
+    "event_log_records_cover_observations": true,
+    "sequence_range": [194, 204],
+    "raw_observation_image_bytes_retained_for_join": false,
+    "exact_video_frame_to_controller_observation_identity": "unproven"
+  },
+  "disposition": "OBSERVED_MAIN_VIEW_ONLY; CONTROLLER_FRAME_JOIN_UNPROVEN",
+  "evidence_scope": "human visual correction over the same hash-pinned video and retained frames; no new game, model, GUI, input, or allocation",
+  "independent_semantic_audit": false
+}
