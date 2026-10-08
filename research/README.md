@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8571 A01: [service-debt representation invariance](analysis/service_debt_alias_8571_a01_20261008/FORMAL_RESULT.md) — `PASS_METHOD_SCOPED`: 10/14 fixed alias partitions increased A's four-slot share under caller-keyed debt; trusted-parent grouping reproduced baseline on all partitions. Finite synthetic method only; no live identity or scheduler claim.
+
 - Issue #8406 T0 A01, companion to #7418: [episodic-memory consolidation schedule fixture](analysis/consolidation_schedule_7418_t0_a01_20261008/REPORT.md) — `PASS_T0_METHOD_SCOPED`: four schedules and 24 source-bound snapshots independently reconstructed; no model, GUI, task-effect, or cadence-benefit claim.
 
 - Issue #8397 T0 A02: [state-conditioned observation-omission fixture](analysis/observation_omission_regret_8397_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED` on eight finite traces; pre-decision and post-completion omission preserve authored effects with fewer delivered observations, while a transition-crossing omission incurs wrong-target recovery. No model, GUI, or runtime claim.
@@ -319,3 +321,4 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.- [Issue #6156 escrowed optional-resource budget T0](analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md) — Docker PASS_METHOD_SCOPED over 9,988 reachable states / 27,748 transitions; balanced coordination benefit and skew/crash stranded-right cost retained; no runtime claim.
 
 - [Issue #8386 A05 byte-bound carbon-window comparator replay](carbon_window_7794_a05_bytebound_recheck_20261008/REPORT.md) — `PASS_BYTEBOUND_REPLAY_SCOPED` (auditor JSON: `PASS_DIAGNOSTIC_SCOPED`): exact-byte successor replay reconstructed 10/10 finite cases with zero A02 differences and the declared discriminator; unresolved A04 freeze metadata discrepancies remain. Native Windows stdlib only; no Docker/WSLc or operational scheduler/emissions claim.
+
