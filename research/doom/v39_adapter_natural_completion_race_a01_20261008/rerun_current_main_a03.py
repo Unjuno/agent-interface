@@ -32,9 +32,15 @@ try:
     assert result["turn_result"]["answer"] is None
     assert result["helper_terminal"]["release"] == {"verified": True, "keys_down": [], "buttons_down": []}
     raw_result = (TEMP / "RESULT.json").read_bytes()
-    (ROOT / "RESULT_A03.json").write_bytes(raw_result)
+    stored = json.loads((ROOT / "RESULT_A03.json").read_text(encoding="utf-8"))
+    event_names = lambda doc: [row["event"] for row in doc["events"]]
+    assert result["main"] == stored["main"] == FREEZE["main_commit"]
+    assert result["source_blobs"] == stored["source_blobs"]
+    assert event_names(result) == event_names(stored)
+    assert result["turn_result"] == stored["turn_result"]
+    assert result["helper_terminal"] == stored["helper_terminal"]
     digest = hashlib.sha256(raw_result).hexdigest()
-    (ROOT / "RESULT_A03.sha256").write_text(digest + "  RESULT_A03.json\n", encoding="ascii")
-    print(json.dumps({"status": "PASS_CURRENT_MAIN_A03_RERUN", "main_commit": FREEZE["main_commit"], "result_sha256": digest, "event_count": len(result["events"])}))
+    stored_digest = hashlib.sha256((ROOT / "RESULT_A03.json").read_bytes()).hexdigest()
+    print(json.dumps({"status": "PASS_CURRENT_MAIN_A03_RERUN", "main_commit": FREEZE["main_commit"], "candidate_result_sha256": digest, "retained_result_sha256": stored_digest, "event_count": len(result["events"]), "retained_artifact_unchanged": True}))
 finally:
     shutil.rmtree(TEMP, ignore_errors=True)
