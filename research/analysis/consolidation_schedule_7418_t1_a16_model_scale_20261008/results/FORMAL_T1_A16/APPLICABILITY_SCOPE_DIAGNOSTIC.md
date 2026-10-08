@@ -6,6 +6,8 @@ This posthoc diagnostic reads the frozen ledger, query oracle, and preserved A16
 
 The source ledger records applicability context for `ep01`/`ep02` (`editor/draft/standard`) and `ep03` (`editor/publish/standard`). The frozen consolidation mapping explicitly says to ignore fields outside the mapping and writes only effect value and source IDs for both `common_success` and `rare_exception`. The independent transition auditor checks those mapped fields, claim coverage, and source IDs; it does not require app/mode/surface scope in claims. Therefore A16's `PASS_METHOD` establishes faithfulness to its frozen value/source mapping, not preservation of applicability context.
 
+This scope differs from the earlier deterministic T0 A01 contract in PR #8414. T0's independently reconstructed `common_save_pattern` and `rare_publish_exception` claims both carry their source applicability context, and its auditor compares each complete expected claim at every checkpoint. A16 froze the later A15 typed-conflict prompt/schema for a model-scale comparison, but that model-facing contract did not carry forward T0's context-preservation property.
+
 The `q_common_save` oracle asks for the `editor/draft/standard` effect. It uses the contextual ledger to define the answer, while consolidated arms receive only context-free claims. At prefixes 3–6 (after the publish-mode exception is in the source prefix), the raw responses were:
 
 | Arm | SUPPORTED | CONFLICT | UNKNOWN | Correct exact answers |
@@ -19,6 +21,6 @@ Across all six prefixes, the existing exact-answer totals remain episodic-only 1
 
 ## Interpretation boundary
 
-This finding does not alter A16's registered `PASS_METHOD` or its scoped exact-answer contrast on the frozen fixture. It narrows what those results establish: the transition audit did not test scope-preserving faithfulness, and query correctness depends on a contextual oracle while the consolidated evidence omits that context. The aggregate contrast cannot be attributed to cadence alone or generalized to a context-preserving memory design. No GUI, deployed memory, or action-effect claim follows.
+This finding does not alter A16's registered `PASS_METHOD` or its measured schedule-dependent exact-answer contrast under the frozen context-free mapping. It narrows what those results establish: the transition audit did not test the context-preservation property present in T0, and the query oracle uses contextual truth while consolidated evidence omits that context. The contrast is scoped to this particular lossy representation and schedule protocol; it does not show how schedules compare under a context-preserving memory design. No GUI, deployed memory, or action-effect claim follows.
 
 Future comparison should either preserve applicability scope in every claim and have the independent auditor check it, or score queries using only information actually retained in each arm. Query families should also contain multiple independently authored questions, not one question repeated across prefixes and seeds.
