@@ -28,6 +28,7 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #8583 T0 A01: [finite principal-stratum bounds](analysis/principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; four synthetic cases independently reconstructed, 5/5 mutations rejected, WSLc CPU-only. No empirical causal or product claim.
 
 - Issue #8571 A01: [service-debt representation invariance custody HOLD](analysis/service_debt_alias_8571_a01_20261008/CUSTODY_NOTE.md) — first-run trace and independent replay retained, but formal promotion withheld because the freeze was not committed before execution; no rerun. Synthetic diagnostic only.
+- Issue #8571 A02: [five-request service-debt alias partitions](analysis/service_debt_alias_8571_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`; 46/51 nontrivial alias partitions increased A's share, trusted-parent trace matched 52/52, FIFO order matched 52/52. Finite synthetic method evidence only.
 
 - Issue #8406 T0 A01, companion to #7418: [episodic-memory consolidation schedule fixture](analysis/consolidation_schedule_7418_t0_a01_20261008/REPORT.md) — `PASS_T0_METHOD_SCOPED`: four schedules and 24 source-bound snapshots independently reconstructed; no model, GUI, task-effect, or cadence-benefit claim.
 
