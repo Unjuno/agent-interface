@@ -209,6 +209,36 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                 self.assertEqual(receipt["duplicate_terminal_ids"],
                                  ["duplicate-command"])
 
+    def test_unmatched_or_invalid_event_ids_fail_closed(self):
+        valid_release = {"verified": True, "keys_down": [],
+                         "buttons_down": [], "keys_unknown": [],
+                         "key_state_errors": []}
+        cases = [
+            ("unmatched_terminal", [
+                {"event": "accepted", "id": "accepted-command"},
+                {"event": "terminal", "id": "other-command",
+                 "release": valid_release},
+            ], 0, 0),
+            ("invalid_accept_id", [
+                {"event": "accepted", "id": 7},
+                {"event": "terminal", "id": "terminal-command",
+                 "release": valid_release},
+            ], 1, 0),
+            ("missing_terminal_id", [
+                {"event": "accepted", "id": "accepted-command"},
+                {"event": "terminal", "release": valid_release},
+            ], 0, 1),
+        ]
+        for name, events, invalid_accepts, invalid_terminals in cases:
+            with self.subTest(name=name):
+                receipt = self.run_cleanup_events(events)
+                self.assertFalse(receipt["input_terminals_complete"])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertEqual(receipt["invalid_accepted_event_id_count"],
+                                 invalid_accepts)
+                self.assertEqual(receipt["invalid_terminal_event_id_count"],
+                                 invalid_terminals)
+
 
 if __name__ == "__main__":
     unittest.main()
