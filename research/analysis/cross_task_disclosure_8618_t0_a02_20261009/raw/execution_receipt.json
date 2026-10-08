@@ -1,0 +1,70 @@
+{
+  "allocation_id": "8618-T0-A02-20261009",
+  "audit_sha256": "39c4b6374b6ff84dfbaa0eab5eda24e97bed6b1727bd0d3389314c2b505e78f2",
+  "auditor": {
+    "command": [
+      "/usr/bin/sandbox-exec",
+      "-p",
+      "(version 1) (deny network*) (allow default)",
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/src/auditor.py",
+      "--protocol",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/input/protocol.json",
+      "--policy",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/input/policy_fixture.json",
+      "--oracle",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/input/oracle_fixture.json",
+      "--raw",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/raw/candidate.jsonl",
+      "--output",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/audit/audit.json"
+    ],
+    "duration_ns": 59510333,
+    "end_utc": "2026-10-08T20:27:15.460270Z",
+    "exit_code": 0,
+    "start_utc": "2026-10-08T20:27:15.400746Z",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "482f58e05fab64dc8024a72eba2b6bef60080a8f679a4fd7faa115ff03a9606c"
+  },
+  "candidate": {
+    "command": [
+      "/usr/bin/sandbox-exec",
+      "-p",
+      "(version 1) (deny network*) (allow default)",
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/src/candidate.py",
+      "--protocol",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/input/protocol.json",
+      "--policy",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/input/policy_fixture.json",
+      "--output",
+      "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/raw/candidate.jsonl"
+    ],
+    "duration_ns": 56455000,
+    "end_utc": "2026-10-08T20:27:15.400345Z",
+    "exit_code": 0,
+    "start_utc": "2026-10-08T20:27:15.343877Z",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "86a687b5289da8c2b6d60398460046816a3e510279dd8e12102501a37ad551b2"
+  },
+  "candidate_raw_sha256": "ca1955a9975f9d408bd1cf8fa17bf908c88e6650260a4fc2a394a09a7486c593",
+  "freeze_commit": "1da256503e76e133f8af598a452fe8532a4ed004",
+  "runner_command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/src/formal_runner.py",
+    "--repo-root",
+    "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009",
+    "--freeze",
+    "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009/FREEZE.json",
+    "--freeze-commit",
+    "1da256503e76e133f8af598a452fe8532a4ed004",
+    "--package",
+    "/private/tmp/agent-interface-8618-cross-task-disclosure-t0-a01-20261009/research/analysis/cross_task_disclosure_8618_t0_a02_20261009",
+    "--sandbox-exec",
+    "/usr/bin/sandbox-exec"
+  ],
+  "runner_end_utc": "2026-10-08T20:27:15.460590Z",
+  "runner_pid": 39860,
+  "runner_start_utc": "2026-10-08T20:27:15.343287Z",
+  "state": "AUDIT_EXITED"
+}

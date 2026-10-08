@@ -1,0 +1,211 @@
+{
+  "cases": [
+    {
+      "case_id": "public_no_secret",
+      "general_action_equivalent": false,
+      "public_secret_independent_action": true,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": false,
+      "secret_id": null,
+      "secret_present": false,
+      "secret_value": null,
+      "source_surface": null,
+      "task_correct_actions": [
+        "public-status"
+      ]
+    },
+    {
+      "case_id": "no_grant_S_RED",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": false,
+      "secret_id": "S_RED",
+      "secret_present": true,
+      "secret_value": "red",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_RED",
+        "general-no_grant_S_RED"
+      ]
+    },
+    {
+      "case_id": "no_grant_S_BLUE",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": false,
+      "secret_id": "S_BLUE",
+      "secret_present": true,
+      "secret_value": "blue",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_BLUE",
+        "general-no_grant_S_BLUE"
+      ]
+    },
+    {
+      "case_id": "matching_grant_S_RED",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": true,
+      "secret_id": "S_RED",
+      "secret_present": true,
+      "secret_value": "red",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_RED",
+        "general-matching_grant_S_RED"
+      ]
+    },
+    {
+      "case_id": "matching_grant_S_BLUE",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": true,
+      "secret_id": "S_BLUE",
+      "secret_present": true,
+      "secret_value": "blue",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_BLUE",
+        "general-matching_grant_S_BLUE"
+      ]
+    },
+    {
+      "case_id": "wrong_recipient_grant",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": false,
+      "secret_id": "S_RED",
+      "secret_present": true,
+      "secret_value": "red",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_RED",
+        "general-wrong_recipient_grant"
+      ]
+    },
+    {
+      "case_id": "wrong_purpose_grant",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": false,
+      "secret_id": "S_BLUE",
+      "secret_present": true,
+      "secret_value": "blue",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_BLUE",
+        "general-wrong_purpose_grant"
+      ]
+    },
+    {
+      "case_id": "missing_source_lineage",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": true,
+      "secret_id": "S_RED",
+      "secret_present": true,
+      "secret_value": "red",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_RED",
+        "general-missing_source_lineage"
+      ]
+    },
+    {
+      "case_id": "forged_source_lineage",
+      "general_action_equivalent": false,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": true,
+      "secret_id": "S_BLUE",
+      "secret_present": true,
+      "secret_value": "blue",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_BLUE"
+      ]
+    },
+    {
+      "case_id": "missing_dependency_binding",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": true,
+      "secret_id": "S_RED",
+      "secret_present": true,
+      "secret_value": "red",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_RED",
+        "general-missing_dependency_binding"
+      ]
+    },
+    {
+      "case_id": "no_equivalent_general_route",
+      "general_action_equivalent": false,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": false,
+      "secret_id": "S_BLUE",
+      "secret_present": true,
+      "secret_value": "blue",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_BLUE"
+      ]
+    },
+    {
+      "case_id": "forged_general_equivalence",
+      "general_action_equivalent": false,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": false,
+      "secret_id": "S_RED",
+      "secret_present": true,
+      "secret_value": "red",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_RED"
+      ]
+    },
+    {
+      "case_id": "wrong_source_grant",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": false,
+      "secret_id": "S_BLUE",
+      "secret_present": true,
+      "secret_value": "blue",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-S_BLUE",
+        "general-wrong_source_grant"
+      ]
+    },
+    {
+      "case_id": "capability_absent",
+      "general_action_equivalent": true,
+      "public_secret_independent_action": false,
+      "recipient_surface": "recipient/app-B",
+      "release_authorized": true,
+      "secret_id": "S_RED",
+      "secret_present": true,
+      "secret_value": "red",
+      "source_surface": "source/app-A",
+      "task_correct_actions": [
+        "use-secret-capability_absent",
+        "general-capability_absent"
+      ]
+    }
+  ],
+  "protocol_id": "CTD-8618-v1"
+}

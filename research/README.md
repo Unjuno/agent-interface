@@ -6,6 +6,9 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8618 T0 A02: [recipient-bound disclosure gate](analysis/cross_task_disclosure_8618_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`; 14 synthetic cases, 7 unauthorized instruction-only effects versus 0 gated, 2 exact-grant values, 7 equivalent general completions, and 4/4 construction mutations rejected. A01 pre-candidate STOP retained; no live/model/product claim.
+
+
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
 
 - Issue #8259: [release-batch alias cleanup evidence rescue](doom/release_batch_alias_rescue_8259_20261009/README.md) — nine preserved fake-X/private-Xvfb experiment packages and a separate measurement-publication custody record; scoped construction only, with first STOP/FAIL outcomes retained. No live/game claim.

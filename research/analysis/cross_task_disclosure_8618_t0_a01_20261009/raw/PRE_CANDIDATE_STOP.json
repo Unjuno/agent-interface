@@ -1,0 +1,16 @@
+{
+  "allocation_id": "8618-T0-A01-20261009",
+  "auditor_invocations": 0,
+  "candidate_end_utc": null,
+  "candidate_invocations": 0,
+  "candidate_start_utc": null,
+  "failure": "load_freeze resolved package-relative input/oracle_fixture.json under repo root instead of the package root; FileNotFoundError occurred before EXECUTION_LOCK creation and before candidate subprocess invocation.",
+  "formal_runner_exit_code": 1,
+  "formal_runner_invocations": 1,
+  "freeze_commit": "aed089bab5eba50e3c596e345bac5030630f4329",
+  "outcome": "STOP_INFRASTRUCTURE_BEFORE_CANDIDATE",
+  "outputs_observed": "raw/ and audit/ directories exist but contain no candidate, audit, lock, or receipt files.",
+  "preserved_at_utc": "2026-10-08T20:25:50Z",
+  "retry_policy": "A01 will not be invoked again. The allocation remains pre-candidate and has no scientific result. A runner repair will use a new allocation id and output path.",
+  "run_start_time_not_recorded": true
+}

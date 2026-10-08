@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8618 T0 A02 recipient-bound cross-task disclosure gate](cross_task_disclosure_8618_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 14 finite cases, 7 baseline unauthorized secret effects and 0 gated, exact red/blue releases, seven equivalent general completions, public/capability controls, and 4/4 construction mutation controls. A01 pre-candidate runner STOP preserved; no opaque-model or product claim.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -548,6 +550,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`coupled_visual_control_6195_t0_a01_20261008/`](coupled_visual_control_6195_t0_a01_20261008/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
+- [`cross_task_disclosure_8618_t0_a01_20261009/`](cross_task_disclosure_8618_t0_a01_20261009/)
+- [`cross_task_disclosure_8618_t0_a02_20261009/`](cross_task_disclosure_8618_t0_a02_20261009/)
 - [`crossed_verdict_repeatability_6222_t0_20261001_01/`](crossed_verdict_repeatability_6222_t0_20261001_01/)
 - [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
 - [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
@@ -1215,6 +1219,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 </details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
+
+
 
 - [Issue #7794 comparator semantics diagnostic A04](carbon_window_7794_comparator_a04_20261005/REPORT.md) — `PASS_DIAGNOSTIC_SCOPED`: independent audit reconstructed all 10 rows; nine A02 fixtures agreed and the fixed two-job discriminator separated global lexicographic from serial ASAP. Native macOS fallback; no emissions/operational claim.
 

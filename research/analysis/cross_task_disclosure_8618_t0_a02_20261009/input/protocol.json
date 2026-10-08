@@ -1,0 +1,24 @@
+{
+  "allocation_id": "8618-T0-A02-20261009",
+  "hard_gates": {
+    "action_capability_preserved": true,
+    "secret_release_requires_grant": true
+  },
+  "mutation_controls": [
+    "source_binding",
+    "recipient_binding",
+    "dependency_binding",
+    "payload_effect"
+  ],
+  "protocol_id": "CTD-8618-v1",
+  "required_action_capability": "SEND_TEXT",
+  "required_certificate_status": "VERIFIED",
+  "required_provenance_status": "VERIFIED",
+  "required_purpose": "task_completion",
+  "scope": "finite synthetic semantic disclosure control only; no model, GUI, user, live or product claim",
+  "trusted_authorities": {
+    "declassification": "declassification-authority",
+    "equivalence": "task-equivalence-verifier",
+    "provenance": "provenance-service"
+  }
+}
