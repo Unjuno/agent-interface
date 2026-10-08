@@ -1,0 +1,40 @@
+{
+  "cell": "candidate_held_lock",
+  "source_sha256": "31782095e0d926ea1842d47c2ce584cbccb830c2ed8fdb96cefa4697a79c91a7",
+  "exception_is_original": true,
+  "exception_type": "ValueError",
+  "exception_message": "起動失敗 — preserve this exact exception",
+  "exception_notes": [
+    "startup cleanup incomplete; see startup-cleanup.json"
+  ],
+  "journal_closed_before_cleanup": false,
+  "callback_retained_before_cleanup": true,
+  "journal_close_attempts_before_cleanup": 0,
+  "startup_artifact": {
+    "schema": "map01-startup-cleanup-v1",
+    "session_exit_code": null,
+    "reader_joined": true,
+    "client_closed": false,
+    "input_release_verified": false,
+    "errors": [
+      "planner close: TimeoutError('app-server journal close timed out')"
+    ],
+    "escalations": [],
+    "stderr_complete": true,
+    "stderr_bytes": 0,
+    "stderr_reader_joined": true,
+    "startup_error": {
+      "type": "ValueError",
+      "message": "起動失敗 — preserve this exact exception"
+    },
+    "startup_events": []
+  },
+  "operations_before_cleanup": [
+    "client_factory",
+    "owned_lock_acquire",
+    "callback_register",
+    "initialize"
+  ],
+  "start_ns": 43132717892100,
+  "end_ns": 43133737340500
+}

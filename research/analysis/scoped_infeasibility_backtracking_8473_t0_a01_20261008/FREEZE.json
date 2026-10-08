@@ -1,0 +1,16 @@
+{
+  "allocation": "8473-SCOPED-INFEASIBILITY-T0-A01-20261008-01",
+  "base_main": "eeec9a355adc82ccd4cace8ea36f145a60c8805f",
+  "branch": "research/8473-scoped-infeasibility-t0-a01-20261008",
+  "fixture": "fixture.json",
+  "candidate": "candidate.py",
+  "auditor": "audit.py",
+  "scope": "finite synthetic symbolic model only; no GUI, model, OS input, network, GPU, package dependency, runtime mutation, or product claim",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "decision": "PASS_METHOD_SCOPED only if independent exhaustive labels agree; SCOPED_NOGOOD reduces duplicate equivalent infeasibility queries; rearrangement and recovery alternatives remain; generation change invalidates old constraint; timeout/unknown never gains pruning authority; all five mutation controls detected. FAIL_UNSOUND_PRUNING for any feasible-plan pruning or timeout promotion. NO_RESIDUAL if no query reduction. HOLD if oracle grounding or scope is incomplete.",
+  "container_status": "STOP_HOST_ONLY: OrbStack daemon responds but image list and inspect fail with content-store operation not supported; no pull, repair, or runtime mutation attempted. Issue protocol is standard-library finite CPU method and project precedents permit host-only when container is unavailable.",
+  "host": "Darwin arm64; CPython 3.14.5",
+  "network": "not used by experiment; no dependency installation",
+  "seed": "not applicable; deterministic exhaustive fixture"
+}

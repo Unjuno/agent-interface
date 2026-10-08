@@ -10,7 +10,13 @@ import unittest
 from pathlib import Path
 
 from runtime.core_v1.contract import SCHEMA_PROGRAM, office_readiness
-from runtime.backends.win32_v1.backend import Win32Backend, Win32BackendError, utf16_units, virtual_key
+from runtime.backends.win32_v1.backend import (
+    Win32Backend,
+    Win32BackendError,
+    Win32ExecutionError,
+    utf16_units,
+    virtual_key,
+)
 from runtime.backends.win32_v1.session import Win32RuntimeSession
 
 
@@ -199,12 +205,156 @@ class PureWin32HelperTests(unittest.TestCase):
         self.assertEqual(regular, [(17, False)])
         self.assertEqual(backend.pending_unicode_ups, {65})
 
+    def test_unverified_explicit_up_stops_following_operations(self):
+        class State:
+            def __init__(self, stuck, raises=False):
+                self.stuck = stuck
+                self.raises = raises
+
+            def GetAsyncKeyState(self, vk):
+                if self.raises:
+                    raise OSError("inert state query failure")
+                return 0x8000 if vk in self.stuck else 0
+
+        cases = (
+            ([{"op": "key_state", "key": "SHIFT", "down": True},
+              {"op": "key_state", "key": "SHIFT", "down": False}], {0x10}),
+            ([{"op": "key_chord", "keys": ["CTRL", "S"]}], {0x11, ord("S")}),
+            ([{"op": "key_chord", "keys": ["CTRL", "S"]}], {0x11}),
+            ([{"op": "pointer_button", "button": "left", "down": True},
+              {"op": "pointer_button", "button": "left", "down": False}], {1}),
+        )
+        for raises in (False, True):
+            for ops, stuck in cases:
+                with self.subTest(raises=raises, ops=ops):
+                    backend = Win32Backend.__new__(Win32Backend)
+                    backend.held_keys = {}
+                    backend.held_buttons = set()
+                    backend.pending_unicode_ups = set()
+                    backend.emissions = 0
+                    backend.user32 = State(stuck, raises)
+                    events = []
+                    backend.preflight = lambda program: None
+                    def record(event):
+                        events.append(event)
+                        backend.emissions += 1
+                    backend._send_key = lambda vk, down: record(("key", vk, down))
+                    backend._send_unicode_unit = lambda unit, down: record(("text", unit, down))
+                    backend._send = lambda item: record(("mouse", int(item.mi.dwFlags)))
+                    program = {"ops": ops + [{"op": "text", "text": "x"}]}
+                    with self.assertRaises(Win32BackendError):
+                        backend.execute(program)
+        self.assertFalse(any(event[0] == "text" for event in events))
+
+        backend = Win32Backend.__new__(Win32Backend)
+        backend.held_keys = {}
+        backend.held_buttons = set()
+        backend.pending_unicode_ups = set()
+        backend.emissions = 0
+        backend.user32 = State(set())
+        events = []
+        backend.preflight = lambda program: None
+        def record(event):
+            events.append(event)
+            backend.emissions += 1
+        backend._send_key = lambda vk, down: record(("key", vk, down))
+        backend._send_unicode_unit = lambda unit, down: record(("text", unit, down))
+        result = backend.execute({"ops": [
+            {"op": "key_state", "key": "SHIFT", "down": True},
+            {"op": "key_state", "key": "SHIFT", "down": False},
+            {"op": "text", "text": "x"},
+        ]})
+        self.assertEqual(result["emissions"], 4)
+        self.assertEqual([event[0] for event in events], ["key", "key", "text", "text"])
+
+
+class Win32SessionRecoveryTests(unittest.TestCase):
+    def backend(self):
+        backend = Win32Backend.__new__(Win32Backend)
+        backend.emissions = 0
+        backend.held_keys = {}
+        backend.held_buttons = set()
+        backend.pending_unicode_ups = set()
+        backend.manifest = lambda: Win32Backend.manifest(backend)
+        backend.monotonic_ns = time.monotonic_ns
+        backend.preflight = lambda program: None
+        return backend
+
+    def dispatch(self, session, program_id):
+        return session.dispatch(
+            make_program(program_id),
+            current_observation_seq=7,
+            current_binding_revision=3,
+        )
+
+    def test_verified_failure_cleanup_does_not_quarantine_or_block_next_dispatch(self):
+        backend = self.backend()
+        session = Win32RuntimeSession(backend)
+        receipt = {"verified": True, "keys_down": [], "buttons_down": []}
+
+        def fail_after_verified_cleanup(program):
+            raise Win32ExecutionError(Win32BackendError("injected operation failure"), receipt, None)
+
+        backend.execute = fail_after_verified_cleanup
+        failed = self.dispatch(session, "failed-with-neutral-input")
+        self.assertEqual(failed["status"], "execution_failed")
+        self.assertEqual(failed["release"], receipt)
+        self.assertFalse(failed["recovery_required"])
+        self.assertFalse(session.recovery_required)
+
+        backend.execute = lambda program: {"releases": [receipt]}
+        next_result = self.dispatch(session, "next-dispatch")
+        self.assertEqual(next_result["status"], "completed")
+
+    def test_repeated_preflight_refusal_without_emission_does_not_quarantine(self):
+        backend = self.backend()
+        session = Win32RuntimeSession(backend)
+        calls = 0
+
+        def fail_on_execute_preflight(program):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                raise Win32BackendError("injected late preflight refusal")
+
+        backend.preflight = fail_on_execute_preflight
+        backend.execute = Win32Backend.execute.__get__(backend, Win32Backend)
+        refused = self.dispatch(session, "late-preflight-refusal")
+        self.assertEqual(refused["status"], "execution_failed")
+        self.assertIn("preflight refusal", refused["detail"])
+        self.assertEqual(backend.emissions, 0)
+        self.assertFalse(refused["recovery_required"])
+        self.assertFalse(session.recovery_required)
+
+        receipt = {"verified": True, "keys_down": [], "buttons_down": []}
+        backend.preflight = lambda program: None
+        backend.execute = lambda program: {"releases": [receipt]}
+        self.assertEqual(self.dispatch(session, "dispatch-after-preflight-refusal")["status"], "completed")
+
+    def test_unverified_failure_cleanup_still_quarantines(self):
+        backend = self.backend()
+        session = Win32RuntimeSession(backend)
+        receipt = {"verified": False, "keys_down": ["A"], "buttons_down": []}
+
+        def fail_after_unverified_cleanup(program):
+            raise Win32ExecutionError(Win32BackendError("injected operation failure"), receipt, None)
+
+        backend.execute = fail_after_unverified_cleanup
+        failed = self.dispatch(session, "failed-with-held-key")
+        self.assertEqual(failed["status"], "execution_failed")
+        self.assertTrue(failed["recovery_required"])
+        self.assertTrue(session.recovery_required)
+        self.assertEqual(self.dispatch(session, "blocked-next-dispatch")["error"], "INPUT_RECOVERY_REQUIRED")
+
 
 @unittest.skipUnless(sys.platform == "win32", "requires native Windows")
 class Win32IntegrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        cls.proc = None
+        cls.backend = None
         cls.tmp = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls._cleanup_fixture)
         root = Path(cls.tmp.name)
         cls.meta = root / "meta.json"
         cls.effect = root / "effect.json"
@@ -225,16 +375,27 @@ class Win32IntegrationTests(unittest.TestCase):
         cls.session = Win32RuntimeSession(cls.backend)
 
     @classmethod
-    def tearDownClass(cls):
-        try:
-            cls.backend.user32.PostMessageW(cls.backend.targets["fixture"], 0x0010, 0, 0)
-        except Exception:
-            pass
-        try:
-            cls.proc.wait(timeout=2)
-        except subprocess.TimeoutExpired:
-            cls.proc.kill()
-        cls.tmp.cleanup()
+    def _cleanup_fixture(cls):
+        backend = getattr(cls, "backend", None)
+        if backend is not None:
+            try:
+                backend.user32.PostMessageW(backend.targets["fixture"], 0x0010, 0, 0)
+            except Exception:
+                pass
+        proc = getattr(cls, "proc", None)
+        if proc is not None:
+            try:
+                proc.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait(timeout=2)
+            finally:
+                # Leave resources intact when terminal ownership is unconfirmed.
+                if proc.poll() is not None and proc.stderr is not None:
+                    proc.stderr.close()
+        tmp = getattr(cls, "tmp", None)
+        if tmp is not None:
+            tmp.cleanup()
 
     def setUp(self):
         self.effect.unlink(missing_ok=True)

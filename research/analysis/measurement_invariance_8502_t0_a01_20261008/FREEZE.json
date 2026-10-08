@@ -1,0 +1,38 @@
+{
+  "schema": "issue8502-t0-a01-freeze-v1",
+  "issue": 8502,
+  "main_sha": "0c9bf746a8bb07564cde3d0c3283af6aff942be0",
+  "created_utc": "2026-10-08T04:57:48Z",
+  "execution": {
+    "host": "Windows local CPU; no WSLc/container/runtime calls",
+    "python": "3.12.10",
+    "candidate_invocations": 1,
+    "independent_auditor_invocations": 1,
+    "formal_candidate_reruns": 0,
+    "network_gui_model_gpu_participant_data": false
+  },
+  "seeds": {
+    "F01": 850201,
+    "F02": 850202,
+    "F03": 850203,
+    "F04": 850204,
+    "F05": 850205
+  },
+  "sample_sizes_per_group": {
+    "F01": 1500,
+    "F02": 1500,
+    "F03": 1500,
+    "F04": 1500,
+    "F05": 20
+  },
+  "inputs": {
+    "fixtures.json": "e38134e9a8acf6b47ff6b7f10b670cccb6c3027ef0eddd89a4761295c1c210a1",
+    "truth.json": "6a7ccb72d914e9644d9572bce5a4af1da2276328a13c037fa4fee1a30c9a48e3"
+  },
+  "sources": {
+    "PROTOCOL.md": "fcfaee7d467d9d3f440db2af6c0f65e1a856773c04f451b366414672017eb1a7",
+    "generate.py": "76b9c729b1e136b68a811e85411719e507ce932dfdf72057667ead0628f178ca",
+    "candidate.py": "8100aaa4d9c79e53ad9c90468ae4edd4c4d213288d0d9c63a2a1460e0a177980",
+    "audit.py": "dae7ae8e320f3f6ea928453fcfb11211b8fde4b93b5b89fa30defd1581270476"
+  }
+}
