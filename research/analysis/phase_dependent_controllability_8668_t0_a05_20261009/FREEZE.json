@@ -1,0 +1,37 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A05-20261009",
+  "base_commit": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "case_count": 6,
+  "construction_tests_before_freeze": {
+    "python_3_12_normal": 4,
+    "python_3_12_optimized": 4,
+    "python_3_14_normal": 4,
+    "python_3_14_optimized": 4
+  },
+  "container_execution": false,
+  "decision_gate": "PASS_METHOD_SCOPED only if all six frozen cases reconstruct, phase-refined false no-effect claims and unsafe retries are zero, identical EMITTED views with opposite hidden outcomes both remain UNKNOWN/no-retry, the queued positive control remains retry-eligible, the phase-blind request-bound comparator exhibits the frozen committed-effect false-cancel/unsafe-retry witness, and all three mutations are rejected.",
+  "formal_invocations": {
+    "auditor": 1,
+    "candidate": 1,
+    "retries": 0
+  },
+  "frozen_at_utc": "2026-10-08T22:22:46Z",
+  "gui_or_effect_dispatch": false,
+  "hypothesis": "When the controller has observed EMITTED but not application consumption, a matching cancellation ACK does not establish no effect; phase-refined policy must report UNKNOWN and prohibit retry, while preserving a valid pre-emission cancellation.",
+  "issue": 8668,
+  "predecessor": {
+    "head": "934b2f7433afd8f841b6a83ac6d68d1c16e0dafe",
+    "pr": 8761,
+    "scope": "A04 request-bound ACK finite schedules; retained predecessor remains unchanged."
+  },
+  "source_sha256": {
+    "ENVIRONMENT.json": "a0b835670b5c406f2f340eecbd48a1f9893c10e5a2c1a9b7fbf9cee3a7785603",
+    "PROTOCOL.md": "64f84f73bd8874d3e0909ed7b82134251fbadfef4a07535550bc7064f7e1818f",
+    "README.md": "9a867f8f94c14e236cc9d3d5974e19307bb1f208a776471d9355a544ad63be5a",
+    "auditor.py": "174a517d27dff3165c861bef15f23857c9278af5f3424d06295e086519349040",
+    "candidate.py": "1f6f92a47fb6bfadf2f8d81cd4da839ecb77eb0509aec7e8abdfde9d66086642",
+    "candidate_input.json": "cae6af9db52350af9f88e46b626a304d0b0882baf770dc045d848ae06ce74551",
+    "design.json": "f8403b7dd8ce4a1e49ce3f331ca1330a660eb473095d99ad9810442b44c2bf09",
+    "test_construction.py": "fd88718b9387f606bac1f2b087bc47d31cf73a0f560ff0b713da8b46a7843d67"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A05-20261009",
+  "base_commit": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "freeze_commit": "c16c8a57a5e2a2598b3bae94f50d65f631f2dedf",
+  "freeze_sha256": "4fe3a5f557a5e6327f0c0827c43aeebb2fbe39496f4a726cc97f79f9ac496cd0",
+  "candidate": {
+    "command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > results/candidate_raw.json 2> results/candidate.stderr",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout_sha256": "afa93965a77f787ec8801e4b294fd1278b901ef9f8ed51d6319b6694b40caea1",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "auditor": {
+    "command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py > results/audit.json 2> results/auditor.stderr",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout_sha256": "d623df4bee14d91c57a8d228cb5991083b95e1721b6eb854eb0890f08da9c345",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "retries": 0,
+  "network_denied": true,
+  "container_execution": false,
+  "gui_or_effect_dispatch": false,
+  "construction_tests": {
+    "python_3_12_normal": "4/4 PASS",
+    "python_3_12_optimized": "4/4 PASS",
+    "python_3_14_normal": "4/4 PASS",
+    "python_3_14_optimized": "4/4 PASS"
+  },
+  "audit_summary": {
+    "status": "PASS_METHOD_SCOPED",
+    "case_count": 6,
+    "phase_refined_false_no_effect_count": 0,
+    "phase_refined_unsafe_retry_count": 0,
+    "phase_blind_false_no_effect_count": 1,
+    "phase_blind_unsafe_retry_count": 1,
+    "mutations_rejected": 3,
+    "mutations_total": 3
+  }
+}
