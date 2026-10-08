@@ -56,6 +56,7 @@ try {
     if ($LASTEXITCODE -ne 0) {
         throw "WSLc probe failed with exit code $LASTEXITCODE. Preserve the output above for diagnosis."
     }
+
     if (-not (Test-Path -LiteralPath $cidPath -PathType Leaf)) {
         throw 'WSLc probe completed without writing its requested container ID receipt.'
     }
@@ -83,32 +84,9 @@ try {
         }
     }
 
-
     Write-Output 'WSLc local runtime probe: PASS'
     Write-Output "Image: $image"
-    Write-Output 'Network: none; memory: 512M; CPUs: 1; source mount: read-only; exact-ID cleanup: verified'
-    Write-Output 'Note: WSL may report that swap/cgroup memory limits are unavailable; this probe does not test swap isolation or peak-memory enforcement.'
-}
-finally {
-    if (Test-Path -LiteralPath $probePath) {
-        Remove-Item -LiteralPath $probePath -Recurse -Force
-    }
-}
-) {
-        try {
-            $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
-        }
-        catch {
-            throw 'The scoped WSLc cleanup query did not return valid empty-array JSON; cleanup is unverified.'
-        }
-        if ($null -eq $listedContainers -or @($listedContainers).Count -gt 0) {
-            throw 'The scoped WSLc cleanup query did not return an empty JSON array; cleanup is unverified.'
-        }
-    }
-
-    Write-Output 'WSLc local runtime probe: PASS'
-    Write-Output "Image: $image"
-    Write-Output 'Network: none; memory: 512M; CPUs: 1; source mount: read-only; exact-ID cleanup: verified'
+    Write-Output 'Network: none; memory: 512M; CPUs: 1; source mount: read-only; cleanup: verified'
     Write-Output 'Note: WSL may report that swap/cgroup memory limits are unavailable; this probe does not test swap isolation or peak-memory enforcement.'
 }
 finally {
