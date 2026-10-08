@@ -1,0 +1,32 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A03-20261009",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "source_commit": "d47fe1db3b89d3041f2b87bbc23968eb383786c7",
+  "freeze_commit": "9fd6e31f73a9ee890ae1e5a736e0d62138796105",
+  "freeze_sha256": "eacb83aba4a37c327e7b9f4dc46ce11e3383568e46f2a630139bfb88b651431f",
+  "runtime": "macOS 27.0.1 arm64; CPython 3.14.5; sandbox-exec network deny; standard library only; not container evidence",
+  "container_started": false,
+  "candidate": {
+    "invocations": 1,
+    "exit_code": null,
+    "exit_code_status": "UNKNOWN_RUNNER_FAILED_AFTER_SUBPROCESS",
+    "started_utc": "2026-10-08T21:53:04Z",
+    "finished_utc": null,
+    "stdout_path": "results/candidate_raw.json",
+    "stdout_bytes": 561847,
+    "stdout_sha256": "e7d7f1012006fc105c3aa83c6c7311eb41d240bdedfa9acc1bd13d0337b1f3ac",
+    "stderr_path": "results/candidate.stderr",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "json_parse": "PASS_STRUCTURAL_ONLY",
+    "case_count": 23
+  },
+  "auditor": {
+    "invocations": 0,
+    "reason": "Frozen protocol requires confirmed candidate exit 0; exit receipt was not captured"
+  },
+  "retries": 0,
+  "wrapper_error": "zsh:1: read-only variable: status",
+  "formal_disposition": "HOLD_RUNNER_EXIT_UNCAPTURED",
+  "scientific_result": "NOT_EVALUATED"
+}

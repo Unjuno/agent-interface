@@ -1,0 +1,32 @@
+{
+  "allocation": "LABEL-CONTROL-AMBIGUITY-1998-T0-A03-20261009",
+  "auditor_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "candidate_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py",
+  "container_preflight": "OrbStack Docker context; image inventory stopped before listing images on containerd content-blob operation-not-supported error; no container started.",
+  "formal_invocations_at_freeze": {
+    "auditor": 0,
+    "candidate": 0,
+    "retries": 0
+  },
+  "invalid_requests": 5,
+  "mutation_controls": 6,
+  "preregistered_cases": 23,
+  "runtime": "macOS 27.0.1 arm64; CPython 3.14.5; sandbox-exec network deny; standard library only; not container evidence.",
+  "source_commit": "d47fe1db3b89d3041f2b87bbc23968eb383786c7",
+  "source_sha256": {
+    "CONSTRUCTION_LOG.md": "e32b4a736da1d9fb967ac804b99f2ca2702f63cc46a2fc83576ba242e922f920",
+    "ENVIRONMENT.json": "0d4fcee97bdca9e5616876c7b27a6cf5a53542e880c313e55b2d1e705a4e7197",
+    "PROTOCOL.md": "f9dbb8983833ae76fec0c07a3266bfda6087e50ba06d83a059c8b9315a64cb33",
+    "README.md": "170b46bd55b1f9f1388a481105f822b92e0639fce8007524fdae537565c49dcd",
+    "auditor.py": "069929827e8b85b551e301e939e13ce4d7655c75074811d2c8b3b005c04721df",
+    "build_fixture.py": "06091c4320b5e60ce76b08ade8adfcf73e8aa5fe7dd15869381c5c4c52c31b08",
+    "candidate.py": "6565477cb154b1ebc7aed8775b0bb991e26608ef27de998c63e04286945ec6a4",
+    "design.json": "d8f4c7364a004f9c425246ef093d702397b6cdadb64c09b316f8574907f63716",
+    "source/flat_ui.rgb8": "4648e92cef793bbb22ba55a5a39db41378cf39febff52a0d08f0e27dbd06e2b7",
+    "source/seeded_high_entropy.rgb8": "d0ac317ea85c0c845442a9d55eff6e0a800e3f169f186dc6cd4868aee11a70b4",
+    "source/structured_edges.rgb8": "dd08bf867b6f9fca465780ede12fe1280dcd89a01a4ee30123144f25ce76cfe7",
+    "test_construction.py": "c451fe9309a0f567fa9cd73e4c0e6c5ba5d9b99f05200f8736de915a6f9493e9"
+  },
+  "valid_requests": 18
+}

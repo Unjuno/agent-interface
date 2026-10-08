@@ -1,0 +1,171 @@
+{
+  "channels": 3,
+  "encoding": "RGB8",
+  "frames": [
+    {
+      "epoch": 7,
+      "frame_id": "frame-flat_ui",
+      "pattern": "flat_ui",
+      "source": "source/flat_ui.rgb8"
+    },
+    {
+      "epoch": 7,
+      "frame_id": "frame-structured_edges",
+      "pattern": "structured_edges",
+      "source": "source/structured_edges.rgb8"
+    },
+    {
+      "epoch": 7,
+      "frame_id": "frame-seeded_high_entropy",
+      "pattern": "seeded_high_entropy",
+      "source": "source/seeded_high_entropy.rgb8"
+    }
+  ],
+  "height": 96,
+  "invalid_requests": [
+    {
+      "bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "candidate_region_ids": [
+        "roi-invalid"
+      ],
+      "case_id": "invalid-stale-epoch",
+      "epoch": 6,
+      "focus_state": "active",
+      "frame_id": "frame-flat_ui",
+      "reason": "uncertain",
+      "region_id": "roi-invalid"
+    },
+    {
+      "bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "candidate_region_ids": [
+        "roi-invalid"
+      ],
+      "case_id": "invalid-replaced-identity",
+      "epoch": 7,
+      "focus_state": "active",
+      "frame_id": "replaced-frame",
+      "reason": "uncertain",
+      "region_id": "roi-invalid"
+    },
+    {
+      "bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "candidate_region_ids": [
+        "roi-invalid"
+      ],
+      "case_id": "invalid-focus-lost",
+      "epoch": 7,
+      "focus_state": "lost",
+      "frame_id": "frame-flat_ui",
+      "reason": "uncertain",
+      "region_id": "roi-invalid"
+    },
+    {
+      "bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "candidate_region_ids": [
+        "roi-invalid",
+        "roi-other"
+      ],
+      "case_id": "invalid-ambiguous",
+      "epoch": 7,
+      "focus_state": "active",
+      "frame_id": "frame-flat_ui",
+      "reason": "uncertain",
+      "region_id": "roi-invalid"
+    },
+    {
+      "bounds": [
+        120,
+        80,
+        136,
+        96
+      ],
+      "candidate_region_ids": [
+        "roi-invalid"
+      ],
+      "case_id": "invalid-out-of-bounds",
+      "epoch": 7,
+      "focus_state": "active",
+      "frame_id": "frame-flat_ui",
+      "reason": "uncertain",
+      "region_id": "roi-invalid"
+    }
+  ],
+  "schema": "1998-a03-design-v1",
+  "valid_rois": [
+    {
+      "bounds": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "roi_id": "tiny"
+    },
+    {
+      "bounds": [
+        16,
+        16,
+        48,
+        40
+      ],
+      "roi_id": "small"
+    },
+    {
+      "bounds": [
+        32,
+        24,
+        96,
+        72
+      ],
+      "roi_id": "medium"
+    },
+    {
+      "bounds": [
+        0,
+        0,
+        120,
+        88
+      ],
+      "roi_id": "large"
+    },
+    {
+      "bounds": [
+        0,
+        0,
+        128,
+        96
+      ],
+      "roi_id": "full_frame"
+    },
+    {
+      "bounds": [
+        60,
+        0,
+        68,
+        96
+      ],
+      "roi_id": "narrow_tall"
+    }
+  ],
+  "width": 128
+}
