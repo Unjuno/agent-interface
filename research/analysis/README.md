@@ -1,5 +1,6 @@
 # Analytical research
 
+- [Successor #7452 A02 equal-denominator context × event-order comparison](ordered_context_event_coverage_7452_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent audit matches mixed and exhaustive suites on the same 64 obligations; mixed 32 rows/4 episodes versus exhaustive 128 rows/64 episodes; 4/4 hostile inputs rejected. Synthetic CPU-only evidence; A01's unequal-scope result remains unchanged.
 - [Successor #7452 A01 reset-faithful context × event-order coverage](ordered_context_event_coverage_7452_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent reconstruction validated 4 mixed reset-bounded episodes/32 rows against 128 exhaustive episodes/256 rows; all seeded mutants detected only with the combined suite; host CPU-only, synthetic method evidence.
 
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
