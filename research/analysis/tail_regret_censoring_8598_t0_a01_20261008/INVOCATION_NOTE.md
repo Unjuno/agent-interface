@@ -1,0 +1,3 @@
+# Invocation custody note
+
+The first orchestration attempt supplied a non-existent working directory outside the sparse checkout. Process creation failed before Python/candidate.py started (`CreateProcess ... ディレクトリ名が無効です。 (os error 267)`); no candidate output existed and no exit code was returned. This is retained as a launcher setup error, not a candidate invocation. The workspace, commit and absence of output were checked. The frozen candidate CLI was then successfully invoked exactly once from the correct package directory (exit 0); the frozen auditor CLI was invoked exactly once (exit 1 with `FAIL_METHOD`, errors 0). No retry, overwrite, or source/input modification occurred after either formal CLI invocation.
