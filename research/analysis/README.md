@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8610 T0 A01 common-cause degradation contracts](degradation_common_cause_8610_a01_20261008/REPORT.md) — internal fixture/audit PASS, but `HOLD_PROTOCOL_ARM_MISMATCH`: A01 used binary all-route refusal and unsafe substitution instead of the required independence-assuming and unknown-dependency fail-closed arms. Do not treat it as testing the #8610 hypothesis; corrected successor is #8622. No runtime/product claim.
+
 - [Issue #8622 T0 A02 common-cause degradation policy comparison](degradation_policy_compare_8622_a02_20261008/REPORT.md) — fixture/auditor PASS on the three required arms and 10 cases (6 independence overclaims / 4 cases; dependency-aware unsupported 0; unknown fail-closed admissions 0), but `HOLD_RESULT_CUSTODY`: terminal wrapping/truncation prevented recovery of exact stdout hashes; no raw-output files or retries. Host-only; no runtime/product claim.
 
 - [Issue #8604 T0 A03 WSLc byte-reproducibility transfer](handoff_choice_complexity_8604_t0_a03_wslc_20261008/REPORT.md) — `PASS_TRANSFER_SCOPED`: exact A02 candidate/audit bytes reproduced in WSLc; 24 cards/120 keys independently reconstructed, zero errors. cgroup/swap warning retained; resource-limit enforcement not established. No human, latency, or product claim.
@@ -556,6 +558,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`decision_reversal_6003_t0_v1/`](decision_reversal_6003_t0_v1/)
 - [`decision_sufficiency_5329_v1/`](decision_sufficiency_5329_v1/)
 - [`decision_value_7934_a01_20261007/`](decision_value_7934_a01_20261007/)
+- [`degradation_common_cause_8610_a01_20261008/`](degradation_common_cause_8610_a01_20261008/)
 - [`degradation_policy_compare_8622_a02_20261008/`](degradation_policy_compare_8622_a02_20261008/)
 - [`delay_gain_stability_6195_t0_host_20261001_01/`](delay_gain_stability_6195_t0_host_20261001_01/)
 - [`delayed_gui_effect_attribution_7487_t0_20261004/`](delayed_gui_effect_attribution_7487_t0_20261004/)
