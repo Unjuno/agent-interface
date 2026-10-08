@@ -1,0 +1,39 @@
+{
+  "schema": "issue-8582-dif-t0-v1",
+  "allocation": "UNJUNO-8582-HUMAN-AGENT-DIF-T0-A01-20261009",
+  "groups": ["human_label", "agent_label"],
+  "strata": ["low", "high"],
+  "items": ["anchor_a", "anchor_b", "null_item", "target_uniform", "target_nonuniform", "low_discrimination"],
+  "replicates_per_supported_cell": 100,
+  "min_known_per_cell": 80,
+  "effect_threshold": 0.2,
+  "scenarios": ["invariant", "uniform_dif", "nonuniform_dif", "placebo_labels", "low_discrimination", "no_common_support", "invalid_anchors", "missing_unknown"],
+  "probabilities": {
+    "invariant": {"anchor_a":[20,70],"anchor_b":[25,75],"null_item":[30,65],"target_uniform":[25,70],"target_nonuniform":[25,75],"low_discrimination":[50,50]},
+    "uniform_dif": {"anchor_a":[20,70],"anchor_b":[25,75],"null_item":[30,65],"target_uniform":[25,70],"target_nonuniform":[25,75],"low_discrimination":[50,50]},
+    "nonuniform_dif": {"anchor_a":[20,70],"anchor_b":[25,75],"null_item":[30,65],"target_uniform":[25,70],"target_nonuniform":[25,75],"low_discrimination":[50,50]},
+    "placebo_labels": {"anchor_a":[20,70],"anchor_b":[25,75],"null_item":[30,65],"target_uniform":[25,70],"target_nonuniform":[25,75],"low_discrimination":[50,50]},
+    "low_discrimination": {"anchor_a":[20,70],"anchor_b":[25,75],"null_item":[30,65],"target_uniform":[25,70],"target_nonuniform":[25,75],"low_discrimination":[50,50]},
+    "no_common_support": {"anchor_a":[20,70],"anchor_b":[25,75],"null_item":[30,65],"target_uniform":[25,70],"target_nonuniform":[25,75],"low_discrimination":[50,50]},
+    "invalid_anchors": {"anchor_a":[20,70],"anchor_b":[25,75],"null_item":[30,65],"target_uniform":[25,70],"target_nonuniform":[25,75],"low_discrimination":[50,50]},
+    "missing_unknown": {"anchor_a":[20,70],"anchor_b":[25,75],"null_item":[30,65],"target_uniform":[25,70],"target_nonuniform":[25,75],"low_discrimination":[50,50]}
+  },
+  "effect_modifiers": {
+    "uniform_dif": {"target_uniform":{"agent_low_delta":30,"agent_high_delta":30}},
+    "nonuniform_dif": {"target_nonuniform":{"agent_low_delta":30,"agent_high_delta":-30}},
+    "invalid_anchors": {"anchor_a":{"agent_low_delta":30,"agent_high_delta":30},"anchor_b":{"agent_low_delta":20,"agent_high_delta":20}}
+  },
+  "gates": {
+    "uniform_item_class": "UNIFORM_DIF",
+    "nonuniform_item_class": "NONUNIFORM_DIF",
+    "null_item_class": "NO_FLAG",
+    "low_discrimination_class": "LOW_INFORMATION",
+    "placebo_class": "NO_FLAG",
+    "no_common_support_disposition": "HOLD_COMMON_SUPPORT",
+    "invalid_anchor_disposition": "HOLD_ANCHOR_INVALID",
+    "missing_item_disposition": "UNKNOWN_LOW_SUPPORT",
+    "authority": "NONE"
+  },
+  "authority": "NONE",
+  "execution_scope": "synthetic deterministic CPU method fixture; stdlib only; no participants, model, GUI, network, or external effect"
+}
