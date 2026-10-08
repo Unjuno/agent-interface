@@ -62,7 +62,7 @@ try {
     }
 
     $containerId = (Get-Content -LiteralPath $cidPath -Raw).Trim()
-    if ($containerId -notmatch '^[0-9a-fA-F]{64}
+    if ($containerId -notmatch '^[0-9a-fA-F]{64}$') {
         throw 'WSLc probe wrote a missing or malformed container ID receipt.'
     }
 
