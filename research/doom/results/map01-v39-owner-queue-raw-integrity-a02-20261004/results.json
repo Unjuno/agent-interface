@@ -1,0 +1,32 @@
+{
+  "baseline_audit_exit": 0,
+  "baseline_manifest": {
+    "checks": 15,
+    "failures": [],
+    "pass": true
+  },
+  "baseline_manifest_after_audit": {
+    "checks": 15,
+    "failures": [],
+    "pass": true
+  },
+  "hypothesis": "The saved-result auditor's substring check does not reject contradictory raw runner text, while the existing SHA256SUMS manifest identifies the changed bytes.",
+  "mutated_audit_exit": 0,
+  "mutated_audit_passed": true,
+  "mutated_manifest": {
+    "checks": 15,
+    "failures": [
+      {
+        "actual": "5fdac9539a5598c4d1424e0ae5b16b0f9329e07e6e53cd383e86ac09cacf19fb",
+        "error": "sha256_mismatch",
+        "expected": "57bced57998a40cb52f7127444e19e48ca749782a8b304b81d1ac709c162991a",
+        "path": "results/RAW_COMPOSITION.txt"
+      }
+    ],
+    "pass": false
+  },
+  "parent_commit": "23290e22615e9f9d4f10b6ab4694429e19757c9a",
+  "pass": true,
+  "schema": "map01-v39-owner-queue-raw-integrity-a02-v1",
+  "scope": "saved fake-Xlib evidence integrity only; no live input or allocation"
+}
