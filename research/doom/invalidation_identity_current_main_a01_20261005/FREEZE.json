@@ -1,0 +1,56 @@
+{
+  "package": "invalidation_identity_current_main_a01_20261005",
+  "issue": 59,
+  "hypothesis": "The health-only invalidation identity repair and matched-frame barrier from PR #8031 compose with current main without weakening existing stale-frame, binding, or RGB identity rejection.",
+  "treatment": "Replay the exact merge tree of current main 5db548aa351c8ccd351831485d5e5940a4967ff3 and PR #8031 head bbdede97bf0ccfc1c3a0b6454422b402e8cf0b6f in WSLc, network disabled, one CPU, read-only source bind.",
+  "decision_rule": "Pass only if the merge tree equals 74e24a812f6ffa2bf9a79b310ae76eb9070eb44b, all four frozen implementation/test files match their recorded SHA-256 values, the focused suite runs 16 tests with zero failures/errors, the adjacent suite runs 40 tests with zero failures/errors, and an independent read-only audit confirms both run receipts and logs.",
+  "controls": [
+    "incomplete invalidation identity remains rejected",
+    "older capture time remains rejected",
+    "wrong pointer binding remains rejected",
+    "wrong RGB frame hash remains rejected",
+    "nested binding copy remains isolated from later mutation"
+  ],
+  "confounders": "Synthetic process, queue, image, observation and signal-reader schedules; the tests do not exercise pending-model-loop timing or real planner/provider cancellation.",
+  "scope": "CPU-only code/integration replay. No live game, model inference, GUI, X11, native input, physical release, task effect, useful-feedback onset, recovery benefit, GPU, or formal/live allocation is tested.",
+  "source_refs": {
+    "current_main": "5db548aa351c8ccd351831485d5e5940a4967ff3",
+    "pr_7963_head": "0d08aa48521c343bdfb4936400910363a9d56eb6",
+    "pr_8031_head": "bbdede97bf0ccfc1c3a0b6454422b402e8cf0b6f",
+    "expected_merge_tree": "74e24a812f6ffa2bf9a79b310ae76eb9070eb44b"
+  },
+  "runtime": {
+    "wslc_version": "3.0.1.0",
+    "image": "agent-interface/native-suite-wslc-a08:20261004",
+    "image_id": "sha256:1b4a8bd7c0fe372cc0cafa74af433b8ae1f73f1bee0f11a028f126b08b2c128a",
+    "python": "3.12.14",
+    "network": "none",
+    "cpus_requested": 1,
+    "source_mount": "read-only"
+  },
+  "implementation_files": {
+    "research/doom/map01_overlap_controller_v39.py": "6c0f28bdb6c8bc06bd6b3f7908644e26b5a07ddc6758e72d59ea1584a14b4628",
+    "research/doom/test_map01_overlap_controller_v39.py": "190c9e2ddca8d43dd742fbfff65fdff55713c14a004c8314f00d8013a8429cf3",
+    "research/live_control/observable_signal_guard_v2.py": "48cde58896c92614591fe069a7a047e72d1df4cb2dc0410b1b262dc922eca1f8",
+    "research/live_control/test_observable_signal_guard_v2.py": "fd2938d1b44f68c9818e18703c21e23850f84e07b6304d931a1307346d4f4b6a"
+  },
+  "implementation_git_blobs": {
+    "research/doom/map01_overlap_controller_v39.py": "ac72010b194652217ebfb8c3d2d6b2fc2e72f428",
+    "research/doom/test_map01_overlap_controller_v39.py": "8a4b67719ee21f01c1e25389460799d1c17a96e6",
+    "research/live_control/observable_signal_guard_v2.py": "ba55ff578a99fc049c932a3ddb0a59cc4693a09e",
+    "research/live_control/test_observable_signal_guard_v2.py": "9c9d475bdc7949fa352f24083ca01d11b61c51f8"
+  },
+  "test_commands": {
+    "focused": [
+      "research.live_control.test_observable_signal_guard_v2",
+      "research.doom.test_map01_overlap_controller_v39"
+    ],
+    "adjacent": [
+      "research.doom.test_overlap_controller_v39_wait",
+      "research.doom.test_controller_failure_cleanup_v1",
+      "research.doom.test_map01_overlap_controller_v39_dual_signal",
+      "research.doom.test_map01_overlap_controller_v39_pair_duplicate_consistency",
+      "research.doom.test_map01_v39_pair_wait_dispatch"
+    ]
+  }
+}
