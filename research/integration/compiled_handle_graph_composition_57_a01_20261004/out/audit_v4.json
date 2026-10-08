@@ -1,0 +1,28 @@
+{
+  "behavioral_audit_v2_passed": true,
+  "behavioral_counts_from_read_only_v2_audit": {
+    "baseline_two_action_success": 5,
+    "field_race_zero_action_refusal": 5,
+    "submit_race_entry_only_refusal": 5
+  },
+  "candidate_source_main_label": "41df296f3ce4d03c801c998d38f6e537e64a83ab",
+  "execution_repeated": false,
+  "frozen_integration_base": "9dc383a89043deb6199c847196498d867ba6bb75",
+  "module_identity_matches_both": true,
+  "reason": "candidate source_main differs from FREEZE integration_base; frozen decision classifies any mismatch as FAIL",
+  "schema": "compiled-handle-graph-composition-audit-v4",
+  "scope": "retained offline test-double records only; source-label failure is preserved, not repaired by rewriting raw output",
+  "source_module_blobs_at_frozen_base": {
+    "compiled_gui.py": "ca14d654a7580cfa8369a1aef988f59d1acc9442",
+    "handles.py": "45462cfa5da1a96e07df2a874670a3de23dab891",
+    "handles_base.py": "b22a0f9bef22638951307345549f72aa7f4596e6",
+    "handles_texture.py": "d72b9ba411eaeb8a63bb6519af9dc9bd415ca8f8"
+  },
+  "source_module_blobs_at_raw_label": {
+    "compiled_gui.py": "ca14d654a7580cfa8369a1aef988f59d1acc9442",
+    "handles.py": "45462cfa5da1a96e07df2a874670a3de23dab891",
+    "handles_base.py": "b22a0f9bef22638951307345549f72aa7f4596e6",
+    "handles_texture.py": "d72b9ba411eaeb8a63bb6519af9dc9bd415ca8f8"
+  },
+  "verdict": "FAIL_SOURCE_BASE_LABEL_MISMATCH"
+}

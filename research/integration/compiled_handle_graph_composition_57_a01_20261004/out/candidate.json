@@ -1,0 +1,2132 @@
+{
+  "adapter_calls_are_test_doubles": true,
+  "case_count": 5,
+  "input_dispatch_calls": 0,
+  "live_gui_calls": 0,
+  "model_calls": 0,
+  "rows": [
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        }
+      ],
+      "completed_transitions": 2,
+      "execute_operations": [
+        "enter_exact_token",
+        "activate_submit"
+      ],
+      "field_box": [
+        232,
+        390,
+        96,
+        22
+      ],
+      "mode": "baseline",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-2/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-2/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "submit_form",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/submit_form",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-2/observation-3",
+            "matched_conditions": {
+              "submission_pixels_changed": true
+            },
+            "outcome": "complete",
+            "state": "submitted"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "elapsed_ns": 39000,
+        "ended_ns": 2140000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-2-baseline",
+        "latest_evidence_ref": "test-double/task-2/observation-3",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "fbe55734535474b0dc12ee9184fa7fb3db0832a626cba091fb7c8ca0c88b75c4",
+            "evidence_ref": "test-double/task-2/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "5cc96657485dde2c94cdd3234376f6562e511709b14e71719544cc7e8e2b16f8",
+            "evidence_ref": "test-double/task-2/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          },
+          {
+            "captured_ns": 2133000,
+            "evidence_digest": "18609f90df44c1cfe5abf797b89e2f4183e1bead56f13a277e740e7a9e5c4a00",
+            "evidence_ref": "test-double/task-2/observation-3",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": true,
+              "submit_target_present": true
+            },
+            "sequence": 3
+          }
+        ],
+        "outcome": "TASK_SUCCEEDED",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "method_complete",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-2/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "effect_ref": "synthetic-effect-2",
+            "evidence_ref": "test-double/task-2/observation-2",
+            "from_state": "verify_value",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "observation_sequence": 2,
+            "release_verified": true,
+            "to_state": "submitted"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        364,
+        389,
+        24,
+        24
+      ],
+      "task": 2
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 0,
+      "execute_operations": [],
+      "field_box": [
+        232,
+        390,
+        96,
+        22
+      ],
+      "mode": "field_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 0,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-2/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 0,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 12000,
+        "ended_ns": 2113000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-2-field_race",
+        "latest_evidence_ref": "test-double/task-2/observation-1",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "fbe55734535474b0dc12ee9184fa7fb3db0832a626cba091fb7c8ca0c88b75c4",
+            "evidence_ref": "test-double/task-2/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": []
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        364,
+        389,
+        24,
+        24
+      ],
+      "task": 2
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 1,
+      "execute_operations": [
+        "enter_exact_token"
+      ],
+      "field_box": [
+        232,
+        390,
+        96,
+        22
+      ],
+      "mode": "submit_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-2/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-2/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 27000,
+        "ended_ns": 2128000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-2-submit_race",
+        "latest_evidence_ref": "test-double/task-2/observation-2",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "fbe55734535474b0dc12ee9184fa7fb3db0832a626cba091fb7c8ca0c88b75c4",
+            "evidence_ref": "test-double/task-2/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "5cc96657485dde2c94cdd3234376f6562e511709b14e71719544cc7e8e2b16f8",
+            "evidence_ref": "test-double/task-2/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-2/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        364,
+        389,
+        24,
+        24
+      ],
+      "task": 2
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        }
+      ],
+      "completed_transitions": 2,
+      "execute_operations": [
+        "enter_exact_token",
+        "activate_submit"
+      ],
+      "field_box": [
+        202,
+        390,
+        96,
+        23
+      ],
+      "mode": "baseline",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-3/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-3/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "submit_form",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/submit_form",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-3/observation-3",
+            "matched_conditions": {
+              "submission_pixels_changed": true
+            },
+            "outcome": "complete",
+            "state": "submitted"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "elapsed_ns": 39000,
+        "ended_ns": 2140000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-3-baseline",
+        "latest_evidence_ref": "test-double/task-3/observation-3",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "827f76441a12dbb18aeef49c3577dad32bad93feffef12d82b5809908afd252b",
+            "evidence_ref": "test-double/task-3/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "6e1897ba563ad80aacb5a4ad5be52789c5ba877f2ff30df79a7090d9ef452bc3",
+            "evidence_ref": "test-double/task-3/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          },
+          {
+            "captured_ns": 2133000,
+            "evidence_digest": "0ab17cb28ae95ced6bd8e77c2820758643d8fd7a75d365849b4e47b7f21a7e1b",
+            "evidence_ref": "test-double/task-3/observation-3",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": true,
+              "submit_target_present": true
+            },
+            "sequence": 3
+          }
+        ],
+        "outcome": "TASK_SUCCEEDED",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "method_complete",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-3/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "effect_ref": "synthetic-effect-2",
+            "evidence_ref": "test-double/task-3/observation-2",
+            "from_state": "verify_value",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "observation_sequence": 2,
+            "release_verified": true,
+            "to_state": "submitted"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        364,
+        389,
+        24,
+        24
+      ],
+      "task": 3
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 0,
+      "execute_operations": [],
+      "field_box": [
+        202,
+        390,
+        96,
+        23
+      ],
+      "mode": "field_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 0,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-3/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 0,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 12000,
+        "ended_ns": 2113000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-3-field_race",
+        "latest_evidence_ref": "test-double/task-3/observation-1",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "827f76441a12dbb18aeef49c3577dad32bad93feffef12d82b5809908afd252b",
+            "evidence_ref": "test-double/task-3/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": []
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        364,
+        389,
+        24,
+        24
+      ],
+      "task": 3
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 1,
+      "execute_operations": [
+        "enter_exact_token"
+      ],
+      "field_box": [
+        202,
+        390,
+        96,
+        23
+      ],
+      "mode": "submit_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-3/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-3/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 27000,
+        "ended_ns": 2128000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-3-submit_race",
+        "latest_evidence_ref": "test-double/task-3/observation-2",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "827f76441a12dbb18aeef49c3577dad32bad93feffef12d82b5809908afd252b",
+            "evidence_ref": "test-double/task-3/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "6e1897ba563ad80aacb5a4ad5be52789c5ba877f2ff30df79a7090d9ef452bc3",
+            "evidence_ref": "test-double/task-3/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-3/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        364,
+        389,
+        24,
+        24
+      ],
+      "task": 3
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        }
+      ],
+      "completed_transitions": 2,
+      "execute_operations": [
+        "enter_exact_token",
+        "activate_submit"
+      ],
+      "field_box": [
+        652,
+        539,
+        96,
+        40
+      ],
+      "mode": "baseline",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-4/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-4/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "submit_form",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/submit_form",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-4/observation-3",
+            "matched_conditions": {
+              "submission_pixels_changed": true
+            },
+            "outcome": "complete",
+            "state": "submitted"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "elapsed_ns": 39000,
+        "ended_ns": 2140000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-4-baseline",
+        "latest_evidence_ref": "test-double/task-4/observation-3",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "e59b2616ab8ab457d5ccd59c0bfed01ca2abd5eeefc31e796b98acd3ccb977a4",
+            "evidence_ref": "test-double/task-4/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "9daffa3a9fd90c54dce20a5e2754ab497c128dd58b547f808d926681531f80c2",
+            "evidence_ref": "test-double/task-4/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          },
+          {
+            "captured_ns": 2133000,
+            "evidence_digest": "9ce30cfaabf92bcaf2a91f75d14338cc894bc4422905d21658a09f5ef61e2669",
+            "evidence_ref": "test-double/task-4/observation-3",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": true,
+              "submit_target_present": true
+            },
+            "sequence": 3
+          }
+        ],
+        "outcome": "TASK_SUCCEEDED",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "method_complete",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-4/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "effect_ref": "synthetic-effect-2",
+            "evidence_ref": "test-double/task-4/observation-2",
+            "from_state": "verify_value",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "observation_sequence": 2,
+            "release_verified": true,
+            "to_state": "submitted"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 4
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 0,
+      "execute_operations": [],
+      "field_box": [
+        652,
+        539,
+        96,
+        40
+      ],
+      "mode": "field_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 0,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-4/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 0,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 12000,
+        "ended_ns": 2113000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-4-field_race",
+        "latest_evidence_ref": "test-double/task-4/observation-1",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "e59b2616ab8ab457d5ccd59c0bfed01ca2abd5eeefc31e796b98acd3ccb977a4",
+            "evidence_ref": "test-double/task-4/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": []
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 4
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 1,
+      "execute_operations": [
+        "enter_exact_token"
+      ],
+      "field_box": [
+        652,
+        539,
+        96,
+        40
+      ],
+      "mode": "submit_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-4/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-4/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 27000,
+        "ended_ns": 2128000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-4-submit_race",
+        "latest_evidence_ref": "test-double/task-4/observation-2",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "e59b2616ab8ab457d5ccd59c0bfed01ca2abd5eeefc31e796b98acd3ccb977a4",
+            "evidence_ref": "test-double/task-4/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "9daffa3a9fd90c54dce20a5e2754ab497c128dd58b547f808d926681531f80c2",
+            "evidence_ref": "test-double/task-4/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-4/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 4
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        }
+      ],
+      "completed_transitions": 2,
+      "execute_operations": [
+        "enter_exact_token",
+        "activate_submit"
+      ],
+      "field_box": [
+        652,
+        540,
+        96,
+        37
+      ],
+      "mode": "baseline",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-5/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-5/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "submit_form",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/submit_form",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-5/observation-3",
+            "matched_conditions": {
+              "submission_pixels_changed": true
+            },
+            "outcome": "complete",
+            "state": "submitted"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "elapsed_ns": 39000,
+        "ended_ns": 2140000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-5-baseline",
+        "latest_evidence_ref": "test-double/task-5/observation-3",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "3d494c4ca3d1cadd2cc9ee1d6b1255d08a632eff8cd681499561b5a24371d237",
+            "evidence_ref": "test-double/task-5/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "59b0b8c9d3700c94ba4ba45d4a343165265311913d971cbb9058a61375a23123",
+            "evidence_ref": "test-double/task-5/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          },
+          {
+            "captured_ns": 2133000,
+            "evidence_digest": "4880853bbaa215ef9f88a745015cd6bdf6ed098ed4ab254416895608f07ae2eb",
+            "evidence_ref": "test-double/task-5/observation-3",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": true,
+              "submit_target_present": true
+            },
+            "sequence": 3
+          }
+        ],
+        "outcome": "TASK_SUCCEEDED",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "method_complete",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-5/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "effect_ref": "synthetic-effect-2",
+            "evidence_ref": "test-double/task-5/observation-2",
+            "from_state": "verify_value",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "observation_sequence": 2,
+            "release_verified": true,
+            "to_state": "submitted"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 5
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 0,
+      "execute_operations": [],
+      "field_box": [
+        652,
+        540,
+        96,
+        37
+      ],
+      "mode": "field_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 0,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-5/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 0,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 12000,
+        "ended_ns": 2113000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-5-field_race",
+        "latest_evidence_ref": "test-double/task-5/observation-1",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "3d494c4ca3d1cadd2cc9ee1d6b1255d08a632eff8cd681499561b5a24371d237",
+            "evidence_ref": "test-double/task-5/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": []
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 5
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 1,
+      "execute_operations": [
+        "enter_exact_token"
+      ],
+      "field_box": [
+        652,
+        540,
+        96,
+        37
+      ],
+      "mode": "submit_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-5/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-5/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 27000,
+        "ended_ns": 2128000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-5-submit_race",
+        "latest_evidence_ref": "test-double/task-5/observation-2",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "3d494c4ca3d1cadd2cc9ee1d6b1255d08a632eff8cd681499561b5a24371d237",
+            "evidence_ref": "test-double/task-5/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "59b0b8c9d3700c94ba4ba45d4a343165265311913d971cbb9058a61375a23123",
+            "evidence_ref": "test-double/task-5/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-5/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 5
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        }
+      ],
+      "completed_transitions": 2,
+      "execute_operations": [
+        "enter_exact_token",
+        "activate_submit"
+      ],
+      "field_box": [
+        652,
+        540,
+        96,
+        38
+      ],
+      "mode": "baseline",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-6/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-6/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "submit_form",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/submit_form",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-6/observation-3",
+            "matched_conditions": {
+              "submission_pixels_changed": true
+            },
+            "outcome": "complete",
+            "state": "submitted"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "elapsed_ns": 39000,
+        "ended_ns": 2140000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-6-baseline",
+        "latest_evidence_ref": "test-double/task-6/observation-3",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "967ad1abc18e65c4dcdfd9fadd6c9614e402e405e3a945e5e7b52340c6f06903",
+            "evidence_ref": "test-double/task-6/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "62890037e6ee8fe7e4022efdc54cbf468e02a0bccf9e1d3a18ab4cb7258fbc35",
+            "evidence_ref": "test-double/task-6/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          },
+          {
+            "captured_ns": 2133000,
+            "evidence_digest": "0890942c7c8247695704c74975237b94005042275b543b90deed197656cac70c",
+            "evidence_ref": "test-double/task-6/observation-3",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": true,
+              "submit_target_present": true
+            },
+            "sequence": 3
+          }
+        ],
+        "outcome": "TASK_SUCCEEDED",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "method_complete",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-6/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "synthetic-action-2",
+            "effect_ref": "synthetic-effect-2",
+            "evidence_ref": "test-double/task-6/observation-2",
+            "from_state": "verify_value",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "observation_sequence": 2,
+            "release_verified": true,
+            "to_state": "submitted"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 6
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 0,
+      "execute_operations": [],
+      "field_box": [
+        652,
+        540,
+        96,
+        38
+      ],
+      "mode": "field_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 0,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-6/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 0,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 12000,
+        "ended_ns": 2113000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-6-field_race",
+        "latest_evidence_ref": "test-double/task-6/observation-1",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "967ad1abc18e65c4dcdfd9fadd6c9614e402e405e3a945e5e7b52340c6f06903",
+            "evidence_ref": "test-double/task-6/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": []
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 6
+    },
+    {
+      "admission_checks": [
+        {
+          "action": "enter_token",
+          "eligible": true,
+          "pixel_resolution_status": "VALID"
+        },
+        {
+          "action": "submit_form",
+          "eligible": false,
+          "pixel_resolution_status": "MISSING"
+        }
+      ],
+      "completed_transitions": 1,
+      "execute_operations": [
+        "enter_exact_token"
+      ],
+      "field_box": [
+        652,
+        540,
+        96,
+        38
+      ],
+      "mode": "submit_race",
+      "outcome": "SAFE_YIELD",
+      "reason": "missing_symbol",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-6/observation-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "test-double/effect/enter_token",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "test-double/task-6/observation-2",
+            "matched_conditions": {
+              "field_value_matches_task": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "verify_value"
+          },
+          {
+            "action": "submit_form",
+            "event": "admission_refused",
+            "reason": "missing_symbol",
+            "status": "missing"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "missing_symbol"
+          }
+        ],
+        "elapsed_ns": 27000,
+        "ended_ns": 2128000,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "composition-task-6-submit_race",
+        "latest_evidence_ref": "test-double/task-6/observation-2",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 2103000,
+            "evidence_digest": "967ad1abc18e65c4dcdfd9fadd6c9614e402e405e3a945e5e7b52340c6f06903",
+            "evidence_ref": "test-double/task-6/observation-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 2118000,
+            "evidence_digest": "62890037e6ee8fe7e4022efdc54cbf468e02a0bccf9e1d3a18ab4cb7258fbc35",
+            "evidence_ref": "test-double/task-6/observation-2",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "missing_symbol",
+        "session_scope": "offline-compose-a01",
+        "started_ns": 2101000,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "synthetic-action-1",
+            "effect_ref": "synthetic-effect-1",
+            "evidence_ref": "test-double/task-6/observation-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "release_verified_all_executions": true,
+      "submit_box": [
+        677,
+        622,
+        24,
+        24
+      ],
+      "task": 6
+    }
+  ],
+  "scenario_count": 15,
+  "schema": "compiled-handle-graph-composition-candidate-v1",
+  "source_main": "41df296f3ce4d03c801c998d38f6e537e64a83ab"
+}
