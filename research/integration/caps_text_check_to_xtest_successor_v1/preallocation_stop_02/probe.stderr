@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/public_dispatch_probe.py", line 316, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/public_dispatch_probe.py", line 161, in main
+    "display_server": xvfb_identity(),
+                      ^^^^^^^^^^^^^^^
+  File "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/public_dispatch_probe.py", line 68, in xvfb_identity
+    raise RuntimeError("formal Xvfb PID does not identify the expected server")
+RuntimeError: formal Xvfb PID does not identify the expected server

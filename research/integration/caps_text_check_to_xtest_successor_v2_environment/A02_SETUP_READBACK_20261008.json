@@ -1,0 +1,56 @@
+{
+  "schema": "caps-text-query-xtest-a02-environment-readback-v1",
+  "study_id": "caps-text-query-xtest-a02-20261008",
+  "recorded_utc": "2026-10-08",
+  "purpose": "Dedicated environment preparation and source readback only; no public dispatch, GUI case, preflight Xvfb, or formal allocation was run.",
+  "vm": {
+    "name": "caps-text-xtest-a02-20261008",
+    "orbstack_id": "01M4CGDMXE66AX0J08FX7XFMCM",
+    "state": "running",
+    "distro": "Ubuntu 24.04.5 LTS Noble",
+    "architecture": "arm64",
+    "creation_flags": [
+      "--isolated",
+      "--isolate-network"
+    ],
+    "host_folder_mount": false,
+    "setup_network": "Outbound Ubuntu package and GitHub access was available during setup; no experimental process ran in that network state."
+  },
+  "source": {
+    "github_pr": 8338,
+    "github_head": "39a0b3ae74fa5ce675fe116245540748d7c92b2f",
+    "main_ref": "4c203d797cd3e33168bd9177fea8e0d6ef605c6b",
+    "checkout_clean": true,
+    "freeze_status": "PROTOCOL_DRAFT_NOT_ALLOCATED",
+    "freeze_sha256": "8f7251645e4eaaf54fe0601807ea27d347857db9b5f93864100de1cf79c5fe19",
+    "source_manifest_sha256": "180f7d311d1ad02d9da3b53af9fe93b10f85643c815cd42f9c854c5f7283daab",
+    "manifest_file_hashes_verified": 17,
+    "runtime_closure_hashes_verified": 11,
+    "backend_sha256": "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126"
+  },
+  "python": {
+    "version": "3.12.3",
+    "python_xlib": "0.33",
+    "tk": "8.6.14"
+  },
+  "packages": {
+    "xvfb": "2:21.1.12-1ubuntu1.8",
+    "python3_xlib": "0.33-2",
+    "python3_tk": "3.12.3-0ubuntu1",
+    "libx11_dev": "2:1.8.7-1build1",
+    "gcc_package": "4:13.2.0-7ubuntu1",
+    "gcc_executable": "13.3.0",
+    "git": "1:2.43.0-1ubuntu7.3"
+  },
+  "validation": {
+    "auditor_tests": "10/10 pass on the dedicated VM",
+    "python_compile": "pass",
+    "main_source_closure": "17/17 study file hashes and 11/11 runtime module hashes match",
+    "candidate_and_barrier_patches": "apply in order and compile in a temporary source copy; instrumented backend SHA-256 e885806c649acafe3550b55f2d88e070a59428008a9356fa60ce0699d4d118bb",
+    "network_namespace_case_gate": "not yet exercised",
+    "public_dispatch": "not run",
+    "formal_cases": 0
+  },
+  "setup_incident": "The first static patch command used git -C and modified only the backend in the disposable A02 study clone. No X server or dispatch was started. The file was restored from the pinned clean commit and checkout cleanliness verified; the patch test then passed against a separate /tmp source copy.",
+  "next_gate": "Independent review of PR #8338 and protocol/auditor, then exact immutable freeze/readback before any Xvfb preflight or public-dispatch construction."
+}

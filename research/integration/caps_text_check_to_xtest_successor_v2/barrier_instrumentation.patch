@@ -1,0 +1,30 @@
+diff --git a/runtime/backends/x11_v1/backend.py b/runtime/backends/x11_v1/backend.py
+--- a/runtime/backends/x11_v1/backend.py
++++ b/runtime/backends/x11_v1/backend.py
+@@ -312,7 +312,25 @@ class X11Backend:
+     def text(self, value: str) -> None:
+         # Research candidate k8n4: this query is not atomic with later input.
+         plan = self._text_plan(value)
+-        if value and self.root.query_pointer().mask & X.LockMask:
++        mask = int(self.root.query_pointer().mask)
++        if value and mask & X.LockMask:
+             raise X11BackendError("CAPS_LOCK_ACTIVE: literal text refused; lock unchanged")
++        import os
++        import socket
++        barrier = os.environ.get("AGENT_INTERFACE_CAPS_BARRIER_SOCKET")
++        if value and barrier:
++            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as channel:
++                channel.settimeout(5.0)
++                channel.connect(barrier)
++                request = "LOCK_ON:" + str(int(bool(mask & X.LockMask))) + chr(10)
++                channel.sendall(request.encode())
++                reply = bytearray()
++                while not reply.endswith(bytes((10,))) and len(reply) <= 4096:
++                    chunk = channel.recv(1)
++                    if not chunk:
++                        raise X11BackendError("CAPS_BARRIER_ACK_MISSING")
++                    reply.extend(chunk)
++                if not reply.startswith(b"ACK:"):
++                    raise X11BackendError("CAPS_BARRIER_ACK_INVALID")
+         for keys in plan:
+             self.key_chord(keys)

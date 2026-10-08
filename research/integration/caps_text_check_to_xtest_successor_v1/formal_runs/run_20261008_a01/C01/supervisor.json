@@ -1,0 +1,85 @@
+{
+  "arm": "current",
+  "block": 1,
+  "case_id": "C01",
+  "ended_ns": 23279358074577,
+  "errors": [],
+  "network_boundary": {
+    "interfaces": [
+      [
+        1,
+        "lo"
+      ],
+      [
+        2,
+        "tunl0"
+      ],
+      [
+        3,
+        "sit0"
+      ],
+      [
+        4,
+        "ip6tnl0"
+      ]
+    ],
+    "ipv4_non_loopback_routes": [],
+    "ipv6_non_loopback_routes": [],
+    "namespace_inode": 4026533664,
+    "pid1_namespace_inode": 4026533393,
+    "up_non_loopback_interfaces": []
+  },
+  "probe_argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/public_dispatch_probe.py",
+    "--repo",
+    "/home/research/agent-interface-src",
+    "--out",
+    "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/formal_runs/run_20261008_a01/C01/probe",
+    "--arm",
+    "current",
+    "--mode",
+    "formal",
+    "--case-id",
+    "C01"
+  ],
+  "probe_exit": 0,
+  "probe_pid": 5912,
+  "record_case_id": "C01",
+  "record_display_server_pid": 5909,
+  "record_exists": true,
+  "record_sha256": "899f1fa5883c0563f458aae42da7f56ab3157c4c5699d71c9ea06c91a84289e3",
+  "started_ns": 23278875100415,
+  "study_id": "caps-text-query-xtest-a01-20261007",
+  "supervisor_argv": [
+    "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/run_formal.py",
+    "--repo",
+    "/home/research/agent-interface-src",
+    "--freeze-commit",
+    "d5732e6628a48481dd6cfc93297626811bdf528f",
+    "--out",
+    "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/formal_runs/run_20261008_a01"
+  ],
+  "supervisor_pid": 5873,
+  "xvfb": {
+    "argv": [
+      "Xvfb",
+      ":99",
+      "-screen",
+      "0",
+      "640x240x24",
+      "-nolisten",
+      "tcp",
+      "-ac"
+    ],
+    "display": ":99",
+    "lock_removed": true,
+    "pid": 5909,
+    "socket_removed": true,
+    "stderr": "The XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\nThe XKEYBOARD keymap compiler (xkbcomp) reports:\n> Warning:          Could not resolve keysym XF86CameraAccessEnable\n> Warning:          Could not resolve keysym XF86CameraAccessDisable\n> Warning:          Could not resolve keysym XF86CameraAccessToggle\n> Warning:          Could not resolve keysym XF86NextElement\n> Warning:          Could not resolve keysym XF86PreviousElement\n> Warning:          Could not resolve keysym XF86AutopilotEngageToggle\n> Warning:          Could not resolve keysym XF86MarkWaypoint\n> Warning:          Could not resolve keysym XF86Sos\n> Warning:          Could not resolve keysym XF86NavChart\n> Warning:          Could not resolve keysym XF86FishingChart\n> Warning:          Could not resolve keysym XF86SingleRangeRadar\n> Warning:          Could not resolve keysym XF86DualRangeRadar\n> Warning:          Could not resolve keysym XF86RadarOverlay\n> Warning:          Could not resolve keysym XF86TraditionalSonar\n> Warning:          Could not resolve keysym XF86ClearvuSonar\n> Warning:          Could not resolve keysym XF86SidevuSonar\n> Warning:          Could not resolve keysym XF86NavInfo\nErrors from xkbcomp are not fatal to the X server\n",
+    "stderr_blocks": 2,
+    "stdout": ""
+  },
+  "xvfb_exit": 0
+}

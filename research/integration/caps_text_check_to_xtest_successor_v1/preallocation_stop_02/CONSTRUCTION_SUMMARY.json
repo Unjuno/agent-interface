@@ -1,0 +1,39 @@
+{
+  "display": ":0",
+  "ended_ns": 22822242553308,
+  "kind": "excluded-construction-only",
+  "probe_argv": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/public_dispatch_probe.py",
+    "--repo",
+    "/home/research/agent-interface-src",
+    "--out",
+    "/tmp/caps8328-direct-construction-01/probe",
+    "--arm",
+    "guard-interposed",
+    "--mode",
+    "construction"
+  ],
+  "probe_exit": 1,
+  "probe_stderr": "Traceback (most recent call last):\n  File \"/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/public_dispatch_probe.py\", line 316, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/public_dispatch_probe.py\", line 161, in main\n    \"display_server\": xvfb_identity(),\n                      ^^^^^^^^^^^^^^^\n  File \"/home/research/agent-interface-src/research/integration/caps_text_check_to_xtest_successor_v1/public_dispatch_probe.py\", line 68, in xvfb_identity\n    raise RuntimeError(\"formal Xvfb PID does not identify the expected server\")\nRuntimeError: formal Xvfb PID does not identify the expected server\n",
+  "probe_stdout": "",
+  "record_sha256": null,
+  "repo_head": "f393aed694248db712ec4e3393b80504d6bc0ce5",
+  "study_id": "caps-text-query-xtest-a01-20261007",
+  "xvfb_argv": [
+    "Xvfb",
+    "-displayfd",
+    "6",
+    "-screen",
+    "0",
+    "640x240x24",
+    "-nolisten",
+    "tcp",
+    "-ac"
+  ],
+  "xvfb_exit": 1,
+  "xvfb_pid": 5452,
+  "xvfb_stderr_blocks": 1,
+  "xvfb_stderr_sha256": "507fa03eb7c0b5b2a5d4aea39f53d364e4b190520f9d207c86c544034f89d18c"
+}
