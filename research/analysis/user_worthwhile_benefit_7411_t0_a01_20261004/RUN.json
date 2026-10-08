@@ -1,0 +1,39 @@
+{
+  "allocation": "USER-WORTHWHILE-BENEFIT-7411-T0-A01-20261004",
+  "candidate": {
+    "command": "python3 -B research/analysis/user_worthwhile_benefit_7411_t0_a01_20261004/candidate.py",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout_file": "formal_01/candidate.stdout.txt"
+  },
+  "auditor": {
+    "command": "python3 -B research/analysis/user_worthwhile_benefit_7411_t0_a01_20261004/audit.py",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout_file": "formal_01/audit.stdout.txt"
+  },
+  "container": {
+    "image_pull": false,
+    "invocations": 0,
+    "read_only_inspection_error": "Cached python:3.12-slim image content blob read failed with operation not supported",
+    "status": "HOST_ONLY_ORBSTACK_IMAGE_BLOB_STOP"
+  },
+  "formal_result": "PASS_METHOD_SCOPED",
+  "post_run_disposition": "HOLD_AUDIT_INCOMPLETE",
+  "post_run_review": "The frozen audit counted/analyzed raw rows and its four mutation checks only confirmed a changed SHA-256; it did not implement the preregistered row-by-row raw validation and reject mutations through the audit path. First outcome preserved; no candidate or frozen-auditor retry.",
+  "posthoc_revalidation": {
+    "command": "python3 -B research/analysis/user_worthwhile_benefit_7411_t0_a01_20261004/posthoc_audit.py",
+    "exit_code": 0,
+    "invocations": 1,
+    "result": "POSTHOC_RAW_REVALIDATION_PASS",
+    "scope": "Not preregistered and does not replace the formal disposition.",
+    "stdout_file": "posthoc_audit.stdout.txt"
+  },
+  "host": {
+    "python": "CPython 3.14.5",
+    "runtime": "macOS host; standard library only"
+  },
+  "retries": 0,
+  "schema": "issue-7411-t0-a01-run-v1",
+  "scope_limit": "Synthetic estimator method only; no participant, route, GUI, application, model, task effect, user-value, adoption, or safety evidence."
+}

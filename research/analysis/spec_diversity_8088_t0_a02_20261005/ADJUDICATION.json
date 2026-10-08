@@ -1,0 +1,18 @@
+{
+  "allocation":"SPEC-DIVERSITY-8088-T0-A01-20261005-01",
+  "adjudicator_agent":"01a10bef-a01c-7663-adf1-95484c83e9ea",
+  "blind_scope":"contracts + Spec A + Spec B only; no candidate output, code, mutation outcome, or auditor output",
+  "rows":[
+    {"contract_id":"C01_add_work_persists_once","difference":"Spec-B records reload durability mechanism as unknown; Spec-A does not list it.","classification":"HARMLESS_PARTITION_OR_WORDING","basis":"The contract requires the stated result after reloading but specifies no storage mechanism. Spec-A’s omission of that unknown does not add or remove an obligation.","uncertainty":"No contract-defined persistence mechanism or durability level."},
+    {"contract_id":"C02_add_archive_only","difference":"Spec-A combines Archive inclusion and Work exclusion; Spec-B splits them.","classification":"HARMLESS_PARTITION_OR_WORDING","basis":"Both preserve the requirement to appear once in Archive and zero times in Work after reloading both lists.","contract_quote":"After reloading both lists, it must appear exactly once in Archive and zero times in Work.","uncertainty":"None about required counts or destination."},
+    {"contract_id":"C04_rename_preserves_fields","difference":"Spec-A groups rename and preserved fields; Spec-B separates them.","classification":"HARMLESS_PARTITION_OR_WORDING","basis":"Together, both decompositions capture the requested rename and preserved fields.","contract_quote":"Rename only item ID task-1 from Draft to Draft v2. After reloading Work, preserve its ID, completion state, and due date.","uncertainty":"None about explicitly preserved fields."},
+    {"contract_id":"C05_clear_completed_only","difference":"Spec-A records treatment of Work items outside active/completed categories as unresolved; Spec-B omits that uncertainty.","classification":"UNRESOLVED_AMBIGUITY","basis":"The contract does not define any other item category or its treatment.","contract_quote":"remove every completed item from Work, preserve every active item unchanged","uncertainty":"Treatment of items outside the stated categories is unspecified."},
+    {"contract_id":"C06_filter_is_view_only","difference":"Spec-A records filter persistence across reloads and other-filter behavior as unresolved; Spec-B omits these unknowns.","classification":"UNRESOLVED_AMBIGUITY","basis":"The contract specifies Active and All behavior but not persistence or other filters.","uncertainty":"Those behaviors are unspecified."},
+    {"contract_id":"C07_duplicate_title_id_target","difference":"Spec-A records absence of a reload requirement as uncertainty; Spec-B omits it.","classification":"UNRESOLVED_AMBIGUITY","basis":"The contract requires marking only task-4 and preserving specified state, but gives no reload instruction.","uncertainty":"Whether any reload is expected is unspecified."},
+    {"contract_id":"cross_contract_outcomes","difference":"Spec-A records unspecified failure outcomes for C01-C05 and C07; Spec-B omits them.","classification":"UNRESOLVED_AMBIGUITY","basis":"Those contracts specify actions and state conditions but no general failure/unknown outcome. C08 separately specifies UNKNOWN_TARGET, which does not establish that rule for other contracts.","contract_quote":"return UNKNOWN_TARGET","uncertainty":"The contracts do not determine failure outcomes for C01-C05 or C07."}
+  ],
+  "agreements":["Both decompositions capture all explicit positive postconditions and forbidden side effects across C01-C08."],
+  "incremental_contract_anchored_omissions":0,
+  "invented_requirements":0,
+  "unresolved_differences_promoted_to_fact":0
+}

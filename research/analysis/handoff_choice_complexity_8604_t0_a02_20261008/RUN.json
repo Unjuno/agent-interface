@@ -1,0 +1,40 @@
+{
+  "schema": "8604-run-v2",
+  "freeze_commit": "da8781ac0da763223d23e2c392e16198b6a46145",
+  "parent_main": "f89ab7173e659c04a95841c8f2285b1f6b1a7df1",
+  "candidate": {
+    "command": "python -B candidate.py --input spec.json --output raw/candidate.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "CANDIDATE_COMPLETE cards=24",
+    "stderr": "",
+    "output_bytes": 41149,
+    "output_sha256": "3171b417d38cdc7d3f1cbb9ec10b0b1e52b5c38ed6553ec1c0a4bb8d1cdbb1ac"
+  },
+  "auditor": {
+    "command": "python -B auditor.py --spec spec.json --candidate raw/candidate.json --output raw/audit.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "AUDIT_COMPLETE PASS errors=0",
+    "stderr": "",
+    "output_bytes": 152,
+    "output_sha256": "76cfcc6e71ed86a532bbced1a972d7c9d6c5e6a11f40059717f90a41815ab143"
+  },
+  "launcher_setup_errors_before_auditor": 1,
+  "launcher_setup_error": "An orchestration process creation used an invalid working directory and was rejected before Python/auditor.py started (Windows error 267). Not counted as an auditor CLI invocation; no output or file change occurred.",
+  "result": {
+    "status": "PASS_METHOD_SCOPED",
+    "audit_integrity": "PASS",
+    "audit_errors": 0,
+    "families": 8,
+    "cards_reconstructed": 24,
+    "option_instances": 72,
+    "comprehension_keys_reconstructed": 120,
+    "construction_mutation_tests_rejected": 8
+  },
+  "construction_tests_normal": 6,
+  "construction_tests_optimized": 6,
+  "retries": 0,
+  "source_or_input_changes_after_freeze": 0,
+  "runtime": "CPython 3.12.10; Windows x86_64; host CPU; no Docker/WSLc, participants, human data, model, network, GUI, or action dispatch"
+}

@@ -1,0 +1,28 @@
+async function runDurableD01(tab) {
+  const out = {unit:'stock-todomvc-durable-57-D01-01a0ff35-20261003',started_utc:new Date().toISOString(),states:[],actions:[],status:'RUNNING'};
+  let identity = null;
+  async function observe(stage, completed) {
+    const ax = await tab.playwright.domSnapshot();
+    const dom = await tab.playwright.evaluate(() => ({rows:Array.from(document.querySelectorAll('.todo-list li')).map(e=>({id:e.getAttribute('data-id'),title:e.querySelector('label')?.textContent,completed:e.classList.contains('completed'),checked:e.querySelector('input.toggle')?.checked})),input:document.querySelector('.new-todo')?.value,counter:document.querySelector('.todo-count')?.textContent}));
+    out.states.push({stage,utc:new Date().toISOString(),ax,dom});
+    if(stage==='initial') {if(dom.rows.length!==0 || dom.input!=='') throw Error('STOP_NONEMPTY_OR_UNKNOWN');return;}
+    if(dom.rows.length!==1 || dom.rows[0].title!=='D01 owned reload witness' || dom.rows[0].completed!==completed || dom.rows[0].checked!==completed || typeof dom.rows[0].id!=='string' || !dom.rows[0].id || dom.input!=='') throw Error('STOP_TASK_EFFECT');
+    if(identity===null)identity=dom.rows[0].id;
+    if(dom.rows[0].id!==identity)throw Error('STOP_IDENTITY_CHANGED');
+    if(!dom.counter?.includes(completed?'0 items left':'1 item left'))throw Error('STOP_COUNTER');
+  }
+  try {
+    await observe('initial',false);
+    const input=tab.playwright.getByPlaceholder('What needs to be done?',{exact:true});
+    if(await input.count()!==1 || !await input.isEnabled())throw Error('STOP_INPUT_MATCH');
+    out.actions.push('type title');await input.pressSequentially('D01 owned reload witness');
+    out.actions.push('Enter');await input.press('Enter');await observe('created',false);
+    out.actions.push('reload1');await tab.reload();await observe('reload1',false);
+    const toggle=tab.playwright.locator('.todo-list li').getByRole('checkbox');
+    if(await toggle.count()!==1 || !await toggle.isEnabled())throw Error('STOP_TOGGLE_MATCH');
+    out.actions.push('complete');await toggle.check();await observe('completed',true);
+    out.actions.push('reload2');await tab.reload();await observe('reload2',true);
+    out.status='PASS_SCOPED_RELOAD_EFFECT';
+  } catch(e) {out.status='FIRST_STOP';out.error=String(e);}
+  out.ended_utc=new Date().toISOString();return out;
+}

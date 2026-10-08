@@ -1,0 +1,19 @@
+/* Actual owned echo child; no SDK/backend/native/input/model capability. */
+import {createInterface} from 'node:readline';
+import {writeFileSync,existsSync} from 'node:fs';
+import {join} from 'node:path';
+const [dir,nonce,held]=process.argv.slice(2);let count=0,bytes=0,chunks=0;
+const put=(n,v)=>writeFileSync(join(dir,n),JSON.stringify(v)+'\n',{flag:'wx'});
+put('fixture-start.json',{pid:process.pid,ppid:process.ppid,nonce,utc:new Date().toISOString()});
+const guard=setTimeout(()=>{process.exitCode=77;process.stdin.destroy();},5000);
+process.stdin.on('data',b=>{bytes+=b.length;writeFileSync(join(dir,`request-chunk-${++chunks}.hex.txt`),b.toString('hex')+'\n',{flag:'wx'});});
+const lines=createInterface({input:process.stdin,terminal:false});
+lines.on('line',line=>{
+ const r=JSON.parse(line);count++;put(`fixture-request-${count}.json`,r);
+ const respond=()=>{put(`fixture-reply-${count}.json`,{nonce,utc:new Date().toISOString(),request_id:r.id});
+  process.stdout.write(JSON.stringify({status:'returned',id:r.id,tool:r.tool,next_id:r.id+1,result:{content:[{type:'text',text:JSON.stringify({schema:'own-inert-echo-v1',label:r.arguments.label})}]}})+'\n');};
+ if(held==='yes'){const poll=setInterval(()=>{if(existsSync(join(dir,'release.json'))){clearInterval(poll);respond();}},5);poll.unref();}
+ else respond();
+});
+lines.once('close',()=>clearTimeout(guard));
+process.on('exit',code=>put('fixture-exit.json',{pid:process.pid,ppid:process.ppid,nonce,code,requests:count,request_bytes:bytes,utc:new Date().toISOString()}));

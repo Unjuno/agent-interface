@@ -1,0 +1,34 @@
+{
+  "schema": "logical-time-unit-representation-v1",
+  "time_unit": "s",
+  "time_fields": [
+    "reference_period",
+    "observation_period",
+    "input_hold",
+    "release_lag",
+    "deadline",
+    "lease",
+    "startup_delay",
+    "horizon"
+  ],
+  "event_order": [
+    "lease_expiry",
+    "external_state",
+    "observation",
+    "hold_deadline",
+    "deadline",
+    "release"
+  ],
+  "scenarios": [
+    {"id":"null","reference_period":"1","observation_period":"1","input_hold":"6","release_lag":"1/8","deadline":"8","lease":"7","startup_delay":"0","horizon":"8","events":[]},
+    {"id":"slow_drift","reference_period":"1","observation_period":"1","input_hold":"6","release_lag":"1/8","deadline":"8","lease":"7","startup_delay":"0","horizon":"8","events":[{"at":"3","state":"warning"}]},
+    {"id":"oscillation","reference_period":"1","observation_period":"1","input_hold":"6","release_lag":"1/8","deadline":"8","lease":"7","startup_delay":"0","horizon":"8","events":[{"at":"3/2","state":"warning"},{"at":"5/2","state":"safe"}]},
+    {"id":"near_cadence_reversal","reference_period":"1","observation_period":"1","input_hold":"6","release_lag":"1/8","deadline":"8","lease":"7","startup_delay":"0","horizon":"8","events":[{"at":"2","state":"warning"},{"at":"3","state":"safe"}]},
+    {"id":"abrupt_step","reference_period":"1","observation_period":"1","input_hold":"6","release_lag":"1/8","deadline":"8","lease":"7","startup_delay":"0","horizon":"8","events":[{"at":"1/2","state":"hazard"}]},
+    {"id":"semantic_swap","reference_period":"1","observation_period":"1","input_hold":"6","release_lag":"1/8","deadline":"8","lease":"7","startup_delay":"0","horizon":"8","events":[{"at":"5/2","state":"different_target"}]}
+  ],
+  "representations": ["s", "ms"],
+  "seconds_per_unit": {"s":"1","ms":"1/1000"},
+  "mutation_controls": ["missing_case", "reference_period", "event_timestamp", "unit_label"],
+  "limits": {"homogeneous_scale":"not tested in this allocation", "quantization":"not tested", "backend_delay":"not tested", "live_gui":false, "model":false, "network":false}
+}

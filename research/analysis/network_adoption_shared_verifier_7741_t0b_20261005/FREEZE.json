@@ -1,0 +1,38 @@
+{
+  "experiment_id": "UNJUNO-7741-ADOPTION-QUEUE-T0B-20261005-01",
+  "predecessor": "network_adoption_shared_verifier_7741_t0_20261005 T0 v1 retained failure",
+  "issue": 7741,
+  "source_commit": "dd6143ef23033afcbfbd48d06d818d434d34d7d5",
+  "protocol_changes": [
+    "each principal-tick is one opportunity and route start is a Bernoulli draw at the frozen probability",
+    "paired conditions use identical opportunity draws",
+    "audit separates queued-unstarted from started-in-service unfinished tasks",
+    "each negative control is compared with frozen adoption at its exact effective verifier topology/capacity"
+  ],
+  "model": {
+    "ticks": 160,
+    "principals": 24,
+    "topologies": ["ring", "star"],
+    "seeds": [11, 29, 47, 83],
+    "imitation": [0.08, 0.2],
+    "innovation_probability": 0.012,
+    "route_start_probability": {"baseline": 0.12, "reduced_cost": 0.22},
+    "task_interaction_cost": {"baseline": 10, "reduced_cost": 6},
+    "service_ticks": 3,
+    "verifier_topologies": ["shared_1", "shared_24", "per_principal_1"],
+    "conditions": ["baseline_frozen_shared_1", "reduced_frozen_shared_1", "reduced_peer_shared_1", "reduced_exogenous_shared_1", "reduced_no_imitation_shared_1", "reduced_frozen_shared_24", "reduced_peer_shared_24", "reduced_frozen_per_principal", "reduced_peer_per_principal"],
+    "event_order": ["prior_tick_completions", "adoption_from_prior_verified_outcomes", "one_opportunity_per_principal", "FIFO_service_admission"],
+    "matched_randomness": "opportunity and task-start uniform draws are keyed by topology, seed, principal and tick and reused across conditions; adoption draws use a separate stream",
+    "p95": "nearest-rank over all completed-task latencies; unfinished tasks remain separately counted and are never censored into completions"
+  },
+  "decision": {
+    "primary": "peer/shared_1 p95 exceeds reduced_frozen/shared_1 for the same topology/seed/imitation, while task interaction cost is 6 versus 10",
+    "pass": "for both imitation values and both topologies, at least 3/4 paired seeds have a primary reversal; no-imitation/shared_1 vs reduced_frozen/shared_1, peer/shared_24 vs reduced_frozen/shared_24, and peer/per_principal vs reduced_frozen/per_principal have zero reversals",
+    "otherwise": "NO_REVERSAL_IN_GRID if no primary cell reverses; otherwise METHOD_FAIL_OR_INCONCLUSIVE",
+    "scope": "finite synthetic mechanism analysis only; no human, runtime, empirical adoption elasticity, operational queue, or safety claim"
+  },
+  "audit": {
+    "independent_raw_replay": true,
+    "mutations": ["drop opportunity", "alter start decision", "alter adoption transition", "alter queue service order", "alter completion latency", "drop unfinished task"]
+  }
+}

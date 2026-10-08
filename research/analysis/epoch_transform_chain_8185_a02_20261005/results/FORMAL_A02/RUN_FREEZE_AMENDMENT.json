@@ -1,0 +1,35 @@
+{
+  "cache_files_missing_after_cleanup": [
+    "src/__pycache__/auditor.cpython-314.pyc",
+    "src/__pycache__/candidate.cpython-314.pyc",
+    "src/__pycache__/test_protocol.cpython-314.pyc"
+  ],
+  "cache_hash_mismatches_when_recompiled": [
+    {
+      "frozen_sha256": "6b1212c5532fb72efab49bf31a2955a170815b0ff081a64bd797623c72d286fe",
+      "path": "src/__pycache__/auditor.cpython-314.pyc",
+      "postrun_regenerated_sha256": "cbe5228296a0d425abcb8de39246eb45f7b3392a06d83b53b80db98614580164"
+    },
+    {
+      "frozen_sha256": "a9105c42bd66219f563ca7894c36aaeb2d145d738e21ae751e1c7e620541d790",
+      "path": "src/__pycache__/candidate.cpython-314.pyc",
+      "postrun_regenerated_sha256": "8b6b89c64351534b860bf976dda748528a2f64b7bfa6ac44fdfa8b0cf403719e"
+    },
+    {
+      "frozen_sha256": "f2b7293f00da7303ed7b8212aec6ee6d5554a339dec1e62789f19dc2cb0e68a4",
+      "path": "src/__pycache__/test_protocol.cpython-314.pyc",
+      "postrun_regenerated_sha256": "92780bce83835f1fbef397518b830137c6fce48c3f074a4105ee0cc248afe62d"
+    }
+  ],
+  "candidate_or_auditor_reinvoked": false,
+  "created_utc": "2026-10-05T13:02:26.207885+00:00",
+  "formal_dependency_hashes_verified": {
+    "PROTOCOL_A02.md": "21bf70eb0748a3a3869d523e2566637cc09f00384361e07212943d847e1263b4",
+    "results/FORMAL_A02/oracle/exact_worlds.json": "7e978feac106eaa548fae2bcbdb91cba0917cf787b8db29bf288b70ef9ced04d",
+    "results/FORMAL_A02/public/corpus.json": "56e9cb59ac8843b6f9db1d507e0a6ea671dc9f8192c5f3aabdc943129c88e593",
+    "src/auditor.py": "637c492c81b16fce26bdba24fa8836ab64d2129167ae50fb55c53efb924e701a",
+    "src/candidate.py": "6a82710c3a5638cd3b3623cc345f643c6697c733c333e84201a63417897d8c73"
+  },
+  "original_freeze_sha256": "f3e39af8d33beb57579d265fb62685b1e128aeacdce0138cda475e4b0002148f",
+  "reason": "The broad pre-formal file enumeration included construction-only CPython __pycache__ bytecode. The formal commands mounted only candidate.py or auditor.py plus the frozen public/oracle directories; no bytecode was mounted or executed. After the formal run, cache cleanup/reconstruction exposed nonmatching bytecode hashes. All protocol, executable formal source, public input, and oracle hashes used by the formal commands remain exact."
+}

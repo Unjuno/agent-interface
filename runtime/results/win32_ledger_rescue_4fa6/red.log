@@ -1,0 +1,126 @@
+FFF.FF..F{"api_down": [], "case": "button_pair_healthy", "emissions": 2, "events": [{"down": true, "send": 1}, {"down": false, "send": 1}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_button_pair_terminal_rejects_reported_down_input", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 123456, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}], "started_ns": 123456}, "required_capabilities": ["display.geometry", "input.pointer", "input.release_all"], "status": "completed"}}
+{"api_down": [1], "case": "button_pair_stubborn", "emissions": 2, "events": [{"down": true, "send": 1}, {"down": false, "send": 1}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_button_pair_terminal_rejects_reported_down_input", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 123456, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}], "started_ns": 123456}, "required_capabilities": ["display.geometry", "input.pointer", "input.release_all"], "status": "completed"}}
+{"api_down": [81], "case": "later_first", "emissions": 2, "events": [{"down": true, "send": 81}, {"down": false, "send": 81}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_caller_later_neutral_read_retires_explicit_up_obligation", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 123456, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}], "started_ns": 123456}, "required_capabilities": ["input.keyboard", "input.release_all"], "status": "completed"}}
+{"api_down": [81], "case": "later_second", "emissions": 2, "events": [{"down": true, "send": 81}, {"down": false, "send": 81}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_caller_later_neutral_read_retires_explicit_up_obligation", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 123456, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}], "started_ns": 123456}, "required_capabilities": ["input.release_all"], "status": "completed"}}
+{"api_down": [], "case": "chord_healthy", "emissions": 2, "events": [{"down": true, "send": 81}, {"down": false, "send": 81}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_chord_terminal_rejects_reported_down_input", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 123456, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}], "started_ns": 123456}, "required_capabilities": ["input.keyboard", "input.release_all"], "status": "completed"}}
+{"api_down": [81], "case": "chord_stubborn", "emissions": 2, "events": [{"down": true, "send": 81}, {"down": false, "send": 81}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_chord_terminal_rejects_reported_down_input", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 123456, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}], "started_ns": 123456}, "required_capabilities": ["input.keyboard", "input.release_all"], "status": "completed"}}
+{"api_down": [81], "case": "key_send_exception", "emissions": 1, "events": [{"down": true, "send": 81}, {"down": false, "send": 81}], "held_buttons": [], "held_keys": {"Q": 81}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_explicit_up_send_failure_preserves_existing_obligation", "value": {"detail": "inert send unavailable", "exception": "Win32BackendError"}}
+{"api_down": [1], "case": "button_send_exception", "emissions": 1, "events": [{"down": true, "send": 1}, {"down": false, "send": 1}], "held_buttons": ["left"], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_explicit_up_send_failure_preserves_existing_obligation", "value": {"detail": "inert send unavailable", "exception": "Win32BackendError"}}
+{"api_down": [], "case": "key_pair_healthy", "emissions": 2, "events": [{"down": true, "send": 81}, {"down": false, "send": 81}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_key_pair_terminal_rejects_reported_down_input", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 123456, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}], "started_ns": 123456}, "required_capabilities": ["input.keyboard", "input.release_all"], "status": "completed"}}
+{"api_down": [81], "case": "key_pair_stubborn", "emissions": 2, "events": [{"down": true, "send": 81}, {"down": false, "send": 81}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_key_pair_terminal_rejects_reported_down_input", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 123456, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}], "started_ns": 123456}, "required_capabilities": ["input.keyboard", "input.release_all"], "status": "completed"}}
+{"api_down": [81], "case": "explicit_up_query_exception", "emissions": 2, "events": [{"down": true, "send": 81}, {"down": false, "send": 81}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_state_read_failure_after_explicit_up_preserves_obligation", "value": {"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}}
+{"api_down": [1, 81], "case": "untracked_control", "emissions": 2, "events": [{"down": false, "send": 81}, {"down": false, "send": 1}], "held_buttons": [], "held_keys": {}, "test": "runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_untracked_up_does_not_claim_unowned_inputs", "value": {"buttons_down": [], "keys_down": [], "monotonic_ns": 123456, "verified": true}}
+{"api_down": [90], "held_buttons": [], "held_keys": {}, "queries": [81, 1], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_confirmed_up_and_empty_controls_verify_without_unrelated_scan", "value": {"buttons_down": [], "keys_down": [], "monotonic_ns": 76746371675333, "verified": true}}
+{"api_down": [90], "held_buttons": [], "held_keys": {}, "queries": [], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_confirmed_up_and_empty_controls_verify_without_unrelated_scan", "value": {"buttons_down": [], "keys_down": [], "monotonic_ns": 76746371694708, "verified": true}}
+{"api_down": [1, 81], "held_buttons": [], "held_keys": {}, "queries": [81, 1], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_later_neutral_confirmation_retires_retained_obligations", "value": {"buttons_down": ["left"], "keys_down": ["Q"], "monotonic_ns": 76746371860041, "verified": false}}
+{"api_down": [1, 81], "held_buttons": [], "held_keys": {}, "queries": [81, 1], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_later_neutral_confirmation_retires_retained_obligations", "value": {"buttons_down": [], "keys_down": [], "monotonic_ns": 76746371873625, "verified": true}}
+{"api_down": [1, 81], "held_buttons": [], "held_keys": {}, "queries": [81, 82, 2, 1], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 82}, {"up": true, "vk": 2}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_mixed_up_down_retires_only_confirmed_up_obligations", "value": {"buttons_down": ["left"], "keys_down": ["Q"], "monotonic_ns": 76746372288625, "verified": false}}FFF.F
+======================================================================
+FAIL: test_button_pair_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_button_pair_terminal_rejects_reported_down_input) (stubborn=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_explicit_up_ledger.py", line 101, in family
+    self.assertIs(release['verified'], not stubborn)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_caller_later_neutral_read_retires_explicit_up_obligation (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_caller_later_neutral_read_retires_explicit_up_obligation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_explicit_up_ledger.py", line 162, in test_caller_later_neutral_read_retires_explicit_up_obligation
+    self.assertEqual(first['status'], 'release_unverified')
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+======================================================================
+FAIL: test_chord_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_chord_terminal_rejects_reported_down_input) (stubborn=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_explicit_up_ledger.py", line 101, in family
+    self.assertIs(release['verified'], not stubborn)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_key_pair_terminal_rejects_reported_down_input (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_key_pair_terminal_rejects_reported_down_input) (stubborn=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_explicit_up_ledger.py", line 101, in family
+    self.assertIs(release['verified'], not stubborn)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_state_read_failure_after_explicit_up_preserves_obligation (runtime.backends.win32_v1.test_explicit_up_ledger.ExplicitUpLedgerTests.test_state_read_failure_after_explicit_up_preserves_obligation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_explicit_up_ledger.py", line 150, in test_state_read_failure_after_explicit_up_preserves_obligation
+    with self.assertRaisesRegex(RuntimeError, 'read unavailable'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_later_neutral_confirmation_retires_retained_obligations (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_later_neutral_confirmation_retires_retained_obligations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_release_ledger.py", line 107, in test_later_neutral_confirmation_retires_retained_obligations
+    self.assertEqual(first_ledger, ({"Q": 81}, {"left"}))
+AssertionError: Tuples differ: ({}, set()) != ({'Q': 81}, {'left'})
+
+First differing element 0:
+{}
+{'Q': 81}
+
+- ({}, set())
++ ({'Q': 81}, {'left'})
+
+======================================================================
+FAIL: test_mixed_up_down_retires_only_confirmed_up_obligations (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_mixed_up_down_retires_only_confirmed_up_obligations)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_release_ledger.py", line 97, in test_mixed_up_down_retires_only_confirmed_up_obligations
+    self.assertEqual(obj.held_keys, {"Q": 81})
+AssertionError: {} != {'Q': 81}
+- {}
++ {'Q': 81}
+
+======================================================================
+FAIL: test_persistent_down_does_not_become_neutral_on_second_call (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_persistent_down_does_not_become_neutral_on_second_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_release_ledger.py", line 86, in test_persistent_down_does_not_become_neutral_on_second_call
+    self.assertFalse(second["verified"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_query_exception_preserves_precheck_ledger (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_query_exception_preserves_precheck_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_release_ledger.py", line 117, in test_query_exception_preserves_precheck_ledger
+    self.assertEqual(obj.held_keys, {"Q": 81})
+AssertionError: {} != {'Q': 81}
+- {}
++ {'Q': 81}
+
+======================================================================
+FAIL: test_session_does_not_complete_after_previous_unverified_release (runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_session_does_not_complete_after_previous_unverified_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/backends/win32_v1/test_release_ledger.py", line 142, in test_session_does_not_complete_after_previous_unverified_release
+    self.assertEqual(second["status"], "release_unverified")
+AssertionError: 'completed' != 'release_unverified'
+- completed
++ release_unverified
+
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.006s
+
+FAILED (failures=10)
+
+{"api_down": [1, 81], "held_buttons": [], "held_keys": {}, "queries": [81, 1], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_persistent_down_does_not_become_neutral_on_second_call", "value": {"buttons_down": ["left"], "keys_down": ["Q"], "monotonic_ns": 76746372616166, "verified": false}}
+{"api_down": [1, 81], "held_buttons": [], "held_keys": {}, "queries": [81, 1], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_persistent_down_does_not_become_neutral_on_second_call", "value": {"buttons_down": [], "keys_down": [], "monotonic_ns": 76746372630041, "verified": true}}
+{"api_down": [], "held_buttons": [], "held_keys": {}, "queries": [81], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_query_exception_preserves_precheck_ledger", "value": {"detail": "inert query unavailable", "exception": "RuntimeError"}}
+{"api_down": [1, 82], "held_buttons": ["left"], "held_keys": {"Q": 81, "R": 82}, "queries": [], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 82}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_send_exception_preserves_precheck_ledger", "value": {"detail": "inert send failure", "exception": "Win32BackendError"}}
+{"api_down": [1, 81], "held_buttons": [], "held_keys": {}, "queries": [81, 1], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_session_does_not_complete_after_previous_unverified_release", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 76746373369625, "observations": [], "releases": [{"buttons_down": ["left"], "keys_down": ["Q"], "monotonic_ns": 76746373369208, "verified": false}], "started_ns": 76746373354750}, "required_capabilities": ["input.release_all"], "status": "release_unverified"}}
+{"api_down": [1, 81], "held_buttons": [], "held_keys": {}, "queries": [81, 1], "sends": [{"up": true, "vk": 81}, {"up": true, "vk": 1}], "test": "runtime.backends.win32_v1.test_release_ledger.ReleaseLedgerTests.test_session_does_not_complete_after_previous_unverified_release", "value": {"admission": "accepted", "execution": {"emissions": 2, "ended_ns": 76746373425458, "observations": [], "releases": [{"buttons_down": [], "keys_down": [], "monotonic_ns": 76746373425166, "verified": true}], "started_ns": 76746373418666}, "required_capabilities": ["input.release_all"], "status": "completed"}}

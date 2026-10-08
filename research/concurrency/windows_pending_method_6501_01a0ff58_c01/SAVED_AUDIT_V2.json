@@ -1,0 +1,85 @@
+{
+  "baseline": {
+    "closed_FDs": 2,
+    "closed_thread_handles": 2,
+    "derived_disposition": "PASS_OWNED_THREAD_PENDING_METHOD_ONLY",
+    "events": 27,
+    "joined_threads": 2,
+    "native_thread_ids": [
+      11920,
+      35600
+    ],
+    "normal_D": true,
+    "paired_pending_observations": 3
+  },
+  "dependency_hash_recheck_utc": "2026-10-03T13:40:08.077938+00:00",
+  "end_utc": "2026-10-03T13:40:08.082735+00:00",
+  "negative_controls": [
+    {
+      "name": "wrong_native_tid",
+      "reason": "exact value",
+      "rejected": true,
+      "sha256": "80d32a8730d3e2048e7c333352ab1344c9f28d162d06fa54b1e39d13cf3a2555"
+    },
+    {
+      "name": "boolean_pending_alias",
+      "reason": "exact type",
+      "rejected": true,
+      "sha256": "195ba3ba85074aa765b10a71d9fbbf8a177af048913eaa1a3f6fc6a69c3bf10f"
+    },
+    {
+      "name": "write_count_alias",
+      "reason": "exact type",
+      "rejected": true,
+      "sha256": "47ec92b27ebaa8a55b45fe0413eb19d3e1f982bb9505872ebbccaa3f8772cc17"
+    },
+    {
+      "name": "read_before_write",
+      "reason": "normal write/read order",
+      "rejected": true,
+      "sha256": "320dc6b0db0c0d749d2a10761b09362aad3e22efb2bfaeb675dddb0269356596"
+    },
+    {
+      "name": "missing_query",
+      "reason": "exact value",
+      "rejected": true,
+      "sha256": "393efa407d0bac6c14ae7befae8f549d78dbc545829f78d683b14e42c7aeef09"
+    },
+    {
+      "name": "waiter_false_positive",
+      "reason": "exact value",
+      "rejected": true,
+      "sha256": "88cd624ffec02bef8ffc953366bb0c6021fb282267c123588ae96b1a2ae467a3"
+    },
+    {
+      "name": "join_still_alive",
+      "reason": "exact value",
+      "rejected": true,
+      "sha256": "a2b4c30c08c968f2a3fe2353926173349e80fda87b9cc9e1b34a5f65c0383fc9"
+    },
+    {
+      "name": "handle_close_failed",
+      "reason": "exact value",
+      "rejected": true,
+      "sha256": "4de051220efce72667f4dfc06e590927f102c4aba6447470ec5a4374c43a50f2"
+    },
+    {
+      "name": "wrong_closed_fd",
+      "reason": "owned final FD roster",
+      "rejected": true,
+      "sha256": "ae396cdaccab255909106990db6184e3a084be893a4226df09f4b77ef5d86757"
+    },
+    {
+      "name": "pid_alias",
+      "reason": "positive exact integer",
+      "rejected": true,
+      "sha256": "eb16d8ff8d5977007a2b2ba4735592c71bf3ba5edc9ee9853c5a727e25f1b2bc"
+    }
+  ],
+  "original_private_path_dependencies_rechecked": 3,
+  "original_streams_and_source_unchanged": true,
+  "pid": 6296,
+  "producer_calls": 0,
+  "start_utc": "2026-10-03T13:40:08.055211+00:00",
+  "status": "PASS_SAVED_METHOD_AUDIT"
+}

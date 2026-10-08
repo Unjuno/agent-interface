@@ -1,0 +1,36 @@
+{
+  "schema": "unjuno.issue7462.t0.freeze.v1",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/7462",
+  "base_commit": "750a9e28974ca57333ab6cddd48386568a4590d1",
+  "method": "Enumerate the complete bounded equality closure over the authored finite DSL, extract the lexicographically minimum cost member, compare with fixed-order strict-improvement greedy, then independently enumerate the relation and exhaustively check observable state/effect traces.",
+  "hypothesis": "On the held-out freshness/effect-barrier program, bounded equality saturation yields a strictly lower declared cost than fixed-order greedy while preserving all stipulated finite observable contracts.",
+  "limits": {
+    "max_terms_per_program": 4096,
+    "max_rounds_per_program": 128,
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "program_count": 3,
+    "inputs": 3,
+    "persisted_values": 2,
+    "starting_epoch_pairs": 3
+  },
+  "environment": {
+    "runtime": "host-only Python standard library; no container execution",
+    "container_stop": "OrbStack cached containerd blob read previously returned operation not supported; no retry/pull/build/restart; this exact finite CPU-only DSL experiment does not require container semantics",
+    "network_or_external_effects": false
+  },
+  "formal_output_paths": [
+    "formal_01/raw.json",
+    "formal_01/audit.json"
+  ],
+  "formal_run_started": false,
+  "source_files": [
+    "README.md",
+    "PROTOCOL.md",
+    "fixture.json",
+    "candidate.py",
+    "auditor.py",
+    "test_contract.py"
+  ],
+  "pre_freeze_artifacts": "construction_pre_freeze/ and CONSTRUCTION.md are retained for transparency and excluded from formal results"
+}

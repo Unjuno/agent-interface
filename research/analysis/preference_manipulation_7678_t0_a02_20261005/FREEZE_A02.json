@@ -1,0 +1,49 @@
+{
+  "schema": "preference-manipulation-7678-t0-a02-freeze-v1",
+  "allocation": "PREFERENCE-MANIPULATION-7678-T0-A02-20261005-01",
+  "status_at_freeze": "FROZEN_PRE_RUN",
+  "freeze_date": "2026-10-05",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/7678",
+  "predecessor_allocation": "PREFERENCE-MANIPULATION-7678-T0-20261005-01",
+  "predecessor_disposition": "HOLD; unchanged",
+  "base_main_sha_at_freeze": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "certificate_source_commit": "3dbbda05eb8d5067ee2c2969615e472a0f20f562",
+  "certificate_source_path": "research/analysis/preference_explicit_choice_6274_t0_20261002/candidate.py",
+  "formal_command": "docker run --rm --platform linux/arm64 --network none --cpus=1 --memory=1g --pids-limit=64 --mount type=bind,src=/Users/taka/Documents/Codex/2026-09-19/new-chat-2/work/issue7678-t0-a02-20261005,dst=/src,readonly --mount type=bind,src=/Users/taka/Documents/Codex/2026-09-19/new-chat-2/work/issue7678-t0-a02-20261005/results/formal-01,dst=/out -w /src python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f python -B run_formal.py",
+  "container": {
+    "runtime": "OrbStack Docker",
+    "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "cpus": 1,
+    "memory_bytes": 1073741824,
+    "pids_limit": 64,
+    "source_mount_read_only": true,
+    "output_mount_writable": true
+  },
+  "pre_freeze_construction_only": {
+    "unit_tests": "4/4 PASS",
+    "matrix": "7,774/7,774 candidate-oracle matches",
+    "controls": "4/4 PASS",
+    "formal_allocation_count": 0
+  },
+  "formal_invocation_policy": {
+    "container_invocations": 1,
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retry_count": 0,
+    "no_post_freeze_source_edits": true
+  },
+  "sha256": {
+    "PROTOCOL_A02.md": "64b60400405f99214a43d53af3ee38832326bc9cee907c9497b0744beba755ff",
+    "PREDECESSOR_A01.md": "71d21d3f404b376c9eac2612b5ca0053d98746284d0bbda7342fe963a393675d",
+    "CONSTRUCTION.md": "3e0708bac6c0190e02f14c66ef81dad9ac1e6b4755e4381ae8e23a0c53a1ba09",
+    "fixture.json": "254ceb435a022912cf97838fb85bbefe9668cc8c88cc58485ef931e4a454e42f",
+    "frozen_6274_candidate.py": "faf28cbc47ec6eff403a5a77fd05c126b7d0d161a172fa22a94f5ff109a59935",
+    "candidate.py": "5dfd656d6f48f6cc8ee50d80750b5cb1033b7bf0a4e33d8bd110781b552a09a0",
+    "oracle.py": "fca84449d2431aca6d5aa42b7bb527e39e6489a2a3eb1bc12b0ac1a3b33cc83c",
+    "audit.py": "d71cf7cc88f2d7d0badad070e8da68f1654d407c87b06c70311cf62c3617bca2",
+    "test_construction.py": "51f9e99dfe26fc36565c8189c9994cb87d1f153123aaf6954624802a48ae9dce",
+    "run_formal.py": "5a7e721286f9ba2edb9d09092294e895d92f93c4f2602a0f15361302c3e6566c"
+  }
+}

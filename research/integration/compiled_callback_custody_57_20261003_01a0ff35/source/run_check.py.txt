@@ -1,0 +1,36 @@
+"""Retain exclusive first streams/receipt for ordinary engineering commands."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import subprocess
+import sys
+
+here = Path(__file__).resolve().parent
+cwd = here.parent / "agent-interface-compiled-custody"
+stage, *argv = sys.argv[1:]
+assert stage and argv
+for suffix in (".stdout", ".stderr", ".receipt.json"):
+    assert not (here / (stage + suffix)).exists()
+started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+result = subprocess.run(argv, cwd=cwd, capture_output=True, timeout=120)
+ended = datetime.datetime.now(datetime.timezone.utc).isoformat()
+for suffix, raw in ((".stdout", result.stdout), (".stderr", result.stderr)):
+    with (here / (stage + suffix)).open("xb") as stream:
+        stream.write(raw)
+receipt = {"argv": argv, "cwd": str(cwd), "started_utc": started,
+           "ended_utc": ended, "exit_code": result.returncode,
+           "stdout_sha256": hashlib.sha256(result.stdout).hexdigest(),
+           "stderr_sha256": hashlib.sha256(result.stderr).hexdigest(),
+           "compiled_source_sha256": hashlib.sha256(
+               (cwd / "runtime/core_v1/compiled_gui.py").read_bytes()).hexdigest(),
+           "regressions_sha256": hashlib.sha256(
+               (cwd / "runtime/core_v1/test_compiled_callback_custody_01a0ff35.py").read_bytes()).hexdigest(),
+           "scope": "ordinary engineering regression; no formal allocation"}
+with (here / (stage + ".receipt.json")).open("x", encoding="utf-8") as stream:
+    json.dump(receipt, stream, sort_keys=True, indent=2)
+    stream.write("\n")
+print(json.dumps(receipt))
+print(result.stdout.decode("utf-8", errors="replace"))
+print(result.stderr.decode("utf-8", errors="replace"))
+raise SystemExit(result.returncode)

@@ -1,0 +1,66 @@
+{
+  "scope": "actual AST-extracted nested controller wait; authored protocol events only; zero game/model/input; shortened timeout does not measure production40s",
+  "results": [
+    {
+      "source": "original",
+      "case": "delivery_unknown",
+      "source_sha256": "8a6a8ae5a89190bd8f9d10b5dacc2bf738a9821efda213b4e6b1fa06b0173eae",
+      "returned": null,
+      "exception": "TimeoutError",
+      "elapsed_ns": 100632664,
+      "stop_file": false
+    },
+    {
+      "source": "original",
+      "case": "unverified",
+      "source_sha256": "8a6a8ae5a89190bd8f9d10b5dacc2bf738a9821efda213b4e6b1fa06b0173eae",
+      "returned": null,
+      "exception": "TimeoutError",
+      "elapsed_ns": 100228233,
+      "stop_file": false
+    },
+    {
+      "source": "original",
+      "case": "valid_release",
+      "source_sha256": "8a6a8ae5a89190bd8f9d10b5dacc2bf738a9821efda213b4e6b1fa06b0173eae",
+      "returned": {
+        "event": "input_released",
+        "id": "plan-1"
+      },
+      "exception": null,
+      "elapsed_ns": 10805,
+      "stop_file": false
+    },
+    {
+      "source": "derived",
+      "case": "delivery_unknown",
+      "source_sha256": "217b29f8def01d00f8ac9129ad08b22d288d9c1214481be5b23bce2701649f58",
+      "returned": null,
+      "exception": "RuntimeError",
+      "elapsed_ns": 3479849,
+      "stop_file": true
+    },
+    {
+      "source": "derived",
+      "case": "unverified",
+      "source_sha256": "217b29f8def01d00f8ac9129ad08b22d288d9c1214481be5b23bce2701649f58",
+      "returned": null,
+      "exception": "RuntimeError",
+      "elapsed_ns": 2247454,
+      "stop_file": true
+    },
+    {
+      "source": "derived",
+      "case": "valid_release",
+      "source_sha256": "217b29f8def01d00f8ac9129ad08b22d288d9c1214481be5b23bce2701649f58",
+      "returned": {
+        "event": "input_released",
+        "id": "plan-1"
+      },
+      "exception": null,
+      "elapsed_ns": 10723,
+      "stop_file": false
+    }
+  ],
+  "boundary_checks_pass": true
+}

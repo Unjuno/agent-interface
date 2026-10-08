@@ -1,0 +1,83 @@
+{
+  "schema": "opportunity-bound-preference-7790-t0-a01-v1",
+  "allocation": "OPPORTUNITY-PREFERENCE-7790-T0-A01-20261005-01",
+  "preference_domain": [
+    ["A", "B", "C"],
+    ["B", "A", "C"],
+    ["C", "A", "B"],
+    ["A", "C", "B"],
+    ["B", "C", "A"],
+    ["C", "B", "A"]
+  ],
+  "observations": [
+    {
+      "case_id": "01-consented-direct",
+      "events": [
+        {"event_id": "e01", "principal": "p", "task_id": "task-1", "context_id": "layout", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "A", "defaulted_option": null, "capture_complete": true, "constraint_id": null}
+      ]
+    },
+    {
+      "case_id": "02-single-enabled",
+      "events": [
+        {"event_id": "e02", "principal": "p", "task_id": "task-1", "context_id": "single", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A"], "feasible_options": ["A", "B"], "selected": "A", "defaulted_option": null, "capture_complete": true, "constraint_id": null}
+      ]
+    },
+    {
+      "case_id": "03-preselected-default",
+      "events": [
+        {"event_id": "e03", "principal": "p", "task_id": "task-1", "context_id": "default", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "accepted_default", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "A", "defaulted_option": "A", "capture_complete": true, "constraint_id": null}
+      ]
+    },
+    {
+      "case_id": "04-notice-unverified",
+      "events": [
+        {"event_id": "e04", "principal": "p", "task_id": "task-1", "context_id": "viewport", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A"], "noticed_options": ["A"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "A", "defaulted_option": null, "capture_complete": true, "constraint_id": null}
+      ]
+    },
+    {
+      "case_id": "05-constraint-forced",
+      "events": [
+        {"event_id": "e05", "principal": "p", "task_id": "task-1", "context_id": "deadline", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A"], "selected": "A", "defaulted_option": null, "capture_complete": true, "constraint_id": "deadline-only-A"}
+      ]
+    },
+    {
+      "case_id": "06-agent-originated",
+      "events": [
+        {"event_id": "e06", "principal": "p", "task_id": "task-1", "context_id": "agent", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "agent", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "A", "defaulted_option": null, "capture_complete": true, "constraint_id": null}
+      ]
+    },
+    {
+      "case_id": "07-origin-unknown",
+      "events": [
+        {"event_id": "e07", "principal": "p", "task_id": "task-1", "context_id": "unknown", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "unknown", "actor_provenance": "unverified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "B", "defaulted_option": null, "capture_complete": true, "constraint_id": null}
+      ]
+    },
+    {
+      "case_id": "08-distinct-contexts",
+      "events": [
+        {"event_id": "e08a", "principal": "p", "task_id": "task-1", "context_id": "delivery", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "A", "defaulted_option": null, "capture_complete": true, "constraint_id": null},
+        {"event_id": "e08b", "principal": "p", "task_id": "task-1", "context_id": "appearance", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "B", "defaulted_option": null, "capture_complete": true, "constraint_id": null}
+      ]
+    },
+    {
+      "case_id": "09-context-version-reversal",
+      "events": [
+        {"event_id": "e09a", "principal": "p", "task_id": "task-1", "context_id": "preferences", "context_version": "v1", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "A", "defaulted_option": null, "capture_complete": true, "constraint_id": null},
+        {"event_id": "e09b", "principal": "p", "task_id": "task-1", "context_id": "preferences", "context_version": "v2", "consent_status": "active", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["B", "C"], "visible_options": ["B", "C"], "noticed_options": ["B", "C"], "enabled_options": ["B", "C"], "feasible_options": ["B", "C"], "selected": "B", "defaulted_option": null, "capture_complete": true, "constraint_id": null}
+      ]
+    },
+    {
+      "case_id": "10-opt-out-expired",
+      "events": [
+        {"event_id": "e10", "principal": "p", "task_id": "task-1", "context_id": "expired", "context_version": "v1", "consent_status": "expired", "consent_scope": "task", "actor": "user", "actor_provenance": "verified", "event_type": "direct_selection", "menu_options": ["A", "B"], "visible_options": ["A", "B"], "noticed_options": ["A", "B"], "enabled_options": ["A", "B"], "feasible_options": ["A", "B"], "selected": "B", "defaulted_option": null, "capture_complete": true, "constraint_id": null}
+      ]
+    }
+  ],
+  "mutations": [
+    {"mutation_id": "remove-alternative", "field": "enabled_options", "value": ["A"], "expected": "NO_IDENTIFIED_COMPARISON"},
+    {"mutation_id": "introduce-default", "field": "defaulted_option", "value": "A", "expected": "NO_IDENTIFIED_COMPARISON"},
+    {"mutation_id": "change-actor", "field": "actor", "value": "agent", "expected": "NO_IDENTIFIED_COMPARISON"},
+    {"mutation_id": "withdraw-consent", "field": "consent_status", "value": "opted_out", "expected": "NO_IDENTIFIED_COMPARISON"},
+    {"mutation_id": "change-context-version", "field": "context_version", "value": "v2", "expected": "SEPARATE_SCOPE"}
+  ]
+}

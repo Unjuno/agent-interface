@@ -1,0 +1,16 @@
+{
+  "allocation": "wslc-local-smoke-7924-a02-20261008",
+  "auditor_invocations": 1,
+  "exit_code": 1,
+  "status": "FAIL_AUDITOR_CONTRACT",
+  "exception": "KeyError: 'sha256'",
+  "failure_site": "auditor.py line 22: freeze['sha256']['fixture.txt']",
+  "freeze_field": "source_sha256",
+  "additional_static_mismatches_observed_after_failure": [
+    "auditor.py line 24 reads freeze['sha256']['fixture.txt']",
+    "auditor.py line 30 reads len(freeze['sha256'])"
+  ],
+  "combined_output": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\nTraceback (most recent call last):\n  File \"/src/auditor.py\", line 37, in <module>\n    main()\n  File \"/src/auditor.py\", line 22, in main\n    if raw[\"fixture_sha256\"] != freeze[\"sha256\"][\"fixture.txt\"]:\n                                ~~~~~~^^^^^^^^^^\nKeyError: 'sha256'\n",
+  "audit_json_created": false,
+  "retry_or_frozen_code_edit": false
+}

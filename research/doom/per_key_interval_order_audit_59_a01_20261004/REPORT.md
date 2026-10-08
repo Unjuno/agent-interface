@@ -1,0 +1,21 @@
+# Per-key adapter interval ordering audit
+
+This audit tests whether the V39 per-key receipt projection rejects internally valid input-edge records whose monotonic sampling brackets contradict the claimed DOWN-then-UP order.
+
+## H/T/D/C/U
+
+- **H:** `input_edge_receipts` at PR #7602 head `76886c5cc41ef801bf1d0cb153b1dabf444d9127` should not label an adapter pair complete when the entire `up` interval precedes the `down` interval. The status is a classification of sampled X-server keymap edges, not application receipt or task benefit.
+- **T:** AST-extract the exact `input_edge_receipts` function from the pinned controller snapshot and run four synthetic pairs with matching program, step, key, token, owner, actuation ID, confirmed classifications, and authority-free fields: ordered DOWN `[100,110] ns` / UP `[200,210] ns`; touching DOWN `[100,200] ns` / UP `[200,250] ns`; overlapping DOWN `[100,200] ns` / UP `[150,250] ns`; and reversed DOWN `[200,210] ns` / UP `[100,110] ns`. Then exhaustively enumerate all 100 pairs of valid closed intervals over endpoints `{0,1,2,3}`.
+- **D:** Only the strictly separated ordered pair should be paired. FAIL the source if any touching, overlapping/ambiguous, or reversed pair is returned as `adapter_edge_brackets_paired`; retain all four cases in a repair regression.
+- **C:** A malformed or reordered evidence record is not evidence that the retained experiment produced bad measurements. The live bridge may serialize valid events in temporal order; this audit only checks the projection’s own validation contract.
+- **U:** Synthetic static counterexample only. It does not measure X11, physical key dwell, game consumption, controller behavior, or task effect.
+
+## Result
+
+The pinned function returns `adapter_edge_brackets_paired` for all four interval relationships, including touching, reversed, and overlapping brackets. The exhaustive 100-pair enumeration gives 15 strictly ordered pairs and 85 pairs without strict DOWN-before-UP; all 85 invalid-order pairs are still classified as paired, while all 15 ordered pairs are paired. It validates each interval's shape and checks matching actuation identity, but the completion predicate does not compare DOWN and UP interval order. The exact source snapshot, fixture, and raw reproduction are retained under this directory. Run `python source/audit.py` to reproduce; it exits nonzero if the pinned source changes or this classification matrix no longer reproduces.
+
+The required correction is to fail closed unless the two sampling brackets establish strict DOWN-before-UP (`down_end < up_start`), with regressions for reversed, overlapping/ambiguous, touching-boundary, and correctly ordered brackets. This audit does not modify PR #7602 or assert any claim about its retained run data.
+
+## Producer-contract cross-check
+
+At current `main` `af6d0f9842a2377fba736d2d65643b02690f99d9`, InputOwner v12 is blob `82aae20cec847e3766df2eb6ff5269506a74a2e4` at `research/doom/map01_attack_onset_phase_allocation_02_v1/dependencies/v12/input_owner_v12.py`. `sample_key_state` brackets `query_keymap()` with monotonic `perf_counter_ns()` timestamps; confirmed DOWN and UP intervals are each the pre-sample completion through the post-sample completion (source lines 196–202, 454, 489). The owner consumes its request queue on one worker loop, while the v39 bridge synchronously waits for `owner.call()` before emitting the row (bridge blob `6c2f59d2c6e55d8fab2d5f43de96e333c7825ba5`, `research/doom/map01_v39_perkey_bridge_a01/bridge.py`). This producer order is a separate causal fact for authentic rows. For the projection's stated *interval ordering* claim, the interval-only sufficient condition remains `down_end < up_start`; overlap or a shared endpoint is ambiguous from closed sampling bounds alone. A weaker `down_start < up_end` condition admits reversed or overlapping brackets. If a projection instead relies on producer call order to accept ambiguous intervals, it must validate and label that causal evidence separately rather than infer it from the interval pair.

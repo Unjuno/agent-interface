@@ -1,0 +1,80 @@
+{
+  "outcome": "PASS_SOURCE_OBSERVABILITY_COUNTEREXAMPLE",
+  "decision": "REJECT_X11_KEYMAP_AS_CDP_RELEASE_CERTIFICATE; native XTest-to-X11-state mapping scoped supported",
+  "scoped_native_report": "Shift50 appears only during XTest source, final native keys/buttons/modifiers neutral",
+  "records": 14,
+  "native_samples": 5,
+  "source_comparisons": 1,
+  "controls": [
+    {
+      "name": "false-cdp-native-held",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "lost-native-held",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "unreleased-modifier",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "missing-cdp-up",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "wrong-browser-binding",
+      "outcome": "REFUSED"
+    },
+    {
+      "name": "integer-trusted",
+      "outcome": "REFUSED"
+    }
+  ],
+  "sessions_stopped": [
+    {
+      "folder": "firecrawl-release-observability-2f23-Q04",
+      "success": true,
+      "status": "stopped",
+      "sessionDurationMs": 52000,
+      "creditsBilled": 2
+    },
+    {
+      "folder": "firecrawl-release-source-2f23-Q06",
+      "success": true,
+      "status": "stopped",
+      "sessionDurationMs": 245000,
+      "creditsBilled": 9
+    },
+    {
+      "folder": "firecrawl-window-diagnostic-2f23-Q07",
+      "success": true,
+      "status": "stopped",
+      "sessionDurationMs": 70000,
+      "creditsBilled": 3
+    },
+    {
+      "folder": "firecrawl-release-source-2f23-Q08",
+      "success": true,
+      "status": "stopped",
+      "sessionDurationMs": 110000,
+      "creditsBilled": 4
+    },
+    {
+      "folder": "firecrawl-release-source-2f23-Q09",
+      "success": true,
+      "status": "stopped",
+      "sessionDurationMs": 16000,
+      "creditsBilled": 2
+    }
+  ],
+  "original_Q06_Q08_stops": "retained before input; comparison not executed",
+  "source_wording_correction": "Fresh Q07 missing WM_NAME explains guard failure mechanism; exact Q06 unreported properties remain unknown, not historical cause authentication",
+  "limits": [
+    "one modifier/one source pair",
+    "provider X11 virtual state, not Windows/physical USB",
+    "isolated session assurance is provider premise",
+    "browser/default runtime integration and recovery not tested",
+    "no matched model/latency/resource comparison"
+  ]
+}

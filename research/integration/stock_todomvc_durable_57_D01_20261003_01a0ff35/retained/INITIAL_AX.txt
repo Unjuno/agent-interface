@@ -1,0 +1,43 @@
+- complementary:
+  - heading "JavaScript" [level=3]
+  - heading "Vanilla JavaScript Example" [level=5]
+  - link "Source":
+    - /url: https://github.com/tastejs/todomvc/tree/gh-pages/examples/vanillajs
+  - separator
+  - blockquote:
+    - paragraph: “ JavaScript® (often shortened to JS) is a lightweight, interpreted, object-oriented language with first-class functions, most known as the scripting language for Web pages, but used in many non-browser environments as well such as node.js or Apache CouchDB. ”
+    - link "JavaScript":
+      - /url: http://developer.mozilla.org/en-US/docs/JavaScript
+  - separator
+  - emphasis:
+    - text: If you have other helpful links to share, or find any of the links above no longer work, please
+    - link "let us know":
+      - /url: https://github.com/tastejs/todomvc/issues
+    - text: .
+- heading "todos" [level=1]
+- textbox "What needs to be done?" [active]
+- checkbox "❯Mark all as complete"
+- generic: ❯Mark all as complete
+- list
+- list:
+  - link "All":
+    - /url: "#/"
+  - link "Active":
+    - /url: "#/active"
+  - link "Completed":
+    - /url: "#/completed"
+- button "Clear completed"
+- contentinfo:
+  - paragraph: Double-click to edit a todo
+  - paragraph:
+    - text: Created by
+    - link "Oscar Godson":
+      - /url: http://twitter.com/oscargodson
+  - paragraph:
+    - text: Refactored by
+    - link "Christoph Burgmer":
+      - /url: https://github.com/cburgmer
+  - paragraph:
+    - text: Part of
+    - link "TodoMVC":
+      - /url: http://todomvc.com

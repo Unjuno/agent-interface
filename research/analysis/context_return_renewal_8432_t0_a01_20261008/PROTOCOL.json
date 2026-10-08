@@ -1,0 +1,193 @@
+{
+  "format": "context-return-renewal-t0-protocol-v1",
+  "issue": 8432,
+  "allocation_id": "8432-context-return-method-t0-a01",
+  "question": "Does a finite assay preserve cue/action/outcome support and discriminate seeded A-return recurrence without treating method controls as model behavior?",
+  "factors": {
+    "cue_id": "X",
+    "contexts": [
+      "A",
+      "B",
+      "C"
+    ],
+    "actions": [
+      "old_choice",
+      "corrected_choice"
+    ],
+    "mapping_A": {
+      "old_choice": 1,
+      "corrected_choice": 0
+    },
+    "mapping_B": {
+      "old_choice": 0,
+      "corrected_choice": 1
+    },
+    "n_demonstrations_per_phase": 4,
+    "n_trials_per_test_phase": 4,
+    "demonstration_action_order": [
+      "old_choice",
+      "corrected_choice",
+      "old_choice",
+      "corrected_choice"
+    ]
+  },
+  "tracks": [
+    {
+      "id": "context_return",
+      "phases": [
+        {
+          "phase": "acquire_A",
+          "context_marker": "A",
+          "mapping_id": "A",
+          "kind": "demonstration"
+        },
+        {
+          "phase": "correct_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "kind": "demonstration"
+        },
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "kind": "test"
+        },
+        {
+          "phase": "return_A",
+          "context_marker": "A",
+          "mapping_id": "B",
+          "kind": "test"
+        }
+      ]
+    },
+    {
+      "id": "continued_B",
+      "phases": [
+        {
+          "phase": "acquire_A",
+          "context_marker": "A",
+          "mapping_id": "A",
+          "kind": "demonstration"
+        },
+        {
+          "phase": "correct_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "kind": "demonstration"
+        },
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "kind": "test"
+        },
+        {
+          "phase": "continue_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "kind": "test"
+        }
+      ]
+    },
+    {
+      "id": "novel_C",
+      "phases": [
+        {
+          "phase": "acquire_A",
+          "context_marker": "A",
+          "mapping_id": "A",
+          "kind": "demonstration"
+        },
+        {
+          "phase": "correct_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "kind": "demonstration"
+        },
+        {
+          "phase": "test_B",
+          "context_marker": "B",
+          "mapping_id": "B",
+          "kind": "test"
+        },
+        {
+          "phase": "novel_C",
+          "context_marker": "C",
+          "mapping_id": "B",
+          "kind": "test"
+        }
+      ]
+    }
+  ],
+  "history_treatments": [
+    "chronological",
+    "context_tagged",
+    "none"
+  ],
+  "diagnostic_proposal_traces": {
+    "no_signal": {
+      "context_return": [
+        "old_choice",
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice"
+      ],
+      "continued_B": [
+        "old_choice",
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice"
+      ],
+      "novel_C": [
+        "old_choice",
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice"
+      ]
+    },
+    "seeded_return_signal": {
+      "context_return": [
+        "old_choice",
+        "old_choice",
+        "corrected_choice",
+        "old_choice"
+      ],
+      "continued_B": [
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice",
+        "corrected_choice"
+      ],
+      "novel_C": [
+        "corrected_choice",
+        "old_choice",
+        "corrected_choice",
+        "corrected_choice"
+      ]
+    }
+  },
+  "scorer": {
+    "current_mapping_id": "B",
+    "outcomes": {
+      "old_choice": 0,
+      "corrected_choice": 1
+    },
+    "recurrence": "count(old_choice)",
+    "regret": "sum(max(outcomes)-outcome(proposal))",
+    "executed_effects": false
+  },
+  "mutation_controls": [
+    "leak_test_mapping_into_history",
+    "erase_phase_boundary",
+    "relabel_return_context",
+    "change_current_mapping"
+  ],
+  "limits": [
+    "method construction only",
+    "no model or GUI",
+    "seeded traces are scorer controls, not observed behavior",
+    "no learning or renewal inference"
+  ]
+}
+

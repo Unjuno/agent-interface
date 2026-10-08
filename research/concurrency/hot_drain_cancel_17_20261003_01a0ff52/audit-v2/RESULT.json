@@ -1,0 +1,59 @@
+{
+  "recorded_utc": "2026-10-03T09:30:22.058575+00:00",
+  "status": "PASS_VERSIONED_SAVED_OWNERSHIP_REPAIR",
+  "parent_pr": 6960,
+  "predecessor_head": "35e174fa45d8c3ea12c60e7aa1703f5808a784e7",
+  "observed_external_merge": "38518811f537a5dc3dea3b231036b9006b25d8aa",
+  "v1_auditor_sha256": "003a7ca7f370494b70ad94cb5335deb01303cedd349fc5d3286246e3f46b3539",
+  "v2_auditor_sha256": "c5b326165c4806183464821f1a6199bf85938e49ad2fa28db38028c3fdc90c86",
+  "test_sha256": "98f37434049cf06d45800c7f280fc984ba53696f0fa67ffdb9a95386f177e72e",
+  "raw_sha256": "242439e8d7a96f2c938668955c5469e40e1ccaeb97a754d1f1295e07f156efa0",
+  "original_rows": 15,
+  "original_fd_closures": 75,
+  "methods_each": 6,
+  "records_each": 195,
+  "commands": [
+    {
+      "stage": "red",
+      "pid": 63989,
+      "start_utc": "2026-10-03T09:24:12.018014+00:00",
+      "end_utc": "2026-10-03T09:24:12.162060+00:00",
+      "exit_code": 1,
+      "source_sha256": "003a7ca7f370494b70ad94cb5335deb01303cedd349fc5d3286246e3f46b3539",
+      "test_sha256": "98f37434049cf06d45800c7f280fc984ba53696f0fa67ffdb9a95386f177e72e"
+    },
+    {
+      "stage": "normal",
+      "pid": 64631,
+      "start_utc": "2026-10-03T09:24:41.488932+00:00",
+      "end_utc": "2026-10-03T09:24:41.610906+00:00",
+      "exit_code": 0,
+      "source_sha256": "c5b326165c4806183464821f1a6199bf85938e49ad2fa28db38028c3fdc90c86",
+      "test_sha256": "98f37434049cf06d45800c7f280fc984ba53696f0fa67ffdb9a95386f177e72e"
+    },
+    {
+      "stage": "optimized",
+      "pid": 64633,
+      "start_utc": "2026-10-03T09:24:41.665501+00:00",
+      "end_utc": "2026-10-03T09:24:41.804523+00:00",
+      "exit_code": 0,
+      "source_sha256": "c5b326165c4806183464821f1a6199bf85938e49ad2fa28db38028c3fdc90c86",
+      "test_sha256": "98f37434049cf06d45800c7f280fc984ba53696f0fa67ffdb9a95386f177e72e"
+    }
+  ],
+  "red_failures": 110,
+  "final_failures": 0,
+  "new_negative_fd_copies": 75,
+  "new_extra_open_copies": 30,
+  "retained_exact_row_witnesses": 3,
+  "retained_full15_witnesses": 2,
+  "zero_fd_positive_copies": 75,
+  "older_corruptions_rejected": 11,
+  "final_normal_optimized_saved_equal": true,
+  "reference_sha256": "d743a73aac22eb625bcb02ae1dd2661bc80ece05ffabeceaa854dabc7444b254",
+  "exact_reverse_source_delta": true,
+  "original_formal_or_producer_invocations": 0,
+  "new_native_observations": 0,
+  "private_original_authentication": false,
+  "limits": "Scoped copied-record FD domain and single-birth ownership repair. Native original data is unchanged; v1 audit/first PASS are historical, not proof of malformed-data robustness. No production adoption, natural timing/concurrent producer/task/physical release/full-goal claim. External merge path not retroactively certified. Internal helper analysis is not eligible content approval."
+}

@@ -1,0 +1,78 @@
+{
+  "allocation": "MAP01-PER-KEY-OCCUPANCY-COMPLETENESS-A01-20261005",
+  "checks": {
+    "gate_preserves_complete_case": true,
+    "gate_rejects_missing_space": true,
+    "legacy_accepts_missing_space": true,
+    "legacy_full_preserves_original_bounds": true,
+    "source_manifest_is_expected_fixture": true
+  },
+  "expected_keys": [
+    "SPACE",
+    "W"
+  ],
+  "gated_complete": {
+    "intervals": [
+      {
+        "action_id": "act-1",
+        "epoch": 7,
+        "key": "SPACE",
+        "lower_ns": 32,
+        "upper_ns": 50
+      },
+      {
+        "action_id": "act-1",
+        "epoch": 7,
+        "key": "W",
+        "lower_ns": 70,
+        "upper_ns": 90
+      }
+    ],
+    "reasons": [],
+    "status": "BOUNDED"
+  },
+  "gated_space_row_omitted": {
+    "intervals": [],
+    "reasons": [
+      "expected_key_inventory_mismatch"
+    ],
+    "status": "UNKNOWN"
+  },
+  "imports_candidate_or_legacy_code": false,
+  "legacy_complete": {
+    "intervals": [
+      {
+        "action_id": "act-1",
+        "epoch": 7,
+        "key": "SPACE",
+        "lower_ns": 32,
+        "upper_ns": 50
+      },
+      {
+        "action_id": "act-1",
+        "epoch": 7,
+        "key": "W",
+        "lower_ns": 70,
+        "upper_ns": 90
+      }
+    ],
+    "reasons": [],
+    "status": "BOUNDED"
+  },
+  "legacy_space_row_omitted": {
+    "intervals": [
+      {
+        "action_id": "act-1",
+        "epoch": 7,
+        "key": "W",
+        "lower_ns": 70,
+        "upper_ns": 90
+      }
+    ],
+    "reasons": [],
+    "status": "BOUNDED"
+  },
+  "raw_sha256": "890d8c5ad8eca2c6d5583007029bb6e71f7a87df725945fa7bf2ce8f45b04161",
+  "scope": "deterministic synthetic evidence mutation; no live input, effect, recovery, or resource claim",
+  "status": "PASS_METHOD_SCOPED"
+}

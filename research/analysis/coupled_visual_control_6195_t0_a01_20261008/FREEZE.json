@@ -1,0 +1,33 @@
+{
+  "schema": "issue-8470-compositional-gain-t0-a01-v1",
+  "issue": 8470,
+  "parent_issue": 59,
+  "base_main": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "branch": "research/8470-coupled-gain-t0-a01-20261008",
+  "package_path": "research/analysis/coupled_visual_control_6195_t0_a01_20261008/",
+  "formal_candidate_invocations_before_freeze": 0,
+  "formal_auditor_invocations_before_freeze": 0,
+  "construction_suite_invocations_before_freeze": 1,
+  "construction_suite_tests": 15,
+  "construction_suite_exit": 0,
+  "candidate_sha256": "569e25c0e2fa9053606f37cc85d72a532ecf5d9883c19e931e1593304eb369f6",
+  "auditor_sha256": "66640ace6663e5b97ab29908fa6074cfff5e57268ed5a1ced95d74980e18a084",
+  "cases_sha256": "e5d708c242afdc124d3058c3066cd35202f4d84e05851b447e8759f9e9a2f537",
+  "preregistration_sha256": "b7d4f97d9b210ff50fc72d66ca4e5b0b188223a83d1b9d09017aa236e6718acd",
+  "construction_tests_sha256": {
+    "test_candidate_contract.py": "20627bd07e0eac44e3149474a1957004f97c068a3d6a7467a49ea21404f15817",
+    "test_auditor_contract.py": "f6617abd4f9947740454644283eaee9f466afd16b0cce6d837c2457a60b34877",
+    "test_fixture_construction.py": "14c88d679344e178583e79d03c7e3dcf3fc0208c2309e4e12ec0d8dfc7b8192e"
+  },
+  "model": "finite exact-rational two-axis recurrence with scheduled delay/jitter, estimator error, actuator coupling/saturation, hold duration/cap, disturbance, and one-step release residual",
+  "decision_threshold": "composed induced-infinity row gain < 1 and all exact finite-horizon features <= 2",
+  "candidate_command": "python candidate.py cases.json",
+  "auditor_command": "python audit.py cases.json CANDIDATE.stdout.json",
+  "formal_invocation_budget": {
+    "candidate": 1,
+    "auditor": 1,
+    "retries": 0
+  },
+  "execution": "attached local CPU-only execution environment; Python 3.12 standard library; no Docker/WSLc/game/GUI/model/GPU/live input",
+  "scope_note": "Construction suite is pre-freeze and distinct; it exercised the authored finite fixture for implementation checks, not as a formal candidate/auditor allocation."
+}

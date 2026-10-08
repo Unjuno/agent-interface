@@ -1,0 +1,303 @@
+{
+  "decision": "PASS_DIFFERENTIAL_GUARD",
+  "experiment_id": "compiled-form-guard-differential-3311-20261005-01",
+  "input_rows": [
+    {
+      "field_pixels_changed": false,
+      "field_target_present": true,
+      "field_value_matches_task": false,
+      "submission_pixels_changed": false,
+      "submit_target_present": true
+    },
+    {
+      "field_pixels_changed": true,
+      "field_target_present": true,
+      "field_value_matches_task": false,
+      "submission_pixels_changed": false,
+      "submit_target_present": true
+    },
+    {
+      "field_pixels_changed": true,
+      "field_target_present": true,
+      "field_value_matches_task": false,
+      "submission_pixels_changed": true,
+      "submit_target_present": true
+    }
+  ],
+  "results": [
+    {
+      "actions": [
+        "enter_exact_token",
+        "activate_submit"
+      ],
+      "observations_used": 3,
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "receipt": {
+        "completed_transitions": 2,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "synthetic-frame-1",
+            "matched_conditions": {
+              "field_pixels_changed": false,
+              "field_target_present": true
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "v1-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "synthetic-frame-2",
+            "status": "succeeded"
+          },
+          {
+            "action": "submit_form",
+            "event": "branch_selected",
+            "evidence_ref": "synthetic-frame-2",
+            "matched_conditions": {
+              "field_pixels_changed": true,
+              "submit_target_present": true
+            },
+            "outcome": "action",
+            "state": "filled"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "v1-action-2",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "submit_form",
+            "event": "effect_checked",
+            "evidence_ref": "synthetic-frame-3",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "synthetic-frame-3",
+            "matched_conditions": {
+              "submission_pixels_changed": true
+            },
+            "outcome": "complete",
+            "state": "submitted"
+          },
+          {
+            "completed_transitions": 2,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "elapsed_ns": 110333,
+        "ended_ns": 176603716279208,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "guard-differential",
+        "latest_evidence_ref": "synthetic-frame-3",
+        "method": "enter_then_submit",
+        "method_version": "1",
+        "observations": [
+          {
+            "captured_ns": 176603716173125,
+            "evidence_digest": "synthetic-digest-1",
+            "evidence_ref": "synthetic-frame-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 176603716215625,
+            "evidence_digest": "synthetic-digest-2",
+            "evidence_ref": "synthetic-frame-2",
+            "predicates": {
+              "field_pixels_changed": true,
+              "field_target_present": true,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          },
+          {
+            "captured_ns": 176603716258125,
+            "evidence_digest": "synthetic-digest-3",
+            "evidence_ref": "synthetic-frame-3",
+            "predicates": {
+              "field_pixels_changed": true,
+              "field_target_present": true,
+              "submission_pixels_changed": true,
+              "submit_target_present": true
+            },
+            "sequence": 3
+          }
+        ],
+        "outcome": "TASK_SUCCEEDED",
+        "pending_effect": null,
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "method_complete",
+        "session_scope": "synthetic-case-001",
+        "started_ns": 176603716168875,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "v1-action-1",
+            "effect_ref": "v1-effect-1",
+            "evidence_ref": "synthetic-frame-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_pixels_changed": false,
+              "field_target_present": true
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "filled"
+          },
+          {
+            "action": "submit_form",
+            "action_id": "v1-action-2",
+            "effect_ref": "v1-effect-2",
+            "evidence_ref": "synthetic-frame-2",
+            "from_state": "filled",
+            "matched_conditions": {
+              "field_pixels_changed": true,
+              "submit_target_present": true
+            },
+            "observation_sequence": 2,
+            "release_verified": true,
+            "to_state": "submitted"
+          }
+        ]
+      },
+      "transitions": 2,
+      "version": "v1"
+    },
+    {
+      "actions": [
+        "enter_exact_token"
+      ],
+      "observations_used": 2,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "receipt": {
+        "completed_transitions": 1,
+        "critical_events": [
+          {
+            "action": "enter_token",
+            "event": "branch_selected",
+            "evidence_ref": "synthetic-frame-1",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "outcome": "action",
+            "state": "empty"
+          },
+          {
+            "action": "enter_token",
+            "action_id": "v2-action-1",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "action": "enter_token",
+            "event": "effect_checked",
+            "evidence_ref": "synthetic-frame-2",
+            "status": "failed",
+            "verifier": "compiled_predicate_condition"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "SAFE_YIELD",
+            "reason": "effect_failed"
+          }
+        ],
+        "elapsed_ns": 43500,
+        "ended_ns": 176603716402250,
+        "format": "compiled-gui-runtime-receipt-v1",
+        "frontier_model_resumptions": 0,
+        "input_authority": "admission_per_action_only",
+        "interface_id": "guard-differential",
+        "latest_evidence_ref": "synthetic-frame-2",
+        "method": "enter_verify_exact_value_then_submit",
+        "method_version": "2",
+        "observations": [
+          {
+            "captured_ns": 176603716360916,
+            "evidence_digest": "synthetic-digest-1",
+            "evidence_ref": "synthetic-frame-1",
+            "predicates": {
+              "field_pixels_changed": false,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 1
+          },
+          {
+            "captured_ns": 176603716390375,
+            "evidence_digest": "synthetic-digest-2",
+            "evidence_ref": "synthetic-frame-2",
+            "predicates": {
+              "field_pixels_changed": true,
+              "field_target_present": true,
+              "field_value_matches_task": false,
+              "submission_pixels_changed": false,
+              "submit_target_present": true
+            },
+            "sequence": 2
+          }
+        ],
+        "outcome": "SAFE_YIELD",
+        "pending_effect": {
+          "action": "enter_token",
+          "effect_ref": "v2-effect-1",
+          "expected_effect": {
+            "field_value_matches_task": true
+          }
+        },
+        "raw_evidence_retention": "adapter_responsibility_unverified",
+        "reason": "effect_failed",
+        "session_scope": "synthetic-case-001",
+        "started_ns": 176603716358750,
+        "transitions": [
+          {
+            "action": "enter_token",
+            "action_id": "v2-action-1",
+            "effect_ref": "v2-effect-1",
+            "evidence_ref": "synthetic-frame-1",
+            "from_state": "empty",
+            "matched_conditions": {
+              "field_target_present": true,
+              "field_value_matches_task": false
+            },
+            "observation_sequence": 1,
+            "release_verified": true,
+            "to_state": "verify_value"
+          }
+        ]
+      },
+      "transitions": 1,
+      "version": "v2"
+    }
+  ]
+}

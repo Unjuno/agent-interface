@@ -1,0 +1,33 @@
+"""One-use local closeout after exact actual remote-body readback."""
+from pathlib import Path
+import json,base64,gzip,hashlib,datetime
+P=Path(__file__).resolve().parent; W=P.parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+assert not (P/'CLOSED.json').exists()
+parts=[(P/f'PUBLIC_PART_{i}.md').read_text(encoding='utf-8') for i in (1,2,3)]
+b64=''.join(s.split('```text\n')[1].split('\n```')[0] for s in parts)
+compressed=base64.b64decode(b64); full=gzip.decompress(compressed)
+m=json.loads((P/'PUBLIC_MANIFEST.json').read_text())
+assert sha(compressed)==m['gzip_sha256'] and sha(full)==m['json_sha256']
+packet=json.loads(full)
+for member in packet['members']:
+    b=base64.b64decode(member['base64']);assert len(b)==member['bytes'] and sha(b)==member['sha256']
+assert len(packet['members'])==44
+closed={'unit':'stock-todomvc-durable-57-D01-01a0ff35-20261003','closed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'result':'FIRST_STOP_CREATE_EFFECT; DURABILITY_UNVERIFIED','raw_sha256':sha((P/'FIRST_RAW.json').read_bytes()),'proof_comments':[5969430816,5969431871,5969432662],'actual_remote_bodies_exact':True,'actual_remote_readback_basis':'MCP all-pages #57 readback, each of 3 whole bodies strictly equal original canonical source in functions.exec, 13:04 UTC','restored_members_verified':44,'packet':m,'own_pids_absent':[5916,14140,20408],'absence_observed_utc':'2026-10-03T13:04:16.9807119Z','tab_closed':'2026-10-03T12:45:51.688Z','main_sends':0,'formal_replays':0,'auxiliary_first_failures':['image serialization corrupt original retained','oversized packager exit1 never sent; identical existing packet split into 3'],'limits':['historical backend, no transfer of current C06','missing view.js/app.js request cause unproved','reload and completion unreached','post-run reader not prefrozen independent scorer','full goal remains active']}
+(P/'CLOSED.json').write_text(json.dumps(closed,ensure_ascii=False,indent=2),encoding='utf-8')
+original=(W/'STATE.json').read_bytes();backup=W/'STATE-before-D01-20261003.json';assert not backup.exists();backup.write_bytes(original)
+s=json.loads(original);s['last_ordinary_D01']=closed
+s['work_unit']=closed['unit'];s['current_unit_classification']='PROGRESS: actual first task-effect STOP preserved/published, durability not reached; scoped resources retired'
+s['progress_this_turn']='D01 unchanged historical stock qualification stopped at create; all 23 frozen pins and 13 Git blobs verified; six saved semantic negatives rejected; three actual public proof bodies fully read back; native/tab retired'
+s['last_observation_utc']=closed['closed_utc'];s['next']='Continue current #57 integration with an actually boot-qualified existing task backend; do not replay D01 or transfer historical/localStorage success. Recheck owner/allocation and live main before any new work; retained 6942/6956 approvals remain scope-bound.'
+(W/'STATE.json').write_text(json.dumps(s,ensure_ascii=False,indent=2),encoding='utf-8')
+out=Path('outputs');out.mkdir(exist_ok=True)
+(out/'D01-result.md').write_text('''D01の結果は FIRST_STOP（タスク作成効果なし）。文字入力とTabの後も入力欄にタイトルが残り、行は0件でした。再読み込み・完了操作は未実施で、永続化は未検証です。
+
+固定した歴史的TodoMVCソースは13ファイル一致。サーバー記録にはview.js/app.jsの取得がなく、原因は未確定です。保存データの別実装は23固定ファイルを検証し、6種類の改変を拒否しました。この検証器は実行後に作成しています。
+
+専用タブとサーバーは終了済み。原観測・ソース・失敗履歴・画像を含む44ファイルは3コメントで公開し、実際の全本文を照合しました。main変更はありません。全体目標は継続中です。
+
+[公開証拠1](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969430816) / [2](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969431871) / [3](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969432662)
+''',encoding='utf-8')
+print(json.dumps({'closed':True,'restored_members':44,'backup_sha256':sha(original),'state_sha256':sha((W/'STATE.json').read_bytes()),'local_unit_bytes':sum(p.stat().st_size for p in P.rglob('*') if p.is_file())}))

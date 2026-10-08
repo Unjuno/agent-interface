@@ -1,0 +1,33 @@
+"""Run the seven frozen regressions against the actual committed zipapp module."""
+from pathlib import Path
+import importlib.util
+import json
+import sys
+import unittest
+import zipfile
+
+archive, driver_path, tests_path = map(Path, sys.argv[1:])
+sys.path.insert(0, str(archive))
+from runtime.core_v1 import compiled_gui
+
+assert str(archive) in compiled_gui.__file__
+assert not any(name.startswith("research") for name in sys.modules)
+with zipfile.ZipFile(archive) as packed:
+    assert packed.read("runtime/core_v1/compiled_gui.py") == (
+        tests_path.parent / "compiled_gui.py.committed.txt").read_bytes()
+
+def load(name, path):
+    specification = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(specification)
+    sys.modules[name] = module
+    specification.loader.exec_module(module)
+    return module
+
+load("runtime.core_v1.test_compiled_gui", driver_path)
+tests = load("callback_custody_regressions", tests_path)
+result = unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(tests))
+assert result.testsRun == 7
+assert not any(name.startswith("research") for name in sys.modules)
+print(json.dumps({"tests": result.testsRun, "successful": result.wasSuccessful(),
+                  "compiled_module_from_zipapp": True, "research_imports": False}))
+raise SystemExit(0 if result.wasSuccessful() else 1)

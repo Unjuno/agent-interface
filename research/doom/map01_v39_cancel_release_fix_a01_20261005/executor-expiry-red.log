@@ -1,0 +1,15 @@
+test_executor_expiry_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_terminal_contains_one_verified_cleanup_receipt) ... FAIL
+
+======================================================================
+FAIL: test_executor_expiry_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_terminal_contains_one_verified_cleanup_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-v39-cancel-release-fix-a01/research/doom/map01_v39_cancel_release_fix_a01_20261005/test_cancel_release.py", line 378, in test_executor_expiry_terminal_contains_one_verified_cleanup_receipt
+    self.assertEqual(len(ups), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.042s
+
+FAILED (failures=1)

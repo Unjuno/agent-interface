@@ -1,0 +1,11 @@
+{
+  "format": "issue59-v39-ammo-observation-dispatch-a06-freeze-v1",
+  "baseline_commit": "40f118fef7757744f09c0683870517e94ff5109f",
+  "current_main_at_parent": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "runtime": "CPython 3.14.5, macOS arm64; Pillow, NumPy, python-xlib from ephemeral uv environment",
+  "formal_live_allocation_invocations": 0,
+  "baseline_controller_sha256": "70c5ff1d3f7ff4745a495600e6e067ba81dcc4475a6520b4a3e186baf6b327cc",
+  "candidate_controller_sha256": "79bae65a3cc423acb3fe476728fdb33ac1205768f8cacf278b9f2fc30f1219a8",
+  "regression_source_sha256": "d8f2bac98b33447b5fec941f45cde1fc5877a112c9fc7d565e1b10cc459bfcd1",
+  "decision_gate": "PASS only if frozen A05 fails the dispatch/deduplication/reader-error regressions and the current focused suite, compilation, diff check, and artifact hash checks pass"
+}

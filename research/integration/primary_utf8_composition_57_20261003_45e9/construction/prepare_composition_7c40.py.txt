@@ -1,0 +1,53 @@
+"""Prepare one ordinary regression composition with current #6935 dependency; no Git mutation."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,shutil
+root=Path(__file__).resolve().parent
+target=root/'composition-7c40'
+target.mkdir(exist_ok=False)
+inputs=json.loads((root/'COMPOSITION_INPUTS_7C40.json').read_bytes())
+def sha(b):return hashlib.sha256(b).hexdigest()
+def oid(b):return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+def put(p,v):p.write_text(json.dumps(v,indent=2,sort_keys=True,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
+shutil.copytree(root/'source',target/'source')
+for k,name in [('relay','relay_client.mjs'),('test_relay','test_relay_client.mjs')]:
+ b=inputs[k]['content'].encode('utf-8')
+ assert oid(b)==inputs[k]['sha']
+ (target/'source/runtime/host_v1'/name).write_bytes(b)
+names=['primary_stdio.mjs','primary_exchange.mjs','primary_caller.mjs','relay_host.mjs','test_primary_stdio.mjs']
+baseline=[]
+for name,record in zip(names,inputs['base_core']):
+ b=record['content'].encode('utf-8');assert oid(b)==record['sha']
+ old=(root/('red-first/'+name+'.txt')).read_bytes() if name=='primary_stdio.mjs' else (root/'source/runtime/host_v1'/name).read_bytes()
+ assert old==b
+ baseline.append({'path':'runtime/host_v1/'+name,'blob_oid':record['sha'],'sha256':sha(b),'bytes':len(b)})
+current_readme=inputs['readme']['content'].encode('utf-8');assert oid(current_readme)==inputs['readme']['sha']
+old_doc=(root/'source/runtime/host_v1/README.md').read_text(encoding='utf-8')
+start=old_doc.index('Raw byte stdin must be valid UTF-8.')
+end=old_doc.index('Explicitly send `call` with',start)
+paragraph=old_doc[start:end]
+doc=current_readme.decode('utf-8');needle='Explicitly send `call` with'
+assert doc.count(needle)==1 and paragraph not in doc
+(target/'source/runtime/host_v1/README.md').write_text(doc.replace(needle,paragraph+needle,1),encoding='utf-8',newline='\n')
+for name in ['fixture.mjs','collect_public.mjs','audit_public.py','run_audit.py']:
+ shutil.copyfile(root/name,target/name)
+capture=(root/'capture_public.py').read_text(encoding='utf-8')
+needle="'runtime/host_v1/test_primary_stdio_utf8.mjs'],root/'source')"
+assert capture.count(needle)==1
+capture=capture.replace(needle,"'runtime/host_v1/test_primary_stdio_utf8.mjs','runtime/host_v1/test_relay_client.mjs'],root/'source')",1)
+(target/'capture_public.py').write_text(capture,encoding='utf-8',newline='\n')
+for name in ['red-first','green-first']:
+ shutil.copytree(root/name,target/name)
+put(target/'COMPOSITION_CONTEXT.json',{'prepared_utc':datetime.now(timezone.utc).isoformat(),'base':inputs['base'],
+ 'fixed_content_head':'ba95f01edc122c1d4c3f8e368534222578570bfa',
+ 'H':'strict UTF8 intake preserves the current #6935 original relay exit-journal behavior when composed with the existing five Node imports',
+ 'T':'one new ordinary composed execution of maintained stdio27 plus current relay17, and same three own ordinary CLI regression controls using the changed dependency',
+ 'D':'44 literal methods pass with zero fail/skip/cancel;CLI0/2/2;fixture1/0/1;all6 original children absent and no guards;data-only source/raw audit accepts8 copied negative joins',
+ 'C':'current base usedrelay changed;old27+3 cannot certify it. This run is only this frozen composition,not any later main or separate6919V3/6902/6879 source',
+ 'U':'inert echo/controlled fixtures only,zero SDK/backend/native/input/model/task/formal deck or original five-cell replay;no new worker/shared resource/main/update request',
+ 'base_core_exact':baseline,'new_relay_blob_oid':inputs['relay']['sha'],'new_relay_test_blob_oid':inputs['test_relay']['sha'],
+ 'new_readme_blob_oid':inputs['readme']['sha'],'staged_combined_readme_sha256':sha((target/'source/runtime/host_v1/README.md').read_bytes()),
+ 'old_RED_GREEN_custody':'Byte-identical copies of original15-method first phases,not rerun or reinterpreted as this composition.',
+ 'helpers':[{'path':name,'sha256':sha((target/name).read_bytes())} for name in ['capture_public.py','fixture.mjs','collect_public.mjs','audit_public.py','run_audit.py']]})
+print(json.dumps({'composition_prepared':True,'base':inputs['base'],'expected_literal_methods':44}))
+
