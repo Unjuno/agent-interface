@@ -1,0 +1,123 @@
+{
+  "actions": [],
+  "batches": [
+    {
+      "actions": [
+        {
+          "down": true,
+          "key": "a"
+        },
+        {
+          "down": false,
+          "key": "a"
+        }
+      ],
+      "batch": 0,
+      "cycle": 0,
+      "ended_ns": 19744762693,
+      "started_ns": 19743447826
+    }
+  ],
+  "cleanup": {
+    "xvfb_exit": 0
+  },
+  "client_events": [],
+  "client_window": 2097152,
+  "display": ":126",
+  "emitted_rows": [
+    {
+      "admitted_ns": 19743589965,
+      "event": "input_admission",
+      "id": "v39-perkey-xvfb-a04",
+      "input_ack_ns": 19743836637,
+      "intent_token": "v39-perkey-xvfb-a04",
+      "key": "a",
+      "owner_id": "33de7828611e4ee5a7735ffedda25f49",
+      "step": 0,
+      "valid_until_ns": 49743439260
+    },
+    {
+      "backend_owned_before_release": true,
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "id": "v39-perkey-xvfb-a04",
+      "intent_token": "v39-perkey-xvfb-a04",
+      "intent_token_matches_after_batch": true,
+      "key": "a",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+      "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owned_keycodes_after_batch": [],
+      "owner_cleanup_intervened": false,
+      "owner_cleanup_record_count_before_release": 0,
+      "owner_id": "33de7828611e4ee5a7735ffedda25f49",
+      "owner_identity_matches_after_batch": true,
+      "owner_release_history_complete": true,
+      "owner_sample_after_finished_ns": 19744673005,
+      "owner_sample_after_started_ns": 19744456835,
+      "owner_sample_ordered_after_batch": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "v39-perkey-xvfb-a04",
+        "key": "a",
+        "keycode": 38,
+        "operation": "up",
+        "owner_id": "33de7828611e4ee5a7735ffedda25f49",
+        "owner_keyrelease_started_ns": 19744035997,
+        "owner_sync_returned_ns": 19744246562,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 49743439260
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_thread_keyup_verified_after_batch": true,
+      "owner_transition_verified": true,
+      "physical_verification_authoritative": false,
+      "release_batch_complete": true,
+      "release_batch_delivery_position": 0,
+      "release_batch_identifier": "v39-perkey-xvfb-a04",
+      "release_batch_position": 0,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_size": 1,
+      "release_batch_step": 0,
+      "release_call_bracket_ns": 377393,
+      "release_call_returned_ns": 19744298479,
+      "release_call_started_ns": 19743921086,
+      "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+      "step": 0,
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 49743439260
+    }
+  ],
+  "errors": [
+    "TimeoutError: client edge timeout cycle=0 batch=0 edge=0"
+  ],
+  "ignored_events": [
+    {
+      "batch": 0,
+      "cycle": 0,
+      "edge_waiting_for": 0,
+      "event_class": "MappingNotify",
+      "event_type": 34,
+      "observed_ns": 19744873610
+    }
+  ],
+  "keycodes": {
+    "a": 38,
+    "space": 65
+  },
+  "keymap_queries": [],
+  "post_batch_keymaps": [],
+  "schema": "map01-v39-xvfb-per-key-release-raw-a04-v1",
+  "scope": "V39 release-batch backend and owner on isolated Xvfb; no game/model/physical input",
+  "status": "CANDIDATE_ERROR",
+  "xvfb_pid": 388
+}

@@ -1,0 +1,43 @@
+{
+  "kind": "ordinary_regression_not_formal_allocation",
+  "label": "baseline",
+  "command": [
+    "/run/current-system/sw/bin/python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "runtime.backends.quartz_v1.test_release_faults"
+  ],
+  "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+  "git_head": "9c26e204c0475bee30919e3d0e6681f393078ef1",
+  "python_version": "Python 3.12.13",
+  "started_utc": "2026-10-03T05:15:48.628116+00:00",
+  "ended_utc": "2026-10-03T05:15:48.799154+00:00",
+  "elapsed_ns": 170744084,
+  "exit_code": 1,
+  "timed_out": false,
+  "child_reaped": true,
+  "source_sha256_before": {
+    "runtime/backends/quartz_v1/backend.py": "a265b6501f5de3cc3e9fce7c037e36db39716f7dbaac5f5bdc69289081d85866",
+    "runtime/backends/quartz_v1/session.py": "bd8fee0f5d36fce746d97a998ffd77f6b9b16f83d067a0009799614f3c2a35bd",
+    "runtime/backends/quartz_v1/test_release_faults.py": "6a55244411f0f274d43b74bf42f5908d85910a304f12a42e59a1714af1af8c3e"
+  },
+  "source_sha256_after": {
+    "runtime/backends/quartz_v1/backend.py": "a265b6501f5de3cc3e9fce7c037e36db39716f7dbaac5f5bdc69289081d85866",
+    "runtime/backends/quartz_v1/session.py": "bd8fee0f5d36fce746d97a998ffd77f6b9b16f83d067a0009799614f3c2a35bd",
+    "runtime/backends/quartz_v1/test_release_faults.py": "6a55244411f0f274d43b74bf42f5908d85910a304f12a42e59a1714af1af8c3e"
+  },
+  "streams": {
+    "stdout": {
+      "path": "baseline-stdout.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "baseline-stderr.txt",
+      "bytes": 25274,
+      "sha256": "0c8ae16632d6f45ab9bf3e302e7b25e62023f4b9312acfe20ec3aee2977ffa03"
+    }
+  }
+}

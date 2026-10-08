@@ -1,0 +1,23 @@
+{
+  "audit_checks_passed": 18,
+  "audit_checks_total": 18,
+  "audit_command": "python3 -B audit.py",
+  "audit_exit_code": 0,
+  "audit_gate": "PASS_C03_POST_SAMPLE_CANCEL_BOUNDARY_REPRODUCED",
+  "candidate_command": "python3 -B candidate.py",
+  "candidate_end_timestamp": "not recorded by wrapper; the exec tool reported 0.1 s wall time for the complete invocation",
+  "candidate_end_utc_window": "within the same UTC second as candidate.started.json, based on that 0.1 s exec wall-time observation",
+  "candidate_exit_code": 0,
+  "candidate_invocation": 1,
+  "candidate_started_utc": "2026-10-04T04:21:29Z",
+  "container_used": false,
+  "finish_recorded_utc": "2026-10-04T04:25:16Z",
+  "notes": "The source blobs were rechecked after execution and remained byte-identical at the later snapshots. This post-run source identity check does not change the frozen run base.",
+  "run_id": "MAP01-V39-CANCEL-RELEASE-CAUSE-C03-20261004",
+  "source_versions": {
+    "current_main_snapshot_at_freeze": "aacbdbcb67daf22ebb277a9826305184de458ca3",
+    "later_main_snapshot_source_identity_check": "89a3dfc12edfd2e17eb94c4743599cbb158e5a5b",
+    "later_pr7440_head_source_identity_check": "1eadd189debbed2014a92ad813d4413c44f22873",
+    "pr7440_head_at_freeze": "b90cf06b705df350fd74437c3b40c93fa546696b"
+  }
+}

@@ -1,3 +1,27 @@
+# Issue #8157 A04 — prefix-local audit of retained bounded TTC allocation (2026-10-05)
+
+An audit-only successor reconstructed all 2,400 prefixes from the preserved A02 public inputs with zero candidate mismatch; its five corruption controls and source/artifact hash checks passed. The original A02 auditor's 98 mismatches are 49 point and 49 interval mismatches, all in the occlusion profile. Disposition is `PASS_RAW_RECONCILIATION_ONLY`: A02's `FAIL_METHOD` remains unscorable and A03's one-shot auditor runtime STOP remains preserved. No TTC method, vision-transfer, GUI/game, or safety result is claimed. See the [A04 report and frozen evidence](research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A04_AUDIT_ONLY/REPORT.md), [A03 STOP](research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A03_AUDIT_ONLY/STOP.md), and [Issue #8157](https://github.com/Unjuno/agent-interface/issues/8157).
+
+# Issue #6053 T1 — PCAA stage-propagation eligibility (2026-10-04)
+
+The read-only audit of the current Procedural Control Arena v1 returns `HOLD_NO_ELIGIBLE_CHAIN`: it has a stage-level event/result ledger and an authored recovery displacement, but no matched upstream perturbation versus no-disturbance/checkpointed re-grounding contrast. The source explicitly does not provide a hardened held-out process boundary. The existing 14/14 mechanics suite passes, but does not answer the propagation hypothesis. No PCAA episode, GUI, model, container, or input run occurred. See [the report and retained audit](research/analysis/pcaa_stage_propagation_6053_t1_20261004/REPORT.md) and [Issue #6053](https://github.com/Unjuno/agent-interface/issues/6053).
+
+## Issue #59 — V15 per-key owner identity recheck at frozen #8065 head (2026-10-05)
+
+The three fresh-process startup probes reproduce `FAIL_V15_PERKEY_SELECTED_OWNER_IDENTITY` at frozen #8065 head `4158d9b063e7cbf56828f1b0667ec2714af0ff2b`: V12-perkey selects archived A01, default V15 selects the current V4 transition wrapper, and V15-perkey selects current raw V12 while its manifest records the archived A01 hash. Independent source/raw audit passes 22/22, including byte identity for all 56 snapshots and shared-source refreshes pinned to `f1d7dd1` and `649b4c4` (55 paths shared; only `input_owner_v12.py` differs). The 649b4c4 snapshot refresh passes 8/8; the candidate was not rerun. The initial system-Python missing-Pillow STOP remains retained. This is not a validation against later main commits. This is source-selection construction evidence only: no owner/session/native call, X11, physical release, application effect, live threat response, recovery, or MAP01 outcome. See the [checksummed report, frozen sources and retained results](research/doom/v15_perkey_owner_evidence_only_20261005/README.md), [PR #8091 discussion](https://github.com/Unjuno/agent-interface/pull/8091), and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+# Issue #6367 T0 — matched protective-adaptation method fixture (2026-10-04)
+
+`METHOD_PASS_SCOPED`: candidate and independent raw-only auditor each ran once with zero retries. All 18 externally scheduled offers and 9 matched pairs were reconstructed; three auditor mutations were rejected. Host Python 3.14.5 was used because OrbStack image inspection failed with a containerd content-blob error; no image pull/retry/container launch occurred. This is synthetic method evidence only, not live #59 efficacy, MAP01 recovery, physical occupancy, or product benefit. The separate successor audit caught the frozen auditor's top-level safety-disposition blind spot; original T0 evidence remains unchanged. See the [report and checksummed artifacts](research/analysis/protective_local_adaptation_6367_t0_20261004/REPORT.md), [successor audit](research/analysis/protective_local_adaptation_6367_reaudit_v1/README.md), and [Issue #6367](https://github.com/Unjuno/agent-interface/issues/6367).
+
+# Issue #7834 T0 A01 — carryover-aware optional-adaptation estimator (2026-10-05)
+
+The exact finite two-cluster/four-decision-point candidate and raw-only auditor each ran once and passed the scoped oracle gate. IPW excursion estimate 0.150000000000000 vs exact oracle 0.150000000000000; both predeclared history strata matched. The unweighted/history-ignorant and executed-only controls missed the oracle; all five support/timing/missingness/interference/proximal-distal controls passed. This is synthetic method evidence only, executed host-only because OrbStack's local image-content store returned `operation not supported`; no GUI, user, live task, or product claim. See [report and immutable outputs](research/analysis/optional_adaptation_mrt_7834_t0_a01_20261005/REPORT.md) and [Issue #7834](https://github.com/Unjuno/agent-interface/issues/7834).
+
+## Issue #59 A01 — saved-frame model interpretation client STOP (2026-10-05)
+
+One frozen Codex CLI 0.146.1 invocation requested `gpt-6.1-sol` at medium effort on retained V39 sequence 200, then exited 1 before any model response: the service returned HTTP 400 because that model is unsupported with the authenticated ChatGPT account. Independent audit: `STOP`; retries: zero; model comprehension: not evaluated. The image, source-event join, redacted CLI JSONL/stderr, invocation, raw custody hashes, and audits remain in [the additive package](research/doom/v39_frame_model_interpretation_59_a01_20261005/REPORT.md). This is client/model-availability evidence only, not live threat response or game-control evidence.
+
 # Issue #7466 A03 — within-episode feedback gate for adaptive checkpoints (2026-10-05)
 
 The frozen candidate and independent auditor each ran once (no retries). Candidate exit 0 produced 432 episodes / 669,050 ticks and passed the calibration gate; auditor exit 0 reconstructed all rows with no errors and rejected all four mutation controls. Formal disposition is `FAIL_UNSAFE_RESUME`: all 144 reversed-cohort episode×cost rows (24 distinct streams across six cost cells) were incomplete, and informative cost improvement missed the required 10% gate at checkpoint/replay costs 4/1 and 8/1. Independent and reversed signals never activated and exactly followed event fallback, but this did not satisfy completion or all-cell benefit. The 300 MB candidate raw remains locally preserved with a lossless gzip transport copy; do not claim a real interruption, GUI, model, persistence, safety, or production-latency result. A02's preformal STOP and the earlier A01 outcome remain unchanged. See the [formal report](research/analysis/hazard_checkpoint_7466_feedback_gate_a03_20261004/REPORT.md), [run record](research/analysis/hazard_checkpoint_7466_feedback_gate_a03_20261004/RUN.md), and [Issue #7466](https://github.com/Unjuno/agent-interface/issues/7466).
@@ -19,9 +43,17 @@ Read-only feasibility audit of pinned main evidence: all 1,051 files in the publ
 
 The native, unprivileged macOS `powermetrics` probe refused to run without superuser access; no privilege escalation was attempted. Its local documentation identifies reported power as estimated and process Energy Impact as a rough proxy, not a cumulative joule counter with explicit resolution. Disposition `HOLD_ENERGY_SENSOR_UNAVAILABLE`; the first two auditor attempts' man-page-format parsing failures remain preserved, while v3 independently confirmed the stop. No GUI/model/route task or energy comparison was run. See [report and raw evidence](research/analysis/client_energy_per_effect_7728_t0_20261005/REPORT.md) and [Issue #7728](https://github.com/Unjuno/agent-interface/issues/7728).
 
+# Issue #7712 T0/T1 — discrete PID fixture and target-feasibility hold (2026-10-04)
+
+The one frozen T0 candidate invocation matched the declared bivariate Williams–Beer `I_min` atoms on six exact integer-count fixtures; the raw-only audit passed, and an independently frozen v2 mutation suite passed 5/5 including target relabeling. A read-only T1 audit of 72 retained same-capture modality bundles found coherent screenshot/crop/accessibility data and authored state labels, but no independently labeled safe action or measured effect; disposition remains `HOLD_NO_SAFE_ACTION_EFFECT_LABELS`. This qualifies arithmetic only and does not establish natural GUI synergy, acquisition-cost benefit, model behavior, or task effect. Candidate was not rerun during rescue; no new GUI, input, container, or formal allocation occurred. See the [retained report and corrections](research/analysis/gui_modality_pid_7712_t0_20261005/REPORT.md), [T1 audit](research/analysis/gui_modality_pid_7712_t0_20261005/t1_readonly_audit/T1_REPORT.md), and [Issue #7712](https://github.com/Unjuno/agent-interface/issues/7712).
+
 # Issue #59 A01 — ammo depletion during renewable fire cover (2026-10-05)
 
 Current-main v39's synthetic monitor-boundary probe returned `FAIL_AMMO_DEPLETION_NOT_GUARDED`: while a notional active fire cover had health=100, typed ammo 4→0 did not trigger a policy-invalidation event; unchanged positive ammo was preserved and health 100→89 correctly invalidated. The independent source-level audit passed 7/7 checks. This is not live firing, game, key-release, survival, or usefulness evidence; formal live allocation remained 0/0. OrbStack's read-only image inventory failed on a cached containerd blob, so no image pull/build/restart occurred; the stdlib-only boundary ran on host CPython 3.14.5. Any live successor requires a separately assigned lane. See [report and frozen artifacts](research/doom/v39_ammo_cover_guard_59_a01_20261005/REPORT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+# Issue #59 A01 — typed observation epoch alias boundary (2026-10-05)
+
+The retained source-boundary probe accepted eight Boolean/float aliases in typed health/ammo row epochs while the enclosing epoch was integer `1`; the integer control passed. The stored raw-only audit was rerun on the successor and reconstructed 53/53 checks. The frozen result's `FAIL_CLOSED` label is wrong; the separately retained correction records the fail-open interpretation without changing the original freeze/raw output. This offline boundary result does not show malformed in-tree readers or live input/effect, threat response, recovery, or MAP01 behavior. The experiment was host-only; no container claim or new candidate invocation is made. See the [report and immutable artifacts](research/doom/v39_typed_epoch_alias_59_a01_20261005/REPORT.md), [interpretation correction](research/doom/v39_typed_epoch_alias_59_a01_20261005/CORRECTION.md), and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
 
 # Issue #59 A02 — composed health/ammo cover guard (2026-10-05)
 
@@ -31,9 +63,25 @@ A separate construction prototype composed the current generic typed-signal guar
 
 A fresh ten-case construction probe added a strict common sequence/capture/binding gate before composing health and ammo guards. Coherent positive ammo (including 1) was preserved; zero ammo, health below floor, split sequence/time, binding mismatch, Boolean/float aliases, and unknown ammo failed closed. Independent audit 44/44; `PASS_PAIRED_EPOCH_FAIL_CLOSED`, construction-only. No current controller integration or live/game/input/release/task-effect evidence. The separately assigned live lane remains required. See [report and frozen artifacts](research/doom/v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
 
+# Issue #59 — A02 per-key trace source attribution (2026-10-05)
+
+Frozen-source audit A05 independently reconciled the two inter-key `query_keymap` events in the retained A02 operation trace. The events are the historical V12 fixture owner's post-up and next pre-up physical probes; A02's transition wrapper joins their receipts. The current V39 V15 closure instead uses V4→V3→current V12: each explicit up issues KeyRelease/XSync, with no inter-release keymap query, followed by one owner-state sample after the batch. The current V12 keymap query is only in terminal release cleanup. Candidate passed 12/12 assertions and independent source/raw auditor v2 passed with zero errors; A05 auditor v1's AST identity failure remains preserved. This corrects the apparent query-contract conflict but confirms that V39 production still lacks per-key physical-state evidence; XSync is not application-consumption evidence. Read-only source attribution only: no A02 rerun, live X11, GUI, game, model, latency bound, useful feedback, recovery, or task-effect claim. A02 candidate/audit failure and construction-stop records remain preserved. See [report and artifacts](research/doom/map01_v39_perkey_bridge_source_audit_a01_20261005/RESULT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+# Issue #59 — Astra retained failure video triage (2026-10-05)
+
+Reviewed the complete labelled 2x video with time-sampled frames and joined its threat visibility to retained model waits, cover programs, decision-frame HUD and 852-row runtime events. The first visible threat appears across the lower area near live time 36 s. One firing/strafe cover overlaps an 11.741 s model call and spends 11 rounds across the surrounding decision window as sampled health falls 100→84; damage timing cannot be localized within that window. Later fresh route-finding answers continue as health falls to zero; with an approaching on-screen enemy, ammo remains 37 and no later primary command fires. Seven of 13 waits outlasted fixed ten-second cover (9.771 s total, 3.765 s max); eight contingencies were authored, none fired. This is a delayed-reaction diagnosis, not stale model-answer replay: answers use fresh sequences/images. Per-decision damage windows include the following primary action, so the observation does not assign damage causally to cover or a particular enemy. Current main `c1074c4d` already carries bounded health/ammo cover guards, inference-wait renewal, model interruption, and verified release on invalidation; its guard has no enemy-appearance predicate. The next live test must expose whether that existing path reacts to threat-linked HUD changes before the answer returns. One kill, one death, no exit; no threat-source, counterfactual, or recovery claim. This advances required retained-failure diagnosis only; no live allocation was assigned or run. See [triage](research/doom/MAP01_ASTRA_SYSTEM_FAILURE_TRIAGE_V1.md), [frozen attempt](research/doom/MAP01_ASTRA_ATTEMPT_V1.md), and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
 # Issue #59 — retained v39 fire-cover ammo timeline (posthoc, 2026-10-05)
 
 Read-only reconstruction of the retained v39 trace found three fire-cover model-wait windows with 122 typed observations and seven observed ammo decreases (46→44, 43→41, 40→37); none reached zero. Health invalidated the final window. Independent reconstruction passed 5/5. This is explicitly posthoc, not a new live allocation; the sole aggregate score cannot establish per-window usefulness, and no physical-key, causal firing, safety, or MAP01-clear claim is made. See [report and frozen artifacts](research/doom/v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+# Issue #59 — Astra camera-stabilized cue A01 (2026-10-05)
+
+On ten retained video frames, integer translation registration left the manually described 22.7 s wall-indicator warm-pixel transition at 186 newly appearing pixels, above the frozen threshold of 40; raw reconstruction passed. The pre-window 21.9 s muzzle-flash cue also remained at 96. One later row hit the registration search boundary and is not interpreted. This rejects one simple translation-only cue-suppression method, not enemy classification or the current-main live threat-response gate. No game/model/input/live allocation ran. See [frozen report and artifacts](research/doom/astra_camera_stabilized_cue_a01_20261005/README.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+# Issue #59 T0 — v39 release-sink failure custody (2026-10-04)
+
+An exploratory host-Python construction probe of the distinct pinned v13 executor found that `_release_event` marks an action published before calling the sink. Both raise-before-accept and accept-then-raise suppress retries without a `delivery_unknown` record; the escaped exception also bypasses later `release_all` and terminal publication in the inspected caller path. Saved-data audit and source pins pass. This is not prospectively frozen and does not exercise a full executor thread, live owner/sink, container, game, model, or input; no production, physical-release, or task-effect claim follows. See the [retained experiment and audit](research/doom/v39_release_sink_failure_59_7474_t0_20261004/README.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
 
 # Issue #7383 T0 — freshness-gated observation hedging (2026-10-04)
 
@@ -130,6 +178,10 @@ explanation or a global MLE. All three run packages, failed starts, raw outputs
 and hashes are retained separately; formal six-case T0 and physical release
 evidence remain pending.
 
+# Issue #6358 C01 — private service-capacity transfer (2026-10-03)
+
+One retained six-arm, 24-request synthetic HTTP/SQLite comparison shows 2/4 exact effects for shared generic advice, 4/4 for explicit routing at the same shared capacity, 4/4 for both ample-capacity arms, 0/4 for expired authority, and 3/4 when one recipient is forbidden from a route. The saved-only independent interpreter agrees with the retained effects, and all four copied corruption controls are refused. This is limited to an intentionally held-slot synthetic capacity premise: static assignment to existing parallel capacity explains the difference. It does not estimate natural arrival patterns, queue/latency distributions, production congestion, task efficiency, physical release, application truth, or #6358 H_PASS. The original candidate/auditor allocation was not replayed. See the [retained report and evidence](research/integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) and [#6358](https://github.com/Unjuno/agent-interface/issues/6358).
+
 # Issue #6501 T0-01 / T0b-01: scope-typed singleflight (2026-10-02)
 
 T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candidate ran once, the independent auditor ran once, retries were zero, and the wrapper's literal backslash-n caused JSON parsing to fail. No raw auditor result exists. The original STOP and receipts are immutable in [the predecessor package](research/analysis/scope_typed_singleflight_6501_t0_20261002/REPORT.md).
@@ -137,6 +189,10 @@ T0-01 is preserved as `STOP_OUTPUT_SERIALIZATION` / `NOT_EVALUATED`: the candida
 The distinct, frozen WSLc successor T0b-01 returned `PASS_METHOD_SCOPED`: one candidate invocation, one independent raw-only auditor invocation, zero retries; 10/10 cases audited with no violations, and construction tests passed 24/24. The independent audit found 20 verifier calls without coalescing, 11 for unsafe predicate-only keying, and 14 for scope-typed keying. Summed per-caller latency was 145/100/115 ms in a stipulated 5 ms serial-service model; only the single truly equivalent overlap fell from two calls / 15 ms to one / 10 ms with scope-typed sharing. Predicate-only keying failed the planted different-target, contradictory-dependency, and restart/ABA controls. Other stale-return, deadline, cancellation, owner-failure, UNKNOWN, and late-caller gates were retained.
 
 These latency values are simulated—not measured CPU, runtime, GUI, or end-to-end performance. WSLc used the cached digest-pinned CPython 3.12.14 image with network disabled, read-only source and output-only mount; it warned that swap/cgroup limits are unsupported. No memory enforcement is claimed. This establishes neither Docker parity nor migration of #6389, real verifier equivalence, runtime serialization, freshness under live GUI changes, or authority sharing. See [the successor report and raw audit](research/analysis/scope_typed_singleflight_6501_t0b_20261002/REPORT.md), [Issue #6501](https://github.com/Unjuno/agent-interface/issues/6501), and immutable [T0 STOP evidence](research/analysis/scope_typed_singleflight_6501_t0_20261002/STOP.json).
+
+## Issue #6501 T01 — Windows native ReadFile cancellation comparison (2026-10-03)
+
+The preserved Windows 11 / CPython 3.12.14 one-shot comparison retains three frozen cells: ordinary completion returned one byte; cancelling the asyncio wrapper left the underlying native read unfinished through its declared 500 ms observation window; `CancelSynchronousIo` returned success and the distinct `ReadFile` completion reported `ERROR_OPERATION_ABORTED` with no data. All cells exited 0 without timeout, and owned threads, handles, and descriptors were joined/closed. The first saved-data auditor falsely accepted two of nine mutations; a separately retained v2 auditor rejected all nine against the unchanged data. This is a scoped native cancellation characterization, distinct from C01 pending-state sampling and from asyncio/Linux evidence. The allocation was consumed and was not replayed. No arbitrary-I/O, pooled-thread, application-effect, portability, performance, or runtime-adoption claim follows. See the [checksummed archival report and original outputs](research/concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) and [#6501](https://github.com/Unjuno/agent-interface/issues/6501).
 
 # Issue #6509: claim-scoped partial verdicts T0 (2026-10-02)
 
@@ -2282,3 +2338,55 @@ synthetic scenarios, not a real model/interface crossover, recommendation,
 safety or performance result. A01 and A02 main-advance STOPs remain distinct.
 See [the report and checksummed formal artifacts](research/analysis/model_interface_crossover_6035_t0_a03_20261002/REPORT.md)
 and [Issue #6035](https://github.com/Unjuno/agent-interface/issues/6035).
+# Issue #7944 successor T0 A01 — bounded offline bandwidth inheritance (2026-10-05)
+
+The frozen candidate and separate raw-only audit passed the declared authored finite-model gate (`PASS_METHOD_SCOPED` / `H_PASS_SCOPED`): BWI met the verifier freshness deadline in the budget-inversion and nested-chain cases where home-charged PI missed; no-contention traces were identical; waiter-budget exhaustion and multiple waiters exposed bounded tradeoffs. OrbStack's image-content store was unreadable, so the standard-library model ran host-only with no isolation claim. This is not a full CBS theorem or OS/runtime/scheduler result. See [report and retained raw evidence](research/analysis/bandwidth_inheritance_7944_t0_a01_20261005/REPORT.md) and [successor allocation Issue #7979](https://github.com/Unjuno/agent-interface/issues/7979).
+# Issue #7986 T0 A01 — action-conditioned incorrect-belief exposure (2026-10-05)
+
+Eight authored event intervals passed the frozen method gate: exposure is zero for an old-but-correct belief (age 10), positive for stale and freshly misbound beliefs (6 and 5 ticks; the latter age 1), excluded outside live authority/opportunity, and distinct from one realized unsafe effect. Missing truth and ambiguous clock return `UNKNOWN`. Candidate receives no truth sidecar. This is a finite method result only—not harm reduction, safety, human, GUI, live, or runtime evidence. See [report and frozen artifacts](research/analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) and [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
+
+# Issue #57 — native existing-runtime B01–B03 construction boundary (2026-10-03)
+
+On one owned isolated Debian 12/ARM64 guest, B01 retained a driver-template
+syntax failure, B02 retained authenticated-Xvfb readiness failure, and B03
+completed setup plus one 1280×800 capture with verified empty input release.
+No input-down, model turn, or task attempt occurred; the consumed formal
+allocation was not invoked. The independent saved-data auditor passed and all
+221 manifest entries were rechecked against byte length and SHA-256. This is
+construction/readiness evidence only, not current-main route qualification,
+application effect, release under held input, or efficiency. Private cookie
+contents were excluded, all first failures and Openbox exit 1 remain retained,
+and no historical script was replayed. See the [B01–B03 archive](research/integration/native_existing_runtime_57_20261003_01a0ff52_b01/REPORT.md)
+and [Issue #57](https://github.com/Unjuno/agent-interface/issues/57).
+
+## Issue #57 D01 — retained native held-input cancellation
+
+The same rescue also preserves 58 D01 archival files from 2026-10-03: one authenticated Debian 12/ARM64 virtual-display XTEST Shift_L hold, an independent down witness, cancellation, verified owner release, and an independent clear key/button witness. The terminal remained cancelled with zero completed steps; Xvfb -9 and Openbox 1 exits and all scope limits remain retained. No model/task attempt or original run was replayed. This is one virtual-display cancellation condition, not physical-hardware release, general GUI reliability, current-main runtime qualification, or an efficiency claim. See the [D01 report and retained raw evidence](research/integration/native_held_release_57_20261003_01a0ff52_d01/REPORT.md).
+
+# Issue #57 — primary caller release-shape E01 archive (2026-10-03)
+
+The original 48-cell unchanged-caller arm retains `FAIL_SHAPE_ADMISSION_SCOPED`:
+malformed release-array aliases permitted eight invalid continuations. A
+separately frozen private candidate's 48 cells had zero invalid continuations,
+preserved eight healthy rows and changed 16 alias rows; this is inert fake-host
+construction evidence only. Source and private-candidate packets, first result,
+raw rows, saved auditors, native receipts, and byte-join custody are archived
+without rerunning either producer. The package explicitly does not establish
+that a conforming backend emits these shapes, physical release, real task
+effects, or production suitability. No candidate runtime change is proposed
+here; #7071 remains the separate integration/review path. See the [E01 archive](research/integration/primary_release_shape_57_E01_20261003_01a0ff59/README.md), [Issue #57 source/result records](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969803925), and [PR #7071](https://github.com/Unjuno/agent-interface/pull/7071).
+
+# Issue #57 — Firecrawl remote-browser and compiled release-boundary archive (2026-10-03)
+
+This archive preserves one bounded ordinary remote-browser task (T01) with
+provider-reported app effects and one compiled-core bridge boundary (I01).
+T01's finite task effect was independently checked in the retained public
+evidence; this does not establish a general GUI result. I01's add action changed
+the application, but the provider supplied no release/neutral-state telemetry:
+the outcome remains `RUNTIME_FAILED` / `HOLD_RELEASE_TELEMETRY` with zero
+completed transitions and release `UNVERIFIED`. Do not infer no effect from
+zero completed transitions and do not resend the action. The prior sessions,
+source pins, raw responses, projections, hashes, and first failures are
+preserved; no consumed remote task was rerun for rescue. See the [complete
+archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
+and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).

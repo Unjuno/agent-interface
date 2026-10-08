@@ -1,0 +1,21 @@
+{
+  "experiment": "issue59-v39-pending-observation-answer-race-a01-20261008",
+  "status": "PASS_BOUNDED_QUEUED_EVENT_REGRESSION",
+  "source_main": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "baseline": {
+    "future_done_before_wait_condition": true,
+    "queued_typed_observations": 1,
+    "monitor_calls_before_patch": 0,
+    "queued_event_skipped_by_outer_loop": true
+  },
+  "patched_helper": {
+    "tests_passed": 3,
+    "hard_crossing_invalidates": true,
+    "queued_terminal_retained": true,
+    "soft_observation_preserves_answer_path": true,
+    "empty_queue_returns_without_wait": true
+  },
+  "integration": "When drain reports invalidation, the existing controller invalidation path cancels any still-active cover and the existing planner-result branch discards the answer.",
+  "scope": "Focused source-boundary construction only; no production event-frequency, live, or efficacy claim."
+}
+

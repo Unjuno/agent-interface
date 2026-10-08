@@ -1,0 +1,40 @@
+{
+  "schema": "release-ledger-sink-mutation-current-main-a02-v1",
+  "issue": 59,
+  "predecessor_pr": 7669,
+  "tested_main_commit": "81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "tested_backend_blob": "f249ef036a9ec56740961af4aee375a28d9e133f",
+  "historical_frozen_parent": "12522ccd0b58d3333da1d241d1b04f2c888c46e6",
+  "scope": "synthetic backend composition; no live sink or input",
+  "mutation": {
+    "field": "release_batch_position",
+    "value": 99,
+    "timing": "inside sink callback immediately before the injected exception"
+  },
+  "matrix": {
+    "publication_paths": {
+      "complete_batch": 6,
+      "incomplete_cleanup": 6
+    },
+    "failure_positions": [0, 1, 2],
+    "sink_outcomes": ["fail_before_accept", "accept_then_raise"],
+    "total_cases": 12,
+    "passing_cases": 12,
+    "disposition": "PASS"
+  },
+  "suite": {
+    "command": "python3 -B -m unittest research.doom.test_release_backend_v3_actual_composition -v",
+    "tests_passed": 14,
+    "tests_failed": 0,
+    "disposition": "PASS"
+  },
+  "implementation_observation": "The tested main backend binds row object identity to its ledger index before crossing the sink boundary; this A02 adds tests only.",
+  "environment": {
+    "python": "3.14.5",
+    "container": "STOP before launch: local containerd image-list operation returned operation not supported"
+  },
+  "limitations": [
+    "No evidence that production sinks mutate handed-off rows",
+    "No physical-release, GUI, application-effect, recovery, or task-completion claim"
+  ]
+}

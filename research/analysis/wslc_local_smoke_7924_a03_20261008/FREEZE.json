@@ -1,0 +1,44 @@
+{
+  "schema": "wslc-local-smoke-7924-a03-freeze-v1",
+  "allocation": "wslc-local-smoke-7924-a03-20261008",
+  "issue": 8446,
+  "predecessor_issue": 7924,
+  "source_main_sha": "b52e37574debe61196b951624a4a0e06c67ac829",
+  "branch": "research/wslc-local-smoke-7924-a03-resume-20261008",
+  "path": "research/analysis/wslc_local_smoke_7924_a03_20261008/",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "wsl_package": "3.0.1.0",
+  "wslc_version": "3.0.1.0",
+  "source_sha256": {
+    "A02_IMPORT_MANIFEST.json": "9f1fcb468e50efcf8622e98602ed73f84ecce53fd2611eafff75efb8a676da06",
+    "PROTOCOL.json": "ebb9679500441bd65c7a06edda5c606eb1fadb19a46a6f6f505583f34ed2d960",
+    "auditor.py": "c00af9149bbdbad7f2807a1359eb7bff3413d490733b37ad291605e5c8746834"
+  },
+  "a02_import_commit": "d13480e51a6116afdef2ac4797f0fedc3385cf56",
+  "auditor_container_name": "unjuno-8446-a03-audit-b52e3757-eb6164e0e693",
+  "commands": {
+    "auditor": "wslc run --rm --pull never --network none --cpus 1 --memory 512M --name unjuno-8446-a03-audit-b52e3757-eb6164e0e693 --cidfile AUDITOR_CID.txt --volume \"C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-github-mcp-main-2\\repo-7924-a03-resume-20261008\\research\\analysis\\wslc_local_smoke_7924_a03_20261008:/src:ro\" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B auditor.py",
+    "cleanup_verification": "wslc container inspect <exact-cid-from-AUDITOR_CID.txt>; expected named object not found after --rm"
+  },
+  "preflight": {
+    "current_main_worktree_clean_tracked_files": true,
+    "wslc_active_process_count": 0,
+    "wslc_version_check": "3.0.1.0",
+    "pinned_image_inspect": "exact requested digest present; no tag/global inventory",
+    "prior_container_or_image_inventory_performed": false,
+    "docker_used": false,
+    "runner_working_directory": "research/analysis/wslc_local_smoke_7924_a03_20261008/",
+    "preflight_utc": "2026-10-08T03:02:49Z"
+  },
+  "invocations": {
+    "candidate": 0,
+    "a02_auditor": 0,
+    "a03_auditor": 1,
+    "retries": 0,
+    "image_pulls": 0,
+    "global_container_list_calls": 0,
+    "docker_calls": 0
+  },
+  "memory_limit_claim": "512M requested only; effective hard enforcement is not established",
+  "first_failure_is_final": true
+}

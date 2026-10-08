@@ -1,0 +1,16 @@
+{
+  "schema": "scorer-feedback-attribution-a05-unknown-kind-freeze-v1",
+  "parent_issue": 59,
+  "parent_pr": 7537,
+  "base_commit": "8ddf0925539d03733d803b469586fb74a5b444e0",
+  "hypothesis": "A fixed independent-progress-event-v2 positive/useful event with an unregistered kind must not be promoted to SINGLE_POSSIBLE_INTENT_ENVELOPE by the A04 attribution candidate.",
+  "test": "test_unknown_kind_probe.py",
+  "test_sha256": "f0976a92f1dac1839fbb8bea5205ea0eff1acd3ab8ea175f73cf04ec23b2a6f4",
+  "candidate": "scorer_feedback_attribution_v3.py",
+  "candidate_sha256": "c96b4565452c6095c5f51410226e154ce91be42daa7f042052ff25d140b4a87f",
+  "input": "samples 100/200 ns; positive useful controller-invisible BANANA_UNREGISTERED event at 200 ns; one verified ATTACK interval [90,210]",
+  "decision": "PASS_BOUNDARY if candidate raises ValueError or returns UNRESOLVED with intent_token null; FAIL_BOUNDARY if it reports a possible-intent envelope",
+  "execution": "single host-side Python 3.14.5 probe; no candidate edits, no game/model/GUI/input, no live allocation",
+  "container": "STOP_NOT_RUN: OrbStack Docker image listing and pull both failed on containerd blob open with operation not supported; no runtime image identity was available",
+  "scope": "synthetic schema/semantic boundary only; not producer authenticity, event-vocabulary policy, scorer correctness, causal attribution, or task effect"
+}

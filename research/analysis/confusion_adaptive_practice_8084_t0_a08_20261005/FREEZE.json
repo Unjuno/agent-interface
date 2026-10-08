@@ -1,0 +1,29 @@
+{
+  "allocation": "CONFUSION-ADAPTIVE-PRACTICE-8084-A08-20261005-01",
+  "frozen_at_local": "2026-10-05",
+  "base_main": "24cbb631b972eee1723d2372adf53032dfdaab20",
+  "branch": "research/8084-diagnostic-threshold-sensitivity-a08-20261005",
+  "protocol": "PROTOCOL.md",
+  "host": "Windows x64; CPython 3.12.10",
+  "interpreter": "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+  "execution": {
+    "network": "none by source design",
+    "container": "none; host-process boundary, weaker isolation disclosed",
+    "candidate_runs": 1,
+    "auditor_launches": 1,
+    "fixture_generator_runs": 1,
+    "replicates_per_profile_sample_size": 5000,
+    "seed_base": 8608000,
+    "distinct_prior_seed_bases": [8406000, 8507000]
+  },
+  "sha256_lf_normalized": {
+    "PROTOCOL.md": "A5074F6EC8117DD5D43BF9A9A38C4018BC6FEDCBCA9A9A6CBFF1C00E70B2B98B",
+    "SCORING.json": "2E2C07B530FC3B8FD54E19ADA4F2701DABCC095E65D0AC0E130ADC5E18D3C952",
+    "generate.py": "A044A20666810D72EACB355684417A0D7A8D5F07BA59CD745CE823BB3D84136C",
+    "candidate/candidate.py": "D1F3C78960B021EBF128FBA3DA7853C171E6D7ED124B3B7CC8CAC09F00309EEB",
+    "auditor/auditor.py": "2F8C7F903E149BBA331EC454BFAFCA7AE28BE62000BAA6860E5CA1DC40EDCD37",
+    "test_method.py": "16EC58709D4AF8F13D46F9584F19AF19819A29F48886E3DDE0A280142FCAD2E2"
+  },
+  "construction_tests": "4/4 normal and 4/4 under -O passed before freeze",
+  "prior_allocation_disposition": "A06 and A07 STOP records remain unchanged; their raw observations are not reused"
+}

@@ -61,6 +61,15 @@ SOURCE_FILES = (
     "runtime/backends/win32_v1/__init__.py",
     "runtime/backends/win32_v1/backend.py",
     "runtime/backends/win32_v1/session.py",
+    "runtime/guarded_win32_v1/__init__.py",
+    "runtime/guarded_win32_v1/bridge.py",
+    "runtime/guarded_win32_v1/effect.py",
+    "runtime/guarded_win32_v1/fresh.py",
+    "runtime/guarded_win32_v1/pixel_worker.py",
+    "runtime/guarded_win32_v1/reference.py",
+    "runtime/guarded_win32_v1/retained.py",
+    "runtime/guarded_win32_v1/supervisor.py",
+    "runtime/guarded_win32_v1/worker_effect.py",
     "runtime/backends/quartz_v1/__init__.py",
     "runtime/backends/quartz_v1/backend.py",
     "runtime/backends/quartz_v1/session.py",
@@ -99,7 +108,7 @@ SUPPORT = {
     "wayland": {"promoted": False, "reason": "WAYLAND_BACKEND_NOT_PROMOTED"},
     "automatic_target_discovery": False,
     "automatic_permission_escalation": False,
-    "optional_dependencies": {"x11_png_artifacts": ["Pillow"], "guarded_x11_python_api": ["Pillow", "python-xlib"], "mcp_stdio": ["mcp==1.30.0"]},
+    "optional_dependencies": {"x11_png_artifacts": ["Pillow"], "guarded_x11_python_api": ["Pillow", "python-xlib"], "guarded_win32_python_api": ["Pillow"], "mcp_stdio": ["mcp==1.30.0"]},
 }
 
 
