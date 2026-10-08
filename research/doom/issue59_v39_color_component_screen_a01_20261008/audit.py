@@ -27,7 +27,9 @@ checks={}; rows={x['code']:x for x in O['rows']}
 checks['sample_size_36']=len(S['entries'])==36==len(rows)
 checks['label_inventory_36']=len(L)==36
 checks['sample_codes_unique']=len({x['code'] for x in S['entries']})==36
-checks['candidate_rule_matches_freeze']=json.loads((HERE/'FREEZE.json').read_text())['candidate_rule']['positive']=='at least one component has area >= 8 pixels'
+freeze=json.loads((HERE/'FREEZE.json').read_text())
+checks['candidate_rule_matches_freeze']=freeze['candidate_rule']['positive']=='at least one component has area >= 8 pixels'
+checks['label_access_chronology_disclosed']=freeze['candidate_rule']['labels_accessed_before_candidate_rule_authored'] is True and freeze['candidate_rule']['threshold_frozen_before_label_join'] is False
 conf={'tp':0,'fp':0,'fn':0,'tn':0,'uncertain_excluded':0}; assets_ok=True; component_ok=True
 for e in S['entries']:
  row=rows[e['code']]; path=ROOT/f"{e['sequence']:03}.png"; raw=path.read_bytes(); assets_ok &= len(raw)==e['bytes'] and hashlib.sha256(raw).hexdigest()==e['sha256']
@@ -44,7 +46,7 @@ checks['candidate_confusion_recomputed']=conf==O['candidate_confusion']
 checks['comparison_baseline_matches_merged_record']=O['published_yellow_baseline']=={'tp':3,'fp':0,'fn':13,'tn':18,'uncertain_excluded':2}
 checks['candidate_rejects_as_interrupt_trigger']=conf['fp']>0 and conf['tn']==0
 checks['scope_is_offline_exploratory']=json.loads((HERE/'FREEZE.json').read_text())['classification']=='offline_exploratory_candidate_screen'
-result={'status':'PASS_REPRODUCIBILITY_CANDIDATE_REJECTED','checks':checks,'independent_confusion':conf,'all_checks_pass':all(checks.values())}
+result={'status':'PASS_REPRODUCIBILITY_POSTHOC_CANDIDATE_REJECTED','checks':checks,'independent_confusion':conf,'all_checks_pass':all(checks.values())}
 (HERE/'AUDIT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result,sort_keys=True))
 if not all(checks.values()):raise SystemExit(1)
 
