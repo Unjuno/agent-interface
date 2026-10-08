@@ -1,0 +1,19 @@
+{
+  "schema": "v40-candidate-source-identity-result-v1",
+  "candidate_sha256": "79033d42786d5c1327727dfd57e0cda5e6d08bc9f5f931241c4b4ae4a33f94c9",
+  "committed_audit_candidate_sha256": "961eadb2b14d23d9c1f4972addebb58e12553b8667db01a91701f4505dc826b0",
+  "committed_readme_candidate_sha256": "961eadb2b14d23d9c1f4972addebb58e12553b8667db01a91701f4505dc826b0",
+  "structural_audit_rerun": {
+    "decision": "PASS_CONSTRUCTION_STRUCTURE",
+    "checks_passed": 5,
+    "checks_total": 5,
+    "candidate_sha256": "79033d42786d5c1327727dfd57e0cda5e6d08bc9f5f931241c4b4ae4a33f94c9"
+  },
+  "checks": {
+    "audit_matches_candidate": false,
+    "readme_matches_candidate": false,
+    "audit_matches_readme": true
+  },
+  "decision": "FAIL_SOURCE_IDENTITY",
+  "scope": "source identity only; no behavioral or runtime validation"
+}
