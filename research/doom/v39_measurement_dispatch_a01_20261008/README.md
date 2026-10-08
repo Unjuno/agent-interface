@@ -18,11 +18,11 @@ The exact current-main helper selects `session_map01_v12.py` for the default par
 
 ## Reproduce
 
-From the repository root run:
+From the repository root run this read-only reproduction:
 
 ```sh
 python -B research/doom/v39_measurement_dispatch_a01_20261008/run_modes.py
 python -B research/doom/v39_measurement_dispatch_a01_20261008/verify.py
 ```
 
-All execution is offline and synthetic. The harness AST-executes only the frozen command helper and parser-option declaration; it does not import the controller's runtime dependencies or launch a session.
+All execution is offline and synthetic. The harness AST-executes only the frozen command helper and parser-option declaration; it does not import the controller's runtime dependencies or launch a session. `run_modes.py` compares fresh stdout and independently reconstructed audit data against the retained raw files and refuses mismatches; it never writes over `RESULT.json`, `AUDIT.json`, stdout captures, or their manifest.
