@@ -1,3 +1,7 @@
-# Issue #8604 T0 A01 — pending formal run
+# Issue #8604 T0 A01 — formal execution STOP
 
-Formal candidate and independent audit invocations have not occurred. Construction tests and exact card semantics are captured in `PROTOCOL.md`, `README.md`, and `SHA256SUMS` after freeze. No participant study or human data is authorized, performed, or inferred. Do not cite this placeholder or construction test pass as a human-choice result.
+**Disposition: `STOP_CANDIDATE_OUTPUT_CONTRACT`.** After freeze commit `4545673dd7aabf54071056426b09d4c393a1dd92`, the candidate was invoked once with `python -B candidate.py --input cards.json --output raw/candidate.json`. Instead of honoring the CLI contract and creating `raw/candidate.json`, the module's `__main__` path printed the 24-card JSON fixture to stdout. The orchestration transcript retained only a truncated display; exact stdout bytes and process exit status were not captured as artifacts. The required output file is absent. No auditor invocation was made because there is no custody-valid candidate output to audit. Candidate retry count 0; auditor invocations 0. This is an execution/interface failure, not a scientific result.
+
+The construction suite had passed 7/7 normal and 7/7 optimized tests, but failed to exercise the formal CLI argument/output path. That test-coverage gap is part of the retained failure. Do not rerun this frozen allocation or infer that cards passed the formal audit. The pre-formal fixed-oracle check is construction evidence only.
+
+No participants, human data, model, network, GUI, Docker/WSLc, or action dispatch were involved. This says nothing about choice latency, Hick–Hyman transfer, choice overload, human comprehension, or product behavior. A successor requires a fresh allocation and must test actual CLI file creation/custody before freeze; do not alter this frozen source or overwrite the failed allocation.

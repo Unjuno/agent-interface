@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8604 T0 A01 inert handoff-card method audit](handoff_choice_complexity_8604_t0_a01_20261008/REPORT.md) — `STOP_CANDIDATE_OUTPUT_CONTRACT`: CLI printed the fixture but did not create its requested output; independent auditor invocation 0, no retry, no human/latency inference.
+
 - [Issue #8598 T0 A01 censored opportunity tail regret](tail_regret_censoring_8598_t0_a01_20261008/REPORT.md) — `FAIL_METHOD`, audit integrity PASS: 768 cohorts/24,576 opportunities reconstructed; 10/128 strict IPCW-correct vs 20/128 resolved-only, 768/768 partial-tail coverage and zero false unique ranks. Synthetic host CPU only; no live/product claim.
 
 - [Issue #8592 T0 A03 bounded DPOR validation](bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`: 45,360 exhaustive schedules matched against 217 DPOR representatives; 5/5 auditor rejection controls passed in construction tests. WSLc finite authored-model evidence only; no runtime-speed or live-safety claim. A01/A02 execution STOPs preserved.
@@ -665,6 +667,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`gui_reversibility_7949_external_write_a03_20261007/`](gui_reversibility_7949_external_write_a03_20261007/)
 - [`gui_reversibility_7949_journal_a01_20261007/`](gui_reversibility_7949_journal_a01_20261007/)
 - [`gui_reversibility_7949_journal_duplicate_execution_20261007/`](gui_reversibility_7949_journal_duplicate_execution_20261007/)
+- [`handoff_choice_complexity_8604_t0_a01_20261008/`](handoff_choice_complexity_8604_t0_a01_20261008/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
 - [`hazard_checkpoint_7466_adaptive_cost_a02_20261004/`](hazard_checkpoint_7466_adaptive_cost_a02_20261004/)
 - [`hazard_checkpoint_7466_feedback_gate_a03_20261004/`](hazard_checkpoint_7466_feedback_gate_a03_20261004/)
