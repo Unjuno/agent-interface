@@ -14,7 +14,7 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "9ecd9012f4f4ee206b9a1a9ba6afd009df6efcca2f59b0c905f3a1fb07ea35d8"
+FROZEN_PLAN_SHA256 = "e01b14533bc196bbe97f4651c73565caef46c34d711b09c84aa2aaef7a805b23"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
 EXPECTED_XVFB_STDERR_SHA256 = FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]
 
@@ -74,6 +74,9 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
     require(any("Xvfb" in arg for arg in server.get("argv", [])) and
             "-nolisten" in server.get("argv", []) and "tcp" in server.get("argv", []), "Xvfb argv/isolation")
     events = record.get("entry_events", [])
+    allowed_event_types = {"KeyPress", "KeyRelease", "value", "exit"}
+    require(all(event.get("event") in allowed_event_types for event in events),
+            "Entry event type")
     event_times = [event.get("ns") for event in events]
     require(all(type(ns) is int for ns in event_times) and
             event_times == sorted(event_times), "Entry event chronology")
@@ -351,6 +354,8 @@ def mutation_controls(root: Path) -> dict:
             r["before"].update(lockmask=False), r["before"]["keymap"].__setitem__(0, False)),
         "boolean_completed_operation_index": lambda r: r["response"]["result"]["execution"][
             "completed_ops"].__setitem__(0, False),
+        "unexpected_entry_event_type": lambda r: r["entry_events"].insert(
+            2, {"event": "MapNotify", "ns": r["entry_events"][1]["ns"]}),
     }
     def move_value_and_exit_before_input(record: dict) -> None:
         terminal = [e for e in record["entry_events"] if e.get("event") in ("value", "exit")]

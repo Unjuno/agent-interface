@@ -119,7 +119,8 @@
     "JSON boolean substituted for integer LockMask and keymap evidence",
     "JSON boolean substituted for completed operation index",
     "JSON boolean substituted for actor transition state",
-    "JSON boolean substituted for actor ACK timestamp"
+    "JSON boolean substituted for actor ACK timestamp",
+    "unexpected Entry journal event type"
   ],
   "scope_limits": [
     "one VM, Xvfb/Tk Entry, XKB map, and source closure only",
@@ -144,5 +145,5 @@
     "disposition": "STOP due to auditor predicate counting modifier KeyPress char=\"\" as payload and not requiring balanced KeyRelease keycodes; no remaining cases were run and none of that allocation is reused.",
     "raw_record_sha256": "899f1fa5883c0563f458aae42da7f56ab3157c4c5699d71c9ea06c91a84289e3"
   },
-  "audit_event_contract": "Require exact JSON integers (never booleans) for LockMask/keymap bytes, completed-operation indices, keycodes, timestamps, actor state and actor ACK time. Require an exact-integer nondecreasing monotonic timestamp for every Entry journal row in recorded order. Compare payload against nonempty KeyPress.char fields. Require one progressive Entry value prefix after each corresponding character KeyPress and before its KeyRelease, and exactly one final exit row after all input. Independently require exact-integer keycode multiset balance and valid per-key chronology: no duplicate down, orphan release, or key left down, including modifiers."
+  "audit_event_contract": "Allow only fixture-recorded Entry event types KeyPress, KeyRelease, value, and exit. Require exact JSON integers (never booleans) for LockMask/keymap bytes, completed-operation indices, keycodes, timestamps, actor state and actor ACK time. Require an exact-integer nondecreasing monotonic timestamp for every Entry journal row in recorded order. Compare payload against nonempty KeyPress.char fields. Require one progressive Entry value prefix after each corresponding character KeyPress and before its KeyRelease, and exactly one final exit row after all input. Independently require exact-integer keycode multiset balance and valid per-key chronology: no duplicate down, orphan release, or key left down, including modifiers."
 }

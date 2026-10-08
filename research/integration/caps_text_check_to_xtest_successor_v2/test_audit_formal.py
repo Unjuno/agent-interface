@@ -74,6 +74,12 @@ def record(arm: str, case_id: str = "C01") -> dict:
 
 
 class FormalAuditTest(unittest.TestCase):
+    def test_rejects_unfrozen_entry_event_type(self):
+        sample = record("current")
+        events = sample["entry_events"]
+        events.insert(2, {"event": "MapNotify", "ns": events[1]["ns"]})
+        self.assertIn("Entry event type", audit_record("C01", "current", sample))
+
     def test_rejects_boolean_for_integer_json_evidence(self):
         samples = []
         sample = record("current")
@@ -273,7 +279,7 @@ class FormalAuditTest(unittest.TestCase):
             self.assertEqual(result["status"], "PASS")
             controls = mutation_controls(root)
             self.assertEqual(controls["status"], "PASS")
-            self.assertEqual(len(controls["controls"]), 23)
+            self.assertEqual(len(controls["controls"]), 24)
             self.assertTrue(controls["controls"]["value_and_exit_before_input"]["rejected"])
             self.assertTrue(controls["controls"]["release_before_press"]["rejected"])
             self.assertTrue(controls["controls"]["final_value_before_character_press"]["rejected"])
@@ -282,6 +288,7 @@ class FormalAuditTest(unittest.TestCase):
             self.assertTrue(controls["controls"]["boolean_completed_operation_index"]["rejected"])
             self.assertTrue(controls["controls"]["boolean_actor_state"]["rejected"])
             self.assertTrue(controls["controls"]["boolean_actor_ack_timestamp"]["rejected"])
+            self.assertTrue(controls["controls"]["unexpected_entry_event_type"]["rejected"])
 
 
 if __name__ == "__main__":
