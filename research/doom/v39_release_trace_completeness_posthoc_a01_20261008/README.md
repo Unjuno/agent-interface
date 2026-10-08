@@ -10,7 +10,7 @@
 
 **C.** Some covers may be cancelled at a step boundary or after no current input remains. Terminal release is the authority for complete closure; absence of an early event alone cannot prove held input or missed release.
 
-**U.** This is a posthoc analysis of one retained live allocation, not a new live exposure. It gives aggregate owner-empty timestamps, not per-key key-up times. The run does not retain independently useful application-feedback timing, and it ended unfinished without MAP01 exit. No runtime repair or causal latency claim follows.
+**U.** This is a posthoc analysis of one retained live allocation, not a new live exposure. Its frozen `runtime/sources.json` identifies the historical run as ExecutorV12 with an ExecutorV11 owner wrapper; it is not evidence of current ExecutorV13 behavior. It gives aggregate owner-empty timestamps, not per-key key-up times. The run does not retain independently useful application-feedback timing, and it ended unfinished without MAP01 exit. No runtime repair or causal latency claim follows.
 
 ## Result
 
@@ -18,7 +18,7 @@ The retained trace has seven cancel requests and seven matching cancelled termin
 
 For the three interrupted receipts, cancel-request to owner-empty verification spans **0.771–2.652 ms** in this single run. This is not a distribution or a per-key up-time measurement. The one early event was published 12.902 ms after its owner receipt; the two cover interruptions surfaced their verified empty release only in their terminal records. The raw owner receipts contain no per-key release timestamps. The prior audit passes its declared gates; it did not require complete early-event coverage.
 
-The result therefore identifies a telemetry-coverage boundary to examine in a future versioned live run: distinguish per-program early release publication from terminal-only cleanup evidence, and add per-key release measurements if the runtime can retain them without disrupting input-up ordering. This package does not change production code.
+The 1/3 event-coverage figure belongs only to this historical V12/V11 allocation and must not be generalized to ExecutorV13. The result therefore identifies a telemetry-coverage boundary to examine in a future versioned live run: distinguish per-program early release publication from terminal-only cleanup evidence, and add per-key release measurements if the runtime can retain them without disrupting input-up ordering. This package does not change production code.
 
 The v2 auditor counts only `input_released` as verified early-release coverage; `input_release_unverified` is reported separately. Event IDs for accepted programs, terminals, cancellation requests, and release events must be unique, and release events must reference a terminal. Mutation tests cover these distinctions. The retained input still has one verified early-release event and zero unverified release events.
 
@@ -27,9 +27,12 @@ The v2 auditor counts only `input_released` as verified early-release coverage; 
 From the repository root, run a reproduction into fresh output names (the scripts refuse to overwrite existing results):
 
 ```powershell
-python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/run_audit.py --output RESULT_REPRO.json
-python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/audit_result.py --result RESULT_REPRO.json --output AUDIT_REPRO.json
+python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/run_audit.py --output RESULT_V3_REPRO.json
+python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/audit_result.py --result RESULT_V3_REPRO.json --output AUDIT_V3_REPRO.json
 python -B -m unittest -v research.doom.v39_release_trace_completeness_posthoc_a01_20261008.test_audit
 ```
 
 The initial output blobs from commit `5604a1add0cf8d36902e185d7060e438270c76b5` remain in this branch's history. Current `RESULT.json` / `AUDIT.json` were regenerated from the exact same frozen inputs with the independent check strengthened for per-ID timing and task outcome; only JSON line endings changed, and the stronger audit hash binds the current result bytes. The first output and audit were not a new game/model allocation. Input provenance and checksums are in `FREEZE.json`; the original live allocation remains unchanged. No image, model, game, X11, OS input, container, or GPU was used in this posthoc run.
+
+
+The V3 result pins the historical live executor, owner wrapper, input owner, and controller hashes from the frozen source manifests. The independent V3 oracle rejects any result whose source lineage differs from those frozen identities. This is a provenance correction and does not change the V2 release-event reconciliation.
