@@ -1,0 +1,46 @@
+{
+  "a01_merge_commit": "6c153c298ce551b24dc2f0ab645ee54c655217d8",
+  "a01_pr": "https://github.com/Unjuno/agent-interface/pull/8559",
+  "allocation": "CEGAR-POLICY-BRANCH-BINDING-8553-A02-20261009",
+  "base_commit": "6ceb8552df13a188f6aad9cbfed88eba6eb70689",
+  "branch": "research/8553-observation-branch-a02-20261009",
+  "candidate_a01_sha256": "0bf12edd869f39c7a00338b74597c9264f70a98bd3629a89f9604c0df162622e",
+  "construction_branch_audit_cli_invocations": 0,
+  "construction_legacy_probe_cli_invocations": 1,
+  "construction_tests": {
+    "python312": "3/3 passed",
+    "python314": "3/3 passed"
+  },
+  "container": false,
+  "container_reason": "Read-only Docker image listing failed with containerd content-store operation-not-supported; this stdlib file audit has no container-specific dependency.",
+  "files": {
+    "CONSTRUCTION.stdout.txt": "b0fa8e6db8b2c6db42d207dedb59bff139696580a54b6991caa1ad7c61712ae6",
+    "PROTOCOL.md": "9c8b558048f4c62847a1b2cd75809ccae9bde55ba434342f4dbd3ee10fdf6f7c",
+    "README.md": "18e3d78136420af3884e7408b603273719e64d683306a18cf6379306709b48df",
+    "branch_audit.py": "cdb18d86daeb22797ca1fa5b7ea406ab9b995db7cbea20e2705a9b95f0db09f2",
+    "input/audit-a01.json": "13f845490888e4704792726714077711cee58c66323c8ddcd6121119ec363c59",
+    "input/audit-a01.py": "a41336baaa7a01500be1c50b699b5de3388af33881d50661af1d31664f43e6c0",
+    "input/candidate-a01.json": "0bf12edd869f39c7a00338b74597c9264f70a98bd3629a89f9604c0df162622e",
+    "input/fixture.json": "514788d1b15a58a08469717370cd062762184cec9119082e5291ff8b66598baf",
+    "legacy_probe.py": "1db511718f757bf9dfc60f7ff362326b371e212ee2cf6443df9022d0db5d906f",
+    "run_formal.py": "c535720791858b7cb5e2b9c502e5087fb6ebf30660ed147c188be0bdd8686348",
+    "test_construction.py": "e2e9b5c1806feb9a1c91e386fc1e16d60f99ed59bc79fab70a714ec86e203a5a"
+  },
+  "fixture_sha256": "514788d1b15a58a08469717370cd062762184cec9119082e5291ff8b66598baf",
+  "formal_candidate_invocations_before_freeze": 0,
+  "formal_independent_auditor_invocations_before_freeze": 0,
+  "formal_legacy_checker_process_invocations_before_freeze": 0,
+  "formal_runtime": {
+    "executable": "/run/current-system/sw/bin/python3.12",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]"
+  },
+  "freeze_sha256": "15711dd8c3c112299809ec131b2654b61fe8ef7b9c25910f0c16398962bd7ee7",
+  "independent_auditor_invocations_before_freeze": 0,
+  "issue": 8553,
+  "legacy_audit_sha256": "a41336baaa7a01500be1c50b699b5de3388af33881d50661af1d31664f43e6c0",
+  "legacy_checker_formal_invocations_before_freeze": 0,
+  "repo_relative_path": "research/analysis/cegar_policy_branch_binding_8553_a02_20261009",
+  "retries_before_freeze": 0,
+  "schema": "issue8553-a02-freeze-v1"
+}
