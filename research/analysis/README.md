@@ -2,6 +2,8 @@
 
 - [Issue #1998 A04 Pillow PNG focused-payload economics](pillow_focused_observation_payload_1998_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: main ImageArtifactSink/Pillow 12.3.0 exact-pixel audit on 21 retained GUI frames and 441 requests; 420 crops saved 9,617,403 serialized bytes, 21 full-bounds controls fell back, and 6/6 mutations were rejected. Finite byte accounting only; ROI quality, model, latency, GUI/task effect, and product benefit remain untested.
 
+- [Issue #1998 A09 Chromium post-submit task-cue crop OCR](chromium_postsubmit_task_cue_1998_t0_a09_20261009/REPORT.md) — `FAIL_NO_CROP_TOKEN`: all 20 fixed A04 crops were OCR-processed and independently audited, but none recovered exact `t001101`; the full-frame pilot also missed it. One retained pending-effect frame only; no GUI/task replay or product claim.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -368,9 +370,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
-<details>
-<summary><strong>Expand all retained result/failure directories</strong></summary>
-
 - [`5352_unknown_recovery_audit_v1/`](5352_unknown_recovery_audit_v1/)
 - [`accessibility_configuration_effects_5922_t0_v1/`](accessibility_configuration_effects_5922_t0_v1/)
 - [`action_bound_residual_6619_t0_v1/`](action_bound_residual_6619_t0_v1/)
@@ -487,6 +486,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
+- [`chromium_postsubmit_task_cue_1998_t0_a09_20261009/`](chromium_postsubmit_task_cue_1998_t0_a09_20261009/)
 - [`circuit_rejection_cost_5375_a01_20261004/`](circuit_rejection_cost_5375_a01_20261004/)
 - [`circuit_rejection_cost_5375_a02_20261004/`](circuit_rejection_cost_5375_a02_20261004/)
 - [`claim_disk_recovery_6509_01a0ff58/`](claim_disk_recovery_6509_01a0ff58/)
@@ -1214,8 +1214,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v1/`](xterm_resource_footprint_transfer_v1/)
 - [`xterm_resource_footprint_transfer_v2/`](xterm_resource_footprint_transfer_v2/)
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
-
-</details>
 
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
