@@ -1,3 +1,4 @@
+import {createInstrumentedRelayClient} from './relay_host.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp, readFile, writeFile, readdir} from 'node:fs/promises';
@@ -106,3 +107,37 @@ test('original presentation is explicit and adds no new host send or review',asy
   assert.equal(sends,1);assert.equal(presents,1);assert.equal(reviews,0);
   assert.equal(JSON.parse(await readFile(result.original_reply_path)),null);
 });
+
+test('explicit command attribution reaches the existing host dispatch',async()=>{
+ const calls=[];
+ const host={sendPresented:async(...args)=>{calls.push(args);return {attempt:1,result:{content:[{type:'text',text:'{"status":"closed"}'}]}};}};
+ const exchange=await createPrimaryExchange({host,route:'direct-post',directory:join(await mkdtemp(join(tmpdir(),'exchange-attribution-')),'exchange')});
+ const attribution={evaluation_id:'owned-evaluation',phase:'termination',model_stage_id:'stage-1',primary_call_id:'call_owned'};
+ await exchange.execute({id:1,method:'call',args:['interface_close',{}],attribution});
+ assert.equal(calls.length,1);assert.deepEqual(calls[0][3],attribution);
+});
+
+test('command metadata survives actual exchange/caller/relay path and cannot leak into next command',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'attribution-path-'));const transport=join(root,'transport');const directory=join(root,'exchange');
+ const peer=`require('readline').createInterface({input:process.stdin}).on('line',s=>{const r=JSON.parse(s);console.log(JSON.stringify({id:r.id,tool:r.tool,status:'returned',next_id:r.id+1,result:{content:[{type:'text',text:JSON.stringify({status:r.tool==='interface_close'?'closed':'clock'})}]}}));});`;
+ const host=await createInstrumentedRelayClient({command:process.execPath,args:['-e',peer],evidenceDirectory:transport});
+ const exchange=await createPrimaryExchange({host,route:'direct-post',directory});
+ const attribution={evaluation_id:'owned',phase:'preflight',model_stage_id:'stage-1',primary_call_id:'call_owned'};const original={...attribution};
+ try{
+  for(const value of [{...attribution,phase:'unknown'},{...attribution,provider_tokens:0},{...attribution,model_stage_id:''}]){
+   await assert.rejects(exchange.execute({id:1,method:'call',args:['interface_clock',{}],attribution:value}),TypeError);
+   assert.equal(exchange.state().next_id,1);assert.equal(exchange.state().stopped,null);assert.equal(host.state().attempts,0);
+  }
+  const pending=exchange.execute({id:1,method:'call',args:['interface_clock',{}],attribution});attribution.phase='bounded_repair';
+  await assert.rejects(exchange.execute({id:2,method:'call',args:['interface_clock',{}]}),/outstanding/);
+  const result=await pending;assert.deepEqual(result.attribution,original);
+  await exchange.execute({id:2,method:'call',args:['interface_close',{}]});
+  const rows=(await readFile(join(transport,'host-events.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);
+  const first=rows.filter(r=>r.attempt===1&&['send_requested','reply_available'].includes(r.kind));assert.equal(first.length,2);first.forEach(r=>assert.deepEqual(r.caller_attribution,original));
+  rows.filter(r=>r.attempt===2).forEach(r=>assert.equal(Object.hasOwn(r,'caller_attribution'),false));
+  const persisted=JSON.parse(await readFile(join(directory,'request-1.json'),'utf8'));assert.deepEqual(persisted.attribution,original);
+  const raw=JSON.parse(await readFile(join(transport,'request-1.json'),'utf8'));assert.deepEqual(raw,{id:1,tool:'interface_clock',arguments:{}});
+  assert.equal(host.state().attempts,2);assert.equal(exchange.state().next_id,3);
+ }finally{await host.close();}
+});
+
