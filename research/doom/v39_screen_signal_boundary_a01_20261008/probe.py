@@ -1,6 +1,17 @@
 import hashlib, json, sys
 from pathlib import Path
-sys.path[:0] = [r"C:\Users\user\Documents\Codex\2026-10-08\work\issue59-main-576d\research\doom", r"C:\Users\user\Documents\Codex\2026-10-08\work\issue59-main-576d\research\live_control"]
+
+root = Path(__file__).resolve().parents[3]
+source_ids = {
+    root / "research/doom/map01_overlap_controller_v39.py": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a",
+    root / "research/live_control/observable_signal_guard_v2.py": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+}
+for source, expected in source_ids.items():
+    data = source.read_bytes()
+    actual = hashlib.sha1(f"blob {len(data)}\\0".encode() + data).hexdigest()
+    if actual != expected:
+        raise RuntimeError(f"frozen source blob mismatch: {source.relative_to(root)}: {actual}")
+sys.path[:0] = [str(root / "research/doom"), str(root / "research/live_control")]
 from map01_overlap_controller_v39 import DoomCoverSignalPairMonitor
 from observable_signal_guard_v2 import ObservableSignalGuard
 
