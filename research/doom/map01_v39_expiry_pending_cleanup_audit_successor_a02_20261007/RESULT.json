@@ -1,0 +1,39 @@
+{
+  "schema": "map01-v39-a02-expiry-receipt-audit-v2-result-v1",
+  "disposition": "PASS_AUDIT_CORRECTION_SCOPED",
+  "input": {
+    "path": "research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a01_20261005/results/formal_02/candidate.json",
+    "sha256": "961b867713d9fbbef923b61b6271b6f4f8a94a488b4833f344e3583411b433cf"
+  },
+  "baseline_auditor": {
+    "source": "A01 merged audit_successor.py",
+    "positive_control_accepted": true,
+    "negative_controls_total": 10,
+    "existing_six_rejected": 6,
+    "new_single_field_mutations_false_accepted": [
+      "emitted grants_input_authority=true",
+      "emitted top-level edge=down",
+      "emitted reason=cancelled while owner cleanup reason=expired"
+    ],
+    "false_accepts_reproduced_in_normal_and_optimized_python": true,
+    "test_exit_code": 1
+  },
+  "corrected_auditor": {
+    "positive_control_accepted": true,
+    "negative_controls_total": 10,
+    "negative_controls_rejected": 10,
+    "test_methods": 11,
+    "auditor_subprocesses": 22,
+    "normal_and_optimized_python": true,
+    "direct_raw_audit_exit_code": 0,
+    "test_exit_code": 0
+  },
+  "candidate_or_runtime_execution": 0,
+  "scope": "one immutable fake-display A02 record; offline audit-method correction only",
+  "not_established": [
+    "production input or physical release behavior",
+    "live GUI or game behavior",
+    "useful feedback or bounded recovery",
+    "Issue #59 live threat-control acceptance"
+  ]
+}
