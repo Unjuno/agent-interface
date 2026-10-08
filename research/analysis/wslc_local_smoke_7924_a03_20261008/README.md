@@ -10,6 +10,10 @@ Successor to [Issue #7924](https://github.com/Unjuno/agent-interface/issues/7924
 - **C:** A02 retained only combined stdout/stderr. One host/runtime only. The historical WSLc output warns that cgroup swap limits are unavailable.
 - **U:** This does not repair or upgrade A02's `FAIL_AUDITOR_CONTRACT`, rerun A02, or establish Docker parity, speed, memory relief, effective memory limits, OOM prevention, GUI/model behavior, or general migration.
 
-## Execution status
+## Execution result
 
-Pending frozen A03 audit invocation. The only permitted container operation for this allocation is one uniquely named, offline WSLc auditor run against this read-only package. No Docker or global container list is used.
+**A03 result: `FAIL_AUDITOR_CONTRACT`.** The one frozen WSLc invocation exited 1 before completing the retained-evidence checks. The auditor expected `absence_verified` at the top level of the A02 auditor cleanup receipt, but A02 records that field under `targeted_inspect_checks[1]`. This is an A03 verifier defect; it does not contradict the saved A02 cleanup evidence and does not alter A02's `FAIL_AUDITOR_CONTRACT` result.
+
+The single WSLc invocation used the pinned image with no network, read-only package mount, `--pull never`, and `--rm`. A warning stated that swap limits/cgroup support are unavailable, so the requested 512M is not evidence of effective memory isolation. One exact-CID inspect returned not found after auto-remove. No Docker operation, global container list, retry, A02 candidate run, or A02 auditor run occurred. Exact output and receipts are retained.
+
+The A03 allocation is final and was not rerun. `AUDIT.json` is intentionally absent because the auditor did not finish. Any follow-up must be a distinct, explicitly scoped allocation and must not rewrite this outcome or the A02 evidence.
