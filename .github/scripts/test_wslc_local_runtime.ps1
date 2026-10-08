@@ -71,7 +71,18 @@ try {
         throw "Could not verify WSLc cleanup for this run's container ID (exit code $LASTEXITCODE)."
     }
     $listing = ($matchingContainers -join "`n").Trim()
-    if ($listing -notmatch '^\[\s*\]
+    if ($listing -notmatch '^\[\s*\]$') {
+        try {
+            $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
+        }
+        catch {
+            throw 'The scoped WSLc cleanup query did not return valid empty-array JSON; cleanup is unverified.'
+        }
+        if ($null -eq $listedContainers -or @($listedContainers).Count -gt 0) {
+            throw 'The scoped WSLc cleanup query did not return an empty JSON array; cleanup is unverified.'
+        }
+    }
+
 
     Write-Output 'WSLc local runtime probe: PASS'
     Write-Output "Image: $image"
