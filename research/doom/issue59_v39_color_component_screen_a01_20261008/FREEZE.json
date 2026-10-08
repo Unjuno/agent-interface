@@ -1,0 +1,30 @@
+{
+  "experiment_id": "issue59-v39-color-component-screen-a01-20261008",
+  "classification": "offline_exploratory_candidate_screen",
+  "source_main": "8d2eac460a7744d049bbca1d25b3cde86b1b496c",
+  "evaluation_dataset": "merged PR #8472 blinded V39 fixed-yellow-cue recheck, 36-frame frozen sample; labels remain unchanged",
+  "input_episode": "map01-v39-coast-liveness-live-01; episode source controller commit is not pinned in the retained run",
+  "candidate_rule": {
+    "roi_xywh": [
+      450,
+      250,
+      380,
+      270
+    ],
+    "warm_pixel": "R>70 and R>1.25*G and R>1.25*B",
+    "yellow_pixel": "R>180 and G>100 and B<100 and R>0.8*G and G>1.5*B",
+    "mask": "warm OR yellow",
+    "connectivity": "8-neighbor",
+    "positive": "at least one component has area >= 8 pixels",
+    "threshold_frozen_before_label_join": true
+  },
+  "baseline": "published fixed yellow pixel count >200; reported TP=3 FP=0 FN=13 TN=18; uncertain=2 excluded",
+  "decision_rule": "Compare candidate confusion on the same determinate labels; do not tune thresholds or claim general detector performance from one episode.",
+  "limits": [
+    "one episode and one reviewer label set",
+    "fixed ROI/color mask can confuse enemy sprites with blood, projectiles, and animation",
+    "no live input, interruption, release, recovery, game progress, or terminal outcome",
+    "no causal or product claim"
+  ]
+}
+
