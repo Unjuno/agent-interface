@@ -116,6 +116,14 @@ def serve(ipc: Path, repo: Path, once: bool = False) -> int:
                     response = ""
             (ipc / f"{request_id}.response.jsonl").write_text(
                 response, encoding="utf-8", newline="\n")
+            def resolved_path(key):
+                value = host_path(request.get(key), repo)
+                return None if value is None else str(Path(value).resolve())
+            broker["resolved_paths"] = {
+                "schema": resolved_path("schema"),
+                "working": resolved_path("working"),
+                "image": resolved_path("image"),
+            }
             (ipc / f"{request_id}.broker.json").write_text(
                 json.dumps(broker) + "\n", encoding="utf-8", newline="\n")
             handled.add(request_id)
