@@ -1,0 +1,19 @@
+{
+  "allocation": "EPISTEMIC-ACTION-8623-T0-A01-20261008",
+  "issue": 8623,
+  "base_main_sha": "f99ac0d3ad084c244cc7558d2219ac87247ded0c",
+  "branch": "research/8623-epistemic-action-t0-a01-20261008",
+  "freeze_scope": "The listed plan, fixture, oracle, tests, candidate, auditor, and one-shot runner bytes are frozen before the official candidate/auditor invocation.",
+  "source_sha256": {
+    "PLAN.md": "f58fa1424dcc4672ba1d36016499bab8da62a3e9991b9e39dfa9f823eced9e6d",
+    "fixture.json": "dd62c3d1aca0a57744a700df71b24f7b4a14dfcb9dfe20e3ac4cf7e70d11afd2",
+    "oracle.json": "a68f1e9d81ec927be12305cb43caee7cfc5869a3b8b1de23df3cd05e37dca201",
+    "test_construction.py": "17818d66694feb964e48ca4b188477104115c7355bdadffc7bec29686f44aea1",
+    "candidate.py": "3191b3f4f457edfcb4b15d800f68bef0c4e63df008269587cc253fc9a87125c0",
+    "auditor.py": "877f4e6dedb459dc95d195dd4ab5f9e337439dfe0a1d744381098cae1cf111c5",
+    "run_formal.py": "3b15a6b15cd80ec3be0fe73de06d45b68e8a360c746f04e99e9e1e845d980e82"
+  },
+  "formal_invocations_before_freeze": {"candidate": 0, "auditor": 0},
+  "formal_invocation_limit": {"candidate": 1, "auditor": 1, "retries": 0},
+  "environment": "Windows 11 AMD64 host, CPython 3.12.10, stdlib only; no Docker/WSLc or external state."
+}

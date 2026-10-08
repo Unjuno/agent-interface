@@ -1,0 +1,25 @@
+{
+  "allocation": "EPISTEMIC-ACTION-8623-T0-A01-20261008",
+  "issue": 8623,
+  "schema": "epistemic-action-result-summary-v1",
+  "formal_disposition": "PASS_METHOD_SCOPED",
+  "hypothesis_disposition": "H_PASS_SCOPED",
+  "scope": "authored_deterministic_cpu_method_fixture_only",
+  "model_or_live_agent_evaluated": false,
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "rows_audited": 18,
+  "arms": {
+    "AVAILABLE": {"recognition": "6/6", "action_selection": "5/6", "evidence_production": "6/6", "evidence_use": "6/6", "stopping": "5/6", "task_success": "4/6", "hard_gate_violations": 0, "evidence_needed_successes": "3/3", "unnecessary_actions": 1},
+    "PRESCRIBED": {"recognition": "6/6", "action_selection": "6/6", "evidence_production": "6/6", "evidence_use": "6/6", "stopping": "6/6", "task_success": "4/6", "hard_gate_violations": 0},
+    "NO_EPISTEMIC_ACTION": {"recognition": "6/6", "action_selection": "3/6", "evidence_production": "6/6", "evidence_use": "3/6", "stopping": "3/6", "task_success": "1/6", "hard_gate_violations": 0, "evidence_needed_successes": "0/3"}
+  },
+  "four_mutation_controls_rejected": true,
+  "aggregate_task_success_masks_available_stopping_defect": true,
+  "performance_claim": false,
+  "deployment_or_user_benefit_claim": false,
+  "candidate_stdout_sha256": "44ad26ecbfaa5bd952980e2462e8d5f924b28e1ebad52a14c676a7030f22610d",
+  "auditor_stdout_sha256": "32784066d00628b5187c6cf17b3a1c75ede06316cc6b791d485d61813f7ae84f",
+  "run_record": "formal/RUN.json"
+}

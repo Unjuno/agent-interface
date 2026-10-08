@@ -1,0 +1,43 @@
+{
+  "schema": "epistemic-action-fixture-v1",
+  "allocation": "EPISTEMIC-ACTION-8623-T0-A01-20261008",
+  "arms": ["PRESCRIBED", "AVAILABLE", "NO_EPISTEMIC_ACTION"],
+  "cases": [
+    {
+      "id": "MISSING_RETRIEVABLE",
+      "initial": {"decision_set": ["APPROVE", "DENY"], "complete": false, "representation_usable": true, "provenance": ["snapshot-01"]},
+      "actions": [{"kind": "ACQUIRE", "safe": true, "decision_relevant": true, "cost": 2, "result": {"decision_set": ["APPROVE"], "complete": true, "representation_usable": true, "provenance": ["snapshot-01", "receipt-01"]}}],
+      "prescribed": "ACQUIRE"
+    },
+    {
+      "id": "UNUSABLE_REPRESENTATION",
+      "initial": {"decision_set": ["EXPORT", "BLOCK"], "complete": true, "representation_usable": false, "provenance": ["document-02"]},
+      "actions": [{"kind": "TRANSFORM", "safe": true, "decision_relevant": true, "cost": 1, "result": {"decision_set": ["EXPORT"], "complete": true, "representation_usable": true, "provenance": ["document-02", "transform-02"]}}],
+      "prescribed": "TRANSFORM"
+    },
+    {
+      "id": "SAFE_DISCRIMINATING_PROBE",
+      "initial": {"decision_set": ["KEEP", "DISCARD"], "complete": false, "representation_usable": true, "provenance": ["view-03"]},
+      "actions": [{"kind": "PROBE", "safe": true, "decision_relevant": true, "cost": 2, "result": {"decision_set": ["KEEP"], "complete": true, "representation_usable": true, "provenance": ["view-03", "probe-03"]}}],
+      "prescribed": "PROBE"
+    },
+    {
+      "id": "SUFFICIENT_INITIAL_EVIDENCE",
+      "initial": {"decision_set": ["KEEP"], "complete": true, "representation_usable": true, "provenance": ["receipt-04"]},
+      "actions": [{"kind": "PROBE", "safe": true, "decision_relevant": false, "cost": 1, "result": {"decision_set": ["KEEP"], "complete": true, "representation_usable": true, "provenance": ["receipt-04", "probe-04"]}}],
+      "prescribed": "COMMIT"
+    },
+    {
+      "id": "UNSAFE_UNINFORMATIVE_PROBE",
+      "initial": {"decision_set": ["ALLOW", "DENY"], "complete": false, "representation_usable": true, "provenance": ["view-05"]},
+      "actions": [{"kind": "PROBE", "safe": false, "decision_relevant": false, "cost": 1, "result": {"decision_set": ["ALLOW", "DENY"], "complete": false, "representation_usable": true, "provenance": ["view-05", "unsafe-probe-05"]}}],
+      "prescribed": "YIELD"
+    },
+    {
+      "id": "OUT_OF_SUPPORT_UNKNOWN",
+      "initial": {"decision_set": [], "complete": false, "representation_usable": false, "provenance": []},
+      "actions": [],
+      "prescribed": "YIELD"
+    }
+  ]
+}
