@@ -1,0 +1,58 @@
+mode=baseline
+optimized=true
+command=["/usr/local/bin/python", "-O", "-m", "unittest", "test_doom_typed_artifact_reconciliation_v1", "-v"]
+exit=1
+--- stdout ---
+--- stderr ---
+test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) ... 
+  test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) (field='id') ... FAIL
+  test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) (field='step') ... FAIL
+  test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) (field='sequence') ... FAIL
+  test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) (field='capture_ns') ... FAIL
+test_exact_identity_pair_matches (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_exact_identity_pair_matches) ... ok
+test_nested_boolean_integer_pointer_binding_alias_does_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_nested_boolean_integer_pointer_binding_alias_does_not_match) ... FAIL
+
+======================================================================
+FAIL: test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) (field='id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_doom_typed_artifact_reconciliation_v1.py", line 89, in test_boolean_integer_aliases_in_epoch_fields_do_not_match
+    self.assertFalse(result["matched"], result["checks"])
+AssertionError: True is not false : {'typed_schema': True, 'full_observation': True, 'same_epoch': True, 'same_binding': True, 'rgb_hash': True, 'ammo_signal': True, 'health_signal': True}
+
+======================================================================
+FAIL: test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) (field='step')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_doom_typed_artifact_reconciliation_v1.py", line 89, in test_boolean_integer_aliases_in_epoch_fields_do_not_match
+    self.assertFalse(result["matched"], result["checks"])
+AssertionError: True is not false : {'typed_schema': True, 'full_observation': True, 'same_epoch': True, 'same_binding': True, 'rgb_hash': True, 'ammo_signal': True, 'health_signal': True}
+
+======================================================================
+FAIL: test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) (field='sequence')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_doom_typed_artifact_reconciliation_v1.py", line 89, in test_boolean_integer_aliases_in_epoch_fields_do_not_match
+    self.assertFalse(result["matched"], result["checks"])
+AssertionError: True is not false : {'typed_schema': True, 'full_observation': True, 'same_epoch': True, 'same_binding': True, 'rgb_hash': True, 'ammo_signal': True, 'health_signal': True}
+
+======================================================================
+FAIL: test_boolean_integer_aliases_in_epoch_fields_do_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_boolean_integer_aliases_in_epoch_fields_do_not_match) (field='capture_ns')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_doom_typed_artifact_reconciliation_v1.py", line 89, in test_boolean_integer_aliases_in_epoch_fields_do_not_match
+    self.assertFalse(result["matched"], result["checks"])
+AssertionError: True is not false : {'typed_schema': True, 'full_observation': True, 'same_epoch': True, 'same_binding': True, 'rgb_hash': True, 'ammo_signal': True, 'health_signal': True}
+
+======================================================================
+FAIL: test_nested_boolean_integer_pointer_binding_alias_does_not_match (test_doom_typed_artifact_reconciliation_v1.TypedArtifactReconciliationTests.test_nested_boolean_integer_pointer_binding_alias_does_not_match)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_doom_typed_artifact_reconciliation_v1.py", line 101, in test_nested_boolean_integer_pointer_binding_alias_does_not_match
+    self.assertFalse(result["matched"], result["checks"])
+AssertionError: True is not false : {'typed_schema': True, 'full_observation': True, 'same_epoch': True, 'same_binding': True, 'rgb_hash': True, 'ammo_signal': True, 'health_signal': True}
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.088s
+
+FAILED (failures=5)
