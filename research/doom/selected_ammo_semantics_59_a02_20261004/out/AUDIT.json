@@ -1,0 +1,24 @@
+{
+  "schema": "selected-ammo-signal-audit-v1",
+  "run_id": "59-selected-ammo-semantics-a02-20261004",
+  "disposition": "PARTIAL_SIGNAL_SEMANTICS_PASS_SLOT_MAPPING_HOLD",
+  "checks": {
+    "no_inputs": true,
+    "tic_bracketed": true,
+    "direct_equals_game_state": true,
+    "all_ammo_slots_retained": true,
+    "selected_ammo_50": true,
+    "ammo1_0": true,
+    "health_stable_100": true,
+    "png_hashes_match": true
+  },
+  "interpretation": "AMMO1 is not selected-weapon ammunition in this sampled state: SELECTED_WEAPON=2, SELECTED_WEAPON_AMMO=50, AMMO1=0. HUD shows 50. AMMO2 and AMMO4 are both 50, so this one state cannot establish a unique weapon-index-to-ammo-slot mapping.",
+  "scope_limits": [
+    "single fresh initial episode",
+    "no task action or model",
+    "no damage or recovery effect",
+    "two samples only",
+    "HUD values manually read from retained screenshots",
+    "not a useful-feedback-onset measurement"
+  ]
+}

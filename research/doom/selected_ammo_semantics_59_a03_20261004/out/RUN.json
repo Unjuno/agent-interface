@@ -1,0 +1,82 @@
+{
+  "candidate_argv": [
+    "wslc",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "65534:65534",
+    "--cpus",
+    "1",
+    "--memory",
+    "512m",
+    "--workdir",
+    "/out",
+    "-v",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-3\\work\\game-action-sample-audit\\research/doom/selected_ammo_semantics_59_a03_20261004\\source:/study/source:ro",
+    "-v",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-3\\work\\game-action-sample-audit\\research/doom/selected_ammo_semantics_59_a03_20261004\\out:/out:rw",
+    "-e",
+    "PYTHONPATH=/study/source",
+    "-e",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "-e",
+    "HOME=/tmp",
+    "post-guard-game-59-4d74:20261004",
+    "python3",
+    "-B",
+    "/study/source/probe.py"
+  ],
+  "declared_freeze_created_utc": "2026-10-04T12:54:03Z",
+  "declared_timestamp_matches_filesystem": false,
+  "audit_exit_code": 0,
+  "image_id": "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+  "repository_main_sha": "fdbe5182c57102916833f489cd07c60927e3de28",
+  "probe_sha256": "04f1e815aea304d6e8ddc67f660f218c673e045ea07298ba24ffc2b215df926d",
+  "container_log_creation_utc": "2026-10-04T12:55:34.2104816Z",
+  "disposition": "PASS_HASHED_WAD_GLYPH_READER_AND_SAME_TIC_API_SCOPED",
+  "run_id": "59-selected-ammo-semantics-a03-20261004",
+  "candidate_exit_code": 0,
+  "filesystem_freeze_creation_utc": "2026-10-04T12:55:03.0358353Z",
+  "memory_limit_warning": "Kernel lacks swap limit capabilities or cgroup mount; enforcement unverified.",
+  "prelaunch_receipt_utc": "2026-10-04T12:55:31.0167226Z",
+  "source_members": [
+    {
+      "path": "research/doom/doom_hud_signal_v1.py",
+      "git_blob": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "sha256": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v2.py",
+      "git_blob": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "sha256": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v3.py",
+      "git_blob": "083338b4565176aaea560d800ce0210f17b6852f",
+      "sha256": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7"
+    }
+  ],
+  "audit_argv": [
+    "wslc",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "65534:65534",
+    "-v",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-3\\work\\game-action-sample-audit\\research/doom/selected_ammo_semantics_59_a03_20261004\\source:/study/source:ro",
+    "-v",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-10-03\\new-chat-3\\work\\game-action-sample-audit\\research/doom/selected_ammo_semantics_59_a03_20261004\\out:/out:rw",
+    "-e",
+    "PYTHONPATH=/study/source",
+    "-e",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "post-guard-game-59-4d74:20261004",
+    "python3",
+    "-B",
+    "/study/source/audit.py"
+  ]
+}
