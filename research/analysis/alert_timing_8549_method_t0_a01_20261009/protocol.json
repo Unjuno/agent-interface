@@ -1,0 +1,32 @@
+{
+  "allocation": "ALERT-TIMING-8549-METHOD-T0-A01-20261009",
+  "question": "Does the frozen method preserve matched notification facts, presentation and deadlines across the first-event-demand by inter-event-gap comparison, and correctly score source-bound second-event responses?",
+  "scope": "METHOD_ONLY_SYNTHETIC_FIXTURE",
+  "human_participants": false,
+  "primary_factorial": {
+    "first_event_demand": ["process", "task_irrelevant"],
+    "gap_ms": [250, 500, 2000],
+    "matched_blocks": 4,
+    "event_count_per_trial": 2,
+    "t2_deadline_after_arrival_ms": 3000,
+    "visual_duration_ms": 1200,
+    "salience": 5,
+    "truth_facts": ["effect_complete_unverified", "authority_expiry_pending"]
+  },
+  "counterbalance": "For each demand-gap cell, alternate the two event orders by block parity; counterbalance first-event screen position by block parity plus the cell index. Randomize the six cell presentation order independently within each block using the frozen fixture seed.",
+  "response_target_cell": {"block": 1, "demand": "process", "gap_ms": 250},
+  "controls": ["t2_only", "isolated_t1", "persistent_history"],
+  "control_definitions": {
+    "t2_only": {"available_event_ids": ["E2"], "event_count": 1, "history_available": false},
+    "isolated_t1": {"available_event_ids": ["E1"], "event_count": 1, "history_available": false},
+    "persistent_history": {"available_event_ids": ["E1", "E2"], "event_count": 2, "history_available": true}
+  },
+  "response_scoring": {
+    "required_fields": ["event_id", "source_id", "fact_id", "latency_after_t2_ms"],
+    "correct_if": "all identities match the second event and latency is between 0 and the inclusive deadline",
+    "missing_or_malformed": "incorrect, retained with reason"
+  },
+  "synthetic_response_classes": ["correct", "wrong_event", "wrong_source", "wrong_fact", "late", "missing"],
+  "decision": "METHOD_PASS_SCOPED iff all 24 factorial schedules preserve the frozen matched fields, event order and screen position are counterbalanced, all control classes remain labeled, all six synthetic response cases are scored against the independent truth key and deadline, and the independent auditor detects every frozen mutation control.",
+  "prohibitions": ["No human or model inference", "No GUI, OS input, live alert, user data, or consequential effect", "No claim about an attentional-blink effect or alert policy"]
+}

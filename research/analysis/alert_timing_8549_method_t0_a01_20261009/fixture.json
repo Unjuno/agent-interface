@@ -1,0 +1,17 @@
+{
+  "fixture_id": "8549-method-fixture-v1",
+  "random_seed": 8549001,
+  "source_id": "simulator://oversight-lab",
+  "truth": [
+    {"event_id": "E1", "fact_id": "effect_complete_unverified", "message": "Change completed; effect not yet verified."},
+    {"event_id": "E2", "fact_id": "authority_expiry_pending", "message": "Approval expires soon; delivery remains unresolved."}
+  ],
+  "response_cases": [
+    {"case_id":"R01","class":"correct","trial_id":"B01-Dprocess-G0250","event_id":"E2","source_id":"simulator://oversight-lab","fact_id":"authority_expiry_pending","latency_after_t2_ms":250},
+    {"case_id":"R02","class":"wrong_event","trial_id":"B01-Dprocess-G0250","event_id":"E1","source_id":"simulator://oversight-lab","fact_id":"effect_complete_unverified","latency_after_t2_ms":250},
+    {"case_id":"R03","class":"wrong_source","trial_id":"B01-Dprocess-G0250","event_id":"E2","source_id":"simulator://other","fact_id":"authority_expiry_pending","latency_after_t2_ms":250},
+    {"case_id":"R04","class":"wrong_fact","trial_id":"B01-Dprocess-G0250","event_id":"E2","source_id":"simulator://oversight-lab","fact_id":"effect_complete_unverified","latency_after_t2_ms":250},
+    {"case_id":"R05","class":"late","trial_id":"B01-Dprocess-G0250","event_id":"E2","source_id":"simulator://oversight-lab","fact_id":"authority_expiry_pending","latency_after_t2_ms":3001},
+    {"case_id":"R06","class":"missing","trial_id":"B01-Dprocess-G0250","event_id":null,"source_id":null,"fact_id":null,"latency_after_t2_ms":null}
+  ]
+}

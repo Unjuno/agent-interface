@@ -1,0 +1,32 @@
+{
+  "allocation": "ALERT-TIMING-8549-METHOD-T0-A01-20261009",
+  "branch": "research/8549-alert-timing-method-t0-a01-20261009",
+  "candidate": {
+    "command": "sh run_candidate_once.sh",
+    "invocations": 1,
+    "exit_code": 0,
+    "factorial_schedules": 24,
+    "response_cases": 6,
+    "raw_sha256": "a0e2744e4990d3ed1b58dfddecb70ffde4df22bbca0c929361ee9c29c5f9f0d8",
+    "stdout_sha256": "09432626e23ebfc1aeb4d30e63eb4f97dbcd87c440179f422a4fbb4c714be6ae",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "auditor": {
+    "command": "sh run_auditor_once.sh",
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "PASS_METHOD_SCOPED",
+    "reconstructed_schedules": 24,
+    "independently_scored_responses": 6,
+    "errors": 0,
+    "mutation_controls_rejected": 4,
+    "audit_sha256": "7e86049fce0d2896b01f6db58bfb33f8259df989a331bfd1751b5b985eafe035",
+    "stdout_sha256": "3c3914e1a521101a6e8984834135195525f90fa671da91faec185f980ba73aa4",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "formal_retries": 0,
+  "freeze_commit": "be4a25fcfa85d36559cfde6f752b25d2c11bd913",
+  "base_main_sha": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "runtime": "host macOS CPython 3.14.5; no container started because OrbStack docker ps returned a containerd missing-blob error",
+  "scope": "method-only synthetic fixture; no human-effect inference"
+}
