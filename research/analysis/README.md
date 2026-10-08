@@ -647,6 +647,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`generalizability_budget_7889_t0_a01_20261005/`](generalizability_budget_7889_t0_a01_20261005/)
 - [`generation_bound_container_revalidation_2166_v1/`](generation_bound_container_revalidation_2166_v1/)
 - [`generation_bound_evidence_2047_v1/`](generation_bound_evidence_2047_v1/)
+- [`global_queue_sync_8494_t0_a01_20261008/`](global_queue_sync_8494_t0_a01_20261008/)
 - [`gluing_approx_irreversible_5537_t10_v1/`](gluing_approx_irreversible_5537_t10_v1/)
 - [`gluing_approx_irreversible_5537_t9_v1/`](gluing_approx_irreversible_5537_t9_v1/)
 - [`gluing_numeric_schema_5537_t12_v1/`](gluing_numeric_schema_5537_t12_v1/)
