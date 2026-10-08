@@ -119,7 +119,7 @@ def main():
                         "per_key_timestamps_absent": True},
              "result_sha256": __import__("hashlib").sha256(
                  result_path.read_bytes()).hexdigest()}
-    output.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(audit, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(audit, separators=(",", ":")))
 
 

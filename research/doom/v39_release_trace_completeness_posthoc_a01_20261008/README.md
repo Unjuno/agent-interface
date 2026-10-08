@@ -22,12 +22,12 @@ The result therefore identifies a telemetry-coverage boundary to examine in a fu
 
 ## Reproduction
 
-From the repository root, run the v2 analysis and independent audit (the first result and audit are retained unchanged):
+From the repository root, run a reproduction into fresh output names (the scripts refuse to overwrite existing results):
 
 ```powershell
-python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/run_audit.py --output RESULT_V2.json
-python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/audit_result.py --result RESULT_V2.json --output AUDIT_V2.json
+python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/run_audit.py --output RESULT_REPRO.json
+python -B research/doom/v39_release_trace_completeness_posthoc_a01_20261008/audit_result.py --result RESULT_REPRO.json --output AUDIT_REPRO.json
 python -B -m unittest -v research.doom.v39_release_trace_completeness_posthoc_a01_20261008.test_audit
 ```
 
-The scripts refuse to overwrite prior results. `RESULT.json` / `AUDIT.json` preserve the first analysis pass; `RESULT_V2.json` / `AUDIT_V2.json` strengthen independent checks of per-ID timing and task outcome. Input provenance and checksums are in `FREEZE.json`; the original allocation and audit remain unchanged. No image, model, game, X11, OS input, container, or GPU was used in this posthoc run.
+The initial output blobs from commit `5604a1add0cf8d36902e185d7060e438270c76b5` remain in this branch's history. Current `RESULT.json` / `AUDIT.json` were regenerated from the exact same frozen inputs with the independent check strengthened for per-ID timing and task outcome; only JSON line endings changed, and the stronger audit hash binds the current result bytes. The first output and audit were not a new game/model allocation. Input provenance and checksums are in `FREEZE.json`; the original live allocation remains unchanged. No image, model, game, X11, OS input, container, or GPU was used in this posthoc run.

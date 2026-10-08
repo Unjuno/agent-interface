@@ -140,7 +140,7 @@ def main():
     output = args.output if args.output.is_absolute() else HERE / args.output
     if output.exists():
         raise SystemExit(f"refusing to overwrite {output}")
-    output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(result, separators=(",", ":")))
 
 
