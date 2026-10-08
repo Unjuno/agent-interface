@@ -40,6 +40,8 @@ New work should normally use a category directory. Existing direct-root paths re
 
 ## Retained direct-root research families
 
+- [`outputs/`](outputs/) — retained local research-session status and handoff notes; not experiment evidence unless individually cited.
+
 - [`session_handoff/`](session_handoff/)
 - [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/)
 - [`results/`](results/) — retained native-handle result bundles; each bundle's report defines its scope and status.
