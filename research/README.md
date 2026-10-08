@@ -19,6 +19,7 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #8576 T0 A01: [grounded optional resume suggestions](analysis/resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 12 synthetic cases audited, 6/6 mutations rejected, WSLc CPU-only. No human-benefit claim.
 
 - Issue #8589 T0 A01: [effect-aware selective recovery](analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 8/8 finite cases reconstructed, 5/5 mutations rejected, zero effect dispatches. No GUI/runtime/cost/product claim.
+- Issue #8596 T0 A02: [chance-bounded progress fixture](analysis/chance_bounded_progress_8596_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED` / `H_SUPPORTED_SCOPED` on authored finite interval models, with exact independent audit and 7/7 mutations rejected. No controller optimization, real probability calibration, GUI, or product claim; A01's pre-formal HOLD is retained.
 - Issue #8583 T0 A01: [finite principal-stratum bounds](analysis/principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; four synthetic cases independently reconstructed, 5/5 mutations rejected, WSLc CPU-only. No empirical causal or product claim.
 
 - Issue #8571 A01: [service-debt representation invariance custody HOLD](analysis/service_debt_alias_8571_a01_20261008/CUSTODY_NOTE.md) — first-run trace and independent replay retained, but formal promotion withheld because the freeze was not committed before execution; no rerun. Synthetic diagnostic only.

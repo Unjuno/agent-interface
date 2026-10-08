@@ -1,0 +1,71 @@
+{
+  "allocation": "UNJUNO-8596-CHANCE-BOUNDED-PROGRESS-T0-A02-20261009",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8596",
+  "issue_state_at_freeze": "open",
+  "issue_assignees_at_freeze": [],
+  "current_main_sha": "decfe816f5e3b1de34790be9d7b00a1595be86b0",
+  "branch": "research/8596-chance-bounded-progress-t0-a02-20261009",
+  "worktree": "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/worktrees/8596-chance-bounded-progress-t0",
+  "package": "research/analysis/chance_bounded_progress_8596_t0_a02_20261009",
+  "source_sha256": {
+    "README.md": "2b0bc4b2c3474ddf370c1006efbc2b86f13d1ee67a31d68cc455210ea2383198",
+    "PROTOCOL.md": "97d79b3bcc0d1de13f770e3efd0c40c87ff5f8a34844e21e0d5fa3b7b7113488",
+    "ISSUE_COMMENT.md": "3b2e50540d5ffc2999773065b4c3f5d2b1307854468ee8aa654e0741ccd7d37e",
+    "fixtures.json": "7e23151c1f3839761bba20f925f450d4beb4fec647499425b27a53c51c247842",
+    "candidate.py": "4d3ee6bdfea2fe5071debc78319a29a6f22cebc50eab2ad788be5257609e4ddf",
+    "runner.py": "4134e12d3372322de2b09b10b6041cbb3b8b07d33f1916e567835e57dd3b43fc",
+    "auditor.py": "3d162bad26e198369d1f3da0934ae2261cf0d07f174ffe24996215d2f6fe5a54",
+    "test_construction.py": "b254adf87edf97a6fcd2139d87a496d976c5c31a8eef37621f0dc378ea00dec6",
+    "construction/OUTCOMES.md": "3f32a04082c19dbfa221b8bcd995a50805cdae7249b9b0e5bf0e803da7eebcf4"
+  },
+  "candidate_formal_invocations": 0,
+  "auditor_formal_invocations": 0,
+  "run_policy": "one candidate invocation, then one independent raw-only auditor invocation; retain first outcome and do not retry or tune",
+  "commands": [
+    "python3 -B runner.py --output results/first-outcome",
+    "python3 -B auditor.py --output results/first-outcome --result results/first-outcome/audit.json"
+  ],
+  "formal_fixtures": {
+    "cases": [
+      "geometric_wide",
+      "geometric_high",
+      "rare_disturbance_safe_yield",
+      "rare_disturbance_unsafe",
+      "same_mean_delay",
+      "unmodeled_delay"
+    ],
+    "horizons_opportunities": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "primary_deadline_opportunities": 4,
+    "illustrative_threshold": "4/5",
+    "threshold_scope": "synthetic sensitivity example only; not a task or runtime admission threshold",
+    "interval_endpoint_vectors": 32,
+    "primary_binary_histories_per_endpoint_vector": 16,
+    "formal_model": "exact rational arithmetic; no random sampling"
+  },
+  "H": "An exact deadline-reachability interval distinguishes a chance-bounded synthetic progress policy from lack of an all-traces finite bound; midpoint risk differs from the robust lower bound; same-mean delay laws differ at a deadline; hard safety and missing-probability identifiability remain separate.",
+  "T": "One finite pure-Python model; candidate dynamic programming and auditor enumeration over every interval endpoint vector and binary path, horizons 1-4; exact same-mean/tail, adversarial-trigger, and unknown-model controls.",
+  "D": {
+    "method_pass": "Exact candidate/auditor agreement at all frozen horizons; geometric positive-mass miss histories are not called sure completion; midpoint does not replace lower bound; equal-mean delay tail probabilities differ; reachable unsafe transition fails hard safety; unknown model reports no numeric probability; all seven saved-output mutations rejected.",
+    "h_supported": "High interval lower bound meets 4/5 while no all-traces finite bound exists; wide-interval midpoint meets 4/5 while its robust lower bound does not; same-mean tail difference, hard-safety separation, and unknown abstention all hold.",
+    "fail": "Any exact value, safety, tail, or mutation mismatch.",
+    "hold": "Missing/invalid inputs, source identity, or evidence custody."
+  },
+  "C": "An all-traces guarantee or safe-yield may be preferable when probability intervals lack task justification; authored fixtures/threshold may not represent any application; correct arithmetic does not validate its model.",
+  "U": "Authored exact-rational models only; no empirical delay calibration, wall-clock latency, GUI, OS input, task effect, safety, user tempo, runtime admission, or product evidence.",
+  "runtime": {
+    "python": "Python 3.14.5",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "dependencies": "Python standard library only",
+    "cpu_count": 10,
+    "load_average": [
+      67.1005859375,
+      37.21826171875,
+      28.505859375
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "allocation": "UNJUNO-8596-CHANCE-BOUNDED-PROGRESS-T0-A02-20261009",
+  "freeze_sha256": "598d9a4e88e5c01c282ea7d72e4be299dc0e678c4fc98b0dad5008240239f2b2",
+  "execution_commit": "39d7033c111",
+  "candidate": {
+    "command": "python3 -B runner.py --output results/first-outcome",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_file": "results/first-outcome/candidate.stdout",
+    "output_file": "results/first-outcome/candidate.json",
+    "output_sha256": "3d91579f06465f8ef59698b094d87550cc6229bcd65a610157685ba38103aff7"
+  },
+  "auditor": {
+    "command": "python3 -B auditor.py --output results/first-outcome --result results/first-outcome/audit.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_file": "results/first-outcome/auditor.stdout",
+    "output_file": "results/first-outcome/audit.json",
+    "output_sha256": "dd90eee349a9817921a4493961cd6e9d4cff6dcc41eaece3276ffc3d55b8376a"
+  },
+  "sha256": {
+    "candidate.json": "3d91579f06465f8ef59698b094d87550cc6229bcd65a610157685ba38103aff7",
+    "audit.json": "dd90eee349a9817921a4493961cd6e9d4cff6dcc41eaece3276ffc3d55b8376a",
+    "candidate.stdout": "11d5030669541e6592ab641153b1a86b2621c33d817778bb2971b0146cb5422e",
+    "auditor.stdout": "6881919e38538b96b1dba1da350a93ca1680d6b53176fdb6016b45559e4c85c2"
+  },
+  "disposition": "H_SUPPORTED_SCOPED",
+  "method_gate": "PASS_METHOD_SCOPED",
+  "formal_retry_count": 0
+}
