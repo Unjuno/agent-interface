@@ -159,6 +159,8 @@ def run():
                 memory_at[(seed, arm, prefix)] = memory
 
     scores = Counter()
+    family_scores = Counter()
+    family_totals = Counter()
     for row in rows:
         seed, arm, prefix = row["seed"], row["arm"], row["prefix"]
         request = row["request"]
@@ -200,7 +202,10 @@ def run():
         value = parse_query_response(row)
         if value is None:
             malformed_queries.append(row["row_id"])
-        scores[(seed, arm)] += int(exact_match(value, expected))
+        hit = exact_match(value, expected)
+        scores[(seed, arm)] += int(hit)
+        family_scores[(arm, row["query_id"])] += int(hit)
+        family_totals[(arm, row["query_id"])] += 1
 
     per_seed_accuracy = {
         f"{seed}/{arm}": scores[(seed, arm)] / 30
@@ -225,6 +230,17 @@ def run():
         "transition_mismatches": len(transitions),
         "request_or_identity_mismatches": len(errors),
         "per_seed_accuracy": per_seed_accuracy,
+        "query_family_accuracy": {
+            arm: {
+                query["id"]: {
+                    "correct": family_scores[(arm, query["id"])],
+                    "total": family_totals[(arm, query["id"])],
+                    "accuracy": family_scores[(arm, query["id"])] / family_totals[(arm, query["id"])],
+                }
+                for query in queries
+            }
+            for arm in ARMS
+        },
         "accuracy_matches_frozen_audit": True,
         "frozen_audit_status": frozen_audit["status"],
         "frozen_audit_errors": len(frozen_audit["errors"]),
