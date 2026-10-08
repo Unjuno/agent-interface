@@ -1,3 +1,7 @@
+# Issue #8502 T0 A03 — corrected paired-cutpoint successor (2026-10-08)
+
+A03 is a fresh-seed successor to A01 `FAIL_METHOD` and A02 `FAIL_AUDIT_ONLY`; neither old allocation was rerun or modified. Candidate and independent contingency-table auditor each ran once. All five synthetic classifications/localizations reconstructed with zero errors, and all 6/6 declared mutations were rejected: `PASS_METHOD_SCOPED`. The result is a coarse synthetic screen only—not human measurement invariance, scalar/latent-mean comparability, workload validity, accessibility, or user benefit. See [A03 report and frozen package](research/analysis/measurement_invariance_8502_t0_a03_20261008/RESULT.md) and [Issue #8502](https://github.com/Unjuno/agent-interface/issues/8502).
+
 # Issue #8502 T0 A02 — independent audit-only successor (2026-10-08)
 
 A02 preserves A01's `FAIL_METHOD` and emitted the five saved-fixture labels with six mutation controls rejected, but its own README source digest was mis-frozen. Overall disposition is `FAIL_AUDIT_ONLY`; no result is promoted. See the [A02 record](research/analysis/measurement_invariance_8502_t0_a02_20261008/RESULT.md) and [Issue #8502](https://github.com/Unjuno/agent-interface/issues/8502).
