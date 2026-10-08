@@ -8,7 +8,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 ALLOC = "map01-v39-live-threat-guard-a07-20261009"
 ROOT = REPO / "results-local/doom" / ALLOC
-MAIN_SHA = "23d1807ffad8359e0f89421ee2b9bf5783c9d5f4"
+MAIN_SHA = "4fb44827372c1fe4872a1add532c12544a5a9f81"
 EXPECTED_WAD_SHA = "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
 
 
