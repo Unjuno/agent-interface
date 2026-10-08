@@ -1,0 +1,52 @@
+{
+  "schema": "multisource-event-run-record-v1",
+  "allocation_id": "8587-T0-A01-20261009",
+  "disposition": "PASS_METHOD_SCOPED",
+  "source_main_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "freeze_commit": "b1d1baa24e651736b044a400132712543668da49",
+  "freeze_sha256": "3278343613e511eb2b3fa9800f3a9ac788011ac7a5dbcc202926a691ebaf51fe",
+  "environment": {
+    "implementation": "CPython",
+    "version": "3.14.5",
+    "os": "macOS 27.0.1 arm64"
+  },
+  "formal_invocations": {
+    "candidate": 1,
+    "auditor": 1,
+    "retries": 0,
+    "candidate_command": "python3 -B candidate.py model.json FREEZE.json",
+    "auditor_command": "python3 -B auditor.py model.json oracle.json FREEZE.json results/candidate.raw.json",
+    "candidate_exit": 0,
+    "auditor_exit": 0
+  },
+  "artifacts": {
+    "results/candidate.raw.json": {
+      "bytes": 5730,
+      "sha256": "8d65cb8f70a567e07a4da30bda6637651910d8134c828ea53469535e7cc17404"
+    },
+    "results/candidate.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "results/audit.raw.json": {
+      "bytes": 294,
+      "sha256": "59f28e92e9c4c90e3f7ceff6754a7f36b846f5b072e6600cda471b0e756fd1b5"
+    },
+    "results/auditor.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "audit": {
+    "status": "PASS_METHOD_SCOPED",
+    "cases_audited": 15,
+    "identifiable_faults_localized": 8,
+    "unknown_cases": 2,
+    "benign_false_localizations": 0,
+    "final_state_only_signals": 0,
+    "client_ledger_only_signals": 1,
+    "mutation_controls_rejected": 5,
+    "errors": []
+  },
+  "scope": "Authored finite trace fixture only; no real GUI, source completeness, semantic effect, action authority, or product claim."
+}

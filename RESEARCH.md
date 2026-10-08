@@ -1,3 +1,7 @@
+# Issue #8587 T0 A01 — multi-source event reconciliation (2026-10-09)
+
+`PASS_METHOD_SCOPED`: the one-shot candidate and independent auditor each exited 0; all eight identifiable faults across client/toolkit/OS traces were localized to the declared boundary, two non-identifiable cases remained UNKNOWN, and five benign controls produced no false localization. Cross-source matching localized 8 faults versus 1 client-ledger-only signal and 0 final-state-only signals; all 5 frozen mutations were rejected. This is an authored finite trace fixture only, with no real GUI completeness, semantic-effect, task-success, or action-authority claim. See [report and checksums](research/analysis/multisource_event_reconciliation_8587_t0_a01_20261009/REPORT.md), [protocol and freeze](research/analysis/multisource_event_reconciliation_8587_t0_a01_20261009/PROTOCOL.md), and [Issue #8587](https://github.com/Unjuno/agent-interface/issues/8587).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)
