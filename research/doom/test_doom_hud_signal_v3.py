@@ -1,5 +1,7 @@
 import json
 import copy
+import hashlib
+import tempfile
 from pathlib import Path
 import sys
 import unittest
@@ -80,6 +82,89 @@ class DoomHudSignalV3Tests(unittest.TestCase):
             malformed[field] = value
             with self.assertRaises(ValueError):
                 build_action_snapshot(malformed, contract)
+
+
+class DoomTypedArtifactIdentityTests(unittest.TestCase):
+    def setUp(self):
+        self._temporary_directory = tempfile.TemporaryDirectory()
+        self.image_path = Path(self._temporary_directory.name) / "frame.png"
+        frame = Image.new("RGB", (2, 2), (17, 34, 51))
+        frame.save(self.image_path)
+        self.typed = {
+            "schema": "doom-typed-observation-v1",
+            "id": 1, "step": 1, "sequence": 1, "capture_ns": 1,
+            "pointer_binding": {"focus": 1, "surface": 0,
+                                "geometry": [0, 0, 1, 1]},
+            "frame_rgb_sha256": hashlib.sha256(
+                frame.convert("RGB").tobytes()).hexdigest(),
+        }
+        self.observation = {
+            "event": "observation", "exact": True,
+            "id": 1, "step": 1, "sequence": 1, "capture_ns": 1,
+            "pointer_binding": {"focus": 1, "surface": 0,
+                                "geometry": [0, 0, 1, 1]},
+            "image": str(self.image_path),
+        }
+
+    def tearDown(self):
+        self._temporary_directory.cleanup()
+
+    def test_exact_typed_and_full_observation_identity_still_matches(self):
+        result = reconcile_artifact(self.typed, self.observation, {})
+        self.assertTrue(result["matched"], result)
+        self.assertTrue(all(result["checks"].values()), result)
+
+    def test_boolean_integer_aliases_in_each_epoch_field_are_rejected(self):
+        for field in ("id", "step", "sequence", "capture_ns"):
+            for side in ("typed", "observation"):
+                with self.subTest(field=field, side=side):
+                    typed = copy.deepcopy(self.typed)
+                    observation = copy.deepcopy(self.observation)
+                    target = typed if side == "typed" else observation
+                    target[field] = True
+                    result = reconcile_artifact(typed, observation, {})
+                    self.assertFalse(result["checks"]["same_epoch"],
+                                     (field, side, result))
+                    self.assertFalse(result["matched"], (field, side, result))
+
+    def test_boolean_integer_aliases_inside_pointer_binding_are_rejected(self):
+        cases = (("focus", True), ("surface", False),
+                 (("geometry", 0), False), (("geometry", 1), False),
+                 (("geometry", 2), True), (("geometry", 3), True))
+        for path, alias in cases:
+            if isinstance(path, str):
+                path = (path,)
+            for side in ("typed", "observation"):
+                with self.subTest(path=path, side=side):
+                    typed = copy.deepcopy(self.typed)
+                    observation = copy.deepcopy(self.observation)
+                    target = typed if side == "typed" else observation
+                    value = target["pointer_binding"]
+                    for key in path[:-1]:
+                        value = value[key]
+                    value[path[-1]] = alias
+                    result = reconcile_artifact(typed, observation, {})
+                    self.assertFalse(result["checks"]["same_binding"],
+                                     (path, side, result))
+                    self.assertFalse(result["matched"], (path, side, result))
+
+    def test_missing_epoch_identity_is_not_treated_as_matching(self):
+        typed = copy.deepcopy(self.typed)
+        observation = copy.deepcopy(self.observation)
+        typed.pop("step")
+        observation.pop("step")
+        result = reconcile_artifact(typed, observation, {})
+        self.assertFalse(result["checks"]["same_epoch"], result)
+        self.assertFalse(result["matched"], result)
+
+    def test_missing_pointer_bindings_are_not_treated_as_matching(self):
+        typed = copy.deepcopy(self.typed)
+        observation = copy.deepcopy(self.observation)
+        typed.pop("pointer_binding")
+        observation.pop("pointer_binding")
+        result = reconcile_artifact(typed, observation, {})
+        self.assertFalse(result["checks"]["same_binding"], result)
+        self.assertFalse(result["matched"], result)
 
 
 if __name__ == "__main__":
