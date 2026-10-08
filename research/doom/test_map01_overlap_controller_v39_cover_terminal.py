@@ -411,15 +411,19 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
-            def interrupt(self, handle):
+            def interrupt(self, handle, before_transport=None):
                 trace.append("planner_interrupt")
-                raise TimeoutError("synthetic interrupt failure")
+                try:
+                    before_transport()
+                except BaseException:
+                    raise TimeoutError("synthetic interrupt failure")
+                raise AssertionError("cancel callback unexpectedly succeeded")
 
         with self.assertRaisesRegex(OSError, "synthetic executor pipe failure") as raised:
             controller.cancel_invalidated_cover(
                 Planner(), object(), Process(), lambda predicate: None, "cover-0")
 
-        self.assertEqual(trace, ["cancel_write", "planner_interrupt"])
+        self.assertEqual(trace, ["planner_interrupt", "cancel_write"])
         self.assertIsInstance(raised.exception.__cause__, TimeoutError)
         self.assertIn("planner interrupt also failed: TimeoutError",
                       getattr(raised.exception, "__notes__", []))
