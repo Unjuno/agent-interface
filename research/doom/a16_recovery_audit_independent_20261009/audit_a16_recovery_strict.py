@@ -47,17 +47,17 @@ def analyze(decisions: list[dict], decision_cap: int) -> dict:
                     row["fresh_sequence_at_plan"] > invalidation_sequence and
                     row.get("model_action_discarded") is False]
         malformed = [row for row in candidates
-                     if "model_action_discarded" in row and
-                     type(row["model_action_discarded"]) is not bool]
+                     if type(row.get("model_action_discarded")) is not bool]
         observed_max = max(iterations)
         required_followups = set(range(iteration + 1, iteration + 3))
         observed_followups = {row["iteration"] for row in candidates}
         missing_followups = sorted(required_followups - observed_followups)
-        if recovery:
+        if malformed:
+            classification = "auditor_input_invalid"
+        elif recovery:
             classification = "recovered_within_two_decisions"
         elif observed_max >= iteration + 2:
-            classification = ("auditor_input_invalid"
-                              if malformed or missing_followups else
+            classification = ("auditor_input_invalid" if missing_followups else
                               "observable_recovery_missed")
         else:
             classification = "right_censored_by_episode_or_decision_cap"
