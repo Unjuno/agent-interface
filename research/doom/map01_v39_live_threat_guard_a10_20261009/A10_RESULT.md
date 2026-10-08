@@ -1,6 +1,6 @@
 # A10 live result
 
-Allocation `map01-v39-live-threat-guard-a10-20261009` ran once on exact current main `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36`, with experiment tree `5c6dc5451bf52aa0cc0b33b00ee4603715673da5`. The exact raw output, `FREEZE.json`, and first `AUDIT.json` remain local and immutable; A10 was not retried.
+Allocation `map01-v39-live-threat-guard-a10-20261009` ran once on exact current main `4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36`, with its exact execution-tree identity retained only in local `FREEZE.json`. The exact raw output, `FREEZE.json`, and first `AUDIT.json` remain local and immutable; A10 was not retried.
 
 The one-shot run stopped after 62.396 seconds at 13 completed model turns. The game ended with one kill, one death, and no MAP01 exit. The controller refused a source refresh on invalid observed health and exited 1. The app-server exited 0, forwarded 17 requests and 1,907 responses, and reported no relay error.
 
