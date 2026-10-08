@@ -23,6 +23,8 @@
 
 - [Issue #8553 T0 A01 counterexample-guided recovery refinement](counterexample_guided_recovery_refinement_8553_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 5/5 finite cases independently reconstructed; safe separator refined with `p_color` (one predicate vs fixed-fine's three); planted optimistic false recovery returned `UNKNOWN`; 5/5 mutations rejected. Hand-authored CPU-only model; no GUI/runtime/product claim.
 
+- [Issue #8553 A03 recovery-policy branch binding audit](cegar_policy_branch_binding_8553_a03_20261009/REPORT.md) — `CONFIRMED_AUDIT_GAP`: the A01 checker accepted unsupported observation signatures and swapped routes; the independent finite replay accepted the original policy and rejected both mutations. Preserve A01 raw outputs and historical label; its branch-safety gate is not established. Synthetic finite policy only.
+
 - [Issue #5309 A08 effect-witness preservation](dual_control_5309_witness_a08_20261007/REPORT.md) — `PASS_WITNESS_BOUNDARY_SCOPED`: isolated candidate/oracle mounts; 56 rows independently reconstructed. A04–A07 STOP/method-failure lineage remains preserved; synthetic-only, no GUI/runtime/product claim.
 
 - [Issue #5309 A13 pre-freeze execution STOP](dual_control_5309_precapture_control_a13_20261007/PRE_FREEZE_STOP.md) — candidate ran once before source freeze; environment and auditor were not run. Invalid as preregistration; retained output is custody evidence only, not a scientific result.
@@ -478,6 +480,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`causal_elasticity_5851_branch_intervention_successor_20261001/`](causal_elasticity_5851_branch_intervention_successor_20261001/)
 - [`causal_temporal_attention_successor_1941_v1/`](causal_temporal_attention_successor_1941_v1/)
 - [`causal_temporal_history_2026_v1/`](causal_temporal_history_2026_v1/)
+- [`cegar_policy_branch_binding_8553_a03_20261009/`](cegar_policy_branch_binding_8553_a03_20261009/)
 - [`cegis_grammar_gap_4294_v1/`](cegis_grammar_gap_4294_v1/)
 - [`cegis_skill_4262_v1/`](cegis_skill_4262_v1/)
 - [`censored_useful_effect_integrity_2514_v1/`](censored_useful_effect_integrity_2514_v1/)
