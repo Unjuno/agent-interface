@@ -1,0 +1,3 @@
+A01 formal launch STOP before candidate invocation.
+
+The frozen formal_runner.py attempted SHA-256 checks as repo_root / package_relative_path and raised FileNotFoundError for `input/oracle_fixture.json`. The wrapper returned exit 1 before writing EXECUTION_LOCK.json or launching the candidate. Candidate invocations: 0. Auditor invocations: 0. The empty raw/ and audit/ directories were created by the wrapper. This allocation is not retried; A02 receives a new id and output directory with only the runner package-root hash resolution changed. See PRE_CANDIDATE_STOP.json for the exact state.
