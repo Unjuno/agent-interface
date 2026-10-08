@@ -4,9 +4,9 @@ import itertools
 import json
 import math
 
-BETA = (2, 5, 10, 20)
-GAMMA = (0.5, 1.0, 1.5, 2.0)
-DELTA = (2, 5, 10, 20)
+BETA = (2, 10, 20)
+GAMMA = (0.5, 1.5)
+DELTA = (2, 10, 20)
 THETA = tuple(round(-0.30 + 0.03 * i, 12) for i in range(21))
 ARMS = ("COUPLED", "ONE_WAY", "EXOGENOUS_ONLY", "ZERO_FEEDBACK")
 RELAX = 0.25
@@ -65,9 +65,7 @@ for beta, gamma, delta in itertools.product(BETA, GAMMA, DELTA):
                             break
                     advantage = theta + gamma * (q - 0.5)
                     points.append([
-                        round(a, 12), round(q, 12), steps, converged,
-                        round(spectral_radius(a, q, beta, gamma, delta, arm), 12),
-                        round(100.0 * a * advantage, 12)
+                        round(a, 10), round(q, 10), steps, converged
                     ])
                 print(json.dumps({
                     "kind": "PROFILE", "beta": beta, "gamma": gamma,
