@@ -1,0 +1,15 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_full_child_stdin_does_not_block_bounded_cleanup (test_cleanup_finish_pipe.FinishPipeCleanupTests.test_full_child_stdin_does_not_block_bounded_cleanup) ... FAIL
+
+======================================================================
+FAIL: test_full_child_stdin_does_not_block_bounded_cleanup (test_cleanup_finish_pipe.FinishPipeCleanupTests.test_full_child_stdin_does_not_block_bounded_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tests/test_cleanup_finish_pipe.py", line 74, in test_full_child_stdin_does_not_block_bounded_cleanup
+    self.assertTrue(completed_before_external_cleanup,
+AssertionError: False is not true : bounded cleanup remained blocked until probe kill
+
+----------------------------------------------------------------------
+Ran 1 test in 3.538s
+
+FAILED (failures=1)

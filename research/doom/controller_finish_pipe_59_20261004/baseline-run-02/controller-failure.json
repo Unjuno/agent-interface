@@ -1,0 +1,39 @@
+{
+  "format": "controller-failure-cleanup-v1",
+  "primary_error_type": "RuntimeError",
+  "stages": [
+    {
+      "stage": "child_poll_before",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "finish_send",
+      "status": "failed",
+      "error_type": "TypeError"
+    },
+    {
+      "stage": "child_wait",
+      "status": "returned",
+      "result": -9
+    },
+    {
+      "stage": "child_poll_after",
+      "status": "returned",
+      "result": -9
+    },
+    {
+      "stage": "planner_close",
+      "status": "returned",
+      "result": null
+    },
+    {
+      "stage": "atexit_unregister",
+      "status": "returned",
+      "result": null
+    }
+  ],
+  "input_release_verified": false,
+  "scope": "owned child process only; no physical release or scorer certificate",
+  "child_exit_code": -9
+}
