@@ -2,7 +2,7 @@
 
 ## Disposition
 
-`PASS_ADAPTIVE_FEEDBACK_METHOD_SCOPED`. The frozen CPython candidate and independent raw-only auditor each ran once. The auditor independently reconstructed all 13,312 rows across 512 null and 512 planted replicates, with zero errors; the over-budget proposal was rejected before creating another candidate.
+`PASS_ADAPTIVE_FEEDBACK_METHOD_SCOPED`. The frozen CPython candidate and independent raw-only auditor each ran once. Candidate receipt: `exec-8392c27a-e15e-4e0f-8604-d19cb73874ea` (exit 0, 10,525 ms); auditor receipt: `exec-84e53525-52cd-4565-8c0c-f1c22e940f70` (exit 0, 749 ms). Exact start/end UTC timestamps were not retained and are unavailable; no times are inferred. The auditor independently reconstructed all 13,312 rows across 512 null and 512 planted replicates, with zero errors; the over-budget proposal was rejected before creating another candidate.
 
 At 16 adaptive rounds in the null family, median selected-winner optimism was 0.02585 for FULL_RELEASE, 0.02753 for AGGREGATE_RELEASE, and 0.00701 for REUSABLE_HOLDOUT. Corresponding false-superiority rates were 72.5%, 76.6%, and 21.7%. The one-query median optimism was −0.00011 for every arm, so the full-release criterion increased with rounds. The bounded reusable policy reduced the 16-query median optimism by 72.9% relative to full release and 74.5% relative to aggregate release.
 
