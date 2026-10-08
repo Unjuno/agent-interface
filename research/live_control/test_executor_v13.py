@@ -32,6 +32,42 @@ class Backend:
 
 
 class ExecutorV13Tests(unittest.TestCase):
+    def test_cleanup_failure_preserves_unattempted_release_disposition(self):
+        disposition = [{"key": "Down", "identifier": "cancelled-cleanup",
+                        "step": 0, "backend_owned_before_release": True,
+                        "disposition": "not_attempted_owner_cancel_release"}]
+
+        class CleanupDispositionBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+
+            def release_all(self):
+                error = RuntimeError("owner cleanup failed")
+                error.cancelled_pending_ups = disposition
+                raise error
+
+        backend = CleanupDispositionBackend()
+        events = []
+        terminal_received = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("cancelled-cleanup", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+        finally:
+            executor.close()
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertFalse(terminal["release"]["verified"])
+        self.assertEqual(terminal["release"]["cancelled_pending_ups"], disposition)
+
     def test_release_all_baseexception_preserves_custody_in_failed_terminal(self):
         publication = {
             "schema": "release-batch-delivery-v1", "identifier": "cleanup-interrupt",
