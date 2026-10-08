@@ -1,0 +1,62 @@
+"""Own ordinary six-cell construction, then separately allocated saved-only audit."""
+import datetime as dt
+import hashlib
+import io
+import json
+from pathlib import Path
+import subprocess
+import tarfile
+
+r=Path(__file__).resolve().parent
+prefix=['/opt/homebrew/bin/orb','run','-m','research-6695-docker-01a0ff52','-u','root']
+freeze=json.loads((r/'FREEZE.json').read_text());pins=freeze['pins']
+def stamp():return dt.datetime.now(dt.timezone.utc).isoformat()
+def run(name,args,data=None,timeout=15):
+ start=stamp();p=subprocess.Popen(args,stdin=subprocess.PIPE if data is not None else subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+ timed_out=False
+ try:stdout,stderr=p.communicate(data,timeout=timeout)
+ except subprocess.TimeoutExpired:
+  timed_out=True;p.kill();stdout,stderr=p.communicate()
+ for stream,b in [('stdout',stdout),('stderr',stderr)]:
+  with (r/(name+'.'+stream)).open('xb') as f:f.write(b)
+ with (r/(name+'.receipt.json')).open('x') as f:f.write(json.dumps({'argv':args,'pid':p.pid,'started_utc':start,'ended_utc':stamp(),'returncode':p.returncode,'timed_out':timed_out,'terminal':p.poll() is not None,'stdout_bytes':len(stdout),'stdout_sha256':hashlib.sha256(stdout).hexdigest(),'stderr_bytes':len(stderr),'stderr_sha256':hashlib.sha256(stderr).hexdigest()},sort_keys=True,indent=2)+'\n')
+ return p.returncode,stdout,stderr,timed_out
+for n,v in pins.items():
+ b=(r/n).read_bytes();assert len(b)==v['bytes'] and hashlib.sha256(b).hexdigest()==v['sha256']
+with (r/'CONSTRUCTION_SEND_ONCE.json').open('x') as f:f.write(json.dumps({'id':freeze['id'],'utc':stamp(),'freeze_sha256':hashlib.sha256((r/'FREEZE.json').read_bytes()).hexdigest()})+'\n')
+src='/var/tmp/notification-reentrant-c02-b64b-src';out='/var/tmp/notification-reentrant-c02-b64b-out';buf=io.BytesIO()
+with tarfile.open(fileobj=buf,mode='w') as t:
+ for name in [*pins,'FREEZE.json']:
+  b=(r/name).read_bytes();i=tarfile.TarInfo(name);i.size=len(b);i.mode=0o444;t.addfile(i,io.BytesIO(b))
+setup='import pathlib,tarfile,sys;s=pathlib.Path(sys.argv[1]);o=pathlib.Path(sys.argv[2]);s.mkdir();o.mkdir();o.chmod(0o777);tarfile.open(fileobj=sys.stdin.buffer,mode="r|").extractall(s,filter="data")'
+code,stdout,stderr,timed_out=run('transfer',prefix+['python3','-c',setup,src,out],buf.getvalue());assert code==0 and not timed_out
+check='import pathlib,json,hashlib,sys;r=pathlib.Path(sys.argv[1]);print(json.dumps({str(p.relative_to(r)):{"bytes":len(p.read_bytes()),"sha256":hashlib.sha256(p.read_bytes()).hexdigest()} for p in r.rglob("*") if p.is_file()},sort_keys=True))'
+code,stdout,stderr,timed_out=run('source-readback',prefix+['python3','-c',check,src]);assert code==0 and not timed_out
+got=json.loads(stdout)
+for n,v in pins.items():assert got[n]==v
+assert got['FREEZE.json']['sha256']==hashlib.sha256((r/'FREEZE.json').read_bytes()).hexdigest()
+terminal=[];successful=True
+for phase in ['construction','saved-audit']:
+ if not successful:break
+ name='notification-reentrant-'+phase+'-c02-b64b'
+ args=prefix+['docker','create','--name',name,'--label','worker=01a0ff52-b64b','--label','allocation='+freeze['id'],'--pull','never','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--cpus','0.25','--memory','128m','--memory-swap','128m','--pids-limit','32','--tmpfs','/tmp:rw,nosuid,nodev,noexec,size=8m','--user','65534:65534','-v',src+':/src:ro','-v',out+':/out:rw',freeze['image'],'python','-B','/src/container_entry.py',phase]
+ code,stdout,stderr,timed_out=run(phase+'-create',args);assert code==0 and not timed_out
+ code,stdout,stderr,timed_out=run(phase+'-prestart-inspect',prefix+['docker','inspect',name]);assert code==0
+ d=json.loads(stdout)[0];h=d['HostConfig'];assert d['State']['Status']=='created' and d['Image']==freeze['image_id'] and h['NetworkMode']=='none' and h['ReadonlyRootfs'] and h['Memory']==h['MemorySwap']==134217728 and h['NanoCpus']==250000000 and h['PidsLimit']==32 and d['Config']['User']=='65534:65534' and d['Config']['Labels']['allocation']==freeze['id']
+ assert any(m['Destination']=='/src' and m['Source']==src and not m['RW'] for m in d['Mounts'])
+ with (r/(phase+'-SEND-ONCE.json')).open('x') as f:f.write(json.dumps({'id':freeze['id'],'phase':phase,'UTC':stamp(),'created_container_id':d['Id']})+'\n')
+ code,stdout,stderr,timed_out=run(phase,prefix+['docker','start','-a',name],timeout=30)
+ if timed_out:run(phase+'-containment-stop',prefix+['docker','stop','--time','1',name],timeout=5)
+ successful=code==0 and not timed_out
+ code,stdout,stderr,timed_out=run(phase+'-terminal-inspect',prefix+['docker','inspect',name]);assert code==0
+ d=json.loads(stdout)[0];assert not d['State']['Running'] and d['State']['Pid']==0
+ terminal.append({'name':name,'id':d['Id'],'Image':d['Image'],'State':d['State'],'HostConfig':{k:d['HostConfig'][k] for k in ['NetworkMode','ReadonlyRootfs','Memory','MemorySwap','NanoCpus','PidsLimit','SecurityOpt','CapDrop']},'mounts':d['Mounts']})
+ successful=successful and d['State']['ExitCode']==0 and not d['State']['OOMKilled']
+code,stdout,stderr,timed_out=run('output-export',prefix+['tar','-cf','-','-C',out,'.']);assert code==0 and len(stdout)<1048576
+(r/'guest-output.tar').write_bytes(stdout);raw=r/'raw';raw.mkdir()
+with tarfile.open(fileobj=io.BytesIO(stdout)) as t:t.extractall(raw,filter='data')
+assert sum(p.stat().st_size for p in raw.rglob('*') if p.is_file())<=262144
+(r/'terminal-containers.json').write_text(json.dumps(terminal,sort_keys=True,indent=2)+'\n')
+run('own-engine-terminal',prefix+['docker','ps','--filter','status=running','--format','{{json .}}'])
+print(json.dumps({'construction_and_saved_audit_exit0':successful,'terminal_containers':len(terminal),'saved_files':len([p for p in raw.rglob('*') if p.is_file()])}))
+raise SystemExit(0 if successful else 2)

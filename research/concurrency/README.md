@@ -72,5 +72,7 @@ This is a navigation model derived from the retained studies, not a new runtime 
 - Integration studies: [`../integration/`](../integration/)
 - Measurement/concurrency handback studies: [`../measurement/`](../measurement/)
 - Research workspace map: [`../README.md`](../README.md)
+
+- [#17 notification reentrant-consumption counterexample](notification_reentrancy_17_20261003_b64b/README.md): six first ordinary source-method cells expose duplicate return and unrelated notification loss; unadopted identity-check comparison retains B. No constructor/native/task or general recovery claim.
 - [Expired predicate retry and deadline-first qualification](predicate_retry_deadline_17_20261003_b64b/REPORT.md): retained finite counterexample and fresh-match tradeoff; private comparator only, no production adoption or hard-deadline claim.
 - [Shared-result custody and retained delivery-to-return audit repair](singleflight_result_custody_6501_01a0ff35/REPORT.md) — original finite Windows characterization and later causal-join correction; not runtime adoption or native-effect proof.

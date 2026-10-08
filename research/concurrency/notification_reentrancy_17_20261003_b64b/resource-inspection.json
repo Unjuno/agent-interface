@@ -1,0 +1,82 @@
+[
+  {
+    "argv": [
+      "/opt/homebrew/bin/orb",
+      "info",
+      "research-6695-docker-01a0ff52",
+      "--format",
+      "json"
+    ],
+    "ended_utc": "2026-10-03T12:35:40.214855+00:00",
+    "returncode": 0,
+    "started_utc": "2026-10-03T12:35:40.168361+00:00",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 494,
+    "stdout_sha256": "8bd1f2cfb0e4dee32802bec117656175684c845ca708379de77c0998766d39eb"
+  },
+  {
+    "argv": [
+      "/opt/homebrew/bin/orb",
+      "run",
+      "-m",
+      "research-6695-docker-01a0ff52",
+      "-u",
+      "root",
+      "docker",
+      "ps",
+      "--filter",
+      "status=running",
+      "--format",
+      "{{json .}}"
+    ],
+    "ended_utc": "2026-10-03T12:35:41.913777+00:00",
+    "returncode": 0,
+    "started_utc": "2026-10-03T12:35:40.215213+00:00",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "/opt/homebrew/bin/orb",
+      "run",
+      "-m",
+      "research-6695-docker-01a0ff52",
+      "-u",
+      "root",
+      "docker",
+      "image",
+      "inspect",
+      "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016"
+    ],
+    "ended_utc": "2026-10-03T12:35:41.974890+00:00",
+    "returncode": 0,
+    "started_utc": "2026-10-03T12:35:41.914123+00:00",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 1750,
+    "stdout_sha256": "2e3f72f40b6d33676f835857a4a87a49e84ec0e4cb5e29fbf09dca4d11695d5f"
+  },
+  {
+    "argv": [
+      "/opt/homebrew/bin/orb",
+      "run",
+      "-m",
+      "research-6695-docker-01a0ff52",
+      "-u",
+      "root",
+      "python3",
+      "-c",
+      "import json,pathlib,os;print(json.dumps({\"available_bytes\":os.statvfs(\"/var/tmp\").f_bavail*os.statvfs(\"/var/tmp\").f_frsize,\"meminfo\":pathlib.Path(\"/proc/meminfo\").read_text()}))"
+    ],
+    "ended_utc": "2026-10-03T12:35:42.022903+00:00",
+    "returncode": 0,
+    "started_utc": "2026-10-03T12:35:41.975197+00:00",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 1301,
+    "stdout_sha256": "1eb438d998a25e8f13d1eb9a1d7aab1830fc3ab3791dd21cdcf0171bed38bc53"
+  }
+]

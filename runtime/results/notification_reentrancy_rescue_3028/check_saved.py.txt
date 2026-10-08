@@ -1,0 +1,43 @@
+"""Saved bytes only; do not run producer, comparator or whole auditor."""
+import ast
+import hashlib
+import json
+from pathlib import Path
+
+root = Path('research/concurrency/notification_reentrancy_17_20261003_b64b')
+count = 0
+for line in (root / 'SHA256SUMS').read_text().splitlines():
+    digest, name = line.split(maxsplit=1)
+    name = name.lstrip('*')
+    if hashlib.sha256((root / name).read_bytes()).hexdigest() != digest:
+        raise AssertionError(name)
+    count += 1
+print('original checksum targets:', count, 'mismatches: 0')
+tree = ast.parse((root / 'saved_check.py.txt').read_text())
+selected = ast.Module(body=[n for n in tree.body if isinstance(n, (ast.Import, ast.ImportFrom, ast.FunctionDef))], type_ignores=[])
+namespace = {}
+exec(compile(selected, '<original saved functions only>', 'exec'), namespace)
+class Sources:
+    def __truediv__(self, name):
+        return root / (name + '.txt')
+namespace['SRC'] = Sources()
+check = namespace['check']
+for arm in ('baseline', 'outside'):
+    for mode in ('healthy', 'reentrant-true', 'reentrant-false'):
+        check(json.loads((root / 'raw' / (arm + '-' + mode + '.json')).read_text()), arm, mode)
+print('six saved rows: PASS')
+audit = json.loads((root / 'raw/AUDIT.json').read_text())
+controls = audit['effective_copied_refusals']
+for row in controls:
+    arm, mode = row['case'].split('-', 1)
+    data = json.loads((root / 'raw/copied-negatives' / (row['name'] + '.json')).read_text())
+    try:
+        check(data, arm, mode)
+    except AssertionError:
+        pass
+    else:
+        raise AssertionError('accepted saved control: ' + row['name'])
+if len(controls) != 12:
+    raise AssertionError('expected twelve saved controls')
+print('twelve saved copied controls: refused')
+print('no producer, native peer, formal allocation, container or output write')
