@@ -1,0 +1,31 @@
+{
+  "allocation": "8638-T0-A02-20261009",
+  "freeze_commit": "ad8d81eb7a2a9308823480d2d01504c58462ca94",
+  "base_main_at_freeze": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "candidate": {
+    "command": "sandbox-exec -f network_deny.sb python3 -B candidate.py inputs.json raw/candidate_raw.json",
+    "start_utc": "2026-10-08 20:38:58 UTC",
+    "end_utc": "2026-10-08 20:38:58 UTC",
+    "exit_code": 0,
+    "invocations": 1,
+    "retries": 0,
+    "raw_sha256": "28344631b161579696c6f42436e9b147fdaa4fdf0a7ddc9db7dc714fa5d93760",
+    "stdout_sha256": "008c23a537956ec9da9190d8744ae953e52dc051745de0b52ab49796f620359f"
+  },
+  "auditor": {
+    "command": "sandbox-exec -f network_deny.sb python3 -B auditor.py inputs.json raw/candidate_raw.json raw/audit.json",
+    "start_utc": "2026-10-08 20:39:12 UTC",
+    "end_utc": "2026-10-08 20:39:12 UTC",
+    "exit_code": 0,
+    "invocations": 1,
+    "retries": 0,
+    "audit_sha256": "275bb46c5e5c39b208198894d72b626ad26efb60848930a66dd197908cb222e8e",
+    "stdout_sha256": "11f513d409ed66e3857e841bed980741b401359cb9f98294e84dcdd154a1ca4f"
+  },
+  "candidate_result": "CANDIDATE_COMPLETE",
+  "independent_audit_result": "PASS_METHOD_SCOPED",
+  "case_count": 13,
+  "supported_row_count": 192,
+  "network": "sandbox-exec profile denies network; loopback probe separately returned EPERM",
+  "runtime": "native macOS Python 3.14.5; no container launched because OrbStack read-only inventory failed before candidate execution"
+}
