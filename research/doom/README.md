@@ -472,3 +472,7 @@ gates remain open; this archive makes no code promotion.
 ## PR #7414 recorder-boundary successor evidence
 
 - [Rescued construction and malformed-auditor probes](results/map01-v39-recorder-boundary-probe-7414-20261004/README.md) — recorder-boundary regression is red on #7386 parent and green after repair; candidate/auditor suite 13/13. Separate malformed keymap-hex input probe changed from uncaught `ValueError` to explicit FAIL/HOLD. Source commit/blob/SHA provenance is pinned. Synthetic construction only; no live allocation or X11 action. Original source branch remains stacked under Draft #7386/#7355 and is not directly mergeable to main.
+
+## App Server interrupt cancellation portability (#59)
+
+- [macOS 0.146.1 stream-cancel A01](v39_appserver_interrupt_stream_macos_a01_20261008/README.md) — interrupted turn completed promptly, but no provider-socket EOF/reset was observed before the held mock response release; unexpected featured-plugin metadata egress makes the overall environment disposition HOLD. One bounded run; no live/game/input claim.
