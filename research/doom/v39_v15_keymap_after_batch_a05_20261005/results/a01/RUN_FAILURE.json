@@ -1,0 +1,26 @@
+{
+  "schema": "v39-v15-keymap-after-batch-run-failure-v1",
+  "run_id": "V39-V15-KEYMAP-AFTER-BATCH-A05-20261005",
+  "base_commit": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "candidate_invocations": 1,
+  "candidate_started": true,
+  "candidate_completed": false,
+  "status": "STOP_FAKE_CLEANUP_DROP_ALIAS",
+  "exception": {
+    "type": "RuntimeError",
+    "message": "owner release not verified: [65]",
+    "site": "research/live_control/input_owner_v12.py:196",
+    "trigger": "owner.close() after the missed-space-up case"
+  },
+  "case_progress": {
+    "normal_case": "run_case returned in memory; batch runner did not persist it before starting the next case",
+    "missed_space_up_case": "reached teardown; fake physical keycode 65 remained down after teardown release was also omitted",
+    "query_unavailable_case": "not started"
+  },
+  "raw_candidate_retained": false,
+  "operation_trace_retained": false,
+  "cleanup_verified": false,
+  "cause": "The test wrapper dropped every KeyRelease for the configured SPACE key, including the later cleanup release. It should have dropped exactly one explicit release injection; this was a candidate harness defect, not evidence that the production owner fails cleanup.",
+  "scope": "inert FakeX display and synthetic owner calls only; no OS input, GUI, DoomGame, model, or live allocation",
+  "retry_policy": "No candidate retry. The preregistration specifies one candidate invocation and no retries. Preserve this STOP; any successor must be distinctly frozen and use one-shot release-drop semantics with per-case incremental retention."
+}
