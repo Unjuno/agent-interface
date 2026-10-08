@@ -1,0 +1,33 @@
+{
+  "allocation": "UNJUNO-7059-VERDICT-FREE-T0-A01-20261005",
+  "auditor_invocations": 1,
+  "auditor_sha256": "2aca20af93e6002fc30faeeaf8ee309f4f1e3d766518892643310b74fddc3477",
+  "base_commit": "ff677c7fc04ba72923ee375527ae39489728a0bd",
+  "candidate_invocations": 1,
+  "commands": {
+    "auditor": "python3 -B audit.py",
+    "candidate": "python3 -B candidate.py --input formal_input.json --output formal_output.json"
+  },
+  "decision_gate": "PASS_METHOD_SCOPED only for exact source-bound reconstruction, five expected authored ledger classes, and rejection of all six frozen mutations. No behavioral claim.",
+  "environment": {
+    "dependencies": "Python standard library only",
+    "machine": "arm64",
+    "model_gui_user_data_or_external_effects": false,
+    "network_used": false,
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "issue": 7059,
+  "protocol": "issue-7059-t0-a01-v1",
+  "retries": 0,
+  "scope": "Authored measurement-ledger method fixture; no model/human behavior.",
+  "source_sha256": {
+    "README.md": "2693395f4bfc16c06a1bc14981a6def1252c3f2cedbc7ec2a4ca559b4232cbcb",
+    "audit.py": "2aca20af93e6002fc30faeeaf8ee309f4f1e3d766518892643310b74fddc3477",
+    "auditor_truth.json": "5ae24ccd22c298429df457eddc8e13d4d786cba98683c5c51e1504191ef9e180",
+    "build_fixture.py": "be2c065f3d8b5e2be9072ca7335106a1cbd42e9fa24c5b4c6151a9ba87a81b48",
+    "candidate.py": "0f55db8c7e71456ecd4f39da525ca7142886858985266565d92651240a57cff7",
+    "formal_input.json": "e227742012164cd03f866c471de45f59f04beb090f0d1ef3ced926fb3ebfb3db",
+    "test_construction.py": "c6d3cceb3afce64a32d930946212fc63835c90ca7feef107ac64a83e68bbc7c0"
+  }
+}
