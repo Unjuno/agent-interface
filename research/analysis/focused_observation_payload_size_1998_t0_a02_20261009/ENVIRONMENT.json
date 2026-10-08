@@ -1,0 +1,21 @@
+{
+  "host": "macOS Darwin 27.0.0 arm64",
+  "python": "CPython 3.14.5",
+  "dependencies": "standard library only",
+  "container_preflight": {
+    "contexts": ["orbstack", "default"],
+    "orbstack_images_command": "docker --context orbstack images --format '{{.Repository}}:{{.Tag}} {{.ID}} {{.Digest}}'",
+    "orbstack_error": "Error response from daemon: rpc error: code = Unknown desc = blob sha256:253e23fe66fc4ea0cdbfd1124a9495fc8b0c8a4acc9a523cd35a9808ed63f67a expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/253e23fe66fc4ea0cdbfd1124a9495fc8b0c8a4acc9a523cd35a9808ed63f67a: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/253e23fe66fc4ea0cdbfd1124a9495fc8b0c8a4acc9a523cd35a9808ed63f67a: operation not supported",
+    "default_images_command": "docker --context default images --format '{{.Repository}}:{{.Tag}} {{.ID}} {{.Digest}}'",
+    "default_error": "Error response from daemon: rpc error: code = Unknown desc = blob sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc: operation not supported",
+    "images_listed": false,
+    "containers_started": false
+  },
+  "selected_method": "Host-only finite CPU test under macOS sandbox-exec network deny",
+  "sandbox_profile": "(version 1) (deny network*) (allow default)",
+  "sandbox_smoke_test": "passed",
+  "candidate_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > results/candidate_raw.json 2> results/candidate.stderr",
+  "auditor_command": "sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py > results/audit.json 2> results/auditor.stderr",
+  "available_disk_bytes_approx": 204010946560,
+  "formal_invocations_at_freeze": {"candidate": 0, "auditor": 0, "retries": 0}
+}
