@@ -1,0 +1,706 @@
+{
+  "alpha": "1/10",
+  "protocol": "issue-7993-t0-a01-v1",
+  "records": [
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": true,
+        "upper": "0"
+      },
+      "case_id": "zero_risk_control",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "complete",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "zero_risk_control@complete",
+      "status_counts": {
+        "pending": 0,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 4,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "informative_delay_known_bad",
+      "censor_adjusted": {
+        "estimator": null,
+        "is_risk_certificate": false,
+        "point_estimate": null,
+        "reason": "outcome-independence assumption not verified",
+        "status": "UNKNOWN"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "informative_delay_known_bad@interim",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "informative_delay_hidden_misspecification",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "informative_delay_hidden_misspecification@interim",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "zero_support_error_stratum",
+      "censor_adjusted": {
+        "estimator": null,
+        "is_risk_certificate": false,
+        "point_estimate": null,
+        "reason": "zero/invalid follow-up probability violates positivity",
+        "status": "UNKNOWN"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "zero_support_error_stratum@interim",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "delayed_eventually_resolved",
+      "censor_adjusted": {
+        "estimator": null,
+        "is_risk_certificate": false,
+        "point_estimate": null,
+        "reason": "outcome-independence assumption not verified",
+        "status": "UNKNOWN"
+      },
+      "checkpoint": "early",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "delayed_eventually_resolved@early",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "delayed_eventually_resolved",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/4",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "late",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1/4"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "delayed_eventually_resolved@late",
+      "status_counts": {
+        "pending": 0,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 4,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "pending_at_horizon",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "horizon",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "pending_at_horizon@horizon",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "safe_terminal_stop",
+      "censor_adjusted": {
+        "estimator": null,
+        "is_risk_certificate": false,
+        "point_estimate": null,
+        "reason": "censor model not known",
+        "status": "UNKNOWN"
+      },
+      "checkpoint": "terminal",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "safe_terminal_stop@terminal",
+      "status_counts": {
+        "pending": 0,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 1
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "permanent_loss_unknown_cause",
+      "censor_adjusted": {
+        "estimator": null,
+        "is_risk_certificate": false,
+        "point_estimate": null,
+        "reason": "censor model not known",
+        "status": "UNKNOWN"
+      },
+      "checkpoint": "horizon",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "permanent_loss_unknown_cause@horizon",
+      "status_counts": {
+        "pending": 0,
+        "permanent_loss_unknown_cause": 1,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1"
+      },
+      "case_id": "independent_mask_00",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": null,
+        "risk": null
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_00@interim",
+      "status_counts": {
+        "pending": 4,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 0,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "1"
+      },
+      "case_id": "independent_mask_01",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/2",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_01@interim",
+      "status_counts": {
+        "pending": 3,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 1,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "3/4"
+      },
+      "case_id": "independent_mask_02",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_02@interim",
+      "status_counts": {
+        "pending": 3,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 1,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "3/4"
+      },
+      "case_id": "independent_mask_03",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/2",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1/2"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_03@interim",
+      "status_counts": {
+        "pending": 2,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 2,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "3/4"
+      },
+      "case_id": "independent_mask_04",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_04@interim",
+      "status_counts": {
+        "pending": 3,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 1,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "3/4"
+      },
+      "case_id": "independent_mask_05",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/2",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1/2"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_05@interim",
+      "status_counts": {
+        "pending": 2,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 2,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/2"
+      },
+      "case_id": "independent_mask_06",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_06@interim",
+      "status_counts": {
+        "pending": 2,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 2,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "1/2"
+      },
+      "case_id": "independent_mask_07",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/2",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1/3"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_07@interim",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "3/4"
+      },
+      "case_id": "independent_mask_08",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_08@interim",
+      "status_counts": {
+        "pending": 3,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 1,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "3/4"
+      },
+      "case_id": "independent_mask_09",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/2",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1/2"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_09@interim",
+      "status_counts": {
+        "pending": 2,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 2,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/2"
+      },
+      "case_id": "independent_mask_10",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_10@interim",
+      "status_counts": {
+        "pending": 2,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 2,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "1/2"
+      },
+      "case_id": "independent_mask_11",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/2",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1/3"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_11@interim",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/2"
+      },
+      "case_id": "independent_mask_12",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_12@interim",
+      "status_counts": {
+        "pending": 2,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 2,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "1/2"
+      },
+      "case_id": "independent_mask_13",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/2",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1/3"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_13@interim",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "0",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "independent_mask_14",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "0",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": true,
+        "risk": "0"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_14@interim",
+      "status_counts": {
+        "pending": 1,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 3,
+        "safe_terminal_stop": 0
+      }
+    },
+    {
+      "all_assigned_bounds": {
+        "lower": "1/4",
+        "supports_le_alpha": false,
+        "upper": "1/4"
+      },
+      "case_id": "independent_mask_15",
+      "censor_adjusted": {
+        "estimator": "horvitz_thompson_point_estimate",
+        "is_risk_certificate": false,
+        "point_estimate": "1/2",
+        "reason": "known verified outcome-independent follow-up with positive support",
+        "status": "ELIGIBLE"
+      },
+      "checkpoint": "interim",
+      "complete_case": {
+        "naive_le_alpha": false,
+        "risk": "1/4"
+      },
+      "n_assigned": 4,
+      "snapshot_id": "independent_mask_15@interim",
+      "status_counts": {
+        "pending": 0,
+        "permanent_loss_unknown_cause": 0,
+        "resolved": 4,
+        "safe_terminal_stop": 0
+      }
+    }
+  ]
+}

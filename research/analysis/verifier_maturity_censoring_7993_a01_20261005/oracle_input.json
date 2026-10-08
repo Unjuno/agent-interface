@@ -1,0 +1,355 @@
+{
+  "protocol": "issue-7993-t0-a01-v1",
+  "snapshots": [
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "0/4",
+      "loss_by_row": {
+        "z1": 0,
+        "z2": 0,
+        "z3": 0,
+        "z4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "zero_risk_control@complete"
+    },
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "outcome_dependent_delay",
+      "mechanism_matches_declared_model": false,
+      "snapshot_id": "informative_delay_known_bad@interim"
+    },
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "outcome_dependent_delay",
+      "mechanism_matches_declared_model": false,
+      "snapshot_id": "informative_delay_hidden_misspecification@interim"
+    },
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "zero_probability_for_rare_stratum",
+      "mechanism_matches_declared_model": false,
+      "snapshot_id": "zero_support_error_stratum@interim"
+    },
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "delayed_then_resolved",
+      "mechanism_matches_declared_model": false,
+      "snapshot_id": "delayed_eventually_resolved@early"
+    },
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "delayed_then_resolved",
+      "mechanism_matches_declared_model": false,
+      "snapshot_id": "delayed_eventually_resolved@late"
+    },
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "pending_at_horizon@horizon"
+    },
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "safe_terminal_stop",
+      "mechanism_matches_declared_model": false,
+      "snapshot_id": "safe_terminal_stop@terminal"
+    },
+    {
+      "design_probability": "1",
+      "enumeration_group": null,
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "permanent_loss_unknown_cause",
+      "mechanism_matches_declared_model": false,
+      "snapshot_id": "permanent_loss_unknown_cause@horizon"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_00@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_01@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_02@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_03@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_04@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_05@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_06@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_07@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_08@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_09@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_10@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_11@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_12@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_13@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_14@interim"
+    },
+    {
+      "design_probability": "1/16",
+      "enumeration_group": "independent_masks_16",
+      "full_cohort_risk": "1/4",
+      "loss_by_row": {
+        "e1": 1,
+        "e2": 0,
+        "e3": 0,
+        "e4": 0
+      },
+      "mechanism": "independent_bernoulli_followup",
+      "mechanism_matches_declared_model": true,
+      "snapshot_id": "independent_mask_15@interim"
+    }
+  ]
+}
