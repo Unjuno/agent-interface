@@ -1094,6 +1094,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`spec_diversity_8088_t0_a03_20261005/`](spec_diversity_8088_t0_a03_20261005/)
 - [`specialist_regeneration_4295_controls_20261001_01/`](specialist_regeneration_4295_controls_20261001_01/)
 - [`specialist_regeneration_4295_formal_20261001_01/`](specialist_regeneration_4295_formal_20261001_01/)
+- [`split_control_value_8638_t0_a02_20261009/`](split_control_value_8638_t0_a02_20261009/)
 - [`spoken_instruction_contract_preservation_6471_t0_20261002/`](spoken_instruction_contract_preservation_6471_t0_20261002/)
 - [`sqlite_schema_readset_reprepare_v1/`](sqlite_schema_readset_reprepare_v1/)
 - [`stagewise_perturbation_6053_t0_20261002/`](stagewise_perturbation_6053_t0_20261002/)

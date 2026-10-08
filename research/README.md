@@ -8,6 +8,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
 
+- Issue #8638 T0 A02: [split-control value accounting](analysis/split_control_value_8638_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`; 192 rows independently reconstructed, three preregistered rank reversals, with stale/unknown cues unscored. Synthetic only; A01 raw-custody STOP preserved.
+
 - Issue #8259: [release-batch alias cleanup evidence rescue](doom/release_batch_alias_rescue_8259_20261009/README.md) — nine preserved fake-X/private-Xvfb experiment packages and a separate measurement-publication custody record; scoped construction only, with first STOP/FAIL outcomes retained. No live/game claim.
 
 - Issue #8318: [duplicate-allocation STOP custody record](analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_8318/ARCHIVAL_QUALIFICATION.md) — the repeated allocation is preserved separately and explicitly does not replace or pool with #8317's `HOLD_AUDITOR_COVERAGE`.
