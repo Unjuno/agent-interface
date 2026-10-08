@@ -1,0 +1,20 @@
+{
+  "allocation": "EPISTEMIC-ACTION-8623-T0-A01-20261008",
+  "construction_only": true,
+  "red": [
+    {"tests": 6, "outcome": "6 assertion failures because candidate.py CLI was absent; no import/syntax errors"},
+    {"tests": 7, "outcome": "1 assertion failure because run_formal.py was absent; no import/syntax errors"}
+  ],
+  "green": [
+    {"mode": "normal", "tests": 7, "outcome": "PASS"},
+    {"mode": "python -O", "tests": 7, "outcome": "PASS"}
+  ],
+  "controls": [
+    "unrelated probe side effect",
+    "lossy transformation/provenance deletion",
+    "fabricated provenance",
+    "unnecessary probe when admissible decision cannot change"
+  ],
+  "formal_invocations": {"candidate": 0, "auditor": 0},
+  "scope": "No model, GUI, human, network, Docker, WSLc, or OS input. Construction test runs are not official candidate/auditor allocations."
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "epistemic-action-oracle-v1",
+  "expected": {
+    "MISSING_RETRIEVABLE": {"decision": "APPROVE", "evidence_needed": true, "action": "ACQUIRE", "recognized_need": "NEEDS_ACQUISITION"},
+    "UNUSABLE_REPRESENTATION": {"decision": "EXPORT", "evidence_needed": true, "action": "TRANSFORM", "recognized_need": "NEEDS_TRANSFORM"},
+    "SAFE_DISCRIMINATING_PROBE": {"decision": "KEEP", "evidence_needed": true, "action": "PROBE", "recognized_need": "NEEDS_PROBE"},
+    "SUFFICIENT_INITIAL_EVIDENCE": {"decision": "KEEP", "evidence_needed": false, "action": "COMMIT", "recognized_need": "SUFFICIENT"},
+    "UNSAFE_UNINFORMATIVE_PROBE": {"decision": "UNKNOWN", "evidence_needed": true, "action": "YIELD", "recognized_need": "BLOCKED_EVIDENCE"},
+    "OUT_OF_SUPPORT_UNKNOWN": {"decision": "UNKNOWN", "evidence_needed": "UNKNOWN", "action": "YIELD", "recognized_need": "UNKNOWN"}
+  },
+  "arms": {
+    "PRESCRIBED": {"MISSING_RETRIEVABLE": ["ACQUIRE", "COMMIT"], "UNUSABLE_REPRESENTATION": ["TRANSFORM", "COMMIT"], "SAFE_DISCRIMINATING_PROBE": ["PROBE", "COMMIT"], "SUFFICIENT_INITIAL_EVIDENCE": ["COMMIT"], "UNSAFE_UNINFORMATIVE_PROBE": ["YIELD"], "OUT_OF_SUPPORT_UNKNOWN": ["YIELD"]},
+    "AVAILABLE": {"MISSING_RETRIEVABLE": ["ACQUIRE", "COMMIT"], "UNUSABLE_REPRESENTATION": ["TRANSFORM", "COMMIT"], "SAFE_DISCRIMINATING_PROBE": ["PROBE", "COMMIT"], "SUFFICIENT_INITIAL_EVIDENCE": ["PROBE", "COMMIT"], "UNSAFE_UNINFORMATIVE_PROBE": ["YIELD"], "OUT_OF_SUPPORT_UNKNOWN": ["YIELD"]},
+    "NO_EPISTEMIC_ACTION": {"MISSING_RETRIEVABLE": ["YIELD"], "UNUSABLE_REPRESENTATION": ["YIELD"], "SAFE_DISCRIMINATING_PROBE": ["YIELD"], "SUFFICIENT_INITIAL_EVIDENCE": ["COMMIT"], "UNSAFE_UNINFORMATIVE_PROBE": ["YIELD"], "OUT_OF_SUPPORT_UNKNOWN": ["YIELD"]}
+  },
+  "task_success_decisions": {
+    "MISSING_RETRIEVABLE": ["APPROVE"],
+    "UNUSABLE_REPRESENTATION": ["EXPORT"],
+    "SAFE_DISCRIMINATING_PROBE": ["KEEP"],
+    "SUFFICIENT_INITIAL_EVIDENCE": ["KEEP"],
+    "UNSAFE_UNINFORMATIVE_PROBE": [],
+    "OUT_OF_SUPPORT_UNKNOWN": []
+  }
+}
