@@ -193,12 +193,13 @@ class ControllerFailureCleanup:
                     record.get('keys_down')==[] and record.get('buttons_down')==[] and
                     record.get('keys_unknown')==[] and record.get('key_state_errors')==[])
         def matching_input_release(identifier, token):
-            for row in released_by_id[identifier]:
-                owner=row.get('owner_release')
-                if (row.get('intent_token')==token and type(owner) is dict and
-                        owner.get('intent_token')==token and empty_release(owner)):
-                    return True
-            return False
+            rows=released_by_id[identifier]
+            if len(rows)!=1:
+                return False
+            row=rows[0]
+            owner=row.get('owner_release')
+            return (row.get('intent_token')==token and type(owner) is dict and
+                    owner.get('intent_token')==token and empty_release(owner))
         def release_is_verified(identifier):
             terminal=terminal_by_id[identifier]
             release=terminal.get('release')

@@ -170,6 +170,38 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
             [accepted, admission, owner_release, terminal])
         self.assertTrue(matching_receipt["input_releases_verified_empty"])
 
+    def test_duplicate_input_release_receipts_fail_closed(self):
+        accepted = {"event": "accepted", "id": "source-refresh-0",
+                    "intent_token": "accepted-lease"}
+        admission = {"event": "input_admission", "id": "source-refresh-0",
+                     "intent_token": "accepted-lease"}
+        good_release = {"event": "input_released", "id": "source-refresh-0",
+                        "intent_token": "accepted-lease",
+                        "owner_release": {"verified": True, "keys_down": [],
+                                          "buttons_down": [], "keys_unknown": [],
+                                          "key_state_errors": [],
+                                          "intent_token": "accepted-lease"}}
+        contradictory_release = {"event": "input_released", "id": "source-refresh-0",
+                                 "intent_token": "accepted-lease",
+                                 "owner_release": {"verified": False,
+                                                   "keys_down": ["KEY_W"],
+                                                   "buttons_down": [],
+                                                   "keys_unknown": [],
+                                                   "key_state_errors": [],
+                                                   "intent_token": "accepted-lease"}}
+        terminal = {"event": "terminal", "id": "source-refresh-0",
+                    "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": [], "keys_unknown": [],
+                                "key_state_errors": [],
+                                "intent_token": "accepted-lease"}}
+        for releases in ((good_release, contradictory_release),
+                         (contradictory_release, good_release)):
+            with self.subTest(first_release_verified=releases[0]["owner_release"]["verified"]):
+                receipt = self.run_cleanup_events(
+                    [accepted, admission, *releases, terminal])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+
     def test_cancelled_admission_rejects_wrong_owner_release_token(self):
         accepted = {"event": "accepted", "id": "source-refresh-0",
                     "intent_token": "accepted-lease"}
