@@ -1167,7 +1167,11 @@ def main():
             try:
                 latest, source_refresh = refresh_source(
                     latest, signal_reader, ammo_reader, send_source_refresh, wait,
-                    f"source-refresh-{index}")
+                    f"source-refresh-{index}",
+                    terminal_predicate=lambda row, health, ammo: (
+                        row.get("event") == "observation" and
+                        health.get("status") == "observed" and
+                        type(health.get("value")) is int and health.get("value") == 0))
             except SourceRefreshRefused as error:
                 source_refreshes.append(dict(error.receipt, iteration=index))
                 try:
@@ -1180,6 +1184,19 @@ def main():
             source_refreshes.append(dict(source_refresh, iteration=index))
             (args.out/"source-refreshes.json").write_text(
                 json.dumps(source_refreshes,indent=2)+"\n")
+            if source_refresh.get("status") == "terminal":
+                decisions.append({
+                    "iteration": index,
+                    "terminal_observation": {
+                        "status": "observed",
+                        "health": latest.get("signals", {}).get("health", {}).get("value"),
+                        "sequence": latest.get("sequence"),
+                    },
+                    "source_refresh": dict(source_refresh, iteration=index),
+                    "model_action_discarded": False,
+                    "plan_terminal": "terminal_environment_observed",
+                })
+                break
             failure_cleanup.set_stage("cover_validity_admission")
             cover_semantic, cover_validity_semantic, cover_policy_source_iteration = reusable_cover(decisions)
             validity_monitor, validity_admission = build_cover_monitor(
@@ -1876,7 +1893,8 @@ def main():
           "measurement_session":("v15_scorer_only_per_key_release"
                                   if args.measurement_session else "v12_default"),
           "model_session_span":args.session_span,
-          "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
+          "model_session_ids":list(dict.fromkeys(
+              row["model_session_id"] for row in decisions if "model_session_id" in row)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
           "effect_receipt_contract":"reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
           "soft_event_context_contract":"expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
@@ -1948,7 +1966,12 @@ def main():
           "model_authored_cover_validity_envelopes":sum(isinstance(x.get("action"),dict) and
               x["action"]["state"]=="active" and len(x["action"].get("next_cover_validity",[]))==1 and
               not x.get("model_action_discarded",False) for x in decisions),
-          "model_wall_seconds":sum(x["model_ns"] for x in decisions)/1e9}
+          "model_wall_seconds":sum(x.get("model_ns", 0) for x in decisions)/1e9,
+          "terminal_health_observation":next((x["terminal_observation"] for x in decisions
+              if x.get("plan_terminal") == "terminal_environment_observed"), None),
+          "terminal_health_policy_boundary":(
+              "Observed health zero ends the episode before another model turn or input; "
+              "it is a post-terminal reporting/custody path and does not claim death prevention.")}
         failure_cleanup.set_stage("report_write")
         (args.out/"report.json").write_text(json.dumps(report,indent=2)+"\n")
         print(json.dumps({"iterations":len(decisions),"score":score,

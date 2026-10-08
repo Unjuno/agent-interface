@@ -76,6 +76,27 @@ class SourceRefreshTests(unittest.TestCase):
     def test_binding_change_refuses(self):
         row=observation(2,health=97,ammo=47); row['pointer_binding']['surface']=2
         with self.assertRaises(SourceRefreshRefused): self.run_refresh(Harness([row]))
+    def test_terminal_zero_is_reportable_without_submitting_input(self):
+        h=Harness([]); initial=observation(1,health=0,ammo=40)
+        row,receipt=refresh_source(initial,Reader('health'),Reader('ammo'),h.send,h.wait,
+            'source-0',terminal_predicate=lambda row,health,ammo:
+                row.get('event')=='observation' and health.get('status')=='observed' and
+                type(health.get('value')) is int and health.get('value')==0)
+        self.assertEqual(row,initial); self.assertEqual(receipt['status'],'terminal')
+        self.assertEqual(h.commands,[])
+    def test_terminal_predicate_does_not_relax_default_closed_domain(self):
+        h=Harness([])
+        with self.assertRaises(SourceRefreshRefused):
+            self.run_refresh(h,observation(1,health=0,ammo=40))
+        self.assertEqual(h.commands,[])
+    def test_terminal_zero_after_passive_refresh_stops_before_next_attempt(self):
+        h=Harness([observation(2,health=0,ammo=40),observation(3,health=97,ammo=47)])
+        row,receipt=refresh_source(observation(1),Reader('health'),Reader('ammo'),h.send,h.wait,
+            'source-0',terminal_predicate=lambda row,health,ammo:
+                row.get('event')=='observation' and health.get('status')=='observed' and
+                type(health.get('value')) is int and health.get('value')==0)
+        self.assertEqual(row['sequence'],2); self.assertEqual(receipt['status'],'terminal')
+        self.assertEqual(len(h.commands),1)
     def test_deadline_expiration_prevents_submission(self):
         times=iter([0,3])
         h=Harness([])

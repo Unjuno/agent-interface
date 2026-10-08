@@ -9,7 +9,7 @@ class SourceRefreshRefused(RuntimeError):
 
 def refresh_source(observation, health_reader, ammo_reader, send, wait, prefix,
                    max_refreshes=4, budget_seconds=2, clock=time.monotonic,
-                   lease_clock=time.perf_counter_ns):
+                   lease_clock=time.perf_counter_ns, terminal_predicate=None):
     if type(max_refreshes) is not int or not 1 <= max_refreshes <= 4:
         raise ValueError('one to four passive refreshes required')
     if not 0 < budget_seconds <= 2:
@@ -21,6 +21,8 @@ def refresh_source(observation, health_reader, ammo_reader, send, wait, prefix,
         raise SourceRefreshRefused(receipt)
     def valid(row):
         health, ammo = health_reader.read(row), ammo_reader.read(row)
+        if terminal_predicate is not None and terminal_predicate(row, health, ammo):
+            return "terminal"
         for name, signal in [('health',health), ('ammo',ammo)]:
             status = signal.get('status')
             if status == 'observed':
@@ -29,7 +31,12 @@ def refresh_source(observation, health_reader, ammo_reader, send, wait, prefix,
             elif status != 'unknown':
                 refuse('invalid_signal_status_' + name)
         return health['status'] == 'observed' and ammo['status'] == 'observed'
-    if valid(observation):
+    source_state = valid(observation)
+    if source_state == "terminal":
+        receipt["status"] = "terminal"
+        receipt["reason"] = "terminal_observation"
+        return observation, receipt
+    if source_state:
         receipt['status']='already_observed'
         return observation, receipt
     deadline = clock() + budget_seconds
@@ -74,7 +81,12 @@ def refresh_source(observation, health_reader, ammo_reader, send, wait, prefix,
                 or fresh.get('pointer_binding') != observation.get('pointer_binding')):
             refuse('fresh_observation_unqualified')
         current = fresh
-        if valid(current):
+        source_state = valid(current)
+        if source_state == "terminal":
+            receipt.update(status="terminal", terminal_sequence=current["sequence"],
+                           reason="terminal_observation")
+            return current, receipt
+        if source_state:
             receipt.update(status='recovered', recovered_sequence=current['sequence'])
             return current, receipt
     refuse('refresh_limit_exhausted')

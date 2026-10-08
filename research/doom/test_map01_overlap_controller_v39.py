@@ -375,6 +375,28 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(calls[0], ("build", fresh))
         self.assertEqual(calls[1][2:], ([], None))
 
+    def test_production_source_refresh_stops_loop_on_terminal_health_zero(self):
+        source_path = Path(__file__).resolve().parent / "map01_overlap_controller_v39.py"
+        source = source_path.read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        refresh = source.index("latest, source_refresh = refresh_source(", execute)
+        terminal_predicate = source.index("terminal_predicate=lambda row, health, ammo:", refresh)
+        terminal_break = source.index('if source_refresh.get("status") == "terminal":', terminal_predicate)
+        loop_break = source.index("break", terminal_break)
+        next_input_path = source.index('failure_cleanup.set_stage("cover_validity_admission")', loop_break)
+        finish_path = source.index('failure_cleanup.set_stage("session_finish")', next_input_path)
+        report_path = source.index('failure_cleanup.set_stage("report_write")', finish_path)
+        model_session_filter = source.index('row["model_session_id"] for row in decisions if "model_session_id" in row', report_path - 8000)
+        model_wall_sum = source.index('x.get("model_ns", 0)', report_path - 1000)
+        self.assertLess(refresh, terminal_predicate)
+        self.assertLess(terminal_predicate, terminal_break)
+        self.assertLess(terminal_break, loop_break)
+        self.assertLess(loop_break, next_input_path)
+        self.assertLess(next_input_path, finish_path)
+        self.assertLess(finish_path, report_path)
+        self.assertLess(model_session_filter, report_path)
+        self.assertLess(model_wall_sum, report_path)
+
     def test_production_initial_cover_rejection_branch_uses_caller_reset(self):
         source = Path(controller.__file__).read_text(encoding="utf-8")
         execute = source.index("def main(")
