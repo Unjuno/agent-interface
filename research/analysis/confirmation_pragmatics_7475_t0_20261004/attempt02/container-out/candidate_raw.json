@@ -1,0 +1,168 @@
+{
+  "cards": [
+    {
+      "case_id": "calendar_invite",
+      "variant": "neutral",
+      "framing_sentence": "Review the prepared invitation before deciding.",
+      "displayed_facts": {
+        "id": "calendar_invite",
+        "action": "Send a calendar invitation",
+        "target": "Project Atlas test calendar; alex@example.invalid",
+        "payload": "Planning review, 2026-11-12 10:00 UTC, 30 minutes",
+        "status": "Not sent; awaiting a decision",
+        "on_confirm": "Send exactly this invitation to the displayed recipient",
+        "reversibility": "The organizer can cancel the invitation after sending; cancellation may not retract notices already delivered",
+        "evidence": "Recipient and complete invitation details are displayed",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Send invitation"
+        ]
+      },
+      "answer_key": {
+        "already_performed": false,
+        "decline_effect": "no action is dispatched",
+        "confirm_effect": "Send exactly this invitation to the displayed recipient",
+        "target": "Project Atlas test calendar; alex@example.invalid",
+        "reversibility": "The organizer can cancel the invitation after sending; cancellation may not retract notices already delivered"
+      }
+    },
+    {
+      "case_id": "calendar_invite",
+      "variant": "framed",
+      "framing_sentence": "Continue toward completion by reviewing the prepared invitation before deciding.",
+      "displayed_facts": {
+        "id": "calendar_invite",
+        "action": "Send a calendar invitation",
+        "target": "Project Atlas test calendar; alex@example.invalid",
+        "payload": "Planning review, 2026-11-12 10:00 UTC, 30 minutes",
+        "status": "Not sent; awaiting a decision",
+        "on_confirm": "Send exactly this invitation to the displayed recipient",
+        "reversibility": "The organizer can cancel the invitation after sending; cancellation may not retract notices already delivered",
+        "evidence": "Recipient and complete invitation details are displayed",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Send invitation"
+        ]
+      },
+      "answer_key": {
+        "already_performed": false,
+        "decline_effect": "no action is dispatched",
+        "confirm_effect": "Send exactly this invitation to the displayed recipient",
+        "target": "Project Atlas test calendar; alex@example.invalid",
+        "reversibility": "The organizer can cancel the invitation after sending; cancellation may not retract notices already delivered"
+      }
+    },
+    {
+      "case_id": "file_archive",
+      "variant": "neutral",
+      "framing_sentence": "Review the prepared move before deciding.",
+      "displayed_facts": {
+        "id": "file_archive",
+        "action": "Move a file to recoverable archive",
+        "target": "drafts/launch-notes.txt",
+        "payload": "Move the displayed file; no content change",
+        "status": "Not moved; awaiting a decision",
+        "on_confirm": "Move exactly this file to the recoverable archive",
+        "reversibility": "Restore is available for 30 days",
+        "evidence": "Path and destination are displayed",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Move to archive"
+        ]
+      },
+      "answer_key": {
+        "already_performed": false,
+        "decline_effect": "no action is dispatched",
+        "confirm_effect": "Move exactly this file to the recoverable archive",
+        "target": "drafts/launch-notes.txt",
+        "reversibility": "Restore is available for 30 days"
+      }
+    },
+    {
+      "case_id": "file_archive",
+      "variant": "framed",
+      "framing_sentence": "Continue toward completion by reviewing the prepared move before deciding.",
+      "displayed_facts": {
+        "id": "file_archive",
+        "action": "Move a file to recoverable archive",
+        "target": "drafts/launch-notes.txt",
+        "payload": "Move the displayed file; no content change",
+        "status": "Not moved; awaiting a decision",
+        "on_confirm": "Move exactly this file to the recoverable archive",
+        "reversibility": "Restore is available for 30 days",
+        "evidence": "Path and destination are displayed",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Move to archive"
+        ]
+      },
+      "answer_key": {
+        "already_performed": false,
+        "decline_effect": "no action is dispatched",
+        "confirm_effect": "Move exactly this file to the recoverable archive",
+        "target": "drafts/launch-notes.txt",
+        "reversibility": "Restore is available for 30 days"
+      }
+    },
+    {
+      "case_id": "sandbox_form",
+      "variant": "neutral",
+      "framing_sentence": "Review the prepared request before deciding.",
+      "displayed_facts": {
+        "id": "sandbox_form",
+        "action": "Submit a test request",
+        "target": "Example Service sandbox",
+        "payload": "Request R-17; quantity 2; total USD 8.00; no charge is possible in this sandbox",
+        "status": "Not submitted; awaiting a decision",
+        "on_confirm": "Submit exactly the displayed request to the sandbox",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible",
+        "evidence": "Sandbox destination and all request fields are displayed",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Submit request"
+        ]
+      },
+      "answer_key": {
+        "already_performed": false,
+        "decline_effect": "no action is dispatched",
+        "confirm_effect": "Submit exactly the displayed request to the sandbox",
+        "target": "Example Service sandbox",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible"
+      }
+    },
+    {
+      "case_id": "sandbox_form",
+      "variant": "framed",
+      "framing_sentence": "Continue toward completion by reviewing the prepared request before deciding.",
+      "displayed_facts": {
+        "id": "sandbox_form",
+        "action": "Submit a test request",
+        "target": "Example Service sandbox",
+        "payload": "Request R-17; quantity 2; total USD 8.00; no charge is possible in this sandbox",
+        "status": "Not submitted; awaiting a decision",
+        "on_confirm": "Submit exactly the displayed request to the sandbox",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible",
+        "evidence": "Sandbox destination and all request fields are displayed",
+        "layout": "single-column; facts before controls",
+        "buttons": [
+          "Decline",
+          "Submit request"
+        ]
+      },
+      "answer_key": {
+        "already_performed": false,
+        "decline_effect": "no action is dispatched",
+        "confirm_effect": "Submit exactly the displayed request to the sandbox",
+        "target": "Example Service sandbox",
+        "reversibility": "Submission can be withdrawn before processing; processing is not guaranteed reversible"
+      }
+    }
+  ],
+  "human_data_collected": false,
+  "dispatch_performed": false
+}
