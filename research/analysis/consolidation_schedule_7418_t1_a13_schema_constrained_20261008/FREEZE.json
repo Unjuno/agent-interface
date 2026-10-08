@@ -1,0 +1,98 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A13-SCHEMA-CONSTRAINED-20261008",
+  "issue": 8406,
+  "base_main_sha": "1aaa633c4f1aeec25e4b4617d92dd93af3b20603",
+  "branch": "research/8406-schedule-t1-a13-schema-constrained-20261008",
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a13_schema_constrained_20261008",
+  "pre_freeze_HEAD": "1aaa633c4f1aeec25e4b4617d92dd93af3b20603",
+  "predecessor": "T1 A12 FAIL_METHOD; 18 transition errors preserved separately; no pooling",
+  "delta_from_A12": [
+    "fresh allocation and seeds 5301/5302/5303",
+    "consolidation request format is a JSON Schema with allowed kind enum; query format remains JSON"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "seeds": [
+      5301,
+      5302,
+      5303
+    ],
+    "query_calls": 360,
+    "consolidation_calls": 30,
+    "maximum_total_calls": 390,
+    "query_num_predict": 128,
+    "consolidation_num_predict": 2048,
+    "num_ctx": 8192,
+    "temperature": 0.2,
+    "top_p": 0.9,
+    "think": false,
+    "query_format": "json",
+    "consolidation_format": "frozen JSON Schema object in candidate.py",
+    "retries": 0
+  },
+  "model": {
+    "request_name": "qwen3:8b",
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "parameters": "8.2B",
+    "quantization": "Q4_K_M",
+    "ollama_version": "0.40.0",
+    "host": "127.0.0.1:11435",
+    "private_store": "/tmp/unjuno-8406-t1-a13-ollama-store"
+  },
+  "runtime": {
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+    "container": "none; host-local private Ollama",
+    "network": "loopback model API; model pull completed before freeze",
+    "gui": "none",
+    "action_authority": "none",
+    "user_data": "none"
+  },
+  "preflight_result": "results/FORMAL_T1_A13/PREFLIGHT.json",
+  "preflight_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "construction_tests": "15/15 PASS before freeze; py_compile PASS; private tag/blob preflight PASS",
+  "transition_contract": [
+    "exactly one canonical claim per visible episode",
+    "copy prior claims unchanged",
+    "exception kind and exact/forbidden effect faithfully mapped",
+    "fact key is the value of fact_key input slot",
+    "history key combines version and field; full baseline-to-current relation",
+    "conflicts only for same fact-key/scope with differing visible observations",
+    "exact provenance and no unknown source IDs"
+  ],
+  "schema_contract": "Every consolidation request must carry the exact frozen JSON Schema; queries stay format=json. Schema requires claim fields and restricts kind to verified_pattern, forbidden_effect_exception, fact_observation, conflict, history_delta. It does not guarantee semantic mapping or claim completeness.",
+  "decision_rule": ">=0.10 consistent paired contrast across seeds plus clean full transition/raw audit => PASS_CADENCE_SENSITIVITY_SCOPED; all contrasts within margin plus all gates clean => PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED; failed transition/method gate => FAIL_METHOD; otherwise UNCERTAIN",
+  "schema_diagnostic": "Count response claims whose kind is outside the allowed output enum; diagnostic only, not a replacement for transition audit.",
+  "frozen_sha256": {
+    "README.md": "e3807537ac1da0451ce5e99783de62d1c85f7e50e01afd582c58146df28df9fb",
+    "PROTOCOL.md": "c9c50c2f08fe75cf602b1ced3c10a59799f060b43eb403b942140c57eb07b24f",
+    "candidate.py": "88105fbf1665cd2064783960b1f9735e33d4d4a357f70baf056dd834e33d2d70",
+    "auditor.py": "813c684920dcc5b50d7e6e93a6bd3f097e23ac7296680e2c7bfb6bf2d579ed9a",
+    "preflight.py": "529c5398ae2ba27df3ba4cd5e3f8bad0b0de6ab8eeb19b3b989eefa1a5ef1d9b",
+    "test_construction.py": "b2ac6c8d328c66f4bbe3f15a5b9190a3e99bf80363b2b94898a190eb5a94c50f",
+    "episode_ledger.json": "b059062f4d7f1dc36fa604d9f7ba75a58e993563bc161f3989fa2f7638fc3a1f",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "prompts.json": "c28cf6efa3f7dfb735d7972bcabe0a3e15d67d9491e66ce7d0aa73d88899ae0c",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "RUN_RECORD.json": "843ab5859d72a580eedc5168ef5a17905935828fe8d2cf283ba180108cec3567"
+  },
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a13_schema_constrained_20261008/results/FORMAL_T1_A13/RAW.jsonl",
+  "primary_references": [
+    "https://github.com/ollama/ollama/blob/v0.40.0/api/types.go",
+    "https://ollama.com/blog/structured-outputs"
+  ],
+  "preregistration": "to be posted to Issue #8406 before candidate invocation"
+}
