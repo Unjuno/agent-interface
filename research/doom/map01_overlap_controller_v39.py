@@ -389,9 +389,14 @@ def require_cover_terminal(terminal, *, cancellation_requested=False):
 
 
 def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
-    planner_interrupt = planner.interrupt(planner_handle)
-    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
-    process.stdin.flush()
+    # Stop local input before waiting on the synchronous App Server interrupt
+    # response; otherwise a slow planner transport can leave this cover active.
+    # Still attempt to stop the planner if the local cancel pipe itself fails.
+    try:
+        process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+        process.stdin.flush()
+    finally:
+        planner_interrupt = planner.interrupt(planner_handle)
     terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
     release = terminal.get("release", {})
     # The bounded cover can naturally finish or lease-expire between policy
