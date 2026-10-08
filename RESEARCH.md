@@ -1,3 +1,7 @@
+# Issue #8589 T0 A01 — effect-aware selective recovery (2026-10-08)
+
+The WSLc synthetic DAG protocol and decision gate are frozen in [the package](research/analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/PROTOCOL.md); the one-shot formal candidate and independent audit have not run yet. No GUI runtime, external-effect replay, task correctness, latency/cost, user benefit, or product claim is implied.
+
 # Issue #8500 T0 A01 — rejected-analogy memory finite method test (2026-10-08)
 
 `PASS_METHOD_SCOPED`: frozen deterministic scorer and independent auditor each ran once, with zero retries. All 84 rows across 12 blocks reconstructed with zero errors; all 5/5 frozen corruption controls were rejected. Invalid proposals among 14 authored invalid candidates were 8/14 (no memory), 5/14 (prose), and 2/14 (structured); base valid recall was 8/10 in every arm. All four changed-envelope controls reopened under structured memory. This is a finite hand-authored fixture result only—not real analogical reasoning, model behavior, generalization, deployed-memory effectiveness, or product benefit. Host CPython 3.12.10; no container boundary required and no Docker/WSLc comparison. See [formal report and raw evidence](research/analysis/analogy_rejection_8500_t0_a01_20261008/RESULT.md), [frozen package](research/analysis/analogy_rejection_8500_t0_a01_20261008/README.md), and [Issue #8500](https://github.com/Unjuno/agent-interface/issues/8500).

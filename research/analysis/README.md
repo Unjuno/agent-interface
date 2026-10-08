@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/PROTOCOL.md) — preregistered finite DAG; formal result pending; no GUI/runtime/effect-dispatch claim.
+
 - [Issue #8488 PSI-triggered work-shedding T0 A01](psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — `HOLD_DEADLINE_SEMANTICS_MISMATCH`: strict-bound raw recheck gives fixed 4 / queue 3 / free-memory 4 / PSI 1 primary misses, so the zero-miss gate fails. The original `NO_RESIDUAL` reading is withdrawn; no runtime/container claim.
 
 - [Issue #8553 T0 A01 counterexample-guided recovery refinement](counterexample_guided_recovery_refinement_8553_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 5/5 finite cases independently reconstructed; safe separator refined with `p_color` (one predicate vs fixed-fine's three); planted optimistic false recovery returned `UNKNOWN`; 5/5 mutations rejected. Hand-authored CPU-only model; no GUI/runtime/product claim.
@@ -942,6 +944,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
 - [`recovery_sentinel_5776_t0_v1/`](recovery_sentinel_5776_t0_v1/)
 - [`recovery_sentinel_5776_t0_v2/`](recovery_sentinel_5776_t0_v2/)
+- [`recovery_validity_effect_replay_8589_t0_a01_20261008/`](recovery_validity_effect_replay_8589_t0_a01_20261008/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
 - [`relation_first_real_corpus_8073_a01_20261007/`](relation_first_real_corpus_8073_a01_20261007/)
 - [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
