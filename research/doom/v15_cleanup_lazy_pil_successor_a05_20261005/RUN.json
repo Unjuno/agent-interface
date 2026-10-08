@@ -1,0 +1,61 @@
+{
+  "schema": "v15-cleanup-lazy-pil-a05-run-v1",
+  "disposition": "STOP_SOURCE_STAGING_FAILED_BEFORE_CANDIDATE_IMPORT",
+  "cause": "the staging validator correctly detected that A04 source manifest records the pre-patch Git blob while scratch candidate was already patched; source copy aborted. The shell did not fail-fast and invoked both frozen test commands against an empty scratch; each failed to import all seven named test modules. No candidate module or sitecustomize blocker loaded.",
+  "staging_validator_failed": true,
+  "test_commands_invoked_once_each": true,
+  "candidate_source_executed": false,
+  "blocker_active": false,
+  "tree": "78b8636f08bef691944da8bb536437586f0d116a",
+  "main": "b5be19963454ce5edafc945b78b100012952dd15",
+  "pr": 8094,
+  "pr_head": "d0aa8463a10abf04d1b40cb4f498fc0a659fb827",
+  "runtime": "CPython 3.12.14 Windows AMD64",
+  "normal": {
+    "stdout": {
+      "path": "runs/normal.stdout.txt.b64",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "runs/normal.stderr.txt.b64",
+      "bytes": 5677,
+      "sha256": "31a5035589e2368e30741b9c9214ce882fd96c094a991f9d9e1d07422a0a8d80"
+    },
+    "exit_code": 1,
+    "discovered": 7,
+    "errors": 7,
+    "summary": [
+      "Ran 7 tests in 0.002s",
+      "FAILED (errors=7)"
+    ],
+    "blocker_marker_seen": false,
+    "candidate_modules_imported": false
+  },
+  "optimized": {
+    "stdout": {
+      "path": "runs/optimized.stdout.txt.b64",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "runs/optimized.stderr.txt.b64",
+      "bytes": 5677,
+      "sha256": "afe9416b92b07eca184b1b5f3fca15154b99d24c2d993c966d2d0b1c1576724a"
+    },
+    "exit_code": 1,
+    "discovered": 7,
+    "errors": 7,
+    "summary": [
+      "Ran 7 tests in 0.001s",
+      "FAILED (errors=7)"
+    ],
+    "blocker_marker_seen": false,
+    "candidate_modules_imported": false
+  },
+  "retry": false,
+  "live_game": false,
+  "model_calls": 0,
+  "native_x11": false,
+  "input_calls": 0
+}
