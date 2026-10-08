@@ -73,8 +73,13 @@ def analyze(events, owner_events, report, prior_audit):
         if terminal is None:
             raise ValueError(f"cancel lacks terminal: {identifier}")
         terminal_release = terminal.get("release", {})
+        requested_ns = cancel.get("requested_ns")
+        terminal_ns = terminal.get("terminal_ns")
+        verified_ns = terminal_release.get("verified_ns")
         if (terminal.get("status") != "cancelled" or terminal_release.get("verified") is not True or
-                terminal_release.get("keys_down") != [] or terminal_release.get("buttons_down") != []):
+                terminal_release.get("keys_down") != [] or terminal_release.get("buttons_down") != [] or
+                type(requested_ns) is not int or type(verified_ns) is not int or
+                type(terminal_ns) is not int or not requested_ns <= verified_ns <= terminal_ns):
             raise ValueError(f"cancel terminal is not verified empty: {identifier}")
         cause = (terminal.get("interruption") or {}).get("record")
         active = identifier in held_ids
@@ -85,9 +90,9 @@ def analyze(events, owner_events, report, prior_audit):
             "interruption_owner_release": cause is not None,
             "input_release_event": early is not None,
             "input_release_unverified_event": identifier in unverified_release_rows,
-            "cancel_requested_ns": cancel.get("requested_ns"),
-            "terminal_ns": terminal.get("terminal_ns"),
-            "terminal_owner_verified_ns": terminal_release.get("verified_ns"),
+            "cancel_requested_ns": requested_ns,
+            "terminal_ns": terminal_ns,
+            "terminal_owner_verified_ns": verified_ns,
         }
         if cause is not None:
             if (cause.get("event") != "owner_release" or cause.get("verified") is not True or

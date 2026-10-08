@@ -1,0 +1,39 @@
+{
+  "allocation_id": "ISSUE8566-RECONCILE-ALIAS-A01-20261008",
+  "schema": "issue8566-reconcile-alias-freeze-v1",
+  "source_commit": "64c77d54c1a16b63be9084be1b117b628482b377",
+  "source_files": {
+    "research/doom/doom_typed_observation_v1.py": {
+      "git_blob": "930e1c78511b57999a0a2176cb94a31a32d166a8",
+      "sha256": "038537fac0b155025bec50e92eaa9ca434cc3789498199634ded095b151ef555"
+    },
+    "research/live_control/action_validity_admission_v1.py": {
+      "git_blob": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+      "sha256": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a"
+    }
+  },
+  "sha256": {
+    "PREREGISTRATION.md": "ca06d7012f3833e31899e7cb3005b723a5e020e3c1eb745d915f6dcc71a69dc2",
+    "audit.py": "57b028d426523f94e2ec3b536e07228db157868b37277001a0e05ad61fbf7c95",
+    "probe.py": "793a0ae2ecf313879f1435cda3dd978d7d6b24d9452b35265c5c2814e9cfc737",
+    "research/doom/doom_typed_observation_v1.py": "038537fac0b155025bec50e92eaa9ca434cc3789498199634ded095b151ef555",
+    "research/live_control/action_validity_admission_v1.py": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a"
+  },
+  "command": "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --env SOURCE_ROOT=/src --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/probe.py",
+  "audit_command": "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --env SOURCE_ROOT=/src --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/audit.py",
+  "container": {
+    "cli": "wslc 3.0.1.0",
+    "image": "agent-interface/native-suite-wslc-a08:20261004",
+    "image_id": "1b4a8bd7c0fe",
+    "python": "CPython 3.12.14",
+    "pillow": "10.2.0",
+    "network": "none",
+    "cpu_limit_requested": 1,
+    "memory_limit_requested": "1G",
+    "memory_enforcement_note": "WSL warned kernel does not support swap limit capabilities/cgroup swap limit; no swap limit is claimed."
+  },
+  "candidate_invocations": 1,
+  "audit_invocations": 1,
+  "retry_limit": 0,
+  "scope": "direct deterministic reconcile_artifact identity join; no GUI/game/model/OS input/live allocation"
+}

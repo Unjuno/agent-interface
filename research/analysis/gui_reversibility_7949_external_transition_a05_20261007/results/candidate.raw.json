@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "final": "000",
+      "id": "pre_interference",
+      "label": "UNIVERSALLY_UNIFORM",
+      "recovery": [
+        "restore_a"
+      ]
+    },
+    {
+      "id": "stale_then_refreshed",
+      "refreshed": {
+        "final": "001",
+        "label": "UNIVERSALLY_UNIFORM",
+        "recovery": [
+          "clear_owned_a"
+        ]
+      },
+      "stale": {
+        "final": null,
+        "label": "UNKNOWN_STALE_CERTIFICATE",
+        "recovery": null
+      }
+    },
+    {
+      "final": null,
+      "id": "journal_gap",
+      "label": "UNKNOWN_EVENT_CHAIN",
+      "recovery": null
+    }
+  ],
+  "run_id": "gui-reversibility-7949-external-transition-a05-20261007"
+}

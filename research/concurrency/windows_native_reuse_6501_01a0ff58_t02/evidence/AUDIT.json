@@ -1,0 +1,35 @@
+{
+  "native_replay": 0,
+  "rows": [
+    {
+      "all_owned_closed": true,
+      "events": 29,
+      "mode": "normal_B_D",
+      "primary_B_done": true,
+      "stale_cancel_target": null
+    },
+    {
+      "all_owned_closed": true,
+      "events": 29,
+      "mode": "stale_handle",
+      "primary_B_done": true,
+      "stale_cancel_target": 2
+    },
+    {
+      "all_owned_closed": true,
+      "events": 31,
+      "mode": "check_then_call",
+      "primary_B_done": true,
+      "stale_cancel_target": 2
+    },
+    {
+      "all_owned_closed": true,
+      "events": 31,
+      "mode": "locked_gate",
+      "primary_B_done": false,
+      "stale_cancel_target": null
+    }
+  ],
+  "source_execution": 0,
+  "status": "PASS_H_SCOPED_DIRECTED_REUSE"
+}

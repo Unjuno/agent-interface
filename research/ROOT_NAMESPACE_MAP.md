@@ -40,6 +40,8 @@ New work should normally use a category directory. Existing direct-root paths re
 
 ## Retained direct-root research families
 
+- [`outputs/`](outputs/) — retained local research-session status and handoff notes; not experiment evidence unless individually cited.
+
 - [`session_handoff/`](session_handoff/)
 - [`gtk_fresh_post_effect_2673/`](gtk_fresh_post_effect_2673/)
 - [`results/`](results/) — retained native-handle result bundles; each bundle's report defines its scope and status.
@@ -175,6 +177,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+- [`decision_regret_8528_t0_a01_20261008/`](decision_regret_8528_t0_a01_20261008/) — Issue #8528 finite synthetic decision-opportunity regret probe; read its protocol and audit for the authored toy-loss scope and STOP/qualification record.
 - [`gpu/`](gpu/) — archived local-GPU candidate triage snapshot and recovery status; not a current resource schedule or authorization.
 - [`archive/`](archive/) — Legacy research archive; consult included manifests and reports for scope.
 - [`archives/`](archives/) — Archived research bundles and their retained evidence indexes.
@@ -235,6 +238,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 ### Recent direct-root evidence
 
+- [`analysis/psi_work_shedding_8488_t0_a01_20261008/`](analysis/) — Issue #8488 T0 A01 is held for an exclusive-deadline semantics mismatch; see the report and append-only correction. The original `NO_RESIDUAL` interpretation was withdrawn.
 - [`carbon_window_7794_a05_bytebound_recheck_20261008/`](carbon_window_7794_a05_bytebound_recheck_20261008/) — Issue #8386 exact-byte comparator replay; consult its report for scoped disposition and unresolved freeze metadata.
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 report-temp fault revalidation.
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — retained Issue #3769 streamed online role-adapter experiment.

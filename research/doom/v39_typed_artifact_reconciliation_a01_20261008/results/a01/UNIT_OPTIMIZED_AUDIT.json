@@ -1,0 +1,26 @@
+{
+  "audit_scope": "read-only integrity and output reconstruction; not an additional test run",
+  "baseline": {
+    "exit": 1,
+    "failures": 5,
+    "tests": 3
+  },
+  "candidate": {
+    "exit": 0,
+    "failures": 0,
+    "tests": 3
+  },
+  "checks": {
+    "baseline_log_sha": true,
+    "baseline_optimized_red": true,
+    "candidate_log_sha": true,
+    "candidate_optimized_green": true,
+    "candidate_source_sha": true,
+    "runner_sha": true,
+    "test_sha": true
+  },
+  "checks_passed": 7,
+  "checks_total": 7,
+  "passed": true,
+  "schema": "issue8566-reconcile-alias-a01-optimized-unit-audit-v1"
+}
