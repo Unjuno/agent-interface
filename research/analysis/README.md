@@ -462,6 +462,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`claim_postdominator_6553_t0_20261002/`](claim_postdominator_6553_t0_20261002/)
 - [`claim_scoped_clip_trace_6536_t0_20261002/`](claim_scoped_clip_trace_6536_t0_20261002/)
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
+- [`clairvoyant_repair_7466_successor_a01_20261007/`](clairvoyant_repair_7466_successor_a01_20261007/)
 - [`clarification_timing_5959_t0_a01_20261008/`](clarification_timing_5959_t0_a01_20261008/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`client_energy_per_effect_7728_t0_20261005/`](client_energy_per_effect_7728_t0_20261005/)
