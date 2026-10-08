@@ -1,0 +1,63 @@
+{
+  "allocation": "UNJUNO-8636-ROTATION-FEATURES-T0-A02-20261009",
+  "base_main_sha": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "commands": [
+    "python3 -B runner.py --output results/a02-outcome",
+    "python3 -B auditor.py --output results/a02-outcome --result results/a02-outcome/audit.json"
+  ],
+  "construction_tests": {
+    "includes_A01_seed_30011_focal_shape_yield_regression": true,
+    "normal": "11/11",
+    "optimized": "11/11"
+  },
+  "delta_from_A01": "Auditor independently accepts focal_shift YIELD only when frozen 0.09-rad shape gate is reproduced with matching reason; such YIELD remains separately reported stress loss. New seed set; no threshold changes.",
+  "environment": {
+    "architecture": "arm64",
+    "container": "not required; CPU-only analytic fixture",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13"
+  },
+  "formal_invocations": {
+    "auditor": 0,
+    "auditor_limit": 1,
+    "candidate": 0,
+    "candidate_limit": 1,
+    "retries": 0
+  },
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8636",
+  "predecessor_A01": {
+    "disposition": "HOLD_UNCERTAIN",
+    "draft_pr": "https://github.com/Unjuno/agent-interface/pull/8711",
+    "preservation": "A01 source, output, and disposition remain unchanged",
+    "result_commit": "48135041a13c0988cf2d254dc5680f611063d10e"
+  },
+  "schema": "issue-8636-t0-a02-freeze-v1",
+  "seed_ranges": {
+    "combined_rotation": [
+      30030,
+      30059
+    ],
+    "feature_loss": [
+      30030,
+      30059
+    ],
+    "focal_shift": [
+      30030,
+      30059
+    ],
+    "pure_yaw": [
+      30030,
+      30059
+    ]
+  },
+  "source_sha256": {
+    "ENVIRONMENT.md": "44358ebf40a84043d8f020f95c0b0a25a994222f1a5dc014bf587629abec015d",
+    "PROTOCOL.md": "bd18257bdc0b188ebff8d06ac9d410ff3f701b417707e8749db993f08b06cc27",
+    "README.md": "123df006145bbf4c9c4b0b30a84a692a2c78d0332e97a7381318351b7b5e4a83",
+    "STATUS.md": "6d39154c2ef4a54b63f279887726abd3bf3e6a8f744c54b1d46d57a98aa94d3b",
+    "auditor.py": "5b21fbb8eb8e0fe1041fe8c3dd2a2cac0c55699632fbd6198e50fd3fcecbb968",
+    "candidate.py": "e058cdc69700b5cb08bbda13cb90c83caca36e238edcddbd9fde5cfced76d1a4",
+    "runner.py": "71a6a68d0d0035a694aa7256389e9d753d41ba95405c708ae6e63bb04d837cfd",
+    "test_construction.py": "056778b391fed3ed3c472b525adffb44aae04c8b0a3f30fd53752345bc5e2eb9"
+  }
+}
