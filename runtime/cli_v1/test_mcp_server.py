@@ -376,7 +376,7 @@ class PublicMCPTests(unittest.IsolatedAsyncioTestCase):
                         'program': {}, 'current_observation_seq': -1, 'current_binding_revision': 0})
                     row = json.loads(reply.content[0].text)
                     self.assertEqual(row['outcome_summary']['error'], 'INVALID_OBSERVATION_SEQ')
-                    self.assertTrue(Path(row['call_directory']).is_relative_to(root/'calls'))
+                    self.assertTrue(Path(row['call_directory']).is_relative_to((root/'calls').resolve(strict=True)))
                     retained = await client.call_tool('interface_results', {
                         'call_id': row['call_id']})
                     reread = json.loads(retained.content[0].text)

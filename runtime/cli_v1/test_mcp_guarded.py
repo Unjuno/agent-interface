@@ -745,7 +745,7 @@ class PublicCompiledOwnerTests(unittest.TestCase):
             self.assertEqual(row['method_receipt'],receipt)
             self.assertIsNone(row['task_success']);self.assertFalse(row['replay_allowed'])
             self.assertEqual(row['feedback']['image_status'],'image')
-            self.assertTrue(Path(row['feedback']['image_reference']['path']).is_relative_to(root/'method'))
+            self.assertTrue(Path(row['feedback']['image_reference']['path']).is_relative_to((root/'method').resolve(strict=True)))
             self.assertEqual(bridge.sequence,1);bridge.observe.assert_not_called();run.assert_called_once()
 
     def test_zero_observation_yield_does_not_present_previous_capture(self):
