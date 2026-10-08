@@ -1,6 +1,31 @@
 """Best-effort owned cleanup preserving the controller's primary failure."""
 import atexit,json,os,select,threading,time
 
+MAX_CHILD_STDERR_BYTES=1_048_576
+
+def capture_child_stderr(stream,path,max_bytes=MAX_CHILD_STDERR_BYTES):
+    """Drain one owned child stderr pipe with a byte cap and retain its prefix."""
+    if type(max_bytes) is not int or max_bytes<0:
+        raise ValueError('stderr capture byte limit must be a nonnegative integer')
+    reader=getattr(stream,'buffer',stream)
+    read_chunk=getattr(reader,'read1',None)
+    if not callable(read_chunk):read_chunk=reader.read
+    observed=retained=0
+    with open(path,'wb') as output:
+        while True:
+            chunk=read_chunk(65536)
+            if not chunk:break
+            if type(chunk) is str:chunk=chunk.encode('utf-8')
+            if type(chunk) is not bytes:
+                raise TypeError('child stderr reader must return text or bytes')
+            observed+=len(chunk)
+            keep=chunk[:max(0,max_bytes-retained)]
+            if keep:
+                output.write(keep);output.flush();retained+=len(keep)
+    return {'status':'complete','path':str(path),'bytes_observed':observed,
+            'bytes_retained':retained,'truncated':retained<observed,
+            'scope':'owned child stderr pipe'}
+
 def send_failure_finish(stream, timeout=0.25):
     """Attempt finish on an owned POSIX pipe without an unbounded flush.
 
@@ -117,6 +142,20 @@ class ControllerFailureCleanup:
                     bounded('child_stdin_close',child.stdin.close,.5)
             if attempt('child_poll_after',child.poll):
                 receipt['child_exit_code']=receipt['stages'][-1]['result']
+            stderr=getattr(child,'stderr',None)
+            if stderr is not None:
+                stderr_path=self.out/'stderr.txt'
+                captured,metadata,_worker=bounded(
+                    'child_stderr_capture',
+                    lambda:capture_child_stderr(stderr,stderr_path),1)
+                receipt['stderr_capture']=(metadata if captured else {
+                    'status':'incomplete', 'path':str(stderr_path),
+                    'scope':'owned child stderr pipe; partial file may be present'})
+                if captured and hasattr(stderr,'close'):
+                    attempt('child_stderr_close',stderr.close)
+            else:
+                receipt['stderr_capture']={'status':'unavailable',
+                                           'scope':'owned child stderr pipe'}
         bounded('planner_close',lambda:self.planner.close(timeout=1),1)
         attempt('atexit_unregister',lambda:atexit.unregister(self.planner.close))
         receipt['stdout_reader_retired']=False

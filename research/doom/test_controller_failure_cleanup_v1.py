@@ -40,6 +40,54 @@ class Tests(unittest.TestCase):
                                 side_effect=fake_finish)
         self.finish_patch.start()
         self.addCleanup(self.finish_patch.stop)
+    def test_failed_session_stderr_is_retained(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);planner=Planner()
+            child=subprocess.Popen(
+                [sys.executable,'-c',
+                 "import sys;sys.stderr.write('session import diagnostic\\n')"],
+                stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,
+                stderr=subprocess.PIPE,text=True)
+            self.assertEqual(child.wait(timeout=3),0)
+            error=RuntimeError('session exited before ready')
+            with self.assertRaises(RuntimeError) as caught:
+                with ControllerFailureCleanup(planner,out) as scope:
+                    scope.track(child);scope.set_stage('session_startup');raise error
+            self.assertIs(caught.exception,error)
+            retained=out/'stderr.txt'
+            self.assertTrue(retained.is_file(),
+                            'failed session stderr is lost when startup exits early')
+            self.assertEqual(retained.read_text(), 'session import diagnostic\n')
+            self.assertTrue(child.stderr.closed)
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertEqual(receipt['stderr_capture']['status'],'complete')
+            self.assertEqual(receipt['stderr_capture']['bytes_observed'],
+                             len(b'session import diagnostic\n'))
+
+    def test_failure_cleanup_bounds_stderr_reader_and_leaves_timed_out_stream_open(self):
+        class BlockingReader:
+            def __init__(self): self.release=threading.Event()
+            def read1(self,size): self.release.wait();return b''
+        class BlockingStream:
+            def __init__(self): self.buffer=BlockingReader();self.closed=False
+            def close(self): self.closed=True
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);planner=Planner();child=Child();child.stderr=BlockingStream()
+            error=RuntimeError('session exited before ready')
+            started=time.monotonic()
+            with self.assertRaises(RuntimeError) as caught:
+                with ControllerFailureCleanup(planner,out) as scope:
+                    scope.track(child);scope.set_stage('session_startup');raise error
+            self.assertIs(caught.exception,error)
+            self.assertLess(time.monotonic()-started,2.0)
+            self.assertFalse(child.stderr.closed)
+            receipt=json.loads((out/'controller-failure.json').read_text())
+            self.assertEqual(receipt['stderr_capture']['status'],'incomplete')
+            self.assertEqual(next(row for row in receipt['stages']
+                                  if row['stage']=='child_stderr_capture')['status'],
+                             'timed_out')
+            child.stderr.buffer.release.set()
+
     @unittest.skipUnless(os.name=='posix','pipe filling uses POSIX nonblocking descriptor flags')
     def test_full_child_stdin_pipe_does_not_block_cleanup_reachability(self):
         import fcntl
