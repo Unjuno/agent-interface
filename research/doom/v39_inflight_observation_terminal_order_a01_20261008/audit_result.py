@@ -30,6 +30,9 @@ source_wait=ast.get_source_segment(text,wait)
 assert 'observation_monitor.observe(row)' in source_wait
 assert source_wait.index('observation_monitor.observe(row)') < source_wait.index('if predicate(row)')
 assert 'for _ in range(incoming.qsize())' in text
-report={'status':'PASS_INDEPENDENT_EXPERIMENT_AND_PIPELINE_AUDIT','sources_verified':len(sources),'git_blobs':[x['git_blob'] for x in sources],'source_sha256':result['source_sha256'],'pipeline_status':pipeline['status'],'assertions':25,'main_commit':freeze['current_main_commit']}
+runtime_asserts=sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse((ROOT/'audit_runtime_order.py').read_text(encoding='utf-8'))))
+local_asserts=sum(isinstance(n,ast.Assert) for n in ast.walk(ast.parse(Path(__file__).read_text(encoding='utf-8'))))
+assertion_count=runtime_asserts+local_asserts+4*len(sources)
+report={'status':'PASS_INDEPENDENT_EXPERIMENT_AND_PIPELINE_AUDIT','sources_verified':len(sources),'git_blobs':[x['git_blob'] for x in sources],'source_sha256':result['source_sha256'],'pipeline_status':pipeline['status'],'assertions':assertion_count,'main_commit':freeze['current_main_commit']}
 (ROOT/'AUDIT.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(report,sort_keys=True))

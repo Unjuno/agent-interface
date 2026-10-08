@@ -73,6 +73,17 @@ assert 'Executor(backend, emit)' in v12text
 v15text=source('session_map01_v15.py')
 assert 'base.Executor=ReleaseOrderedExecutor' in v15text
 assert 'base.main()' in v15text
+assert 'base.Backend=TelemetryBackend' in v15text
+
+release2=module('doom_typed_release_backend_v2.py')
+release2_cls=next(n for n in release2.body if isinstance(n,ast.ClassDef) and n.name=='Backend')
+release2_execute=next(n for n in release2_cls.body if isinstance(n,ast.FunctionDef) and n.name=='execute')
+assert has_call(release2_execute,'execute')
+ownerbatch=module('doom_owner_thread_release_batch_backend_v1.py')
+ownerbatch_cls=next(n for n in ownerbatch.body if isinstance(n,ast.ClassDef) and n.name=='Backend')
+ownerbatch_execute=next(n for n in ownerbatch_cls.body if isinstance(n,ast.FunctionDef) and n.name=='execute')
+assert has_call(ownerbatch_execute,'execute')
+assert not any(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr in ('Thread','submit') for n in ast.walk(ownerbatch_execute))
 
 # Census direct snapshot producers in the session process. Only startup and
 # fixture setup call the backend directly; active samples occur inside execute.
@@ -142,7 +153,8 @@ evidence={
   'finish_path_closes_executor_then_emits_score_without_snapshot':True,
   'no_active_post_terminal_observation_producer_in_pinned_session_route':True,
   'default_v12_inherits_v5_execute_before_terminal_loop':True,
-  'opt_in_v13_executes_backend_before_terminal':True
+  'opt_in_v13_executes_backend_before_terminal':True,
+  'v15_backend_override_delegates_synchronously_through_release_batch_and_typed_wrappers':True
  },
  'scope':'Static current-main source ordering proof; no live pipe scheduling, model, HUD cadence, game, OS input, release timing or task outcome.',
  'anchors':{
@@ -160,6 +172,8 @@ evidence={
   'finish_score_emit':line('session_map01_v12.py',score_emit),
   'executor_v13_backend_execute':line('executor_v13.py',v13_backend_execute),
   'executor_v13_terminal_emit':line('executor_v13.py',v13_terminal_emit),
+  'v15_release2_execute':line('doom_typed_release_backend_v2.py',release2_execute),
+  'v15_release_batch_execute':line('doom_owner_thread_release_batch_backend_v1.py',ownerbatch_execute),
   'backend_execute_sites':execute_sites
  }
 }
