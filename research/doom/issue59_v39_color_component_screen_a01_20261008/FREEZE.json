@@ -16,10 +16,11 @@
     "mask": "warm OR yellow",
     "connectivity": "8-neighbor",
     "positive": "at least one component has area >= 8 pixels",
-    "threshold_frozen_before_label_join": true
+    "threshold_frozen_before_label_join": false,
+    "labels_accessed_before_candidate_rule_authored": true
   },
   "baseline": "published fixed yellow pixel count >200; reported TP=3 FP=0 FN=13 TN=18; uncertain=2 excluded",
-  "decision_rule": "Compare candidate confusion on the same determinate labels; do not tune thresholds or claim general detector performance from one episode.",
+  "decision_rule": "This is a posthoc exploratory comparison because the labels were fetched and visible before the candidate rule was authored. Do not call it blinded or preregistered; do not tune further or claim general detector performance from one episode.",
   "limits": [
     "one episode and one reviewer label set",
     "fixed ROI/color mask can confuse enemy sprites with blood, projectiles, and animation",
