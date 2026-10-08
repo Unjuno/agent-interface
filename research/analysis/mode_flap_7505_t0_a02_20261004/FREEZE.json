@@ -1,0 +1,37 @@
+{
+  "allocation": "issue7505-mode-flap-t0-a02-20261004",
+  "frozen_at": "2026-10-04",
+  "repository": "Unjuno/agent-interface",
+  "source_base_sha": "2fbfc00f8e38f33d7d74fb7cc734fbf5b0a11ab0",
+  "local_branch": "research/mode-flap-7505-a01-20261004",
+  "prior_allocation": "issue7505-mode-flap-t0-a01-20261004 STOP_INFRASTRUCTURE before candidate process; not retried",
+  "difference_from_a01": "fresh disjoint calibration/heldout IDs, corrected WSLc invocation omitting host-resolved --cidfile, and fixture transition schedule fixed prospectively to distinguish endogenous flicker from slower policy oscillation; no A01 raw candidate data exists",
+  "source_sha256": {
+    "fixture.json": "8c5ece77afb9c12044a0d263055b6435b3327d19fed832e5e8062cba889a7e90",
+    "candidate.py": "fe7f778f553c44ac6b0c644fed862961a190276e78636cd01a3e1249dea6d04a",
+    "audit.py": "35cc23175bd1b4694c7a4322ca254ce3eb72ac3303ee22cd136edf359096c497",
+    "PREREG.md": "b76f54f36b7676491a535bc0aabbdd8349131c7fe9381b39713188ec6373c946"
+  },
+  "environment": {
+    "host_os": "Windows 11, build 10.0.26300.9457",
+    "wslc": "3.0.1.0",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "image_digest": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "platform": "linux/amd64",
+    "network": "none",
+    "cpu_limit_configured": 1,
+    "memory_limit_configured_mib": 256,
+    "source_mount": "read-only",
+    "output_mount": "separate read-write",
+    "root_filesystem": "ephemeral default; wslc run exposes no --read-only option",
+    "pids_limit": "unavailable in wslc run CLI",
+    "container_id": "not captured; foreground --rm run removes container and WSLc does not expose a host-compatible CID path in the output mount",
+    "host_warning": "WSLc has warned in earlier experiments that cgroup/swap limit enforcement is unavailable; any warning emitted during this allocation will be preserved. Configured resource flags are not enforcement evidence."
+  },
+  "invocations": [
+    ["wslc", "run", "--rm", "--pull", "never", "--network", "none", "--cpus", "1", "--memory", "256M", "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m", "--mount", "type=bind,source=<PACKAGE>,target=/work,readonly", "--mount", "type=bind,source=<FORMAL_A02>,target=/out", "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016", "python", "/work/candidate.py", "/work/fixture.json", "/out/raw.json"],
+    ["wslc", "run", "--rm", "--pull", "never", "--network", "none", "--cpus", "1", "--memory", "256M", "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m", "--mount", "type=bind,source=<PACKAGE>,target=/work,readonly", "--mount", "type=bind,source=<FORMAL_A02>,target=/out", "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016", "python", "/work/audit.py", "/work/fixture.json", "/out/raw.json", "/out/audit.json"]
+  ],
+  "retry_policy": "exactly one candidate invocation and one separate auditor invocation; no retry within allocation",
+  "expected_outputs_absent_before_run": ["formal_a02/raw.json", "formal_a02/audit.json"]
+}
