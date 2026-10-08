@@ -7,7 +7,7 @@ For claims and scientific disposition, start with the top-level [research index]
 ## Start here
 
 - Issue #8604 T0 A02: [inert handoff-card method audit](analysis/handoff_choice_complexity_8604_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED` on eight synthetic families: 24 cards/72 option instances/120 factual keys independently reconstructed, zero errors. A01 CLI STOP remains preserved. No participant, latency, or human-comprehension result.
-- Issue #8604 T0 A01: [inert handoff-card CLI STOP record](https://github.com/Unjuno/agent-interface/blob/8f9d740a51161b0ce8814ce45490b92625fb3ab6/research/analysis/handoff_choice_complexity_8604_t0_a01_20261008/STOP.md) — `STOP_CANDIDATE_OUTPUT_CONTRACT`; frozen CLI emitted JSON on stdout but did not create its requested file, so the auditor was not run. No retry or scientific/human-choice inference.
+- Issue #8604 T0 A01: [inert handoff-card CLI STOP record](analysis/handoff_choice_complexity_8604_t0_a01_20261008/STOP.md) — `STOP_CANDIDATE_OUTPUT_CONTRACT`; frozen CLI emitted JSON on stdout but did not create its requested file, so the auditor was not run. No retry or scientific/human-choice inference.
 
 - Issue #8598 T0 A01: [censored opportunity tail regret](analysis/tail_regret_censoring_8598_t0_a01_20261008/REPORT.md) — `FAIL_METHOD`, audit integrity PASS: 768 cohorts/24,576 opportunities independently reconstructed; IPCW strict ranking 10/128 vs 20/128 resolved-only; all 768 partial-tail bounds contain truth, zero false unique rankings. Synthetic host-CPU only; no Docker/WSLc or live/product claim.
 
