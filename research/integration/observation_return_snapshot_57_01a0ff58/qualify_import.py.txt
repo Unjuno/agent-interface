@@ -1,0 +1,25 @@
+import datetime, hashlib, json, pathlib, shutil, subprocess, sys
+HERE=pathlib.Path(__file__).resolve().parent
+REPO=HERE.parent/'agent-interface'
+BASE='a216324bac278621af298d8336dd85e319cda2ef'
+root=HERE/'real-import'
+root.mkdir(exist_ok=False)
+records=[]
+for path in ('runtime/cli_v1/__init__.py','runtime/cli_v1/api.py','runtime/selector_v1/__init__.py','runtime/selector_v1/selector.py'):
+    data=subprocess.run(['git','show',BASE+':'+path],cwd=REPO,capture_output=True,check=True).stdout
+    target=root/path; target.parent.mkdir(parents=True,exist_ok=True); target.write_bytes(data)
+    oid=subprocess.run(['git','rev-parse',BASE+':'+path],cwd=REPO,capture_output=True,check=True).stdout.decode().strip()
+    records.append({'path':path,'git_blob':oid,'sha256':hashlib.sha256(data).hexdigest()})
+for name in ('observe.py','test_observe.py'):
+    shutil.copyfile(HERE/'candidate'/name,root/'runtime/cli_v1'/name)
+    data=(root/'runtime/cli_v1'/name).read_bytes()
+    records.append({'path':'runtime/cli_v1/'+name,'sha256':hashlib.sha256(data).hexdigest(),'source':'fixed candidate'})
+freeze={'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'base':BASE,'source':records,'command':[sys.executable,'-B','-m','unittest','runtime.cli_v1.test_observe','-v'],'scope':'actual unchanged cli __init__/api/selector imports; tests mock native construction. Distinct ordinary import qualification; no formal repeat.'}
+(HERE/'import-freeze.json').write_text(json.dumps(freeze,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+r=subprocess.run(freeze['command'],cwd=root,capture_output=True,timeout=20)
+end=datetime.datetime.now(datetime.timezone.utc).isoformat()
+(HERE/'commands/real-import.stdout').write_bytes(r.stdout); (HERE/'commands/real-import.stderr').write_bytes(r.stderr)
+receipt={'argv':freeze['command'],'cwd':str(root),'started_utc':start,'ended_utc':end,'exit':r.returncode,'stdout_sha256':hashlib.sha256(r.stdout).hexdigest(),'stderr_sha256':hashlib.sha256(r.stderr).hexdigest()}
+(HERE/'commands/real-import-command.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+print(json.dumps(receipt)); print(r.stderr.decode()); sys.exit(r.returncode)

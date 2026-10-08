@@ -1,0 +1,21 @@
+test_caller_owned_capture_preserves_recovery_and_connection (runtime.cli_v1.test_observe.ObserveTests.test_caller_owned_capture_preserves_recovery_and_connection) ... ok
+test_caller_owned_failure_and_invalid_request_never_close_or_retry (runtime.cli_v1.test_observe.ObserveTests.test_caller_owned_failure_and_invalid_request_never_close_or_retry) ... ok
+test_caller_owned_next_capture_cannot_rewrite_prior_observation (runtime.cli_v1.test_observe.ObserveTests.test_caller_owned_next_capture_cannot_rewrite_prior_observation) ... ok
+test_close_failure_preserves_captured_observation (runtime.cli_v1.test_observe.ObserveTests.test_close_failure_preserves_captured_observation) ... ok
+test_initialization_exception_returns_observation_failure_without_retry (runtime.cli_v1.test_observe.ObserveTests.test_initialization_exception_returns_observation_failure_without_retry) ... ok
+test_invalid_region_never_opens_native_connection (runtime.cli_v1.test_observe.ObserveTests.test_invalid_region_never_opens_native_connection) ... ok
+test_no_dispatch_focus_or_release_and_unique_observation_identity (runtime.cli_v1.test_observe.ObserveTests.test_no_dispatch_focus_or_release_and_unique_observation_identity) ... ok
+test_owned_cleanup_cannot_rewrite_returned_observation (runtime.cli_v1.test_observe.ObserveTests.test_owned_cleanup_cannot_rewrite_returned_observation) ... ok
+test_returned_snapshot_mutation_cannot_rewrite_backend_cache (runtime.cli_v1.test_observe.ObserveTests.test_returned_snapshot_mutation_cannot_rewrite_backend_cache) ... ok
+test_snapshot_failure_preserves_primary_error_and_session_ownership (runtime.cli_v1.test_observe.ObserveTests.test_snapshot_failure_preserves_primary_error_and_session_ownership) ... ok
+test_unsupported_and_capture_failure_close_without_dispatch (runtime.cli_v1.test_observe.ObserveTests.test_unsupported_and_capture_failure_close_without_dispatch) ... ok
+test_existing_win32_capture_is_available_without_input_dispatch (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_existing_win32_capture_is_available_without_input_dispatch) ... ok
+test_win32_artifact_request_still_refuses_before_capture (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_win32_artifact_request_still_refuses_before_capture) ... ok
+test_win32_capture_failure_is_not_retried_or_recovered (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_win32_capture_failure_is_not_retried_or_recovered) ... ok
+test_win32_invalid_region_and_unknown_target_do_not_capture (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_win32_invalid_region_and_unknown_target_do_not_capture) ... ok
+test_win32_unknown_or_stale_target_refuses_both_frames (runtime.cli_v1.test_observe.Win32ReadOnlyObserveTests.test_win32_unknown_or_stale_target_refuses_both_frames) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.009s
+
+OK
