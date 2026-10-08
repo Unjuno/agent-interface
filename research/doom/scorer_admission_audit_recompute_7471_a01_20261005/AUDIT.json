@@ -1,0 +1,22 @@
+{
+  "baseline_recomputed": "ADMISSION_BRACKETED_PROGRESS",
+  "baseline_retained": "ADMISSION_BRACKETED_PROGRESS",
+  "checks": {
+    "baseline_decision_recomputes": true,
+    "frozen_source_hashes_match": false,
+    "mutated_input_changes_recomputed_decision": true,
+    "original_auditor_accepts_frozen_baseline": true,
+    "original_auditor_accepts_mutated_raw": true
+  },
+  "errors": [
+    "frozen_raw_hash",
+    "frozen_auditor_hash",
+    "frozen_candidate_hash",
+    "mutation_shape"
+  ],
+  "experiment_id": "scorer-admission-audit-recompute-7471-a01",
+  "independent_audit": "FAIL_AUDIT",
+  "mutated_recomputed": "POST_CANCELLATION_COOCCURRENCE",
+  "mutated_retained": "ADMISSION_BRACKETED_PROGRESS",
+  "scope": "Synthetic scorer-attribution raw-audit integrity only; no runtime or causal claim."
+}
