@@ -999,6 +999,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`residual_dependence_6096_t0_20261001/`](residual_dependence_6096_t0_20261001/)
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
 - [`resume_plan_suggestions_8576_t0_a01_20261008/`](resume_plan_suggestions_8576_t0_a01_20261008/)
+- [`resume_plan_suggestions_8576_t0_a02_20261009/`](resume_plan_suggestions_8576_t0_a02_20261009/)
 - [`retained_row_adjudication_5229_v1/`](retained_row_adjudication_5229_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
