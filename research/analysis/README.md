@@ -10,6 +10,8 @@
 
 - [Issue #8473 scoped infeasibility feedback T0 A02](scoped_nogood_gui_plan_8473_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 21 runs independently reconstructed, 5/5 mutations rejected; scoped no-goods reduced one duplicate feasibility query in each recovery case while preserving alternatives across generation change and expiry. Synthetic symbolic fixture only.
 
+- [Issue #5959 deadline-constrained clarification timing T0 A01](clarification_timing_5959_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 15 finite requests / 45 policy rows independently reconstructed; hard bypass, stale/late/nonresponse/authority gates passed. Authored interruption-cost scores only; no human or runtime claim.
+
 - [Issue #7650 T0 A01/A02 machine-gate audit chain](crosslingual_visual_injection_7650_t0_a01_20261008/REPORT.md) — Preserve A01's recorded `PASS_MACHINE_GATE_SCOPED` as history; review found it insufficient for row-to-UID binding, which read-only A02 passes with 7/7 metadata controls on the exact raw. Full Issue T0 remains HOLD: no bilingual semantic adjudication or pixel review.
 
 - [Issue #6600 practice-order discriminator T0 A01](faded_demonstration_practice_order_6600_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: fixed-dose blocked/mixed six-task ledgers independently reconstructed; 6/6 mutations rejected. Host-only stdlib method evidence; no participants or learning claim.
@@ -450,6 +452,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`claim_postdominator_6553_t0_20261002/`](claim_postdominator_6553_t0_20261002/)
 - [`claim_scoped_clip_trace_6536_t0_20261002/`](claim_scoped_clip_trace_6536_t0_20261002/)
 - [`claim_scoped_partial_verdict_6509_t0_20261002/`](claim_scoped_partial_verdict_6509_t0_20261002/)
+- [`clarification_timing_5959_t0_a01_20261008/`](clarification_timing_5959_t0_a01_20261008/)
 - [`cli_v1_lineage_direct_tests_2428_v1/`](cli_v1_lineage_direct_tests_2428_v1/)
 - [`client_energy_per_effect_7728_t0_20261005/`](client_energy_per_effect_7728_t0_20261005/)
 - [`clipboard_formats_36_t0_01a0ff51/`](clipboard_formats_36_t0_01a0ff51/)
