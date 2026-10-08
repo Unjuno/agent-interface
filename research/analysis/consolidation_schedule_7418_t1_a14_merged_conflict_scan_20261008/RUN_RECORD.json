@@ -1,0 +1,44 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A14-MERGED-CONFLICT-SCAN-20261008",
+  "status": "FROZEN_PREREGISTERED_NOT_RUN",
+  "created_utc": "2026-10-08",
+  "package": "research/analysis/consolidation_schedule_7418_t1_a14_merged_conflict_scan_20261008",
+  "fixture_source": "research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/model.json",
+  "model": "qwen3:8b",
+  "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "private_base_url": "http://127.0.0.1:11435",
+  "private_store": "/tmp/unjuno-8406-t1-a14-ollama-store",
+  "seeds": [
+    5401,
+    5402,
+    5403
+  ],
+  "arms": [
+    "episodic_only",
+    "per_episode",
+    "batch_2",
+    "terminal"
+  ],
+  "checkpoints": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "queries_per_checkpoint": 5,
+  "planned_calls": {
+    "query": 360,
+    "consolidation": 30,
+    "total": 390
+  },
+  "single_intervention_vs_a13": "Two-pass prompt requires a rescan of all fact observations in the complete merged prior-plus-new claim list for conflict derivation.",
+  "schema_constraint": "Held fixed from A13; consolidation response is constrained by JSON Schema.",
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1,
+  "preflight_path": "results/FORMAL_T1_A14/PREFLIGHT.json",
+  "raw_path": "results/FORMAL_T1_A14/raw.jsonl",
+  "audit_path": "results/FORMAL_T1_A14/audit.json",
+  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406#issuecomment-6051753716"
+}
