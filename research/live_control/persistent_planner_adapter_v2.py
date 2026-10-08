@@ -47,6 +47,7 @@ class PersistentPlannerAdapter:
         self._terminal_status = None
         self._cancellation_requested = False
         self._interrupt_response = None
+        self._transport_aborted = False
 
     @property
     def thread_id(self):
@@ -77,6 +78,7 @@ class PersistentPlannerAdapter:
             self._terminal_status = None
             self._cancellation_requested = False
             self._interrupt_response = None
+            self._transport_aborted = False
             return thread_id
 
     def begin_turn(self, prompt, *, output_schema, image_path=None):
@@ -104,6 +106,7 @@ class PersistentPlannerAdapter:
             self._terminal_status = None
             self._cancellation_requested = False
             self._interrupt_response = None
+            self._transport_aborted = False
             self._output_schema = output_schema
         return handle
 
@@ -127,6 +130,18 @@ class PersistentPlannerAdapter:
         with self._lock:
             self._interrupt_response = response
         return {"outcome": outcome, "response": response}
+
+    def abort_pending_turn(self):
+        """Close the transport when a fatal session error leaves a turn pending."""
+        with self._lock:
+            if self._active is None or self._terminal_status is not None:
+                return {"outcome": "already_terminal", "status": self._terminal_status}
+            self._cancellation_requested = True
+            if self._transport_aborted:
+                return {"outcome": "already_aborted"}
+            self._transport_aborted = True
+        self.client.close(timeout=5)
+        return {"outcome": "aborted"}
 
     def await_turn(self, handle, timeout=120):
         with self._lock:
