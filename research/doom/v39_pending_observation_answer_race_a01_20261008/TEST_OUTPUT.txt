@@ -28,3 +28,16 @@ Ran 5 tests in 0.000s
 OK
 The snapshot test enqueues a second event from the observation callback and verifies the helper processes only the initial backlog, leaving the new row queued.
 
+Full controller module import with pinned dependencies (2026-10-08):
+The initial empty scratch import failed on missing map01_stagnation_v1 before collection. The dependency fixture was then populated with current-main files whose Git blob IDs are recorded in RESULT.json; local Git blob IDs matched the GitHub API values.
+Command: python -B -m unittest -v test_map01_v39_pending_observation_drain.py
+test_completed_future_drain_is_wired_before_answer_read ... ok
+test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
+test_queued_hard_crossing_precedes_completed_answer ... ok
+test_snapshot_drain_leaves_events_arriving_after_entry_queued ... ok
+test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
+
+Ran 5 tests in 0.468s
+OK
+This run imported the complete controller module and its pinned dependencies. No runtime/game session was started.
+
