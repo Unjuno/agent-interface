@@ -152,8 +152,8 @@ class ControllerFailureCleanup:
         def empty_release(record):
             return (type(record) is dict and record.get('verified') is True and
                     record.get('keys_down')==[] and record.get('buttons_down')==[] and
-                    ('keys_unknown' not in record or record.get('keys_unknown')==[]) and
-                    ('key_state_errors' not in record or record.get('key_state_errors')==[]))
+                    record.get('keys_unknown')==[] and
+                    record.get('key_state_errors')==[])
         def matching_input_release(identifier, token):
             for row in released_by_id[identifier]:
                 owner=row.get('owner_release')

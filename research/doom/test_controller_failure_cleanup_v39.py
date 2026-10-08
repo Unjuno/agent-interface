@@ -34,6 +34,8 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                 "verified": True,
                 "keys_down": [],
                 "buttons_down": [],
+                "keys_unknown": [],
+                "key_state_errors": [],
             }
             if release_token is not OMIT_TOKEN:
                 release["intent_token"] = release_token
@@ -91,6 +93,33 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         }
         receipt = self.run_cleanup(None, [admission, released], status="cancelled")
         self.assertTrue(receipt["input_releases_verified_empty"])
+
+    def test_cancelled_admitted_input_rejects_missing_owner_release_state_fields(self):
+        admission = {
+            "event": "input_admission",
+            "id": "source-refresh-0",
+            "intent_token": "accepted-lease",
+        }
+        for omitted in ("keys_unknown", "key_state_errors"):
+            with self.subTest(omitted=omitted):
+                owner_release = {
+                    "verified": True,
+                    "keys_down": [],
+                    "buttons_down": [],
+                    "keys_unknown": [],
+                    "key_state_errors": [],
+                    "intent_token": "accepted-lease",
+                }
+                owner_release.pop(omitted)
+                released = {
+                    "event": "input_released",
+                    "id": "source-refresh-0",
+                    "intent_token": "accepted-lease",
+                    "owner_release": owner_release,
+                }
+                receipt = self.run_cleanup(
+                    None, [admission, released], status="cancelled")
+                self.assertFalse(receipt["input_releases_verified_empty"])
 
     def test_cancelled_admitted_input_without_matching_release_is_not_certified(self):
         admission = {
