@@ -35,4 +35,4 @@ The initial source-only preregistration commit `353ce273ad26f61866ffcdd9f8c1eb40
 
 ## Formal run ledger (initially empty)
 
-Formal candidate invocations: 0/1. Formal auditor invocations: 0/1. Candidate raw result: not yet generated. Independent audit result: not yet generated. Construction tests and their failures are recorded separately in `CONSTRUCTION_LOG.md`.
+Formal candidate invocations: 1/1 (`CANDIDATE_COMPLETE rows=22 cases=8`, exit 0). Formal auditor invocations: 1/1 (`PASS_METHOD_SCOPED errors=0 mutations=7/7`, exit 0). Candidate raw result: `candidate.json`. Independent audit result: `AUDIT.json`. Detailed environment, timing, hashes, and scope limits: `RUN_RECORD.md`. Construction tests and their failures are recorded separately in `CONSTRUCTION_LOG.md`.
