@@ -296,6 +296,28 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(started, ["fresh-plan"])
         self.assertEqual([event["id"] for event in published], ["fresh-plan"])
 
+    def test_initial_stale_cover_fails_closed_when_no_new_full_observation_arrives(self):
+        latest = {"sequence": 21}
+        attempts = []
+        rejected = {"event": "rejected", "id": "cover-21",
+                    "reason": "latest observation sequence required before input"}
+
+        def submit():
+            attempts.append(21)
+            return rejected
+
+        def wait(_predicate):
+            raise TimeoutError("no newer full observation")
+
+        with self.assertRaisesRegex(TimeoutError, "no newer full observation"):
+            submit_initial_cover_with_recovery(
+                submit, identifier="cover-21", latest_reader=lambda: latest,
+                event_log=[], incoming=queue.Queue(), wait=wait,
+                observation_monitor=Monitor())
+
+        self.assertEqual(attempts, [21])
+        self.assertEqual(latest["sequence"], 21)
+
     def test_drain_stops_at_fixed_budget_and_reports_remaining_backlog(self):
         incoming = queue.Queue()
         for sequence in range(1, MAX_PENDING_OBSERVATION_EVENTS + 3):
