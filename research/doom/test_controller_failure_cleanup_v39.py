@@ -133,6 +133,64 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
         receipt = self.run_cleanup()
         self.assertTrue(receipt["input_release_verified_empty"])
 
+    def test_cancelled_without_admission_accepts_null_lease_token(self):
+        accepted = {"event": "accepted", "id": "source-refresh-0",
+                    "intent_token": "accepted-lease"}
+        terminal = {
+            "event": "terminal", "id": "source-refresh-0",
+            "status": "cancelled",
+            "release": {"verified": True, "keys_down": [],
+                        "buttons_down": [], "keys_unknown": [],
+                        "key_state_errors": [], "intent_token": None},
+        }
+        receipt = self.run_cleanup_events([accepted, terminal])
+        self.assertTrue(receipt["input_releases_verified_empty"])
+
+    def test_cancelled_admission_requires_matching_owner_release(self):
+        accepted = {"event": "accepted", "id": "source-refresh-0",
+                    "intent_token": "accepted-lease"}
+        admission = {"event": "input_admission", "id": "source-refresh-0",
+                     "intent_token": "accepted-lease"}
+        terminal = {
+            "event": "terminal", "id": "source-refresh-0",
+            "status": "cancelled",
+            "release": {"verified": True, "keys_down": [],
+                        "buttons_down": [], "keys_unknown": [],
+                        "key_state_errors": [], "intent_token": "accepted-lease"},
+        }
+        missing_receipt = self.run_cleanup_events([accepted, admission, terminal])
+        self.assertFalse(missing_receipt["input_releases_verified_empty"])
+        owner_release = {"event": "input_released", "id": "source-refresh-0",
+                         "intent_token": "accepted-lease",
+                         "owner_release": {"verified": True, "keys_down": [],
+                                           "buttons_down": [], "keys_unknown": [],
+                                           "key_state_errors": [],
+                                           "intent_token": "accepted-lease"}}
+        matching_receipt = self.run_cleanup_events(
+            [accepted, admission, owner_release, terminal])
+        self.assertTrue(matching_receipt["input_releases_verified_empty"])
+
+    def test_cancelled_admission_rejects_wrong_owner_release_token(self):
+        accepted = {"event": "accepted", "id": "source-refresh-0",
+                    "intent_token": "accepted-lease"}
+        admission = {"event": "input_admission", "id": "source-refresh-0",
+                     "intent_token": "accepted-lease"}
+        owner_release = {"event": "input_released", "id": "source-refresh-0",
+                         "intent_token": "other-lease",
+                         "owner_release": {"verified": True, "keys_down": [],
+                                           "buttons_down": [], "keys_unknown": [],
+                                           "key_state_errors": [],
+                                           "intent_token": "other-lease"}}
+        terminal = {
+            "event": "terminal", "id": "source-refresh-0",
+            "status": "cancelled",
+            "release": {"verified": True, "keys_down": [],
+                        "buttons_down": [], "keys_unknown": [],
+                        "key_state_errors": [], "intent_token": "accepted-lease"},
+        }
+        receipt = self.run_cleanup_events([accepted, admission, owner_release, terminal])
+        self.assertFalse(receipt["input_releases_verified_empty"])
+
     def test_unknown_key_state_prevents_empty_release_certificate(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
