@@ -1,0 +1,18 @@
+{
+  "allocation_id": "EIR-8620-T0-A01-20261009",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8620",
+  "source_commit": "0621713407d42c5a3922572b2fe57222f175e9a2",
+  "branch": "research/8620-execution-information-t0-a01-20261009",
+  "fixture_sha256": "ba9c184bac0d76228a83087cd3bf6f53865d9fd466c8a113577d17b44ed7d5ff",
+  "candidate_sha256": "6d82ddf6810fea472ea0a23f1b4291ead211135c3ffecd11bdd20a27fb6f1c21",
+  "auditor_sha256": "69e42467e1147c7cfb8fc16e3e4c1dc51b47b68398c37856c9ca39f2f52dd8b8",
+  "host": "macOS host CPython 3.x; exact version captured in raw record",
+  "runtime_reason": "Issue T0 explicitly requires no container. OrbStack image preflight STOP was recorded before candidate execution because the content store returned an unsupported-operation error.",
+  "input": "input/fixture.json; 12 finite past histories; contract_v1 and expanded contract_v2; five future schedule types; weighted deterministic reacquisition costs",
+  "candidate_command": "python3 src/candidate.py input/fixture.json raw/candidate.json",
+  "auditor_command": "python3 src/auditor.py input/fixture.json raw/candidate.json audit/audit.json",
+  "invocation_rule": "one candidate invocation and one independent auditor invocation; no scientific reruns",
+  "decision_gate": "PASS_METHOD_SCOPED only if the independent raw oracle confirms both exact cut partitions and minimum sufficient encodings, EIR incurs zero unavailable requirements, proof fields are retained, each expanded-contract partition is recomputed, both simple policies have more errors, EIR is Pareto-nondominated, and all three mutation controls discriminate; otherwise FAIL_METHOD or HOLD as specified by Issue #8620",
+  "scope": "finite synthetic method fixture only; no model, GUI, network, OS input, product or live memory claim",
+  "docker_preflight": "STOP_INFRASTRUCTURE before candidate: docker image inspect python:3.12-slim failed: content blob open returned operation not supported; no container was started and no candidate input was consumed"
+}
