@@ -1,0 +1,61 @@
+{
+  "status": "PASS_SOURCE_VERIFIED_OBSERVATION_BEFORE_TERMINAL_FIFO",
+  "main_commit": "520ae707c0a8882bfc0965f73b7c201b77cefedb",
+  "verified_git_blobs": [
+    "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+    "cbbef5405c29fe56018c24e120b1b87d3c39dd26",
+    "e701035302da4802e0db463035c4d653a7e7618b",
+    "f71ca01426a703e4160c9403395fed03416c772e",
+    "080fa353bc14afc8bc620e80abc38e6cf64d1259",
+    "d95d382ee9c234dab652fa8af93b233baa5225a4",
+    "094a800151b4d2b357a9aeca8b018f45d1e7f368",
+    "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+    "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "9eb5ed4dcd42cae07bea69530136f78f9e65fb33"
+  ],
+  "properties": {
+    "single_stdout_reader_decodes_then_enqueues_before_next_line": true,
+    "only_reader_producer_to_incoming_queue": true,
+    "session_emitter_serializes_and_flushes_each_json_line_under_lock": true,
+    "coast_observation_emitted_synchronously_during_backend_execute": true,
+    "executor_terminal_emitted_after_backend_execute_returns": true,
+    "wait_observes_policy_event_before_terminal_predicate": true,
+    "default_v12_and_opt_in_v15_use_the_serialized_session_emitter": true
+  },
+  "scope": "Static current-main source ordering proof; no live pipe scheduling, model, HUD cadence, game, OS input, release timing or task outcome.",
+  "anchors": {
+    "controller_reader": {
+      "file": "map01_overlap_controller_v39.py",
+      "line": 813
+    },
+    "controller_wait": {
+      "file": "map01_overlap_controller_v39.py",
+      "line": 822
+    },
+    "session_emit": {
+      "file": "session_map01_v12.py",
+      "line": 97
+    },
+    "coast_snapshot": {
+      "file": "doom_typed_coast_backend_v1.py",
+      "line": 18
+    },
+    "coast_execute": {
+      "file": "coast_backend_v1.py",
+      "line": 32
+    },
+    "executor_run": {
+      "file": "executor_v5.py",
+      "line": 51
+    },
+    "executor_backend_execute": {
+      "file": "executor_v5.py",
+      "line": 58
+    },
+    "executor_terminal_emit": {
+      "file": "executor_v5.py",
+      "line": 88
+    }
+  }
+}
