@@ -1,0 +1,26 @@
+{
+  "freeze": {
+    "main_sha": "3daf9e167f1e7896ad682ac1d22134618f70a23c",
+    "issue": 8631,
+    "allocation": "T0-A03",
+    "fresh_input_from": "A01 STOP preserved; A02 diagnostic construction only and not used as outcome data",
+    "predicate_grammar": ["target_current=true", "age=fresh", "route=A", "version=v1"],
+    "learner": "enumerate conjunctions by increasing term count; choose first with zero training errors; fixed atom order",
+    "support_stratum": ["route", "age", "target_current"],
+    "unknown_policy": "no observed failure in stratum => UNKNOWN_SUPPORT",
+    "candidate_policy": "diagnostic only; never changes authority or the independent gate"
+  },
+  "cases": [
+    {"id":"A3P1","route":"A","age":"fresh","target_current":true,"version":"v1","noise":"x","split":"train","outcome":"success"},
+    {"id":"A3P2","route":"A","age":"fresh","target_current":true,"version":"v1","noise":"y","split":"train","outcome":"success"},
+    {"id":"A3P3","route":"A","age":"fresh","target_current":true,"version":"v1","noise":"z","split":"train","outcome":"success"},
+    {"id":"A3P4","route":"A","age":"fresh","target_current":true,"version":"v1","noise":"x","split":"train","outcome":"success"},
+    {"id":"A3S1","route":"A","age":"stale","target_current":true,"version":"v1","noise":"y","split":"train","outcome":"success"},
+    {"id":"A3N1","route":"A","age":"fresh","target_current":false,"version":"v1","noise":"z","split":"train","outcome":"failure"},
+    {"id":"A3F1","route":"A","age":"fresh","target_current":true,"version":"v2","noise":"x","split":"falsifier","outcome":"failure"},
+    {"id":"A3R1","route":"B","age":"fresh","target_current":true,"version":"v1","noise":"y","split":"heldout","outcome":"failure"},
+    {"id":"A3R2","route":"B","age":"fresh","target_current":true,"version":"v1","noise":"z","split":"heldout","outcome":"success"}
+  ],
+  "declared_domain": {"route":["A","B","C"],"age":["fresh","stale"],"target_current":[true,false],"version":["v1","v2"],"noise":["x","y","z"]},
+  "expected_controls": ["reject_if_in_envelope_failures_unreported", "unknown_if_zero_failure_support", "noise_invariant", "do_not_use_envelope_as_authority"]
+}
