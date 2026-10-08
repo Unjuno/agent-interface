@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8470 compositional gain margin T0 A01](coupled_visual_control_6195_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 exact-rational rows independently reconstructed; 3/3 gain mutations rejected; synthetic CPU method evidence only, no GUI/runtime claim.
+
 - [Issue #8466 source-time expiry across negative-evidence handoff T0 A01](negative_handoff_expiry_5865_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 10 finite logical-time cases reconstructed; sliding TTL accepted the expired C02 receipt, while absolute source-time expiry rejected it; 6/6 mutations rejected. No live cache, clock, task, GUI, or safety claim.
 
 - [Issue #7650 T0 A01/A02 machine-gate audit chain](crosslingual_visual_injection_7650_t0_a01_20261008/REPORT.md) — Preserve A01's recorded `PASS_MACHINE_GATE_SCOPED` as history; review found it insufficient for row-to-UID binding, which read-only A02 passes with 7/7 metadata controls on the exact raw. Full Issue T0 remains HOLD: no bilingual semantic adjudication or pixel review.
@@ -485,6 +487,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`counterexample_guard_refinement_6645_t0_orbstack_20261003/`](counterexample_guard_refinement_6645_t0_orbstack_20261003/)
 - [`counterexample_guard_refinement_6645_t0b_orbstack_20261003/`](counterexample_guard_refinement_6645_t0b_orbstack_20261003/)
 - [`counterexample_guard_refinement_6645_t0c_orbstack_20261003/`](counterexample_guard_refinement_6645_t0c_orbstack_20261003/)
+- [`coupled_visual_control_6195_t0_a01_20261008/`](coupled_visual_control_6195_t0_a01_20261008/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
 - [`crossed_verdict_repeatability_6222_t0_20261001_01/`](crossed_verdict_repeatability_6222_t0_20261001_01/)
