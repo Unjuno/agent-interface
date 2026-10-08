@@ -1,0 +1,47 @@
+{
+  "format": "field-invalidation-input-v1",
+  "cases": [
+    {
+      "case_id": "parent_surface_replacement",
+      "base": {"key": {"object_id": "button-7", "generation": 4}, "epoch": 1, "coverage_complete": true,
+        "fields": {"object_token": "save-7", "accessible_name": "Save", "surface_id": "pane-A", "surface_role": "editor", "surface_origin": [10, 20], "local_position": [2, 3], "ui_mode": "edit", "enabled_edit": true, "enabled_preview": false, "task_scope": "doc-7", "text_value": "Draft"}},
+      "events": [{"event_id": "surface-2", "key": {"object_id": "button-7", "generation": 4}, "epoch": 2, "updates": {"surface_id": "dialog-B", "surface_role": "dialog", "surface_origin": [100, 200]}, "invalidate_fields": [], "coverage_complete": true}]
+    },
+    {
+      "case_id": "transitive_layout_and_sibling",
+      "base": {"key": {"object_id": "button-8", "generation": 1}, "epoch": 1, "coverage_complete": true,
+        "fields": {"object_token": "open-8", "accessible_name": "Open", "surface_id": "pane-C", "surface_role": "editor", "surface_origin": [40, 50], "local_position": [4, 5], "ui_mode": "edit", "enabled_edit": true, "enabled_preview": false, "task_scope": "doc-8", "text_value": "Report"}},
+      "events": [{"event_id": "move-2", "key": {"object_id": "button-8", "generation": 1}, "epoch": 2, "updates": {"local_position": [9, 12]}, "invalidate_fields": [], "coverage_complete": true}]
+    },
+    {
+      "case_id": "mode_dependent_branch",
+      "base": {"key": {"object_id": "button-9", "generation": 2}, "epoch": 1, "coverage_complete": true,
+        "fields": {"object_token": "commit-9", "accessible_name": "Commit", "surface_id": "pane-D", "surface_role": "editor", "surface_origin": [0, 0], "local_position": [3, 6], "ui_mode": "edit", "enabled_edit": true, "enabled_preview": true, "task_scope": "doc-9", "text_value": "Ready"}},
+      "events": [{"event_id": "mode-2", "key": {"object_id": "button-9", "generation": 2}, "epoch": 2, "updates": {"ui_mode": "preview", "enabled_preview": false}, "invalidate_fields": [], "coverage_complete": true}]
+    },
+    {
+      "case_id": "delayed_older_update",
+      "base": {"key": {"object_id": "button-10", "generation": 1}, "epoch": 1, "coverage_complete": true,
+        "fields": {"object_token": "share-10", "accessible_name": "Share", "surface_id": "pane-E", "surface_role": "editor", "surface_origin": [5, 5], "local_position": [1, 1], "ui_mode": "edit", "enabled_edit": true, "enabled_preview": false, "task_scope": "doc-10", "text_value": "Ready"}},
+      "events": [
+        {"event_id": "fresh-3", "key": {"object_id": "button-10", "generation": 1}, "epoch": 3, "updates": {"local_position": [6, 8]}, "invalidate_fields": [], "coverage_complete": true},
+        {"event_id": "late-2", "key": {"object_id": "button-10", "generation": 1}, "epoch": 2, "updates": {"local_position": [900, 900]}, "invalidate_fields": [], "coverage_complete": true}
+      ]
+    },
+    {
+      "case_id": "object_id_reuse_new_generation",
+      "base": {"key": {"object_id": "button-11", "generation": 4}, "epoch": 1, "coverage_complete": true,
+        "fields": {"object_token": "old-11", "accessible_name": "Save", "surface_id": "pane-old", "surface_role": "editor", "surface_origin": [11, 11], "local_position": [1, 1], "ui_mode": "edit", "enabled_edit": true, "enabled_preview": false, "task_scope": "doc-old", "text_value": "Old"}},
+      "events": [
+        {"event_id": "reuse-5", "key": {"object_id": "button-11", "generation": 5}, "epoch": 5, "snapshot": {"coverage_complete": true, "fields": {"object_token": "new-11", "accessible_name": "Save", "surface_id": "pane-new", "task_scope": "doc-new"}}, "updates": {}, "invalidate_fields": []},
+        {"event_id": "late-old-generation-6", "key": {"object_id": "button-11", "generation": 4}, "epoch": 6, "updates": {"surface_id": "pane-old-late"}, "invalidate_fields": [], "coverage_complete": true}
+      ]
+    },
+    {
+      "case_id": "missing_source_and_dependency_coverage",
+      "base": {"key": {"object_id": "button-12", "generation": 1}, "epoch": 1, "coverage_complete": true,
+        "fields": {"object_token": "undo-12", "accessible_name": "Undo", "surface_id": "pane-F", "surface_role": "editor", "surface_origin": [60, 70], "local_position": [2, 4], "ui_mode": "edit", "enabled_edit": true, "enabled_preview": false, "task_scope": "doc-12", "text_value": "Changed"}},
+      "events": [{"event_id": "unknown-parent-2", "key": {"object_id": "button-12", "generation": 1}, "epoch": 2, "updates": {"surface_id": "pane-unknown"}, "invalidate_fields": ["surface_role", "surface_origin"], "coverage_complete": false, "removed_dependency_edges": [["surface_origin", "screen_position"]], "missing_dependency_edges": [["surface_origin", "screen_position"]]}]
+    }
+  ]
+}
