@@ -1,7 +1,7 @@
 import copy
 import unittest
 
-from audit import audit_candidate
+from audit import _expected, audit_candidate
 
 
 CONTAINER_ID = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
@@ -46,6 +46,15 @@ class CleanupReceiptAuditTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             audit_candidate(rows)
 
+    def test_unexpected_json_shapes_are_not_reported_as_remaining_rows(self):
+        for raw in ("{}", "false", "0", '"ok"'):
+            with self.subTest(raw=raw):
+                self.assertEqual(_expected(0, raw),
+                                 (False, "cleanup_response_shape_invalid"))
+        self.assertEqual(_expected(0, "[{}]"),
+                         (False, "container_row_remains"))
+
 
 if __name__ == "__main__":
     unittest.main()
+

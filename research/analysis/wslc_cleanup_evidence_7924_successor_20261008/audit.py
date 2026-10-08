@@ -24,11 +24,13 @@ def _expected(exit_code, raw):
         decoded = json.loads(raw)
     except (json.JSONDecodeError, TypeError):
         return False, "cleanup_response_invalid"
-    if isinstance(decoded, list) and len(decoded) == 0:
-        return True, "empty_array"
+    if isinstance(decoded, list):
+        if len(decoded) == 0:
+            return True, "empty_array"
+        return False, "container_row_remains"
     if decoded is None:
         return False, "json_null_is_not_empty_array"
-    return False, "container_row_remains"
+    return False, "cleanup_response_shape_invalid"
 
 
 def _validate(rows):
@@ -109,3 +111,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

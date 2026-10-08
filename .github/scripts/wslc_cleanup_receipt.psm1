@@ -26,12 +26,15 @@ function New-WslcCleanupReceipt {
     }
     else {
         try {
-            $parsed = ConvertFrom-Json -InputObject $RawOutput -ErrorAction Stop
+            $parsed = ConvertFrom-Json -InputObject $RawOutput -NoEnumerate -ErrorAction Stop
             if ($null -eq $parsed) {
                 $reason = 'json_null_is_not_empty_array'
             }
-            else {
+            elseif ($parsed -is [array]) {
                 $reason = 'container_row_remains'
+            }
+            else {
+                $reason = 'cleanup_response_shape_invalid'
             }
         }
         catch {
@@ -49,3 +52,4 @@ function New-WslcCleanupReceipt {
 }
 
 Export-ModuleMember -Function New-WslcCleanupReceipt
+
