@@ -7,6 +7,7 @@ For claims and scientific disposition, start with the top-level [research index]
 ## Start here
 
 - [`outputs/`](outputs/) — retained local research-session status and handoff notes; not experiment evidence unless individually cited.
+- Issue #8576 T0 A01: [grounded optional resume suggestions](analysis/resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 12 synthetic cases audited, 6/6 mutations rejected, WSLc CPU-only. No human-benefit claim.
 
 - Issue #8589 T0 A01: [effect-aware selective recovery](analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 8/8 finite cases reconstructed, 5/5 mutations rejected, zero effect dispatches. No GUI/runtime/cost/product claim.
 - Issue #8583 T0 A01: [finite principal-stratum bounds](analysis/principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; four synthetic cases independently reconstructed, 5/5 mutations rejected, WSLc CPU-only. No empirical causal or product claim.
