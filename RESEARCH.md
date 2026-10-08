@@ -1,3 +1,11 @@
+# Issue #8502 T0 A02 — independent audit-only successor (2026-10-08)
+
+A02 preserves A01's `FAIL_METHOD` and emitted the five saved-fixture labels with six mutation controls rejected, but its own README source digest was mis-frozen. Overall disposition is `FAIL_AUDIT_ONLY`; no result is promoted. See the [A02 record](research/analysis/measurement_invariance_8502_t0_a02_20261008/RESULT.md) and [Issue #8502](https://github.com/Unjuno/agent-interface/issues/8502).
+
+# Issue #8502 T0 A01 — ordinal comparability screen (2026-10-08)
+
+A01's candidate emitted the five planned synthetic labels, but its auditor used a difference of groupwise maximum cumulative proportions instead of the maximum between-group difference, producing `FAIL_METHOD` at F02. A02 did not rerun A01 and does not override this failure. No `METHOD_PASS_SCOPED`, human data, latent-mean comparability, or accessibility inference is claimed. See the [A01 record](research/analysis/measurement_invariance_8502_t0_a01_20261008/RESULT.md).
+
 # Issue #5826 A02 — WSLc container-transfer replication (2026-10-08)
 
 `PASS_WSLc_TRANSFER_SCOPED`: byte-identical A01 source and fixture executed in WSLc using the cached pinned Python 3.12.14 linux/amd64 image. Candidate and independent auditor each exited 0; 18 opportunities / 72 rows reconstructed, union recall 9/12 with F02/F04/F08 missed by all channels, runtime/watcher estimates 7.5 / 7.0 versus known 12, and 5/5 corruption controls rejected. The unchanged auditor's `PASS_METHOD_SCOPED_HOST` / `HOLD_CONTAINER_TRANSFER` strings are preserved and documented as unconditional stale labels; execution evidence is the Linux candidate environment plus exact WSLc invocation. WSLc warned that cgroup/swap limit support is unavailable; no CPU/memory enforcement claim. This is one synthetic container-transfer result only—not a live hidden-failure rate, safety, or product claim. See [report, frozen protocol, raw artifacts and source copies](research/analysis/ascertainment_5826_wslc_transfer_a02_20261008/README.md) and [Issue #5826](https://github.com/Unjuno/agent-interface/issues/5826).
