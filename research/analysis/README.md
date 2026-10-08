@@ -1,5 +1,10 @@
 # Analytical research
 
+- [Issue #8592 T0 A03 bounded DPOR validation](bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`: 45,360 exhaustive schedules matched against 217 DPOR representatives; 5/5 auditor rejection controls passed in construction tests. WSLc finite authored-model evidence only; no runtime-speed or live-safety claim. A01/A02 execution STOPs preserved.
+
+- [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 12 finite cases independently reconstructed, 6/6 output mutations rejected; WSLc CPU method evidence only, no human-benefit claim.
+
+- [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 cases independently reconstructed, 5/5 mutations rejected, zero dispatches; synthetic DAG only, no GUI/runtime/effect-dispatch claim.
 - [Issue #8583 T0 A01 principal-stratum bounds](principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: four finite synthetic cases exactly reconstructed, 5/5 candidate mutations rejected; WSLc CPU method evidence only, no empirical causal or product claim.
 
 - [Issue #8488 PSI-triggered work-shedding T0 A01](psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — `HOLD_DEADLINE_SEMANTICS_MISMATCH`: strict-bound raw recheck gives fixed 4 / queue 3 / free-memory 4 / PSI 1 primary misses, so the zero-miss gate fails. The original `NO_RESIDUAL` reading is withdrawn; no runtime/container claim.
@@ -40,6 +45,8 @@
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
 
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
+
+- [Issue #6501 C01 owned pending-I/O observation method](../concurrency/windows_pending_method_6501_01a0ff58_c01/README.md) — 27 retained native Windows events and ten saved-data corruption controls; no replay. Follow the [2026-10-08 control-state qualification HOLD](windows_pending_method_6501_c01_control_review_20261008/REPORT.md): the `Event.wait` control was not proven blocked when sampled, so its negative-control contrast is not qualified.
 
 - [Issue #7817 provenance-checked defeasible obligations T0 A01](provenance_defeasible_obligations_7817_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: ten finite obligation contexts and five hostile mutations independently audited; advisory-only synthetic semantics.
 
@@ -437,6 +444,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`boundary_margin_5707_policy_pair_v1/`](boundary_margin_5707_policy_pair_v1/)
 - [`boundary_margin_5707_t0_v1/`](boundary_margin_5707_t0_v1/)
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
+- [`bounded_dpor_8592_t0_a03_20261008/`](bounded_dpor_8592_t0_a03_20261008/)
 - [`bounded_path_class_switching_6586_t0_20261002/`](bounded_path_class_switching_6586_t0_20261002/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
@@ -946,6 +954,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
 - [`recovery_sentinel_5776_t0_v1/`](recovery_sentinel_5776_t0_v1/)
 - [`recovery_sentinel_5776_t0_v2/`](recovery_sentinel_5776_t0_v2/)
+- [`recovery_validity_effect_replay_8589_t0_a01_20261008/`](recovery_validity_effect_replay_8589_t0_a01_20261008/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
 - [`relation_first_real_corpus_8073_a01_20261007/`](relation_first_real_corpus_8073_a01_20261007/)
 - [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
@@ -963,6 +972,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`resident_reactive_rung0_successor_2110_r1_v1/`](resident_reactive_rung0_successor_2110_r1_v1/)
 - [`residual_dependence_6096_t0_20261001/`](residual_dependence_6096_t0_20261001/)
 - [`response_capacity_5771_successor_v1/`](response_capacity_5771_successor_v1/)
+- [`resume_plan_suggestions_8576_t0_a01_20261008/`](resume_plan_suggestions_8576_t0_a01_20261008/)
 - [`retained_row_adjudication_5229_v1/`](retained_row_adjudication_5229_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
@@ -1143,6 +1153,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`voi_exact_boundary_5411_dot_v1/`](voi_exact_boundary_5411_dot_v1/)
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
 - [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/)
+- [`windows_pending_method_6501_c01_control_review_20261008/`](windows_pending_method_6501_c01_control_review_20261008/)
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
 - [`wslc_control_plane_6669_t1_20261003/`](wslc_control_plane_6669_t1_20261003/)
 - [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
@@ -1259,4 +1270,3 @@ The checker compares the generated block against every child directory with a re
 # Issue #57 — Firecrawl compiled release-boundary evidence
 
 - [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.
-

@@ -92,6 +92,7 @@ flowchart TD
 | Sustained scorer overrun and command service | [Issue #59 construction A01](scorer_command_fairness_59_20261003_01a0ff52/README.md) — 12 retained starvation witnesses; first patch/audit FAIL preserved; v2 ordinary repair passes 18 service conditions and 32 existing tests. Proposed source copies only; no live/runtime adoption. |
 | Historical V39 scorer-tail priority A01/A02 (PR #7738) | [A01 frozen result](v39_scorer_tail_command_priority_a01_20261005/README.md) and [A02 frozen result](v39_scorer_tail_command_priority_a02_20261005/README.md) — preserve starvation behavior in the exact historical adapter snapshot. A02's candidate classifier did not match `deadline_overrun`; the independent audit reconstructs the bounded failure. Current main has a separate regression-tested command-service repair, so this is historical evidence, not a current-main defect or live/game result. |
 | Startup-failure stderr custody diagnostic | [Issue #59 T0](results/issue59_startup_stderr_custody_t0_20261004/REPORT.md) — OrbStack synthetic subprocess method PASS for bounded concurrent stderr capture and primary failure preservation; does not diagnose the retained controller STOP or establish live recovery. |
+| V39 startup-custody experiment archive rescue (#6944) | [Current-main rescue record](results/v39-startup-rescue-6944-currentmain-20261008/README.md) — five immutable evidence packages retained; active controller/tests are not promoted, and the source PR conflicts with current main. |
 | Recovery-arm useful-effect gate | [Paired-adjudicator synthetic counterexample](map01_r133_recovery_coast_t1_v1/useful_effect_audit_v2/REPORT.md) — scoped PASS with 0/3 recovery kill/exit pairs; survival sufficiency remains a study-design decision |
 | Recovery useful-effect gate sensitivity | [T4 exhaustive abstract-input sweep](map01_r133_recovery_coast_t1_v1/useful_effect_sensitivity_v1/REPORT.md) — 2,916 comparator cases; coast-only events are all HOLD under a recovery-specific gate; synthetic sensitivity only |
 | Recovery guard boundary | [Retained v39 continuation-guard window diagnostic](map01_continuation_guard_window_59_t2_20261001/REPORT.md) — counterfactual health-floor timing only; candidate and auditor reruns are disclosed |
@@ -480,3 +481,7 @@ gates remain open; this archive makes no code promotion.
 ## App Server interrupt cancellation portability (#59)
 
 - [macOS 0.146.1 stream-cancel A01](v39_appserver_interrupt_stream_macos_a01_20261008/README.md) — interrupted turn completed promptly, but no provider-socket EOF/reset was observed before the held mock response release; unexpected featured-plugin metadata egress makes the overall environment disposition HOLD. One bounded run; no live/game/input claim.
+
+## Synthetic fake-Xlib key-hold bounds (historical)
+
+- [30-cycle construction record](results/map01-key-hold-bounds-construction-v1/README.md) — frozen fake-Xlib evidence reports 300/300 row checks and 11/11 aggregate checks, bounded to synthetic server-side intervals; no application, GUI, game, or task-effect claim. Source baseline is historical and stacked on #7440; see the archived scope and limitations.
