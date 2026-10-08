@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -37,5 +38,18 @@ class AuthoredHealthBoundaryAuditTests(unittest.TestCase):
                     validate(altered)
 
 
+    def test_manifest_matches_exact_package_bytes(self):
+        root = Path(__file__).parent
+        manifest = json.loads((root / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["schema"], "issue59-authored-health-loss-boundary-manifest-v2")
+        expected = {"AUDIT.json", "MANIFEST_A01.json", "README.md", "RESULT.json",
+                    "RUN_COMMAND.txt", "audit.py", "candidate.py", "test_audit.py", "FREEZE.json"}
+        entries = manifest["files"]
+        self.assertEqual({row["path"] for row in entries}, expected)
+        for row in entries:
+            data = (root / row["path"]).read_bytes()
+            with self.subTest(path=row["path"]):
+                self.assertEqual(len(data), row["bytes"])
+                self.assertEqual(hashlib.sha256(data).hexdigest(), row["sha256"])
 if __name__ == "__main__":
     unittest.main(verbosity=2)

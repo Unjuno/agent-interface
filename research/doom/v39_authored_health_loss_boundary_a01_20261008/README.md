@@ -17,3 +17,8 @@ The candidate extracts and executes the frozen current-main `guard_spec`, `build
 `PASS_CONSTRUCTION_BOUNDARY`. The current frozen builder and paired monitor classified the triage value 84 as `HARD_INVALIDATED` for maximum-loss limits 0–15, and `SOFT_CHANGED` for limits 16–20. For every tested setting, the exact floor was preserved (or unchanged when the floor was the source value 100), while one point below the floor requested a new decision. No tested outcome granted input authority. The independent auditor reconstructed all 21 settings, and its result binding is SHA-256 `70ec5c1f261c08629f9880c60dc9b99e524768ea38bff930c701db5da33ee30c`.
 
 This does not identify the authored threshold in the historical attempt or show when a real HUD reading would reach the monitor. A live threat exposure with per-key release, independently useful feedback, bounded recovery, progress/ammo, and terminal outcome remains required; no allocation or private game lane is granted by this package.
+
+
+## Versioned package manifest
+
+The original stale manifest is preserved byte-for-byte as `MANIFEST_A01.json`. `MANIFEST.json` is version 2 and the package test verifies exact file coverage, byte counts, and SHA-256 values for every listed file. The manifest intentionally excludes itself to avoid a recursive hash.
