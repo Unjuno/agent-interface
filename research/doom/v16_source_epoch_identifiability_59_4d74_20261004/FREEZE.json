@@ -1,0 +1,11 @@
+{
+  "schema": "v16-source-epoch-probe-a01-freeze-v1",
+  "hypothesis": "The merged V16 wrapper can attach a current run/update identity to scorer values returned from a stale prior-episode cache because the ProgressSample callback provides no source epoch.",
+  "treatment": "Run the exact main ProgressClockV2 and AcknowledgedSampler through two deterministic histories: one reads current game counters; one returns the same cached prior-epoch counters after acknowledged updates while current game state diverges.",
+  "decision": "Counterexample if both histories produce identical AcknowledgedProgressSample records, client-update sidecars, and progress events despite different underlying current state.",
+  "control": "Current main 5c52cc4c08e96312338228ae5a566c2436eabc37; sources pinned below.",
+  "uncertainty": "No evidence that the real engine returns stale values; this tests only API/source identifiability and does not alter runtime.",
+  "main_commit": "5c52cc4c08e96312338228ae5a566c2436eabc37",
+  "clock_blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+  "acknowledged_scorer_blob": "7a82e92f85d8af56faedb780369df0ad0ee2919a"
+}
