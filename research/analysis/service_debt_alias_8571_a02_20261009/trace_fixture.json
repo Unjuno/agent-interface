@@ -1,0 +1,1443 @@
+{
+  "schema": "service-debt-alias-trace-fixture-v1",
+  "allocation_id": "SERVICE-DEBT-ALIAS-8571-A02",
+  "base_revision": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "horizon": 4,
+  "policies": [
+    "fifo",
+    "presented_service_debt",
+    "trusted_parent_service_debt"
+  ],
+  "base_requests": [
+    {
+      "id": "A0",
+      "caller_id": "A",
+      "arrival": 0,
+      "ordinal": 0,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "B0",
+      "caller_id": "B",
+      "arrival": 0,
+      "ordinal": 1,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "A1",
+      "caller_id": "A",
+      "arrival": 0,
+      "ordinal": 2,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "B1",
+      "caller_id": "B",
+      "arrival": 0,
+      "ordinal": 3,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "A2",
+      "caller_id": "A",
+      "arrival": 0,
+      "ordinal": 4,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "B2",
+      "caller_id": "B",
+      "arrival": 0,
+      "ordinal": 5,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "A3",
+      "caller_id": "A",
+      "arrival": 0,
+      "ordinal": 6,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "B3",
+      "caller_id": "B",
+      "arrival": 0,
+      "ordinal": 7,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "A4",
+      "caller_id": "A",
+      "arrival": 0,
+      "ordinal": 8,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    },
+    {
+      "id": "B4",
+      "caller_id": "B",
+      "arrival": 0,
+      "ordinal": 9,
+      "service": 1,
+      "deadline": 20,
+      "authority_current": true,
+      "fresh": true,
+      "joint_grant": true,
+      "conflict_free": true,
+      "revoked_at": null
+    }
+  ],
+  "alias_partitions": [
+    {
+      "id": "alias_p01_k1",
+      "blocks": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p02_k2_02",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          2,
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p03_k2_03",
+      "blocks": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p04_k2_04",
+      "blocks": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p05_k2_05",
+      "blocks": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p06_k2_06",
+      "blocks": [
+        [
+          0,
+          1,
+          2,
+          4
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p07_k2_07",
+      "blocks": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p08_k2_08",
+      "blocks": [
+        [
+          0,
+          1,
+          3,
+          4
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "alias_p09_k2_09",
+      "blocks": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p10_k2_10",
+      "blocks": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p11_k2_11",
+      "blocks": [
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p12_k2_12",
+      "blocks": [
+        [
+          0,
+          2,
+          3,
+          4
+        ],
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "id": "alias_p13_k2_13",
+      "blocks": [
+        [
+          0,
+          2,
+          4
+        ],
+        [
+          1,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p14_k2_14",
+      "blocks": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p15_k2_15",
+      "blocks": [
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "alias_p16_k2_16",
+      "blocks": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p17_k3_17",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2,
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p18_k3_18",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p19_k3_19",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p20_k3_20",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          2,
+          4
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p21_k3_21",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p22_k3_22",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          3,
+          4
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "alias_p23_k3_23",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p24_k3_24",
+      "blocks": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p25_k3_25",
+      "blocks": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p26_k3_26",
+      "blocks": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p27_k3_27",
+      "blocks": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p28_k3_28",
+      "blocks": [
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          2
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p29_k3_29",
+      "blocks": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p30_k3_30",
+      "blocks": [
+        [
+          0,
+          2
+        ],
+        [
+          1
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p31_k3_31",
+      "blocks": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p32_k3_32",
+      "blocks": [
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p33_k3_33",
+      "blocks": [
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          1
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p34_k3_34",
+      "blocks": [
+        [
+          0,
+          2,
+          4
+        ],
+        [
+          1
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p35_k3_35",
+      "blocks": [
+        [
+          0,
+          3
+        ],
+        [
+          1
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p36_k3_36",
+      "blocks": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p37_k3_37",
+      "blocks": [
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "alias_p38_k3_38",
+      "blocks": [
+        [
+          0,
+          3,
+          4
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "alias_p39_k3_39",
+      "blocks": [
+        [
+          0,
+          4
+        ],
+        [
+          1
+        ],
+        [
+          2,
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p40_k3_40",
+      "blocks": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p41_k3_41",
+      "blocks": [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2
+        ]
+      ]
+    },
+    {
+      "id": "alias_p42_k4_42",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p43_k4_43",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p44_k4_44",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p45_k4_45",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p46_k4_46",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p47_k4_47",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p48_k4_48",
+      "blocks": [
+        [
+          0,
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p49_k4_49",
+      "blocks": [
+        [
+          0,
+          2
+        ],
+        [
+          1
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p50_k4_50",
+      "blocks": [
+        [
+          0,
+          3
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          4
+        ]
+      ]
+    },
+    {
+      "id": "alias_p51_k4_51",
+      "blocks": [
+        [
+          0,
+          4
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ]
+    },
+    {
+      "id": "alias_p52_k5_52",
+      "blocks": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ]
+      ]
+    }
+  ],
+  "extra_cases": [
+    {
+      "id": "fragmentation_base",
+      "requests": [
+        {
+          "id": "FB_A0",
+          "caller_id": "FA",
+          "arrival": 0,
+          "ordinal": 0,
+          "service": 2,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "FB_B0",
+          "caller_id": "FB",
+          "arrival": 0,
+          "ordinal": 1,
+          "service": 2,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "FB_A1",
+          "caller_id": "FA",
+          "arrival": 0,
+          "ordinal": 2,
+          "service": 2,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "FB_B1",
+          "caller_id": "FB",
+          "arrival": 0,
+          "ordinal": 3,
+          "service": 2,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        }
+      ],
+      "trusted_parents": {
+        "FA": "A",
+        "FB": "B"
+      },
+      "parent_claims": {},
+      "release_times": []
+    },
+    {
+      "id": "fragmentation_split",
+      "requests": [
+        {
+          "id": "FS_A0a",
+          "caller_id": "FA",
+          "arrival": 0,
+          "ordinal": 0,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "FS_B0",
+          "caller_id": "FB",
+          "arrival": 0,
+          "ordinal": 1,
+          "service": 2,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "FS_A0b",
+          "caller_id": "FA",
+          "arrival": 0,
+          "ordinal": 2,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "FS_B1",
+          "caller_id": "FB",
+          "arrival": 0,
+          "ordinal": 3,
+          "service": 2,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "FS_A1a",
+          "caller_id": "FA",
+          "arrival": 0,
+          "ordinal": 4,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "FS_A1b",
+          "caller_id": "FA",
+          "arrival": 0,
+          "ordinal": 5,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        }
+      ],
+      "trusted_parents": {
+        "FA": "A",
+        "FB": "B"
+      },
+      "parent_claims": {},
+      "release_times": []
+    },
+    {
+      "id": "honest_three_principals",
+      "requests": [
+        {
+          "id": "H_A",
+          "caller_id": "HA",
+          "arrival": 0,
+          "ordinal": 0,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "H_B",
+          "caller_id": "HB",
+          "arrival": 0,
+          "ordinal": 1,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "H_C",
+          "caller_id": "HC",
+          "arrival": 0,
+          "ordinal": 2,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        }
+      ],
+      "trusted_parents": {
+        "HA": "A",
+        "HB": "B",
+        "HC": "C"
+      },
+      "parent_claims": {},
+      "release_times": []
+    },
+    {
+      "id": "revoked_principal",
+      "requests": [
+        {
+          "id": "R_A0",
+          "caller_id": "RA",
+          "arrival": 0,
+          "ordinal": 0,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": 0
+        },
+        {
+          "id": "R_B0",
+          "caller_id": "RB",
+          "arrival": 0,
+          "ordinal": 1,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "R_B1",
+          "caller_id": "RB",
+          "arrival": 0,
+          "ordinal": 2,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "R_B2",
+          "caller_id": "RB",
+          "arrival": 0,
+          "ordinal": 3,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "R_B3",
+          "caller_id": "RB",
+          "arrival": 0,
+          "ordinal": 4,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        }
+      ],
+      "trusted_parents": {
+        "RA": "A",
+        "RB": "B"
+      },
+      "parent_claims": {},
+      "release_times": []
+    },
+    {
+      "id": "missing_joint_grant",
+      "requests": [
+        {
+          "id": "J_A0",
+          "caller_id": "JA",
+          "arrival": 0,
+          "ordinal": 0,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "J_B0",
+          "caller_id": "JB",
+          "arrival": 0,
+          "ordinal": 1,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "J_A1",
+          "caller_id": "JA",
+          "arrival": 0,
+          "ordinal": 2,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": false,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "J_B1",
+          "caller_id": "JB",
+          "arrival": 0,
+          "ordinal": 3,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        }
+      ],
+      "trusted_parents": {
+        "JA": "A",
+        "JB": "B"
+      },
+      "parent_claims": {},
+      "release_times": []
+    },
+    {
+      "id": "false_parent_claim",
+      "requests": [
+        {
+          "id": "F_A0",
+          "caller_id": "FA0",
+          "arrival": 0,
+          "ordinal": 0,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "F_B0",
+          "caller_id": "FB",
+          "arrival": 0,
+          "ordinal": 1,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "F_A1",
+          "caller_id": "FA1",
+          "arrival": 0,
+          "ordinal": 2,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "F_B1",
+          "caller_id": "FB",
+          "arrival": 0,
+          "ordinal": 3,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        }
+      ],
+      "trusted_parents": {
+        "FA0": "A",
+        "FA1": "A",
+        "FB": "B"
+      },
+      "parent_claims": {
+        "FA0": "B"
+      },
+      "release_times": []
+    },
+    {
+      "id": "mandatory_release",
+      "requests": [
+        {
+          "id": "M_A0",
+          "caller_id": "MA",
+          "arrival": 0,
+          "ordinal": 0,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "M_B0",
+          "caller_id": "MB",
+          "arrival": 0,
+          "ordinal": 1,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "M_A1",
+          "caller_id": "MA",
+          "arrival": 0,
+          "ordinal": 2,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        },
+        {
+          "id": "M_B1",
+          "caller_id": "MB",
+          "arrival": 0,
+          "ordinal": 3,
+          "service": 1,
+          "deadline": 20,
+          "authority_current": true,
+          "fresh": true,
+          "joint_grant": true,
+          "conflict_free": true,
+          "revoked_at": null
+        }
+      ],
+      "trusted_parents": {
+        "MA": "A",
+        "MB": "B"
+      },
+      "parent_claims": {},
+      "release_times": [
+        2
+      ]
+    }
+  ],
+  "alias_request_count": 5
+}
