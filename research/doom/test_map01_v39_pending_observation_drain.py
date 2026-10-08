@@ -1,10 +1,16 @@
 """Regression for observations queued as the planner future completes."""
 import queue
+import threading
+import time
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
+from executor_v12 import Executor as ExecutorV12
 from map01_overlap_controller_v39 import (
-    DoomCoverSignalPairMonitor, drain_pending_observation_events)
+    MAX_PENDING_OBSERVATION_EVENTS, DoomCoverSignalPairMonitor,
+    drain_pending_observation_events, recover_pending_observation_backlog,
+    settle_pending_observation_backlog)
 
 
 class Monitor:
@@ -101,26 +107,189 @@ class PendingObservationDrainTests(unittest.TestCase):
         result = drain_pending_observation_events(incoming, monitor, "cover-3")
 
         self.assertEqual(result, {"latest": None, "terminal": None,
-                                  "invalidation": None})
+                                  "invalidation": None,
+                                  "pending_events": False})
         self.assertEqual(monitor.seen, [])
 
-    def test_snapshot_drain_leaves_events_arriving_after_entry_queued(self):
+    def test_bounded_drain_processes_events_arriving_after_entry(self):
         incoming = queue.Queue()
         incoming.put({"event": "observation", "sequence": 30})
 
         class EnqueueDuringObserve(Monitor):
+            enqueued = False
+
             def observe(self, row):
                 self.seen.append(row["sequence"])
-                incoming.put({"event": "observation", "sequence": 31})
+                if not self.enqueued:
+                    self.enqueued = True
+                    incoming.put({"event": "observation", "sequence": 31})
                 return None
 
         monitor = EnqueueDuringObserve()
         result = drain_pending_observation_events(incoming, monitor, "cover-4")
 
-        self.assertEqual(monitor.seen, [30])
-        self.assertEqual(result["latest"]["sequence"], 30)
+        self.assertEqual(monitor.seen, [30, 31])
+        self.assertEqual(result["latest"]["sequence"], 31)
+        self.assertFalse(result["pending_events"])
+        self.assertTrue(incoming.empty())
+
+    def test_boundary_hard_crossing_is_processed_before_answer_reuse(self):
+        incoming = queue.Queue()
+
+        class EnqueueHardCrossingDuringObserve(Monitor):
+            def observe(self, row):
+                self.seen.append(row["sequence"])
+                if row["sequence"] == 11:
+                    incoming.put({"event": "typed_observation", "sequence": 12})
+                if row["sequence"] == 12:
+                    return {"event": "paired_signal_invalidation",
+                            "reason": "health:below_hard_minimum",
+                            "requires_new_decision": True}
+                return None
+
+        incoming.put({"event": "observation", "sequence": 11})
+        monitor = EnqueueHardCrossingDuringObserve()
+        result = drain_pending_observation_events(incoming, monitor, "cover-race")
+
+        self.assertEqual(monitor.seen, [11, 12])
+        self.assertEqual(result["invalidation"]["reason"],
+                         "health:below_hard_minimum")
+        self.assertFalse(result["pending_events"])
+        self.assertTrue(incoming.empty())
+
+        fresh = {"event": "observation", "sequence": 12, "image": "frame-12"}
+        waits = []
+
+        def wait(predicate):
+            waits.append(predicate(fresh))
+            return fresh
+
+        recovery = recover_pending_observation_backlog(
+            incoming, result["latest"], 11, "cover-race", wait)
+
+        self.assertEqual(waits, [True])
+        self.assertEqual(recovery["fresh_observation_sequence"], 12)
+        self.assertIs(recovery["latest"], fresh)
+
+    def test_stale_executor_rejection_recovers_then_admits_fresh_sequence(self):
+        incoming = queue.Queue()
+
+        class EnqueueHardCrossingDuringObserve(Monitor):
+            def observe(self, row):
+                self.seen.append(row["sequence"])
+                if row["sequence"] == 11:
+                    incoming.put({"event": "typed_observation", "sequence": 12})
+                if row["sequence"] == 12:
+                    return {"event": "paired_signal_invalidation",
+                            "reason": "health:below_hard_minimum",
+                            "requires_new_decision": True}
+                return None
+
+        class Backend:
+            sequence = 12
+            lease = None
+
+            @staticmethod
+            def validate(steps):
+                return None
+
+        started = []
+        published = []
+
+        class NoInputThread:
+            def __init__(self, target, args, daemon):
+                self.target = target
+                self.args = args
+                self.daemon = daemon
+
+            def start(self):
+                started.append(self.args[0])
+
+        executor = ExecutorV12.__new__(ExecutorV12)
+        executor.lock = threading.RLock()
+        executor.closed = False
+        executor.active = None
+        executor.backend = Backend()
+        executor.used_ids = set()
+        executor.admission_callback_ids = set()
+        executor.terminal_publication_errors = {}
+        executor.admission_publication_errors = {}
+        executor.emit = published.append
+        deadline = time.perf_counter_ns() + 10_000_000_000
+
+        with patch("executor_v12.threading.Thread", NoInputThread):
+            with self.assertRaisesRegex(
+                    ValueError, "latest observation sequence required before input"):
+                executor.submit("stale-plan", [{"op": "observe"}], 11, deadline)
+            self.assertEqual(started, [])
+            self.assertEqual(published, [])
+
+            incoming.put({"event": "observation", "sequence": 11})
+            monitor = EnqueueHardCrossingDuringObserve()
+            drained = drain_pending_observation_events(
+                incoming, monitor, "cover-race")
+            self.assertIsNotNone(drained["invalidation"])
+            fresh = {"event": "observation", "sequence": 12, "image": "frame-12"}
+            recovery = recover_pending_observation_backlog(
+                incoming, drained["latest"], 11, "cover-race",
+                lambda predicate: fresh if predicate(fresh) else None)
+            self.assertEqual(recovery["fresh_observation_sequence"], 12)
+            executor.submit("fresh-plan", [{"op": "observe"}],
+                            recovery["fresh_observation_sequence"], deadline)
+
+        self.assertEqual(started, ["fresh-plan"])
+        self.assertEqual([event["id"] for event in published], ["fresh-plan"])
+
+    def test_drain_stops_at_fixed_budget_and_reports_remaining_backlog(self):
+        incoming = queue.Queue()
+        for sequence in range(1, MAX_PENDING_OBSERVATION_EVENTS + 3):
+            incoming.put({"event": "observation", "sequence": sequence})
+        monitor = Monitor()
+
+        result = drain_pending_observation_events(incoming, monitor, "cover-4b")
+
+        self.assertEqual(len(monitor.seen), MAX_PENDING_OBSERVATION_EVENTS)
+        self.assertEqual(result["latest"]["sequence"], MAX_PENDING_OBSERVATION_EVENTS)
+        self.assertTrue(result["pending_events"])
+        self.assertEqual(incoming.qsize(), 2)
+
+    def test_continuous_backlog_recovery_exhausts_a_finite_budget(self):
+        class ReplenishingQueue(queue.Queue):
+            def get_nowait(self):
+                row = super().get_nowait()
+                self.put({"event": "observation",
+                          "sequence": row["sequence"] + 1})
+                return row
+
+        incoming = ReplenishingQueue()
+        incoming.put({"event": "observation", "sequence": 1})
+
+        result = settle_pending_observation_backlog(
+            incoming, {"event": "observation", "sequence": 0}, "cover-flood")
+
+        self.assertTrue(result["exhausted"])
+        self.assertEqual(result["batches"], 4)
         self.assertEqual(incoming.qsize(), 1)
-        self.assertEqual(incoming.get_nowait()["sequence"], 31)
+        self.assertEqual(result["latest"]["sequence"], 1024)
+
+    def test_pending_backlog_is_discarded_before_waiting_for_fresh_source(self):
+        source = Path(__file__).with_name("map01_overlap_controller_v39.py").read_text(
+            encoding="utf-8")
+        drain = source.index("drained = drain_pending_observation_events(")
+        backlog_check = source.index('elif drained["pending_events"]:', drain)
+        result = source.index("planner_result=future.result()", drain)
+        discard = source.index("if invalidation is not None:", result)
+        settle = source.index("recovery = recover_pending_observation_backlog(", discard)
+        admission = source.index("final_action_admission=prepare_action_admission(", settle)
+        helper = source.index("def recover_pending_observation_backlog(")
+        settle_helper = source.index("settle_pending_observation_backlog(", helper)
+        fresh_wait = source.index("row[\"sequence\"] > source_sequence", helper)
+        self.assertLess(drain, backlog_check)
+        self.assertLess(backlog_check, result)
+        self.assertLess(result, discard)
+        self.assertLess(discard, settle)
+        self.assertLess(settle_helper, fresh_wait)
+        self.assertLess(settle, admission)
 
     def test_production_paired_monitor_invalidates_queued_typed_health_crossing(self):
         binding = {"focus": 7, "surface": 9,

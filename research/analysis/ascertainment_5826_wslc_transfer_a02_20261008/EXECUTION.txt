@@ -1,0 +1,33 @@
+Issue #5826 A02 WSLc container-transfer replication — execution record
+Date: 2026-10-08 JST
+Publication base: main bfcc14e08fbfe5f2f04cd0237d13559e5d62538b
+Frozen source: PR #8389 head 6086879eac550ed0fa05175011d8d39602e55393
+Runtime: WSL 3.0.1.0 / WSLc 3.0.1 / kernel 6.18.40.1-1
+Image: python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f (linux/amd64)
+Local image ID: sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4
+
+Construction-only import smoke, before candidate freeze execution:
+  python -B -c "import run_candidate,audit_result,test_mutations; print('IMPORT_SMOKE_OK')"
+  Exit 0; output IMPORT_SMOKE_OK.
+  WSLc warning: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+
+Pre-run gate:
+  5 frozen candidate/fixture/auditor/mutation source hashes matched.
+  out/candidate.json absent before the single candidate invocation.
+  Image was already cached; --pull never; no Docker/OrbStack daemon used.
+
+Candidate invocation: exact command in PREREGISTRATION.md; exit 0.
+  candidate opportunities=18 channel_rows=72 output=/out/candidate.json (exclusive create)
+  WSLc cgroup/swap warning preserved above.
+
+Independent auditor invocation: exact command in PREREGISTRATION.md; exit 0.
+  PASS_METHOD_SCOPED_HOST
+  {"channel_true_positives":{"post_effect_audit":7,"runtime":4,"verifier":3,"watcher":3},"controls":6,"false_reports":{"post_effect_audit":[],"runtime":["N16"],"verifier":[],"watcher":[]},"faults":12,"missed_by_all":["F02","F04","F08"],"opportunities":18,"runtime_watcher":{"chapman_estimate":7.0,"n1":5,"n2":3,"naive_estimate":7.5,"naive_underestimate_fraction":0.375,"oracle_fault_total":12,"overlap":2},"union_detected_faults":9,"union_recall":0.75,"unknown_cells":[["N18","verifier"]]}
+  container transfer gate: HOLD_CONTAINER_TRANSFER (not exercised)
+  WSLc cgroup/swap warning preserved above. The two scope strings are hard-coded by the unchanged A01 auditor and are not runtime detection.
+
+Five mutation-control invocation: exact command in PREREGISTRATION.md; exit 0.
+  PASS: rejected 5/5 mutations: omitted-row, duplicate-row, mislinked-event, unknown-as-negative, oracle-truth-flip
+  WSLc cgroup/swap warning preserved above.
+
+All three scientific invocations used --rm, --network none, --pull never, --cpus 0.25, --memory 256m, source read-only, and a distinct output bind. Auditor/mutation output bind was read-only. Python was run with -B to avoid source-tree bytecode writes. Memory/CPU enforcement was not independently verified. WSLc `--read-only` root was not offered by this CLI version and is not claimed.

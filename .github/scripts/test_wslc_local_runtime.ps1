@@ -28,6 +28,7 @@ if (-not $probePath.StartsWith($tempRoot, [System.StringComparison]::OrdinalIgno
 }
 
 $containerName = "agent-interface-wslc-probe-$([guid]::NewGuid().ToString('N'))"
+$cidPath = Join-Path $probePath 'container.cid'
 $sentinelPath = Join-Path $probePath 'sentinel.bin'
 $probeCode = @'
 import errno
@@ -50,18 +51,39 @@ try {
     [void](New-Item -ItemType Directory -Path $probePath)
     [System.IO.File]::WriteAllBytes($sentinelPath, [System.Text.Encoding]::UTF8.GetBytes('wslc-readonly-probe'))
 
-    & $wslc.Source run --rm --name $containerName --pull never --network none --memory 512M --cpus 1 `
+    & $wslc.Source run --rm --name $containerName --cidfile $cidPath --pull never --network none --memory 512M --cpus 1 `
         --volume "${probePath}:/probe:ro" $image python -B -c $probeCode
     if ($LASTEXITCODE -ne 0) {
         throw "WSLc probe failed with exit code $LASTEXITCODE. Preserve the output above for diagnosis."
     }
 
-    $containers = & $wslc.Source container list --all
-    if ($LASTEXITCODE -ne 0) {
-        throw "Could not verify WSLc cleanup (exit code $LASTEXITCODE)."
+    if (-not (Test-Path -LiteralPath $cidPath -PathType Leaf)) {
+        throw 'WSLc probe completed without writing its requested container ID receipt.'
     }
-    if (($containers -join "`n") -match [regex]::Escape($containerName)) {
-        throw "The --rm probe container remains after completion: $containerName"
+
+    $containerId = (Get-Content -LiteralPath $cidPath -Raw).Trim()
+    if ($containerId -notmatch '^[0-9a-fA-F]{64}$') {
+        throw 'WSLc probe wrote a missing or malformed full container ID receipt.'
+    }
+
+    # Query only this run's exact container ID; never enumerate unrelated shared containers.
+    $matchingContainers = & $wslc.Source container list --all --filter "id=$containerId" --format json
+    if ($LASTEXITCODE -ne 0) {
+        throw "Could not verify WSLc cleanup for this run's container ID (exit code $LASTEXITCODE)."
+    }
+    $listing = ($matchingContainers -join "`n").Trim()
+    # WSLc 3.0.1 emits no stdout for a successful zero-match filtered query.
+    # Treat that as empty only after the command's exit code has been checked.
+    if (-not [string]::IsNullOrWhiteSpace($listing)) {
+        try {
+            $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
+        }
+        catch {
+            throw 'The scoped WSLc cleanup query returned invalid JSON; cleanup is unverified.'
+        }
+        if ($null -eq $listedContainers -or @($listedContainers).Count -gt 0) {
+            throw 'The scoped WSLc cleanup query returned a matching container; cleanup is unverified.'
+        }
     }
 
     Write-Output 'WSLc local runtime probe: PASS'

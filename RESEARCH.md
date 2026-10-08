@@ -1,3 +1,27 @@
+# Issue #8589 T0 A01 — effect-aware selective recovery (2026-10-08)
+
+`PASS_METHOD_SCOPED`: the frozen WSLc synthetic DAG candidate and independent audit each ran once; 8/8 cases reconstructed, 5/5 mutation controls rejected, and effect dispatch attempts were zero. Selective recomputation was lower than suffix recomputation in two of the eight authored cases; incomplete provenance forced HOLD with zero reuse. This is method evidence only, not GUI/runtime safety, real savings, user benefit, or product validation. See the [full report and artifacts](research/analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md), [protocol](research/analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/PROTOCOL.md), and [Issue #8589](https://github.com/Unjuno/agent-interface/issues/8589).
+
+# Issue #8500 T0 A01 — rejected-analogy memory finite method test (2026-10-08)
+
+`PASS_METHOD_SCOPED`: frozen deterministic scorer and independent auditor each ran once, with zero retries. All 84 rows across 12 blocks reconstructed with zero errors; all 5/5 frozen corruption controls were rejected. Invalid proposals among 14 authored invalid candidates were 8/14 (no memory), 5/14 (prose), and 2/14 (structured); base valid recall was 8/10 in every arm. All four changed-envelope controls reopened under structured memory. This is a finite hand-authored fixture result only—not real analogical reasoning, model behavior, generalization, deployed-memory effectiveness, or product benefit. Host CPython 3.12.10; no container boundary required and no Docker/WSLc comparison. See [formal report and raw evidence](research/analysis/analogy_rejection_8500_t0_a01_20261008/RESULT.md), [frozen package](research/analysis/analogy_rejection_8500_t0_a01_20261008/README.md), and [Issue #8500](https://github.com/Unjuno/agent-interface/issues/8500).
+
+# Issue #8502 T0 A03 — corrected paired-cutpoint successor (2026-10-08)
+
+A03 is a fresh-seed successor to A01 `FAIL_METHOD` and A02 `FAIL_AUDIT_ONLY`; neither old allocation was rerun or modified. Candidate and independent contingency-table auditor each ran once. All five synthetic classifications/localizations reconstructed with zero errors, and all 6/6 declared mutations were rejected: `PASS_METHOD_SCOPED`. The result is a coarse synthetic screen only—not human measurement invariance, scalar/latent-mean comparability, workload validity, accessibility, or user benefit. See [A03 report and frozen package](research/analysis/measurement_invariance_8502_t0_a03_20261008/RESULT.md) and [Issue #8502](https://github.com/Unjuno/agent-interface/issues/8502).
+
+# Issue #8502 T0 A02 — independent audit-only successor (2026-10-08)
+
+A02 preserves A01's `FAIL_METHOD` and emitted the five saved-fixture labels with six mutation controls rejected, but its own README source digest was mis-frozen. Overall disposition is `FAIL_AUDIT_ONLY`; no result is promoted. See the [A02 record](research/analysis/measurement_invariance_8502_t0_a02_20261008/RESULT.md) and [Issue #8502](https://github.com/Unjuno/agent-interface/issues/8502).
+
+# Issue #8502 T0 A01 — ordinal comparability screen (2026-10-08)
+
+A01's candidate emitted the five planned synthetic labels, but its auditor used a difference of groupwise maximum cumulative proportions instead of the maximum between-group difference, producing `FAIL_METHOD` at F02. A02 did not rerun A01 and does not override this failure. No `METHOD_PASS_SCOPED`, human data, latent-mean comparability, or accessibility inference is claimed. See the [A01 record](research/analysis/measurement_invariance_8502_t0_a01_20261008/RESULT.md).
+
+# Issue #5826 A02 — WSLc container-transfer replication (2026-10-08)
+
+`PASS_WSLc_TRANSFER_SCOPED`: byte-identical A01 source and fixture executed in WSLc using the cached pinned Python 3.12.14 linux/amd64 image. Candidate and independent auditor each exited 0; 18 opportunities / 72 rows reconstructed, union recall 9/12 with F02/F04/F08 missed by all channels, runtime/watcher estimates 7.5 / 7.0 versus known 12, and 5/5 corruption controls rejected. The unchanged auditor's `PASS_METHOD_SCOPED_HOST` / `HOLD_CONTAINER_TRANSFER` strings are preserved and documented as unconditional stale labels; execution evidence is the Linux candidate environment plus exact WSLc invocation. WSLc warned that cgroup/swap limit support is unavailable; no CPU/memory enforcement claim. This is one synthetic container-transfer result only—not a live hidden-failure rate, safety, or product claim. See [report, frozen protocol, raw artifacts and source copies](research/analysis/ascertainment_5826_wslc_transfer_a02_20261008/README.md) and [Issue #5826](https://github.com/Unjuno/agent-interface/issues/5826).
+
 # Issue #8157 A04 — prefix-local audit of retained bounded TTC allocation (2026-10-05)
 
 An audit-only successor reconstructed all 2,400 prefixes from the preserved A02 public inputs with zero candidate mismatch; its five corruption controls and source/artifact hash checks passed. The original A02 auditor's 98 mismatches are 49 point and 49 interval mismatches, all in the occlusion profile. Disposition is `PASS_RAW_RECONCILIATION_ONLY`: A02's `FAIL_METHOD` remains unscorable and A03's one-shot auditor runtime STOP remains preserved. No TTC method, vision-transfer, GUI/game, or safety result is claimed. See the [A04 report and frozen evidence](research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A04_AUDIT_ONLY/REPORT.md), [A03 STOP](research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A03_AUDIT_ONLY/STOP.md), and [Issue #8157](https://github.com/Unjuno/agent-interface/issues/8157).
@@ -193,6 +217,26 @@ These latency values are simulated—not measured CPU, runtime, GUI, or end-to-e
 ## Issue #6501 T01 — Windows native ReadFile cancellation comparison (2026-10-03)
 
 The preserved Windows 11 / CPython 3.12.14 one-shot comparison retains three frozen cells: ordinary completion returned one byte; cancelling the asyncio wrapper left the underlying native read unfinished through its declared 500 ms observation window; `CancelSynchronousIo` returned success and the distinct `ReadFile` completion reported `ERROR_OPERATION_ABORTED` with no data. All cells exited 0 without timeout, and owned threads, handles, and descriptors were joined/closed. The first saved-data auditor falsely accepted two of nine mutations; a separately retained v2 auditor rejected all nine against the unchanged data. This is a scoped native cancellation characterization, distinct from C01 pending-state sampling and from asyncio/Linux evidence. The allocation was consumed and was not replayed. No arbitrary-I/O, pooled-thread, application-effect, portability, performance, or runtime-adoption claim follows. See the [checksummed archival report and original outputs](research/concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) and [#6501](https://github.com/Unjuno/agent-interface/issues/6501).
+
+## Issue #6501 — owned Windows pending-I/O observation C01 (2026-10-03)
+
+One native Windows 11 / CPython 3.12.14 method allocation retained 27 events
+with three sampled `GetThreadIOPendingFlag` pairs for an owned `os.pipe` reader
+and an `Event.wait` control, followed by one normal byte transfer, cooperative
+joins, and verified handle/FD closure. A separately versioned raw-only auditor
+reconstructed the retained events and rejected ten serialized corruptions; the
+first auditor's Windows-path lookup failure remains preserved. A subsequent
+static qualification review found that `wait_enter` is signaled before the
+control calls `wait_release.wait()`, with no evidence that the control had
+entered its blocking call when sampled. Thus the observed false control flag
+does not establish a blocked-control contrast. Disposition is
+`HOLD_CONTROL_STATE_UNESTABLISHED`; the original `PASS_OWNED_THREAD_PENDING_METHOD_ONLY`
+record remains unchanged but is not a qualified method-pass claim. The archive
+is retained as a record of sampled values, not as cancellation efficacy. Later
+#6501 T02/T03/P02 allocations are distinct and remain separate. Do not replay
+the archived probe. See the [C01 receipts](research/concurrency/windows_pending_method_6501_01a0ff58_c01/README.md),
+[additive control-state review](research/analysis/windows_pending_method_6501_c01_control_review_20261008/REPORT.md),
+and [Issue #6501](https://github.com/Unjuno/agent-interface/issues/6501).
 
 # Issue #6509: claim-scoped partial verdicts T0 (2026-10-02)
 
@@ -2390,3 +2434,12 @@ source pins, raw responses, projections, hashes, and first failures are
 preserved; no consumed remote task was rerun for rescue. See the [complete
 archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
 and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).
+# Issue #8553 T0 A01 — counterexample-guided recovery refinement (2026-10-08)
+
+The frozen host-CPython candidate and independent auditor each ran once (exit 0; retries 0), reconstructing all five hand-authored finite cases with zero audit errors. CEGAR resolved the safe-separable spurious-loss case using only `p_color` (one predicate versus three in fixed-fine); a planted optimistic false-recovery witness was downgraded to `UNKNOWN`; genuine loss, equivalent aliases, and deadline exhaustion matched their declared verdicts. All 5/5 mutation controls were rejected. Disposition: `PASS_METHOD_SCOPED` for this deterministic synthetic fixture only—not evidence of live GUI state, task recovery, deadlines, runtime benefit, or general efficacy. See [report and frozen raw evidence](research/analysis/counterexample_guided_recovery_refinement_8553_t0_a01_20261008/REPORT.md) and [Issue #8553](https://github.com/Unjuno/agent-interface/issues/8553).
+# Issue #8576 T0 A01 — grounded optional resume suggestions (2026-10-08)
+
+`PASS_METHOD_SCOPED`: a frozen WSLc CPU-only candidate and independent topological-order auditor each ran once; all 12 synthetic cases reconstructed with zero errors and 6/6 output mutations rejected. Only uniquely entailed next checkpoints were suggested; ambiguous, stale, mismatched, terminal, unresolved-effect, and no-contract cases abstained. Equal public inputs with different sealed hidden labels produced the same output. No human participants, GUI, model, task continuation, or human-benefit claim. See [report and frozen artifacts](research/analysis/resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) and [Issue #8576](https://github.com/Unjuno/agent-interface/issues/8576).
+# Issue #8583 T0 A01 — principal-stratum bounds (2026-10-08)
+
+`PASS_METHOD_SCOPED`: one frozen finite compatibility candidate and one independent ordered-completion auditor ran in WSLc; four toy cases reconstructed with zero errors and all 5/5 preregistered mutations rejected. Asymmetric demand margins leave the p0 always-demand contrast bounded [−1,+1] despite observed contrast −1/3; an empty compatible always-demand stratum remains explicitly unidentified. Synthetic finite method evidence only—not empirical causal inference or a real recovery/product claim. See [report, frozen protocol, sources and raw evidence](research/analysis/principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) and [Issue #8583](https://github.com/Unjuno/agent-interface/issues/8583).

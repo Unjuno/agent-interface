@@ -752,6 +752,10 @@ def temporal_sheet(sources, target):
     sheet.save(target,optimize=True)
 
 
+MAX_PENDING_OBSERVATION_EVENTS = 256
+MAX_PENDING_OBSERVATION_RECOVERY_BATCHES = 4
+
+
 def drain_pending_observation_events(incoming, observation_monitor, terminal_id):
     """Process events already queued when a planner future becomes done."""
     latest = None
@@ -759,8 +763,9 @@ def drain_pending_observation_events(incoming, observation_monitor, terminal_id)
     invalidation = None
     event_types = (getattr(observation_monitor, "event_types", {"observation"})
                    if observation_monitor is not None else set())
-    # Snapshot the finite backlog so a live producer cannot make this drain unbounded.
-    for _ in range(incoming.qsize()):
+    # A live producer cannot make this drain unbounded, and a finite snapshot
+    # cannot strand events that arrive while the snapshot is being processed.
+    for _ in range(MAX_PENDING_OBSERVATION_EVENTS):
         try:
             row = incoming.get_nowait()
         except queue.Empty:
@@ -772,7 +777,39 @@ def drain_pending_observation_events(incoming, observation_monitor, terminal_id)
             invalidation = observation_monitor.observe(row)
         if row.get("event") == "terminal" and row.get("id") == terminal_id:
             terminal = row
-    return {"latest": latest, "terminal": terminal, "invalidation": invalidation}
+    return {"latest": latest, "terminal": terminal, "invalidation": invalidation,
+            "pending_events": not incoming.empty()}
+
+
+def settle_pending_observation_backlog(incoming, latest, terminal_id):
+    """Consume a finite recovery budget; report exhaustion without retry loops."""
+    batches = 0
+    while batches < MAX_PENDING_OBSERVATION_RECOVERY_BATCHES:
+        if incoming.empty():
+            return {"latest": latest, "batches": batches, "exhausted": False}
+        drained = drain_pending_observation_events(incoming, None, terminal_id)
+        if drained["latest"] is not None:
+            latest = drained["latest"]
+        batches += 1
+        if not drained["pending_events"]:
+            return {"latest": latest, "batches": batches, "exhausted": False}
+    return {"latest": latest, "batches": batches,
+            "exhausted": not incoming.empty()}
+
+
+def recover_pending_observation_backlog(incoming, latest, source_sequence,
+                                        terminal_id, wait):
+    recovery = settle_pending_observation_backlog(incoming, latest, terminal_id)
+    if recovery["exhausted"]:
+        return recovery
+    latest = recovery["latest"]
+    if latest["sequence"] <= source_sequence:
+        latest = wait(lambda row:row["event"] == "observation" and
+                      type(row.get("sequence")) is int and
+                      row["sequence"] > source_sequence)
+    recovery["latest"] = latest
+    recovery["fresh_observation_sequence"] = latest["sequence"]
+    return recovery
 
 
 def main():
@@ -1000,6 +1037,16 @@ def main():
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
                                 planner,planner_handle,process,wait,current_cover)
                             cover_terminals.append(current_terminal)
+                    elif drained["pending_events"]:
+                        invalidation = {
+                            "event": "policy_invalidation",
+                            "reason": "pending_observation_backlog_limit",
+                            "requires_new_decision": True,
+                        }
+                        if current_terminal is None:
+                            planner_interrupt,current_terminal=cancel_invalidated_cover(
+                                planner,planner_handle,process,wait,current_cover)
+                            cover_terminals.append(current_terminal)
                 planner_result=future.result()
                 failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
@@ -1028,6 +1075,15 @@ def main():
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())
             if invalidation is not None:
+                recovery = recover_pending_observation_backlog(
+                    incoming, latest, action_source_observation["sequence"],
+                    current_cover, wait)
+                latest = recovery["latest"]
+                if recovery["exhausted"]:
+                    raise RuntimeError(
+                        "pending observation recovery budget exhausted "
+                        f"after {recovery['batches']} batches at sequence "
+                        f"{latest['sequence']}")
                 decisions.append({"iteration":index,"source_image":str(source_image),"model_image":str(image),
                   "model_image_sha256":hashlib.sha256(image.read_bytes()).hexdigest(),"action":action,
                   "effect_memory":effect_memory,"usage":usage,"model_ns":model_ns,
@@ -1047,6 +1103,7 @@ def main():
                   "cover_validity_admission":validity_admission,
                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
+                  "pending_observation_recovery":recovery,
                   "policy_invalidation":invalidation,"model_action_discarded":True,
                   "discard_reason":"policy_dependency_invalidated",
                   "cover_terminal_before_plan":True,"plan_terminal":"not_admitted"})

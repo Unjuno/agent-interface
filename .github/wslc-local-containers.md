@@ -1,8 +1,8 @@
-# Local container-backed research with WSL Containers
+# Local research runtimes on Windows with WSL 3.x
 
 ## Status
 
-Microsoft WSL Containers (`wslc`) is the **default local container runtime** for eligible single-container research and test iterations on this Windows host. WSL Containers is generally available with current WSL releases, including this host's WSL `3.0.1.0` / WSLc `3.0.1`; starting Docker Desktop or installing Docker Engine is not required for the covered build/run path. This is a scoped workflow migration, not a claim that every Docker workflow is interchangeable or that switching runtimes resolves memory pressure.
+Docker Desktop and Docker Engine are **not prerequisites** for the covered local research workflows on this Windows host. WSL 3.x provides two distinct local routes: run Linux tools directly in the WSL distribution when a container boundary is unnecessary, or use Microsoft WSL Containers (`wslc`) when a pinned Linux image or container lifecycle is useful. WSLc is the default local container runtime for eligible single-container work; it is not a Docker Engine replacement. This scoped migration does not claim universal Docker compatibility or that changing runtimes resolves memory pressure.
 
 The local run path is established for ordinary CPU-only tests using a pinned Linux image, `--network none`, read-only source mounts, ordinary process exit codes, and disposable containers. Use native WSL execution instead when a test does not need a container boundary and its frozen protocol permits that. Use WSLc when container isolation and image packaging are useful but no Docker Engine API/Compose behavior is required.
 
@@ -18,6 +18,14 @@ Existing WSLc research evidence is also recorded in [PR #6114](https://github.co
 ## Local iteration on WSL 3.x
 
 On this host, `wsl --version` reports WSL `3.0.1.0`, and `wslc version` reports WSLc `3.0.1`. These are the Windows WSL platform/container CLI versions; the installed Ubuntu distribution remains WSL2. `wslc` is included with WSL and can run eligible Linux containers without Docker Desktop or a separately installed Docker Engine.
+
+### Select the lightest compatible route
+
+1. **Native WSL first** for standard-library checks, finite analysis, source validation, and tests that do not require an image/container boundary. Use a project checkout inside the WSL Linux filesystem for Linux-heavy file workloads when practical; Windows-mounted paths have different I/O characteristics.
+2. **WSLc** when an immutable Linux image, repeatable OS-level dependency set, or container boundary is required. Keep to the verified scope below and perform a small workload-specific compatibility check before formal evidence collection.
+3. **Hosted CI or another specifically validated runtime** when the protocol needs Docker Engine API/socket, Compose, unsupported isolation/capabilities, enforceable cgroup/swap limits, a required daemon behavior, or a runtime explicitly frozen by the study. Do not silently substitute the runtime in a consumed allocation.
+
+For ordinary local iteration, do not install or launch Docker solely to satisfy an old generic “container-first” convention. For formal research, freeze the runtime, exact tool/image versions, source identities, command, and outputs before execution. A container or WSL distribution is not by itself a security boundary for untrusted code; match isolation and mounts to the threat model.
 
 A scoped local validation on current `main` (`1eac6ea9f5b91cc10a8c3dc20374b9d79ffcf179`) used the cached `python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f` (`linux/amd64`), read-only source bind, `--pull never`, `--network none`, `--cpus 1`, and `--rm`:
 
