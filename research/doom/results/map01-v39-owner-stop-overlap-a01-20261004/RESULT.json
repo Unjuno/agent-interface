@@ -1,0 +1,12 @@
+{
+  "schema": "map01-v39-owner-stop-overlap-result-v1",
+  "run_id": "owner-stop-overlap-a01-20261004",
+  "classification": "construction-only",
+  "candidate_invocations": 2,
+  "candidate_exit_code": 0,
+  "audit_invocations": 1,
+  "audit_checks": "18/18 PASS",
+  "finding": "stop_requested arriving after explicit release dequeue adds a second verified-empty owner_release record (valid_until_ns=null) after one lease-bound release; it does not add a second fake XTEST KeyRelease",
+  "scope": "deterministic fake-Xlib owner queue/record behavior only",
+  "allocation_id": null
+}
