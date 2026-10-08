@@ -6,4 +6,10 @@ The reconciliation requires exactly one terminal for each cancellation, rejects 
 
 `PASS` now means only that these scoped reconciliation checks passed. `formal_pass` remains false because this additive auditor does not rerun the original audit's source, stale-admission, bounded-recovery, and full preregistration gates. The original `AUDIT.json`, v1 auditor, and saved episode were not modified or rerun.
 
-Construction regressions: `python3 -B -m unittest research.doom.map01_v39_live_threat_guard_a07_20261009.test_audit_live_v2 -v` (10 passed). These use synthetic files in temporary directories and do not inspect the saved raw episode or start the game, model, VM, or GUI.
+Construction regressions: `python3 -B research/doom/map01_v39_live_threat_guard_a07_20261009/test_audit_live_v2.py -v` (15 passed; the same set passes under `python3 -O -B`). These use synthetic files in temporary directories and do not inspect the saved raw episode or start the game, model, VM, or GUI.
+
+## Follow-up false-PASS correction
+
+A later nonauthor review of the exact PR head found two additional ways to obtain a scoped custody `PASS`: an `input_admission` with the matching key could occur after `cancel_requested` and still be counted as prior admission; and a release transition could match only the key name while its `step` or `intent_token` belonged to another actuation. Duplicate admission/transition rows with the same key-only count could also balance each other.
+
+The follow-up now requires every admitted input to have an integer `admitted_ns` no later than the cancellation's integer `requested_ns`. It matches release transitions to unique `(step, key, intent_token)` identities rather than key names alone. New synthetic tests reject post-cancel or untimed admissions, mismatched step/token releases, and duplicate matching pairs. A valid scoped custody result continues to keep `formal_pass` false. Original raw, v1 audit, and candidate output remain untouched; no candidate or live allocation was rerun.

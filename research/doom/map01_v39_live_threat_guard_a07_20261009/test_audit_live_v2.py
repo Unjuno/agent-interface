@@ -36,12 +36,15 @@ class AuditLiveV2Tests(unittest.TestCase):
 
     def valid_case(self, *, admitted=False, release=True, decision_time=150,
                    guard_receive=145, scorer_time=175, guard=True):
-        events = [{"event": "cancel_requested", "id": "c1", "matched": True}]
+        events = [{"event": "cancel_requested", "id": "c1", "matched": True,
+                   "requested_ns": 100}]
         if admitted:
             events += [
-                {"event": "input_admission", "id": "c1", "key": "W"},
+                {"event": "input_admission", "id": "c1", "key": "W",
+                 "step": 0, "intent_token": "intent-1", "admitted_ns": 90},
                 {"event": "input_release_transition", "id": "c1",
-                 "key": "W", "release_batch_complete": True,
+                 "key": "W", "step": 0, "intent_token": "intent-1",
+                 "release_batch_complete": True,
                  "owner_thread_keyup_verified": True},
             ]
             if release:
@@ -101,6 +104,8 @@ class AuditLiveV2Tests(unittest.TestCase):
     def test_admitted_input_with_complete_release_can_pass_scoped_reconciliation(self):
         audit, _ = self.run_audit(*self.valid_case(admitted=True))
         self.assertEqual(audit["status"], "PASS")
+        self.assertTrue(audit["scoped_pass"])
+        self.assertFalse(audit["formal_pass"])
 
     def test_admitted_input_without_release_fails_custody(self):
         audit, _ = self.run_audit(*self.valid_case(admitted=True, release=False))
@@ -123,6 +128,43 @@ class AuditLiveV2Tests(unittest.TestCase):
         audit, _ = self.run_audit(events, decisions, scorer)
         self.assertEqual(audit["status"], "HOLD")
         self.assertFalse(audit["checks"]["hard_health_guard_exposed"])
+
+    def test_admission_after_cancel_fails_custody(self):
+        events, decisions, scorer = self.valid_case(admitted=True)
+        admission = next(row for row in events if row["event"] == "input_admission")
+        admission["admitted_ns"] = 101
+        audit, _ = self.run_audit(events, decisions, scorer)
+        self.assertEqual(audit["status"], "FAIL")
+        self.assertFalse(audit["checks"]["all_matched_cancellations_closed_empty"])
+
+    def test_admission_without_timestamp_fails_custody(self):
+        events, decisions, scorer = self.valid_case(admitted=True)
+        admission = next(row for row in events if row["event"] == "input_admission")
+        del admission["admitted_ns"]
+        audit, _ = self.run_audit(events, decisions, scorer)
+        self.assertEqual(audit["status"], "FAIL")
+
+    def test_key_up_from_wrong_step_fails_custody(self):
+        events, decisions, scorer = self.valid_case(admitted=True)
+        transition = next(row for row in events if row["event"] == "input_release_transition")
+        transition["step"] = 1
+        audit, _ = self.run_audit(events, decisions, scorer)
+        self.assertEqual(audit["status"], "FAIL")
+
+    def test_key_up_from_wrong_intent_fails_custody(self):
+        events, decisions, scorer = self.valid_case(admitted=True)
+        transition = next(row for row in events if row["event"] == "input_release_transition")
+        transition["intent_token"] = "intent-other"
+        audit, _ = self.run_audit(events, decisions, scorer)
+        self.assertEqual(audit["status"], "FAIL")
+
+    def test_duplicate_admission_and_transition_identity_fails_custody(self):
+        events, decisions, scorer = self.valid_case(admitted=True)
+        admission = next(row for row in events if row["event"] == "input_admission")
+        transition = next(row for row in events if row["event"] == "input_release_transition")
+        events.extend([dict(admission), dict(transition)])
+        audit, _ = self.run_audit(events, decisions, scorer)
+        self.assertEqual(audit["status"], "FAIL")
 
 
 if __name__ == "__main__":
