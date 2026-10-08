@@ -1,0 +1,145 @@
+{
+  "allocation": "PREFERENCE-MANIPULATION-7678-A03-FOUR-ROUTES-20261005-01",
+  "auditor_path": "canonical_sources/issue6274_oracle.py",
+  "auditor_sha256": "48609a1f8ed9a62eab5f885aa11ea2a54d84ce0739ede24776088b903e9a1dd1",
+  "candidate_path": "canonical_sources/issue6274_candidate.py",
+  "candidate_sha256": "faf28cbc47ec6eff403a5a77fd05c126b7d0d161a172fa22a94f5ff109a59935",
+  "controls": {
+    "protected_constraint": "principal_0:protected-record",
+    "protected_route": "c",
+    "revoked_principal": "principal_1",
+    "revoked_route": "d"
+  },
+  "decision_maker": "principal_1",
+  "partial_information_mask": [
+    "a",
+    "b"
+  ],
+  "predecessor_a02_pr": "https://github.com/Unjuno/agent-interface/pull/7919",
+  "predecessor_candidate_blob": "faf28cbc47ec6eff403a5a77fd05c126b7d0d161a172fa22a94f5ff109a59935",
+  "presented_set": "possible_frontier",
+  "principals": [
+    "principal_0",
+    "principal_1"
+  ],
+  "report_masks": [
+    [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    [
+      "a",
+      "b",
+      "c"
+    ],
+    [
+      "a",
+      "b"
+    ],
+    []
+  ],
+  "routes": {
+    "a": {
+      "effect_id": "same-requester-exact-effect-a02-v1",
+      "latency_ms": 1
+    },
+    "b": {
+      "effect_id": "same-requester-exact-effect-a02-v1",
+      "latency_ms": 2
+    },
+    "c": {
+      "effect_id": "same-requester-exact-effect-a02-v1",
+      "latency_ms": 3
+    },
+    "d": {
+      "effect_id": "same-requester-exact-effect-a02-v1",
+      "latency_ms": 4
+    }
+  },
+  "schema": "preference-manipulation-7678-a02-four-route-fixture-v1",
+  "set_utility": "minimum true-order tier index among routes in possible_frontier",
+  "source_commit": "c837ad535eed085d95744ad0a9680535a5bb7143",
+  "task_effect_id": "same-requester-exact-effect-a02-v1",
+  "truth_orders": [
+    [
+      [
+        "a"
+      ],
+      [
+        "b"
+      ],
+      [
+        "c"
+      ],
+      [
+        "d"
+      ]
+    ],
+    [
+      [
+        "b"
+      ],
+      [
+        "c"
+      ],
+      [
+        "d"
+      ],
+      [
+        "a"
+      ]
+    ],
+    [
+      [
+        "c"
+      ],
+      [
+        "d"
+      ],
+      [
+        "a"
+      ],
+      [
+        "b"
+      ]
+    ],
+    [
+      [
+        "d"
+      ],
+      [
+        "a"
+      ],
+      [
+        "b"
+      ],
+      [
+        "c"
+      ]
+    ],
+    [
+      [
+        "a",
+        "b"
+      ],
+      [
+        "c",
+        "d"
+      ]
+    ],
+    [
+      [
+        "a"
+      ],
+      [
+        "b",
+        "c"
+      ],
+      [
+        "d"
+      ]
+    ]
+  ]
+}
