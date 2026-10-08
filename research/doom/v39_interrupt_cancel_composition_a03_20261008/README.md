@@ -15,6 +15,7 @@ The one-shot candidate used the real repository functions and deterministic in-p
 - Each eligible case admitted only the next same-thread answer produced from the fresh observation.
 - All six invalid terminal/release controls were rejected.
 - Independent auditor: `PASS: independently reconstructed 10/10 cases; 6/6 invalid terminals refused; stale turn rejected; fresh turn isolated`.
+- A follow-up audit review tightened event-log reconstruction of interrupt outcomes. The candidate JSON was not rerun or modified; the corrected auditor again passed 10/10, and its 4 mutation controls were rejected 4/4.
 
 The preceding A01 and A02 attempts each stopped before candidate logic due to incomplete Python import-path bootstraps; their separate records are preserved unchanged under the sibling A01/A02 directories. Neither STOP was rerun or relabeled.
 

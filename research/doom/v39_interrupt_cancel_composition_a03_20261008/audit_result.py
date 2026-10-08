@@ -25,6 +25,12 @@ def audit_case(row):
             "cover cancel identity mismatch")
     require(kinds.index("planner_interrupt") < kinds.index("cover_cancel") <
             kinds.index("cover_terminal"), "interrupt/cancel/terminal order mismatch")
+    interrupt_rows = [event for event in events if event["event"] == "interrupt_outcome"]
+    require(len(interrupt_rows) == 1, "must retain one returned interrupt outcome")
+    expected_outcome = ("request_error" if row["case"] == "interrupt-transport-error"
+                        else "requested")
+    require(interrupt_rows[0].get("outcome") == expected_outcome,
+            "event log interrupt outcome mismatch")
     term = next(event for event in events if event["event"] == "cover_terminal")
     release = term.get("release")
     neutral = (type(release) is dict and release.get("verified") is True and
@@ -33,11 +39,18 @@ def audit_case(row):
     require((row["disposition"] == "accepted") == accepted,
             "terminal acceptance does not match independent policy")
     require(row["expected_accept"] == accepted, "frozen expected disposition mismatch")
-    outcome = "request_error" if row["interrupt_fails"] else "requested"
+    outcome = expected_outcome
     require(row["interrupt_outcome"] == outcome, "interrupt failure disposition mismatch")
+    require(row["interrupt_fails"] is (row["case"] == "interrupt-transport-error"),
+            "case label and interrupt error condition mismatch")
     old = next(event for event in events if event["event"] == "old_turn_result")
     require(old["answer_eligible"] is False and old["answer"] is None,
             "invalidated old answer was admitted")
+    arrival = next(event for event in events if event["event"] == "turn_answer_arrived" and
+                   event.get("turn_id") == "turn-1")
+    require(kinds.index("cover_terminal") < kinds.index("turn_answer_arrived") and
+            arrival["thread_id"] == interrupt["thread_id"],
+            "old response must arrive only after invalidation/cancel path")
     require(row["old_answer_eligible"] is False and row["old_answer"] is None,
             "candidate summary admits old answer")
     fresh_rows = [event for event in events if event["event"] == "fresh_turn_result"]
