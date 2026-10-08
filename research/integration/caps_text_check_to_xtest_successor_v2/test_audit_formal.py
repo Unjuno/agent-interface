@@ -33,7 +33,8 @@ def record(arm: str, case_id: str = "C01") -> dict:
         "display": ":99",
         "display_server": {"pid": 1234, "argv": ["Xvfb", ":99", "-screen", "0", "640x240x24", "-nolisten", "tcp"], "display": ":99"},
         "driver_pid": 1235,
-        "runner_sha256": "runner",
+        "runner_sha256": json.loads((Path(__file__).resolve().parent / "SOURCE_MANIFEST.json").read_text())[
+            "files"]["research/integration/caps_text_check_to_xtest_successor_v2/public_dispatch_probe.py"],
         "freeze_sha256": FROZEN_PLAN_SHA256,
         "errors": [],
         "entry_events": ([{"event": "KeyPress", "ns": 20, "char": value[0], "keycode": 38},
@@ -79,6 +80,28 @@ class FormalAuditTest(unittest.TestCase):
         events = sample["entry_events"]
         events.insert(2, {"event": "MapNotify", "ns": events[1]["ns"]})
         self.assertIn("Entry event type", audit_record("C01", "current", sample))
+
+    def test_rejects_wrong_runner_identity(self):
+        sample = record("current")
+        sample["runner_sha256"] = "unrecognized-runner"
+        self.assertIn("runner source identity", audit_record("C01", "current", sample))
+
+    def test_rejects_boolean_namespace_inode(self):
+        sample = record("current")
+        sample["network_boundary"]["namespace_inode"] = True
+        self.assertIn("private network namespace", audit_record("C01", "current", sample))
+
+    def test_rejects_malformed_empty_error_and_stderr_fields(self):
+        sample = record("current")
+        sample["errors"] = None
+        sample["app_stderr"] = []
+        self.assertIn("record errors", audit_record("C01", "current", sample))
+        self.assertIn("app stderr", audit_record("C01", "current", sample))
+
+    def test_rejects_boolean_actor_exit(self):
+        sample = record("guard-interposed")
+        sample["actor"]["exit"] = False
+        self.assertIn("actor exit", audit_record("C01", "guard-interposed", sample))
 
     def test_rejects_boolean_for_integer_json_evidence(self):
         samples = []
@@ -279,7 +302,7 @@ class FormalAuditTest(unittest.TestCase):
             self.assertEqual(result["status"], "PASS")
             controls = mutation_controls(root)
             self.assertEqual(controls["status"], "PASS")
-            self.assertEqual(len(controls["controls"]), 24)
+            self.assertEqual(len(controls["controls"]), 33)
             self.assertTrue(controls["controls"]["value_and_exit_before_input"]["rejected"])
             self.assertTrue(controls["controls"]["release_before_press"]["rejected"])
             self.assertTrue(controls["controls"]["final_value_before_character_press"]["rejected"])
@@ -289,6 +312,14 @@ class FormalAuditTest(unittest.TestCase):
             self.assertTrue(controls["controls"]["boolean_actor_state"]["rejected"])
             self.assertTrue(controls["controls"]["boolean_actor_ack_timestamp"]["rejected"])
             self.assertTrue(controls["controls"]["unexpected_entry_event_type"]["rejected"])
+            for name in (
+                "wrong_runner_source_identity", "boolean_network_namespace_inode",
+                "malformed_record_errors_and_stderr", "boolean_actor_exit",
+                "string_xvfb_argv", "boolean_preflight_xvfb_exit",
+                "boolean_supervisor_probe_exit", "boolean_supervisor_xvfb_exit",
+                "boolean_index_probe_exit",
+            ):
+                self.assertTrue(controls["controls"][name]["rejected"], name)
 
 
 if __name__ == "__main__":

@@ -6,7 +6,9 @@ from collections import Counter
 import hashlib
 import json
 from pathlib import Path
+import shutil
 import sys
+import tempfile
 
 
 SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interposed"),
@@ -14,8 +16,11 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "976a3edbc5e32f9a1bb4954f4769181a48808fd0ce9b7b05715d5a0d612bb174"
+FROZEN_PLAN_SHA256 = "1e28d4d38517200c826d85f4a8e1ee753e65d1fcab055ccf12d6d0881af11599"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
+SOURCE_MANIFEST_PATH = Path(__file__).resolve().parent / "SOURCE_MANIFEST.json"
+SOURCE_MANIFEST = json.loads(SOURCE_MANIFEST_PATH.read_text())
+EXPECTED_RUNNER_SHA256 = SOURCE_MANIFEST["files"][FROZEN_PLAN["artifacts"]["runner"]]
 EXPECTED_XVFB_STDERR_SHA256 = FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]
 
 
@@ -27,6 +32,20 @@ def xvfb_stderr_blocks(raw: bytes) -> int | None:
     if count not in FROZEN_PLAN["environment"]["expected_xvfb_stderr_blocks"] or raw != block * count:
         return None
     return count
+
+
+def success_exit(value: object) -> bool:
+    return type(value) is int and value == 0
+
+
+def private_network_boundary(boundary: object) -> bool:
+    return (type(boundary) is dict and
+            type(boundary.get("namespace_inode")) is int and
+            type(boundary.get("pid1_namespace_inode")) is int and
+            boundary["namespace_inode"] != boundary["pid1_namespace_inode"] and
+            all(type(boundary.get(key)) is list and not boundary[key]
+                for key in ("ipv4_non_loopback_routes", "ipv6_non_loopback_routes",
+                            "up_non_loopback_interfaces")))
 
 
 def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
@@ -61,19 +80,28 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
     require(type(completed_ops) is list and all(type(op) is int for op in completed_ops) and
             completed_ops == [0, 1, 2], "completed operation indices exact integers")
     releases = execution.get("releases", [])
-    require(bool(releases) and releases[-1].get("verified") is True and
+    require(type(releases) is list and bool(releases) and type(releases[-1]) is dict and
+            releases[-1].get("verified") is True and
             releases[-1].get("keys_down") == [] and releases[-1].get("buttons_down") == [],
             "verified neutral release receipt")
     require(type(record.get("app", {}).get("exit")) is int and
             record.get("app", {}).get("exit") == 0, "app exit exact integer")
-    require(not record.get("errors"), "record errors")
-    require(record.get("app", {}).get("ready", {}).get("window") is not None, "fixture window identity")
+    require(type(record.get("errors")) is list and not record["errors"], "record errors")
+    window = record.get("app", {}).get("ready", {}).get("window")
+    require(type(window) is int and window > 0, "fixture window identity")
     server = record.get("display_server", {})
     require(server.get("display") == record.get("display"), "Xvfb display identity")
     require(type(server.get("pid")) is int and server["pid"] > 0, "Xvfb PID")
-    require(any("Xvfb" in arg for arg in server.get("argv", [])) and
-            "-nolisten" in server.get("argv", []) and "tcp" in server.get("argv", []), "Xvfb argv/isolation")
+    server_argv = server.get("argv")
+    require(type(server_argv) is list and all(type(arg) is str for arg in server_argv) and
+            bool(server_argv) and Path(server_argv[0]).name == "Xvfb" and
+            any(server_argv[i:i + 2] == ["-nolisten", "tcp"]
+                for i in range(len(server_argv) - 1)), "Xvfb argv/isolation")
     events = record.get("entry_events", [])
+    require(type(events) is list and all(type(event) is dict for event in events),
+            "Entry event row shape")
+    if type(events) is not list or not all(type(event) is dict for event in events):
+        events = []
     allowed_event_types = {"KeyPress", "KeyRelease", "value", "exit"}
     require(all(event.get("event") in allowed_event_types for event in events),
             "Entry event type")
@@ -133,11 +161,8 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
                                      {"op": "release_all"}], "exact public program")
     require(record.get("program_id") == f"formal-{case_id}-{arm}", "program id")
     boundary = record.get("network_boundary", {})
-    require(boundary.get("namespace_inode") != boundary.get("pid1_namespace_inode"),
-            "private network namespace")
-    require(not boundary.get("ipv4_non_loopback_routes") and
-            not boundary.get("ipv6_non_loopback_routes") and
-            not boundary.get("up_non_loopback_interfaces"), "network disabled for case")
+    require(private_network_boundary(boundary), "private network namespace")
+    require(private_network_boundary(boundary), "network disabled for case")
     if arm == "guard-interposed":
         actor = record.get("actor", {})
         try:
@@ -145,8 +170,8 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
         except (ValueError, TypeError):
             actor_doc = {}
         presses = [e for e in events if e.get("event") == "KeyPress"]
-        require(actor.get("exit") == 0, "actor exit")
-        require(not actor.get("stderr"), "actor stderr")
+        require(success_exit(actor.get("exit")), "actor exit")
+        require(type(actor.get("stderr")) is str and not actor["stderr"], "actor stderr")
         require(type(actor.get("pid")) is int and actor["pid"] not in
                 (record.get("driver_pid"), record.get("app", {}).get("pid")), "separate actor process")
         actor_state = {"candidate_sample": 0, "pre_lock": 0, "accepted": 1, "post_lock": 1}
@@ -158,7 +183,10 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
                 "ACK before first KeyPress")
     else:
         require("actor" not in record, "unexpected actor")
-    require(not (record.get("app", {}).get("stderr") or record.get("app_stderr")), "app stderr")
+    require(type(record.get("app", {}).get("stderr", "")) is str and
+            not record.get("app", {}).get("stderr", "") and
+            type(record.get("app_stderr")) is str and not record["app_stderr"],
+            "app stderr")
     if arm.startswith("guard-"):
         require(record.get("current_main_candidate_patch_sha256") ==
                 FROZEN_PLAN["source_base"]["current_main_candidate_patch_sha256"],
@@ -168,7 +196,8 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
     require("runtime.backends.x11_v1.backend" in imports, "backend source identity")
     require(bool(imports.get("runtime.cli_v1.api", {}).get("sha256")), "dispatch source digest")
     require(bool(imports.get("runtime.backends.x11_v1.backend", {}).get("sha256")), "backend source digest")
-    require(bool(record.get("runner_sha256")), "runner source digest")
+    require(type(record.get("runner_sha256")) is str and
+            record.get("runner_sha256") == EXPECTED_RUNNER_SHA256, "runner source identity")
     require(record.get("freeze_sha256") == FROZEN_PLAN_SHA256, "freeze source digest")
     return errors
 
@@ -199,20 +228,22 @@ def audit(root: Path) -> tuple[list[str], dict]:
         preflight = json.loads(preflight_path.read_text())
         if preflight.get("status") != "PASS" or preflight.get("scope") != "excluded pre-allocation readiness only":
             errors.append("pre-allocation environment preflight")
-        if preflight.get("xvfb", {}).get("exit") != 0 or not preflight.get("xtest_present"):
+        if (not success_exit(preflight.get("xvfb", {}).get("exit")) or
+                preflight.get("xtest_present") is not True):
             errors.append("preflight Xvfb/XTEST")
         preflight_stderr_path = root / "preflight-xvfb" / "xvfb.stderr"
         if preflight_stderr_path.is_file():
             preflight_stderr = preflight_stderr_path.read_bytes()
         else:
-            preflight_stderr = preflight.get("xvfb", {}).get("stderr", "").encode()
+            preflight_stderr_value = preflight.get("xvfb", {}).get("stderr", "")
+            preflight_stderr = (preflight_stderr_value.encode()
+                                if type(preflight_stderr_value) is str else b"")
         if (xvfb_stderr_blocks(preflight_stderr) is None or
+                type(preflight.get("xvfb", {}).get("stderr_blocks")) is not int or
                 preflight.get("xvfb", {}).get("stderr_blocks") != xvfb_stderr_blocks(preflight_stderr)):
             errors.append("preflight Xvfb stderr identity")
         boundary = preflight.get("network_boundary", {})
-        if (boundary.get("namespace_inode") == boundary.get("pid1_namespace_inode") or
-                boundary.get("ipv4_non_loopback_routes") or boundary.get("ipv6_non_loopback_routes") or
-                boundary.get("up_non_loopback_interfaces")):
+        if not private_network_boundary(boundary):
             errors.append("preflight network isolation")
     except Exception as exc:
         errors.append(f"preflight unavailable: {type(exc).__name__}: {exc}")
@@ -254,9 +285,11 @@ def audit(root: Path) -> tuple[list[str], dict]:
         supervisor_path = root / case_id / "supervisor.json"
         if supervisor_path.is_file():
             supervisor = json.loads(supervisor_path.read_text())
-            if supervisor.get("probe_exit") != 0:
+            if supervisor.get("study_id") != "caps-text-query-xtest-a02-20261008":
+                errors.append(f"{case_id}: supervisor study identity")
+            if not success_exit(supervisor.get("probe_exit")):
                 errors.append(f"{case_id}: public runner exit")
-            if supervisor.get("xvfb_exit") != 0:
+            if not success_exit(supervisor.get("xvfb_exit")):
                 errors.append(f"{case_id}: Xvfb exit")
             if supervisor.get("record_display_server_pid") != record.get("display_server", {}).get("pid"):
                 errors.append(f"{case_id}: Xvfb process identity mismatch")
@@ -264,19 +297,28 @@ def audit(root: Path) -> tuple[list[str], dict]:
                 errors.append(f"{case_id}: supervisor case identity")
             if supervisor.get("errors"):
                 errors.append(f"{case_id}: supervisor errors")
-            if supervisor.get("network_boundary") != record.get("network_boundary"):
+            if (not private_network_boundary(supervisor.get("network_boundary")) or
+                    json.dumps(supervisor.get("network_boundary"), sort_keys=True) !=
+                    json.dumps(record.get("network_boundary"), sort_keys=True)):
                 errors.append(f"{case_id}: supervisor network boundary mismatch")
             xvfb = supervisor.get("xvfb", {})
-            if not xvfb.get("socket_removed") or not xvfb.get("lock_removed"):
+            if xvfb.get("socket_removed") is not True or xvfb.get("lock_removed") is not True:
                 errors.append(f"{case_id}: Xvfb cleanup")
-            xvfb_raw = xvfb.get("stderr", "").encode()
-            if xvfb_stderr_blocks(xvfb_raw) is None or xvfb.get("stderr_blocks") != xvfb_stderr_blocks(xvfb_raw):
+            xvfb_stderr = xvfb.get("stderr", "")
+            xvfb_raw = xvfb_stderr.encode() if type(xvfb_stderr) is str else b""
+            if (type(xvfb_stderr) is not str or
+                    xvfb_stderr_blocks(xvfb_raw) is None or
+                    type(xvfb.get("stderr_blocks")) is not int or
+                    xvfb.get("stderr_blocks") != xvfb_stderr_blocks(xvfb_raw)):
                 errors.append(f"{case_id}: unexpected Xvfb stderr")
             probe_stderr = root / case_id / "probe.stderr"
             if not probe_stderr.is_file() or probe_stderr.read_text(errors="replace"):
                 errors.append(f"{case_id}: probe stderr")
             if index:
                 indexed = index.get("cases", {}).get(case_id, {})
+                if (not success_exit(indexed.get("probe_exit")) or
+                        not success_exit(indexed.get("xvfb_exit"))):
+                    errors.append(f"{case_id}: raw index process exit types")
                 if indexed.get("record_sha256") != digest:
                     errors.append(f"{case_id}: raw index record hash")
                 if indexed.get("supervisor_sha256") != hashlib.sha256(supervisor_path.read_bytes()).hexdigest():
@@ -356,6 +398,13 @@ def mutation_controls(root: Path) -> dict:
             "completed_ops"].__setitem__(0, False),
         "unexpected_entry_event_type": lambda r: r["entry_events"].insert(
             2, {"event": "MapNotify", "ns": r["entry_events"][1]["ns"]}),
+        "wrong_runner_source_identity": lambda r: r.update(runner_sha256="unrecognized-runner"),
+        "boolean_network_namespace_inode": lambda r: r["network_boundary"].update(
+            namespace_inode=True),
+        "malformed_record_errors_and_stderr": lambda r: (
+            r.update(errors=None, app_stderr=[])),
+        "string_xvfb_argv": lambda r: r["display_server"].update(
+            argv="Xvfb -nolisten tcp"),
     }
     def move_value_and_exit_before_input(record: dict) -> None:
         terminal = [e for e in record["entry_events"] if e.get("event") in ("value", "exit")]
@@ -424,6 +473,10 @@ def mutation_controls(root: Path) -> dict:
     actor_exit = deepcopy(interposed)
     actor_exit["actor"]["exit"] = 1
     outcomes["actor_nonzero_exit"] = audit_record("I01", "guard-interposed", actor_exit)
+    boolean_actor_exit = deepcopy(interposed)
+    boolean_actor_exit["actor"]["exit"] = False
+    outcomes["boolean_actor_exit"] = audit_record(
+        "I01", "guard-interposed", boolean_actor_exit)
     actor_stderr = deepcopy(interposed)
     actor_stderr["actor"]["stderr"] = "injected"
     outcomes["actor_stderr"] = audit_record("I01", "guard-interposed", actor_stderr)
@@ -431,6 +484,45 @@ def mutation_controls(root: Path) -> dict:
     candidate_patch["current_main_candidate_patch_sha256"] = "wrong"
     outcomes["wrong_current_main_candidate_patch"] = audit_record(
         "I01", "guard-interposed", candidate_patch)
+
+    def audit_root_mutation(name: str, mutate) -> None:
+        with tempfile.TemporaryDirectory(prefix="caps-formal-mutation-") as tmp:
+            copied = Path(tmp) / "run"
+            shutil.copytree(root, copied)
+            mutate(copied)
+            errors, _ = audit(copied)
+            outcomes[name] = errors
+
+    def false_preflight_exit(copied: Path) -> None:
+        path = copied / "PREFLIGHT.json"
+        doc = json.loads(path.read_text())
+        doc["xvfb"]["exit"] = False
+        path.write_text(json.dumps(doc))
+
+    def false_supervisor_exit(field: str):
+        def mutate(copied: Path) -> None:
+            supervisor_path = copied / "C01" / "supervisor.json"
+            supervisor = json.loads(supervisor_path.read_text())
+            supervisor[field] = False
+            supervisor_path.write_text(json.dumps(supervisor))
+            index_path = copied / "RAW_INDEX.json"
+            index = json.loads(index_path.read_text())
+            index["cases"]["C01"][field] = False
+            index["cases"]["C01"]["supervisor_sha256"] = hashlib.sha256(
+                supervisor_path.read_bytes()).hexdigest()
+            index_path.write_text(json.dumps(index))
+        return mutate
+
+    def false_index_exit(copied: Path) -> None:
+        index_path = copied / "RAW_INDEX.json"
+        index = json.loads(index_path.read_text())
+        index["cases"]["C01"]["probe_exit"] = False
+        index_path.write_text(json.dumps(index))
+
+    audit_root_mutation("boolean_preflight_xvfb_exit", false_preflight_exit)
+    audit_root_mutation("boolean_supervisor_probe_exit", false_supervisor_exit("probe_exit"))
+    audit_root_mutation("boolean_supervisor_xvfb_exit", false_supervisor_exit("xvfb_exit"))
+    audit_root_mutation("boolean_index_probe_exit", false_index_exit)
     escaped = [name for name, errors in outcomes.items() if not errors]
     if escaped:
         raise AssertionError(f"effective mutation controls escaped: {escaped}")
