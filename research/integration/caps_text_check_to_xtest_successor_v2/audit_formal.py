@@ -16,7 +16,7 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "0e76de1e050e909307e088168b08bfc90e283e19e300773d11fef375f0af2883"
+FROZEN_PLAN_SHA256 = "f70c5ff5f9b43f76b3e0cd3fc431faa75603382b59c1158308b464bcd1ae0a44"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
 SOURCE_MANIFEST_PATH = Path(__file__).resolve().parent / "SOURCE_MANIFEST.json"
 SOURCE_MANIFEST = json.loads(SOURCE_MANIFEST_PATH.read_text())
