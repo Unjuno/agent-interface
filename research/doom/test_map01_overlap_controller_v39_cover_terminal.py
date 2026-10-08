@@ -379,6 +379,33 @@ class CoverTerminalTests(unittest.TestCase):
 
         self.assertEqual(trace, ["cancel_write", "planner_interrupt"])
 
+    def test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails(self):
+        trace = []
+
+        class Stdin:
+            def write(self, value):
+                trace.append("cancel_write")
+                raise OSError("synthetic executor pipe failure")
+            def flush(self):
+                trace.append("flush")
+
+        class Process:
+            stdin = Stdin()
+
+        class Planner:
+            def interrupt(self, handle):
+                trace.append("planner_interrupt")
+                raise TimeoutError("synthetic interrupt failure")
+
+        with self.assertRaisesRegex(OSError, "synthetic executor pipe failure") as raised:
+            controller.cancel_invalidated_cover(
+                Planner(), object(), Process(), lambda predicate: None, "cover-0")
+
+        self.assertEqual(trace, ["cancel_write", "planner_interrupt"])
+        self.assertIsInstance(raised.exception.__cause__, TimeoutError)
+        self.assertIn("planner interrupt also failed: TimeoutError",
+                      getattr(raised.exception, "__notes__", []))
+
     def test_interrupt_exception_aborts_pending_transport_and_keeps_failure_primary(self):
         trace = self.exercise("interrupt-exception", "failed", NEUTRAL,
                               interrupt_failure=True, planner_wait_cap=0.15)

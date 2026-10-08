@@ -395,8 +395,15 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
     try:
         process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
         process.stdin.flush()
-    finally:
-        planner_interrupt = planner.interrupt(planner_handle)
+    except BaseException as cancel_error:
+        try:
+            planner.interrupt(planner_handle)
+        except BaseException as interrupt_error:
+            cancel_error.add_note(
+                "planner interrupt also failed: " + type(interrupt_error).__name__)
+            raise cancel_error from interrupt_error
+        raise
+    planner_interrupt = planner.interrupt(planner_handle)
     terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
     release = terminal.get("release", {})
     # The bounded cover can naturally finish or lease-expire between policy
