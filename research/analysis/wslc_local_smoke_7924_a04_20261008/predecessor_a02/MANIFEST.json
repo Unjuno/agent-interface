@@ -1,0 +1,26 @@
+{
+  "schema": "wslc-local-smoke-7924-a02-manifest-v1",
+  "decision": "FAIL_AUDITOR_CONTRACT",
+  "freeze_commit": "581805cad9e73968276817b252798fa588995a46",
+  "main_sha": "6da5dc940fdb97866cfb900ca747edb8c94b2790",
+  "sha256": {
+    "FREEZE.json": "ea14b172460f91d0b4e17454ab8642dfe12bf7a11b2a5b9344b9f5d0325982a7",
+    "PROTOCOL.json": "58e4b4e0594c999a5b22d8d81061080eb0bb1a8fbcf47b054959bdcf6c0c87cc",
+    "fixture.txt": "a534d2138b0a8fbb37c0930c54f8c9922acbd1dd8109d9abd69c8659271dc965",
+    "probe.py": "85a545d12b2d58b32d5e02727f47b734d41a0ddb21d2682774c49a8a41f1daf1",
+    "auditor.py": "be690ffa85bffa08d55da9644b7c2c3e447b329701441295540ad2e8ed344e37",
+    "RAW.json": "c50a0a8614ea732ac13c2a2461172fe4ccc5af29a18eb2e2d91e6cb2eab818aa",
+    "CANDIDATE_RESULT.json": "c50a0a8614ea732ac13c2a2461172fe4ccc5af29a18eb2e2d91e6cb2eab818aa",
+    "CANDIDATE_CID.txt": "dba32ddf699d51a69f91f3f87d1bd933a579d6f5a399db6e3ca43dfd81d235f2",
+    "AUDITOR_CID.txt": "8445d6902b2067ea5b6ef28d40fd8b9593988a21ce023bf65e6a5089d04f8453",
+    "CANDIDATE_CLEANUP.json": "5698c521a92dfe65e139fe2c98fe0bc8491f6852b3593606dca39f7b50e9bf19",
+    "AUDITOR_CLEANUP.json": "88cefe8e7c2dfb5a68986351905537705714683bb1959f0120956db5e3b5016e",
+    "AUDIT_ATTEMPT.json": "88b3cb64becb5bd32ff6823857eb44b2e9d904505d52ebdd2864d4e1ae2b8e4f",
+    "RUN_RECEIPT.json": "e20254aec4f4803f0a46aef2135c585f9edb048479efd72dfaddf9c566d7a345",
+    "REPORT.md": "9d4c1d4bf90613a3da37a2978a01953e279d1941957fc00d7aa80e0f6d21df65",
+    "README.md": "807220b3d42e2e0b850cd23657cc649c221a52c9d5415ff4a237b24c7fd837e9",
+    "RUN_COMMAND.txt": "abfde2803ddd9b942249f3afcfdf18c78c408e740991c506ac34e7fce4a62098"
+  },
+  "audit_json": null,
+  "audit_absence_reason": "The one frozen auditor invocation terminated on KeyError: 'sha256' before producing an audit file."
+}

@@ -1,0 +1,13 @@
+{
+  "status": "PASS_ROI_NOT_IDENTIFIABLE_FROM_RETAINED_A14_ARTIFACTS",
+  "checks": {
+    "source_event_stream_is_sha256_pinned": true,
+    "reduced_observations_have_no_pixels_or_roi_samples": true,
+    "observations_contain_only_hash_hud_and_time_fields": true,
+    "A14_protocol_deviation_is_explicit": true,
+    "prior_overlap_arithmetic_audit_passed": true,
+    "this_package_has_no_source_run_image_files": true
+  },
+  "conclusion": "ROI pixel-change counts cannot be reconstructed for A14 from the retained full-frame SHA-256, typed HUD values, and timestamped interval analysis. ROI crops from another run are not interchangeable with A14 frames."
+}
+

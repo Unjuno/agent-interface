@@ -1,0 +1,24 @@
+{
+  "allocation_id": "8569-prevention-conditional-a01-20261008",
+  "base_commit": "5215aab506f43c8a02470d495b7352b1326a9580",
+  "branch": "research/8569-prevention-conditional-a01-20261008",
+  "formal_invocations_before_freeze_commit": 0,
+  "frozen_files_sha256": {
+    "CONSTRUCTION_LOG.md": "3311c98e736cfb07c1180a9d66780cabed389e1c89ff5e677cc6431a349bb269",
+    "PREREGISTRATION.md": "371460e4cf66824b22ab328602de488376b4f502b1f2001581ee3473b5bd381f",
+    "RUNTIME_NOTE.md": "9c967c3a4af8086a0d0c986b8edc9e83962df79fec79bd0ac4e29f0ad233072b",
+    "auditor.py": "cbe183269ad8142f3bc933d19d6eaf18eae21d84e5ea7e13aa114cc9bb7b61d5",
+    "candidate.py": "aabf75c3e575d63d9a140d21dc3b7020e6c4ea612143b2f206d5f5233390ea06",
+    "test_method.py": "6df894692492cf8acfdc604e96f730a37363189b00c502e04cc56d514852cd73",
+    "trace_fixture.json": "e72b29d8987946f855490af47fd1a37bfceedcca4e7f9def13611341cd9fbd05"
+  },
+  "freeze_manifest_excludes_itself": true,
+  "image_preflight_only": {
+    "local_image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "repo_digest": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "runtime_launch": "WSLc preflight returned E_FAIL; formal allocation uses native Ubuntu WSL as specified in PREREGISTRATION.md"
+  },
+  "formal_candidate_invocations": 1,
+  "formal_auditor_invocations": 1,
+  "formal_retries_allowed": 0
+}

@@ -1,0 +1,28 @@
+{
+  "allocation_id": "8432-context-return-method-t0-a02-20261008",
+  "issue": 8432,
+  "frozen_at_local": "2026-10-08 Asia/Tokyo before formal invocation",
+  "source_main": "0c9bf746a8bb07564cde3d0c3283af6aff942be0",
+  "container": {
+    "runtime": "OrbStack Docker Engine",
+    "platform": "linux/arm64",
+    "image": "node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+    "network": "none",
+    "rootfs": "read-only",
+    "user": "1000:1000",
+    "capabilities": "drop all",
+    "no_new_privileges": true,
+    "limits_requested": {"memory": "256m", "cpus": "0.5", "pids": 32},
+    "limits_note": "Requested Docker limits; do not infer kernel enforcement absent independent measurement."
+  },
+  "formal_invocations": {"candidate": 1, "auditor": 1, "retries": 0},
+  "source_sha256": {
+    "README.md": "a50e4d018fc291ae75f9a403ede5f92c13c12d70439869a976135cdf50093d97",
+    "PREREGISTRATION.md": "ae6189df1d1c7dde907b5f132a004ecbc823765c8b10028807d2ccece29e433b",
+    "fixture.json": "0cfea95b25ff8a03a9d06e65c9d3448b0b5bd6d72f0c0310bb570c13647c9274",
+    "candidate.js": "5a57373125723e63dde6bbdf18dc7c4c1da67b899c6822b710210e8f26f87256",
+    "auditor.js": "f8f85cd790889b92f94c42eed1834d45eaac87ff6ce799d9c8ee4176a5f8cde3",
+    "test_construction.js": "22e322171af90abde4603bfd241391132f585fd9a3b7694374b3b9a9ba4bad87",
+    "CONSTRUCTION_LOG.md": "f52ba599151f7022d86fc82d6e2eb0c1820cfc36fcb47f8f14be4f5db8360724"
+  }
+}

@@ -20,7 +20,7 @@ flowchart TD
     ANALYSIS[Proof / exhaustive oracle / identifiability result]
     RESIDUAL[Empirical residual]
     PROPOSAL[Research proposal<br/>H / T / D / C / U]
-    RUN[Container or live allocation]
+    RUN[Native WSL, WSLc, hosted CI, or live allocation]
     AUDIT[Independent audit]
     EVIDENCE[Retained evidence / RESEARCH.md]
     BUG[Harness / runtime bug]
@@ -40,5 +40,6 @@ The diagram is an intake/navigation view. It does not require every idea to beco
 - [`workflows/`](workflows/) — GitHub Actions for runtime checks, release packaging, pages, research retention, and scoped live research workflows.
 - [`workflows/README.md`](workflows/README.md) — workflow map and interpretation notes.
 - [`wslc-local-containers.md`](wslc-local-containers.md) — local WSL Containers (`wslc`) pilot and migration gates for container-backed research.
+- Research execution is not universally Docker/container-first: follow [`docs/RESEARCH_METHOD.md`](../docs/RESEARCH_METHOD.md) to select native WSL, WSLc, hosted CI, or a live allocation from the frozen protocol, dependency needs, and threat model.
 
 Workflow presence is not a support or promotion claim. Scientific status is recorded in the relevant research report and [`../RESEARCH.md`](../RESEARCH.md); user-facing release status is defined under [`../release/`](../release/).

@@ -1,0 +1,29 @@
+{
+  "schema": "currentmain-v39-pending-drain-race-a01-v1",
+  "status": "REPRODUCED_STALE_ANSWER_REACHES_EXECUTOR_REJECTION_WITHOUT_REPLAN",
+  "main_commit": "6ea1269defb6d48a607f13b08f1aa2d223ba06e9",
+  "sources": {
+    "research/doom/map01_overlap_controller_v39.py": {
+      "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+      "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
+    },
+    "research/live_control/executor_v12.py": {
+      "git_blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+    }
+  },
+  "drain": {
+    "latest_sequence_used": 11,
+    "hard_crossing_sequence_left_queued": 12,
+    "invalidation_returned": null,
+    "current_terminal_already_present": true,
+    "caller_wait_branch_skipped": true
+  },
+  "executor": {
+    "backend_sequence": 12,
+    "submitted_expected_sequence": 11,
+    "outcome": "rejected",
+    "reason": "latest observation sequence required before input"
+  },
+  "scope": "Exact production drain helper and ExecutorV12.submit with deterministic queue schedule; caller branch/order checked in exact controller source; no live App Server, game, model, GUI, or OS input."
+}

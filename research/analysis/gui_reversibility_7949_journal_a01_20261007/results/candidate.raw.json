@@ -1,0 +1,331 @@
+{
+  "cases": [
+    {
+      "after_external": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 1,
+          "x": 1,
+          "y": 0
+        }
+      },
+      "before": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 1,
+          "x": 1,
+          "y": 0
+        }
+      },
+      "decision": "COMPENSATED_BASELINE",
+      "final": {
+        "journal": [
+          {
+            "actor": "agent",
+            "field": "x",
+            "new_value": 0,
+            "old_value": 1,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "compensate-1"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 2,
+          "x": 0,
+          "y": 0
+        }
+      },
+      "fresh_certificate_revision": 1,
+      "id": "baseline",
+      "stale_certificate": "CERTIFICATE_CURRENT"
+    },
+    {
+      "after_external": {
+        "journal": [
+          {
+            "actor": "external",
+            "field": "y",
+            "new_value": 7,
+            "old_value": 0,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "external-1"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 2,
+          "x": 1,
+          "y": 7
+        }
+      },
+      "before": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 1,
+          "x": 1,
+          "y": 0
+        }
+      },
+      "decision": "COMPENSATED_DISJOINT",
+      "final": {
+        "journal": [
+          {
+            "actor": "external",
+            "field": "y",
+            "new_value": 7,
+            "old_value": 0,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "external-1"
+          },
+          {
+            "actor": "agent",
+            "field": "x",
+            "new_value": 0,
+            "old_value": 1,
+            "rev_after": 3,
+            "rev_before": 2,
+            "seq": 2,
+            "txid": "compensate-1"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 3,
+          "x": 0,
+          "y": 7
+        }
+      },
+      "fresh_certificate_revision": 2,
+      "id": "disjoint_write",
+      "stale_certificate": "UNKNOWN_STALE_CERTIFICATE"
+    },
+    {
+      "after_external": {
+        "journal": [
+          {
+            "actor": "external",
+            "field": "x",
+            "new_value": 9,
+            "old_value": 1,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "external-1"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 2,
+          "x": 9,
+          "y": 0
+        }
+      },
+      "before": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 1,
+          "x": 1,
+          "y": 0
+        }
+      },
+      "decision": "UNKNOWN_SAME_FIELD_CONFLICT",
+      "final": {
+        "journal": [
+          {
+            "actor": "external",
+            "field": "x",
+            "new_value": 9,
+            "old_value": 1,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "external-1"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 2,
+          "x": 9,
+          "y": 0
+        }
+      },
+      "fresh_certificate_revision": null,
+      "id": "same_field_write",
+      "stale_certificate": "UNKNOWN_STALE_CERTIFICATE"
+    },
+    {
+      "after_external": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 2,
+          "x": 1,
+          "y": 7
+        }
+      },
+      "before": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 1,
+          "x": 1,
+          "y": 0
+        }
+      },
+      "decision": "UNKNOWN_JOURNAL_STATE_MISMATCH",
+      "final": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 2,
+          "x": 1,
+          "y": 7
+        }
+      },
+      "fresh_certificate_revision": null,
+      "id": "missing_journal",
+      "stale_certificate": "UNKNOWN_STALE_CERTIFICATE"
+    },
+    {
+      "after_external": {
+        "journal": [
+          {
+            "actor": "external",
+            "field": "y",
+            "new_value": 7,
+            "old_value": 0,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "external-1"
+          },
+          {
+            "actor": "external",
+            "field": "y",
+            "new_value": 8,
+            "old_value": 7,
+            "rev_after": 3,
+            "rev_before": 2,
+            "seq": 3,
+            "txid": "external-2"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 3,
+          "x": 1,
+          "y": 8
+        }
+      },
+      "before": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 1,
+          "x": 1,
+          "y": 0
+        }
+      },
+      "decision": "UNKNOWN_JOURNAL_STATE_MISMATCH",
+      "final": {
+        "journal": [
+          {
+            "actor": "external",
+            "field": "y",
+            "new_value": 7,
+            "old_value": 0,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "external-1"
+          },
+          {
+            "actor": "external",
+            "field": "y",
+            "new_value": 8,
+            "old_value": 7,
+            "rev_after": 3,
+            "rev_before": 2,
+            "seq": 3,
+            "txid": "external-2"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 3,
+          "x": 1,
+          "y": 8
+        }
+      },
+      "fresh_certificate_revision": null,
+      "id": "sequence_gap",
+      "stale_certificate": "UNKNOWN_STALE_CERTIFICATE"
+    },
+    {
+      "after_external": {
+        "journal": [
+          {
+            "actor": "external",
+            "field": "y",
+            "new_value": 6,
+            "old_value": 0,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "external-1"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 2,
+          "x": 1,
+          "y": 7
+        }
+      },
+      "before": {
+        "journal": [],
+        "state": {
+          "object_id": "doc",
+          "revision": 1,
+          "x": 1,
+          "y": 0
+        }
+      },
+      "decision": "UNKNOWN_JOURNAL_STATE_MISMATCH",
+      "final": {
+        "journal": [
+          {
+            "actor": "external",
+            "field": "y",
+            "new_value": 6,
+            "old_value": 0,
+            "rev_after": 2,
+            "rev_before": 1,
+            "seq": 1,
+            "txid": "external-1"
+          }
+        ],
+        "state": {
+          "object_id": "doc",
+          "revision": 2,
+          "x": 1,
+          "y": 7
+        }
+      },
+      "fresh_certificate_revision": null,
+      "id": "journal_state_mismatch",
+      "stale_certificate": "UNKNOWN_STALE_CERTIFICATE"
+    }
+  ]
+}

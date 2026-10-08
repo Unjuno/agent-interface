@@ -1,0 +1,103 @@
+test_combined_baseexception_hooks (__main__.Regression.test_combined_baseexception_hooks) ... FAIL
+test_event_copy_fault (__main__.Regression.test_event_copy_fault) ... FAIL
+test_json_serialization_fault (__main__.Regression.test_json_serialization_fault) ... FAIL
+test_non_string_str (__main__.Regression.test_non_string_str) ... FAIL
+test_note_lookup_fault (__main__.Regression.test_note_lookup_fault) ... FAIL
+test_ordinary_cleanup_error (__main__.Regression.test_ordinary_cleanup_error) ... ok
+test_record_keyboardinterrupt (__main__.Regression.test_record_keyboardinterrupt) ... FAIL
+test_record_non_oserror (__main__.Regression.test_record_non_oserror) ... FAIL
+test_type_name_fault (__main__.Regression.test_type_name_fault) ... FAIL
+test_unicode_control (__main__.Regression.test_unicode_control) ... ok
+
+======================================================================
+FAIL: test_combined_baseexception_hooks (__main__.Regression.test_combined_baseexception_hooks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 79, in <lambda>
+    setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
+                                                       ^^^^^^^^^^^^^^^^^^
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 62, in check_case
+    self.assertTrue(same,'diagnostics replaced original startup exception')
+AssertionError: False is not true : diagnostics replaced original startup exception
+
+======================================================================
+FAIL: test_event_copy_fault (__main__.Regression.test_event_copy_fault)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 79, in <lambda>
+    setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
+                                                       ^^^^^^^^^^^^^^^^^^
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 62, in check_case
+    self.assertTrue(same,'diagnostics replaced original startup exception')
+AssertionError: False is not true : diagnostics replaced original startup exception
+
+======================================================================
+FAIL: test_json_serialization_fault (__main__.Regression.test_json_serialization_fault)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 79, in <lambda>
+    setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
+                                                       ^^^^^^^^^^^^^^^^^^
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 62, in check_case
+    self.assertTrue(same,'diagnostics replaced original startup exception')
+AssertionError: False is not true : diagnostics replaced original startup exception
+
+======================================================================
+FAIL: test_non_string_str (__main__.Regression.test_non_string_str)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 79, in <lambda>
+    setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
+                                                       ^^^^^^^^^^^^^^^^^^
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 62, in check_case
+    self.assertTrue(same,'diagnostics replaced original startup exception')
+AssertionError: False is not true : diagnostics replaced original startup exception
+
+======================================================================
+FAIL: test_note_lookup_fault (__main__.Regression.test_note_lookup_fault)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 79, in <lambda>
+    setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
+                                                       ^^^^^^^^^^^^^^^^^^
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 62, in check_case
+    self.assertTrue(same,'diagnostics replaced original startup exception')
+AssertionError: False is not true : diagnostics replaced original startup exception
+
+======================================================================
+FAIL: test_record_keyboardinterrupt (__main__.Regression.test_record_keyboardinterrupt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 79, in <lambda>
+    setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
+                                                       ^^^^^^^^^^^^^^^^^^
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 62, in check_case
+    self.assertTrue(same,'diagnostics replaced original startup exception')
+AssertionError: False is not true : diagnostics replaced original startup exception
+
+======================================================================
+FAIL: test_record_non_oserror (__main__.Regression.test_record_non_oserror)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 79, in <lambda>
+    setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
+                                                       ^^^^^^^^^^^^^^^^^^
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 62, in check_case
+    self.assertTrue(same,'diagnostics replaced original startup exception')
+AssertionError: False is not true : diagnostics replaced original startup exception
+
+======================================================================
+FAIL: test_type_name_fault (__main__.Regression.test_type_name_fault)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 79, in <lambda>
+    setattr(Regression,'test_'+case,lambda self,c=case:self.check_case(c))
+                                                       ^^^^^^^^^^^^^^^^^^
+  File "PUBLIC_WORKSPACE\work\startup-diagnostics-b04b-v3\regression_v1.py", line 62, in check_case
+    self.assertTrue(same,'diagnostics replaced original startup exception')
+AssertionError: False is not true : diagnostics replaced original startup exception
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.010s
+
+FAILED (failures=8)

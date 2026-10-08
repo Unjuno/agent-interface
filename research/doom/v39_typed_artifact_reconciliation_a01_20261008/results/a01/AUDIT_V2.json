@@ -1,0 +1,29 @@
+{
+  "accepted_aliases": [
+    "id_bool_int_alias",
+    "step_bool_int_alias",
+    "sequence_bool_int_alias",
+    "capture_bool_int_alias",
+    "binding_nested_bool_int_alias"
+  ],
+  "audit_scope": "source/raw integrity and deterministic row reconstruction; not a second experiment",
+  "checks": {
+    "alias_summary": true,
+    "all_five_aliases_reconstructed": true,
+    "case_names_and_order": true,
+    "control_reconstructed": true,
+    "frozen_file:PREREGISTRATION.md": true,
+    "frozen_file:audit.py": true,
+    "frozen_file:probe.py": true,
+    "frozen_file:research/doom/doom_typed_observation_v1.py": true,
+    "frozen_file:research/live_control/action_validity_admission_v1.py": true,
+    "result_label": true,
+    "source_blob": true,
+    "source_commit": true
+  },
+  "experimental_result": "FAIL_BOOL_INT_ALIAS_ACCEPTED",
+  "passed": true,
+  "raw_sha256": "c032b799266c1fbb3441af6a483ff2c196d968e1f55cfb19c3224591fad19266",
+  "schema": "issue8566-reconcile-alias-a01-audit-v2",
+  "supersedes": "AUDIT_INITIAL_FAILURE.json; original audit.py and initial failure are retained"
+}
