@@ -1,0 +1,33 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A05-20261009",
+  "case_count": 6,
+  "errors": [],
+  "identical_emitted_views_remain_unknown": true,
+  "mutation_controls": {
+    "rejected": 3,
+    "results": [
+      {
+        "name": "phase_changed",
+        "rejected": true
+      },
+      {
+        "name": "status_changed",
+        "rejected": true
+      },
+      {
+        "name": "row_removed",
+        "rejected": true
+      }
+    ],
+    "total": 3
+  },
+  "phase_blind_committed_effect_witness": true,
+  "phase_blind_false_no_effect_count": 1,
+  "phase_blind_unsafe_retry_count": 1,
+  "phase_refined_false_no_effect_count": 0,
+  "phase_refined_unsafe_retry_count": 0,
+  "queued_positive_control": true,
+  "schema": "8668-a05-audit-v1",
+  "status": "PASS_METHOD_SCOPED",
+  "valid": true
+}
