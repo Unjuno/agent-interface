@@ -1,0 +1,32 @@
+{
+  "schema": "v15-release-batch-t5-source-provenance-addendum-v1",
+  "current_main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+  "current_main_release_backend": {
+    "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+    "blob": "193c2bd231795e7ee57de64aedfd741c8b814013"
+  },
+  "frozen_t0_gate": {
+    "path": "research/doom/scorer_feedback_attribution_59_t0_a01_20261004/scorer_feedback_attribution_v1.py",
+    "commit": "b076890cbcd28f2889184055453f2868fd87c629",
+    "blob": "68d49857c49547585fdb313b00d08ae2969429be",
+    "included_copy": "scorer_feedback_attribution_v1.py",
+    "included_copy_git_blob": "68d49857c49547585fdb313b00d08ae2969429be"
+  },
+  "frozen_t0_tests": {
+    "path": "research/doom/scorer_feedback_attribution_59_t0_a01_20261004/test_attribution.py",
+    "commit": "b076890cbcd28f2889184055453f2868fd87c629",
+    "blob": "c58cfebdc461de42245cb5973c20340979a7ccd2",
+    "included_copy": "package/test_t0.py",
+    "included_copy_git_blob": "c58cfebdc461de42245cb5973c20340979a7ccd2"
+  },
+  "preceding_t2_adapter": {
+    "branch_head": "71cbd2cd00a8c4da77e959ad96394d7b86ef7d25",
+    "path": "research/doom/map01_v39_feedback_sufficiency_59_t1_20261004/attribution_adapter_t2/adapter.py",
+    "blob": "056a3b46bde7bdf4da204963de866eb646742abf"
+  },
+  "new_candidate": {
+    "adapter_sha256": "6f0ad1eb378b8269d596b6d7f38ec21c3e447c7f41814b974f6aa19a7250b58c",
+    "test_sha256": "f212b975990e648a9e0eb0bbba7d7a73bda8fa199629c0c1b5c7400ee8812580"
+  },
+  "limitations": "T0 gate snapshot is pinned and copied because that research gate commit is not present at the selected current-main contents path. This package is adapter-construction evidence, not a runtime/live result."
+}
