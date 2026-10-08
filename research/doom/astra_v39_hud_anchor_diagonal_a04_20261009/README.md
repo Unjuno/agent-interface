@@ -52,3 +52,7 @@ retained. Audit v2 changed root selection, independently recomputed all 234
 candidate/blank rows, and passed 5/5 mutation controls. The candidate result was
 not rerun. See `FREEZE_A04.json`, `FREEZE_AUDIT_V2.json`, `RUN_RECORD_A04.json`,
 and `results/` for source identities and raw output.
+
+## Runtime availability follow-up
+
+A host preflight on 2026-10-09 found WSL `2.7.13.0` and no `wslc.exe` command; the repository runbook identifies WSLc as included with WSL `2.9.3+`. The original Windows CPython result is therefore retained as exploratory evidence and does not meet the preferred WSLc route. No WSL update or restart was performed. See `results/wslc_host_preflight.json`; a future WSLc execution must be a separately frozen successor, not a replay or relabeling of this consumed candidate.
