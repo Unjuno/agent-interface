@@ -1,0 +1,459 @@
+{
+  "schema": "v39-post8706-current-main-static-import-closure-v1",
+  "tested_commit": "b4046798ed8902745a36e8fda091204233bb06d3",
+  "baseline_commit": "74fc81e0a447ad05e4a2220b16d7949979635fb9",
+  "method": "AST import traversal from seven test modules through local modules under research/doom and research/live_control; dynamic imports and runtime loads are outside this static closure",
+  "root_test_modules": [
+    "research/doom/test_map01_overlap_controller_v39.py",
+    "research/doom/test_map01_overlap_controller_v39_dual_signal.py",
+    "research/doom/test_map01_overlap_controller_v39_cover_terminal.py",
+    "research/doom/test_map01_v39_pending_observation_drain.py",
+    "research/doom/test_session_map01_v15.py",
+    "research/live_control/test_executor_v13.py",
+    "research/live_control/test_input_owner_v12_explicit_up_cancel.py"
+  ],
+  "file_count": 73,
+  "files": [
+    {
+      "path": "research/doom/doom_action_snapshot_v1.py",
+      "git_blob": "756626d2a3745b50a32b89e1ae64b33eea24b2aa",
+      "baseline_blob": "756626d2a3745b50a32b89e1ae64b33eea24b2aa",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_action_validity_contract_v1.py",
+      "git_blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+      "baseline_blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_controller_failure_cleanup_v1.py",
+      "git_blob": "50c63fa83969ed518a91e39c08d1ee52064eb636",
+      "baseline_blob": "50c63fa83969ed518a91e39c08d1ee52064eb636",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v1.py",
+      "git_blob": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "baseline_blob": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v2.py",
+      "git_blob": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "baseline_blob": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v3.py",
+      "git_blob": "083338b4565176aaea560d800ce0210f17b6852f",
+      "baseline_blob": "083338b4565176aaea560d800ce0210f17b6852f",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "git_blob": "e2f5cb1aebd8bade99981b5d656b436737640ccc",
+      "baseline_blob": "e2f5cb1aebd8bade99981b5d656b436737640ccc",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_signal_value_domain_v1.py",
+      "git_blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+      "baseline_blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_source_refresh_v1.py",
+      "git_blob": "51c12ff4f2816f022bb86be9f5f6a951467d38b7",
+      "baseline_blob": "51c12ff4f2816f022bb86be9f5f6a951467d38b7",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_typed_coast_backend_v1.py",
+      "git_blob": "d95d382ee9c234dab652fa8af93b233baa5225a4",
+      "baseline_blob": "d95d382ee9c234dab652fa8af93b233baa5225a4",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_typed_observation_v1.py",
+      "git_blob": "ddeb95efe76c32f4c77d0b1d25f08e395a536a2e",
+      "baseline_blob": "ddeb95efe76c32f4c77d0b1d25f08e395a536a2e",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_typed_release_backend_v1.py",
+      "git_blob": "080fa353bc14afc8bc620e80abc38e6cf64d1259",
+      "baseline_blob": "080fa353bc14afc8bc620e80abc38e6cf64d1259",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/doom_typed_release_backend_v2.py",
+      "git_blob": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+      "baseline_blob": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/independent_progress_clock_v2.py",
+      "git_blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "baseline_blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/main_thread_scorer_polling_v1.py",
+      "git_blob": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+      "baseline_blob": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+      "baseline_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/map01_scorer_stdio_adapter_v1.py",
+      "git_blob": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2",
+      "baseline_blob": "cb1b8f6c87d3531f87bc9c10bb94d5115e9eefb2",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/map01_stagnation_v1.py",
+      "git_blob": "be03ef1295c27e25dc63df3a9121f5c7f5296bfb",
+      "baseline_blob": "be03ef1295c27e25dc63df3a9121f5c7f5296bfb",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/session_map01_v12.py",
+      "git_blob": "e701035302da4802e0db463035c4d653a7e7618b",
+      "baseline_blob": "e701035302da4802e0db463035c4d653a7e7618b",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/session_map01_v15.py",
+      "git_blob": "f71ca01426a703e4160c9403395fed03416c772e",
+      "baseline_blob": "f71ca01426a703e4160c9403395fed03416c772e",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/session_v2.py",
+      "git_blob": "1256e5bea022b1cd3a49eddad9cbb90af56f9044",
+      "baseline_blob": "1256e5bea022b1cd3a49eddad9cbb90af56f9044",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/session_v4.py",
+      "git_blob": "b17cd86b3e88ce8c03865fc4c1c897284f8ea7a5",
+      "baseline_blob": "b17cd86b3e88ce8c03865fc4c1c897284f8ea7a5",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/session_v5.py",
+      "git_blob": "8a982fb21ce49bff3d8cae64782ca914db46da92",
+      "baseline_blob": "8a982fb21ce49bff3d8cae64782ca914db46da92",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/session_v6.py",
+      "git_blob": "72c5592efcc12c0cc9001c1801799283e8bd2047",
+      "baseline_blob": "72c5592efcc12c0cc9001c1801799283e8bd2047",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/session_v7.py",
+      "git_blob": "b8f044cd52449f2a72538232bb162a7a01155d2b",
+      "baseline_blob": "b8f044cd52449f2a72538232bb162a7a01155d2b",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/test_map01_overlap_controller_v39.py",
+      "git_blob": "691183f504b16fa9cedae6bd49b71baca00fcfdc",
+      "baseline_blob": "691183f504b16fa9cedae6bd49b71baca00fcfdc",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/test_map01_overlap_controller_v39_cover_terminal.py",
+      "git_blob": "161f689c38104cfef37556988d29ed539d12cd1f",
+      "baseline_blob": "161f689c38104cfef37556988d29ed539d12cd1f",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/test_map01_overlap_controller_v39_dual_signal.py",
+      "git_blob": "36e6a10bfdc73c2af4a1f02087005bb95d300625",
+      "baseline_blob": "36e6a10bfdc73c2af4a1f02087005bb95d300625",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/test_map01_v39_pending_observation_drain.py",
+      "git_blob": "0e11c16736759842217ae47b228cd6739aae9c13",
+      "baseline_blob": "0e11c16736759842217ae47b228cd6739aae9c13",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/doom/test_session_map01_v15.py",
+      "git_blob": "99aab6dae2c3834f795860546ed4ba34620e8b94",
+      "baseline_blob": "99aab6dae2c3834f795860546ed4ba34620e8b94",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/action_validity_admission_v1.py",
+      "git_blob": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+      "baseline_blob": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/coast_backend_v1.py",
+      "git_blob": "094a800151b4d2b357a9aeca8b018f45d1e7f368",
+      "baseline_blob": "094a800151b4d2b357a9aeca8b018f45d1e7f368",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/codex_app_server_client_v2.py",
+      "git_blob": "8553874221761a7807c846c7dcd66c22fc6340ff",
+      "baseline_blob": "8553874221761a7807c846c7dcd66c22fc6340ff",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/executor_v10.py",
+      "git_blob": "e0a31884307eeac405094a624e3a63222acc656f",
+      "baseline_blob": "e0a31884307eeac405094a624e3a63222acc656f",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/executor_v11.py",
+      "git_blob": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+      "baseline_blob": "8dc84dc83bd3bb17ec5354d768383738e683d9d4",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/executor_v12.py",
+      "git_blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "baseline_blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/executor_v13.py",
+      "git_blob": "1339491237d4c52f686548e2de8e84f3d5ccf41c",
+      "baseline_blob": "1339491237d4c52f686548e2de8e84f3d5ccf41c",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/executor_v2.py",
+      "git_blob": "78935941e380f35f986dcdddedc8ad02180e3d17",
+      "baseline_blob": "78935941e380f35f986dcdddedc8ad02180e3d17",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/executor_v3.py",
+      "git_blob": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "baseline_blob": "2b072454fd81c41bf9e025217afc78020c7059de",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/executor_v5.py",
+      "git_blob": "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+      "baseline_blob": "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/final_action_admission_v1.py",
+      "git_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "baseline_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/final_action_admission_v2.py",
+      "git_blob": "2078194e704d603c6bd864030cc570abc542455c",
+      "baseline_blob": "2078194e704d603c6bd864030cc570abc542455c",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/gui_suite.py",
+      "git_blob": "84edcb6cf87ae3ea72f1a0071806d7d149ef6b33",
+      "baseline_blob": "84edcb6cf87ae3ea72f1a0071806d7d149ef6b33",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/input_owner.py",
+      "git_blob": "ab565d4ecc1526f851364c641ee16a351f14b6d9",
+      "baseline_blob": "ab565d4ecc1526f851364c641ee16a351f14b6d9",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "baseline_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/input_owner_v11.py",
+      "git_blob": "842071284156d3ccc647f47135ee62a9e512cb56",
+      "baseline_blob": "842071284156d3ccc647f47135ee62a9e512cb56",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "git_blob": "95308351e5cd0ebd9b4d39d2df3ca566928bd437",
+      "baseline_blob": "95308351e5cd0ebd9b4d39d2df3ca566928bd437",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/input_owner_v2.py",
+      "git_blob": "d09e3c8f9ac139657b91ed2b6bcf76dc14e02bf5",
+      "baseline_blob": "d09e3c8f9ac139657b91ed2b6bcf76dc14e02bf5",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/input_owner_v5.py",
+      "git_blob": "74e8ff65bba874eb49f5a30520c918162f316200",
+      "baseline_blob": "74e8ff65bba874eb49f5a30520c918162f316200",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "git_blob": "079ed1a3fc1dc3b3342bdf1d3393ffa2ecb9dc3c",
+      "baseline_blob": "079ed1a3fc1dc3b3342bdf1d3393ffa2ecb9dc3c",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "git_blob": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55",
+      "baseline_blob": "ac1cc0e67114e2b8630acbaa6d94bf2a73686a55",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/lease.py",
+      "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "baseline_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/lease_cause_v1.py",
+      "git_blob": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474",
+      "baseline_blob": "310a3b0ee8f0cca050cc55cadcb635cee2cbc474",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/lease_cause_v2.py",
+      "git_blob": "7428e22919b019a62fa80f2162ce5c0bc1d9231b",
+      "baseline_blob": "7428e22919b019a62fa80f2162ce5c0bc1d9231b",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/lease_release_v1.py",
+      "git_blob": "e325bd358874ae003e066f5d592c045b0ebef56e",
+      "baseline_blob": "e325bd358874ae003e066f5d592c045b0ebef56e",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "baseline_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "baseline_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/quiet_window.py",
+      "git_blob": "a6ce76076a8f018672ed4bd7cbbd89cfd8d00b47",
+      "baseline_blob": "a6ce76076a8f018672ed4bd7cbbd89cfd8d00b47",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/running_action_guard_v1.py",
+      "git_blob": "b679af39a1eefc09b8d1c06b934ef6a594212776",
+      "baseline_blob": "b679af39a1eefc09b8d1c06b934ef6a594212776",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/running_action_guard_v2.py",
+      "git_blob": "0e74ae977603be8279b48b334cfd24d25dd30b4b",
+      "baseline_blob": "0e74ae977603be8279b48b334cfd24d25dd30b4b",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/running_action_guard_v3.py",
+      "git_blob": "bbefdba8edfd83e886baf556caf28aca66ac88fb",
+      "baseline_blob": "bbefdba8edfd83e886baf556caf28aca66ac88fb",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/session_v10.py",
+      "git_blob": "1f5e0550770d383b5dec59242ea9ddf77d718890",
+      "baseline_blob": "1f5e0550770d383b5dec59242ea9ddf77d718890",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/session_v2.py",
+      "git_blob": "a868500465cbeff6a765e41562e439eb0fc9fd15",
+      "baseline_blob": "a868500465cbeff6a765e41562e439eb0fc9fd15",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/session_v4.py",
+      "git_blob": "082aa3931c4f620be28ff782d2c65bac2e61dd39",
+      "baseline_blob": "082aa3931c4f620be28ff782d2c65bac2e61dd39",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/session_v5.py",
+      "git_blob": "32fbac18346cb7f9322b8d398d50d83243c18ce4",
+      "baseline_blob": "32fbac18346cb7f9322b8d398d50d83243c18ce4",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/session_v6.py",
+      "git_blob": "ba20966cdae3b2543e7357e1f6a1a5fbd7b2abb4",
+      "baseline_blob": "ba20966cdae3b2543e7357e1f6a1a5fbd7b2abb4",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/session_v7.py",
+      "git_blob": "7af91f86b0133ebf8b019fd606bd4bb677e1526b",
+      "baseline_blob": "7af91f86b0133ebf8b019fd606bd4bb677e1526b",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/session_v8.py",
+      "git_blob": "4f33111fa27474d6eb4d3f8db22fae4bae7626c8",
+      "baseline_blob": "4f33111fa27474d6eb4d3f8db22fae4bae7626c8",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/session_v9.py",
+      "git_blob": "1d214a353d728b30b9b18d6120760b6703d9086e",
+      "baseline_blob": "1d214a353d728b30b9b18d6120760b6703d9086e",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/test_executor_v13.py",
+      "git_blob": "8efadef5ea57cd6ee5a5f5204f1179bfdc2d6a1c",
+      "baseline_blob": "8efadef5ea57cd6ee5a5f5204f1179bfdc2d6a1c",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/test_input_owner_v12_explicit_up_cancel.py",
+      "git_blob": "a5ccb2e44baec649caa4314612dc8a1696985abf",
+      "baseline_blob": "7697a4f985628462ff35986b8f7dc77c1cc0464b",
+      "changed_since_baseline": true
+    },
+    {
+      "path": "research/live_control/test_running_action_guard_v2.py",
+      "git_blob": "6d7f3b5da754e172ad55f97aa5780dc39ecd00dd",
+      "baseline_blob": "6d7f3b5da754e172ad55f97aa5780dc39ecd00dd",
+      "changed_since_baseline": false
+    },
+    {
+      "path": "research/live_control/tile_transport.py",
+      "git_blob": "98f5b1c02afa5a28ff9ec36f81edf3fcf701fa3b",
+      "baseline_blob": "98f5b1c02afa5a28ff9ec36f81edf3fcf701fa3b",
+      "changed_since_baseline": false
+    }
+  ],
+  "changed_paths_since_baseline": [
+    "research/live_control/test_input_owner_v12_explicit_up_cancel.py"
+  ]
+}
