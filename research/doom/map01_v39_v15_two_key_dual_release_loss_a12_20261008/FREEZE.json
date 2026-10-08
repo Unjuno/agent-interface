@@ -1,0 +1,45 @@
+{
+  "candidate_sha256": "bc69c79cdcaee1e1a95c0e3cbbabe10afd4344b3661f3905c1b2e6142759a535",
+  "issue": 59,
+  "main_base": "6c153c298ce551b24dc2f0ab645ee54c655217d8",
+  "original_candidate_sha256": "6aa318aa5fdb9516c28ba180bafc43405d9e0af544cc7dc89ff70af8f8c9fff1",
+  "protocol": {
+    "actions": [
+      [
+        "F8",
+        true
+      ],
+      [
+        "F9",
+        true
+      ],
+      [
+        "F8",
+        false
+      ],
+      [
+        "F9",
+        false
+      ]
+    ],
+    "keycodes": {
+      "F8": 38,
+      "F9": 39
+    },
+    "treatment": "drop first KeyRelease exactly once for both codes 38 and 39"
+  },
+  "run_id": "a12-two-key-dual-release-loss-20261008",
+  "schema": "issue59-two-key-dual-release-loss-a12-v1",
+  "scope": {
+    "fake_x_only": true,
+    "game": false,
+    "gui": false,
+    "model": false,
+    "os_input": false,
+    "physical_authority": false,
+    "real_x11": false
+  },
+  "source_commit": "712a71b25dc024b5406b24b568225c0663e7278b",
+  "source_count": 21,
+  "source_manifest_sha256": "bf7b2d911854cb6fdaabedabdb853bb2fc3bffd5049b3f4c8e5b3c1355a4222a"
+}
