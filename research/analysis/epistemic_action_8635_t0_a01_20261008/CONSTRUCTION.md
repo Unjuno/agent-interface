@@ -10,6 +10,7 @@
 - Full construction suite: 21/21 passed with normal CPython 3.12.10 and 21/21 with `python -O`. These are host-side construction checks, not formal candidate/auditor results.
 - Follow-up safety test first reproduced an uncovered runner defect: `FileNotFoundError` during candidate process creation left an output directory without `RUN.json` and propagated without a durable HOLD record. The runner now catches launch-time `OSError`, retains empty candidate/audit raw streams and stderr containing the launch message, records zero candidate/auditor invocations, zero retries, and `HOLD`, and does not launch the auditor. The synthetic launch-failure test passes; it does not invoke WSLc.
 - Updated full construction suite: 22/22 passed with normal CPython 3.12.10 and 22/22 with `python -O`.
+- First Linux GitHub Actions construction run exposed a test-isolation issue: patching shared `subprocess.run` also intercepted `platform.platform()`'s `uname -p` probe, so the mock saw two calls. The runner behavior itself was not implicated. The test now stubs platform discovery while isolating the synthetic missing-executable call; rerun local normal/optimized checks and CI before treating this correction as green.
 - Dataset generation completed through `prepare_data.py` using fresh seeds. Formal candidate/auditor counts remain 0/0; no output directory was reserved and no formal source freeze exists yet.
 
 ## WSLc coordination disclosure

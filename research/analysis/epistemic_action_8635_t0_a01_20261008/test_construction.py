@@ -236,7 +236,7 @@ class FormalRunnerSafetyTests(unittest.TestCase):
             (root / "FREEZE.json").write_text(json.dumps({"files": hashes, "image": "python@sha256:" + "a" * 64}), encoding="utf-8")
             output = Path(temporary) / "formal"
             launch_error = FileNotFoundError("synthetic missing executable")
-            with patch("subprocess.run", side_effect=launch_error) as run_mock:
+            with patch("platform.platform", return_value="synthetic-test-platform"), patch("subprocess.run", side_effect=launch_error) as run_mock:
                 receipt = run_formal.run_once(root, output, "missing-wslc.exe")
             run_mock.assert_called_once()
 
