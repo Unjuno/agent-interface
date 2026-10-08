@@ -1,0 +1,68 @@
+{
+  "commands": [
+    "python3 candidate.py design.json > results/raw.json",
+    "python3 audit.py design.json results/raw.json > results/audit.json"
+  ],
+  "design": {
+    "cases": 860,
+    "corpus": "design.json",
+    "deterministic_repeat_check": "byte-identical",
+    "development": 60,
+    "generation": "python3 make_design.py > design.json",
+    "heldout_negative": 500,
+    "heldout_positive": 300,
+    "negative_control_families": [
+      "automorphism",
+      "removed_target",
+      "semantic_role_change"
+    ],
+    "oracle_visible_to_candidate": false,
+    "positive_edit_families": [
+      "sibling_reorder",
+      "insert_duplicate_save",
+      "transparent_wrapper"
+    ]
+  },
+  "environment": {
+    "gui_model_or_action_execution": false,
+    "network": "not used by experiment",
+    "python": "3.14.5",
+    "runtime": "native CPU; Python standard library only"
+  },
+  "frozen_at": "2026-10-08T19:30:21Z",
+  "frozen_decision": {
+    "automorphism_and_semantic_change_controls": "all must abstain",
+    "coverage_gain_over_best_baseline": "at least 0.15 absolute",
+    "if_gate_fails": "FAIL_NO_GAIN_OR_FALSE_BIND",
+    "independent_reconstruction": "all rows and outcomes must match",
+    "one_sided_95_percent_upper_false_rebind_bound": "at most 0.01",
+    "reruns": "none; one formal candidate invocation and one independent audit invocation",
+    "status_on_all_conditions": "PASS_RELATIONAL_REIDENTIFICATION_SCOPED"
+  },
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8675",
+  "issue_state_at_freeze": "open; unassigned; zero comments",
+  "methods": {
+    "ID_PATH": "unique exact source target runtime ID and path",
+    "RELATIONAL": "exhaustive injective node assignments; fused 0.5 typed-node mismatch plus 0.5 categorical pair-relation mismatch; Gibbs soft mass over assignments",
+    "ROLE_LABEL": "unique exact role, label, and actionability tuple",
+    "important_scope": "finite entropic assignment-space approximation to fused Gromov-Wasserstein; not a general-purpose or canonical entropic FGW solver"
+  },
+  "overlap_search_at_freeze": "PR searches for 8675 and cross-revision target transport returned none; branch searches for 8675 and relational-target returned none",
+  "run_id": "8675-relational-target-transport-t0-a01-20261009",
+  "schema": "issue-8675-t0-freeze-v1",
+  "sha256": {
+    "audit.py": "7a48a667adfcb244f1f93a066fed12114abe0db23241bb1f0872ac1d41797920",
+    "candidate.py": "0a5d30f85d5f6ca6a2427a0ad626bb6d843c7e6c9e6c4fbfe824f3fab17ac3b5",
+    "design.json": "4a3c6661b4b40c9857a73de5eb26000fce9942b204438b430ef9cee0986608d6",
+    "make_design.py": "663693e44c1c70cf74f056e224537ab7bc4e49f8caf3b4ed639c7682895870fb",
+    "test_construction.py": "ab0eaf06b9a3a19c47ef5f0cb9ddbf468cdd27bc520e7d511677b39dbb306bc1"
+  },
+  "source_main": "cef53dbe8d131a8e116c92b5c79257f1db5f77b3",
+  "thresholds": {
+    "assignment_gibbs_temperature": 0.05,
+    "maximum_best_fused_cost": 0.12,
+    "minimum_target_margin": 0.9,
+    "minimum_target_marginal": 0.95,
+    "selected_using_heldout_results": false
+  }
+}
