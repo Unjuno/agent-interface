@@ -1,0 +1,24 @@
+{
+  "allocation": "7078-T0-A01-20261009",
+  "issue": 7078,
+  "scope": "T0_METHOD_ONLY",
+  "base_sha": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "source_commit": "fb4d09fdc509f2614b358f9068c91f367b8bced9",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retry_budget": 0,
+  "formal_commands": [
+    "python research/analysis/elective_plan_note_offloading_7078_t0_a01_20261009/candidate.py research/analysis/elective_plan_note_offloading_7078_t0_a01_20261009/input.json research/analysis/elective_plan_note_offloading_7078_t0_a01_20261009/results/candidate_output.json",
+    "python research/analysis/elective_plan_note_offloading_7078_t0_a01_20261009/auditor.py research/analysis/elective_plan_note_offloading_7078_t0_a01_20261009 research/analysis/elective_plan_note_offloading_7078_t0_a01_20261009/results/candidate_output.json"
+  ],
+  "sha256": {
+    "PLAN.md": "1756884aa8f6692e32fc2a2d9530b194202ad71fff541df871e589bd2b5d0c9a",
+    "input.json": "923e1e05d8466b8b8a7eae980b61df32491d3b29484a6cf63b63302f5d2fdf08",
+    "oracle.json": "5206acf9efed2a9b527c7e7dc81098e06a2bb52a6a3faa885df9111cd78e5d03",
+    "candidate.py": "27de346fa31ee27c0e8984118ce3edf5d6f544407ddff865f5e9be0f2e0e3d37",
+    "auditor.py": "494d2eb34d3c1d030e9db0c8fd6e35bbbec3385978984f08a4a0bf2d04b07e2e",
+    "test_fixture.py": "009c3beda98737d5158113368a3e7e9fcc12acfe6003c1d00cc79cf99ec6c744"
+  },
+  "construction_tests": "10 passed before freeze",
+  "formal_status": "NOT_RUN_AT_FREEZE"
+}
