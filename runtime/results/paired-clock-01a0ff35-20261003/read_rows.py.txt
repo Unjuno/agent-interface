@@ -1,0 +1,51 @@
+"""Data-only independent arithmetic reader; imports/executes no probe/backend."""
+from datetime import datetime
+import argparse,hashlib,json
+from pathlib import Path
+
+def sha(data):return hashlib.sha256(data).hexdigest()
+def require(condition,message):
+    if not condition:raise ValueError(message)
+def instant(value):
+    require(type(value)is str,'UTC string')
+    parsed=datetime.fromisoformat(value)
+    require(parsed.utcoffset() is not None and parsed.utcoffset().total_seconds()==0,'actual UTC')
+    return parsed
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--plan',required=True);ap.add_argument('--output',required=True)
+    ap.add_argument('--report',required=True);args=ap.parse_args()
+    plan_path=Path(args.plan);plan=json.loads(plan_path.read_bytes());out=Path(args.output)
+    begin=json.loads((out/'START.json').read_bytes());end=json.loads((out/'END.json').read_bytes())
+    require(begin['allocation_id']==end['allocation_id']==plan['allocation_id'],'allocation identity')
+    require(begin['plan_sha256']==sha(plan_path.read_bytes()),'actual plan bytes')
+    require(instant(plan['frozen_utc'])<=instant(begin['started_utc'])<=instant(end['completed_utc']),'prospective freeze/execution UTC')
+    require(type(begin['rows_declared']) is int and begin['rows_declared']==12,'declared fixed denominator')
+    require(type(end['rows_completed']) is int and end['rows_completed']==12 and end['execution_completed']is True,'terminal completion, no aliases')
+    raw=(out/'rows.jsonl').read_bytes();require(raw.endswith(b'\n') and sha(raw)==end['rows_sha256'],'complete raw bytes')
+    rows=[json.loads(line) for line in raw.splitlines()]
+    require(len(rows)==12,'all fixed rows')
+    observations=[];previous=instant(begin['started_utc'])
+    for row,condition in zip(rows,plan['rows'],strict=True):
+        for key in ('row_id','requested_ns','monotonic_started_ns','monotonic_ended_ns','perf_started_ns','perf_ended_ns'):
+            require(type(row[key])is int and row[key]>=0,'strict nonnegative integer '+key)
+        require((row['row_id'],row['requested_ns'])==(condition['row_id'],condition['requested_ns']),'exact unique ordered conditions')
+        started,ended=instant(row['started_utc']),instant(row['ended_utc'])
+        require(previous<=started<=ended<=instant(end['completed_utc']),'sequential UTC chronology');previous=ended
+        monotonic=row['monotonic_ended_ns']-row['monotonic_started_ns']
+        perf=row['perf_ended_ns']-row['perf_started_ns']
+        require(monotonic>=0 and perf>=0,'clock went backwards')
+        observations.append({'row_id':row['row_id'],'requested_ns':row['requested_ns'],
+                             'monotonic_elapsed_ns':monotonic,'perf_elapsed_ns':perf,
+                             'paired_witness':monotonic<row['requested_ns']<=perf})
+    witnesses=[row['row_id'] for row in observations if row['paired_witness']]
+    short=[row['row_id'] for row in observations if row['perf_elapsed_ns']<row['requested_ns']]
+    decision='COUNTEREVIDENCE_SHORT_PERF' if short else 'SUPPORTED_IN_FIXED_RUN' if witnesses else 'HOLD_NO_WITNESS'
+    report={'allocation_id':plan['allocation_id'],'decision':decision,'rows':12,'witness_rows':witnesses,
+            'short_perf_rows':short,'observations':observations,
+            'monotonic_range_ns':[min(r['monotonic_elapsed_ns'] for r in observations),max(r['monotonic_elapsed_ns'] for r in observations)],
+            'perf_range_ns':[min(r['perf_elapsed_ns'] for r in observations),max(r['perf_elapsed_ns'] for r in observations)],
+            'scope':'Two actual APIs measure nested intervals around one20ms sleep. This is no physical-clock calibration, causal proof for every MCP failure, native task/release/model performance or general reliability claim.'}
+    path=Path(args.report)
+    with path.open('x',encoding='utf-8',newline='\n')as stream:stream.write(json.dumps(report,indent=2)+'\n')
+    print(json.dumps({k:v for k,v in report.items() if k!='observations'}))
+if __name__=='__main__':main()

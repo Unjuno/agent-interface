@@ -1,0 +1,45 @@
+"""Finite own-proof capsule; exact original data and disclosed private prefix projection."""
+from pathlib import Path
+import json,gzip,base64,hashlib
+O=Path(__file__).resolve().parent;root=O.parent.parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+original=(O/'actual-image-reads.json').read_bytes();reads=json.loads(original)
+rows=[]
+for r in reads['rows']:
+    row={k:r[k] for k in ('ref','path','isError','error')}
+    row['raw_url']='https://raw.githubusercontent.com/Unjuno/agent-interface/'+r['ref']+'/'+r['path']
+    if not r['isError']:
+        b=r['data'].encode('utf-8');row.update(observed_utf8_bytes=len(b),observed_utf8_sha256=sha(b))
+    rows.append(row)
+refs={'kind':'retained actual101 MCP source observations projected to immutable public storage references; full error retained; original whole strings remain private','original_read_record_bytes':len(original),'original_read_record_sha256':sha(original),'rows':rows,'new_MCP_observations':0}
+(O/'OBSERVED-INPUT-REFERENCES.json').write_text(json.dumps(refs,indent=2)+'\n',encoding='utf-8')
+rules=[]
+for raw,replacement in [(str(root),'<OWN_WORKSPACE>'),(r'<BUNDLED_RUNTIME>','<BUNDLED_RUNTIME>')]:
+    for v in {raw,raw.replace('\\','/'),json.dumps(raw)[1:-1]}:rules.append((v,replacement))
+rules.append(("'jun"+"ny'","'<PRIVATE_USERNAME>'"))
+rules.sort(key=lambda x:len(x[0]),reverse=True)
+names=['PROPOSAL.json','PROPOSAL.canonical.json','changed-paths.json','93-CHANGED-IMAGES.canonical.json','ACTUAL-101-IMAGES.json','OBSERVED-INPUT-REFERENCES.json','SOURCE-RESULT.json','source-audit.py','source-audit-v2.py','ACQUISITION-PLAN.json','ACQUISITION-FREEZE.json','ACQUISITION-PROSPECTIVE-CLAIM.json','freeze-acquisition.py','probe-acquisition-a01.py','ACQUISITION-RAW.json','ACQUISITION-CELLS.partial.json','DATA-PLAN.json','data-audit.py','DATA-RESULT.json','CHANGES-REQUIRED.txt','CHANGES-PUBLICATION-INTENT.json','ACTUAL-CHANGES-READBACK.json','FINISH-STATE.json','finish-state.py','build-public-proof.py','restore-public-proof.py']
+for label in ['FETCH_METADATA','SOURCE_AUDIT','SOURCE_AUDIT_A02','ACQUISITION_A01','DATA_AUDIT_A01','FINISH_STATE_A01']:
+    names.extend(label+'/'+f for f in ['receipt.json','stdout.log','stderr.log'])
+names.extend(['BUILD-PACKET-FIRST-ERROR.json','build-public-proof-v1.py','build-public-proof-v2.py','BUILD_PUBLIC_PACKET_A02/receipt.json','BUILD_PUBLIC_PACKET_A02/stdout.log','BUILD_PUBLIC_PACKET_A02/stderr.log'])
+files=[]
+def add(name,p):
+    raw=p.read_bytes();text=raw.decode('utf-8');public=text
+    for old,new in rules:public=public.replace(old,new)
+    if ('jun'+'ny') in public.lower():raise ValueError('private reviewer prefix remains: '+name)
+    b=public.encode('utf-8');files.append({'path':name,'bytes':len(b),'sha256':sha(b),'original_bytes':len(raw),'original_sha256':sha(raw),'projection':'known reviewer workspace/runtime prefixes and quoted guard username token only' if b!=raw else 'none','utf8':public})
+for name in names:add(name,O/name)
+add('own-capture-wrapper.py.txt',root/'outputs/compiled-effect-evidence/run_check.py')
+freeze=json.loads((O/'ACQUISITION-FREEZE.json').read_bytes())
+for r in freeze['source']:
+    p=O/'export'/r['path'];b=p.read_bytes();assert len(b)==r['bytes'] and sha(b)==r['sha256'];add('inert-source/'+r['path']+'.txt',p)
+p=O/'baseline/runtime/backends/quartz_v1/backend.py';b=p.read_bytes();assert sha(b)==freeze['baseline_backend']['sha256'];add('inert-source/baseline-backend.py.txt',p)
+files.sort(key=lambda f:f['path']);manifest=[{k:f[k] for k in ('path','bytes','sha256','original_bytes','original_sha256','projection')} for f in files]
+packet={'format':'review6938-f520-utf8-members-v1','head':freeze['head'],'review_base':freeze['review_base'],'proposal_digest':'cac4dfbb798d2bd72606798207047c278074c9617e064c83be620cdc2bb7d022','files':files,'existing_author_archive':'all101 exact observed byte-images recoverable from existing immutable publicGit storage references; not duplicated/reexecuted','limits':'inert source-boundary evidence only; first FAIL3 retained; no native/physical/author/peer/formal allocation replay or main application'}
+decoded=json.dumps(packet,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode();packed=gzip.compress(decoded,compresslevel=6,mtime=0);b64=base64.b64encode(packed).decode()
+idx={'members':len(files),'gzip_bytes':len(packed),'gzip_sha256':sha(packed),'json_bytes':len(decoded),'json_sha256':sha(decoded),'manifest_sha256':sha(json.dumps(manifest,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()),'parts':(len(b64)+49000-1)//49000}
+(O/'proof-packet.json.gz').write_bytes(packed);(O/'proof-packet.base64.txt').write_text(b64,encoding='ascii');(O/'PACKET-INDEX.json').write_text(json.dumps(idx,indent=2)+'\n',encoding='utf-8')
+for n,start in enumerate(range(0,len(b64),49000),1):
+    header='Recoverable genuine assigned nonauthor review6938 V2, worker f520, CHANGES_REQUIRED5968788602; packet-part '+str(n)+'/'+str(idx['parts'])+'. First new five-cell raw safety FAIL3/PASS2 retained; independent saved-data audit12 copied semantic controls. Data only: never execute restored reviewed producers. Exact private reviewer workspace/runtime prefixes explicitly projected, per-member original/public hashes retained. Existing author88-file archive remains at immutable publicGit references; complete101 observation reference/error records included. Join parts in order.\n'+json.dumps(idx,sort_keys=True)+'\npacket-part-data-begin\n'
+    body=header+b64[start:start+49000]+'\npacket-part-data-end';assert len(body.encode())<64000;(O/f'packet-part-{n:02}.txt').write_text(body,encoding='utf-8')
+print(json.dumps(idx))

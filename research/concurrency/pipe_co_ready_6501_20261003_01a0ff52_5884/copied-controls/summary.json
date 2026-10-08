@@ -1,0 +1,58 @@
+{
+  "utc_ns": 1791002226002476000,
+  "baseline_method": "METHOD_PASS_SCOPED",
+  "outcomes": [
+    {
+      "name": "boolean_fd",
+      "rejected": true,
+      "reason": "exact integer fd",
+      "sha256": "502a56ed13b925f0280da1347fc02c016f6c0d1cacbc96ff9b69aabe31068a14"
+    },
+    {
+      "name": "boolean_count",
+      "rejected": true,
+      "reason": "exact integer count",
+      "sha256": "ae7a1d490f2f9f17c8c746f0d784596fb9c9b207563d6e73cc2df08ccec1a6ee"
+    },
+    {
+      "name": "primary_wrong_byte",
+      "rejected": true,
+      "reason": "event binding read_return",
+      "sha256": "53533ca54e2657d836d358ff6d58bbe464dcabaa4d88a4ced33a40d94290235f"
+    },
+    {
+      "name": "hidden_control_ready",
+      "rejected": true,
+      "reason": "ready set equals prewritten bytes",
+      "sha256": "67b1072e61e1dd489da07ba3945c13150af6d4fbee5ea900b242b40c3d38faaf"
+    },
+    {
+      "name": "missing_row",
+      "rejected": true,
+      "reason": "complete twenty-row denominator",
+      "sha256": "552332ec1bad18e867f1d8adc7d447cea70260a692fde007699b64557ef93d7c"
+    },
+    {
+      "name": "cleanup_relabelled_primary",
+      "rejected": true,
+      "reason": "event binding read_return",
+      "sha256": "53ed518dbceb7f52ae61ca480e22a132de8a4032166481eee9239026ca46c3ec"
+    },
+    {
+      "name": "poll_before_write",
+      "rejected": true,
+      "reason": "causal stage write_requested",
+      "sha256": "269709de093fa1a2fb074768dc3bd72d6d0b687182b0cce65b2af4280bc2fb08"
+    },
+    {
+      "name": "unclosed_fd",
+      "rejected": true,
+      "reason": "event binding close_checked",
+      "sha256": "977e89449fe284d61a7ee8074182d4f2453c9142f6073b9593cf9ee4d5d5707f"
+    }
+  ],
+  "original_sha256_before": "88f79f5c5e3eaec5420c16e3019c20b0f656b06e1cb080c4a1cc133fe4029578",
+  "original_sha256_after": "88f79f5c5e3eaec5420c16e3019c20b0f656b06e1cb080c4a1cc133fe4029578",
+  "producer_replays": 0,
+  "role": "private copied raw controls; separate from primary audit"
+}

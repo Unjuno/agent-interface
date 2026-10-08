@@ -1,0 +1,17 @@
+{
+  "audit_status": "PASS_RAW_AND_CONTROLS",
+  "case_count": 4,
+  "finding_case_ids": [
+    "ack_before_admission",
+    "release_return_before_start"
+  ],
+  "hypothesis_outcome": "FAIL_TIMESTAMP_ORDER_NEGATIVE_ACCEPTED",
+  "integrity_errors": [],
+  "mutation_controls": 4,
+  "mutation_rejections": 4,
+  "schema": "owner-keyup-timestamp-order-audit-v2",
+  "scientific_findings": [
+    "readiness_mismatch:ack_before_admission",
+    "readiness_mismatch:release_return_before_start"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "probe": "A04-C01 pre-freeze construction probe; not a formal allocation",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "runtime": "functions.exec in-memory V8",
+  "candidate": {
+    "rows": 2600,
+    "eligible_weight": 2.9999999999999853,
+    "observation_rate": 0.800000000000001,
+    "proximal_effect_arm1_vs0": 2.583333333333349,
+    "proximal_effect_arm2_vs0": 0.16666666666666777,
+    "executed_fraction_by_arm": [
+      0.9081632653061221,
+      0.6388888888888892,
+      0.6428571428571429
+    ],
+    "distal_policy_outcome_by_type": {
+      "0": 8.44375,
+      "1": 9.443750000000001
+    }
+  },
+  "auditor": {
+    "base_audit": false,
+    "expected_rows": 2600,
+    "mutation_count": 16,
+    "rejected_mutations": 16,
+    "oracle_arm1_vs0": 2.583333333333336,
+    "oracle_arm2_vs0": 0.16666666666666674,
+    "distal_oracle_by_type": {
+      "0": 8.44375,
+      "1": 9.44375
+    }
+  },
+  "observed_failure": "Auditor compared the distal numeric object by exact JSON string equality; type-1 values differ only at floating-point roundoff. This is an auditor construction defect, not a candidate scientific disposition."
+}

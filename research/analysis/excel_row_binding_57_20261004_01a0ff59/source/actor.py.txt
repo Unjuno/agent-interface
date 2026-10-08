@@ -1,0 +1,57 @@
+import json,time,gc,sys
+from pathlib import Path
+import win32com.client,win32process,win32api,win32event,win32con
+P=Path(__file__).resolve().parent
+before=set(win32process.EnumProcesses());app=None;owned=False;handle=None;book=None;sheet=None;rows=[];error=None
+started=time.perf_counter_ns()
+def write(n,v):(P/n).write_text(json.dumps(v,ensure_ascii=False,indent=2),encoding='utf-8')
+def read(sheet):return [list(row) for row in sheet.Range('A1:E5').Value]
+try:
+    app=win32com.client.DispatchEx('Excel.Application')
+    _,pid=win32process.GetWindowThreadProcessId(app.Hwnd)
+    assert pid not in before,'Excel PID existed before isolated activation'
+    assert app.Workbooks.Count==0,'unexpected existing workbook'
+    owned=True;handle=win32api.OpenProcess(win32con.SYNCHRONIZE|win32con.PROCESS_QUERY_INFORMATION,False,pid)
+    write('RESOURCE.json',{'excel_pid':pid,'pid_absent_before':True,'initial_workbooks':0,'version':app.Version,'build':str(app.Build),'hwnd':app.Hwnd})
+    app.Visible=False;app.DisplayAlerts=False
+    for route in ['cached_row','id_revalidate']:
+        book=app.Workbooks.Add();sheet=book.Worksheets(1);sheet.Name='Orders'
+        sheet.Range('A1:E4').Value=(('OrderID','Item','Quantity','UnitPrice','Subtotal'),('ORDER-101','紙',2,10,None),('ORDER-202','ケーブル',3,20,None),('ORDER-303','鉛筆',4,5,None))
+        for row in [2,3,4]:sheet.Cells(row,5).Formula=f'=C{row}*D{row}'
+        sheet.Range('H1').Formula='=SUM(E2:E4)';app.CalculateFull()
+        original=read(sheet);cached=3
+        sheet.Rows(3).Insert()
+        sheet.Range('A3:E3').Value=(('ORDER-X','追加行',1,100,None),);sheet.Range('E3').Formula='=C3*D3';app.CalculateFull()
+        changed=read(sheet)
+        if route=='cached_row':selected=cached
+        else:
+            values=sheet.Range('A2:A5').Value
+            matches=[i+2 for i,r in enumerate(values) if r[0]=='ORDER-202']
+            assert len(matches)==1,'missing/ambiguous OrderID'
+            selected=matches[0]
+        intent={'route':route,'target_id':'ORDER-202','desired_quantity':7,'selected_row':selected,'selected_id_before':sheet.Cells(selected,1).Value,'retry':False}
+        write(route+'.INTENT.json',intent)
+        sheet.Cells(selected,3).Value=7;app.CalculateFull()
+        final=read(sheet);formulas=[sheet.Cells(i,5).Formula for i in range(2,6)];total=sheet.Range('H1').Value
+        path=P/(route+'.xlsx');assert not path.exists(),'output collision'
+        book.SaveAs(str(path),51)
+        rows.append({'route':route,'original':original,'after_row_insert':changed,'intent':intent,'final':final,'formulas':formulas,'total':total,'total_formula':sheet.Range('H1').Formula,'edit_calls':1,'save_calls':1})
+        write('ROWS.json',rows)
+        book.Close(False);sheet=None;book=None;gc.collect()
+except BaseException as e:
+    error={'type':type(e).__name__,'message':str(e)}
+finally:
+    cleanup=[]
+    if owned:
+        if book is not None:
+            try:book.Close(False)
+            except Exception as e:cleanup.append({'stage':'book_close','type':type(e).__name__,'message':str(e)})
+        try:app.Quit()
+        except Exception as e:cleanup.append({'stage':'excel_quit','type':type(e).__name__,'message':str(e)})
+    sheet=None;book=None;app=None;gc.collect();gc.collect()
+    retired=handle is not None and win32event.WaitForSingleObject(handle,5000)==win32event.WAIT_OBJECT_0
+    if handle is not None:handle.Close()
+    result={'rows':rows,'error':error,'cleanup_errors':cleanup,'excel_owned':owned,'excel_process_retired':retired,'started_ns':started,'ended_ns':time.perf_counter_ns(),'model_calls':0,'scope':'isolated Excel COM application effects, no GUI/native-input/release or integrated-spine claim'}
+    write('RESULT.json',result)
+print(json.dumps({'rows':len(rows),'error':error,'excel_retired':retired}))
+if error is not None:sys.exit(1)

@@ -1,0 +1,17 @@
+test_actual_retained_rows_join_by_full_identity_and_hold_for_effect (test_join.JoinTests.test_actual_retained_rows_join_by_full_identity_and_hold_for_effect) ... ok
+test_duplicate_same_key_admission_is_ambiguous (test_join.JoinTests.test_duplicate_same_key_admission_is_ambiguous) ... ok
+test_event_permutation_does_not_change_pairs (test_join.JoinTests.test_event_permutation_does_not_change_pairs) ... ok
+test_inter_up_keymap_query_fails (test_join.JoinTests.test_inter_up_keymap_query_fails) ... ok
+test_invalid_time_order_fails_closed (test_join.JoinTests.test_invalid_time_order_fails_closed) ... ok
+test_missing_or_duplicate_release_holds (test_join.JoinTests.test_missing_or_duplicate_release_holds) ... ok
+test_no_effect_rows_are_never_inferred_from_release_receipts (test_join.JoinTests.test_no_effect_rows_are_never_inferred_from_release_receipts) ... ok
+test_receipt_identity_mutations_hold (test_join.JoinTests.test_receipt_identity_mutations_hold) ... ok
+test_reordered_keyup_operation_fails (test_join.JoinTests.test_reordered_keyup_operation_fails) ... ok
+test_unverified_or_authoritative_receipt_holds (test_join.JoinTests.test_unverified_or_authoritative_receipt_holds) ... ok
+test_wrong_release_identity_holds (test_join.JoinTests.test_wrong_release_identity_holds) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.002s
+
+OK
+{"conclusion": "PASS_IDENTITY_JOIN_SCOPED; HOLD_MISSING_TASK_EFFECT", "mutation_cases": {"authority_overclaim": "HOLD_RECEIPT_SCOPE_OR_VERIFICATION", "duplicate_admission": "HOLD_AMBIGUOUS_IDENTITY", "duplicate_release": "HOLD_AMBIGUOUS_IDENTITY", "inter_up_keymap_query": "FAIL_INTER_UP_KEYMAP_QUERY", "missing_release": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE", "receipt_key_mismatch": "HOLD_RECEIPT_IDENTITY_MISMATCH", "release_intent_token": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE", "release_key": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE", "release_owner_id": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE", "release_step": "HOLD_UNMATCHED_ADMISSION_OR_RELEASE", "reordered_keyup_operation": "FAIL_RELEASE_OPERATION_ORDER_MISMATCH", "reversed_time": "FAIL_INVALID_OR_REVERSED_TIME_ORDER"}, "unit_tests": {"errors": 0, "failures": 0, "run": 11}}

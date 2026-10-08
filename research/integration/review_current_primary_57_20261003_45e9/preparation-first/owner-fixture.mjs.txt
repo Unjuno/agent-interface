@@ -1,0 +1,14 @@
+import {writeFileSync,existsSync} from 'node:fs';
+const [root,nonce]=process.argv.slice(2);let bytes=0,requests=0,replyCount=0,line='',timer;
+writeFileSync(root+'/fixture-start.json',JSON.stringify({pid:process.pid,ppid:process.ppid,nonce})+'\n',{flag:'wx'});
+process.stdin.on('data',chunk=>{bytes+=chunk.length;line+=chunk;let n;
+ while((n=line.indexOf('\n'))>=0){const request=JSON.parse(line.slice(0,n));line=line.slice(n+1);requests++;
+  writeFileSync(root+'/fixture-request.json',JSON.stringify({request,nonce,pid:process.pid})+'\n',{flag:'wx'});
+  timer=setInterval(()=>{if(!existsSync(root+'/release'))return;clearInterval(timer);replyCount++;
+   const response={jsonrpc:'2.0',id:request.id,result:{isError:false,content:[{type:'text',text:JSON.stringify({status:'closed',nonce})}]}};
+   writeFileSync(root+'/fixture-response.json',JSON.stringify({response,nonce,pid:process.pid})+'\n',{flag:'wx'});process.stdout.write(JSON.stringify(response)+'\n');},5);
+ }
+});
+process.stdin.on('end',()=>{if(timer)clearInterval(timer);});
+process.on('exit',code=>writeFileSync(root+'/fixture-exit.json',JSON.stringify({pid:process.pid,ppid:process.ppid,nonce,code,bytes,requests,replyCount})+'\n',{flag:'wx'}));
+process.stdin.resume();

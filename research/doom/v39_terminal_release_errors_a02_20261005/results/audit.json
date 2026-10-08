@@ -1,0 +1,17 @@
+{
+  "schema": "v39-terminal-release-errors-a02-audit-v1",
+  "checks": {
+    "manifest_commit_matches_freeze": true,
+    "candidate_snapshot_hashes": true,
+    "baseline_identity_matches_freeze": true,
+    "baseline_source_hash": true,
+    "runner_hash": true,
+    "auditor_hash": true,
+    "invocation_candidate_matches": true,
+    "baseline_expected_failure": true,
+    "candidate_24_pass": true,
+    "compile_exit_zero": true
+  },
+  "passed": true,
+  "scope": "local deterministic source-bound regression only"
+}

@@ -1,0 +1,106 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_inner_game_is_closed_when_final_sample_raises (builtins.GameProxyLifecycleTests.test_inner_game_is_closed_when_final_sample_raises) ... ERROR
+test_reentrant_close_during_final_sample_does_not_repeat_cleanup (builtins.GameProxyLifecycleTests.test_reentrant_close_during_final_sample_does_not_repeat_cleanup) ... ERROR
+test_repeated_close_reports_the_original_cleanup_failure (builtins.GameProxyLifecycleTests.test_repeated_close_reports_the_original_cleanup_failure) ... FAIL
+test_sample_and_cleanup_errors_are_both_grouped (builtins.GameProxyLifecycleTests.test_sample_and_cleanup_errors_are_both_grouped) ... ERROR
+test_session_unwind_preserves_controller_sample_and_close_errors (builtins.GameProxyLifecycleTests.test_session_unwind_preserves_controller_sample_and_close_errors) ... ERROR
+test_successful_sample_preserves_inner_close_result_and_is_idempotent (builtins.GameProxyLifecycleTests.test_successful_sample_preserves_inner_close_result_and_is_idempotent) ... FAIL
+test_wrapped_close_failure_is_replayed_without_a_false_success (builtins.GameProxyLifecycleTests.test_wrapped_close_failure_is_replayed_without_a_false_success) ... FAIL
+test_cancel_arriving_after_dequeue_is_preserved_as_release_cause (cause_fixture.CancellationReleaseCauseTests.test_cancel_arriving_after_dequeue_is_preserved_as_release_cause) ... ok
+test_cancel_arriving_during_release_io_is_preserved (cause_fixture.CancellationReleaseCauseTests.test_cancel_arriving_during_release_io_is_preserved) ... FAIL
+test_ordinary_release_remains_ordinary (cause_fixture.CancellationReleaseCauseTests.test_ordinary_release_remains_ordinary) ... ok
+
+======================================================================
+ERROR: test_inner_game_is_closed_when_final_sample_raises (builtins.GameProxyLifecycleTests.test_inner_game_is_closed_when_final_sample_raises)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "unchanged-proxy-fixture", line 130, in test_inner_game_is_closed_when_final_sample_raises
+  File "session14-class", line 49, in close
+  File "unchanged-proxy-fixture", line 122, in final_sample
+  File "session14-class", line 45, in __getattr__
+AttributeError: 'InnerGame' object has no attribute 'closing'
+
+======================================================================
+ERROR: test_reentrant_close_during_final_sample_does_not_repeat_cleanup (builtins.GameProxyLifecycleTests.test_reentrant_close_during_final_sample_does_not_repeat_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "unchanged-proxy-fixture", line 186, in test_reentrant_close_during_final_sample_does_not_repeat_cleanup
+  File "session14-class", line 49, in close
+  File "unchanged-proxy-fixture", line 180, in final_sample
+  File "session14-class", line 45, in __getattr__
+AttributeError: 'InnerGame' object has no attribute 'closing'
+
+======================================================================
+ERROR: test_sample_and_cleanup_errors_are_both_grouped (builtins.GameProxyLifecycleTests.test_sample_and_cleanup_errors_are_both_grouped)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "unchanged-proxy-fixture", line 152, in test_sample_and_cleanup_errors_are_both_grouped
+  File "session14-class", line 49, in close
+  File "unchanged-proxy-fixture", line 149, in <lambda>
+  File "unchanged-proxy-fixture", line 149, in <genexpr>
+RuntimeError: sample failed
+
+======================================================================
+ERROR: test_session_unwind_preserves_controller_sample_and_close_errors (builtins.GameProxyLifecycleTests.test_session_unwind_preserves_controller_sample_and_close_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "unchanged-proxy-fixture", line 214, in test_session_unwind_preserves_controller_sample_and_close_errors
+  File "session14-class", line 49, in close
+  File "unchanged-proxy-fixture", line 208, in <lambda>
+  File "unchanged-proxy-fixture", line 208, in <genexpr>
+RuntimeError: sample failed
+
+======================================================================
+FAIL: test_repeated_close_reports_the_original_cleanup_failure (builtins.GameProxyLifecycleTests.test_repeated_close_reports_the_original_cleanup_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "unchanged-proxy-fixture", line 171, in test_repeated_close_reports_the_original_cleanup_failure
+AssertionError: Lists differ: ['init', 'final_sample', 'inner_close', 'inner_close'] != ['init', 'final_sample', 'inner_close']
+
+First list contains 1 additional elements.
+First extra element 3:
+'inner_close'
+
+- ['init', 'final_sample', 'inner_close', 'inner_close']
+?                          ---------------
+
++ ['init', 'final_sample', 'inner_close']
+
+======================================================================
+FAIL: test_successful_sample_preserves_inner_close_result_and_is_idempotent (builtins.GameProxyLifecycleTests.test_successful_sample_preserves_inner_close_result_and_is_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "unchanged-proxy-fixture", line 142, in test_successful_sample_preserves_inner_close_result_and_is_idempotent
+AssertionError: 'closed' is not None
+
+======================================================================
+FAIL: test_wrapped_close_failure_is_replayed_without_a_false_success (builtins.GameProxyLifecycleTests.test_wrapped_close_failure_is_replayed_without_a_false_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "unchanged-proxy-fixture", line 202, in test_wrapped_close_failure_is_replayed_without_a_false_success
+AssertionError: Lists differ: ['init', 'final_sample', 'inner_close', 'inner_close'] != ['init', 'final_sample', 'inner_close']
+
+First list contains 1 additional elements.
+First extra element 3:
+'inner_close'
+
+- ['init', 'final_sample', 'inner_close', 'inner_close']
+?                          ---------------
+
++ ['init', 'final_sample', 'inner_close']
+
+======================================================================
+FAIL: test_cancel_arriving_during_release_io_is_preserved (cause_fixture.CancellationReleaseCauseTests.test_cancel_arriving_during_release_io_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/research/doom/results/cause/cause_test.py", line 186, in test_cancel_arriving_during_release_io_is_preserved
+    self.assertEqual(self._exercise(cancel_during_sync=True), "cancelled")
+AssertionError: 'release' != 'cancelled'
+- release
++ cancelled
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.041s
+
+FAILED (failures=4, errors=4)

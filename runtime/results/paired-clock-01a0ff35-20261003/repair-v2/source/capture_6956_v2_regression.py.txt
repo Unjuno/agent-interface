@@ -1,0 +1,41 @@
+"""Exclusive native regression receipts; stdout/stderr never replace earlier runs."""
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib, json, os, subprocess, sys
+ROOT=Path(__file__).resolve().parent
+REPO=ROOT/'paired-clock-repo'
+OUT=ROOT/'6956-v2-intake'
+PYTHON=ROOT/'mcp-shutdown-venv312/Scripts/python.exe'
+label=sys.argv[1]
+args=sys.argv[2:]
+def sha(data):return hashlib.sha256(data).hexdigest()
+def now():return datetime.now(timezone.utc).isoformat()
+if (OUT/(label+'.start.json')).exists():raise ValueError('exclusive stage already consumed')
+paths=[REPO/'runtime/cli_v1/mcp_session.py',REPO/'runtime/cli_v1/mcp_server.py',
+    REPO/'runtime/cli_v1/public_summary.py',REPO/'runtime/cli_v1/test_post_dispatch_capture.py',
+    REPO/'runtime/cli_v1/test_public_summary.py',REPO/'runtime/cli_v1/fixtures/nonpaced_dispatch_review.json',
+    ROOT/'qualify_6956_endpoint_controls.py',Path(__file__)]
+before={str(p):sha(p.read_bytes()) for p in paths}
+env=dict(os.environ,PYTHONDONTWRITEBYTECODE='1',PYTHONIOENCODING='utf-8',
+    OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1',PYTHONPATH=str(REPO))
+argv=[str(PYTHON),'-B',*args]
+start={'argv':argv,'cwd':str(REPO),'started_utc':now(),'source_sha256':before,
+    'kind':'ordinary endpoint regression/control qualification; no A01 replay',
+    'timeout_seconds':60,'requested_threads':1,'enforcement':'not independently certified'}
+with (OUT/(label+'.start.json')).open('x',encoding='utf-8') as f:json.dump(start,f,indent=2)
+child=subprocess.Popen(argv,cwd=REPO,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+with (OUT/(label+'.child.json')).open('x',encoding='utf-8') as f:json.dump({'pid':child.pid,'observed_utc':now()},f)
+timed_out=False
+try:stdout,stderr=child.communicate(timeout=60)
+except subprocess.TimeoutExpired:
+    timed_out=True;child.kill();stdout,stderr=child.communicate()
+terminal={'pid':child.pid,'started_utc':start['started_utc'],'ended_utc':now(),
+    'exit_code':child.returncode,'timed_out':timed_out,
+    'source_unchanged':all(sha(p.read_bytes())==before[str(p)] for p in paths)}
+for name,data in [('stdout',stdout),('stderr',stderr)]:
+    with (OUT/(label+'.'+name+'.txt')).open('xb') as f:f.write(data)
+    terminal[name+'_bytes']=len(data);terminal[name+'_sha256']=sha(data)
+with (OUT/(label+'.terminal.json')).open('x',encoding='utf-8') as f:json.dump(terminal,f,indent=2)
+print(json.dumps(terminal))
+print(stderr.decode('utf-8',errors='replace')[-1800:])
+raise SystemExit(child.returncode)

@@ -1,0 +1,1322 @@
+{
+  "before_trial": {
+    "end_ns": 14015991504,
+    "image": {
+      "artifact": {
+        "bytes": 58255,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/images/8b743c273122414cbb17b049ffe6d8e2.png",
+        "sha256": "2b8a4079894a902b79e8f1b6e5513ff336da06a94d558d388e43fbf96894f2bb",
+        "source_raw_sha256": "be0aacad52e4d524aae6e140f9b1d87aab9c06cd7d95fc80940eb2d9c951c8b9",
+        "timing_ns": {
+          "converted": 13989688453,
+          "encoded": 14009681739,
+          "hashed": 14015963664,
+          "started": 13987246361,
+          "written": 14013521892
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 13985106406,
+      "capture_started_ns": 13978790609,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "be0aacad52e4d524aae6e140f9b1d87aab9c06cd7d95fc80940eb2d9c951c8b9",
+      "target": "owned",
+      "width": 1280
+    },
+    "physical": {
+      "buttons": 0,
+      "end_ns": 14016356418,
+      "keys": [],
+      "start_ns": 14015992509
+    },
+    "start_ns": 13978786983
+  },
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "cleanup_physical": {
+    "buttons": 0,
+    "end_ns": 14072914634,
+    "keys": [],
+    "start_ns": 14072598314
+  },
+  "cleanup_release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 14072595375,
+    "verified": true
+  },
+  "ended_ns": 14104416263,
+  "errors": [
+    "Traceback (most recent call last):\n  File \"/src/producer.py\", line 84, in <module>\n    apply('trial',19,23,82,168,spec['click_wait_ms'])\n  File \"/src/producer.py\", line 78, in apply\n    if receipt['status']!='completed' or row['physical']['keys'] or row['physical']['buttons']:raise RuntimeError('native/release failure '+label)\n                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: native/release failure trial\n"
+  ],
+  "events": [],
+  "initial": {
+    "end_ns": 13355090716,
+    "image": {
+      "artifact": {
+        "bytes": 57330,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/images/ab13e1cc59014278840dc130eff9acaf.png",
+        "sha256": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+        "source_raw_sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+        "timing_ns": {
+          "converted": 13324821975,
+          "encoded": 13349254191,
+          "hashed": 13354935259,
+          "started": 13322809601,
+          "written": 13352947831
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 13320781545,
+      "capture_started_ns": 13309737824,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+      "target": "owned",
+      "width": 1280
+    },
+    "physical": {
+      "buttons": 0,
+      "end_ns": 13355405189,
+      "keys": [],
+      "start_ns": 13355091746
+    },
+    "start_ns": 13309728981
+  },
+  "initial_document_sha256": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+  "last_window_tree": [
+    {
+      "id": 4194404,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194405,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194406,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194407,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194413,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194408,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194409,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194414,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194410,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194411,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194412,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194415,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194422,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194423,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194424,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194425,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194426,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194429,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194430,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194431,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194432,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194433,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194434,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194435,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194416,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194417,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194418,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194419,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194420,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194421,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194427,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194428,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194436,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194437,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194438,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194439,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194440,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194441,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194442,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194443,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194444,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194445,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194446,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194447,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194448,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194449,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194450,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194451,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194452,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194453,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194454,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194455,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194456,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194457,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194458,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194459,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194460,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194461,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194462,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194463,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194464,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194465,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194466,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194467,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194468,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194469,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194470,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194471,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194472,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194473,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194474,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194475,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194476,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194477,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194478,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194479,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194480,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291969,
+      "map_state": 2,
+      "title": "heldout-comparison.fods \u2014 LibreOffice Calc"
+    },
+    {
+      "id": 4194399,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194386,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194387,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194388,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194389,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194390,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194391,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194392,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194393,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194394,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194395,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194396,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194397,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194398,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194400,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194401,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194402,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194403,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194318,
+      "map_state": 2,
+      "title": "Openbox"
+    },
+    {
+      "id": 6291457,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291467,
+      "map_state": 0,
+      "title": "VCL ImplGetDefaultWindow"
+    },
+    {
+      "id": 6291469,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 8388609,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291993,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291998,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292003,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292018,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292026,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292031,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292036,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292041,
+      "map_state": 0,
+      "title": ""
+    }
+  ],
+  "schema": "calc-heldout-row-v1",
+  "source_hashes": {
+    "blank.fods": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+    "driver_once.py": "abc27533f339dbfe15724c8643f2bc87ee89c150ed965e8e674d5886c0edfc47",
+    "producer.py": "ffd67b735a17a607a6dcb8bee11e03af089013902a4271d0a7abd5f8abed7110",
+    "saved_oracle.py": "92def4221091e3d788ce24340d7a3f0f6e2e4dbe9b732164dc97605975f6de0d",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "sources/runtime/core_v1/contract.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+  },
+  "spec": {
+    "click_wait_ms": 0,
+    "index": 1,
+    "route": "keyboard"
+  },
+  "started_ns": 9664227493,
+  "target": {
+    "id": 6291969,
+    "map_state": 2,
+    "title": "heldout-comparison.fods \u2014 LibreOffice Calc"
+  },
+  "tasks": [
+    {
+      "a": 13,
+      "b": 17,
+      "click_wait_ms": 50,
+      "end_ns": 13926865008,
+      "image": {
+        "end_ns": 13963239574,
+        "image": {
+          "artifact": {
+            "bytes": 58255,
+            "height": 800,
+            "mime_type": "image/png",
+            "path": "/out/images/b116c5b6a40b4acda4ace3bc09f7818a.png",
+            "sha256": "2b8a4079894a902b79e8f1b6e5513ff336da06a94d558d388e43fbf96894f2bb",
+            "source_raw_sha256": "be0aacad52e4d524aae6e140f9b1d87aab9c06cd7d95fc80940eb2d9c951c8b9",
+            "timing_ns": {
+              "converted": 13936041474,
+              "encoded": 13957833424,
+              "hashed": 13963055895,
+              "started": 13934623538,
+              "written": 13960895550
+            },
+            "width": 1280
+          },
+          "bytes": 4096000,
+          "capture_ended_ns": 13932485512,
+          "capture_started_ns": 13926870954,
+          "frame": "screen_physical_px",
+          "height": 800,
+          "native_window_id": 6291969,
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "sha256": "be0aacad52e4d524aae6e140f9b1d87aab9c06cd7d95fc80940eb2d9c951c8b9",
+          "target": "owned",
+          "width": 1280
+        },
+        "physical": {
+          "buttons": 0,
+          "end_ns": 13963692807,
+          "keys": [],
+          "start_ns": 13963240942
+        },
+        "start_ns": 13926866161
+      },
+      "label": "prime",
+      "physical": {
+        "buttons": 0,
+        "end_ns": 13973178147,
+        "keys": [],
+        "start_ns": 13972582379
+      },
+      "program": {
+        "authority": {
+          "expires_at_ns": 23360863646,
+          "lease_id": "owned-calc-click-text-diagnostic"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "owned"
+          },
+          {
+            "frame": "screen_physical_px",
+            "op": "pointer_move",
+            "x": 80,
+            "y": 168
+          },
+          {
+            "button": "left",
+            "down": true,
+            "op": "pointer_button"
+          },
+          {
+            "button": "left",
+            "down": false,
+            "op": "pointer_button"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 50
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "3"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "TAB"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "7"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "TAB"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "text",
+            "text": "="
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "A"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "*"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "B"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "ENTER"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "s"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 300
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "prime",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "receipt": {
+        "admission": "accepted",
+        "execution": {
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "emissions": 39,
+          "ended_ns": 13926844333,
+          "observations": [],
+          "program_emissions": 39,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 13926841598,
+              "verified": true
+            }
+          ],
+          "started_ns": 13362518756,
+          "waits": [
+            {
+              "completed": true,
+              "ended_ns": 13413272023,
+              "kind": "fixed_delay",
+              "operation_index": 4,
+              "requested_ms": 50,
+              "started_ns": 13363049190,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13434787194,
+              "kind": "fixed_delay",
+              "operation_index": 6,
+              "requested_ms": 20,
+              "started_ns": 13414643736,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13456238573,
+              "kind": "fixed_delay",
+              "operation_index": 8,
+              "requested_ms": 20,
+              "started_ns": 13436080567,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13478056228,
+              "kind": "fixed_delay",
+              "operation_index": 11,
+              "requested_ms": 20,
+              "started_ns": 13457846507,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13498710771,
+              "kind": "fixed_delay",
+              "operation_index": 13,
+              "requested_ms": 20,
+              "started_ns": 13478615570,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13519849961,
+              "kind": "fixed_delay",
+              "operation_index": 16,
+              "requested_ms": 20,
+              "started_ns": 13499747515,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13540769914,
+              "kind": "fixed_delay",
+              "operation_index": 18,
+              "requested_ms": 20,
+              "started_ns": 13520605317,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13561386975,
+              "kind": "fixed_delay",
+              "operation_index": 20,
+              "requested_ms": 20,
+              "started_ns": 13541282868,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13582291579,
+              "kind": "fixed_delay",
+              "operation_index": 22,
+              "requested_ms": 20,
+              "started_ns": 13562100724,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13604086738,
+              "kind": "fixed_delay",
+              "operation_index": 24,
+              "requested_ms": 20,
+              "started_ns": 13583796109,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13624946334,
+              "kind": "fixed_delay",
+              "operation_index": 26,
+              "requested_ms": 20,
+              "started_ns": 13604749989,
+              "update_observed": null
+            },
+            {
+              "completed": true,
+              "ended_ns": 13926443317,
+              "kind": "fixed_delay",
+              "operation_index": 29,
+              "requested_ms": 300,
+              "started_ns": 13626331374,
+              "update_observed": null
+            }
+          ]
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "clock.monotonic",
+          "display.geometry",
+          "event.feedback",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "saved_sha256": "21ec8135bbb02d7c5a172a466e8361385be139f27ee88addaee95b33cc195296",
+      "start_ns": 13360866188,
+      "x": 80,
+      "y": 168
+    },
+    {
+      "a": 19,
+      "b": 23,
+      "click_wait_ms": 0,
+      "end_ns": 14020775573,
+      "image": {
+        "end_ns": 14057634630,
+        "image": {
+          "artifact": {
+            "bytes": 58255,
+            "height": 800,
+            "mime_type": "image/png",
+            "path": "/out/images/dcd949a6230742dfae95475dbaf79d9a.png",
+            "sha256": "2b8a4079894a902b79e8f1b6e5513ff336da06a94d558d388e43fbf96894f2bb",
+            "source_raw_sha256": "be0aacad52e4d524aae6e140f9b1d87aab9c06cd7d95fc80940eb2d9c951c8b9",
+            "timing_ns": {
+              "converted": 14030955957,
+              "encoded": 14051402328,
+              "hashed": 14057610414,
+              "started": 14028779689,
+              "written": 14055118617
+            },
+            "width": 1280
+          },
+          "bytes": 4096000,
+          "capture_ended_ns": 14026556237,
+          "capture_started_ns": 14020779860,
+          "frame": "screen_physical_px",
+          "height": 800,
+          "native_window_id": 6291969,
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "sha256": "be0aacad52e4d524aae6e140f9b1d87aab9c06cd7d95fc80940eb2d9c951c8b9",
+          "target": "owned",
+          "width": 1280
+        },
+        "physical": {
+          "buttons": 0,
+          "end_ns": 14058049949,
+          "keys": [],
+          "start_ns": 14057635585
+        },
+        "start_ns": 14020776301
+      },
+      "label": "trial",
+      "physical": {
+        "buttons": 0,
+        "end_ns": 14064924846,
+        "keys": [],
+        "start_ns": 14064510459
+      },
+      "program": {
+        "authority": {
+          "expires_at_ns": 24019345505,
+          "lease_id": "owned-calc-click-text-diagnostic"
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "owned"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "HOME"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "Down"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "text",
+            "text": "1"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "9"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "TAB"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "3"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "TAB"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "text",
+            "text": "="
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "A"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "*"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "B"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "op": "text",
+            "text": "2"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 20
+          },
+          {
+            "keys": [
+              "ENTER"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "keys": [
+              "CTRL",
+              "s"
+            ],
+            "op": "key_chord"
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 300
+          },
+          {
+            "op": "release_all"
+          }
+        ],
+        "program_id": "trial",
+        "schema": "agent-interface/program-v1",
+        "source": {
+          "binding_revision": 1,
+          "observation_seq": 1
+        },
+        "terminal": {
+          "release_all_required": true
+        }
+      },
+      "receipt": {
+        "backend_emissions": 39,
+        "cleanup_attempted": true,
+        "detail": "unmapped key HOME; X11 keysym names are case-sensitive, use Home",
+        "error": "BACKEND_CONSTRAINT",
+        "program_emissions": 0,
+        "program_execution_started": false,
+        "recovery_required": false,
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 14020755866,
+          "verified": true
+        },
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "refused"
+      },
+      "saved_sha256": "21ec8135bbb02d7c5a172a466e8361385be139f27ee88addaee95b33cc195296",
+      "start_ns": 14019347307,
+      "x": 82,
+      "y": 168
+    }
+  ],
+  "terminal": [
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 255,
+      "name": "Calc",
+      "pid": 15
+    },
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 0,
+      "name": "openbox",
+      "pid": 12
+    },
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 0,
+      "name": "Xvfb",
+      "pid": 8
+    }
+  ]
+}

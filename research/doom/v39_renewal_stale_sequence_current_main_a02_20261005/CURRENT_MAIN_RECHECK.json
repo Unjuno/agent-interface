@@ -1,0 +1,15 @@
+{
+  "schema": "v39-renewal-stale-sequence-a02-followup-v1",
+  "checked_at_utc": "2026-10-05",
+  "observed_origin_main": "5339abda428b426a7e646dbd3f17f3a62c960584",
+  "captured_test_source_main": "b6907899f11b036f2af572e8d4794ebb4b7e5c83",
+  "result": "A02 remains a valid reproduction for its frozen b690 source only. It must not be described as current-main reproduction: the captured blobs differ from current main and a later fix commit exists but is not an ancestor of main.",
+  "controller_blob_in_a02": "e9b437979e87347f6aa4dbefffcc84e9a2d01752",
+  "controller_blob_current_main_snapshot": "ba5eaa3c364647ce4d509e9a6d88c76d46ac4b2d",
+  "cleanup_blob_in_a02": "d04e167ed182d5faf935e6c23132b164fe9a16ac",
+  "cleanup_blob_current_main_snapshot": "b20e29662f7939e8efc609cba5d5b60d30712dd5",
+  "followup_fix_commit": "fc14994f53655da57b9b6573d028ddde1a11b858",
+  "followup_fix_is_ancestor_of_origin_main": false,
+  "followup_fix_summary": "Adds stale-sequence renewal disposition handling and renewal recovery; requires a separate candidate validation before adoption.",
+  "test_rerun": false
+}

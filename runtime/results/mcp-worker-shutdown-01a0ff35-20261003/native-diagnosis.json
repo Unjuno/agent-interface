@@ -1,0 +1,131 @@
+{
+  "classification": "retained ordinary shared-entry FAIL and bounded source/clock diagnosis; not formal result or retry",
+  "observed_utc": "2026-10-03T06:05:28.997409+00:00",
+  "checks": {
+    "protocol": {
+      "methods": 419,
+      "verdict": "FAILED (failures=4, errors=30, skipped=7)",
+      "errors": [
+        "test_continuation_never_infers_from_bad_or_terminal_sources (test_native_exchange_v1.NativeExchangeTests.test_continuation_never_infers_from_bad_or_terminal_sources)",
+        "test_continuation_rejects_different_delivered_image_identity (test_native_exchange_v1.NativeExchangeTests.test_continuation_rejects_different_delivered_image_identity)",
+        "test_continuation_requires_matching_source_and_unoccupied_slot (test_native_exchange_v1.NativeExchangeTests.test_continuation_requires_matching_source_and_unoccupied_slot)",
+        "test_digest_resume_keeps_reply_binding_and_owner_loss_rules (test_native_exchange_v1.NativeExchangeTests.test_digest_resume_keeps_reply_binding_and_owner_loss_rules)",
+        "test_digest_resume_pending_then_reply_is_read_only (test_native_exchange_v1.NativeExchangeTests.test_digest_resume_pending_then_reply_is_read_only)",
+        "test_digest_resume_rejects_missing_changed_or_ambiguous_reference (test_native_exchange_v1.NativeExchangeTests.test_digest_resume_rejects_missing_changed_or_ambiguous_reference)",
+        "test_digest_resume_rejects_noncanonical_bytes_and_read_race (test_native_exchange_v1.NativeExchangeTests.test_digest_resume_rejects_noncanonical_bytes_and_read_race)",
+        "test_directory_sync_failure_leaves_occupied_slot_and_resume_is_read_only (test_native_exchange_v1.NativeExchangeTests.test_directory_sync_failure_leaves_occupied_slot_and_resume_is_read_only)",
+        "test_foreign_and_malformed_owner_are_not_a_claim_of_process_death (test_native_exchange_v1.NativeExchangeTests.test_foreign_and_malformed_owner_are_not_a_claim_of_process_death)",
+        "test_historical_bound_and_explicit_longer_session_contract (test_native_exchange_v1.NativeExchangeTests.test_historical_bound_and_explicit_longer_session_contract)",
+        "test_invalid_stage_contract_never_publishes_request (test_native_exchange_v1.NativeExchangeTests.test_invalid_stage_contract_never_publishes_request)",
+        "test_live_owner_is_pending_but_replaced_incarnation_requires_reconciliation (test_native_exchange_v1.NativeExchangeTests.test_live_owner_is_pending_but_replaced_incarnation_requires_reconciliation)",
+        "test_owner_channel_payload_or_wrong_descriptor_refuses (test_native_exchange_v1.NativeExchangeTests.test_owner_channel_payload_or_wrong_descriptor_refuses)",
+        "test_owner_pipe_lifetime_is_nonblocking_and_does_not_leak_on_exec (test_native_exchange_v1.NativeExchangeTests.test_owner_pipe_lifetime_is_nonblocking_and_does_not_leak_on_exec)",
+        "test_publish_refuses_existing_slot_without_partial_overwrite (test_native_exchange_v1.NativeExchangeTests.test_publish_refuses_existing_slot_without_partial_overwrite)",
+        "test_resume_missing_or_changed_request_does_not_publish (test_native_exchange_v1.NativeExchangeTests.test_resume_missing_or_changed_request_does_not_publish)",
+        "test_review_recovery_forbids_input_without_consuming_request (test_native_exchange_v1.NativeExchangeTests.test_review_recovery_forbids_input_without_consuming_request)",
+        "test_stopped_owner_is_not_terminal_and_finished_reply_takes_precedence (test_native_exchange_v1.NativeExchangeTests.test_stopped_owner_is_not_terminal_and_finished_reply_takes_precedence)",
+        "test_syncs_complete_file_before_link_and_directory_before_return (test_native_exchange_v1.NativeExchangeTests.test_syncs_complete_file_before_link_and_directory_before_return)",
+        "test_timeout_then_read_only_resume_never_republishes (test_native_exchange_v1.NativeExchangeTests.test_timeout_then_read_only_resume_never_republishes)",
+        "test_wrong_reply_identity_and_wrong_source_are_rejected (test_native_exchange_v1.NativeExchangeTests.test_wrong_reply_identity_and_wrong_source_are_rejected)",
+        "test_stdio_observe_submit_pending_resume_and_duplicate (test_native_mcp_v1.MCPTests.test_stdio_observe_submit_pending_resume_and_duplicate)",
+        "test_stdio_pacing_refusal_keeps_connection_and_request_slot_usable (test_native_mcp_v1.MCPTests.test_stdio_pacing_refusal_keeps_connection_and_request_slot_usable)",
+        "test_stdio_recovery_request_publishes_only_explicit_observation (test_native_mcp_v1.MCPTests.test_stdio_recovery_request_publishes_only_explicit_observation)",
+        "test_foreign_source_is_not_ready (test_native_allocation_v1.AllocationTests.test_foreign_source_is_not_ready)",
+        "test_only_reader_is_passed_and_terminal_poll_closes_writer (test_native_allocation_v1.AllocationTests.test_only_reader_is_passed_and_terminal_poll_closes_writer)",
+        "test_owner_lifetime_pipe_closes_on_setup_and_spawn_failure (test_native_allocation_v1.AllocationTests.test_owner_lifetime_pipe_closes_on_setup_and_spawn_failure) (phase='launch_record')",
+        "test_owner_lifetime_pipe_closes_on_setup_and_spawn_failure (test_native_allocation_v1.AllocationTests.test_owner_lifetime_pipe_closes_on_setup_and_spawn_failure) (phase='spawn')",
+        "test_start_timeout_observes_same_owner_and_never_restarts_terminal (test_native_allocation_v1.AllocationTests.test_start_timeout_observes_same_owner_and_never_restarts_terminal)",
+        "test_stop_is_opt_in_idempotent_and_never_relaunches (test_native_allocation_v1.AllocationTests.test_stop_is_opt_in_idempotent_and_never_relaunches)"
+      ],
+      "failures": [
+        "test_explicit_wait_is_after_release_and_retained_lookup_never_waits_again (runtime.cli_v1.test_post_dispatch_capture.PostDispatchCaptureTests.test_explicit_wait_is_after_release_and_retained_lookup_never_waits_again)",
+        "test_no_inline_capture_summary_keeps_image_and_full_program_retrieval (runtime.cli_v1.test_post_dispatch_capture.PostDispatchCaptureTests.test_no_inline_capture_summary_keeps_image_and_full_program_retrieval)",
+        "test_real_relay_forwards_opt_in_stop_without_starting_allocation (test_native_mcp_relay_v1.RelayTests.test_real_relay_forwards_opt_in_stop_without_starting_allocation)",
+        "test_real_relay_pending_resume_then_second_stage (test_native_mcp_relay_v1.RelayTests.test_real_relay_pending_resume_then_second_stage)"
+      ]
+    },
+    "harness": {
+      "methods": 205,
+      "verdict": "FAILED (failures=1, errors=39)",
+      "errors": [
+        "test_arbitrary_mint_error_does_not_continue (test_native_finish_after_v1.NativeFinishAfterTests.test_arbitrary_mint_error_does_not_continue)",
+        "test_cleanup_failure_preserves_action_image_and_evaluation (test_native_finish_after_v1.NativeFinishAfterTests.test_cleanup_failure_preserves_action_image_and_evaluation)",
+        "test_default_and_false_still_wait_for_explicit_finish (test_native_finish_after_v1.NativeFinishAfterTests.test_default_and_false_still_wait_for_explicit_finish) (extra={})",
+        "test_default_and_false_still_wait_for_explicit_finish (test_native_finish_after_v1.NativeFinishAfterTests.test_default_and_false_still_wait_for_explicit_finish) (extra={'finish_after': False})",
+        "test_directional_task_is_public_before_first_decision (test_native_finish_after_v1.NativeFinishAfterTests.test_directional_task_is_public_before_first_decision)",
+        "test_explicit_observation_neither_mints_nor_dispatches_input (test_native_finish_after_v1.NativeFinishAfterTests.test_explicit_observation_neither_mints_nor_dispatches_input)",
+        "test_failed_input_is_not_evaluated_or_replayed (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_input_is_not_evaluated_or_replayed) (status='refused')",
+        "test_failed_input_is_not_evaluated_or_replayed (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_input_is_not_evaluated_or_replayed) (status='release_unverified')",
+        "test_failed_observation_requires_explicit_recovery (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_observation_requires_explicit_recovery)",
+        "test_failed_review_after_refusal_stays_terminal (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_review_after_refusal_stays_terminal)",
+        "test_failed_task_is_retained_in_finished_session (test_native_finish_after_v1.NativeFinishAfterTests.test_failed_task_is_retained_in_finished_session)",
+        "test_finish_after_on_last_permitted_stage (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_after_on_last_permitted_stage)",
+        "test_finish_after_one_response_after_cleanup (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_after_one_response_after_cleanup)",
+        "test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'tail': [{'op': 'key_chord', 'keys': ['CTRL', 's']}]})",
+        "test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'tail': []})",
+        "test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'point': [600, 378]})",
+        "test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'interaction': 'click'})",
+        "test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'finish_after': False})",
+        "test_finish_with_action_fields_never_silently_evaluates (test_native_finish_after_v1.NativeFinishAfterTests.test_finish_with_action_fields_never_silently_evaluates) (extra={'unknown': None})",
+        "test_flat_refusal_at_stage_limit_does_not_publish_next_source (test_native_finish_after_v1.NativeFinishAfterTests.test_flat_refusal_at_stage_limit_does_not_publish_next_source)",
+        "test_flat_refusal_returns_new_boundary_then_explicit_action (test_native_finish_after_v1.NativeFinishAfterTests.test_flat_refusal_returns_new_boundary_then_explicit_action)",
+        "test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': 'true'})",
+        "test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': 1})",
+        "test_invalid_or_conflicting_flags_precede_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_invalid_or_conflicting_flags_precede_mint) (decision={'finish_after': True, 'finish': True})",
+        "test_last_stage_returns_terminal_evidence_without_unusable_source (test_native_finish_after_v1.NativeFinishAfterTests.test_last_stage_returns_terminal_evidence_without_unusable_source) (last={'interaction': 'observe'})",
+        "test_last_stage_returns_terminal_evidence_without_unusable_source (test_native_finish_after_v1.NativeFinishAfterTests.test_last_stage_returns_terminal_evidence_without_unusable_source) (last={'point': [600, 378], 'expected_title': 'shape.svg - Inkscape', 'tail': []})",
+        "test_observation_rejects_hidden_input_fields (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_rejects_hidden_input_fields)",
+        "test_observation_reviews_changed_focus_without_input (test_native_finish_after_v1.NativeFinishAfterTests.test_observation_reviews_changed_focus_without_input)",
+        "test_pending_review_rejects_input_before_mint (test_native_finish_after_v1.NativeFinishAfterTests.test_pending_review_rejects_input_before_mint)",
+        "test_post_input_failed_review_never_replays_and_ignores_finish_after (test_native_finish_after_v1.NativeFinishAfterTests.test_post_input_failed_review_never_replays_and_ignores_finish_after)",
+        "test_repeated_review_failure_exhausts_stage_bound_without_input (test_native_finish_after_v1.NativeFinishAfterTests.test_repeated_review_failure_exhausts_stage_bound_without_input)",
+        "test_cleanup_does_not_replace_original_action_error (test_native_cleanup_v1.CleanupTests.test_cleanup_does_not_replace_original_action_error)",
+        "test_copy_and_close_failures_do_not_skip_session (test_native_cleanup_v1.CleanupTests.test_copy_and_close_failures_do_not_skip_session)",
+        "test_live_process_prevents_finished (test_native_cleanup_v1.CleanupTests.test_live_process_prevents_finished)",
+        "test_persistence_failure_in_returned_reply (test_native_cleanup_v1.CleanupTests.test_persistence_failure_in_returned_reply)",
+        "test_poll_failure_prevents_finished (test_native_cleanup_v1.CleanupTests.test_poll_failure_prevents_finished)",
+        "test_publication_follows_cleanup (test_native_cleanup_v1.CleanupTests.test_publication_follows_cleanup)",
+        "test_session_failure_still_checks_processes (test_native_cleanup_v1.CleanupTests.test_session_failure_still_checks_processes)",
+        "test_task_failure_is_not_cleanup_failure (test_native_cleanup_v1.CleanupTests.test_task_failure_is_not_cleanup_failure)"
+      ],
+      "failures": [
+        "test_guarded_api_imports_from_archive_without_research_checkout (runtime.guarded_x11_v1.test_archive.GuardedArchiveTests.test_guarded_api_imports_from_archive_without_research_checkout)"
+      ]
+    }
+  },
+  "baseline_three": {
+    "methods": 3,
+    "verdict": "FAILED (failures=2)",
+    "errors": [],
+    "failures": [
+      "test_no_inline_capture_summary_keeps_image_and_full_program_retrieval (runtime.cli_v1.test_post_dispatch_capture.PostDispatchCaptureTests.test_no_inline_capture_summary_keeps_image_and_full_program_retrieval) (clock='fresh-host')",
+      "test_guarded_api_imports_from_archive_without_research_checkout (runtime.guarded_x11_v1.test_archive.GuardedArchiveTests.test_guarded_api_imports_from_archive_without_research_checkout)"
+    ]
+  },
+  "clock_observation": {
+    "monotonic": {
+      "implementation": "GetTickCount64()",
+      "monotonic": true,
+      "adjustable": false,
+      "resolution_seconds": 0.015625
+    },
+    "perf_counter": {
+      "implementation": "QueryPerformanceCounter()",
+      "monotonic": true,
+      "adjustable": false,
+      "resolution_seconds": 1e-07
+    }
+  },
+  "clock_observation_interpreter": "orchestrator3.11.9; supported3.12 clock implementation separately available through captured native environment/runtime source; no physical sleep duration measured here",
+  "source_facts": [
+    "Legacy native exchange/allocation/finish/cleanup require POSIX and /proc/self/ns/pid or os.O_DIRECTORY; these sources are unchanged and were not ported.",
+    "Archive fixture identifies itself as Linux/X11 and asserts zip module filenames begin archive path plus literal slash; unchanged original-server check reproduces that assertion failure.",
+    "One no-inline-summary20ms assertion reproduces as15ms on original-server source; explicit-wait case passes in that one baseline check. Both candidate failures remain; no favorable-row selection or causal frequency inference.",
+    "The runtime wait calls time.sleep and timestamps it with time.monotonic_ns, both unchanged. Coarse Windows monotonic resolution is a plausible explanation for unstable lower-bound measurement, not proof of actual physical wait duration.",
+    "No full shared-native PASS or Linux-supported backend result is claimed. Appropriate compatible native checks/explicit review remain necessary before runtime adoption."
+  ],
+  "original_server_blob": "05f952d26c90d66ccc2af3b24dd4704e0ffd596e",
+  "original_server_sha256": "048de835474aa85d052bbeb3a5cc35eada9a1fca874fc1f1f705914b7ba2fee6",
+  "restored_final_server_sha256": "99457ff3890685d3b503ef695d2dda894c8620c4ee54e12a1e10ade3e1885b33",
+  "formal_allocations": 0
+}

@@ -1,0 +1,35 @@
+{
+  "allocation_id": "TASK-MEMORY-RETRIEVAL-7166-T0-HOST-A04-20261004",
+  "base_main": "58bcbb4c45501880db8782158ddd3add3b765984",
+  "issue": 7166,
+  "issue_state_at_freeze": "open",
+  "matching_open_prs": 0,
+  "matching_remote_branches": 0,
+  "output_path_absent_at_freeze": true,
+  "candidate_budget": 1,
+  "auditor_budget": 1,
+  "retries": 0,
+  "environment": "macOS arm64; CPython 3.14.5; standard library; host-only; no model, GUI, network, GPU, container, or input",
+  "container_note": "OrbStack content-store STOP already recorded in Issue #7383 comment 5976132398; not retried and no container enforcement claimed",
+  "construction": {
+    "test_command": "python3 -I research/analysis/task_memory_retrieval_7166_t0_host_a04_20261004/test_package.py",
+    "test_result": "PASS 4/4, including explicit assertion that all six frozen mutation operations change rows",
+    "py_compile": "PASS",
+    "fixture_and_oracle": "A03 semantics preserved byte-for-byte; 72 cases and six strata of 12"
+  },
+  "sha256": {
+    "build_fixture.py": "53da033bafee6ef5b4bdf84d0bea5517684a323f54fd1ae2db52d5b8fed7d028",
+    "candidate.py": "f413be2c76ce71cab1011bc60cf7d990cdfd17233416ddf3c3f6f0dc97f49a7f",
+    "auditor.py": "7583bf498c676d062d37bb8ace006de29692d776fa7af9e620509d0551a318b6",
+    "test_package.py": "6a2f4ed29fe31c8fcb70b2ae74db3c73ad53bbff4da1200f67c3752aee7e21ed",
+    "fixture.json": "ba740a845801cda6b9aedd2dcd2da8c5a93e9101ea111291952a38fda8c42fb6",
+    "oracle.json": "5187722e91795f19011648735b018ba04e481fa72ceaa91754a76d648c1eb6a6",
+    "README.md": "b4090ab3ddd278870d70c7c60585d437060d2f4578397eb2ad4af6fcb80edb4a",
+    "PREREGISTRATION.md": "511bbd9e5bfc0d915491957f109b94c088a17e4b3288ac02edb4bebce1fa455b"
+  },
+  "formal_invocations_at_freeze": {
+    "candidate": 0,
+    "auditor": 0
+  },
+  "frozen_at_utc": "2026-10-04T03:58:34Z"
+}

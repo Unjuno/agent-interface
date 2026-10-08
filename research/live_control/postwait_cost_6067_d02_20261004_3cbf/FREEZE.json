@@ -1,0 +1,466 @@
+{
+  "schema": "postwait-cost-6067-d02-v1",
+  "allocation": "POSTWAIT-COST-6067-D02-20261004-3CBF",
+  "source_commit": "c3fe1cd39c60a50ec494e4b280d3a0ccc0b2b3f1",
+  "source_sha256": {
+    "observer.py": "8be84058c071ae18324feaf2890fcff6d494e6a7b9bcd0ed9760e92734c359c6",
+    "fixture.py": "01e3a0355107ec8eb5e703635851cc12c7b3d7ea6c1a4e0f7ab85674e2f06b1d",
+    "STATUS_SNAPSHOT.md": "8b5fdb49e75f78d970b2ebe3fa52115b012085783c2407374fbae461ccc3de95",
+    "methods/cell-red.log": "32de890bedbe8838573a3de08bf3743b071528e1f49ca321c7be1c593b988205",
+    "methods/cell-red-confirmed.log": "a004585c544f986ee650dcec6f9f2532204c792a9dc042f23d900e44b0e8a036",
+    "methods/container-v2-inspection.json": "3898451efa56a40f3d2fe2e8a18665029c04e98ec36fc83522b2924add6d6261",
+    "methods/container-v2-green.log": "ab745811962098fe370ca46f923f1a41d77950d244a4b9b9de0acf68182cd7b3",
+    "methods/audit-command-red.log": "51b55d9d000a10edb86d8c2a59a1398dff78e17966ede80eadaba67a796c42ca",
+    "methods/trial-full-endpoint-red.log": "6a1ec5236ade208b0851417335476fafcf0384c08b4646638f387bbc99589af0",
+    "methods/container-green.log": "f14504955ae6adbdd966e0c0e6d601ea961cee0746b4dd64aa01e623548ee424",
+    "methods/review2-red.log": "38f51075d8e61d7eef402f8e023187d0c68fef3b26e7486030d99ed45f6c6de3",
+    "methods/container-inspection.json": "44ddd725c2b59697c2595881eba789ac77e8bd0c176eab5c8b66770c0a08e730",
+    "methods/producer-red.log": "582fc3a90157d4f6d6f9b8363824a94fc08d090fb2e66d8c36490e5aee78ab3c",
+    "methods/audit-command-length-failure.log": "e5adefb1228001be1e26dcd0c9782af3bd82e9780a4ddcbfe00e200aa32cf90d",
+    "methods/validation-red.log": "3857fcafc012ec4c2f9d9b768d5e025d8c33f2d22e52ddaffd8de9ed649d93cb",
+    "methods/decision-red.log": "f1683c64f27d9106d20f0f2f488281f1c517e68a87109a1e253cfb8f57348343",
+    "test_validation.py": "0dc841d856d129a44252eade1e055eb5791e72ea21a846a0c5507c3c0630d285",
+    "plan.json": "63579d07caad0a7ab1bcd2241434b944ee3cc63ac31e150f958f219e10471221",
+    "audit.py": "292b3938b4900424384888909a525a66a2b083c1904cb4f635b4ecb890cdeffa",
+    "test_producer.py": "3f6cdab1446f89df6fd7d12ac40e71cc5bd91e404f9923b0efb6fdbee6259ab4",
+    "test_decision.py": "4356b108b8b4df1962db256c1d8e7655405e6ee63f2b8b229d42cd2f912114ff",
+    "policy.py": "f31df31976e59ebfee0dd2ff505ca057583912daa0d56f5d8fc69a1c6c64a6a2",
+    "decision.py": "18e5ab993792ede4c649f4c4f548eba3a44ed7cc7236200aae47eb9cf88b48f1",
+    "test_cell.py": "e253bfdc68614e08b095f405f04cc8eb58f716b019cac0e023dd620bef745217",
+    "producer.py": "a31475a3c1ec91780d23101f06dd49be43e12c438d4028fe57f05dff51ba1341",
+    "README.md": "e744c3fd2bc2a4b02db91860aa2ec4141eba892a52bd3ca3728a173703e85d89",
+    "timing.py": "1f8ec675a3f582dd66c9bed1d4a31c76aee1b7986c7417fe6102cb7387e07030",
+    "common.py": "d0274dc14a409ae409363ca82b83a4cffd186f37b7c859ba1cb6e22d875d9b37",
+    "test_audit.py": "b83c2ee79386a0cc092a10bb467c79c8805fe8a37d0533f8a3b22ed489e0c360",
+    "x11.py": "51570deaf7e11828df3d58c6ddc65381fb3041818e3b733978c62090125030d5",
+    "validation.py": "750adad989e0dfbccac37160a6ab992dfdaa0d5b215312f5531c0c8f7b6c4467"
+  },
+  "cases": [
+    {
+      "id": "dark_full",
+      "kind": "dark",
+      "treatment": "full",
+      "pair": null,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "dark_minimal",
+      "kind": "dark",
+      "treatment": "minimal",
+      "pair": null,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "persistent_full",
+      "kind": "persistent",
+      "treatment": "full",
+      "pair": null,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "persistent_minimal",
+      "kind": "persistent",
+      "treatment": "minimal",
+      "pair": null,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p0_full",
+      "kind": "pulse",
+      "treatment": "full",
+      "pair": 0,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p0_minimal",
+      "kind": "pulse",
+      "treatment": "minimal",
+      "pair": 0,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p1_minimal",
+      "kind": "pulse",
+      "treatment": "minimal",
+      "pair": 1,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p1_full",
+      "kind": "pulse",
+      "treatment": "full",
+      "pair": 1,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p2_minimal",
+      "kind": "pulse",
+      "treatment": "minimal",
+      "pair": 2,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p2_full",
+      "kind": "pulse",
+      "treatment": "full",
+      "pair": 2,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p3_full",
+      "kind": "pulse",
+      "treatment": "full",
+      "pair": 3,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p3_minimal",
+      "kind": "pulse",
+      "treatment": "minimal",
+      "pair": 3,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p4_full",
+      "kind": "pulse",
+      "treatment": "full",
+      "pair": 4,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p4_minimal",
+      "kind": "pulse",
+      "treatment": "minimal",
+      "pair": 4,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p5_minimal",
+      "kind": "pulse",
+      "treatment": "minimal",
+      "pair": 5,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    },
+    {
+      "id": "p5_full",
+      "kind": "pulse",
+      "treatment": "full",
+      "pair": 5,
+      "phase": 1,
+      "width_ms": 10,
+      "offsets": [
+        0,
+        3,
+        6,
+        9
+      ]
+    }
+  ],
+  "native_output": "/out/record",
+  "native_producer_runs": 1,
+  "saved_diagnostic_auditor_runs": 1,
+  "auditor_admission": "only after producer terminal0 and COMPLETE_DIAGNOSTIC plus source/runtime/raw/copy custody",
+  "retries": 0,
+  "scientific_114_runs": 0,
+  "decision": {
+    "pooled_reduction_ns_at_least": 500000,
+    "paired_reduction_ns_at_least": 500000,
+    "required_pairs": 5,
+    "matched_pairs": 6,
+    "support": "SUPPORTED_FINITE_CONTRAST",
+    "otherwise": "HOLD_NOT_REPRODUCED",
+    "collection_failure": "STOP_COLLECTION"
+  },
+  "controls": {
+    "actual_semantic_cell_corruptions": 9,
+    "full_wrapper_mutation_trials": 0
+  },
+  "runtime": {
+    "vm": "research-6183-t0-20261003",
+    "uuid": "01M3ZD3J2GK283SQRFW9EW9DBZ",
+    "image": "sha256:c4839671ed0625dd38a53d8ed542bab16407c2b4c88a5ac84431695438c2b816",
+    "cgroups": {
+      "cpu.max": "100000 100000",
+      "memory.max": "536870912",
+      "memory.swap.max": "0",
+      "pids.max": "64"
+    },
+    "host_exclusive": false
+  },
+  "paths": {
+    "guest_source": "/home/taka/inputs/postwait-6067-d02-3cbf-source",
+    "guest_native": "/home/taka/outputs/postwait-6067-d02-3cbf-native",
+    "guest_audit": "/home/taka/outputs/postwait-6067-d02-3cbf-audit",
+    "guest_raw_export": "/home/taka/outputs/postwait-6067-d02-3cbf-raw-export",
+    "guest_audit_export": "/home/taka/outputs/postwait-6067-d02-3cbf-audit-export",
+    "host_evidence": "/Users/taka/Documents/Codex/2026-10-04/postwait-cost-d02-evidence-3cbf"
+  },
+  "commands": {
+    "native": [
+      "/usr/local/bin/orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "-u",
+      "root",
+      "docker",
+      "run",
+      "--name",
+      "postwait-6067-d02-3cbf-native",
+      "--network",
+      "none",
+      "--cpus",
+      "1",
+      "--memory",
+      "512m",
+      "--memory-swap",
+      "512m",
+      "--pids-limit",
+      "64",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--user",
+      "501:501",
+      "--tmpfs",
+      "/tmp:rw,nosuid,size=64m",
+      "--mount",
+      "type=bind,source=/home/taka/inputs/postwait-6067-d02-3cbf-source,target=/source,readonly",
+      "--env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "--mount",
+      "type=bind,source=/home/taka/outputs/postwait-6067-d02-3cbf-native,target=/out",
+      "sha256:c4839671ed0625dd38a53d8ed542bab16407c2b4c88a5ac84431695438c2b816",
+      "python3",
+      "-B",
+      "/source/producer.py",
+      "--out",
+      "/out/record",
+      "--freeze",
+      "/source/FREEZE.json"
+    ],
+    "audit": [
+      "/usr/local/bin/orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "-u",
+      "root",
+      "docker",
+      "run",
+      "--name",
+      "postwait-6067-d02-3cbf-audit",
+      "--network",
+      "none",
+      "--cpus",
+      "1",
+      "--memory",
+      "512m",
+      "--memory-swap",
+      "512m",
+      "--pids-limit",
+      "64",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--security-opt",
+      "no-new-privileges",
+      "--user",
+      "501:501",
+      "--tmpfs",
+      "/tmp:rw,nosuid,size=64m",
+      "--mount",
+      "type=bind,source=/home/taka/inputs/postwait-6067-d02-3cbf-source,target=/source,readonly",
+      "--env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "--mount",
+      "type=bind,source=/home/taka/outputs/postwait-6067-d02-3cbf-raw-export,target=/raw,readonly",
+      "--mount",
+      "type=bind,source=/home/taka/outputs/postwait-6067-d02-3cbf-audit,target=/out",
+      "sha256:c4839671ed0625dd38a53d8ed542bab16407c2b4c88a5ac84431695438c2b816",
+      "python3",
+      "-B",
+      "/source/audit.py",
+      "--raw",
+      "/raw",
+      "--out",
+      "/out/result",
+      "--freeze",
+      "/source/FREEZE.json"
+    ],
+    "native_inspect": [
+      "/usr/local/bin/orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "-u",
+      "root",
+      "docker",
+      "inspect",
+      "postwait-6067-d02-3cbf-native"
+    ],
+    "audit_inspect": [
+      "/usr/local/bin/orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "-u",
+      "root",
+      "docker",
+      "inspect",
+      "postwait-6067-d02-3cbf-audit"
+    ],
+    "native_export": [
+      "/usr/local/bin/orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "-u",
+      "root",
+      "docker",
+      "cp",
+      "postwait-6067-d02-3cbf-native:/out/record",
+      "/home/taka/outputs/postwait-6067-d02-3cbf-raw-export"
+    ],
+    "audit_export": [
+      "/usr/local/bin/orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "-u",
+      "root",
+      "docker",
+      "cp",
+      "postwait-6067-d02-3cbf-audit:/out/result",
+      "/home/taka/outputs/postwait-6067-d02-3cbf-audit-export"
+    ],
+    "native_host_copy": [
+      "/usr/local/bin/orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "cp",
+      "-a",
+      "/home/taka/outputs/postwait-6067-d02-3cbf-raw-export",
+      "/Users/taka/Documents/Codex/2026-10-04/postwait-cost-d02-evidence-3cbf/raw"
+    ],
+    "audit_host_copy": [
+      "/usr/local/bin/orbctl",
+      "run",
+      "-m",
+      "research-6183-t0-20261003",
+      "cp",
+      "-a",
+      "/home/taka/outputs/postwait-6067-d02-3cbf-audit-export",
+      "/Users/taka/Documents/Codex/2026-10-04/postwait-cost-d02-evidence-3cbf/audit"
+    ]
+  },
+  "boundaries": "New finite source-instrumentation counterfactual only; no consumed A03/B01 replay, no exact old rootcause, no scientific114/phase-effect/task/model/rare-tail/safety promotion. Timing/exposure outcomes retained without diagnostic censoring."
+}

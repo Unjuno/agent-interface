@@ -1,0 +1,104 @@
+"""Private one-time export/freeze. Bytes are copied without parsing the180 raw trials."""
+import datetime
+import hashlib
+import json
+import platform
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+REPO = ROOT / "agent-interface"
+OUT = ROOT / "interval-6526"
+PKG = REPO / "research/integration/publication_interval_6526_20261003_01a0ff35"
+SOURCE = "332da58a9b6b825c384a142dfb59d7ed2b8b774e"
+CURRENT = "a3e93e471f065214ed01b050683aaecbe0db3b4d"
+A02 = "research/analysis/observation_intervention_6526_a02_orbstack_20261003/"
+A03 = "research/analysis/observation_intervention_6526_a03_deadline_audit_only_20261003/"
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def write(path, value):
+    path.write_text(json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+
+def main():
+    OUT.mkdir(exist_ok=False)
+    (PKG / "evidence").mkdir(exist_ok=False)
+    started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    differences = subprocess.run(["git", "diff", "--exit-code", SOURCE, CURRENT, "--", A02, A03],
+                                 cwd=REPO, capture_output=True)
+    (OUT / "source-current-diff.stdout").write_bytes(differences.stdout)
+    (OUT / "source-current-diff.stderr").write_bytes(differences.stderr)
+    if differences.returncode != 0:
+        raise RuntimeError("source-current-difference")
+    proc = subprocess.run(["git", "ls-tree", "-r", SOURCE, "--", A02, A03],
+                          cwd=REPO, capture_output=True, check=True)
+    chosen = []
+    fixed = {A02 + p for p in ("fixture.py", "candidate.py", "FREEZE.json", "results/formal-a02/audit.json",
+                              "results/formal-a02/SHA256SUMS.txt")}
+    fixed.update(A03 + p for p in ("posthoc_audit.py", "REPORT.md"))
+    fixed.update(A02 + "results/formal-a02/raw/" + p for p in
+                 ("app-events.jsonl", "formal-trials.json", "candidate-receipt.json"))
+    for line in proc.stdout.decode().splitlines():
+        meta, path = line.split("\t")
+        mode, kind, blob = meta.split()
+        if path in fixed or (path.startswith(A02 + "results/formal-a02/raw/") and
+                            Path(path).name.startswith(("deadline-", "effect-")) and path.endswith(".json")):
+            if kind != "blob" or mode != "100644":
+                raise RuntimeError("unexpected-selected-mode")
+            chosen.append((path, mode, blob))
+    if len(chosen) != 370:
+        raise RuntimeError("selected-count:" + str(len(chosen)))
+    batch = subprocess.run(["git", "cat-file", "--batch"], input=("\n".join(v[2] for v in chosen) + "\n").encode(),
+                           cwd=REPO, capture_output=True, check=True)
+    if len(batch.stdout) > 15 * 1024 * 1024:
+        raise RuntimeError("export-byte-bound")
+    offset = 0
+    files = []
+    for path, mode, blob in chosen:
+        boundary = batch.stdout.index(b"\n", offset)
+        header = batch.stdout[offset:boundary].decode().split()
+        if header[:2] != [blob, "blob"]:
+            raise RuntimeError("batch-header")
+        size = int(header[2])
+        offset = boundary + 1
+        data = batch.stdout[offset:offset + size]
+        offset += size + 1
+        if hashlib.sha1(b"blob " + str(size).encode() + b"\0" + data).hexdigest() != blob:
+            raise RuntimeError("export-blob")
+        destination = OUT / "inputs" / path
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(data)
+        files.append({"path": path, "mode": mode, "git_blob": blob, "bytes": size, "sha256": sha(data)})
+    if offset != len(batch.stdout):
+        raise RuntimeError("batch-trailing-bytes")
+    write(PKG / "INPUTS.json", {"source_commit": SOURCE, "current_main_at_intake": CURRENT,
+                              "source_directories_unchanged": True, "files": files})
+    # An exhaustive finite logic check precedes reading retained outcomes.
+    oracle_cmd = [sys.executable, "-B", str(PKG / "controls.py")]
+    oracle = subprocess.run(oracle_cmd, cwd=PKG, capture_output=True)
+    (PKG / "evidence/pre-result-oracle.stdout.txt").write_bytes(oracle.stdout)
+    (PKG / "evidence/pre-result-oracle.stderr.txt").write_bytes(oracle.stderr)
+    freeze = {"schema": "publication-interval-pre-result-freeze-v1", "source_commit": SOURCE,
+              "intake_main": CURRENT, "created_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              "raw_trial_content_parsed_before_freeze": False, "input_count": len(files),
+              "input_manifest_sha256": sha((PKG / "INPUTS.json").read_bytes()),
+              "pre_result_files": {name: sha((PKG / name).read_bytes()) for name in
+                                   ("PLAN.md", "intervals.py", "controls.py", "independent_check.py")},
+              "pre_result_oracle": {"argv": oracle_cmd, "exit_code": oracle.returncode,
+                                    "stdout_sha256": sha(oracle.stdout), "stderr_sha256": sha(oracle.stderr)},
+              "export_started_utc": started, "export_bytes": sum(f["bytes"] for f in files),
+              "source_current_diff_exit": differences.returncode,
+              "python": sys.version, "platform": platform.platform(),
+              "original_candidate_invocations": 0, "original_auditor_invocations": 0,
+              "formal_allocation": None, "scientific_disposition": "HOLD_AUDIT_TIMING"}
+    write(PKG / "FREEZE.json", freeze)
+    write(OUT / "preparation.json", freeze)
+    print(json.dumps({"exported": len(files), "bytes": freeze["export_bytes"], "oracle_exit": oracle.returncode,
+                      "freeze_utc": freeze["created_utc"], "freeze_sha256": sha((PKG / "FREEZE.json").read_bytes())}))
+    if oracle.returncode != 0:
+        raise RuntimeError("pre-result-oracle-failed")
+
+if __name__ == "__main__":
+    main()

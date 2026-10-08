@@ -1,0 +1,17 @@
+import json,subprocess,time,sys,hashlib,os,platform
+from pathlib import Path
+out=Path('/out');items=[];start=time.monotonic_ns()
+for arm,mode in [('baseline','healthy'),('candidate','healthy'),('baseline','held'),('candidate','held')]:
+ name=arm+'-'+mode;argv=[sys.executable,'-B','/src/driver.py',arm,mode,str(out/name)]
+ begin=time.monotonic_ns()
+ try:
+  r=subprocess.run(argv,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=8);stdout=r.stdout;stderr=r.stderr;code=r.returncode;error=None
+ except subprocess.TimeoutExpired as e:
+  stdout=e.stdout or b'';stderr=e.stderr or b'';code=None;error='outer cell timeout; native child state requires container terminal reconciliation'
+ (out/(name+'.stdout')).write_bytes(stdout);(out/(name+'.stderr')).write_bytes(stderr)
+ receipt={'argv':argv,'start_ns':begin,'end_ns':time.monotonic_ns(),'exit_code':code,'error':error,'stdout_bytes':len(stdout),'stdout_sha256':hashlib.sha256(stdout).hexdigest(),'stderr_bytes':len(stderr),'stderr_sha256':hashlib.sha256(stderr).hexdigest()}
+ (out/(name+'.receipt.json')).write_text(json.dumps(receipt,indent=2)+'\n');items.append(receipt)
+ if code!=0:break
+summary={'schema':'predicate-condition-collection-v1','start_ns':start,'end_ns':time.monotonic_ns(),'items':items,'planned_cells':4,'completed_driver_exit0':sum(r['exit_code']==0 for r in items),'retries':0,'pid':os.getpid(),'python':sys.version,'platform':platform.platform(),'memory_max':Path('/sys/fs/cgroup/memory.max').read_text().strip(),'cpu_max':Path('/sys/fs/cgroup/cpu.max').read_text().strip(),'pids_max':Path('/sys/fs/cgroup/pids.max').read_text().strip()}
+(out/'collection.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary,sort_keys=True))
+raise SystemExit(0 if len(items)==4 and all(r['exit_code']==0 for r in items) else 2)

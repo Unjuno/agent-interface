@@ -1,0 +1,32 @@
+{
+  "experiment": "issue59-duplicate-epoch-frame-coherence-a02-20261008",
+  "kind": "synthetic source-level construction probe; not a live allocation",
+  "frozen_at_utc": "2026-10-08T01:59:55Z",
+  "prior_attempt": {
+    "id": "issue59-duplicate-epoch-frame-coherence-a01-20261008",
+    "disposition": "STOP_HARNESS_ERROR",
+    "record": "../v39-duplicate-epoch-a01-20261008/STOP.json"
+  },
+  "main_commit": "e4db1a9115cdf4f9163bddc169a7313672b9155e",
+  "source_path": "map01_overlap_controller_v39.py",
+  "source_git_blob": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a",
+  "source_sha256": "c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95",
+  "source_bytes": 83848,
+  "probe_path": "probe.py",
+  "probe_sha256": "6c1c1a19dd6c5a27bd30eb5151619d910f02014da039d2efc1d4b3c7c883bd20",
+  "probe_bytes": 4530,
+  "audit_path": "audit.py",
+  "audit_sha256": "160a0193aa553f697e0e2b30e6dd68f60a96abdb6d6ff7d05aeec8f5ec9359d0",
+  "audit_bytes": 2651,
+  "hypothesis": "The V39 paired-signal monitor accepts a changed whole-frame hash for a strictly newer observation epoch, accepts an identical cross-transport duplicate for the same epoch, and invalidates a same-epoch cross-transport duplicate whose frame hash differs.",
+  "test": "Extract the exact paired-signal monitor and validation helpers from the pinned V39 source AST. Run three synthetic cases with stable health/ammo and pointer binding: advancing epoch/hash change, same-epoch/same-hash typed-to-observation duplicate, and same-epoch/different-hash duplicate. Readers project the already-present typed signal pair for the observation transport.",
+  "decision_rule": "All three observed outcomes must match the hypothesis. Any failure is retained; A01 remains preserved and is not rerun.",
+  "counterhypothesis": "The monitor may reject all changed hashes, accept same-epoch hash mismatches, or reject an otherwise coherent same-epoch duplicate.",
+  "confounds_and_limits": [
+    "Synthetic rows and mock guard evaluations; no DOOM process, model, GUI, OS input, or physical release.",
+    "Whole-frame hashes have no semantic threat interpretation.",
+    "No active cover, cancellation delivery, useful feedback, policy appropriateness, survival, recovery, or task effect measured.",
+    "This construction result does not pass the live V39 threat-exposure gate."
+  ],
+  "allocation": "No live/private-game allocation requested or consumed."
+}

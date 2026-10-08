@@ -1,0 +1,55 @@
+import datetime as dt
+import hashlib
+import json
+import pathlib
+import subprocess
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+REPO = ROOT / 'work/agent-interface'
+BRANCH = 'research/6089-delivery-01a0ff59'
+OLD = 'research/analysis/observation_loss_robust_tube_6089_t0b_20261002/'
+NEW = 'research/analysis/checkpoint_delivery_6089_20261003_01a0ff59/'
+
+def git(*args):
+    return subprocess.run(['git', *args], cwd=REPO, capture_output=True, check=True).stdout
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+if git('status', '--porcelain').strip():
+    raise ValueError('dedicated checkout is not clean')
+base = git('rev-parse', 'origin/main').decode().strip()
+git('switch', '--create', BRANCH, base)
+dest = REPO / NEW
+dest.mkdir(parents=True, exist_ok=False)
+(dest / 'sources').mkdir()
+sources = {}
+for name in ['candidate.py', 'audit.py', 'cases.json', 'README.md', 'FREEZE.json', 'SHA256SUMS']:
+    data = git('show', f'{base}:{OLD}{name}')
+    target = dest / 'sources' / (name + '.txt')
+    target.write_bytes(data)
+    if target.read_bytes() != data:
+        raise ValueError('source readback')
+    sources[OLD + name] = {'snapshot': 'sources/' + target.name, 'sha256': sha(data), 'bytes': len(data), 'blob': git('rev-parse', f'{base}:{OLD}{name}').decode().strip()}
+
+contexts = [
+    ('k0', 18, 0, False),
+    ('k1_boundary', 14, 1, False),
+    ('invalidated', 18, 1, True),
+]
+encodings = {
+    'empty': [],
+    'missing': [{'kind': 'MISSING'}],
+    'fresh': [{'kind': 'FRESH', 'generation': 5, 'age': 0}],
+    'stale': [{'kind': 'STALE_OLD_GENERATION', 'generation': 4, 'age': 1}],
+}
+cases = []
+for context, boundary, k, invalidated in contexts:
+    for encoding, events in encodings.items():
+        case = {'id': context + '__' + encoding, 'initial_states': [0], 'action': 1, 'disturbances': [-1, 0, 1], 'boundary_by_step': [boundary] * 9, 'max_horizon': 5, 'release_lag': 1, 'observation_interval': 1, 'max_consecutive_misses': k, 'loss_bound_supported': True, 'source_generation': 5, 'max_receipt_age': 0, 'checkpoint_events': events, 'target_invalidated': invalidated}
+        cases.append({'context': context, 'encoding': encoding, 'first_checkpoint_is_due': True, 'case': case})
+(dest / 'CASES.json').write_text(json.dumps({'schema': 'checkpoint-delivery-assay-v1', 'cases': cases}, indent=2) + '\n', encoding='utf-8', newline='\n')
+(dest / 'SOURCE_MAP.json').write_text(json.dumps({'base_main': base, 'legacy_prefix': OLD, 'legacy_pr': 6627, 'sources': sources, 'historical_formal_invocations': 0}, indent=2) + '\n', encoding='utf-8', newline='\n')
+(dest / '.gitattributes').write_text('sources/** -text -whitespace\nexecution/** -text -whitespace\nraw.json -text -whitespace\n', encoding='utf-8', newline='\n')
+(dest / 'conftest.py').write_text('"""Archived finite study tests run only by explicit command."""\ncollect_ignore = ["test_reference.py"]\n', encoding='utf-8', newline='\n')
+print(json.dumps({'base': base, 'branch': BRANCH, 'path': str(dest), 'cases': len(cases), 'sources': len(sources), 'prepared_utc': dt.datetime.now(dt.timezone.utc).isoformat()}, indent=2))

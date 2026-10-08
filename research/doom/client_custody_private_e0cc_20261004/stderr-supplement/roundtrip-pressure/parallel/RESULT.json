@@ -1,0 +1,37 @@
+{
+  "source_sha256": "3a784bc3d1d68876871ac9425adc245026c208e36041a12f0eddd84e1334d1a1",
+  "owned_pid": 85252,
+  "terminal_exit": 0,
+  "exact_requests_responses": 4,
+  "journal_rows": 8,
+  "drained_bytes": 1228800,
+  "retained_tail_bytes": 65536,
+  "all_readers_journal_pipe_wrappers_retired": true,
+  "scope": "ordinary owned finite Python peer; four concurrent requests; reverse-order peer responses under stderr pressure",
+  "limits": [
+    "No actual app-server/model/GUI/input task",
+    "No descendants or hard deadline proof"
+  ],
+  "raw_hashes": {
+    "intent.json": "09a280dd90f3d1df712aac301c2b3b28f97cb4d399aefe5b7a24ba8d1a6194eb",
+    "stderr-tail.bin": "dcb3cceeb89595b15abac3233c5871a9dc8d5e4af56443c0c5085386c9b50439",
+    "journal.jsonl": "7c6a1977ae837504626844464a5430d00a69573ad9e942fa176f3081ce03a019"
+  },
+  "independent_retained_journal_oracle": {
+    "sent_ids": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "received_ids": [
+      4,
+      3,
+      2,
+      1
+    ],
+    "exact_mapping": true
+  },
+  "producer_script_sha256": "af224c527d81608316324c4386aa5fceae68a3b66568af6373bf49884ff7dea4",
+  "request_threads_retired": 4
+}

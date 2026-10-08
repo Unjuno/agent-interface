@@ -1,0 +1,25 @@
+✔ numbered commands return exact file/text descriptors with no image encoding (2.877333ms)
+✔ commands arriving while outstanding are rejected rather than queued (1.574833ms)
+✔ EOF waits for the already committed command without replaying it (0.608916ms)
+✔ malformed JSON is refused without invoking exchange or consuming a command (0.527166ms)
+✔ command error reports uncertainty and state without retry (0.392792ms)
+✔ output failure rejects the stream owner after one completed command (0.680833ms)
+✔ config refuses unknown routes and fields before starting a host (0.195917ms)
+✔ terminal output refuses before starting a relay or allocating its evidence (0.149959ms)
+✔ startup output failure keeps original exception, closes one relay and never writes again (50.281042ms)
+✔ failed review is correlated to its consumed command without a host call or replay (2.57975ms)
+✔ pre-admission envelope error keeps requested id distinct from unconsumed next id (0.553375ms)
+✔ malformed command identity stays bounded and does not become a valid correlation (0.284208ms)
+✔ input read failure waits for an accepted command and preserves its result (55.747917ms)
+✔ input read failure before a command rejects through the owned transport path (51.339041ms)
+✔ whole owner retains ready_input failure and observes its original relay exit (101.083875ms)
+✔ whole owner retains ready_output failure and observes its original relay exit (101.749542ms)
+✔ whole owner retains terminal_output failure and observes its original relay exit (101.303459ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 537.614

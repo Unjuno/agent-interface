@@ -1,0 +1,14 @@
+{
+  "pair_order": [["vA", "vB"], ["vA", "vC"], ["vB", "vC"]],
+  "attempts_per_variant": 4,
+  "max_identical_run": 2,
+  "eligibility": {"minimum_span": 0.25, "minimum_peak": 0.70},
+  "cases": [
+    {"id":"hetero-ab", "variants":["vA","vB","vC"], "confusion":[0.90,0.20,0.20]},
+    {"id":"hetero-ac", "variants":["vA","vB","vC"], "confusion":[0.20,0.90,0.20]},
+    {"id":"hetero-bc", "variants":["vA","vB","vC"], "confusion":[0.20,0.20,0.90]},
+    {"id":"uniform", "variants":["vA","vB","vC"], "confusion":[0.40,0.40,0.40]},
+    {"id":"low-dispersion", "variants":["vA","vB","vC"], "confusion":[0.68,0.60,0.55]},
+    {"id":"span-boundary", "variants":["vA","vB","vC"], "confusion":[0.75,0.50,0.25]}
+  ]
+}

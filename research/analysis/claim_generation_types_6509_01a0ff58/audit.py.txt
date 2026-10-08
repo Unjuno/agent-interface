@@ -1,0 +1,57 @@
+import copy
+import hashlib
+import json
+from pathlib import Path
+
+CHECKS = ["identity", "freshness", "effect"]
+def sha(b): return hashlib.sha256(b).hexdigest()
+def verify(raw, freeze, root):
+    errors = []
+    def require(value, label):
+        if not value: errors.append(label)
+    cases = [("int-current", int, 1), ("int-stale", int, 2), ("bool-alias", bool, True), ("float-alias", float, 1.0)]
+    require(raw.get("run_id") == freeze["run_id"], "run_id")
+    require(type(raw.get("pid")) is int and raw["pid"] > 0, "pid")
+    require(raw.get("started_utc", "") < raw.get("finished_utc", ""), "child_time_order")
+    expected_pins = {p: sha((root / p).read_bytes()) for p in freeze["source_input_sha256"]}
+    require(expected_pins == freeze["source_input_sha256"], "frozen_file_drift")
+    require(raw.get("source_input_sha256_before") == expected_pins, "before_hash")
+    require(raw.get("source_input_sha256_after") == expected_pins, "after_hash")
+    lines = (root / "input/c03.receipts.jsonl").read_bytes().splitlines()
+    receipt = [json.loads(b) for b in lines]
+    require(receipt == [{"sequence": i + 1, "check": c, "value": True, "generation": 1, "scope": "synthetic-claim"} for i, c in enumerate(CHECKS)], "retained_input")
+    rows = raw.get("rows", [])
+    require(type(rows) is list and len(rows) == 4, "four_rows")
+    declared = raw.get("request_cases", [])
+    require(type(declared) is list and len(declared) == 4, "four_request_cases")
+    for i, (label, kind, value) in enumerate(cases):
+        if i >= len(rows) or i >= len(declared): continue
+        row = rows[i]
+        require(type(row) is dict and set(row) == {"id", "generation_type", "generation_value", "legacy", "strict"}, label + ":schema")
+        require(row.get("id") == label and row.get("generation_type") == kind.__name__ and type(row.get("generation_value")) is kind and row.get("generation_value") == value, label + ":request")
+        require(declared[i] == {"id": label, "python_type": kind.__name__, "value": value} and type(declared[i].get("value")) is kind, label + ":declared_type")
+        complete = {"disposition": "COMPLETE_VERDICT", "reason": "MANDATORY_COMPLETE", "completed": CHECKS, "missing": []}
+        stale = {"disposition": "PARTIAL_UNKNOWN", "reason": "GENERATION_OR_SCOPE", "completed": [], "missing": CHECKS}
+        invalid = {"disposition": "PARTIAL_UNKNOWN", "reason": "REQUEST_GENERATION_TYPE", "completed": [], "missing": CHECKS}
+        # Independent four-case closed table, never imports either evaluated reader.
+        require(row.get("legacy") == (stale if label == "int-stale" else complete), label + ":legacy")
+        require(row.get("strict") == (complete if label == "int-current" else stale if label == "int-stale" else invalid), label + ":strict")
+    return errors
+
+def main():
+    root = Path(__file__).resolve().parent
+    freeze = json.loads((root / "FREEZE.json").read_bytes())
+    raw = json.loads((root / "results/raw.json").read_bytes())
+    errors = verify(raw, freeze, root)
+    controls = []
+    mutations = [("legacy_bool_outcome", lambda x: x["rows"][2]["legacy"].update(disposition="PARTIAL_UNKNOWN")), ("strict_float_false_complete", lambda x: x["rows"][3]["strict"].update(disposition="COMPLETE_VERDICT")), ("bool_type_as_int", lambda x: x["rows"][2].update(generation_type="int", generation_value=1)), ("missing_row", lambda x: x["rows"].pop()), ("input_hash_corruption", lambda x: x["source_input_sha256_after"].update({"input/c03.receipts.jsonl": "0"*64}))]
+    for name, mutate in mutations:
+        obj = copy.deepcopy(raw)
+        mutate(obj)
+        found = verify(obj, freeze, root)
+        controls.append({"name": name, "effective": obj != raw, "rejected": bool(found), "errors": found})
+    result = {"classification": "PASS_SCOPED_ARGUMENT_BOUNDARY" if not errors and all(c["effective"] and c["rejected"] for c in controls) else "FAIL_OR_HOLD", "errors": errors, "controls": controls, "raw_sha256": sha((root / "results/raw.json").read_bytes()), "scope": "Retained-input ordinary request scalar check; no original writer/matrix replay or runtime promotion."}
+    (root / "results/AUDIT.json").write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+    print(json.dumps(result, sort_keys=True))
+    raise SystemExit(0 if result["classification"] == "PASS_SCOPED_ARGUMENT_BOUNDARY" else 1)
+if __name__ == "__main__": main()

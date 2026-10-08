@@ -1,0 +1,17 @@
+{
+  "format": "issue59-v39-ammo-main-rebase-validation-a08-freeze-v1",
+  "base_commit": "3dbbda05eb8d5067ee2c2969615e472a0f20f562",
+  "tested_head": "acce7cb9ecf3ba185cae34f5892b4cc2131c62d6",
+  "source_sha256": {
+    "research/doom/map01_overlap_controller_v39.py": "79bae65a3cc423acb3fe476728fdb33ac1205768f8cacf278b9f2fc30f1219a8",
+    "research/doom/test_map01_overlap_controller_v39_dual_signal.py": "d8f2bac98b33447b5fec941f45cde1fc5877a112c9fc7d565e1b10cc459bfcd1",
+    "research/doom/test_map01_overlap_controller_v39.py": "924b62b7c078422f5525435f75bcda82a77db37eca103384dec58ef48a83a882",
+    "research/doom/test_overlap_controller_v39_wait.py": "efe87ade28fea5130fe53dc3bd8d5416b92a1fbd74f52ba7d9063a07d15be618",
+    "research/doom/test_source_refresh_v1.py": "3dd0662069421679a8257db012088fed9266d88835a8363e08a00d1f083bbab7",
+    "research/doom/test_doom_action_validity_contract_v1.py": "5f90c04d7097101e28ce0d51e3ef5c7ffa45d593f934b0db4a3e8e35f4fe2f7f"
+  },
+  "runtime": "CPython 3.14 via uv; Pillow, NumPy, and python-xlib provided by uv run",
+  "formal_live_allocation_invocations": 0,
+  "decision_gate": "All 46 tests in five focused suites pass; changed Python files compile; git diff --check against origin/main is clean.",
+  "scope": "synthetic observations and stubs only; no game, model, GUI, OS input, physical release, or task-effect measurement"
+}

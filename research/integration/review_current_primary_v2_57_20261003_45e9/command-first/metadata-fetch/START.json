@@ -1,0 +1,29 @@
+{
+  "GIT_NO_LAZY_FETCH": "1",
+  "argv": [
+    "git",
+    "-c",
+    "maintenance.auto=false",
+    "-c",
+    "gc.auto=0",
+    "-c",
+    "fetch.negotiationAlgorithm=noop",
+    "fetch",
+    "origin",
+    "--no-auto-maintenance",
+    "--no-tags",
+    "--no-write-fetch-head",
+    "--recurse-submodules=no",
+    "--filter=blob:none",
+    "--stdin",
+    "--depth=2"
+  ],
+  "cwd": "<OWN_WORKSPACE>\\work\\agent-interface",
+  "oids": [
+    "2523fc996fa44d88d40aef79f1d757f569fca387",
+    "4f1cbe2b6801b12b9219ef883faa9654b0d91905"
+  ],
+  "pid": 11668,
+  "ppid": 36764,
+  "started_utc": "2026-10-03T10:23:05.954420+00:00"
+}

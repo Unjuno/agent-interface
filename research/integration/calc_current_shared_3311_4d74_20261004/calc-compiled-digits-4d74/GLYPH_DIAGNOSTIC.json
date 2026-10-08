@@ -1,0 +1,107 @@
+{
+  "scope": "post-failure diagnostic only; saved truth labels never supplied to controller",
+  "original_png_sha256": "edaf13819de1f67fee35e29be0ea9d8a6bd22a9920f7066367ac719cf9a5d032",
+  "rows": [
+    {
+      "cell_label_from_saved_oracle": "23",
+      "segments": [
+        {
+          "expected_diagnostic_label": "2",
+          "recognized": "2",
+          "bits": "011110\n110011\n100001\n000001\n000010\n000100\n001000\n010000\n100000\n111111",
+          "closest_same_shape": [
+            {
+              "digit": "2",
+              "different_bits": 0,
+              "template": "011110\n110011\n100001\n000001\n000010\n000100\n001000\n010000\n100000\n111111"
+            }
+          ]
+        },
+        {
+          "expected_diagnostic_label": "3",
+          "recognized": "3",
+          "bits": "0011110\n0100010\n0000011\n0000010\n0001100\n0000010\n0000001\n1100001\n0100011\n0011110",
+          "closest_same_shape": [
+            {
+              "digit": "3",
+              "different_bits": 0,
+              "template": "0011110\n0100010\n0000011\n0000010\n0001100\n0000010\n0000001\n1100001\n0100011\n0011110"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cell_label_from_saved_oracle": "31",
+      "segments": [
+        {
+          "expected_diagnostic_label": "3",
+          "recognized": "3",
+          "bits": "011110\n110011\n000001\n000011\n001110\n000011\n000001\n100001\n110011\n011110",
+          "closest_same_shape": [
+            {
+              "digit": "3",
+              "different_bits": 0,
+              "template": "011110\n110011\n000001\n000011\n001110\n000011\n000001\n100001\n110011\n011110"
+            }
+          ]
+        },
+        {
+          "expected_diagnostic_label": "1",
+          "recognized": "1",
+          "bits": "001100\n111100\n001100\n001100\n001100\n001100\n001100\n001100\n001100\n111111",
+          "closest_same_shape": [
+            {
+              "digit": "1",
+              "different_bits": 0,
+              "template": "001100\n111100\n001100\n001100\n001100\n001100\n001100\n001100\n001100\n111111"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "cell_label_from_saved_oracle": "713",
+      "segments": [
+        {
+          "expected_diagnostic_label": "7",
+          "recognized": null,
+          "bits": "111111\n000001\n000010\n000110\n000100\n001100\n001000\n001000\n001000\n001000",
+          "closest_same_shape": [
+            {
+              "digit": "7",
+              "different_bits": 3,
+              "template": "111111\n000001\n000010\n000010\n000100\n000100\n001100\n001000\n001000\n001000"
+            }
+          ]
+        },
+        {
+          "expected_diagnostic_label": "1",
+          "recognized": "1",
+          "bits": "001100\n111100\n001100\n001100\n001100\n001100\n001100\n001100\n001100\n111111",
+          "closest_same_shape": [
+            {
+              "digit": "1",
+              "different_bits": 0,
+              "template": "001100\n111100\n001100\n001100\n001100\n001100\n001100\n001100\n001100\n111111"
+            }
+          ]
+        },
+        {
+          "expected_diagnostic_label": "3",
+          "recognized": null,
+          "bits": "0111100\n0100010\n0000010\n0000010\n0011100\n0000110\n0000011\n1000011\n1100010\n0111100",
+          "closest_same_shape": [
+            {
+              "digit": "3",
+              "different_bits": 12,
+              "template": "0011110\n0100010\n0000011\n0000010\n0001100\n0000010\n0000001\n1100001\n0100011\n0011110"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "training_changed": false,
+  "original_disposition": "FAIL_HELDOUT_DIGIT_TRANSFER_HOLD_COMPARISON"
+}

@@ -1,0 +1,41 @@
+✔ one pending call survives interrupted waiting; no resend, exact content presentation (142.1391ms)
+✔ refused IDs can remain unchanged while attempt records never overwrite (138.9414ms)
+✔ process loss makes delivery uncertain and blocks new sends (41.2564ms)
+✔ mismatched response retained but never presented as the pending result (130.6543ms)
+✔ existing evidence directory is refused before spawn (0.6443ms)
+✔ nonfinite or omitted values are refused before recording or sending (40.3502ms)
+✔ review attribution comes from explicit retained reply and cannot overwrite history (8.4178ms)
+✔ public and management captures have explicit identity without invented sequence (13.0647ms)
+✔ review refuses ambiguous, missing-image, uncertain and incomplete evidence (4.9747ms)
+✔ presentation preserves explicit MCP error status before unchanged content (0.3708ms)
+✔ presentation retains explicit error status for empty content and does not invent an absent flag (0.1189ms)
+✔ copied public host modules run outside the checkout using only Node built-ins (157.6865ms)
+✔ reply reader failure before a request blocks delivery without consuming an ID (92.049ms)
+✔ reply reader failure rejects the same outstanding promise and forbids replay (89.3365ms)
+✔ reply reader failure preserves an already settled result and blocks future delivery (89.4822ms)
+✔ reply reader retains fragmented multilingual responses and normal EOF (91.4719ms)
+✔ ordered same-clock events separate transport, presentation and caller review before next send (170.2375ms)
+✔ public capture review joins the same host timeline without a fabricated source sequence (95.2494ms)
+✔ failed instrumentation before send emits no request and transport remains closable (42.8105ms)
+✔ presentation failure is retained as a started-only boundary and blocks later action (99.3896ms)
+✔ invalid JSON does not consume an attempt and foreign review cannot gain an event (89.2292ms)
+✔ timeline loss after submission retains reply and blocks replay while allowing transport cleanup (315.0066ms)
+✔ opt-in image reuse requires explicit presented review and retains original base (659.4604ms)
+✔ unpresented review cannot acknowledge an image base (148.6816ms)
+✔ reference presentation failure blocks actions and cannot be treated as delivered (167.3932ms)
+✔ a changed PNG is forwarded and invalidates the previous acknowledged base (212.2064ms)
+✔ reviewed image reference preserves current MCP error status (162.3041ms)
+✔ returned local attempt selects retained reply even when relay IDs are reused (110.4518ms)
+✔ sendPresented delivers typed MCP refusal before resolving and never retries (96.4505ms)
+✔ sendPresented owns the whole send/display interval and wait returns the original promise (149.1278ms)
+✔ sendPresented checks delivery callbacks before dispatching input (42.1668ms)
+✔ sendPresented presentation failure preserves the reply and blocks subsequent input (93.2742ms)
+✔ sendPresented snapshots callbacks before its request can wait (101.2958ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2814.6971

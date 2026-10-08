@@ -1,0 +1,149 @@
+{
+  "allocation_id": "paired-clock-01a0ff35-20261003-A01",
+  "kind": "new prospective finite native paired-observer experiment; not a prior producer/allocation replay",
+  "worker_id": "01a0ff35-0b9f-7d13-bcfa-22d064ff4fec",
+  "policy_version": "FINAL-v5",
+  "parent_issue": 57,
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/paired-clock-01a0ff35-20261003",
+  "repository_context": "4ada7f511ce451caa4050c78b7fa4b3afe6b6f72",
+  "production_imports": false,
+  "H": "On this Windows3.12.14 build, a coarse monotonic receipt can measure below20ms while a nested high-resolution perf interval around the same20ms sleep measures at least20ms.",
+  "T": "Exactly12 sequential rows, each one20ms time.sleep on one thread. Read monotonic-start/perf-start/sleep/perf-end/monotonic-end. Preserve every row. No early-success stop, retries, model, GUI, executor, current MCP producer or new worker.",
+  "D": {
+    "SUPPORTED_IN_FIXED_RUN": "Complete unchanged12 rows, all perf intervals>=20ms, at least one monotonic<20ms<=perf witness.",
+    "COUNTEREVIDENCE_SHORT_PERF": "Any complete row has perf interval<20ms; retain it without selecting favorable rows.",
+    "HOLD_NO_WITNESS": "Complete fixed run has no paired witness and no short-perf row.",
+    "PROTOCOL_FAIL": "Source/environment/row/type/time/exit completeness violation; preserve partial result, no repeat."
+  },
+  "C": "Clock quantization rather than shortened wait; uncontrolled scheduling may hide a witness. API instrumentation ordering makes perf interval nested in monotonic interval. This does not estimate independent failure frequency or prove every earlier MCP failure cause.",
+  "U": "One native host/build/time window;12 sequential non-independent observations; concurrent load during the burst unknown. Report clock metadata, hardware/OS/load snapshot and observed ranges, no confidence interval, physical calibration/native effect or product speed claim.",
+  "rows": [
+    {
+      "row_id": 0,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 1,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 2,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 3,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 4,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 5,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 6,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 7,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 8,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 9,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 10,
+      "requested_ns": 20000000
+    },
+    {
+      "row_id": 11,
+      "requested_ns": 20000000
+    }
+  ],
+  "units": {
+    "row_id": "dimensionless integer",
+    "requested_ns": "ns, SI subunit of second",
+    "elapsed_clock_readings": "ns, nonnegative strict integers; each difference uses only its own clock",
+    "cpu_clock_speed": "MHz, snapshot only",
+    "CIM_memory_fields": "KiB, binary1024-byte units",
+    "disk": "bytes"
+  },
+  "environment": {
+    "binaries": {
+      "base_executable": {
+        "bytes": 107312,
+        "path": "C:\\Users\\WORKER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "sha256": "372c2eae555b344520bf147be0096e009069aeca4e7f78d6aecea6d53158056a"
+      },
+      "executable": {
+        "bytes": 277808,
+        "path": "C:\\Users\\WORKER\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\mcp-shutdown-venv312\\Scripts\\python.exe",
+        "sha256": "2204195cec25879507d958a8b6949add67091244b8b4da9cf3672f993548fa49"
+      },
+      "python_dll": {
+        "bytes": 6985520,
+        "path": "C:\\Users\\WORKER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python312.dll",
+        "sha256": "c1ce6d603041759061139f482c4b90c4ac9db676e30abf52fda66a794aab1bd0"
+      }
+    },
+    "clocks": {
+      "monotonic": {
+        "adjustable": false,
+        "implementation": "GetTickCount64()",
+        "monotonic": true,
+        "resolution": 0.015625
+      },
+      "perf_counter": {
+        "adjustable": false,
+        "implementation": "QueryPerformanceCounter()",
+        "monotonic": true,
+        "resolution": 1e-07
+      }
+    },
+    "implementation": "CPython",
+    "platform": "win32",
+    "version": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "version_tuple": [
+      3,
+      12,
+      14
+    ]
+  },
+  "source_sha256": {
+    "probe.py.txt": "8f145a1dd5d0140a381d97b3f7797ec6b839d2bcf2b1e9c0733d2e9e0245b287",
+    "read_rows.py.txt": "b5ae8f4b6edc8d957f45cd924161d5fa43e78b7176a5397da0f5bd59b2853d41"
+  },
+  "resources_sha256": "d0abee3aae44aa1c62f53d5f445a96eb82648eb212dc1583af37c95522bfdacb",
+  "environment_preflight": {
+    "argv": [
+      "C:\\Users\\WORKER\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\mcp-shutdown-venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\WORKER\\Documents\\Codex\\2026-10-03\\new-chat-5\\work\\paired-clock-repo\\runtime\\results\\paired-clock-01a0ff35-20261003\\probe.py.txt",
+      "--environment-only"
+    ],
+    "started_utc": "2026-10-03T07:06:05.447873+00:00",
+    "ended_utc": "2026-10-03T07:06:05.529583+00:00",
+    "exit_code": 0,
+    "stdout_sha256": "521949bbe7e4a8eeb5332a8c2a1601a4da0908d39bb98983370481cae2db8077",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sleep_measurements": 0
+  },
+  "resource_scope": "Own bounded native CPU process/one thread/12 sleeps and small exclusive output. Snapshot is not shared-resource acquisition or global idle proof.",
+  "model_settings": "No model participant or call",
+  "input_seed": "No random input or seed; exact12 declared conditions",
+  "no_retry": true,
+  "output": "execution-A01",
+  "expected_output_upper_bound_bytes": 262144,
+  "runner_wrapper_source_sha256": "bd095ecb6ff9e4ebf0cd6821d5f57d1d792dd85aba56913232219257bcba5345",
+  "freeze_helper_sha256": "f26a647ddf62fa89afad8716fb4035c89709460c24547f26ee5a93b856916dbc",
+  "frozen_utc": "2026-10-03T07:06:05.529583+00:00",
+  "deadline": "Common deadline unknown and not reset; small finite subsecond requested sleep total0.24s, not a hard scheduler bound."
+}

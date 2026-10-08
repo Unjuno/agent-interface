@@ -1,0 +1,19 @@
+{
+  "schema": "map01-v39-a02-audit-successor-result-v1",
+  "disposition": "PASS_RAW_ONLY_HOST_SCOPED",
+  "predecessor_audit": "Six distinct corruptions were false-accepted; unchanged raw also accepted",
+  "successor_audit": "Unchanged raw passed full identity, receipt-before-terminal, physical-up, owner-neutrality, and final-state checks",
+  "mutations": {
+    "negative_controls": 6,
+    "rejected": 6,
+    "rejected_in_optimized_mode": 6,
+    "positive_control_accepted": true
+  },
+  "formal_candidate_execution_count": 0,
+  "retries": 0,
+  "limitations": [
+    "host-only CPython 3.14.5; OrbStack STOP before container start",
+    "one frozen synthetic fake-display result",
+    "no live X11, OS input, application effect, useful feedback, recovery, gameplay, or Issue #59 completion"
+  ]
+}
