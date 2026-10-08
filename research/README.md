@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8544 T0 A02: [crowding-inspired endpoint scorer method check](analysis/crowding_target_flanker_8544_t0_a02_20261009/README.md) — fresh successor after A01's pre-process launch STOP; it binds fixture IDs to row payloads and tests one-shot output custody before any VLM transfer study. The finite method result does not measure crowding or model behavior.
+
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
 
 - Issue #8259: [release-batch alias cleanup evidence rescue](doom/release_batch_alias_rescue_8259_20261009/README.md) — nine preserved fake-X/private-Xvfb experiment packages and a separate measurement-publication custody record; scoped construction only, with first STOP/FAIL outcomes retained. No live/game claim.
