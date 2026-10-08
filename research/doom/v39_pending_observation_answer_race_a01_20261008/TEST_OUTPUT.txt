@@ -12,7 +12,19 @@ The initial standalone harness failure is retained separately at ../INITIAL_TEST
 Current-main retest (2026-10-08):
 GitHub main commit: a537c80de21ba24d774fb332e34fcd415db51b7d
 Controller Git blob: f7b66279d87ebc3704ccef1b6a5ce646611c890b
-Regression test Git blob: af01126e613c6b1c51e218cab6f199eb56e57efe
+Original main regression test Git blob: af01126e613c6b1c51e218cab6f199eb56e57efe
+Proposed PR regression test Git blob: 9136d705f1f2e871c7c0b35ff0a4e3931fd9249a
 Direct command `python -B -m unittest -v test_map01_v39_pending_observation_drain.py` failed before collection because the scratch directory lacked map01_stagnation_v1. This is an environment/import failure, not a test assertion result.
-Then the unchanged regression test file was run with the exact drain_pending_observation_events AST extracted from the frozen main controller source; 4/4 tests passed. This exercises the exact production helper and source-order assertion, but does not import the complete controller module.
+The original main regression test file was run with the exact drain_pending_observation_events AST extracted from the frozen main controller source; 4/4 tests passed in that initial mainline harness. This exercises the exact production helper and source-order assertion, but does not import the complete controller module.
+
+Current-main snapshot-boundary extension (2026-10-08):
+test_completed_future_drain_is_wired_before_answer_read ... ok
+test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
+test_queued_hard_crossing_precedes_completed_answer ... ok
+test_snapshot_drain_leaves_events_arriving_after_entry_queued ... ok
+test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
+
+Ran 5 tests in 0.000s
+OK
+The snapshot test enqueues a second event from the observation callback and verifies the helper processes only the initial backlog, leaving the new row queued.
 
