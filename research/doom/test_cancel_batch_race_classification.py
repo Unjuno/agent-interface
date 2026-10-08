@@ -124,6 +124,37 @@ class CancelBatchClassificationTests(unittest.TestCase):
         )
         self.assertEqual(backend.lease.check_calls, 1)
 
+    def test_cancelled_pending_disposition_survives_later_step_failure(self):
+        backend = self.backend(True)
+        # Exercise the real production incomplete-publication cleanup rather
+        # than the no-op fixture hook used by the two smaller tests above.
+        del backend._finish_incomplete_release_batch
+        backend.lease.cancel = threading.Event()
+        backend.lease.cancel.set()
+        backend_type = type(backend)
+        base_type = backend_type.__mro__[1]
+        original_execute = base_type.execute
+
+        def fail_after_release_classification(self, step, cancel, identifier, index):
+            self.raw("space", False)
+            raise RuntimeError("subsequent operation failed")
+
+        base_type.execute = fail_after_release_classification
+        try:
+            with self.assertRaisesRegex(RuntimeError, "subsequent operation failed") as caught:
+                backend.execute({}, object(), "synthetic-program", 7)
+        finally:
+            base_type.execute = original_execute
+
+        self.assertEqual(
+            getattr(caught.exception, "cancelled_pending_ups", None),
+            [{"key": "space", "identifier": "synthetic-program", "step": 7,
+              "backend_owned_before_release": True,
+              "disposition": "not_attempted_owner_cancel_release"}],
+        )
+        self.assertFalse(hasattr(backend._release_batch, "context"))
+        self.assertEqual(backend.owner.calls, [])
+
     def test_without_verified_cancel_preserves_original_failure(self):
         backend = self.backend(False)
         try:

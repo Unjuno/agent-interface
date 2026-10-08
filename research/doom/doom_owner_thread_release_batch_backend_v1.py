@@ -152,6 +152,12 @@ class Backend(Previous):
                 )
         finally:
             self._attach_delivery_ledger(error, context)
+            cancelled_pending = self._cancelled_pending_up_records(context)
+            if cancelled_pending:
+                try:
+                    error.cancelled_pending_ups = cancelled_pending
+                except (AttributeError, TypeError):
+                    pass
             context["rows"].clear()
             try:
                 del self._release_batch.context
