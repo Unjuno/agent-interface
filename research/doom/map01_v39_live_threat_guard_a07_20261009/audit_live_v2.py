@@ -43,6 +43,17 @@ def main():
     scorer = jsonl(ROOT / "episode/runtime/scorer-events.jsonl")
     report = json.loads((ROOT / "episode/report.json").read_text())
     original_audit_path = ROOT / "AUDIT.json"
+    id_events = {"cancel_requested", "input_released", "terminal",
+                 "input_admission", "input_release_transition"}
+    malformed_id_rows = [row for row in events
+                         if row.get("event") in id_events and
+                         (type(row.get("id")) is not str or not row.get("id"))]
+    event_ids_valid = not malformed_id_rows
+    # Exclude malformed identities before any Counter/defaultdict indexing.
+    # The aggregate gate below remains FAIL, and the audit can still be saved.
+    events = [row for row in events
+              if row.get("event") not in id_events or
+              (type(row.get("id")) is str and bool(row.get("id")))]
     cancellations = [row for row in events if row.get("event") == "cancel_requested"]
     releases = defaultdict(list)
     terminals = defaultdict(list)
@@ -131,7 +142,7 @@ def main():
               event.get("kind") in ("KILL_COUNT_INCREASE", "MAP_EXIT") and
               any(in_model_interval(decision, event.get("observed_ns"))
                   for decision in decisions)]
-    safety_ok = bool(cancellations) and all(row["custody_ok"] for row in rows)
+    safety_ok = event_ids_valid and bool(cancellations) and all(row["custody_ok"] for row in rows)
     scope_exposed = bool(guards) and bool(useful)
     status = "PASS" if safety_ok and scope_exposed else ("HOLD" if safety_ok else "FAIL")
     result = {
@@ -151,6 +162,7 @@ def main():
                            "for any formal result."),
         "checks": {"all_matched_cancellations_closed_empty": safety_ok,
                    "all_admitted_input_cancel_releases_verified": safety_ok,
+                   "all_relevant_event_ids_valid": event_ids_valid,
                    "hard_health_guard_exposed": bool(guards),
                    "useful_feedback_during_pending_model": bool(useful),
                    "original_audit_available": original_audit_path.is_file()},
@@ -158,6 +170,7 @@ def main():
                    "cancellations_with_admitted_input": sum(r["input_admitted_before_cancel"] > 0 for r in rows),
                    "cancellations_without_admitted_input": sum(r["input_admitted_before_cancel"] == 0 for r in rows),
                    "matched_input_release_events": sum(r["input_released_event_present"] for r in rows),
+                   "malformed_event_id_rows": len(malformed_id_rows),
                    "hard_health_guards": len(guards), "useful_scorer_events": len(useful)},
         "per_cancellation": rows,
         "score": json.loads((ROOT / "episode/runtime/score.json").read_text()),
