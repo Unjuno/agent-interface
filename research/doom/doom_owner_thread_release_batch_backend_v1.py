@@ -100,7 +100,7 @@ class Backend(Previous):
 
         self._flush_pending_ups(context)
 
-        if context["rows"]:
+        if context["rows"] or context.get("cancelled_pending_ups"):
             self._release_batch.context = context
         else:
             try:
@@ -152,6 +152,12 @@ class Backend(Previous):
                 )
         finally:
             self._attach_delivery_ledger(error, context)
+            cancelled_pending = self._cancelled_pending_up_records(context)
+            if cancelled_pending:
+                try:
+                    error.cancelled_pending_ups = cancelled_pending
+                except (AttributeError, TypeError):
+                    pass
             context["rows"].clear()
             try:
                 del self._release_batch.context
@@ -166,6 +172,12 @@ class Backend(Previous):
             result = super().release_all()
         except BaseException as exc:
             if context is not None:
+                cancelled_pending = self._cancelled_pending_up_records(context)
+                if cancelled_pending:
+                    try:
+                        exc.cancelled_pending_ups = cancelled_pending
+                    except (AttributeError, TypeError):
+                        pass
                 if context["rows"]:
                     self._finish_incomplete_release_batch(
                         context, exc, "release_all_exception"
@@ -200,7 +212,23 @@ class Backend(Previous):
         if isinstance(ledger, dict) and isinstance(result, dict):
             result = dict(result)
             result["release_batch_delivery"] = self._copy_delivery_ledger(ledger)
+        if context is not None and context.get("cancelled_pending_ups") and isinstance(result, dict):
+            result = dict(result)
+            result["cancelled_pending_ups"] = self._cancelled_pending_up_records(context)
         return result
+
+    @staticmethod
+    def _cancelled_pending_up_records(context):
+        return [
+            {
+                "key": item["key"],
+                "identifier": item["input_context"][0],
+                "step": item["input_context"][1],
+                "backend_owned_before_release": item["backend_owned_before_release"],
+                "disposition": "not_attempted_owner_cancel_release",
+            }
+            for item in context.get("cancelled_pending_ups", [])
+        ]
 
     def raw(self, key, down):
         input_context = self._input_event_context
@@ -241,11 +269,27 @@ class Backend(Previous):
         pending = context.get("pending_ups", [])
         if not pending:
             return
+        cancel = getattr(self.lease, "cancel", None)
+        cancel_requested = getattr(cancel, "is_set", None)
+        if callable(cancel_requested) and cancel_requested():
+            # The owner watcher has revoked this lease and performed its own
+            # verified release. These queued step-UPs were never attempted;
+            # do not send them through the ordinary lease-bound up_batch RPC.
+            context["cancelled_pending_ups"] = [dict(item) for item in pending]
+            context["pending_ups"] = []
+            return
         records = getattr(self.owner, "records", None)
         record_count = len(records) if isinstance(records, list) else None
-        transitions = self.owner.call(
-            "up_batch", self.lease, [item["key"] for item in pending]
-        )
+        try:
+            transitions = self.owner.call(
+                "up_batch", self.lease, [item["key"] for item in pending]
+            )
+        except Exception:
+            # If the owner recorded an interruption while this queued UP was
+            # in flight, let the lease surface that cause. The buffered batch
+            # remains unknown and must not be replayed.
+            self.lease.check()
+            raise
         if type(transitions) is not list or len(transitions) != len(pending):
             raise AssertionError("v4 release batch did not return one transition per UP")
         context["pending_ups"] = []
