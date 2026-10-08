@@ -13,9 +13,12 @@ def oracle_rows(spec):
         mod=spec.get("effect_modifiers",{}).get(scenario,{}).get(item,{})
         if group=="agent_label": p+=mod.get("agent_"+stratum+"_delta",0)
         if not 0<=p<=100: raise ValueError("probability range")
-        for rep in range(n):
-            y=int(rep<p)
-            if scenario=="missing_unknown" and item=="target_uniform" and group=="agent_label" and stratum=="high" and rep<50: y=None
+        configured=spec["support_counts_by_scenario"].get(scenario)
+        cell_n=configured[group][stratum] if isinstance(configured,dict) else n
+        threshold=(p*cell_n)//100
+        for rep in range(cell_n):
+            y=int(rep<threshold)
+            if scenario=="missing_unknown" and item=="target_uniform" and group=="agent_label" and stratum=="high" and rep<90: y=None
             out.append({"scenario":scenario,"group":group,"stratum":stratum,"item":item,"replicate":rep,"outcome":y})
     return Counter(tuple(sorted(x.items())) for x in out)
 

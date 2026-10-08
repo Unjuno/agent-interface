@@ -21,6 +21,11 @@ def probability(spec, scenario, item, group, stratum):
     if group=="agent_label": p += delta.get(f"agent_{stratum}_delta",0)
     return p
 
+def cell_size(spec, scenario, group, stratum):
+    configured=spec["support_counts_by_scenario"].get(scenario)
+    if isinstance(configured,dict): return configured[group][stratum]
+    return spec["replicates_per_supported_cell"]
+
 
 def rows_for(spec):
     rows=[]
@@ -31,9 +36,11 @@ def rows_for(spec):
                     continue
                 for item in spec["items"]:
                     p=probability(spec,scenario,item,group,stratum)
-                    for replicate in range(spec["replicates_per_supported_cell"]):
-                        y=int(replicate < p)
-                        if scenario=="missing_unknown" and item=="target_uniform" and group=="agent_label" and stratum=="high" and replicate<50:
+                    n=cell_size(spec,scenario,group,stratum)
+                    threshold=(p*n)//100
+                    for replicate in range(n):
+                        y=int(replicate < threshold)
+                        if scenario=="missing_unknown" and item=="target_uniform" and group=="agent_label" and stratum=="high" and replicate<90:
                             y=None
                         rows.append({"scenario":scenario,"group":group,"stratum":stratum,"item":item,"replicate":replicate,"outcome":y})
     return rows

@@ -4,11 +4,11 @@
   "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
   "branch": "research/8582-human-agent-dif-t0-a01-20261009",
   "construction": {
-    "candidate_auditor_replay": "PASS_METHOD_SCOPED; 18,000 rows; 18,064 checks; mutation controls 7/7 rejected",
+    "candidate_auditor_replay": "PASS_METHOD_SCOPED; 19,200 rows; 19,272 checks; mutation controls 7/7 rejected",
     "formal_auditor_invocations_before_freeze": 0,
     "formal_candidate_invocations_before_freeze": 0,
     "formal_outputs_absent": true,
-    "tests": "3/3 PASS"
+    "tests": "4/4 PASS"
   },
   "decision_gate": "PLAN.md",
   "environment": {
@@ -26,16 +26,16 @@
     "candidate": "python3.12 research/analysis/human_agent_dif_8582_t0_a01_20261009/candidate.py --spec research/analysis/human_agent_dif_8582_t0_a01_20261009/spec.json --output research/analysis/human_agent_dif_8582_t0_a01_20261009/results/candidate.raw.json",
     "invocation_limit": "one candidate, one auditor, zero retries"
   },
-  "frozen_at_utc": "2026-10-08T21:20:30+00:00",
+  "frozen_at_utc": "2026-10-08T21:22:22+00:00",
   "package_path": "research/analysis/human_agent_dif_8582_t0_a01_20261009/",
   "preregistration_gate": "Wait until frozen source is pushed, exact hashes are recorded on Issue #8582 and remote source is read back before formal invocation.",
   "schema": "issue-8582-dif-t0-freeze-v1",
   "source_sha256": {
-    "PLAN.md": "4892d1025fa745389d1c51bd978a6782402b008268884ba50c26aa9e77bf0d5e",
+    "PLAN.md": "d4af91b376fbda4d1a710a2e60acc6614cbd2ee18e023169648fb8cbec1ab089",
     "README.md": "4a4c4ebf930563c95eee919d67506b441f828156fd09b8d74738709b0b2f338c",
-    "auditor.py": "dd813540b5a7ac958b0e854ce8a342e75f2c69ff377121f83c26dddb7911bf14",
-    "candidate.py": "7d76a3e6b94abafdb81956ba8cc60d61fd476f43f2d73e24e8cbc5a3dcad7eac",
-    "spec.json": "fbe92b76a065ec50589dcf211fbdc796358c4af7be190bf885329953879c5654",
-    "tests/test_construction.py": "2e749b78757e580575d955952b8ef4187d11e9b2aaf04946e2be1b5f30740f7e"
+    "auditor.py": "0048fc219a8ff75f0f9c58588cb5dd82146947b96c6b585a390cc55f627123ce",
+    "candidate.py": "0f2ae674da77e2fae71b82b2c046bc9e2f7ccd5acc0ecbc085e36e6bc395c880",
+    "spec.json": "1d5954fb1b6bb0d8274b5b237974366a8b068a68c72c809dbb728f74627236e1",
+    "tests/test_construction.py": "b3354d4fddaea1d83137c067cc1fe911bcd0318e1ecd58625906bd9ea17524be"
   }
 }
