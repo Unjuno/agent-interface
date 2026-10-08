@@ -1,0 +1,222 @@
+[
+    {
+        "Id": "7453ded807b0e7bac6335ad8e006117308d66c821bbbfff5264f8cc3b9a235d9",
+        "Created": "2026-10-03T21:05:00.329395732Z",
+        "Path": "/opt/owner-measurement-env/bin/python",
+        "Args": [
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "/tests",
+            "-v"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-03T21:05:00.449535617Z",
+            "FinishedAt": "2026-10-03T21:05:00.662325164Z"
+        },
+        "Image": "sha256:200f0ba1c5b6689261b30f1cc89c26da1b8c8b522fbcbe27b688d55ea67348c5",
+        "ResolvConfPath": "/var/lib/docker/containers/7453ded807b0e7bac6335ad8e006117308d66c821bbbfff5264f8cc3b9a235d9/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/7453ded807b0e7bac6335ad8e006117308d66c821bbbfff5264f8cc3b9a235d9/hostname",
+        "HostsPath": "/var/lib/docker/containers/7453ded807b0e7bac6335ad8e006117308d66c821bbbfff5264f8cc3b9a235d9/hosts",
+        "LogPath": "/var/lib/docker/containers/7453ded807b0e7bac6335ad8e006117308d66c821bbbfff5264f8cc3b9a235d9/7453ded807b0e7bac6335ad8e006117308d66c821bbbfff5264f8cc3b9a235d9-json.log",
+        "Name": "/owner-retention-construction-5ce3-20261004",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/mnt/mac/Users/taka/Documents/Codex/2026-10-03/agent-interface-r134-feedback-audit/research/doom/owner_measurement_59_5ce3_20261004/retention_successor:/tests:ro"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": null,
+            "Tmpfs": {
+                "/tmp": "rw,noexec,nosuid,size=64m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 536870912,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 536870912,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 128,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/mnt/mac/Users/taka/Documents/Codex/2026-10-03/agent-interface-r134-feedback-audit/research/doom/owner_measurement_59_5ce3_20261004/retention_successor",
+                "Destination": "/tests",
+                "Mode": "ro",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "7453ded807b0",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PYTHONDONTWRITEBYTECODE=1",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "OMP_THREAD_LIMIT=1"
+            ],
+            "Cmd": [
+                "-m",
+                "unittest",
+                "discover",
+                "-s",
+                "/tests",
+                "-v"
+            ],
+            "Image": "sha256:200f0ba1c5b6689261b30f1cc89c26da1b8c8b522fbcbe27b688d55ea67348c5",
+            "Volumes": null,
+            "WorkingDir": "/tmp",
+            "Entrypoint": [
+                "/opt/owner-measurement-env/bin/python"
+            ],
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "ff123810bcfe22a84be42290e59551f82228a17371f0f5fed377b39035d8c0a4",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:200f0ba1c5b6689261b30f1cc89c26da1b8c8b522fbcbe27b688d55ea67348c5",
+            "size": 1406,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]
