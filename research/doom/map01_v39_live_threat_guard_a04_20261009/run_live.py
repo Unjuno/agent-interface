@@ -1,4 +1,4 @@
-"""One-shot host relay for the frozen Issue #59 A03 allocation."""
+"""One-shot host relay for the frozen Issue #59 A04 allocation."""
 from datetime import datetime, timezone
 from pathlib import Path
 import hashlib
@@ -67,9 +67,9 @@ def image_receipts(message):
 def main():
     if len(sys.argv) != 2 or sys.argv[1] != "--execute-frozen-allocation":
         raise SystemExit("explicit one-shot execution flag required")
-    main_sha = os.environ.get("A03_MAIN_SHA", "")
+    main_sha = os.environ.get("A04_MAIN_SHA", "")
     if len(main_sha) != 40:
-        raise SystemExit("A03_MAIN_SHA must name the frozen current-main commit")
+        raise SystemExit("A04_MAIN_SHA must name the frozen current-main commit")
     if OUT.exists():
         raise SystemExit(f"allocation output already exists; refusing reuse: {OUT}")
     remote_main = subprocess.check_output(
@@ -155,7 +155,7 @@ def main():
                     "--disable", "shell_snapshot", "-c", "project_doc_max_bytes=0"]
     guest_env = {
         "HOME": "/tmp/issue59-live-v39-home", "PYTHONDONTWRITEBYTECODE": "1",
-        "A03_SOURCE_ROOT": SOURCE_ROOT,
+        "A04_SOURCE_ROOT": SOURCE_ROOT,
         "PYTHONPATH": SOURCE_ROOT + ":" + ":".join(
             SOURCE_ROOT + path for path in (
                 "/research/doom", "/research/live_control",
