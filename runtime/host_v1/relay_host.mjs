@@ -30,6 +30,17 @@ export async function createInstrumentedRelayClient(options) {
     return { data: block.data, mime_type: block.mimeType,
       image_sha256: createHash('sha256').update(bytes).digest('hex') };
   }
+  function validateImagePayloads(reply) {
+    if (reply.status !== 'returned' || !Array.isArray(reply.result?.content)) return;
+    for (const block of reply.result.content) {
+      if (block?.type !== 'image') continue;
+      if (typeof block.data !== 'string') throw TypeError('image data must be canonical base64');
+      const bytes = Buffer.from(block.data, 'base64');
+      if (!bytes.length || bytes.toString('base64') !== block.data) {
+        throw TypeError('image data must be nonempty canonical base64');
+      }
+    }
+  }
   const event = async (kind, fields = {}) => {
     const row = { schema: 'agent-interface/relay-host-event-v1', sequence: ++sequence,
       host_monotonic_ms: performance.now(), kind, ...fields };
@@ -88,6 +99,7 @@ export async function createInstrumentedRelayClient(options) {
       begin('present', reservationToken);
       try {
         const saved = await retained(attempt);
+        validateImagePayloads(saved.reply);
         const picture = reuseImages ? singlePng(saved.reply) : null;
         if (forceImage) imageBase = null;
         const delivery = reuseImages && picture && imageBase &&
