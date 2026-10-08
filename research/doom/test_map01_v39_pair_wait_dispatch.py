@@ -173,6 +173,21 @@ class PairWaitDispatchTests(unittest.TestCase):
             and isinstance(node.value, ast.Name)
             and node.value.id == "ReleaseOrderedExecutor"
             for node in ast.walk(measured_session)))
+        self.assertTrue(any(
+            isinstance(node, ast.ImportFrom)
+            and node.module == "doom_owner_thread_release_batch_backend_v1"
+            and any(alias.name == "Backend"
+                    and alias.asname == "TelemetryBackend"
+                    for alias in node.names)
+            for node in ast.walk(measured_session)))
+        self.assertTrue(any(
+            isinstance(node, ast.Assign)
+            and any(isinstance(target, ast.Attribute)
+                    and target.attr == "Backend"
+                    for target in node.targets)
+            and isinstance(node.value, ast.Name)
+            and node.value.id == "TelemetryBackend"
+            for node in ast.walk(measured_session)))
         executor_v13 = source("research/live_control/executor_v13.py")
         self.assertTrue(any(isinstance(node, ast.ImportFrom)
                             and node.module == "executor_v12"
@@ -192,6 +207,20 @@ class PairWaitDispatchTests(unittest.TestCase):
         self.assertEqual(len(parent_submit), 1)
         self.assertEqual(len(watcher_starts), 1)
         self.assertLess(parent_submit[0].lineno, watcher_starts[0].lineno)
+
+        release_batch = source(
+            "research/doom/doom_owner_thread_release_batch_backend_v1.py")
+        release_batch_class = next(node for node in release_batch.body
+                                   if isinstance(node, ast.ClassDef)
+                                   and node.name == "Backend")
+        release_batch_execute = function(release_batch, "execute",
+                                         release_batch_class)
+        self.assertTrue(any(isinstance(node.func.value, ast.Call)
+                            and isinstance(node.func.value.func, ast.Name)
+                            and node.func.value.func.id == "super"
+                            for node in calls(release_batch_execute, "execute")))
+        self.assertFalse(calls(release_batch_execute, "start"))
+        self.assertFalse(calls(release_batch_execute, "submit"))
 
         typed = source("research/doom/doom_typed_coast_backend_v1.py")
         typed_backend = next(node for node in typed.body
@@ -213,6 +242,10 @@ class PairWaitDispatchTests(unittest.TestCase):
         self.assertTrue(any(isinstance(node, ast.ImportFrom)
                             and node.module == "coast_backend_v1"
                             for node in typed.body))
+        release_v2 = source("research/doom/doom_typed_release_backend_v2.py")
+        self.assertTrue(any(isinstance(node, ast.ImportFrom)
+                            and node.module == "doom_typed_release_backend_v1"
+                            for node in release_v2.body))
 
         controller = source("research/doom/map01_overlap_controller_v39.py")
         controller_main = function(controller, "main")
