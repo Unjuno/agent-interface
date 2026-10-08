@@ -1,6 +1,7 @@
 # Analytical research
 
 - [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 12 finite cases independently reconstructed, 6/6 output mutations rejected; WSLc CPU method evidence only, no human-benefit claim.
+- [Issue #8583 T0 A01 principal-stratum bounds](principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: four finite synthetic cases exactly reconstructed, 5/5 candidate mutations rejected; WSLc CPU method evidence only, no empirical causal or product claim.
 
 - [Issue #8488 PSI-triggered work-shedding T0 A01](psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — `HOLD_DEADLINE_SEMANTICS_MISMATCH`: strict-bound raw recheck gives fixed 4 / queue 3 / free-memory 4 / PSI 1 primary misses, so the zero-miss gate fails. The original `NO_RESIDUAL` reading is withdrawn; no runtime/container claim.
 
@@ -904,6 +905,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`primary_refusal_terminality_59_spine07_20261001/`](primary_refusal_terminality_59_spine07_20261001/)
 - [`primary_refusal_terminality_59_spine07_v2_20261001/`](primary_refusal_terminality_59_spine07_v2_20261001/)
 - [`primary_refusal_terminality_59_t0_20261001/`](primary_refusal_terminality_59_t0_20261001/)
+- [`principal_stratum_bounds_8583_t0_a01_20261008/`](principal_stratum_bounds_8583_t0_a01_20261008/)
 - [`priority_inheritance_5370_t7_composition_20261002_01/`](priority_inheritance_5370_t7_composition_20261002_01/)
 - [`priority_inheritance_nested_5370_t6_20261001/`](priority_inheritance_nested_5370_t6_20261001/)
 - [`privacy_conditional_kernel_5420_t0_20261004/`](privacy_conditional_kernel_5420_t0_20261004/)
@@ -1258,4 +1260,3 @@ The checker compares the generated block against every child directory with a re
 # Issue #57 — Firecrawl compiled release-boundary evidence
 
 - [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.
-
