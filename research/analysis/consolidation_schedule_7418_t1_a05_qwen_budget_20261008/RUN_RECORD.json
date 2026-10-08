@@ -1,18 +1,70 @@
 {
   "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A05-QWEN-BUDGET-20261008",
-  "auditor_invocations": 0,
-  "candidate_invocations": 0,
+  "artifacts": {
+    "AUDIT.json": {
+      "bytes": 4294,
+      "sha256": "094a2b5655ab4da2d0bbcdbfa432bc64d0113cdab53502072ed3a58fc2560af2"
+    },
+    "RAW.jsonl": {
+      "bytes": 1801131,
+      "sha256": "90d45c9383c517dd7f61c7e4912a0954dcc6633107db9da8e503f49bd545ff67"
+    },
+    "RESULTS.md": {
+      "bytes": 2463,
+      "sha256": "29c687ac55e089d97aa4e02840cc3d9becf9bddc11a680645dbda78902e2a6ce"
+    },
+    "SUPPLEMENTAL_REVIEW.json": {
+      "bytes": 4811,
+      "sha256": "f86243767b6217d21b87f77ebae47f575e75fa1cb292b88eea0a265e9e9daab5"
+    },
+    "auditor.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "auditor.stdout.txt": {
+      "bytes": 86,
+      "sha256": "7b69338f313dccb62ad1f530fe7bd24a10e47f39a2b53483a618186ffc5be9a7"
+    },
+    "candidate.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "candidate.stdout.txt": {
+      "bytes": 50,
+      "sha256": "bc789c3b9b077d6e4fe5a9813732ef5bbe37f7498d5cedc7bddc60fab79386e3"
+    }
+  },
+  "audit_json_sha256": "094a2b5655ab4da2d0bbcdbfa432bc64d0113cdab53502072ed3a58fc2560af2",
+  "audit_sha256": "094a2b5655ab4da2d0bbcdbfa432bc64d0113cdab53502072ed3a58fc2560af2",
+  "auditor_decision": "PASS_CADENCE_SENSITIVITY_SCOPED",
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_status": "PASS_METHOD",
+  "auditor_stderr_txt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "auditor_stdout_txt_sha256": "7b69338f313dccb62ad1f530fe7bd24a10e47f39a2b53483a618186ffc5be9a7",
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "candidate_stderr_txt_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "candidate_stdout_txt_sha256": "bc789c3b9b077d6e4fe5a9813732ef5bbe37f7498d5cedc7bddc60fab79386e3",
   "consolidation_output_cap": 2048,
   "expected_calls": 390,
-  "formal_model_calls_observed": 0,
+  "formal_model_calls_observed": 390,
   "formal_retries": 0,
   "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "overall_claim_status": "HOLD_NO_CLEAN_TRANSITION_AUDIT",
   "predecessor_stops": [
     "T1 A01",
     "T1 A02",
     "T1 A03",
     "T1 A04"
   ],
+  "raw_bytes": 1801131,
+  "raw_jsonl_sha256": "90d45c9383c517dd7f61c7e4912a0954dcc6633107db9da8e503f49bd545ff67",
   "raw_path": "results/FORMAL_T1_A05/RAW.jsonl",
-  "terminal_disposition": "FROZEN_NOT_STARTED"
+  "raw_sha256": "90d45c9383c517dd7f61c7e4912a0954dcc6633107db9da8e503f49bd545ff67",
+  "result_summary": "RESULTS.md",
+  "supplemental_review_json_sha256": "f86243767b6217d21b87f77ebae47f575e75fa1cb292b88eea0a265e9e9daab5",
+  "supplemental_review_sha256": "f86243767b6217d21b87f77ebae47f575e75fa1cb292b88eea0a265e9e9daab5",
+  "supplemental_transition_audit_status": "FAIL",
+  "terminal_disposition": "ANSWER_SENSITIVITY_SCOPED; OVERALL HOLD FOR FAILED TRANSITION AUDIT"
 }
