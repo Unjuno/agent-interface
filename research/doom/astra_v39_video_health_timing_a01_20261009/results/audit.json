@@ -1,0 +1,72 @@
+{
+  "anchor_mismatches": [],
+  "auditor_sha256": "2d35f573b3cc2c27ab0491ac119b7133e4dfbd36ffa95037a7dbe9615e0471f6",
+  "base_commit": "0455b0079ca29bcfe85153f280e592f5e96528f6",
+  "candidate_result_sha256": "eafcad5641b72d918ce541297e63b1b91f0ee337afe2d86e04a5609aab7041b0",
+  "candidate_sha256": "0e172b4af44f7c50336732f8f77ed71e3047b93467c3722ded5730db62aec34e",
+  "decoded_frame_count": 780,
+  "execution_id": "astra-v39-video-health-timing-a01-20261009",
+  "failures": [],
+  "freeze_sha256": "d04964834196e00e45863c29534b13cd56d55c2041bf1190ae2a003a64102693",
+  "model_duration_note": {
+    "controller_elapsed_ns": 11844595127,
+    "difference_ns": 103535006,
+    "interpretation": "Both values are retained; source does not explain the difference.",
+    "report_model_ns": 11741060121
+  },
+  "mutation_controls": {
+    "drop_row": true,
+    "wrong_anchor": true,
+    "wrong_clock": true,
+    "wrong_health": true,
+    "wrong_unknown_count": true
+  },
+  "recomputed_rows": 85,
+  "row_mismatches": [],
+  "schema": "astra-video-health-timing-a01-audit-v1",
+  "scope": "Independent offline audit only; historical video timing cannot establish what a current guard would have done.",
+  "status": "PASS_AUDIT",
+  "threshold_timing_relation": [
+    {
+      "controller_end_video_seconds": 28.246877074691767,
+      "fit_uncertainty_seconds_only": 0.15243535055396645,
+      "floor": 90,
+      "ordering": "UNRESOLVED_WITHIN_FRAME_AND_FIT_WINDOW",
+      "sample_video_seconds": 28.2,
+      "unmodeled_media_sync_uncertainty": "unknown"
+    },
+    {
+      "controller_end_video_seconds": 28.246877074691767,
+      "fit_uncertainty_seconds_only": 0.15243535055396645,
+      "floor": 88,
+      "ordering": "UNRESOLVED_WITHIN_FRAME_AND_FIT_WINDOW",
+      "sample_video_seconds": 28.2,
+      "unmodeled_media_sync_uncertainty": "unknown"
+    },
+    {
+      "controller_end_video_seconds": 28.246877074691767,
+      "fit_uncertainty_seconds_only": 0.15243535055396645,
+      "floor": 84,
+      "ordering": "SAMPLED_BELOW_AFTER_ESTIMATED_CONTROLLER_END",
+      "sample_video_seconds": 30.2,
+      "unmodeled_media_sync_uncertainty": "unknown"
+    },
+    {
+      "controller_end_video_seconds": 28.246877074691767,
+      "fit_uncertainty_seconds_only": 0.15243535055396645,
+      "floor": 80,
+      "ordering": "NO_CROSSING_IN_WINDOW",
+      "sample_video_seconds": null,
+      "unmodeled_media_sync_uncertainty": "unknown"
+    },
+    {
+      "controller_end_video_seconds": 28.246877074691767,
+      "fit_uncertainty_seconds_only": 0.15243535055396645,
+      "floor": 78,
+      "ordering": "NO_CROSSING_IN_WINDOW",
+      "sample_video_seconds": null,
+      "unmodeled_media_sync_uncertainty": "unknown"
+    }
+  ],
+  "unknown_rows": 0
+}
