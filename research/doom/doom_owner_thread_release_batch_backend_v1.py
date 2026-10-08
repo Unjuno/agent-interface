@@ -243,9 +243,17 @@ class Backend(Previous):
             return
         records = getattr(self.owner, "records", None)
         record_count = len(records) if isinstance(records, list) else None
-        transitions = self.owner.call(
-            "up_batch", self.lease, [item["key"] for item in pending]
-        )
+        try:
+            transitions = self.owner.call(
+                "up_batch", self.lease, [item["key"] for item in pending]
+            )
+        except Exception:
+            # An owner interruption may already have released held keys and
+            # invalidated this lease before the buffered telemetry batch arrives.
+            # Preserve the batch as unknown, while letting the lease report its
+            # recorded cause instead of misclassifying it as an ordinary failure.
+            self.lease.check()
+            raise
         if type(transitions) is not list or len(transitions) != len(pending):
             raise AssertionError("v4 release batch did not return one transition per UP")
         context["pending_ups"] = []
