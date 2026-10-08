@@ -1,0 +1,10 @@
+import pathlib,subprocess,sys,os,hashlib,json,datetime
+O=pathlib.Path(__file__).resolve().parent;W=O.parents[1]/'work'/'primary-request-snapshot-01a0ff32';label=sys.argv[1];cmd=sys.argv[2:];D=O/label;D.mkdir(exist_ok=False);sha=lambda b:hashlib.sha256(b).hexdigest();pins=[]
+for p in sorted((W/'runtime'/'host_v1').glob('*')):
+ if p.is_file() and p.suffix in {'.mjs','.py','.md'}:
+  b=p.read_bytes();pins.append({'path':p.relative_to(W).as_posix(),'bytes':len(b),'sha256':sha(b)})
+tool=pathlib.Path(cmd[0]);b=tool.read_bytes();freeze={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'label':label,'argv':cmd,'cwd':str(W),'source_pins':pins,'runner_sha256':sha(pathlib.Path(__file__).read_bytes()),'tool_bytes':len(b),'tool_sha256':sha(b),'timeout_seconds':60,'original_producer_replay':False};(D/'FREEZE.json').write_text(json.dumps(freeze,indent=2),encoding='utf8');env=os.environ.copy();env['TASK_PRIMARY_RELEASE_TRACE']=str(D/'rows.jsonl');start=datetime.datetime.now(datetime.timezone.utc).isoformat();p=subprocess.Popen(cmd,cwd=W,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE);timeout=False
+try:out,err=p.communicate(timeout=60)
+except subprocess.TimeoutExpired:
+ timeout=True;p.kill();out,err=p.communicate(timeout=10)
+end=datetime.datetime.now(datetime.timezone.utc).isoformat();(D/'stdout.log').write_bytes(out);(D/'stderr.log').write_bytes(err);record={'label':label,'pid':p.pid,'argv':cmd,'cwd':str(W),'started_utc':start,'ended_utc':end,'exit_code':p.returncode,'timeout':timeout,'reaped':p.poll() is not None,'stdout_bytes':len(out),'stderr_bytes':len(err),'stdout_sha256':sha(out),'stderr_sha256':sha(err),'source_unchanged':all(sha((W/q['path']).read_bytes())==q['sha256'] for q in pins)};(D/'receipt.json').write_text(json.dumps(record,indent=2),encoding='utf8');print(json.dumps(record));print((out+err).decode('utf8',errors='replace')[-1000:]);sys.exit(p.returncode or (1 if timeout else 0))
