@@ -1,0 +1,41 @@
+{
+  "allocation": "UNJUNO-8582-HUMAN-AGENT-DIF-T0-A01-20261009",
+  "base_branch": "main",
+  "base_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8582-human-agent-dif-t0-a01-20261009",
+  "construction": {
+    "candidate_auditor_replay": "PASS_METHOD_SCOPED; 18,000 rows; 18,064 checks; mutation controls 7/7 rejected",
+    "formal_auditor_invocations_before_freeze": 0,
+    "formal_candidate_invocations_before_freeze": 0,
+    "formal_outputs_absent": true,
+    "tests": "3/3 PASS"
+  },
+  "decision_gate": "PLAN.md",
+  "environment": {
+    "dependencies": "standard library only",
+    "machine": "arm64",
+    "model_or_GUI": "none",
+    "network": "not used",
+    "participants": "none",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+    "runtime": "host CPython; deterministic CPU fixture"
+  },
+  "formal_commands": {
+    "auditor": "python3.12 research/analysis/human_agent_dif_8582_t0_a01_20261009/auditor.py --spec research/analysis/human_agent_dif_8582_t0_a01_20261009/spec.json --raw research/analysis/human_agent_dif_8582_t0_a01_20261009/results/candidate.raw.json --output research/analysis/human_agent_dif_8582_t0_a01_20261009/results/audit.raw.json",
+    "candidate": "python3.12 research/analysis/human_agent_dif_8582_t0_a01_20261009/candidate.py --spec research/analysis/human_agent_dif_8582_t0_a01_20261009/spec.json --output research/analysis/human_agent_dif_8582_t0_a01_20261009/results/candidate.raw.json",
+    "invocation_limit": "one candidate, one auditor, zero retries"
+  },
+  "frozen_at_utc": "2026-10-08T21:20:30+00:00",
+  "package_path": "research/analysis/human_agent_dif_8582_t0_a01_20261009/",
+  "preregistration_gate": "Wait until frozen source is pushed, exact hashes are recorded on Issue #8582 and remote source is read back before formal invocation.",
+  "schema": "issue-8582-dif-t0-freeze-v1",
+  "source_sha256": {
+    "PLAN.md": "4892d1025fa745389d1c51bd978a6782402b008268884ba50c26aa9e77bf0d5e",
+    "README.md": "4a4c4ebf930563c95eee919d67506b441f828156fd09b8d74738709b0b2f338c",
+    "auditor.py": "dd813540b5a7ac958b0e854ce8a342e75f2c69ff377121f83c26dddb7911bf14",
+    "candidate.py": "7d76a3e6b94abafdb81956ba8cc60d61fd476f43f2d73e24e8cbc5a3dcad7eac",
+    "spec.json": "fbe92b76a065ec50589dcf211fbdc796358c4af7be190bf885329953879c5654",
+    "tests/test_construction.py": "2e749b78757e580575d955952b8ef4187d11e9b2aaf04946e2be1b5f30740f7e"
+  }
+}
