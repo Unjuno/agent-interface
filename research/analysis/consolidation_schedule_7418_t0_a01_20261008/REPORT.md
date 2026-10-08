@@ -12,9 +12,11 @@
 
 **C.** The episodes and deterministic consolidation transformation are authored fixtures. Different stored intermediate states do not prove different downstream task answers or a benefit from any schedule.
 
-**U.** No model, GUI, task accuracy, token use, latency, safety, real-world exception frequency, or optimal cadence was measured. T1 requires its own allocation, fixed model/prompt/retrieval, held-out split, seeds, and independent endpoint audit.
+**U.** No model, GUI, task accuracy, token use, latency, safety, real-world exception frequency, or optimal cadence was measured. T1 requires its own allocation, fixed model/prompt/retrieval, held-out split, seeds, and independent endpoint audit. The external ARC-AGI preprint motivates schedule sensitivity but is not replicated or transferred by this T0 [Zhang et al.](https://arxiv.org/abs/2605.12978).
 
 ## Execution provenance
+
+Concurrent, non-pooled #8406 work discovered in a later coordination check is documented in [`COORDINATION.md`](COORDINATION.md).
 
 - Allocation: `GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T0-A01-20261008`
 - Companion idea: #8406; distinct from #7418's representation comparison.
