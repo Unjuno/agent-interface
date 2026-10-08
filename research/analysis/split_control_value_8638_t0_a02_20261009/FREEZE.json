@@ -1,0 +1,49 @@
+{
+  "allocation": "8638-T0-A02-20261009",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/8638",
+  "protocol": "SCV-8638-v2",
+  "status_at_freeze": "FROZEN_NOT_RUN",
+  "base_main": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "branch": "research/8638-split-control-voi-a02-20261009",
+  "package_path": "research/analysis/split_control_value_8638_t0_a02_20261009/",
+  "formal_invocations_at_freeze": {"candidate": 0, "auditor": 0, "retries": 0},
+  "inputs": {
+    "path": "inputs.json",
+    "sha256": "fd90317e5e076411aa7e8ed6e0af7ac4884800de858010a908559c5b9ecb5a3c",
+    "cases": 13,
+    "supported_cases": 12,
+    "supported_rows": 192,
+    "unsupported_cases": 1
+  },
+  "sources": {
+    "README.md": "e63f775e18530042b4a2230b512cce9d45f78dd538a185bceee34c8158e29b43",
+    "CONSTRUCTION.md": "20099f7ab3f7779fe297ab496c67283f0e6c2cafd9e0d620f170f09470896589",
+    "raw/README.md": "0e6ec1251f3ae9c653c2969af16261c40626e03147bebbd92a220d31a2e505dc",
+    "candidate.py": "db51d7938784fd9adbc67aa5a1ec2e6dd4dda6eb0877a31daf6c2b961d8fc756",
+    "auditor.py": "4a7d19c4841656d6dabbc8aa3f57447fed0035e53c01dc790abb86989e674d99",
+    "construction_check.py": "7cad8656f5102c308fdb846a5ece398a245372ab1b300f65a18ca8dbd7bce1f0",
+    "network_deny.sb": "52d2e8f0d947edf9c29e8b85a5ebe6fa47cfd8cbedb27247643fe143a638dd62",
+    "PROTOCOL.md": "85b0dc869a40eb10c7851023a654d3df9ba5f75ee8290d95f25c80f25df7303e",
+    "construction_report.json": "2f9711bf07ed75f9586de5d50937146a65938867a916fae497f2d4f0d7a97961"
+  },
+  "formal_commands": {
+    "candidate": "sandbox-exec -f network_deny.sb python3 -B candidate.py inputs.json raw/candidate_raw.json",
+    "auditor": "sandbox-exec -f network_deny.sb python3 -B auditor.py inputs.json raw/candidate_raw.json raw/audit.json"
+  },
+  "execution_environment": {
+    "host": "macOS 27.0.1 build 26A434",
+    "python": "3.14.5",
+    "route": "native CPU exact enumeration under macOS sandbox-exec network denial",
+    "network_denial_probe": "loopback connect returned EPERM",
+    "container_route": "OrbStack read-only docker ps failed before inventory with containerd content-blob operation-not-supported; no container launched or changed",
+    "reason": "T0 is a deterministic standard-library finite enumeration and does not require a container boundary; OrbStack daemon could not complete even a read-only inventory request"
+  },
+  "frozen_decision": {
+    "required_rank_reversals": 3,
+    "authority": "NONE",
+    "mandatory_gates_unchanged": true,
+    "candidate_invocations": 1,
+    "auditor_invocations": "one only after complete candidate exit 0 and raw hash verification",
+    "same_allocation_retry": false
+  }
+}

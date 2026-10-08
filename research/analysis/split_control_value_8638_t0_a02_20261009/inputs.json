@@ -1,0 +1,22 @@
+{
+  "allocation": "8638-T0-A02-20261009",
+  "protocol": "SCV-8638-v2",
+  "unit": "integer probabilities per 1000; exact rational expected losses and values",
+  "authority": "NONE",
+  "mandatory_gates": ["raw_validity", "freshness", "authority", "release", "independent_effect"],
+  "cases": [
+    {"id":"pair_A_reference","pair":"reference","role":"A","support":"known","validity":"valid","prior_state1":500,"accuracy":950,"delivery":800,"uptake":200,"response":"follow","cost_milli":100,"loss":[[0,1],[1,0]]},
+    {"id":"pair_B_reference","pair":"reference","role":"B","support":"known","validity":"valid","prior_state1":500,"accuracy":750,"delivery":1000,"uptake":900,"response":"follow","cost_milli":50,"loss":[[0,1],[1,0]]},
+    {"id":"pair_A_holdout_1","pair":"holdout_1","role":"A","support":"known","validity":"valid","prior_state1":500,"accuracy":900,"delivery":1000,"uptake":200,"response":"follow","cost_milli":80,"loss":[[0,1],[1,0]]},
+    {"id":"pair_B_holdout_1","pair":"holdout_1","role":"B","support":"known","validity":"valid","prior_state1":500,"accuracy":720,"delivery":1000,"uptake":900,"response":"follow","cost_milli":40,"loss":[[0,1],[1,0]]},
+    {"id":"pair_A_holdout_2","pair":"holdout_2","role":"A","support":"known","validity":"valid","prior_state1":500,"accuracy":920,"delivery":1000,"uptake":150,"response":"follow","cost_milli":110,"loss":[[0,1],[1,0]]},
+    {"id":"pair_B_holdout_2","pair":"holdout_2","role":"B","support":"known","validity":"valid","prior_state1":500,"accuracy":780,"delivery":1000,"uptake":800,"response":"follow","cost_milli":80,"loss":[[0,1],[1,0]]},
+    {"id":"rare_high_consequence","pair":null,"role":"control","support":"known","validity":"valid","prior_state1":50,"accuracy":900,"delivery":800,"uptake":750,"response":"follow","cost_milli":100,"loss":[[0,1],[10,0]]},
+    {"id":"irrelevant_cue","pair":null,"role":"control","support":"known","validity":"valid","prior_state1":500,"accuracy":500,"delivery":1000,"uptake":1000,"response":"follow","cost_milli":10,"loss":[[0,1],[1,0]]},
+    {"id":"positive_but_unconsumed","pair":null,"role":"control","support":"known","validity":"valid","prior_state1":500,"accuracy":900,"delivery":1000,"uptake":0,"response":"follow","cost_milli":20,"loss":[[0,1],[1,0]]},
+    {"id":"ignored_after_delivery","pair":null,"role":"control","support":"known","validity":"valid","prior_state1":500,"accuracy":900,"delivery":1000,"uptake":0,"response":"ignore","cost_milli":20,"loss":[[0,1],[1,0]]},
+    {"id":"misleading_response","pair":null,"role":"control","support":"known","validity":"valid","prior_state1":500,"accuracy":800,"delivery":1000,"uptake":1000,"response":"invert","cost_milli":10,"loss":[[0,1],[1,0]]},
+    {"id":"stale_signal","pair":null,"role":"control","support":"known","validity":"stale","prior_state1":500,"accuracy":950,"delivery":1000,"uptake":1000,"response":"follow","cost_milli":50,"loss":[[0,1],[1,0]]},
+    {"id":"out_of_model_unknown","pair":null,"role":"control","support":"unknown","validity":"unknown","cost_milli":25}
+  ]
+}

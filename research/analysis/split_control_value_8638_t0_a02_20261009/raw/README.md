@@ -1,0 +1,1 @@
+Formal output directory reserved before execution. `candidate_raw.json` and `audit.json` must be created only by the exact commands in `FREEZE.json`; no construction output or prior A01 artifact belongs here.
