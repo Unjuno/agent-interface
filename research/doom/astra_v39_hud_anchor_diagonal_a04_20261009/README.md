@@ -29,6 +29,7 @@ synthetic diagonal translations. No candidate retry was made.
 ## Relation to the neighboring A04 diagnostic
 
 PR #8680 tested the unchanged A03 axial policy on eight diagonal translations per frame (104 cases) and found 2 correct reads, with the rest unknown. This package tests a different candidate policy: a 24-offset radius-2 square fallback across all 16 frozen diagonal translations (208 cases), while retaining the axial policy as comparator. It is a policy successor on the same fixed corpus, not a rerun of the same candidate arm.
+
 ## Result
 
 The frozen candidate passed its decision gate. The existing eight-axis policy
