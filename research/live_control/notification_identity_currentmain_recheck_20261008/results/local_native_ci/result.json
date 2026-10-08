@@ -1,0 +1,164 @@
+{
+  "schema": "agent-interface/local-native-check-v1",
+  "status": "FAIL",
+  "suites": [
+    {
+      "suite": "protocol",
+      "command": [
+        "/run/current-system/sw/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.integration_checks.test_delivered_capture",
+        "runtime.integration_checks.test_workload",
+        "runtime.integration_checks.test_host_timing",
+        "runtime.cli_v1.test_observe",
+        "runtime.selector_v1.test_selector",
+        "runtime.cli_v1.test_mcp_relay",
+        "runtime.cli_v1.test_mcp_server",
+        "runtime.cli_v1.test_mcp_clock",
+        "runtime.cli_v1.test_mcp_session",
+        "runtime.cli_v1.test_mcp_guarded",
+        "runtime.cli_v1.test_guarded_presentation",
+        "runtime.cli_v1.test_public_presentation",
+        "runtime.cli_v1.test_public_summary",
+        "runtime.cli_v1.test_post_dispatch_capture",
+        "runtime.cli_v1.test_cli",
+        "runtime.core_v1.test_contract",
+        "runtime.core_v1.test_compiled_gui",
+        "test_compiled_compatibility_v1",
+        "runtime.cli_v1.test_review",
+        "test_agent_review",
+        "test_receipt_references",
+        "test_native_exchange_v1",
+        "test_native_mcp_v1",
+        "test_native_allocation_v1",
+        "test_native_mcp_relay_v1",
+        "test_native_direct_task_v1",
+        "test_native_primary_review_v1",
+        "test_native_brief_review_v1",
+        "test_native_guarded_form_v1",
+        "test_guarded_source_dependencies_v1",
+        "test_appserver_journal_close_01a0ff2d",
+        "test_appserver_reader_retirement_01a0ff2d",
+        "test_app_server_eof_stop",
+        "test_appserver_utf8_2d0b",
+        "test_app_server_reply_id_5156",
+        "test_appserver_write_admission_e0cc",
+        "test_app_server_utf8",
+        "test_appserver_process_tree_cleanup_20261004",
+        "test_codex_app_server_send_deadline_v1",
+        "test_app_server_known_eof",
+        "test_app_server_runtime_eligibility",
+        "test_app_server_send_snapshot",
+        "test_appserver_bounded_close_e0cc",
+        "test_adaptive_acquisition_caller_v3",
+        "test_adaptive_acquisition_caller_custody_v3",
+        "test_adaptive_acquisition_caller_terminal_v3",
+        "test_adaptive_acquisition_invocation_93c2",
+        "test_adaptive_acquisition_caller_refusal_v3",
+        "test_adaptive_acquisition_caller_dispatch_v3",
+        "test_adaptive_acquisition_caller_uncertain_tail_v3",
+        "test_adaptive_acquisition_cost_coverage",
+        "test_adaptive_acquisition_aggregate_cost",
+        "runtime.integration_checks.test_native_catalogue",
+        "test_cost_invocation_composition_93c2",
+        "test_adaptive_acquisition_diagnostics_93c2",
+        "test_adaptive_acquisition_failure_metadata_93c2",
+        "test_adaptive_acquisition_caller_verify_progress_v3",
+        "test_usage_subset_route",
+        "test_caller_diagnostic_composition",
+        "test_caller_failure_id_composition",
+        "test_failure_status_composition",
+        "runtime.cli_v1.test_receipt_empty_index_r7p4"
+      ],
+      "returncode": 1,
+      "duration_ns": 10117514458,
+      "logs": {
+        "stdout": {
+          "file": "protocol.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "protocol.stderr.log",
+          "sha256": "49454d6d417e382d0bcf922f00dba32bd7a55477a54160a49c00cacd52c88400"
+        }
+      }
+    },
+    {
+      "suite": "harness",
+      "command": [
+        "/run/current-system/sw/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.guarded_x11_v1.test_input_dependency",
+        "runtime.guarded_x11_v1.test_compiled",
+        "runtime.guarded_x11_v1.test_move",
+        "runtime.guarded_x11_v1.test_reference_lifetime",
+        "runtime.guarded_x11_v1.test_activation",
+        "runtime.guarded_x11_v1.test_deadline",
+        "runtime.guarded_x11_v1.test_history",
+        "runtime.backends.x11_v1.test_focus",
+        "runtime.cli_v1.test_x11_target_review",
+        "runtime.backends.x11_v1.test_mapping_boundary",
+        "runtime.backends.x11_v1.test_text_plan",
+        "runtime.backends.x11_v1.test_partial_execution",
+        "test_native_finish_after_v1",
+        "test_native_cleanup_v1",
+        "test_native_handle_bridge_v1",
+        "test_native_tail_v1",
+        "runtime.distribution_v2.test_distribution",
+        "runtime.guarded_x11_v1.test_archive",
+        "runtime.distribution_v2.test_compiled_archive"
+      ],
+      "returncode": 1,
+      "duration_ns": 17729775500,
+      "logs": {
+        "stdout": {
+          "file": "harness.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "harness.stderr.log",
+          "sha256": "28a3487f20af2db95f9179cd99c4197383ba4043eb44c4e3ef345f4ab8cc6ece"
+        }
+      }
+    },
+    {
+      "suite": "win32",
+      "command": [
+        "/run/current-system/sw/bin/python",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.guarded_win32_v1.test_effect",
+        "runtime.guarded_win32_v1.test_effect_quarantine",
+        "runtime.guarded_win32_v1.test_fixture_cleanup",
+        "runtime.guarded_win32_v1.test_kill_failure",
+        "runtime.guarded_win32_v1.test_late_state",
+        "runtime.guarded_win32_v1.test_move",
+        "runtime.guarded_win32_v1.test_recovery",
+        "runtime.guarded_win32_v1.test_sparse_effect",
+        "runtime.guarded_win32_v1.test_unicode_neutral",
+        "runtime.guarded_win32_v1.test_verifier_pending",
+        "runtime.guarded_win32_v1.test_worker_effect",
+        "runtime.backends.win32_v1.test_integration"
+      ],
+      "returncode": 1,
+      "duration_ns": 284906291,
+      "logs": {
+        "stdout": {
+          "file": "win32.stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "file": "win32.stderr.log",
+          "sha256": "add879ed933c9bc9998c8b1a22db6b395f620e90f6928cb6bbea5f9de33b4a2c"
+        }
+      }
+    }
+  ],
+  "scope": "contract tests; not a live GUI experiment or independent adoption audit",
+  "runner_sha256": "8495245860b592584a5f7ddd2c59e32a19598835c80f596d27a777db5546384e"
+}

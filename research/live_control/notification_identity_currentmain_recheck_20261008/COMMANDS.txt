@@ -1,0 +1,33 @@
+PYTHONPATH=research/live_control python -m unittest \
+  test_codex_app_server_notification_arrival \
+  test_codex_app_server_notification_identity \
+  test_app_server_eof_stop \
+  test_appserver_bounded_close_e0cc \
+  test_appserver_journal_close_01a0ff2d \
+  test_appserver_process_tree_cleanup_20261004 \
+  test_appserver_reader_retirement_01a0ff2d \
+  test_appserver_utf8_2d0b
+PASS: 39 tests
+
+PYTHONPATH=research/live_control python -O -m unittest \
+  test_codex_app_server_notification_arrival \
+  test_codex_app_server_notification_identity \
+  test_app_server_eof_stop \
+  test_appserver_bounded_close_e0cc \
+  test_appserver_journal_close_01a0ff2d \
+  test_appserver_process_tree_cleanup_20261004 \
+  test_appserver_reader_retirement_01a0ff2d \
+  test_appserver_utf8_2d0b
+PASS: 39 tests
+
+python runtime/integration_checks/native.py --output <fresh-nonexistent-temp-path>
+FAIL: details in results/local_native_ci/result.json and runner logs
+
+python research/check_workspace_index.py --git-tree
+PASS: 161 top-level directories reachable
+
+python research/analysis/check_index.py --strict
+PASS: 775 retained result/failure directories indexed
+
+git diff --check origin/main...HEAD
+PASS

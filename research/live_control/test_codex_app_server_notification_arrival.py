@@ -17,6 +17,7 @@ class Arrival(unittest.TestCase):
         client._notifications = deque([old])
         client._notification_consumptions = 0
         client._responses = {}
+        client._journal_order_lock = threading.Lock()
         client._closed = False
         selected = threading.Event()
         consumed = threading.Event()
