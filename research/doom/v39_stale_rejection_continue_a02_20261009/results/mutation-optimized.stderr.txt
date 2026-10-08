@@ -1,0 +1,19 @@
+test_stale_rejection_branch_continues_outer_control_loop (test_map01_v39_stale_rejection_continue_static.StaleRejectionContinueTests.test_stale_rejection_branch_continues_outer_control_loop) ... FAIL
+
+======================================================================
+FAIL: test_stale_rejection_branch_continues_outer_control_loop (test_map01_v39_stale_rejection_continue_static.StaleRejectionContinueTests.test_stale_rejection_branch_continues_outer_control_loop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/v39-stale-a02-n20m147w/research/doom/test_map01_v39_stale_rejection_continue_static.py", line 43, in test_stale_rejection_branch_continues_outer_control_loop
+    self.assertIsInstance(
+    ~~~~~~~~~~~~~~~~~~~~~^
+        stale_branch.body[-1], ast.Continue,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "stale rejection must skip normal completion and continue the outer iteration")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Expr(value=Call(func=Attribute(value=Name(...), attr='append', ctx=Load(...)), args=[Dict(keys=[Constant(...), ..., Constant(...)], values=[Name(...), ..., IfExp(...)])], keywords=[])) is not an instance of <class 'ast.Continue'> : stale rejection must skip normal completion and continue the outer iteration
+
+----------------------------------------------------------------------
+Ran 1 test in 0.018s
+
+FAILED (failures=1)

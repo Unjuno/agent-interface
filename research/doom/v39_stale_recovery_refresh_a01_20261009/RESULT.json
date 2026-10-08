@@ -1,0 +1,27 @@
+{
+  "schema": "agent-interface/v39-stale-recovery-source-refresh-result-v1",
+  "classification": "DETERMINISTIC_PRODUCTION_FUNCTION_COMPOSITION",
+  "decision": "PASS_SCOPED_STALE_RECOVERY_REFRESH_HANDOFF",
+  "observed": {
+    "stale_guard_state": "REJECTED_BEFORE_PROGRAM_ADMISSION",
+    "stale_guard_input_authority": false,
+    "stale_admission_status": "REJECTED_EXECUTOR_STALE_SEQUENCE",
+    "source_refresh_status": "recovered",
+    "refresh_expected_sequence": 5,
+    "refresh_observation_sequence": 6,
+    "verified_empty_release_and_matching_intent_token": true,
+    "next_planner_image": "refreshed.png",
+    "next_planner_health": 60,
+    "next_planner_ammo": 8,
+    "negative_mismatched_release_token": "refused_before_planner"
+  },
+  "tests": {
+    "focused_normal": "1/1 PASS",
+    "focused_optimized": "1/1 PASS",
+    "controller_normal": "16/16 PASS",
+    "controller_optimized": "16/16 PASS",
+    "pending_drain_normal": "21/21 PASS",
+    "pending_drain_optimized": "21/21 PASS"
+  },
+  "scope": "Software composition only; no live game, GUI, model inference, OS input, or physical release. No task-effect or Issue #59 completion claim."
+}

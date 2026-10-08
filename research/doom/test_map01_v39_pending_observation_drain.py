@@ -385,6 +385,55 @@ class PendingObservationDrainTests(unittest.TestCase):
                                   "pending_events": False})
         self.assertEqual(monitor.seen, [])
 
+    def test_late_invalidation_after_empty_sample_is_fenced_before_executor_input(self):
+        typed = {"event": "typed_observation", "sequence": 12}
+        full = {"event": "observation", "sequence": 12, "image": "frame-12"}
+
+        class ArriveAfterEmptySample(queue.Queue):
+            injected = False
+
+            def empty(self):
+                sampled_empty = super().empty()
+                if sampled_empty and not self.injected:
+                    self.injected = True
+                    self.put(typed)
+                    self.put(full)
+                return sampled_empty
+
+        incoming = ArriveAfterEmptySample()
+        monitor = Monitor(invalidate_on=12)
+        drained = drain_pending_observation_events(incoming, monitor, "cover-race")
+
+        # The row lands after the drain's final get_nowait and after empty()
+        # samples the queue, so this bounded drain cannot report it yet.
+        self.assertFalse(drained["pending_events"])
+        self.assertEqual(incoming.qsize(), 2)
+        self.assertEqual(monitor.seen, [])
+
+        class Backend:
+            sequence = 12
+            validate_calls = 0
+            execute_calls = 0
+
+            def validate(self, steps):
+                self.validate_calls += 1
+
+            def execute(self, *args):
+                self.execute_calls += 1
+
+        executor = ExecutorV12.__new__(ExecutorV12)
+        executor.lock = threading.RLock()
+        executor.closed = False
+        executor.active = None
+        executor.backend = Backend()
+        with self.assertRaisesRegex(
+                ValueError, "latest observation sequence required before input"):
+            executor.submit("stale-plan", [{"op": "observe"}], 11, 10**30)
+
+        self.assertIsNone(executor.active)
+        self.assertEqual(executor.backend.validate_calls, 0)
+        self.assertEqual(executor.backend.execute_calls, 0)
+
     def test_bounded_drain_processes_events_arriving_after_entry(self):
         incoming = queue.Queue()
         incoming.put({"event": "observation", "sequence": 30})

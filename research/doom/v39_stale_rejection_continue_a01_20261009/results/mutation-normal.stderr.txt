@@ -1,0 +1,14 @@
+test_stale_rejection_branch_continues_outer_control_loop (test_map01_v39_stale_rejection_continue.StaleRejectionContinueTests.test_stale_rejection_branch_continues_outer_control_loop) ... FAIL
+
+======================================================================
+FAIL: test_stale_rejection_branch_continues_outer_control_loop (test_map01_v39_stale_rejection_continue.StaleRejectionContinueTests.test_stale_rejection_branch_continues_outer_control_loop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/stale-continue-package-n87vt73r/research/doom/test_map01_v39_stale_rejection_continue.py", line 45, in test_stale_rejection_branch_continues_outer_control_loop
+    self.assertIsInstance(
+AssertionError: <ast.Expr object at 0x10a2cfdd0> is not an instance of <class 'ast.Continue'> : stale rejection must skip normal completion and start a fresh-source iteration
+
+----------------------------------------------------------------------
+Ran 1 test in 0.013s
+
+FAILED (failures=1)
