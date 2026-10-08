@@ -1,0 +1,23 @@
+{
+  "allocation": "5947-MULTI-UPDATE-PROVENANCE-T0-A01-20261007",
+  "freeze_sha256": "6bf8a36d64c42b88aec84b7791b07ad4e8c244e075b64c12c89e97c519eeb9a9",
+  "candidate": {
+    "command": "python3 research/analysis/proactive_interference_5947_t0_a01_20261007/generate.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": ""
+  },
+  "independent_auditor": {
+    "command": "python3 research/analysis/proactive_interference_5947_t0_a01_20261007/audit.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "{\"errors\": [], \"result\": \"PASS\"}\n"
+  },
+  "formal_retries": 0,
+  "construction_suite": {
+    "command": "python3 research/analysis/proactive_interference_5947_t0_a01_20261007/test_construction.py",
+    "passed": 5,
+    "failed": 0,
+    "four_mutations_rejected_after_hash_refresh": true
+  }
+}
