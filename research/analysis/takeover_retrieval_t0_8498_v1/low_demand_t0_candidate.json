@@ -1,0 +1,488 @@
+[
+  {
+    "case_id": "verified_completion",
+    "condition": "RETRIEVAL",
+    "delay_bucket": 2,
+    "exposure": {
+      "question": "State what is verified, what remains uncertain, and the next safe inspection.",
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 0,
+    "safe_action": "verify_receipt",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": true
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "verified_completion",
+    "condition": "NO_PROMPT",
+    "delay_bucket": 2,
+    "exposure": {
+      "question": null,
+      "receipt": null
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 1,
+    "safe_action": "verify_receipt",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": true
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "verified_completion",
+    "condition": "PASSIVE_RECEIPT",
+    "delay_bucket": 2,
+    "exposure": {
+      "question": null,
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 2,
+    "safe_action": "verify_receipt",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": true
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "partial_effect",
+    "condition": "PASSIVE_RECEIPT",
+    "delay_bucket": 2,
+    "exposure": {
+      "question": null,
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 0,
+    "safe_action": "inspect_fresh_state",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": true,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "partial_effect",
+    "condition": "RETRIEVAL",
+    "delay_bucket": 2,
+    "exposure": {
+      "question": "State what is verified, what remains uncertain, and the next safe inspection.",
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 1,
+    "safe_action": "inspect_fresh_state",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": true,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "partial_effect",
+    "condition": "NO_PROMPT",
+    "delay_bucket": 2,
+    "exposure": {
+      "question": null,
+      "receipt": null
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 2,
+    "safe_action": "inspect_fresh_state",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": true,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "no_effect_stop",
+    "condition": "PASSIVE_RECEIPT",
+    "delay_bucket": 1,
+    "exposure": {
+      "question": null,
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 0,
+    "safe_action": "replan_from_fresh_state",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "no_effect_stop",
+    "condition": "NO_PROMPT",
+    "delay_bucket": 1,
+    "exposure": {
+      "question": null,
+      "receipt": null
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 1,
+    "safe_action": "replan_from_fresh_state",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "no_effect_stop",
+    "condition": "RETRIEVAL",
+    "delay_bucket": 1,
+    "exposure": {
+      "question": "State what is verified, what remains uncertain, and the next safe inspection.",
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 2,
+    "safe_action": "replan_from_fresh_state",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "uncertain_delivery",
+    "condition": "RETRIEVAL",
+    "delay_bucket": 1,
+    "exposure": {
+      "question": "State what is verified, what remains uncertain, and the next safe inspection.",
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 0,
+    "safe_action": "stop_and_reconcile",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": true,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "uncertain_delivery",
+    "condition": "PASSIVE_RECEIPT",
+    "delay_bucket": 1,
+    "exposure": {
+      "question": null,
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 1,
+    "safe_action": "stop_and_reconcile",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": true,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "uncertain_delivery",
+    "condition": "NO_PROMPT",
+    "delay_bucket": 1,
+    "exposure": {
+      "question": null,
+      "receipt": null
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 2,
+    "safe_action": "stop_and_reconcile",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": false,
+      "partial": false,
+      "uncertain": true,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "stale_focus",
+    "condition": "NO_PROMPT",
+    "delay_bucket": 3,
+    "exposure": {
+      "question": null,
+      "receipt": null
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 0,
+    "safe_action": "reacquire_target",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": true,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "stale_focus",
+    "condition": "RETRIEVAL",
+    "delay_bucket": 3,
+    "exposure": {
+      "question": "State what is verified, what remains uncertain, and the next safe inspection.",
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 1,
+    "safe_action": "reacquire_target",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": true,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "stale_focus",
+    "condition": "PASSIVE_RECEIPT",
+    "delay_bucket": 3,
+    "exposure": {
+      "question": null,
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 2,
+    "safe_action": "reacquire_target",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": true,
+      "held_input": false,
+      "partial": false,
+      "uncertain": false,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "held_input_uncertain",
+    "condition": "RETRIEVAL",
+    "delay_bucket": 3,
+    "exposure": {
+      "question": "State what is verified, what remains uncertain, and the next safe inspection.",
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 0,
+    "safe_action": "release_all_then_observe",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": true,
+      "partial": false,
+      "uncertain": true,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "held_input_uncertain",
+    "condition": "NO_PROMPT",
+    "delay_bucket": 3,
+    "exposure": {
+      "question": null,
+      "receipt": null
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 1,
+    "safe_action": "release_all_then_observe",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": true,
+      "partial": false,
+      "uncertain": true,
+      "verified": false
+    },
+    "urgent_event": false
+  },
+  {
+    "case_id": "held_input_uncertain",
+    "condition": "PASSIVE_RECEIPT",
+    "delay_bucket": 3,
+    "exposure": {
+      "question": null,
+      "receipt": "source_bound_receipt_available"
+    },
+    "facts": {
+      "last_operation": "bounded_operation",
+      "receipt": "source_bound_receipt_available",
+      "task": "disposable_gui_task",
+      "urgent_event": false
+    },
+    "gap_predeclared": true,
+    "order_index": 2,
+    "safe_action": "release_all_then_observe",
+    "takeover_unannounced": true,
+    "truth": {
+      "focus_stale": false,
+      "held_input": true,
+      "partial": false,
+      "uncertain": true,
+      "verified": false
+    },
+    "urgent_event": false
+  }
+]
