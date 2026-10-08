@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #6600 practice-order discriminator T0 A01](faded_demonstration_practice_order_6600_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: fixed-dose blocked/mixed six-task ledgers independently reconstructed; 6/6 mutations rejected. Host-only stdlib method evidence; no participants or learning claim.
+
 - [Issue #8434 disturbance-order correlation T0 A01](disturbance_order_8434_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: held-out route ranking reverses across equal-marginal clustered/block versus alternating schedules; 96 source-bound cases independently reconstructed. Authored finite method fixture only, host-only after container content-store STOP; no real-interface inference.
 
 - [Successor #7452 A02 equal-denominator context × event-order comparison](ordered_context_event_coverage_7452_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent audit matches mixed and exhaustive suites on the same 64 obligations; mixed 32 rows/4 episodes versus exhaustive 128 rows/64 episodes; 4/4 hostile inputs rejected. Synthetic CPU-only evidence; A01's unequal-scope result remains unchanged.
@@ -556,6 +558,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`explanation_dependence_5916_t0_v1/`](explanation_dependence_5916_t0_v1/)
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
 - [`faded_demonstration_6600_t0_orbstack_20261002/`](faded_demonstration_6600_t0_orbstack_20261002/)
+- [`faded_demonstration_practice_order_6600_t0_a01_20261008/`](faded_demonstration_practice_order_6600_t0_a01_20261008/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
 - [`feasibility_estimability_7379_t0b_20261004/`](feasibility_estimability_7379_t0b_20261004/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
