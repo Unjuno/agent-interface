@@ -10,7 +10,7 @@
 
 **C.** The release contract may intentionally sample only the last physical release, or real runtime scheduling may never produce overlapping holds. Under either condition, full per-key history could be unnecessary for the current scorer-tail purpose.
 
-**U.** The candidate is an isolated synthetic wrapper prototype. It does not execute V19's real backend class, scorer tail, controller, GUI, OS input, model, or game. It says nothing about how often overlapping keys occur, physical release correctness, task feedback, or efficacy. The source under test is an unmerged PR branch, not current-main runtime code.
+**U.** The candidate is an isolated synthetic wrapper prototype. It does not execute V19's real backend class, scorer tail, controller, GUI, OS input, model, or game. It says nothing about how often overlapping keys occur, physical release correctness, task feedback, or efficacy. The source under test is an unmerged PR branch, not current-main runtime code. The experiment began after confirming main at `ba6d1da119e58f16c06d32245e36b0adb8f75449`; the evidence PR was then based on the newer main `e37ae63b88a456816598a51887cf0b3e1ef44265`.
 
 ## Result
 
