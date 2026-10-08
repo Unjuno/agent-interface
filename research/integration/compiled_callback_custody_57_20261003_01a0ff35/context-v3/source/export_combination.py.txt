@@ -1,0 +1,75 @@
+"""Export exact Git code for a bounded author integration check, never main."""
+from pathlib import Path
+import datetime, hashlib, json, subprocess
+
+here = Path(__file__).resolve().parent
+root = here.parent / 'agent-interface-compiled-custody'
+git = r'C:\Program Files\Git\cmd\git.exe'
+base = '636986a804a6004cd047db7e8cc5e62c02d585d8'
+head = 'd3fa17987f89365cb20dbe096ad52ca0506420ce'
+review_base = '316ac44b24d4ac29c1942d2fee51f1c0599855b1'
+
+def run(*args):
+    p = subprocess.run([git, '-C', str(root), *args], capture_output=True, timeout=120)
+    if p.returncode:
+        raise RuntimeError((args, p.returncode, p.stderr.decode('utf-8', 'replace')))
+    return p.stdout
+
+def tree(ref):
+    result = {}
+    for row in run('ls-tree', '-rz', '--full-tree', ref).split(b'\0'):
+        if row:
+            meta, name = row.split(b'\t', 1)
+            result[name.decode()] = meta.decode().split()
+    return result
+
+assert run('status', '--porcelain') == b''
+assert run('rev-parse', 'HEAD').decode().strip() == head
+combined = run('merge-tree', '--write-tree', base, head).decode().strip()
+assert len(combined) == 40 and '\n' not in combined
+old, latest, proposed, joined = map(tree, (review_base, base, head, combined))
+own_paths = sorted(p for p in set(old) | set(proposed) if old.get(p) != proposed.get(p))
+joined_paths = sorted(p for p in set(latest) | set(joined) if latest.get(p) != joined.get(p))
+assert len(own_paths) == 66 and own_paths == joined_paths
+modified = ['runtime/core_v1/COMPILED_GUI.md', 'runtime/core_v1/compiled_gui.py']
+assert all(joined[p] == proposed[p] for p in own_paths if p not in modified)
+assert all(joined.get(p) == row for p, row in latest.items() if p not in own_paths)
+docs = ['README.md','docs/CURRENT_GOAL.md','ROADMAP.md','docs/WORKER_QUICKSTART.md',
+        'docs/RESEARCH_METHOD.md','docs/ISSUE_FAILURE_CLASSIFICATION.md']
+assert all(old[p] == latest[p] for p in docs)
+assert not [p for p in latest if p.rsplit('/',1)[-1] == 'AGENTS.md']
+manifest = json.loads((here.parent / 'compiled-callback-custody/committed-build-manifest.json').read_text())
+paths = [e['path'] for e in manifest['source_files']]
+extra = ['runtime/distribution_v2/__init__.py','runtime/distribution_v2/build.py',
+         'runtime/core_v1/test_compiled_gui.py',
+         'runtime/core_v1/test_compiled_callback_custody_01a0ff35.py',
+         'runtime/core_v1/test_compiled_effect_evidence_01a0ff32.py',
+         'runtime/core_v1/COMPILED_GUI.md']
+records = {}
+for label, ref in [('combined',combined),('guard-only',base),('custody-only',head)]:
+    target = here / label
+    target.mkdir(exist_ok=False)
+    entries = tree(ref)
+    rows = []
+    for path in paths + extra:
+        if path not in entries:
+            # Each historical baseline lacks the other owner's new test module.
+            assert path.startswith('runtime/core_v1/test_compiled_')
+            continue
+        mode, kind, oid = entries[path]
+        assert kind == 'blob' and mode == '100644'
+        raw = run('cat-file','blob',oid)
+        dest = target / path
+        dest.parent.mkdir(parents=True,exist_ok=True)
+        with dest.open('xb') as f: f.write(raw)
+        rows.append(dict(path=path,mode=mode,oid=oid,bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest()))
+    records[label] = dict(ref=ref,files=rows)
+record = dict(observed_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+              scope='author-only ordinary composition preparation; no main/apply certificate',
+              current_main_sha=base, original_head=head, original_review_base=review_base,
+              combined_tree_sha=combined, original_66_paths=own_paths,
+              combined_modified_paths=modified, all_other_current_blobs_preserved=True,
+              startup_documents_unchanged=docs,no_AGENTS=True,exports=records)
+with (here/'exact-export.json').open('x',encoding='utf-8') as f:
+    json.dump(record,f,sort_keys=True,indent=2); f.write('\n')
+print(json.dumps(dict(combined_tree_sha=combined,exported_files={k:len(v['files']) for k,v in records.items()})))

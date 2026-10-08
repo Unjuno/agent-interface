@@ -1,0 +1,18 @@
+{
+  "run_id": "gui-reversibility-7949-external-write-a01-20261007",
+  "target": {"object_id": "doc-1", "generation": 1},
+  "agent_write": {"field": "x", "before": 0, "after": 1, "global_revision": 1, "field_revision": 1},
+  "initial_fields": {"x": 0, "y": 0},
+  "cases": [
+    {"id":"no_interference","coverage_complete":true,"events":[],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":1,"field_revisions":{"x":1,"y":0},"fields":{"x":1,"y":0}}},
+    {"id":"disjoint_y_write","coverage_complete":true,"events":[{"seq":1,"event_id":"w-y-2","kind":"write","object_id":"doc-1","generation":1,"field":"y","value":9,"global_revision":2,"field_revision":1}],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":2,"field_revisions":{"x":1,"y":1},"fields":{"x":1,"y":9}}},
+    {"id":"same_field_write","coverage_complete":true,"events":[{"seq":1,"event_id":"w-x-2","kind":"write","object_id":"doc-1","generation":1,"field":"x","value":7,"global_revision":2,"field_revision":2}],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":2,"field_revisions":{"x":2,"y":0},"fields":{"x":7,"y":0}}},
+    {"id":"aba_same_final_value","coverage_complete":true,"events":[{"seq":1,"event_id":"w-x-2","kind":"write","object_id":"doc-1","generation":1,"field":"x","value":7,"global_revision":2,"field_revision":2},{"seq":2,"event_id":"w-x-3","kind":"write","object_id":"doc-1","generation":1,"field":"x","value":1,"global_revision":3,"field_revision":3}],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":3,"field_revisions":{"x":3,"y":0},"fields":{"x":1,"y":0}}},
+    {"id":"object_replaced","coverage_complete":true,"events":[{"seq":1,"event_id":"replace-2","kind":"replace","object_id":"doc-2","generation":2,"global_revision":2,"fields":{"x":1,"y":0}}],"snapshot":{"object_id":"doc-2","generation":2,"global_revision":2,"field_revisions":{"x":0,"y":0},"fields":{"x":1,"y":0}}},
+    {"id":"sequence_gap","coverage_complete":true,"events":[{"seq":2,"event_id":"w-y-3","kind":"write","object_id":"doc-1","generation":1,"field":"y","value":9,"global_revision":3,"field_revision":1}],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":3,"field_revisions":{"x":1,"y":1},"fields":{"x":1,"y":9}}},
+    {"id":"out_of_order","coverage_complete":true,"events":[{"seq":2,"event_id":"w-y-3","kind":"write","object_id":"doc-1","generation":1,"field":"y","value":9,"global_revision":3,"field_revision":1},{"seq":1,"event_id":"w-z-2","kind":"write","object_id":"doc-1","generation":1,"field":"z","value":2,"global_revision":2,"field_revision":1}],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":3,"field_revisions":{"x":1,"y":1,"z":1},"fields":{"x":1,"y":9,"z":2}}},
+    {"id":"incomplete_coverage","coverage_complete":false,"events":[],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":2,"field_revisions":{"x":1,"y":1},"fields":{"x":1,"y":9}}},
+    {"id":"snapshot_mismatch","coverage_complete":true,"events":[{"seq":1,"event_id":"w-y-2","kind":"write","object_id":"doc-1","generation":1,"field":"y","value":9,"global_revision":2,"field_revision":1}],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":2,"field_revisions":{"x":1,"y":1},"fields":{"x":1,"y":0}}},
+    {"id":"unjournaled_revision","coverage_complete":true,"events":[],"snapshot":{"object_id":"doc-1","generation":1,"global_revision":2,"field_revisions":{"x":1,"y":0},"fields":{"x":1,"y":0}}}
+  ]
+}

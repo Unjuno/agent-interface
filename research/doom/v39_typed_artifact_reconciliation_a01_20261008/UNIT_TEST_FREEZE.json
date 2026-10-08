@@ -1,0 +1,28 @@
+{
+  "schema": "issue8566-reconcile-alias-a01-unit-freeze-v1",
+  "main_commit": "f97ea50ce6835b02cb26c2ff357c31b5046da0ef",
+  "production_source_blob": "930e1c78511b57999a0a2176cb94a31a32d166a8",
+  "test": "research/doom/test_doom_typed_artifact_reconciliation_v1.py",
+  "test_git_blob": "68ca69bee3b1a47eac7156d53a29c730430f84c8",
+  "test_sha256": "2936162c2942a6de7a31c50cf130422d4cb0305e89c1ac08bf51fdcb34d19d00",
+  "candidate_test_sha256": "2936162c2942a6de7a31c50cf130422d4cb0305e89c1ac08bf51fdcb34d19d00",
+  "candidate_source_sha256": "fbe3d85b1777a92595faa556a580417ba42a7ce1b8b8b65de98fb2e9bf983441",
+  "runner_sha256": "5f570af99a07890956767c35b1a33c8010d823f5ab5500aa575feae0d46fa3e5",
+  "baseline_probe_raw_sha256": "c032b799266c1fbb3441af6a483ff2c196d968e1f55cfb19c3224591fad19266",
+  "candidate_probe_raw_sha256": "f10e9e839cf0de59c9ba4e9568ff5f24e89900f77de6db5fa1afdd71bd4661e9",
+  "expected": {
+    "baseline": "one exact-control pass; four epoch alias subtests and one binding alias test fail closed",
+    "candidate": "all three unittest methods pass; exact control matches, aliases rejected"
+  },
+  "commands": [
+    "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --env SOURCE_ROOT=/src --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/run_unit_suite.py baseline",
+    "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --env SOURCE_ROOT=/src --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/run_unit_suite.py candidate"
+  ],
+  "runtime": "wslc 3.0.1.0; agent-interface/native-suite-wslc-a08:20261004 (image ID 1b4a8bd7c0fe); CPython 3.12.14; Pillow 10.2.0",
+  "network": "none",
+  "cpu_limit_requested": 1,
+  "memory_limit_requested": "1G",
+  "memory_enforcement_note": "WSL reports swap/cgroup swap-limit unsupported; no swap limit claimed.",
+  "candidate_invocations": 1,
+  "retry_limit": 0
+}

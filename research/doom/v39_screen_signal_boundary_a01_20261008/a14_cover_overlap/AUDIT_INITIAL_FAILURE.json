@@ -1,0 +1,12 @@
+{
+  "status": "FAIL_AUDIT",
+  "checks": {
+    "source_run_labeled_protocol_deviation": false,
+    "source_hashes_match_freeze": true,
+    "six_planner_turns_and_seven_cover_spans": true,
+    "all_interval_pairs_recomputed": true,
+    "overlap_summary_recomputed": true,
+    "no_semantic_screen_claim": true
+  },
+  "diagnosis": "Auditor implementation error: checked for lowercase prose 'protocol-deviation' while the frozen record uses the canonical status EXPLORATORY_PROTOCOL_DEVIATION. Interval arithmetic and source hashes passed. Corrected audit checks the canonical state string."
+}
