@@ -1,0 +1,3 @@
+# Custody correction — Issue #8582 T0 A01
+
+The formal candidate and auditor ran against the frozen eight-scenario package committed as `05f180a5dcfcde4f27fa121ae7e63de42d15e33d`. After that run, construction-only edits for a composition-shift scenario were mistakenly committed in `b1ffe97bc792cdb1fa339b25e25b08e80d84e4c2`, alongside the frozen run outputs. No formal process ran against those edits. The final package restores all frozen source files byte-for-byte and verifies them against `FREEZE.json`; the retained formal outputs are interpreted only against that original source. The postformal scenario is excluded, no rerun was made, and the interim commit remains in branch history for transparent custody.

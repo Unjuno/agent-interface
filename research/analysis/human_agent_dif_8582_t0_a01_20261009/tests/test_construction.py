@@ -8,7 +8,7 @@ c=load("candidate"); a=load("auditor"); S=json.loads((ROOT/"spec.json").read_tex
 class ConstructionTests(unittest.TestCase):
  def test_full_rows_and_all_scenario_gates_reconstruct(self):
   raw=c.run(S); result=a.check(raw,S)
-  self.assertEqual(result["rows_reconstructed"],19200)
+  self.assertEqual(result["rows_reconstructed"],18000)
   self.assertEqual(raw["scenario_results"]["uniform_dif"]["classification"]["items"]["target_uniform"],"UNIFORM_DIF")
   self.assertEqual(raw["scenario_results"]["nonuniform_dif"]["classification"]["items"]["target_nonuniform"],"NONUNIFORM_DIF")
   self.assertEqual(raw["scenario_results"]["invariant"]["classification"]["items"]["null_item"],"NO_FLAG")
@@ -21,14 +21,8 @@ class ConstructionTests(unittest.TestCase):
  def test_missing_outcomes_remain_in_assigned_denominator(self):
   raw=c.run(S); r=raw["scenario_results"]["missing_unknown"]
   self.assertEqual(r["row_count"],2400)
-  self.assertEqual(r["known_count"],2310)
-  self.assertEqual(r["row_count"]-r["known_count"],90)
-
- def test_stratification_removes_planted_composition_only_difference(self):
-  r=c.run(S)["scenario_results"]["composition_only"]
-  self.assertEqual(r["classification"]["items"]["null_item"],"NO_FLAG")
-  self.assertAlmostEqual(r["group_marginal_means"]["null_item:agent_label"]-r["group_marginal_means"]["null_item:human_label"],.21)
-  self.assertEqual(r["within_stratum_differences"]["null_item"],{"low":0.0,"high":0.0})
+  self.assertEqual(r["known_count"],2350)
+  self.assertEqual(r["row_count"]-r["known_count"],50)
 
  def test_independent_mutation_controls_reject_seven_failures(self):
   raw=c.run(S)
