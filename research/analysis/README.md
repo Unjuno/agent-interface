@@ -984,6 +984,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`relation_first_real_corpus_8073_a01_20261007/`](relation_first_real_corpus_8073_a01_20261007/)
 - [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
 - [`relational_noninterference_5811_t0_v1/`](relational_noninterference_5811_t0_v1/)
+- [`relative_view_rotation_features_8636_t0_a02_20261009/`](relative_view_rotation_features_8636_t0_a02_20261009/)
 - [`rent_compile_5870_t0_v1/`](rent_compile_5870_t0_v1/)
 - [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
 - [`research_failure_detector_5531_t4/`](research_failure_detector_5531_t4/)

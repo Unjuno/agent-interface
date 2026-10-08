@@ -1,3 +1,7 @@
+# Issue #8636 T0 A02 — rotation-feature audit correction first outcome (2026-10-09)
+
+`HOLD_UNCERTAIN`: candidate completed 360 synthetic trials; the single independent auditor exited 1 before summary on `status does not match independent decision`. Post-run review also found frozen Python 3.12.13 versus formal `python3` 3.14.5. Exact output archive and receipts are preserved; retries 0. A01's earlier HOLD remains unchanged. No feature-method, live GUI, or product inference. See [failure and custody record](research/analysis/relative_view_rotation_features_8636_t0_a02_20261009/FORMAL_FAILURE.md), [post-run review](research/analysis/relative_view_rotation_features_8636_t0_a02_20261009/POSTRUN_REVIEW.md), [raw archive](research/analysis/relative_view_rotation_features_8636_t0_a02_20261009/results/a02-first-outcome.tar.gz), and [Issue #8636](https://github.com/Unjuno/agent-interface/issues/8636).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)
