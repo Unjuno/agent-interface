@@ -437,6 +437,16 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
     return planner_interrupt, terminal
 
 
+def cancel_initial_cover_before_planner(process, wait, cover_id):
+    """Cancel an invalidated accepted cover before creating a planner turn."""
+    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+    process.stdin.flush()
+    terminal = wait(lambda row: row["event"] == "terminal" and
+                    row.get("id") == cover_id)
+    require_cover_terminal(terminal, cancellation_requested=True)
+    return terminal
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -867,9 +877,14 @@ def submit_initial_cover_with_recovery(submit, *, identifier, latest_reader,
     if type(ack) is not dict or ack.get("event") not in ("accepted", "rejected"):
         raise ValueError("initial cover submit returned an invalid acknowledgement")
     if ack["event"] == "accepted":
+        event_types = getattr(observation_monitor, "event_types", {"observation"})
+        invalidation = None
+        for row in consumed_events:
+            if row.get("event") in event_types and invalidation is None:
+                invalidation = observation_monitor.observe(row)
         return {"ack": ack, "latest": latest_reader(),
                 "submitted_sequence": submitted_sequence,
-                "recovery": None}
+                "recovery": None, "invalidation": invalidation}
     recovery = recover_stale_cover_submission(
         ack, identifier=identifier, expected_sequence=submitted_sequence,
         consumed_events=consumed_events, latest=latest_reader(),
@@ -1036,6 +1051,7 @@ def main():
             cover_steps=compile_cover(cover_semantic)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
             cover_submission_recovery=None
+            cover_submission_invalidation=None
             def submit_cover(identifier, consumed_events=None):
                 nonlocal clock_ns
                 clock_ns=time.perf_counter_ns()
@@ -1055,6 +1071,25 @@ def main():
                 observation_monitor=validity_monitor)
             cover_ack=cover_result["ack"]
             if cover_ack["event"] == "rejected":
+                cover_submission_invalidation = {
+                    "ack": cover_result["ack"],
+                    "submitted_sequence": cover_result["submitted_sequence"],
+                    "invalidation": cover_result["invalidation"],
+                    "cover_cancel_terminal": cover_terminals[-1],
+                }
+                latest = cover_result["latest"]
+                cover = None
+                cover_semantic=[];cover_validity_semantic=None
+                cover_policy_source_iteration=None;cover_steps=[]
+                validity_monitor,validity_admission=build_cover_monitor(
+                    signal_reader,latest,None,index,ammo_reader=ammo_reader,
+                    requires_ammo=False)
+                validity_monitor,validity_admission=select_cover_monitor(
+                    validity_monitor,validity_admission,[],None)
+            elif cover_result.get("invalidation") is not None:
+                failure_cleanup.set_stage("initial_cover_invalidation_release")
+                cover_terminals.append(cancel_initial_cover_before_planner(
+                    process, wait, cover))
                 cover_submission_recovery = cover_result
                 latest = cover_result["latest"]
                 cover = None
@@ -1238,6 +1273,7 @@ def main():
                   "discard_reason":"policy_dependency_invalidated",
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
                   "plan_terminal":"not_admitted"})
                 continue
             if not planner_result.answer_eligible:
@@ -1262,6 +1298,7 @@ def main():
                   "model_action_discarded":True,"discard_reason":"planner_answer_ineligible",
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
                   "plan_terminal":"not_admitted"})
                 continue
             try:
@@ -1293,6 +1330,7 @@ def main():
                   "model_action_discarded":True,"discard_reason":"controller_validation_failed",
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
                   "plan_terminal":"not_admitted"})
                 continue
             if action["state"] != "active":
@@ -1349,6 +1387,7 @@ def main():
                   "model_action_discarded":True,"discard_reason":"action_not_current",
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
                   "plan_terminal":"not_admitted"})
                 continue
             grounded_capture_ns=source_health_signal["capture_ns"]
@@ -1602,6 +1641,7 @@ def main():
                   "discard_reason":"executor_stale_sequence_before_acceptance",
                   "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
                   "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
                   "plan_terminal":("stale_rejected_before_next_segment" if trace
                                    else "rejected_before_admission")})
                 continue
@@ -1639,6 +1679,7 @@ def main():
               "fresh_sequence_at_plan":fresh_before_plan["sequence"],
               "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
               "cover_submission_recovery":cover_submission_recovery,
+              "cover_submission_invalidation":cover_submission_invalidation,
               "cover_program_ids":cover_ids,"cover_renewals":max(0,len(cover_ids)-1),
               "cover_renewal_gaps_ms":cover_renewal_gaps_ms,
               "cover_policy":cover_semantic,"cover_policy_source_iteration":cover_policy_source_iteration,

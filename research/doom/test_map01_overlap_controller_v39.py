@@ -113,6 +113,38 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(interruption, {"status": "interrupted"})
         self.assertIn('"op": "cancel"', process.stdin.writes[0])
 
+    def test_initial_cover_invalidation_cancels_before_planner_and_requires_empty_release(self):
+        class Stdin:
+            def __init__(self): self.writes = []
+            def write(self, value): self.writes.append(value)
+            def flush(self): pass
+        class Process:
+            def __init__(self): self.stdin = Stdin()
+
+        terminal = {"event": "terminal", "id": "cover-0",
+                    "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": []}}
+        process = Process()
+        result = controller.cancel_initial_cover_before_planner(
+            process, lambda predicate: terminal if predicate(terminal) else None,
+            "cover-0")
+
+        self.assertIs(result, terminal)
+        self.assertIn('"op": "cancel"', process.stdin.writes[0])
+        for release in (
+            {"verified": False, "keys_down": [], "buttons_down": []},
+            {"verified": True, "keys_down": ["W"], "buttons_down": []},
+            {"verified": True, "keys_down": [], "buttons_down": ["fire"]},
+        ):
+            unsafe_terminal = dict(terminal, release=release)
+            with self.subTest(release=release), self.assertRaisesRegex(
+                    RuntimeError, "allowed status and verified empty release"):
+                controller.cancel_initial_cover_before_planner(
+                    Process(),
+                    lambda predicate: unsafe_terminal if predicate(unsafe_terminal) else None,
+                    "cover-0")
+
     def test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral(self):
         class Stdin:
             def write(self, value): pass

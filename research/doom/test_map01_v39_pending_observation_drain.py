@@ -155,6 +155,41 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(monitor.soft_event_count, 1)
         self.assertTrue(incoming.empty())
 
+    def test_accepted_initial_cover_ack_observes_hard_crossing_consumed_during_wait(self):
+        binding = {"focus": 7, "surface": 9,
+                   "geometry": [0, 0, 640, 480]}
+        signals = {
+            "health": typed_signal("health", 50, 12, 1_100_000_000, binding),
+            "ammo": typed_signal("ammo", 4, 12, 1_100_000_000, binding),
+        }
+        full = {"event": "observation", "sequence": 12,
+                "capture_ns": 1_100_000_000, "pointer_binding": binding,
+                "frame_rgb_sha256": "a" * 64, "signals": signals}
+        latest = {"sequence": 11}
+        consumed = []
+        monitor = DoomCoverSignalPairMonitor(
+            {"health": SignalGuard("health", 100, 11, 1_000_000_000, 60),
+             "ammo": SignalGuard("ammo", 4, 11, 1_000_000_000, 1)},
+            health_reader=SignalReader("health"),
+            ammo_reader=SignalReader("ammo"))
+
+        def submit(consumed_events):
+            consumed_events.append(full)
+            consumed.append(full)
+            latest.update(full)
+            return {"event": "accepted", "id": "cover-0"}
+
+        result = submit_initial_cover_with_recovery(
+            submit, identifier="cover-0", latest_reader=lambda: latest,
+            incoming=queue.Queue(), wait=lambda predicate: self.fail("unexpected wait"),
+            observation_monitor=monitor)
+
+        self.assertEqual(result["ack"]["event"], "accepted")
+        self.assertEqual(result["invalidation"]["reason"],
+                         "health:below_hard_minimum")
+        self.assertEqual(monitor.last_sequence, 12)
+        self.assertEqual(consumed, [full])
+
     def test_queued_hard_crossing_precedes_completed_answer(self):
         incoming = queue.Queue()
         incoming.put({"event": "typed_observation", "sequence": 12})
