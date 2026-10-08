@@ -4,6 +4,8 @@ This directory is the research workspace and retained evidence record for Agent 
 
 For claims and scientific disposition, start with the top-level [research index](../RESEARCH.md).
 
+- Closed PR #7148: [X11 input-custody safety HOLD](integration/x11_input_custody_7148/RECOVERY.md) — retained candidate tests do not establish safe release: source-supported wrong-ClientPointer and unreadable-button-state constructions can falsely clear custody. No runtime patch is adopted.
+
 ## Start here
 
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
