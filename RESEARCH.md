@@ -2465,3 +2465,8 @@ The saved A01 auditor reproducibly accepts three contradictory receipt-metadata 
 # Issue #8258 — V39 typed-observation raw-retention boundary A01 (2026-10-07)
 
 The preserved construction result writes two representative typed-health/ammo and full-observation rows through the frozen session event sink; the independent saved-data audit accepts the raw rows and rejects all 5/5 nested-value, omission, ordering, and timestamp mutations. The candidate was not rerun during rescue. Current-main comparison finds only 3/5 frozen implementation sources still byte-identical, so this remains historical frozen-snapshot construction evidence—not current-main integration, live signal capture, monitor behavior, game effect, or recovery evidence. See the [artifact package and source-lineage qualification](research/doom/typed_observation_retention_a01_20261007/README.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+
+# Issue #8641 T0 A01 — uncertainty-source intervention choice
+
+`PASS_METHOD_SCOPED / H_FAIL_NO_ADDED_DECISION_VALUE`: the frozen candidate and independent auditor reconstructed all 4,800 synthetic rows with zero errors; four label/dependence/epoch/cost mutations were rejected. DECOMPOSED correctness was 88.9%, but its mean cost (0.258) exceeded TOTAL_UNCERTAINTY (0.200) and DECISION_VALUE (0.158), failing the preregistered cost reduction at matched correctness. No GUI, model, user, live, or product claim. See [report, frozen inputs, raw output, and audit](research/analysis/uncertainty_intervention_8641_t0_a01_20261009/REPORT.md) and [Issue #8641](https://github.com/Unjuno/agent-interface/issues/8641).
