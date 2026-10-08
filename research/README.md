@@ -25,6 +25,7 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #8576 T0 A01: [grounded optional resume suggestions](analysis/resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 12 synthetic cases audited, 6/6 mutations rejected, WSLc CPU-only. No human-benefit claim.
 
 - Issue #8589 T0 A01: [effect-aware selective recovery](analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 8/8 finite cases reconstructed, 5/5 mutations rejected, zero effect dispatches. No GUI/runtime/cost/product claim.
+- Issue #8581 T0 A03: [controlled-feedback raw-artifact bypass](analysis/raw_artifact_bypass_8581_t0_a03_20261009/REPORT.md) — `BYPASS_DEFEATS_FEEDBACK_SCOPED` by the frozen equality-inclusive rule; all four cells were identical, so no differential bypass effect is demonstrated. A01/A02 first audit failures remain separate.
 - Issue #8583 T0 A01: [finite principal-stratum bounds](analysis/principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; four synthetic cases independently reconstructed, 5/5 mutations rejected, WSLc CPU-only. No empirical causal or product claim.
 
 - Issue #8571 A01: [service-debt representation invariance custody HOLD](analysis/service_debt_alias_8571_a01_20261008/CUSTODY_NOTE.md) — first-run trace and independent replay retained, but formal promotion withheld because the freeze was not committed before execution; no rerun. Synthetic diagnostic only.

@@ -1,0 +1,22 @@
+{
+  "allocation": "RAW-ARTIFACT-BYPASS-8581-T0-A03-20261009",
+  "issue": 8581,
+  "frozen_main": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8581-feedback-bypass-a03-20261009",
+  "package": "research/analysis/raw_artifact_bypass_8581_t0_a03_20261009",
+  "frozen_at": "2026-10-09 Asia/Tokyo",
+  "runtime": "CPython 3.14.5; stdlib only; macOS 27.0 ARM64 host CPU; no container, network, model, GUI, or shared runtime",
+  "source_hashes_sha256": {
+    "design.json": "0ed9304f0bc5bd901889b5c94454fdcb47352489b7c728160e279a9a9ee2dcf0",
+    "protocol.json": "10f70337d3c404a0da35471eb0a3df7f727d90ee3f6cf7e9b0b5586d6a63d759",
+    "candidate.py": "0158a37deca8cb70474a033437fb5bd63709ab03a21dbda8be50fe5e6e43636f",
+    "auditor.py": "d1f332311f468d6e57fe73271d6167ff2cd297210fe9143f3fe6acc4a55ada46",
+    "test_model.py": "84b7b6a116e0e17cd4e495025b957ba8ea744ec8853dedfb80b0e014fef04c5b"
+  },
+  "candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retry_policy": "one candidate invocation; only on exit 0, one independent raw-only auditor invocation; preserve first outcome; no retries",
+  "construction": "py_compile and 4 deterministic model-boundary, mutation, and shared-RNG tests passed before freeze",
+  "fresh_cohort": "candidate code has no fresh-label generation or fresh-score path; independent auditor computes fresh score post-lock",
+  "successor_reason": "A01 (#8760) and A02 (#8762) first outcomes are preserved without pooling. A03 uses a fresh seed, aligns candidate/oracle random-label streams, and fixes A02's post-output logging NameError."
+}
