@@ -1,6 +1,7 @@
 """Bind a small planner-authored MAP01 validity spec to exact local signals."""
 from action_validity_admission_v1 import (
     CONTRACT_FORMAT, action_fingerprint)
+from doom_signal_value_domain_v1 import signal_value_in_domain
 
 
 FIRE_ACTIONS = {"fire", "advance_fire", "retreat_fire"}
@@ -26,7 +27,7 @@ def bindings_equal_exact(left, right):
 def _observed(signal, signal_id):
     if (type(signal) is not dict or signal.get("format") != "observable-signal-v1" or
             signal.get("status") != "observed" or signal.get("signal_id") != signal_id or
-            type(signal.get("value")) is not int or signal["value"] < 0 or
+            not signal_value_in_domain(signal_id, signal.get("value")) or
             type(signal.get("sequence")) is not int or
             type(signal.get("capture_ns")) is not int or
             type(signal.get("binding")) is not dict):

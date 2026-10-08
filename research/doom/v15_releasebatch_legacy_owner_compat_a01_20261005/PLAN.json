@@ -1,0 +1,11 @@
+{
+  "schema": "v15_releasebatch_legacy_owner_compat_a01_plan_v1",
+  "main_sha": "7754ef4e268fcb5166ece66ad821ef1af57cabd6",
+  "parent_issue": 59,
+  "candidate": "Do not compose the archived A01 physical-edge InputOwner under the current V39 release-batch backend until it satisfies the backend's owner protocol.",
+  "H": "The current V39 release-batch backend requires owner.call('up_batch', lease, keys), while archived A01 InputOwner v12 supports only single-key down/up operations; direct substitution will fail closed before publishing per-key release rows.",
+  "T": "Freeze the exact current-main release-batch backend, archived A01 InputOwner, current InputOwner v12, executor v3 and Lease. In a fresh Python process, start only the archived owner thread over an inert fake X display, call the required up_batch operation with a non-input dummy lease, capture the result, and close/join the owner. The XTest function raises if invoked.",
+  "D": "FAIL_COMPATIBILITY if the current backend source requires up_batch and the archived owner rejects that exact operation with unknown input operation, while the worker closes cleanly and no XTest call occurs. PASS_COMPATIBILITY only if an actual list result is returned and the owner stops cleanly without forbidden calls. Other outcomes are INCONCLUSIVE.",
+  "C": "The current owner v12 is a distinct implementation and has an explicit up_batch path; matching class name/version suffix does not imply protocol compatibility. This test checks only method compatibility, not a repair or per-key measurement quality.",
+  "U": "No live X server, GUI, owner admission/down, native process, game, model, physical release, release ordering, task effect, useful feedback, recovery, timing or live threat exposure. Fake-X exception is a construction compatibility result only."
+}

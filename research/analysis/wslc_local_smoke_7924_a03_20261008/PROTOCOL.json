@@ -1,0 +1,23 @@
+{
+  "schema": "wslc-local-smoke-7924-a03-protocol-v1",
+  "issue": 8446,
+  "predecessor_issue": 7924,
+  "question": "Can an independent offline auditor validate the immutable A02 evidence and reject four isolated corruptions without rerunning A02?",
+  "candidate_reruns": 0,
+  "a02_auditor_reruns": 0,
+  "a03_auditor_invocations": 1,
+  "retries": 0,
+  "network": "none",
+  "mount": "read-only",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "runtime": "WSLc 3.0.1.0",
+  "source_main_sha": "b52e37574debe61196b951624a4a0e06c67ac829",
+  "audited_source_commit": "d13480e51a6116afdef2ac4797f0fedc3385cf56",
+  "decision_gate": "PASS_AUDIT_ONLY_SCOPED iff immutable import hashes, A02 result reconstruction, four mutation rejections, exact CID cleanup receipts, and saved auditor failure all validate; otherwise first result is final.",
+  "scope_limits": [
+    "Does not change A02 FAIL_AUDITOR_CONTRACT.",
+    "Does not rerun candidate or A02 auditor.",
+    "Does not establish Docker parity, performance, memory relief, hard memory enforcement, or OOM prevention.",
+    "Does not use Docker, global container inventory, prior A02 CIDs, or lifecycle operations on unrelated objects."
+  ]
+}

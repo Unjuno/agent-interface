@@ -1,0 +1,18 @@
+{
+  "schema": "issue59-health-invalidation-interrupt-composition-freeze-v1",
+  "experiment": "issue59-health-invalidation-interrupt-composition-a01-20261008",
+  "kind": "one-shot synthetic integration construction; no live allocation",
+  "main_commit": "e4db1a9115cdf4f9163bddc169a7313672b9155e",
+  "sources": {
+    "controller": {"path": "research/doom/map01_overlap_controller_v39.py", "git_blob": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a", "sha256": "c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95"},
+    "guard": {"path": "research/live_control/observable_signal_guard_v2.py", "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543", "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"},
+    "planner_adapter": {"path": "research/live_control/persistent_planner_adapter_v2.py", "git_blob": "879736562aa5c0637319616c9f01df22af087b15", "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674"},
+    "motivating_triage": {"path": "research/doom/MAP01_ASTRA_SYSTEM_FAILURE_TRIAGE_V1.md", "git_blob": "99f807b68a782f95836a2f32130ea24967e60a61", "sha256": "4af4a25cdb4dc2cd1c035e7faef05d676284e0fd34542989a1371652147d2796"}
+  },
+  "hypothesis": "A typed health observation that crosses an authored V39 cover floor while a planner answer is pending is composed into verified executor cancellation before planner interrupt transport; the invalidated answer stays ineligible. A soft change within the floor preserves the policy and does not cancel.",
+  "test": "Use current-main build_cover_monitor and DoomCoverSignalPairMonitor with source health 100 and critical floor 80; evaluate health 84 at authored maximum-loss limits 12 (hard crossing) and 16 (soft change), then pass actual hard invalidation through current cancel_invalidated_cover and PersistentPlannerAdapter with deterministic in-process fakes. Include executor cancel-write failure.",
+  "decision": "PASS_CONSTRUCTION_COMPOSITION only if hard crossing triggers cancel-before-interrupt, verified empty terminal is required, stale answer is rejected even after completion, cancel-write failure still attempts planner interruption and remains an error, and soft change preserves the pending turn without cancellation.",
+  "counterhypothesis": "Monitor wiring, callback ordering, or planner lifecycle may fail to connect the health invalidation to local cancellation and stale-answer rejection.",
+  "uncertainty": "Synthetic typed observations and fake transports do not establish real HUD extraction timing, actual App Server behavior, physical key release, useful feedback, recovery, survival, or task effect.",
+  "retry_policy": "Execute the candidate once after this freeze. Do not repeat a live allocation or change the frozen candidate after observing its outcome."
+}
