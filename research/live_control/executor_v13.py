@@ -209,9 +209,13 @@ class Executor(Previous):
             if cancelled_pending_ups:
                 release = dict(release)
                 retained = release.get("cancelled_pending_ups")
-                combined = ([dict(row) for row in retained if isinstance(row, dict)]
-                            if isinstance(retained, list) else [])
-                for row in cancelled_pending_ups:
+                # Worker-exception dispositions precede dispositions attached
+                # by final cleanup. Keep that causal order in the terminal
+                # receipt while avoiding duplicates copied across both errors.
+                combined = [dict(row) for row in cancelled_pending_ups]
+                for row in retained if isinstance(retained, list) else []:
+                    if not isinstance(row, dict):
+                        continue
                     if row not in combined:
                         combined.append(dict(row))
                 release["cancelled_pending_ups"] = combined
