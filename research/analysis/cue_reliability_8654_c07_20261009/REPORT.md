@@ -9,3 +9,7 @@ Results: 197,376/197,376 histories unique; all six regime/policy groups had exac
 This supports only the stated finite-design mathematical method result. It does not show exploration improves real-agent behavior, establish sequential learning performance, or support GUI-safety or product claims.
 
 The C06 root-level raw files were retained. Their byte-identical allocation-scoped copies and custody note were added separately on the C06 branch; no original was deleted or modified.
+
+## Reproducible input package
+
+C07 now includes byte-identical copies of all 15 C06 shards under aw/ and a local RAW_MANIFEST.json. Every source blob is the same Git blob SHA as the previously audited C06 allocation-scoped copy; the original root-level C06 files and C06 FAIL_METHOD record remain unchanged. The C07 audit itself consumed the verified C06 branch inputs and ran once; these packaged copies are a custody/reproducibility addition, not a rerun.
