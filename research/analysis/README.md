@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8500 T0 A02 equal-check analogy-rejection successor](analogy_rejection_8500_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 72 rows independently reconstructed; structured invalid proposals 0/6 vs 6/6 in both controls, while all arms retain 12/12 valid recall and structured memory reopens all six changed-envelope controls. Hand-authored deterministic fixture only; no human, model, real-agent, or product claim.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
