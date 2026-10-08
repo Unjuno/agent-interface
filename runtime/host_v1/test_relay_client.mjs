@@ -65,6 +65,22 @@ test('mismatched refusal next id is retained as uncertain and blocks replay',asy
    {id:1,tool:'refuse',arguments:{}});
  assert.equal((await client.close()).code,0);
 });
+test('malformed returned isError is retained but never released as a response',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'native-relay-invalid-result-shape-'));
+ const evidenceDirectory=join(root,'evidence');
+ const malformed=fixture.replace('result:{content:',"result:{isError:'false',content:");
+ assert.notEqual(malformed,fixture,'fixture mutation must alter the response result');
+ const client=await createRelayClient({command:process.execPath,args:['-e',malformed],evidenceDirectory});
+ try {
+  await assert.rejects(client.send('native_submit'),/isError must be boolean/);
+  const retained=JSON.parse(await readFile(join(evidenceDirectory,'reply-1.json'),'utf8'));
+  assert.equal(retained.result.isError,'false','keep original malformed response for diagnosis');
+  assert.match(client.state().blocked,/isError must be boolean/);
+  assert.throws(()=>client.send('native_status'),/isError must be boolean/);
+  assert.deepEqual((await readdir(evidenceDirectory)).filter(name=>name.startsWith('request-')),
+    ['request-1.json']);
+ } finally {await client.close();}
+});
 test('process loss makes delivery uncertain and blocks new sends',async()=>{
  const {client}=await setup();
  await assert.rejects(client.send('die'),/delivery is uncertain/);
