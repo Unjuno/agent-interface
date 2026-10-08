@@ -317,8 +317,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 <!-- BEGIN GENERATED ANALYSIS RESULT INDEX -->
 
-- [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
-
 <details>
 <summary><strong>Expand all retained result/failure directories</strong></summary>
 
@@ -487,6 +485,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
 - [`crossed_verdict_repeatability_6222_t0_20261001_01/`](crossed_verdict_repeatability_6222_t0_20261001_01/)
 - [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
+- [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
 - [`cue_triggered_intention_7162_t0_20261004/`](cue_triggered_intention_7162_t0_20261004/)
 - [`cutoff_local_guard_audit_6451_t0_v1/`](cutoff_local_guard_audit_6451_t0_v1/)
 - [`cutoff_local_guard_audit_6451_t0b_orbstack_20261003/`](cutoff_local_guard_audit_6451_t0b_orbstack_20261003/)
