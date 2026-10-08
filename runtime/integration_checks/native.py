@@ -47,6 +47,10 @@ SUITES['protocol'].append('test_adaptive_acquisition_failure_metadata_93c2')
 
 SUITES["protocol"].append("test_adaptive_acquisition_caller_verify_progress_v3")
 
+SUITES['protocol'].append('test_adaptive_report_custody')
+
+SUITES['protocol'].append('test_adaptive_report_metrics')
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--protocol-python', default=sys.executable)
