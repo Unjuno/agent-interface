@@ -35,7 +35,26 @@
     "kills": 2,
     "deaths": 0,
     "map_exit": false,
-    "episode_finished": false
+    "episode_finished": false,
+    "action_health_validity_rejections": 2,
+    "action_health_validity_details": [
+      {
+        "decision": 1,
+        "source_health": 97,
+        "fresh_health": 85,
+        "maximum_allowed_decrease": 10,
+        "action_admissible": false,
+        "requires_new_decision": true
+      },
+      {
+        "decision": 2,
+        "source_health": 85,
+        "fresh_health": 70,
+        "maximum_allowed_decrease": 10,
+        "action_admissible": false,
+        "requires_new_decision": true
+      }
+    ]
   },
   "input_custody": {
     "matched_cancellations": 13,
@@ -55,7 +74,7 @@
     "recovered_within_two_decisions": 0,
     "observable_misses": 0,
     "right_censored": 0,
-    "status": "not exercised; no guard occurred"
+    "status": "not exercised: no policy guard below the authored hard minimum occurred; two separate action-level health max-decrease predicate rejections occurred"
   },
   "audit_disposition": {
     "original_audit_status_preserved": "FAIL",
@@ -76,5 +95,5 @@
   "warnings": [
     "app-server stderr recorded a models-cache warning and a process-group termination warning; app-server exited 0 and all 12 turns completed"
   ],
-  "scope": "One descriptive live episode. No hard-health guard occurred, so recovery was not tested. The episode did not show a useful scorer event inside any controller model interval and did not exit MAP01. No causal benefit, general reliability, physical key state, or game-consumption claim."
+  "scope": "One descriptive live episode. No policy hard-health guard occurred, so the preregistered recovery question was not exercised. Separately, two distinct action-level health max-decrease predicates rejected model actions (health 97 to 85, then 85 to 70, against a maximum decrease of 10); neither was the preregistered recovery trigger. The episode did not show a useful scorer event inside any controller model interval and did not exit MAP01. No causal benefit, general reliability, physical key state, or game-consumption claim."
 }
