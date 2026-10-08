@@ -1,0 +1,127 @@
+[
+  {
+    "case": "baseline",
+    "optimized": false,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "/mnt/data/ai59_r2p6/discovery/baseline-0/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "c3d835f8fcc55a5112da9d6af98ae21d23f95cf28cbea4710f5d88f70c9f7824"
+  },
+  {
+    "case": "baseline",
+    "optimized": true,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "-O",
+      "/mnt/data/ai59_r2p6/discovery/baseline-1/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "c3d835f8fcc55a5112da9d6af98ae21d23f95cf28cbea4710f5d88f70c9f7824"
+  },
+  {
+    "case": "duplicate_replace",
+    "optimized": false,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "/mnt/data/ai59_r2p6/discovery/duplicate_replace-0/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "a2ff645a3f5408a91388322a59756a59f707f47e521f6c1d487e732e6dbff39b"
+  },
+  {
+    "case": "duplicate_replace",
+    "optimized": true,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "-O",
+      "/mnt/data/ai59_r2p6/discovery/duplicate_replace-1/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "a2ff645a3f5408a91388322a59756a59f707f47e521f6c1d487e732e6dbff39b"
+  },
+  {
+    "case": "modified_candidate_null",
+    "optimized": false,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "/mnt/data/ai59_r2p6/discovery/modified_candidate_null-0/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "ed0618f79b566a38c3a096fa9d96306241cfe1880d171e14f17c3a12add2f3bf"
+  },
+  {
+    "case": "modified_candidate_null",
+    "optimized": true,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "-O",
+      "/mnt/data/ai59_r2p6/discovery/modified_candidate_null-1/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "ed0618f79b566a38c3a096fa9d96306241cfe1880d171e14f17c3a12add2f3bf"
+  },
+  {
+    "case": "unbound_candidate_ref",
+    "optimized": false,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "/mnt/data/ai59_r2p6/discovery/unbound_candidate_ref-0/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "c8f2a6a0d3504c306ea4a6f4ff04668b14f9e337d78a434fa0c8c70133358b0b"
+  },
+  {
+    "case": "unbound_candidate_ref",
+    "optimized": true,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "-O",
+      "/mnt/data/ai59_r2p6/discovery/unbound_candidate_ref-1/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "c8f2a6a0d3504c306ea4a6f4ff04668b14f9e337d78a434fa0c8c70133358b0b"
+  },
+  {
+    "case": "candidate_equals_main",
+    "optimized": false,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "/mnt/data/ai59_r2p6/discovery/candidate_equals_main-0/verify.py"
+    ],
+    "returncode": 1,
+    "input_sha256": "dc42624be67980bde2543632f9076eda5311b45932bc0676b77c1b40e36032eb"
+  },
+  {
+    "case": "candidate_equals_main",
+    "optimized": true,
+    "command": [
+      "/opt/pyvenv/bin/python",
+      "-I",
+      "-B",
+      "-O",
+      "/mnt/data/ai59_r2p6/discovery/candidate_equals_main-1/verify.py"
+    ],
+    "returncode": 0,
+    "input_sha256": "dc42624be67980bde2543632f9076eda5311b45932bc0676b77c1b40e36032eb"
+  }
+]
