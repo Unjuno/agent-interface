@@ -18,6 +18,3 @@ checks={
 out={'status':'PASS' if all(checks.values()) else 'FAIL','checks':checks}
 (p/'AUDIT.json').write_text(json.dumps(out,indent=2)+'\n',encoding='utf-8')
 print(json.dumps(out,indent=2));sys.exit(0 if all(checks.values()) else 1)
-
-
-
