@@ -463,6 +463,20 @@ def cover_submission_invalidation_receipt(result, terminal=None):
     }
 
 
+def reset_cover_after_preacceptance_rejection(result, *, build_monitor,
+                                              select_monitor):
+    """Return a rejected initial cover to a fresh, unauthored planner source."""
+    if (type(result) is not dict or type(result.get("ack")) is not dict or
+            result["ack"].get("event") != "rejected"):
+        raise ValueError("preacceptance cover rejection required")
+    latest = result["latest"]
+    monitor, admission = build_monitor(latest)
+    monitor, admission = select_monitor(monitor, admission, [], None)
+    return {"latest": latest, "monitor": monitor, "admission": admission,
+            "receipt": (cover_submission_invalidation_receipt(result)
+                        if result.get("invalidation") is not None else None)}
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -1201,18 +1215,19 @@ def main():
             cover_ack=cover_result["ack"]
             if cover_ack["event"] == "rejected":
                 cover_submission_recovery = cover_result
-                if cover_result["invalidation"] is not None:
-                    cover_submission_invalidation = \
-                        cover_submission_invalidation_receipt(cover_result)
-                latest = cover_result["latest"]
+                reset = reset_cover_after_preacceptance_rejection(
+                    cover_result,
+                    build_monitor=lambda source:build_cover_monitor(
+                        signal_reader,source,None,index,ammo_reader=ammo_reader,
+                        requires_ammo=False),
+                    select_monitor=select_cover_monitor)
+                cover_submission_invalidation = reset["receipt"]
+                latest = reset["latest"]
                 cover = None
                 cover_semantic=[];cover_validity_semantic=None
                 cover_policy_source_iteration=None;cover_steps=[]
-                validity_monitor,validity_admission=build_cover_monitor(
-                    signal_reader,latest,None,index,ammo_reader=ammo_reader,
-                    requires_ammo=False)
-                validity_monitor,validity_admission=select_cover_monitor(
-                    validity_monitor,validity_admission,[],None)
+                validity_monitor,validity_admission=(
+                    reset["monitor"],reset["admission"])
             elif cover_result.get("invalidation") is not None:
                 failure_cleanup.set_stage("initial_cover_invalidation_release")
                 cancel_terminal = cancel_initial_cover_before_planner(

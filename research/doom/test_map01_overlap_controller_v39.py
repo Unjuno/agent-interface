@@ -1,6 +1,7 @@
 """Regression for the v38 rejected-action -> unauthored coast interrupt loop."""
 import sys
 import unittest
+import queue
 from argparse import Namespace
 from pathlib import Path
 
@@ -171,6 +172,53 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertEqual(before_admission["coherent_source_recovery"], coherent)
         self.assertIs(after_admission["cover_cancel_terminal"], terminal)
         self.assertEqual(after_admission["ack"]["event"], "accepted")
+
+    def test_stale_initial_cover_caller_recovers_fresh_planner_source_without_cancel(self):
+        source = {"event": "observation", "sequence": 11,
+                  "image": "old.png"}
+        fresh = {"event": "observation", "sequence": 12,
+                 "image": "fresh.png"}
+        incoming = queue.Queue()
+        incoming.put(fresh)
+        monitor = controller.UnauthoredCoastMonitor()
+        calls = []
+
+        result = controller.submit_initial_cover_with_recovery(
+            lambda consumed: {"event": "rejected", "id": "cover-0",
+                              "reason": "latest observation sequence required before input"},
+            identifier="cover-0", latest_reader=lambda: source,
+            incoming=incoming,
+            wait=lambda predicate, **kwargs: self.fail(
+                "queued fresh observation should satisfy recovery"),
+            observation_monitor=monitor)
+        reset = controller.reset_cover_after_preacceptance_rejection(
+            result,
+            build_monitor=lambda latest: (calls.append(("build", latest)) or
+                                          (object(), {"authored": None})),
+            select_monitor=lambda guard, admission, commands, iteration: (
+                calls.append(("select", admission, commands, iteration)) or
+                controller.select_cover_monitor(guard, admission, commands,
+                                                iteration)))
+
+        self.assertEqual(result["ack"]["event"], "rejected")
+        self.assertEqual(reset["latest"], fresh)
+        self.assertIsInstance(reset["monitor"], controller.UnauthoredCoastMonitor)
+        self.assertEqual(reset["admission"]["monitor_mode"],
+                         "unauthored_coast_no_policy")
+        self.assertIsNone(reset["receipt"])
+        self.assertEqual(calls[0], ("build", fresh))
+        self.assertEqual(calls[1][2:], ([], None))
+
+    def test_production_initial_cover_rejection_branch_uses_caller_reset(self):
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        rejected = source.index('if cover_ack["event"] == "rejected":', execute)
+        reset = source.index("reset_cover_after_preacceptance_rejection(", rejected)
+        fresh_source = source.index('latest = reset["latest"]', reset)
+        planner_input = source.index("action_source_observation=dict(latest)", fresh_source)
+        self.assertLess(rejected, reset)
+        self.assertLess(reset, fresh_source)
+        self.assertLess(fresh_source, planner_input)
 
     def test_observations_consumed_during_executor_ack_are_replayed_after_admission(self):
         class Monitor:
