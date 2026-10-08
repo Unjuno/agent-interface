@@ -1,0 +1,27 @@
+{
+  "schema": "v15-t6-schema-loss-identifiability-freeze-v1",
+  "frozen_at": "2026-10-08",
+  "hypothesis": "A row-only adapter cannot distinguish a current stream whose release_batch_delivery_position field was deleted from every release row from a valid legacy-shaped stream when both retain input-release-batch-v3.",
+  "source": {
+    "main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+    "release_backend_path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+    "release_backend_blob": "193c2bd231795e7ee57de64aedfd741c8b814013",
+    "source_sha256": "e2bd846c4702eca17187f175ca629481f8c7f99beef1b2c980a1f87591aaa3d8",
+    "adapter_path": "research/doom/v15_release_batch_t5_20261008/package/adapter.py",
+    "adapter_sha256": "6f0ad1eb378b8269d596b6d7f38ec21c3e447c7f41814b974f6aa19a7250b58c"
+  },
+  "minimum_test": "Compare current producer-shaped two-member stream with positions 0,1 against the same rows after deleting the field from all release rows. Compare its normalized row content and adapter output with the legacy-shaped stream.",
+  "decision_gate": {
+    "unidentifiable": "Rows and outputs are identical, both SOURCE_ROWS_JOINED / TEMPORALLY_UNIQUE: record representational limit, not live defect.",
+    "distinguishable": "The adapter holds total loss while accepting legitimate legacy input using an identified row-level discriminator."
+  },
+  "competing_explanation": "Out-of-band session/source-version provenance could distinguish the traces; this experiment tests the row-only adapter interface.",
+  "uncertainty": "Synthetic producer-shaped records; no evidence that total field loss happened in a live trace.",
+  "commands": [
+    "python -B -m unittest discover -s ..\\package -p test_*.py -v",
+    "python -B -O -m unittest discover -s ..\\package -p test_*.py -v",
+    "python -B probe.py",
+    "python -B audit.py"
+  ]
+}
+
