@@ -127,7 +127,11 @@ class ControllerFailureCleanup:
             if reader_alive:
                 receipt['stdout_reader_retired']=not receipt['stages'][-1]['result']
         receipt['stdout_reader_errors']=list(self.reader_errors)
-        events=self.events if type(self.events) is list else []
+        event_collection_valid=type(self.events) is list
+        events=self.events if event_collection_valid else []
+        invalid_event_records=sum(type(row) is not dict for row in events)
+        if not event_collection_valid:
+            invalid_event_records=1
         accepted_rows=[row for row in events if type(row) is dict and
                        row.get('event')=='accepted']
         terminal_rows=[row for row in events if type(row) is dict and
@@ -150,12 +154,14 @@ class ControllerFailureCleanup:
                         row.get('event')=='accepted' and type(row.get('id')) is str}
         terminal_by_id={row.get('id'):row for row in events if type(row) is dict and
                         row.get('event')=='terminal' and type(row.get('id')) is str}
-        identities_unambiguous=(not duplicate_accepted_ids and
+        identities_unambiguous=(event_collection_valid and invalid_event_records==0 and
+                                not duplicate_accepted_ids and
                                 not duplicate_terminal_ids and
                                 invalid_accepted_ids==0 and invalid_terminal_ids==0 and
                                 accepted_ids==terminal_ids)
         receipt['duplicate_accepted_ids']=duplicate_accepted_ids
         receipt['duplicate_terminal_ids']=duplicate_terminal_ids
+        receipt['invalid_event_record_count']=invalid_event_records
         receipt['invalid_accepted_event_id_count']=invalid_accepted_ids
         receipt['invalid_terminal_event_id_count']=invalid_terminal_ids
         receipt['input_event_identities_unambiguous']=identities_unambiguous

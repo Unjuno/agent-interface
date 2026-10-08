@@ -239,6 +239,15 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                 self.assertEqual(receipt["invalid_terminal_event_id_count"],
                                  invalid_terminals)
 
+    def test_non_object_event_records_fail_closed(self):
+        for malformed in ("unexpected-json-scalar", [{"event": "accepted", "id": "x"}]):
+            with self.subTest(record_type=type(malformed).__name__):
+                receipt = self.run_cleanup_events([malformed])
+                self.assertFalse(receipt["input_terminals_complete"])
+                self.assertFalse(receipt["input_releases_verified_empty"])
+                self.assertFalse(receipt["input_event_identities_unambiguous"])
+                self.assertEqual(receipt["invalid_event_record_count"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
