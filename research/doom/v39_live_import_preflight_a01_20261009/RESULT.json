@@ -1,0 +1,8 @@
+{
+  "parent_main": "23d1807ffad8359e0f89421ee2b9bf5783c9d5f4",
+  "v39_controller_sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+  "success_case": {"runtime": "CPython 3.12.14 with Pillow 12.3.0", "exit": 0, "decision": "IMPORT_ONLY_READY"},
+  "missing_pillow_case": {"runtime": "clean CPython 3.12.14 venv", "direct_import_exit": 1, "preflight_exit": 20, "decision": "STOP_IMPORT_PREFLIGHT"},
+  "wrong_version_case": {"expected": "0.0", "actual": "12.3.0", "exit": 20, "decision": "STOP_IMPORT_PREFLIGHT"},
+  "scope": "local import-only setup gate; no VM, game, GUI, app-server, model, or physical input"
+}

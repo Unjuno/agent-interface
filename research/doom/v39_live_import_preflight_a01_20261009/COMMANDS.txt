@@ -1,0 +1,10 @@
+Parent/current main: 23d1807ffad8359e0f89421ee2b9bf5783c9d5f4
+Positive test: bundled CPython 3.12.14 with Pillow 12.3.0
+Negative-control test: clean CPython 3.12.14 venv with no site packages/Pillow
+
+python3 research/doom/v39_live_import_preflight_a01_20261009/import_preflight.py 12.3.0
+/tmp/v39-pillow-absent/bin/python research/doom/v39_live_import_preflight_a01_20261009/import_preflight.py 12.3.0
+/tmp/v39-pillow-absent/bin/python -c 'import sys; sys.path[:0] = ["research/doom", "research/live_control"]; import map01_overlap_controller_v39'
+python3 research/doom/v39_live_import_preflight_a01_20261009/import_preflight.py 0.0
+
+Expected outcomes: positive exit 0 / IMPORT_ONLY_READY; missing Pillow exit 20 / STOP_IMPORT_PREFLIGHT (raw direct import reproduces ModuleNotFoundError: No module named PIL); wrong expected version exit 20 / STOP_IMPORT_PREFLIGHT. None starts a game, model, GUI, app-server, or physical input.
