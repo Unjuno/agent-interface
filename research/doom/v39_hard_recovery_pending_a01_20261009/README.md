@@ -27,3 +27,12 @@ py -3.11 -m unittest research.doom.test_map01_v39_pending_observation_drain rese
 ```
 
 All executed stdout, stderr, exit codes, raw normal/optimized candidate results, audit output and SHA-256 inventory are in `results/` and `SHA256SUMS.txt`. An initial harness extraction error and a fixture-assumption failure were retained in `results/initial-attempts.md`; neither reached or modified production code.
+
+## Additive audit correction (2026-10-09)
+
+The original `audit.py` and its saved output are preserved as historical evidence. Independent review found that v1 reports `PASS_SCOPED_REPLAY` even when the saved candidate's final admission is changed to `READY_FOR_ACTION_VALIDITY` or `input_authority_admitted=true`. Use `audit_v2.py` for the corrected persisted-raw audit; it directly verifies all final-admission fields and counts the unique checks it executes. Its normal candidate passes 11 assertions, and `test_final_admission_audit_v2.py` verifies that both known false-pass mutations fail. This remains a scoped fixture replay with the live limitations above.
+
+```powershell
+py -3.11 research/doom/v39_hard_recovery_pending_a01_20261009/audit_v2.py
+py -3.11 -m unittest research.doom.v39_hard_recovery_pending_a01_20261009.test_final_admission_audit_v2 -v
+```
