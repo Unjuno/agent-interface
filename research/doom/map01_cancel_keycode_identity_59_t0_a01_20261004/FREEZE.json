@@ -1,0 +1,18 @@
+{
+  "schema": "map01-cancel-keycode-identity-freeze-v1",
+  "issue": 59,
+  "allocation": "map01-cancel-keycode-identity-t0-a01-20261004",
+  "method": "CPU fake-Xlib source-composition construction; no OS input",
+  "source_commit": "6a22a43ce6ed3a3acc687c561e0dfcc37a5f294b",
+  "source_path": "research/live_control/batch_fixture_composition_59_4d74_20261004/source/input_owner_v12.py",
+  "source_git_blob": "da1a0b496572f3b853a84a94451e6824369a49b0",
+  "factors": {
+    "control": {"W": 87, "A": 65},
+    "alias": {"W": 77, "A": 77}
+  },
+  "decision": {
+    "pass": "both admissions omit keycode; control returns two intervals; alias returns one interval for two symbol admissions",
+    "scope": "candidate owner identity only; not live X11 or game qualification"
+  },
+  "run_policy": "single frozen candidate source; preserve first result; no retry of live allocation"
+}

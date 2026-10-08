@@ -1,0 +1,16 @@
+{
+  "schema": "map01-release-error-censor-repair-freeze-v1",
+  "issue": 59,
+  "allocation": "map01-release-error-censor-repair-t1-a03-20261004",
+  "parent_evidence": "research/doom/map01_release_receipt_failure_boundary_59_t1_a02_20261004/",
+  "sources": {
+    "research/doom/doom_typed_release_backend_v2.py": "cfdb0697011c109c8085fc269999775451b7d75d8dff4bcf3d8fa9990ae5f238",
+    "research/doom/test_doom_typed_release_backend_v2.py": "2cf6077e47e00925e93e09b5f5433b86f05cd27bb1f70ac7f2db92d08a1037c5",
+    "research/doom/map01_feedback_release_contract_v1.py": "edbb7d5f20b481a09d3a0e52b30c3cb48ad873e6c281de1b29d04f7022b1ebf9",
+    "research/doom/test_map01_feedback_release_contract_v1.py": "8e00c308a92f3c154206a74f180891480eb560fe1fe8b7c9702ee4eb2ac4e2d7",
+    "research/live_control/input_owner_v10.py": "349af74264f6ee49173f51e7da1a3ffff6ac48ff0dede4cf8efd5621d90a98dc",
+    "research/live_control/input_owner_v11.py": "1a55a51b30b2bbc8a5828d072d093c691b3220ad993dca55200de5939b0888ef"
+  },
+  "decision": "A failed ordinary up emits an authority-free outcome_uncertain event; a later successful retry must not produce a transition interval for an admission sharing that symbol/keycode. Verified cleanup must yield only a censored upper bound. Without cleanup, the open interval fails closed.",
+  "scope": "Source-level typed-backend and pure reconciliation construction tests; no live X server, physical input, game, model, or allocation."
+}
