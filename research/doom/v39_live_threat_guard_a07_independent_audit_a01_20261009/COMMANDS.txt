@@ -4,5 +4,7 @@ Raw allocation: the unchanged local A07 output directory containing SHA256SUMS.j
 
 python3 research/doom/v39_live_threat_guard_a07_independent_audit_a01_20261009/audit_raw.py "$RAW_ROOT" --output research/doom/v39_live_threat_guard_a07_independent_audit_a01_20261009/RESULT.json
 shasum -a 256 -c research/doom/v39_live_threat_guard_a07_independent_audit_a01_20261009/SHA256SUMS.txt
+python3 -B research/doom/v39_live_threat_guard_a07_independent_audit_a01_20261009/test_audit_raw_output.py -v
+python3 -O -B research/doom/v39_live_threat_guard_a07_independent_audit_a01_20261009/test_audit_raw_output.py -v
 
-The auditor checks 2,358 manifest entries, the pinned manifest and event-stream hashes, exact cancellation-to-admission identities, per-key release receipts or cleanup keymap attempts, verified empty terminal releases, the hard-health guard count, scorer-positive count, and three negative mutation controls. It writes only to the specified output path.
+The auditor checks 2,358 manifest entries, the pinned manifest and event-stream hashes, exact cancellation-to-admission identities, per-key release receipts or cleanup keymap attempts, verified empty terminal releases, the hard-health guard count, scorer-positive count, and three negative mutation controls. The follow-up rejects output paths inside the raw allocation and writes via an atomic sibling-file replacement. Its three synthetic output-safety tests run without reading the raw allocation.
