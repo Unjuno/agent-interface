@@ -1,0 +1,350 @@
+{
+  "schema": "a16-trace-excerpts-v1",
+  "allocation": "map01-v39-live-threat-guard-a16-health-guard-boundary-20261009",
+  "source_commit": "57337e95ecbecf7e762c8ec8091472b79e8ad49f",
+  "evidence_scope": "Selected trace excerpts for reviewer inspection; raw-to-excerpt reproduction requires the locally retained raw files. Hashes identify those original files. This is not a complete independent rerun audit.",
+  "raw_sha256": {
+    "events.jsonl": "1ef05f702dd2a13e6332e740209041495a7782dfb4268028e083d0373c59e2dc",
+    "source-refreshes.json": "4de1b7af309d492bc025c9ad219182af44a54d177e97ad9ab78f1b45d767457b",
+    "owner-events.json": "958eab67e367d91a25c1e523cbd4371fc92ec99905735170ed5ae41a3f01c445",
+    "planner-protocol.jsonl": "58ee587dfe91da06011c79988d62beb6314f58eb7d71cf9c3215935db10f613e",
+    "decision-11-prompt.txt": "8a52024818fab7748e5d4206d73f30689b178b2bcd10184c7c62d70f41dbe681"
+  },
+  "decision_11": {
+    "prompt_health_excerpt": "Current locally verified health: 4.",
+    "prompt_sha256": "8a52024818fab7748e5d4206d73f30689b178b2bcd10184c7c62d70f41dbe681",
+    "model_response_text": "{\"assessment\":\"Active; health is critically low at 4 with a close enemy on the right. Execute an immediate emergency retreat while firing and strafe left.\",\"state\":\"active\",\"commands\":[{\"action\":\"retreat_fire\",\"extent\":\"pulse\"},{\"action\":\"strafe_left\",\"extent\":\"pulse\"}],\"contingencies\":[],\"next_cover\":[{\"action\":\"strafe_left\",\"extent\":\"pulse\"},{\"action\":\"backward\",\"extent\":\"pulse\"},{\"action\":\"fire\",\"extent\":\"pulse\"}],\"next_cover_validity\":[{\"signal_id\":\"health\",\"critical_health_minimum\":1,\"maximum_health_loss\":3,\"max_source_age_ms\":30000}],\"action_validity\":[{\"critical_health_minimum\":1,\"maximum_health_loss\":3,\"minimum_ammo\":1,\"max_current_age_ms\":150}]}",
+    "model_response_sha256": "ef14f1ee4d1a4891b5b35815ab301b146550b31103490cde02246d06323d5ce6"
+  },
+  "typed_observation_sequence_325": [
+    {
+      "event": "typed_observation",
+      "schema": "doom-typed-observation-v1",
+      "id": "cover-11",
+      "step": 0,
+      "sequence": 325,
+      "capture_ns": 24021434953418,
+      "pointer_binding": {
+        "focus": 6291472,
+        "surface": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ]
+      },
+      "signals": {
+        "ammo": {
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "format": "observable-signal-v1",
+          "value": 40,
+          "sequence": 325,
+          "signal_id": "ammo",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+          "capture_ns": 24021434953418,
+          "status": "observed"
+        },
+        "health": {
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "format": "observable-signal-v1",
+          "value": 0,
+          "sequence": 325,
+          "signal_id": "health",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+          "capture_ns": 24021434953418,
+          "status": "observed"
+        }
+      },
+      "frame_rgb_sha256": "44e9cb776c42b19c4dc8c960d7597796c73ceae79d89bc3c2d217aede110ff18",
+      "frame_size": [
+        1280,
+        800
+      ],
+      "typed_extraction_started_ns": 24021437744437,
+      "typed_ready_ns": 24021440228287,
+      "capture_to_typed_ready_ms": 5.274869,
+      "artifact_published": false,
+      "grants_input_authority": false,
+      "emit_ns": 24021442279009
+    }
+  ],
+  "source_refresh_sequence_338": [
+    {
+      "format": "doom-source-refresh-v1",
+      "status": "refused",
+      "source_sequence": 338,
+      "attempts": [],
+      "reason": "invalid_observed_health",
+      "iteration": 12
+    }
+  ],
+  "owner_log_release_rows_sanitized": [
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23964803051528
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23965461504426
+    },
+    {
+      "event": "owner_release",
+      "reason": "cancelled",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23971499459846
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23971533779119
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23977817956658
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23982721149135
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23988191224101
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23993763362589
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 23999443799431
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24004437036224
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24005256222414
+    },
+    {
+      "event": "owner_release",
+      "reason": "cancelled",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24010493774437
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24010494601610
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24011312881919
+    },
+    {
+      "event": "owner_release",
+      "reason": "cancelled",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24014830675221
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24014865548665
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24015655294156
+    },
+    {
+      "event": "owner_release",
+      "reason": "cancelled",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24019542402949
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24019571385561
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24025215036739
+    },
+    {
+      "event": "owner_release",
+      "reason": "close",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24025268207931
+    }
+  ],
+  "owner_log_counts": {
+    "all_rows": 53,
+    "explicit_keyups": 32,
+    "owner_release_rows": 21,
+    "verified_empty_release_rows": 21,
+    "last_release_row": {
+      "event": "owner_release",
+      "reason": "close",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "keys_unknown": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "verified_ns": 24025268207931
+    }
+  }
+}
