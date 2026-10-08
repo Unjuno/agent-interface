@@ -1,0 +1,63 @@
+{
+  "episode": "map01-fixed-threat-v28-live-01",
+  "manifest_sha256": "f14709f16fa432805d18abc1b0d6c11abc87d83758132d451fa086cd03208eaa",
+  "events_sha256": "5be74bb0c3bc9f321760f8b7c7dfacd9c86f5f4ecc0ffdce032e20780ffee0dc",
+  "source_audit_sha256": "bbdbc7b687317cb96e8a3e3ce968bd06368becf4727bcfa2ae120b765d6704e1",
+  "crop_xyxy": [
+    321,
+    180,
+    961,
+    584
+  ],
+  "fixed_mask": "R>70 and R*4>5*G and R*4>5*B",
+  "fixed_component_area_px": [
+    8,
+    256
+  ],
+  "fixed_threshold": 51.5,
+  "positive_rule": "small_component_count < 51.5",
+  "positive_sequences": [
+    {
+      "sequence": 1,
+      "manifest_path": "runtime/001.png",
+      "sha256": "b51e54a222d4ac2b94b2134f458e18be042e95b0dc1c96b7e73f6bc829abb5c8",
+      "review": "visible_enemy_confirmed_by_direct_inspection_in_this_screen"
+    },
+    {
+      "sequence": 11,
+      "manifest_path": "runtime/011.png",
+      "sha256": "ca8c601f2bddb710d2e4dafdb8a7b9ae4a1584d06d687bf0dca1a37295c3035d",
+      "review": "visible_enemy_confirmed_by_direct_inspection_in_this_screen"
+    },
+    {
+      "sequence": 28,
+      "manifest_path": "runtime/028.png",
+      "sha256": "e055a0422a4aa8b16f90b948316491921e26d4d17e625cbb85ca0a1ae56a1ccf",
+      "review": "visible_enemy_confirmed_by_direct_inspection_in_this_screen"
+    },
+    {
+      "sequence": 51,
+      "manifest_path": "runtime/051.png",
+      "sha256": "c4c0dea94263721fca0cb2c641b9f989355640a71d8c84094ed5bb598184ede3",
+      "review": "visible_enemy_confirmed_by_direct_inspection_in_this_screen"
+    },
+    {
+      "sequence": 60,
+      "manifest_path": "runtime/060.png",
+      "sha256": "641108183488d2ceda0a77905d428314b034d339523fa1399db997d0dac4ecf9",
+      "review": "visible_enemy_confirmed_by_direct_inspection_in_this_screen"
+    },
+    {
+      "sequence": 68,
+      "manifest_path": "runtime/068.png",
+      "sha256": "292679e853690f7759a859e78520cd319d3b6609ad77bd6b8d1ecd105c54f73d",
+      "review": "visible_enemy_confirmed_by_direct_inspection_in_this_screen"
+    },
+    {
+      "sequence": 70,
+      "manifest_path": "runtime/070.png",
+      "sha256": "3f7d0d657d653f164115ccca5e6b39db5a60fe5c0f061ffa7c207cb6f0528e18",
+      "review": "visible_enemy_confirmed_by_direct_inspection_in_this_screen"
+    }
+  ]
+}

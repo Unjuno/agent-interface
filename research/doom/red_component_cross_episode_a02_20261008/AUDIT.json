@@ -1,0 +1,56 @@
+{
+  "status": "PASS_INDEPENDENT_CROSS_EPISODE_AUDIT_SCOPED",
+  "source_episode": "map01-fixed-threat-v28-live-01",
+  "source_hashes": {
+    "retention_manifest": "f14709f16fa432805d18abc1b0d6c11abc87d83758132d451fa086cd03208eaa",
+    "events": "5be74bb0c3bc9f321760f8b7c7dfacd9c86f5f4ecc0ffdce032e20780ffee0dc",
+    "source_audit": "bbdbc7b687317cb96e8a3e3ce968bd06368becf4727bcfa2ae120b765d6704e1"
+  },
+  "rows_recomputed": [
+    {
+      "sequence": 1,
+      "component_count": 120,
+      "predicted_enemy": false
+    },
+    {
+      "sequence": 11,
+      "component_count": 121,
+      "predicted_enemy": false
+    },
+    {
+      "sequence": 28,
+      "component_count": 128,
+      "predicted_enemy": false
+    },
+    {
+      "sequence": 51,
+      "component_count": 82,
+      "predicted_enemy": false
+    },
+    {
+      "sequence": 60,
+      "component_count": 81,
+      "predicted_enemy": false
+    },
+    {
+      "sequence": 68,
+      "component_count": 84,
+      "predicted_enemy": false
+    },
+    {
+      "sequence": 70,
+      "component_count": 63,
+      "predicted_enemy": false
+    }
+  ],
+  "audit_scope": "provenance, event/image joins, and arithmetic only; labels are not independently adjudicated",
+  "checks": [
+    "source retention manifest hash",
+    "source event stream hash",
+    "source audit hash",
+    "per-frame hash against manifest and INPUTS",
+    "observation sequence to image-path join",
+    "8-connected component counts via row-run union-find",
+    "result rows and fail disposition match"
+  ]
+}
