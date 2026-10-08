@@ -11,5 +11,6 @@ See:
 - `formal/RESULT.json`, `AUDIT.json`, `CONTROLS.json` — retained decision evidence;
 - `candidate.py`, `audit.py`, `controls.py` — frozen executable sources;
 - `RAW_PROVENANCE.md` — exact original raw identity and publication limit.
+- `AUDIT_REPAIR.md` and `FOLLOWUP_SOURCE_AUDIT.md` — unresolved source-hash mismatches, syntax failures, and missing-raw reproduction limit.
 
 This package does not consume the separate formal six-case T0 allocation. It establishes no real release-tail or safety bound.
