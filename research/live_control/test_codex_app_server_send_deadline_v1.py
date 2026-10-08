@@ -33,8 +33,10 @@ def owned_client(journal_path=None):
             return self
 
         def __next__(self):
-            self.rows.get(timeout=5)
-            raise StopIteration
+            line = self.rows.get(timeout=5)
+            if line is None:
+                raise StopIteration
+            return line
 
         def close(self):
             self.rows.put(None)
@@ -282,45 +284,31 @@ class AppServerSendDeadlineTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             journal_path = os.path.join(directory, "protocol.jsonl")
             with owned_client(journal_path=journal_path) as (client, _read_fd):
-                reached_send_marker = threading.Event()
-                allow_send_marker = threading.Event()
                 original_record = client._record
-                receive_waiting = threading.Event()
                 received_done = threading.Event()
-
-                def delayed_send_marker(direction, message):
-                    if direction == "sent":
-                        reached_send_marker.set()
-                        self.assertTrue(allow_send_marker.wait(3))
-                    original_record(direction, message)
-
-                client._record = delayed_send_marker
+                original_write = os.write
                 client._closed = False
 
-                def receive():
-                    receive_waiting.set()
-                    with client._journal_order_lock:
-                        original_record("received", {"id": 1, "result": {}})
-                    received_done.set()
+                def record(direction, message):
+                    original_record(direction, message)
+                    if direction == "received":
+                        received_done.set()
 
-                sender = threading.Thread(target=lambda: client._write(
-                    {"method": "fast-reply", "id": 1},
-                    deadline=time.monotonic() + 1))
-                sender.start()
-                try:
-                    self.assertTrue(reached_send_marker.wait(1))
-                    receiver = threading.Thread(target=receive)
-                    receiver.start()
-                    self.assertTrue(receive_waiting.wait(1))
-                    receiver.join(timeout=.05)
-                    self.assertTrue(receiver.is_alive())
-                finally:
-                    allow_send_marker.set()
-                    sender.join(timeout=1)
-                self.assertFalse(sender.is_alive())
-                receiver.join(timeout=1)
-                self.assertFalse(receiver.is_alive())
-                self.assertTrue(received_done.is_set())
+                def write_final_then_queue_reply(fd, payload):
+                    count = original_write(fd, payload)
+                    client.process.stdout.rows.put(
+                        json.dumps({"id": 1, "result": {}}))
+                    # The real reader consumes the response while os.write has
+                    # not returned to _write yet. A final-write ordering lock
+                    # must keep its journal row behind the completed send row.
+                    self.assertFalse(received_done.wait(.05))
+                    return count
+
+                client._record = record
+                with patch.object(module.os, "write", side_effect=write_final_then_queue_reply):
+                    client._write({"method": "fast-reply", "id": 1},
+                                  deadline=time.monotonic() + 1, request_id=1)
+                self.assertTrue(received_done.wait(1))
 
             with open(journal_path, encoding="utf-8") as stream:
                 rows = [json.loads(line) for line in stream]

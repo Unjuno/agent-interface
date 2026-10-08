@@ -7,6 +7,8 @@
 - [Issue #7817 provenance-checked defeasible obligations T0 A01](provenance_defeasible_obligations_7817_a01_20261005/REPORT.md) — `PASS_METHOD_SCOPED`: ten finite obligation contexts and five hostile mutations independently audited; advisory-only synthetic semantics.
 
 - [Issue #7367 A02 frozen workload binding](issue7367_audit_binding_a02_20261005/REPORT.md) — `PASS_RETAINED_BYTES_SCOPED`: legacy auditor accepted a self-consistent post-freeze workload mutation; read-only successor binds workload bytes to PRE-RUN; 3/3 controls pass. A01 unchanged, candidate not rerun.
+- [Issue #7367 A01 completeness-boundary counterexample](issue7367_context_liveness_completeness_a01_20261005/README.md) — independent raw audit 7/7: a caller-asserted `graph_complete=true` misses an undeclared consumer; unknown scope correctly keeps all records. Synthetic contract counterexample only.
+- [Issue #7367 closed-workflow contract A01](issue7367_closed_workflow_contract_a01_20261005/README.md) — independent raw audit 12/12: a closed manifest-backed workflow/interpreter keeps declared reads and fails closed on dynamic/changed/undeclared paths. Scoped to workflows where every read and transition is mediated; no model or production-runtime claim.
 
 
 - [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — `PASS_METHOD_SCOPED_T0_ONLY`: 31 process/machine crash images independently reconstructed; three machine-only states, 4/4 mutations rejected. Synthetic persistence model only; no host power-loss or T1 claim.
@@ -630,6 +632,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue59_wsl_cuda_model_route_smoke_20261003/`](issue59_wsl_cuda_model_route_smoke_20261003/)
 - [`issue59_wslc_ollama_store_mount_t0_20261003/`](issue59_wslc_ollama_store_mount_t0_20261003/)
 - [`issue7367_audit_binding_a02_20261005/`](issue7367_audit_binding_a02_20261005/)
+- [`issue7367_closed_workflow_contract_a01_20261005/`](issue7367_closed_workflow_contract_a01_20261005/)
 - [`issue_3655_committed_evidence_audit_v1/`](issue_3655_committed_evidence_audit_v1/)
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
