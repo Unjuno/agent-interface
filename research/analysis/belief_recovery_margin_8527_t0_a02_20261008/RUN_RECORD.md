@@ -2,7 +2,7 @@
 
 ## Pre-run state
 
-- Allocation/source freeze: recorded in FREEZE.json; based on current-main snapshot a94da2c520edf566f615b1b909d5ed590a35c8f3.
+- Allocation/source freeze: commit a2677e890f9cd1910f061da3fc29c4a40f408ea5, based on current-main snapshot a94da2c520edf566f615b1b909d5ed590a35c8f3; code/input/oracle bytes match FREEZE.json and SHA256SUMS.
 - Candidate formal invocations: 0.
 - Independent auditor formal invocations: 0.
 - Retries: 0.
