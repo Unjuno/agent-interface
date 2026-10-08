@@ -1,0 +1,5 @@
+Posthoc command, run once against the retained A14 raw file:
+  python -B analyze.py
+  python -B audit.py
+
+The source path points to the local A14 evidence package. The source file SHA-256 and byte count are pinned in FREEZE.json. The reduced trace retains only ordered typed-observation id/sequence/time, whole-frame hash, health, and ammo values.
