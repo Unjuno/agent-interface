@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #1998 A04 Pillow PNG focused-payload economics](pillow_focused_observation_payload_1998_t0_a04_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: main ImageArtifactSink/Pillow 12.3.0 exact-pixel audit on 21 retained GUI frames and 441 requests; 420 crops saved 9,617,403 serialized bytes, 21 full-bounds controls fell back, and 6/6 mutations were rejected. Finite byte accounting only; ROI quality, model, latency, GUI/task effect, and product benefit remain untested.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -904,6 +906,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`phase_overlap_resource_footprint_a2_v1/`](phase_overlap_resource_footprint_a2_v1/)
 - [`phase_overlap_resource_footprint_r0_v1/`](phase_overlap_resource_footprint_r0_v1/)
 - [`phase_overlap_resource_footprint_r0_v2/`](phase_overlap_resource_footprint_r0_v2/)
+- [`pillow_focused_observation_payload_1998_t0_a04_20261009/`](pillow_focused_observation_payload_1998_t0_a04_20261009/)
 - [`planner_blind_credential_entry_6515_t0_v1/`](planner_blind_credential_entry_6515_t0_v1/)
 - [`planner_hysteresis_5352_t10_20261001/`](planner_hysteresis_5352_t10_20261001/)
 - [`portfolio_multiplicity_5890_intake_a02_20261003/`](portfolio_multiplicity_5890_intake_a02_20261003/)
