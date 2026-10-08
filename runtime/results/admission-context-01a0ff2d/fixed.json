@@ -1,0 +1,658 @@
+{
+  "backend_opened": false,
+  "base": "f1416985d4ff9ce5bbf9f0f4be1be3d0ee669549",
+  "ended_utc": "2026-10-03T01:41:10.268811+00:00",
+  "fixtures_sha256": "26505c5541f47371959820c8230da821905be5deb381088c349c79ccf44a6841",
+  "input_dispatched": false,
+  "python": "3.12.10",
+  "rows": [
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": false
+      },
+      "id": "now_ns-00",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": true
+      },
+      "id": "now_ns-01",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 1.0
+      },
+      "id": "now_ns-02",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 1.5
+      },
+      "id": "now_ns-03",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": "1"
+      },
+      "id": "now_ns-04",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": null
+      },
+      "id": "now_ns-05",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": []
+      },
+      "id": "now_ns-06",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": {}
+      },
+      "id": "now_ns-07",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": -1
+      },
+      "id": "now_ns-08",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 9223372036854775808
+      },
+      "id": "now_ns-09",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 0
+      },
+      "id": "now_ns-10",
+      "result": {
+        "accepted": true,
+        "error": null,
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "now_ns-11",
+      "result": {
+        "accepted": true,
+        "error": null,
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 2
+      },
+      "id": "now_ns-12",
+      "result": {
+        "accepted": true,
+        "error": null,
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 9223372036854775807
+      },
+      "id": "now_ns-13",
+      "result": {
+        "accepted": false,
+        "error": "LEASE_EXPIRED",
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": false,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-00",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": true,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-01",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1.0,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-02",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1.5,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-03",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": "1",
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-04",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": null,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-05",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": [],
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-06",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": {},
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-07",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": -1,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-08",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 9223372036854775808,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-09",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 0,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-10",
+      "result": {
+        "accepted": false,
+        "error": "STALE_OBSERVATION",
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-11",
+      "result": {
+        "accepted": true,
+        "error": null,
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 2,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-12",
+      "result": {
+        "accepted": false,
+        "error": "STALE_OBSERVATION",
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 9223372036854775807,
+        "now_ns": 1
+      },
+      "id": "current_observation_seq-13",
+      "result": {
+        "accepted": false,
+        "error": "STALE_OBSERVATION",
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": false,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-00",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": true,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-01",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1.0,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-02",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1.5,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-03",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": "1",
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-04",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": null,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-05",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": [],
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-06",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": {},
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-07",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": -1,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-08",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 9223372036854775808,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-09",
+      "result": {
+        "accepted": false,
+        "error": "INVALID_PROGRAM",
+        "required": []
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 0,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-10",
+      "result": {
+        "accepted": false,
+        "error": "STALE_BINDING",
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-11",
+      "result": {
+        "accepted": true,
+        "error": null,
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 2,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-12",
+      "result": {
+        "accepted": false,
+        "error": "STALE_BINDING",
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 9223372036854775807,
+        "current_observation_seq": 1,
+        "now_ns": 1
+      },
+      "id": "current_binding_revision-13",
+      "result": {
+        "accepted": false,
+        "error": "STALE_BINDING",
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 100
+      },
+      "id": "expiry-equal",
+      "result": {
+        "accepted": true,
+        "error": null,
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    },
+    {
+      "context": {
+        "current_binding_revision": 1,
+        "current_observation_seq": 1,
+        "now_ns": 101
+      },
+      "id": "expiry-after",
+      "result": {
+        "accepted": false,
+        "error": "LEASE_EXPIRED",
+        "required": [
+          "input.release_all"
+        ]
+      },
+      "unchanged": true
+    }
+  ],
+  "schema": "admission-context-regression-v1",
+  "source_sha256": "e0320ae7853cdadfd5820577cc7e166a60210b822afc8b6ca910eb64fd1b5965",
+  "stage": "fixed",
+  "started_utc": "2026-10-03T01:41:10.266814+00:00"
+}

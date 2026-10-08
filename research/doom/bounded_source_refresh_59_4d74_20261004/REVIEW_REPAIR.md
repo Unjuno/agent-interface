@@ -1,0 +1,7 @@
+# Review correction, retained first candidate
+
+Independent review of92419bcbe27d3ebb943797eb5e819216c3d7072e found an Important defect: the first helper treated observed health0/negative ammo/malformed observed numbers as refreshable alongside UNKNOWN. A later positive frame could bypass the old immediate refusal. Original REPORT, construction02/03,19-test result and25-target manifest remain unchanged as historical evidence; they do not qualify the final source.
+
+Frozen construction04 adds the observed-zero boundary to the first candidate and fails1/20, preserving direct reproduction. Final helper distinguishes unknown from observed-invalid: any invalid observed health/ammo or unsupported signal status refuses immediately, both on entry and during refresh. Frozen construction05 passes22 tests, including negative/malformed initial values and intermediate invalid observations that must stop before a later positive frame. These are authored boundary checks, not actual game recovery or hard deadline proof. No game/model/formal comparison was rerun.
+
+FILES.v2.sha256.json covers all current evidence members including original FILES.sha256.json; only v2 itself is excluded. Source/test copies in05 are the final candidate;02/03/04 are immutable older stages. Main controller integration remains unchanged from first candidate. A fresh independent follow-up must review the repaired head. Persistent UNKNOWN refusal still does not finish/close the whole session; exception lifecycle remains open.

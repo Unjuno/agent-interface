@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/src/research/integration/tk_model_task_guard_5260_a15_wslc_20261004/paired_audit.py", line 829, in <module>
+    print(json.dumps(audit(sys.argv[1]),sort_keys=True))
+                     ^^^^^^^^^^^^^^^^^^
+  File "/src/research/integration/tk_model_task_guard_5260_a15_wslc_20261004/paired_audit.py", line 411, in audit
+    outer_capture(root/(role+'-launch'))
+  File "/src/research/integration/tk_model_task_guard_5260_a15_wslc_20261004/paired_audit.py", line 94, in outer_capture
+    attempt, receipt = read(directory/'attempt.json'), read(directory/'receipt.json')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/research/integration/tk_model_task_guard_5260_a15_wslc_20261004/paired_audit.py", line 29, in read
+    return json.loads(Path(path).read_bytes())
+                      ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/out/host-launch/attempt.json'

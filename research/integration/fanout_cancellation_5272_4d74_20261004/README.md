@@ -1,0 +1,1 @@
+Read fanout-cancellation-5272-4d74-c02/REPORT.md. Real asyncio fixture, 12 cells; explicit launch STOP retained. SUPPORT_TERMINAL_RELEASE_ACCOUNTING_SCOPED / HOLD_REAL_VERIFIER_BENEFIT. Same-author saved audit, not production or task-speed proof.

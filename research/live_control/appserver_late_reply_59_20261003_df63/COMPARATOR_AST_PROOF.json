@@ -1,0 +1,28 @@
+{
+  "changed_methods": [
+    "__init__",
+    "_read",
+    "request"
+  ],
+  "unchanged_methods": [
+    "__enter__",
+    "__exit__",
+    "_record",
+    "_write",
+    "close",
+    "initialize",
+    "interrupt_turn",
+    "latest_turn_usage",
+    "notify",
+    "start_thread",
+    "start_turn",
+    "wait_notification",
+    "wait_turn_completed"
+  ],
+  "constructor_change": "initialize pending set before reader starts",
+  "reader_change": "cache only IDs in pending set; record every frame first",
+  "request_change": "register allocated ID under condition; retire/cache-pop in finally",
+  "source_sha256": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e",
+  "control_sha256": "8a1b53db17fb12ef5c379eeec2470f774456e010f2e89e9671c6f25ad94134eb",
+  "subject_or_control_executed": false
+}

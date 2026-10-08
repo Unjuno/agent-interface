@@ -1,0 +1,20 @@
+"""Single allocation, bounded native child; retains timeout as STOP, no retry."""
+from datetime import datetime,timezone
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+out=Path(sys.argv[1]).resolve();now=lambda:datetime.now(timezone.utc).isoformat()
+record={'start':now(),'argv':[sys.executable,str(Path(__file__).with_name('native_capture_622.py')),str(out)],'timeout_seconds':12,'attempts':1}
+with (out/'native.stdout').open('wb') as stdout,(out/'native.stderr').open('wb') as stderr:
+    p=subprocess.Popen(record['argv'],stdout=stdout,stderr=stderr);record['pid']=p.pid
+    (out/'NATIVE_STARTED.json').write_text(json.dumps(record,indent=2))
+    try:record['exit_code']=p.wait(timeout=12);record['timed_out']=False
+    except subprocess.TimeoutExpired:
+        record['timed_out']=True;p.kill();record['exit_code']=p.wait()
+record['end']=now()
+for channel in ('stdout','stderr'):record[channel+'_sha256']=hashlib.sha256((out/('native.'+channel)).read_bytes()).hexdigest()
+(out/'NATIVE_RECEIPT.json').write_text(json.dumps(record,indent=2))
+print(json.dumps(record));raise SystemExit(1 if record['timed_out'] else record['exit_code'])

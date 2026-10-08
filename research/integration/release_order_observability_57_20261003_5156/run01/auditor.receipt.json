@@ -1,0 +1,36 @@
+{
+  "label": "auditor",
+  "argv": [
+    "<python>",
+    "-B",
+    "audit.py",
+    "run01/raw.json",
+    "run01/audit.json"
+  ],
+  "cwd": "<study>",
+  "start_utc": "2026-10-03T03:16:18.992180+00:00",
+  "end_utc": "2026-10-03T03:16:19.171759+00:00",
+  "exit_code": 0,
+  "timed_out": false,
+  "python": "3.12.10",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "streams": {
+    "stdout": {
+      "original_bytes": 121,
+      "original_sha256": "e09f1056890d108bb372df9243296d09a401658326f183302f90f9f5c5b0babe",
+      "published_bytes": 121,
+      "published_sha256": "e09f1056890d108bb372df9243296d09a401658326f183302f90f9f5c5b0babe",
+      "derivation": "Replace exact private study prefix only; otherwise byte-identical"
+    },
+    "stderr": {
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_bytes": 0,
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "derivation": "Replace exact private study prefix only; otherwise byte-identical"
+    }
+  },
+  "original_receipt_bytes": 845,
+  "original_receipt_sha256": "59f62f50e4c2da1881ab19cbfb4ff02ef5a175f49cbe0b01f18e19bd312a5cf1",
+  "derivation": "Actual original receipt retained privately; argv interpreter/cwd placeholders and pid omitted. Times/status/environment unchanged."
+}

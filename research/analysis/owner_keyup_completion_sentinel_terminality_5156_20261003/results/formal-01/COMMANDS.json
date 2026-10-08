@@ -1,0 +1,28 @@
+[
+  {
+    "case": "control",
+    "command": [
+      "python3",
+      "-B",
+      "research/live_control/owner_keyup_keymap_witness_5156_t3_v1/audit_formal_x11.py",
+      "research/analysis/owner_keyup_completion_sentinel_terminality_5156_20261003/results/formal-01/control/raw.jsonl",
+      "research/live_control/owner_keyup_keymap_witness_5156_t3_v1/EXPECTED.json",
+      "research/analysis/owner_keyup_completion_sentinel_terminality_5156_20261003/results/formal-01/control/audit.json",
+      "synthetic-cli"
+    ],
+    "cwd": "."
+  },
+  {
+    "case": "nonterminal",
+    "command": [
+      "python3",
+      "-B",
+      "research/live_control/owner_keyup_keymap_witness_5156_t3_v1/audit_formal_x11.py",
+      "research/analysis/owner_keyup_completion_sentinel_terminality_5156_20261003/results/formal-01/nonterminal/raw.jsonl",
+      "research/live_control/owner_keyup_keymap_witness_5156_t3_v1/EXPECTED.json",
+      "research/analysis/owner_keyup_completion_sentinel_terminality_5156_20261003/results/formal-01/nonterminal/audit.json",
+      "synthetic-cli"
+    ],
+    "cwd": "."
+  }
+]

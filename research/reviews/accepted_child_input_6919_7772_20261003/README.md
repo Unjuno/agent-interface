@@ -1,0 +1,26 @@
+# Supplementary #6919 accepted-command transport evidence
+
+Actual existing nonauthor worker 01a0ff58-7772-7312-9c2a-459f38d6734d; FINAL-v5, outside assigned content committee. Source owner stays #6919. Review evidence branch only: no production edit, proposed source replacement, counted content vote or main application. Parent #57.
+
+**The frozen comparison's original verdict remains FAIL_PREDECLARED_BASELINE_SURVIVAL.** All eight rows completed in one invocation with retained actual process handles and files. The initial audit exited1 because the old-source peer was already terminal before response permit, contrary to the prospective survival/effect condition. Its cause is UNKNOWN. Source/raw/freeze/first audit remain untouched. Separately frozen audit_v2 describes that same raw, validates the candidate cleanup observations and refuses all eight copied-raw controls; it does not rerun any process or turn the original FAIL into PASS.
+
+| Source | Input boundary | Downstream fixture | Actual primary exit | Actual peer exit | Synthetic effects | Owner transport close |
+|---|---|---|---:|---:|---:|---|
+| main3e93df | injected error | success intended | 1 | 0 before permit | 0 | absent |
+| #6919 dbe05f5 | injected error | success | 2 | 0 | 1 | retained |
+| main3e93df | injected error | exit17 intended | 1 | 0 before permit | 0 | absent |
+| #6919 dbe05f5 | injected error | exit17 | 2 | 17 | 1 | retained |
+| main3e93df | injected error | wrong ID intended | 1 | 0 before permit | 0 | absent |
+| #6919 dbe05f5 | injected error | wrong ID | 2 | 0 | 1 | retained |
+| main3e93df | EOF | success | 0 | 0 | 1 | retained |
+| #6919 dbe05f5 | EOF | success | 0 | 0 | 1 | retained |
+
+Windows, Node24.13.0 and Python3.11.9, stdlib only. Ten exact exported Git files comprise both copies of the existing five-module host path. The sole production difference is #6919's `lines.on('error',failed)`. A real Node owner invokes actual runPrimaryStdio -> primary exchange/caller -> instrumented relay host/client and spawns a real private Python stdio peer. The collector opens a read-only handle to that peer before fault injection, verifies its parent is the retained owner process, and waits for its actual terminal handle. It never PID-kills another process. All eight accepted requests are identical, each consumed once; no request is replayed. The three candidate injected-error rows preserve the exact original input error after the same request settles; success preserves original response/image/presentation, while exit17 and wrong-ID produce correlated command_error/replay_allowed=false. Both EOF controls preserve ready/returned/terminal in order. At most two child processes run concurrently. Raw SHA256 is `4bc58be82a857122c1589b437bb1055a18ac20d2c91da166385292fe6a6471d1`.
+
+**Concrete remaining evidence gap:** candidate wrong-ID preserves malformed reply-1.json, refuses replay, observes child exit0 and logs transport_closed, but does not create host/exit.json. In relay_client.mjs the reply validation throws on its serialized journal; the later exit-record continuation is skipped and close resolves with journal_error. This limitation was predeclared by source inspection and observed in the retained row. It concerns exit receipt persistence after a protocol error, not whether the primary Interface listener waits for the accepted command. Original host bytes and first result are preserved for the source owner to assess; no repair ownership is claimed here.
+
+First ordinary EOF construction used a wrongly nested synthetic release payload and returned evidence while latching STOP. CONSTRUCTION.md, peer.py, collect_v1.py and construction-smoke retain it. The v2 fixture corrects only result.execution nesting; construction-smoke-v2 confirms caller STOP null before FREEZE.json. Formal matrix-v1 then runs once. FIRST_AUDIT_TOOL_RECEIPT.json retains the original failed audit tool observation. REAUDIT.md/REAUDIT_FREEZE.json and execution/reaudit-v2 retain the separate raw-only re-audit source, original raw digest, actual exit0, logs and copied control outcomes. No original author producer/auditor, fixed allocation or benchmark is replayed.
+
+The task/effect counter, completed/release metadata and PNG are explicitly synthetic. The input fault is PassThrough.destroy, not a naturally failing OS stdin. Installed Python lacks MCP SDK; the production Python MCP relay/server/backend is not executed. No native input, physical release, real task success, model call/cost, GUI, GPU, container, WSLc, shared daemon, global framing bound, permanent-stall deadline or performance gain is proved. #6919 author owns its separate ready/terminal lifecycle repair and any renewed head/proposal. Further production head/dependency changes require scoped applicability checks. The full computer-control goal remains open.
+
+All published files are exact byte copies of these owned private evidence files; SHA256SUMS covers the packet. Absolute paths in historical evidence are the original owned Windows paths and are retained, not rewritten. Reproduce audits in a separate copy/output; existing auditor output and control directories intentionally refuse overwrite. Ordinary regression or raw re-audit is distinct from replaying the consumed formal allocation.

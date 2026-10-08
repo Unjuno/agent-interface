@@ -1,0 +1,7 @@
+WSLc 3.0.1.0; local image python:3.12-slim, image ID sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364.
+A03 candidate once, exit 0; independent auditor once, exit 1.
+A04 candidate once, exit 0; independent auditor once in a separate container, exit 0. No formal retries.
+Candidate command: wslc.exe run --rm --pull never --network none --cpus 1 --memory 512m --mount type=bind,source=<src>,target=/src,readonly --mount type=bind,source=<out>,target=/out --workdir /src python:3.12-slim python /src/run.py
+Auditor command: wslc.exe run --rm --pull never --network none --cpus 1 --memory 512m --mount type=bind,source=<src>,target=/src,readonly --mount type=bind,source=<raw>,target=/raw,readonly --workdir /src python:3.12-slim python /src/audit.py /raw/RAW.json
+Every run reported: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap. CPU request was configured but not independently measured. GPU none. Network none. Source mounted read-only; output separately mounted; auditor read raw read-only.
+A01/A02 stopped before injections and have no formal candidate cases. Their attempted source setup commands and nonzero exits are retained separately.

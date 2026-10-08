@@ -1,0 +1,34 @@
+{
+  "capture_source_sha256": "bc2c1a8b51951a97fe42e4278991a9b3051a3c932014486ccf3c6c65926aa94a",
+  "frozen_utc": "2026-10-03T06:14:55.350857+00:00",
+  "head": "b84aa6a1260128bd70e2cbe1598a9c80b55f75ee",
+  "independent_source_sha256": "213bd1c4285d2dfc64f99f7d9e5736237a274334875de9c676125082040a6ede",
+  "original_producer_or_formal_replays": 0,
+  "planned_jobs": [
+    {
+      "command": [
+        "<REVIEWER_PRIVATE_PATH>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "runtime.kernel.test_nominal_types",
+        "-v"
+      ],
+      "cwd": "<REVIEWER_PRIVATE_PATH>\\work\\review6923\\source",
+      "label": "nominal-seven"
+    },
+    {
+      "command": [
+        "<REVIEWER_PRIVATE_PATH>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+        "-B",
+        "<REVIEWER_PRIVATE_PATH>\\work\\review6923\\independent.py"
+      ],
+      "cwd": "<REVIEWER_PRIVATE_PATH>\\work\\review6923",
+      "label": "independent-fourteen"
+    }
+  ],
+  "proposal_digest": "0bb92940998a498177652729c777a491d6f9778115176dabc2724c00e6a4e47a",
+  "python_binary_sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+  "python_version": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "source_manifest_sha256": "f18959bd38511ad904e466cb3b32d60397dd6cd9de06efc618bc144968a0c32d"
+}

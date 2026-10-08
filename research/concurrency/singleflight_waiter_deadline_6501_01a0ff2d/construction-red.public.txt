@@ -1,0 +1,27 @@
+test_actual_guard_refuses_delayed_value_and_cleans_up (test_construction.DeadlineConstruction.test_actual_guard_refuses_delayed_value_and_cleans_up) ... FAIL
+test_expired_and_equal_deadline_refuse (test_construction.DeadlineConstruction.test_expired_and_equal_deadline_refuse) ... FAIL
+test_fresh_deadline_preserved (test_construction.DeadlineConstruction.test_fresh_deadline_preserved) ... ok
+
+======================================================================
+FAIL: test_actual_guard_refuses_delayed_value_and_cleans_up (test_construction.DeadlineConstruction.test_actual_guard_refuses_delayed_value_and_cleans_up)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\work\agent-interface\research\concurrency\singleflight_waiter_deadline_6501_01a0ff2d\test_construction.py", line 18, in test_actual_guard_refuses_delayed_value_and_cleans_up
+    self.assertEqual(row['timed']['terminal'], 'value')
+AssertionError: 'timeout' != 'value'
+- timeout
++ value
+
+
+======================================================================
+FAIL: test_expired_and_equal_deadline_refuse (test_construction.DeadlineConstruction.test_expired_and_equal_deadline_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\work\agent-interface\research\concurrency\singleflight_waiter_deadline_6501_01a0ff2d\test_construction.py", line 10, in test_expired_and_equal_deadline_refuse
+    self.assertIs(candidate.deadline_valid(100, 100), False)
+AssertionError: True is not False
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+FAILED (failures=2)

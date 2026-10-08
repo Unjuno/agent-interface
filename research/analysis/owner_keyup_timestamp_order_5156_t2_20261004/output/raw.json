@@ -1,0 +1,176 @@
+{
+  "allocation": "OWNER-KEYUP-TIMESTAMP-ORDER-5156-T2-20261004-01",
+  "analyzer_sha256": "163a32ce20516bdfc034eb4c6659141e53e3ef11b8526372042fb5e9d509e63a",
+  "python": "3.14.5",
+  "rows": [
+    {
+      "analyzer_output": {
+        "decision": "PASS: direct bounded release evidence available",
+        "hold_count": 1,
+        "holds": [
+          {
+            "censor_width_ms": 2e-05,
+            "intent_token": "frozen-intent",
+            "key": "Up",
+            "retained_lower_ms": 0.0003,
+            "retained_upper_ms": 0.00032,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "invalid_release_count": 0,
+        "measurement_ready": true,
+        "schema": "map01-direct-retained-input-v1",
+        "unmatched_admission_count": 0
+      },
+      "case_id": "ordinary_order",
+      "events": [
+        {
+          "admitted_ns": 100,
+          "event": "input_admission",
+          "input_ack_ns": 110,
+          "intent_token": "frozen-intent",
+          "key": "Up"
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "frozen-intent",
+          "key": "Up",
+          "operation": "up",
+          "owner_transition_verified": true,
+          "release_call_returned_ns": 420,
+          "release_call_started_ns": 410
+        }
+      ]
+    },
+    {
+      "analyzer_output": {
+        "decision": "PASS: direct bounded release evidence available",
+        "hold_count": 1,
+        "holds": [
+          {
+            "censor_width_ms": 0.0,
+            "intent_token": "frozen-intent",
+            "key": "Up",
+            "retained_lower_ms": 0.0,
+            "retained_upper_ms": 0.0,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "invalid_release_count": 0,
+        "measurement_ready": true,
+        "schema": "map01-direct-retained-input-v1",
+        "unmatched_admission_count": 0
+      },
+      "case_id": "all_equal_boundary",
+      "events": [
+        {
+          "admitted_ns": 100,
+          "event": "input_admission",
+          "input_ack_ns": 100,
+          "intent_token": "frozen-intent",
+          "key": "Up"
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "frozen-intent",
+          "key": "Up",
+          "operation": "up",
+          "owner_transition_verified": true,
+          "release_call_returned_ns": 100,
+          "release_call_started_ns": 100
+        }
+      ]
+    },
+    {
+      "analyzer_output": {
+        "decision": "PASS: direct bounded release evidence available",
+        "hold_count": 1,
+        "holds": [
+          {
+            "censor_width_ms": 0.0,
+            "intent_token": "frozen-intent",
+            "key": "Up",
+            "retained_lower_ms": 0.00031,
+            "retained_upper_ms": 0.00031,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "invalid_release_count": 0,
+        "measurement_ready": true,
+        "schema": "map01-direct-retained-input-v1",
+        "unmatched_admission_count": 0
+      },
+      "case_id": "ack_before_admission",
+      "events": [
+        {
+          "admitted_ns": 110,
+          "event": "input_admission",
+          "input_ack_ns": 100,
+          "intent_token": "frozen-intent",
+          "key": "Up"
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "frozen-intent",
+          "key": "Up",
+          "operation": "up",
+          "owner_transition_verified": true,
+          "release_call_returned_ns": 420,
+          "release_call_started_ns": 410
+        }
+      ]
+    },
+    {
+      "analyzer_output": {
+        "decision": "PASS: direct bounded release evidence available",
+        "hold_count": 1,
+        "holds": [
+          {
+            "censor_width_ms": 0.0,
+            "intent_token": "frozen-intent",
+            "key": "Up",
+            "retained_lower_ms": 0.00031,
+            "retained_upper_ms": 0.00031,
+            "source_events": [
+              "input_admission",
+              "input_release_transition"
+            ]
+          }
+        ],
+        "invalid_release_count": 0,
+        "measurement_ready": true,
+        "schema": "map01-direct-retained-input-v1",
+        "unmatched_admission_count": 0
+      },
+      "case_id": "release_return_before_start",
+      "events": [
+        {
+          "admitted_ns": 100,
+          "event": "input_admission",
+          "input_ack_ns": 110,
+          "intent_token": "frozen-intent",
+          "key": "Up"
+        },
+        {
+          "event": "input_release_transition",
+          "intent_token": "frozen-intent",
+          "key": "Up",
+          "operation": "up",
+          "owner_transition_verified": true,
+          "release_call_returned_ns": 410,
+          "release_call_started_ns": 420
+        }
+      ]
+    }
+  ],
+  "schema": "owner-keyup-timestamp-order-raw-v1"
+}

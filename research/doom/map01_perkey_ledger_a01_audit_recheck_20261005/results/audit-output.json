@@ -1,0 +1,60 @@
+{
+  "allocation": "MAP01-PERKEY-LEDGER-A01-AUDIT-RECHECK-20261005",
+  "candidate_output_sha256": "9dd02d37a45090e9185d4e8c7ea4132357610ebc4a0020d86b0eb1e04d8f7d98",
+  "checks": {
+    "all_candidate_interval_rows_match_raw_derived_bounds": true,
+    "candidate_case_names_match_frozen_scenarios": true,
+    "complete_default_control_is_bounded": true,
+    "complete_with_underdeclared_inventory_is_unknown": true,
+    "mutated_observation_contains_only_w": true,
+    "omission_with_correct_inventory_is_unknown": true,
+    "omission_with_underdeclared_inventory_is_bounded": true,
+    "raw_fixture_contains_two_distinct_keys": true,
+    "raw_stream_contains_one_verified_empty_and_no_unknown_rows": true
+  },
+  "expected_cases_raw_derived": {
+    "complete_correct_inventory": {
+      "intervals": [
+        {
+          "action_id": "act-1",
+          "epoch": 7,
+          "key": "SPACE",
+          "lower_ns": 32,
+          "upper_ns": 50
+        },
+        {
+          "action_id": "act-1",
+          "epoch": 7,
+          "key": "W",
+          "lower_ns": 70,
+          "upper_ns": 90
+        }
+      ],
+      "status": "BOUNDED"
+    },
+    "complete_underdeclared_inventory": {
+      "intervals": [],
+      "status": "UNKNOWN"
+    },
+    "omitted_correct_inventory": {
+      "intervals": [],
+      "status": "UNKNOWN"
+    },
+    "omitted_underdeclared_inventory": {
+      "intervals": [
+        {
+          "action_id": "act-1",
+          "epoch": 7,
+          "key": "W",
+          "lower_ns": 70,
+          "upper_ns": 90
+        }
+      ],
+      "status": "BOUNDED"
+    }
+  },
+  "imports_candidate_or_ledger": false,
+  "raw_sha256": "890d8c5ad8eca2c6d5583007029bb6e71f7a87df725945fa7bf2ce8f45b04161",
+  "scope": "independent raw timestamp arithmetic and exact candidate case reconstruction; synthetic fixture only",
+  "status": "PASS_RAW_DERIVED_AUDIT"
+}

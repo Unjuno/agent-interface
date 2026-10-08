@@ -1,0 +1,16 @@
+import ast,difflib,hashlib,pathlib,json
+r=pathlib.Path(__file__).resolve().parent
+dep=(r/'projection/dependency6900/compiled_gui.py').read_bytes()
+pub=(r/'projection/runtime/results/compiled-literal-unknown-01a0ff35/source/dependency-compiled_gui.py.txt').read_bytes()
+base=(r/'projection/runtime/results/compiled-literal-unknown-01a0ff35/source/baseline-compiled_gui.py.txt').read_bytes()
+cand=(r/'projection/runtime/core_v1/compiled_gui.py').read_bytes()
+old=b'            unknown = any(key not in observed or observed.get(key) == "unknown"\n                          for key in expected)\n'
+new=b'            # A declared matching string literal still needs the effect verifier.\n            # Retain legacy unavailable handling when "unknown" does not match.\n            unknown = any(key not in observed or\n                          (observed[key] == "unknown" and\n                           not _matches(observed[key], value))\n                          for key, value in expected.items())\n'
+def summary(v):return {'bytes':len(v),'sha256':hashlib.sha256(v).hexdigest(),'crlf':v.count(b'\r\n'),'barelf':v.count(b'\n')-v.count(b'\r\n')}
+normdep=dep.replace(b'\r\n',b'\n')
+joint=normdep.replace(old,new)
+normpub=pub.replace(b'\r\n',b'\n')
+result={'actual_dependency':summary(dep),'public_composed':summary(pub),'candidate':summary(cand),'baseline':summary(base),'old_block_count':normdep.count(old),'newjoint':summary(joint),'normalized_equal':joint==normpub,'ast_equal':ast.dump(ast.parse(joint))==ast.dump(ast.parse(pub)),'literal_delta_exact':base.replace(old,new)==cand}
+print(json.dumps(result,indent=2))
+print(''.join(difflib.unified_diff(joint.decode().splitlines(True),normpub.decode().splitlines(True),n=2))[:2400])
+(r/'dependency-byte-diagnosis.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')

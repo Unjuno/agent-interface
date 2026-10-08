@@ -1,0 +1,18 @@
+{
+  "schema": "visual04-usage-status-audit-freeze-v1",
+  "source_commit": "5ce152e1479bedac08f55db45d24b3dd1405cb16",
+  "source_package": "research/doom/v16_visual_readmission_59_4d74_20261004/",
+  "raw_files": {
+    "run/episode/report.json": {"bytes": 266746, "sha256": "5b7872544042080813f0d45f1c8892dbbaa2b69a17feb4eaec20160e29178a2a"},
+    "run/host.stdout.jsonl": {"bytes": 272677, "sha256": "0a7212196fee55625d6cbe4c4e5f7c0c974efbc2ffdd8cae0ea7d17725ca6259"},
+    "run/USAGE_QUALIFICATION.json": {"bytes": 1149, "sha256": "7be9d643df88499970d05a36d279e2ee6934e18c7f25ff90a77676aadf7d6d7d"},
+    "run/SAVED_READMISSION_AUDIT.json": {"bytes": 6594, "sha256": "b497f2bf3d7a7f2bb9eae695bd37d17234ee88b8e7420ee1145418935a5358c5"}
+  },
+  "hypothesis": "The saved visual04 auditor's aggregation can be replaced with a status-aware report that preserves completed-turn last snapshots as reported fields while keeping every interrupted-turn increment unknown, even when snapshots repeat or change.",
+  "test": "Join all six turn IDs from the episode report to raw thread/tokenUsage/updated notifications. Do not include interrupted turns in completed-turn snapshot summaries or infer a zero increment. Verify source hashes and preserve the original saved audit and qualification unchanged.",
+  "decision_gate": {
+    "pass": "All report turn IDs join one-to-one with raw usage notifications, four completed statuses and two interrupted statuses are retained, only completed last snapshots sum to 48773 input / 1100 output, and both interrupted increments remain UNKNOWN.",
+    "fail": "Any interrupted snapshot is counted as a fresh delta, a zero interrupted cost is inferred, identity/status rows are lost, or a source hash differs."
+  },
+  "scope": "Retained usage-record interpretation only. No billing, causal control, live recovery, or controller defect conclusion."
+}

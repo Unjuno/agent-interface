@@ -1,0 +1,38 @@
+{
+  "schema": "issue59-v16-readmission-usage-qualification-freeze-v1",
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/59-usage-qualified-audit-20261004",
+  "base_commit": "5ce152e1479bedac08f55db45d24b3dd1405cb16",
+  "source_commit": "8a462fa02d01801b166a4ae00edaa41a6f29eb67",
+  "run_root": "research/doom/v16_visual_readmission_59_4d74_20261004/run",
+  "input_git_blobs": {
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/episode/report.json": "29dd00bee709459d93842f7af170eb13e97aedd8",
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/host.stdout.jsonl": "a5263c6d82a33226c0c7ef31eeaa694efd03666a",
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/episode/planner-protocol.jsonl": "569cc72ced74c0f761adbd96260a9e01a0e7ed8b",
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/SAVED_READMISSION_AUDIT.json": "ab7b1445999f9a35b943bd1d19b93cd0904ba97f",
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/USAGE_QUALIFICATION.json": "7b0e20e296e0aefb6e0e7970b184ca715933a683"
+  },
+  "input_sha256": {
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/episode/report.json": "5b7872544042080813f0d45f1c8892dbbaa2b69a17feb4eaec20160e29178a2a",
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/host.stdout.jsonl": "0a7212196fee55625d6cbe4c4e5f7c0c974efbc2ffdd8cae0ea7d17725ca6259",
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/episode/planner-protocol.jsonl": "5b2b7732faba1dc69481421c3d2bfefbe3d5c1025d89c4522009dae33146da69",
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/SAVED_READMISSION_AUDIT.json": "b497f2bf3d7a7f2bb9eae695bd37d17234ee88b8e7420ee1145418935a5358c5",
+    "research/doom/v16_visual_readmission_59_4d74_20261004/run/USAGE_QUALIFICATION.json": "7be9d643df88499970d05a36d279e2ee6934e18c7f25ff90a77676aadf7d6d7d"
+  },
+  "method": "reconcile turn/tokenUsage/updated latest snapshots against report turn status and usage; sum completed `last` snapshots only as observed snapshots; never infer interrupted increments or full response-level consumption",
+  "environment": {
+    "python": "3.11.9",
+    "platform": "win32",
+    "live_game_model_gui_input": false
+  },
+  "expected_scoped_result": {
+    "completed_turn_last_snapshot_sum": {
+      "inputTokens": 48773,
+      "outputTokens": 1100
+    },
+    "interrupted_turns": 2,
+    "interrupted_incremental_usage": "UNKNOWN",
+    "response_level_usage_records": 0,
+    "full_attempt_usage": "NOT_ESTABLISHED"
+  }
+}

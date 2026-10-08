@@ -1,0 +1,59 @@
+Current-main post-r135 replay A05
+Current main: aa2e4b623b2f4ccdcbc8e294535bab09c0092f30
+Candidate commit: 766bbf0b8 (add V12 expiry cleanup composition evidence)
+Execution tree: disposable overlay of the exact current-main commit with the frozen candidate package applied.
+
+===== candidate-suite (exit 0) =====
+test_cancel_cleanup_emits_up_receipt_joined_to_admission_context (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_cancel_cleanup_emits_up_receipt_joined_to_admission_context) ... ok
+test_each_cancelled_key_keeps_its_own_admission_context (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_each_cancelled_key_keeps_its_own_admission_context) ... ok
+test_executor_cancel_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_cancel_terminal_contains_one_verified_cleanup_receipt) ... ok
+test_executor_expiry_terminal_contains_one_verified_cleanup_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_executor_expiry_terminal_contains_one_verified_cleanup_receipt) ... ok
+test_expired_program_exit_drains_owner_cleanup_without_cancel_event (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_expired_program_exit_drains_owner_cleanup_without_cancel_event) ... ok
+test_ordinary_up_still_emits_one_matching_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_ordinary_up_still_emits_one_matching_receipt) ... ok
+test_reconciliation_error_does_not_drop_recorded_release_receipt (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_reconciliation_error_does_not_drop_recorded_release_receipt) ... ok
+test_unavailable_per_key_samples_never_claim_confirmed_up (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_unavailable_per_key_samples_never_claim_confirmed_up) ... ok
+test_verified_async_cleanup_reconciles_bridge_held_state (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_cancel_release.CancellationReceiptTests.test_verified_async_cleanup_reconciles_bridge_held_state) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.051s
+
+OK
+
+===== executor-v12-expiry-suite (exit 0) =====
+test_expiry_publishes_contextual_up_before_verified_terminal (research.doom.map01_v39_cancel_release_fix_a01_20261005.test_executor_v12_expiry_composition.ExecutorV12ExpiryCompositionTests.test_expiry_publishes_contextual_up_before_verified_terminal) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.036s
+
+OK
+
+===== owner-compat-suite (exit 0) =====
+test_clean_down_up_and_composable_identity (input_owner_v12_harness.Tests.test_clean_down_up_and_composable_identity) ... ok
+test_foreign_up_rejects_before_sampling (input_owner_v12_harness.Tests.test_foreign_up_rejects_before_sampling) ... ok
+test_missing_intent_does_not_reject_but_blocks_lineage (input_owner_v12_harness.Tests.test_missing_intent_does_not_reject_but_blocks_lineage) ... ok
+test_noop_up_already_up_no_identity (input_owner_v12_harness.Tests.test_noop_up_already_up_no_identity) ... ok
+test_preexisting_physical_down_does_not_mint (input_owner_v12_harness.Tests.test_preexisting_physical_down_does_not_mint) ... ok
+test_repeated_down_reuses_id_without_new_interval (input_owner_v12_harness.Tests.test_repeated_down_reuses_id_without_new_interval) ... ok
+test_sample_failure_does_not_change_down_control (input_owner_v12_harness.Tests.test_sample_failure_does_not_change_down_control) ... ok
+test_sequential_holds_advance_generation (input_owner_v12_harness.Tests.test_sequential_holds_advance_generation) ... ok
+test_sync_failure_matches_control_error_and_no_receipt (input_owner_v12_harness.Tests.test_sync_failure_matches_control_error_and_no_receipt) ... ok
+test_verified_cleanup_terminates_identity_without_edge_receipt (input_owner_v12_harness.Tests.test_verified_cleanup_terminates_identity_without_edge_receipt) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.003s
+
+OK
+
+===== existing-bridge-suite (exit 0) =====
+test_backend_emits_same_intent_per_key_verified_up_edge (test_bridge.PerKeyBridgeConstructionTests.test_backend_emits_same_intent_per_key_verified_up_edge) ... ok
+test_missing_program_context_refuses_before_owner_call (test_bridge.PerKeyBridgeConstructionTests.test_missing_program_context_refuses_before_owner_call) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK
+
+===== audit (exit 0) =====
+AUDIT_PASS_SOURCE_LOCK_AND_22_TEST_RECEIPTS
+
+Scope: fake-display tests only; no X server, game, GUI, or OS input.

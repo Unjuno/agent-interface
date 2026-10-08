@@ -1,0 +1,22 @@
+{
+  "schema": "5420-conditional-kernel-freeze-v1",
+  "allocation_id": "5420-COND-KERNEL-T0-01",
+  "repository_head": "c7837e7aae09bf2f3d9b40a77b790d7d6777d799",
+  "docker": "29.5.2/29.4.0 linux/arm64",
+  "engine": "linux/aarch64 overlayfs",
+  "image": "node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+  "image_inspect": "sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 [\"node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80\"]",
+  "source_path": "research/analysis/privacy_conditional_kernel_5420_t0_20261004/src",
+  "files_sha256": {
+    "audit.mjs": "9d71e1db729b7174f6d40c3d12b558275b3d6c3332a06e9e933f3d1dbde27490",
+    "candidate.mjs": "1b77c6120f37f1b654dfec8eff8defc9c5a5eebe199d8e5672a262c976674671",
+    "freeze.mjs": "26431ad98869dc0a28fca0d14f0224e0ec9246b060e5e6bc49859cd63bd395ab",
+    "PLAN.md": "d65fdea471e3c5820c114201bbbb674b7c7c57cc471bb23d09a7388a5cc28a93",
+    "spec.json": "9fa72c51132421576d0835c22610769a6f0ca8677d80886e5c3e7c255ab472c7",
+    "test.mjs": "eb6faf4de5cf1aecd74ebb9e9ec40dd818ed40cc6240b97ce6df3dec3861bda1"
+  },
+  "test_command": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 node /src/test.mjs",
+  "candidate_command": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly --mount type=bind,src=<RAW>,dst=/out node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 node /src/candidate.mjs",
+  "auditor_command": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly --mount type=bind,src=<RAW>,dst=/out node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 node /src/audit.mjs",
+  "decision_gate": "Exact raw-only reconstruction of 16 rows and 3 scenarios; shared conditional gate reject while fresh and constant accept; marginal comparator accepts shared; all 4 mutations rejected."
+}

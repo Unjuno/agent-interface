@@ -1,0 +1,85 @@
+{
+  "allocation": "CALC-PARTIAL-REPLY-3311-4D74-G15-20261004",
+  "source_main": "9823419dc71eb6f7fd745bfe8249cf7f7584a3a9",
+  "rows": [
+    {
+      "index": 0
+    }
+  ],
+  "H": "Explicit executed/unexecuted separation reduces unsupported final visible-state reports on fixed partial evidence.",
+  "T": "Four fresh contexts ABBA, same model/prompt/input+feedback PNG and successFalse; reply text only differs.",
+  "D": "All four registered-tool transcripts/usage and independent final report audit; no unsupported second-row assertion.",
+  "C": "Retained-image feedback experiment; no fresh GUI/action, not full-task or population efficacy.",
+  "U": "Host existing authenticated model endpoint; container saved-data audit, no credentials copied.",
+  "source_hashes": {
+    "EVIDENCE.json": "48a3ef84c889c0ee10b9738cd25050bfa73da51c095856ad39355f3786477ae8",
+    "model_client.py": "d8f35a2a188527490de4c39ca76e08f88d7ce2522bd50086f871b8aa7dcc818c",
+    "run_once.py": "db804bfc6780014c11a828002909be8cb9c8a6dfaeb5f9e818365f20b208ab5b",
+    "saved_oracle.py": "92def4221091e3d788ce24340d7a3f0f6e2e4dbe9b732164dc97605975f6de0d",
+    "images/2ae5bc5ea0db4aa09f611afa8ab91972.png": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+    "images/da739e86bdbf4fbd8e48a41b7de7ddcf.png": "d6a54cf5df90e7df827cf1f7b7aa31de1f1ef17b4817746c0fa3a5fc88a23c14"
+  },
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "app_server_argv": [
+    "C:\\Users\\junny\\AppData\\Local\\OpenAI\\Codex\\bin\\8aaf1547b825b104\\codex.exe",
+    "app-server",
+    "--stdio",
+    "--disable",
+    "plugins",
+    "--disable",
+    "apps",
+    "--disable",
+    "shell_tool",
+    "--disable",
+    "multi_agent",
+    "--disable",
+    "hooks",
+    "--disable",
+    "computer_use",
+    "--disable",
+    "browser_use",
+    "--disable",
+    "browser_use_external",
+    "--disable",
+    "unified_exec",
+    "-c",
+    "mcp_servers.node_repl.enabled=false",
+    "-c",
+    "features.code_mode.enabled=false"
+  ],
+  "cli_sha256": "37762753b554982eef1c109303d1be652b6397f1479e844794353a85650199c6",
+  "base_instructions": "You are a screenshot-grounded Calc selector in a measured experiment. Use only the registered enter_products tool exactly once. Do not inspect files, execute commands, use other tools, delegate or ask questions. After the exact feedback image, report the visible worksheet state. A completed input is not proof of correct state.",
+  "tool": {
+    "type": "function",
+    "name": "enter_products",
+    "description": "Ground A1 interior, then run fixed two-product OCR-verified guarded Calc sequence exactly once.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1279
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 799
+        }
+      }
+    }
+  },
+  "status": "FROZEN_FIRST_CLIENT_QUALIFICATION",
+  "arms": [
+    "current",
+    "explicit",
+    "explicit",
+    "current"
+  ]
+}

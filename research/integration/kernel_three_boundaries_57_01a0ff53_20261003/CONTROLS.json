@@ -1,0 +1,86 @@
+{
+  "test_source_sha256": "6cf7344751f8d597c099904abe7474c23dfed2118a51ad9b687e20215579002b",
+  "records": [
+    {
+      "name": "oracle-controls-normal",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "test_oracle",
+        "-v"
+      ],
+      "cwd": "$PACKAGE",
+      "started_utc": "2026-10-03T01:24:03.816056+00:00",
+      "ended_utc": "2026-10-03T01:24:04.062018+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "oracle-controls-optimized",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-O",
+        "-B",
+        "-m",
+        "unittest",
+        "test_oracle",
+        "-v"
+      ],
+      "cwd": "$PACKAGE",
+      "started_utc": "2026-10-03T01:24:04.062056+00:00",
+      "ended_utc": "2026-10-03T01:24:04.313191+00:00",
+      "exit_code": 0,
+      "expected_exit_code": 0
+    },
+    {
+      "name": "mutation-single-start",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "runtime.kernel.test_kernel",
+        "-v"
+      ],
+      "cwd": "$PACKAGE/mutation-single-start",
+      "started_utc": "2026-10-03T01:24:04.313255+00:00",
+      "ended_utc": "2026-10-03T01:24:04.378913+00:00",
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "name": "mutation-factory",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "runtime.kernel.test_backend_contract",
+        "-v"
+      ],
+      "cwd": "$PACKAGE/mutation-factory",
+      "started_utc": "2026-10-03T01:24:04.378949+00:00",
+      "ended_utc": "2026-10-03T01:24:04.440531+00:00",
+      "exit_code": 1,
+      "expected_exit_code": 1
+    },
+    {
+      "name": "mutation-release",
+      "argv": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "-m",
+        "unittest",
+        "runtime.kernel.test_release_epoch",
+        "-v"
+      ],
+      "cwd": "$PACKAGE/mutation-release",
+      "started_utc": "2026-10-03T01:24:04.440579+00:00",
+      "ended_utc": "2026-10-03T01:24:04.505533+00:00",
+      "exit_code": 1,
+      "expected_exit_code": 1
+    }
+  ]
+}

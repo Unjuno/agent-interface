@@ -1,0 +1,45 @@
+import fnmatch,hashlib,json,subprocess
+from pathlib import Path
+import yaml
+r=Path(__file__).resolve().parent;repo=r.parent/'agent-interface';base='1089e144bcde387036c613972ff3f2f0c384dae4'
+branch='research/5442-jupyterlab-01a0ff58-20261003';prefix='research/integration/jupyterlab_endpoint_5442_01a0ff58'
+def git(*args):return subprocess.check_output(['git','-C',str(repo),*args])
+paths=[prefix+'/'+p.relative_to(r/'packet-J01-v2').as_posix() for p in (r/'packet-J01-v2').rglob('*') if p.is_file()]
+def matches(value,patterns):
+    if isinstance(patterns,str):patterns=[patterns]
+    result=False
+    for pattern in patterns:
+        if fnmatch.fnmatchcase(value,pattern.lstrip('!')):result=not pattern.startswith('!')
+    return result
+def applies(filters,ref):
+    filters=filters or {}
+    if not isinstance(filters,dict):return True
+    if filters.get('tags') and not filters.get('branches'):return False
+    if filters.get('branches') and not matches(ref,filters['branches']):return False
+    if filters.get('branches-ignore') and matches(ref,filters['branches-ignore']):return False
+    if filters.get('paths') and not any(matches(p,filters['paths']) for p in paths):return False
+    if filters.get('paths-ignore') and all(matches(p,filters['paths-ignore']) for p in paths):return False
+    return True
+rows=[];push=[];pr=[];create=[];targets=[];ignored=[]
+for path in git('ls-tree','-r','--name-only',base,'--','.github/workflows').decode().splitlines():
+    b=git('show',base+':'+path)
+    if Path(path).suffix not in {'.yml','.yaml'}:
+        ignored.append(dict(path=path,bytes=len(b),sha256=hashlib.sha256(b).hexdigest()));continue
+    obj=yaml.load(b,Loader=yaml.BaseLoader);events=obj.get('on',{})
+    if isinstance(events,str):events={events:{}}
+    if isinstance(events,list):events={e:{} for e in events}
+    if not isinstance(events,dict):raise ValueError('unknown events')
+    jobs={key:value.get('if') for key,value in obj.get('jobs',{}).items()}
+    row=dict(path=path,bytes=len(b),sha256=hashlib.sha256(b).hexdigest(),events=events,jobs_if=jobs);rows.append(row)
+    if 'push' in events and applies(events['push'],branch):push.append(path)
+    if 'pull_request' in events and applies(events['pull_request'],'main'):pr.append(path)
+    if 'pull_request_target' in events and applies(events['pull_request_target'],'main'):targets.append(row)
+    if 'create' in events:create.append(row)
+if targets:raise ValueError('inspect unskippable PR target before publication')
+if len(create)!=1 or create[0]['path']!='.github/workflows/5716-identifiability-docker-construction-a01.yml':raise ValueError('unknown unskippable create event')
+if len(create[0]['jobs_if'])!=1 or not all("github.event.ref == 'research/5716-identifiability-docker-construction-20261001-01'" in str(x) for x in create[0]['jobs_if'].values()):raise ValueError('inspect exact create guard')
+out=dict(base=base,branch=branch,prefix=prefix,workflow_tree=git('rev-parse',base+':.github/workflows').decode().strip(),definitions=rows,
+    push_candidates=push,pull_request_candidates=pr,create_rows=create,pull_request_target_candidates=targets,non_workflow_objects=ignored,
+    disposition='head commit [skip ci] for push/pull_request, required checks never called green or bypassed; one foreign exact create-job guard false',glob_scope='conservative fnmatch event preflight, not full GitHub execution semantics')
+with (r/'TRANSPORT_PREFLIGHT.json').open('x',encoding='utf-8') as f:json.dump(out,f,indent=2)
+print(json.dumps({k:v for k,v in out.items() if k not in ['definitions','create_rows']},indent=2))

@@ -1,0 +1,83 @@
+"""Audit already retained integration outputs; do not rerun the two checks."""
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+workspace = Path(__file__).resolve().parent.parent
+repo = workspace / "work/agent-interface"
+root = workspace / "work/compose6866-403a21a"
+source = root / "source"
+freeze = json.loads((root / "FREEZE.json").read_bytes())
+base, head = freeze["observed_base_sha"], freeze["head_sha"]
+env = dict(os.environ, GIT_INDEX_FILE=str(root / "candidate.index"))
+primary_hash = hashlib.sha256((repo / ".git/index").read_bytes()).hexdigest()
+
+
+def git(*args):
+    return subprocess.check_output(["git", *args], cwd=repo, env=env)
+
+
+receipts = {name: json.loads((root / (name + ".receipt.json")).read_bytes())
+            for name in ("core-current", "sessions-current")}
+assert all(receipt["exit_code"] == 0 for receipt in receipts.values())
+assert b"Ran 84 tests" in (root / "core-current.stderr.txt").read_bytes()
+assert (root / "core-current.stderr.txt").read_bytes().rstrip().endswith(b"OK")
+raw = json.loads((root / "sessions-current.stdout.txt").read_bytes())
+expected_ids = {(route, label) for route in ("win32_v1", "x11_v1", "quartz_v1")
+                for label in ("valid", "expired", "nan_clock", "negative_clock", "bool_clock",
+                              "bool_sequence", "float_revision")}
+assert len(raw["rows"]) == 21
+assert {(row["route"], row["case"]) for row in raw["rows"]} == expected_ids
+for row in raw["rows"]:
+    valid = row["case"] == "valid"
+    assert type(row["spy_execution_count"]) is int
+    assert row["spy_execution_count"] == (1 if valid else 0)
+    assert row["status"] == ("completed" if valid else "refused")
+    assert row["calls"] == (["clock", "preflight", "execute"] if valid else ["clock"])
+for item in freeze["blobs"]:
+    data = (source / item["path"]).read_bytes()
+    assert hashlib.sha256(data).hexdigest() == item["sha256"]
+    assert hashlib.sha1(f"blob {len(data)}\0".encode() + data).hexdigest() == item["blob_oid"]
+tree = git("write-tree", "--missing-ok").decode().strip()
+delta = git("diff", "--cached", "--name-status", base).decode().splitlines()
+assert len(delta) == 42 and sum(row.startswith("M\t") for row in delta) == 1
+contract = (source / "runtime/core_v1/contract.py").read_bytes()
+normal = hashlib.sha256(contract.replace(b"\r\n", b"\n")).hexdigest()
+assert normal == "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1"
+# Recover the first local-only candidate from our repository's recent loose objects.
+# No ref, missing-object lookup or whole-repository fsck is involved.
+candidates = []
+cutoff = datetime.fromisoformat(receipts["core-current"]["started_utc"]).timestamp()
+for folder in (repo / ".git/objects").iterdir():
+    if len(folder.name) != 2 or not folder.is_dir():
+        continue
+    for obj in folder.iterdir():
+        if len(obj.name) != 38 or not obj.is_file() or not cutoff - 120 <= obj.stat().st_mtime <= cutoff:
+            continue
+        oid = folder.name + obj.name
+        if git("cat-file", "-t", oid).strip() != b"commit":
+            continue
+        record = git("cat-file", "commit", oid).decode()
+        if record.startswith(f"tree {tree}\nparent {base}\nparent {head}\n"):
+            candidates.append(oid)
+assert len(candidates) == 1, candidates
+assert hashlib.sha256((repo / ".git/index").read_bytes()).hexdigest() == primary_hash
+result = {"worker_id": "01a0ff2e-17a3-70a1-908e-0d6dd78c45e9", "policy_version": "FINAL-v5",
+    "base_sha": base, "head_sha": head, "planned_tree_sha": tree,
+    "local_candidate_commit": candidates[0], "parents": [base, head], "changed_paths": 42,
+    "contract_blob_oid": git("rev-parse", tree + ":runtime/core_v1/contract.py").decode().strip(),
+    "contract_sha256": hashlib.sha256(contract).hexdigest(), "contract_normalized_lf_sha256": normal,
+    "compiled_sha256": hashlib.sha256((source / "runtime/core_v1/compiled_gui.py").read_bytes()).hexdigest(),
+    "frozen_source_files": len(freeze["blobs"]), "core_tests": 84, "session_spy_cases": 21,
+    "valid_inert_executions": 3, "refused_cases_without_preflight_or_execute": 18,
+    "source_after_checks_unchanged": True, "primary_index_unchanged_during_completion": True,
+    "check_receipts": receipts, "completion_utc": datetime.now(timezone.utc).isoformat(),
+    "main_send_attempted": False, "head_changed": False,
+    "first_helper_failure": "After both actual check commands exited0, author preparation helper incorrectly expected successful status 'ok' and a redundant release_all backend call. Actual retained source specifies 'completed' and returns verified execute-release output without an additional call. First helper and outputs retained; this separate completion audits those same outputs with no check rerun.",
+    "qualification": "Author preparation only; content quorum and independent actual-current-tuple confirmation remain required. No native backend/input or historical producer/formal replay. Original first-log custody limitation unchanged."}
+(root / "RESULT.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
+(workspace / "outputs/6866-current-composition.json").write_bytes((root / "RESULT.json").read_bytes())
+print(json.dumps({key: value for key, value in result.items() if key != "check_receipts"}, sort_keys=True))

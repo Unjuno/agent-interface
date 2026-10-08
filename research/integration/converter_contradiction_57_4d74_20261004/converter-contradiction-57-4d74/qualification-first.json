@@ -1,0 +1,354 @@
+{
+  "rows": [
+    {
+      "case": "original_completed",
+      "kind": "exact original data",
+      "matches": true
+    },
+    {
+      "case": "original_preinput_refusal",
+      "kind": "exact original data",
+      "matches": true
+    },
+    {
+      "case": "original_partial_wait_fault",
+      "kind": "exact original data",
+      "matches": true
+    },
+    {
+      "case": "original_release_omission",
+      "kind": "exact original data",
+      "matches": true
+    },
+    {
+      "case": "refused_but_started",
+      "kind": "copied contradiction",
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "preinput_refusal",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-converter-fixture",
+          "expires_at_ns": 1
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_state",
+            "key": "Shift_L",
+            "down": true
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "receipt": {
+        "status": "refused",
+        "error": "LEASE_EXPIRED",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "backend_emissions": 0,
+        "program_execution_started": true
+      },
+      "accepted": true,
+      "conversion": {
+        "decision": {
+          "status": "safe_yield",
+          "reason": "execution_refused",
+          "completed_actions": 0,
+          "input_dispatched": false
+        },
+        "native_receipt": {
+          "status": "refused",
+          "error": "LEASE_EXPIRED",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "backend_emissions": 0,
+          "program_execution_started": true
+        },
+        "native_receipt_sha256": "043ce01589cfcdaaa2112f7a7dc8b244621bee74e647841310b4924a6ecb7f68",
+        "count_unit": "completed input-bearing native IR operations; not XTEST emissions",
+        "authority": "none"
+      }
+    },
+    {
+      "case": "completed_but_not_admitted",
+      "kind": "copied contradiction",
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "completed",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-converter-fixture",
+          "expires_at_ns": 21517678874
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_state",
+            "key": "Shift_L",
+            "down": true
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "receipt": {
+        "status": "completed",
+        "admission": "refused",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "execution": {
+          "started_ns": 16522154091,
+          "ended_ns": 16524851146,
+          "emissions": 2,
+          "program_emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [],
+              "buttons_down": [],
+              "verified": true,
+              "monotonic_ns": 16524848890
+            }
+          ],
+          "waits": [
+            {
+              "operation_index": 1,
+              "requested_ms": 1,
+              "started_ns": 16522703655,
+              "completed": true,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "ended_ns": 16523813436
+            }
+          ],
+          "activations": [],
+          "completed_ops": [
+            0,
+            1,
+            2
+          ]
+        },
+        "recovery_required": false
+      },
+      "accepted": true,
+      "conversion": {
+        "decision": {
+          "status": "completed"
+        },
+        "native_receipt": {
+          "status": "completed",
+          "admission": "refused",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 16522154091,
+            "ended_ns": 16524851146,
+            "emissions": 2,
+            "program_emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 16524848890
+              }
+            ],
+            "waits": [
+              {
+                "operation_index": 1,
+                "requested_ms": 1,
+                "started_ns": 16522703655,
+                "completed": true,
+                "kind": "fixed_delay",
+                "update_observed": null,
+                "ended_ns": 16523813436
+              }
+            ],
+            "activations": [],
+            "completed_ops": [
+              0,
+              1,
+              2
+            ]
+          },
+          "recovery_required": false
+        },
+        "native_receipt_sha256": "c308482ae7dab52234d3f28af5909409868fcd6146429a428a942bb9d272c7e9",
+        "count_unit": "completed input-bearing native IR operations; not XTEST emissions",
+        "authority": "none"
+      }
+    },
+    {
+      "case": "failed_without_failed_operation",
+      "kind": "copied contradiction",
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "partial_wait_fault",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-converter-fixture",
+          "expires_at_ns": 21596407441
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "key_state",
+            "key": "Shift_L",
+            "down": true
+          },
+          {
+            "op": "wait_update",
+            "timeout_ms": 1
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "receipt": {
+        "status": "execution_failed",
+        "admission": "accepted",
+        "error": "BACKEND_EXECUTION_FAILED",
+        "required_capabilities": [
+          "clock.monotonic",
+          "event.feedback",
+          "input.keyboard",
+          "input.release_all"
+        ],
+        "execution": {
+          "started_ns": 16599659155,
+          "ended_ns": 16600210000,
+          "emissions": 2,
+          "program_emissions": 2,
+          "observations": [],
+          "releases": [
+            {
+              "keys_down": [],
+              "buttons_down": [],
+              "verified": true,
+              "monotonic_ns": 16600207982
+            }
+          ],
+          "waits": [
+            {
+              "operation_index": 1,
+              "requested_ms": 1,
+              "started_ns": 16599897168,
+              "completed": false,
+              "kind": "fixed_delay",
+              "update_observed": null,
+              "ended_ns": 16599900311
+            }
+          ],
+          "activations": [],
+          "completed_ops": [],
+          "error": "OSError('prospective injected wait fault')",
+          "failed_op_effect": "unknown; may have emitted partial input"
+        },
+        "recovery_required": false
+      },
+      "accepted": true,
+      "conversion": {
+        "decision": {
+          "status": "safe_yield",
+          "reason": "execution_failed",
+          "completed_actions": 0,
+          "input_dispatched": false
+        },
+        "native_receipt": {
+          "status": "execution_failed",
+          "admission": "accepted",
+          "error": "BACKEND_EXECUTION_FAILED",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "execution": {
+            "started_ns": 16599659155,
+            "ended_ns": 16600210000,
+            "emissions": 2,
+            "program_emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 16600207982
+              }
+            ],
+            "waits": [
+              {
+                "operation_index": 1,
+                "requested_ms": 1,
+                "started_ns": 16599897168,
+                "completed": false,
+                "kind": "fixed_delay",
+                "update_observed": null,
+                "ended_ns": 16599900311
+              }
+            ],
+            "activations": [],
+            "completed_ops": [],
+            "error": "OSError('prospective injected wait fault')",
+            "failed_op_effect": "unknown; may have emitted partial input"
+          },
+          "recovery_required": false
+        },
+        "native_receipt_sha256": "942d2f5c0ca97aa49003dc2884d4569b66f13d6c141e1640d43544b2875cefac",
+        "count_unit": "completed input-bearing native IR operations; not XTEST emissions",
+        "authority": "none"
+      }
+    }
+  ],
+  "false_accepts": 3,
+  "disposition": "FAIL_UNTRUSTED_RECEIPT_GATE",
+  "native_runs": 0,
+  "model_calls": 0
+}

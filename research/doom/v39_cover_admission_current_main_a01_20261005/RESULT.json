@@ -1,0 +1,38 @@
+{
+  "schema": "v39-cover-admission-current-main-a01-result-v1",
+  "disposition": "PASS_MAIN_ADMISSION_GAP_REPRODUCED",
+  "source_commit": "6f34c5c0c5bc3116d8e7c25f29aa1b92cc4a01b1",
+  "comparison_pr": 7589,
+  "trace": {
+    "event_order": ["observation:17:health=70", "accepted:cover-0"],
+    "main_wait": {
+      "result": "accepted",
+      "monitor_observations": 0,
+      "latest_sequence": 17,
+      "events_left_queued": 0
+    },
+    "pr7589_helper_with_main_wait": {
+      "result": "policy_invalidation",
+      "invalidation_reason": "health_below_floor",
+      "monitor_observations": 1,
+      "latest_sequence": 17,
+      "events_left_queued": 1
+    }
+  },
+  "verification": {
+    "source_locked_candidate": "PASS",
+    "separate_raw_only_audit": "22/22 PASS",
+    "main_wait_regression_suite": "7/7 PASS",
+    "pr7589_wait_suite_on_pr_source": "8/8 PASS",
+    "pr7589_test_suite_on_main_source": "STOP_SOURCE_SELECTION: helper absent from current-main source"
+  },
+  "environment": "WSLc 3.0.1.0, cached Python 3.12 slim image digest in FREEZE.json; --pull never, --network none, 1 CPU and 512 MiB requested",
+  "live_game": false,
+  "real_x_server": false,
+  "gui": false,
+  "model_calls": 0,
+  "os_input": false,
+  "allocation": false,
+  "limitation": "One inert FIFO event ordering and wait/helper composition only. The full submit_cover call, session lifecycle, input, cancellation result, physical release, game effect, latency, feedback, recovery, threat exposure and MAP01 remain untested.",
+  "integration_implication": "Current-main compatibility evidence for revalidating the existing open Draft #7589 fix; does not change that branch or authorize merge."
+}

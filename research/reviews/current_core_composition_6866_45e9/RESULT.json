@@ -1,0 +1,62 @@
+{
+  "worker_id": "01a0ff2e-17a3-70a1-908e-0d6dd78c45e9",
+  "policy_version": "FINAL-v5",
+  "base_sha": "403a21a6951662401925835fbc70670bab84b457",
+  "head_sha": "abd318643112150d073a242926494145c6461e33",
+  "planned_tree_sha": "0c863d23bdd629aaef634fa12fb1e71caf456523",
+  "local_candidate_commit": "62565069b66a0def03e813651c55bdabde7103ef",
+  "parents": [
+    "403a21a6951662401925835fbc70670bab84b457",
+    "abd318643112150d073a242926494145c6461e33"
+  ],
+  "changed_paths": 42,
+  "contract_blob_oid": "231ab75625e7d88bbf440b90d7e15cb64cd13f44",
+  "contract_sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+  "contract_normalized_lf_sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+  "compiled_sha256": "ccaff4ce59cfbe7af76bfe80655c968eed7855acdb7514df64730790766cf7f7",
+  "frozen_source_files": 24,
+  "core_tests": 84,
+  "session_spy_cases": 21,
+  "valid_inert_executions": 3,
+  "refused_cases_without_preflight_or_execute": 18,
+  "source_after_checks_unchanged": true,
+  "primary_index_unchanged_during_completion": true,
+  "check_receipts": {
+    "core-current": {
+      "command": [
+        "<PYTHON312>",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "runtime/core_v1",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "started_utc": "2026-10-03T03:40:05.787825+00:00",
+      "ended_utc": "2026-10-03T03:40:06.099351+00:00",
+      "exit_code": 0,
+      "source_freeze_sha256": "fc92066a5ca4559d451f20b2aa4976fb15368bf85559dfb4152d34c68967b514",
+      "kind": "ordinary integration regression, no formal allocation",
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+    },
+    "sessions-current": {
+      "command": [
+        "<PYTHON312>",
+        "<WORKSPACE>\\work\\compose6866-403a21a\\source\\research\\integration\\current_evidence_scalars_57_20261003_45e9\\session_probe.py"
+      ],
+      "started_utc": "2026-10-03T03:40:06.108355+00:00",
+      "ended_utc": "2026-10-03T03:40:06.440341+00:00",
+      "exit_code": 0,
+      "source_freeze_sha256": "fc92066a5ca4559d451f20b2aa4976fb15368bf85559dfb4152d34c68967b514",
+      "kind": "ordinary integration regression, no formal allocation",
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+    }
+  },
+  "completion_utc": "2026-10-03T03:41:57.533922+00:00",
+  "main_send_attempted": false,
+  "head_changed": false,
+  "first_helper_failure": "After both actual check commands exited0, author preparation helper incorrectly expected successful status 'ok' and a redundant release_all backend call. Actual retained source specifies 'completed' and returns verified execute-release output without an additional call. First helper and outputs retained; this separate completion audits those same outputs with no check rerun.",
+  "qualification": "Author preparation only; content quorum and independent actual-current-tuple confirmation remain required. No native backend/input or historical producer/formal replay. Original first-log custody limitation unchanged."
+}

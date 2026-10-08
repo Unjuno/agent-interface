@@ -1,0 +1,31 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_button_up_uses_same_receipt_contract (test_input_owner_v11.InputOwnerV11Tests.test_button_up_uses_same_receipt_contract) ... ok
+test_key_up_is_bracketed_around_existing_v10_call (test_input_owner_v11.InputOwnerV11Tests.test_key_up_is_bracketed_around_existing_v10_call) ... ok
+test_non_release_operation_preserves_v10_result (test_input_owner_v11.InputOwnerV11Tests.test_non_release_operation_preserves_v10_result) ... ok
+test_underlying_release_failure_does_not_fabricate_receipt (test_input_owner_v11.InputOwnerV11Tests.test_underlying_release_failure_does_not_fabricate_receipt) ... ok
+test_unexpected_v10_release_payload_fails_closed (test_input_owner_v11.InputOwnerV11Tests.test_unexpected_v10_release_payload_fails_closed) ... ok
+test_doom_typed_release_backend_v2 (unittest.loader._FailedTest.test_doom_typed_release_backend_v2) ... ERROR
+test_candidate_differs_only_by_telemetry_backend_and_its_source_hashes (test_session_map01_v13_release_telemetry.SessionReleaseTelemetryCompositionTests.test_candidate_differs_only_by_telemetry_backend_and_its_source_hashes) ... ok
+test_selected_backend_is_the_typed_release_telemetry_v2 (test_session_map01_v13_release_telemetry.SessionReleaseTelemetryCompositionTests.test_selected_backend_is_the_typed_release_telemetry_v2) ... ok
+
+======================================================================
+ERROR: test_doom_typed_release_backend_v2 (unittest.loader._FailedTest.test_doom_typed_release_backend_v2)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_doom_typed_release_backend_v2
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/src/research/doom/test_doom_typed_release_backend_v2.py", line 5, in <module>
+    from doom_typed_release_backend_v1 import Backend as Previous
+  File "/src/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/src/research/doom/doom_typed_coast_backend_v1.py", line 4, in <module>
+    from PIL import ImageGrab
+ModuleNotFoundError: No module named 'PIL'
+
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.015s
+
+FAILED (errors=1)

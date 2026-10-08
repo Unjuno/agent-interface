@@ -1,0 +1,16 @@
+{
+  "study": "issue-5865-negative-delivery-t0a-a03",
+  "truth": {
+    "forward_cycle": {"target_present": false},
+    "exact_expiry_boundary": {"target_present": false},
+    "predicate_changed_target_present": {"target_present": true},
+    "insertion_with_invalidation": {"target_present_at_0": false, "target_present_at_5": true},
+    "missing_writer_coverage": {"target_present": false, "coverage_certified": false},
+    "unknown_clock_offset": {"target_present": false, "clock_mapping_known": false},
+    "timeout_target_present_healthy_route": {"target_present": true, "route_A": "TIMEOUT", "route_B": "MATCH_FOUND"},
+    "failure_cooldown_copy": {"target_present": true, "route_A": "MATCH_FOUND_AFTER_RETRY_ELIGIBILITY", "retry_after": 5},
+    "evicted_entry": {"target_present": false, "producer_available_after_eviction": false},
+    "fresh_source_reevaluation": {"target_present": false}
+  },
+  "lossless_gate": {"false_negative_cost": 100, "unknown_cost": 2, "scoped_negative_cost": 0, "authority_granted": false}
+}

@@ -1,0 +1,126 @@
+"""Own saved-data/semantic oracle. No author auditor, producer or runtime imports."""
+from datetime import datetime,timezone
+import copy,hashlib,json,os,re,subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent;packet=root/'source/research/integration/primary_stream_lifecycle_57_20261003_01a0ff53'
+out=root/'retained-audit';out.mkdir(exist_ok=False)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def require(v,msg):
+ if not v:raise AssertionError(msg)
+def integer(v):return type(v) is int
+def load(p):return json.loads(p.read_bytes())
+export=load(root/'EXPORT.json');p=load(root/'PROPOSAL.json');repo=root.parent/'agent-interface';env=dict(os.environ,GIT_NO_LAZY_FETCH='1')
+for r in export['blobs']:require(sha((root/r['side']/r['path']).read_bytes())==r['sha256'],'export image')
+def git(*a):return subprocess.check_output(['git',*a],cwd=repo,env=env)
+def tree(ref,prefix):
+ return dict((row.split('\t')[1],row.split('\t')[0]) for row in git('ls-tree','-r',ref,'--',prefix).decode().splitlines())
+v1prefix='research/integration/primary_input_error_57_20261003_01a0ff53'
+old=tree('dbe05f5ce33b6827dbd3d09e8a85da1e2d20f51a',v1prefix);current=tree(p['head_sha'],v1prefix)
+require(len(old)==51 and old==current,'original v1 immutable51 Git images')
+for relative,pin in load(packet/'SOURCE_PINS.json').items():
+ data=(packet/relative).read_bytes();require(sha(data)==pin['sha256'],'archived5+5 source bytes')
+ oid=hashlib.sha1(('blob '+str(len(data))).encode()+bytes([0])+data).hexdigest();require(oid==pin['blob_oid'],'source Git blob')
+ path='runtime/host_v1/'+relative.split('/')[-1]
+ if relative.startswith('candidate/'):require(data==(root/'source'/path).read_bytes(),'actual candidate module identity')
+ else:require(git('ls-tree',pin['commit'],'--',path).decode().split()[2]==oid,'actual baseline source Git identity')
+dependencies=load(packet/'CHECK_DEPENDENCIES.json')['files']
+for path,pin in dependencies.items():require(sha((root/'source'/path).read_bytes())==pin['sha256'],'18 source/test/helper pins')
+projections={r['path']:r for r in load(packet/'PROJECTIONS.json')['files']};require(len(projections)==43,'projection count')
+files={x.relative_to(packet).as_posix():x.read_bytes() for x in packet.rglob('*') if x.is_file()}
+for path,pin in projections.items():require(sha(files[path])==pin['projected_sha256'],'public projection hash')
+def original_hash(path):return projections[path]['original_sha256'] if path in projections else sha(files[path])
+cases=[]
+for label,source,scenarios,codes in [('red','baseline',['ready_input','ready_output','terminal_output','normal_eof'],[1,1,1,0]),
+ ('green','candidate',['ready_input','ready_output','terminal_output','normal_eof'],[0,0,0,0]),
+ ('pending-green','candidate',['pending_success','pending_persistence_failure'],[0,0])]:
+ freeze=json.loads(files[label+'/SOURCE_FREEZE.json']);rows=json.loads(files[label+'/RAW.json'])['rows']
+ require(freeze['scenarios']==scenarios and [r['scenario'] for r in rows]==scenarios,'frozen scenario coverage')
+ for path,digest in freeze['source_sha256'].items():require(original_hash(source+'/'+path)==digest,'prospective source custody')
+ for path,digest in freeze.get('helper_sha256',freeze.get('helpers',{})).items():require(original_hash(path)==digest,'prospective helper custody')
+ for scenario,row,code in zip(scenarios,rows,codes):
+  prefix=label+'/'+scenario
+  require(row==json.loads(files[prefix+'/receipt.json']),'RAW/receipt join')
+  for channel in ('stdout','stderr'):require(original_hash(prefix+'/'+channel+'.txt')==row[channel+'_sha256'],'full original channel claim join')
+  cases.append({'label':label,'scenario':scenario,'code':code,'row':row,'freeze':freeze,
+   'start':json.loads(files[prefix+'/fixture.started.json']),'fixture':json.loads(files[prefix+'/fixture.exit.json']),
+   'summary':json.loads(files[prefix+'/owner.summary.json']) if prefix+'/owner.summary.json' in files else None,
+   'stderr':files[prefix+'/stderr.txt'].decode('utf-8'),'prefix':prefix})
+def validate(bundle):
+ require(len(bundle)==10,'complete ten histories')
+ for c in bundle:
+  row=c['row'];fixture=c['fixture'];start=c['start'];summary=c['summary'];scenario=c['scenario'];prefix=c['prefix']
+  require(integer(row['exit_code']) and row['exit_code']==c['code'] and row['timed_out'] is False,'original numeric parent outcome')
+  require(datetime.fromisoformat(c['freeze']['created_utc'])<=datetime.fromisoformat(row['started_utc'])<=datetime.fromisoformat(row['ended_utc']),'prospective UTC')
+  require(integer(fixture['pid']) and fixture['pid']>0 and fixture['pid']==start['pid'] and fixture==row['fixture.exit.json'] and start==row['fixture.started.json'],'same owned fixture')
+  require(integer(fixture['code']) and fixture['code']==0 and row['fixture_pid_absent'] is True,'typed fixture completion')
+  if c['code']==1:
+   require(summary is None and 'owner.summary.json' not in row and 'Unhandled' in c['stderr'],'first unhandled parent failure retained')
+   continue
+  require(summary==row['owner.summary.json'] and summary['scenario']==scenario,'owner observation join')
+  require(summary['exit']==row['host/exit.json']==json.loads(files[prefix+'/host/exit.json'])=={'code':0,'signal':None},'same observed host exit')
+  require(summary['listeners']=={'input':0,'output':0},'owned listener restoration')
+  if c['label']!='pending-green':
+   require(integer(fixture['bytes']) and fixture['bytes']==0,'zero request bytes')
+   require(summary['initialListeners']=={'input':0,'output':0},'initial listener baseline')
+   require([x['status'] for x in summary['writeIntents']]==(['ready','terminal'] if scenario in ('normal_eof','terminal_output') else ['ready']),'bounded write intentions')
+   if scenario=='normal_eof':require(summary['outcome']=={'kind':'resolved'},'healthy EOF')
+   else:require(summary['outcome']=={'kind':'rejected','message':'injected '+scenario+' channel failure','original_identity':True},'original first error')
+   if scenario=='ready_input':require([x for x in summary['events'] if x['kind']=='after_input_turn']==[{'kind':'after_input_turn','settled':False}],'ready callback barrier')
+  else:
+   require(integer(fixture['requests']) and fixture['requests']==1 and fixture['pending'] is False,'one accepted request no replay')
+   events=summary['events'];require([x['kind'] for x in events]==['output','actual_request_accepted','input_failure','pending_observed_before_release','reply_released','output','owner_rejected'],'pending observation order')
+   require(events[3]['settled'] is False and events[-1]['original_identity'] is True and events[-1]['message']=='original pending input failure','same pending and first error')
+   request=json.loads(files[prefix+'/fixture.request.json']);require(request==json.loads(files[prefix+'/host/request-1.json'])=={'id':1,'tool':'interface_clock','arguments':{}},'literal one request')
+   reply=json.loads(files[prefix+'/host/reply-1.json']);require([json.loads(x) for x in files[prefix+'/fixture.reply.jsonl'].decode().splitlines()]==[reply],'original one response')
+   require(integer(reply['id']) and reply['id']==1 and integer(reply['next_id']) and reply['next_id']==2 and reply['result']['isError'] is False,'typed response identity')
+   rows=summary['rows'];require(len(rows)==2 and rows[0]['status']=='ready','two observed rows')
+   last=rows[1]
+   if scenario=='pending_success':
+    require(last['status']=='returned' and integer(last['result']['attempt']) and last['result']['attempt']==1 and last['result']['next_id']==2,'single consumed result')
+    require(json.loads(files[prefix+'/exchange/original-reply-1.json'])=={**reply,'attempt':1},'attempt enrichment preserved')
+   else:
+    require(last['status']=='command_error' and integer(last['command_id']) and last['command_id']==1 and last['command_method']=='call' and last['replay_allowed'] is False,'correlated refusal no replay')
+    require(last['state']['next_id']==2 and last['state']['stopped'] and 'EEXIST' in last['error'],'consumed ambiguous state')
+    require(files[prefix+'/exchange/original-reply-1.json']==b'occupied original slot\n','occupied slot untouched')
+ return True
+validate(cases)
+controls=[]
+def alter_joint(c,key,value):c['summary'][key]=value;c['row']['owner.summary.json']=copy.deepcopy(c['summary'])
+for name,mutate in [
+ ('normalize-first-failed-parent',lambda b:b[0]['row'].__setitem__('exit_code',0)),
+ ('bool-fixture-pid',lambda b:b[4]['fixture'].__setitem__('pid',True)),
+ ('reverse-process-UTC',lambda b:b[4]['row'].__setitem__('started_utc','2099-01-01T00:00:00+00:00')),
+ ('invent-missing-owner-summary',lambda b:b[0].__setitem__('summary',{'exit':{'code':0,'signal':None}})),
+ ('replace-original-first-fault',lambda b:alter_joint(b[4],'outcome',{'kind':'rejected','message':'other fault','original_identity':False})),
+ ('abandon-pending-before-reply',lambda b:b[8]['summary']['events'][3].__setitem__('settled',True)),
+ ('allow-replay-after-slot-error',lambda b:b[9]['summary']['rows'][1].__setitem__('replay_allowed',True)),
+ ('second-accepted-request',lambda b:b[8]['fixture'].__setitem__('requests',2))]:
+ b=copy.deepcopy(cases);mutate(b)
+ try:validate(b)
+ except AssertionError as e:controls.append({'control':name,'rejected':True,'reason':str(e)})
+ else:raise AssertionError('copied semantic control accepted '+name)
+process_records=[]
+for path,data in sorted(files.items()):
+ if not path.endswith('/receipt.json'):continue
+ r=json.loads(data);require(integer(r['exit_code']),'recorded numeric process exit')
+ require(datetime.fromisoformat(r['started_utc'])<=datetime.fromisoformat(r['ended_utc']),'saved process UTC')
+ parent=path.removesuffix('/receipt.json')
+ for channel in ('stdout','stderr'):
+  stream=parent+'/'+channel+'.txt';require(stream in files,'retained full stream')
+  if channel+'_sha256' in r:require(original_hash(stream)==r[channel+'_sha256'],'stream hash/receipt')
+ process_records.append({'path':path,'exit_code':r['exit_code'],'streams':True})
+for folder,count,passes,fails,code in [('unit-red',17,14,3,1),('unit-green-01',17,17,0,0),('checks/affected-host-45',45,45,0,0),
+ ('checks/neighbor-current-composition',20,15,5,1),('checks/neighbor-current-composition-layout',20,20,0,0)]:
+ text=files[folder+'/stdout.txt'].decode('utf-8');r=json.loads(files[folder+'/receipt.json'])
+ for key,value in [('tests',count),('pass',passes),('fail',fails)]:require(re.search(r'^(?:#|\u2139) '+key+' '+str(value)+r'\s*$',text,re.M),'actual retained summary '+folder+' '+key)
+ require(r['exit_code']==code,'actual retained test process status')
+require(json.loads(files['checks/saved-audit/receipt.json'])['exit_code']==1 and json.loads(files['checks/saved-audit-v2/receipt.json'])['exit_code']==0,'first audit fail preserved')
+for r in export['blobs']:require(sha((root/r['side']/r['path']).read_bytes())==r['sha256'],'unchanged after reader')
+result={'status':'PASS_SCOPED_RETAINED_ORACLE','ended_utc':datetime.now(timezone.utc).isoformat(),'original_v1_51_images_unchanged':True,
+ 'candidate_baseline_module_source_pin_joins':10,'exact_current_dependency_images':len(dependencies),'public_original_path_projections':43,
+ 'original_owner_histories':10,'saved_process_receipts_full_streams':len(process_records),'process_records':process_records,
+ 'effective_semantic_copied_controls':controls,'author17_RED14_GREEN17_45_and20':'retained actual observations only, not fresh reviewer deck executions',
+ 'limits':'Author private original bytes inaccessible; public hashes/original claims joined, retention author attested. No retrospective recovery of missing evidence.',
+ 'author_producer_auditor_or_formal_invocations':0,'source_and_raw_unchanged':True}
+(out/'RESULT.json').write_text(json.dumps(result,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({k:v for k,v in result.items() if k not in {'process_records','effective_semantic_copied_controls'}},sort_keys=True))

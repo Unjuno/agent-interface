@@ -1,0 +1,189 @@
+{
+  "classification": "ordinary actual-owner/fixture-relay regression construction; not old comparison/auditor allocation",
+  "rows": [
+    {
+      "scenario": "ready_input",
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "<owner-work>/lifecycle_probe.mjs",
+        "ready_input",
+        "work/primary-stream-lifecycle-v2/baseline",
+        "<owner-work>/red/ready_input"
+      ],
+      "started_utc": "2026-10-03T04:29:01.654694+00:00",
+      "exit_code": 1,
+      "ended_utc": "2026-10-03T04:29:01.711583+00:00",
+      "timed_out": false,
+      "stdout_sha256": "a90998de7039b0bbd3bee797a68e0f0b1062a11db52453dbe0ef3c165c4b80ba",
+      "stderr_sha256": "adbb5043a99a7c0379a159ad9b5782c0649a5029abc22c3755ae2cef7cb93062",
+      "fixture.started.json": {
+        "pid": 60287,
+        "ppid": 1
+      },
+      "fixture.exit.json": {
+        "pid": 60287,
+        "code": 0,
+        "bytes": 0
+      },
+      "fixture_pid_absent": true
+    },
+    {
+      "scenario": "ready_output",
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "<owner-work>/lifecycle_probe.mjs",
+        "ready_output",
+        "work/primary-stream-lifecycle-v2/baseline",
+        "<owner-work>/red/ready_output"
+      ],
+      "started_utc": "2026-10-03T04:29:01.765933+00:00",
+      "exit_code": 1,
+      "ended_utc": "2026-10-03T04:29:01.824415+00:00",
+      "timed_out": false,
+      "stdout_sha256": "5f7cec714bd0ee32c4888857278dcea4068921443e57971502dddab811133e92",
+      "stderr_sha256": "cc869a25c0343b1604b9dc6af03502b90423ad8140699216479742621bf2ead2",
+      "fixture.started.json": {
+        "pid": 60294,
+        "ppid": 1
+      },
+      "fixture.exit.json": {
+        "pid": 60294,
+        "code": 0,
+        "bytes": 0
+      },
+      "fixture_pid_absent": true
+    },
+    {
+      "scenario": "terminal_output",
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "<owner-work>/lifecycle_probe.mjs",
+        "terminal_output",
+        "work/primary-stream-lifecycle-v2/baseline",
+        "<owner-work>/red/terminal_output"
+      ],
+      "started_utc": "2026-10-03T04:29:01.875367+00:00",
+      "exit_code": 1,
+      "ended_utc": "2026-10-03T04:29:01.980250+00:00",
+      "timed_out": false,
+      "stdout_sha256": "af0a6347b27c11c447a893592a760ccce79cfbdcbf4640c41620e0dd2637fb52",
+      "stderr_sha256": "e7836f1d85b59d152b3c891a8e2d715e5eeab5a6a67980b422b814ec9a8a1368",
+      "fixture.started.json": {
+        "pid": 60302,
+        "ppid": 60298
+      },
+      "fixture.exit.json": {
+        "pid": 60302,
+        "code": 0,
+        "bytes": 0
+      },
+      "host/exit.json": {
+        "code": 0,
+        "signal": null
+      },
+      "fixture_pid_absent": true
+    },
+    {
+      "scenario": "normal_eof",
+      "argv": [
+        "/opt/homebrew/bin/node",
+        "<owner-work>/lifecycle_probe.mjs",
+        "normal_eof",
+        "work/primary-stream-lifecycle-v2/baseline",
+        "<owner-work>/red/normal_eof"
+      ],
+      "started_utc": "2026-10-03T04:29:01.981223+00:00",
+      "exit_code": 0,
+      "ended_utc": "2026-10-03T04:29:02.084263+00:00",
+      "timed_out": false,
+      "stdout_sha256": "e76e6e52e1f1348c6981c486f05af65f588dc4c5ecf0a6545057041803260938",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture.started.json": {
+        "pid": 60308,
+        "ppid": 60305
+      },
+      "fixture.exit.json": {
+        "pid": 60308,
+        "code": 0,
+        "bytes": 0
+      },
+      "owner.summary.json": {
+        "scenario": "normal_eof",
+        "outcome": {
+          "kind": "resolved"
+        },
+        "exit": {
+          "code": 0,
+          "signal": null
+        },
+        "initialListeners": {
+          "input": 0,
+          "output": 0
+        },
+        "listeners": {
+          "input": 0,
+          "output": 0
+        },
+        "writeIntents": [
+          {
+            "schema": "agent-interface/primary-stdio-v1",
+            "status": "ready",
+            "state": {
+              "next_id": 1,
+              "busy": false,
+              "stopped": null,
+              "caller_state": {
+                "stopped": null
+              }
+            }
+          },
+          {
+            "schema": "agent-interface/primary-stdio-v1",
+            "status": "terminal",
+            "exit": {
+              "code": 0,
+              "signal": null
+            },
+            "state": {
+              "next_id": 1,
+              "busy": false,
+              "stopped": null,
+              "caller_state": {
+                "stopped": null
+              }
+            }
+          }
+        ],
+        "events": [
+          {
+            "kind": "write_enter",
+            "status": "ready"
+          },
+          {
+            "kind": "write_ack",
+            "status": "ready"
+          },
+          {
+            "kind": "input_eof"
+          },
+          {
+            "kind": "write_enter",
+            "status": "terminal"
+          },
+          {
+            "kind": "write_ack",
+            "status": "terminal"
+          },
+          {
+            "kind": "owner_resolved"
+          }
+        ]
+      },
+      "host/exit.json": {
+        "code": 0,
+        "signal": null
+      },
+      "fixture_pid_absent": true
+    }
+  ]
+}

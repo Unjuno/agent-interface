@@ -1,0 +1,20 @@
+{
+  "cause": "The chosen post-run evidence commit aa4b4a4cf68eb795340d4182c240833d37b910a2 did not yet include all later-archived formal logs named by POST_RUN_SHA256.json.",
+  "classification": "READ_ONLY_AUDIT_HARNESS_STOP",
+  "command": "python -B audit_readonly.py",
+  "exception": "FileNotFoundError",
+  "exit_code": 1,
+  "failure_phase": "retained formal-log custody read, before AUDIT.json was written",
+  "missing_path": "inputs/a04-formal/audit.log",
+  "notes": [
+    "The raw was loaded and the new raw inspection completed in memory before the missing audit.log access raised.",
+    "No A04 candidate, A04 formal auditor, container, X11, application, model, game, or input was run.",
+    "No posthoc audit report was emitted; this record does not claim one.",
+    "Preserved A05_FREEZE.json and source/input bytes are unchanged."
+  ],
+  "schema": "owner-keyup-duplicate-down-a05-posthoc-first-attempt-v1",
+  "separate_test_command": "python -B -m unittest -v test_posthoc_audit.py",
+  "test_exit_code": 0,
+  "tests_failed": 0,
+  "tests_passed": 10
+}

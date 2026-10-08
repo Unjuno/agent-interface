@@ -1,0 +1,56 @@
+{
+  "files": {
+    "file_stdio_proxy.py": "47ec437d1b65cd02eafbd5a7896e9389d0d9647962b2891317d27d0d457e08cc",
+    "fake_pending_server.py": "6f30df6af87fbdd17f5b0fced55a2d3e3bc73a4615bb3268e7c2a6611607dbaa",
+    "relay_container_check.py": "e52947de27bdbff9928ef3ef76162b00a775e1f4b0f6ae2960132b13bd4689d2",
+    "run_relay_construction.py": "63b91ee7bb95a09bd63e134f66fe4fac985603f02dae59d76ec6e77f0a05c664",
+    "planner-source-02/research/live_control/codex_app_server_client_v2.py": "243d3c0b242a34317b5cc6234df2f323322271e670c7f38a3b25a35e0b13c768",
+    "planner-source-02/research/live_control/persistent_planner_adapter_v2.py": "e00ca6b8f20ee1081dc57a0ccd754115fe81f9bf5fa36553ed7c98add873fc0e",
+    "planner-source-02/research/live_control/test_persistent_planner_adapter_v2.py": "c358ef0107867bdae686d2e4d8964bb3f25fbaf41f387dc4bb097029290186eb"
+  },
+  "host_argv": [
+    "C:\\Users\\junny\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-X",
+    "utf8",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004\\fake_pending_server.py"
+  ],
+  "container_argv": [
+    "C:/Program Files/WSL/wslc.exe",
+    "run",
+    "--name",
+    "post-guard-relay-59-4d74-construction01",
+    "--pull",
+    "never",
+    "--cpus",
+    "1",
+    "--memory",
+    "512M",
+    "--network",
+    "none",
+    "--user",
+    "65534",
+    "--env",
+    "HOME=/tmp",
+    "--env",
+    "PYTHONPATH=/source",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004,target=/study,readonly",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004\\planner-source-02,target=/source,readonly",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004\\relay-construction-01,target=/out",
+    "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+    "/usr/local/bin/python3",
+    "/study/relay_container_check.py"
+  ],
+  "scope": "one bounded setup construction, explicit fake peer, no provider/game/input",
+  "cases": [
+    "pending interrupt",
+    "completed after interrupt",
+    "fresh continuation"
+  ],
+  "max_seconds": 40,
+  "retry": false
+}
