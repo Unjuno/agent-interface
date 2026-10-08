@@ -4,7 +4,7 @@
 
 **H.** The exact current-main V15 release-batch producer methods emit a multi-batch delivery ledger that the T5 fail-closed adapter can consume without promoting incomplete rows to a unique temporal attribution.
 
-**T.** Freeze current main `2a9052efdd155b8cdc173d216a969ea5f64a1ce9` and the T5 adapter source at PR #8513 head `cebc4239cab5bd4d83b0cf8a32e945d536b9d7f0`. AST-execute the exact backend `_delivery_ledger`, `_set_delivery_state`, and `_publish_release_batch` methods for two single-key releases in one program stream. Supply inert owner receipts and independent scorer samples, pass the emitted rows directly to T5, then inject mixed schema, duplicate/gapped positions, a missing final release row, and input-row reordering.
+**T.** Freeze current main `e627b8954ecfbdd90ccfe35a81441a00d88047c8` and the T5 adapter source at PR #8513 head `cebc4239cab5bd4d83b0cf8a32e945d536b9d7f0`. AST-execute the exact backend `_delivery_ledger`, `_set_delivery_state`, and `_publish_release_batch` methods for two single-key releases in one program stream. Supply inert owner receipts and independent scorer samples, pass the emitted rows directly to T5, then inject mixed schema, duplicate/gapped positions, a missing final release row, and input-row reordering.
 
 **D.** The unmodified producer output must have delivery positions 0 and 1, confirmed ledger states, and a verified non-authoritative release receipt; T5 must return `SOURCE_ROWS_JOINED / TEMPORALLY_UNIQUE` with causal attribution still `NOT_ESTABLISHED`. Mixed, duplicate, and gapped positions must be `HOLD_INCOMPLETE_RELEASE_BATCH / UNRESOLVED`. A missing release row must not retain a unique label. Reordering input rows must preserve the baseline disposition.
 
