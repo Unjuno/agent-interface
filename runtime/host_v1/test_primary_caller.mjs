@@ -336,3 +336,4 @@ test('retained uncertain relay response returns unchanged and stops subsequent d
  assert.equal(await caller.call('interface_close',{}),closed);
  assert.equal(calls,2);assert.ok(caller.state().stopped);
 });
+import './test_primary_mint_sparse.mjs';
