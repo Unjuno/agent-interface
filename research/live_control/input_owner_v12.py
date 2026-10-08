@@ -581,7 +581,7 @@ class InputOwner:
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
-                            result = dict(event='input_admission', key=key, admitted_ns=admitted,
+                            result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
                                           input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
                         else:
                             # Cleanup from an old intent must never release a newer hold.
