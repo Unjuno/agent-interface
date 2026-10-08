@@ -1,0 +1,21 @@
+{
+  "cases": [
+    {
+      "case_status": "STOP",
+      "error": "No module named 'map01_v39_perkey_bridge_a01.bridge'",
+      "error_type": "ModuleNotFoundError",
+      "scenario": "sequential",
+      "schema": "v39-repeat-samekey-case-stop-v1",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a01_20261005\\candidate.py\", line 128, in <module>\n    result = run(actions, name)\n             ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a01_20261005\\candidate.py\", line 15, in run\n    from map01_v39_perkey_bridge_a01 import test_bridge\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\map01_v39_perkey_bridge_a01\\test_bridge.py\", line 56, in <module>\n    from map01_v39_perkey_bridge_a01.bridge import Backend\nModuleNotFoundError: No module named 'map01_v39_perkey_bridge_a01.bridge'\n"
+    },
+    {
+      "case_status": "STOP",
+      "error": "No module named 'map01_v39_perkey_bridge_a01.bridge'",
+      "error_type": "ModuleNotFoundError",
+      "scenario": "overlapping_duplicate_down",
+      "schema": "v39-repeat-samekey-case-stop-v1",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a01_20261005\\candidate.py\", line 128, in <module>\n    result = run(actions, name)\n             ^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\v39_samekey_repeat_a01_20261005\\candidate.py\", line 15, in run\n    from map01_v39_perkey_bridge_a01 import test_bridge\n  File \"C:\\Users\\junny\\Documents\\Codex\\_tmp\\issue59-repeat-same-key-a01-20261005\\research\\doom\\map01_v39_perkey_bridge_a01\\test_bridge.py\", line 56, in <module>\n    from map01_v39_perkey_bridge_a01.bridge import Backend\nModuleNotFoundError: No module named 'map01_v39_perkey_bridge_a01.bridge'\n"
+    }
+  ],
+  "schema": "v39-repeat-samekey-raw-v1"
+}

@@ -1,0 +1,214 @@
+{
+  "backend_class": "doom_owner_thread_release_batch_backend_v1.Backend",
+  "backend_held_after": [],
+  "between_up_operations": [
+    {
+      "at_ns": 175288270197700,
+      "op": "sync"
+    },
+    {
+      "at_ns": 175288272231200,
+      "keycode": 74,
+      "op": "key-down"
+    },
+    {
+      "at_ns": 175288273165100,
+      "op": "sync"
+    }
+  ],
+  "case_status": "RETURNED",
+  "events": [
+    {
+      "admitted_ns": 175288265379400,
+      "event": "input_admission",
+      "id": "cover-samekey-a03-sequential",
+      "input_ack_ns": 175288267976400,
+      "intent_token": "intent-samekey-a03-sequential",
+      "key": "F8",
+      "owner_id": "fa10f755bfa94811b2862e104ffb780a",
+      "step": 2,
+      "valid_until_ns": 175298265262900
+    },
+    {
+      "backend_owned_before_release": true,
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "id": "cover-samekey-a03-sequential",
+      "intent_token": "intent-samekey-a03-sequential",
+      "intent_token_matches_after_batch": true,
+      "key": "F8",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+      "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owned_keycodes_after_batch": [],
+      "owner_cleanup_intervened": false,
+      "owner_cleanup_record_count_before_release": 0,
+      "owner_id": "fa10f755bfa94811b2862e104ffb780a",
+      "owner_identity_matches_after_batch": true,
+      "owner_release_history_complete": true,
+      "owner_sample_after_finished_ns": 175288271077100,
+      "owner_sample_after_started_ns": 175288271064500,
+      "owner_sample_ordered_after_batch": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "intent-samekey-a03-sequential",
+        "key": "F8",
+        "keycode": 74,
+        "operation": "up",
+        "owner_id": "fa10f755bfa94811b2862e104ffb780a",
+        "owner_keyrelease_started_ns": 175288269110500,
+        "owner_sync_returned_ns": 175288270873000,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 175298265262900
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_thread_keyup_verified_after_batch": true,
+      "owner_transition_verified": true,
+      "physical_verification_authoritative": false,
+      "release_batch_complete": true,
+      "release_batch_delivery_position": 0,
+      "release_batch_identifier": "cover-samekey-a03-sequential",
+      "release_batch_position": 0,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_size": 1,
+      "release_batch_step": 2,
+      "release_call_bracket_ns": 1940500,
+      "release_call_returned_ns": 175288270953900,
+      "release_call_started_ns": 175288269013400,
+      "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+      "step": 2,
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 175298265262900
+    },
+    {
+      "admitted_ns": 175288272227800,
+      "event": "input_admission",
+      "id": "cover-samekey-a03-sequential",
+      "input_ack_ns": 175288273975900,
+      "intent_token": "intent-samekey-a03-sequential",
+      "key": "F8",
+      "owner_id": "fa10f755bfa94811b2862e104ffb780a",
+      "step": 2,
+      "valid_until_ns": 175298265262900
+    },
+    {
+      "backend_owned_before_release": true,
+      "cancel_requested_after_sync": false,
+      "cancel_requested_at_request": false,
+      "event": "input_release_transition",
+      "focus_invalid_at_request": false,
+      "grants_input_authority": false,
+      "id": "cover-samekey-a03-sequential",
+      "intent_token": "intent-samekey-a03-sequential",
+      "intent_token_matches_after_batch": true,
+      "key": "F8",
+      "lease_time_valid_at_request": true,
+      "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; the release history since admission must contain no same-lease owner cleanup; no owner/X11 state sample or telemetry publication occurs inside this call",
+      "measurement_contract_v3": "all explicit key-up calls in this backend-held batch complete before the one owner-state sample and before per-key telemetry publication",
+      "operation": "up",
+      "ordinary_release_candidate": true,
+      "owned_keycodes_after_batch": [],
+      "owner_cleanup_intervened": false,
+      "owner_cleanup_record_count_before_release": 1,
+      "owner_id": "fa10f755bfa94811b2862e104ffb780a",
+      "owner_identity_matches_after_batch": true,
+      "owner_release_history_complete": true,
+      "owner_sample_after_finished_ns": 175288276760600,
+      "owner_sample_after_started_ns": 175288276754400,
+      "owner_sample_ordered_after_batch": true,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_receipt": {
+        "cancel_requested_after_sync": false,
+        "event": "owner_explicit_keyup",
+        "intent_token": "intent-samekey-a03-sequential",
+        "key": "F8",
+        "keycode": 74,
+        "operation": "up",
+        "owner_id": "fa10f755bfa94811b2862e104ffb780a",
+        "owner_keyrelease_started_ns": 175288274891700,
+        "owner_sync_returned_ns": 175288276570400,
+        "physical_verification_authoritative": false,
+        "server_sync_completed": true,
+        "valid_until_ns": 175298265262900
+      },
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_verified": true,
+      "owner_thread_keyup_verified_after_batch": true,
+      "owner_transition_verified": true,
+      "physical_verification_authoritative": false,
+      "release_batch_complete": true,
+      "release_batch_delivery_position": 1,
+      "release_batch_identifier": "cover-samekey-a03-sequential",
+      "release_batch_position": 0,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_size": 1,
+      "release_batch_step": 2,
+      "release_call_bracket_ns": 1846300,
+      "release_call_returned_ns": 175288276666600,
+      "release_call_started_ns": 175288274820300,
+      "release_measurement_contract_v4": "one identity-bound owner-thread XTest KeyRelease/XSync receipt is nested inside the caller's explicit-up bracket; XSync does not prove application use",
+      "step": 2,
+      "transition_schema": "input-release-transition-v3",
+      "valid_until_ns": 175298265262900
+    }
+  ],
+  "fake_display_counts": {
+    "injections": 4,
+    "queries": 0,
+    "syncs": 4
+  },
+  "fake_physical_after": [],
+  "key_up_injection_count": 2,
+  "keymap_queries_between_ups": 0,
+  "operations": [
+    {
+      "at_ns": 175288265382700,
+      "keycode": 74,
+      "op": "key-down"
+    },
+    {
+      "at_ns": 175288266899300,
+      "op": "sync"
+    },
+    {
+      "at_ns": 175288269114000,
+      "keycode": 74,
+      "op": "key-up"
+    },
+    {
+      "at_ns": 175288270197700,
+      "op": "sync"
+    },
+    {
+      "at_ns": 175288272231200,
+      "keycode": 74,
+      "op": "key-down"
+    },
+    {
+      "at_ns": 175288273165100,
+      "op": "sync"
+    },
+    {
+      "at_ns": 175288274894400,
+      "keycode": 74,
+      "op": "key-up"
+    },
+    {
+      "at_ns": 175288275721000,
+      "op": "sync"
+    }
+  ],
+  "owner_class": "input_transition_owner_v4.InputOwner",
+  "schema": "v39-repeat-samekey-candidate-v1",
+  "selector_source": "def session_command(args, runtime):\n    # Keep the established v12 session as the default. The opt-in v15 wrapper\n    # adds scorer-only progress sampling and per-key release telemetry without\n    # exposing scorer state through the controller event stream.\n    session = (\"session_map01_v15.py\"\n               if getattr(args, \"measurement_session\", False)\n               else \"session_map01_v12.py\")\n    return [sys.executable, str(HERE / session),\n            \"--out\", str(runtime), \"--seed\", str(args.seed),\n            \"--timeout-seconds\", \"600\", \"--skill\", \"1\",\n            \"--load-fixture-manifest\", str(args.load_fixture_manifest.resolve())]",
+  "selector_source_verified": true
+}

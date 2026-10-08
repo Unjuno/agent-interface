@@ -1,0 +1,108 @@
+{
+  "schema": "v39-repeated-same-key-checks-v1",
+  "frozen_preflight": {
+    "candidate_blob": "b9dc7597916977538ef635043b6135301ef6e440",
+    "selected_source_blobs": 13,
+    "all_match": true
+  },
+  "candidate": {
+    "command": "python -B research/doom/v39_samekey_repeat_a03_20261005/candidate.py",
+    "exit_code": 0,
+    "statuses": [
+      "RETURNED",
+      "RETURNED"
+    ],
+    "invocations": 1
+  },
+  "auditor": {
+    "command": "python -B research/doom/v39_samekey_repeat_a03_20261005/audit.py",
+    "decision": "PASS_REPEAT_JOIN_WITH_OVERLAP_HOLD",
+    "exit_code": 0
+  },
+  "auditor_development": {
+    "v1": "FAIL_AUDIT",
+    "reason": [
+      "assumed both releases share a two-row batch; actual source emits two one-row batches",
+      "assumed scenario labels absent from emitted raw rows"
+    ],
+    "v2": "passes frozen D",
+    "candidate_rerun": false
+  },
+  "prior_stops": [
+    {
+      "run": "A01",
+      "classification": "STOP_BEFORE_CASE_ACTIONS_MISSING_BRIDGE_IMPORT"
+    },
+    {
+      "run": "A02",
+      "classification": "STOP_AFTER_FIRST_FAKE_KEYDOWN_MISSING_BACKEND_EMIT_HARNESS_FIELD"
+    }
+  ],
+  "verification_sources": {
+    "research/doom/test_session_map01_v15.py": "99aab6dae2c3834f795860546ed4ba34620e8b94",
+    "research/doom/test_release_backend_v3_actual_composition.py": "a7d65e9643fd9b8be6603b6f396e673ff3f49adc",
+    "research/doom/test_release_backend_v3_composition.py": "06e123340eb3cba2363b9560c55b2b1833b5e7eb",
+    "research/live_control/test_input_transition_owner_v4.py": "cfaa446f6d54f071d1bdd9728aa0721d64701b35",
+    "research/live_control/test_input_owner_v12_explicit_up_cancel.py": "11271ca817d1490f172efa7c710c1c9b3ad32cfb"
+  },
+  "local_verification": {
+    "normal": [
+      {
+        "suite": "test_session_map01_v15",
+        "tests": 8,
+        "exit_code": 0
+      },
+      {
+        "suite": "test_release_backend_v3_actual_composition",
+        "tests": 12,
+        "exit_code": 0
+      },
+      {
+        "suite": "test_release_backend_v3_composition",
+        "tests": 2,
+        "exit_code": 0
+      },
+      {
+        "suite": "test_input_transition_owner_v4",
+        "tests": 1,
+        "exit_code": 0
+      },
+      {
+        "suite": "test_input_owner_v12_explicit_up_cancel",
+        "tests": 1,
+        "exit_code": 0
+      }
+    ],
+    "optimized": [
+      {
+        "suite": "test_session_map01_v15",
+        "tests": 8,
+        "exit_code": 0
+      },
+      {
+        "suite": "test_release_backend_v3_actual_composition",
+        "tests": 12,
+        "exit_code": 0
+      },
+      {
+        "suite": "test_release_backend_v3_composition",
+        "tests": 2,
+        "exit_code": 0
+      },
+      {
+        "suite": "test_input_transition_owner_v4",
+        "tests": 1,
+        "exit_code": 0
+      },
+      {
+        "suite": "test_input_owner_v12_explicit_up_cancel",
+        "tests": 1,
+        "exit_code": 0
+      }
+    ],
+    "totals": {
+      "normal": 24,
+      "optimized": 24
+    }
+  }
+}
