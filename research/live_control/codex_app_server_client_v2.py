@@ -192,11 +192,13 @@ class CodexAppServerClient:
                                 "total_bytes": len(data), "reason": type(error).__name__,
                             })
                         else:
-                            with self._journal_order_lock:
-                                self._record("send_uncertain", {
-                                    "message": snapshot, "sent_bytes": sent,
-                                    "total_bytes": len(data), "reason": type(error).__name__,
-                                })
+                            # A failed bounded order-lock acquisition must not
+                            # turn uncertainty reporting into an unbounded wait.
+                            # _record still serializes journal bytes itself.
+                            self._record("send_uncertain", {
+                                "message": snapshot, "sent_bytes": sent,
+                                "total_bytes": len(data), "reason": type(error).__name__,
+                            })
                     except Exception:
                         pass
                 if not isinstance(error, Exception):
