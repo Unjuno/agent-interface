@@ -1,0 +1,52 @@
+import base64,copy,hashlib,json,zipfile,xml.etree.ElementTree as E
+from pathlib import Path
+P=Path(__file__).resolve().parent;sha=lambda b:hashlib.sha256(b).hexdigest();ns={'m':'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+freeze=json.loads((P/'FREEZE.json').read_bytes())
+for n,h in freeze['source_pins'].items():assert sha((P/n).read_bytes())==h
+result=json.loads((P/'RESULT.json').read_bytes());receipt=json.loads((P/'DRIVER_RECEIPT.json').read_bytes())
+assert receipt==json.loads((P/'driver.receipt.json').read_bytes())
+assert type(receipt['exit']) is int and receipt['exit']==0 and receipt['timed_out'] is False and receipt['reaped'] is True
+for k,v in receipt['streams'].items():
+ b=(P/('driver.'+k)).read_bytes();assert len(b)==v['bytes'] and sha(b)==v['sha256']
+assert result['error'] is None and result['cleanup_errors']==[] and result['owned'] is True and result['excel_retired'] is True
+assert json.loads((P/'RESOURCE.json').read_bytes())['pid_absent_before'] is True
+assert receipt['started_ns']<=result['start_ns']<result['end_ns']<=receipt['ended_ns']
+assert result['rows']==json.loads((P/'ROWS.json').read_bytes())
+def workbook(path):
+ with zipfile.ZipFile(path) as z:
+  assert z.testzip() is None
+  strings=[''.join(t.text or '' for t in s.findall('.//m:t',ns)) for s in E.fromstring(z.read('xl/sharedStrings.xml')).findall('m:si',ns)]
+  cells={}
+  for c in E.fromstring(z.read('xl/worksheets/sheet1.xml')).findall('.//m:c',ns):
+   value=c.find('m:v',ns);form=c.find('m:f',ns)
+   if value is None:continue
+   cells[c.attrib['r']]=dict(value=strings[int(value.text)] if c.get('t')=='s' else float(value.text),formula=form.text if form is not None else None)
+  for n in z.namelist():
+   if n.startswith('xl/worksheets/sheet') and n.endswith('.xml') and n!='xl/worksheets/sheet1.xml':assert E.fromstring(z.read(n)).findall('.//m:c',ns)==[]
+  return cells
+def check(row,cells):
+ arm=row['arm'];intent=json.loads((P/(arm+'.INTENT.json')).read_bytes());assert row['intent']==intent
+ expected=[['OrderID','Item','Quantity','UnitPrice','Subtotal'],['A','Paper',2,10,20],['B','Cable',7,20,60 if arm=='manual_save' else 140],['C','Pencil',4,5,20]]
+ assert row['after']['values']==expected and row['after']['saved'] is True
+ assert row['pre_save']['values'][2]==['B','Cable',7,20,60] and row['pre_save']['total']==100
+ assert row['after']['total']==(100 if arm=='manual_save' else 180)
+ assert row['input_only_accept'] is True and row['derived_effect_accept']==(arm!='manual_save')
+ assert intent['edit_calls']==intent['save_calls']==1 and intent['calculation']==-4135 and intent['calculate_before_save']==(arm!='manual_save')
+ for r,values in enumerate(expected,1):
+  for col,v in zip('ABCDE',values):assert cells[col+str(r)]['value']==v
+ for r in [2,3,4]:assert cells['E'+str(r)]['formula']==f'C{r}*D{r}'
+ assert cells['H1']['formula']=='SUM(E2:E4)' and cells['H1']['value']==row['after']['total']
+ assert set(cells)=={c+str(r) for c in 'ABCDE' for r in [1,2,3,4]}|{'H1'}
+ assert result['start_ns']<=row['save_start_ns']<=row['save_return_ns']<=result['end_ns']
+ return dict(arm=arm,input=cells['C3']['value'],cached_subtotal=cells['E3']['value'],cached_total=cells['H1']['value'],arithmetic_subtotal=7*20,arithmetic_total=2*10+7*20+4*5,derived_effect_accept=row['derived_effect_accept'],xlsx_sha256=sha((P/(arm+'.xlsx')).read_bytes()))
+rows=result['rows'];assert [r['arm'] for r in rows]==['manual_save','calculate_before_save']
+blobs={r['arm']:(P/(r['arm']+'.xlsx')).read_bytes() for r in rows};cells=[workbook(P/(r['arm']+'.xlsx')) for r in rows];views=[check(r,c) for r,c in zip(rows,cells)]
+negatives=[]
+for name,i,key,value in [('false_manual_success',0,'derived_effect_accept',True),('false_updated_cache',0,'after',{'values':rows[1]['after']['values'],'saved':True,'total':180}),('second_save',1,'intent',dict(rows[1]['intent'],save_calls=2))]:
+ row=copy.deepcopy(rows[i]);row[key]=value
+ try:check(row,cells[i])
+ except AssertionError:negatives.append(name)
+ else:raise AssertionError('copied contradiction accepted '+name)
+assert blobs=={arm:(P/(arm+'.xlsx')).read_bytes() for arm in blobs}
+review=dict(status='QUALIFIED_NATIVE_EXCEL_CACHED_EFFECT_COUNTEREXAMPLE',rows=views,rejected=negatives,full_saved_cell_formula_cache_checks=True,original_xlsx_unchanged=True,producer_replayed=False,main_writes=0,votes=0,limits='literal arithmetic, standard workbook formulas, fixed manual setting, two directed fresh books; no native input/full controller or efficiency proof')
+(P/'SAVED_REVIEW.json').write_text(json.dumps(review,indent=2));print(json.dumps(review))
