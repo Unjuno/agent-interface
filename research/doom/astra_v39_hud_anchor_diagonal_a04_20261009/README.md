@@ -40,6 +40,12 @@ one local run, so the expanded scan remains an offline candidate and is not
 adopted into runtime. The result demonstrates bounded synthetic diagonal
 recovery on this corpus, not general HUD robustness.
 
+After the candidate run, main advanced to `0455b0079ca29bcfe85153f280e592f5e96528f6`
+through PR #8669. The reader v1-v3 modules, transfer freeze, 13-frame corpus,
+and A03 result/audit are unchanged between the frozen A04 base `677e95f` and
+`0455b007`; this was verified by a path-scoped Git comparison. The candidate
+was not rerun. See `results/current_main_continuity.json`.
+
 The candidate ran once. Audit v1 failed before reading the result because its
 repository-root calculation pointed outside the checkout; the raw failure is
 retained. Audit v2 changed root selection, independently recomputed all 234
