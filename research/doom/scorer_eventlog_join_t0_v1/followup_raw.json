@@ -1,0 +1,35 @@
+{
+  "base_main": "b47d4d0b053f6e7d88c37e24be81777aa28feb6a",
+  "candidate_started_in_container": false,
+  "causal_attribution": false,
+  "execution_scope": "local Python 3.12.13 on macOS arm64",
+  "first_input_ns": 120,
+  "pre_input_progress_observed_ns": 115,
+  "prior_baseline_ns": 105,
+  "prior_candidate_git_blob": "3a097172115b6d8c2cd482c37c80388b86404b25",
+  "prior_candidate_sha256": "fecf7be7abe7a36111ec2df171461eb225d5c951b37c8d979d0a2ce2d0e7f4b9",
+  "prior_decision": "ADMISSION_BRACKETED_PROGRESS",
+  "sample_history": [
+    [
+      105,
+      0
+    ],
+    [
+      110,
+      0
+    ],
+    [
+      115,
+      1
+    ],
+    [
+      130,
+      1
+    ]
+  ],
+  "schema": "scorer-eventlog-prior-policy-regression-raw-v1",
+  "successor_candidate_sha256": "23727e925c3e27a171592b0a831ab29572647bc0309cb6f10b8d81c8104aa049",
+  "successor_decision": "POST_CANCELLATION_COOCCURRENCE",
+  "successor_reason": "no_bounded_post_input_progress",
+  "unchanged_post_input_sample_ns": 130
+}

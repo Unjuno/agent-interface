@@ -73,6 +73,7 @@ class SessionSelectionTests(unittest.TestCase):
                     "doom/doom_typed_release_backend_v2.py",
                     "live_control/executor_v13.py",
                     "live_control/executor_v12.py",
+                    "live_control/executor_v3.py",
                     "live_control/input_transition_owner_v4.py",
                     "live_control/input_transition_owner_v3.py",
                     "live_control/input_owner_v12.py",

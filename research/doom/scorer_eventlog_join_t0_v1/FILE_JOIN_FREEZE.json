@@ -1,0 +1,10 @@
+{
+  "schema": "scorer-eventlog-jsonl-consumer-freeze-v1",
+  "base_main": "b47d4d0b053f6e7d88c37e24be81777aa28feb6a",
+  "hypothesis": "The policy can consume actual MAP01 v15 events.jsonl and scorer-samples.jsonl files with strict parsing, join by intent id, and fail closed for missing or malformed artifacts.",
+  "test": "Four deterministic CPU-only JSONL-file cases using exact runtime event and scorer receipt field names: valid join, stale pre-input progress, absent scorer file, and malformed event line.",
+  "decision_gate": "PASS only if JSONL parsing yields ADMISSION_BRACKETED_PROGRESS for the valid runtime-shaped artifacts, rejects stale pre-input progress using the freshest pre-input baseline, and rejects missing/malformed files or missing acceptance without exception or false positive.",
+  "max_gap_ns": 100,
+  "resources": "Local Python 3.12.13 deterministic test. The frozen OrbStack content-store STOP from the predecessor remains; no pull or identical container retry is performed.",
+  "claim_limit": "Temporary synthetic JSONL fixtures only. No actual MAP01 episode output, game, model, live input, live allocation, or causal recovery evidence."
+}

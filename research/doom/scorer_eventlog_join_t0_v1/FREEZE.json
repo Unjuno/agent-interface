@@ -1,0 +1,12 @@
+{
+  "schema": "scorer-eventlog-join-t0-freeze-v1",
+  "base_main": "decefbd53240cdac21633e0d3e66c7e3bec76722",
+  "hypothesis": "The current MAP01 v15 event and scorer files contain enough same-runtime timestamp and intent-ID data to classify an independently scored positive change after a recovery's accepted timestamp, a post-acceptance/pre-first-input baseline, and a bounded post-input positive sample.",
+  "test": "One deterministic CPU-only file-level construction experiment with seven JSONL fixtures matching current ExecutorV13, input-owner-v12, scorer-file-sink-v1, and independent-progress-clock-v2 records.",
+  "decision_gate": "PASS only if the valid fixture joins one accepted id to its first input admission and reports an admission-bracketed useful score change using the latest pre-input baseline; pre-input-only progress, missing baseline, missed scorer period, malformed sample receipt, and absent/ambiguous intent identity all fail closed.",
+  "max_gap_ns": 100,
+  "missed_period_rule": "Any missed scheduled sample period from the selected baseline through the positive sample rejects classification.",
+  "clock_rule": "All event and scorer times are synthetic values in one runtime perf_counter_ns domain. Runtime source code presently calls perf_counter_ns for accepted_ns, admitted_ns, and ProgressSample.sample_ns; this construction test does not verify a live episode or host-clock conversion.",
+  "resources": "CPU-only deterministic test in a fresh OrbStack linux/arm64 python:3.12-slim container; no game, model, live input, GPU, WSLc, or formal allocation.",
+  "claim_limit": "Admission-bracketed progress is an observed interval association only. It does not establish exact effect time, causality, recovery efficacy, or MAP01 completion."
+}

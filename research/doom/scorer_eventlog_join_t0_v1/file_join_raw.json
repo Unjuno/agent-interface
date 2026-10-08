@@ -1,0 +1,57 @@
+{
+  "base_main": "b47d4d0b053f6e7d88c37e24be81777aa28feb6a",
+  "cases": [
+    {
+      "expected": "ADMISSION_BRACKETED_PROGRESS",
+      "id": "valid",
+      "observed": {
+        "accepted_ns": 100,
+        "baseline_ns": 110,
+        "causal_attribution": false,
+        "decision": "ADMISSION_BRACKETED_PROGRESS",
+        "first_input_ns": 120,
+        "gap_ns": 20,
+        "intent_id": "recover-1",
+        "positive_sample_ns": 130,
+        "progress": {
+          "death_count": 0,
+          "kill_count": 1,
+          "map_exit": false
+        },
+        "reason": "bounded_independent_progress_observed_after_first_input"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "stale_preinput",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "no_bounded_post_input_progress"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "missing_sample",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "error_type": "FileNotFoundError",
+        "reason": "invalid_or_missing_runtime_jsonl"
+      }
+    },
+    {
+      "expected": "POST_CANCELLATION_COOCCURRENCE",
+      "id": "malformed",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "error_type": "JSONDecodeError",
+        "reason": "invalid_or_missing_runtime_jsonl"
+      }
+    }
+  ],
+  "clock_domain": "synthetic_runtime_perf_counter_ns",
+  "live_game_model_or_input_launched": false,
+  "schema": "scorer-eventlog-jsonl-consumer-raw-v1"
+}

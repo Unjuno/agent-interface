@@ -1,0 +1,90 @@
+{
+  "base_main": "31ce02c0a148aed9650b58ef31a8746d5e85e091",
+  "cases": [
+    {
+      "expected_decision": "ADMISSION_BRACKETED_PROGRESS",
+      "expected_reason": "bounded_independent_progress_observed_after_first_input",
+      "id": "valid",
+      "observed": {
+        "accepted_ns": 100,
+        "baseline_ns": 110,
+        "causal_attribution": false,
+        "decision": "ADMISSION_BRACKETED_PROGRESS",
+        "first_input_ns": 120,
+        "gap_ns": 20,
+        "intent_id": "recover-1",
+        "positive_sample_ns": 130,
+        "progress": {
+          "death_count": 0,
+          "kill_count": 1,
+          "map_exit": false
+        },
+        "reason": "bounded_independent_progress_observed_after_first_input"
+      }
+    },
+    {
+      "expected_decision": "POST_CANCELLATION_COOCCURRENCE",
+      "expected_reason": "source_manifest_mismatch",
+      "id": "source_hash_changed",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "source_manifest_mismatch"
+      }
+    },
+    {
+      "expected_decision": "POST_CANCELLATION_COOCCURRENCE",
+      "expected_reason": "source_manifest_mismatch",
+      "id": "source_entry_unexpected",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "source_manifest_mismatch"
+      }
+    },
+    {
+      "expected_decision": "POST_CANCELLATION_COOCCURRENCE",
+      "expected_reason": "scorer_summary_sample_count_mismatch",
+      "id": "summary_count_changed",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "scorer_summary_sample_count_mismatch"
+      }
+    },
+    {
+      "expected_decision": "POST_CANCELLATION_COOCCURRENCE",
+      "expected_reason": "invalid_scorer_summary",
+      "id": "summary_schema_changed",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_scorer_summary"
+      }
+    },
+    {
+      "expected_decision": "POST_CANCELLATION_COOCCURRENCE",
+      "expected_reason": "invalid_scorer_summary",
+      "id": "controller_visible",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_scorer_summary"
+      }
+    },
+    {
+      "expected_decision": "POST_CANCELLATION_COOCCURRENCE",
+      "expected_reason": "invalid_or_missing_runtime_metadata",
+      "id": "summary_missing",
+      "observed": {
+        "causal_attribution": false,
+        "decision": "POST_CANCELLATION_COOCCURRENCE",
+        "reason": "invalid_or_missing_runtime_metadata"
+      }
+    }
+  ],
+  "experiment_id": "scorer-run-bundle-provenance-a01-20261005",
+  "input_provenance": "source policy copied from current-main retained sources.json; event and scorer files are synthetic fixtures",
+  "live_game_model_or_input_launched": false,
+  "schema": "scorer-run-bundle-raw-v1"
+}

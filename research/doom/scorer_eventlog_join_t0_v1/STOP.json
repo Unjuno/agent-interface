@@ -1,0 +1,11 @@
+{
+  "schema": "scorer-eventlog-join-t0-stop-v1",
+  "decision": "STOP",
+  "gate": "fresh OrbStack linux/arm64 python:3.12-slim experiment",
+  "command": "docker pull --platform linux/arm64 python:3.12-slim",
+  "error": "Error response from daemon: failed to lease content: rpc error: code = Unknown desc = blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported",
+  "inspection": "docker image inspect python:3.12-slim failed with the same content-store error; no usable cached image was available.",
+  "candidate_started_in_container": false,
+  "identical_container_retry_performed": false,
+  "local_fallback": "The frozen deterministic runner, independent auditor, and three focused tests were executed with the workspace Python interpreter. Those results are reported separately and do not satisfy the frozen container gate."
+}

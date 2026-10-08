@@ -1,0 +1,12 @@
+{
+  "base_main": "31ce02c0a148aed9650b58ef31a8746d5e85e091",
+  "claim_limit": "Construction-only metadata and file-bundling validation. Does not authenticate run authorship, prove event/sample co-origin against deliberate copying, test a live episode, locate effect time, establish causality/recovery, or complete MAP01.",
+  "decision_gate": "PASS only if the valid directory reaches the existing classifier unchanged, and any source-map mismatch, wrong summary schema, malformed/missing metadata, or sample-count mismatch fails closed.",
+  "expected_source_policy": "SOURCE_POLICY.json",
+  "expected_source_policy_sha256": "97a47c0164789845e1d18a3eab66f90cb6f1954b71b805e814d12879d3ad2036",
+  "experiment_id": "scorer-run-bundle-provenance-a01-20261005",
+  "hypothesis": "A co-located runtime bundle can reject a wrong v15 source manifest or incomplete scorer sample file before running the existing admission-bracket classifier.",
+  "resources": "Local deterministic Python; no container, game, model, GUI, OS input, GPU, or formal allocation.",
+  "schema": "scorer-run-bundle-freeze-v1",
+  "test": "CPU-only synthetic runtime-shaped directory cases: valid bundle; changed and unexpected source entries; modified frozen policy; wrong summary schema; controller-visible summary; missing metadata; sample-count mismatch; and malformed scorer rows. Reuse the frozen expected source inventory from an existing current-main MAP01 v15 runtime."
+}

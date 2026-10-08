@@ -1,0 +1,84 @@
+{
+  "derived": {
+    "post_input_deltas": [
+      [
+        130,
+        0
+      ]
+    ],
+    "prior_baseline": [
+      105,
+      0
+    ],
+    "prior_decision": "ADMISSION_BRACKETED_PROGRESS",
+    "prior_positive_sample": [
+      130,
+      1
+    ],
+    "successor_baseline": [
+      115,
+      1
+    ],
+    "successor_decision": "POST_CANCELLATION_COOCCURRENCE",
+    "successor_reason": "no_bounded_post_input_progress"
+  },
+  "errors": [],
+  "fixture_metadata": {
+    "accepted_ns": 100,
+    "first_input_ns": 120,
+    "intent_id": "recover-1",
+    "max_gap_ns": 100,
+    "missed_periods": 0,
+    "provenance": "static literals in byte-pinned followup_run.py; not new runtime observations",
+    "sample_history": [
+      [
+        105,
+        0
+      ],
+      [
+        110,
+        0
+      ],
+      [
+        115,
+        1
+      ],
+      [
+        130,
+        1
+      ]
+    ]
+  },
+  "inputs": {
+    "../scorer_admission_attribution_t0_v1/candidate.py": {
+      "git_blob": "3a097172115b6d8c2cd482c37c80388b86404b25",
+      "sha256": "fecf7be7abe7a36111ec2df171461eb225d5c951b37c8d979d0a2ce2d0e7f4b9"
+    },
+    "FOLLOWUP.json": {
+      "git_blob": "b671d50b35b08808d80a389f369bf638b064df5c",
+      "sha256": "c0f994ae541103b3c9fa425a8c362ea1109f5dd53f11b67b41c8572e5858b09a"
+    },
+    "candidate.py": {
+      "git_blob": "2f032bd5c06160193df3b34ab1bf3741e79b400f",
+      "sha256": "23727e925c3e27a171592b0a831ab29572647bc0309cb6f10b8d81c8104aa049"
+    },
+    "followup_audit.py": {
+      "git_blob": "306985ffb2ce00de8d0de622e41d8726b009dda6",
+      "sha256": "d1792b471344f70ade1117ab8fb24d920a187754a1090bd783607623a2cf1e83"
+    },
+    "followup_raw.json": {
+      "git_blob": "fcc04774cb1f892f3190c10944bf60e82190cf08",
+      "sha256": "2533079effb83bf83f32e54ee573a02679481d24df62afa29d26b3000078f827"
+    },
+    "followup_run.py": {
+      "git_blob": "34ff7c21754be2cd81e122e94e28e10661c07a93",
+      "sha256": "ab61b298fc6028c06afb5339b93569c529785715ea109b05429b8aed7a569b5f"
+    }
+  },
+  "pass": true,
+  "runtime_or_causal_claim": false,
+  "schema": "scorer-eventlog-saved-history-audit-v2",
+  "scope": "post-hoc one-fixture saved-history plus pinned-source-metadata audit; no producer execution",
+  "seven_case_raw_audit_repaired": false,
+  "source_head": "c87812a4a2d41f65127bb3a72fdceea390f63dc7"
+}
