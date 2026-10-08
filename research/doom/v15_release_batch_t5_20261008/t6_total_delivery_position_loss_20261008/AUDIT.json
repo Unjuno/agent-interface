@@ -1,0 +1,15 @@
+{
+  "audit": "PASS_ROW_ONLY_TOTAL_LOSS_UNIDENTIFIABLE",
+  "checks": {
+    "current_has_delivery_positions": true,
+    "degraded_rows_equal_legacy_rows": true,
+    "degraded_output_equals_legacy_output": true,
+    "both_unique_not_causal": true,
+    "no_live_claim": true
+  },
+  "disposition": {
+    "trace_integrity": "SOURCE_ROWS_JOINED",
+    "attribution": "TEMPORALLY_UNIQUE"
+  }
+}
+
