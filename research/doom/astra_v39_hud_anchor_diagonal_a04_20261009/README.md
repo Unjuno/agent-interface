@@ -56,3 +56,5 @@ and `results/` for source identities and raw output.
 ## Runtime availability follow-up
 
 A host preflight on 2026-10-09 found WSL `2.7.13.0` and no `wslc.exe` command; the repository runbook identifies WSLc as included with WSL `2.9.3+`. The original Windows CPython result is therefore retained as exploratory evidence and does not meet the preferred WSLc route. No WSL update or restart was performed. See `results/wslc_host_preflight.json`; a future WSLc execution must be a separately frozen successor, not a replay or relabeling of this consumed candidate.
+
+Ubuntu remained listed as a running WSL distribution after the probe and a 10-second idle interval. To preserve the shared environment, WSL was not updated or restarted. The WSLc successor is therefore deferred until the required host runtime can be made available without interrupting active work.
