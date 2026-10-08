@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "%PYTHON311%\Lib\shutil.py", line 632, in _rmtree_unsafe
+    os.unlink(fullname)
+PermissionError: [WinError 32] �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B: 'C:\\Users\\junny\\AppData\\Local\\Temp\\codex-live-observation-a04-kup62mg4\\.tmp\\plugins-clone-crYwH7\\.git\\FETCH_HEAD'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "%A04_WORKTREE%\research\analysis\v39_active_message_coalescing_a04_20261005\probe.py", line 537, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "%A04_WORKTREE%\research\analysis\v39_active_message_coalescing_a04_20261005\probe.py", line 519, in main
+    result = _run_app_server(frames, INITIAL_PENDING_WINDOW_S)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%A04_WORKTREE%\research\analysis\v39_active_message_coalescing_a04_20261005\probe.py", line 290, in _run_app_server
+    with tempfile.TemporaryDirectory(prefix="codex-live-observation-a04-") as home_text:
+  File "%PYTHON311%\Lib\tempfile.py", line 943, in __exit__
+    self.cleanup()
+  File "%PYTHON311%\Lib\tempfile.py", line 947, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+  File "%PYTHON311%\Lib\tempfile.py", line 929, in _rmtree
+    _shutil.rmtree(name, onerror=onerror)
+  File "%PYTHON311%\Lib\shutil.py", line 787, in rmtree
+    return _rmtree_unsafe(path, onerror)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "%PYTHON311%\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "%PYTHON311%\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "%PYTHON311%\Lib\shutil.py", line 629, in _rmtree_unsafe
+    _rmtree_unsafe(fullname, onerror)
+  File "%PYTHON311%\Lib\shutil.py", line 634, in _rmtree_unsafe
+    onerror(os.unlink, fullname, sys.exc_info())
+  File "%PYTHON311%\Lib\tempfile.py", line 893, in onerror
+    _os.unlink(path)
+PermissionError: [WinError 32] �v���Z�X�̓t�@�C���ɃA�N�Z�X�ł��܂���B�ʂ̃v���Z�X���g�p���ł��B: 'C:\\Users\\junny\\AppData\\Local\\Temp\\codex-live-observation-a04-kup62mg4\\.tmp\\plugins-clone-crYwH7\\.git\\FETCH_HEAD'

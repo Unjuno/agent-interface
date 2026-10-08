@@ -1,0 +1,19 @@
+test_cleanup_failure_and_plugin_fetch_remain_partial_unverifiable (test_audit_postrun.PostrunClassificationTests.test_cleanup_failure_and_plugin_fetch_remain_partial_unverifiable) ... ok
+test_missing_cleanup_or_external_contact_is_not_promoted (test_audit_postrun.PostrunClassificationTests.test_missing_cleanup_or_external_contact_is_not_promoted) ... FAIL
+test_nonempty_stdout_is_not_classified_as_the_retained_failure (test_audit_postrun.PostrunClassificationTests.test_nonempty_stdout_is_not_classified_as_the_retained_failure) ... ok
+
+======================================================================
+FAIL: test_missing_cleanup_or_external_contact_is_not_promoted (test_audit_postrun.PostrunClassificationTests.test_missing_cleanup_or_external_contact_is_not_promoted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\new-chat-6\work\active-message-coalescing-a01\research\analysis\v39_active_message_coalescing_a04_20261005\test_audit_postrun.py", line 22, in test_missing_cleanup_or_external_contact_is_not_promoted
+    self.assertEqual(AUDIT.classify_candidate(1, 0, "PermissionError WinError 32 FETCH_HEAD", fetch), "UNVERIFIABLE")
+AssertionError: 'PARTIAL_OR_UNVERIFIABLE' != 'UNVERIFIABLE'
+- PARTIAL_OR_UNVERIFIABLE
++ UNVERIFIABLE
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=1)

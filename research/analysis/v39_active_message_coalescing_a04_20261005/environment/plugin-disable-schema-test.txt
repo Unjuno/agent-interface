@@ -1,0 +1,4 @@
+Installed CLI: codex-cli 0.160.0
+Supported-command check: `codex features list` listed `remote_plugin` as stable, initially true. `codex features disable remote_plugin` succeeded in a disposable CODEX_HOME and wrote `[features] remote_plugin = false`; a second `codex features list` showed stable, false. The disposable config directory was removed.
+
+This verifies the installed CLI recognizes the configuration toggle. It does not prove that an App Server startup with this toggle suppresses all plugin synchronization or all external network traffic; a successor must independently enforce or verify that boundary before candidate execution.
