@@ -26,8 +26,8 @@ def reconstruct(protocol):
                          "observed_outcome": f["mapping_" + map_id][action],
                          "source_kind": "fixed_outcome_example"})
     episodes = []
-    for route in protocol["tracks"]:
-        for treatment in ("chronological", "context_tagged", "none"):
+    for treatment in ("chronological", "context_tagged", "none"):
+        for route in protocol["tracks"]:
             records = rows if treatment != "none" else []
             view = {"treatment": treatment, "records": records}
             if treatment == "context_tagged":
@@ -175,4 +175,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
