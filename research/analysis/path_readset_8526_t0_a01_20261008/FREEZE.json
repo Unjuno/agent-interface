@@ -1,0 +1,37 @@
+{
+  "run_id": "8526-path-readset-t0-a01-20261008",
+  "base_commit": "3f026dc67d745d7cc67f7cc09f250cb60d71f872",
+  "frozen_at_utc": "2026-10-08T07:27:33Z",
+  "scope": "finite synthetic read-set validation only; no GUI, model, network, OS input, WSLc, or Docker",
+  "runtime": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64"
+  },
+  "matrix": {
+    "cases": 13,
+    "policies": ["GLOBAL_UNION", "EXECUTED_PATH", "PATH_CERTIFICATE"],
+    "rows": 39
+  },
+  "construction_tests": {
+    "command": "python -B -m unittest -v test_model.py test_audit.py",
+    "passed": 9,
+    "failed": 0,
+    "formal_candidate_count": 0,
+    "formal_auditor_count": 0
+  },
+  "source_sha256": {
+    "candidate.py": "F82BD377EF8925A8F9668BCCF2C5ECFF4970BAC71469228A19D5554288F79CBE",
+    "audit.py": "DFF580D51689DC5353CF1915EFA949DFFA65734A00919E3123986A53A07CD1DB",
+    "test_model.py": "A5B7C0CA39A5C2605D690D96B78F824C84E023766076DFBE08D3F65157BE3BA6",
+    "test_audit.py": "47DEC278E73170462F643B7884FDBAA10F801394D093306FA418C315FCA67BF9",
+    "PROTOCOL.md": "27387227A50A6FDAC07D176783AFE0A8226D8A0CD197994B4D9E3772B39D220A"
+  },
+  "candidate_command": "python -B candidate.py --output results/candidate.json",
+  "audit_command": "python -B audit.py --candidate results/candidate.json --output results/audit.json",
+  "stop_rules": [
+    "Verify every source_sha256 entry before candidate execution; any mismatch is STOP.",
+    "Candidate once; auditor once only after candidate exit 0 and output exists.",
+    "No edits, retry, output overwrite, WSLc/Docker call, or post-result tuning."
+  ]
+}

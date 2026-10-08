@@ -1,0 +1,18 @@
+{
+  "run_id": "startup-caller-current-b04b-v2-ordinary-20261003",
+  "worker": "01a0ff33-b04b-7b51-8194-a60b82fed8a2",
+  "created_utc": "2026-10-03T13:24:00.173445+00:00",
+  "source_qualified_current_base": "38fadf49f4b81c7754e5d558cb01a5b5e5881124",
+  "runner_sha256": "1b7ba974ad17a5364cf0f0f7d6051c851c792436b46f93bed5f44c762b45a5dd",
+  "baseline_sha256": "a0bcfa076970b7cf6d048155478952958280b7958e0bbe486c0f1f12a55e4f0e",
+  "candidate_sha256": "31782095e0d926ea1842d47c2ce584cbccb830c2ed8fdb96cefa4697a79c91a7",
+  "client_sha256": "2290f2f8b3d2693db7358cbfe6fca4daf0553e8e2cec9ebcf88db533352c0abb",
+  "cells": [
+    "baseline_healthy",
+    "candidate_healthy",
+    "candidate_held_lock",
+    "candidate_close_error"
+  ],
+  "decision": "all four preserve exact injected original exception object; baseline defers open journal/callback without cleanup artifact; candidate success retires both; candidate two failures record exact error and annotate original exception while retaining journal/callback; all own resources externally retired",
+  "limits": "Full controller source/main executes only controlled initialize failure; external imports inert, real client constructor not invoked, retired process/reader doubles, actual file journal/owned lock/atexit calls. No native peer/main success-path/game/model/input/whole deadline. Different caller error-identity question, no old native allocation replay."
+}

@@ -1,0 +1,37 @@
+{
+  "cell": "close_error",
+  "stage": "first",
+  "receipt": {
+    "schema": "map01-startup-cleanup-v1",
+    "session_exit_code": null,
+    "reader_joined": true,
+    "client_closed": false,
+    "input_release_verified": false,
+    "errors": [
+      "planner close: OSError('injected journal close error')"
+    ],
+    "escalations": [],
+    "stderr_complete": true,
+    "stderr_bytes": 0,
+    "stderr_reader_joined": true
+  },
+  "callback_retained": true,
+  "journal_closed": false,
+  "journal_close_calls": 1,
+  "events": [
+    {
+      "op": "callback_register"
+    },
+    {
+      "op": "reader_join",
+      "timeout": 1
+    },
+    {
+      "op": "journal_close",
+      "fault": true
+    }
+  ],
+  "start_ns": 42234925962800,
+  "end_ns": 42234925975700,
+  "elapsed_ns": 12900
+}
