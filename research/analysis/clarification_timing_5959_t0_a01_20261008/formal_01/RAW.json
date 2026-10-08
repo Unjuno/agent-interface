@@ -1,0 +1,330 @@
+{
+  "schema": "clarification-timing-candidate-output-v1",
+  "allocation": "CLARIFICATION-TIMING-5959-T0-A01-20261008",
+  "policy_rows": [
+    {
+      "request_id": "C01-low-window-tradeoff",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C01-low-window-tradeoff",
+      "policy": "latest_safe",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C01-low-window-tradeoff",
+      "policy": "low_cost_window",
+      "planned_tick": 6,
+      "disposition": "AUTHORIZED_LOW_COST_WINDOW",
+      "signal_tick": 6
+    },
+    {
+      "request_id": "C02-unavailable-signal",
+      "policy": "immediate",
+      "planned_tick": 1,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C02-unavailable-signal",
+      "policy": "latest_safe",
+      "planned_tick": 7,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C02-unavailable-signal",
+      "policy": "low_cost_window",
+      "planned_tick": 7,
+      "disposition": "LATEST_SAFE_FALLBACK",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C03-unknown-signal",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C03-unknown-signal",
+      "policy": "latest_safe",
+      "planned_tick": 7,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C03-unknown-signal",
+      "policy": "low_cost_window",
+      "planned_tick": 7,
+      "disposition": "LATEST_SAFE_FALLBACK",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C04-zero-slack",
+      "policy": "immediate",
+      "planned_tick": null,
+      "disposition": "YIELD_NOW",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C04-zero-slack",
+      "policy": "latest_safe",
+      "planned_tick": null,
+      "disposition": "YIELD_NOW",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C04-zero-slack",
+      "policy": "low_cost_window",
+      "planned_tick": null,
+      "disposition": "YIELD_NOW",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C05-nondeferrable-urgent",
+      "policy": "immediate",
+      "planned_tick": 5,
+      "disposition": "IMMEDIATE_NONDEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C05-nondeferrable-urgent",
+      "policy": "latest_safe",
+      "planned_tick": 5,
+      "disposition": "IMMEDIATE_NONDEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C05-nondeferrable-urgent",
+      "policy": "low_cost_window",
+      "planned_tick": 5,
+      "disposition": "IMMEDIATE_NONDEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C06-version-changes-before-delivery",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C06-version-changes-before-delivery",
+      "policy": "latest_safe",
+      "planned_tick": 10,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C06-version-changes-before-delivery",
+      "policy": "low_cost_window",
+      "planned_tick": 6,
+      "disposition": "AUTHORIZED_LOW_COST_WINDOW",
+      "signal_tick": 6
+    },
+    {
+      "request_id": "C07-version-changes-at-delivery",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C07-version-changes-at-delivery",
+      "policy": "latest_safe",
+      "planned_tick": 10,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C07-version-changes-at-delivery",
+      "policy": "low_cost_window",
+      "planned_tick": 6,
+      "disposition": "AUTHORIZED_LOW_COST_WINDOW",
+      "signal_tick": 6
+    },
+    {
+      "request_id": "C08-no-response",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C08-no-response",
+      "policy": "latest_safe",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C08-no-response",
+      "policy": "low_cost_window",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE_FALLBACK",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C09-refusal",
+      "policy": "immediate",
+      "planned_tick": 1,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C09-refusal",
+      "policy": "latest_safe",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C09-refusal",
+      "policy": "low_cost_window",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE_FALLBACK",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C10-response-exceeds-bound",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C10-response-exceeds-bound",
+      "policy": "latest_safe",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C10-response-exceeds-bound",
+      "policy": "low_cost_window",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE_FALLBACK",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C11-answer-at-inclusive-deadline",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C11-answer-at-inclusive-deadline",
+      "policy": "latest_safe",
+      "planned_tick": 6,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C11-answer-at-inclusive-deadline",
+      "policy": "low_cost_window",
+      "planned_tick": 6,
+      "disposition": "LATEST_SAFE_FALLBACK",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C12-version-changes-after-delivery",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C12-version-changes-after-delivery",
+      "policy": "latest_safe",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C12-version-changes-after-delivery",
+      "policy": "low_cost_window",
+      "planned_tick": 2,
+      "disposition": "AUTHORIZED_LOW_COST_WINDOW",
+      "signal_tick": 2
+    },
+    {
+      "request_id": "C13-hard-event-bypasses-pending-question",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C13-hard-event-bypasses-pending-question",
+      "policy": "latest_safe",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C13-hard-event-bypasses-pending-question",
+      "policy": "low_cost_window",
+      "planned_tick": 6,
+      "disposition": "AUTHORIZED_LOW_COST_WINDOW",
+      "signal_tick": 6
+    },
+    {
+      "request_id": "C14-no-window-fallback",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C14-no-window-fallback",
+      "policy": "latest_safe",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C14-no-window-fallback",
+      "policy": "low_cost_window",
+      "planned_tick": 8,
+      "disposition": "LATEST_SAFE_FALLBACK",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C15-unauthorized-choice",
+      "policy": "immediate",
+      "planned_tick": 0,
+      "disposition": "IMMEDIATE_DEFERRABLE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C15-unauthorized-choice",
+      "policy": "latest_safe",
+      "planned_tick": 7,
+      "disposition": "LATEST_SAFE",
+      "signal_tick": null
+    },
+    {
+      "request_id": "C15-unauthorized-choice",
+      "policy": "low_cost_window",
+      "planned_tick": 7,
+      "disposition": "LATEST_SAFE_FALLBACK",
+      "signal_tick": null
+    }
+  ],
+  "mandatory_routes": [
+    {
+      "request_id": "C13-hard-event-bypasses-pending-question",
+      "event_id": "M13-focus-revoked",
+      "arrival_tick": 3,
+      "delivery_tick": 3,
+      "bypass": true
+    }
+  ]
+}

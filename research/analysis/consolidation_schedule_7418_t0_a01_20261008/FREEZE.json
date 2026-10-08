@@ -1,0 +1,33 @@
+{
+  "issue": 8406,
+  "companion_to": 7418,
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T0-A01-20261008",
+  "branch": "research/8406-consolidation-schedule-t0-a01-20261008",
+  "base_sha": "bb476976d887bb0194a64a1c6ab1e7ac45d72e24",
+  "package_path": "research/analysis/consolidation_schedule_7418_t0_a01_20261008",
+  "frozen_file_sha256": {
+    "model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "candidate.py": "3372ad299c3924c1b565e358c02f62cb8f219ab20e1644c5c4b1842afb485150",
+    "auditor.py": "41f06f80ebdacdf4151484f6af95515124e99055bda22b46abd5b2bacbee1627",
+    "test_construction.py": "e95f1a07dcae26bff2746a47eccc6407cb5f804ee5e6a3a5b7be36c3675b3cb3",
+    "PROTOCOL.md": "ac0ca4ad04da73c157fc3e551dbe54a306d900c1a92084430bef9782ab3ac365",
+    "CONSTRUCTION.md": "6fe0bc839886c9871c9ab8a463b6971022810355894ac1ed22121303390471d1"
+  },
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "formal_retries": 0,
+  "construction_tests_final": "8/8 PASS; earlier 7/8 aliasing failure preserved in CONSTRUCTION.md",
+  "runtime": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "network": "sandbox-exec deny network*",
+    "gui": "none",
+    "model": "none",
+    "container": "none; deterministic CPU-only contract fixture"
+  },
+  "decision_rule": "PASS_T0_METHOD_SCOPED only if the independent raw-only auditor matches all 24 snapshots across four schedules, exact ledger/query/budget/provenance/UNKNOWN/checkpoint gates pass, and all seven hostile mutations reject; otherwise preserve first FAIL/STOP.",
+  "formal_commands": [
+    "sandbox-exec -p '(version 1) (allow default) (deny network*)' python3 research/analysis/consolidation_schedule_7418_t0_a01_20261008/candidate.py research/analysis/consolidation_schedule_7418_t0_a01_20261008/model.json --output research/analysis/consolidation_schedule_7418_t0_a01_20261008/results/FORMAL_A01/candidate.json > research/analysis/consolidation_schedule_7418_t0_a01_20261008/results/FORMAL_A01/candidate.stdout.txt",
+    "sandbox-exec -p '(version 1) (allow default) (deny network*)' python3 research/analysis/consolidation_schedule_7418_t0_a01_20261008/auditor.py research/analysis/consolidation_schedule_7418_t0_a01_20261008/results/FORMAL_A01/candidate.json --output research/analysis/consolidation_schedule_7418_t0_a01_20261008/results/FORMAL_A01/audit.json > research/analysis/consolidation_schedule_7418_t0_a01_20261008/results/FORMAL_A01/auditor.stdout.txt"
+  ]
+}

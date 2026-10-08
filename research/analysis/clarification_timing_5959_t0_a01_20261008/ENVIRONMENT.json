@@ -1,0 +1,18 @@
+{
+  "docker_context": "orbstack",
+  "docker_server_version": "29.4.0",
+  "docker_ostype": "linux",
+  "docker_architecture": "aarch64",
+  "running_containers_before_allocation": 0,
+  "image": "node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+  "platform": "linux/arm64",
+  "container_node_version": "v26.10.0",
+  "preflight_command": "docker run --rm --pull=never --platform linux/arm64 --network none --read-only --cpus=0.5 --memory=256m --pids-limit=32 node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 node -p 'process.version + \" \" + process.arch'",
+  "preflight_exit": 0,
+  "preflight_stdout": "v26.10.0 arm64",
+  "nonroot_mount_path_probe": {"exit": 0, "stdout": "{\"node\":\"v26.10.0\",\"arch\":\"arm64\",\"uid\":65532,\"usr_src\":false}", "workdir": "/tmp"},
+  "candidate_mount_probe": {"exit": 0, "stdout": "{\"source\":true,\"requests\":15,\"oracle_visible\":false}"},
+  "auditor_mount_probe": {"exit": 0, "stdout": "{\"package_readable\":true,\"requests\":15,\"oracle_cases\":15}"},
+  "resource_limits": "Requested by Docker CLI; enforcement was not independently established.",
+  "known_image_store_observation": "python:3.11-alpine was absent. A broad image-list request encountered an operation-not-supported missing-blob error for sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e; no pull, prune, delete, or daemon repair was attempted. The exact cached Node image inspected and ran successfully."
+}
