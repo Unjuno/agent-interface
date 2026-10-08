@@ -284,6 +284,22 @@ class MeasuredTailCompositionTests(unittest.TestCase):
                 self.assertIs(session.vd.DoomGame, game_constructor)
                 self.assertIs(sys.stdin, original_stdin)
 
+    def test_final_sample_runs_if_output_directory_creation_fails(self):
+        events_seen = []
+
+        class Polling:
+            def sample_measured_tail(self, **_kwargs):
+                raise AssertionError("no candidate means no tail polling")
+
+        with patch.object(candidate.Path, "mkdir",
+                          side_effect=OSError("simulated output-store failure")):
+            with self.assertRaisesRegex(OSError, "simulated output-store failure"):
+                candidate._run_measured_tail(
+                    Polling(), "unwritable/output", None,
+                    lambda: events_seen.append("final"))
+
+        self.assertEqual(events_seen, ["final"])
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
