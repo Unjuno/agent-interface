@@ -1,6 +1,7 @@
 """Regression for observations queued as the planner future completes."""
 import queue
 import unittest
+from pathlib import Path
 
 from map01_overlap_controller_v39 import drain_pending_observation_events
 
@@ -51,6 +52,20 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(result["latest"]["sequence"], 20)
         self.assertIsNone(result["invalidation"])
         self.assertEqual(result["terminal"]["id"], "cover-2")
+
+
+    def test_completed_future_drain_is_wired_before_answer_read(self):
+        source = Path(__file__).with_name("map01_overlap_controller_v39.py").read_text(
+            encoding="utf-8")
+        loop = source.index("while not future.done():")
+        drain = source.index("drain_pending_observation_events(", loop)
+        result = source.index("planner_result=future.result()", drain)
+        discard = source.index("if invalidation is not None:", result)
+        eligible = source.index("if not planner_result.answer_eligible:", discard)
+        self.assertLess(loop, drain)
+        self.assertLess(drain, result)
+        self.assertLess(result, discard)
+        self.assertLess(discard, eligible)
 
     def test_empty_backlog_is_nonblocking_and_returns_no_boundary(self):
         incoming = queue.Queue()
