@@ -1,0 +1,13 @@
+{
+  "experiment_id": "v39-soft-feedback-a05-cancel-carry-20261005",
+  "main_base": "018934cdf45fcabffcc4efe25b5c7b3d59bd459f",
+  "controller_git_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+  "candidate_sha256": "a7fd380a673bb4c1c794009f4b3d1fb597c0e09086712038276d0e9a9890b232",
+  "independent_auditor_v2_sha256": "9c24d4034646a6c3385ae83705713e78b4cf7516965582a12e620952e1233ee4",
+  "result_sha256": "febddc59b1516a772454b90617d97e5ab150153368b1881ca9fd1a71f11c32d3",
+  "audit_successor_v2_sha256": "2ce1b81fd690eeaf6932f58f0addce67fb1ca9c58510a3cee311950794dbf212",
+  "decision_gate": "PASS_SCOPED_CANCEL_CARRY iff current main invalidation branch retains both soft-event count and latest-event fields on the canceled decision before continue, next-iteration summary precedes prompt construction, and exact helper output is present in the subsequent stub prompt with no authority grant.",
+  "invocations": {"candidate": 1, "independent_auditor_v1": 1, "independent_auditor_successor_v2": 1, "candidate_retry": 0},
+  "scope": "offline source AST plus exact summary/prompt helper composition; no model/game/GUI/OS input/container/live allocation"
+}

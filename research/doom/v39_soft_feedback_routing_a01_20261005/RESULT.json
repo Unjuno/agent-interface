@@ -1,0 +1,78 @@
+{
+  "candidate_sha256": "c46d2db3768e1036bda9c36076d66d1870501c720e54208d567331d91996f1ab",
+  "input": {
+    "ammo": [
+      46,
+      37
+    ],
+    "ammo_hard_minimum": 1,
+    "binding_unchanged": true,
+    "capture_ns": [
+      1000000000,
+      2000000000
+    ],
+    "frame_hash_changed": true,
+    "health": [
+      100,
+      100
+    ],
+    "health_hard_minimum": 88,
+    "sequence": [
+      1,
+      2
+    ]
+  },
+  "main_base": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "monitor": {
+    "latest_soft_event": {
+      "monitor_received_ns": 180714046852700,
+      "outcome": {
+        "current_value": 37,
+        "format": "observable-signal-guard-outcome-v1",
+        "grants_input_authority": false,
+        "guard_id": "map01-0-ammo",
+        "hard_minimum": 1,
+        "keep_existing_policy": true,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "reason": "within_validity_envelope",
+        "requires_new_decision": false,
+        "semantic_change_identified": true,
+        "signal_id": "ammo",
+        "source_age_ms": 1000.0,
+        "source_value": 46,
+        "status": "SOFT_CHANGED",
+        "task_success_verified": false
+      },
+      "outcome_evaluated_ns": 180714046885200,
+      "sequence": 2,
+      "signal": {
+        "binding": {
+          "source": "A01",
+          "surface": "offline-synthetic"
+        },
+        "capture_ns": 2000000000,
+        "sequence": 2,
+        "signal_id": "ammo",
+        "status": "observed",
+        "value": 37
+      }
+    },
+    "policy_invalidation": false,
+    "returned": null,
+    "soft_event_count": 1
+  },
+  "pending_planner_stub": {
+    "calls": [
+      "begin_turn"
+    ],
+    "prompt_after": "Select the next bounded MAP01 action from the new temporal sheet.\nCurrent locally verified health: 100.\nCurrent locally verified ammo: 46.\nNewest typed soft event from the preceding control interval: null\nPrevious no-visible-effect actions: []\n",
+    "prompt_before": "Select the next bounded MAP01 action from the new temporal sheet.\nCurrent locally verified health: 100.\nCurrent locally verified ammo: 46.\nNewest typed soft event from the preceding control interval: null\nPrevious no-visible-effect actions: []\n",
+    "prompt_unchanged_after_observation": true
+  },
+  "schema": "v39-soft-event-routing-result-a01-v1",
+  "scope": "one offline synthetic typed-observation/source-composition probe; no model, game, GUI, OS input, container, or live allocation",
+  "source_sha256": {
+    "controller": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "guard_source_copy": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+  }
+}

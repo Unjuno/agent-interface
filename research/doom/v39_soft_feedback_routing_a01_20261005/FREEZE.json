@@ -1,0 +1,32 @@
+{
+  "experiment_id": "v39-soft-feedback-routing-a01-20261005",
+  "main_base": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "controller_git_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "guard_path": "research/live_control/observable_signal_guard_v2.py",
+  "guard_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+  "runtime": "CPython 3.11.9, Windows host",
+  "case": {
+    "health_source": 100,
+    "health_current": 100,
+    "health_hard_minimum": 88,
+    "ammo_source": 46,
+    "ammo_current": 37,
+    "ammo_hard_minimum": 1,
+    "source_sequence": 1,
+    "current_sequence": 2,
+    "source_capture_ns": 1000000000,
+    "current_capture_ns": 2000000000,
+    "binding": "unchanged synthetic typed pair",
+    "frame_rgb_sha256": "changed from absent source hash to 64 lowercase 'a' characters"
+  },
+  "decision_gate": "FAIL_NO_INDEPENDENT_IN_FLIGHT_FEEDBACK iff the production monitor records exactly one SOFT_CHANGED ammo event and returns None, the stub planner receives only its already-built begin_turn prompt, source ordering shows that prompt and current turn begin before the monitored pending wait, and the event is added to the current decision only after future.result(); otherwise preserve exact outcome without retry.",
+  "invocation_limit": {"candidate": 1, "independent_auditor": 1, "retry": 0},
+  "sha256": {
+    "controller": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "guard_source_copy": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+    "candidate": "c46d2db3768e1036bda9c36076d66d1870501c720e54208d567331d91996f1ab",
+    "audit": "9ed126e01bd3d02660ee7b7d888f1925a007e10b048f5a699add95dc82bfec67"
+  },
+  "allocation": "offline local construction only; no model, game, GUI, OS input, container, or live lane"
+}
