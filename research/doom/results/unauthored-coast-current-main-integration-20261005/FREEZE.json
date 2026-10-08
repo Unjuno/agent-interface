@@ -1,0 +1,36 @@
+{
+  "schema": "issue59-unauthored-coast-current-main-integration-freeze-v1",
+  "base_main_commit": "267dbf61e19efe94299b681dcda89925aae5b935",
+  "base_controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "base_controller_git_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+  "candidate_controller_path": "research/doom/map01_overlap_controller_v40.py",
+  "monitor_path": "research/doom/unauthored_coast_liveness_v1.py",
+  "controller_sha256": "B7DF89C84446B933516CB05FB6C0813F560A32F96B37723E43552382757185CB",
+  "monitor_sha256": "77EEB241C6EAC48B3142FB9803A2563BB3DE9202D236168B4358296B19499015",
+  "tests": {
+    "candidate_controller": "research/doom/test_map01_overlap_controller_v40.py",
+    "candidate_controller_sha256": "F93F4D7DEC60E2D0CEB9046F1B514E7A63F2DBC4D6B91A5AB6172911D50F8012",
+    "monitor": "research/doom/test_unauthored_coast_liveness_v1.py",
+    "monitor_sha256": "D661B9A7662FAF99F1E3B30CAD95F2CF3F93327855404779ABB8E0E8A0224464",
+    "existing_current_v39": "research/doom/test_map01_overlap_controller_v39.py"
+  },
+  "delta": [
+    "Replace no-op unauthored-coast monitor selection with the typed-health candidate.",
+    "After interruption, cancel and verify empty release before accepting a matching/newer screenshot.",
+    "Require the same fresh-screenshot handoff when invalidation is observed after the planner future completes.",
+    "Preserve all other current-main V39 controller code, including paired health/ammo cover validation."
+  ],
+  "verification": {
+    "python_version": "3.12",
+    "py_compile": "PASS",
+    "normal_tests": "18/18 PASS",
+    "optimized_tests": "13/13 PASS",
+    "patch_whitespace_check": "PASS"
+  },
+  "scope": {
+    "classification": "local deterministic integration construction",
+    "live_allocation": "not invoked",
+    "candidate_threshold": "retrospective exploratory; prospective efficacy untested",
+    "claims": ["no live benefit", "no recovery efficacy", "no survival efficacy", "no MAP01 completion"]
+  }
+}
