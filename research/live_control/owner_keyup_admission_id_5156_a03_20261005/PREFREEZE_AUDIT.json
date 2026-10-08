@@ -1,0 +1,24 @@
+{
+  "base_error_count": 0,
+  "decision": "PASS_OWNER_ADMISSION_ID_SCOPED",
+  "errors": [],
+  "missed_controls": [],
+  "mutation_count": 12,
+  "mutation_rejections": 12,
+  "rejected_controls": [
+    "missing admission id",
+    "blank admission id",
+    "duplicate admission id",
+    "wrong admission sequence",
+    "wrong explicit release id",
+    "wrong nested receipt id",
+    "swapped release ids",
+    "wrong owner id",
+    "wrong release key",
+    "wrong step context",
+    "authority overclaim",
+    "missing owner receipt"
+  ],
+  "result_sha256": "2a57170d23b664d6fc5f91e56edf17b3816182d98eef7eee57dcbf8accbd69b2",
+  "schema": "owner-keyup-admission-id-audit-v1"
+}

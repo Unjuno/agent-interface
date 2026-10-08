@@ -1,0 +1,45 @@
+{
+  "schema": "owner-keyup-context-freeze-v2",
+  "successor_of_a01": "62eb9edcf32bbceaa283ad1922fb1dd2194c0269",
+  "prior_a01_result_sha256": "454cc725d3d0e8c17e3397e394cbf5b413f5508b52a8bbc61f84cd818ebcb9f6",
+  "prior_a01_audit_sha256": "14bcc5e4a7beecde113d54751c6b0fe0a69e3b9ef833849778fd3207631288d9",
+  "intake_commit": "ad7a6d5a6dcc0d990af5a2beef32d59b31fbaa04",
+  "prep_head": "1258186fdb626695038c111da4d160e8150af718",
+  "current_main_blobs": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_transition_owner_v3.py": "99dfc7c9907b018e7473bc2ba8a7393a5b221f51",
+    "research/doom/doom_retained_input_backend_v4.py": "81484e6146bb8b93a007f338df3e504620924a45"
+  },
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "platform": "linux/amd64",
+  "python": "3.12.15",
+  "sha256": {
+    "input_owner_v11_candidate.py": "0f01e6a7c8ed3ce4c71a1e664684b7feb3db5d2ca4e43ce9c198acd93766057f",
+    "input_transition_owner_v3_frozen.py": "b4064c12465dcdf3ccb763d95093a25e2ee8892149da3a1718c6f47bb5a15078",
+    "doom_retained_input_backend_v4_frozen.py": "0e307af96760d7c70e1d2ed7f7810530d38deddec51062c8057c78d7db57b0e0",
+    "RUN.md": "ede299e53f5b3a8c496e669fee391eb23639d8ab1fd74d6ca618a07dce5e3ac0",
+    "input_transition_owner_v4_candidate.py": "c29fde86311992153bf33adb26b4e786f4ed79f7c27402faa93d2a16a94a6247",
+    "PROTOCOL.md": "4675ad69021b30982a6336e48d91be28b3ce88ce0c3e3517db6cfe1b1851b3b4",
+    "run_candidate.py": "477a054bd14fa6638a29692fcd02015867769a09c9866b58760607d8ca494c03",
+    "audit.py": "dcfbcd0ba8f8656d385ddb93ad9d7500c8a75e6b0b93f02ca92e8c153e0d6a22",
+    "input_owner_v10_frozen.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "fake_xlib.py": "5e4ff7460b1848f9c100b732cd501e132fcb8f8d027ff0f62b5791d0c5bc765d"
+  },
+  "limits": {
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "network": "none",
+    "cpus": 1,
+    "source_mount": "read-only",
+    "output_mount": "separate writable",
+    "memory_limit": "omitted; not verified on this host"
+  },
+  "decision_gates": {
+    "candidate_zero_exit": true,
+    "auditor_zero_exit": true,
+    "mutation_controls_rejected": 8,
+    "live_x11_authority": false
+  }
+}
