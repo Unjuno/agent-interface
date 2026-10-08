@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
+
 - [Issue #8610 T0 A01 common-cause degradation contracts](degradation_common_cause_8610_a01_20261008/REPORT.md) — internal fixture/audit PASS, but `HOLD_PROTOCOL_ARM_MISMATCH`: A01 used binary all-route refusal and unsafe substitution instead of the required independence-assuming and unknown-dependency fail-closed arms. Do not treat it as testing the #8610 hypothesis; corrected successor is #8622. No runtime/product claim.
 
 - [Issue #8622 T0 A02 common-cause degradation policy comparison](degradation_policy_compare_8622_a02_20261008/REPORT.md) — fixture/auditor PASS on the three required arms and 10 cases (6 independence overclaims / 4 cases; dependency-aware unsupported 0; unknown fail-closed admissions 0), but `HOLD_RESULT_CUSTODY`: terminal wrapping/truncation prevented recovery of exact stdout hashes; no raw-output files or retries. Host-only; no runtime/product claim.
