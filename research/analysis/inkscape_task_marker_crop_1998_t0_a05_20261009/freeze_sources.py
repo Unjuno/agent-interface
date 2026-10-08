@@ -3,8 +3,10 @@
 import hashlib
 import json
 import os
+import platform
 import pathlib
 import subprocess
+import sys
 import xml.etree.ElementTree as ET
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -86,6 +88,11 @@ def main():
         "eng_traineddata_path": str(eng),
         "eng_traineddata_sha256": sha(eng.read_bytes()),
         "psm": 11,
+        "python_executable": os.path.realpath(sys.executable),
+        "python_version": sys.version,
+        "platform": platform.platform(),
+        "machine": platform.machine(),
+        "kernel_release": platform.release(),
         "candidate_invocations": 1,
         "auditor_invocations": 1,
         "retries": 0,

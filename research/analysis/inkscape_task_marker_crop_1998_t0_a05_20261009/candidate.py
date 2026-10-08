@@ -3,6 +3,7 @@
 import hashlib
 import json
 import pathlib
+import platform
 import subprocess
 import sys
 
@@ -16,6 +17,10 @@ def sha(data):
 
 def main():
     freeze = json.loads((PKG / "FREEZE.json").read_text())
+    if (pathlib.Path(sys.executable).resolve().as_posix() != freeze["python_executable"] or
+            sys.version != freeze["python_version"] or platform.platform() != freeze["platform"] or
+            platform.machine() != freeze["machine"] or platform.release() != freeze["kernel_release"]):
+        raise SystemExit("frozen Python/host identity mismatch")
     for rel, expected in freeze["inputs"].items():
         if sha((ROOT / rel).read_bytes()) != expected:
             raise SystemExit("frozen input digest mismatch: " + rel)
