@@ -1,0 +1,102 @@
+{
+  "schema": "v39-bounded-pending-backlog-current-main-revalidation-v1",
+  "main_commit": "76eefd0e53da2243d1e2ab45776db7761f4366ee",
+  "executed_at_local": "2026-10-08 Asia/Tokyo (work session)",
+  "environment": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python311\\python.exe"
+  },
+  "command": "python -m unittest discover -s research/doom -p test_map01_v39_pending_observation_drain.py -v",
+  "import_path": "<temporary overlay with the 12 exact-main modules listed below>; research/doom; research/live_control",
+  "status": "PASS_CURRENT_MAIN_DETERMINISTIC_REGRESSION_SCOPED",
+  "tests": 12,
+  "elapsed_seconds": 0.003,
+  "log_path": "current_main_regression_retry02.log",
+  "log_sha256": "755493b702255a53a739787cd81362abb91694c7a6414c730dae600b7f79fba5",
+  "source_files": {
+    "research/doom/map01_overlap_controller_v39.py": {
+      "git_blob": "fec805219fec1155beb0e2608024663bc8c7e127",
+      "sha256": "e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754"
+    },
+    "research/doom/test_map01_v39_pending_observation_drain.py": {
+      "git_blob": "b59590ab6816e0acca20426af2fb08675246ddb6",
+      "sha256": "a027988ffb3b9780e5cc895639402d27620dcb486f3176f4746604a0eaa40f3a"
+    },
+    "research/live_control/executor_v12.py": {
+      "git_blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+      "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+    }
+  },
+  "overlay_manifest": "current_main_import_sources.sha256",
+  "overlay_manifest_sha256": "82fd6395b986f2f0cde05ba9188b7e3d417e79b7ebcedd288e675c79e06371fa",
+  "overlay_sources": [
+    {
+      "path": "research/doom/map01_stagnation_v1.py",
+      "git_blob": "be03ef1295c27e25dc63df3a9121f5c7f5296bfb",
+      "sha256": "669d61eb473c486e693a478b1941a7b40102d2049e0a437e5982143544d60a54"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v3.py",
+      "git_blob": "083338b4565176aaea560d800ce0210f17b6852f",
+      "sha256": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7"
+    },
+    {
+      "path": "research/doom/doom_controller_failure_cleanup_v1.py",
+      "git_blob": "d04e167ed182d5faf935e6c23132b164fe9a16ac",
+      "sha256": "e7738973991459f5fe9553383afb4000a1cbb6c755bc5763f11eab85c32dead8"
+    },
+    {
+      "path": "research/doom/doom_source_refresh_v1.py",
+      "git_blob": "51c12ff4f2816f022bb86be9f5f6a951467d38b7",
+      "sha256": "f3a9c66bc069a98b3240f5256810123e4f61931fd648e03b3e564aedec545743"
+    },
+    {
+      "path": "research/doom/doom_typed_observation_v1.py",
+      "git_blob": "ddeb95efe76c32f4c77d0b1d25f08e395a536a2e",
+      "sha256": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1"
+    },
+    {
+      "path": "research/doom/doom_action_validity_contract_v1.py",
+      "git_blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+      "sha256": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e"
+    },
+    {
+      "path": "research/live_control/running_action_guard_v1.py",
+      "git_blob": "d54047e78bc76f53ef47c6f70fd4a3be6318f09c",
+      "sha256": "2d5feb69efd59fdca22e0db9e561923411490eb758eab9e2b8379714e20e5c62"
+    },
+    {
+      "path": "research/live_control/running_action_guard_v2.py",
+      "git_blob": "4e1a36c1dbd3d78aea795a292bc4e0bf9db0b75b",
+      "sha256": "908ab4117f007c2592d96a50370c7e29a5c048cfee2d6c70d1bb66fc1b4e11e2"
+    },
+    {
+      "path": "research/doom/doom_action_snapshot_v1.py",
+      "git_blob": "756626d2a3745b50a32b89e1ae64b33eea24b2aa",
+      "sha256": "f6efc8c8ac0957dfa0d8cf5e8190e4e58b2e71fa328021c816f01d36af476f38"
+    },
+    {
+      "path": "research/doom/doom_signal_value_domain_v1.py",
+      "git_blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+      "sha256": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v2.py",
+      "git_blob": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "sha256": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v1.py",
+      "git_blob": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "sha256": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c"
+    }
+  ],
+  "setup_failures": [
+    "current_main_regression.log",
+    "current_main_regression_retry01.log"
+  ],
+  "scope": "Deterministic unit regression only; no game, GUI, App Server, model, live input, or task-success outcome.",
+  "package_overlay_replay_log_path": "package_overlay_replay.log",
+  "package_overlay_replay_log_sha256": "755493b702255a53a739787cd81362abb91694c7a6414c730dae600b7f79fba5"
+}
