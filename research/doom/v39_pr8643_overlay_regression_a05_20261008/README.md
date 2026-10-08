@@ -1,20 +1,20 @@
-# PR #8643 pending-observation suite overlay validation A05
+# PR #8643 current-head recovery overlay validation A05
 
 ## H / T / D / C / U
 
-**H.** The recovery changes in PR #8643 should preserve the existing bounded drain and invalidation behavior across the directly affected regression suite, including no-fresh-observation fail-closed behavior and the distinction between reader lookahead rows and rows actually consumed by the ACK wait, under normal and optimized Python execution.
+**H.** PR #8643's recovery changes should preserve bounded drain and invalidation behavior, including fail-closed observation timeouts, ACK-wait event consumption, and cancelling an invalidated initial cover before planning, under normal and optimized Python execution.
 
-**T.** Freeze PR head `ce7f4a9f0eac5e38388372a2638c23734a19dee5` and dependency base `1f81daa690b567a9a049cc75fae8619b2660c343`. Extract only the seven candidate files listed in `FREEZE.json` into a temporary source overlay. Before running, verify that the checked-out dependency tree differs from the base only under the listed evidence output prefixes. Run the candidate `test_map01_v39_pending_observation_drain.py` against unchanged dependencies from the base, once normally and once with `-O`. Record raw stdout/stderr and exit codes.
+**T.** Freeze PR head `38569db07352a8d42e08fd6711ba32c77aca20a4` and dependency base `1f81daa690b567a9a049cc75fae8619b2660c343`. Extract only the eight candidate files listed in `FREEZE.json` into a temporary source overlay. Verify the checked-out dependency tree differs from the base only under the listed evidence output prefixes. Run `test_map01_v39_pending_observation_drain.py` and `test_map01_overlap_controller_v39.py` against unchanged dependencies from the base, normally and with `-O`. Record stdout/stderr and exit codes.
 
-**D.** PASS if all seven overlay blobs match their frozen Git identities and both test runs exit zero with 16 tests reported. Otherwise FAIL/HOLD with the first retained output.
+**D.** PASS if all eight overlay blobs match their frozen Git identities and all four runs exit zero: 17 drain tests and 9 controller tests in each Python mode.
 
-**C.** The runner overlays changed controller/test/admission/guard files while importing other modules from the pinned base checkout. The suite uses deterministic fixtures; this is not a full source checkout or live execution.
+**C.** The runner overlays changed controller/test/admission/guard files while importing other modules from the pinned base checkout. Tests use deterministic fixtures; this is a small source overlay rather than a full checkout.
 
-**U.** No full controller session, App Server, model, game, GUI, OS input, physical release measurement, or task effect is run. Passing these 16 tests supports the selected drain/recovery integration contracts only; Issue #59's live threat and task-effect gates remain open.
+**U.** No full controller session, App Server, model, game, GUI, OS input, physical release measurement, or live task effect is run. These tests cover local recovery contracts only; Issue #59's live threat and task-effect gates remain open.
 
 ## Result
 
-PASS. Both normal and optimized Python 3.13 runs completed 16/16 tests. Newer cases verify fail-closed timeout handling without a fresh full observation and prevent reader lookahead rows from being mistaken for ACK-wait-consumed events. The dependency checkout had no changes outside the listed experiment packages. The temporary overlay was removed by its context manager after the runs. Candidate file hashes and raw output are retained in `FREEZE.json`, `normal.*.txt`, `optimized.*.txt`, and `RESULT.json`.
+PASS. Python 3.13 completed 17/17 pending-drain tests and 9/9 overlap-controller tests in both normal and optimized modes against candidate head `38569db`. This includes the current ACK invalidation and initial-cover cancellation path. The dependency checkout had no changes outside the listed experiment packages. The temporary overlay was removed after each run. Candidate hashes and raw output are retained in `FREEZE.json`, per-suite output files, and `RESULT.json`.
 
 ## Reproduction
 
@@ -25,4 +25,4 @@ py -3.13 -B research/doom/v39_pr8643_overlay_regression_a05_20261008/run_suite.p
 py -3.13 -B research/doom/v39_pr8643_overlay_regression_a05_20261008/audit.py
 ```
 
-The runner needs only a small temporary overlay; it does not materialize a full worktree.
+The runner uses a small temporary overlay and does not materialize a full worktree.

@@ -3,7 +3,7 @@
   "issue": 59,
   "execution_id": "v39-pr8643-overlay-regression-a05-20261008",
   "dependency_base_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
-  "candidate_commit": "ce7f4a9f0eac5e38388372a2638c23734a19dee5",
+  "candidate_commit": "38569db07352a8d42e08fd6711ba32c77aca20a4",
   "allowed_output_prefixes": [
     "research/doom/v39_final_empty_recovery_integration_a01_20261008/",
     "research/doom/v39_stale_initial_cover_final_empty_a02_20261008/",
@@ -12,14 +12,6 @@
     "research/doom/v39_pr8643_overlay_regression_a05_20261008/"
   ],
   "overlay_paths": {
-    "research/doom/map01_overlap_controller_v39.py": {
-      "blob": "8313f1278aac3e286f2c074a2a919a9271b895d7",
-      "sha256": "c51f7707f245b1c2090968f7f9ed2ae4071ebacc3151714868f17bbbad709146"
-    },
-    "research/doom/test_map01_v39_pending_observation_drain.py": {
-      "blob": "c3e41f62c5824d50c7391dcabf8d4ea59aa70cd7",
-      "sha256": "31dccb4d2ad46f1c2b4b8ae533c2716b0fd8f2f56f6a82efc588682f0d336b11"
-    },
     "research/live_control/final_action_admission_v2.py": {
       "blob": "2078194e704d603c6bd864030cc570abc542455c",
       "sha256": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01"
@@ -39,11 +31,25 @@
     "research/live_control/executor_v12.py": {
       "blob": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
       "sha256": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+    },
+    "research/doom/map01_overlap_controller_v39.py": {
+      "blob": "5835a7a9114d6e253c24981dd1f3e68d2bd60b5b",
+      "sha256": "d57ac7540e9f7731e1aade48dea47786673204089e6c1998f593028d7d978e0c"
+    },
+    "research/doom/test_map01_v39_pending_observation_drain.py": {
+      "blob": "89cdd32a427f269f80793be03c5663492e278bf9",
+      "sha256": "89391053347c7a1d8c89bb8662dfa8e8cfe2708cb0b3684633583871c2251980"
+    },
+    "research/doom/test_map01_overlap_controller_v39.py": {
+      "blob": "ce4e9aa0d968391618fdbae6a6bd6842c6bb78d1",
+      "sha256": "f23cf4b7e830fe74050619728cea563d9c8164dccae8aa52e2ca6e5630fbd39e"
     }
   },
   "commands": [
     "py -3.13 -B -m unittest discover -s <temporary-overlay>/research/doom -p test_map01_v39_pending_observation_drain.py -v",
-    "py -3.13 -B -O -m unittest discover -s <temporary-overlay>/research/doom -p test_map01_v39_pending_observation_drain.py -v"
+    "py -3.13 -B -m unittest discover -s <temporary-overlay>/research/doom -p test_map01_overlap_controller_v39.py -v",
+    "py -3.13 -B -O -m unittest discover -s <temporary-overlay>/research/doom -p test_map01_v39_pending_observation_drain.py -v",
+    "py -3.13 -B -O -m unittest discover -s <temporary-overlay>/research/doom -p test_map01_overlap_controller_v39.py -v"
   ],
   "formal_allocation_invocations": 0,
   "live_app_or_os_input": false

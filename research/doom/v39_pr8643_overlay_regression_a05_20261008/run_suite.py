@@ -22,7 +22,7 @@ def frozen_blob(path, expected):
     return data
 
 
-def run_command(overlay, optimized):
+def run_command(overlay, optimized, pattern):
     package_doom = overlay / "research" / "doom"
     package_live = overlay / "research" / "live_control"
     env = os.environ.copy()
@@ -35,7 +35,7 @@ def run_command(overlay, optimized):
     if optimized:
         cmd.append("-O")
     cmd.extend(["-m", "unittest", "discover", "-s", str(package_doom),
-                "-p", "test_map01_v39_pending_observation_drain.py", "-v"])
+                "-p", pattern, "-v"])
     result = subprocess.run(cmd, cwd=REPO, env=env, capture_output=True, text=True)
     recorded_command = [arg.replace(str(overlay), "<temporary-overlay>") for arg in cmd]
     return {"command": recorded_command, "exit_code": result.returncode,
@@ -66,8 +66,13 @@ def main():
             target = overlay / path
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes(frozen_blob(path, expected))
-        normal = run_command(overlay, optimized=False)
-        optimized = run_command(overlay, optimized=True)
+        runs = {}
+        for pattern in ("test_map01_v39_pending_observation_drain.py",
+                        "test_map01_overlap_controller_v39.py"):
+            runs[pattern] = {
+                "normal": run_command(overlay, optimized=False, pattern=pattern),
+                "optimized": run_command(overlay, optimized=True, pattern=pattern),
+            }
 
     result = {
         "schema": "v39-pr8643-overlay-regression-result-v1",
@@ -75,17 +80,20 @@ def main():
         "dependency_base_commit": FREEZE["dependency_base_commit"],
         "dependency_tree_unchanged_outside_evidence": True,
         "overlay_paths": sorted(FREEZE["overlay_paths"]),
-        "normal": {key: value for key, value in normal.items()
-                   if key not in ("stdout", "stderr")},
-        "optimized": {key: value for key, value in optimized.items()
-                      if key not in ("stdout", "stderr")},
-        "decision": "PASS" if normal["exit_code"] == optimized["exit_code"] == 0 else "FAIL",
-        "scope": "Exact frozen PR files overlaid onto the retained dependency base, running the pending-observation drain unittest suite in normal and optimized Python. No full worktree, App Server, model, game, GUI, OS input, or live task.",
+        "runs": {pattern: {mode: {key: value for key, value in run.items()
+                                  if key not in ("stdout", "stderr")}
+                           for mode, run in paired.items()}
+                 for pattern, paired in runs.items()},
+        "decision": "PASS" if all(run["exit_code"] == 0
+                                   for paired in runs.values()
+                                   for run in paired.values()) else "FAIL",
+        "scope": "Exact frozen PR files overlaid onto the retained dependency base, running the pending-observation drain and overlap-controller unittest suites in normal and optimized Python. No full worktree, App Server, model, game, GUI, OS input, or live task.",
     }
-    (ROOT / "normal.stdout.txt").write_text(normal["stdout"], encoding="utf-8")
-    (ROOT / "normal.stderr.txt").write_text(normal["stderr"], encoding="utf-8")
-    (ROOT / "optimized.stdout.txt").write_text(optimized["stdout"], encoding="utf-8")
-    (ROOT / "optimized.stderr.txt").write_text(optimized["stderr"], encoding="utf-8")
+    for pattern, paired in runs.items():
+        stem = pattern.removesuffix(".py")
+        for mode, run in paired.items():
+            (ROOT / f"{stem}.{mode}.stdout.txt").write_text(run["stdout"], encoding="utf-8")
+            (ROOT / f"{stem}.{mode}.stderr.txt").write_text(run["stderr"], encoding="utf-8")
     (ROOT / "RESULT.json").write_text(json.dumps(result, indent=2) + "\n",
                                       encoding="utf-8")
     print(json.dumps(result, indent=2))

@@ -1,4 +1,4 @@
-"""Verify candidate source pins and both recorded regression-suite outcomes."""
+"""Verify candidate source pins and all recorded regression-suite outcomes."""
 import hashlib
 import json
 import re
@@ -22,11 +22,14 @@ assert RESULT["candidate_commit"] == FREEZE["candidate_commit"]
 assert RESULT["dependency_base_commit"] == FREEZE["dependency_base_commit"]
 assert RESULT["dependency_tree_unchanged_outside_evidence"] is True
 assert RESULT["decision"] == "PASS"
-assert RESULT["normal"]["exit_code"] == 0
-assert RESULT["optimized"]["exit_code"] == 0
-for name in ("normal", "optimized"):
-    output = (ROOT / f"{name}.stderr.txt").read_text(encoding="utf-8")
-    match = re.search(r"Ran (\d+) tests? in", output)
-    assert match and int(match.group(1)) == 16, (name, match.group(0) if match else "missing")
-    assert output.rstrip().endswith("OK"), name
-print("audit: PASS (7 frozen overlay files; normal and -O each ran 16 tests)")
+counts = {"test_map01_v39_pending_observation_drain.py": 17,
+          "test_map01_overlap_controller_v39.py": 9}
+for pattern, expected_count in counts.items():
+    for mode in ("normal", "optimized"):
+        assert RESULT["runs"][pattern][mode]["exit_code"] == 0
+        stem = pattern.removesuffix(".py")
+        output = (ROOT / f"{stem}.{mode}.stderr.txt").read_text(encoding="utf-8")
+        match = re.search(r"Ran (\d+) tests? in", output)
+        assert match and int(match.group(1)) == expected_count, (pattern, mode)
+        assert output.rstrip().endswith("OK"), (pattern, mode)
+print("audit: PASS (8 frozen overlay files; drain 17/17 and controller 9/9 in normal and -O)")

@@ -1,10 +1,11 @@
 {
   "schema": "v39-pr8643-overlay-regression-result-v1",
-  "candidate_commit": "ce7f4a9f0eac5e38388372a2638c23734a19dee5",
+  "candidate_commit": "38569db07352a8d42e08fd6711ba32c77aca20a4",
   "dependency_base_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
   "dependency_tree_unchanged_outside_evidence": true,
   "overlay_paths": [
     "research/doom/map01_overlap_controller_v39.py",
+    "research/doom/test_map01_overlap_controller_v39.py",
     "research/doom/test_map01_v39_pending_observation_drain.py",
     "research/live_control/executor_v12.py",
     "research/live_control/final_action_admission_v2.py",
@@ -12,37 +13,74 @@
     "research/live_control/running_action_guard_v2.py",
     "research/live_control/running_action_guard_v3.py"
   ],
-  "normal": {
-    "command": [
-      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
-      "-B",
-      "-m",
-      "unittest",
-      "discover",
-      "-s",
-      "<temporary-overlay>\\research\\doom",
-      "-p",
-      "test_map01_v39_pending_observation_drain.py",
-      "-v"
-    ],
-    "exit_code": 0
-  },
-  "optimized": {
-    "command": [
-      "C:\\Users\\user\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\\python.exe",
-      "-B",
-      "-O",
-      "-m",
-      "unittest",
-      "discover",
-      "-s",
-      "<temporary-overlay>\\research\\doom",
-      "-p",
-      "test_map01_v39_pending_observation_drain.py",
-      "-v"
-    ],
-    "exit_code": 0
+  "runs": {
+    "test_map01_v39_pending_observation_drain.py": {
+      "normal": {
+        "command": [
+          "<sys.executable>",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "<temporary-overlay>\\research\\doom",
+          "-p",
+          "test_map01_v39_pending_observation_drain.py",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      "optimized": {
+        "command": [
+          "<sys.executable>",
+          "-B",
+          "-O",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "<temporary-overlay>\\research\\doom",
+          "-p",
+          "test_map01_v39_pending_observation_drain.py",
+          "-v"
+        ],
+        "exit_code": 0
+      }
+    },
+    "test_map01_overlap_controller_v39.py": {
+      "normal": {
+        "command": [
+          "<sys.executable>",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "<temporary-overlay>\\research\\doom",
+          "-p",
+          "test_map01_overlap_controller_v39.py",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      "optimized": {
+        "command": [
+          "<sys.executable>",
+          "-B",
+          "-O",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "<temporary-overlay>\\research\\doom",
+          "-p",
+          "test_map01_overlap_controller_v39.py",
+          "-v"
+        ],
+        "exit_code": 0
+      }
+    }
   },
   "decision": "PASS",
-  "scope": "Exact frozen PR files overlaid onto the retained dependency base, running the pending-observation drain unittest suite in normal and optimized Python. No full worktree, App Server, model, game, GUI, OS input, or live task."
+  "scope": "Exact frozen PR files overlaid onto the retained dependency base, running the pending-observation drain and overlap-controller unittest suites in normal and optimized Python. No full worktree, App Server, model, game, GUI, OS input, or live task."
 }
