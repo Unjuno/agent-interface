@@ -1,0 +1,30 @@
+{
+  "id": "6526-SQLITE-INTERRUPT-PENDING-WRITE-7772-C01",
+  "claim": 5969168458,
+  "frozen_utc": "2026-10-03T12:30:35.249446+00:00",
+  "source": {
+    "bytes": 4713,
+    "sha256": "4bd718c3c33ce420724e48929a167b63d2d2cdb0da481ca261cf959d872909d6"
+  },
+  "runner": {
+    "bytes": 1807,
+    "sha256": "31c65692b5fecbd41d0bcbbafdf204445483cf53a7466d222d10565b2e4d0695"
+  },
+  "python": {
+    "bytes": 103192,
+    "sha256": "5f7b89a612c9b8af1d6456cdfcd1dbe5ca630849e79aebced9bee9a6694952ec"
+  },
+  "python_version": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "sqlite_version": "3.45.1",
+  "sqlite_module": {
+    "bytes": 120600,
+    "sha256": "ff6a2a2f38b21b7784f97d604c99961d8c07ef455f7908110a4e893835d42b76"
+  },
+  "ordered_cases": [
+    "READ_INTERRUPT",
+    "WRITE_INTERRUPT",
+    "HEALTHY_WRITE"
+  ],
+  "D": "read9/active1/COMMITsuccess/end1;write9/inactive0/COMMIT_SQLITE_ERROR/end0;healthyactive2/COMMITsuccess/end2; all three fresh endpoints0 and complete raw/capsules. Otherwise first FAIL, never replay to get PASS.",
+  "scope": "known returned local errors/invented DBs; not COMMIT_BUSY or lost response or cancellation-to-commit authority; no statement resend"
+}
