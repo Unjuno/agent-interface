@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8622 T0 A02 common-cause degradation policy comparison](degradation_policy_compare_8622_a02_20261008/REPORT.md) — fixture/auditor PASS on the three required arms and 10 cases (6 independence overclaims / 4 cases; dependency-aware unsupported 0; unknown fail-closed admissions 0), but `HOLD_RESULT_CUSTODY`: terminal wrapping/truncation prevented recovery of exact stdout hashes; no raw-output files or retries. Host-only; no runtime/product claim.
+
 - [Issue #8604 T0 A03 WSLc byte-reproducibility transfer](handoff_choice_complexity_8604_t0_a03_wslc_20261008/REPORT.md) — `PASS_TRANSFER_SCOPED`: exact A02 candidate/audit bytes reproduced in WSLc; 24 cards/120 keys independently reconstructed, zero errors. cgroup/swap warning retained; resource-limit enforcement not established. No human, latency, or product claim.
 
 - [Issue #8598 T0 A01 censored opportunity tail regret](tail_regret_censoring_8598_t0_a01_20261008/REPORT.md) — `FAIL_METHOD`, audit integrity PASS: 768 cohorts/24,576 opportunities reconstructed; 10/128 strict IPCW-correct vs 20/128 resolved-only, 768/768 partial-tail coverage and zero false unique ranks. Synthetic host CPU only; no live/product claim.
