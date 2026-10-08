@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/private/tmp/agent-interface-8636-a02-audit-20261009/research/analysis/relative_view_rotation_features_8636_t0_a02_audit_20261009/audit.py", line 387, in <module>
+    if __name__=="__main__": main()
+                             ^^^^^^
+  File "/private/tmp/agent-interface-8636-a02-audit-20261009/research/analysis/relative_view_rotation_features_8636_t0_a02_audit_20261009/audit.py", line 378, in main
+    summary=audit(out)
+            ^^^^^^^^^^
+  File "/private/tmp/agent-interface-8636-a02-audit-20261009/research/analysis/relative_view_rotation_features_8636_t0_a02_audit_20261009/audit.py", line 287, in audit
+    raise ValueError(f"status mismatch trial={r['trial']} step={r['step']} actual={r['status']} expected={expected_status} fault={active_fault} arm={truth['arm']}")
+ValueError: status mismatch trial=pure_yaw-30030-viewstate_oracle step=3 actual=ACTION expected=STOP fault=None arm=viewstate_oracle
