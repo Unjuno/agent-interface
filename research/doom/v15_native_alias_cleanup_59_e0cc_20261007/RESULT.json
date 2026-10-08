@@ -1,0 +1,145 @@
+{
+  "source_head": "d9dc9dbfa09d89f10961e7cd7a8f52283b1c24c1",
+  "source_main": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "classification": "Scoped native behavior supported by additive saved audit; original frozen audit remains FAIL",
+  "execution": {
+    "recorded_utc": "2026-10-07T09:20:26.724430+00:00",
+    "native_candidate_invocations": 1,
+    "native_candidate_exit_code": 0,
+    "native_run_started": "2026-10-07T09:15:45Z",
+    "native_run_ended": "2026-10-07T09:15:46Z",
+    "raw_sha256": "6b74aa9e466f8cbddf2569cafd292fd3ca7f881163e3f05e4ab2f90fb9d3df9a",
+    "original_auditor": {
+      "exit_code": 1,
+      "status": "FAIL",
+      "passed": 89,
+      "total": 90,
+      "failure": "schema_exception.KeyError:'original_full_keymap_rows'",
+      "mutation_controls_with_new_failure": 2,
+      "mutation_controls": 8
+    },
+    "additive_saved_auditor_v2": {
+      "exit_code": 0,
+      "status": "PASS_SAVED_NATIVE_ALIAS_CLEANUP_V2",
+      "passed": 188,
+      "total": 188,
+      "mutations_rejected": 8,
+      "mutations": 8
+    },
+    "source_files": 95,
+    "loaded_source_files": 39,
+    "frozen_inputs_unchanged": true,
+    "observations": 11,
+    "artifacts": [
+      {
+        "bytes": 4336,
+        "path": "backend-artifacts/001.ait",
+        "sha256": "7065d1613605ef8b161365b9bcc5bb61b851d8c4f247697577f40ad1f421915f"
+      },
+      {
+        "bytes": 4100,
+        "path": "backend-artifacts/001.png",
+        "sha256": "d9dc56084deb7e3839d2a0ccd35c0ea6764663d6adc5a133ad033aaf0fe170d8"
+      },
+      {
+        "bytes": 317,
+        "path": "backend-artifacts/002.ait",
+        "sha256": "fc493123d114873186304ec940d108608572868f9ec80f6993e49f6bc451e791"
+      },
+      {
+        "bytes": 328,
+        "path": "backend-artifacts/003.ait",
+        "sha256": "9a2d0ec371366892c0e267c041935848b63a8270555baae61748fd23acb6a062"
+      },
+      {
+        "bytes": 328,
+        "path": "backend-artifacts/004.ait",
+        "sha256": "bcc3bec329326a4d658f042dc291c62b3931c60f4929074f58bf1e92a88aaf75"
+      },
+      {
+        "bytes": 328,
+        "path": "backend-artifacts/005.ait",
+        "sha256": "0ca250f7f08eabd5f5f4e2fc1020a7162974ff1b17e148d3bee3c257c3fd899f"
+      },
+      {
+        "bytes": 328,
+        "path": "backend-artifacts/006.ait",
+        "sha256": "8dfba1dd008695aef16cdb608992fb5ffd489c40b10cad18b942ef35ff9fbd18"
+      },
+      {
+        "bytes": 326,
+        "path": "backend-artifacts/007.ait",
+        "sha256": "7ae322f770645f409a82907fa638ed5d4b25023dce3b065f44b2b80a56138923"
+      },
+      {
+        "bytes": 337,
+        "path": "backend-artifacts/008.ait",
+        "sha256": "884bf70ab5b9f1c085e1eacd1180a934ee9fc8464a2af49f5300f627661b7bff"
+      },
+      {
+        "bytes": 337,
+        "path": "backend-artifacts/009.ait",
+        "sha256": "5fb7f960b3be58a3eebea7360538434aafa76c01821b3f098930db9d3c8c043d"
+      },
+      {
+        "bytes": 338,
+        "path": "backend-artifacts/010.ait",
+        "sha256": "aadfdd452cc448a9b878a31167dbad123de32e3c22afbb2a3fecca63739068c6"
+      },
+      {
+        "bytes": 339,
+        "path": "backend-artifacts/011.ait",
+        "sha256": "edb7906c95efef9115343fa449b7b77a54e47a77c225240caf44475a895e6cc8"
+      }
+    ],
+    "fixture_repair": {
+      "path": "native_alias_probe_v2.py",
+      "sha256": "510dd24a3ac8ca914e2ea909bd83009fe2e857fa346b01c0fd62e98818f3324c",
+      "change": "final mapping_setup assignment changed to update, retaining incremental full arrays",
+      "verification": "syntax only; not invoked",
+      "frozen_driver_unchanged": true
+    },
+    "teardown": {
+      "postrun_receipt": "postrun-readback.json",
+      "vm_receipt": "vm-stop.json",
+      "vm": "stopped",
+      "unit": "inactive",
+      "xvfb_processes": []
+    },
+    "scientific_scope": "production measured Backend/Executor/owner and private artificial Xvfb alias map only; no live/game/model/physical keyboard/task/effect/efficiency claim"
+  },
+  "artifact": {
+    "path": "evidence.tar.xz",
+    "bytes": 237688,
+    "sha256": "139329673d6d95cf2b9bc1edc126ec7bb499a6adc782031b4a12b12e44e2078f",
+    "members": 407,
+    "member_bytes": 7770224,
+    "projected_paths": [
+      "mutations-v1/RESULT.json",
+      "mutations-v2/RESULT.json"
+    ]
+  },
+  "review_role": "producer authored by bugbot, separate saved auditor by root, peer spot-check coauthor; no nonauthor quorum vote",
+  "merge": "not performed",
+  "scope_limits": [
+    "artificial private Xvfb map",
+    "no physical keyboard or application-consumption proof",
+    "no V39 controller, Session launcher, model, game or live allocation",
+    "no threat/task-effect/useful-feedback or performance claim",
+    "original full-map fields overwritten; original/server map reconstructed from complete248changed rows",
+    "exact submitted request array relies on frozen driver source, not direct raw field",
+    "prior #8094 native FAIL337/338 unchanged"
+  ],
+  "publication_validation": {
+    "workspace_tree_methods_passed": 21,
+    "workspace_index_method_passed": 1,
+    "workspace_index": "PASS160top-level directories",
+    "initial_setup_errors": [
+      "Test invocation from chat cwd: research import unavailable",
+      "Package invocation: one index test module needed research on sys.path;21tree methods passed; corrected direct-file invocation passed the remaining1method"
+    ],
+    "private_full_log": "work/v15-native-alias-e0cc-20261007/publication-validation.json",
+    "full_runtime_suite": "not repeated; only new inert evidence paths, frozen95source images unchanged",
+    "github_ci": "not claimed for this new evidence head"
+  }
+}
