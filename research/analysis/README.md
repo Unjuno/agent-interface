@@ -4,6 +4,8 @@
 
 - [Issue #1998 A05 Inkscape task-marker crop OCR](inkscape_task_marker_crop_1998_t0_a05_20261009/REPORT.md) — `HOLD_RUNNER_ERROR`: frozen candidate exited before Tesseract because of an unbound local variable; auditor was not invoked, retries 0, and no scientific crop result is claimed.
 
+- [Issue #1998 A06 Chromium token-cue crop OCR](chromium_task_token_crop_1998_t0_a06_20261009/REPORT.md) — `HOLD_RUNNER_ERROR`: frozen wrapper stopped before candidate startup because the results directory already existed; candidate/auditor/OCR 0/0/0, retries 0, and no scientific crop result is claimed.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -489,6 +491,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`cex_qualified_guard_refinement_6645_t0_v1/`](cex_qualified_guard_refinement_6645_t0_v1/)
 - [`change_cue_contrast_1931_v1/`](change_cue_contrast_1931_v1/)
 - [`checkpoint_delivery_6089_20261003_01a0ff59/`](checkpoint_delivery_6089_20261003_01a0ff59/)
+- [`chromium_task_token_crop_1998_t0_a06_20261009/`](chromium_task_token_crop_1998_t0_a06_20261009/)
 - [`circuit_rejection_cost_5375_a01_20261004/`](circuit_rejection_cost_5375_a01_20261004/)
 - [`circuit_rejection_cost_5375_a02_20261004/`](circuit_rejection_cost_5375_a02_20261004/)
 - [`claim_disk_recovery_6509_01a0ff58/`](claim_disk_recovery_6509_01a0ff58/)
