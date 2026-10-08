@@ -1,0 +1,38 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import importlib.util,json,hashlib,copy,os
+W=Path(__file__).parent;root=W.parents[1];S=root/'work/owned_io_6501_p02_frozen';O=root/'outputs/owned_io_6501_p02_native';H=lambda b:hashlib.sha256(b).hexdigest();start=datetime.now(timezone.utc).isoformat()
+freeze=json.loads((S/'FREEZE.json').read_text(encoding='utf8'));pins={r['name']:r for r in freeze['sources']}
+for name,p in pins.items():assert H((S/name).read_bytes())==p['sha256']
+spec=importlib.util.spec_from_file_location('fixed_data_auditor',S/'audit_p02.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+receipts=json.loads((O/'SUPERVISOR_RESULT.json').read_text(encoding='utf8'));assert len(receipts)==2
+results=[];raws={}
+for mode,receipt in zip(freeze['cells'],receipts):
+    assert receipt['exit']==0 and receipt['child_reaped'] is True and receipt['stop_reason'] is None
+    for stream in ('stdout','stderr'):
+        b=(O/(mode+'-supervisor')/stream).read_bytes();assert len(b)==receipt['streams'][stream]['bytes'] and H(b)==receipt['streams'][stream]['sha256']
+    b=(O/(mode+'-native')/'RESULT.json').read_bytes();r=json.loads(b);raws[mode]=r
+    assert r['pid']==receipt['pid'] and type(r['pid']) is int and r['allocation']==freeze['allocation'] and r['mode']==mode
+    assert r['source_sha256']==pins['native_driver_p02.py']['sha256']
+    for row in r['loaded_sources']:
+        name=row['module']+'.py';assert Path(row['path']).resolve()==(S/name).resolve();image=(O/(mode+'-native')/(row['module']+'.loaded-source.py.txt')).read_bytes()
+        assert len(image)==row['bytes'] and H(image)==row['sha256']==pins[name]['sha256']
+    result=module.audit(r);results.append(dict(mode=mode,pid=r['pid'],audit=result,raw_sha256=H(b),events=len(r['events']),source_identity_scope='source path/adjacent full bytes, not loaded bytecode attestation'))
+controls=[];base=raws['pending_cancel']
+for name in ('api_failed_pending','early_close','worker_normal','summary_bool_count','missing_caller','cleanup_write'):
+    r=copy.deepcopy(base)
+    if name=='api_failed_pending':next(e for e in r['events'] if e['kind']=='pending_observation' and e.get('pending') is True)['api_success']=False
+    elif name=='early_close':
+        a=next(i for i,e in enumerate(r['events']) if e['kind']=='thread_join');b=next(i for i,e in enumerate(r['events']) if e['kind']=='close_handle');r['events'][a],r['events'][b]=r['events'][b],r['events'][a]
+    elif name=='worker_normal':next(e for e in r['events'] if e['kind']=='read_return')['result']=[True,0,1,'44']
+    elif name=='summary_bool_count':r['controller']['worker_completion']['count']=False
+    elif name=='missing_caller':r['events']=[e for e in r['events'] if e['kind']!='caller_cancel_receipt']
+    else:r['cleanup_write']=True
+    clocks=sorted(e['monotonic_ns'] for e in r['events'])
+    for i,e in enumerate(r['events']):e.update(seq=i,monotonic_ns=clocks[i])
+    target=O/'controls'/(name+'.json');target.parent.mkdir(exist_ok=True);target.write_text(json.dumps(r,indent=2)+'\n',encoding='utf8')
+    try:module.audit(r)
+    except ValueError as exc:controls.append(dict(name=name,refused=str(exc),sha256=H(target.read_bytes())))
+    else:raise AssertionError('contradiction accepted: '+name)
+report=dict(pid=os.getpid(),start=start,end=datetime.now(timezone.utc).isoformat(),status='PASS_TWO_NATIVE_CELLS_SIX_SAVED_CONTROLS',results=results,controls=controls,new_native_executions=0,formal_replays=0,main_requests=0)
+(O/'AUDIT.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf8');print(json.dumps(report))
