@@ -262,6 +262,10 @@ class DoomCoverSignalPairMonitor:
                 observation, "signal_pair_nonadvancing_capture_time", signals)
         self.last_sequence = observation["sequence"]
         self.last_capture_ns = observation["capture_ns"]
+        self.last_event_kind = event_kind
+        self.last_binding = binding
+        self.last_frame_rgb_sha256 = observation.get("frame_rgb_sha256")
+        self.last_signals = signals
 
         outcomes = {name: guard.evaluate(signals[name])
                     for name, guard in self.guards.items()}
@@ -768,6 +772,25 @@ MAX_PENDING_OBSERVATION_EVENTS = 256
 MAX_PENDING_OBSERVATION_RECOVERY_BATCHES = 4
 
 
+def prefer_observation_invalidation(current, candidate):
+    if candidate is None:
+        return current
+    if (current is None or candidate.get("reason") ==
+            "signal_pair_duplicate_epoch_mismatch"):
+        return candidate
+    return current
+
+
+def observe_cover_submission_events(events, observation_monitor):
+    event_types = getattr(observation_monitor, "event_types", {"observation"})
+    invalidation = None
+    for row in events:
+        if row.get("event") in event_types:
+            invalidation = prefer_observation_invalidation(
+                invalidation, observation_monitor.observe(row))
+    return invalidation
+
+
 def drain_pending_observation_events(incoming, observation_monitor, terminal_id):
     """Process events already queued when a planner future becomes done."""
     latest = None
@@ -784,9 +807,9 @@ def drain_pending_observation_events(incoming, observation_monitor, terminal_id)
             break
         if row.get("event") == "observation":
             latest = row
-        if (invalidation is None and observation_monitor is not None and
-                row.get("event") in event_types):
-            invalidation = observation_monitor.observe(row)
+        if observation_monitor is not None and row.get("event") in event_types:
+            invalidation = prefer_observation_invalidation(
+                invalidation, observation_monitor.observe(row))
         if row.get("event") == "terminal" and row.get("id") == terminal_id:
             terminal = row
     return {"latest": latest, "terminal": terminal, "invalidation": invalidation,
@@ -806,8 +829,8 @@ def settle_pending_observation_backlog(incoming, latest, terminal_id,
             incoming, observation_monitor, terminal_id)
         if drained["latest"] is not None:
             latest = drained["latest"]
-        if invalidation is None:
-            invalidation = drained["invalidation"]
+        invalidation = prefer_observation_invalidation(
+            invalidation, drained["invalidation"])
         batches += 1
         if not drained["pending_events"]:
             return {"latest": latest, "batches": batches, "exhausted": False,
@@ -843,18 +866,15 @@ def recover_stale_cover_submission(rejected, *, identifier, expected_sequence,
             "latest observation sequence required before input" or
             type(expected_sequence) is not int):
         raise ValueError("exact stale initial-cover rejection required")
-    event_types = getattr(observation_monitor, "event_types", {"observation"})
-    invalidation = None
-    for row in consumed_events:
-        if row.get("event") in event_types and invalidation is None:
-            invalidation = observation_monitor.observe(row)
+    invalidation = observe_cover_submission_events(
+        consumed_events, observation_monitor)
     recovery = recover_pending_observation_backlog(
         incoming, latest, expected_sequence, identifier, wait,
         observation_monitor=observation_monitor)
     if recovery["exhausted"]:
         raise RuntimeError("stale initial-cover recovery budget exhausted")
-    if recovery.get("invalidation") is not None:
-        invalidation = recovery["invalidation"]
+    invalidation = prefer_observation_invalidation(
+        invalidation, recovery.get("invalidation"))
     fresh = recovery["latest"]
     if (type(fresh) is not dict or type(fresh.get("sequence")) is not int or
             fresh["sequence"] <= expected_sequence):
@@ -877,11 +897,8 @@ def submit_initial_cover_with_recovery(submit, *, identifier, latest_reader,
     if type(ack) is not dict or ack.get("event") not in ("accepted", "rejected"):
         raise ValueError("initial cover submit returned an invalid acknowledgement")
     if ack["event"] == "accepted":
-        event_types = getattr(observation_monitor, "event_types", {"observation"})
-        invalidation = None
-        for row in consumed_events:
-            if row.get("event") in event_types and invalidation is None:
-                invalidation = observation_monitor.observe(row)
+        invalidation = observe_cover_submission_events(
+            consumed_events, observation_monitor)
         return {"ack": ack, "latest": latest_reader(),
                 "submitted_sequence": submitted_sequence,
                 "recovery": None, "invalidation": invalidation}

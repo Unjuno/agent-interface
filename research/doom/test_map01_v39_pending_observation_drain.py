@@ -190,6 +190,68 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(monitor.last_sequence, 12)
         self.assertEqual(consumed, [full])
 
+    def test_accepted_ack_validates_pair_after_first_hard_half_invalidates(self):
+        binding = {"focus": 7, "surface": 9,
+                   "geometry": [0, 0, 640, 480]}
+        hard_signals = {
+            "health": typed_signal("health", 50, 12, 1_100_000_000, binding),
+            "ammo": typed_signal("ammo", 4, 12, 1_100_000_000, binding),
+        }
+        disagreeing_signals = dict(hard_signals)
+        disagreeing_signals["health"] = typed_signal(
+            "health", 100, 12, 1_100_000_000, binding)
+        typed = {"event": "typed_observation", "sequence": 12,
+                 "capture_ns": 1_100_000_000, "pointer_binding": binding,
+                 "frame_rgb_sha256": "a" * 64, "signals": hard_signals}
+        full = dict(typed, event="observation", signals=disagreeing_signals)
+        latest = dict(full)
+        monitor = DoomCoverSignalPairMonitor(
+            {"health": SignalGuard("health", 100, 11, 1_000_000_000, 60),
+             "ammo": SignalGuard("ammo", 4, 11, 1_000_000_000, 1)},
+            health_reader=SignalReader("health"),
+            ammo_reader=SignalReader("ammo"))
+
+        def submit(consumed_events):
+            consumed_events.extend([typed, full])
+            return {"event": "accepted", "id": "cover-0"}
+
+        result = submit_initial_cover_with_recovery(
+            submit, identifier="cover-0", latest_reader=lambda: latest,
+            incoming=queue.Queue(), wait=lambda predicate: self.fail("unexpected wait"),
+            observation_monitor=monitor)
+
+        self.assertEqual(result["invalidation"]["reason"],
+                         "signal_pair_duplicate_epoch_mismatch")
+
+    def test_backlog_drain_checks_pair_after_first_hard_half_invalidates(self):
+        binding = {"focus": 7, "surface": 9,
+                   "geometry": [0, 0, 640, 480]}
+        hard_signals = {
+            "health": typed_signal("health", 50, 12, 1_100_000_000, binding),
+            "ammo": typed_signal("ammo", 4, 12, 1_100_000_000, binding),
+        }
+        disagreeing_signals = dict(hard_signals)
+        disagreeing_signals["health"] = typed_signal(
+            "health", 100, 12, 1_100_000_000, binding)
+        typed = {"event": "typed_observation", "sequence": 12,
+                 "capture_ns": 1_100_000_000, "pointer_binding": binding,
+                 "frame_rgb_sha256": "a" * 64, "signals": hard_signals}
+        full = dict(typed, event="observation", signals=disagreeing_signals)
+        incoming = queue.Queue()
+        incoming.put(typed)
+        incoming.put(full)
+        monitor = DoomCoverSignalPairMonitor(
+            {"health": SignalGuard("health", 100, 11, 1_000_000_000, 60),
+             "ammo": SignalGuard("ammo", 4, 11, 1_000_000_000, 1)},
+            health_reader=SignalReader("health"),
+            ammo_reader=SignalReader("ammo"))
+
+        result = drain_pending_observation_events(incoming, monitor, "cover-0")
+
+        self.assertEqual(result["invalidation"]["reason"],
+                         "signal_pair_duplicate_epoch_mismatch")
+        self.assertTrue(incoming.empty())
+
     def test_queued_hard_crossing_precedes_completed_answer(self):
         incoming = queue.Queue()
         incoming.put({"event": "typed_observation", "sequence": 12})
@@ -375,7 +437,7 @@ class PendingObservationDrainTests(unittest.TestCase):
             self.assertEqual(recovered["submitted_sequence"], 11)
             self.assertEqual(recovered["invalidation"]["reason"],
                              "health:below_hard_minimum")
-            self.assertEqual(monitor.seen, [12])
+            self.assertEqual(monitor.seen, [12, 12])
             executor.submit("fresh-plan", [{"op": "observe"}],
                             recovered["latest"]["sequence"], deadline)
 
