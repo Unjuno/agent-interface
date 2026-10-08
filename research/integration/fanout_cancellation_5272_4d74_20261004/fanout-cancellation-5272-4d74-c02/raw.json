@@ -1,0 +1,954 @@
+{
+  "rows": [
+    {
+      "case": "cooperative",
+      "policy": "REQUEST_ONLY",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 26101,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 50566,
+          "live": [
+            "original"
+          ],
+          "decision": "FAIL"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 54128,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 55097,
+          "live": [
+            "original"
+          ],
+          "basis": "cancel_request_or_done"
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 71980,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 73312,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 74655,
+          "live": []
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 78027,
+          "live": [
+            "replacement"
+          ]
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 87341,
+          "live": [
+            "replacement"
+          ],
+          "done": true
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 10300076,
+          "live": []
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 10309448,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": true,
+      "peak_live": 1
+    },
+    {
+      "case": "cooperative",
+      "policy": "TERMINAL_RELEASE",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 23305,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 38189,
+          "live": [
+            "original"
+          ],
+          "decision": "FAIL"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 40805,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 50242,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 51273,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 52080,
+          "live": []
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 58520,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 59766,
+          "live": [],
+          "basis": "terminal_and_release"
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 66700,
+          "live": [
+            "replacement"
+          ]
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 10335502,
+          "live": []
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 10346046,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": true,
+      "peak_live": 1
+    },
+    {
+      "case": "slow_cleanup",
+      "policy": "REQUEST_ONLY",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 22117,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 38572,
+          "live": [
+            "original"
+          ],
+          "decision": "FAIL"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 41039,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 42144,
+          "live": [
+            "original"
+          ],
+          "basis": "cancel_request_or_done"
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 56909,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 65258,
+          "live": [
+            "original",
+            "replacement"
+          ]
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 10270127,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 40553385,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 40558192,
+          "live": []
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 40566300,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 40569334,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": true,
+      "peak_live": 2
+    },
+    {
+      "case": "slow_cleanup",
+      "policy": "TERMINAL_RELEASE",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 21946,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 37477,
+          "live": [
+            "original"
+          ],
+          "decision": "FAIL"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 39841,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 49025,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 40254466,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 40260127,
+          "live": []
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 40267075,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 40269341,
+          "live": [],
+          "basis": "terminal_and_release"
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 40284525,
+          "live": [
+            "replacement"
+          ]
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 50484801,
+          "live": []
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 50495743,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": true,
+      "peak_live": 1
+    },
+    {
+      "case": "suppressed_late",
+      "policy": "REQUEST_ONLY",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 22167,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 36844,
+          "live": [
+            "original"
+          ],
+          "decision": "FAIL"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 38846,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 39756,
+          "live": [
+            "original"
+          ],
+          "basis": "cancel_request_or_done"
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 51442,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 57650,
+          "live": [
+            "original",
+            "replacement"
+          ]
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 10249700,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "late_result",
+          "t_ns": 40603258,
+          "live": [
+            "original"
+          ],
+          "result": "PASS"
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 40611022,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 40612615,
+          "live": []
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 40619660,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 40622403,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": true,
+      "peak_live": 2
+    },
+    {
+      "case": "suppressed_late",
+      "policy": "TERMINAL_RELEASE",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 23326,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 38927,
+          "live": [
+            "original"
+          ],
+          "decision": "FAIL"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 41165,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 49482,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "late_result",
+          "t_ns": 40235981,
+          "live": [
+            "original"
+          ],
+          "result": "PASS"
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 40244115,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 40245645,
+          "live": []
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 40252711,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 40254121,
+          "live": [],
+          "basis": "terminal_and_release"
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 40270254,
+          "live": [
+            "replacement"
+          ]
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 50486237,
+          "live": []
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 50496809,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": true,
+      "peak_live": 1
+    },
+    {
+      "case": "completion_race",
+      "policy": "REQUEST_ONLY",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 24031,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 35833,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 36510,
+          "live": []
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 40212,
+          "live": [],
+          "decision": "FAIL"
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 41566,
+          "live": [],
+          "basis": "cancel_request_or_done"
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 72708,
+          "live": [
+            "replacement"
+          ]
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 83089,
+          "live": [
+            "replacement"
+          ],
+          "done": true
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 10318228,
+          "live": []
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 10327381,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": true,
+      "peak_live": 1
+    },
+    {
+      "case": "completion_race",
+      "policy": "TERMINAL_RELEASE",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 20893,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 31733,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 32441,
+          "live": []
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 35590,
+          "live": [],
+          "decision": "FAIL"
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 37032,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 38281,
+          "live": [],
+          "basis": "terminal_and_release"
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 42965,
+          "live": [
+            "replacement"
+          ]
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 10215117,
+          "live": []
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 10224414,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": true,
+      "peak_live": 1
+    },
+    {
+      "case": "missing_release",
+      "policy": "REQUEST_ONLY",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 32805,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 47289,
+          "live": [
+            "original"
+          ],
+          "decision": "FAIL"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 49491,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 50584,
+          "live": [
+            "original"
+          ],
+          "basis": "cancel_request_or_done"
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 63804,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 65339,
+          "live": []
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 68476,
+          "live": [
+            "replacement"
+          ]
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 75048,
+          "live": [
+            "replacement"
+          ],
+          "done": true
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 10280475,
+          "live": []
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 10289753,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": false,
+      "peak_live": 1
+    },
+    {
+      "case": "missing_release",
+      "policy": "TERMINAL_RELEASE",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 20251,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 34006,
+          "live": [
+            "original"
+          ],
+          "decision": "FAIL"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 36267,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 43706,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 45325,
+          "live": []
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 50749,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "slot_hold",
+          "t_ns": 52033,
+          "live": [],
+          "reason": "release_unavailable"
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 52997,
+          "live": [],
+          "decision": "FAIL"
+        }
+      ],
+      "decision": "FAIL",
+      "release_observed": false,
+      "peak_live": 1
+    },
+    {
+      "case": "mandatory_unfinished",
+      "policy": "REQUEST_ONLY",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 6779,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 13180,
+          "live": [
+            "original"
+          ],
+          "decision": "UNKNOWN"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 14692,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 15629,
+          "live": [
+            "original"
+          ],
+          "basis": "cancel_request_or_done"
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 23264,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 28363,
+          "live": [
+            "original",
+            "replacement"
+          ]
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 10178338,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 40345188,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 40351277,
+          "live": []
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 40359952,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 40363428,
+          "live": [],
+          "decision": "UNKNOWN"
+        }
+      ],
+      "decision": "UNKNOWN",
+      "release_observed": true,
+      "peak_live": 2
+    },
+    {
+      "case": "mandatory_unfinished",
+      "policy": "TERMINAL_RELEASE",
+      "events": [
+        {
+          "event": "worker_start",
+          "t_ns": 24163,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "decision_sealed",
+          "t_ns": 41524,
+          "live": [
+            "original"
+          ],
+          "decision": "UNKNOWN"
+        },
+        {
+          "event": "cancel_requested",
+          "t_ns": 44059,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "cancel_observed",
+          "t_ns": 54076,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "release_receipt",
+          "t_ns": 40223442,
+          "live": [
+            "original"
+          ]
+        },
+        {
+          "event": "worker_terminal",
+          "t_ns": 40229186,
+          "live": []
+        },
+        {
+          "event": "task_joined",
+          "t_ns": 40236574,
+          "live": [],
+          "done": true
+        },
+        {
+          "event": "slot_refunded",
+          "t_ns": 40238478,
+          "live": [],
+          "basis": "terminal_and_release"
+        },
+        {
+          "event": "replacement_start",
+          "t_ns": 40253350,
+          "live": [
+            "replacement"
+          ]
+        },
+        {
+          "event": "replacement_terminal",
+          "t_ns": 50452609,
+          "live": []
+        },
+        {
+          "event": "cell_terminal",
+          "t_ns": 50463440,
+          "live": [],
+          "decision": "UNKNOWN"
+        }
+      ],
+      "decision": "UNKNOWN",
+      "release_observed": true,
+      "peak_live": 1
+    }
+  ],
+  "python": "3.12.15",
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "scope": "real asyncio coroutines, logical fixture release only; no backend resource certificate"
+}

@@ -1,0 +1,25 @@
+test_collection_requires_all_three_exact_terminal_exits (test_probe.Probe.test_collection_requires_all_three_exact_terminal_exits) ... FAIL
+test_observer_has_required_epoch_file (test_probe.Probe.test_observer_has_required_epoch_file) ... FAIL
+
+======================================================================
+FAIL: test_collection_requires_all_three_exact_terminal_exits (test_probe.Probe.test_collection_requires_all_three_exact_terminal_exits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_probe.py", line 9, in test_collection_requires_all_three_exact_terminal_exits
+    self.assertTrue(collected(good))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_observer_has_required_epoch_file (test_probe.Probe.test_observer_has_required_epoch_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_probe.py", line 15, in test_observer_has_required_epoch_file
+    self.assertIn('--epoch-file',args)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '--epoch-file' not found in []
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (failures=2)

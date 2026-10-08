@@ -1,0 +1,163 @@
+{
+  "status": "PASS_SCOPED_SEPARATE_SAVED_DATA_ORACLE",
+  "observed_utc": "2026-10-03T07:49:08.653421+00:00",
+  "actual_check_records": [
+    {
+      "label": "red-new-boundary",
+      "actual_exit_code": 1,
+      "tap": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "witness_rows": 0,
+      "started_utc": "2026-10-03T07:34:07.609762+00:00",
+      "ended_utc": "2026-10-03T07:34:07.994568+00:00"
+    },
+    {
+      "label": "red-boundary-fixture-repair",
+      "actual_exit_code": 1,
+      "tap": {
+        "tests": 2,
+        "pass": 1,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "witness_rows": 2,
+      "started_utc": "2026-10-03T07:35:58.767984+00:00",
+      "ended_utc": "2026-10-03T07:35:59.087269+00:00"
+    },
+    {
+      "label": "green-new-boundary",
+      "actual_exit_code": 0,
+      "tap": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "witness_rows": 2,
+      "started_utc": "2026-10-03T07:36:39.777173+00:00",
+      "ended_utc": "2026-10-03T07:36:40.105691+00:00"
+    },
+    {
+      "label": "green-focused19",
+      "actual_exit_code": 0,
+      "tap": {
+        "tests": 19,
+        "pass": 19,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "witness_rows": 2,
+      "started_utc": "2026-10-03T07:38:45.263313+00:00",
+      "ended_utc": "2026-10-03T07:38:46.059358+00:00"
+    },
+    {
+      "label": "green-combined22",
+      "actual_exit_code": 0,
+      "tap": {
+        "tests": 22,
+        "pass": 22,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "witness_rows": 2,
+      "started_utc": "2026-10-03T07:45:42.305436+00:00",
+      "ended_utc": "2026-10-03T07:45:43.162318+00:00"
+    }
+  ],
+  "controlled_startup_witness_rows": 8,
+  "actual_public_fd_cells": [
+    {
+      "case": "healthy-empty-file",
+      "actual_exit": 0,
+      "statuses": [
+        "ready",
+        "terminal"
+      ]
+    },
+    {
+      "case": "directory-read-error",
+      "actual_exit": 0,
+      "statuses": [
+        "ready",
+        "terminal"
+      ]
+    },
+    {
+      "case": "writeonly-file-read-error",
+      "actual_exit": 2,
+      "statuses": [
+        "ready"
+      ]
+    }
+  ],
+  "original_directory_induction_outcome": "FAIL retained, not an input-error observation",
+  "effective_copied_validator_controls": [
+    {
+      "name": "invent-ready-after-captured-startup-fault",
+      "rejected": true,
+      "reason": "no known-fault readiness"
+    },
+    {
+      "name": "boolean-fixture-exit",
+      "rejected": true,
+      "reason": "typed fixture exit"
+    },
+    {
+      "name": "float-fixture-pid",
+      "rejected": true,
+      "reason": "integer fixture PID"
+    },
+    {
+      "name": "different-owned-child",
+      "rejected": true,
+      "reason": "same owned fixture"
+    },
+    {
+      "name": "invent-input-request",
+      "rejected": true,
+      "reason": "zero operation child outcome"
+    },
+    {
+      "name": "original-error-lost",
+      "rejected": true,
+      "reason": "original injected fault observation"
+    },
+    {
+      "name": "boolean-cli-exit",
+      "rejected": true,
+      "reason": "typed CLI exit"
+    },
+    {
+      "name": "unrelated-child-parent",
+      "rejected": true,
+      "reason": "actual CLI/fixture ancestry"
+    },
+    {
+      "name": "hide-actual-read-error",
+      "rejected": true,
+      "reason": "observed actual EBADF"
+    },
+    {
+      "name": "pretend-directory-induced-error",
+      "rejected": true,
+      "reason": "actual CLI endpoint"
+    }
+  ],
+  "producer_runtime_tests_or_native_imports": 0,
+  "source_version_bank_match": true,
+  "limits": "Controlled mkdir/error mechanism; actual EBADF FD route only on MacNode26; fd access mode was source-asserted by frozen producer but numeric F_GETFL value not retained; no device/TTY/native backend/task/release/hard-time/performance proof. Copied controls test the independent semantic validators, not all hostile raw parser paths."
+}

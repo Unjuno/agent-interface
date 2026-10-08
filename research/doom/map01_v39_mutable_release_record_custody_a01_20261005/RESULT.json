@@ -1,0 +1,33 @@
+{
+  "schema": "map01-v39-mutable-release-record-custody-a01-result-v1",
+  "disposition": "FAIL_CANDIDATE_BRIDGE_MUTABLE_RECORD_CUSTODY_REPRODUCED_DIAGNOSTIC_PROBE_SCOPED_PASS",
+  "base_main": "4a8049327eb44b54cfcf55167adb102a710a7051",
+  "candidate_source": {
+    "input_owner_v13_candidate_sha256": "0e3c65aadfba76b644f1ca99afa267bc873bc120320a4b0cac67dafb82cfa814",
+    "bridge_v2_candidate_sha256": "81e759b0484ac5b7854da0ebcffa917035f56b83a3dbfda40cafbb7f9f5138d1"
+  },
+  "run_ids": {
+    "A01": "MAP01-V39-MUTABLE-RELEASE-RECORD-CUSTODY-A01-FORMAL-01-20261005",
+    "A02": "MAP01-V39-MUTABLE-RELEASE-RECORD-CUSTODY-A01-FORMAL-02-20261005"
+  },
+  "A01": {
+    "status": "STOP_CONTAINER_CLI_IMAGE_PARSE",
+    "container_starts": 0,
+    "candidate_executions": 0,
+    "evidence": "STOP_A01.txt"
+  },
+  "A02": {
+    "container_candidate_commands": 1,
+    "candidate_cases": 2,
+    "baseline_executions": 1,
+    "probe_executions": 1,
+    "retries": 0,
+    "baseline": "FAIL_REPRODUCED_MUTABLE_RECORD_CUSTODY",
+    "probe": "PASS_DIAGNOSTIC_NEUTRAL_STATE_REVISIT_SCOPED",
+    "independent_audit_mismatches": 0,
+    "raw_candidate": "results/formal_02/candidate.json",
+    "raw_audit": "results/formal_02/audit.json",
+    "audit_wrapper_note": "AUDIT_WRAPPER_NOTE.txt"
+  },
+  "scope": "one fake-Xlib forced schedule; no live X11, physical keyboard, application/game effect, useful feedback, recovery, threat control, safety, or Issue #59 completion"
+}

@@ -1,0 +1,49 @@
+"""Prospective preparation only; never launches an app or edits consumed raw."""
+import hashlib, importlib.metadata, json, urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+root=Path(__file__).resolve().parent
+def write(name,data):
+    with (root/name).open('xb') as f:f.write(data)
+cases=[]
+for ident,name,actor in [('J001','agenda-stable.md','none'),('J002','agenda-newmtime.md','newmtime'),('J003','agenda-samemtime.md','samemtime')]:
+    initial=f'# 設計レビュー {ident}\n日程：2026年10月8日（木）\n開始：10:30\n参加者：青、白\n備考：図面は受付に置く。\n'
+    goal=initial.replace('2026年10月8日（木）','2026年10月13日（火）').replace('10:30','14:00')
+    note='' if actor=='none' else '追記：最新版の資料は青い棚に置く。\n'
+    cases.append(dict(id=ident,file=name,actor=actor,initial=initial,goal=goal,note=note,max_manual_saves=2))
+inputs=dict(experiment='JUPYTER-STOCK-J01',phase='primary-J01',cases=cases,
+    sibling=dict(file='notes-sibling.txt',text='別文書：この行を変更しない。\n'),
+    case_order=[c['id'] for c in cases],model='platform assigned; model/effort adoption independently unverified; unchanged during primary')
+write('INPUTS.json',json.dumps(inputs,ensure_ascii=False,indent=2).encode())
+src=(root/'launch_owned.py').read_text(encoding='utf-8')
+needle="if args.phase.startswith('preflight'):\n    (run/'files/preflight.txt').write_text('構築確認用の文書です。\\n本文：初期値\\n',encoding='utf-8')"
+replacement="""if args.phase != 'primary-J01':
+    raise ValueError('only the frozen primary namespace')
+inputs=json.loads((root/'INPUTS.json').read_bytes())
+for case in inputs['cases']:
+    with (run/'files'/case['file']).open('xb') as f:f.write(case['initial'].encode('utf-8'))
+with (run/'files'/inputs['sibling']['file']).open('xb') as f:f.write(inputs['sibling']['text'].encode('utf-8'))
+prefs=run/'settings/@jupyterlab/docmanager-extension'
+prefs.mkdir(parents=True)
+(prefs/'plugin.jupyterlab-settings').write_bytes((root/'AUTOSAVE_OFF.jupyterlab-settings').read_bytes())"""
+if src.count(needle)!=1:raise ValueError('exact launcher construction anchor')
+src=src.replace(needle,replacement).replace('construction instance','primary instance')
+write('primary_launch.py',src.encode())
+write('AUTOSAVE_OFF.jupyterlab-settings',(root/'preflight-A01/settings/@jupyterlab/docmanager-extension/plugin.jupyterlab-settings').read_bytes())
+sources=[]
+for relative in ['packages/docregistry/src/context.ts','LICENSE']:
+    url='https://raw.githubusercontent.com/jupyterlab/jupyterlab/v4.6.4/'+relative
+    started=datetime.now(timezone.utc).isoformat()
+    with urllib.request.urlopen(url,timeout=20) as response:
+        data=response.read();status=response.status
+    name='UPSTREAM_CONTEXT_4.6.4.ts.txt' if relative.endswith('.ts') else 'UPSTREAM_LICENSE.txt'
+    write(name,data)
+    sources.append(dict(url=url,status=status,started_utc=started,ended_utc=datetime.now(timezone.utc).isoformat(),file=name,bytes=len(data),sha256=hashlib.sha256(data).hexdigest()))
+write('UPSTREAM_FETCH.json',json.dumps(sources,indent=2).encode())
+dist=[]
+for d in sorted(importlib.metadata.distributions(),key=lambda x:x.metadata['Name'].lower()):
+    record=d.read_text('RECORD')
+    dist.append(dict(name=d.metadata['Name'],version=d.version,record_sha256=hashlib.sha256(record.encode()).hexdigest() if record else None))
+write('DEPENDENCY_RECORDS.json',json.dumps(dist,indent=2).encode())
+print(json.dumps(dict(cases=len(cases),files=[c['file'] for c in cases],upstream=sources,distributions=len(dist)),ensure_ascii=False))

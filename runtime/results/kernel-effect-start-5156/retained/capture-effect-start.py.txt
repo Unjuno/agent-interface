@@ -1,0 +1,32 @@
+"""Capture one named ordinary engineering check without overwriting results."""
+from datetime import datetime, timezone
+import hashlib, json, subprocess, sys
+from pathlib import Path
+
+task = Path(__file__).resolve().parent.parent
+repo = task / 'work/effect-start'
+originals = task / 'work/effect-start-originals'
+label, *args = sys.argv[1:]
+assert label and all(c.isalnum() or c in '-_' for c in label)
+originals.mkdir(exist_ok=True)
+marker = originals / (label + '.pre.json')
+argv = [sys.executable, '-B', *args]
+with marker.open('x', encoding='utf8') as f:
+    json.dump({'created_utc': datetime.now(timezone.utc).isoformat(),
+               'argv': argv, 'cwd': str(repo), 'scope': 'ordinary engineering, no formal replay'}, f)
+start = datetime.now(timezone.utc).isoformat()
+p = subprocess.run(argv, cwd=repo, capture_output=True, timeout=30)
+end = datetime.now(timezone.utc).isoformat()
+streams = {}
+for name, data in [('stdout', p.stdout), ('stderr', p.stderr)]:
+    if len(data) > 2 * 1024 * 1024: raise RuntimeError('capture cap exceeded')
+    (originals / (label + '.' + name + '.txt')).write_bytes(data)
+    streams[name] = {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+result = {'argv': argv, 'cwd': str(repo), 'start_utc': start, 'end_utc': end,
+          'exit_code': p.returncode, 'streams': streams,
+          'interpreter': sys.version, 'timeout_s': 30}
+(originals / (label + '.receipt.json')).write_text(json.dumps(result, indent=2) + '\n', encoding='utf8')
+print(json.dumps(result))
+print(p.stdout.decode('utf8', 'replace'))
+print(p.stderr.decode('utf8', 'replace'))
+raise SystemExit(p.returncode)

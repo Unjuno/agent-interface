@@ -1,0 +1,1 @@
+Preserve predecessor as STOP/HOLD. Return revalidated target explicitly across caller deepcopy boundary; stop on CALLER_FAILED after saving row. New seeds991067/991068. Regression and source refreeze required before execution. No formal run started.

@@ -1,0 +1,27 @@
+import copy, importlib.machinery, importlib.util, json, pathlib, unittest
+P=pathlib.Path(__file__).parent
+loader=importlib.machinery.SourceFileLoader('pipe_audit',str(P/'audit.py.txt'))
+spec=importlib.util.spec_from_loader(loader.name,loader)
+a=importlib.util.module_from_spec(spec);loader.exec_module(a)
+ROWS=[json.loads(x) for x in pathlib.Path(__import__('sys').argv.pop()).read_text().splitlines()]
+class AuditTests(unittest.TestCase):
+    def test_reconstruct_actual_construction_rows(self):
+        for row in ROWS:
+            with self.subTest(case=row['case_id']): a.audit_row(row,row,'construction-2-distinct-not-formal')
+    def test_effective_corruption_controls(self):
+        for name in ('index_alias','owner','clock_alias','private_payload','timeout_alias','unread','command','missing_clock','receipt_alias','stats_alias'):
+            original=ROWS[0] if name=='index_alias' else ROWS[1]
+            row=copy.deepcopy(original)
+            if name=='index_alias': row['index']=False
+            elif name=='owner':row['events'][0]['owner']=False
+            elif name=='clock_alias':next(e for e in row['events'] if e['kind']=='clock')['ns']=False
+            elif name=='private_payload':next(e for e in row['events'] if e['kind']=='sink_enter')['receipt']['payload']['private_scorer']=False
+            elif name=='timeout_alias':next(e for e in row['events'] if e['kind']=='wait_enter')['timeout']=False
+            elif name=='unread':row['unread_hex']='00'
+            elif name=='command':row['commands'][0]='private_scorer'
+            elif name=='missing_clock':row['events'].pop(next(i for i,e in enumerate(row['events']) if e['kind']=='clock'))
+            elif name=='receipt_alias':next(e for e in row['events'] if e['kind']=='sink_enter')['receipt']['missed_periods_before']=False
+            elif name=='stats_alias':row['stats']['samples']=True
+            with self.subTest(control=name):
+                with self.assertRaises(ValueError):a.audit_row(row,original,'construction-2-distinct-not-formal')
+if __name__=='__main__':unittest.main()

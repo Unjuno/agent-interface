@@ -21,7 +21,7 @@ def bridge_dispatch_result(
         report["reason"] = "result_not_mapping"
         return None, report
     status = result.get("status")
-    if status not in _ALLOWED:
+    if not isinstance(status, str) or status not in _ALLOWED:
         report["reason"] = "status"
         return None, report
     report["source_status"] = status
@@ -44,10 +44,22 @@ def bridge_dispatch_result(
     else:
         release = dict(release)
     report["release"] = dict(release)
-    events = list(context.get("events", []))
+    events = context.get("events", [])
     if not isinstance(events, list):
         report["reason"] = "context_events"
         return None, report
+    events = list(events)
+    commanded_pointer = context.get("commanded_pointer", {})
+    held_keys = context.get("held_keys", [])
+    held_buttons = context.get("held_buttons", [])
+    input_ack = context.get("input_ack", {"id": "unknown", "status": "UNKNOWN"})
+    for key, value, kind in (("commanded_pointer", commanded_pointer, Mapping),
+                             ("held_keys", held_keys, list),
+                             ("held_buttons", held_buttons, list),
+                             ("input_ack", input_ack, Mapping)):
+        if not isinstance(value, kind):
+            report["reason"] = "context_" + key
+            return None, report
     if status in {"released", "failed"}:
         events.append({"type": "RELEASE_TRANSITION", "source": "dispatch_result"})
 
@@ -59,11 +71,11 @@ def bridge_dispatch_result(
         "observation_id": context["observation_id"],
         "surface_id": context["surface_id"],
         "coordinate_frame": context["coordinate_frame"],
-        "commanded_pointer": dict(context.get("commanded_pointer", {})),
+        "commanded_pointer": dict(commanded_pointer),
         "observed_pointer": context.get("observed_pointer"),
-        "held_keys": list(context.get("held_keys", [])),
-        "held_buttons": list(context.get("held_buttons", [])),
-        "input_ack": dict(context.get("input_ack", {"id": "unknown", "status": "UNKNOWN"})),
+        "held_keys": list(held_keys),
+        "held_buttons": list(held_buttons),
+        "input_ack": dict(input_ack),
         "release": release,
         "uncertainty": context.get("uncertainty", "OS_UNCONFIRMED"),
         "events": events,

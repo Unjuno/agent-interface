@@ -1,0 +1,65 @@
+"""Mutate saved images only, execute own saved-data oracle, never native runner."""
+import base64
+import copy
+import hashlib
+import importlib.util
+import json
+import pathlib
+
+root = pathlib.Path(__file__).resolve().parent
+out = root / 'win32-capture-deselection-622-D02'
+spec = importlib.util.spec_from_file_location('own_d02_audit', root / 'audit_capture_d02.py')
+audit = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(audit)
+raw = json.loads((out / 'RAW.json').read_bytes())
+receipt = json.loads((out / 'NATIVE_RECEIPT.json').read_bytes())
+freeze = json.loads((out / 'FREEZE.json').read_bytes())
+assert audit.classify(raw, receipt, freeze) == []
+controls = out / 'saved-controls'
+controls.mkdir(exist_ok=True)
+def pixel(row):
+    data = bytearray(base64.b64decode(row['base64']))
+    data[0] ^= 1
+    row['base64'] = base64.b64encode(data).decode()
+    row['sha256'] = hashlib.sha256(data).hexdigest()
+def flip(row):
+    data = base64.b64decode(row['base64'])
+    stride = row['width'] * 4
+    data = b''.join(data[i:i+stride] for i in range(len(data)-stride, -1, -stride))
+    row['base64'] = base64.b64encode(data).decode()
+    row['sha256'] = hashlib.sha256(data).hexdigest()
+def guard_same(r):
+    event = next(e for e in r['events'] if e['phase'] == 'guard')
+    event['selected'] = event['bitmap']
+def failed_delete(r):
+    event = next(e for e in r['events'] if e['phase'] == 'end' and e['call'] == 'candidate.DeleteDC')
+    event['return'] = 0
+changes = [
+    ('candidate_pixel_rehashed', lambda r, p: pixel(r['cases'][0])),
+    ('baseline_pixel_rehashed', lambda r, p: pixel(r['baseline'])),
+    ('lost_case', lambda r, p: r['cases'].pop()),
+    ('selected_bitmap_guard_claim_true', lambda r, p: guard_same(r)),
+    ('cleanup_false', lambda r, p: r['cleanup'].__setitem__('delete_source_dc', False)),
+    ('cleanup_integer_alias', lambda r, p: r['cleanup'].__setitem__('delete_source_dc', 1)),
+    ('native_delete_zero', lambda r, p: failed_delete(r)),
+    ('wrong_source_hash', lambda r, p: r.__setitem__('candidate_sha256', '0'*64)),
+    ('exit_code_bool_alias', lambda r, p: p.__setitem__('exit_code', False)),
+    ('full_vertical_flip_rehashed', lambda r, p: flip(r['cases'][0])),
+]
+records = []
+for name, change in changes:
+    r, p = copy.deepcopy(raw), copy.deepcopy(receipt)
+    change(r, p)
+    data = json.dumps({'raw': r, 'receipt': p}, indent=2).encode()
+    original = json.dumps({'raw': raw, 'receipt': receipt}, indent=2).encode()
+    assert data != original
+    errors = audit.classify(r, p, freeze)
+    assert errors, name
+    path = controls / (name + '.json')
+    path.write_bytes(data)
+    records.append({'name': name, 'status': 'REFUSED', 'errors': errors,
+                    'sha256': hashlib.sha256(data).hexdigest(), 'bytes': len(data)})
+result = {'status': 'PASS_SAVED_CONTROL_CONSTRUCTION', 'controls': records,
+          'native_calls': 0, 'native_replay': 0, 'received_source_execution': 0}
+(out / 'SAVED_CONTROLS.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
+print(json.dumps({'status': result['status'], 'controls_refused': len(records), 'native_replay': 0}))

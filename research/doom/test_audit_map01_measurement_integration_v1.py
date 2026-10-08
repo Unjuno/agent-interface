@@ -32,4 +32,22 @@ class Tests(unittest.TestCase):
  def test_leak_fails(self):
   with tempfile.TemporaryDirectory() as t:
    root,rr=self.make(t,True,True);self.assertFalse(audit(root,rr)['pass'])
+ def test_missed_scorer_periods_require_an_integer_count(self):
+  for missed in (False,0.0,True,1,None,"0",[],{}):
+   with self.subTest(missed=missed):
+    with tempfile.TemporaryDirectory() as t:
+     root,rr=self.make(t)
+     (root/'scorer-summary.json').write_text(json.dumps({'controller_visible':False,'scheduler':{'missed_sample_periods':missed}}))
+     result=audit(root,rr)
+     self.assertFalse(result['pass'],result)
+     self.assertIn('scorer scheduler missed sample periods',result['failures'])
+ def test_malformed_scheduler_fails_closed(self):
+  for scheduler in (None,False,[],0,{},True,[0],"unknown",0.0):
+   with self.subTest(scheduler=scheduler):
+    with tempfile.TemporaryDirectory() as t:
+     root,rr=self.make(t)
+     (root/'scorer-summary.json').write_text(json.dumps({'controller_visible':False,'scheduler':scheduler}))
+     result=audit(root,rr)
+     self.assertFalse(result['pass'],result)
+     self.assertIn('scorer scheduler missed sample periods',result['failures'])
 if __name__=='__main__':unittest.main()

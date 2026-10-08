@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/source/research/live_control/interactive_integrated_efficiency_v1.py", line 14, in <module>
+    implementation.main()
+  File "/source/research/live_control/cause_servo_interactive_v4.py", line 39, in main
+    session=suite.Session();goal,output,server=suite.prepare(session,args.app,args.seed,args.chromium)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/source/research/live_control/integrated_efficiency_runtime_v1.py", line 34, in prepare
+    session.spawn(args, stdout=log, stderr=log)
+  File "/source/research/real_apps_v1/real_app_suite_v1.py", line 38, in spawn
+    def spawn(self,args,**kw): return self._popen(args,**kw)
+                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/source/research/real_apps_v1/real_app_suite_v1.py", line 37, in _popen
+    p=subprocess.Popen(args,env=self.env,start_new_session=True,**kw);self.procs.append(p);return p
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.12/subprocess.py", line 1955, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/taka/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome'

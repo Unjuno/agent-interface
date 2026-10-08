@@ -1,0 +1,26 @@
+"""Explicit raw-only verifier; guards stay effective with optimization."""
+import hashlib,importlib.machinery,importlib.util,json
+from pathlib import Path
+root=Path(__file__).resolve().parent
+audit_path=root/'audit.py'
+if not audit_path.exists():audit_path=root/'audit.py.txt'
+loader=importlib.machinery.SourceFileLoader('raw_audit_v2_verification',str(audit_path))
+spec=importlib.util.spec_from_loader(loader.name,loader);module=importlib.util.module_from_spec(spec);loader.exec_module(module)
+raw_path=root/'run-01'/'raw.json';before=raw_path.read_bytes()
+raw=json.loads(before);cases=json.loads((root/'FREEZE.json').read_text())['cases']
+paths=sorted((root/'controls-01').glob('control-*.json'))
+if len(paths)!=8:raise ValueError('exact eight controls required')
+results=[]
+for path in paths:
+    witness=json.loads(path.read_text());mutant=json.loads(before)
+    if witness['raw_sha256']!=hashlib.sha256(before).hexdigest():raise ValueError('original raw binding')
+    if witness['operation']=='drop_last':mutant.pop()
+    elif witness['operation']=='replace_row':mutant[witness['row_index']]=witness['changed_row']
+    else:raise ValueError('unknown mutation operation')
+    canonical=json.dumps(mutant,sort_keys=True,separators=(',',':')).encode()
+    if hashlib.sha256(canonical).hexdigest()!=witness['mutant_canonical_sha256']:raise ValueError('mutant binding')
+    errors,_=module.audit(mutant,cases)
+    if not errors or errors!=witness['errors']:raise ValueError('control did not reproduce refusal:'+witness['control'])
+    results.append({'control':witness['control'],'rejected':True,'errors':errors})
+if raw_path.read_bytes()!=before:raise ValueError('raw changed')
+print(json.dumps({'controls':results,'rejected_count':sum(r['rejected'] for r in results),'raw_unchanged':True},sort_keys=True))

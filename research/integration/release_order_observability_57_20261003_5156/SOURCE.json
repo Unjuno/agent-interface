@@ -1,0 +1,34 @@
+{
+  "repository": "Unjuno/agent-interface",
+  "base_commit": "332da58a9b6b825c384a142dfb59d7ed2b8b774e",
+  "export_utc": "2026-10-03T03:15:08.681540+00:00",
+  "files": {
+    "runtime/kernel/__init__.py": {
+      "git_blob": "a8b5bdde62e451b75a9cbf4bf13511aa909cfc6c",
+      "bytes": 858,
+      "sha256": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813",
+      "export_path": "frozen_kernel/__init__.py"
+    },
+    "runtime/kernel/contracts.py": {
+      "git_blob": "c0761747fc1d9936b795ec65d318ec0ef6e67087",
+      "bytes": 10140,
+      "sha256": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+      "export_path": "frozen_kernel/contracts.py"
+    },
+    "runtime/kernel/lifecycle.py": {
+      "git_blob": "cf25a1d48337bedbd50dc35400e4b7df92d402e1",
+      "bytes": 7548,
+      "sha256": "5d3322096712f3a8af6350ec629f6e54079e2f8387e1d9d244703bfe3d011b25",
+      "export_path": "frozen_kernel/lifecycle.py"
+    },
+    "runtime/kernel/backend.py": {
+      "git_blob": "e9369475a70c6ad9503155f9831f625303e6721f",
+      "bytes": 2208,
+      "sha256": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b",
+      "export_path": "frozen_kernel/backend.py"
+    }
+  },
+  "construction_base": "6da2b492b9c2a9d76e5c54d35a0ae50b7b49edde",
+  "construction_source_archive": "construction_sources/SOURCE.json",
+  "construction_reuse": "__init__,contracts,lifecycle exact bytes unchanged. Backend adds callability guard inside BackendRegistry.create, which construction/primary never invokes. Original four construction sources retained."
+}

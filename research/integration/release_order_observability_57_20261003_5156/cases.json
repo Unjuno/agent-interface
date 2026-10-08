@@ -1,0 +1,1130 @@
+{
+  "schema": "release-order-cases-v1",
+  "clock_unit": "ns",
+  "assumptions": [
+    "one key A initially up",
+    "one modeled press action",
+    "one release-all event empties A at that event",
+    "common ordered integer timestamps; seq orders ties",
+    "no unlogged/external input",
+    "end is action-phase completion; receipt delivery is end+200"
+  ],
+  "cases": [
+    {
+      "case_id": "e700-p200-r200-press-release",
+      "ended_ns": 700,
+      "press_ns": 200,
+      "release_ns": 200,
+      "tie_order": "press-release",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p200-r200-release-press",
+      "ended_ns": 700,
+      "press_ns": 200,
+      "release_ns": 200,
+      "tie_order": "release-press",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p200-r400-time",
+      "ended_ns": 700,
+      "press_ns": 200,
+      "release_ns": 400,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p200-r600-time",
+      "ended_ns": 700,
+      "press_ns": 200,
+      "release_ns": 600,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p200-r700-time",
+      "ended_ns": 700,
+      "press_ns": 200,
+      "release_ns": 700,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 700,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p200-r800-time",
+      "ended_ns": 700,
+      "press_ns": 200,
+      "release_ns": 800,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "end",
+          "ns": 700
+        },
+        {
+          "seq": 4,
+          "kind": "release",
+          "ns": 800,
+          "key": "A"
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p400-r200-time",
+      "ended_ns": 700,
+      "press_ns": 400,
+      "release_ns": 200,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p400-r400-press-release",
+      "ended_ns": 700,
+      "press_ns": 400,
+      "release_ns": 400,
+      "tie_order": "press-release",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p400-r400-release-press",
+      "ended_ns": 700,
+      "press_ns": 400,
+      "release_ns": 400,
+      "tie_order": "release-press",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p400-r600-time",
+      "ended_ns": 700,
+      "press_ns": 400,
+      "release_ns": 600,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p400-r700-time",
+      "ended_ns": 700,
+      "press_ns": 400,
+      "release_ns": 700,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 700,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p400-r800-time",
+      "ended_ns": 700,
+      "press_ns": 400,
+      "release_ns": 800,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "end",
+          "ns": 700
+        },
+        {
+          "seq": 4,
+          "kind": "release",
+          "ns": 800,
+          "key": "A"
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p600-r200-time",
+      "ended_ns": 700,
+      "press_ns": 600,
+      "release_ns": 200,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p600-r400-time",
+      "ended_ns": 700,
+      "press_ns": 600,
+      "release_ns": 400,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p600-r600-press-release",
+      "ended_ns": 700,
+      "press_ns": 600,
+      "release_ns": 600,
+      "tie_order": "press-release",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p600-r600-release-press",
+      "ended_ns": 700,
+      "press_ns": 600,
+      "release_ns": 600,
+      "tie_order": "release-press",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p600-r700-time",
+      "ended_ns": 700,
+      "press_ns": 600,
+      "release_ns": 700,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 700,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 700
+        }
+      ]
+    },
+    {
+      "case_id": "e700-p600-r800-time",
+      "ended_ns": 700,
+      "press_ns": 600,
+      "release_ns": 800,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "end",
+          "ns": 700
+        },
+        {
+          "seq": 4,
+          "kind": "release",
+          "ns": 800,
+          "key": "A"
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p200-r200-press-release",
+      "ended_ns": 900,
+      "press_ns": 200,
+      "release_ns": 200,
+      "tie_order": "press-release",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p200-r200-release-press",
+      "ended_ns": 900,
+      "press_ns": 200,
+      "release_ns": 200,
+      "tie_order": "release-press",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p200-r400-time",
+      "ended_ns": 900,
+      "press_ns": 200,
+      "release_ns": 400,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p200-r600-time",
+      "ended_ns": 900,
+      "press_ns": 200,
+      "release_ns": 600,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p200-r900-time",
+      "ended_ns": 900,
+      "press_ns": 200,
+      "release_ns": 900,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 900,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p200-r1000-time",
+      "ended_ns": 900,
+      "press_ns": 200,
+      "release_ns": 1000,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "end",
+          "ns": 900
+        },
+        {
+          "seq": 4,
+          "kind": "release",
+          "ns": 1000,
+          "key": "A"
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p400-r200-time",
+      "ended_ns": 900,
+      "press_ns": 400,
+      "release_ns": 200,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p400-r400-press-release",
+      "ended_ns": 900,
+      "press_ns": 400,
+      "release_ns": 400,
+      "tie_order": "press-release",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p400-r400-release-press",
+      "ended_ns": 900,
+      "press_ns": 400,
+      "release_ns": 400,
+      "tie_order": "release-press",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p400-r600-time",
+      "ended_ns": 900,
+      "press_ns": 400,
+      "release_ns": 600,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p400-r900-time",
+      "ended_ns": 900,
+      "press_ns": 400,
+      "release_ns": 900,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 900,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p400-r1000-time",
+      "ended_ns": 900,
+      "press_ns": 400,
+      "release_ns": 1000,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "end",
+          "ns": 900
+        },
+        {
+          "seq": 4,
+          "kind": "release",
+          "ns": 1000,
+          "key": "A"
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p600-r200-time",
+      "ended_ns": 900,
+      "press_ns": 600,
+      "release_ns": 200,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 200,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p600-r400-time",
+      "ended_ns": 900,
+      "press_ns": 600,
+      "release_ns": 400,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 400,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p600-r600-press-release",
+      "ended_ns": 900,
+      "press_ns": 600,
+      "release_ns": 600,
+      "tie_order": "press-release",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p600-r600-release-press",
+      "ended_ns": 900,
+      "press_ns": 600,
+      "release_ns": 600,
+      "tie_order": "release-press",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "release",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p600-r900-time",
+      "ended_ns": 900,
+      "press_ns": 600,
+      "release_ns": 900,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "release",
+          "ns": 900,
+          "key": "A"
+        },
+        {
+          "seq": 4,
+          "kind": "end",
+          "ns": 900
+        }
+      ]
+    },
+    {
+      "case_id": "e900-p600-r1000-time",
+      "ended_ns": 900,
+      "press_ns": 600,
+      "release_ns": 1000,
+      "tie_order": "time",
+      "events": [
+        {
+          "seq": 1,
+          "kind": "start",
+          "ns": 100
+        },
+        {
+          "seq": 2,
+          "kind": "press",
+          "ns": 600,
+          "key": "A"
+        },
+        {
+          "seq": 3,
+          "kind": "end",
+          "ns": 900
+        },
+        {
+          "seq": 4,
+          "kind": "release",
+          "ns": 1000,
+          "key": "A"
+        }
+      ]
+    }
+  ]
+}

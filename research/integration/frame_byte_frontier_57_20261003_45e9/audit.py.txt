@@ -1,0 +1,36 @@
+from pathlib import Path
+import json,hashlib,copy,os,datetime
+w=Path(__file__).resolve().parent;sha=lambda b:hashlib.sha256(b).hexdigest();plan=json.loads((w/'PLAN.json').read_bytes());cases=json.loads((w/'CASES.json').read_bytes())['cases'];rows=json.loads((w/'ROWS.json').read_bytes());raw=[json.loads(l) for l in (w/'command/stdout.raw.txt').read_text().splitlines()];assert raw==rows
+receipt=json.loads((w/'command/RECEIPT.json').read_bytes());assert type(receipt['exit_code']) is int and receipt['exit_code']==0 and receipt['inputs_unchanged'] is True
+assert plan['freeze_utc']<=receipt['started_utc']<=receipt['ended_utc']
+for name,x in receipt['streams'].items():b=(w/'command'/name).read_bytes();assert len(b)==x['bytes'] and sha(b)==x['sha256']
+for x in plan['inputs']:b=(w/x['path']).read_bytes();assert len(b)==x['bytes'] and sha(b)==x['sha256']
+inputs={c['name']:c for c in cases};assert len(rows)==8 and {(x['case'],x['policy']) for x in rows}=={(c['name'],p) for c in cases for p in ['current','byte-frontier']}
+def check(x):
+ c=inputs[x['case']];wire=(w/'inputs'/c['file']).read_bytes();assert type(x['wire_bytes']) is int and x['wire_bytes']==c['bytes']==len(wire) and x['wire_sha256']==c['sha256']==sha(wire)
+ before=x['before'];f=x['final'];guard=x['policy']=='byte-frontier';over='over' in c['name'];held=c['held'];valid=not over
+ for z in [before,f]:assert type(z['settled']) is int
+ assert f['outcome']=='resolved' and f['settled']==1
+ assert type(before['calls']) is int and before['calls']==(1 if held or valid else 0)
+ assert before['outcome']==('resolved' if valid else 'resolved' if guard and not held else 'pending') and before['settled']==(1 if valid or guard and not held else 0)
+ expected=0 if over and guard and not held else 1;assert len(f['calls'])==expected
+ frames=wire.split(b'\n');request=json.loads(frames[0]);assert f['calls']==([] if expected==0 else [{'id':request['id'],'padding_sha256':sha(request['padding'].encode())}])
+ assert f['original_result_identity'] is (True if held else None)
+ for k in ['input_error_listeners','output_error_listeners']:assert type(f[k]) is int and f[k]==0
+ if guard:
+  for z in [before,f]:
+   g=z['gate'];assert type(g['buffer_peak_bytes']) is int and g['buffer_peak_bytes']==65536;assert g['typed_frontier']==('FRAME_TOO_LARGE' if over else 'none');assert type(g['forwarded_frames']) is int and g['forwarded_frames']==(1 if valid or held else 0)
+ else:assert before['gate'] is None and f['gate'] is None
+ statuses=[r['status'] for r in f['output']];assert statuses.count('returned')==expected and statuses.count('busy')==(1 if held and not guard else 0) and set(statuses)<= {'returned','busy'}
+ if held:assert next(r['result'] for r in f['output'] if r['status']=='returned')=={'original':'same-result'}
+for x in rows:check(x)
+controls=[];sample=next(x for x in rows if x['case']=='held-then-over' and x['policy']=='byte-frontier')
+mutations=[('early-settle',['before','settled'],1),('second-settle',['final','settled'],2),('bool-settle',['final','settled'],True),('masked-stop',['final','gate','typed_frontier'],'none'),('over-limit-buffer',['final','gate','buffer_peak_bytes'],65537),('changed-original',['final','original_result_identity'],False),('wrong-padding',['final','calls',0,'padding_sha256'],'0'*64),('left-listener',['final','input_error_listeners'],1)]
+for label,path,val in mutations:
+ x=copy.deepcopy(sample);z=x
+ for k in path[:-1]:z=z[k]
+ z[path[-1]]=val
+ try:check(x)
+ except AssertionError:controls.append(label)
+ else:raise AssertionError('ineffective mutation '+label)
+out={'status':'PASS_SCOPED_BYTE_FRONTIER_CONSTRUCTION_HOLD_PRODUCTION_INTEGRATION','utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pid':os.getpid(),'raw_cells':8,'effective_semantic_controls':controls,'valid_ascii_unicode_preserved':True,'held_original_preserved':True,'frontier_storage_counter_bound_bytes':65536,'transport_typed_stop_propagated':False,'idle_time_bound_proved':False,'RSS_bound_proved':False,'physical_task_release_efficiency_proved':False,'runtime_reruns':0,'main_sends':0};(w/'AUDIT.json').write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(out))

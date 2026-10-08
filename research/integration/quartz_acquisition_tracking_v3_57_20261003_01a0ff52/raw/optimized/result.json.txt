@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/bin/bash",
+    "-c",
+    "cd work/quartz-acquisition-repair-v3-01a0ff52/candidate && /run/current-system/sw/bin/python3 -B -O -m unittest runtime.backends.quartz_v1.test_release_faults runtime.backends.quartz_v1.test_release_quarantine runtime.backends.quartz_v1.test_acquisition_tracking runtime.core_v1.test_contract runtime.core_v1.test_platform_probe -v"
+  ],
+  "timeout_seconds": 20,
+  "stdin_sha256": null,
+  "started_utc": "2026-10-03T13:28:06.154847+00:00",
+  "pid": 90891,
+  "exit_code": 0,
+  "timed_out": false,
+  "ended_utc": "2026-10-03T13:28:06.298779+00:00",
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 12119,
+    "sha256": "becb003fc30096b2393004270c8a83887c9e0b858f395f537f14d0424851424a"
+  }
+}

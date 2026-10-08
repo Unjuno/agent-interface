@@ -2,6 +2,8 @@ import io
 import json
 import os
 from pathlib import Path
+import subprocess
+import sys
 import threading
 import types
 import unittest
@@ -147,15 +149,19 @@ class ReaderAccessGateRegression(unittest.TestCase):
     def test_precreation_refusal_cancels_no_reader_and_closes_resources(self):
         self.run_cell("refused")
     def test_healthy_standard_reader_and_adopted_close(self):
-        process = InertProcess(io.StringIO('{"id":7,"result":{"ok":true}}\n'))
         journal = io.StringIO()
+        peer = "import json,sys; request=json.loads(sys.stdin.readline()); print(json.dumps({'id':request['id'],'result':{'ok':True}}),flush=True)"
+        process = subprocess.Popen(
+            [sys.executable, "-c", peer], stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, encoding="utf-8")
         with patch.object(source, "open", lambda *a, **k: journal, create=True):
-            client = source.CodexAppServerClient(["inert"], process_factory=lambda *a, **k: process, journal_path="inert")
+            client = source.CodexAppServerClient(
+                [sys.executable, "-c", peer], process_factory=lambda *a, **k: process,
+                journal_path="inert")
         try:
-            client._reader.join(2)
-            self.assertFalse(client._reader.is_alive())
-            self.assertEqual(client._responses[7]["result"], {"ok": True})
-            self.assertEqual(json.loads(journal.getvalue())["message"]["id"], 7)
+            self.assertEqual(client.request("inert/healthy"), {"ok": True})
+            self.assertEqual(json.loads(journal.getvalue().splitlines()[-1])["message"]["id"], 1)
             client.close()
             self.assertTrue(journal.closed)
         finally:

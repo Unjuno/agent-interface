@@ -1,0 +1,28 @@
+{
+  "allocation_id": "5420-COND-KERNEL-T0-01",
+  "environment": "OrbStack Docker, linux/arm64, Node image node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+  "execution_window": "Observed before 2026-10-04T09:12:44Z",
+  "construction": {
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 node /src/test.mjs",
+    "exit_code": 0,
+    "stdout": "construction_test=PASS rows=16 scenarios=3 audit_errors=0 mutations=4/4 node=v26.10.0",
+    "formal_output_written": false
+  },
+  "candidate": {
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly --mount type=bind,src=<RAW>,dst=/out node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 node /src/candidate.mjs",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "{\"status\":\"CANDIDATE_EXIT_0\",\"rows\":16,\"summaries\":3}",
+    "raw_file": "candidate.jsonl",
+    "raw_sha256": "a93758c7a4cc00ef8f56b7aad7b16e5e58791a110d2671faf8b1dc51ec941cad"
+  },
+  "independent_auditor": {
+    "command": "docker run --pull=never --rm --platform linux/arm64 --network none --read-only --pids-limit 16 --mount type=bind,src=<SRC>,dst=/src,readonly --mount type=bind,src=<RAW>,dst=/out node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 node /src/audit.mjs",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "PASS_METHOD_SCOPED rows=16 scenarios=3 errors=0 mutations=4/4",
+    "audit_file": "audit.json",
+    "audit_sha256": "c331e85d30fa80cad552af21d882e9a5f7e7fc0e353b9cd9082b4fe61667a570"
+  },
+  "formal_retry": false
+}

@@ -1,0 +1,51 @@
+{
+  "reviewer_worker": "01a0ff52-5884-7172-a388-d9ac576e13dd",
+  "reviewer_commit": "92cf265b15613b907b23504a53e4c487be0cad3e",
+  "reviewer_comparison_url": "https://raw.githubusercontent.com/Unjuno/agent-interface/92cf265b15613b907b23504a53e4c487be0cad3e/research/reviews/scorer_native_causal_6928_20261003_01a0ff52_5884/copied-control-comparison.json",
+  "fetched_comparison_sha256": "19c7ad68c41844dc2f33ac08e7620227f5e0fdd054d771f6e98a9abaa39527d3",
+  "fetched_comparison_bytes": 11198,
+  "original_head": "5516baf54c92a120d651c08f4163707549678b04",
+  "original_raw_sha256": "a0ed5dc1d7a30b3f9069dcb00a2938e892dd900d9ff994b07e065a7665a84824",
+  "original_rows_pass_both": 16,
+  "controls_rejected_by_independent_oracle": 12,
+  "controls_accepted_by_supplied_v2": [
+    {
+      "name": "effect-marker-before-command",
+      "author_v2_errors": [],
+      "independent_rejection": "n00:EFFECT_AFTER_COMMAND"
+    },
+    {
+      "name": "command-before-native-read",
+      "author_v2_errors": [],
+      "independent_rejection": "n00:COMMAND_AFTER_READ"
+    },
+    {
+      "name": "sink-end-before-sink-begin",
+      "author_v2_errors": [],
+      "independent_rejection": "n00:SINK_END_ORDER"
+    },
+    {
+      "name": "sample-finish-bound-to-future-clock",
+      "author_v2_errors": [],
+      "independent_rejection": "n00:EXACT_FINISH_CLOCK/sample_finished_ns:VALUE"
+    },
+    {
+      "name": "read-after-false-readiness",
+      "author_v2_errors": [],
+      "independent_rejection": "n00:READ_AFTER_READY"
+    },
+    {
+      "name": "clock-line-outside-frozen-source",
+      "author_v2_errors": [],
+      "independent_rejection": "n00:CLOCK_SOURCE"
+    },
+    {
+      "name": "cleanup-before-native-operations",
+      "author_v2_errors": [],
+      "independent_rejection": "n00:LAST_EVENT:VALUE"
+    }
+  ],
+  "author_repeated_comparison_or_native": false,
+  "public_finding": "https://github.com/Unjuno/agent-interface/pull/6928#issuecomment-5966236547",
+  "preserved_content_changes": "https://github.com/Unjuno/agent-interface/pull/6928#issuecomment-5966283598"
+}

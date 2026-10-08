@@ -1,0 +1,170 @@
+{
+  "schema": "native-calc-cache-assay-draft-v1",
+  "status": "CONSTRUCTION_ONLY",
+  "issue": 3311,
+  "source_main": "55505ae94608bef0cc3ee6cc945bd62081c37da6",
+  "tasks": [
+    {
+      "index": 0,
+      "a": 13,
+      "b": 17,
+      "phase": "cold"
+    },
+    {
+      "index": 1,
+      "a": 19,
+      "b": 23,
+      "phase": "warm"
+    },
+    {
+      "index": 2,
+      "a": 29,
+      "b": 37,
+      "phase": "warm"
+    },
+    {
+      "index": 3,
+      "a": 47,
+      "b": 53,
+      "phase": "physical-move-invalidation-and-bounded-repair"
+    },
+    {
+      "index": 4,
+      "a": 59,
+      "b": 61,
+      "phase": "warm-after-repair"
+    },
+    {
+      "index": 5,
+      "a": 67,
+      "b": 71,
+      "phase": "warm-after-repair"
+    }
+  ],
+  "sessions": [
+    "direct",
+    "persistent",
+    "persistent",
+    "direct"
+  ],
+  "common_tool": "enter_product(x,y); fixed common native parameterized product/save program; x/y grounded in current screenshot",
+  "persistent_policy": "retain x/y and actual target/geometry fingerprint from accepted call; attempt native guard at every subsequent task; on actual stale refusal re-ground once",
+  "direct_policy": "fresh grounding call each task; same tool implementation; no cross-task cache",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "metrics": [
+    "all attempted model cumulative usage under provider field semantics",
+    "model calls and images offered",
+    "native dispatches and pre-input refusals",
+    "independent saved FODS per task",
+    "physical neutral input",
+    "wall and phase timings, no causal timing claims"
+  ],
+  "required_before_formal": [
+    "actual model client adaptation",
+    "immutable source freeze on GitHub",
+    "frozen independent scorer and corrupted-record controls",
+    "requirement-to-test matrix for full3311 controls"
+  ],
+  "decision": "HOLD for full3311 if broader controls are unavailable even with scoped positive token signal",
+  "nonclaims": [
+    "no optimal-baseline claim",
+    "no provider billing or exact ingestion claim",
+    "no broad safety/causal/generalization/promotion claim"
+  ],
+  "allocation": "CALC-REALAPP-3311-4D74-CONSTRUCTION-G04-20261004",
+  "image": "sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55",
+  "cli_sha256": "37762753b554982eef1c109303d1be652b6397f1479e844794353a85650199c6",
+  "app_server_argv": [
+    "C:\\Users\\junny\\AppData\\Local\\OpenAI\\Codex\\bin\\8aaf1547b825b104\\codex.exe",
+    "app-server",
+    "--stdio",
+    "--disable",
+    "plugins",
+    "--disable",
+    "apps",
+    "--disable",
+    "shell_tool",
+    "--disable",
+    "multi_agent",
+    "--disable",
+    "hooks",
+    "--disable",
+    "computer_use",
+    "--disable",
+    "browser_use",
+    "--disable",
+    "browser_use_external",
+    "--disable",
+    "unified_exec",
+    "-c",
+    "mcp_servers.node_repl.enabled=false",
+    "-c",
+    "features.code_mode.enabled=false"
+  ],
+  "base_instructions": "You are a screenshot-grounded Calc selector in a measured experiment. Use only the registered enter_product tool exactly once. Do not inspect files, execute commands, use other tools, delegate or ask questions. After the exact feedback image, report the visible worksheet state. A completed input is not proof of correct state.",
+  "tool": {
+    "type": "function",
+    "name": "enter_product",
+    "description": "Click your screenshot-grounded interior point of cell A2, then use the common guarded native product-entry recipe: type the task a, TAB, task b, TAB, =A2*B2, Enter, Ctrl+S. All input is released. It does not navigate to A2; clicking the correct starting cell is required. Returns the original resulting screenshot. Task parameters are identical in both comparison arms.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1279
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 799
+        }
+      }
+    }
+  },
+  "rows": [
+    {
+      "index": 0,
+      "mode": "direct"
+    },
+    {
+      "index": 1,
+      "mode": "persistent"
+    },
+    {
+      "index": 2,
+      "mode": "persistent"
+    },
+    {
+      "index": 3,
+      "mode": "direct"
+    }
+  ],
+  "source_hashes": {
+    "blank.fods": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+    "construction_geometry.py": "0d63c7d84045aeaf8daeebe9c010aaaa74489df4142cf5b57fd2aeafca04f6e2",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/core_v1/contract.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "construction_geometry_v2.py": "afe5c5232ea26103e09ac8ae1e3adfade1797fcfdb68107434f67114a569cd53",
+    "geometry_guard.py": "b860fe96174f3de8d14e2494941aa119bb678f1077c9646a9b8d0c9ad673fe30",
+    "construction_cache.py": "35a7ec14a36bb230e42ff54c21dfc71fdced2f370bb352b425cd2b0d0ac564c3",
+    "native_sequence.py": "1e1f15574f352bb1df1e707a0e5ca8178756de5aeccc686b6313673a60b5e7b4"
+  },
+  "meaningful_benefit": {
+    "metric": "total observed inputTokens across complete persistent vs direct sessions",
+    "threshold_relative_reduction": 0.2,
+    "requires": "all24 independent saved effects correct, all physical neutral, exactly one physical invalidation refusal per persistent session and one fresh repair maximum, all attempted usage known"
+  },
+  "full_issue_decision": "HOLD because broader full3311 control evidence is not covered by this assay; scoped signal does not close3311"
+}

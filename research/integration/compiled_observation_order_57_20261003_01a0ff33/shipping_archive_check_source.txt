@@ -1,0 +1,49 @@
+from pathlib import Path
+import ast
+import datetime
+import hashlib
+import json
+import subprocess
+import sys
+import zipfile
+
+ROOT = Path(__file__).resolve().parent / 'agent-interface'
+sys.path.insert(0, str(ROOT))
+from runtime.distribution_v2.build import build
+
+P = ROOT / 'research/integration/compiled_observation_order_57_20261003_01a0ff33'
+OUT = Path(__file__).resolve().parent / 'compiled-observation-order-shipping'
+OUT.mkdir(exist_ok=False)
+manifest = build(ROOT, OUT / 'runtime.pyz', OUT / 'MANIFEST.json', OUT / 'SHA256SUMS')
+fixture = json.loads((P / 'interface.json').read_bytes())
+syntax = ast.parse((ROOT / 'runtime/core_v1/test_compiled_observation_order.py').read_text(encoding='utf-8'))
+driver = ast.unparse(next(n for n in syntax.body if isinstance(n, ast.ClassDef) and n.name == 'CaptureDriver'))
+code = '''
+import json,sys
+sys.path.insert(0,sys.argv[1])
+from runtime.core_v1.compiled_gui import run
+spec=json.loads(sys.argv[2]); rows=[]
+namespace={'run':run,'interface':lambda:spec}
+exec(sys.argv[3],namespace)
+for captures,completed in [((0,20,110),2),((11,30,120),0),((5,19,120),1),((5,30,109),2)]:
+    d=namespace['CaptureDriver'](captures); r=d.run()
+    expected='TASK_SUCCEEDED' if captures==(0,20,110) else 'SAFE_YIELD'
+    assert r['outcome']==expected and r['completed_transitions']==completed
+    if expected=='SAFE_YIELD': assert r['reason']=='stale_observation'
+    rows.append({'captures':captures,'outcome':r['outcome'],'completed':completed})
+assert not any(name.startswith('research') for name in sys.modules)
+print(json.dumps({'controls':rows,'archive_only_import':True},sort_keys=True))
+'''
+started = datetime.datetime.now(datetime.timezone.utc).isoformat()
+result = subprocess.run([sys.executable,'-I','-c',code,str(OUT/'runtime.pyz'),json.dumps(fixture),driver],cwd=OUT,capture_output=True)
+(P/'shipping-archive.stdout.txt').write_bytes(result.stdout)
+(P/'shipping-archive.stderr.txt').write_bytes(result.stderr)
+canonical=(P/'candidate-source/compiled_gui.py').read_bytes()
+with zipfile.ZipFile(OUT/'runtime.pyz') as archive:
+    bundled=archive.read('runtime/core_v1/compiled_gui.py')
+assert bundled==canonical
+receipt={'kind':'isolated committed-source portable archive regression','source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT).decode().strip(),'python':sys.version.split()[0],'started_utc':started,'completed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit_code':result.returncode,'controls':4,'compiled_blob_sha256':hashlib.sha256(bundled).hexdigest(),'archive_sha256':hashlib.sha256((OUT/'runtime.pyz').read_bytes()).hexdigest(),'stdout_sha256':hashlib.sha256(result.stdout).hexdigest(),'stderr_sha256':hashlib.sha256(result.stderr).hexdigest(),'research_modules_imported':False,'formal_or_matrix_replay':False}
+(P/'SHIPPING_ARCHIVE_RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+print(json.dumps(receipt))
+print(result.stdout.decode('utf-8',errors='replace'))
+assert result.returncode==0

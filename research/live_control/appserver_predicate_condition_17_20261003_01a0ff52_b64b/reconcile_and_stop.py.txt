@@ -1,0 +1,18 @@
+import pathlib,json,subprocess,hashlib,datetime
+p=pathlib.Path(__file__).resolve().parent;prefix=['/opt/homebrew/bin/orb','run','-m','research-6695-docker-01a0ff52','-u','root'];records=[]
+f=json.loads((p/'FREEZE.json').read_text());g=json.loads((p/'guest-source-readback.json').read_text())
+for n,v in f['frozen_inputs'].items():assert g[n]==v
+for label in ['environment','native','independent']:
+ x=json.loads((p/(label+'-inspect.json')).read_text())[0];state=x['State'];h=x['HostConfig'];assert not state['Running'] and state['ExitCode']==0 and not state['OOMKilled'];assert h['Memory']==268435456 and h['NanoCpus']==1000000000 and h['PidsLimit']==64 and h['ReadonlyRootfs'] and h['NetworkMode']=='none';assert x['Config']['User']=='65534:65534'
+ if label!='environment':
+  assert next(v for v in x['Mounts'] if v['Destination']=='/src')['RW'] is False
+  assert x['Config']['Labels']['worker']=='01a0ff52-b64b'
+ if label=='independent':assert next(v for v in x['Mounts'] if v['Destination']=='/raw')['RW'] is False
+ records.append({'label':label,'container':x['Name'],'id':x['Id'],'image':x['Image'],'state':state,'memory':h['Memory'],'NanoCpus':h['NanoCpus'],'pids':h['PidsLimit'],'network':h['NetworkMode'],'read_only_root':h['ReadonlyRootfs'],'mounts':x['Mounts']})
+r=subprocess.run(prefix+['docker','ps','--format','{{json .}}'],capture_output=True,timeout=5);(p/'before-stop-running.stdout').write_bytes(r.stdout);(p/'before-stop-running.stderr').write_bytes(r.stderr);assert r.returncode==0 and r.stdout==b''
+# Retain own exited containers and their original source/image/output; stop only the named owner guest.
+start=datetime.datetime.now(datetime.timezone.utc).isoformat();r=subprocess.run(['/opt/homebrew/bin/orb','stop','research-6695-docker-01a0ff52'],capture_output=True,timeout=15);(p/'guest-stop.stdout').write_bytes(r.stdout);(p/'guest-stop.stderr').write_bytes(r.stderr);assert r.returncode==0
+r=subprocess.run(['/opt/homebrew/bin/orb','list','--format','json'],capture_output=True,timeout=10);(p/'poststop-inventory.private.json').write_bytes(r.stdout);assert r.returncode==0
+allv=json.loads(r.stdout);selected=[x for x in allv if x['name']=='research-6695-docker-01a0ff52'];assert len(selected)==1 and selected[0]['state']=='stopped' and selected[0]['id']=='01M3ZNQT3203YNF70YT80E0A00'
+x={'schema':'predicate-condition-terminal-reconciliation-v1','utc_start':start,'utc_end':datetime.datetime.now(datetime.timezone.utc).isoformat(),'frozen_guest_inputs_exact':len(f['frozen_inputs']),'freeze_exact':g['FREEZE.json']['sha256']==hashlib.sha256((p/'FREEZE.json').read_bytes()).hexdigest(),'containers':records,'running_before_vm_stop':0,'owned_vm_stopped':selected[0],'other_guests_mutated':0,'containers_and_outputs_preserved':True}
+(p/'terminal-reconciliation.json').write_text(json.dumps(x,indent=2,sort_keys=True)+'\n');print(json.dumps({'frozen_guest_inputs_exact':x['frozen_guest_inputs_exact'],'terminal_containers':len(records),'owned_vm_state':selected[0]['state'],'other_guests_mutated':0},sort_keys=True))

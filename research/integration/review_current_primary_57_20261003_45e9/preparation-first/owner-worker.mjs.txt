@@ -1,0 +1,36 @@
+/** NEW distinct output-channel diagnosis boundary; original product bytes unchanged. */
+import {PassThrough,Writable} from 'node:stream';
+import {readFile,writeFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const [configPath,moduleUrl,laterArg]=process.argv.slice(2),config=JSON.parse(await readFile(configPath));
+const root=new URL('.',new URL('file:///'+configPath.replaceAll('\\','/'))).pathname.replace(/^\/(?=[A-Za-z]:)/,'');
+const {runPrimaryStdio}=await import(moduleUrl),events=[],rows=[];let first,held,readyResolve,settled=false;const ready=new Promise(r=>{readyResolve=r;});
+const event=(name,value={})=>events.push({seq:events.length+1,utc:new Date().toISOString(),name,...value});
+const input=new PassThrough(),foreignIn=()=>{},foreignOut=()=>{};input.on('error',foreignIn);
+const output=new Writable({write(chunk,_enc,done){const row=JSON.parse(chunk);rows.push(row);event('write',{status:row.status});if(row.status==='busy')held=done;else {done();if(row.status==='ready')readyResolve();}}});
+output.on('error',foreignOut);
+const OriginalError=globalThis.Error;
+function CaptureError(...args){const e=Reflect.construct(OriginalError,args,new.target||OriginalError);if(args[0]==='primary busy response backlog'){first=e;event('actual_first_backlog_error_constructed',{name:e.name,message:e.message});}return e;}
+CaptureError.prototype=OriginalError.prototype;Object.setPrototypeOf(CaptureError,OriginalError);
+const later=new OriginalError('later owned output fault '+config.nonce);
+const {nonce,...productConfig}=config;let outcome;
+const owner=runPrimaryStdio(productConfig,{input,output}).then(()=>({status:'resolved'}),error=>({status:'rejected',error})).then(x=>{settled=true;outcome=x;event('owner_endpoint',{status:x.status,error:x.error?.message,first_identity:x.error===first,later_identity:x.error===later,cause:x.error?.cause?.message,aggregate:x.error?.errors?.map(e=>e.message)});return x;});
+await ready;globalThis.Error=CaptureError;
+input.write(JSON.stringify({id:1,method:'call',args:['interface_close',{}]})+'\n');
+const turn=()=>new Promise(r=>setImmediate(r));
+for(let i=0;;i++){try{await readFile(root+'fixture-request.json');break;}catch(e){if(e.code!=='ENOENT')throw e;}if(i>10000)throw new OriginalError('fixture request not observed');await new Promise(r=>setTimeout(r,1));}
+event('one_original_request_observed');input.write('{"id":2}\n');await turn();assert.equal(typeof held,'function');
+input.write('{"id":3}\n');await turn();assert.ok(first);assert.equal(input.isPaused(),true);assert.equal(settled,false);
+event('earlier_backlog_and_original_pending');
+if(laterArg==='yes'){event('later_output_error_emit',{message:later.message});output.emit('error',later);await turn();assert.equal(settled,false);}
+globalThis.Error=OriginalError;
+await writeFile(root+'release','release original once\n',{flag:'wx'});event('release_original_fixture');
+const done=held;held=null;done();input.end();await owner;await turn();
+const fixtureStart=JSON.parse(await readFile(root+'fixture-start.json')),fixtureExit=JSON.parse(await readFile(root+'fixture-exit.json')),hostExit=JSON.parse(await readFile(root+'host/exit.json'));
+let childAbsent=false;try{process.kill(fixtureStart.pid,0);}catch(e){if(e.code==='ESRCH')childAbsent=true;else throw e;}
+const originalReply=JSON.parse(await readFile(root+'exchange/original-reply-1.json')),presentation=JSON.parse(await readFile(root+'exchange/presentation-1.json'));
+const diagnosisRetained=outcome.error===first||outcome.error?.cause===first||outcome.error?.errors?.includes(first)===true;
+const result={nonce,worker_pid:process.pid,worker_ppid:process.ppid,later_output:laterArg==='yes',events,rows,first_error:{name:first.name,message:first.message},endpoint_error:{name:outcome.error?.name,message:outcome.error?.message,first_identity:outcome.error===first,later_identity:outcome.error===later},diagnosis_retained:diagnosisRetained,diagnostic_disposition:diagnosisRetained?'PASS_FIRST_BACKLOG_RETAINED':'FAIL_FIRST_BACKLOG_MASKED_BY_LATER_OUTPUT',fixtureStart,fixtureExit,hostExit,childAbsent,originalReply,presentation,listeners:{input:input.listenerCount('error'),output:output.listenerCount('error')},foreign_retained:input.listeners('error')[0]===foreignIn&&output.listeners('error')[0]===foreignOut};
+await writeFile(root+'RAW.json',JSON.stringify(result,null,2)+'\n',{flag:'wx'});console.log(JSON.stringify(result));
+assert.equal(outcome.status,'rejected');assert.deepEqual(rows.map(x=>x.status),['ready','busy','returned']);assert.equal(fixtureExit.requests,1);assert.equal(fixtureExit.replyCount,1);assert.equal(fixtureExit.code,0);assert.deepEqual(hostExit,{code:0,signal:null});assert.equal(childAbsent,true);assert.equal(result.foreign_retained,true);assert.deepEqual(result.listeners,{input:1,output:1});assert.deepEqual(rows[2].result,presentation);
+if(laterArg==='no')assert.equal(outcome.error,first);else assert.equal(outcome.error,later);

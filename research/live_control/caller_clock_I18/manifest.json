@@ -1,0 +1,139 @@
+{
+  "kind": "I18_SEPARATE_ACTIVE_FIXTURE_COMPATIBILITY_CHANGE",
+  "base_head": "90c5993f6cb1607dc66b121529e99370f137a89d",
+  "current_main_observed": "8c66c43918c7b8ac4b3daf929e07b163ba306d81",
+  "old_test": {
+    "bytes": 7945,
+    "sha256": "a59a58584b42244147f56b54c6a0e4689afce12d4813223bab4d72eb49973885",
+    "git_blob": "ffa6627288fe148f94b6f8b61e38b4ed90b2318f"
+  },
+  "new_test": {
+    "bytes": 7961,
+    "sha256": "bc87728f154bb422f3db229c7f3fd2535b554fa7179b553ea96f5ac59967ac0b",
+    "git_blob": "195a9dfceb721ee1ee96bab0bb4d1f73e3d5cd85"
+  },
+  "runtime_source_changes": 0,
+  "complete_core_images_equal_current_to_actual_I17": {
+    "compiled_gui.py": {
+      "bytes": 20726,
+      "sha256": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014",
+      "git_blob": "ca14d654a7580cfa8369a1aef988f59d1acc9442"
+    },
+    "contract.py": {
+      "bytes": 15230,
+      "sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+      "git_blob": "231ab75625e7d88bbf440b90d7e15cb64cd13f44"
+    },
+    "__init__.py": {
+      "bytes": 823,
+      "sha256": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+      "git_blob": "659531954db218d4c04849fe937df80ad1fcf495"
+    },
+    "backend.py": {
+      "bytes": 741,
+      "sha256": "5f5959de391dee682c740baf1007f8bf8c74308d379efed2021fba660b5e9d68",
+      "git_blob": "d00e5508f824bbb530fa67d2089b24572d5a9ef3"
+    },
+    "sequence.py": {
+      "bytes": 4714,
+      "sha256": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+      "git_blob": "8788005073995b613b56ad68532a439078e253d9"
+    },
+    "platform_probe.py": {
+      "bytes": 1898,
+      "sha256": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+      "git_blob": "8fe6982c95fb385986114017bc0f9fcc8fd4dca9"
+    },
+    "doctor.py": {
+      "bytes": 798,
+      "sha256": "e27852838e13d5bc8317fc0dbad7255b4deb6db209cf75ab981441f0f64b4098",
+      "git_blob": "d81d5809273560ab5c8071a6db99b18305013d6c"
+    }
+  },
+  "ordinary_test_results_reused": {
+    "original": [
+      {
+        "label": "normal",
+        "argv": [
+          "<PYTHON>",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_adaptive_acquisition_caller_v3",
+          "test_adaptive_acquisition_caller_refusal_v3",
+          "test_adaptive_acquisition_caller_dispatch_v3",
+          "test_adaptive_acquisition_caller_uncertain_tail_v3"
+        ],
+        "pid": 21976,
+        "utc_start": "2026-10-03T16:29:53.158144+00:00",
+        "utc_end": "2026-10-03T16:29:53.439233+00:00",
+        "exit": 1,
+        "timeout": false,
+        "stdout_bytes": 0,
+        "stderr_bytes": 5741,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "9552ea85a7f5d1658fede131cec24eb9f5346bd9c2d1f1c9246530a58490ce55"
+      }
+    ],
+    "corrected": [
+      {
+        "label": "repaired-normal",
+        "argv": [
+          "<PYTHON>",
+          "-B",
+          "-m",
+          "unittest",
+          "-v",
+          "test_adaptive_acquisition_caller_v3",
+          "test_adaptive_acquisition_caller_refusal_v3",
+          "test_adaptive_acquisition_caller_dispatch_v3",
+          "test_adaptive_acquisition_caller_uncertain_tail_v3"
+        ],
+        "pid": 40984,
+        "utc_start": "2026-10-03T16:31:30.431009+00:00",
+        "utc_end": "2026-10-03T16:31:30.695602+00:00",
+        "exit": 0,
+        "timeout": false,
+        "stdout_bytes": 0,
+        "stderr_bytes": 3742,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "bb52b2d0d9d46e4878134e168984c860c1e32533967857f15ad6621c62af268e"
+      },
+      {
+        "label": "repaired-optimized",
+        "argv": [
+          "<PYTHON>",
+          "-B",
+          "-O",
+          "-m",
+          "unittest",
+          "-v",
+          "test_adaptive_acquisition_caller_v3",
+          "test_adaptive_acquisition_caller_refusal_v3",
+          "test_adaptive_acquisition_caller_dispatch_v3",
+          "test_adaptive_acquisition_caller_uncertain_tail_v3"
+        ],
+        "pid": 36056,
+        "utc_start": "2026-10-03T16:31:30.697602+00:00",
+        "utc_end": "2026-10-03T16:31:30.928814+00:00",
+        "exit": 0,
+        "timeout": false,
+        "stdout_bytes": 0,
+        "stderr_bytes": 3742,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_sha256": "59f8338bf171bbf89681ea6f1ca67d379be238bf70890c5cb8f7b876bc237844"
+      }
+    ]
+  },
+  "evidence": "https://github.com/Unjuno/agent-interface/pull/7097#issuecomment-5971157767",
+  "method": "I17 public capsule45files and immutable Git tree recipe; complete private streams retained, five public profile-only projections explicitly qualified",
+  "known_runtime_residual": "https://github.com/Unjuno/agent-interface/pull/7097#issuecomment-5971141564",
+  "private_peer_runtime_proposal": "https://github.com/Unjuno/agent-interface/pull/7097#issuecomment-5971186713",
+  "limits": [
+    "prior ordinary targeted results reused after complete source/dependency/stream verification; no new test/core/native/model/browser/formal producer execution",
+    "24 named assertions, not complete per-call result capture",
+    "new content votes required; none transferred",
+    "not overall caller adoption/platform/nonauthor current-tree/sender/main certificate"
+  ]
+}

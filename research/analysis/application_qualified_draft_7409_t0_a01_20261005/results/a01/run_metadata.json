@@ -1,0 +1,47 @@
+{
+  "schema": "application-qualified-draft-7409-run-v1",
+  "allocation": "APPLICATION-QUALIFIED-DRAFT-7409-T0-A01-20261005-01",
+  "frozen_source_commit": "5a258dc1ef6ed72d8564e81579b88056702d5844",
+  "frozen_main_base": "19a6b723e58ccfd2b8265e88659589ef9223fcc9",
+  "remote_main_at_candidate_invocation": "38fe303fec59cde15f708483cae00bf617f3bdd0",
+  "runtime": "OrbStack Docker server 29.4.0; client 29.5.2",
+  "image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "platform": "linux/arm64",
+  "docker_info": {
+    "cgroup_driver": "cgroupfs",
+    "cgroup_version": "2",
+    "cpus_reported": 10,
+    "memory_bytes_reported": 16808173568,
+    "warnings": ["WARNING: DOCKER_INSECURE_NO_IPTABLES_RAW is set"],
+    "swap_behavior": "not assessed",
+    "one_cpu_flag": "requested; enforcement not independently measured"
+  },
+  "execution_settings": ["--network none", "--cpus 1", "--read-only", "read-only /src bind", "distinct writable /out bind", "16 MiB noexec/nosuid /tmp tmpfs"],
+  "invocation_counts": {"preflight": 1, "candidate": 1, "auditor_after_candidate_exit_0": 1, "retries": 0},
+  "candidate_exit_code": 0,
+  "auditor_exit_code": 0,
+  "observed_complete_at_utc": "2026-10-05T09:30:36Z",
+  "candidate_command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src='/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/frozen',dst=/src,readonly --mount type=bind,src='/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/a01',dst=/out --workdir /src python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c python -I /src/candidate.py /src/cases.json /out/candidate.raw.json",
+  "auditor_command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src='/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/frozen',dst=/src,readonly --mount type=bind,src='/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/a01',dst=/out --workdir /src python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c python -I /src/auditor.py /src/cases.json /out/candidate.raw.json /out/audit.json",
+  "capture_paths": {
+    "candidate_stdout": "/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/a01/candidate.stdout.txt",
+    "candidate_stderr": "/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/a01/candidate.stderr.txt",
+    "auditor_stdout": "/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/a01/auditor.stdout.txt",
+    "auditor_stderr": "/Users/taka/Documents/Codex/2026-10-05/agent-interface-8080-t0/research/analysis/application_qualified_draft_7409_t0_a01_20261005/results/a01/auditor.stderr.txt"
+  },
+  "outputs": {
+    "candidate.raw.json": "ae6ca2cbbfe6d5669f0dd8de8665b224cf100344ae991575fe3f7f66dc43279d",
+    "audit.json": "9b74747dad9938159f76d7139ebcdc5c760173b389f724f33ce339839e2547eb",
+    "candidate.stdout.txt": "dbf438ff1ce37524b5cc3ff0e6af20e78557bd91932f7aaabd43f53619cfbe0d",
+    "candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "auditor.stdout.txt": "8bd50bdf47388d9c3c8736cc1fce588621c6a74f59c94ae9920634f962f84d06",
+    "auditor.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "audit": {
+    "disposition": "METHOD_PASS_SCOPED",
+    "reconstructed_rows": 6,
+    "errors": [],
+    "mutations_rejected": 6,
+    "mutations_total": 6
+  }
+}

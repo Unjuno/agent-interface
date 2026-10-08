@@ -1,0 +1,41 @@
+"""Actual named nonauthor combined tree check, source/data only, no main reference."""
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent;repo=root.parent/'agent-interface';out=root/'current-application';out.mkdir(exist_ok=False)
+env=dict(os.environ,GIT_NO_LAZY_FETCH='1');primary=(repo/'.git/index').read_bytes();start=datetime.now(timezone.utc).isoformat()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(n,v):(out/n).write_text(json.dumps(v,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+def git(*a):return subprocess.check_output(['git',*a],cwd=repo,env=env)
+p=json.loads((root/'PROPOSAL.json').read_bytes());export=json.loads((root/'EXPORT.json').read_bytes())
+current=json.loads((root/'MAIN_SNAPSHOT.json').read_bytes())['sha'];head=p['head_sha'];base=p['review_base_sha']
+assert git('rev-parse','origin/main').decode().strip()==current
+assert git('merge-base',current,head).decode().strip()==base
+closure=['runtime/host_v1','.github/workflows/native-mcp-v1.yml','runtime/integration_checks/host_timing.py','runtime/integration_checks/native.py','runtime/distribution_v2/build.py']
+changed_dependencies=git('diff','--name-only',base,current,'--',*closure).decode().splitlines();assert not changed_dependencies,changed_dependencies
+drift=git('diff','--name-only',base,current).decode().splitlines()
+cmd=['git','merge-tree','--write-tree',current,head];r=subprocess.run(cmd,cwd=repo,env=env,capture_output=True,timeout=20)
+(out/'merge.stdout.txt').write_bytes(r.stdout);(out/'merge.stderr.txt').write_bytes(r.stderr)
+put('MERGE_RECEIPT.json',{'command':cmd,'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':r.returncode,
+ 'stdout_sha256':sha(r.stdout),'stderr_sha256':sha(r.stderr),'prior_shallow_ancestry_failure_preserved':True})
+assert r.returncode==0,r.stderr
+tree=r.stdout.decode().strip();assert len(tree)==40
+actual=git('diff','--name-only','--no-renames',current,tree).decode().splitlines();assert actual==export['changed_paths'] and len(actual)==259
+images=[]
+for r in export['blobs']:
+ if r['side']!='source':continue
+ assert sha((root/r['side']/r['path']).read_bytes())==r['sha256']
+ meta,path=git('ls-tree',tree,'--',r['path']).decode().strip().split('\t');mode,kind,oid=meta.split()
+ assert path==r['path'] and kind=='blob' and mode==r['mode'] and oid==r['blob_oid']
+ images.append({k:v for k,v in r.items() if k!='side'})
+assert len(images)==280
+assert primary==(repo/'.git/index').read_bytes()
+put('CURRENT_TUPLE.json',{'repository':p['repository'],'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),
+ 'current_main':current,'reviewed_head':head,'content_base_and_actual_merge_base':base,'planned_tree':tree,'proposal_digest':p['proposal_digest'],
+ 'committee_epoch':p['committee_epoch'],'actual_changed_paths':actual,'exact_head_source_archive_config_images':images,'used_closure':closure,
+ 'intervening_used_closure_changes':changed_dependencies,'complete_intervening_paths':drift,
+ 'actual_applicable_evidence':'Own exact-head17 stdio methods +3 public --config CLI/real OS stdout-pipe witnesses, same immutable used closure/config/input/Node24 environment in this named tree. Author45/20 and actual native histories retained only.',
+ 'prior_named_peer_combinations':'ff59 single636/dc7d and neighbor19a0 are separately owned historical preparations; no peer20-byte signature copied to this head (neighbor modifies primary_stdio).',
+ 'no_main_ref_or_merge_commit_created':True,'primary_index_unchanged':True,'apply_id':None,'preparation_only':True,
+ 'final_author_record_then_current_requirements_ownership_cancellation_one_expected_old_forward_apply_and_readback_separate':True,'not_future_main_authority':True})
+print(json.dumps({'current_main':current,'head':head,'planned_tree':tree,'exact_delta':259,'exact_images':280,'used_closure_changes':0,'complete_intervening_paths':len(drift)}))

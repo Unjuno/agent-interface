@@ -1,0 +1,56 @@
+{
+  "platform": "Windows-10-10.0.26300-SP0",
+  "python": "3.11.9",
+  "runs": [
+    {
+      "command": [
+        "$PYTHON",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_adjudication.py"
+      ],
+      "cwd": "$REPO\\research\\analysis\\retained_row_adjudication_5229_v1",
+      "end_utc": "2026-10-03T01:35:56.471770+00:00",
+      "exit_code": 0,
+      "name": "tests",
+      "start_utc": "2026-10-03T01:35:56.338067+00:00",
+      "stderr_sha256": "e899dce99350f82b604bd8a29bb4b0263b831bb41240f4d5e93a5d9e707bf146",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "$PYTHON",
+        "-B",
+        "$REPO\\research\\analysis\\retained_row_adjudication_5229_v1\\adjudicate.py",
+        "--git",
+        "$GIT"
+      ],
+      "cwd": "$REPO",
+      "end_utc": "2026-10-03T01:35:57.014807+00:00",
+      "exit_code": 0,
+      "name": "adjudication",
+      "start_utc": "2026-10-03T01:35:56.474882+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "3271657656365aa0b27cd9d538bebf56261e5852918e8fb3cab05dc41165bfde"
+    },
+    {
+      "command": [
+        "$PYTHON",
+        "-B",
+        "$REPO\\research\\analysis\\retained_row_adjudication_5229_v1\\audit.py",
+        "--git",
+        "$GIT",
+        "$REPO\\research\\analysis\\retained_row_adjudication_5229_v1\\evidence\\adjudication.stdout.json"
+      ],
+      "cwd": "$REPO",
+      "end_utc": "2026-10-03T01:35:57.485490+00:00",
+      "exit_code": 0,
+      "name": "audit",
+      "start_utc": "2026-10-03T01:35:57.014807+00:00",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1062931ad169761a777608b4fcbf786eb29d0687700ae337cbe627953b327e08"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import io
 import json
 import os
 from pathlib import Path
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -67,20 +68,17 @@ class ConstructorFailureRegression(unittest.TestCase):
             with self.assertRaises(FileExistsError):source.CodexAppServerClient(['inert-no-process'],process_factory=factory,journal_path=p)
             self.assertEqual(calls,[]);self.assertEqual(p.read_bytes(),b'prior exact evidence\n')
     def test_healthy_factory_queued_response_and_journal_preserved(self):
-        class InertProcess:
-            def __init__(self):
-                self.stdin=io.StringIO();self.stdout=io.StringIO('{"id":1,"result":{"healthy":true}}\n');self.stderr=io.StringIO()
-            def poll(self):return 0
         with tempfile.TemporaryDirectory() as directory:
-            p=Path(directory)/'journal';process=InertProcess();client=source.CodexAppServerClient([],process_factory=lambda *a,**kw:process,journal_path=p)
+            p=Path(directory)/'journal'
+            peer = "import json,sys; request=json.loads(sys.stdin.readline()); print(json.dumps({'id':request['id'],'result':{'healthy':True}}),flush=True)"
+            client=source.CodexAppServerClient([sys.executable,'-c',peer],journal_path=p)
             try:
-                client._reader.join(timeout=1);self.assertFalse(client._reader.is_alive())
                 self.assertEqual(client.request('inert/healthy'),{'healthy':True})
                 rows=[json.loads(x) for x in p.read_bytes().splitlines()]
-                self.assertEqual([r['direction'] for r in rows],['received','sent'])
-                self.assertEqual(rows[0]['message'],{'id':1,'result':{'healthy':True}})
+                self.assertEqual([r['direction'] for r in rows],['send_prepared','sent','received'])
                 self.assertEqual(rows[1]['message'],{'method':'inert/healthy','id':1})
+                self.assertEqual(rows[2]['message'],{'id':1,'result':{'healthy':True}})
             finally:
-                client.close();process.stdin.close();process.stdout.close();process.stderr.close()
+                client.close()
 
 if __name__=='__main__':unittest.main()

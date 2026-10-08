@@ -1,0 +1,155 @@
+{
+  "environment_delta": {
+    "PRIMARY_STDIO_STARTUP_EVIDENCE_for_maintained": "<OWN_WORKSPACE>\\work\\review6979-45e9\\maintained-startup-cases",
+    "TEMP": "<OWN_WORKSPACE>\\work\\review6979-45e9\\tmp",
+    "TMP": "<OWN_WORKSPACE>\\work\\review6979-45e9\\tmp"
+  },
+  "frozen_utc": "2026-10-03T09:46:31.537745+00:00",
+  "helpers": [
+    {
+      "path": "probes.mjs",
+      "sha256": "aee1bf37d954b476736d9b87279c27175ff08c39b2cd4c2ab7c4f0451a83427e"
+    },
+    {
+      "path": "prepare.py",
+      "sha256": "5b62d1686b49ae3f3d9bf5e71af3dbdbdc0365aebea819e7e03991d488bf13e3"
+    },
+    {
+      "path": "capture.py",
+      "sha256": "4839bbb822a94d49f2459c43c60d62f456c98801e42c2ec01ba33f7369439e41"
+    }
+  ],
+  "intent_sha256": "1ea7c9ce31445d7adc4e31ae4c390bb9fa82e9a040529f7bfd0fdba2711dab2a",
+  "job_timeout_seconds": 25,
+  "jobs": [
+    {
+      "argv": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "<OWN_WORKSPACE>\\work\\review6979-45e9\\probes.mjs"
+      ],
+      "cwd": "<OWN_WORKSPACE>\\work\\review6979-45e9",
+      "name": "new-busy-fault"
+    },
+    {
+      "argv": [
+        "C:\\Program Files\\nodejs\\node.EXE",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "runtime/host_v1/test_primary_stdio.mjs",
+        "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+        "runtime/host_v1/test_primary_stdio_utf8.mjs",
+        "runtime/host_v1/test_relay_client.mjs"
+      ],
+      "cwd": "<OWN_WORKSPACE>\\work\\review6979-45e9\\combined",
+      "name": "combined-maintained54"
+    }
+  ],
+  "node_binary": "C:\\Program Files\\nodejs\\node.EXE",
+  "node_binary_sha256": "3428a3d055501883385d78b19128550d3e8be39a89e7edba683a9b06830257c7",
+  "node_version": "v24.6.0",
+  "source": [
+    {
+      "bytes": 13596,
+      "path": "runtime/host_v1/primary_caller.mjs",
+      "sha256": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e",
+      "variant": "peer"
+    },
+    {
+      "bytes": 4236,
+      "path": "runtime/host_v1/primary_exchange.mjs",
+      "sha256": "e3bbaa6cb79beede5882f47c42d46ae4c405b5392575b8a62a48de3177353420",
+      "variant": "peer"
+    },
+    {
+      "bytes": 6148,
+      "path": "runtime/host_v1/primary_stdio.mjs",
+      "sha256": "f7906ac3e688d6b34fb572234d8abfe7f8e5c27f10c3559caee33b5dd2d4ba7e",
+      "variant": "peer"
+    },
+    {
+      "bytes": 12829,
+      "path": "runtime/host_v1/relay_client.mjs",
+      "sha256": "0a935142a8878fb90f212e004a9e8ffe47224d1505c6cee670960db03c38312b",
+      "variant": "peer"
+    },
+    {
+      "bytes": 11930,
+      "path": "runtime/host_v1/relay_host.mjs",
+      "sha256": "7c83f07126f90761a1d74abf92681a6d1441b0f9320025956c7b025fdbca3984",
+      "variant": "peer"
+    },
+    {
+      "bytes": 17586,
+      "path": "runtime/host_v1/test_primary_stdio.mjs",
+      "sha256": "354a47cc1c932fae6aee6633c94307d77ae04359f748034d8a33421598376295",
+      "variant": "peer"
+    },
+    {
+      "bytes": 3403,
+      "path": "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+      "sha256": "89cf485c7e130c377190c58afca3741fd750a5a76b9d5cc3ab958ae5d6353bef",
+      "variant": "peer"
+    },
+    {
+      "bytes": 14767,
+      "path": "runtime/host_v1/test_relay_client.mjs",
+      "sha256": "d134b5cd53b84ee3bf3d1db3663caaa81045bca5e33b45aeef33eb1eb2c01c28",
+      "variant": "peer"
+    },
+    {
+      "bytes": 13596,
+      "path": "runtime/host_v1/primary_caller.mjs",
+      "sha256": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e",
+      "variant": "combined"
+    },
+    {
+      "bytes": 4236,
+      "path": "runtime/host_v1/primary_exchange.mjs",
+      "sha256": "e3bbaa6cb79beede5882f47c42d46ae4c405b5392575b8a62a48de3177353420",
+      "variant": "combined"
+    },
+    {
+      "bytes": 6888,
+      "path": "runtime/host_v1/primary_stdio.mjs",
+      "sha256": "e95923003e38e1b71fffb32492712ba63c8b9227e64622e15fa64996735c1656",
+      "variant": "combined"
+    },
+    {
+      "bytes": 12829,
+      "path": "runtime/host_v1/relay_client.mjs",
+      "sha256": "0a935142a8878fb90f212e004a9e8ffe47224d1505c6cee670960db03c38312b",
+      "variant": "combined"
+    },
+    {
+      "bytes": 11930,
+      "path": "runtime/host_v1/relay_host.mjs",
+      "sha256": "7c83f07126f90761a1d74abf92681a6d1441b0f9320025956c7b025fdbca3984",
+      "variant": "combined"
+    },
+    {
+      "bytes": 17586,
+      "path": "runtime/host_v1/test_primary_stdio.mjs",
+      "sha256": "354a47cc1c932fae6aee6633c94307d77ae04359f748034d8a33421598376295",
+      "variant": "combined"
+    },
+    {
+      "bytes": 3403,
+      "path": "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+      "sha256": "89cf485c7e130c377190c58afca3741fd750a5a76b9d5cc3ab958ae5d6353bef",
+      "variant": "combined"
+    },
+    {
+      "bytes": 5452,
+      "path": "runtime/host_v1/test_primary_stdio_utf8.mjs",
+      "sha256": "923a9022076219d1f809f996db809dce01710e22d8276751eb91bff0193b1515",
+      "variant": "combined"
+    },
+    {
+      "bytes": 14767,
+      "path": "runtime/host_v1/test_relay_client.mjs",
+      "sha256": "d134b5cd53b84ee3bf3d1db3663caaa81045bca5e33b45aeef33eb1eb2c01c28",
+      "variant": "combined"
+    }
+  ]
+}

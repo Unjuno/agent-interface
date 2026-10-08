@@ -1,0 +1,36 @@
+"""Saved-data negatives only, no subject/model producer or construction calls."""
+import pathlib,json,copy,hashlib,importlib.util
+root=pathlib.Path(__file__).resolve().parent
+spec=importlib.util.spec_from_file_location('independent_saved_oracle',root/'audit_saved.py');oracle=importlib.util.module_from_spec(spec);spec.loader.exec_module(oracle)
+model=oracle.document(root/'raw'/'MODEL.json');construction=oracle.document(root/'construction.json');target=root/'copied-controls';target.mkdir(exist_ok=False)
+baseline=oracle.audit_document(model,construction,root);assert baseline['passed']
+mutations=[]
+def control(name,mutate):
+    m=copy.deepcopy(model);c=copy.deepcopy(construction);mutate(m,c);folder=target/name;folder.mkdir()
+    for filename,value in [('MODEL.json',m),('construction.json',c)]:
+        (folder/filename).write_text(json.dumps(value,indent=2,allow_nan=False)+'\n')
+    rejected=False;error=None
+    try:oracle.audit_document(oracle.document(folder/'MODEL.json'),oracle.document(folder/'construction.json'),root)
+    except oracle.AuditError as e:rejected=True;error=str(e)
+    assert rejected,name
+    mutations.append({'name':name,'rejected':rejected,'error':error,'copied_inputs':{p.name:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in folder.iterdir() if p.is_file()}})
+control('missing-B-transition',lambda m,c:m['graphs'][1]['edges'].pop(next(i for i,e in enumerate(m['graphs'][1]['edges']) if e['actor']=='B')))
+control('duplicate-transition',lambda m,c:m['graphs'][1]['edges'].append(copy.deepcopy(m['graphs'][1]['edges'][0])))
+control('initial-handle-Boolean',lambda m,c:m['graphs'][1]['states'][0].update(q=False))
+control('lasso-actor-mismatch',lambda m,c:m['graphs'][1]['lasso']['edges'][0].update(actor='R' if m['graphs'][1]['lasso']['edges'][0]['actor']!='R' else 'A'))
+control('fairness-false',lambda m,c:m['graphs'][1].update(fair_lasso=False))
+control('outer-decision-forged',lambda m,c:m.update(decision='PASS_UNIVERSAL_RECOVERY'))
+control('late-fresh-arrival',lambda m,c:next(e for e in c['rows'][6]['trace'] if e['event']=='R_FRESH_APPEND').update(logical_arrival_seconds=2.5))
+control('shared-clock-order',lambda m,c:c['rows'][6].update(clock_readings=[0.0,2.0]))
+control('alternative-match-disappeared',lambda m,c:c['rows'][7].update(queue_methods=[]))
+control('diagnostic-attempt-counter',lambda m,c:c['rows'][4].update(A_condition_entries=16))
+control('subject-pin-forged',lambda m,c:m['source_pins']['paths']['outside.py'].update(sha256='0'*64))
+parser=[]
+for name,raw in [('duplicate-key',b'{"x":1,"x":2}'),('nonfinite-NaN',b'{"x":NaN}'),('nonfinite-infinity',b'{"x":1e9999}'),('invalid-json',b'{"x":')]:
+    f=target/(name+'.txt');f.write_bytes(raw);rejected=False;error=None
+    try:oracle.parse(raw)
+    except oracle.AuditError as e:rejected=True;error=str(e)
+    assert rejected,name;parser.append({'name':name,'rejected':True,'error':error,'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()})
+result={'schema':'predicate-retry-copied-data-controls-v1','passed':True,'retained_data_recheck':True,'semantic_controls':mutations,'parser_controls':parser,'subject_calls':0,'model_producer_calls':0,'native_calls':0,'limitation':'bounded selected mutations; saved consistency only, not source authenticity or exhaustive adversarial resistance'}
+with (root/'copied-controls-result.json').open('x') as f:f.write(json.dumps(result,indent=2,allow_nan=False)+'\n')
+print(json.dumps({'passed':True,'semantic':len(mutations),'parser':len(parser),'subject_calls':0,'model_calls':0}))

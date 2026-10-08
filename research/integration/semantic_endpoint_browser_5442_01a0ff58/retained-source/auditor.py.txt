@@ -1,0 +1,137 @@
+"""Raw-only reimplementation. Imports neither the app nor its observer/actor."""
+import argparse
+import copy
+import hashlib
+import json
+import sqlite3
+from contextlib import closing
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+
+
+def require(condition, explanation):
+    if not condition:
+        raise ValueError(explanation)
+
+
+def typed_equal(left, right):
+    if type(left) is not type(right):
+        return False
+    if type(right) is dict:
+        return set(left) == set(right) and all(typed_equal(left[k], right[k]) for k in right)
+    if type(right) is list:
+        return len(left) == len(right) and all(typed_equal(a, b) for a, b in zip(left, right))
+    return left == right
+
+
+def endpoint_truth(row, scenario, before=None):
+    event = row.get('event')
+    if type(event) is not dict or type(row.get('state')) is not dict:
+        return 'UNKNOWN'
+    phase = 'initial' if before is None else 'repair'
+    pre = 0 if before is None else before['A']['version']
+    expected_state = {'A': {'version': pre + 1, 'value': scenario['desired_text']},
+                      'B': {'version': 0 if before is None else before['B']['version'] + int(before['B']['value'] != ''), 'value': ''}}
+    wanted_intent = {k: scenario[k] for k in ('namespace', 'target', 'desired_text')}
+    wanted_intent.update(nonce=scenario['operation_id'] + ':' + phase, expected_pre_version=pre)
+    if before is not None:
+        wanted_intent.update(previous_state=before, expected_versions={t: r['version'] for t, r in before.items()})
+    selected = {k: event.get(k) for k in ('room', 'phase', 'nonce', 'requested_target', 'actual_target',
+                                       'applied_pre', 'applied_post', 'written', 'text')}
+    wanted_event = {'room': scenario['trial_id'], 'phase': phase, 'nonce': scenario['operation_id'] + ':' + phase,
+                    'requested_target': 'A', 'actual_target': 'A', 'applied_pre': pre, 'applied_post': pre + 1,
+                    'written': 1, 'text': scenario['desired_text']}
+    checks = (row.get('trial_id') == scenario['trial_id'], row.get('phase') == phase,
+              typed_equal(row.get('intent'), wanted_intent), typed_equal(selected, wanted_event),
+              typed_equal(row['state'], expected_state))
+    return 'CONFIRMED' if all(checks) else 'UNKNOWN'
+
+
+def check_raw(out, phase, scenarios, previous=None):
+    result = json.loads((out / (phase + '-observation.json')).read_bytes())
+    rows = result['rows']
+    chosen = [s for s in scenarios if phase == 'initial' or previous[s['trial_id']]['semantic_status'] == 'UNKNOWN']
+    require([r['trial_id'] for r in rows] == [s['trial_id'] for s in chosen], 'exact ordered row identity')
+    require(result['study'] == json.loads((ROOT / 'FREEZE.json').read_bytes())['study'], 'study identity')
+    with closing(sqlite3.connect((out / ('endpoint-after-' + phase + '.sqlite')).as_uri() + '?mode=ro', uri=True)) as db:
+        db.row_factory = sqlite3.Row
+        for table, ordering in [('documents', 'room,target'), ('events', 'room,phase'), ('requests', 'sequence')]:
+            require(typed_equal(result[table], [dict(r) for r in db.execute('SELECT * FROM ' + table + ' ORDER BY ' + ordering)]), 'SQLite/raw disagreement:' + table)
+    answers = []
+    for row, scenario in zip(rows, chosen):
+        before = None if previous is None else previous[scenario['trial_id']]['state']
+        truth = endpoint_truth(row, scenario, before)
+        expected = 'CONFIRMED' if phase == 'repair' or scenario['mode'] == 'valid' else 'UNKNOWN'
+        require(truth == expected == row['semantic_status'], 'wrong semantic result:' + scenario['trial_id'])
+        state = {d['target']: {'version': d['version'], 'value': d['value']} for d in result['documents'] if d['room'] == row['trial_id']}
+        require(typed_equal(row['state'], state), 'detached document state')
+        events = [e for e in result['events'] if e['room'] == row['trial_id'] and e['phase'] == phase]
+        require(len(events) == 1 and typed_equal(row['event'], events[0]), 'detached/duplicate event')
+        require(row['dispatch_status'] == 'accepted', 'missing dispatch')
+        answers.append({'trial_id': row['trial_id'], 'phase': phase, 'truth': truth})
+    require(len(result['events']) == (8 if phase == 'initial' else 14), 'event cardinality')
+    posts = [r for r in result['requests'] if r['method'] == 'POST']
+    require(len(posts) == (8 if phase == 'initial' else 14) and all(r['status'] == 200 and r['path'] == '/apply' for r in posts), 'HTTP POST cardinality/status')
+    return result, answers
+
+
+def audit(out):
+    started = datetime.now(timezone.utc).isoformat()
+    freeze = json.loads((ROOT / 'FREEZE.json').read_bytes())
+    for name, digest in freeze['files'].items():
+        require(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, 'source drift:' + name)
+    scenarios = json.loads((ROOT / 'scenarios.json').read_bytes())
+    first, answers = check_raw(out, 'initial', scenarios)
+    prior = {r['trial_id']: r for r in first['rows']}
+    second, more = check_raw(out, 'repair', scenarios, prior)
+    trace = [json.loads(s) for s in (out / 'ui-trace.jsonl').read_text(encoding='utf-8').splitlines()]
+    require(not any('HOLD' in r['stage'] for r in trace), 'UI HOLD')
+    require(len(trace) == 56, 'four trace entries per operation')
+    expected_operations = [(s['trial_id'], 'initial') for s in scenarios] + [(s['trial_id'], 'repair') for s in scenarios if s['mode'] != 'valid']
+    actual_operations = []
+    for index in range(0, len(trace), 4):
+        chunk = trace[index:index + 4]
+        require([r['stage'] for r in chunk] == ['editor', 'intent-before-submit', 'submit-returned', 'dashboard-returned'], 'UI sequence')
+        identity = (chunk[0]['trial_id'], chunk[0]['phase'])
+        require(all((r['trial_id'], r['phase']) == identity for r in chunk), 'UI mixed identity')
+        scenario = next(s for s in scenarios if s['trial_id'] == identity[0])
+        require(chunk[1]['desired_text'] == scenario['desired_text'] and chunk[1]['nonce'] == scenario['operation_id'] + ':' + identity[1], 'UI intent mismatch')
+        require('Dispatcher accepted' in chunk[2]['state'] and 'Request processed' in chunk[2]['state'], 'UI success absent')
+        actual_operations.append(identity)
+    require(actual_operations == expected_operations, 'UI exact operations')
+    baseline = first['rows'][0]
+    changes = [('actual_target', lambda r: r['event'].__setitem__('actual_target', 'B')),
+               ('intent_target', lambda r: r['intent'].__setitem__('target', 'B')),
+               ('preversion', lambda r: r['event'].__setitem__('applied_pre', 1)),
+               ('post_bool_alias', lambda r: r['event'].__setitem__('applied_post', True)),
+               ('saved_value', lambda r: r['state']['A'].__setitem__('value', 'other')),
+               ('missing_event', lambda r: r.__setitem__('event', None)),
+               ('collateral_B', lambda r: r['state']['B'].__setitem__('version', 1)),
+               ('event_text', lambda r: r['event'].__setitem__('text', 'other')),
+               ('nonce', lambda r: r['event'].__setitem__('nonce', 'other')),
+               ('namespace', lambda r: r['intent'].__setitem__('namespace', 'other'))]
+    mutations = []
+    for name, change in changes:
+        row = copy.deepcopy(baseline)
+        change(row)
+        decision = endpoint_truth(row, scenarios[0])
+        require(decision == 'UNKNOWN', 'mutation accepted:' + name)
+        mutations.append({'name': name, 'decision': decision, 'copied_row': row})
+    result = {'started_utc': started, 'ended_utc': datetime.now(timezone.utc).isoformat(),
+              'source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              'initial_sha256': hashlib.sha256((out / 'initial-observation.json').read_bytes()).hexdigest(),
+              'repair_sha256': hashlib.sha256((out / 'repair-observation.json').read_bytes()).hexdigest(),
+              'ui_trace_sha256': hashlib.sha256((out / 'ui-trace.jsonl').read_bytes()).hexdigest(),
+              'raw_matches': answers + more, 'copied_raw_mutations': mutations, 'result': 'PASS_APPLICATION_ENDPOINT_SCOPED'}
+    with (out / 'AUDIT.json').open('x', encoding='utf-8') as handle:
+        json.dump(result, handle, ensure_ascii=False, indent=2)
+    print(json.dumps({'result': result['result'], 'raw_matches': len(answers + more), 'mutation_rejections': len(mutations)}))
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--out', required=True, type=Path)
+    args = parser.parse_args()
+    audit(args.out.resolve())

@@ -1,0 +1,100 @@
+{
+  "scope": "input-free host engineering reproduction; no backend constructed",
+  "source_sha256": "e0320ae7853cdadfd5820577cc7e166a60210b822afc8b6ca910eb64fd1b5965",
+  "rows": [
+    {
+      "case": "valid",
+      "changed": {},
+      "accepted": true,
+      "error": null
+    },
+    {
+      "case": "expired",
+      "changed": {
+        "now_ns": {
+          "type": "int",
+          "repr": "101"
+        }
+      },
+      "accepted": false,
+      "error": "LEASE_EXPIRED"
+    },
+    {
+      "case": "clock_nan",
+      "changed": {
+        "now_ns": {
+          "type": "float",
+          "repr": "nan"
+        }
+      },
+      "accepted": false,
+      "error": "INVALID_PROGRAM"
+    },
+    {
+      "case": "clock_negative",
+      "changed": {
+        "now_ns": {
+          "type": "int",
+          "repr": "-1"
+        }
+      },
+      "accepted": false,
+      "error": "INVALID_PROGRAM"
+    },
+    {
+      "case": "clock_bool",
+      "changed": {
+        "now_ns": {
+          "type": "bool",
+          "repr": "True"
+        }
+      },
+      "accepted": false,
+      "error": "INVALID_PROGRAM"
+    },
+    {
+      "case": "sequence_bool",
+      "changed": {
+        "current_observation_seq": {
+          "type": "bool",
+          "repr": "True"
+        }
+      },
+      "accepted": false,
+      "error": "INVALID_PROGRAM"
+    },
+    {
+      "case": "sequence_float",
+      "changed": {
+        "current_observation_seq": {
+          "type": "float",
+          "repr": "1.0"
+        }
+      },
+      "accepted": false,
+      "error": "INVALID_PROGRAM"
+    },
+    {
+      "case": "revision_bool",
+      "changed": {
+        "current_binding_revision": {
+          "type": "bool",
+          "repr": "True"
+        }
+      },
+      "accepted": false,
+      "error": "INVALID_PROGRAM"
+    },
+    {
+      "case": "revision_float",
+      "changed": {
+        "current_binding_revision": {
+          "type": "float",
+          "repr": "1.0"
+        }
+      },
+      "accepted": false,
+      "error": "INVALID_PROGRAM"
+    }
+  ]
+}

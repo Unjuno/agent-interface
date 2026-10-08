@@ -1,0 +1,5 @@
+# Additional custody / output validation (post-result construction)
+
+The fixed plan, interval producer, first checker and original result remain byte-for-byte unchanged. These controls cannot change the deadline rule, original HOLD or raw180 rows. They exercise actual byte/path/hash rejection in a private copy and complete result-field validation, beyond the original controls' in-memory checksum predicate.
+
+Before running this suite, fix seven result corruptions: row label, row lower reading, cell bound, scientific disposition, zero count changed to False, lower reading changed to an equal float, and trial_count changed to179. All must be rejected by a complete checker. Preserve first-checker acceptances as validation weaknesses, then add a separately named checker_v2 if needed. No producer rerun. Pin unchanged producer result and old checker bytes. Actual original SHA256SUMS uses full repository paths; an initial private helper incorrectly used relative paths and exited1. Correct path matching checks selected retained artifacts only; the unselected original tar archive is not rehashed.

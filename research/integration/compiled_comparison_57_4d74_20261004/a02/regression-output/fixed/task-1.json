@@ -1,0 +1,340 @@
+{
+  "task": {
+    "task_id": "task-1",
+    "token": "fixture",
+    "layout": "A"
+  },
+  "caller": {
+    "outcome": "TASK_SUCCEEDED",
+    "reason": "verified_effect",
+    "task_effect": "succeeded",
+    "delivery": "confirmed",
+    "execution_progress": {
+      "status": "completed"
+    },
+    "selected_target": {
+      "grounding": {
+        "field_point": [
+          285,
+          400
+        ],
+        "submit_point": [
+          376,
+          400
+        ]
+      },
+      "source": {
+        "image": "fixture.png",
+        "sequence": 1
+      },
+      "aliases": {
+        "field": "fixture_field",
+        "submit": "fixture_submit"
+      },
+      "model_call_id": "synthetic-handoff",
+      "mint_records": []
+    },
+    "cache_update": {
+      "grounding": {
+        "field_point": [
+          285,
+          400
+        ],
+        "submit_point": [
+          376,
+          400
+        ]
+      },
+      "source": {
+        "image": "fixture.png",
+        "sequence": 1
+      },
+      "aliases": {
+        "field": "fixture_field",
+        "submit": "fixture_submit"
+      },
+      "model_call_id": "synthetic-handoff",
+      "mint_records": []
+    },
+    "repair_path": null,
+    "route": "cold",
+    "repair_trace": [],
+    "coarse_origin": "caller_provided",
+    "comparison": {
+      "class": "injected_subpath",
+      "omitted_stages": [
+        "coarse_model"
+      ],
+      "comparable_to_full_cold": false
+    },
+    "stages": {
+      "observe_source": {
+        "status": "completed",
+        "reason": null
+      },
+      "coarse_model": {
+        "status": "skipped",
+        "reason": "coarse_caller_provided"
+      },
+      "acquire_anchor": {
+        "status": "completed",
+        "reason": null
+      },
+      "anchor_model": {
+        "status": "completed",
+        "reason": null
+      },
+      "reuse_revalidate": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "local_repair": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "acquire_expansion": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "expanded_model": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "post_model_observe": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "post_model_revalidate": {
+        "status": "skipped",
+        "reason": "branch_not_reached"
+      },
+      "final_revalidate": {
+        "status": "completed",
+        "reason": null
+      },
+      "execute": {
+        "status": "completed",
+        "reason": null
+      },
+      "verify_effect": {
+        "status": "completed",
+        "reason": null
+      }
+    },
+    "attempt_ledger": [
+      {
+        "attempt_id": "Btask-1",
+        "stage": "anchor_model",
+        "status": "completed",
+        "started_ns": 3515487718,
+        "completed_ns": 3515537967,
+        "call_id": "synthetic-handoff",
+        "usage": null,
+        "visible_images_submitted": 0,
+        "wait_ns": 0,
+        "error": null
+      }
+    ],
+    "model_call_ledger": [
+      {
+        "attempt_id": "Btask-1",
+        "stage": "anchor_model",
+        "call_id": "synthetic-handoff",
+        "output": {
+          "status": "target_reference",
+          "target": {
+            "grounding": {
+              "field_point": [
+                285,
+                400
+              ],
+              "submit_point": [
+                376,
+                400
+              ]
+            },
+            "source": {
+              "image": "fixture.png",
+              "sequence": 1
+            },
+            "aliases": null,
+            "model_call_id": "synthetic-handoff"
+          }
+        },
+        "usage": null,
+        "requested_model": "fixture",
+        "requested_effort": "none",
+        "cost": null,
+        "visible_images_submitted": 0,
+        "wait_ns": 0
+      }
+    ],
+    "accounting": {
+      "attempted_calls": 1,
+      "completed_calls": 1,
+      "duplicate_call_ids": [],
+      "usage_totals": {
+        "input_tokens": null,
+        "cached_input_tokens": null,
+        "cache_write_input_tokens": null,
+        "output_tokens": null,
+        "reasoning_output_tokens": null
+      },
+      "usage_coverage": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "visible_images_submitted": 0,
+      "visible_image_coverage": 1,
+      "model_wait_ns": 0,
+      "model_wait_coverage": 1,
+      "cost": null,
+      "cached_input_semantics": "subset of input_tokens; never added to input total"
+    },
+    "phase_timings": [
+      {
+        "stage": "observe_source",
+        "started_ns": 3515463872,
+        "ended_ns": 3515475109,
+        "elapsed_ns": 11237
+      },
+      {
+        "stage": "acquire_anchor",
+        "started_ns": 3515481191,
+        "ended_ns": 3515484746,
+        "elapsed_ns": 3555
+      },
+      {
+        "stage": "anchor_model",
+        "started_ns": 3515487718,
+        "ended_ns": 3515537967,
+        "elapsed_ns": 50249
+      },
+      {
+        "stage": "final_revalidate",
+        "started_ns": 3515559522,
+        "ended_ns": 3515576260,
+        "elapsed_ns": 16738
+      },
+      {
+        "stage": "execute",
+        "started_ns": 3515603650,
+        "ended_ns": 3515625788,
+        "elapsed_ns": 22138
+      },
+      {
+        "stage": "verify_effect",
+        "started_ns": 3515632308,
+        "ended_ns": 3515637819,
+        "elapsed_ns": 5511
+      }
+    ],
+    "input_authority": "consumed_by_recorded_execute_stage"
+  },
+  "graph": null,
+  "post_model_receipt": null,
+  "source": {
+    "image": "fixture.png",
+    "sequence": 1
+  },
+  "programs": [
+    {
+      "observations": [
+        {
+          "context": "AI INTEGRATED SAVED"
+        }
+      ]
+    }
+  ],
+  "durable_calls": 0,
+  "elapsed_ns": 240692,
+  "events": [
+    {
+      "event": "stage_started",
+      "stage": "observe_source",
+      "started_ns": 3515463872
+    },
+    {
+      "event": "stage_completed",
+      "stage": "observe_source",
+      "ended_ns": 3515475109
+    },
+    {
+      "event": "stage_started",
+      "stage": "acquire_anchor",
+      "started_ns": 3515481191
+    },
+    {
+      "event": "stage_completed",
+      "stage": "acquire_anchor",
+      "ended_ns": 3515484746
+    },
+    {
+      "event": "model_attempt_started",
+      "attempt_id": "Btask-1",
+      "stage": "anchor_model",
+      "status": "started",
+      "started_ns": 3515487718,
+      "completed_ns": null,
+      "call_id": null,
+      "usage": null,
+      "visible_images_submitted": null,
+      "wait_ns": null,
+      "error": null
+    },
+    {
+      "event": "model_attempt_finished",
+      "attempt_id": "Btask-1",
+      "stage": "anchor_model",
+      "status": "completed",
+      "started_ns": 3515487718,
+      "completed_ns": 3515537967,
+      "call_id": "synthetic-handoff",
+      "usage": null,
+      "visible_images_submitted": 0,
+      "wait_ns": 0,
+      "error": null
+    },
+    {
+      "event": "stage_started",
+      "stage": "final_revalidate",
+      "started_ns": 3515559522
+    },
+    {
+      "event": "stage_completed",
+      "stage": "final_revalidate",
+      "ended_ns": 3515576260
+    },
+    {
+      "event": "stage_started",
+      "stage": "execute",
+      "started_ns": 3515603650
+    },
+    {
+      "event": "stage_completed",
+      "stage": "execute",
+      "ended_ns": 3515625788
+    },
+    {
+      "event": "stage_started",
+      "stage": "verify_effect",
+      "started_ns": 3515632308
+    },
+    {
+      "event": "stage_completed",
+      "stage": "verify_effect",
+      "ended_ns": 3515637819
+    },
+    {
+      "event": "adaptive_route_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "verified_effect",
+      "repair_path": null,
+      "attempted_calls": 1
+    }
+  ],
+  "provider_failed": false
+}

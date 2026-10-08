@@ -1,0 +1,24 @@
+{
+  "audit_version": "cleanup-failure red/green saved-result review; Win32 query only",
+  "checks": {
+    "baseline_original_factory_hash": true,
+    "baseline_reproduced_cleanup_leak": true,
+    "candidate_hash_matches": true,
+    "candidate_setinfo_failure_closes_job": true,
+    "candidate_primary_resume_error_preserved": true,
+    "candidate_secondary_kill_error_disclosed": true,
+    "candidate_job_closed_after_secondary_error": true,
+    "candidate_child_stopped": true,
+    "candidate_test_passed": true,
+    "both_pids_inactive_now": true
+  },
+  "baseline_pid_state_now": {
+    "exists": false,
+    "error": 87
+  },
+  "candidate_pid_state_now": {
+    "exists": false,
+    "error": 87
+  },
+  "pass": true
+}

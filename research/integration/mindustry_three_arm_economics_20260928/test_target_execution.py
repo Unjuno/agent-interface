@@ -1,0 +1,367 @@
+"""Host construction tests for fresh-locator-to-dispatch composition."""
+
+import unittest
+from unittest.mock import patch
+
+from arm_coordinator import ArmCoordinator
+from target_execution_v1 import DispatchStop, dispatch_task_targets
+from target_receipts_v1 import (build_palette_receipt,
+                                build_world_receipt)
+
+
+def source(sequence, width=1280):
+    return {"sequence": sequence, "pointer_binding": {
+        "surface": 91, "geometry": [0, 24, width, 760]}}
+
+
+def candidate():
+    return {"op": "target_reference", "point_space": "source_observation_pixels",
+            "points": [{"x": 150, "y": 220}, {"x": 640, "y": 410}],
+            "motion_model": "surface_origin_translation",
+            "confidence_basis": "visually_unambiguous"}
+
+
+def slots():
+    return [{"row": 0, "column": 0, "point": [150, 220]}]
+
+
+class TargetExecutionTests(unittest.TestCase):
+    def setUp(self):
+        self.coordinator = ArmCoordinator("plain")
+        self.coordinator.resolve(source(1), 1280, 760, slots(),
+                                lambda _observation: candidate())
+        self.observations = iter((source(2), source(3)))
+        self.clock_calls = []
+        self.receipt_calls = []
+        self.sent = []
+
+    def run_dispatch(self, **overrides):
+        def read_clock():
+            sequence = 10 + len(self.clock_calls)
+            self.clock_calls.append(sequence)
+            return {"sequence": sequence, "runtime_ns": 100 + sequence}
+
+        options = {
+            "coordinator": self.coordinator,
+            "task_id": "A1",
+            "layout": "A",
+            "observe": lambda: next(self.observations),
+            "read_clock": read_clock,
+            "build_receipt": lambda locator, target:
+                self.receipt_calls.append((locator, target)) or {"target": target},
+            "submit": lambda request: self.sent.append(request) or {
+                "request_id": request["id"], "terminal": True, "released": True},
+        }
+        options.update(overrides)
+        return dispatch_task_targets(**options)
+
+    def test_dispatches_two_targets_with_fresh_ordered_locators(self):
+        compiled = []
+
+        def compile_request(locator, clock, task_id, target, receipt):
+            compiled.append((locator, clock, task_id, target, receipt))
+            return {"id": f"{task_id}-{target}",
+                    "expected_sequence": locator["validated_sequence"]}
+
+        with patch("target_execution_v1.compile_receipt_target_click", compile_request):
+            result = self.run_dispatch()
+
+        self.assertEqual([row[3] for row in compiled],
+                         ["palette_point", "target_point"])
+        self.assertEqual([row[0]["validated_sequence"] for row in compiled], [2, 3])
+        self.assertTrue(all(row[2] == "A1" for row in compiled))
+        self.assertEqual(len(self.sent), 2)
+        self.assertEqual([row["target"] for row in result],
+                         ["palette_point", "target_point"])
+
+    def test_composes_real_receipt_builders_and_click_compiler(self):
+        observations = iter((source(2), source(3)))
+        latest = {"sequence": 1}
+        sent = []
+
+        def observe():
+            value = next(observations)
+            latest["sequence"] = value["sequence"]
+            return value
+
+        def build(locator, target):
+            dependency = [{"sequence": 1, "box": [8, 8, 24, 24]}]
+            if target == "palette_point":
+                return build_palette_receipt(locator,
+                                             exact_dependencies=dependency)
+            return build_world_receipt(locator, exact_dependencies=dependency,
+                selection_baseline_sequence=1, selection_receipt_sequence=2,
+                selection_box=[88, 8, 104, 24], minimum_changed_pixels=16)
+
+        result = dispatch_task_targets(
+            coordinator=self.coordinator, task_id="A1", layout="A",
+            observe=observe,
+            read_clock=lambda: {"sequence": latest["sequence"],
+                                "runtime_ns": 100 + latest["sequence"]},
+            build_receipt=build,
+            submit=lambda request: sent.append(request) or {
+                "request_id": request["id"], "terminal": True, "released": True})
+
+        self.assertEqual(len(result), 2)
+        self.assertEqual([row["request"]["expected_sequence"] for row in result], [2, 3])
+        self.assertEqual([row["request"]["steps"][0]["op"] for row in result],
+                         ["pointer_click_receipt_target"] * 2)
+        self.assertEqual(len(sent), 2)
+
+    def test_stale_second_observation_stops_before_second_dispatch(self):
+        self.observations = iter((source(2), source(3, width=1216)))
+        self.sent.clear()
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=lambda locator, clock, task_id, target, receipt:
+                       {"id": target}):
+            with self.assertRaisesRegex(DispatchStop, "refused before input"):
+                self.run_dispatch()
+        self.assertEqual(len(self.sent), 1)
+
+    def test_ambiguous_or_unreleased_dispatch_stops_without_retry(self):
+        attempts = []
+
+        def submit(request):
+            attempts.append(request)
+            return {"request_id": request["id"],
+                    "terminal": True, "released": False}
+
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=lambda locator, clock, task_id, target, receipt:
+                       {"id": target}):
+            with self.assertRaisesRegex(DispatchStop, "terminal release receipt"):
+                self.run_dispatch(submit=submit)
+        self.assertEqual(len(attempts), 1)
+        with self.assertRaisesRegex(DispatchStop, "already consumed"):
+            self.run_dispatch(submit=submit)
+        self.assertEqual(len(attempts), 1)
+
+    def test_submit_callback_mutation_cannot_rewrite_compiled_request_record(self):
+        def mutate_then_complete(request):
+            request["steps"][0]["x"] = 999
+            return {"request_id": request["id"], "terminal": True,
+                    "released": True}
+
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=lambda *_args: {
+                       "id": "A1-select-conveyor",
+                       "steps": [{"op": "pointer_click_receipt_target",
+                                  "x": 150, "y": 220}],
+                   }):
+            result = self.run_dispatch(submit=mutate_then_complete)
+
+        self.assertEqual(result[0]["request"]["steps"][0]["x"], 150)
+
+    def test_persistent_a3_to_b1_repair_dispatches_under_new_geometry(self):
+        coordinator = ArmCoordinator("persistent")
+        sequence = 0
+        model_tasks = []
+        requests = []
+
+        def observation(width):
+            nonlocal sequence
+            sequence += 1
+            return source(sequence, width)
+
+        def compile_request(locator, _clock, task_id, target, _receipt):
+            request = {"id": f"{task_id}-{target}",
+                       "expected_sequence": locator["validated_sequence"]}
+            requests.append((target, request))
+            return request
+
+        def finish_task():
+            coordinator.score(True)
+            coordinator.reset(True)
+            coordinator.advance()
+
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=compile_request):
+            for task_id in ("A1", "A2", "A3", "B1"):
+                task = coordinator.lifecycle.current
+                width = 1280 if task.layout == "A" else 1216
+                model_call = lambda _image, current=task_id: (
+                    model_tasks.append(current) or candidate())
+                resolved = coordinator.resolve(
+                    observation(width), width, 760, slots(), model_call)
+                latest_sequence = {"value": sequence}
+
+                def fresh_observation():
+                    value = observation(width)
+                    latest_sequence["value"] = value["sequence"]
+                    return value
+
+                targets = dispatch_task_targets(
+                    coordinator=coordinator, task_id=task_id, layout=task.layout,
+                    observe=fresh_observation,
+                    read_clock=lambda: {"sequence": latest_sequence["value"],
+                                        "runtime_ns": 100 + latest_sequence["value"]},
+                    build_receipt=lambda _locator, target: {"target": target},
+                    submit=lambda request: {"request_id": request["id"],
+                                            "terminal": True, "released": True})
+                self.assertEqual(len(targets), 2)
+                self.assertEqual(resolved["task"].task_id, task_id)
+                if task_id != "B1":
+                    finish_task()
+
+        b1 = coordinator.task_records[-1]
+        self.assertEqual(b1["task_id"], "B1")
+        self.assertEqual(b1["layout"], "B")
+        self.assertEqual(b1["route"], "repair")
+        self.assertEqual(b1["old_reference_status"], "stale")
+        self.assertEqual(b1["old_reference_pointer_admissions"], 0)
+        self.assertEqual(model_tasks, ["A1", "B1"])
+        self.assertEqual([row[0] for row in requests[-2:]],
+                         ["palette_point", "target_point"])
+        self.assertTrue(all(row[1]["expected_sequence"] >
+                            coordinator.resolved_bundle.source_sequence
+                            for row in requests[-2:]))
+
+    def test_three_arm_task_schedules_compose_with_two_target_dispatches(self):
+        expected = {
+            "plain": (["cold"] * 6, [1] * 6),
+            "ephemeral": (["cold"] * 6, [1] * 6),
+            "persistent": (["cold", "reuse", "reuse", "repair", "reuse", "reuse"],
+                           [1, 0, 0, 1, 0, 0]),
+        }
+        task_model_calls = {}
+        dispatched = []
+
+        def compile_request(locator, _clock, task_id, target, _receipt):
+            request = {"id": f"{task_id}-{target}",
+                       "expected_sequence": locator["validated_sequence"]}
+            dispatched.append((target, request))
+            return request
+
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=compile_request):
+            for arm, (routes, calls) in expected.items():
+                coordinator = ArmCoordinator(arm)
+                sequence = 0
+                actual_model_tasks = []
+
+                for index in range(6):
+                    task = coordinator.lifecycle.current
+                    width = 1280 if task.layout == "A" else 1216
+                    sequence += 1
+                    initial = source(sequence, width)
+
+                    def model_call(_image, task_id=task.task_id):
+                        actual_model_tasks.append(task_id)
+                        return candidate()
+
+                    resolved = coordinator.resolve(
+                        initial, width, 760, slots(), model_call)
+                    latest_sequence = {"value": sequence}
+
+                    def observe():
+                        nonlocal sequence
+                        sequence += 1
+                        latest_sequence["value"] = sequence
+                        return source(sequence, width)
+
+                    targets = dispatch_task_targets(
+                        coordinator=coordinator, task_id=task.task_id,
+                        layout=task.layout, observe=observe,
+                        read_clock=lambda: {
+                            "sequence": latest_sequence["value"],
+                            "runtime_ns": 100 + latest_sequence["value"]},
+                        build_receipt=lambda _locator, target: {"target": target},
+                        submit=lambda request: {
+                            "request_id": request["id"], "terminal": True,
+                            "released": True})
+                    self.assertEqual(resolved["task"].task_id, task.task_id)
+                    self.assertEqual([row["target"] for row in targets],
+                                     ["palette_point", "target_point"])
+                    coordinator.score(True)
+                    coordinator.reset(True)
+                    coordinator.advance()
+
+                records = coordinator.task_records
+                self.assertEqual([row["route"] for row in records], routes)
+                self.assertEqual([row["model_calls"] for row in records], calls)
+                self.assertEqual(len(actual_model_tasks), sum(calls))
+                task_model_calls[arm] = actual_model_tasks
+
+        self.assertEqual(task_model_calls, {
+            "plain": ["A1", "A2", "A3", "B1", "B2", "B3"],
+            "ephemeral": ["A1", "A2", "A3", "B1", "B2", "B3"],
+            "persistent": ["A1", "B1"],
+        })
+        self.assertEqual(len(dispatched), 36)
+        self.assertEqual([row[0] for row in dispatched],
+                         ["palette_point", "target_point"] * 18)
+
+    def test_request_receipt_must_match_id_and_be_terminal(self):
+        for receipt in (
+                {"request_id": "wrong", "terminal": True, "released": True},
+                {"request_id": "palette_point", "terminal": False,
+                 "released": True}):
+            with self.subTest(receipt=receipt):
+                self.setUp()
+                attempts = []
+
+                def submit(request):
+                    attempts.append(request)
+                    return {**receipt, "request_id": receipt["request_id"]}
+
+                with patch("target_execution_v1.compile_receipt_target_click",
+                           side_effect=lambda locator, clock, task_id, target, spec:
+                               {"id": target}):
+                    with self.assertRaisesRegex(DispatchStop,
+                                                "terminal release receipt"):
+                        self.run_dispatch(submit=submit)
+                self.assertEqual(len(attempts), 1)
+                with self.assertRaisesRegex(DispatchStop, "already consumed"):
+                    self.run_dispatch(submit=submit)
+                self.assertEqual(len(attempts), 1)
+
+    def test_consumed_dispatch_resets_only_after_lifecycle_advance(self):
+        with patch("target_execution_v1.compile_receipt_target_click",
+                   side_effect=lambda locator, clock, task_id, target, receipt:
+                       {"id": target}):
+            self.run_dispatch()
+            with self.assertRaisesRegex(DispatchStop, "already consumed"):
+                self.run_dispatch()
+        self.assertEqual(len(self.sent), 2)
+        self.coordinator.score(True)
+        self.coordinator.reset(True)
+        self.coordinator.advance()
+        self.assertFalse(self.coordinator.target_dispatch_started)
+
+    def test_clock_sequence_mismatch_stops_before_submit(self):
+        observations = iter((source(2),))
+        latest = {"sequence": 1}
+        sent = []
+
+        def observe():
+            value = next(observations)
+            latest["sequence"] = value["sequence"]
+            return value
+
+        def build(locator, target):
+            return build_palette_receipt(locator,
+                exact_dependencies=[{"sequence": 1, "box": [8, 8, 24, 24]}])
+
+        with self.assertRaisesRegex(DispatchStop, "socket sequence differs"):
+            dispatch_task_targets(
+                coordinator=self.coordinator, task_id="A1", layout="A",
+                observe=observe,
+                read_clock=lambda: {"sequence": latest["sequence"] + 1,
+                                    "runtime_ns": 102},
+                build_receipt=build,
+                submit=lambda request: sent.append(request))
+        self.assertEqual(sent, [])
+        with self.assertRaisesRegex(DispatchStop, "already consumed"):
+            self.run_dispatch()
+
+    def test_task_mismatch_refuses_before_observation_or_dispatch(self):
+        calls = []
+        with self.assertRaisesRegex(DispatchStop, "current coordinated task"):
+            self.run_dispatch(task_id="A2",
+                              observe=lambda: calls.append("observe"),
+                              submit=lambda _request: calls.append("submit"))
+        self.assertEqual(calls, [])
+
+
+if __name__ == "__main__":
+    unittest.main()

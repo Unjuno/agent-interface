@@ -1,0 +1,245 @@
+{
+  "checker_sha256": "475df75dbe848bf87a679a921657a2c2f756340011857dabf56983e6a7a72795",
+  "construction": [
+    {
+      "A_condition_entries": 1,
+      "B_consumes": 0,
+      "clock_readings": [
+        0.0,
+        2.0
+      ],
+      "clock_reads": 2,
+      "coherent_synthetic_chronology": true,
+      "outcome": "TimeoutError",
+      "policy": "baseline",
+      "scenario": "quiescent",
+      "successful_A_entries": 1
+    },
+    {
+      "A_condition_entries": 2,
+      "B_consumes": 0,
+      "clock_readings": [
+        0.0,
+        2.0
+      ],
+      "clock_reads": 2,
+      "coherent_synthetic_chronology": true,
+      "outcome": "TimeoutError",
+      "policy": "outside",
+      "scenario": "quiescent",
+      "successful_A_entries": 2
+    },
+    {
+      "A_condition_entries": 2,
+      "B_consumes": 0,
+      "clock_readings": [
+        0.0,
+        2.0
+      ],
+      "clock_reads": 2,
+      "coherent_synthetic_chronology": true,
+      "outcome": "TimeoutError",
+      "policy": "deadline_first",
+      "scenario": "quiescent",
+      "successful_A_entries": 2
+    },
+    {
+      "A_condition_entries": 1,
+      "B_consumes": 0,
+      "clock_readings": [
+        0.0,
+        2.0
+      ],
+      "clock_reads": 2,
+      "coherent_synthetic_chronology": true,
+      "outcome": "TimeoutError",
+      "policy": "baseline",
+      "scenario": "churn",
+      "successful_A_entries": 1
+    },
+    {
+      "A_condition_entries": 17,
+      "B_consumes": 8,
+      "clock_readings": [
+        0.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "clock_reads": 9,
+      "coherent_synthetic_chronology": true,
+      "outcome": "DiagnosticCutoff",
+      "policy": "outside",
+      "scenario": "churn",
+      "successful_A_entries": 16
+    },
+    {
+      "A_condition_entries": 2,
+      "B_consumes": 1,
+      "clock_readings": [
+        0.0,
+        2.0,
+        2.0
+      ],
+      "clock_reads": 3,
+      "coherent_synthetic_chronology": true,
+      "outcome": "TimeoutError",
+      "policy": "deadline_first",
+      "scenario": "churn",
+      "successful_A_entries": 2
+    },
+    {
+      "A_condition_entries": 4,
+      "B_consumes": 1,
+      "clock_readings": [
+        0.0,
+        0.25
+      ],
+      "clock_reads": 2,
+      "coherent_synthetic_chronology": true,
+      "outcome": "MATCH",
+      "policy": "outside",
+      "scenario": "fresh_match",
+      "successful_A_entries": 4
+    },
+    {
+      "A_condition_entries": 2,
+      "B_consumes": 1,
+      "clock_readings": [
+        0.0,
+        0.25,
+        2.0
+      ],
+      "clock_reads": 3,
+      "coherent_synthetic_chronology": true,
+      "outcome": "TimeoutError",
+      "policy": "deadline_first",
+      "scenario": "fresh_match",
+      "successful_A_entries": 2
+    },
+    {
+      "A_condition_entries": 1,
+      "B_consumes": 0,
+      "clock_readings": [
+        0.0
+      ],
+      "clock_reads": 1,
+      "coherent_synthetic_chronology": true,
+      "outcome": "MATCH",
+      "policy": "baseline",
+      "scenario": "match_oracle",
+      "successful_A_entries": 1
+    }
+  ],
+  "construction_sha256": "cc701618b40aa456947ccd33eff5e472f7f779e98a676dfc56979b2149f54ab9",
+  "decision": "PASS_SCOPED_EXISTENTIAL_RETRY_COUNTEREXAMPLE",
+  "graphs": [
+    {
+      "A_progress_closed_walk": false,
+      "all3_progress_closed_walk": false,
+      "edges": 4,
+      "independent_witness": null,
+      "policy": "baseline",
+      "states": 4
+    },
+    {
+      "A_progress_closed_walk": true,
+      "all3_progress_closed_walk": true,
+      "edges": 28,
+      "independent_witness": [
+        {
+          "actor": "B",
+          "event": "B_CONSUME",
+          "from": 0,
+          "to": 2
+        },
+        {
+          "actor": "A",
+          "event": "A_SNAPSHOT",
+          "from": 2,
+          "to": 5
+        },
+        {
+          "actor": "A",
+          "event": "A_FALSE_SCAN",
+          "from": 5,
+          "to": 9
+        },
+        {
+          "actor": "R",
+          "event": "R_FRESH_APPEND",
+          "from": 9,
+          "to": 14
+        },
+        {
+          "actor": "A",
+          "event": "A_RETRY",
+          "from": 14,
+          "to": 0
+        }
+      ],
+      "policy": "outside",
+      "states": 16
+    },
+    {
+      "A_progress_closed_walk": false,
+      "all3_progress_closed_walk": false,
+      "edges": 24,
+      "independent_witness": null,
+      "policy": "deadline_first",
+      "states": 17
+    }
+  ],
+  "independent_algorithm": "expanded actor-bit closed-walk BFS; no Tarjan/SCC or generator import",
+  "limits": [
+    "Exact finite expired all-false equality quotient only; model traces are not native scheduling observations.",
+    "Two comparison-relevant handles, not a total live Python-reference bound for every schedule.",
+    "Source controls are saved records; no subject/generator/constructor/thread/native execution by auditor.",
+    "Saved consistency/source identity, not evidence authenticity or universal adversarial coverage.",
+    "Fresh-match loss qualifies simple alternative; no production adoption or whole-call/task-effect claim."
+  ],
+  "model_sha256": "22e1c128f4bff8b17aed8080b6161cbf73a4fac00fd5abc55e01764426a14597",
+  "other_method_AST_unchanged": true,
+  "passed": true,
+  "schema": "predicate-retry-independent-saved-audit-v1",
+  "source_control_helper_sha256": "b4d6dae4d150fda2b0bb8555072f1dd37ad7ebe152df5868f93b0942ddd6d7c2",
+  "source_pins": {
+    "base": "60d7734ddfe23955ab3488584a381397564cc1a8",
+    "own_original_head": "78aeda2407014c1df52f9a3ea5ef635a0f79de98",
+    "paths": {
+      "baseline.py": {
+        "bytes": 6194,
+        "sha256": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e"
+      },
+      "deadline_first.py": {
+        "bytes": 6989,
+        "sha256": "d938d6a630b1dd930ee1c092f7feae3f69085e5d30f094a70a56bec24548ba3a"
+      },
+      "outside.py": {
+        "bytes": 6822,
+        "sha256": "c05855b2c1129a67789f236d194fa5ae5e1929e72f7bd5a7acb936ffdd766569"
+      }
+    }
+  },
+  "source_pins_sha256": "384a4322b2de7964fec14b95b9fcd447c4b823f981ddc1014312408f33e28522",
+  "source_sha256": {
+    "baseline.py": {
+      "bytes": 6194,
+      "sha256": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e"
+    },
+    "deadline_first.py": {
+      "bytes": 6989,
+      "sha256": "d938d6a630b1dd930ee1c092f7feae3f69085e5d30f094a70a56bec24548ba3a"
+    },
+    "outside.py": {
+      "bytes": 6822,
+      "sha256": "c05855b2c1129a67789f236d194fa5ae5e1929e72f7bd5a7acb936ffdd766569"
+    }
+  },
+  "spec_sha256": "be8780ee3253c7c7bea9c739b1449cd6d33d0001d7c70e1383aab1aa1ee5fedb"
+}

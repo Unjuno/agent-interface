@@ -1,0 +1,67 @@
+{
+  "mode": "02",
+  "image": "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+  "argv": [
+    "C:/Program Files/WSL/wslc.exe",
+    "run",
+    "--name",
+    "integration-guard-59-4d74-02",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--user",
+    "65534",
+    "--cpus",
+    "1",
+    "--memory",
+    "512M",
+    "--workdir",
+    "/out",
+    "--env",
+    "HOME=/tmp",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004\\integration-guard-source-02,target=/source,readonly",
+    "--mount",
+    "type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\work\\post-guard-recovery-59-4d74-20261004\\integration-guard-02,target=/out",
+    "sha256:94014a0f7757b46b7c3ae83f430ad973ae6abe1722937bdc6d060139aaeb6378",
+    "/usr/local/bin/python3",
+    "-B",
+    "/source/probe.py"
+  ],
+  "source": {
+    "cause_test.py": {
+      "sha256": "8b27a7d24343b2396c530fe07e739ded89d61e06b4999107ed66351c0cee6e02",
+      "bytes": 6663
+    },
+    "owner12.py": {
+      "sha256": "f443ce22e8c6481e932ed226f1c726f573afbf852ef3444e99404126899c4bcc",
+      "bytes": 20141
+    },
+    "probe.py": {
+      "sha256": "6becd90448db12abe8d6cd8769d392fd5d8c1a27081bb86c5d77561901c110b7",
+      "bytes": 1757
+    },
+    "session14.py": {
+      "sha256": "bc77a73855b5f35cf59911049471fa3eedd65796b23d2a547c7699962a4f3119",
+      "bytes": 4488
+    },
+    "session15.py": {
+      "sha256": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+      "bytes": 6406
+    },
+    "test_session15.py": {
+      "sha256": "78b165a6d4db181471bb331603064b6c4dea8f569258aa49521139cff2ad385b",
+      "bytes": 10501
+    },
+    "research/doom/results/cause/cause_test.py": {
+      "sha256": "8b27a7d24343b2396c530fe07e739ded89d61e06b4999107ed66351c0cee6e02",
+      "bytes": 6663
+    }
+  },
+  "launcher_sha256": "3a8e104c3e43bc3e90ae8086935e60ac109b8583de77fd5c9dfaf9db493b84a2",
+  "retries": 0,
+  "scope": "Construction fake proxy/Xlib with real ownerthread; no formal/native/game/model/input. Requestedcapsenforcementunproven."
+}

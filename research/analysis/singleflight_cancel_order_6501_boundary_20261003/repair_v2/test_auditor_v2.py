@@ -1,0 +1,43 @@
+"""Retained JSON only; never import candidate, runner or original construction tests."""
+import base64
+import copy
+import gzip
+import json
+from pathlib import Path
+import unittest
+from auditor_v2 import audit,same_json,EXPECTED_COUNTS
+from controls_v2 import mutations
+
+ROOT=Path(__file__).resolve().parent
+RAW=json.loads(gzip.decompress(base64.b64decode((ROOT.parent/'run01/candidate-raw.json.gz.b64').read_bytes())))
+
+class TypedAuditTests(unittest.TestCase):
+    def test_unchanged_original_reconstructs(self):
+        result=audit(RAW);self.assertEqual(result['errors'],[])
+        self.assertEqual((result['assignments'],result['waiter_decisions']),(192,384))
+        self.assertTrue(same_json(result['counts'],EXPECTED_COUNTS))
+    def test_six_saved_false_accepts_reject(self):
+        paths=sorted((ROOT/'controls').glob('*.json.gz.b64'))
+        self.assertEqual(len(paths),6)
+        for path in paths:
+            with self.subTest(name=path.name):self.assertTrue(audit(json.loads(gzip.decompress(base64.b64decode(path.read_bytes()))))['errors'])
+    def test_all_fourteen_effective_controls_refuse(self):
+        for name,raw in mutations(RAW):
+            with self.subTest(name=name):self.assertTrue(audit(raw)['errors'])
+    def test_scalar_aliases_are_distinct(self):
+        for a,b in [(False,0),(True,1),(5.0,5),([2.0],[2]),({'a':True},{'a':1})]:
+            with self.subTest(a=a,b=b):self.assertFalse(same_json(a,b))
+    def test_closed_root_and_rows(self):
+        values=[None,[],1,{},dict(RAW,extra='foreign'),dict(RAW,rows=None),dict(RAW,rows={}),dict(RAW,rows=[None]*192)]
+        for value in values:
+            with self.subTest(type=type(value).__name__):self.assertTrue(audit(value)['errors'])
+    def test_object_key_order_is_irrelevant(self):
+        shuffled=json.loads(json.dumps(RAW,sort_keys=True));self.assertEqual(audit(shuffled)['errors'],[])
+    def test_missing_duplicate_and_outcome_still_reject(self):
+        values=[]
+        missing=copy.deepcopy(RAW);missing['rows'].pop();values.append(missing)
+        duplicate=copy.deepcopy(RAW);duplicate['rows'][1]=copy.deepcopy(duplicate['rows'][0]);values.append(duplicate)
+        wrong=copy.deepcopy(RAW);wrong['rows'][0]['outcomes']['a']['ordered']='CANCELLED_WAITER';values.append(wrong)
+        for value in values:self.assertTrue(audit(value)['errors'])
+
+if __name__=='__main__':unittest.main(verbosity=2)

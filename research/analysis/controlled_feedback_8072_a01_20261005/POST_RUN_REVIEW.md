@@ -1,0 +1,3 @@
+# A01 post-run audit review
+
+The original A01 candidate output and audit are preserved byte-for-byte. Review found that the auditor reconstructed proposal, score, acceptance, veto, and freshness-order fields, but did not compare the serialized `feedback` value with the independently expected response. Therefore A01's `PASS_METHOD_SCOPED` output is **not accepted as a valid independent-audit gate**. This is an auditor defect, not evidence against or for the hypothesis. No A01 rerun or artifact replacement was made. A distinct A02 allocation adds exact feedback reconstruction plus forged-feedback mutation controls.

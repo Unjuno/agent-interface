@@ -1,0 +1,48 @@
+import json
+from pathlib import Path
+from datetime import datetime, timezone
+
+root = Path(__file__).resolve().parent
+spec = [
+    ("C01", "STATE", "SET", "NONE", "NONE", False, "NO_INPUT_OBLIGATION", False),
+    ("C02", "STATE", "NOOP", "BEFORE_ROOT", "SET", False, "NO_INPUT_OBLIGATION", False),
+    ("C03", "EVENT", "EVENT", "NONE", "NONE", False, "NO_INPUT_OBLIGATION", False),
+    ("C04", "EVENT", "EVENT", "AFTER_ROOT", "EVENT", False, "NO_INPUT_OBLIGATION", False),
+    ("C05", "STATE", "NOTIFY", "NONE", "NONE", False, "NO_INPUT_OBLIGATION", False),
+    ("C06", "STATE", "SET", "NONE", "NONE", True, "NO_INPUT_OBLIGATION", False),
+    ("C07", "STATE", "SET", "NONE", "NONE", False, "UNVERIFIED", True),
+    ("C08", "STATE", "UNSATISFIED", "NONE", "NONE", False, "NO_INPUT_OBLIGATION", False),
+]
+goals, deck = [], []
+for case_id, kind, mode, order, actor_mode, mask, release, obligation in spec:
+    goals.append(dict(namespace="state-rebase-browser-6259-01a0ff58", session="primary-6259-01a0ff58-v1",
+                      case_id=case_id, desired="ready", kind=kind, protected_sibling="keep",
+                      max_notifications=0, release_required=obligation))
+    deck.append(dict(case_id=case_id, root_mode=mode, actor_order=order,
+                     actor_mode=actor_mode, mask_notifications=mask, release_status=release))
+for name, data in (("GOALS.json", goals), ("SCENARIOS.json", deck)):
+    p = root/name
+    if p.exists():
+        raise RuntimeError("prospective authored file already exists")
+    p.write_text(json.dumps(data, indent=2))
+state_path = root.parent / "STATE.json"
+s = json.loads(state_path.read_text())
+for key in ("pr", "pr_url", "head_sha", "proposed_tree", "proposal_digest", "content_votes_counted",
+            "nonauthor_tree_review", "committee", "pr_state", "applied_commit", "main_application"):
+    s.pop(key, None)
+s.update(updated_utc=datetime.now(timezone.utc).isoformat(), primary_issue=6259,
+         source_base_sha="636986a804a6004cd047db7e8cc5e62c02d585d8",
+         repository_branch="research/6259-state-rebase-browser-01a0ff58-20261003",
+         repository_head="636986a804a6004cd047db7e8cc5e62c02d585d8; owned construction outside clone",
+         primary_unit="#6259 controlled state-rebase HTML/SQLite E construction",
+         previous_goal_turn_classification="progress: dedicated branch/private prospective design and bounded nonduplication evidence; public scoped claim5966488649 before any app action",
+         next="Construct, preflight, freeze, execute eight bounded DOM cases once, independently audit all saved raw and archive inert evidence",
+         verification="Construction not frozen/run; ordinary first launcher failed before child spawn, preserved gate_v1.started.json; @python shell argument must be quoted",
+         state_rebase=dict(claim=5966488649, status="CONSTRUCTION_NOT_FROZEN_NOT_RUN", primary_dispatches=0,
+                           actor_writes=0, server_instances=0, output="work/state-rebase-browser-6259"))
+state_path.write_text(json.dumps(s, indent=2))
+intake_path = root/"INTAKE.json"
+i = json.loads(intake_path.read_text())
+i["claim"] = "https://github.com/Unjuno/agent-interface/issues/6259#issuecomment-5966488649"
+intake_path.write_text(json.dumps(i, indent=2))
+print("Eight prospective contracts and isolated scenario deck written; STATE updated.")

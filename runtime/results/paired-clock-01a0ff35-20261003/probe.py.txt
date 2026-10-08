@@ -1,0 +1,53 @@
+"""Explicit one-shot paired-clock allocation; no repository runtime imports."""
+from datetime import datetime,timezone
+import argparse,hashlib,json,os,platform,sys,time
+from pathlib import Path
+
+def sha(data):return hashlib.sha256(data).hexdigest()
+def utc():return datetime.now(timezone.utc).isoformat()
+def environment():
+    files={}
+    for name,path in [('executable',Path(sys.executable)),('base_executable',Path(sys._base_executable)),
+                      ('python_dll',Path(sys.base_prefix)/'python312.dll')]:
+        if not path.is_file():raise ValueError('missing actual runtime binary '+name)
+        files[name]={'path':str(path),'bytes':path.stat().st_size,'sha256':sha(path.read_bytes())}
+    return {'version':sys.version,'version_tuple':list(sys.version_info[:3]),'platform':sys.platform,
+            'implementation':platform.python_implementation(),'binaries':files,
+            'clocks':{name:vars(time.get_clock_info(name)) for name in ('monotonic','perf_counter')}}
+
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--environment-only',action='store_true')
+    ap.add_argument('--plan');ap.add_argument('--output');args=ap.parse_args()
+    if args.environment_only:
+        print(json.dumps(environment(),sort_keys=True));return
+    plan_path=Path(args.plan);plan=json.loads(plan_path.read_bytes())
+    own=Path(__file__).resolve()
+    if sha(own.read_bytes())!=plan['source_sha256']['probe.py.txt']:raise ValueError('frozen probe source changed')
+    if environment()!=plan['environment']:raise ValueError('frozen Python/binary/clock metadata changed')
+    rows=plan['rows']
+    if len(rows)!=12 or rows!=[{'row_id':i,'requested_ns':20_000_000} for i in range(12)]:
+        raise ValueError('exact fixed12 conditions')
+    output=Path(args.output);output.mkdir(exist_ok=False)
+    start={'allocation_id':plan['allocation_id'],'plan_sha256':sha(plan_path.read_bytes()),
+           'started_utc':utc(),'pid':os.getpid(),'rows_declared':12,
+           'ordering':'monotonic start,perf start,sleep,perf end,monotonic end; no cross-clock absolute subtraction'}
+    (output/'START.json').write_text(json.dumps(start,indent=2)+'\n',encoding='utf-8')
+    completed=[]
+    with (output/'rows.jsonl').open('x',encoding='utf-8',newline='\n') as stream:
+        for row in rows:
+            row_start=utc()
+            mono_start=time.monotonic_ns()
+            perf_start=time.perf_counter_ns()
+            time.sleep(row['requested_ns']/1_000_000_000)
+            perf_end=time.perf_counter_ns()
+            mono_end=time.monotonic_ns()
+            value={**row,'started_utc':row_start,'ended_utc':utc(),
+                   'monotonic_started_ns':mono_start,'monotonic_ended_ns':mono_end,
+                   'perf_started_ns':perf_start,'perf_ended_ns':perf_end}
+            stream.write(json.dumps(value,sort_keys=True)+'\n');stream.flush();completed.append(value)
+    end={'allocation_id':plan['allocation_id'],'completed_utc':utc(),'rows_completed':len(completed),
+         'rows_sha256':sha((output/'rows.jsonl').read_bytes()),'execution_completed':True}
+    (output/'END.json').write_text(json.dumps(end,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({'allocation_id':plan['allocation_id'],'rows_completed':len(completed),'execution_completed':True}))
+
+if __name__=='__main__':main()

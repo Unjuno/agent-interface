@@ -1,0 +1,53 @@
+"""Distinct zero-input startup diagnostic, not a replay of the title-gated C0."""
+import hashlib,json,os,pathlib,signal,subprocess,time,traceback
+from Xlib import X,display
+from runtime.backends.x11_v1.backend import X11Backend
+OUT=pathlib.Path('/out');actors=[];logs=[];result=dict(task_inputs=0,formal_rows=0,errors=[],started_ns=time.monotonic_ns())
+source=pathlib.Path('/src/runs/construction00/heldout-construction.fods')
+doc=OUT/'diagnostic-independent-profile.fods';doc.write_bytes(source.read_bytes())
+env=dict(os.environ,DISPLAY=':142',HOME='/out/home',SAL_USE_VCLPLUGIN='gen');pathlib.Path(env['HOME']).mkdir(exist_ok=True)
+def start(name,args):
+    h=(OUT/(name+'.log')).open('wb');logs.append(h);p=subprocess.Popen(args,env=env,stdout=h,stderr=subprocess.STDOUT,start_new_session=True);actors.append((name,p));return p
+d=b=None
+try:
+    start('Xvfb',['Xvfb',':142','-screen','0','1280x800x24','-nolisten','tcp','-ac'])
+    deadline=time.monotonic()+3
+    while d is None:
+        try:d=display.Display(':142')
+        except Exception:
+            if time.monotonic()>deadline:raise
+            time.sleep(.02)
+    start('openbox',['openbox','--sm-disable']);time.sleep(.2)
+    start('Calc',['libreoffice','-env:UserInstallation=file:///out/profile','--calc','--nologo','--norestore','--nodefault','--nofirststartwizard',str(doc)])
+    time.sleep(5)
+    def walk(w,depth=0):
+        rows=[]
+        if depth>6:return rows
+        for c in w.query_tree().children:
+            try:
+                prop=c.get_full_property(d.intern_atom('_NET_WM_NAME'),X.AnyPropertyType)
+                rows.append(dict(id=c.id,wm_name=str(c.get_wm_name()),net_wm_name=bytes(prop.value).decode('utf8','replace') if prop is not None else None,map_state=c.get_attributes().map_state))
+                rows.extend(walk(c,depth+1))
+            except Exception:pass
+        return rows
+    result['windows']=walk(d.screen().root)
+    b=X11Backend(':142',{'private-root':d.screen().root.id});b.configure_capture_artifacts(OUT/'images')
+    result['capture']=b.observe_read_only('private-root','screen_physical_px',[0,0,1280,800]);result['emissions']=b.emissions
+    bits=d.query_keymap();result['keys_down']=[i for i in range(256) if bits[i//8]&(1<<(i%8))]
+    result['buttons']=int(d.screen().root.query_pointer().mask)&(X.Button1Mask|X.Button2Mask|X.Button3Mask)
+    result['document_unchanged']=source.read_bytes()==doc.read_bytes()
+    (OUT/'package-pins.tsv').write_bytes(pathlib.Path('/opt/calc-package-pins.tsv').read_bytes())
+except Exception:result['errors'].append(traceback.format_exc())
+finally:
+    if b:b.close()
+    if d:d.close()
+    for name,p in reversed(actors):
+        if p.poll() is None:os.killpg(p.pid,signal.SIGTERM)
+        try:code=p.wait(5)
+        except subprocess.TimeoutExpired:
+            os.killpg(p.pid,signal.SIGKILL);code=p.wait(3);result['errors'].append(name+' SIGKILL')
+        result.setdefault('terminal',[]).append(dict(name=name,pid=p.pid,exit_code=code))
+    for h in logs:h.close()
+    result['ended_ns']=time.monotonic_ns()
+    (OUT/'DIAGNOSTIC.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result));raise SystemExit(2 if result['errors'] else 0)

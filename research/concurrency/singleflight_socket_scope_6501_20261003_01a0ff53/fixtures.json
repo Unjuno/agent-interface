@@ -1,0 +1,286 @@
+{
+  "schema": "socket-scope-fixtures-v1",
+  "scope_fields": [
+    "dependency",
+    "generation",
+    "parameter",
+    "predicate",
+    "role",
+    "source",
+    "source_instance",
+    "target",
+    "verifier",
+    "window_end",
+    "window_start"
+  ],
+  "cases": [
+    {
+      "id": "equivalent_four",
+      "waves": [
+        [
+          {
+            "id": "w0",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          },
+          {
+            "id": "w1",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          },
+          {
+            "id": "w2",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          },
+          {
+            "id": "w3",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "different_target",
+      "waves": [
+        [
+          {
+            "id": "w0",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          },
+          {
+            "id": "w1",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-b",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "source_restart_aba",
+      "waves": [
+        [
+          {
+            "id": "w0",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          },
+          {
+            "id": "w1",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-b",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "different_dependency",
+      "waves": [
+        [
+          {
+            "id": "w0",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          },
+          {
+            "id": "w1",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "1111111111111111111111111111111111111111111111111111111111111111",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "different_window",
+      "waves": [
+        [
+          {
+            "id": "w0",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          },
+          {
+            "id": "w1",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "1",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "after_completion_same_scope",
+      "waves": [
+        [
+          {
+            "id": "w0",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          }
+        ],
+        [
+          {
+            "id": "w1",
+            "scope": {
+              "verifier": "v1",
+              "source": "surface",
+              "source_instance": "instance-a",
+              "target": "target-a",
+              "generation": "1",
+              "dependency": "0000000000000000000000000000000000000000000000000000000000000000",
+              "predicate": "present",
+              "parameter": "exact",
+              "window_start": "0",
+              "window_end": "20",
+              "role": "read_only_descriptive"
+            }
+          }
+        ]
+      ]
+    }
+  ]
+}

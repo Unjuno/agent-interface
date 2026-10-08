@@ -1,0 +1,52 @@
+{
+  "allocation_id": "7748-DUPLICATE-ID-A01-20261005-01",
+  "claims_excluded": [
+    "general schedulability",
+    "CBS",
+    "host or container timing",
+    "Agent Interface runtime",
+    "GUI",
+    "model",
+    "safety",
+    "task effect",
+    "physical input release"
+  ],
+  "formal_budget": {
+    "auditor_invocations": 1,
+    "candidate_invocations": 1,
+    "retries": 0
+  },
+  "formal_commands": [
+    "python3 -B research/analysis/processor_demand_witness_7748_duplicate_id_a01_20261005/candidate.py --output research/analysis/processor_demand_witness_7748_duplicate_id_a01_20261005/results/candidate.raw.json",
+    "python3 -B research/analysis/processor_demand_witness_7748_duplicate_id_a01_20261005/audit.py --raw research/analysis/processor_demand_witness_7748_duplicate_id_a01_20261005/results/candidate.raw.json --output research/analysis/processor_demand_witness_7748_duplicate_id_a01_20261005/results/AUDIT.json"
+  ],
+  "frozen_branch": "research/7748-duplicate-id-a01-20261005",
+  "frozen_main": "3c2254ddc4446bec9a8ab4871ed05defa0a900f9",
+  "frozen_utc": "2026-10-05T11:29:00Z",
+  "issue": 7748,
+  "package": "research/analysis/processor_demand_witness_7748_duplicate_id_a01_20261005/",
+  "predecessor_sha256": {
+    "class_enum_audit.json": "ed92c33f8450499cac21f13f4f104cba5388ce29a74ec92a9528aea5cb3a3dc9",
+    "class_enum_auditor.py": "5d757238462c2f95196cca70c51f5f12ae7be3d4d5ba4317b9da49dca97fbffb",
+    "class_enum_candidate.py": "1bef788a78347c1ce3225a451dd239ac93dd44ba15424c022f4aad25435e6603",
+    "class_enum_cases.json": "b265f1b22a1cff12b8a57cf7a918d625175c09328a691055c0f4ab00a74d125e",
+    "class_enum_raw.json": "d20c8d7a62b583f1fd4da43e44783c98092a7f58089bae9202d3ab222c11dec0",
+    "issue_7748_auditor.py": "12c19b924892747e8bddca85fa0b18ec1e8e03c230667cd3f503cbeee3326114",
+    "issue_7748_candidate.py": "12627d9d02586acbd301a969a1215c037d95b5e0e5aad280ec1efda3755a15ed",
+    "issue_7748_cases.json": "66b7660a61f2944ee76db3ca3f592cceefaa85874687ba0fa4bd09863d694163",
+    "issue_7748_formal_raw.json": "5bf70ee7509e820ffafe4463fd734c80757296ac66a538a6127a7a2ab95bedfe"
+  },
+  "runtime_policy": "OrbStack read-only preflight observed missing containerd content blob; preregistered host-only CPython fallback, no isolation/resource claims",
+  "source_file_sha256": {
+    "CONSTRUCTION.log": "90e6db0e2b6153f4ef66d5ee97385dd1a13d4d0d9a74fb3e1c38b5bf631c48cc",
+    "ENVIRONMENT.json": "7ede3726f42814c3998852b2f81deb177134f275f7d98b60c86241a875f93dc9",
+    "PROTOCOL.md": "febd83a8bd91af4d3bf4f2a99560d1eee29ab6a689a3e852caaeda5e76552bb2",
+    "README.md": "85071ff3d497c64fb730a0f7b66b94e623d8737f23eef959ccbe6e581e723aac",
+    "audit.py": "393ab12ae593bcd6cd125b3c2ca770a1ec180f56e214a18cf215c5dd8b5acbba",
+    "base_cases.json": "66b7660a61f2944ee76db3ca3f592cceefaa85874687ba0fa4bd09863d694163",
+    "candidate.py": "42ca1543ba5d53cdce638ffbf7d1d7cc5750869213642f3e74b39baab7457412",
+    "cases.json": "64529ae2278204f13c3efd3ff8783e8395d3320e28a7e6b2f1df932c523312fb",
+    "test_duplicate_gate.py": "cab69f6b2aeda10e146549a6e6a184196d7fc041307942aab2920fb74c633f09"
+  },
+  "successor_scope": "duplicate and malformed job-identity input boundary only"
+}

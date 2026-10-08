@@ -1,0 +1,59 @@
+{
+  "decision_table_match": true,
+  "rows_per_source": 19,
+  "groups": {
+    "before": {
+      "pass": [
+        "valid-integer-zero",
+        "count-false",
+        "count-float-zero"
+      ],
+      "reject": [
+        "count-positive",
+        "count-negative",
+        "count-true",
+        "count-float-one",
+        "count-string-zero",
+        "count-null",
+        "count-list",
+        "count-object",
+        "count-missing",
+        "scheduler-null",
+        "scheduler-false",
+        "scheduler-object-empty",
+        "scheduler-list-empty"
+      ],
+      "exception": [
+        "scheduler-true",
+        "scheduler-list-nonempty",
+        "scheduler-string"
+      ]
+    },
+    "after": {
+      "pass": [
+        "valid-integer-zero"
+      ],
+      "reject": [
+        "count-false",
+        "count-float-zero",
+        "count-positive",
+        "count-negative",
+        "count-true",
+        "count-float-one",
+        "count-string-zero",
+        "count-null",
+        "count-list",
+        "count-object",
+        "count-missing",
+        "scheduler-null",
+        "scheduler-false",
+        "scheduler-true",
+        "scheduler-list-nonempty",
+        "scheduler-string",
+        "scheduler-object-empty",
+        "scheduler-list-empty"
+      ],
+      "exception": []
+    }
+  }
+}

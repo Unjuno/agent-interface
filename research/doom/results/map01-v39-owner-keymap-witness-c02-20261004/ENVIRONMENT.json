@@ -1,0 +1,66 @@
+{
+  "candidate_network_isolation": "none; no candidate code performs network access; Xvfb TCP disabled",
+  "captured_at_utc": "2026-10-04T03:05:34.026657+00:00",
+  "cpu_count": 10,
+  "machine_id": "01M4283HRND5FW9AG9FXYX0B7H",
+  "machine_name": "research-59-per-key-telemetry-01a0ff52-20261004",
+  "meminfo": "MemTotal:       16414232 kB\nMemFree:        13458976 kB\nMemAvailable:   14638728 kB\nBuffers:             104 kB\nCached:           669572 kB\nSwapCached:            0 kB\nActive:           791560 kB\nInactive:         773044 kB\nActive(anon):     711216 kB\nInactive(anon):   210488 kB\nActive(file):      80344 kB\nInactive(file):   562556 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:      17462800 kB\nSwapFree:       17462800 kB\nDirty:             17748 kB\nWriteback:             0 kB\nAnonPages:        877744 kB\nMapped:           238640 kB\nShmem:             26772 kB\nKReclaimable:     793984 kB\nSlab:            1062880 kB\nSReclaimable:     793984 kB\nSUnreclaim:       268896 kB\nKernelStack:       15472 kB\nPageTables:        26208 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:    25669916 kB\nCommitted_AS:    8465944 kB\nVmallocTotal:   135288315904 kB\nVmallocUsed:       85932 kB\nVmallocChunk:          0 kB\nPercpu:            12320 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:         0 kB\nFilePmdMapped:         0 kB\nBalloon:               0 kB\n",
+  "network_namespace_preflight_exit": 1,
+  "network_route": "guest networking remains enabled; candidate makes no network calls and Xvfb uses -nolisten tcp",
+  "os_release": "PRETTY_NAME=\"Ubuntu 24.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.5 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+  "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.39",
+  "python_executable": "/home/taka/.local/venvs/v39-keymap-c02/bin/python",
+  "python_packages": [
+    "python-xlib==0.33",
+    "six==1.17.0"
+  ],
+  "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "python_xlib_version": "0.33",
+  "repo_mount": "/repo/research/doom/results/map01-v39-owner-keymap-witness-c02-20261004",
+  "schema": "map01-v39-owner-keymap-environment-v1",
+  "six_version": "1.17.0",
+  "task_owned_guest": "research-59-per-key-telemetry-01a0ff52-20261004",
+  "uname": {
+    "machine": "aarch64",
+    "node": "research-59-per-key-telemetry-01a0ff52-20261004",
+    "processor": "aarch64",
+    "release": "7.0.5-orbstack-00330-ge3df4e19b0a0-dirty",
+    "system": "Linux",
+    "version": "#1 SMP PREEMPT Sun May 10 11:47:42 UTC 2026"
+  },
+  "unshare_network_namespace_preflight": {
+    "argv": [
+      "unshare",
+      "-n",
+      "true"
+    ],
+    "exit_code": 1,
+    "stderr": "unshare: unshare failed: Operation not permitted",
+    "stdout": ""
+  },
+  "x11_socket_directory_is_tmpfs": true,
+  "x11_socket_directory_mode": "0o1777",
+  "xvfb_package": {
+    "argv": [
+      "dpkg-query",
+      "-W",
+      "-f=${Status} ${Version}",
+      "xvfb"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "install ok installed 2:21.1.12-1ubuntu1.8"
+  },
+  "xvfb_path": "/usr/bin/Xvfb",
+  "xvfb_processes_before_candidate": {
+    "argv": [
+      "pgrep",
+      "-a",
+      "-x",
+      "Xvfb"
+    ],
+    "exit_code": 1,
+    "stderr": "",
+    "stdout": ""
+  }
+}

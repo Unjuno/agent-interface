@@ -1,0 +1,1437 @@
+{
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "cleanup_physical": {
+    "buttons": 0,
+    "end_ns": 12688219420,
+    "keys": [],
+    "start_ns": 12687906976
+  },
+  "cleanup_release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 12687900743,
+    "verified": true
+  },
+  "compiled_result": {
+    "completed_transitions": 1,
+    "critical_events": [
+      {
+        "action": "first",
+        "event": "branch_selected",
+        "evidence_ref": "frame_2",
+        "matched_conditions": {
+          "ready": true
+        },
+        "outcome": "action",
+        "state": "first"
+      },
+      {
+        "action": "first",
+        "action_id": "native_first",
+        "event": "action_terminal",
+        "release_verified": true,
+        "status": "completed"
+      },
+      {
+        "action": "first",
+        "event": "effect_checked",
+        "evidence_ref": "frame_7",
+        "status": "unavailable",
+        "verifier": "compiled_predicate_condition"
+      },
+      {
+        "completed_transitions": 1,
+        "event": "runtime_finished",
+        "outcome": "SAFE_YIELD",
+        "reason": "effect_unavailable"
+      }
+    ],
+    "elapsed_ns": 1042382324,
+    "ended_ns": 12629443925,
+    "format": "compiled-gui-runtime-receipt-v1",
+    "frontier_model_resumptions": 0,
+    "input_authority": "admission_per_action_only",
+    "interface_id": "calc_digitunavailable_g09",
+    "latest_evidence_ref": "frame_7",
+    "method": "pixel_verified_two_saves",
+    "method_version": "1",
+    "observations": [
+      {
+        "captured_ns": 11587618019,
+        "evidence_digest": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+        "evidence_ref": "frame_2",
+        "predicates": {
+          "ready": true,
+          "row_visible": "unknown"
+        },
+        "sequence": 2
+      },
+      {
+        "captured_ns": 12445484785,
+        "evidence_digest": "5c12921eceb7121abd8ea7baa6a2f4a86ee540de232d8eb42141af540845b9e6",
+        "evidence_ref": "frame_7",
+        "predicates": {
+          "ready": true,
+          "row_visible": "unknown"
+        },
+        "sequence": 7
+      }
+    ],
+    "outcome": "SAFE_YIELD",
+    "pending_effect": {
+      "action": "first",
+      "effect_ref": "pixel_effect_first",
+      "expected_effect": {
+        "row_visible": true
+      }
+    },
+    "raw_evidence_retention": "adapter_responsibility_unverified",
+    "reason": "effect_unavailable",
+    "session_scope": "owned_g09",
+    "started_ns": 11587061601,
+    "transitions": [
+      {
+        "action": "first",
+        "action_id": "native_first",
+        "effect_ref": "pixel_effect_first",
+        "evidence_ref": "frame_2",
+        "from_state": "first",
+        "matched_conditions": {
+          "ready": true
+        },
+        "observation_sequence": 2,
+        "release_verified": true,
+        "to_state": "second"
+      }
+    ]
+  },
+  "ended_ns": 12744472503,
+  "errors": [],
+  "events": [],
+  "final_guarded": {
+    "binding_revision": 0,
+    "capture_ns": 12629848804,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 58538,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/guarded/images/164f82339c0f4ce98177eba5b012adfd.png",
+        "sha256": "dd15217a9fc56b48c76efa099489597da7e9d55e4a1828769df855c5325118bd",
+        "source_raw_sha256": "b962b3a94c5066ec1231acf5b6c6f0ff6f2d623f481a280d7e9a13fa4fa7d363",
+        "timing_ns": {
+          "converted": 12635950208,
+          "encoded": 12659645999,
+          "hashed": 12665417008,
+          "started": 12635277688,
+          "written": 12662861599
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 12632869652,
+      "capture_started_ns": 12629848804,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "b962b3a94c5066ec1231acf5b6c6f0ff6f2d623f481a280d7e9a13fa4fa7d363",
+      "target": "owned",
+      "width": 1280
+    },
+    "observation_id": "173173c9b87a4cbf907a8d90adf29ad7",
+    "pointer_binding": {
+      "focus": 6291969,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ],
+      "surface": 6291969
+    },
+    "sequence": 8,
+    "timing_ns": {
+      "artifact_verified": 12672545402,
+      "binding_checked": 12669364813,
+      "decoded": 12672552651,
+      "public_returned": 12665471293,
+      "started": 12629467385
+    }
+  },
+  "graph_admissions": [
+    {
+      "authority": "resolution only; ordinary admission remains required",
+      "binding_translation": [
+        0,
+        0
+      ],
+      "eligible": true,
+      "handle": "a1_primary",
+      "local_translation": [
+        0,
+        0
+      ],
+      "name": "a1_primary",
+      "observed_box": [
+        35,
+        144,
+        90,
+        14
+      ],
+      "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+      "point": [
+        80,
+        151
+      ],
+      "private_registry_id_exposed": false,
+      "reason": "exact_region_match",
+      "reference_kind": "session_alias",
+      "sequence": 2,
+      "status": "VALID",
+      "valid_until_ns": 13087618019
+    }
+  ],
+  "graph_ended_ns": 12629466234,
+  "graph_events": [
+    {
+      "event": "observation_recorded",
+      "evidence_ref": "frame_2",
+      "sequence": 2,
+      "state": "first"
+    },
+    {
+      "action": "first",
+      "event": "branch_selected",
+      "evidence_ref": "frame_2",
+      "matched_conditions": {
+        "ready": true
+      },
+      "outcome": "action",
+      "state": "first"
+    },
+    {
+      "action": "first",
+      "action_id": "native_first",
+      "event": "action_terminal",
+      "release_verified": true,
+      "status": "completed"
+    },
+    {
+      "event": "observation_recorded",
+      "evidence_ref": "frame_7",
+      "sequence": 7,
+      "state": "second"
+    },
+    {
+      "action": "first",
+      "event": "effect_checked",
+      "evidence_ref": "frame_7",
+      "status": "unavailable",
+      "verifier": "compiled_predicate_condition"
+    },
+    {
+      "completed_transitions": 1,
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable"
+    }
+  ],
+  "graph_started_ns": 11586974046,
+  "images": [
+    {
+      "binding_revision": 0,
+      "capture_ns": 11587618019,
+      "image_source": "exact_capture_rgb_handoff",
+      "native": {
+        "artifact": {
+          "bytes": 57330,
+          "height": 800,
+          "mime_type": "image/png",
+          "path": "/out/guarded/images/5bf8d37af54d43e18637ab06d35ef096.png",
+          "sha256": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+          "source_raw_sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+          "timing_ns": {
+            "converted": 11603422255,
+            "encoded": 11626521883,
+            "hashed": 11633513951,
+            "started": 11597605959,
+            "written": 11631089174
+          },
+          "width": 1280
+        },
+        "bytes": 4096000,
+        "capture_ended_ns": 11595222841,
+        "capture_started_ns": 11587618019,
+        "frame": "screen_physical_px",
+        "height": 800,
+        "native_window_id": 6291969,
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+        "target": "owned",
+        "width": 1280
+      },
+      "observation_id": "bf2f79da23b64f9dbc72ad5c74b0b70f",
+      "pointer_binding": {
+        "focus": 6291969,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ],
+        "surface": 6291969
+      },
+      "sequence": 2,
+      "timing_ns": {
+        "artifact_verified": 11642934032,
+        "binding_checked": 11638834413,
+        "decoded": 11642941130,
+        "public_returned": 11633561050,
+        "started": 11587066484
+      }
+    },
+    {
+      "binding_revision": 0,
+      "capture_ns": 12445484785,
+      "image_source": "exact_capture_rgb_handoff",
+      "native": {
+        "artifact": {
+          "bytes": 60436,
+          "height": 800,
+          "mime_type": "image/png",
+          "path": "/out/guarded/images/1db9b904313b45c296d06ecd41d3c7a3.png",
+          "sha256": "5c12921eceb7121abd8ea7baa6a2f4a86ee540de232d8eb42141af540845b9e6",
+          "source_raw_sha256": "e9affbba351d083b02838894b8a87ed0d00ea0ceedbd4cbd4d5f8725265e8b40",
+          "timing_ns": {
+            "converted": 12455878197,
+            "encoded": 12481830861,
+            "hashed": 12490651849,
+            "started": 12452426816,
+            "written": 12488149219
+          },
+          "width": 1280
+        },
+        "bytes": 4096000,
+        "capture_ended_ns": 12449815047,
+        "capture_started_ns": 12445484785,
+        "frame": "screen_physical_px",
+        "height": 800,
+        "native_window_id": 6291969,
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "sha256": "e9affbba351d083b02838894b8a87ed0d00ea0ceedbd4cbd4d5f8725265e8b40",
+        "target": "owned",
+        "width": 1280
+      },
+      "observation_id": "8b38a31ce63d418abde7b4615ac1c6b1",
+      "pointer_binding": {
+        "focus": 6291969,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ],
+        "surface": 6291969
+      },
+      "sequence": 7,
+      "timing_ns": {
+        "artifact_verified": 12496790566,
+        "binding_checked": 12494185056,
+        "decoded": 12496795701,
+        "public_returned": 12490700980,
+        "started": 12445022566
+      }
+    }
+  ],
+  "initial_document_sha256": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+  "initial_guarded": {
+    "binding_revision": 0,
+    "capture_ns": 6993847878,
+    "image_source": "exact_capture_rgb_handoff",
+    "native": {
+      "artifact": {
+        "bytes": 57330,
+        "height": 800,
+        "mime_type": "image/png",
+        "path": "/out/guarded/images/7a61adc4824844de8476fd1e87c37cdc.png",
+        "sha256": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+        "source_raw_sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+        "timing_ns": {
+          "converted": 7011165436,
+          "encoded": 7040746486,
+          "hashed": 7046885129,
+          "started": 7009619862,
+          "written": 7044871744
+        },
+        "width": 1280
+      },
+      "bytes": 4096000,
+      "capture_ended_ns": 7007623851,
+      "capture_started_ns": 6993847878,
+      "frame": "screen_physical_px",
+      "height": 800,
+      "native_window_id": 6291969,
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "sha256": "16fc63c0fb2bb4c7e1fa0669c617318ee00a20c28f17fbc5f9f70727e951968b",
+      "target": "owned",
+      "width": 1280
+    },
+    "observation_id": "33d7bbca104e40debe9ce596b06be963",
+    "pointer_binding": {
+      "focus": 6291969,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ],
+      "surface": 6291969
+    },
+    "sequence": 1,
+    "timing_ns": {
+      "artifact_verified": 7052571441,
+      "binding_checked": 7050762445,
+      "decoded": 7052576989,
+      "public_returned": 7047001611,
+      "started": 6993547172
+    }
+  },
+  "interface": {
+    "actions": {
+      "first": {
+        "expected_effect": {
+          "row_visible": true
+        },
+        "operation": "enter_product",
+        "target_symbol": "anchor"
+      },
+      "second": {
+        "expected_effect": {
+          "row_visible": true
+        },
+        "operation": "enter_product",
+        "target_symbol": "anchor"
+      }
+    },
+    "format": "compiled-gui-interface-v1",
+    "interface_id": "calc_digitunavailable_g09",
+    "method": {
+      "initial_state": "first",
+      "max_runtime_ms": 10000,
+      "max_transitions": 2,
+      "name": "pixel_verified_two_saves",
+      "states": {
+        "done": {
+          "branches": [
+            {
+              "action": null,
+              "next_state": null,
+              "outcome": "complete",
+              "reason": null,
+              "when": {
+                "ready": true
+              }
+            }
+          ]
+        },
+        "first": {
+          "branches": [
+            {
+              "action": "first",
+              "next_state": "second",
+              "outcome": "action",
+              "reason": null,
+              "when": {
+                "ready": true
+              }
+            }
+          ]
+        },
+        "second": {
+          "branches": [
+            {
+              "action": "second",
+              "next_state": "done",
+              "outcome": "action",
+              "reason": null,
+              "when": {
+                "ready": true
+              }
+            }
+          ]
+        }
+      },
+      "version": "1"
+    },
+    "predicates": [
+      "ready",
+      "row_visible"
+    ],
+    "session_scope": "owned_g09",
+    "surface": "owned",
+    "symbols": {
+      "anchor": {
+        "dependencies": [
+          "ready"
+        ],
+        "identity_predicate": "ready",
+        "kind": "target_reference",
+        "target_reference": "a1_primary"
+      }
+    }
+  },
+  "last_window_tree": [
+    {
+      "id": 4194404,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194405,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194406,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194407,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194413,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194408,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194409,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194414,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194410,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194411,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194412,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194415,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194422,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194423,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194424,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194425,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194426,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194429,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194430,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194431,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194432,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194433,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194434,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194435,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194416,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194417,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194418,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194419,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194420,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194421,
+      "map_state": 2,
+      "title": ""
+    },
+    {
+      "id": 4194427,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194428,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194436,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194437,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194438,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194439,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194440,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194441,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194442,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194443,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194444,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194445,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194446,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194447,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194448,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194449,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194450,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194451,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194452,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194453,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194454,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194455,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194456,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194457,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194458,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194459,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194460,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194461,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194462,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194463,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194464,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194465,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194466,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194467,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194468,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194469,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194470,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194471,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194472,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194473,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194474,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194475,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194476,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194477,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194478,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194479,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194480,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291969,
+      "map_state": 2,
+      "title": "heldout-comparison.fods \u2014 LibreOffice Calc"
+    },
+    {
+      "id": 4194399,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194386,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194387,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194388,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194389,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194390,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194391,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194392,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194393,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194394,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194395,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194396,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194397,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194398,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194400,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194401,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194402,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 4194403,
+      "map_state": 1,
+      "title": ""
+    },
+    {
+      "id": 4194318,
+      "map_state": 2,
+      "title": "Openbox"
+    },
+    {
+      "id": 6291457,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291467,
+      "map_state": 0,
+      "title": "VCL ImplGetDefaultWindow"
+    },
+    {
+      "id": 6291469,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 8388609,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291993,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6291998,
+      "map_state": 0,
+      "title": ""
+    },
+    {
+      "id": 6292003,
+      "map_state": 0,
+      "title": ""
+    }
+  ],
+  "native_attempts": [
+    {
+      "admission": "accepted",
+      "execution": {
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "emissions": 41,
+        "ended_ns": 12432793023,
+        "observations": [],
+        "program_emissions": 41,
+        "releases": [
+          {
+            "buttons_down": [],
+            "keys_down": [],
+            "monotonic_ns": 12432789833,
+            "verified": true
+          }
+        ],
+        "started_ns": 11847084394,
+        "waits": [
+          {
+            "completed": true,
+            "ended_ns": 12001470011,
+            "kind": "fixed_delay",
+            "operation_index": 6,
+            "requested_ms": 20,
+            "started_ns": 11981340706,
+            "update_observed": null
+          },
+          {
+            "completed": true,
+            "ended_ns": 12023159031,
+            "kind": "fixed_delay",
+            "operation_index": 10,
+            "requested_ms": 20,
+            "started_ns": 12003000901,
+            "update_observed": null
+          },
+          {
+            "completed": true,
+            "ended_ns": 12044867994,
+            "kind": "fixed_delay",
+            "operation_index": 14,
+            "requested_ms": 20,
+            "started_ns": 12024716127,
+            "update_observed": null
+          },
+          {
+            "completed": true,
+            "ended_ns": 12065999660,
+            "kind": "fixed_delay",
+            "operation_index": 16,
+            "requested_ms": 20,
+            "started_ns": 12045874459,
+            "update_observed": null
+          },
+          {
+            "completed": true,
+            "ended_ns": 12086851101,
+            "kind": "fixed_delay",
+            "operation_index": 18,
+            "requested_ms": 20,
+            "started_ns": 12066690946,
+            "update_observed": null
+          },
+          {
+            "completed": true,
+            "ended_ns": 12108490738,
+            "kind": "fixed_delay",
+            "operation_index": 20,
+            "requested_ms": 20,
+            "started_ns": 12088381978,
+            "update_observed": null
+          },
+          {
+            "completed": true,
+            "ended_ns": 12129850719,
+            "kind": "fixed_delay",
+            "operation_index": 22,
+            "requested_ms": 20,
+            "started_ns": 12109680559,
+            "update_observed": null
+          },
+          {
+            "completed": true,
+            "ended_ns": 12432254040,
+            "kind": "fixed_delay",
+            "operation_index": 26,
+            "requested_ms": 300,
+            "started_ns": 12132134525,
+            "update_observed": null
+          }
+        ]
+      },
+      "guard_checks": [
+        {
+          "authority": "resolution only; ordinary admission remains required",
+          "binding_translation": [
+            0,
+            0
+          ],
+          "eligible": true,
+          "handle": "a1_primary",
+          "local_translation": [
+            0,
+            0
+          ],
+          "name": "a1_primary",
+          "observation_sequence": 3,
+          "observed_box": [
+            35,
+            144,
+            90,
+            14
+          ],
+          "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+          "point": [
+            80,
+            151
+          ],
+          "private_registry_id_exposed": false,
+          "reason": "exact_region_match",
+          "reference_kind": "session_alias",
+          "sequence": 3,
+          "stage": "before_admission",
+          "status": "VALID",
+          "valid_until_ns": 13290607995
+        },
+        {
+          "authority": "resolution only; ordinary admission remains required",
+          "binding_translation": [
+            0,
+            0
+          ],
+          "eligible": true,
+          "handle": "a1_primary",
+          "local_translation": [
+            0,
+            0
+          ],
+          "name": "a1_primary",
+          "observation_sequence": 4,
+          "observed_box": [
+            35,
+            144,
+            90,
+            14
+          ],
+          "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+          "point": [
+            80,
+            151
+          ],
+          "private_registry_id_exposed": false,
+          "reason": "exact_region_match",
+          "reference_kind": "session_alias",
+          "sequence": 4,
+          "stage": "before_focus",
+          "status": "VALID",
+          "valid_until_ns": 13347315679
+        },
+        {
+          "authority": "resolution only; ordinary admission remains required",
+          "binding_translation": [
+            0,
+            0
+          ],
+          "eligible": true,
+          "handle": "a1_primary",
+          "local_translation": [
+            0,
+            0
+          ],
+          "name": "a1_primary",
+          "observation_sequence": 5,
+          "observed_box": [
+            35,
+            144,
+            90,
+            14
+          ],
+          "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+          "point": [
+            80,
+            151
+          ],
+          "private_registry_id_exposed": false,
+          "reason": "exact_region_match",
+          "reference_kind": "session_alias",
+          "sequence": 5,
+          "stage": "before_move",
+          "status": "VALID",
+          "valid_until_ns": 13392515792
+        },
+        {
+          "authority": "resolution only; ordinary admission remains required",
+          "binding_translation": [
+            0,
+            0
+          ],
+          "eligible": true,
+          "handle": "a1_primary",
+          "local_translation": [
+            0,
+            0
+          ],
+          "name": "a1_primary",
+          "observation_sequence": 6,
+          "observed_box": [
+            35,
+            144,
+            90,
+            14
+          ],
+          "patch_sha256": "4578aa9baa79bb7d19e2cfb1e5a3dbea8be81967ebc8babbaeecde1d7164671b",
+          "point": [
+            80,
+            151
+          ],
+          "private_registry_id_exposed": false,
+          "reason": "exact_region_match",
+          "reference_kind": "session_alias",
+          "sequence": 6,
+          "stage": "before_press",
+          "status": "VALID",
+          "valid_until_ns": 13436941716
+        }
+      ],
+      "recovery_required": false,
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "status": "completed"
+    }
+  ],
+  "physical_checks": [
+    {
+      "buttons": 0,
+      "end_ns": 12440886838,
+      "keys": [],
+      "start_ns": 12440616666
+    }
+  ],
+  "pixel_checks": [
+    {
+      "decoded_values": null,
+      "expected_values": [
+        "37",
+        "43",
+        "1591"
+      ],
+      "matches": "unknown",
+      "region": [
+        36,
+        161,
+        305,
+        175
+      ],
+      "rgb_sha256": "1494bd53604ee2e3ff9dc9c0b030d72c9d5e4f7ccb5eb4a7cacc13d342b8630e",
+      "state": "first",
+      "template": "second"
+    },
+    {
+      "decoded_values": null,
+      "expected_values": [
+        "17",
+        "23",
+        "391"
+      ],
+      "matches": "unknown",
+      "region": [
+        36,
+        161,
+        305,
+        175
+      ],
+      "rgb_sha256": "8800da434f4baf1ba2a42c48cfcec648487e5283ff009a39ab7c0a999b9c44c2",
+      "state": "second",
+      "template": "first"
+    }
+  ],
+  "proposal": {
+    "artifact_sha256": "bb191a1a0fb35b50af96bd0bb5205a7955f4161be08b87e0b5baf4d6da2501b9",
+    "source_sequence": 1,
+    "x": 80,
+    "y": 151
+  },
+  "reference": {
+    "lifetime": {
+      "authority_granted": false,
+      "capture_freshness_ms": 1500,
+      "clock": "time.monotonic_ns",
+      "expires_ns": 311575567413,
+      "minted_ns": 11575567413,
+      "scope": "Same execution host clock only. Alias expiry is not capture freshness, pixel validity or input authority. Retained lookup does not renew it."
+    },
+    "offset": [
+      45,
+      7
+    ]
+  },
+  "result": "COMPILED_UNKNOWN_EFFECT_CONSTRUCTION_RETURNED_UNSCORED",
+  "saved_sha256": "60c808119656a6ce9ebdc8f8be92ed061b6e4cc6710864228645967da7ca199d",
+  "schema": "calc-heldout-row-v1",
+  "source_hashes": {
+    "blank.fods": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+    "compiled_measured.py": "d3dc1aba8f1f1165eea9e28de09188e0d554d9f65da47fb9a59659fd34043d33",
+    "effect_predicate.py": "44473bbb30194486ccdceb998a6714f28c59db0fac4ed51cee88202275d54eba",
+    "model_client.py": "b6476901ccea20afa94421e43ac7ec6a611bae8d2ff389d226e8e20d558077e1",
+    "ocr_reader.py": "b98eacb96a6d3e711c12f27f7d6aa7f42a679fd9c7807ebc4d0d1b26eb178125",
+    "run_client_once.py": "65f13fc3d03c7ceee7233ca66980f40dd42f7901f129e6f2fb6d3f53ebe66e6a",
+    "run_once.ps1": "ab85fa39d41410642acbcb36e3a371d5f7eb8d12c807fd7d119da06751e5d4ea",
+    "saved_oracle.py": "92def4221091e3d788ce24340d7a3f0f6e2e4dbe9b732164dc97605975f6de0d",
+    "sources/runtime/backends/quartz_v1/__init__.py": "6184cb0c7d87edb25dc12ccfec87a4ae15f367c278e39246b38c2ec5c655c906",
+    "sources/runtime/backends/quartz_v1/backend.py": "a265b6501f5de3cc3e9fce7c037e36db39716f7dbaac5f5bdc69289081d85866",
+    "sources/runtime/backends/quartz_v1/session.py": "bd8fee0f5d36fce746d97a998ffd77f6b9b16f83d067a0009799614f3c2a35bd",
+    "sources/runtime/backends/win32_v1/__init__.py": "0a21627e9fd4e50a9418335422d45d9ae89f598678ca0ddccc1edc7a4ef5a12b",
+    "sources/runtime/backends/win32_v1/backend.py": "4cf87d6cecab9a84c4e9cdce83adbe8b58f93227eb64526740c029342bbdd6dd",
+    "sources/runtime/backends/win32_v1/session.py": "7e81a5b5cec01dc43da7a0ff4acebd0dd33bd67b9dd7c600ced431f61166af77",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/cli_v1/__init__.py": "8832365589e82ecba394d10ae11a381f146edfb68b981551ccbae8b95e4ac967",
+    "sources/runtime/cli_v1/api.py": "47d4413b5633b334e21e158ffe5c4155b5ec3f24dd7c942f1e7ba91361632ca6",
+    "sources/runtime/cli_v1/observe.py": "1f7a27c2355955fd13708c26c68bab4f3a167578f8d24a2a19d7c87722bd052a",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "sources/runtime/core_v1/compiled_gui.py": "d22160919ad7fc00d8a1c6e1da3240a316b024738362d714fafa68b772005014",
+    "sources/runtime/core_v1/contract.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "sources/runtime/core_v1/sequence.py": "9a4aac391a961c8832199bf414c58d885afdcb2bcf013074cd4dbb3ca6a1a40d",
+    "sources/runtime/guarded_x11_v1/__init__.py": "1dbb095508a6db7fd0c96e64eef7276b02a0d4e57e196dfc96af37eff6a8255a",
+    "sources/runtime/guarded_x11_v1/bridge.py": "0a0675709f2f2e7210ba92fb657c61e860ac1fef2126ef4006bf88699d556e71",
+    "sources/runtime/guarded_x11_v1/frames.py": "cb6aefeaa4e9a41b4f4b9ca532e24106025247e39e7c7ee026ddc242a7cbb05b",
+    "sources/runtime/guarded_x11_v1/handles.py": "b70e99aa0f7540c7c412b27e38c1fedc71ad257235e3a753ebe15e8e7f5849b7",
+    "sources/runtime/guarded_x11_v1/handles_base.py": "ba9d16c97c5adfa355033c16276bc247c92c039b7081f08d7c20f656d824eb33",
+    "sources/runtime/guarded_x11_v1/handles_texture.py": "b78d09aa2cbd2e5bfa3a33567bb4038f5eabbb3dd138627a675583bc27f30774",
+    "sources/runtime/guarded_x11_v1/history.py": "c03f294f8ce26dc09bfe63809fce05ff330aa0b111c6566039fec0587a5661ca",
+    "sources/runtime/selector_v1/__init__.py": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881",
+    "sources/runtime/selector_v1/selector.py": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764"
+  },
+  "spec": {
+    "index": 0
+  },
+  "started_ns": 2796429420,
+  "target": {
+    "id": 6291969,
+    "map_state": 2,
+    "title": "heldout-comparison.fods \u2014 LibreOffice Calc"
+  },
+  "terminal": [
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 255,
+      "name": "Calc",
+      "pid": 15
+    },
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 0,
+      "name": "openbox",
+      "pid": 12
+    },
+    {
+      "cleanup": "group TERM/parent wait; not graceful close/full descendant proof",
+      "exit_code": 0,
+      "name": "Xvfb",
+      "pid": 8
+    }
+  ]
+}

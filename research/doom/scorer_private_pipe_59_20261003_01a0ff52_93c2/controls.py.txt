@@ -1,0 +1,52 @@
+"""Effective corrupted-copy tests of a separately passing frozen raw record."""
+import copy
+import hashlib
+import importlib.machinery
+import importlib.util
+import json
+from pathlib import Path
+import sys
+
+ROOT=Path(__file__).resolve().parent
+loader=importlib.machinery.SourceFileLoader('independent_pipe_audit',str(ROOT/'audit.py.txt'))
+spec=importlib.util.spec_from_loader(loader.name,loader)
+a=importlib.util.module_from_spec(spec);loader.exec_module(a)
+
+def reduce(rows,protocol):
+    a.require(len(rows)==len(protocol['cases'])==60,'coverage')
+    return [a.audit_row(row,case,protocol['allocation_id']) for row,case in zip(rows,protocol['cases'])]
+
+def main():
+    raw_path,output=map(Path,sys.argv[1:])
+    raw=raw_path.read_bytes();rows=[a.strict_json(x) for x in raw.decode().splitlines()]
+    protocol=a.strict_json((ROOT/'PROTOCOL.json').read_text())
+    passing=reduce(rows,protocol)
+    v2=next(i for i,r in enumerate(rows) if r['variant']=='v2' and r['condition']=='sample_sleep')
+    stopped=next(i for i,r in enumerate(rows) if r['variant']=='retained' and r['condition']=='sink_sleep')
+    results=[]
+    for name in ('index_alias','owner','clock_float','receipt_alias','payload','timeout_alias','commands','unread','stats_alias','missing_clock','missing_row','reordered_rows'):
+        changed=copy.deepcopy(rows)
+        if name=='index_alias':changed[0]['index']=False
+        elif name=='owner':changed[v2]['events'][0]['owner']=False
+        elif name=='clock_float':e=next(e for e in changed[v2]['events'] if e['kind']=='clock');e['ns']=float(e['ns'])
+        elif name=='receipt_alias':next(e for e in changed[v2]['events'] if e['kind']=='sink_enter')['receipt']['missed_periods_before']=False
+        elif name=='payload':next(e for e in changed[v2]['events'] if e['kind']=='sink_enter')['receipt']['payload']['private_scorer']=18
+        elif name=='timeout_alias':next(e for e in changed[v2]['events'] if e['kind']=='wait_enter')['timeout']=False
+        elif name=='commands':changed[v2]['commands'][0]='private_scorer'
+        elif name=='unread':changed[stopped]['unread_hex']=''
+        elif name=='stats_alias':changed[v2]['stats']['samples']=True
+        elif name=='missing_clock':changed[v2]['events'].pop(next(i for i,e in enumerate(changed[v2]['events']) if e['kind']=='clock'))
+        elif name=='missing_row':changed.pop()
+        elif name=='reordered_rows':changed[0],changed[1]=changed[1],changed[0]
+        try:
+            reduce(changed,protocol)
+        except ValueError as exc:
+            encoded=json.dumps(changed,sort_keys=True,separators=(',',':')).encode()
+            results.append({'control':name,'rejected':True,'diagnostic':str(exc),'copy_sha256':hashlib.sha256(encoded).hexdigest()})
+        else:
+            raise ValueError('ineffective corruption control: '+name)
+    result={'baseline_rows_passed':len(passing),'controls':results,'raw_sha256':hashlib.sha256(raw).hexdigest(),'no_candidate_or_trial_replay':True}
+    with output.open('x') as f:f.write(json.dumps(result,indent=2)+'\n')
+    print(json.dumps({'passing_base':len(passing),'effective_rejections':len(results)}))
+
+if __name__=='__main__':main()

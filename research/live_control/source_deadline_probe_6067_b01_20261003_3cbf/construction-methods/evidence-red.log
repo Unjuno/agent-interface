@@ -1,0 +1,83 @@
+test_clock_and_counter_delta_are_reconstructed (test_evidence.Evidence.test_clock_and_counter_delta_are_reconstructed) ... FAIL
+test_false_cpu_count_is_not_zero (test_evidence.Evidence.test_false_cpu_count_is_not_zero) ... FAIL
+test_missing_wait_mechanism_is_invalid (test_evidence.Evidence.test_missing_wait_mechanism_is_invalid) ... FAIL
+test_nonterminal_native_state_is_never_admitted (test_evidence.Evidence.test_nonterminal_native_state_is_never_admitted) ... FAIL
+test_nonzero_native_exit_is_never_admitted (test_evidence.Evidence.test_nonzero_native_exit_is_never_admitted) ... FAIL
+test_post_snapshot_must_finish_before_native_call (test_evidence.Evidence.test_post_snapshot_must_finish_before_native_call) ... FAIL
+test_required_counter_raw_join_is_not_optional (test_evidence.Evidence.test_required_counter_raw_join_is_not_optional) ... FAIL
+
+======================================================================
+FAIL: test_clock_and_counter_delta_are_reconstructed (test_evidence.Evidence.test_clock_and_counter_delta_are_reconstructed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_evidence.py", line 18, in test_clock_and_counter_delta_are_reconstructed
+    self.assertEqual(check_trace(trace(),1005,1006),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     {'wait_lateness_ns':0,'post_wait_to_native_ns':5,'nr_throttled_delta':0,'coarse_past_due':False,'sleep_overshoot_ns':[]})
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {} != {'wait_lateness_ns': 0, 'post_wait_to_nati[82 chars]: []}
+- {}
++ {'coarse_past_due': False,
++  'nr_throttled_delta': 0,
++  'post_wait_to_native_ns': 5,
++  'sleep_overshoot_ns': [],
++  'wait_lateness_ns': 0}
+
+======================================================================
+FAIL: test_false_cpu_count_is_not_zero (test_evidence.Evidence.test_false_cpu_count_is_not_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_evidence.py", line 24, in test_false_cpu_count_is_not_zero
+    with self.assertRaises(ValueError): check_trace(t,1005,1006)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_wait_mechanism_is_invalid (test_evidence.Evidence.test_missing_wait_mechanism_is_invalid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_evidence.py", line 30, in test_missing_wait_mechanism_is_invalid
+    with self.assertRaises(ValueError): check_trace(t,1005,1006)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonterminal_native_state_is_never_admitted (test_evidence.Evidence.test_nonterminal_native_state_is_never_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_evidence.py", line 34, in test_nonterminal_native_state_is_never_admitted
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_nonzero_native_exit_is_never_admitted (test_evidence.Evidence.test_nonzero_native_exit_is_never_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_evidence.py", line 32, in test_nonzero_native_exit_is_never_admitted
+    with self.assertRaises(ValueError): admit_launch({'exit_code':2},{})
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_post_snapshot_must_finish_before_native_call (test_evidence.Evidence.test_post_snapshot_must_finish_before_native_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_evidence.py", line 21, in test_post_snapshot_must_finish_before_native_call
+    with self.assertRaises(ValueError): check_trace(trace(),1002,1006)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_required_counter_raw_join_is_not_optional (test_evidence.Evidence.test_required_counter_raw_join_is_not_optional)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/source_deadline_probe_6067_b01_20261003_3cbf/test_evidence.py", line 27, in test_required_counter_raw_join_is_not_optional
+    with self.assertRaises(ValueError): check_trace(t,1005,1006)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+FAILED (failures=7)

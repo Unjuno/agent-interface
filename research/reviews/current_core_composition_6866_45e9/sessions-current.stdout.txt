@@ -1,0 +1,229 @@
+{
+  "scope": "host engineering integration check with recording backend; no native effect",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "session_source_sha256": {
+    "win32_v1": "7e81a5b5cec01dc43da7a0ff4acebd0dd33bd67b9dd7c600ced431f61166af77",
+    "x11_v1": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "quartz_v1": "bd8fee0f5d36fce746d97a998ffd77f6b9b16f83d067a0009799614f3c2a35bd"
+  },
+  "core_sha256": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+  "rows": [
+    {
+      "route": "win32_v1",
+      "case": "valid",
+      "status": "completed",
+      "error": null,
+      "calls": [
+        "clock",
+        "preflight",
+        "execute"
+      ],
+      "spy_execution_count": 1
+    },
+    {
+      "route": "win32_v1",
+      "case": "expired",
+      "status": "refused",
+      "error": "LEASE_EXPIRED",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "win32_v1",
+      "case": "nan_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "win32_v1",
+      "case": "negative_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "win32_v1",
+      "case": "bool_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "win32_v1",
+      "case": "bool_sequence",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "win32_v1",
+      "case": "float_revision",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "x11_v1",
+      "case": "valid",
+      "status": "completed",
+      "error": null,
+      "calls": [
+        "clock",
+        "preflight",
+        "execute"
+      ],
+      "spy_execution_count": 1
+    },
+    {
+      "route": "x11_v1",
+      "case": "expired",
+      "status": "refused",
+      "error": "LEASE_EXPIRED",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "x11_v1",
+      "case": "nan_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "x11_v1",
+      "case": "negative_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "x11_v1",
+      "case": "bool_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "x11_v1",
+      "case": "bool_sequence",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "x11_v1",
+      "case": "float_revision",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "quartz_v1",
+      "case": "valid",
+      "status": "completed",
+      "error": null,
+      "calls": [
+        "clock",
+        "preflight",
+        "execute"
+      ],
+      "spy_execution_count": 1
+    },
+    {
+      "route": "quartz_v1",
+      "case": "expired",
+      "status": "refused",
+      "error": "LEASE_EXPIRED",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "quartz_v1",
+      "case": "nan_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "quartz_v1",
+      "case": "negative_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "quartz_v1",
+      "case": "bool_clock",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "quartz_v1",
+      "case": "bool_sequence",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    },
+    {
+      "route": "quartz_v1",
+      "case": "float_revision",
+      "status": "refused",
+      "error": "INVALID_PROGRAM",
+      "calls": [
+        "clock"
+      ],
+      "spy_execution_count": 0
+    }
+  ]
+}

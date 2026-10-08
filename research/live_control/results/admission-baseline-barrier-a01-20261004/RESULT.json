@@ -1,0 +1,97 @@
+{
+  "candidate_invocations": 1,
+  "candidate_source": "PR #7429 head 8fe1160c89cba797dacc235e28441d1660c13845",
+  "failure_arm": {
+    "active_id_after_failure": "barrier-failure",
+    "backend_execute_count": 0,
+    "backend_lease_set": true,
+    "emitted_events": [
+      {
+        "accepted_ns": 102005889414166,
+        "event": "accepted",
+        "id": "barrier-failure",
+        "intent_token": "f62609e259db405ebbb8bbcb64f08e2b",
+        "program_sha256": "a960fd944204e10b5bde26979bb21cbf3b069a3c9409ca37fa641dfa9ffc58de",
+        "steps": 1,
+        "valid_until_ns": 102010889346333
+      }
+    ],
+    "exception": {
+      "message": "injected scorer baseline failure",
+      "type": "RuntimeError"
+    },
+    "used_id_retained": true,
+    "worker_alive": false,
+    "worker_started": false
+  },
+  "schema": "admission-baseline-barrier-a01-v1",
+  "success_arm": {
+    "baseline_and_submit_thread_match": true,
+    "baseline_before_execute": true,
+    "callback_entered": true,
+    "execute_before_baseline_release": false,
+    "rows": [
+      {
+        "accepted_ns": 102005887685125,
+        "event": "accepted_callback_enter",
+        "id": "barrier-success",
+        "thread_id": 6106001408,
+        "time_ns": 102005887687166
+      },
+      {
+        "baseline": {
+          "tick": 41
+        },
+        "event": "synthetic_baseline_complete",
+        "id": "barrier-success",
+        "thread_id": 6106001408,
+        "time_ns": 102005887714458
+      },
+      {
+        "callback_thread_id": 6122827776,
+        "callback_time_ns": 102005887762833,
+        "event": "step_started",
+        "id": "barrier-success",
+        "issued_ns": 102005887760916,
+        "operation": "hold",
+        "step": 0
+      },
+      {
+        "callback_thread_id": 6122827776,
+        "callback_time_ns": 102005889284500,
+        "completed_ns": 102005889281458,
+        "event": "step_completed",
+        "id": "barrier-success",
+        "step": 0
+      },
+      {
+        "callback_thread_id": 6122827776,
+        "callback_time_ns": 102005889292250,
+        "decision_reason": null,
+        "error": null,
+        "event": "terminal",
+        "id": "barrier-success",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "keys_down": [],
+          "verified": true
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "completed",
+        "steps_completed": 1,
+        "terminal_ns": 102005889291458
+      },
+      {
+        "event": "backend_execute",
+        "id": "barrier-success",
+        "step": 0,
+        "thread_id": 6122827776,
+        "time_ns": 102005887764500
+      }
+    ],
+    "submit_thread_id": 6106001408,
+    "terminal_status": "completed",
+    "worker_stopped": true
+  }
+}

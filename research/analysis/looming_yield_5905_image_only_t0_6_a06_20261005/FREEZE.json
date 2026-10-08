@@ -1,0 +1,26 @@
+{
+  "allocation": "LOOMING-YIELD-5905-T0.6-IMAGE-ONLY-20261005-A06",
+  "issue": 5905,
+  "preregistration_comment": 5989496927,
+  "current_main_sha": "d3a51bc4c962b223d05280225042b96a033df8bf",
+  "branch": "research/5905-image-only-cues-a06-20261005",
+  "evidence_path": "research/analysis/looming_yield_5905_image_only_t0_6_a06_20261005/",
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "sources": {
+    "audit.py": "92d2415bd59f40a267726a61c4e1608e01072d5ca65b4971c977ccfb84141d09",
+    "candidate.py": "afe7eb22eccbb31c98fd2792f40f4202147e82a28104bad22f0c68b7b2de48bf",
+    "generate.py": "48c5e65e1ac68210d05c59b637f39dcdaf429416e3a73735e1328789b2ca4833"
+  },
+  "observations_manifest_sha256": "1f97f68c4a3737ff4e747924d1fff1665f340ddca4ef102e6704de1f9d7ef1b8",
+  "sealed_truth_sha256": "a5c5d034fbd7ea7a04e87ed74a248fa737f1e5eda629ad1157c00f5e5d61d7e0",
+  "formal_counts": {
+    "candidate": 0,
+    "auditor": 0,
+    "retry": 0
+  },
+  "candidate_command": "wslc run --pull never --network none --cpus 1 --rm <pinned-image> python /src/candidate.py /input",
+  "auditor_command": "wslc run --pull never --network none --cpus 1 --rm <pinned-image> python /src/audit.py /bundle /candidate/candidate.json /audit-output/audit.json",
+  "gpu": false,
+  "docker": false
+}

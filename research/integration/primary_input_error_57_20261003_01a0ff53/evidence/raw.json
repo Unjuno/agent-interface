@@ -1,0 +1,115 @@
+{
+  "attempts": 1,
+  "command": [
+    "node",
+    "--eval",
+    "exact child_probe.cjs contents"
+  ],
+  "cwd_roles": [
+    "baseline",
+    "candidate"
+  ],
+  "ended_utc": "2026-10-03T03:35:25.305315+00:00",
+  "freeze_sha256": "0cc9d8491d7d335cbf40b33f8f3505d82a201351651123a9d7ea0fd1409609e2",
+  "node_version": "v26.7.0",
+  "retries": 0,
+  "rows": [
+    {
+      "arm": "baseline",
+      "ended_utc": "2026-10-03T03:35:24.932381+00:00",
+      "exit_code": 1,
+      "scenario": "before_request",
+      "started_utc": "2026-10-03T03:35:24.880359+00:00",
+      "stderr": "node:events:505\n    throw er; // Unhandled 'error' event\n    ^\n\nError: inert input read failure\n    at [eval]:32:55\nEmitted 'error' event on Interface instance at:\n    at PassThrough.onerror (node:internal/readline/interface:264:10)\n    at PassThrough.emit (node:events:526:24)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\n\nNode.js v26.7.0\n",
+      "stderr_sha256": "233e973932834e4a596c0966671c071dd54ee2bb3644905b057b8462cc6c9c3c",
+      "stdout": "{\"kind\":\"input_error_issued\"}\n",
+      "stdout_sha256": "8a50d6b482494714f82f762f61f933eb23253c336c70b5fe005936a29ab9e518"
+    },
+    {
+      "arm": "baseline",
+      "ended_utc": "2026-10-03T03:35:24.985257+00:00",
+      "exit_code": 1,
+      "scenario": "pending_success",
+      "started_utc": "2026-10-03T03:35:24.932437+00:00",
+      "stderr": "node:events:505\n    throw er; // Unhandled 'error' event\n    ^\n\nError: inert input read failure\n    at [eval]:32:55\nEmitted 'error' event on Interface instance at:\n    at PassThrough.onerror (node:internal/readline/interface:264:10)\n    at PassThrough.emit (node:events:526:24)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\n\nNode.js v26.7.0\n",
+      "stderr_sha256": "233e973932834e4a596c0966671c071dd54ee2bb3644905b057b8462cc6c9c3c",
+      "stdout": "{\"kind\":\"execute_enter\",\"request\":{\"id\":1,\"method\":\"call\",\"args\":[]}}\n{\"kind\":\"input_error_issued\"}\n",
+      "stdout_sha256": "2375cfeccaf962ae63e8c7a871b7909b44cecd2ef0986ea6231b15e905bff938"
+    },
+    {
+      "arm": "baseline",
+      "ended_utc": "2026-10-03T03:35:25.038132+00:00",
+      "exit_code": 1,
+      "scenario": "pending_failure",
+      "started_utc": "2026-10-03T03:35:24.985315+00:00",
+      "stderr": "node:events:505\n    throw er; // Unhandled 'error' event\n    ^\n\nError: inert input read failure\n    at [eval]:32:55\nEmitted 'error' event on Interface instance at:\n    at PassThrough.onerror (node:internal/readline/interface:264:10)\n    at PassThrough.emit (node:events:526:24)\n    at emitErrorNT (node:internal/streams/destroy:170:8)\n    at emitErrorCloseNT (node:internal/streams/destroy:129:3)\n    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)\n\nNode.js v26.7.0\n",
+      "stderr_sha256": "233e973932834e4a596c0966671c071dd54ee2bb3644905b057b8462cc6c9c3c",
+      "stdout": "{\"kind\":\"execute_enter\",\"request\":{\"id\":1,\"method\":\"call\",\"args\":[]}}\n{\"kind\":\"input_error_issued\"}\n",
+      "stdout_sha256": "2375cfeccaf962ae63e8c7a871b7909b44cecd2ef0986ea6231b15e905bff938"
+    },
+    {
+      "arm": "baseline",
+      "ended_utc": "2026-10-03T03:35:25.091843+00:00",
+      "exit_code": 0,
+      "scenario": "eof_pending",
+      "started_utc": "2026-10-03T03:35:25.038188+00:00",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "{\"kind\":\"execute_enter\",\"request\":{\"id\":1,\"method\":\"call\",\"args\":[]}}\n{\"kind\":\"eof_issued\"}\n{\"kind\":\"checkpoint\",\"calls\":1,\"completed\":0,\"settled\":false}\n{\"kind\":\"execute_exit\",\"outcome\":\"returned\"}\n{\"kind\":\"response\",\"value\":{\"schema\":\"agent-interface/primary-stdio-v1\",\"status\":\"returned\",\"result\":{\"id\":1,\"value\":\"original result\"}}}\n{\"kind\":\"owner_resolved\"}\n{\"kind\":\"final\",\"calls\":1,\"completed\":1,\"settled\":true}\n",
+      "stdout_sha256": "590bc03bddfe23512efb4fd03d73068e01014e28aed6887cad96ac726117c53f"
+    },
+    {
+      "arm": "candidate",
+      "ended_utc": "2026-10-03T03:35:25.143904+00:00",
+      "exit_code": 2,
+      "scenario": "before_request",
+      "started_utc": "2026-10-03T03:35:25.091910+00:00",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "{\"kind\":\"input_error_issued\"}\n{\"kind\":\"owner_rejected\",\"message\":\"inert input read failure\"}\n{\"kind\":\"checkpoint\",\"calls\":0,\"completed\":0,\"settled\":true}\n{\"kind\":\"final\",\"calls\":0,\"completed\":0,\"settled\":true}\n",
+      "stdout_sha256": "a2a541ce3338c2ceab21e6a54588c01e5550880273c554b5fd65bd57552165ab"
+    },
+    {
+      "arm": "candidate",
+      "ended_utc": "2026-10-03T03:35:25.198708+00:00",
+      "exit_code": 2,
+      "scenario": "pending_success",
+      "started_utc": "2026-10-03T03:35:25.143965+00:00",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "{\"kind\":\"execute_enter\",\"request\":{\"id\":1,\"method\":\"call\",\"args\":[]}}\n{\"kind\":\"input_error_issued\"}\n{\"kind\":\"checkpoint\",\"calls\":1,\"completed\":0,\"settled\":false}\n{\"kind\":\"execute_exit\",\"outcome\":\"returned\"}\n{\"kind\":\"response\",\"value\":{\"schema\":\"agent-interface/primary-stdio-v1\",\"status\":\"returned\",\"result\":{\"id\":1,\"value\":\"original result\"}}}\n{\"kind\":\"owner_rejected\",\"message\":\"inert input read failure\"}\n{\"kind\":\"final\",\"calls\":1,\"completed\":1,\"settled\":true}\n",
+      "stdout_sha256": "84e76e2dad2faa2598fd2a5a6657872300907e59d58cb3163e2bc3d421fb071b"
+    },
+    {
+      "arm": "candidate",
+      "ended_utc": "2026-10-03T03:35:25.251479+00:00",
+      "exit_code": 2,
+      "scenario": "pending_failure",
+      "started_utc": "2026-10-03T03:35:25.198783+00:00",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "{\"kind\":\"execute_enter\",\"request\":{\"id\":1,\"method\":\"call\",\"args\":[]}}\n{\"kind\":\"input_error_issued\"}\n{\"kind\":\"checkpoint\",\"calls\":1,\"completed\":0,\"settled\":false}\n{\"kind\":\"execute_exit\",\"outcome\":\"rejected\"}\n{\"kind\":\"response\",\"value\":{\"schema\":\"agent-interface/primary-stdio-v1\",\"status\":\"command_error\",\"error\":\"Error: inert command outcome unavailable\",\"command_id\":1,\"command_method\":\"call\",\"replay_allowed\":false,\"state\":{\"next_id\":2}}}\n{\"kind\":\"owner_rejected\",\"message\":\"inert input read failure\"}\n{\"kind\":\"final\",\"calls\":1,\"completed\":1,\"settled\":true}\n",
+      "stdout_sha256": "da7feca2bc0ca3476ad4d201ed7f31e5f3a7d300283594ffdac47aa93e43a6c6"
+    },
+    {
+      "arm": "candidate",
+      "ended_utc": "2026-10-03T03:35:25.305078+00:00",
+      "exit_code": 0,
+      "scenario": "eof_pending",
+      "started_utc": "2026-10-03T03:35:25.251550+00:00",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "{\"kind\":\"execute_enter\",\"request\":{\"id\":1,\"method\":\"call\",\"args\":[]}}\n{\"kind\":\"eof_issued\"}\n{\"kind\":\"checkpoint\",\"calls\":1,\"completed\":0,\"settled\":false}\n{\"kind\":\"execute_exit\",\"outcome\":\"returned\"}\n{\"kind\":\"response\",\"value\":{\"schema\":\"agent-interface/primary-stdio-v1\",\"status\":\"returned\",\"result\":{\"id\":1,\"value\":\"original result\"}}}\n{\"kind\":\"owner_resolved\"}\n{\"kind\":\"final\",\"calls\":1,\"completed\":1,\"settled\":true}\n",
+      "stdout_sha256": "590bc03bddfe23512efb4fd03d73068e01014e28aed6887cad96ac726117c53f"
+    }
+  ],
+  "scenarios": [
+    "before_request",
+    "pending_success",
+    "pending_failure",
+    "eof_pending"
+  ],
+  "schema": "primary-read-error-comparison-v1",
+  "source_commit": "8410d2b60877e5f50b7c0dea18ef0f72eb390eeb",
+  "started_utc": "2026-10-03T03:35:24.872073+00:00"
+}

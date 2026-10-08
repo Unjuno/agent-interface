@@ -1,0 +1,43 @@
+{
+  "argv": [
+    "C:\\Program Files\\WSL\\wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--network",
+    "none",
+    "--cpus",
+    "0.5",
+    "--memory",
+    "512M",
+    "--user",
+    "65534:65534",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a04_firstchar_prepare_20261003:/experiment:ro",
+    "--name",
+    "ai-5260-a04-construction01-auditor-20261003",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a04_results_20261003\\construction01-candidate-data:/input:ro",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a04_results_20261003\\construction01-auditor-data:/out",
+    "sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "/usr/bin/python3",
+    "-B",
+    "/experiment/audit.py",
+    "/input/candidate_stdout.json",
+    "/input",
+    "/out",
+    "/experiment/fixture.json"
+  ],
+  "exit_code": 0,
+  "finished_utc": "2026-10-03T14:06:40.476320+00:00",
+  "launch_error": null,
+  "output_sha256": {
+    "attempt.json": "024e2104b5d7868b4ef3025ae1189f6a07a796149e7ef6a6150e901c0be3f885",
+    "stderr.bin": "2562006e62622bcf41c809d627cdc2c6250516b8cf1c9ccd28072c331fcc4096",
+    "stdout.bin": "1ae06fccba70e87984b675465d624094128aab76c7e4325864a12cc88c3318b8"
+  },
+  "started_utc": "2026-10-03T14:06:39.071753+00:00",
+  "wall_seconds": 1.4041055999987293
+}

@@ -1,0 +1,126 @@
+"""Publish inert independent review/CLI proof outside fixed author source tree."""
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+from pathlib import Path
+root=Path(__file__).resolve().parent;ws=root.parent.parent;repo=root.parent/'agent-interface';public=ws/'outputs/review-6919';public.mkdir(exist_ok=False)
+p=json.loads((root/'PROPOSAL.json').read_bytes());head=p['head_sha'];tuple_=json.loads((root/'current-application/CURRENT_TUPLE.json').read_bytes())
+prefix='research/reviews/primary_stdio_owner_6919_45e9';ref='refs/heads/research/review-primary-stdio-6919-45e9-20261003'
+records=[]
+def sha(b):return hashlib.sha256(b).hexdigest()
+def add(source,path):
+ before=source.read_bytes();after=before
+ for text in (str(ws),os.environ['USERPROFILE']):
+  after=after.replace(text.replace('\\','\\\\').encode(),b'<REVIEWER_PRIVATE_PATH>').replace(text.encode(),b'<REVIEWER_PRIVATE_PATH>')
+ dest=public/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(after)
+ records.append({'path':path,'original_sha256':sha(before),'public_sha256':sha(after),'private_prefix_redacted':before!=after,'original_retained':source.read_bytes()==before})
+for name in ('EXPORT.json','PROPOSAL.json','CHANGED_IMAGES.json','MAIN_SNAPSHOT.json','DIAGNOSTIC_LIMITS.json'):add(root/name,name)
+for folder in ('checks','data-checks','retained-audit','current-application','independent-cli-first'):
+ for f in sorted((root/folder).rglob('*'),key=lambda f:f.relative_to(root).as_posix()):
+  if f.is_file():add(f,f.relative_to(root).as_posix())
+for name in ('fixture.mjs','independent-cli.mjs','capture.py','audit_retained.py','capture-data.py','prepare-current.py','publish.py'):
+ add(root/name,'tools/'+name+'.txt')
+add(ws/'work/export_review6919.py','tools/export_review6919.py.txt')
+(public/'PROVENANCE.json').write_text(json.dumps({'created_utc':datetime.now(timezone.utc).isoformat(),'artifacts':records,
+ 'public_derivatives':'Only reviewer private prefixes redacted. Exact original/public byte hashes distinct, originals retained privately.',
+ 'retained_author_custody':'Both50/203 manifest entries and original v1 exact51 images verified;43 projected public paths match original hash claims. Author private originals inaccessible, retention author attested.',
+ 'new_actual_scope':'Public --config CLI and actual Windows OS stdout consumer pipe closure, own inert no-operation relay. Author existing API/fault/native fixture decks not replayed.',
+ 'diagnostics':'cp932 display and shallow merge ancestry failures preserved in DIAGNOSTIC_LIMITS, first exact UTC/separate streams were not recorded. Add File missing-plus patch rejected before mutation; corrected patch applied.'},indent=2)+'\n',encoding='utf-8')
+(public/'README.md').write_text('''# Nominated nonauthor review of PR #6919 v2
+
+Actual existing worker01a0ff2e-17a3-70a1-908e-0d6dd78c45e9, FINAL-v5.
+Prospectively assigned in fixed renewed proposal5965736533; fresh acceptance
+5966405141 precedes this content decision. Repository Unjuno/agent-interface;
+head83e92bbd2bec853b01c2559113436dc8bca6e0c0;
+content base316ac44b24d4ac29c1942d2fee51f1c0599855b1;
+epochprimary-stream-lifecycle-v2-before-renewed-votes;
+digest04fece24cc6d3c80910bf107d060afb0da9c65f8437f66b2247f6b09dbc23512.
+Canonical259 before/after Git image map and proposal digest match. All50 old
+and203 new artifact manifest entries match, original v1 exact51 Git images stay
+unchanged against dbe05f5. Five archived before/candidate modules match actual
+Git/source pins;18 current source/test/helper dependency pins match exactly.
+
+The readonly review confirms an Interface error observer and whole-owner input/
+output observers before relay allocation through ready/terminal writes. The first
+fault remains, the same accepted work and original relay are observed, only owned
+listeners are removed, and no retry/replacement host/default/schema/cancellation/
+workflow behavior is added. The whole-owner boundary used to lack observers at
+ready and terminal; a fixture exit alone did not prove the owner observed it.
+
+Actual reviewer Windows Node24.6.0/binary SHA256
+3428a3d055501883385d78b19128550d3e8be39a89e7edba683a9b06830257c7,
+CPython3.12.10 capture. Source/config/fixture/binary/commands and H/T/D/C/U froze
+before commands. Exact17 affected stdio methods pass. Three separately authored
+actual public --config CLI witnesses pass: healthy EOF, closed OS stdout consumer
+before ready, and consumer closure after ready before terminal. CLI exits0/2/2,
+actual EPIPE error in both fault cases, original host exit0/0/0, own inert fixture
+exit0/0/0, request bytes0/0/0. Each configured fixture is the CLI's own descendant;
+all six CLI/fixture PIDs are absent after close. First full stdout/stderr/UTC/
+commands and original start/typed exit/host endpoints retained. Own watchdogs
+were unreached. No real backend/native input/model/task call was invoked.
+These new CLI/output-pipe observations extend the author's API-only limitation
+on this Windows/Node version. They do not establish real OS stdin/device fault,
+actual MCP/backend/physical release/task success or a hard production I/O bound.
+
+An own saved-data reader imports no author runtime, producer or auditor. It joins
+all10 retained owner histories and22 numeric process receipts/full streams/UTC:
+first unit17 has14 pass/3 unhandled whole-owner failures, repair17/17; baseline
+owner exits[1,1,1,0], candidate4+pending2 all0, original typed fixture exits0;
+same accepted request/reply before first input-error cleanup, consumed identity/
+no replay and preserved occupied exchange slot. Source/freeze/helpers and43
+public path projections match; normal affected45/45 and author neighbor20/20
+remain historical observations, not repeated reviewer decks. First auditor
+enrichment failure and flattened composition15/20 are retained. Eight altered
+copy controls reject numeric outcome normalization, bool fixture identity,
+reversed UTC, invented missing owner summary, changed first fault, omitted same
+pending observation, replay permission and a second accepted request. Some
+controls are rejected at consistency joins; they do not claim every path in a
+general hostile-data parser is covered. Private author originals are inaccessible;
+retention remains author attested, not independently recovered by public hashes.
+
+The first readonly stdout display could not encode Node26 checkmarks under cp932;
+an ASCII JSON display repaired reading only. The first merge-tree view lacked
+the common ancestor because the reviewed intermediate merge was shallow. Original
+tool errors/diagnostic limits preserved. Bounded filtered depth5 metadata restores
+actual merge-base316; no source/test/author producer/formal or ref was replayed.
+An initial Add File patch was syntactically rejected before any mutation.
+
+Actual named nonauthor composition: main'''+tuple_['current_main']+''' plus exact
+head produces tree'''+tuple_['planned_tree']+''', conflict free. Exact259 delta
+and all280 source/archive/config images match, complete533 intervening paths
+were compared; used host/native workflow/timing/native-runner/build closure
+changes zero. Actual17+3 evidence applies to this named identical closure;
+Mac author45/20 are retained qualified observations. The peer's neighbor-combined
+primary_stdio has different bytes and is not silently called this single head.
+No main reference, merge commit, apply lock or application request was created.
+Future actual apply_id linkage, then-current nonauthor tuple/dependencies/platform
+identity/checks/rules/ownership/cancellation and one expected-old forward send/
+readback remain the source owner's separate finite action.
+
+No actionable content defect found in the scoped whole-owner repair. This packet
+supports one assigned nonauthor content decision, recorded externally on GitHub.
+ff59's existing approval5966076053 is one vote; its packet parts are not extra
+votes. No v1/outside/self/reciprocal vote transfer or distinct-user platform
+APPROVE is implied. No original native comparison/author auditor/formal allocation,
+GPU/WSLc/container/display/physical task/release/efficiency/hosted CI or full-goal
+completion claim; N/deadline and other owners unchanged. Primary Git index and
+author source/raw preserved. All published tools are inert .mjs.txt/.py.txt;
+private-path public derivatives have separately bound original/public hashes.
+''',encoding='utf-8',newline='\n')
+(public/'.gitattributes').write_text('* -text\n',encoding='utf-8')
+files=sorted((f for f in public.rglob('*') if f.is_file()),key=lambda f:f.relative_to(public).as_posix())
+(public/'SHA256SUMS').write_text(''.join(sha(f.read_bytes())+'  '+f.relative_to(public).as_posix()+'\n' for f in files),encoding='utf-8',newline='\n')
+for r in json.loads((root/'EXPORT.json').read_bytes())['blobs']:assert sha((root/r['side']/r['path']).read_bytes())==r['sha256']
+index=root/'publication.index';assert not index.exists();primary=(repo/'.git/index').read_bytes();env=dict(os.environ,GIT_INDEX_FILE=str(index),GIT_NO_LAZY_FETCH='1')
+def git(*a,data=None):return subprocess.check_output(['git',*a],cwd=repo,env=env,input=data)
+assert subprocess.run(['git','show-ref','--verify','--quiet',ref],cwd=repo).returncode==1
+git('read-tree',head);paths=[]
+for f in sorted((f for f in public.rglob('*') if f.is_file()),key=lambda f:f.relative_to(public).as_posix()):
+ path=prefix+'/'+f.relative_to(public).as_posix();b=f.read_bytes();oid=git('hash-object','-w','--stdin',data=b).decode().strip()
+ assert git('cat-file','blob',oid)==b;git('update-index','--add','--cacheinfo','100644',oid,path);paths.append(path)
+assert git('diff','--cached','--name-only',head).decode().splitlines()==paths
+git('diff','--cached','--check','--',prefix+'/README.md');tree=git('write-tree','--missing-ok').decode().strip()
+commit=git('commit-tree',tree,'-p',head,data=b'review(#6919): retain independent public CLI ownership evidence [skip ci]\n').decode().strip()
+git('update-ref',ref,commit,'0'*40);assert primary==(repo/'.git/index').read_bytes()
+record={'branch':ref,'commit':commit,'tree':tree,'prefix':prefix,'parent_reviewed_head':head,'files':len(paths),
+ 'bytes':sum(f.stat().st_size for f in public.rglob('*') if f.is_file()),'primary_index_unchanged':True,'status':'local commit; not yet pushed'}
+(ws/'outputs/review-6919-publication.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8');print(json.dumps(record))
