@@ -1,0 +1,42 @@
+{
+  "schema": "v39-v15-prepost-a04-trace-audit-freeze-v1",
+  "freeze_revision": "A04-prereg-v1.1",
+  "issue": 7933,
+  "allocation": "V39-V15-PREPOST-A04-TRACE-AUDIT-20261005-01",
+  "repository": "Unjuno/agent-interface",
+  "main_context_at_freeze": "0db00a564daff64e47fd6931954ace0f71ab8f2b",
+  "main_observed_before_formal_audit": "9febfe4926cde6629f9751d6444f6b802cf31328",
+  "main_gate": "not applicable: this audit is bound only to immutable historical raw/A02/A03 artifacts and the frozen A04 auditor source",
+  "scope": "Versioned audit-only re-evaluation of retained A02 raw trace; no candidate/runtime rerun",
+  "candidate_invocations_planned": 0,
+  "candidate_invocations_actual": 0,
+  "auditor_invocations_planned": 1,
+  "auditor_invocations_actual": 0,
+  "retries": 0,
+  "runtime": {
+    "name": "WSLc",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "network": "none",
+    "cpus": 1,
+    "code_mount": "read-only",
+    "input_mount": "read-only",
+    "output_mount": "dedicated-writable"
+  },
+  "inputs": {
+    "raw": "0336cfa2eeebbe48ad816168d5466938a936fcf0782211b21847df6c20038596",
+    "parent_a02_pre_run": "98581f50e8ccb3e3914aca454975e4dcd523575acf09023e42971dd1b3ce13e7",
+    "parent_a02_audit_v1": "9e44c3a1cfb34715ebcb551cf59fac35961afbf6363d9c31fbf648c541614ce2",
+    "parent_a03_audit_v2_stdout": "b1f3276ec3bd30ffbcc172a2d8cae39937ff631d61dfa1e5783cb4a2eba12a50",
+    "parent_a03_result": "076b9ac01d22beceeb177f53d084e1c6515a6771ceb57e777ebaa744b444a53e",
+    "parent_a03_auditor_source": "1be4485e149f944433f0af73c2b1e08c275434b7251e7b970e1240a2ab10efac"
+  },
+  "superseded_uninvoked_auditor_source_sha256": "6c622663be1f9e07682a491d1aba6cc270f697fa4238448308cc88b67cdc0d88",
+  "supersession_reason": "Pre-run argument audit found the parent A02 PRE-RUN and A04 freeze record must be separate auditor inputs; corrected before any formal invocation.",
+  "auditor_source_sha256": "f433ce309810672555fb7c4f4fbefd02ee98f6a5657a8ba3b0acd08b9755b6e8",
+  "decision": {
+    "pass": "Independent raw reconstruction succeeds; trace sample queries/results/stages/values match their named sampler, summary, and release ordering; all 12 frozen mutations are rejected.",
+    "fail": "Any baseline mismatch, missing/mispaired query, altered stage/value, or mutation not rejected.",
+    "promotion_limit": "Audit integrity only; no real X11, physical input, GUI, application/game effect, latency, recovery, or safety claim."
+  },
+  "invocation": "python -B /src/audit_v3.py /input/a02_candidate.stdout /input/a02_PRE-RUN.json /input/a02_AUDIT.json /input/AUDIT_V2.stdout /input/RESULT.json /bundle/PRE-RUN.json /output/RESULT_A04.json"
+}
