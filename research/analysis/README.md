@@ -705,6 +705,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`mission_survival_5962_t1_eligibility_20261001_02/`](mission_survival_5962_t1_eligibility_20261001_02/)
 - [`mixed_criticality_temporal_feasibility_5557_t15_transport_v1/`](mixed_criticality_temporal_feasibility_5557_t15_transport_v1/)
 - [`modal_call_return_6102_t0_20261001/`](modal_call_return_6102_t0_20261001/)
+- [`mode_flap_7505_t0_a01_20261004/`](mode_flap_7505_t0_a01_20261004/)
 - [`model_ambiguity_lifetime_6580_t0_v1/`](model_ambiguity_lifetime_6580_t0_v1/)
 - [`model_ambiguity_lifetime_6580_t0b_v1/`](model_ambiguity_lifetime_6580_t0b_v1/)
 - [`model_ambiguity_lifetime_6580_t0c_v1/`](model_ambiguity_lifetime_6580_t0c_v1/)
