@@ -1,0 +1,31 @@
+{
+  "study": "map01_v10_release_admission_a02_20261005",
+  "source_commit": "402c7d1b5147b2a905098f082233db60a47d68db",
+  "candidate_commit": "07ba8837d6cd3eb9e36e98b1f9b8db4d4616fddb",
+  "candidate_pr": "https://github.com/Unjuno/agent-interface/pull/7962",
+  "hypothesis": "A persistent terminal release failure leaves the old lease active and prevents a new lease from sending additional key input.",
+  "decision_rule": {
+    "candidate": "all four fake-X cases pass in normal and optimized Python",
+    "baseline": "the new admission boundary case passes; existing dropped-release repair cases retain their expected baseline error/failure",
+    "retries": 0
+  },
+  "sources": {
+    "baseline": {
+      "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+      "test_input_owner_v10_release_retry.py": "cb6ff8ad9f19d236cefed870d700090f6335ed6709da4b2cfb60def3fb8fc2cc"
+    },
+    "candidate": {
+      "input_owner_v10.py": "b1b0d361d10ff5df412905f2f763e40fdcb9ad119d87763eac6a1c935c4dd034",
+      "test_input_owner_v10_release_retry.py": "cb6ff8ad9f19d236cefed870d700090f6335ed6709da4b2cfb60def3fb8fc2cc"
+    }
+  },
+  "runtime": {
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "cpus": 1,
+    "memory": "512M",
+    "network": "none",
+    "gpu": false,
+    "modes": ["normal", "optimized"]
+  },
+  "scope": "synthetic fake-X owner API only; no live game, real X server, model, GUI, OS input, or live allocation"
+}

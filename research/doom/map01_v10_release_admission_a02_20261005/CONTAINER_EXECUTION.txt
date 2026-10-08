@@ -1,0 +1,10 @@
+Runtime: Microsoft WSLc 3.0.1, session 1; Windows 10.0.26300.9457; kernel 6.18.40.1-1.
+Image: python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016.
+Container: d1a3f0b1ef5b9699a2922a3ce39c2e83a496d8f13d4861ef6b94888a5f59b750 (auto-removed after exit).
+Configured: --cpus 1 --memory 512M --network none; no GPU; /src read-only; /out writable.
+Runner command: python /src/run.py --source-root /src/source --out /out
+Start command: wslc.exe start --attach d1a3f0b1ef5b9699a2922a3ce39c2e83a496d8f13d4861ef6b94888a5f59b750
+Host warning: kernel does not support swap limit capabilities or cgroup is not mounted; memory was limited without swap.
+Order: baseline normal, baseline optimized, candidate normal, candidate optimized; one invocation each; zero retries.
+Exit: runner 0; baseline case exit codes 1/1 as preregistered repair failures; candidate case exit codes 0/0.
+Raw stdout/stderr and case exit codes are in results/*.json.

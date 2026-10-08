@@ -1,0 +1,19 @@
+{
+  "variant": "candidate",
+  "mode": "normal",
+  "command": [
+    "/usr/local/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/src/source/candidate",
+    "-p",
+    "test_input_owner_v10_release_retry.py",
+    "-v"
+  ],
+  "cwd": "/src/source/candidate",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "test_cleanup_retries_a_key_still_down_after_explicit_up (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_key_still_down_after_explicit_up) ... ok\ntest_cleanup_retries_a_wheel_release_omitted_by_server (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_cleanup_retries_a_wheel_release_omitted_by_server) ... ok\ntest_persistent_key_release_failure_remains_unverified (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_persistent_key_release_failure_remains_unverified) ... ok\ntest_unverified_release_blocks_a_new_lease_admission (test_input_owner_v10_release_retry.InputOwnerV10ReleaseRetryTests.test_unverified_release_blocks_a_new_lease_admission) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.087s\n\nOK\n"
+}
