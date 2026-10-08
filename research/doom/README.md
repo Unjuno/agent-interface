@@ -480,3 +480,7 @@ gates remain open; this archive makes no code promotion.
 ## App Server interrupt cancellation portability (#59)
 
 - [macOS 0.146.1 stream-cancel A01](v39_appserver_interrupt_stream_macos_a01_20261008/README.md) — interrupted turn completed promptly, but no provider-socket EOF/reset was observed before the held mock response release; unexpected featured-plugin metadata egress makes the overall environment disposition HOLD. One bounded run; no live/game/input claim.
+
+## Synthetic fake-Xlib key-hold bounds (historical)
+
+- [30-cycle construction record](results/map01-key-hold-bounds-construction-v1/README.md) — frozen fake-Xlib evidence reports 300/300 row checks and 11/11 aggregate checks, bounded to synthetic server-side intervals; no application, GUI, game, or task-effect claim. Source baseline is historical and stacked on #7440; see the archived scope and limitations.
