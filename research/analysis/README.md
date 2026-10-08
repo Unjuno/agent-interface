@@ -1130,6 +1130,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`voi_option_5306_t1/`](voi_option_5306_t1/)
 - [`wake_fence_6331_t0_v1/`](wake_fence_6331_t0_v1/)
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
+- [`wslc_cleanup_evidence_7924_successor_20261008/`](wslc_cleanup_evidence_7924_successor_20261008/)
 - [`wslc_control_plane_6669_t1_20261003/`](wslc_control_plane_6669_t1_20261003/)
 - [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
 - [`wslc_local_smoke_7924_a02_20261008/`](wslc_local_smoke_7924_a02_20261008/)

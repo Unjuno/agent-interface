@@ -1,0 +1,26 @@
+{
+  "run_id": "7924-cleanup-receipt-method-a01-20261008",
+  "base_commit": "6ea1269defb6d48a607f13b08f1aa2d223ba06e9",
+  "scope": "offline cleanup-receipt contract only; no WSLc or Docker invocation",
+  "runtime": {
+    "python": "3.12.10",
+    "powershell": "7.6.6",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64"
+  },
+  "source_sha256": {
+    ".github/scripts/test_wslc_local_runtime.ps1": "D424553390C41A1D99B05BC5043896C93E2F1BD09ABFC59480E3BA386B2921E5",
+    ".github/scripts/wslc_cleanup_receipt.psm1": "8E7F16F9224B253A63CD4107B0D632CF789E4293C3630D4D0A4BE2D646739DFB",
+    ".github/scripts/test_wslc_cleanup_receipt.ps1": "C158FDCC38F533C318D4BC8C3813B0AA5680C8CB2E4B2D58D4CEBF5E96441361",
+    "research/analysis/wslc_cleanup_evidence_7924_successor_20261008/audit.py": "46ADDC7EE8DCD25864501BF5040F5838BA31E79CAB0CA23EB7D9FCD858C37AD2",
+    "research/analysis/wslc_cleanup_evidence_7924_successor_20261008/test_audit.py": "47C8BAAB5424C84F84ADC73A5BA4501BDF389910475AB78E01C05C0D77DCE736",
+    "research/analysis/wslc_cleanup_evidence_7924_successor_20261008/PROTOCOL.md": "C7CCB82255EE4CBB23F69980103D42E45103814E5142AB0D3407BBB0C5F2BCFF"
+  },
+  "candidate_command": "pwsh -NoProfile -File .github/scripts/test_wslc_cleanup_receipt.ps1 -OutputPath research/analysis/wslc_cleanup_evidence_7924_successor_20261008/results/candidate.json",
+  "audit_command": "python -B research/analysis/wslc_cleanup_evidence_7924_successor_20261008/audit.py --candidate research/analysis/wslc_cleanup_evidence_7924_successor_20261008/results/candidate.json --output research/analysis/wslc_cleanup_evidence_7924_successor_20261008/results/audit.json",
+  "limits": [
+    "The preceding WSLc invocation was unregistered, exited 1, and its cleanup response/ID were not retained.",
+    "No retry or WSLc/Docker runtime operation is part of this frozen run.",
+    "The offline result cannot establish or change the original container cleanup state."
+  ]
+}
