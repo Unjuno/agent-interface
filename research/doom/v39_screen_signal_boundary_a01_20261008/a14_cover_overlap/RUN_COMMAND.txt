@@ -1,0 +1,5 @@
+From this addendum directory, using A14 artifacts retained in PR #8403:
+  python -B analyze_overlap.py <A14-package>/raw/runtime/events.jsonl <A14-package>/raw/planner-protocol.jsonl
+  python -B audit.py
+
+The analysis verifies both full raw-file byte counts and SHA-256 before extraction. It retains only the reduced timing/observation trace needed to independently recompute overlap intervals and adjacent-pair counts.

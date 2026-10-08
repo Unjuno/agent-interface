@@ -1,0 +1,3 @@
+# A12 disposition: FAIL_METHOD
+
+The candidate and frozen audit each ran once. The candidate completed 390 calls, but the raw-only auditor found 18 transition violations: 12 wrong exception kinds across the per-episode prefixes and 6 missing-conflict/coverage errors at the final batch-2 transition. Because the preregistered transition gate failed, do not interpret the descriptive answer contrasts as cadence evidence. Preserve the raw, audit, preflight, and logs at `results/FORMAL_T1_A12/`; hashes and metrics are in `RESULTS.md`. No rerun, prompt repair, or predecessor pooling is permitted for this consumed allocation.
