@@ -224,3 +224,44 @@ test('sendPresented snapshots callbacks before its request can wait',async()=>{
  try{const pending=client.sendPresented('observe',{},callbacks);callbacks.image=undefined;await pending;assert.equal(images,1);}
  finally{await client.close();}
 });
+
+const attributionFixture = `require('node:readline').createInterface({input:process.stdin}).on('line',line=>{
+ const r=JSON.parse(line);console.log(JSON.stringify({id:r.id,tool:r.tool,status:'returned',next_id:r.id+1,result:{content:[{type:'text',text:JSON.stringify(r)}]}}));});`;
+test('caller attribution joins actual relay events without changing protocol request or granting authority', async () => {
+ const dir=join(await mkdtemp(join(tmpdir(),'owned-attribution-real-relay-')),'transport');
+ const host=await createInstrumentedRelayClient({command:process.execPath,args:['-e',attributionFixture],evidenceDirectory:dir});
+ const attribution={evaluation_id:'owned',phase:'cold_acquisition',model_stage_id:'stage-1',primary_call_id:'call_owned'};
+ const original={...attribution};
+ try {
+  const first=host.send('owned_observe',{value:17},attribution);attribution.phase='bounded_repair';
+  assert.throws(()=>host.send('duplicate',{}),/outstanding/);
+  const reply=await first;assert.deepEqual(JSON.parse(reply.result.content[0].text),{id:1,tool:'owned_observe',arguments:{value:17}});
+  assert.throws(()=>host.send('invalid',{}, {...original, phase:'unknown'}),TypeError);assert.equal(host.state().attempts,1);
+  await host.sendPresented('owned_text',{}, {text:()=>{},image:()=>{throw new Error('unexpected image');}},original);
+  const rows=(await readFile(join(dir,'host-events.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);
+  for(const attempt of [1,2]) {
+   const joined=rows.filter(r=>r.attempt===attempt&&['send_requested','reply_available'].includes(r.kind));
+   assert.equal(joined.length,2);joined.forEach(r=>assert.deepEqual(r.caller_attribution,original));
+  }
+  assert.equal(host.state().attempts,2);
+ } finally {await host.close();}
+});
+
+test('invalid caller declarations cannot consume relay attempts or create accounting events',async()=>{
+ const dir=join(await mkdtemp(join(tmpdir(),'attribution-negative-')),'transport');
+ const peer=`require('readline').createInterface({input:process.stdin}).on('line',s=>{const r=JSON.parse(s);console.log(JSON.stringify({id:r.id,tool:r.tool,status:'returned',next_id:r.id+1,result:{content:[{type:'text',text:'ok'}]}}));});`;
+ const host=await createInstrumentedRelayClient({command:process.execPath,args:['-e',peer],evidenceDirectory:dir});
+ const valid={evaluation_id:'evaluation',phase:'termination',model_stage_id:'stage'};
+ const invalid=[false,[],{}, {...valid,phase:'unknown'}, {...valid,primary_call_id:''}, {...valid,evaluation_id:' '}, {...valid,model_stage_id:17}, {...valid,provider_tokens:0}, {...valid,model_stage_id:'x'.repeat(129)}];
+ try {
+  for(const value of invalid){
+   assert.throws(()=>host.send('observe',{},value),TypeError);
+   assert.throws(()=>host.sendPresented('observe',{}, {text:()=>{},image:()=>{}},value),TypeError);
+   assert.equal(host.state().attempts,0);
+  }
+  await host.send('observe',{},valid);
+  const rows=(await readFile(join(dir,'host-events.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);
+  assert.equal(rows.length,2);assert.equal(host.state().attempts,1);
+  rows.forEach(row=>assert.deepEqual(row.caller_attribution,valid));
+ }finally{await host.close();}
+});

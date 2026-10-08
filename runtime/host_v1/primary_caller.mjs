@@ -32,6 +32,11 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
     }
     return meta;
   }
+  function snapshotMethodArguments(values) {
+    if (stopped) throw Error('trial stopped: ' + stopped);
+    try { return structuredClone(values); }
+    catch (error) { stop('primary method argument snapshot failure'); throw error; }
+  }
   function inputArguments(values) {
     const [alias, offset, interaction, tail] = values;
     if (route !== 'guarded-local' || values.length !== 4 ||
@@ -51,9 +56,11 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
   const caller = {
     state: () => ({ stopped }),
     async input(...values) {
+      values = snapshotMethodArguments(values);
       return caller.call('interface_guarded_input', inputArguments(values));
     },
     async inputWithFeedback(...values) {
+      values = snapshotMethodArguments(values);
       let policy;
       try { policy = structuredClone(values[4]); }
       catch (error) { stop('invalid primary feedback policy'); throw error; }
@@ -80,9 +87,10 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
       return caller.call('interface_guarded_review_window', { window_id: reviewWindowId });
     },
     async mint(...values) {
+      values = snapshotMethodArguments(values);
       const [alias, sourceSequence, point, regionSize] = values;
       const pair = value => Array.isArray(value) && value.length === 2 &&
-        value.every(Number.isSafeInteger);
+        Array.from(value).every(Number.isSafeInteger);
       if (route !== 'guarded-local' || values.length !== 4 ||
           typeof alias !== 'string' || !alias.trim() ||
           !Number.isSafeInteger(sourceSequence) || sourceSequence < 1 ||
@@ -96,6 +104,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
       });
     },
     async mintMany(...values) {
+      values = snapshotMethodArguments(values);
       const [sourceSequence, references] = values;
       const pair = value => Array.isArray(value) && value.length === 2 &&
         Array.from(value).every(Number.isSafeInteger);
@@ -132,6 +141,10 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
         stop('unavailable tool ' + tool);
         throw Error(stopped); // Local rejection before host dispatch.
       }
+      // Validate the result against the same arguments admitted for this call.
+      // Presentation callbacks may mutate the caller's original object.
+      try { args = structuredClone(args); }
+      catch (error) { stop('primary request snapshot failure'); throw error; }
       if (tool === 'interface_guarded_input' && args?.interaction !== undefined &&
           !['click', 'keyboard', 'move'].includes(args.interaction)) {
         stop('invalid guarded interaction');
@@ -170,6 +183,7 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
           meta.session?.recovery_required === false && (expected.kind === 'source'
             ? meta.input_dispatched === false && meta.error === expected.error
             : meta.result?.input_dispatched === false && !meta.result.execution &&
+              Array.isArray(meta.result.guard_checks) &&
               meta.result.guard_checks?.length === 1 && meta.result.guard_checks[0].stage === 'before_admission' &&
               meta.result.guard_checks[0].status === 'MISSING' && meta.result.guard_checks[0].reason === expected.reason &&
               meta.result.guard_checks[0].handle === expected.alias);
@@ -193,8 +207,9 @@ export function createPrimaryCaller(host, route, sinks, expectations = [], optio
           const completed = summary ? meta.outcome_summary?.execution_status === 'completed' &&
             meta.outcome_summary.input_release_verified === true && meta.outcome_summary.recovery_required === false &&
             meta.outcome_summary.error === null : meta.status === 'completed';
-          if (!completed || meta.image_status !== 'image' || !releases?.length ||
-              releases.some(r => r.verified !== true || r.keys_down?.length !== 0 || r.buttons_down?.length !== 0)) {
+          if (!completed || meta.image_status !== 'image' || !Array.isArray(releases) || releases.length === 0 ||
+              releases.some(r => r.verified !== true || !Array.isArray(r.keys_down) || r.keys_down.length !== 0 ||
+                !Array.isArray(r.buttons_down) || r.buttons_down.length !== 0)) {
             stop('incomplete input or unverified neutral release');
           }
           if (tool === 'interface_guarded_input' && args?.feedback !== undefined) {

@@ -133,12 +133,12 @@ test('a completed neutral direct result returns unchanged and permits the next c
   assert.equal(caller.state().stopped,null);assert.equal(calls,2);
 });
 
-test('an exception during neutral-release validation blocks later input',async()=>{
+test('an unknown neutral-release container preserves original evidence and blocks later input',async()=>{
   const reply={result:{content:[{type:'text',text:'{"status":"completed","image_status":"image"}'}]}};
-  // A non-array releases object makes outcome validation fail.
+  // A non-array releases object does not prove neutral owned input.
   reply.result.content[0].text='{"status":"completed","image_status":"image","result":{"execution":{"releases":{"length":1}}}}';
   const caller=createPrimaryCaller({sendPresented:async()=>reply},'guarded-local',{});
-  await assert.rejects(caller.call('interface_guarded_input',{alias:'x',interaction:'click'}),TypeError);
+  assert.equal(await caller.call('interface_guarded_input',{alias:'x',interaction:'click'}),reply);
   assert.ok(caller.state().stopped);
   await assert.rejects(caller.call('interface_guarded_input',{alias:'x',interaction:'click'}),/stopped/);
 });
@@ -336,3 +336,10 @@ test('retained uncertain relay response returns unchanged and stops subsequent d
  assert.equal(await caller.call('interface_close',{}),closed);
  assert.equal(calls,2);assert.ok(caller.state().stopped);
 });
+// Keep request snapshot regressions in the existing local/CI caller entry.
+import './test_primary_request_snapshot.mjs';
+// Typed release evidence is exercised through the same local/CI entry.
+import './test_primary_typed_release.mjs';
+// Declared negative controls require a typed guard array before continuing.
+import './test_primary_control_container.mjs';
+import "./test_primary_method_snapshot.mjs";
