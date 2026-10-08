@@ -60,6 +60,23 @@ class Map01V39CoastTests(unittest.TestCase):
 
         self.assertEqual(controller.reusable_cover([previous]), ([], None, None))
 
+    def test_completed_and_legacy_actions_preserve_authored_cover_reuse(self):
+        cover = [{"action": "strafe_left", "extent": "short"}]
+        validity = [{"signal_id": "health", "critical_health_minimum": 35,
+                     "maximum_health_loss": 12, "max_source_age_ms": 30000}]
+        for decision in (
+            {"iteration": 2, "model_action_discarded": False,
+             "remaining_action_discarded": False,
+             "action": {"state": "active", "next_cover": cover,
+                        "next_cover_validity": validity}},
+            {"iteration": 3, "model_action_discarded": False,
+             "action": {"state": "active", "next_cover": cover,
+                        "next_cover_validity": validity}},
+        ):
+            with self.subTest(iteration=decision["iteration"]):
+                self.assertEqual(controller.reusable_cover([decision]),
+                                 (cover, validity[0], decision["iteration"]))
+
     def test_authored_cover_still_uses_original_guard(self):
         guard = object()
         authored = {"signal_id": "health", "critical_health_minimum": 35,
