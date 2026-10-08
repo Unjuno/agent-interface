@@ -1,5 +1,5 @@
 {
-  "schema": "map01-v39-live-a14-audit-v1",
+  "schema": "map01-v39-live-a14-audit-v2",
   "status": "EXPLORATORY_PROTOCOL_DEVIATION",
   "freeze_source_main": "9d9c42c80f946762e8742ddb2739d07d33db136d",
   "frozen_purpose": "identify startup stage under exact V39 AppServer-initialized, V15 session path; no planner turn or model call",
@@ -74,6 +74,12 @@
     "scorer_refresh_calls_after_control": 1,
     "emit_ns": 258042510940610
   },
+  "protocol_deviation_reasons": {
+    "planner_turns_when_forbidden": true,
+    "declared_diagnostic_source_not_executed": true
+  },
+  "declared_diagnostic_source_sha256": "f3a3ba259cf9b3caeeb1467422c011e3e77f853d6b765df6f6de8e71f4ca7059",
+  "runtime_diagnostic_source_sha256": "096fb9968a412e2c539af708408e5be1bcb408c5ecb53bd2740431fc0ced9e23",
   "runtime_source_hash_mismatches": [],
   "diagnostic_adapter_executed": false,
   "raw_file_count": 370,

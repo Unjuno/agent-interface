@@ -22,6 +22,22 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def classify_protocol_deviation(freeze, adapter, runtime_sources, actual_turn_count):
+    no_turn_expected = "no planner turn or model call" in freeze.get("purpose", "")
+    diagnostic = freeze.get("diagnostic_adapter", {})
+    expected_sha = diagnostic.get("diagnostic_sha256")
+    adapter_path = adapter.get("file", "")
+    runtime_path = adapter_path.removeprefix("research/")
+    actual_sha = runtime_sources.get(runtime_path)
+    reasons = {
+        "planner_turns_when_forbidden": no_turn_expected and actual_turn_count > 0,
+        "declared_diagnostic_source_not_executed": (
+            no_turn_expected and expected_sha is not None and actual_sha != expected_sha
+        ),
+    }
+    return reasons, any(reasons.values()), expected_sha, actual_sha
+
+
 def main() -> int:
     freeze = load_json(ROOT / "ORIGINAL_FREEZE.json")
     report = load_json(RAW / "report.json")
@@ -136,9 +152,10 @@ def main() -> int:
             }
         )
 
-    freeze_expected_no_turn = "no planner turn or model call" in freeze.get("purpose", "")
     actual_turn_count = len(started)
-    protocol_deviation = freeze_expected_no_turn and actual_turn_count > 0
+    protocol_deviation_reasons, protocol_deviation, expected_diagnostic_sha, actual_session_sha = (
+        classify_protocol_deviation(freeze, adapter, runtime_sources, actual_turn_count)
+    )
     score = report.get("score", {})
     decisions_by_iteration = {d["iteration"]: d for d in report["decisions"]}
     recovery_3 = decisions_by_iteration.get(3, {})
@@ -180,7 +197,7 @@ def main() -> int:
         status = "BOUNDED_OBSERVATION"
 
     audit = {
-        "schema": "map01-v39-live-a14-audit-v1",
+        "schema": "map01-v39-live-a14-audit-v2",
         "status": status,
         "freeze_source_main": freeze.get("source_main"),
         "frozen_purpose": freeze.get("purpose"),
@@ -198,6 +215,9 @@ def main() -> int:
             "action": (recovery_4.get("action") or {}).get("commands"),
         },
         "score": score,
+        "protocol_deviation_reasons": protocol_deviation_reasons,
+        "declared_diagnostic_source_sha256": expected_diagnostic_sha,
+        "runtime_diagnostic_source_sha256": actual_session_sha,
         "runtime_source_hash_mismatches": source_mismatches,
         "diagnostic_adapter_executed": adapter["diagnostic_sha256"] is not None
         and runtime_sources.get("doom/session_map01_v12.py") == adapter["diagnostic_sha256"],
