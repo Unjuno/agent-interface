@@ -8,7 +8,7 @@ source_ids = {
 }
 for source, expected in source_ids.items():
     data = source.read_bytes()
-    actual = hashlib.sha1(f"blob {len(data)}\\0".encode() + data).hexdigest()
+    actual = hashlib.sha1(f"blob {len(data)}\0".encode() + data).hexdigest()
     if actual != expected:
         raise RuntimeError(f"frozen source blob mismatch: {source.relative_to(root)}: {actual}")
 sys.path[:0] = [str(root / "research/doom"), str(root / "research/live_control")]
