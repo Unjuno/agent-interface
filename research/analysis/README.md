@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8598 T0 A01 censored opportunity tail regret](tail_regret_censoring_8598_t0_a01_20261008/REPORT.md) — `FAIL_METHOD`, audit integrity PASS: 768 cohorts/24,576 opportunities reconstructed; 10/128 strict IPCW-correct vs 20/128 resolved-only, 768/768 partial-tail coverage and zero false unique ranks. Synthetic host CPU only; no live/product claim.
+
 - [Issue #8592 T0 A03 bounded DPOR validation](bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`: 45,360 exhaustive schedules matched against 217 DPOR representatives; 5/5 auditor rejection controls passed in construction tests. WSLc finite authored-model evidence only; no runtime-speed or live-safety claim. A01/A02 execution STOPs preserved.
 
 - [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 12 finite cases independently reconstructed, 6/6 output mutations rejected; WSLc CPU method evidence only, no human-benefit claim.
@@ -1081,6 +1083,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`switched_dwell_stability_8471_t0_a01_20261008/`](switched_dwell_stability_8471_t0_a01_20261008/)
 - [`symmetry_reduction_6251_t0_host_20261002/`](symmetry_reduction_6251_t0_host_20261002/)
 - [`system_carbon_rebound_8421_t0_20261008/`](system_carbon_rebound_8421_t0_20261008/)
+- [`tail_regret_censoring_8598_t0_a01_20261008/`](tail_regret_censoring_8598_t0_a01_20261008/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_memory_retrieval_7166_t0_host_a03_20261004/`](task_memory_retrieval_7166_t0_host_a03_20261004/)
