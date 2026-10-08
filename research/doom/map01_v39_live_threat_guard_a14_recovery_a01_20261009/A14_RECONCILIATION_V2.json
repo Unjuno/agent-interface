@@ -42,25 +42,36 @@
       {
         "decision_iteration": 1,
         "action_fingerprint": "3e7ad755fef23df987e5ebca06c57fc1caa2dba4cf3eb977d499900759e9eea4",
+        "rejection_sequence": 44,
         "source_health": 97,
         "fresh_health": 85,
         "maximum_allowed_decrease": 10,
         "action_admissible": false,
         "requires_new_decision": true,
-        "outcome": "revoked_after_executor_acceptance"
+        "outcome": "revoked_after_executor_acceptance",
+        "fresh_admitted_followup_iterations_within_two": [
+          3
+        ],
+        "fresh_admitted_followup_within_two": true
       },
       {
         "decision_iteration": 2,
         "action_fingerprint": "5d4d49020001d415b73a350efc051ec8d408f405fdebc130b23411ae0ee2e3e8",
+        "rejection_sequence": 65,
         "source_health": 85,
         "fresh_health": 70,
         "maximum_allowed_decrease": 8,
         "action_admissible": false,
         "requires_new_decision": true,
-        "outcome": "rejected_before_executor_admission"
+        "outcome": "rejected_before_executor_admission",
+        "fresh_admitted_followup_iterations_within_two": [
+          3,
+          4
+        ],
+        "fresh_admitted_followup_within_two": true
       }
     ],
-    "interpretation": "These are action-validity max-decrease predicate rejections, not the preregistered policy hard-minimum recovery trigger. One action was revoked after executor acceptance; a second was rejected before executor admission. Both crossed their authored health decrease bound."
+    "interpretation": "These are action-validity max-decrease predicate rejections, not the preregistered policy hard-minimum recovery trigger. One action was revoked after executor acceptance; a second was rejected before executor admission. Both crossed their authored health decrease bound. Each was followed by an admitted plan on a fresh observation within two later decisions; this is post-hoc and not the preregistered recovery endpoint."
   },
   "scope": "Post-hoc reconciliation only; no replay, retry, or change to frozen audit outputs."
 }

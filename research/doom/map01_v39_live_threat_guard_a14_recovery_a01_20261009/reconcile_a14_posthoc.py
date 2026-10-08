@@ -51,6 +51,7 @@ def collect_action_health_rejections(report: dict) -> list[dict]:
                 row = {
                     "decision_iteration": iteration,
                     "action_fingerprint": fingerprint,
+                    "rejection_sequence": snapshot.get("sequence"),
                     "source_health": source_health,
                     "fresh_health": fresh_health,
                     "maximum_allowed_decrease": expected,
@@ -74,12 +75,26 @@ def collect_action_health_rejections(report: dict) -> list[dict]:
             for child in value:
                 walk(child, iteration, decision)
 
-    for index, decision in enumerate(report.get("decisions", [])):
+    decisions = report.get("decisions", [])
+    for decision in decisions:
         iteration = decision.get("iteration")
         if type(iteration) is not int:
             raise ValueError("decision iteration missing")
         walk(decision, iteration, decision)
-    return sorted(unique.values(), key=lambda row: row["decision_iteration"])
+    rows = sorted(unique.values(), key=lambda row: row["decision_iteration"])
+    for row in rows:
+        followups = [decision for decision in decisions
+                     if type(decision.get("iteration")) is int and
+                     row["decision_iteration"] < decision["iteration"] <= row["decision_iteration"] + 2 and
+                     type(decision.get("fresh_sequence_at_plan")) is int and
+                     type(row["rejection_sequence"]) is int and
+                     decision["fresh_sequence_at_plan"] > row["rejection_sequence"] and
+                     decision.get("model_action_discarded") is not True and
+                     (decision.get("final_action_admission") or {}).get("status") == "INPUT_ADMITTED"]
+        row["fresh_admitted_followup_iterations_within_two"] = [
+            decision["iteration"] for decision in followups]
+        row["fresh_admitted_followup_within_two"] = bool(followups)
+    return rows
 
 
 def build(report: dict, report_sha256: str) -> dict:
@@ -114,7 +129,9 @@ def build(report: dict, report_sha256: str) -> dict:
                 "not the preregistered policy hard-minimum recovery trigger. "
                 "One action was revoked after executor acceptance; a second "
                 "was rejected before executor admission. Both crossed their "
-                "authored health decrease bound."
+                "authored health decrease bound. Each was followed by an "
+                "admitted plan on a fresh observation within two later decisions; "
+                "this is post-hoc and not the preregistered recovery endpoint."
             ),
         },
         "scope": "Post-hoc reconciliation only; no replay, retry, or change to frozen audit outputs.",
