@@ -1,10 +1,72 @@
-A01 focused test output (helper extracted from the exact PR branch source):
+A01 focused test output (exact helper plus integration ordering check against the frozen V39 controller source, with the PR change applied):
+test_completed_future_drain_is_wired_before_answer_read ... ok
 test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
 test_queued_hard_crossing_precedes_completed_answer ... ok
 test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
 
-Ran 3 tests in 0.000s
+Ran 4 tests in 0.007s
 OK
 
-The initial standalone harness failure is retained separately at ../INITIAL_TEST_FAILURE.txt. It failed before candidate tests due to a literal backslash-n written between Python statements; the corrected harness ran the same three tests.
+The initial standalone harness failure is retained separately at ../INITIAL_TEST_FAILURE.txt. It failed before candidate tests due to a literal backslash-n written between Python statements; the corrected harness ran the focused suite.
+
+Current-main retest (2026-10-08):
+GitHub main commit: a537c80de21ba24d774fb332e34fcd415db51b7d
+Controller Git blob: f7b66279d87ebc3704ccef1b6a5ce646611c890b
+Original main regression test Git blob: af01126e613c6b1c51e218cab6f199eb56e57efe
+Proposed PR regression test Git blob: 9136d705f1f2e871c7c0b35ff0a4e3931fd9249a
+Direct command `python -B -m unittest -v test_map01_v39_pending_observation_drain.py` failed before collection because the scratch directory lacked map01_stagnation_v1. This is an environment/import failure, not a test assertion result.
+The original main regression test file was run with the exact drain_pending_observation_events AST extracted from the frozen main controller source; 4/4 tests passed in that initial mainline harness. This exercises the exact production helper and source-order assertion, but does not import the complete controller module.
+
+Current-main snapshot-boundary extension (2026-10-08):
+test_completed_future_drain_is_wired_before_answer_read ... ok
+test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
+test_queued_hard_crossing_precedes_completed_answer ... ok
+test_snapshot_drain_leaves_events_arriving_after_entry_queued ... ok
+test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
+
+Ran 5 tests in 0.000s
+OK
+The snapshot test enqueues a second event from the observation callback and verifies the helper processes only the initial backlog, leaving the new row queued.
+
+Full controller module import with pinned dependencies (2026-10-08):
+The initial empty scratch import failed on missing map01_stagnation_v1 before collection. The dependency fixture was then populated with current-main files whose Git blob IDs are recorded in RESULT.json; local Git blob IDs matched the GitHub API values.
+Command: python -B -m unittest -v test_map01_v39_pending_observation_drain.py
+test_completed_future_drain_is_wired_before_answer_read ... ok
+test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
+test_queued_hard_crossing_precedes_completed_answer ... ok
+test_snapshot_drain_leaves_events_arriving_after_entry_queued ... ok
+test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
+
+Ran 5 tests in 0.468s
+OK
+This run imported the complete controller module and its pinned dependencies. No runtime/game session was started.
+
+Full controller module import after paired-monitor test (2026-10-08):
+Controller blob f7b66279d87ebc3704ccef1b6a5ce646611c890b; proposed regression test blob 1ba3950be3b5cb9a6bf4d0e5b5c308a285f0a44b.
+Command: python -B -m unittest -v test_map01_v39_pending_observation_drain.py
+test_completed_future_drain_is_wired_before_answer_read ... ok
+test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
+test_production_paired_monitor_invalidates_queued_typed_health_crossing ... ok
+test_queued_hard_crossing_precedes_completed_answer ... ok
+test_snapshot_drain_leaves_events_arriving_after_entry_queued ... ok
+test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
+
+Ran 6 tests in 0.001s
+OK
+The production DoomCoverSignalPairMonitor processed the typed health/ammo row through the production drain and surfaced the hard health crossing. No runtime or game session was started.
+
+Full controller module import after soft-change boundary test (2026-10-08):
+Controller blob f7b66279d87ebc3704ccef1b6a5ce646611c890b; proposed regression test blob 604a4d137499508770e25ffa49efeea4780bdfb2.
+Command: python -B -m unittest -v test_map01_v39_pending_observation_drain.py
+test_completed_future_drain_is_wired_before_answer_read ... ok
+test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
+test_production_monitor_preserves_cover_on_soft_typed_health_change ... ok
+test_production_paired_monitor_invalidates_queued_typed_health_crossing ... ok
+test_queued_hard_crossing_precedes_completed_answer ... ok
+test_snapshot_drain_leaves_events_arriving_after_entry_queued ... ok
+test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
+
+Ran 7 tests in 0.001s
+OK
+Observed test boundary: health 100 to 95 above hard minimum 80 produces no policy invalidation; soft context is retained, and a typed-only row does not set the screenshot latest field. This is a contract behavior, not evidence that the cover is unsafe.
 
