@@ -46,6 +46,20 @@ class Map01V39CoastTests(unittest.TestCase):
         # unauthored coast publishes no policy event that can interrupt.
         self.assertEqual(default_receipt["effective"]["hard_minimum"], 85)
 
+    def test_stale_partial_action_does_not_reuse_discarded_remaining_cover(self):
+        previous = {"iteration": 1, "model_action_discarded": False,
+                    "remaining_action_discarded": True,
+                    "executor_preacceptance_rejection": {
+                        "reason": "latest observation sequence required before input"},
+                    "action": {"state": "active", "next_cover": [
+                        {"action": "fire", "extent": "short"}],
+                        "next_cover_validity": [{"signal_id": "health",
+                            "critical_health_minimum": 35,
+                            "maximum_health_loss": 12,
+                            "max_source_age_ms": 30000}]}}
+
+        self.assertEqual(controller.reusable_cover([previous]), ([], None, None))
+
     def test_authored_cover_still_uses_original_guard(self):
         guard = object()
         authored = {"signal_id": "health", "critical_health_minimum": 35,

@@ -55,6 +55,7 @@ MAX_AUTHORED_HEALTH_LOSS = 20
 
 def reusable_cover(decisions):
     if (decisions and not decisions[-1].get("model_action_discarded") and
+            not decisions[-1].get("remaining_action_discarded", False) and
             decisions[-1]["action"]["state"] == "active"):
         validity = decisions[-1]["action"]["next_cover_validity"]
         return (decisions[-1]["action"]["next_cover"], validity[0],
