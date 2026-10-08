@@ -1,0 +1,5 @@
+## Pre-run construction review — retained correction
+
+The initial A02 frozen source commit used N=4 and randomized one unit from each pair to each route. Read-only source review before candidate execution found that route B's first pair had different potential outcomes across its two units. Therefore the complete-ascertainment negative control could show finite assignment variation, contradicting the freeze's requirement of zero rank reversals. This is a design/construction defect found before any candidate invocation; no result was generated.
+
+The original candidate.js and audit.js remain in this branch's commit history. The corrected current source uses N=8, four randomized pairs, and identical potential outcomes within each pair for both routes. This makes the complete-ascertainment route contrast invariant to the blocked assignment while preserving binary outcomes and a nonzero true route difference. The corrected freeze and source are committed before the distinct A02 candidate invocation. This correction is not scientific evidence and does not consume or reclassify A01.
