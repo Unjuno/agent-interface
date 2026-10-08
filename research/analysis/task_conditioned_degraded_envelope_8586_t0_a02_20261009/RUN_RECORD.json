@@ -1,0 +1,28 @@
+{
+  "allocation_id": "TDCE-8586-T0-A02-20261009",
+  "issue": 8586,
+  "main_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "freeze": "FREEZE.json",
+  "candidate_command": "python3 -B candidate.py model.json results/candidate.raw.json",
+  "candidate_invocations": 1,
+  "candidate_exit": 0,
+  "candidate_stdout": "results/candidate.stdout.log",
+  "candidate_stderr": "results/candidate.stderr.log",
+  "raw": "results/candidate.raw.json",
+  "auditor_command": "python3 -B auditor.py model.json results/candidate.raw.json results/audit.json",
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "auditor_stdout": "results/auditor.stdout.log",
+  "auditor_stderr": "results/auditor.stderr.log",
+  "audit": "results/audit.json",
+  "construction": {
+    "normal": "results/construction.normal.log",
+    "optimized": "results/construction.optimized.log",
+    "tests_per_mode": 15,
+    "result": "PASS"
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "retry_count": 0,
+  "runtime_boundary": "CPython 3.14.5, macOS arm64, standard library only; no container, GUI, model, user data, OS input, external effect, or shared runtime",
+  "scope": "Frozen authored finite model only; no live control, application, safety, latency, reliability, or product claim. A01 immutable and not pooled."
+}

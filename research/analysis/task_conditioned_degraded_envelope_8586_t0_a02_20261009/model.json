@@ -1,0 +1,79 @@
+{
+  "schema": "TDCE_TASK_LOCAL_MODEL_V2",
+  "universal_hard_gates": ["target_scope", "freshness", "authority", "actuation_available"],
+  "contexts": [
+    "valid",
+    "unknown_cause",
+    "stale_configuration",
+    "compensator_missing",
+    "task_intent_changed",
+    "degraded_allowance_expired"
+  ],
+  "context_contract": {
+    "unknown_cause": "STOP_UNKNOWN",
+    "stale_configuration": "STOP_UNKNOWN",
+    "task_intent_changed": "STOP_UNKNOWN",
+    "compensator_missing": "STOP_UNKNOWN when task requires a compensator; otherwise not applicable",
+    "degraded_allowance_expired": "STOP_UNKNOWN when a task-relevant primary capability is lost; otherwise not applicable"
+  },
+  "tasks": [
+    {
+      "task_id": "single_toggle",
+      "capabilities": ["semantic_target", "native_effect_check", "pixel_target", "visual_diff"],
+      "obligations": ["correct_target", "exactly_once", "requested_state"],
+      "compensator_required": true,
+      "hard_gates": ["independent_effect"],
+      "primary_route": ["semantic_target", "native_effect_check"],
+      "fallbacks": {"semantic_target": "pixel_target", "native_effect_check": "visual_diff"},
+      "routes": [
+        {"route_id": "toggle_semantic_native", "capabilities": ["semantic_target", "native_effect_check"], "proves": ["correct_target", "exactly_once", "requested_state"]},
+        {"route_id": "toggle_pixel_native", "capabilities": ["pixel_target", "native_effect_check"], "proves": ["correct_target", "exactly_once", "requested_state"]},
+        {"route_id": "toggle_semantic_visual", "capabilities": ["semantic_target", "visual_diff"], "proves": ["correct_target", "exactly_once", "requested_state"]},
+        {"route_id": "toggle_pixel_visual", "capabilities": ["pixel_target", "visual_diff"], "proves": ["correct_target", "exactly_once", "requested_state"]}
+      ]
+    },
+    {
+      "task_id": "preserve_sibling_edit",
+      "capabilities": ["semantic_target", "native_effect_check", "pixel_target", "visual_diff"],
+      "obligations": ["correct_target", "persisted_after_reopen", "sibling_unchanged", "exactly_once"],
+      "compensator_required": true,
+      "hard_gates": ["independent_effect"],
+      "primary_route": ["semantic_target", "native_effect_check"],
+      "fallbacks": {"semantic_target": "pixel_target", "native_effect_check": "visual_diff"},
+      "routes": [
+        {"route_id": "preserve_semantic_native", "capabilities": ["semantic_target", "native_effect_check"], "proves": ["correct_target", "persisted_after_reopen", "sibling_unchanged", "exactly_once"]},
+        {"route_id": "preserve_pixel_native", "capabilities": ["pixel_target", "native_effect_check"], "proves": ["correct_target", "persisted_after_reopen", "sibling_unchanged", "exactly_once"]},
+        {"route_id": "preserve_semantic_visual", "capabilities": ["semantic_target", "visual_diff"], "proves": ["correct_target", "persisted_after_reopen", "sibling_unchanged", "exactly_once"]},
+        {"route_id": "preserve_pixel_visual", "capabilities": ["pixel_target", "visual_diff"], "proves": ["correct_target", "persisted_after_reopen", "exactly_once"]}
+      ]
+    },
+    {
+      "task_id": "read_one_value",
+      "capabilities": ["semantic_target", "pixel_target", "read_action"],
+      "obligations": ["correct_target", "value_transcribed"],
+      "compensator_required": false,
+      "hard_gates": [],
+      "primary_route": ["semantic_target", "read_action"],
+      "fallbacks": {"semantic_target": "pixel_target"},
+      "routes": [
+        {"route_id": "read_semantic", "capabilities": ["semantic_target", "read_action"], "proves": ["correct_target", "value_transcribed"]},
+        {"route_id": "read_pixel", "capabilities": ["pixel_target", "read_action"], "proves": ["correct_target", "value_transcribed"]}
+      ]
+    },
+    {
+      "task_id": "focused_window_action",
+      "capabilities": ["window_identity", "focus_stability", "pixel_target", "visual_diff"],
+      "obligations": ["correct_target", "active_window_unchanged", "exactly_once"],
+      "compensator_required": true,
+      "hard_gates": ["independent_effect"],
+      "primary_route": ["window_identity", "focus_stability"],
+      "fallbacks": {"window_identity": "pixel_target", "focus_stability": "visual_diff"},
+      "routes": [
+        {"route_id": "window_identity_stable_focus", "capabilities": ["window_identity", "focus_stability"], "proves": ["correct_target", "active_window_unchanged", "exactly_once"]},
+        {"route_id": "window_identity_visual_check", "capabilities": ["window_identity", "visual_diff"], "proves": ["correct_target", "active_window_unchanged", "exactly_once"]},
+        {"route_id": "pixel_target_stable_focus", "capabilities": ["pixel_target", "focus_stability"], "proves": ["correct_target", "active_window_unchanged", "exactly_once"]},
+        {"route_id": "pixel_visual_only", "capabilities": ["pixel_target", "visual_diff"], "proves": ["correct_target", "exactly_once"]}
+      ]
+    }
+  ]
+}
