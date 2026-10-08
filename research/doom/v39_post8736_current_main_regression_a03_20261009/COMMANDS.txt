@@ -1,0 +1,9 @@
+Frozen current main: ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385
+Runtime: CPython 3.12.14 at /Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3
+Source identity: all 73 paths in PR #8731 SOURCE_CLOSURE.json have matching git blob IDs at the frozen commit; zero missing paths.
+
+PYTHONPATH=research/doom:research/live_control python3.12 -B -m unittest research.doom.test_map01_overlap_controller_v39 research.doom.test_map01_overlap_controller_v39_dual_signal research.doom.test_map01_overlap_controller_v39_cover_terminal research.doom.test_map01_v39_pending_observation_drain research.doom.test_session_map01_v15 research.live_control.test_executor_v13 research.live_control.test_input_owner_v12_explicit_up_cancel
+Result: Ran 107 tests; OK
+
+PYTHONPATH=research/doom:research/live_control python3.12 -B -O -m unittest research.doom.test_map01_overlap_controller_v39 research.doom.test_map01_overlap_controller_v39_dual_signal research.doom.test_map01_overlap_controller_v39_cover_terminal research.doom.test_map01_v39_pending_observation_drain research.doom.test_session_map01_v15 research.live_control.test_executor_v13 research.live_control.test_input_owner_v12_explicit_up_cancel
+Result: Ran 107 tests; OK
