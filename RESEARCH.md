@@ -2410,3 +2410,6 @@ source pins, raw responses, projections, hashes, and first failures are
 preserved; no consumed remote task was rerun for rescue. See the [complete
 archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
 and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).
+# Issue #8553 T0 A01 — counterexample-guided recovery refinement (2026-10-08)
+
+The frozen host-CPython candidate and independent auditor each ran once (exit 0; retries 0), reconstructing all five hand-authored finite cases with zero audit errors. CEGAR resolved the safe-separable spurious-loss case using only `p_color` (one predicate versus three in fixed-fine); a planted optimistic false-recovery witness was downgraded to `UNKNOWN`; genuine loss, equivalent aliases, and deadline exhaustion matched their declared verdicts. All 5/5 mutation controls were rejected. Disposition: `PASS_METHOD_SCOPED` for this deterministic synthetic fixture only—not evidence of live GUI state, task recovery, deadlines, runtime benefit, or general efficacy. See [report and frozen raw evidence](research/analysis/counterexample_guided_recovery_refinement_8553_t0_a01_20261008/REPORT.md) and [Issue #8553](https://github.com/Unjuno/agent-interface/issues/8553).
