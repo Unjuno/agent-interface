@@ -59,17 +59,38 @@ def main():
                           row.get("id") == ident]
         transitions = [row for row in events if row.get("event") == "input_release_transition" and
                        row.get("id") == ident]
+        cancel_ns = cancel.get("requested_ns")
+        admission_time_ok = (not admitted_downs or
+                             (type(cancel_ns) is int and all(
+                                 type(row.get("admitted_ns")) is int and
+                                 row["admitted_ns"] <= cancel_ns
+                                 for row in admitted_downs)))
+        admitted_before_cancel = [row for row in admitted_downs
+                                  if type(cancel_ns) is int and
+                                  type(row.get("admitted_ns")) is int and
+                                  row["admitted_ns"] <= cancel_ns]
         terminal_rows = terminals.get(ident, [])
         release_rows = releases.get(ident, [])
         terminal = terminal_rows[0] if len(terminal_rows) == 1 else None
         release_event = release_rows[0] if len(release_rows) == 1 else None
         has_input = bool(admitted_downs)
-        admitted_keys = [row.get("key") for row in admitted_downs]
-        transition_keys = [row.get("key") for row in transitions]
+        admitted_identities = [
+            (row.get("step"), row.get("key"), row.get("intent_token"))
+            for row in admitted_downs]
+        transition_identities = [
+            (row.get("step"), row.get("key"), row.get("intent_token"))
+            for row in transitions]
+        identity_fields_ok = all(
+            type(step) is int and isinstance(key, str) and bool(key) and
+            isinstance(token, str) and bool(token)
+            for step, key, token in admitted_identities + transition_identities)
+        admitted_identity_counts = Counter(admitted_identities)
+        transition_identity_counts = Counter(transition_identities)
+        identities_unique = (all(count == 1 for count in admitted_identity_counts.values()) and
+                             all(count == 1 for count in transition_identity_counts.values()))
         per_key_complete = (bool(transitions) and
-                            all(isinstance(key, str) and key for key in admitted_keys) and
-                            all(isinstance(key, str) and key for key in transition_keys) and
-                            Counter(admitted_keys) == Counter(transition_keys) and
+                            identity_fields_ok and identities_unique and
+                            admitted_identity_counts == transition_identity_counts and
                             all(row.get("release_batch_complete") is True and
                                 row.get("owner_thread_keyup_verified") is True
                                 for row in transitions))
@@ -77,11 +98,11 @@ def main():
         custody_ok = (ident is not None and cancel_counts[ident] == 1 and
                       cancel.get("matched") is True and len(terminal_rows) == 1 and
                       len(release_rows) <= 1 and terminal is not None and
-                      empty_release(terminal) and accounted and
+                      empty_release(terminal) and admission_time_ok and accounted and
                       ((release_event is not None and empty_release({"release": release_event.get("owner_release")}))
                        if has_input else release_event is None))
         rows.append({"id": ident, "matched": cancel.get("matched"),
-                     "input_admitted_before_cancel": len(admitted_downs),
+                     "input_admitted_before_cancel": len(admitted_before_cancel),
                      "per_key_release_transitions": len(transitions),
                      "input_released_event_present": bool(release_rows),
                      "verified_empty_terminal": empty_release(terminal or {}),
