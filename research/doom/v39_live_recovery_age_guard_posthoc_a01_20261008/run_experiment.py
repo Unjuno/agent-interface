@@ -55,6 +55,10 @@ def run():
         crossing_health = evaluate(case, "health", case["health_source"],
                                    case["health_hard_minimum"] - 1,
                                    case["health_hard_minimum"], 30000, age)
+        expired_crossing_health = evaluate(
+            case, "health", case["health_source"],
+            case["health_hard_minimum"] - 1,
+            case["health_hard_minimum"], age_cap, age)
         rows.append({
             "iteration": case["iteration"],
             "observed_age_ms": age,
@@ -72,14 +76,20 @@ def run():
             "health_below_hard_minimum_age_cap_30000ms": {
                 "status": crossing_health["status"],
                 "reason": crossing_health["reason"]},
+            "health_below_hard_minimum_while_expired": {
+                "status": expired_crossing_health["status"],
+                "reason": expired_crossing_health["reason"],
+                "requires_new_decision": expired_crossing_health["requires_new_decision"],
+                "keep_existing_policy": expired_crossing_health["keep_existing_policy"]},
         })
     return {"format": "v39-age-guard-posthoc-result-v1",
             "classification": "OFFLINE_POSTHOC_CHARACTERIZATION",
             "cases": rows,
-            "interpretation": "A14's two observed invalidations classify as source expiry before a hard health crossing. With the age cap raised solely for counterfactual isolation, same-sample health remains unchanged and ammo is soft-changed; an explicitly synthesized health value below the frozen hard minimum is hard-invalidated.",
+            "interpretation": "A14's two observed invalidations classify as source expiry before a hard health crossing. With the age cap raised solely for counterfactual isolation, same-sample health remains unchanged and ammo is soft-changed; an explicitly synthesized health value below the frozen hard minimum is hard-invalidated. When that below-floor value is paired with an expired age, status remains UNKNOWN/source_expired, but the guard still requires a new decision and does not keep the existing policy.",
             "limitations": [
                 "The 30000 ms cap is a diagnostic counterfactual, not a live setting recommendation.",
                 "The synthesized health crossing is not an observed A14 event.",
+                "The expired-plus-below-floor combination is a synthetic guard input, not an observed A14 event.",
                 "This establishes guard classification only, not monitor timing, enemy attribution, safe behavior, task effect, or live efficacy.",
                 "A14 remains a protocol-deviation run and its raw record is untouched."]}
 

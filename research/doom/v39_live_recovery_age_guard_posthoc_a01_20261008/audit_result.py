@@ -55,6 +55,30 @@ def check():
         assert row["same_samples_age_cap_30000ms"]["ammo"]["status"] == "SOFT_CHANGED"
         assert row["health_below_hard_minimum_age_cap_30000ms"] == {
             "status": "HARD_INVALIDATED", "reason": "below_hard_minimum"}
+        expired_crossing = ObservableSignalGuard(
+            {"op": "observable_signal_guard", "guard_id": "expired-crossing-audit",
+             "source_sequence": 10, "signal_id": "health",
+             "source_value": case["health_source"],
+             "hard_minimum": case["health_hard_minimum"],
+             "max_source_age_ms": case["authored_max_source_age_ms"],
+             "on_soft_change": "preserve_existing_policy",
+             "on_hard_change": "needs_decision", "on_unknown": "needs_decision"},
+            {"status": "observed", "signal_id": "health",
+             "value": case["health_source"], "sequence": 10,
+             "capture_ns": 1_000_000_000, "binding": binding}, binding).evaluate(
+            {"status": "observed", "signal_id": "health",
+             "value": case["health_hard_minimum"] - 1, "sequence": 11,
+             "capture_ns": 1_000_000_000 + round(case["observed_age_ms"] * 1_000_000),
+             "binding": binding})
+        assert row["health_below_hard_minimum_while_expired"] == {
+            "status": expired_crossing["status"],
+            "reason": expired_crossing["reason"],
+            "requires_new_decision": expired_crossing["requires_new_decision"],
+            "keep_existing_policy": expired_crossing["keep_existing_policy"]}
+        assert expired_crossing["status"] == "UNKNOWN"
+        assert expired_crossing["reason"] == "source_expired"
+        assert expired_crossing["requires_new_decision"] is True
+        assert expired_crossing["keep_existing_policy"] is False
     return {"status": "PASS", "cases": 2,
             "source_sha256": sha(source_path),
             "inputs_sha256": sha(inputs_path),

@@ -20,6 +20,10 @@ class AgeGuardPosthocTests(unittest.TestCase):
                              "SOFT_CHANGED")
             self.assertEqual(row["health_below_hard_minimum_age_cap_30000ms"]["status"],
                              "HARD_INVALIDATED")
+            self.assertEqual(row["health_below_hard_minimum_while_expired"],
+                             {"status": "UNKNOWN", "reason": "source_expired",
+                              "requires_new_decision": True,
+                              "keep_existing_policy": False})
 
     def test_expiry_boundary_is_strictly_greater_than_cap(self):
         binding = {"surface": 1}
