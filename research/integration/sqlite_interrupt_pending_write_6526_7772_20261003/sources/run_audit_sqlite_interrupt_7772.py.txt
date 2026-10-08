@@ -1,0 +1,12 @@
+import datetime,hashlib,json,pathlib,subprocess,sys
+ROOT=pathlib.Path(__file__).resolve().parent;BASE=ROOT/'sqlite-interrupt-7772-c01'
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def pin(p):b=p.read_bytes();return dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+freeze={'frozen_utc':utc(),'source':pin(ROOT/'audit_sqlite_interrupt_7772.py'),'runner':pin(pathlib.Path(__file__)),'inputs':{p.name:pin(p) for p in BASE.iterdir() if p.is_file()},'D':'all three complete SQL/state/error/receipt/capsule sequences, immutable DB images and six effective controls must agree. Otherwise preserve first failure; producer0.'}
+with (BASE/'AUDIT_FREEZE.json').open('x',encoding='utf-8') as f:json.dump(freeze,f,indent=2)
+start=utc()
+with (BASE/'audit.stdout.txt').open('xb') as out,(BASE/'audit.stderr.txt').open('xb') as err:
+    p=subprocess.Popen([sys.executable,str(ROOT/'audit_sqlite_interrupt_7772.py')],stdout=out,stderr=err);code=p.wait(timeout=30)
+receipt={'pid':p.pid,'start_utc':start,'end_utc':utc(),'exit':code,'stdout':pin(BASE/'audit.stdout.txt'),'stderr':pin(BASE/'audit.stderr.txt'),'source_unchanged':pin(ROOT/'audit_sqlite_interrupt_7772.py')==freeze['source'],'all_inputs_unchanged':all(pin(BASE/name)==value for name,value in freeze['inputs'].items())}
+with (BASE/'AUDIT_RECEIPT.json').open('x',encoding='utf-8') as f:json.dump(receipt,f,indent=2)
+print(json.dumps(receipt));sys.exit(code)
