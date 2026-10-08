@@ -1,0 +1,29 @@
+{
+  "decision": "HOLD_CONSTRUCTION",
+  "suites": {
+    "typed_state_feedback": {
+      "exit_code": 1,
+      "ran": 1,
+      "ok": false,
+      "errors": [
+        "map01_stagnation_v1"
+      ]
+    },
+    "owner_admission": {
+      "exit_code": 0,
+      "ran": 3,
+      "ok": true,
+      "errors": []
+    },
+    "perkey_bridge": {
+      "exit_code": 1,
+      "ran": 1,
+      "ok": false,
+      "errors": [
+        "executor_v3"
+      ]
+    }
+  },
+  "reason": "Two frozen suites could not import dependencies absent from the selected-path export; no rerun or repair was performed. Owner admission suite passed 3/3.",
+  "scope": "No runtime/game/X11/live allocation claims."
+}
