@@ -7,6 +7,7 @@
     "wait_returns_policy_invalidation",
     "planner_interrupt_after_completed_answer",
     "matching_cover_terminal",
+    "final_admission_rejected_policy_invalidated",
     "completed_answer_discarded"
   ],
   "status": "PASS_INFLIGHT_OBSERVATION_INVALIDATES_BEFORE_TERMINAL",
@@ -21,6 +22,32 @@
     "verified": true,
     "keys_down": [],
     "buttons_down": []
+  },
+  "final_action_admission": {
+    "schema": "final-action-admission-v2",
+    "status": "REJECTED_POLICY_INVALIDATED",
+    "reason": "health_below_authored_floor",
+    "planner_terminal": {
+      "turn_id": "turn-1",
+      "status": "completed",
+      "answer_eligible": true,
+      "terminal_observed_ns": 300
+    },
+    "policy_invalidation": {
+      "outcome": {
+        "status": "HARD_INVALIDATED",
+        "reason": "health_below_authored_floor",
+        "requires_new_decision": true,
+        "grants_input_authority": false
+      },
+      "outcome_evaluated_ns": 400
+    },
+    "controller_decided_ns": 500,
+    "input_authority_admitted": false,
+    "executor_admission": null,
+    "revocation": null,
+    "grants_input_authority": false,
+    "action_validity": null
   },
   "answer_discarded": true,
   "event_order_assumption": "observation line precedes matching terminal line on the same stdout stream",

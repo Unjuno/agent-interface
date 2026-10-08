@@ -1,7 +1,7 @@
 {
   "schema": "v39-inflight-observation-terminal-order-freeze-v1",
   "experiment": "v39-inflight-observation-terminal-order-a01-20261008",
-  "current_main_commit": "ecc2f79aa7943d94c7486cdd806fb7d75d8fdd8b",
+  "current_main_commit": "8b3e668b078822dccd5a4f7c97c5c6900efd8730",
   "source": {
     "path": "research/doom/map01_overlap_controller_v39.py",
     "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
@@ -10,5 +10,21 @@
     "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
   },
   "hypothesis": "An observation already read by the stdout reader but not yet enqueued when the future-completion snapshot runs will still be processed by the existing wait path, and its hard invalidation will discard the completed answer if it precedes the matching cover terminal in the same event stream.",
-  "scope": "Source-composition construction only; deterministic threaded queue schedule, exact current-main drain helper and nested wait dispatcher, synthetic monitor/future/terminal; no GUI, game, model, Executor, OS input, latency or task effect."
+  "scope": "Source-composition construction only; deterministic threaded queue schedule, exact current-main drain helper and nested wait dispatcher, synthetic monitor/future/terminal; no GUI, game, model, Executor, OS input, latency or task effect.",
+  "additional_sources": [
+    {
+      "local_path": "source/final_action_admission_v1.py",
+      "path": "research/live_control/final_action_admission_v1.py",
+      "git_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "bytes": 6160,
+      "sha256": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d"
+    },
+    {
+      "local_path": "source/final_action_admission_v2.py",
+      "path": "research/live_control/final_action_admission_v2.py",
+      "git_blob": "cbbef5405c29fe56018c24e120b1b87d3c39dd26",
+      "bytes": 6883,
+      "sha256": "16f785d2542335a857163b9afa6c6e84b776b77d62ce36345fc28987a5ca897b"
+    }
+  ]
 }

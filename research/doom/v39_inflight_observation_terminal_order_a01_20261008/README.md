@@ -10,9 +10,9 @@
 
 ## Result
 
-`PASS_INFLIGHT_OBSERVATION_INVALIDATES_BEFORE_TERMINAL`. The future-completion snapshot returned empty while the reader held the already-decoded observation. After release, the exact current-main `wait` dispatch processed the health-60 sample, returned a policy invalidation, and retained the latest observation; the matching cancelled terminal carried verified empty keys/buttons. The harness therefore rejected the completed answer. The source/event audit and focused test pass.
+`PASS_INFLIGHT_OBSERVATION_INVALIDATES_BEFORE_TERMINAL`. The future-completion snapshot returned empty while the reader held the already-decoded observation. After release, the exact current-main `wait` dispatch processed the health-60 sample, returned a policy invalidation, and retained the latest observation; the matching cancelled terminal carried verified empty keys/buttons. The harness therefore rejected the completed answer. The candidate AST-extracts the current-main final-admission helper and decision functions; the source/event audit and focused test pass.
 
-This is the in-flight counterpart to the already-enqueued completed-future regression in PR #8431: it tests the next scheduling boundary after the bounded queue snapshot. It narrows the implementation risk conditionally: with same-stream FIFO delivery, the ordinary wait path covers this event. Before claiming the producer ordering invariant, verify the actual current runtime event writer or collect live traces. No production code changed.
+This is distinct from PR #8431 and PR #8435: those exercise observations already in the reader queue at completion, while this test holds a decoded line outside the queue during the snapshot and delivers it afterward. It tests the next scheduling boundary after the bounded queue snapshot. It narrows the implementation risk conditionally: with same-stream FIFO delivery, the ordinary wait path covers this event. Before claiming the producer ordering invariant, verify the actual current runtime event writer or collect live traces. No production code changed.
 
 ## Reproduction
 
