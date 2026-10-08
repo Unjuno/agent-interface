@@ -1,5 +1,6 @@
 import threading
 import unittest
+from pathlib import Path
 
 from research.live_control.persistent_planner_adapter_v2 import (
     PersistentPlannerAdapter, PlannerProtocolError,
@@ -23,6 +24,12 @@ class FakeClient:
         self.interrupts = []
         self.started = []
         self.release_completion = threading.Event()
+        self.close_calls = []
+        self.fail_interrupt = False
+
+    def close(self, timeout=5):
+        self.close_calls.append(timeout)
+        self.release_completion.set()
 
     def start_thread(self, **params):
         self.thread_count += 1
@@ -46,6 +53,8 @@ class FakeClient:
 
     def interrupt_turn(self, thread_id, turn_id):
         self.interrupts.append((thread_id, turn_id))
+        if self.fail_interrupt:
+            raise OSError("synthetic transport failure")
         return {}
 
 
@@ -70,7 +79,8 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         self.assertTrue(result.answer_eligible)
         self.assertEqual(result.answer, {"action": "forward"})
         self.assertEqual(result.usage, {"inputTokens": 7, "outputTokens": 3})
-        self.assertEqual(client.started[0][1][1], {"type": "localImage", "path": "C:\\frame.png"})
+        self.assertEqual(client.started[0][1][1], {
+            "type": "localImage", "path": str(Path("C:/frame.png"))})
 
     def test_interrupted_turn_never_admits_partial_or_completed_answer(self):
         client = FakeClient([completed()])
@@ -81,6 +91,22 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         self.assertFalse(result.answer_eligible)
         self.assertTrue(result.cancellation_requested)
         self.assertIn("invalidated observation", result.error)
+
+    def test_abort_pending_turn_closes_transport_and_unblocks_waiter(self):
+        client = FakeClient(["WAIT", completed()])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+        box = {}
+        waiter = threading.Thread(target=lambda: box.setdefault("result", planner.await_turn(handle)))
+        waiter.start()
+        client.fail_interrupt = True
+        self.assertEqual(planner.interrupt(handle)["outcome"], "request_error")
+        planner.abort_pending_turn()
+        waiter.join(1)
+        self.assertFalse(waiter.is_alive())
+        self.assertEqual(client.close_calls, [5])
+        self.assertFalse(box["result"].answer_eligible)
+        self.assertTrue(box["result"].cancellation_requested)
 
     def test_duplicate_interrupt_sends_only_one_request(self):
         client = FakeClient([{"status": "interrupted", "items": []}])
