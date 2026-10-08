@@ -1,5 +1,8 @@
 # Analytical research
 
+- [Successor #7452 A02 equal-denominator context × event-order comparison](ordered_context_event_coverage_7452_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent audit matches mixed and exhaustive suites on the same 64 obligations; mixed 32 rows/4 episodes versus exhaustive 128 rows/64 episodes; 4/4 hostile inputs rejected. Synthetic CPU-only evidence; A01's unequal-scope result remains unchanged.
+- [Successor #7452 A01 reset-faithful context × event-order coverage](ordered_context_event_coverage_7452_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent reconstruction validated 4 mixed reset-bounded episodes/32 rows against 128 exhaustive episodes/256 rows; all seeded mutants detected only with the combined suite; host CPU-only, synthetic method evidence.
+
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
 
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
@@ -768,6 +771,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`oracle_boundary_swaps_6230_t0_20261002/`](oracle_boundary_swaps_6230_t0_20261002/)
 - [`oracle_boundary_swaps_6230_t0s2_20261002/`](oracle_boundary_swaps_6230_t0s2_20261002/)
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
+- [`ordered_context_event_coverage_7452_a01_20261008/`](ordered_context_event_coverage_7452_a01_20261008/)
+- [`ordered_context_event_coverage_7452_a02_20261008/`](ordered_context_event_coverage_7452_a02_20261008/)
 - [`ordered_context_history_7452_t0_20261004/`](ordered_context_history_7452_t0_20261004/)
 - [`origin_effect_binding_6500_t0_20261002/`](origin_effect_binding_6500_t0_20261002/)
 - [`owner_keyup_a18_boundary_audit_5156_20261003/`](owner_keyup_a18_boundary_audit_5156_20261003/)
