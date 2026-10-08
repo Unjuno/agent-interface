@@ -43,6 +43,24 @@ test('malformed JSON is refused without invoking exchange or consuming a command
   assert.equal(calls,0);assert.equal(s.rows()[0].status,'refused');assert.equal(s.rows()[0].next_id,1);
   s.input.end('{"id":1}\n');await pending;assert.equal(calls,1);
 });
+test('duplicate JSON members are refused before exchange admission',async()=>{
+  const malformed=[
+    '{"id":1,"id":1,"method":"observe","args":[]}\n',
+    '{"id":1,"\\u0069d":1,"method":"observe","args":[]}\n',
+    '{"id":1,"method":"call","args":["interface_validate",{"program":{"source":"a","\\u0073ource":"b"}}]}\n'
+  ];
+  for(const line of malformed){
+    let calls=0;const s=setup(async()=>{calls++;return {id:1};});
+    const pending=servePrimaryLines(s);s.input.end(line);await pending;
+    assert.equal(calls,0,line);
+    assert.deepEqual(s.rows()[0],{schema:'agent-interface/primary-stdio-v1',status:'refused',
+      operation_invoked:false,next_id:1,error:'SyntaxError: duplicate JSON object member'});
+  }
+  let calls=0;const s=setup(async()=>{calls++;return {id:1};});
+  const pending=servePrimaryLines(s);
+  s.input.end('{"id":1,"method":"observe","args":[{"text":"\\\"id\\\":1,\\\"id\\\":2"}]}\n');
+  await pending;assert.equal(calls,1,'duplicate-looking text inside a JSON string is not a member');
+});
 test('command error reports uncertainty and state without retry',async()=>{
   let calls=0;const s=setup(async()=>{calls++;throw Error('reply write failed after input');});
   const pending=servePrimaryLines(s);s.input.end('{"id":1}\n');await pending;
