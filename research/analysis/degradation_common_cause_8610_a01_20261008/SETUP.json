@@ -1,0 +1,25 @@
+{
+  "historical_setup": {
+    "candidate_cli_construction": "failed: OSError [Errno 28] No space left on device",
+    "auditor_cli_construction": "failed: OSError [Errno 28] No space left on device",
+    "disk_state": "C: had 0 bytes free; no files deleted",
+    "formal_cli_runs": 0
+  },
+  "development_checks": {
+    "host_in_memory_candidate_and_audit": "PASS",
+    "scenario_count": 9,
+    "additional_supported_outcomes": 11,
+    "unsafe_control_rejections": 3,
+    "authority_inflation": 0,
+    "false_effect_claims": 0,
+    "release_obligations_verified": 9,
+    "dispatches": 0,
+    "mutation_controls_rejected": 6
+  },
+  "limitation": "Development checks are not formal frozen-run evidence.",
+  "post_run_review": {
+    "status": "HOLD_PROTOCOL_ARM_MISMATCH",
+    "discovered": "The frozen fixture's three arms differ from the governing Issue #8610 T: binary all-route gating and unsafe silent substitution were used instead of independence-assuming lookup and unknown-dependency fail-closed control.",
+    "action": "Do not edit or rerun the formal allocation; retain hashes, add this correction, and pursue a distinct successor Issue #8622."
+  }
+}
