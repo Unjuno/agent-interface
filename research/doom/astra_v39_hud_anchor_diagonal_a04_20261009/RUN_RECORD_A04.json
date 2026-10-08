@@ -1,0 +1,51 @@
+{
+  "schema": "v39-hud-anchor-diagonal-a04-run-record-v1",
+  "execution_id": "v39-hud-anchor-diagonal-a04-20261009",
+  "candidate_invocations": 1,
+  "candidate_command": "python candidate_a04.py --wad <verified WAD> --git-root .",
+  "candidate_exit": 0,
+  "candidate_result": "results/a04.json",
+  "candidate_summary": {
+    "baseline_frames": 13,
+    "diagonal_cases": 208,
+    "axis_correct": 4,
+    "axis_unknown": 204,
+    "axis_wrong_observed": 0,
+    "square_correct": 208,
+    "square_unknown": 0,
+    "square_wrong_observed": 0,
+    "blank_controls": 13,
+    "square_blank_unknown": 13,
+    "axis_median_ms": 11.5088,
+    "square_median_ms": 34.5726,
+    "axis_p95_ms": 12.7267,
+    "square_p95_ms": 37.1402
+  },
+  "auditors": [
+    {
+      "version": "v1",
+      "invocations": 1,
+      "exit": 1,
+      "disposition": "STOP_BEFORE_RESULT_READ_WRONG_REPOSITORY_ROOT",
+      "raw": "results/audit_v1.*"
+    },
+    {
+      "version": "v2",
+      "invocations": 1,
+      "exit": 0,
+      "disposition": "PASS_AUDIT",
+      "mutation_controls": "5/5",
+      "raw": "results/audit_v2.*"
+    }
+  ],
+  "candidate_rerun_after_audit": false,
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "base_commit": "677e95fce6e5d7357d3c4c16588cdedfa31bfd69",
+  "runtime": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "pillow": "10.2.0",
+    "platform": "Windows"
+  },
+  "scope": "Offline historical frames and synthetic integer translations only; no live-control claim"
+}

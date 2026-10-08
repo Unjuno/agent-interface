@@ -1,0 +1,17 @@
+fatal: not a git repository (or any of the parent directories): .git
+Traceback (most recent call last):
+  File "D:\codex-research\issue59-current-main-cb3fb7\research\doom\astra_v39_hud_anchor_diagonal_a04_20261009\audit_a04.py", line 355, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\codex-research\issue59-current-main-cb3fb7\research\doom\astra_v39_hud_anchor_diagonal_a04_20261009\audit_a04.py", line 288, in main
+    source_bytes = blob(repo, FREEZE["base_commit"], FREEZE["source_freeze_path"])
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\codex-research\issue59-current-main-cb3fb7\research\doom\astra_v39_hud_anchor_diagonal_a04_20261009\audit_a04.py", line 27, in blob
+    return subprocess.check_output(["git", "show", f"{commit}:{path}"], cwd=repo)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'show', '677e95fce6e5d7357d3c4c16588cdedfa31bfd69:research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json']' returned non-zero exit status 128.
