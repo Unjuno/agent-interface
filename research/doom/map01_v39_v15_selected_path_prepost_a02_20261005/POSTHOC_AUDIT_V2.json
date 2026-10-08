@@ -1,0 +1,210 @@
+{
+  "candidate_reruns": 0,
+  "checks": [
+    {
+      "detail": "",
+      "name": "raw_json_parses",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "candidate_exit_zero",
+      "passed": true
+    },
+    {
+      "detail": "bytes=0",
+      "name": "candidate_stderr_empty",
+      "passed": true
+    },
+    {
+      "detail": "v39-v15-selected-path-prepost-a02-raw-v1",
+      "name": "raw_schema",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "selected_v15",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "release_batch_backend_v1",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "executor_v13",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "real_world_claims_false",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "exact_case_order",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_two_up_attempts_65_74",
+      "passed": true
+    },
+    {
+      "detail": "[12, 27, 34]",
+      "name": "normal_no_keymap_query_between_ups",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_one_pre_sample_before_up",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_one_post_sample_after_batch",
+      "passed": true
+    },
+    {
+      "detail": "[1, 4, 6, 9, 18, 22, 23, 24, 25, 33]",
+      "name": "normal_owner_state_sample_precedes_post",
+      "passed": true
+    },
+    {
+      "detail": "[30, 31]",
+      "name": "normal_telemetry_follows_post_sample",
+      "passed": true
+    },
+    {
+      "detail": "['space', 'F8']",
+      "name": "normal_two_filtered_release_rows",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_space_receipt_identity",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_space_server_sync_scope",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_space_post_sample_classification",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_F8_receipt_identity",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_F8_server_sync_scope",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_F8_post_sample_classification",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_suppressed_keycode",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "normal_terminal_cleanup_empty",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_two_up_attempts_65_74",
+      "passed": true
+    },
+    {
+      "detail": "[12, 27, 34]",
+      "name": "lost_space_keyrelease_no_keymap_query_between_ups",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_one_pre_sample_before_up",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_one_post_sample_after_batch",
+      "passed": true
+    },
+    {
+      "detail": "[1, 4, 6, 9, 18, 22, 23, 24, 25, 33]",
+      "name": "lost_space_keyrelease_owner_state_sample_precedes_post",
+      "passed": true
+    },
+    {
+      "detail": "[30, 31]",
+      "name": "lost_space_keyrelease_telemetry_follows_post_sample",
+      "passed": true
+    },
+    {
+      "detail": "['space', 'F8']",
+      "name": "lost_space_keyrelease_two_filtered_release_rows",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_space_receipt_identity",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_space_server_sync_scope",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_space_post_sample_classification",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_F8_receipt_identity",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_F8_server_sync_scope",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_F8_post_sample_classification",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_space_keyrelease_suppressed_keycode",
+      "passed": true
+    },
+    {
+      "detail": "",
+      "name": "lost_release_fails_closed",
+      "passed": true
+    }
+  ],
+  "checks_passed": 39,
+  "checks_total": 39,
+  "failures": [],
+  "frozen_auditor_reruns": 0,
+  "posthoc_auditor_invocations": 1,
+  "raw_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "raw_stdout_sha256": "0336cfa2eeebbe48ad816168d5466938a936fcf0782211b21847df6c20038596",
+  "schema": "v39-v15-selected-path-prepost-a02-posthoc-audit-v2",
+  "scope": "Independent standard-library audit of retained candidate stdout/exit/stderr only. It does not change the frozen auditor v1 FAIL or rerun the candidate. Fake X server state and XSync do not establish physical key state or application consumption; no real X11, live game, threat response, useful feedback, latency, recovery efficacy, or task outcome was tested.",
+  "status": "PASS_RAW_ONLY_POSTHOC_AUDIT_V2"
+}
