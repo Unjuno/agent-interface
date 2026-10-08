@@ -1,0 +1,59 @@
+{
+  "schema": "analogy-rejection-t0-a01-v1",
+  "seed": 850001,
+  "lookup_budget": 1,
+  "context_word_budget": 64,
+  "conditions": ["no_memory", "prose", "structured"],
+  "target_cards": [
+    {"target_id":"T01","versions":{"v1":{"objective":"exact_state"},"v2":{"objective":"throughput"}}},
+    {"target_id":"T02","versions":{"v1":{"observability":"partial"},"v2":{"observability":"full"}}},
+    {"target_id":"T03","versions":{"v1":{"authority":"proposal_only"},"v2":{"authority":"execute"}}},
+    {"target_id":"T04","versions":{"v1":{"reversibility":"irreversible"},"v2":{"reversibility":"reversible"}}},
+    {"target_id":"T05","versions":{"v1":{"recovery":"non_idempotent"}}},
+    {"target_id":"T06","versions":{"v1":{"mechanism":"semantic_relation"}}},
+    {"target_id":"T07","versions":{"v1":{"effect":"idempotent"}}},
+    {"target_id":"T08","versions":{"v1":{"observation":"current_evidence"}}}
+  ],
+  "mappings": [
+    {"candidate_id":"R01","target_id":"T01","relation_family":"objective_transfer","counterexample_id":"CE01","lexical_similarity":0.92,"query_terms":["purpose","throughput","objective"],"boundary_field":"objective","source_value":"throughput","mechanism_edge_present":true},
+    {"candidate_id":"P01","target_id":"T01","relation_family":"exact_state_check","lexical_similarity":0.91,"query_terms":["exact","state","verify"],"boundary_field":"objective","source_value":"exact_state","mechanism_edge_present":true},
+    {"candidate_id":"N01","target_id":"T01","relation_family":"batch_objective","lexical_similarity":0.25,"query_terms":["batch","objective","speed"],"boundary_field":"objective","source_value":"throughput","mechanism_edge_present":true},
+
+    {"candidate_id":"R02","target_id":"T02","relation_family":"observability_transfer","counterexample_id":"CE02","lexical_similarity":0.93,"query_terms":["observation","partial","coverage"],"boundary_field":"observability","source_value":"full","mechanism_edge_present":true},
+    {"candidate_id":"P02","target_id":"T02","relation_family":"partial_state_check","lexical_similarity":0.90,"query_terms":["partial","observation","state"],"boundary_field":"observability","source_value":"partial","mechanism_edge_present":true},
+    {"candidate_id":"N02","target_id":"T02","relation_family":"complete_sensor_analogy","lexical_similarity":0.20,"query_terms":["sensor","coverage","partial"],"boundary_field":"observability","source_value":"full","mechanism_edge_present":true},
+
+    {"candidate_id":"R03","target_id":"T03","relation_family":"authority_transfer","counterexample_id":"CE03","lexical_similarity":0.95,"query_terms":["authority","permission","execution"],"boundary_field":"authority","source_value":"execute","mechanism_edge_present":true},
+    {"candidate_id":"P03","target_id":"T03","relation_family":"proposal_boundary_check","lexical_similarity":0.89,"query_terms":["proposal","permission","review"],"boundary_field":"authority","source_value":"proposal_only","mechanism_edge_present":true},
+    {"candidate_id":"N03","target_id":"T03","relation_family":"delegated_operation","lexical_similarity":0.22,"query_terms":["delegate","authority","execute"],"boundary_field":"authority","source_value":"execute","mechanism_edge_present":true},
+
+    {"candidate_id":"R04","target_id":"T04","relation_family":"rollback_transfer","counterexample_id":"CE04","lexical_similarity":0.94,"query_terms":["rollback","inverse","effect"],"boundary_field":"reversibility","source_value":"reversible","mechanism_edge_present":true},
+    {"candidate_id":"P04","target_id":"T04","relation_family":"reversible_transaction","lexical_similarity":0.90,"query_terms":["transaction","reversible","effect"],"boundary_field":"reversibility","source_value":"irreversible","mechanism_edge_present":true},
+    {"candidate_id":"N04","target_id":"T04","relation_family":"undo_analogy","lexical_similarity":0.18,"query_terms":["undo","rollback","effect"],"boundary_field":"reversibility","source_value":"reversible","mechanism_edge_present":true},
+
+    {"candidate_id":"R05","target_id":"T05","relation_family":"failure_recovery_transfer","counterexample_id":"CE05","lexical_similarity":0.94,"query_terms":["failure","recovery","retry"],"boundary_field":"recovery","source_value":"retry_safe","mechanism_edge_present":true},
+    {"candidate_id":"P05","target_id":"T05","relation_family":"idempotent_recovery","lexical_similarity":0.90,"query_terms":["retry","failure","idempotent"],"boundary_field":"recovery","source_value":"non_idempotent","mechanism_edge_present":true},
+    {"candidate_id":"N05","target_id":"T05","relation_family":"repeat_operation","lexical_similarity":0.15,"query_terms":["repeat","recover","effect"],"boundary_field":"recovery","source_value":"retry_safe","mechanism_edge_present":true},
+
+    {"candidate_id":"R06","target_id":"T06","relation_family":"implementation_only_transfer","counterexample_id":"CE06","lexical_similarity":0.96,"query_terms":["implementation","mechanism","analogy"],"boundary_field":"mechanism","source_value":"named_API_only","mechanism_edge_present":false},
+    {"candidate_id":"P06","target_id":"T06","relation_family":"semantic_mechanism_map","lexical_similarity":0.90,"query_terms":["mechanism","semantic","relation"],"boundary_field":"mechanism","source_value":"semantic_relation","mechanism_edge_present":true},
+    {"candidate_id":"N06","target_id":"T06","relation_family":"library_name_transfer","lexical_similarity":0.12,"query_terms":["library","name","implementation"],"boundary_field":"mechanism","source_value":"named_API_only","mechanism_edge_present":false},
+
+    {"candidate_id":"L07","target_id":"T07","relation_family":"effect_idempotence","lexical_similarity":0.30,"query_terms":["effect","repeat","idempotent"],"boundary_field":"effect","source_value":"idempotent","mechanism_edge_present":true},
+    {"candidate_id":"H07","target_id":"T07","relation_family":"non_idempotent_effect","lexical_similarity":0.91,"query_terms":["effect","idempotent","repeat"],"boundary_field":"effect","source_value":"non_idempotent","mechanism_edge_present":true},
+    {"candidate_id":"V07","target_id":"T07","relation_family":"safe_repeat_effect","lexical_similarity":0.88,"query_terms":["effect","idempotent","verify"],"boundary_field":"effect","source_value":"idempotent","mechanism_edge_present":true},
+
+    {"candidate_id":"L08","target_id":"T08","relation_family":"current_observation","lexical_similarity":0.28,"query_terms":["observation","current","evidence"],"boundary_field":"observation","source_value":"current_evidence","mechanism_edge_present":true},
+    {"candidate_id":"H08","target_id":"T08","relation_family":"stale_observation","lexical_similarity":0.90,"query_terms":["observation","current","stale"],"boundary_field":"observation","source_value":"stale_evidence","mechanism_edge_present":true},
+    {"candidate_id":"V08","target_id":"T08","relation_family":"fresh_observation","lexical_similarity":0.89,"query_terms":["observation","current","fresh"],"boundary_field":"observation","source_value":"current_evidence","mechanism_edge_present":true}
+  ],
+  "rejection_memory": [
+    {"counterexample_id":"CE01","relation_family":"objective_transfer","boundary_field":"objective","source_value":"throughput","rejected_target_value":"exact_state","prose_terms":["purpose","outcome","count"]},
+    {"counterexample_id":"CE02","relation_family":"observability_transfer","boundary_field":"observability","source_value":"full","rejected_target_value":"partial","prose_terms":["visibility","coverage","complete"]},
+    {"counterexample_id":"CE03","relation_family":"authority_transfer","boundary_field":"authority","source_value":"execute","rejected_target_value":"proposal_only","prose_terms":["authority","delegation","execution"]},
+    {"counterexample_id":"CE04","relation_family":"rollback_transfer","boundary_field":"reversibility","source_value":"reversible","rejected_target_value":"irreversible","prose_terms":["reversal","undo","operation"]},
+    {"counterexample_id":"CE05","relation_family":"failure_recovery_transfer","boundary_field":"recovery","source_value":"retry_safe","rejected_target_value":"non_idempotent","prose_terms":["recovery","retry","safe"]},
+    {"counterexample_id":"CE06","relation_family":"implementation_only_transfer","boundary_field":"mechanism","source_value":"named_API_only","rejected_target_value":"semantic_relation","prose_terms":["implementation","mechanism","name"]}
+  ],
+  "change_controls": ["R01","R02","R03","R04"]
+}
