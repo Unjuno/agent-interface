@@ -30,4 +30,4 @@ python -O test_invalidation_replan_composition.py
 python audit_probe.py
 ```
 
-The exact public source snapshot and GitHub main SHA are retained in `FREEZE.json`; the evidence code reads the bundled local source copies when present and otherwise resolves the verified files from the repository checkout. No production file was edited.
+The exact public source snapshot and GitHub main SHA are retained in `FREEZE.json`. All seven frozen source files are bundled beside this README; the test and audit always resolve these immutable copies, so later changes on `main` cannot alter this historical experiment. Their Git blob IDs are checked against `FREEZE.json`, and every package file (including these sources) is covered by `SHA256SUMS.txt`. No production file was edited.

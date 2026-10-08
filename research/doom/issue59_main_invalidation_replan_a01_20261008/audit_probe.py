@@ -74,7 +74,7 @@ for mode in ("normal", "optimized"):
 checks = {}
 for path in sorted(ROOT.rglob("*")):
     if (path.is_file() and "__pycache__" not in path.parts and
-            path.name not in set(expected) | {"SHA256SUMS.txt"}):
+            path.name != "SHA256SUMS.txt"):
         checks[path.relative_to(ROOT).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
 lines = [line.split("  ", 1) for line in (ROOT / "SHA256SUMS.txt").read_text().splitlines()]
 assert {name: digest for digest, name in lines} == checks
