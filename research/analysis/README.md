@@ -986,6 +986,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`retained_row_adjudication_5229_v1/`](retained_row_adjudication_5229_v1/)
 - [`reusable_receipt_session_binding_v1/`](reusable_receipt_session_binding_v1/)
 - [`reusable_receipt_session_binding_v2/`](reusable_receipt_session_binding_v2/)
+- [`reverse_stress_8594_t0_a01_20261008/`](reverse_stress_8594_t0_a01_20261008/)
 - [`reversibility_deadline_frontier_6695_a01_20261003_01a0ff52/`](reversibility_deadline_frontier_6695_a01_20261003_01a0ff52/)
 - [`reversibility_horizon_6695_t0_20261002/`](reversibility_horizon_6695_t0_20261002/)
 - [`revision_timed_cutover_6617_t0_v1/`](revision_timed_cutover_6617_t0_v1/)
