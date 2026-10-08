@@ -26,13 +26,14 @@ not invoked because its required raw input was unavailable.
 
 | Gate | Invocations | Outcome |
 |---|---:|---|
-| Construction tests before freeze | 1 command | PASS, 18/12/6 design and 6/6 synthetic mutants |
+| Construction tests before freeze | 4 commands | 1 initial failure (seeded recurrence control); 3 subsequent passes after the documented pre-freeze correction |
 | Frozen candidate | 1 | exit 0; stdout claims 18; raw unavailable after container exit |
 | Independent auditor | 0 | not invoked; no raw input |
 | Retries / host fallback | 0 | none |
 
-The construction check is not a formal result. `PASS_METHOD_SCOPED`, renewal,
-and history-benefit claims are not established.
+Two additional post-result construction/CI rechecks passed. These tests are not
+formal invocations or independent evidence. `PASS_METHOD_SCOPED`, renewal, and
+history-benefit claims are not established.
 
 ## Runtime evidence
 
