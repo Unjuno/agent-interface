@@ -1,0 +1,3 @@
+# Predicate membership and phantom targets — #8613 A01
+
+**PRE-EXECUTION SOURCE FREEZE**. No formal allocation invoked at this commit. Source and predeclared protocol are held in `FROZEN_SOURCE.tar.xz` (9204 bytes; SHA-256 `9df12e0fbdc32d278c3bafcec6154798602b08b2ae6fdeff69a04fbf310dad32`). It contains `source/*.py`, `PLAN.md`, `FREEZE.json`, `ENVIRONMENT.json` and `SHA256SUMS.txt`. Every file SHA-256 is pinned. Extract with `tar -xJf FROZEN_SOURCE.tar.xz` in a disposable directory. This is a synthetic method study only; do not infer GUI/action/input safety or publish a release. Source and audit fixed before formal; all later results must be additive. Formal command and 77,700 exact cases are in PLAN.
