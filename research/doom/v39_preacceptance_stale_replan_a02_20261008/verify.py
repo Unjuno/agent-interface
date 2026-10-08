@@ -22,7 +22,7 @@ expected = {
     "research/doom/doom_typed_coast_backend_v1.py": "d95d382ee9c234dab652fa8af93b233baa5225a4",
     "research/doom/doom_typed_observation_v1.py": "930e1c78511b57999a0a2176cb94a31a32d166a8",
 }
-assert FREEZE["main_sha"] == "0c9bf746a8bb07564cde3d0c3283af6aff942be0"
+assert FREEZE["main_sha"] == "2a9052efdd155b8cdc173d216a969ea5f64a1ce9"
 assert FREEZE["sources"] == expected
 actual = {name: blob(REPO / name) for name in expected}
 assert actual == expected
