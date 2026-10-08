@@ -884,6 +884,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`protective_local_adaptation_6367_t0_20261004/`](protective_local_adaptation_6367_t0_20261004/)
 - [`provenance_defeasible_obligations_7817_a01_20261005/`](provenance_defeasible_obligations_7817_a01_20261005/)
 - [`provenance_memory_authority_7167_t0_20261004/`](provenance_memory_authority_7167_t0_20261004/)
+- [`psi_work_shedding_8488_t0_a01_20261008/`](psi_work_shedding_8488_t0_a01_20261008/)
 - [`quality_diversity_5908_t1_20261002/`](quality_diversity_5908_t1_20261002/)
 - [`query_version_writer_atomicity_v1/`](query_version_writer_atomicity_v1/)
 - [`quiescent_epoch_binding_5361_t1/`](quiescent_epoch_binding_5361_t1/)
