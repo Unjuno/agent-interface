@@ -1,0 +1,46 @@
+{
+  "schema": "bounded-dpor-freeze-v1",
+  "allocation_id": "DPOR-8592-T0-WSLC-CPU-20261008-A01",
+  "base_main": "9456b1fb55022beb4f8621628980c26c1518a018",
+  "branch": "research/8592-dpor-t0-a01-20261008",
+  "package_path": "research/analysis/bounded_dpor_8592_t0_a01_20261008",
+  "candidate_files": {
+    "candidate.py": "a666ef21fa97c38905b549c93191bf1c5475936a6eaa21c99d8c4785169cf2d1",
+    "input.json": "b97d9b44be6352510d50be71c996211088c1baba341a722539ea00ddeb115559",
+    "run_candidate.py": "8bd5d1a1cebc121ac82747c1d4a5a1b7fe47b698409c9ade5eb4fa957d3222b6",
+    "runner_utils.py": "3a0d927d79b732457fb01ce98d26b1192690ab8b857073a79763ae096ea9d3d4"
+  },
+  "all_files": {
+    "PROTOCOL.md": "4b6386970ed952f43173318f6a754e7945bee13931f1e7203cf14d137cd221f5",
+    "README.md": "cfcc87560c3b1266d28068f1fba2e2414cb510a1af2a14954cb488a036b8a471",
+    "CONSTRUCTION_LOG.md": "88fbe68bd79670a77d1e320a8b2c6e971d35ee11058f70c17cce020786f0eee2",
+    "candidate.py": "a666ef21fa97c38905b549c93191bf1c5475936a6eaa21c99d8c4785169cf2d1",
+    "auditor.py": "0ee4d03bbfe6d2ac8a63cdceb0665336f6456462920f1c6d564093f187a29ee8",
+    "input.json": "b97d9b44be6352510d50be71c996211088c1baba341a722539ea00ddeb115559",
+    "truth.json": "11b344d5c37543fb9fc5b6a65c8f0d4006e6909cb2d0f9482aae1acfa82c9528",
+    "test_candidate.py": "cc69600d4bffa5b9ec171bcaf9685a7eb7420b002cc7d666e35fc275c7318d17",
+    "test_auditor.py": "475dce475716304c527e585cf27701e2d7821513134a7df4c34e66809436afee",
+    "test_runner.py": "fc7a12aa977806faf1f7f4781c428164983633a24ec0d31aac1025c234a2c26e",
+    "runner_utils.py": "3a0d927d79b732457fb01ce98d26b1192690ab8b857073a79763ae096ea9d3d4",
+    "run_candidate.py": "8bd5d1a1cebc121ac82747c1d4a5a1b7fe47b698409c9ade5eb4fa957d3222b6",
+    "run_auditor.py": "4ca6adc100b8f7efdde82d0390128351894fa5797f529654d6e28b18c866cf6c",
+    "CANDIDATE_FREEZE.json": "c9ec462542813e3ba9220180f59a00a7302fe6f7b6715361e05f7be588fdce95"
+  },
+  "runtime": {
+    "wslc_version": "3.0.1.0",
+    "image_tag": "python:3.12-slim",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "image_digest": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_mib_requested": 512,
+    "memory_limit_effective": false
+  },
+  "invocations": {
+    "candidate_max": 1,
+    "auditor_max": 1,
+    "retries": 0
+  }
+}
