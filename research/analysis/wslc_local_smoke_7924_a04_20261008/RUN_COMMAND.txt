@@ -1,0 +1,6 @@
+Pre-freeze receipt-shape smoke (already performed once; not the formal audit):
+wslc run --rm --pull never --network none --cpus 1 --name unjuno-8455-a04-preflight-4864ee82-20261008 --cidfile PREFLIGHT_CID.txt --volume "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-github-mcp-main-2\repo-7924-a04-main-20261008\research\analysis\wslc_local_smoke_7924_a04_20261008:/src:ro" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B preflight_receipt_shapes.py
+
+One formal invocation only, after FREEZE.json is committed and this package directory has no AUDIT.json or AUDITOR_CID.txt:
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --name unjuno-8455-a04-audit-4864ee82-82068b8f21ea --cidfile AUDITOR_CID.txt --volume "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-github-mcp-main-2\repo-7924-a04-main-20261008\research\analysis\wslc_local_smoke_7924_a04_20261008:/src:ro" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B auditor.py
+Then inspect only the exact CID emitted by that invocation once. Do not list containers, invoke Docker, run any A02/A03 script, or rerun after a formal failure. Requested memory does not imply effective enforcement.

@@ -1,5 +1,19 @@
 # Analytical research
 
+- [Issue #8470 compositional gain margin T0 A01](coupled_visual_control_6195_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 exact-rational rows independently reconstructed; 3/3 gain mutations rejected; synthetic CPU method evidence only, no GUI/runtime claim.
+
+- [Issue #8466 source-time expiry across negative-evidence handoff T0 A01](negative_handoff_expiry_5865_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 10 finite logical-time cases reconstructed; sliding TTL accepted the expired C02 receipt, while absolute source-time expiry rejected it; 6/6 mutations rejected. No live cache, clock, task, GUI, or safety claim.
+
+- [Issue #8473 scoped infeasibility feedback T0 A01](scoped_nogood_gui_plan_8473_t0_a01_20261008/STOP.md) — stopped before candidate/auditor because main advanced after freeze; 0/0 formal invocations, no scientific result. A02 is separately frozen on the updated main.
+
+- [Issue #8473 scoped infeasibility feedback T0 A02](scoped_nogood_gui_plan_8473_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 21 runs independently reconstructed, 5/5 mutations rejected; scoped no-goods reduced one duplicate feasibility query in each recovery case while preserving alternatives across generation change and expiry. Synthetic symbolic fixture only.
+
+- [Issue #7650 T0 A01/A02 machine-gate audit chain](crosslingual_visual_injection_7650_t0_a01_20261008/REPORT.md) — Preserve A01's recorded `PASS_MACHINE_GATE_SCOPED` as history; review found it insufficient for row-to-UID binding, which read-only A02 passes with 7/7 metadata controls on the exact raw. Full Issue T0 remains HOLD: no bilingual semantic adjudication or pixel review.
+
+- [Issue #6600 practice-order discriminator T0 A01](faded_demonstration_practice_order_6600_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: fixed-dose blocked/mixed six-task ledgers independently reconstructed; 6/6 mutations rejected. Host-only stdlib method evidence; no participants or learning claim.
+
+- [Issue #8434 disturbance-order correlation T0 A01](disturbance_order_8434_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: held-out route ranking reverses across equal-marginal clustered/block versus alternating schedules; 96 source-bound cases independently reconstructed. Authored finite method fixture only, host-only after container content-store STOP; no real-interface inference.
+
 - [Successor #7452 A02 equal-denominator context × event-order comparison](ordered_context_event_coverage_7452_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent audit matches mixed and exhaustive suites on the same 64 obligations; mixed 32 rows/4 episodes versus exhaustive 128 rows/64 episodes; 4/4 hostile inputs rejected. Synthetic CPU-only evidence; A01's unequal-scope result remains unchanged.
 - [Successor #7452 A01 reset-faithful context × event-order coverage](ordered_context_event_coverage_7452_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent reconstruction validated 4 mixed reset-bounded episodes/32 rows against 128 exhaustive episodes/256 rows; all seeded mutants detected only with the combined suite; host CPU-only, synthetic method evidence.
 
@@ -465,6 +479,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`constraint_elicitation_6380_t0_v1/`](constraint_elicitation_6380_t0_v1/)
 - [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/)
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/)
+- [`context_return_renewal_8432_t0_a01_20261008/`](context_return_renewal_8432_t0_a01_20261008/)
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
 - [`controlled_feedback_8072_a02_20261005/`](controlled_feedback_8072_a02_20261005/)
@@ -476,10 +491,13 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`counterexample_guard_refinement_6645_t0_orbstack_20261003/`](counterexample_guard_refinement_6645_t0_orbstack_20261003/)
 - [`counterexample_guard_refinement_6645_t0b_orbstack_20261003/`](counterexample_guard_refinement_6645_t0b_orbstack_20261003/)
 - [`counterexample_guard_refinement_6645_t0c_orbstack_20261003/`](counterexample_guard_refinement_6645_t0c_orbstack_20261003/)
+- [`coupled_visual_control_6195_t0_a01_20261008/`](coupled_visual_control_6195_t0_a01_20261008/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
 - [`crossed_verdict_repeatability_6222_t0_20261001_01/`](crossed_verdict_repeatability_6222_t0_20261001_01/)
 - [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
+- [`crosslingual_visual_injection_7650_t0_a01_20261008/`](crosslingual_visual_injection_7650_t0_a01_20261008/)
+- [`crosslingual_visual_injection_7650_t0_a02_20261008/`](crosslingual_visual_injection_7650_t0_a02_20261008/)
 - [`cue_triggered_intention_7162_t0_20261004/`](cue_triggered_intention_7162_t0_20261004/)
 - [`cutoff_local_guard_audit_6451_t0_v1/`](cutoff_local_guard_audit_6451_t0_v1/)
 - [`cutoff_local_guard_audit_6451_t0b_orbstack_20261003/`](cutoff_local_guard_audit_6451_t0b_orbstack_20261003/)
@@ -504,6 +522,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`dependency_aware_verifier_quorum_5314_v1/`](dependency_aware_verifier_quorum_5314_v1/)
 - [`desktop_lifecycle_rebind_3190_host_preflight_v1/`](desktop_lifecycle_rebind_3190_host_preflight_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
+- [`disturbance_order_8434_t0_a01_20261008/`](disturbance_order_8434_t0_a01_20261008/)
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
@@ -553,6 +572,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`explanation_dependence_5916_t0_v1/`](explanation_dependence_5916_t0_v1/)
 - [`exposed_success_audit_6367_t0_20261002/`](exposed_success_audit_6367_t0_20261002/)
 - [`faded_demonstration_6600_t0_orbstack_20261002/`](faded_demonstration_6600_t0_orbstack_20261002/)
+- [`faded_demonstration_practice_order_6600_t0_a01_20261008/`](faded_demonstration_practice_order_6600_t0_a01_20261008/)
 - [`failure_detector_5531_async_bound_t6_v1/`](failure_detector_5531_async_bound_t6_v1/)
 - [`feasibility_estimability_7379_t0b_20261004/`](feasibility_estimability_7379_t0b_20261004/)
 - [`feasible_attribution_6100_t0_20261001/`](feasible_attribution_6100_t0_20261001/)
@@ -740,6 +760,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`negative_evidence_delivery_5865_t0a_20261005/`](negative_evidence_delivery_5865_t0a_20261005/)
 - [`negative_evidence_delivery_5865_t0a_a02_20261005/`](negative_evidence_delivery_5865_t0a_a02_20261005/)
 - [`negative_evidence_delivery_5865_t0a_a03_20261005/`](negative_evidence_delivery_5865_t0a_a03_20261005/)
+- [`negative_handoff_expiry_5865_t0_a01_20261008/`](negative_handoff_expiry_5865_t0_a01_20261008/)
 - [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
 - [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`network_adoption_shared_verifier_7741_t0c_20261005/`](network_adoption_shared_verifier_7741_t0c_20261005/)
@@ -931,6 +952,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`schema_equivalence_6210_t0_20261002/`](schema_equivalence_6210_t0_20261002/)
 - [`scope_typed_singleflight_6501_t0_20261002/`](scope_typed_singleflight_6501_t0_20261002/)
 - [`scope_typed_singleflight_6501_t0b_20261002/`](scope_typed_singleflight_6501_t0b_20261002/)
+- [`scoped_infeasibility_backtracking_8473_t0_a01_20261008/`](scoped_infeasibility_backtracking_8473_t0_a01_20261008/)
+- [`scoped_nogood_gui_plan_8473_t0_a01_20261008/`](scoped_nogood_gui_plan_8473_t0_a01_20261008/)
+- [`scoped_nogood_gui_plan_8473_t0_a02_20261008/`](scoped_nogood_gui_plan_8473_t0_a02_20261008/)
 - [`selection_aware_shadow_audit_5681_t0_v1/`](selection_aware_shadow_audit_5681_t0_v1/)
 - [`selection_aware_shadow_audit_5681_t1_v1/`](selection_aware_shadow_audit_5681_t1_v1/)
 - [`selection_aware_verifier_5917_t1_v1/`](selection_aware_verifier_5917_t1_v1/)
@@ -992,6 +1016,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`sunk_cost_artifact_value_6138_t0b_20261002/`](sunk_cost_artifact_value_6138_t0b_20261002/)
 - [`sunk_cost_forward_equivalence_6138_t0_20261002/`](sunk_cost_forward_equivalence_6138_t0_20261002/)
 - [`support_closed_crop_successor_1820_v1/`](support_closed_crop_successor_1820_v1/)
+- [`switched_dwell_stability_8471_t0_a01_20261008/`](switched_dwell_stability_8471_t0_a01_20261008/)
 - [`symmetry_reduction_6251_t0_host_20261002/`](symmetry_reduction_6251_t0_host_20261002/)
 - [`system_carbon_rebound_8421_t0_20261008/`](system_carbon_rebound_8421_t0_20261008/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
@@ -1069,6 +1094,9 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
 - [`wslc_control_plane_6669_t1_20261003/`](wslc_control_plane_6669_t1_20261003/)
 - [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
+- [`wslc_local_smoke_7924_a02_20261008/`](wslc_local_smoke_7924_a02_20261008/)
+- [`wslc_local_smoke_7924_a03_20261008/`](wslc_local_smoke_7924_a03_20261008/)
+- [`wslc_local_smoke_7924_a04_20261008/`](wslc_local_smoke_7924_a04_20261008/)
 - [`wslc_private_session_portability_20261005/`](wslc_private_session_portability_20261005/)
 - [`wslc_receipt_audit_v2_3352_01a10197/`](wslc_receipt_audit_v2_3352_01a10197/)
 - [`wslc_receipt_schema_5309_t8_20261003/`](wslc_receipt_schema_5309_t8_20261003/)

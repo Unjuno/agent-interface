@@ -1,0 +1,99 @@
+{
+  "schema": "scoped-nogood-candidate-input-v1",
+  "policy_order": ["NO_FEEDBACK", "GLOBAL_BLACKLIST", "SCOPED_NOGOOD"],
+  "scenarios": [
+    {
+      "id": "occlusion_rearrangement",
+      "initial_generation": 1,
+      "proposals": [
+        {"id": "direct-1", "tick": 0, "steps": ["click_save"]},
+        {"id": "direct-2", "tick": 1, "steps": ["click_save"]},
+        {"id": "rearrange-then-save", "tick": 2, "steps": ["move_blocker", "click_save"]}
+      ],
+      "checks": {
+        "1|click_save": {"status": "INFEASIBLE", "reason": {"code": "TARGET_OCCLUDED", "target": "save_button", "surface": "window_7", "evidence": "obs_occ_1", "generation": 1, "expires_at": 5}},
+        "1|move_blocker": {"status": "FEASIBLE", "effect": "blocker_moved", "next_generation": 2},
+        "2|click_save": {"status": "FEASIBLE", "effect": "saved"}
+      }
+    },
+    {
+      "id": "focus_recovery",
+      "initial_generation": 4,
+      "proposals": [
+        {"id": "type-now-1", "tick": 0, "steps": ["type_email"]},
+        {"id": "type-now-2", "tick": 1, "steps": ["type_email"]},
+        {"id": "refocus-then-type", "tick": 2, "steps": ["focus_email", "type_email"]}
+      ],
+      "checks": {
+        "4|type_email": {"status": "INFEASIBLE", "reason": {"code": "FOCUS_UNAVAILABLE", "target": "email_field", "surface": "window_9", "evidence": "obs_focus_4", "generation": 4, "expires_at": 5}},
+        "4|focus_email": {"status": "FEASIBLE", "effect": "focus_restored", "next_generation": 5},
+        "5|type_email": {"status": "FEASIBLE", "effect": "text_entered"}
+      }
+    },
+    {
+      "id": "no_alternative",
+      "initial_generation": 8,
+      "proposals": [
+        {"id": "unsupported-1", "tick": 0, "steps": ["invoke_missing_capability"]},
+        {"id": "unsupported-2", "tick": 1, "steps": ["invoke_missing_capability"]}
+      ],
+      "checks": {
+        "8|invoke_missing_capability": {"status": "INFEASIBLE", "reason": {"code": "CAPABILITY_MISSING", "target": "export_action", "surface": "document_app", "evidence": "obs_cap_8", "generation": 8, "expires_at": 5}}
+      }
+    },
+    {
+      "id": "transient_blocker_clears",
+      "initial_generation": 11,
+      "proposals": [
+        {"id": "busy-snapshot", "generation": 11, "tick": 0, "steps": ["click_refresh"]},
+        {"id": "fresh-ready-snapshot", "generation": 12, "tick": 1, "steps": ["click_refresh"]}
+      ],
+      "checks": {
+        "11|click_refresh": {"status": "INFEASIBLE", "reason": {"code": "TRANSIENT_BUSY", "target": "refresh_button", "surface": "window_2", "evidence": "obs_busy_11", "generation": 11, "expires_at": 5}},
+        "12|click_refresh": {"status": "FEASIBLE", "effect": "refreshed"}
+      }
+    },
+    {
+      "id": "constraint_expires",
+      "initial_generation": 13,
+      "proposals": [
+        {"id": "blocked-before-expiry", "tick": 0, "steps": ["click_submit"]},
+        {"id": "same-state-after-expiry", "tick": 3, "steps": ["click_submit"]}
+      ],
+      "checks": {
+        "13|click_submit": {"sequence": [
+          {"status": "INFEASIBLE", "reason": {"code": "TEMPORARY_MODAL", "target": "submit_button", "surface": "window_5", "evidence": "obs_modal_13", "generation": 13, "expires_at": 2}},
+          {"status": "FEASIBLE", "effect": "submitted"}
+        ]}
+      }
+    },
+    {
+      "id": "unknown_then_recheck",
+      "initial_generation": 14,
+      "proposals": [
+        {"id": "unmodeled-first", "tick": 0, "steps": ["open_menu"]},
+        {"id": "recheck-after-unknown", "tick": 1, "steps": ["open_menu"]}
+      ],
+      "checks": {
+        "14|open_menu": {"sequence": [
+          {"status": "UNKNOWN"},
+          {"status": "FEASIBLE", "effect": "menu_opened"}
+        ]}
+      }
+    },
+    {
+      "id": "timeout_then_recheck",
+      "initial_generation": 15,
+      "proposals": [
+        {"id": "timeout-first", "tick": 0, "steps": ["click_open"]},
+        {"id": "recheck-after-timeout", "tick": 1, "steps": ["click_open"]}
+      ],
+      "checks": {
+        "15|click_open": {"sequence": [
+          {"status": "TIMEOUT"},
+          {"status": "FEASIBLE", "effect": "opened"}
+        ]}
+      }
+    }
+  ]
+}

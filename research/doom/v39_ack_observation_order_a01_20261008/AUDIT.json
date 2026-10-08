@@ -1,0 +1,14 @@
+{
+  "schema": "issue59-v39-ack-observation-order-audit-v1",
+  "status": "PASS_ACK_ORDER_SENSITIVE",
+  "frozen_main": "48496b645b1cbf4c4ddea49315972724f020343c",
+  "event_rows": 12,
+  "result_sha256": "c3fd10da37a330e2e34ca0b0d239ba31e2ccba644f6f12e2b28733b559ba89a3",
+  "events_sha256": "fc727b73cb072e16a258f617a6166f7a5f1b440bf8ef71abe5f706ffc25faa84",
+  "checks": {
+    "same_production_wait_helper_both_cases": true,
+    "typed_before_ack_dropped_unmonitored": true,
+    "ack_before_typed_delivered_to_monitor": true,
+    "real_executor_or_input_not_claimed": true
+  }
+}
