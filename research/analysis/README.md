@@ -770,6 +770,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`oracle_boundary_swaps_6230_t0_20261002/`](oracle_boundary_swaps_6230_t0_20261002/)
 - [`oracle_boundary_swaps_6230_t0s2_20261002/`](oracle_boundary_swaps_6230_t0s2_20261002/)
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
+- [`ordered_context_event_coverage_7452_a01_20261008/`](ordered_context_event_coverage_7452_a01_20261008/)
+- [`ordered_context_event_coverage_7452_a02_20261008/`](ordered_context_event_coverage_7452_a02_20261008/)
 - [`ordered_context_history_7452_t0_20261004/`](ordered_context_history_7452_t0_20261004/)
 - [`origin_effect_binding_6500_t0_20261002/`](origin_effect_binding_6500_t0_20261002/)
 - [`owner_keyup_a18_boundary_audit_5156_20261003/`](owner_keyup_a18_boundary_audit_5156_20261003/)
