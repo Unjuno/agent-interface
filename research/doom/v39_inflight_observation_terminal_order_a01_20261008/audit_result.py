@@ -22,6 +22,10 @@ assert result['final_action_admission']['input_authority_admitted'] is False
 assert result['terminal_release']=={'verified':True,'keys_down':[],'buttons_down':[]}
 assert pipeline['status']=='PASS_SOURCE_VERIFIED_OBSERVATION_BEFORE_TERMINAL_FIFO'
 assert pipeline['main_commit']==freeze['current_main_commit']
+candidate_text=(ROOT/'run_candidate.py').read_text(encoding='utf-8')
+assert "n.name=='reader'" in candidate_text
+assert 'incoming.reader_paused.wait(1)' in candidate_text
+assert 'threading.Thread(target=exact_reader)' in candidate_text
 text=(ROOT/freeze['source']['local_path']).read_text(encoding='utf-8')
 tree=ast.parse(text)
 main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')

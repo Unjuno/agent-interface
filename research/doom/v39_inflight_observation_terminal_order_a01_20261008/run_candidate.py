@@ -2,6 +2,7 @@ from __future__ import annotations
 import ast
 import copy
 import hashlib
+import io
 import json
 from pathlib import Path
 import queue
@@ -20,6 +21,20 @@ class PipelineQueue:
     def get_nowait(self): return self.inner.get_nowait()
     def get(self, timeout): return self.inner.get(timeout=timeout)
     def put(self, row): self.inner.put(row)
+
+class GatedQueue(PipelineQueue):
+    def __init__(self):
+        super().__init__()
+        self.reader_paused = threading.Event()
+        self.allow_enqueue = threading.Event()
+        self.pause_once = True
+    def put(self, row):
+        if self.pause_once and row.get('event') == 'observation':
+            self.pause_once = False
+            self.reader_paused.set()
+            if not self.allow_enqueue.wait(2):
+                raise TimeoutError('test did not release reader before enqueue')
+        self.inner.put(row)
 
 class Monitor:
     event_types = {'observation'}
@@ -44,6 +59,7 @@ def source_functions():
     drain=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='drain_pending_observation_events')
     main=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='main')
     wait=next(n for n in ast.walk(main) if isinstance(n,ast.FunctionDef) and n.name=='wait')
+    reader=next(n for n in ast.walk(main) if isinstance(n,ast.FunctionDef) and n.name=='reader')
     drain_ns={'queue':queue}
     drain_mod=ast.fix_missing_locations(ast.Module(body=[drain],type_ignores=[]))
     exec(compile(drain_mod,str(SOURCE),'exec'),drain_ns)
@@ -53,6 +69,11 @@ def source_functions():
     factory_mod=ast.fix_missing_locations(ast.Module(body=[factory],type_ignores=[]))
     wait_ns={'queue':queue,'time':time}
     exec(compile(factory_mod,str(SOURCE),'exec'),wait_ns)
+    reader_factory=ast.parse('def factory(process,incoming,all_events,reader_errors):\n    pass\n').body[0]
+    reader_factory.body=[reader,ast.Return(value=ast.Name(id='reader',ctx=ast.Load()))]
+    reader_mod=ast.fix_missing_locations(ast.Module(body=[reader_factory],type_ignores=[]))
+    reader_ns={'json':json}
+    exec(compile(reader_mod,str(SOURCE),'exec'),reader_ns)
 
     v1_ns={'deepcopy':copy.deepcopy,'SCHEMA':'final-action-admission-v1'}
     funcs(ROOT/'source'/'final_action_admission_v1.py',
@@ -63,29 +84,27 @@ def source_functions():
           {'decide_final_admission'},v2_ns)
     controller_ns={'decide_final_admission':v2_ns['decide_final_admission']}
     funcs(SOURCE,{'final_admission_from_planner_result'},controller_ns)
-    return drain_ns['drain_pending_observation_events'], wait_ns['factory'], controller_ns['final_admission_from_planner_result']
+    return (drain_ns['drain_pending_observation_events'], wait_ns['factory'],
+            controller_ns['final_admission_from_planner_result'], reader_ns['factory'])
 
 def run_scenario():
-    drain,make_wait,final_admission=source_functions()
-    incoming=PipelineQueue(); process=Process(); wait,get_latest=make_wait(process,incoming)
-    monitor=Monitor(); gate=threading.Event(); reader_started=threading.Event()
+    drain,make_wait,final_admission,reader_func=source_functions()
+    incoming=GatedQueue(); process=Process(); wait,get_latest=make_wait(process,incoming)
+    monitor=Monitor()
     observation={'event':'observation','sequence':42,'health':60,'capture_ns':123456}
     terminal={'event':'terminal','id':'cover-7','status':'cancelled',
               'release':{'verified':True,'keys_down':[],'buttons_down':[]}}
-    def reader_pipeline():
-        # Simulates stdout reader after decoding a line but before queue.put.
-        reader_started.set()
-        if not gate.wait(2): raise TimeoutError('test did not release reader')
-        incoming.put(observation)
-        incoming.put(terminal)
-    reader=threading.Thread(target=reader_pipeline)
-    reader.start(); assert reader_started.wait(1)
+    process.stdout=io.StringIO(json.dumps(observation)+'\n'+json.dumps(terminal)+'\n')
+    all_events=[]; reader_errors=[]
+    exact_reader=reader_func(process,incoming,all_events,reader_errors)
+    reader=threading.Thread(target=exact_reader)
+    reader.start(); assert incoming.reader_paused.wait(1)
     result={'events':['planner_future_done','reader_holds_decoded_observation']}
     snapshot=drain(incoming,monitor,'cover-7')
     result['events'].append('bounded_snapshot_empty')
     assert snapshot=={'latest':None,'terminal':None,'invalidation':None},snapshot
     result['events'].append('executor_cancel_sent')
-    gate.set()
+    incoming.allow_enqueue.set()
     boundary=wait(lambda r:r.get('event')=='terminal' and r.get('id')=='cover-7',
                   timeout=2,observation_monitor=monitor)
     result['events'].append('wait_returns_policy_invalidation')
@@ -110,6 +129,8 @@ def run_scenario():
     assert not reader.is_alive()
     assert monitor.seen==[observation]
     assert get_latest()==observation
+    assert reader_errors==[]
+    assert [row['event'] for row in all_events]==['observation','terminal']
     assert terminal_boundary['release']=={'verified':True,'keys_down':[],'buttons_down':[]}
     assert answer_discarded,admission
     result.update({'status':'PASS_INFLIGHT_OBSERVATION_INVALIDATES_BEFORE_TERMINAL',
