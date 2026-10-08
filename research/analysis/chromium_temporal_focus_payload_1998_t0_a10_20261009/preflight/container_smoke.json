@@ -1,0 +1,15 @@
+{
+  "command": [
+    "docker", "run", "--rm", "--pull=never", "--network", "none", "--read-only",
+    "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m", "--cpus=1", "--memory=256m",
+    "--pids-limit=32", "--user", "1000:1000",
+    "--mount", "type=bind,src=/tmp/agent-interface-1998-pillow-a04/research/observation_gating/results/baseline-screen-02/chromium-1101-O0/frames,dst=/inputs,readonly",
+    "node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+    "node", "-e", "const fs=require('node:fs'); console.log(process.version); console.log(fs.statSync('/inputs/36563401256d29715e9ef9b1ceadd4f0764b78712dc9b62d5578283e35e40d06.png').size)"
+  ],
+  "exit": 0,
+  "stdout": "v26.10.0\n26601\n",
+  "stderr": "",
+  "formal_candidate_invocations": 0,
+  "retries": 0
+}
