@@ -21,12 +21,16 @@ class ObservedGameProxy(previous._GameProxy):
         self._sampler.before_external_update(self)
         if tics != 1 or update_state is not True:
             raise ValueError('V16 requires one requested tic with state update')
-        before = int(self._inner.get_episode_time())
+        before = self._inner.get_episode_time()
+        if type(before) is not int or before < 0:
+            raise ValueError('invalid pre-update episode tic')
         started = self._sampler.clock_ns()
         try:
             result = self._inner.advance_action(tics, update_state)
             returned = self._sampler.clock_ns()
-            after = int(self._inner.get_episode_time())
+            after = self._inner.get_episode_time()
+            if type(after) is not int or after < 0:
+                raise ValueError('invalid post-update episode tic')
             self._sampler.observe_external_update(self, before, after, started, returned)
             return result
         except BaseException as error:
