@@ -41,3 +41,17 @@ Ran 5 tests in 0.468s
 OK
 This run imported the complete controller module and its pinned dependencies. No runtime/game session was started.
 
+Full controller module import after paired-monitor test (2026-10-08):
+Controller blob f7b66279d87ebc3704ccef1b6a5ce646611c890b; proposed regression test blob 1ba3950be3b5cb9a6bf4d0e5b5c308a285f0a44b.
+Command: python -B -m unittest -v test_map01_v39_pending_observation_drain.py
+test_completed_future_drain_is_wired_before_answer_read ... ok
+test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
+test_production_paired_monitor_invalidates_queued_typed_health_crossing ... ok
+test_queued_hard_crossing_precedes_completed_answer ... ok
+test_snapshot_drain_leaves_events_arriving_after_entry_queued ... ok
+test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
+
+Ran 6 tests in 0.001s
+OK
+The production DoomCoverSignalPairMonitor processed the typed health/ammo row through the production drain and surfaced the hard health crossing. No runtime or game session was started.
+
