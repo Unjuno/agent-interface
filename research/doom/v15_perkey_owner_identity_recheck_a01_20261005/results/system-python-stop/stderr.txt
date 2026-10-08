@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/private/tmp/v39-pr8065-head-4158-owner-probe/probe_startup.py", line 107, in <module>
+    main()
+    ~~~~^^
+  File "/private/tmp/v39-pr8065-head-4158-owner-probe/probe_startup.py", line 77, in main
+    import session_map01_v12 as base
+  File "/private/tmp/v39-pr8065-head-4158-owner-probe/run/source/research/doom/session_map01_v12.py", line 22, in <module>
+    from doom_typed_release_backend_v1 import Backend, suite
+  File "/private/tmp/v39-pr8065-head-4158-owner-probe/run/source/research/doom/doom_typed_release_backend_v1.py", line 2, in <module>
+    from doom_typed_coast_backend_v1 import Backend as Previous, suite
+  File "/private/tmp/v39-pr8065-head-4158-owner-probe/run/source/research/doom/doom_typed_coast_backend_v1.py", line 4, in <module>
+    from PIL import ImageGrab
+ModuleNotFoundError: No module named 'PIL'
