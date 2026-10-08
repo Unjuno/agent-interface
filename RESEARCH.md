@@ -1,3 +1,7 @@
+# Issue #8586 T0 A01 — task-conditioned degraded configuration envelope (2026-10-09)
+
+`PASS_METHOD_SCOPED` for the frozen authored finite model. Candidate and independent raw-only auditor each ran once; all 1,152 task × capability-subset × context rows reconstructed with zero errors and zero TDCE/oracle mismatches. Edge-wise fallback composition made two false continuations under the joint loss of semantic targeting and native effect checking; blanket stop rejected 107 feasible rows. Synthetic CPU-only method result; no live GUI, runtime, safety, or production-occurrence claim. See the [report](research/analysis/task_conditioned_degraded_envelope_8586_t0_a01_20261009/REPORT.md), [protocol](research/analysis/task_conditioned_degraded_envelope_8586_t0_a01_20261009/PROTOCOL.md), and [Issue #8586](https://github.com/Unjuno/agent-interface/issues/8586).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)

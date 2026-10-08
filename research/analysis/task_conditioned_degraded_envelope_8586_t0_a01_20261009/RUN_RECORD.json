@@ -1,0 +1,33 @@
+{
+  "allocation_id": "TDCE-8586-T0-A01-20261009",
+  "candidate": {
+    "command": "python3 -B candidate.py model.json results/candidate.raw.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "{\"status\": \"CANDIDATE_COMPLETE\", \"rows\": 1152, \"output\": \"results/candidate.raw.json\"}\n",
+    "stderr_capture": "not separately retained",
+    "raw_path": "results/candidate.raw.json",
+    "raw_bytes": 1194522,
+    "raw_sha256": "627f00e2101fc60b4ffb71167d2d429b513d70474c1427643573380306653188"
+  },
+  "auditor": {
+    "command": "python3 -B auditor.py model.json results/candidate.raw.json results/audit.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "{\"status\": \"PASS_METHOD_SCOPED\", \"rows\": 1152, \"errors\": 0}\n",
+    "stderr_capture": "not separately retained",
+    "audit_path": "results/audit.json",
+    "audit_sha256": "fec3075fca06a78f749cfceae4668257570d6c7bc7d8ba0436665a1e3364db68"
+  },
+  "completion_observed_at_utc": "2026-10-08T20:16:43Z",
+  "retry_count": 0,
+  "candidate_process_before_auditor": true,
+  "candidate_raw_nonempty_before_auditor": true,
+  "freeze_sha256": "af1d5f2f62a3e10a9d5943aa9639fee2d900f763b774f8949a9b840881ac54fb",
+  "frozen_main_commit": "b4046798ed8902745a36e8fda091204233bb06d3",
+  "construction_tests": {
+    "normal": "10/10 PASS before formal freeze",
+    "optimized": "10/10 PASS before formal freeze"
+  },
+  "runtime": "CPython 3.14.5 on Darwin 27.0.0 arm64; standard library only; no container"
+}

@@ -1,0 +1,37 @@
+{
+  "allocation_id": "TDCE-8586-T0-A01-20261009",
+  "frozen_at_utc": "2026-10-08T20:15:50Z",
+  "main_commit": "b4046798ed8902745a36e8fda091204233bb06d3",
+  "branch": "research/8586-task-conditioned-degraded-envelope-a01-20261009",
+  "runtime": {
+    "python": "3.14.5",
+    "platform": "Darwin 27.0.0 arm64",
+    "dependencies": "Python standard library only",
+    "container": false
+  },
+  "expected_rows": 1152,
+  "formal_invocations": {
+    "candidate": 1,
+    "auditor": 1,
+    "retry": 0,
+    "auditor_condition": "only after candidate exit 0 and nonempty candidate raw output"
+  },
+  "formal_outputs_absent_at_freeze": [
+    "results/candidate.raw.json",
+    "results/audit.json",
+    "RUN_RECORD.json",
+    "SHA256SUMS.txt"
+  ],
+  "frozen_files": {
+    "model.json": "9df24e86c95e1fc0c8c2f30a6b5b522c77fb91ecaac7f39febeeddabcb00df52",
+    "candidate.py": "41d7e451bc276c16747a7947349e9a5c70e5bff4473e9aa7e4e3b46511b750d0",
+    "auditor.py": "6498fd0d1904044c283bc1435a7df288cd2e6b8c1019895fa27ec82cab2c6f89",
+    "test_construction.py": "7edb1ee25900e089a1f6970b580b57bb74547fd66e2704f1a0df5e6e38147b32",
+    "PROTOCOL.md": "6978218a17c7c26171238ffd5bff0fc03ddf1ea8d91bc0020309617a21adc9f6"
+  },
+  "formal_commands": [
+    "python3 -B candidate.py model.json results/candidate.raw.json",
+    "python3 -B auditor.py model.json results/candidate.raw.json results/audit.json"
+  ],
+  "decision": "PASS_METHOD_SCOPED only under PROTOCOL.md; preserve first FAIL/HOLD/STOP without retry"
+}

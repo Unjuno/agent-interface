@@ -1110,6 +1110,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`tail_regret_censoring_8598_t0_a01_20261008/`](tail_regret_censoring_8598_t0_a01_20261008/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
+- [`task_conditioned_degraded_envelope_8586_t0_a01_20261009/`](task_conditioned_degraded_envelope_8586_t0_a01_20261009/)
 - [`task_memory_retrieval_7166_t0_host_a03_20261004/`](task_memory_retrieval_7166_t0_host_a03_20261004/)
 - [`task_memory_retrieval_7166_t0_host_a04_20261004/`](task_memory_retrieval_7166_t0_host_a04_20261004/)
 - [`task_memory_retrieval_7166_t0_host_a05_20261004/`](task_memory_retrieval_7166_t0_host_a05_20261004/)

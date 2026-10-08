@@ -1,0 +1,63 @@
+{
+  "schema": "TDCE_MODEL_V1",
+  "capabilities": [
+    "semantic_target",
+    "native_effect_check",
+    "pixel_target",
+    "visual_diff",
+    "pointer_action",
+    "read_action"
+  ],
+  "tasks": [
+    {
+      "task_id": "single_toggle",
+      "obligations": ["correct_target", "exactly_once", "requested_state"],
+      "compensator_required": true,
+      "hard_gates": ["target_scope", "freshness", "authority", "independent_effect"],
+      "routes": [
+        {"route_id": "toggle_semantic_native", "capabilities": ["semantic_target", "native_effect_check", "pointer_action"], "proves": ["correct_target", "exactly_once", "requested_state"]},
+        {"route_id": "toggle_pixel_native", "capabilities": ["pixel_target", "native_effect_check", "pointer_action"], "proves": ["correct_target", "exactly_once", "requested_state"]},
+        {"route_id": "toggle_semantic_visual", "capabilities": ["semantic_target", "visual_diff", "pointer_action"], "proves": ["correct_target", "exactly_once", "requested_state"]},
+        {"route_id": "toggle_pixel_visual", "capabilities": ["pixel_target", "visual_diff", "pointer_action"], "proves": ["correct_target", "exactly_once", "requested_state"]}
+      ]
+    },
+    {
+      "task_id": "preserve_sibling_edit",
+      "obligations": ["correct_target", "persisted_after_reopen", "sibling_unchanged", "exactly_once"],
+      "compensator_required": true,
+      "hard_gates": ["target_scope", "freshness", "authority", "independent_effect"],
+      "routes": [
+        {"route_id": "preserve_semantic_native", "capabilities": ["semantic_target", "native_effect_check", "pointer_action"], "proves": ["correct_target", "persisted_after_reopen", "sibling_unchanged", "exactly_once"]},
+        {"route_id": "preserve_pixel_native", "capabilities": ["pixel_target", "native_effect_check", "pointer_action"], "proves": ["correct_target", "persisted_after_reopen", "sibling_unchanged", "exactly_once"]},
+        {"route_id": "preserve_semantic_visual", "capabilities": ["semantic_target", "visual_diff", "pointer_action"], "proves": ["correct_target", "persisted_after_reopen", "sibling_unchanged", "exactly_once"]},
+        {"route_id": "preserve_pixel_visual", "capabilities": ["pixel_target", "visual_diff", "pointer_action"], "proves": ["correct_target", "persisted_after_reopen", "exactly_once"]}
+      ]
+    },
+    {
+      "task_id": "read_one_value",
+      "obligations": ["correct_target", "value_transcribed"],
+      "compensator_required": false,
+      "hard_gates": ["target_scope", "freshness", "authority"],
+      "routes": [
+        {"route_id": "read_semantic", "capabilities": ["semantic_target", "read_action"], "proves": ["correct_target", "value_transcribed"]},
+        {"route_id": "read_pixel", "capabilities": ["pixel_target", "read_action"], "proves": ["correct_target", "value_transcribed"]}
+      ]
+    }
+  ],
+  "contexts": [
+    "valid",
+    "unknown_cause",
+    "stale_configuration",
+    "compensator_missing",
+    "task_intent_changed",
+    "degraded_allowance_expired"
+  ],
+  "universal_hard_gates": ["target_scope", "freshness", "authority"],
+  "context_contract": {
+    "unknown_cause": "STOP_UNKNOWN",
+    "stale_configuration": "STOP_UNKNOWN",
+    "task_intent_changed": "STOP_UNKNOWN",
+    "compensator_missing": "STOP_UNKNOWN when task requires a compensator; otherwise not applicable",
+    "degraded_allowance_expired": "STOP_UNKNOWN when a task-relevant primary capability is lost; otherwise not applicable"
+  }
+}
