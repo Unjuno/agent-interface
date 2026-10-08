@@ -4,9 +4,9 @@
 
 **H.** The existing V39 authored health-floor contract, applied conditionally to the retained decision-4 HUD readouts, distinguishes guard configurations that would invalidate during the recorded cover wait from those that would not. It cannot react to a threat while all guarded values remain unchanged.
 
-**T.** Enumerate every accepted `critical_health_minimum` (1..min(source health, 200)) and `maximum_health_loss` (0..20) for source health 100. For each pair compute `floor=max(critical, 100-loss)` and locate the first retained waiting sample with `health < floor`. Compare the result to an independent closed-form partition. Input is the retained manual HUD readout; this is a new conditional contract analysis, not a rerun of the old game allocation.
+**T.** Enumerate every accepted `critical_health_minimum` (1..min(source health, 200)) and `maximum_health_loss` (0..20) for source health 100. For each pair compute `floor=max(critical, 100-loss)` and locate the first retained waiting sample with `health < floor`. Compare the result to an independent threshold-frequency partition. Input is the retained manual HUD readout; this is a new conditional contract analysis, not a rerun of the old game allocation.
 
-**D.** PASS_CONDITIONAL_FINITE_ENUMERATION only when all 2,100 valid parameter pairs are represented, both implementations agree, and counts partition exactly. Any disagreement fails. No live or causal claim follows from this result.
+**D.** PASS_CONDITIONAL_FINITE_ENUMERATION only when all 2,100 valid parameter pairs are represented, the frozen source SHA matches, both implementations agree, and counts partition exactly. Any disagreement fails. No live or causal claim follows from this result.
 
 **C.** Alternative interpretations include stale/unbound historical values, guard polling cadence missing a change, and gameplay damage or ammo use occurring between sparse manual readouts. The previous video replay samples pixels every 0.2 game-seconds, but these manual HUD values are only available at selected frames.
 
@@ -33,4 +33,4 @@ The counts are an exhaustive partition of allowed parameter values, not recommen
 
 ## Reproduce
 
-From repository root, run `python research/doom/v39_guard_crossing_replay_a01_20261008/analyze.py`. It writes only `RESULT.json` beside itself. It reads the retained `VISUAL_READOUT.json` and checks an independent formula partition (468 / 222 / 1,410). The source artifact is read-only.
+From repository root, run `python research/doom/v39_guard_crossing_replay_a01_20261008/analyze.py`. It writes only `RESULT.json` beside itself. It refuses any `VISUAL_READOUT.json` whose SHA-256 differs from the frozen value above, then compares the enumerator's first-invalidation distribution against a separate floor-frequency/running-minimum calculation. Run `python -m unittest research/doom/v39_guard_crossing_replay_a01_20261008/test_analyze.py` for the frozen-source reproduction and mutation checks. The source artifact is read-only.
