@@ -1,15 +1,32 @@
 {
   "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A12-PRIVATE-PREFLIGHT-20261008",
   "issue": 8406,
-  "predecessors": ["T1 A10 FAIL_METHOD", "T1 A11 STOP_PRIVATE_MODEL_TAG_MISSING"],
-  "candidate_invocations": 0,
-  "auditor_invocations": 0,
-  "formal_model_calls_observed": 0,
+  "predecessors": [
+    "T1 A10 FAIL_METHOD",
+    "T1 A11 STOP_PRIVATE_MODEL_TAG_MISSING"
+  ],
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "formal_model_calls_observed": 390,
   "formal_retries": 0,
-  "terminal_disposition": "FROZEN_NOT_STARTED",
+  "terminal_disposition": "FAIL_METHOD_TRANSITION_VIOLATIONS",
   "raw_path": "results/FORMAL_T1_A12/RAW.jsonl",
-  "seeds": [5201, 5202, 5203],
+  "seeds": [
+    5201,
+    5202,
+    5203
+  ],
   "expected_calls": 390,
   "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
-  "private_model_store": "/tmp/unjuno-8406-t1-a12-ollama-store"
+  "private_model_store": "/tmp/unjuno-8406-t1-a12-ollama-store",
+  "candidate_exit_code": 0,
+  "auditor_exit_code": 0,
+  "auditor_status": "FAIL_METHOD",
+  "auditor_decision": "FAIL_METHOD",
+  "auditor_errors": 18,
+  "result_path": "RESULTS.md",
+  "stop_path": "STOP.md",
+  "raw_sha256": "ced175c72319de8c2322aaf28c81afb4f21545cc946efa3d5c3a000c405152fc",
+  "audit_sha256": "43eaf61fd54fd19b7bc344ab0ff65064d6ab8fcf89778a75c7e8b804248f92bc",
+  "preflight_sha256": "d703d3530504d3a194e63fc28b55713ff149be22cc8b460fcaad6c1f86a3cb7d"
 }
