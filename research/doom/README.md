@@ -37,6 +37,7 @@ flowchart TD
 
 | Theme | Representative entry points |
 |---|---|
+| V39 typed-observation raw retention boundary A01 (#8258) | [`typed_observation_retention_a01_20261007/README.md`](typed_observation_retention_a01_20261007/README.md) — preserved synthetic 2-row event-sink result with independent raw audit 5/5; historical freeze only (3/5 implementation sources still match current main), no live/game claim |
 | V39 expiry-receipt auditor correction A02 (#8257) | [`map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/README.md`](map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/README.md) — reproduces three A01 auditor false accepts, then rejects ten mutations in normal/optimized Python (11 cases, 22 subprocesses); retained raw audit only, no candidate or live-control claim |
 | App Server interrupt transport portability (#59) | [`v39_appserver_interrupt_macos_a01_20261008/README.md`](v39_appserver_interrupt_macos_a01_20261008/README.md) — one macOS arm64 / Codex 0.146.1 loopback-only replication of PR #8380 A06; scoped transport PASS with retained audit-v1 failure and v2 audit correction; no live/game/input claim |
 | Windows redirected-pipe readiness construction T0 (#7446) | [`windows_pipe_polling_59_t0_20261004/REPORT.md`](windows_pipe_polling_59_t0_20261004/REPORT.md) — native Windows anonymous-pipe fix passed focused poller 13/13, v13 composition 4/4, and scorer adapter 5/5; broad discovery remained non-green and no live/game effect was tested |
