@@ -1,0 +1,29 @@
+{
+  "ack_result": {
+    "event": "rejected",
+    "id": "plan-0",
+    "reason": "latest observation sequence required before input"
+  },
+  "controller_latest_after_ack": {
+    "capture_ns": 2000000,
+    "event": "observation",
+    "sequence": 2
+  },
+  "controller_rejection_handler": "raises RuntimeError",
+  "controller_replan_after_rejection": false,
+  "event_order": [
+    "typed_observation",
+    "observation",
+    "rejected"
+  ],
+  "executor_stale_rejection_reason": "latest observation sequence required before input",
+  "executor_worker_start": false,
+  "live_game_model_gui_os_input": false,
+  "monitor_calls": 0,
+  "sequence": [
+    1,
+    2
+  ],
+  "source_path": "research/doom/map01_overlap_controller_v39.py",
+  "source_sha256": "e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754"
+}

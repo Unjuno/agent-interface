@@ -224,6 +224,10 @@ class RunningActionGuardV2:
         self.guard.check_current(snapshot, controller_decided_ns)
         return self.receipt()
 
+    def record_preacceptance_rejection(self, rejection):
+        self.guard.record_preacceptance_rejection(rejection)
+        return self.receipt()
+
     def record_cancel_requested(self, event):
         self.guard.record_cancel_requested(event); return self.receipt()
 
