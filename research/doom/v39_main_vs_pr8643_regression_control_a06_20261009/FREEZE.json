@@ -1,0 +1,32 @@
+{
+  "schema": "v39-main-vs-pr8643-regression-control-freeze-v1",
+  "execution_id": "v39-main-vs-pr8643-regression-control-a06-20261009",
+  "dependency_base_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "main_commit": "5cfe661826c5742eb26da2ba9a9304ae0cb480d4",
+  "candidate_commit": "38569db07352a8d42e08fd6711ba32c77aca20a4",
+  "overlay_paths": {
+    "research/doom/map01_overlap_controller_v39.py": {
+      "ref": "main_commit",
+      "blob": "fec805219fec1155beb0e2608024663bc8c7e127",
+      "sha256": "e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754"
+    },
+    "research/doom/test_map01_overlap_controller_v39.py": {
+      "ref": "candidate_commit",
+      "blob": "ce4e9aa0d968391618fdbae6a6bd6842c6bb78d1",
+      "sha256": "f23cf4b7e830fe74050619728cea563d9c8164dccae8aa52e2ca6e5630fbd39e"
+    }
+  },
+  "expected_case_dispositions": {
+    "test_stale_partial_action_does_not_reuse_discarded_remaining_cover": "FAIL_ASSERTION_ON_MAIN",
+    "test_initial_cover_invalidation_cancels_before_planner_and_requires_empty_release": "ERROR_METHOD_MISSING_ON_MAIN"
+  },
+  "candidate_control_result": {
+    "package": "research/doom/v39_pr8643_overlay_regression_a05_20261008/RESULT.json",
+    "normal_drain_tests": 17,
+    "normal_controller_tests": 9,
+    "optimized_drain_tests": 17,
+    "optimized_controller_tests": 9,
+    "decision": "PASS"
+  },
+  "live_execution": false
+}
