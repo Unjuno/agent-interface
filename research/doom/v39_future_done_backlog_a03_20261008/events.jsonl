@@ -1,0 +1,17 @@
+{"case": "queued_terminal", "done": true, "event": "planner_future_poll"}
+{"case": "queued_terminal", "event": "observation_dequeued", "row_event": "typed_observation", "sequence": 2}
+{"case": "queued_terminal", "event": "monitor_received", "future_done": true, "sequence": 2}
+{"case": "queued_terminal", "event": "monitor_invalidated", "grants_input_authority": false, "reason": "health:below_hard_minimum", "requires_new_decision": true}
+{"case": "queued_terminal", "event": "terminal_dequeued", "id": "cover-0", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "row_event": "terminal", "status": "completed"}
+{"case": "queued_terminal", "event": "cleanup_stage", "stage": "cover_terminal_validation"}
+{"case": "queued_terminal", "event": "planner_result_consumed"}
+{"case": "cancel_needed", "done": true, "event": "planner_future_poll"}
+{"case": "cancel_needed", "event": "observation_dequeued", "row_event": "typed_observation", "sequence": 2}
+{"case": "cancel_needed", "event": "monitor_received", "future_done": true, "sequence": 2}
+{"case": "cancel_needed", "event": "monitor_invalidated", "grants_input_authority": false, "reason": "health:below_hard_minimum", "requires_new_decision": true}
+{"case": "cancel_needed", "event": "planner_interrupt_called", "handle": "turn-1"}
+{"case": "cancel_needed", "event": "executor_cancel_write", "id": "cover-0", "op": "cancel"}
+{"case": "cancel_needed", "event": "executor_cancel_flush"}
+{"case": "cancel_needed", "event": "planner_interrupt_transport", "handle": "turn-1"}
+{"case": "cancel_needed", "event": "terminal_dequeued", "id": "cover-0", "release": {"buttons_down": [], "keys_down": [], "verified": true}, "row_event": "terminal", "status": "cancelled"}
+{"case": "cancel_needed", "event": "planner_result_consumed"}
