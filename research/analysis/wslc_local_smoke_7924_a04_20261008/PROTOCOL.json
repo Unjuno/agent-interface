@@ -1,0 +1,35 @@
+{
+  "schema": "wslc-local-smoke-7924-a04-protocol-v1",
+  "issue": 8455,
+  "predecessor_issue": 8446,
+  "source_main_sha": "44cae8f802ca1109dd03a5627fb3073bcc3c55cc",
+  "question": "Can a separately implemented receipt-shape-aware auditor validate immutable A02 evidence and reject four hostile mutations without executing predecessor code?",
+  "candidate_invocations": 0,
+  "predecessor_auditor_invocations": 0,
+  "formal_a04_invocations": 1,
+  "formal_invocation_status": "NOT_RUN_HOLD_SHARED_WSLC_OWNER_GATE",
+  "formal_command_constraints": {
+    "runtime": "WSLc 3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "pull": "never",
+    "network": "none",
+    "mount": "A04 package read-only",
+    "auto_remove": true,
+    "global_container_inventory": false,
+    "docker": false
+  },
+  "offline_validation": {
+    "runtime": "host Python only; no WSLc/Docker/container commands",
+    "command": "python -B -m unittest -v test_audit",
+    "tests": 8,
+    "formal_experiment_credit": false
+  },
+  "pass_gate": "PASS_AUDIT_ONLY_SCOPED iff all 17 A02 files match frozen SHA-256 and exact source Git blob IDs; saved A02 facts and distinct cleanup receipt shapes validate; four isolated mutations are rejected at intended checks; exactly one authorized WSLc audit exits 0; and the new exact CID is confirmed absent.",
+  "stop_gate": "No WSLc CLI/RPC or WSL lifecycle call while #7924 shared owner/exclusive lane HOLD remains. Once authorized, the first formal A04 invocation is final; never retry.",
+  "scope_limits": [
+    "A02 FAIL_AUDITOR_CONTRACT and A03 FAIL_AUDITOR_CONTRACT remain unchanged.",
+    "No candidate, A02 auditor, or A03 auditor execution.",
+    "No Docker parity, speed, memory relief, hard memory limit, OOM prevention, or general migration claim.",
+    "No prior CID inspection, global inventory, image pull, stop, prune, or unrelated lifecycle operation."
+  ]
+}
