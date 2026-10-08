@@ -965,6 +965,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`quiet_frontier_6310_t0_20261002/`](quiet_frontier_6310_t0_20261002/)
 - [`quiet_supervision_vigilance_6503_t0_20261002/`](quiet_supervision_vigilance_6503_t0_20261002/)
 - [`r133_domain_coverage_transfer_v1/`](r133_domain_coverage_transfer_v1/)
+- [`raw_artifact_bypass_8581_t0_a02_20261009/`](raw_artifact_bypass_8581_t0_a02_20261009/)
 - [`reactance_safe_stop_6342_t0_20261003/`](reactance_safe_stop_6342_t0_20261003/)
 - [`real_option_5428_t1/`](real_option_5428_t1/)
 - [`real_option_wait_cost_monotonicity_5428_t0_20261003/`](real_option_wait_cost_monotonicity_5428_t0_20261003/)
