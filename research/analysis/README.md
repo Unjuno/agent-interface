@@ -895,6 +895,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`persistence_gated_throttle_6650_t0_v1/`](persistence_gated_throttle_6650_t0_v1/)
 - [`persistent_counterparty_8135_t0_a01_20261005/`](persistent_counterparty_8135_t0_a01_20261005/)
 - [`persistent_counterparty_8135_t0_a02_20261005/`](persistent_counterparty_8135_t0_a02_20261005/)
+- [`phase_dependent_controllability_8668_t0_a01_20261009/`](phase_dependent_controllability_8668_t0_a01_20261009/)
 - [`phase_diversified_capture_6067_t0_20261002/`](phase_diversified_capture_6067_t0_20261002/)
 - [`phase_overlap_dynamic_footprint_binding_r1_v1/`](phase_overlap_dynamic_footprint_binding_r1_v1/)
 - [`phase_overlap_resource_footprint_a2_v1/`](phase_overlap_resource_footprint_a2_v1/)
