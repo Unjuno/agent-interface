@@ -9,13 +9,55 @@
     "queued_event_skipped_by_outer_loop": true
   },
   "patched_helper": {
-    "tests_passed": 3,
+    "tests_passed": 7,
     "hard_crossing_invalidates": true,
     "queued_terminal_retained": true,
     "soft_observation_preserves_answer_path": true,
-    "empty_queue_returns_without_wait": true
+    "empty_queue_returns_without_wait": true,
+    "integration_call_order_check": true,
+    "completed_future_discard_branch_precedes_eligibility_check": true,
+    "arrival_after_snapshot_remains_queued": true,
+    "test_git_blob": "604a4d137499508770e25ffa49efeea4780bdfb2",
+    "production_monitor_typed_hard_crossing_invalidates": true,
+    "production_monitor_soft_typed_health_preserves_cover": true,
+    "typed_only_soft_event_does_not_update_screenshot_latest": true
   },
   "integration": "When drain reports invalidation, the existing controller invalidation path cancels any still-active cover and the existing planner-result branch discards the answer.",
-  "scope": "Focused source-boundary construction only; no production event-frequency, live, or efficacy claim."
+  "scope": "Focused source-boundary construction only; no production event-frequency, live, or efficacy claim.",
+  "mainline_retest": {
+    "main_commit": "a537c80de21ba24d774fb332e34fcd415db51b7d",
+    "controller_git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "official_test_command": "python -B -m unittest -v test_map01_v39_pending_observation_drain.py",
+    "ast_extracted_helper_suite": "PASS 6/6; confirmed with full controller import and production paired signal monitor",
+    "full_controller_imported": true,
+    "baseline_main_test_git_blob": "af01126e613c6b1c51e218cab6f199eb56e57efe",
+    "pr_regression_test_git_blob": "604a4d137499508770e25ffa49efeea4780bdfb2",
+    "full_module_test_command": "python -B -m unittest -v test_map01_v39_pending_observation_drain.py",
+    "full_module_test_result": "PASS 7/7 with complete controller and actual paired signal monitor imported",
+    "initial_empty_scratch_import_failure": "ModuleNotFoundError: map01_stagnation_v1; preserved as setup failure, resolved by staging pinned current-main dependencies",
+    "dependency_blob_count": 18,
+    "dependency_blobs": {
+      "research/doom/map01_stagnation_v1.py": "be03ef1295c27e25dc63df3a9121f5c7f5296bfb",
+      "research/doom/doom_hud_signal_v1.py": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "research/doom/doom_hud_signal_v2.py": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "research/doom/doom_hud_signal_v3.py": "083338b4565176aaea560d800ce0210f17b6852f",
+      "research/doom/doom_controller_failure_cleanup_v1.py": "d04e167ed182d5faf935e6c23132b164fe9a16ac",
+      "research/doom/doom_source_refresh_v1.py": "6b5add0fa29865de64afcfa1da4a272d9a216e8d",
+      "research/doom/doom_typed_observation_v1.py": "930e1c78511b57999a0a2176cb94a31a32d166a8",
+      "research/doom/doom_action_validity_contract_v1.py": "318a67d981f3652ddea02dd28ddb605f32e16901",
+      "research/doom/doom_action_snapshot_v1.py": "559084c1021b6c20e27f6f5a7e54fffe1376ab0e",
+      "research/live_control/observable_signal_guard_v2.py": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "research/live_control/codex_app_server_client_v2.py": "8553874221761a7807c846c7dcd66c22fc6340ff",
+      "research/live_control/persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15",
+      "research/live_control/final_action_admission_v1.py": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "research/live_control/final_action_admission_v2.py": "cbbef5405c29fe56018c24e120b1b87d3c39dd26",
+      "research/live_control/action_validity_admission_v1.py": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+      "research/live_control/running_action_guard_v1.py": "d54047e78bc76f53ef47c6f70fd4a3be6318f09c",
+      "research/live_control/running_action_guard_v2.py": "4e1a36c1dbd3d78aea795a292bc4e0bf9db0b75b",
+      "research/live_control/running_action_guard_v3.py": "bbefdba8edfd83e886baf556caf28aca66ac88fb"
+    },
+    "initial_empty_scratch_import_result": "failed_before_test_collection: ModuleNotFoundError map01_stagnation_v1",
+    "behavioral_boundary": "Typed hard health crossing invalidates; typed soft health change within the guard envelope preserves current cover and is retained as soft-event context. This does not establish whether that preserved policy is unsafe in a live threat."
+  }
 }
 
