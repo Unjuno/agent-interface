@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "allocation_id": "5947-MULTI-UPDATE-PROVENANCE-T0-A01-20261007",
+  "source_issue": 5947,
+  "successor_issue": 8313,
+  "conflict_depths": [0, 1, 4, 8],
+  "arms": ["CURRENT_ONLY", "FULL_CONFLICTING_HISTORY", "NONCONFLICTING_HISTORY", "SOURCE_LINKED_DELTA"],
+  "conditions": [
+    {"id":"Q_CURRENT_VALID","kind":"current_only","query":"What is the current selected object?","final_value":"TARGET_Z","expected":"TARGET_Z"},
+    {"id":"Q_CHANGE_HISTORY_REQUIRED","kind":"history_required","query":"What changed from the observed baseline selected object TARGET_A to the current selected object TARGET_Z? Return baseline-to-current value pair.","baseline_value":"TARGET_A","final_value":"TARGET_Z","expected":"TARGET_A_TO_TARGET_Z"}
+  ],
+  "position_control": {"id":"POSITION_POSITIVE_CONTROL","expected_relation":"offset_changes_only_here"},
+  "authority": {"model_calls":0,"gui_actions":0,"execution_authority":false}
+}
