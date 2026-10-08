@@ -1,0 +1,22 @@
+{
+  "schema": "v39-initial-cover-ack-race-binding-freeze-v1",
+  "issue": 59,
+  "execution_id": "v39-initial-cover-ack-race-binding-a03-20261008",
+  "baseline_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "6671acd1395238f3b0805e6cbe03aea12da028bf",
+  "sources": {
+    "baseline": {
+      "research/doom/map01_overlap_controller_v39.py": {
+        "blob": "fec805219fec1155beb0e2608024663bc8c7e127",
+        "sha256": "e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754"
+      }
+    },
+    "candidate": {
+      "research/doom/map01_overlap_controller_v39.py": {
+        "blob": "99e93728f544e095c0c51da8834e15f0e2030d8a",
+        "sha256": "fed7cffba54ad12f1c94238ed91074ce281a0a467ca4be93d597ed5e0aa4cade"
+      }
+    }
+  },
+  "decision_gate": "After exact current-main final-empty drain leaves seq 12 queued while returning seq 11, latest candidate's submit_initial_cover_with_recovery must bind expected sequence 11 before the rejected ACK wait, consume/evaluate seq 12, and discard initial cover authority without resubmitting."
+}
