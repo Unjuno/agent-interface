@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8571 A02 five-request alias partitions](service_debt_alias_8571_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 177/177 rows independently reconstructed; 46/51 nontrivial presented-ID partitions increased A's share; trusted-parent baseline 52/52 and FIFO order 52/52. A01 custody HOLD remains unchanged.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -1063,6 +1065,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`serialized_attention_duplicate_label_successor_1968_v1/`](serialized_attention_duplicate_label_successor_1968_v1/)
 - [`serialized_attention_successor_1968_v1/`](serialized_attention_successor_1968_v1/)
 - [`service_debt_alias_8571_a01_20261008/`](service_debt_alias_8571_a01_20261008/)
+- [`service_debt_alias_8571_a02_20261009/`](service_debt_alias_8571_a02_20261009/)
 - [`service_debt_deadline_6613_a01/`](service_debt_deadline_6613_a01/)
 - [`service_fairness_6613_edf_a01_20261003/`](service_fairness_6613_edf_a01_20261003/)
 - [`service_fairness_6613_t0_20261002/`](service_fairness_6613_t0_20261002/)

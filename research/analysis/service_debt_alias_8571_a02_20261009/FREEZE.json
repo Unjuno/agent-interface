@@ -1,0 +1,24 @@
+{
+  "schema": "service-debt-alias-freeze-v2",
+  "allocation_id": "SERVICE-DEBT-ALIAS-8571-A02",
+  "issue": 8571,
+  "base_revision": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8571-service-debt-alias-a02-20261009",
+  "package": "research/analysis/service_debt_alias_8571_a02_20261009",
+  "frozen_at": "2026-10-09 Asia/Tokyo",
+  "runtime": "CPython 3.14.5; macOS 27.0 ARM64; standard library only; host CPU; no GUI, network, model, container, or shared runtime",
+  "changed_factor": "complete caller-alias partition set expanded from B4=15 to B5=52 by adding a fifth eligible A request and fifth B request; four-slot horizon and policy controls retained",
+  "sha256": {
+    "candidate.py": "5d5bebee45d30a4438a3b5f91ca9acd3641f356aa6e78192e9e94622538e946f",
+    "audit.py": "f644bc1a20b8be09650e5af88d40c617d0b77d09dffb8a5bf1a6ec3adbecce85",
+    "trace_fixture.json": "7125f92399eb7491fe2b3214de905bb32036797a606e3d6920633bd5b9acee1f",
+    "outcome_oracle.json": "cc5e0e8d7a47d6f97af2f992e457715e7b9361537a527333fa082a9e06e6c9b6",
+    "test_model.py": "734e11bee778e04f6e7fc84bdd989682a7812183b062c9f9e40d53d0b29e1cfe",
+    "PROTOCOL.md": "3f8448e71aadea54e2bf6508f3ed873f541b929882d5cee1f54ac44dd62f2133"
+  },
+  "construction": "py_compile and four tests passed before freeze; tests include in-memory construction replay but create no formal output files",
+  "formal_invocations_before_freeze": 0,
+  "formal_invocations_after_freeze": 0,
+  "run_policy": "candidate once; if exit 0, independent auditor once; no retries and preserve first outcome",
+  "lineage": "A01 remains HOLD_CUSTODY_FREEZE_NOT_COMMITTED_BEFORE_RUN in merged PR #8575; A01 raw/audit are not copied or pooled"
+}
