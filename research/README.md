@@ -7,7 +7,7 @@ For claims and scientific disposition, start with the top-level [research index]
 ## Start here
 
 - Issue #8522 T0 A02: [anchoring-vignette identifiability result](analysis/anchoring_vignette_identifiability_8522_t0_a02_20261009/REPORT.md) — conditional recovery and detectable-misfit checks passed on exact synthetic probabilities; overall assumption identification remains `HOLD_NOT_IDENTIFIED`. A01 CLI STOP preserved, no human-data or workload claim.
-- Issue #8522 T0 A01: [first candidate-entrypoint STOP](analysis/anchoring_vignette_identifiability_8522_t0_a01_20261009/REPORT.md) — one failed candidate launch retained; auditor not run and no scientific conclusion assigned.
+- Issue #8522 T0 A01: [first candidate-entrypoint STOP (PR #8774)](https://github.com/Unjuno/agent-interface/pull/8774) — one failed candidate launch retained; auditor not run and no scientific conclusion assigned.
 
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
 
