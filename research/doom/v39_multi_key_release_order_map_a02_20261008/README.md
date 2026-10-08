@@ -29,3 +29,8 @@ python -m py_compile run_candidate.py verify.py
 ```
 
 `result.json` contains each schedule. `verify.py` independently checks the pinned source hash, complete permutation sets, final-pair identity, empty held state, and mutation outcomes.
+
+
+## Additive schema and composition follow-ups
+
+Scope correction: the A02 event identity was synthetic and root-level; retained producer rows nest the actuation ID under physical_key_measurement.actuation_id. A03 checks the retained event schema and exact pair validator. A04 composes the exact V19 _capture_backend and _run_measured_tail functions with the exact V3 scorer adapter: the single-slot baseline accepted 15/41 identity boundaries; the nested-identity candidate accepted 41/41, all at zero sampling duration. See [A02 correction](CORRECTION_A02.md), [A03](a03/README.md), and [A04](a04/README.md). These are offline candidate tests against an unmerged source PR, not current-main runtime results.
