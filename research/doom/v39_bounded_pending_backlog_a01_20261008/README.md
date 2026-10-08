@@ -35,7 +35,7 @@ $env:PYTHONPATH = "$(Get-Location)\research\doom;$(Get-Location)\research\live_c
 python -m unittest discover -s research/doom -p 'test_map01*.py' -v
 ```
 
-Outcome: **48 tests passed** in 0.141 s. See `unittest.log`. New cases cover a boundary hard crossing, a harmless event arriving while drain is active, the 256-event cap, a replenishing producer exhausting exactly four recovery batches, fresh-sequence recovery, and exact ExecutorV12 stale rejection followed by fresh-sequence admission. `git diff --check` and `py_compile` also passed. `sha256.json` records the source and raw artifact hashes; `audit.py` checks provenance and outcome.
+Outcome: **48 tests passed** in 0.114 s. See `unittest.log`. New cases cover a boundary hard crossing, a harmless event arriving while drain is active, the 256-event cap, a replenishing producer exhausting exactly four recovery batches, fresh-sequence recovery, and exact ExecutorV12 stale rejection followed by fresh-sequence admission. `git diff --check` and `py_compile` also passed. `sha256.json` records the source and raw artifact hashes; `audit.py` checks provenance and outcome.
 
 ## Limits and next gate
 
