@@ -1,0 +1,100 @@
+{
+  "schema": "map01-feedback-occupancy-exact-event-join-a02",
+  "status": "PASS_EXACT_IN_HOLD_FEEDBACK_EVENT_IDENTITY_SCOPED",
+  "run": "map01-v39-coast-liveness-live-01",
+  "source_hashes": {
+    "occupancy_v7_sha256": "24e2ee79f2086451469addae359f21c2d4df10c3ca23bf780a7a963fe3714bd9",
+    "event_stream_sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "feedback_artifact_zip_sha256": "74f38f7a9e9c567fa9a41f5ded5c169cbc1e3ca7960da467e41bd79b5e408cbd",
+    "feedback_result_sha256": "931f93977a6e3cf32d0529af6113b135660defb46f38c9c3185d3638a0b9369e",
+    "feedback_audit_member_sha256": "56503b6b544477d4b65bb8d9fabc5b8fce87ed94256c509aeec9de803607f7be"
+  },
+  "plans": [
+    {
+      "id": "plan-0-primary-0-1",
+      "step": 0,
+      "sequence": 30,
+      "capture_ns": 55510954415259,
+      "frame_rgb_sha256": "bc8350c38b39e6fa74531ddc58f72c3a73d66a540dfe8e0734142c8925eafc61",
+      "independent_state_change": [
+        "ammo"
+      ],
+      "from": {
+        "ammo": 48,
+        "health": 97
+      },
+      "to": {
+        "ammo": 47,
+        "health": 97
+      },
+      "hold_keys": [
+        "Up",
+        "Shift_L",
+        "space"
+      ],
+      "first_key_ack_ns": 55510744604148,
+      "confirmed_any_key_held_until_ns": 55511103328377,
+      "is_final_confirming_sample": false,
+      "observation_relation": "IN_HOLD_LOOP_AND_WITHIN_CONFIRMED_ANY_KEY_INTERVAL"
+    },
+    {
+      "id": "plan-3-primary-0-1",
+      "step": 0,
+      "sequence": 115,
+      "capture_ns": 55532110564498,
+      "frame_rgb_sha256": "7ae322747a8b001430320e1b9aaea562fff1ab4e8e42db694b863cbb6e98cfb3",
+      "independent_state_change": [
+        "health",
+        "ammo"
+      ],
+      "from": {
+        "ammo": 44,
+        "health": 68
+      },
+      "to": {
+        "ammo": 43,
+        "health": 65
+      },
+      "hold_keys": [
+        "Down",
+        "space"
+      ],
+      "first_key_ack_ns": 55531922893265,
+      "confirmed_any_key_held_until_ns": 55532110564498,
+      "is_final_confirming_sample": true,
+      "observation_relation": "IN_HOLD_LOOP_AND_WITHIN_CONFIRMED_ANY_KEY_INTERVAL"
+    },
+    {
+      "id": "plan-4-primary-0-1",
+      "step": 0,
+      "sequence": 161,
+      "capture_ns": 55540099435883,
+      "frame_rgb_sha256": "91b72f4f3ab2c1227593f17e4baabd92851aced3c47a6ce96c45da08d02e1dcc",
+      "independent_state_change": [
+        "ammo"
+      ],
+      "from": {
+        "ammo": 41,
+        "health": 61
+      },
+      "to": {
+        "ammo": 40,
+        "health": 61
+      },
+      "hold_keys": [
+        "space"
+      ],
+      "first_key_ack_ns": 55539928785334,
+      "confirmed_any_key_held_until_ns": 55540099435883,
+      "is_final_confirming_sample": true,
+      "observation_relation": "IN_HOLD_LOOP_AND_WITHIN_CONFIRMED_ANY_KEY_INTERVAL"
+    }
+  ],
+  "interpretation": "Each independently reconstructed first HUD feedback capture is the exact same timestamped frame event recorded inside its primary hold step. Two are the final sample used for the any-key-held confirmation bound; one is earlier in that interval.",
+  "limits": [
+    "software-side in-hold observation and any-key confirmation only; no per-key physical release identity",
+    "no action-to-feedback causality; multiple keys and changing game state remain possible causes",
+    "health/ammo changes are decision-relevant, not necessarily beneficial",
+    "three plans from one retained stochastic episode; no live run or allocation"
+  ]
+}

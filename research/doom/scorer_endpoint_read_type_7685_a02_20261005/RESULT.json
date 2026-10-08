@@ -1,0 +1,66 @@
+{
+  "cases": [
+    {
+      "after": {
+        "type": "int",
+        "value": 11
+      },
+      "before": {
+        "type": "int",
+        "value": 10
+      },
+      "case": "integer_control",
+      "error": null,
+      "readback": {
+        "type": "int",
+        "value": 11
+      },
+      "receipt_status": "REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING",
+      "row_status": "REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING",
+      "values_present": true
+    },
+    {
+      "after": {
+        "type": "int",
+        "value": 11
+      },
+      "before": {
+        "type": "int",
+        "value": 10
+      },
+      "case": "float_alias",
+      "error": null,
+      "readback": {
+        "type": "float",
+        "value": 11.0
+      },
+      "receipt_status": "REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING",
+      "row_status": "REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING",
+      "values_present": true
+    },
+    {
+      "after": {
+        "type": "int",
+        "value": 1
+      },
+      "before": {
+        "type": "int",
+        "value": 0
+      },
+      "case": "bool_alias",
+      "error": null,
+      "readback": {
+        "type": "bool",
+        "value": true
+      },
+      "receipt_status": "REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING",
+      "row_status": "REFRESH_RETURNED_RUNTIME_QUALIFICATION_PENDING",
+      "values_present": true
+    }
+  ],
+  "decision": "FAIL_OPEN_ENDPOINT_TYPE",
+  "schema": "scorer-endpoint-read-type-7685-a02-v1",
+  "scope": "candidate construction behavior under stubs only",
+  "source_sha256": "c48c1a734ae32505d7adf000028e618b2d0cfe73a4aa969892b8aada6a6407f5",
+  "subject_pr_head": "5b4a563b5c3f6a70a063a98c7281a8bd6ce71eb0"
+}
