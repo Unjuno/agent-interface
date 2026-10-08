@@ -1,0 +1,45 @@
+{
+  "schema": "issue-8630-reserve-binding-diagnostic-v1",
+  "classification": "deterministic construction diagnostic; not a formal allocation",
+  "issue": 8630,
+  "source_main": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "prior_result": {
+    "allocation": "T0-A01-20261009",
+    "branch_head": "3e4a66b7a047fdd08a3c0dfe8a33838bad468929",
+    "disposition": "FAIL_METHOD",
+    "reason": "The no-observation policy retained one unused opportunity; it did not spend that opportunity on another recovery attempt."
+  },
+  "changed_factor": "Permit a second independent recovery attempt when the optional observation is skipped. All prior A01 type/action probabilities, costs, horizon, perfect observation and mandatory verification assumptions are preserved.",
+  "resources": {
+    "horizon_opportunities": 4,
+    "observation_cost": 1,
+    "initial_action_cost": 1,
+    "mandatory_verification_cost": 1,
+    "recovery_attempt_cost": 1,
+    "minimum_recovery_attempts_reserved_after_action": 1,
+    "recovery_success_probability_per_attempt": "1/2",
+    "recovery_attempts_independent": true
+  },
+  "hidden_types": ["type_0", "type_1"],
+  "prior": ["1/2", "1/2"],
+  "action_success_probability": {
+    "informative": {
+      "A": ["9/10", "1/5"],
+      "B": ["1/5", "9/10"]
+    },
+    "weak_signal": {
+      "A": ["51/100", "49/100"],
+      "B": ["49/100", "51/100"]
+    }
+  },
+  "observation": "If purchased, reveals the hidden type exactly before action selection.",
+  "terminal_utility": "1 only after action or recovery succeeds and the mandatory verification opportunity is completed; otherwise 0.",
+  "hard_constraints": [
+    "Every scored policy pays for mandatory verification.",
+    "Every policy leaves at least one recovery attempt available after the initial action if it fails.",
+    "No unresolved effect is credited as success.",
+    "The optional observation cannot displace the mandatory verification or the reserved recovery attempt."
+  ],
+  "decision": "PASS_DIAGNOSTIC only if an independent path enumerator agrees on every feasible policy score, all rows obey the hard constraints and horizon, the joint optimum observes for informative and skips for weak_signal, and each fixed observation schedule loses strictly in at least one of the two declared regimes.",
+  "scope": "Exact finite arithmetic over authored synthetic probabilities. This diagnostic does not change or rerun A01 and establishes no GUI/runtime probability, safety, latency, model, token, or product result."
+}

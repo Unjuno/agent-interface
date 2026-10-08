@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8630 reserve-binding diagnostic](joint_opportunity_budget_8630_reserve_diagnostic_20261009/REPORT.md) — `PASS_DIAGNOSTIC` for an exact synthetic construction: when observation consumes the second recovery opportunity, observe for the informative case and skip the weak-signal case. A01 remains `FAIL_METHOD`; no formal/live or runtime claim.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
