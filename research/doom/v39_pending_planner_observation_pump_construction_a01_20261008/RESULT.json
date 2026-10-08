@@ -1,0 +1,74 @@
+{
+  "cancel_command": {
+    "id": "cover-0",
+    "op": "cancel"
+  },
+  "controller_git_blob": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a",
+  "controller_sha256": "c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95",
+  "cover_renewals": 0,
+  "invalidation_reason": "synthetic_policy_invalidation",
+  "main_commit": "08d3283f6d3c61cc6b032c6c9c5a63ec464c07ff",
+  "observation_processed_while_planner_pending": true,
+  "planner_interrupt_status": "interrupted",
+  "planner_worker_body_calls": 0,
+  "release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "verified": true
+  },
+  "schema": "v39-pending-pump-construction-result-v1",
+  "scope": [
+    "The production AST block ran with synthetic executor rows and a fake pending future.",
+    "FakePool does not start a worker or run planner.await_turn; this is not a real concurrency or planner-latency test.",
+    "No game, model, GUI, OS input, physical key state, useful feedback, recovery, or task effect was exercised."
+  ],
+  "source_composition_executed": [
+    "nested wait() event dispatcher",
+    "pending planner ThreadPoolExecutor block",
+    "cancel_invalidated_cover()"
+  ],
+  "status": "PASS_SYNTHETIC_PENDING_PUMP_RELEASE_ORDER",
+  "synthetic_event_stream_sha256": "829fce0e07aba11f2ea9344839d45b06cafb43215bc7c41933fb52ea9c67e245",
+  "terminal_status": "cancelled",
+  "trace": [
+    {
+      "done": false,
+      "event": "future_done_check"
+    },
+    {
+      "event": "executor_event_dequeued",
+      "row_event": "typed_observation"
+    },
+    {
+      "done": false,
+      "event": "future_done_check"
+    },
+    {
+      "event": "typed_observation_monitored",
+      "future_pending": true,
+      "sequence": 41
+    },
+    {
+      "event": "planner_interrupt_entered",
+      "future_pending": true
+    },
+    {
+      "command": {
+        "id": "cover-0",
+        "op": "cancel"
+      },
+      "event": "executor_command_written"
+    },
+    {
+      "event": "planner_interrupt_transport_sent"
+    },
+    {
+      "event": "executor_event_dequeued",
+      "row_event": "terminal"
+    },
+    {
+      "event": "cleanup_stage",
+      "stage": "planner_result_validation"
+    }
+  ]
+}
