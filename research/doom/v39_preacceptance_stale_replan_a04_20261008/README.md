@@ -21,6 +21,10 @@
 From repository root:
 
 ```powershell
-python -B research/doom/v39_preacceptance_stale_replan_a04_20261008/run_modes.py
-python -B research/doom/v39_preacceptance_stale_replan_a04_20261008/verify.py
+$resultsDir = Join-Path $env:TEMP ("v39-a04-" + [guid]::NewGuid().ToString("N"))
+python -B research/doom/v39_preacceptance_stale_replan_a04_20261008/run_modes.py --output-dir $resultsDir
+python -B research/doom/v39_preacceptance_stale_replan_a04_20261008/verify.py --results-dir $resultsDir
 ```
+
+
+The runner requires a fresh output directory outside this package and refuses an existing directory before starting the candidate. The verification command checks the replay output against the committed first-run bytes while separately verifying the retained package hashes. Run `python -B -m unittest research/doom/v39_preacceptance_stale_replan_a04_20261008/test_run_modes.py` for the output-safety regressions; these tests do not invoke the candidate.
