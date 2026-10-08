@@ -1,5 +1,7 @@
 # Research workspace
 
+- [Issue #8581 T0 A01 raw-artifact bypass](analysis/raw_artifact_bypass_8581_t0_a01_20261009/README.md) — `HOLD_AUDITOR_FAILURE`; candidate ran once, independent auditor failed before output, first outcome retained with no retry.
+
 This directory is the research workspace and retained evidence record for Agent Interface. Directories represent analyses, experiments, mechanisms, fixtures, audits, or historical work; they are **not product versions** and their names alone do not imply promotion.
 
 For claims and scientific disposition, start with the top-level [research index](../RESEARCH.md).

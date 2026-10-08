@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8581 T0 A01 raw-artifact bypass](raw_artifact_bypass_8581_t0_a01_20261009/REPORT.md) — `HOLD_AUDITOR_FAILURE`: frozen candidate emitted four cells/88 events once; the independent auditor exited 1 before producing an audit. First output and exact traceback retained; no retries or scientific inference.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.

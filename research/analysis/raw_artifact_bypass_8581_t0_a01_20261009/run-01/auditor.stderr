@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "research/analysis/raw_artifact_bypass_8581_t0_a01_20261009/auditor.py", line 137, in <module>
+    main()
+  File "research/analysis/raw_artifact_bypass_8581_t0_a01_20261009/auditor.py", line 121, in main
+    mutation_rejections = {name: bool(validate(mutated, reconstructed)) for name, mutated in mutations.items()}
+  File "research/analysis/raw_artifact_bypass_8581_t0_a01_20261009/auditor.py", line 71, in validate
+    if set(raw.get("cells", {})) != set(reconstructed):
+AttributeError: 'bool' object has no attribute 'get'
