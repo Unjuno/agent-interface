@@ -1,0 +1,208 @@
+"""Independent readback audit of retained batch-sample-custody evidence."""
+from __future__ import annotations
+
+import hashlib
+import json
+import subprocess
+from pathlib import Path
+
+JOB = Path(__file__).resolve().parents[1]
+REPO = JOB.parent / "batch-sample-custody-repo-e0cc-20261005"
+CASES = {
+    "drop-39-error-False": {39: True, 38: False, "pending": False},
+    "drop-38-error-False": {39: False, 38: True, "pending": False},
+    "drop-39-error-True": {39: True, 38: False, "pending": True},
+}
+
+
+def sha(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def jsonl(path: Path) -> list[dict]:
+    return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+
+
+def check(name: str, ok: bool, **details) -> dict:
+    return {"name": name, "pass": bool(ok), **details}
+
+
+def audit_run(run_name: str) -> tuple[dict, list[dict]]:
+    run = JOB / run_name
+    receipt = json.loads((run / "receipt.json").read_text())
+    out_path, err_path = run / "stdout.txt", run / "stderr.txt"
+    rows = jsonl(out_path)
+    failures = []
+    if receipt.get("stdout_sha256") != sha(out_path):
+        failures.append("stdout_sha256")
+    if receipt.get("stderr_sha256") != sha(err_path):
+        failures.append("stderr_sha256")
+    if receipt.get("exit_code") != (0 if run_name in ("green-v1", "adjacent-v1") else 1):
+        failures.append("exit_code")
+    trace_hashes = receipt.get("traces", {})
+    for name, digest in trace_hashes.items():
+        p = run / "traces" / name
+        if not p.is_file() or sha(p) != digest:
+            failures.append("trace:" + name)
+    return {"receipt_failures": failures, "receipt": receipt}, rows
+
+
+def main() -> None:
+    checks = []
+    base = json.loads((JOB / "base-source-manifest.json").read_text())
+    base_files = base["files"]
+    red_map = json.loads((JOB / "red-v1" / "sources.json").read_text())
+    green_map = json.loads((JOB / "green-v1" / "sources.json").read_text())
+    adjacent_map = json.loads((JOB / "adjacent-v1" / "sources.json").read_text())
+    source_file = "research/live_control/input_owner_v12.py"
+    test_file = "research/live_control/test_input_owner_v12_batch_sample_custody.py"
+    base_errors = [p for p, v in base_files.items() if red_map.get(p) != v["sha256"]]
+    green_deltas = {p: value for p, value in green_map.items()
+                    if base_files.get(p, {}).get("sha256") != value}
+    adjacent_deltas = {p: value for p, value in adjacent_map.items()
+                       if base_files.get(p, {}).get("sha256") != value}
+    checks.append(check(
+        "source_maps_bind_base_and_patch_only_owner_plus_new_test",
+        len(base_files) == 56 and not base_errors
+        and set(green_deltas) == {source_file, test_file}
+        and set(adjacent_deltas) == {source_file, test_file}
+        and red_map[source_file] == base_files[source_file]["sha256"]
+        and green_map[source_file] == adjacent_map[source_file],
+        baseline_entry_count=len(base_files), baseline_errors=base_errors,
+        green_changed_paths=sorted(green_deltas),
+        adjacent_changed_paths=sorted(adjacent_deltas),
+        baseline_owner_sha256=red_map.get(source_file),
+        patched_owner_sha256=green_map.get(source_file),
+        new_test_sha256=green_map.get(test_file)))
+
+    before_path = JOB / "source-before.py.txt"
+    checks.append(check(
+        "captured_before_source_matches_base_pin",
+        sha(before_path) == base_files[source_file]["sha256"],
+        before_sha256=sha(before_path), base_sha256=base_files[source_file]["sha256"]))
+    candidate_owner = REPO / source_file
+    candidate_test = REPO / test_file
+    checks.append(check(
+        "candidate_source_and_test_match_green_runtime_pins",
+        candidate_owner.is_file() and candidate_test.is_file()
+        and sha(candidate_owner) == green_map[source_file]
+        and sha(candidate_test) == green_map[test_file],
+        candidate_owner_sha256=sha(candidate_owner) if candidate_owner.is_file() else None,
+        candidate_test_sha256=sha(candidate_test) if candidate_test.is_file() else None))
+
+    result_sets = {}
+    for run_name in ("red-v1", "green-v1", "adjacent-v1"):
+        receipt_data, rows = audit_run(run_name)
+        result_sets[run_name] = rows
+        if run_name == "red-v1":
+            expected_codes = {"drop-39-error-False", "drop-38-error-False", "drop-39-error-True"}
+            expected_exit = 1
+        elif run_name == "green-v1":
+            expected_codes = {"drop-39-error-False", "drop-38-error-False", "drop-39-error-True"}
+            expected_exit = 0
+        else:
+            expected_codes = set()
+            expected_exit = 0
+        checks.append(check(
+            run_name + "_receipt_and_log_hashes",
+            not receipt_data["receipt_failures"]
+            and receipt_data["receipt"]["exit_code"] == expected_exit
+            and (len(rows) == len(expected_codes) if expected_codes else len(rows) == 0),
+            failures=receipt_data["receipt_failures"],
+            exit_code=receipt_data["receipt"]["exit_code"],
+            stdout_sha256=receipt_data["receipt"]["stdout_sha256"],
+            stderr_sha256=receipt_data["receipt"]["stderr_sha256"]))
+
+    pre = {row["case"]: row for row in result_sets["red-v1"]}
+    post = {row["case"]: row for row in result_sets["green-v1"]}
+    red_mismatches, green_errors = [], []
+    for case, expectation in CASES.items():
+        before, after = pre.get(case), post.get(case)
+        if before is None or after is None:
+            red_mismatches.append(case + ":missing")
+            green_errors.append(case + ":missing")
+            continue
+        expected_initial_by_code = {38: expectation[38], 39: expectation[39]}
+        for label, row, errors in (("red", before, red_mismatches), ("green", after, green_errors)):
+            releases = row.get("rows", [])
+            by_code = {r.get("keycode"): r for r in releases}
+            if set(by_code) != {38, 39}:
+                errors.append(case + ":keys")
+                continue
+            first_samples = {code: by_code[code]["server_keyup_attempts"][0].get("keymap_sampled_ns")
+                             for code in (38, 39)}
+            if (first_samples[38] != first_samples[39]
+                    or first_samples[38] != 101200):
+                errors.append(case + ":initial_sample_timestamp")
+            for code, expected_down in expected_initial_by_code.items():
+                initial = by_code[code]["server_keyup_attempts"][0]
+                if initial.get("server_key_down_after") is not expected_down:
+                    errors.append(case + f":key{code}_initial_state")
+            if row.get("state_after_batch", {}).get("release_pending") is not expectation["pending"]:
+                errors.append(case + ":release_pending")
+            if row.get("following_press_count") != 0:
+                errors.append(case + ":subsequent_keypress")
+            if not row.get("owner_stopped") or row.get("final_fake_keys_down") != []:
+                errors.append(case + ":teardown_or_final_fake_state")
+            if row.get("real_x11") is not False or row.get("physical_verification_authoritative") is not False:
+                errors.append(case + ":scope_flags")
+            if row.get("clock") != "synthetic monotonic nanosecond labels; no latency inference":
+                errors.append(case + ":clock_scope")
+        trace = after.get("trace", [])
+        initial_ups = [i for i, item in enumerate(trace)
+                       if item[0] == "key_event" and len(item) > 2 and item[1] == 3]
+        if len(initial_ups) < 2 or any(
+                item[0] == "query_keymap"
+                for item in trace[initial_ups[0] + 1:initial_ups[1]]):
+            green_errors.append(case + ":query_between_original_ups")
+    checks.append(check(
+        "red_reproduces_first_key_sample_custody_and_error_contamination",
+        red_mismatches == ["drop-39-error-False:initial_sample_timestamp",
+                           "drop-39-error-True:initial_sample_timestamp",
+                           "drop-39-error-True:key38_initial_state"],
+        failures=red_mismatches))
+    checks.append(check(
+        "green_keeps_shared_initial_state_error_isolation_and_fail_closed_latch",
+        not green_errors,
+        failures=green_errors,
+        outcomes={case: {
+            "release_pending": row["state_after_batch"]["release_pending"],
+            "following_down_error": row["following_down_error"],
+            "following_press_count": row["following_press_count"],
+            "final_fake_keys_down": row["final_fake_keys_down"],
+        } for case, row in post.items()}))
+
+    adjacent_rows = result_sets["adjacent-v1"]
+    adjacent_stderr = (JOB / "adjacent-v1" / "stderr.txt").read_text()
+    checks.append(check(
+        "adjacent_regression_suite_is_six_passes",
+        len(adjacent_rows) == 0 and "Ran 6 tests" in adjacent_stderr and "OK" in adjacent_stderr,
+        suite_log=adjacent_stderr))
+
+    status = subprocess.run(["git", "status", "--short"], cwd=REPO, check=True,
+                            capture_output=True, text=True).stdout.splitlines()
+    diff = subprocess.run(["git", "diff", "--", source_file], cwd=REPO, check=True,
+                          capture_output=True, text=True).stdout
+    checks.append(check(
+        "production_diff_is_only_common_sample_variable_separation",
+        status == [" M research/live_control/input_owner_v12.py",
+                   "?? research/live_control/test_input_owner_v12_batch_sample_custody.py"]
+        and "batch_bitmap" in diff and "batch_sample_error" in diff
+        and "batch_sampled_ns" in diff,
+        status=status,
+        production_patch="immutable batch_* common post-sample values; retry locals unchanged"))
+
+    output = {
+        "schema": "batch-sample-custody-independent-readback-v1",
+        "base": base["base"],
+        "checks": checks,
+        "pass": all(item["pass"] for item in checks),
+        "scope_limit": "retained fake-X traces and source/receipt pins only; no reruns, real X11, physical input, game, model, or latency qualification",
+    }
+    out_path = Path(__file__).with_name("audit-result-v2.json")
+    out_path.write_text(json.dumps(output, indent=2, sort_keys=True) + "\n")
+    print(json.dumps({"pass": output["pass"], "checks": checks}, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

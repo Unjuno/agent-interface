@@ -191,24 +191,23 @@ class InputOwner:
                     'sync_error': sync_error,
                 }]
 
-            # Keep the shared initial snapshot separate from per-key retry samples.
             try:
-                batch_bitmap = d.query_keymap()
-                batch_sample_error = None
-                batch_sampled_ns = time.perf_counter_ns()
+                bitmap = d.query_keymap()
+                sample_error = None
+                sampled_ns = time.perf_counter_ns()
             except Exception as exc:
-                batch_bitmap = None
-                batch_sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
-                batch_sampled_ns = time.perf_counter_ns()
+                bitmap = None
+                sample_error = {"type": type(exc).__name__, "message": str(exc)[:200]}
+                sampled_ns = time.perf_counter_ns()
             receipts = []
             for key, code in codes:
                 attempts = attempt_rows[code]
                 server_down = (
-                    bool(batch_bitmap[code // 8] & (1 << (code % 8)))
-                    if batch_bitmap is not None else None)
-                attempts[0]['keymap_sampled_ns'] = batch_sampled_ns
+                    bool(bitmap[code // 8] & (1 << (code % 8)))
+                    if bitmap is not None else None)
+                attempts[0]['keymap_sampled_ns'] = sampled_ns
                 attempts[0]['server_key_down_after'] = server_down
-                attempts[0]['keymap_after_error'] = batch_sample_error
+                attempts[0]['keymap_after_error'] = sample_error
                 while server_down is True and len(attempts) < 3:
                     started_ns = time.perf_counter_ns()
                     release_error = None
@@ -416,7 +415,6 @@ class InputOwner:
             record = dict(event='owner_release', reason=reason, verified=not down and not buttons_down and not unknown_keys and not key_state_errors, buttons_down=buttons_down,
                           keys_down=down, keys_unknown=unknown_keys, key_state_errors=key_state_errors, verified_ns=time.perf_counter_ns(),
                           valid_until_ns=active.deadline if active else None,
-                          intent_token=getattr(active, 'intent_token', None) if active else None,
                           key_release_attempts=key_release_attempts,
                           key_release_intervals_ns=[
                               {"keycode": int(code), "interval_ns": [
@@ -551,8 +549,6 @@ class InputOwner:
                                 button = 4 if key > 0 else 5
                                 for _ in range(abs(key)):
                                     pointer_guard(lease,x,y)
-                                    # Track before emission: delivery may precede an exception.
-                                    touched_buttons.add(button)
                                     xtest.fake_input(d,X.ButtonPress,button)
                                     xtest.fake_input(d,X.ButtonRelease,button)
                             d.sync()
@@ -583,7 +579,7 @@ class InputOwner:
                             held[code] = lease
                             xtest.fake_input(d, X.KeyPress, code)
                             d.sync()
-                            result = dict(event='input_admission', key=key, keycode=code, admitted_ns=admitted,
+                            result = dict(event='input_admission', key=key, admitted_ns=admitted,
                                           input_ack_ns=time.perf_counter_ns(), valid_until_ns=lease.deadline)
                         else:
                             # Cleanup from an old intent must never release a newer hold.
