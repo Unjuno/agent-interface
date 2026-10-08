@@ -143,6 +143,25 @@ test('an exception during neutral-release validation blocks later input',async()
   await assert.rejects(caller.call('interface_guarded_input',{alias:'x',interaction:'click'}),/stopped/);
 });
 
+for (const [field, value] of [
+  ['keys_down', ''],
+  ['buttons_down', {length: 0}],
+]) test('malformed neutral-release '+field+' value latches STOP before another input', async () => {
+  const meta = {status: 'completed', image_status: 'image', result: {execution: {releases: [
+    {verified: true, keys_down: [], buttons_down: [], [field]: value},
+  ]}}};
+  const reply = {result: {isError: false, content: [{type: 'text', text: JSON.stringify(meta)}]}};
+  let calls = 0;
+  const caller = createPrimaryCaller({sendPresented: async () => { calls++; return reply; }},
+    'guarded-local', {});
+  const args = {alias: 'x', interaction: 'click'};
+
+  assert.equal(await caller.call('interface_guarded_input', args), reply);
+  assert.ok(caller.state().stopped);
+  await assert.rejects(caller.call('interface_guarded_input', args), /stopped/);
+  assert.equal(calls, 1);
+});
+
 test('real host text-only declared refusal is presented and acknowledged without stopping',async()=>{
   const directory=join(await mkdtemp(join(tmpdir(),'primary-caller-text-')),'host');
   const fixture="require('node:readline').createInterface({input:process.stdin}).on('line',line=>{const r=JSON.parse(line); console.log(JSON.stringify({id:r.id,tool:r.tool,status:'returned',next_id:r.id+1,result:{isError:true,content:[{type:'text',text:JSON.stringify({status:'refused',replay_allowed:false,error:'KeyError(4)',input_dispatched:false,session:{binding_revision:1,recovery_required:false}})}]}}));});";
