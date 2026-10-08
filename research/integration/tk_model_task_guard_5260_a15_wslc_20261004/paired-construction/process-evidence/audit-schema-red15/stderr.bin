@@ -1,0 +1,51 @@
+test_exact_actual_file_scores_completed_without_producer_outcome (test_file_audit.FileAuditTests.test_exact_actual_file_scores_completed_without_producer_outcome) ... ok
+test_malformed_event_kind_is_schema_error_not_exact_file (test_file_audit.FileAuditTests.test_malformed_event_kind_is_schema_error_not_exact_file) ... FAIL
+test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt (test_file_audit.FileAuditTests.test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt) ... 
+  test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt (test_file_audit.FileAuditTests.test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt) (field='token') ... FAIL
+  test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt (test_file_audit.FileAuditTests.test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt) (field='pid') ... FAIL
+  test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt (test_file_audit.FileAuditTests.test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt) (field='text') ... FAIL
+test_no_file_and_no_save_is_unfinished_not_completion (test_file_audit.FileAuditTests.test_no_file_and_no_save_is_unfinished_not_completion) ... ok
+test_tampered_file_is_custody_error_even_with_desired_text (test_file_audit.FileAuditTests.test_tampered_file_is_custody_error_even_with_desired_text) ... ok
+test_wrong_recipient_key_is_detected_even_if_decoy_text_unchanged (test_file_audit.FileAuditTests.test_wrong_recipient_key_is_detected_even_if_decoy_text_unchanged) ... ok
+test_wrong_saved_text_is_wrong_file_not_completion (test_file_audit.FileAuditTests.test_wrong_saved_text_is_wrong_file_not_completion) ... ok
+
+======================================================================
+FAIL: test_malformed_event_kind_is_schema_error_not_exact_file (test_file_audit.FileAuditTests.test_malformed_event_kind_is_schema_error_not_exact_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 86, in test_malformed_event_kind_is_schema_error_not_exact_file
+    with self.assertRaisesRegex(ValueError, 'SCHEMA_INVALID'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt (test_file_audit.FileAuditTests.test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt) (field='token')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 80, in test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt
+    with self.assertRaisesRegex(ValueError, 'SCHEMA_INVALID'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt (test_file_audit.FileAuditTests.test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt) (field='pid')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 80, in test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt
+    with self.assertRaisesRegex(ValueError, 'SCHEMA_INVALID'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt (test_file_audit.FileAuditTests.test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt) (field='text')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-x20\_research_6003_a01_20261003\research\integration\tk_model_task_guard_5260_a15_wslc_20261004\test_file_audit.py", line 80, in test_malformed_identity_or_text_cannot_score_exact_even_with_matching_receipt
+    with self.assertRaisesRegex(ValueError, 'SCHEMA_INVALID'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.141s
+
+FAILED (failures=4)

@@ -1,0 +1,87 @@
+{
+  "allocation": "CLARIFICATION-TIMING-5959-T0-A01-20261008",
+  "issue": 5959,
+  "frozen_commit_at_execution": "751abbd3a891d44d1364a4d9b4d8d7e028796966",
+  "published_freeze_commit": "9727e8800b7056448f2b6990bbad448417734076",
+  "published_main": "1c7e05d60438137e7f2162075ef2bd931aa5bba7",
+  "post_rebase_source_hash_verification": {
+    "files_checked": 11,
+    "mismatches": 0
+  },
+  "rebase_note": "Formal execution used the local freeze commit before main advanced. Main then gained the unrelated #5826 analysis-index entry; the branch was rebased to preserve it. The published freeze commit has a different whole-tree hash, but the 11 frozen experiment package files remain byte-identical by recorded hash.",
+  "base_main": "bfcc14e08fbfe5f2f04cd0237d13559e5d62538b",
+  "formal_invocations": {
+    "candidate": 1,
+    "auditor": 1,
+    "retry": 0
+  },
+  "commands": {
+    "templates": "RUN_COMMANDS.md",
+    "candidate": "docker run --name ai5959-t0-a01-candidate-20261008 --pull=never --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus=0.5 --memory=256m --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges --user 65532:65532 --workdir /tmp; mount candidate.js and candidate_inputs.json individually read-only; node /tmp/candidate.js --formal /tmp/candidate_inputs.json",
+    "auditor": "docker run --name ai5959-t0-a01-auditor-20261008 --pull=never --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus=0.5 --memory=256m --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges --user 65532:65532; mount frozen package read-only; node /pkg/auditor.js --formal /pkg /pkg/formal_01/RAW.json"
+  },
+  "candidate": {
+    "exit": 0,
+    "container_id": "11a2e32ce9a0b959bff4ac6ba3311bdf6cf75399128f234e74c8c7ba04714278",
+    "container_name": "ai5959-t0-a01-candidate-20261008",
+    "started_at": "2026-10-08T04:25:02.458256769Z",
+    "finished_at": "2026-10-08T04:25:04.272383878Z",
+    "raw_path": "formal_01/RAW.json",
+    "raw_bytes": 8764,
+    "raw_sha256": "9ebe50b676dcad83d58adf2cf1404c42a95a8b366f38f6df2b9618b898c8434f",
+    "stderr_path": "formal_01/STDERR.log",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidate_oracle_mounted": false
+  },
+  "auditor": {
+    "exit": 0,
+    "container_id": "11e784343d2dd58cba9adaef998b10be857e2cda977bf75563a71ed5194a687f",
+    "container_name": "ai5959-t0-a01-auditor-20261008",
+    "started_at": "2026-10-08T04:25:18.086885878Z",
+    "finished_at": "2026-10-08T04:25:18.662095576Z",
+    "audit_path": "audit_01/AUDIT.json",
+    "audit_bytes": 14803,
+    "audit_sha256": "61965e6971d1d162d14aa193ac2d69c810add6b10d3d288ca048dcc1d20100c9",
+    "stderr_path": "audit_01/STDERR.log",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "disposition": "PASS_METHOD_SCOPED",
+    "requests_reconstructed": 15,
+    "policy_rows_reconstructed": 45,
+    "mandatory_events_reconstructed": 1,
+    "all_gate_checks": true
+  },
+  "docker": {
+    "context": "orbstack",
+    "server": "29.4.0",
+    "image": "node@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+    "image_id": "sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80",
+    "platform": "linux/arm64",
+    "container_node": "v26.10.0",
+    "recorded_hostconfig": {
+      "readonly_rootfs": true,
+      "network_mode": "none",
+      "nano_cpus_requested": 500000000,
+      "memory_bytes_requested": 268435456,
+      "pids_limit_requested": 32,
+      "user": "65532:65532",
+      "cap_drop": [
+        "ALL"
+      ],
+      "candidate_mounts": [
+        "/tmp/candidate.js:read-only",
+        "/tmp/candidate_inputs.json:read-only"
+      ],
+      "auditor_mounts": [
+        "/pkg:read-only"
+      ]
+    },
+    "limit_enforcement": "requested configuration recorded; enforcement not independently measured"
+  },
+  "post_run_freeze_hash_verification": {
+    "files_checked": 11,
+    "mismatches": 0
+  },
+  "disposition_scope": "Synthetic finite event semantics and authored cost-scoring method only. No participant, GUI, model, runtime scheduler, live service, or human interruption outcome."
+}

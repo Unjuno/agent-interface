@@ -1,0 +1,25 @@
+"""Unpack exact text members as inert files within this new owned review directory."""
+from pathlib import Path,PurePosixPath
+import json,hashlib
+r=Path(__file__).resolve().parent
+specs=[
+('DECODED_PACKET.json','packet',['CHANGED_IMAGES.json','DELIVERY.json','FIRST_CONSTRUCTION_CORRECTION.json','PROPOSAL.canonical.json','SOURCE_AND_RAW_CHECK.json','delivery-diff-check.stderr.txt','delivery-diff-check.stdout.txt','green-first/FREEZE.json','green-first/RECEIPT.json','red-first/FREEZE.json','red-first/RECEIPT.json']),
+('DECODED_SUPPLEMENT.json','supplement',['FIRST_PROPOSAL_DISPLAY_CORRECTION.json','PUBLIC_READBACK.json','run_green_actual.py','run_red_actual.py','source-push/RECEIPT.json','source-push/stderr.txt','source-push/stdout.txt'])]
+for src,dst,names in specs:
+ d=json.loads((r/src).read_bytes());assert set(d)==set(names)
+ root=r/dst;root.mkdir(exist_ok=False);rows=[]
+ for name in names:
+  p=PurePosixPath(name);assert not p.is_absolute() and '..' not in p.parts and all(':' not in x for x in p.parts)
+  value=d[name];assert type(value) is str;b=value.encode('utf-8')
+  path=root.joinpath(*p.parts);path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(b)
+  rows.append({'path':name,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()})
+ (r/(dst.upper()+'_UNPACK.json')).write_text(json.dumps(rows,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+ print(json.dumps({'packet':src,'members':len(rows),'bytes':sum(x['bytes'] for x in rows)}))
+proposal=json.loads((r/'PROPOSAL.canonical.json').read_bytes())
+canonical=json.dumps(proposal,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+assert (r/'packet/PROPOSAL.canonical.json').read_bytes()==canonical
+assert hashlib.sha256(canonical).hexdigest()=='6630528f72c4d6fd668aa87a2525c227c4284fceab3bc332a5e18e3243ed4f9d'
+for phase in ['red-first','green-first']:
+ f=json.loads((r/'packet'/phase/'FREEZE.json').read_bytes())
+ print(json.dumps({'phase':phase,'freeze_keys':list(f),'first_pin':f.get('source_pins',[None])[0],'receipt':json.loads((r/'packet'/phase/'RECEIPT.json').read_bytes())}))
+

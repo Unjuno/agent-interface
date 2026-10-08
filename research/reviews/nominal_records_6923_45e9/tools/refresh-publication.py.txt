@@ -1,0 +1,46 @@
+"""Retain first tuple and add actual second named tuple after disjoint main drift."""
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent;ws=root.parent.parent;repo=root.parent/'agent-interface';public=ws/'outputs/review-6923'
+source=(root/'prepare-current.py').read_text(encoding='utf-8').replace("out=root/'current-application'","out=root/'current-application-v2'").replace('4cd7649777c8a042d486b2058fd1bcbc18a90727','636986a804a6004cd047db7e8cc5e62c02d585d8')
+(root/'prepare-current-v2.py').write_text(source,encoding='utf-8')
+started=datetime.now(timezone.utc).isoformat();p=subprocess.run([sys.executable,'-B',str(root/'prepare-current-v2.py')],capture_output=True,timeout=25)
+(root/'refresh.stdout.txt').write_bytes(p.stdout);(root/'refresh.stderr.txt').write_bytes(p.stderr)
+def sha(b):return hashlib.sha256(b).hexdigest()
+(root/'REFRESH_RECEIPT.json').write_text(json.dumps({'started_utc':started,'ended_utc':datetime.now(timezone.utc).isoformat(),
+ 'command':[sys.executable,'-B',str(root/'prepare-current-v2.py')],'exit_code':p.returncode,'stdout_sha256':sha(p.stdout),'stderr_sha256':sha(p.stderr),
+ 'preceding_command_tool_errors':'PowerShell quoting made initial Python -c creation fail SyntaxError; following execution found no file. Neither reached candidate/test/ref. Both outputs remain in conversation.'},indent=2)+'\n',encoding='utf-8')
+assert p.returncode==0,p.stderr
+provenance=json.loads((public/'PROVENANCE.json').read_bytes())
+def add(file,relative):
+ before=file.read_bytes();after=before
+ for text in (str(ws),os.environ['USERPROFILE']):
+  after=after.replace(text.replace('\\','\\\\').encode(),b'<REVIEWER_PRIVATE_PATH>').replace(text.encode(),b'<REVIEWER_PRIVATE_PATH>')
+ dest=public/relative;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(after)
+ provenance['artifacts'].append({'path':relative,'original_sha256':sha(before),'public_sha256':sha(after),
+  'private_prefix_redacted':before!=after,'original_retained':file.read_bytes()==before})
+for file in sorted((root/'current-application-v2').iterdir(),key=lambda f:f.name):add(file,'current-application-v2/'+file.name)
+for name in ('REFRESH_RECEIPT.json','refresh.stdout.txt','refresh.stderr.txt'):add(root/name,name)
+for name in ('prepare-current-v2.py','refresh-publication.py'):add(root/name,'tools/'+name+'.txt')
+new=json.loads((root/'current-application-v2/CURRENT_TUPLE.json').read_bytes())
+provenance['current_tuple_refresh']={'main':new['current_main'],'planned_tree':new['planned_tree'],'first_tuple_retained':True,'live_tests_repeated':False}
+(public/'PROVENANCE.json').write_text(json.dumps(provenance,indent=2)+'\n',encoding='utf-8')
+with (public/'README.md').open('a',encoding='utf-8',newline='\n') as f:
+ f.write('\nBefore publication, main advanced by PR6931 outside the used kernel closure.\nSecond actual named preparation at main'+new['current_main']+' yields tree'+new['planned_tree']+'.\nExact38 delta/47 images still match; kernel/package/workflow drift stays zero.\nThe first tuple and all original tests remain intact. See current-application-v2.\nNo fresh live test, author deck, main reference or application was performed.\n')
+items=sorted((f for f in public.rglob('*') if f.is_file() and f.name!='SHA256SUMS'),key=lambda f:f.relative_to(public).as_posix())
+(public/'SHA256SUMS').write_text(''.join(sha(f.read_bytes())+'  '+f.relative_to(public).as_posix()+'\n' for f in items),encoding='utf-8',newline='\n')
+record=json.loads((ws/'outputs/review-6923-publication.json').read_bytes());ref=record['branch'];previous=record['commit']
+primary=(repo/'.git/index').read_bytes();env=dict(os.environ,GIT_INDEX_FILE=str(root/'refresh.index'),GIT_NO_LAZY_FETCH='1')
+def git(*a,data=None):return subprocess.check_output(['git',*a],cwd=repo,env=env,input=data)
+assert git('rev-parse',ref).decode().strip()==previous;git('read-tree',previous)
+for file in sorted((f for f in public.rglob('*') if f.is_file()),key=lambda f:f.relative_to(public).as_posix()):
+ path=record['prefix']+'/'+file.relative_to(public).as_posix();b=file.read_bytes();oid=git('hash-object','-w','--stdin',data=b).decode().strip()
+ git('update-index','--add','--cacheinfo','100644',oid,path)
+changed=git('diff','--cached','--name-only',previous).decode().splitlines();assert all(x.startswith(record['prefix']+'/') for x in changed)
+tree=git('write-tree','--missing-ok').decode().strip();commit=git('commit-tree',tree,'-p',previous,data=b'review(#6923): retain refreshed disjoint main tuple [skip ci]\n').decode().strip()
+git('update-ref',ref,commit,previous);assert primary==(repo/'.git/index').read_bytes()
+record.update({'commit':commit,'tree':tree,'proof_previous_commit':previous,'files':len(items)+1,
+ 'bytes':sum(f.stat().st_size for f in public.rglob('*') if f.is_file()),'second_current_main':new['current_main'],'second_planned_tree':new['planned_tree']})
+(ws/'outputs/review-6923-publication.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8')
+print(json.dumps(record));print(p.stdout.decode('utf-8'))

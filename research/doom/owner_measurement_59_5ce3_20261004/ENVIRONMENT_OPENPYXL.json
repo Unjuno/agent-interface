@@ -1,0 +1,19 @@
+{
+  "scope": "dependency installation only; no game/native/model",
+  "parent_image": "sha256:375118d626e922682598f45b5aa9eeb2cfc78ae8e9bb61be67e7f9713e981cf7",
+  "prepared_image": "sha256:200f0ba1c5b6689261b30f1cc89c26da1b8c8b522fbcbe27b688d55ea67348c5",
+  "container": "owner-import-env-openpyxl-5ce3-20261004",
+  "command": ["-m", "pip", "install", "--only-binary=:all:", "--no-cache-dir", "--report", "/opt/owner-measurement-openpyxl-report.json", "openpyxl==3.1.5"],
+  "started_at": "2026-10-03T20:41:44.762937187Z",
+  "finished_at": "2026-10-03T20:41:45.566337139Z",
+  "exit_code": 0,
+  "oom_killed": false,
+  "packages": [
+    {"name": "openpyxl", "version": "3.1.5", "sha256": "5282c12b107bffeef825f4617dc029afaf41d0ea60823bbb665ef3079dc79de2"},
+    {"name": "et_xmlfile", "version": "2.0.0", "sha256": "7a91720bc756843502c3b7504c77b8fe44217c85c537d85037f0f536151b2caa"}
+  ],
+  "metadata_source": "https://pypi.org/pypi/openpyxl/3.1.5/json",
+  "transitive_dependency_frozen_before_resolution": false,
+  "resource_enforcement_measured": false,
+  "image_pushed": false
+}

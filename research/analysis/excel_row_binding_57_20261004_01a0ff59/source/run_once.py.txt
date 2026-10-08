@@ -1,0 +1,10 @@
+import json,hashlib,os
+from pathlib import Path
+from capture_v2 import capture
+P=Path(__file__).resolve().parent
+assert not (P/'FREEZE.json').exists(),'invoked already'
+python=P.parent/'venv/Scripts/python.exe'
+freeze={'id':'excel-row-binding-0820-01','question':'Issue57/2789 stale target binding: does a cached spreadsheet row address preserve business-record identity after a native row insertion?','kind':'new ordinary owned native application API experiment; not integrated desktop acceptance','delta':'actual Microsoft Excel workbook/formula/save effects, new row insertion; not old Calc/native/input-binding actor replay','H':'bounded visible ID revalidation updates intended row while cached row writes new unrelated record','T':'one cached then one ID arm, fresh own workbook each in verified-new invisible Excel process','D':'retain first result; qualified counterexample if baseline wrong record and ID route exactly correct with one edit/save each; STOP if PID preexisting/workbooks present, missing/duplicate ID, cleanup/error/missing artifacts; no retry','C':'known literal task/serial own mutation, existing simple ID search; no model necessity/novel algorithm','U':'no physical input/release, concurrent writer, general semantics, efficiency or six-task spine claim','pins':{n:hashlib.sha256((P/n).read_bytes()).hexdigest() for n in ['actor.py','run_once.py','capture_v2.py']},'runtime_sha256':hashlib.sha256(python.read_bytes()).hexdigest(),'order':['cached_row','id_revalidate'],'model_calls':0,'resources':'new Excel COM PID absent before, zero initial workbooks; own files only','retry':0,'direct_driver_timeout_s':45}
+(P/'FREEZE.json').write_text(json.dumps(freeze,indent=2))
+r=capture([str(python),'-X','utf8',str(P/'actor.py')],dict(os.environ),P/'driver',45)
+(P/'DRIVER_RECEIPT.json').write_text(json.dumps(r,indent=2));print(json.dumps({'exit':r['exit'],'timeout':r['timed_out'],'reaped':r['reaped']}))

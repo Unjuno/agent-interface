@@ -1,0 +1,1617 @@
+{
+  "arms": [
+    "fresh_reset",
+    "persistent_learner",
+    "stationary",
+    "frequency_sham",
+    "persistent_null"
+  ],
+  "blocks": [
+    {
+      "arm": "persistent_null",
+      "block_id": "b000",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b001",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b002",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b003",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b004",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": [
+        "positive_control",
+        "unauthorized_addon"
+      ]
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b005",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b006",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b007",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": [
+        "unauthorized_addon",
+        "positive_control"
+      ]
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b008",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b009",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": [
+        "unauthorized_addon",
+        "positive_control"
+      ]
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b010",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b011",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b012",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b013",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": [
+        "positive_control",
+        "unauthorized_addon"
+      ]
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b014",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": [
+        "positive_control",
+        "unauthorized_addon"
+      ]
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b015",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b016",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b017",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b018",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": [
+        "unauthorized_addon",
+        "positive_control"
+      ]
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b019",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": [
+        "positive_control",
+        "unauthorized_addon"
+      ]
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b020",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b021",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b022",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b023",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b024",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b025",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b026",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b027",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b028",
+      "replicate": 1,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b029",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b030",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b031",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b032",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b033",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b034",
+      "replicate": 0,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b035",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b036",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b037",
+      "replicate": 0,
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b038",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_schedule": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b039",
+      "replicate": 1,
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_schedule": [
+        "unauthorized_addon",
+        "positive_control"
+      ]
+    }
+  ],
+  "episodes": [
+    {
+      "arm": "persistent_null",
+      "block_id": "b000",
+      "episode_id": "b000-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b000",
+      "episode_id": "b000-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b001",
+      "episode_id": "b001-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b001",
+      "episode_id": "b001-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b002",
+      "episode_id": "b002-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b002",
+      "episode_id": "b002-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b003",
+      "episode_id": "b003-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b003",
+      "episode_id": "b003-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b004",
+      "episode_id": "b004-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": "positive_control"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b004",
+      "episode_id": "b004-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": "unauthorized_addon"
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b005",
+      "episode_id": "b005-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b005",
+      "episode_id": "b005-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b006",
+      "episode_id": "b006-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b006",
+      "episode_id": "b006-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b007",
+      "episode_id": "b007-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": "unauthorized_addon"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b007",
+      "episode_id": "b007-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": "positive_control"
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b008",
+      "episode_id": "b008-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b008",
+      "episode_id": "b008-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b009",
+      "episode_id": "b009-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": "unauthorized_addon"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b009",
+      "episode_id": "b009-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": "positive_control"
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b010",
+      "episode_id": "b010-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b010",
+      "episode_id": "b010-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b011",
+      "episode_id": "b011-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b011",
+      "episode_id": "b011-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b012",
+      "episode_id": "b012-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b012",
+      "episode_id": "b012-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b013",
+      "episode_id": "b013-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": "positive_control"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b013",
+      "episode_id": "b013-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": "unauthorized_addon"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b014",
+      "episode_id": "b014-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": "positive_control"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b014",
+      "episode_id": "b014-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": "unauthorized_addon"
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b015",
+      "episode_id": "b015-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b015",
+      "episode_id": "b015-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b016",
+      "episode_id": "b016-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b016",
+      "episode_id": "b016-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b017",
+      "episode_id": "b017-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b017",
+      "episode_id": "b017-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b018",
+      "episode_id": "b018-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": "unauthorized_addon"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b018",
+      "episode_id": "b018-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": "positive_control"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b019",
+      "episode_id": "b019-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": "positive_control"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b019",
+      "episode_id": "b019-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": "unauthorized_addon"
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b020",
+      "episode_id": "b020-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b020",
+      "episode_id": "b020-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b021",
+      "episode_id": "b021-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b021",
+      "episode_id": "b021-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b022",
+      "episode_id": "b022-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b022",
+      "episode_id": "b022-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b023",
+      "episode_id": "b023-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b023",
+      "episode_id": "b023-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b024",
+      "episode_id": "b024-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b024",
+      "episode_id": "b024-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b025",
+      "episode_id": "b025-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b025",
+      "episode_id": "b025-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b026",
+      "episode_id": "b026-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b026",
+      "episode_id": "b026-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b027",
+      "episode_id": "b027-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b027",
+      "episode_id": "b027-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b028",
+      "episode_id": "b028-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b028",
+      "episode_id": "b028-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b029",
+      "episode_id": "b029-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b029",
+      "episode_id": "b029-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b030",
+      "episode_id": "b030-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b030",
+      "episode_id": "b030-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b031",
+      "episode_id": "b031-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b031",
+      "episode_id": "b031-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b032",
+      "episode_id": "b032-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b032",
+      "episode_id": "b032-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b033",
+      "episode_id": "b033-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b033",
+      "episode_id": "b033-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b034",
+      "episode_id": "b034-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_learner",
+      "block_id": "b034",
+      "episode_id": "b034-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b035",
+      "episode_id": "b035-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b035",
+      "episode_id": "b035-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b036",
+      "episode_id": "b036-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "persistent_null",
+      "block_id": "b036",
+      "episode_id": "b036-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b037",
+      "episode_id": "b037-e0",
+      "episode_index": 0,
+      "replicate": 0,
+      "route": "plain",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": null
+    },
+    {
+      "arm": "stationary",
+      "block_id": "b037",
+      "episode_id": "b037-e1",
+      "episode_index": 1,
+      "replicate": 0,
+      "route": "effect_boundary",
+      "route_order": [
+        "plain",
+        "effect_boundary"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b038",
+      "episode_id": "b038-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_FAST",
+      "sham_assignment": null
+    },
+    {
+      "arm": "fresh_reset",
+      "block_id": "b038",
+      "episode_id": "b038-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": null
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b039",
+      "episode_id": "b039-e0",
+      "episode_index": 0,
+      "replicate": 1,
+      "route": "effect_boundary",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": "H_CHECKED",
+      "sham_assignment": "unauthorized_addon"
+    },
+    {
+      "arm": "frequency_sham",
+      "block_id": "b039",
+      "episode_id": "b039-e1",
+      "episode_index": 1,
+      "replicate": 1,
+      "route": "plain",
+      "route_order": [
+        "effect_boundary",
+        "plain"
+      ],
+      "seed_public_history": null,
+      "sham_assignment": "positive_control"
+    }
+  ],
+  "histories": [
+    "H_FAST",
+    "H_CHECKED"
+  ],
+  "orders": [
+    [
+      "plain",
+      "effect_boundary"
+    ],
+    [
+      "effect_boundary",
+      "plain"
+    ]
+  ],
+  "routes": [
+    "plain",
+    "effect_boundary"
+  ],
+  "schema": "unjuno.issue8135.t0.schedule.v1",
+  "seed": 20261006
+}

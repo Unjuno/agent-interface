@@ -1,0 +1,14 @@
+{
+  "schema": "issue59-health-invalidation-interrupt-composition-audit-v1",
+  "status": "PASS_CONSTRUCTION_COMPOSITION",
+  "checks": {
+    "frozen_source_identities": true,
+    "hard_health_crossing_reaches_current_cancel_helper": true,
+    "executor_cancel_precedes_interrupt_transport": true,
+    "empty_terminal_required_and_retained": true,
+    "invalidated_answer_rejected_after_completion": true,
+    "soft_change_does_not_interrupt": true,
+    "cancel_failure_preserved_after_interrupt_attempt": true
+  },
+  "result_sha256": "8f8407b3febb543e1e8a2e8750de223468b64874d31d1a0d633500664430f9e1"
+}

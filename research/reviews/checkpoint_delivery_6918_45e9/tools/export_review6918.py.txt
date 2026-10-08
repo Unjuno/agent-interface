@@ -1,0 +1,76 @@
+"""Exact scoped promisor export; no Git archive or scientific execution."""
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+workspace = Path(__file__).resolve().parent.parent
+repo = workspace / "work/agent-interface"
+root = workspace / "work/review6918"
+root.mkdir(exist_ok=False)
+head = "5e02b30977dc8412c715aa22dab718630906f4ad"
+old_head = "f0d2a2e3cee7df14aa5f16edff32d9dfaf14eebf"
+base = "8386402b40c51d7c8f9403acd88c3711ebd27bd6"
+prefix = "research/analysis/checkpoint_delivery_6089_20261003_01a0ff59"
+started = datetime.now(timezone.utc).isoformat()
+primary = (repo / ".git/index").read_bytes()
+
+
+def git(*args, data=None):
+    return subprocess.check_output(["git", *args], cwd=repo, input=data)
+
+
+def entries(ref, *paths):
+    rows = {}
+    for line in git("ls-tree", "-r", ref, "--", *paths).decode().splitlines():
+        metadata, path = line.split("\t")
+        mode, kind, oid = metadata.split()
+        assert kind == "blob"
+        rows[path] = {"mode": mode, "blob_oid": oid}
+    return rows
+
+
+records = entries(head, prefix, "research/analysis/.gitattributes", "research/analysis/README.md")
+assert len(records) == 47
+original = entries(old_head, prefix)
+current_packet = entries(head, prefix)
+assert len(original) == 45 and current_packet == original
+before = entries(base, "research/analysis/.gitattributes", "research/analysis/README.md")
+oids = {item["blob_oid"] for item in records.values()} | {item["blob_oid"] for item in before.values()}
+fetch = subprocess.run(["git", "-c", "fetch.negotiationAlgorithm=noop", "fetch", "origin",
+    "--no-tags", "--no-write-fetch-head", "--recurse-submodules=no", "--filter=blob:none", "--stdin"],
+    cwd=repo, input=("\n".join(sorted(oids)) + "\n").encode(), capture_output=True)
+(root / "fetch.stdout.txt").write_bytes(fetch.stdout)
+(root / "fetch.stderr.txt").write_bytes(fetch.stderr)
+assert fetch.returncode == 0, fetch.stderr.decode()
+freeze = []
+for side, tree in (("source", records), ("before", before)):
+    for path, item in sorted(tree.items()):
+        data = git("cat-file", "blob", item["blob_oid"])
+        assert hashlib.sha1(f"blob {len(data)}\0".encode() + data).hexdigest() == item["blob_oid"]
+        target = root / side / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(data)
+        freeze.append(dict(side=side, path=path, **item, bytes=len(data), sha256=hashlib.sha256(data).hexdigest()))
+packet = root / "source" / prefix
+manifest = (packet / "SHA256SUMS").read_bytes()
+assert hashlib.sha256(manifest).hexdigest() == "73ab4934bb19cc5faf69dc5ddc56d0699e23fb4641e9102a2a2eea33c1e1f927"
+lines = manifest.decode().splitlines()
+assert len(lines) == 44
+for line in lines:
+    digest, path = line.split(maxsplit=1)
+    assert hashlib.sha256((packet / path.lstrip("*")).read_bytes()).hexdigest() == digest
+assert hashlib.sha256((packet / "raw.json").read_bytes()).hexdigest() == "b4c0f8238be52ffc5e6b014e11227a9fb2d6e74101c83182cdfa5ce6b96d569c"
+delta = git("diff", "--no-renames", "--name-only", base, head).decode().splitlines()
+assert len(delta) == 47 and set(delta) == set(records)
+assert sum(item["bytes"] for item in freeze) < 2000000
+assert (repo / ".git/index").read_bytes() == primary
+result = {"head_sha": head, "review_base_sha": base, "original_head_sha": old_head,
+    "scope": "read-only exact47-path export; no producer/formal/native execution", "blobs": freeze,
+    "all45_archive_blobs_unchanged_from_v1": True, "all44_manifest_entries_match": True,
+    "started_utc": started, "ended_utc": datetime.now(timezone.utc).isoformat(),
+    "primary_index_unchanged": True}
+(root / "EXPORT.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
+print(json.dumps({"files": len(records), "export_bytes": sum(item["bytes"] for item in freeze),
+    "all45_archive_blobs_unchanged": True, "checksums44": True, "primary_index_unchanged": True}))

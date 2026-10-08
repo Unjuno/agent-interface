@@ -1,0 +1,49 @@
+"""Saved-data-only consistency audit; never imports caller/runtime/tests."""
+import copy,hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parent
+def read(name):return json.loads((root/name).read_text(encoding='utf-8'))
+def check(raw):
+    if len(raw['rows'])!=13:raise ValueError('exact row coverage')
+    rows={r['case']:r for r in raw['rows']}
+    positives={'zero-refusal':0,'partial-refusal':1,'compiled-prefix-0':0,'compiled-prefix-1':1}
+    for name,n in positives.items():
+        row=rows[name];c=row['caller'];progress=c['execution_progress']
+        if c['outcome']!='EXECUTION_INCOMPLETE' or c['reason']!='execution_refused' or type(progress['completed_actions']) is not int or progress!={'status':'safe_yield','reason':'execution_refused','completed_actions':n}:raise ValueError('typed progress')
+        if c['delivery']!=('confirmed_partial' if n else 'not_attempted') or c['input_authority']!=('consumed_by_recorded_execute_stage' if n else 'none'):raise ValueError('delivery/authority')
+        if row['calls']!={'execute':1,'verify_effect':0}:raise ValueError('effect after yield')
+        if name.startswith('compiled'):
+            inner=row['compiled']
+            if inner['outcome']!='SAFE_YIELD' or inner['reason']!='execution_refused' or type(inner['completed_transitions']) is not int or inner['completed_transitions']!=n:raise ValueError('inner prefix')
+            if inner['critical_events'][-2]['event']!='action_terminal' or inner['critical_events'][-2].get('input_dispatched') is not False or inner['critical_events'][-2]['release_verified'] is not False:raise ValueError('no invented release')
+    negatives={'boolean-count','negative-count','float-count','missing-count','extra-target','unknown-reason','wrong-status'}
+    for name in negatives:
+        c=rows[name]['caller']
+        if c['outcome']!='CALLER_FAILED' or c['execution_progress'] is not None or rows[name]['calls']['verify_effect']!=0:raise ValueError('malformed refusal accepted')
+    if rows['cancelled-control']['caller']['reason']!='cancelled' or rows['completed-control']['caller']['outcome']!='TASK_SUCCEEDED':raise ValueError('control')
+    return True
+red,green,opt=map(read,['red-RAW.json','green-RAW.json','green-optimized-RAW.json'])
+if (red['tests_run'],red['failures'],red['errors'],red['skipped'])!=(17,4,0,0):raise RuntimeError('first red')
+for raw in [green,opt]:
+    if (raw['tests_run'],raw['failures'],raw['errors'],raw['skipped'])!=(17,0,0,0):raise RuntimeError('green coverage')
+    check(raw)
+if green['source_sha256']!=opt['source_sha256']:raise RuntimeError('green definition mismatch')
+changed=[p.replace('\\', '/') for p,v in red['source_sha256'].items() if green['source_sha256'][p]!=v]
+if changed!=['research/live_control/adaptive_acquisition_caller_v3.py']:raise RuntimeError('unexpected repair scope')
+source=read('SOURCE_READBACK.json')['sources']['research/live_control/adaptive_acquisition_caller_v3.py']
+fixed=(root/'candidate/research/live_control/adaptive_acquisition_caller_v3.py').read_text(encoding='utf-8')
+expected=source.replace('"budget_exhausted", "delivery_uncertain", "execution_failed",','"budget_exhausted", "delivery_uncertain", "execution_failed", "execution_refused",')
+if fixed!=expected:raise RuntimeError('not minimal source diff')
+controls=[]
+for label in ['false-prefix','invented-release','effect-after-refusal']:
+    altered=copy.deepcopy(green)
+    row=next(r for r in altered['rows'] if r['case']=='compiled-prefix-0')
+    if label=='false-prefix':row['caller']['execution_progress']['completed_actions']=False
+    elif label=='invented-release':row['compiled']['critical_events'][-2]['release_verified']=True
+    else:row['calls']['verify_effect']=1
+    try:check(altered)
+    except ValueError:controls.append({'case':label,'rejected':True})
+    else:raise RuntimeError('control falsely accepted')
+result={'data_only':True,'original_producer_replays':0,'red':{'methods':17,'failures':4},'green_methods':17,'optimized_methods':17,'new_complete_rows_per_endpoint':13,'exact_only_caller_changed':changed,'negative_controls':controls,'source_sha256':green['source_sha256']}
+(root/'AUDIT_RESULT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+print(json.dumps(result))

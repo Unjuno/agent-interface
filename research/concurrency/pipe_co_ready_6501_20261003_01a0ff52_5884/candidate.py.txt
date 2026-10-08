@@ -1,0 +1,124 @@
+"""Explicit one-shot native observation; inert archive, no imports by runtime."""
+import errno
+import hashlib
+import json
+import os
+import pathlib
+import selectors
+import sys
+import time
+
+ROOT = pathlib.Path(__file__).resolve().parent
+ALLOCATION = "6501-MACOS-COREADY-A01-20261003-01a0ff52-5884"
+
+
+def row(case):
+    events, fds, registered = [], {}, []
+    selector = None
+    failure = None
+
+    def emit(kind, **fields):
+        events.append(dict(seq=len(events), utc_ns=time.time_ns(),
+                           mono_ns=time.monotonic_ns(), kind=kind, **fields))
+
+    try:
+        for resource in ("data", "control"):
+            r, w = os.pipe()
+            for suffix, fd in (("r", r), ("w", w)):
+                fds[resource + "_" + suffix] = fd
+                os.set_blocking(fd, False)
+                emit("owned", resource=resource + "_" + suffix, fd=fd,
+                     nonblocking=not os.get_blocking(fd))
+        selector = selectors.DefaultSelector()
+        fds["selector"] = selector.fileno()
+        emit("owned", resource="selector", fd=selector.fileno(),
+             selector_class=type(selector).__name__)
+        for resource in case["register_order"]:
+            fd = fds[resource + "_r"]
+            key = selector.register(fd, selectors.EVENT_READ, resource)
+            registered.append(resource)
+            emit("registered", resource=resource, fd=key.fd, events=key.events)
+        for resource in case["write_order"]:
+            byte = b"D" if resource == "data" else b"C"
+            emit("write_requested", resource=resource, fd=fds[resource + "_w"], hex=byte.hex())
+            count = os.write(fds[resource + "_w"], byte)
+            emit("write_return", resource=resource, fd=fds[resource + "_w"], count=count)
+            if count != 1:
+                raise RuntimeError("partial write")
+        emit("poll_requested", timeout=0)
+        pairs = selector.select(0)
+        ready = [key.data for key, mask in pairs]
+        emit("poll_return", ready=[dict(resource=key.data, fd=key.fd, events=mask)
+                                   for key, mask in pairs])
+        selected = None
+        if case["policy"] == "first_ready":
+            selected = ready[0] if ready else None
+        elif case["policy"] == "control_priority":
+            selected = "control" if "control" in ready else "data" if "data" in ready else None
+        else:
+            raise ValueError("unknown policy")
+        emit("selected", resource=selected)
+        if selected is not None:
+            emit("read_requested", purpose="primary", resource=selected, fd=fds[selected + "_r"])
+            value = os.read(fds[selected + "_r"], 1)
+            emit("read_return", purpose="primary", resource=selected, fd=fds[selected + "_r"], hex=value.hex())
+        emit("primary_checkpoint")
+        for resource in ("data", "control"):
+            emit("read_requested", purpose="cleanup", resource=resource, fd=fds[resource + "_r"])
+            try:
+                value = os.read(fds[resource + "_r"], 8)
+                emit("read_return", purpose="cleanup", resource=resource,
+                     fd=fds[resource + "_r"], hex=value.hex())
+            except BlockingIOError as exc:
+                emit("read_return", purpose="cleanup", resource=resource,
+                     fd=fds[resource + "_r"], errno=exc.errno)
+    except Exception as exc:
+        failure = type(exc).__name__ + ": " + str(exc)
+        emit("failure", message=failure)
+    finally:
+        if selector is not None:
+            for resource in registered:
+                selector.unregister(fds[resource + "_r"])
+                emit("unregistered", resource=resource, fd=fds[resource + "_r"])
+            selector.close()
+            emit("closed", resource="selector", fd=fds["selector"])
+        for name, fd in fds.items():
+            if name != "selector":
+                os.close(fd)
+                emit("closed", resource=name, fd=fd)
+        for name, fd in fds.items():
+            try:
+                os.fstat(fd)
+                emit("close_checked", resource=name, fd=fd, open=True)
+            except OSError as exc:
+                if exc.errno != errno.EBADF:
+                    raise
+                emit("close_checked", resource=name, fd=fd, open=False, errno=exc.errno)
+    return dict(kind="trial", case=case, events=events, failure=failure)
+
+
+def main():
+    out = pathlib.Path(sys.argv[1])
+    freeze = json.loads((ROOT / "FREEZE.json").read_text())
+    cases = json.loads((ROOT / "INPUT.json").read_text())
+    if selectors.DefaultSelector.__name__ != freeze["environment"]["selector_class"]:
+        raise RuntimeError("backend mismatch")
+    with out.open("x", encoding="utf-8") as stream:
+        def write(record):
+            line = json.dumps(record, sort_keys=True, separators=(",", ":")) + "\n"
+            if stream.tell() + len(line.encode()) > 262144:
+                raise RuntimeError("raw cap")
+            stream.write(line); stream.flush(); os.fsync(stream.fileno())
+        write(dict(kind="header", allocation=ALLOCATION, utc_ns=time.time_ns(), producer_pid=os.getpid(),
+                   input_sha256=hashlib.sha256((ROOT / "INPUT.json").read_bytes()).hexdigest(),
+                   selector_class=freeze["environment"]["selector_class"]))
+        for case in cases:
+            result = row(case)
+            write(result)
+            if result["failure"] is not None:
+                raise RuntimeError(result["failure"])
+        write(dict(kind="footer", rows=len(cases), utc_ns=time.time_ns(), all_rows_emitted=True))
+
+
+if __name__ == "__main__":
+    main()

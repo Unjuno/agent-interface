@@ -11,14 +11,41 @@ import time
 ROOT = Path(__file__).resolve().parents[2]
 SUITES = {
     'protocol': ['runtime.integration_checks.test_delivered_capture', 'runtime.integration_checks.test_workload', 'runtime.integration_checks.test_host_timing', 'runtime.cli_v1.test_observe', 'runtime.selector_v1.test_selector',
-                 'runtime.cli_v1.test_mcp_relay', 'runtime.cli_v1.test_mcp_server', 'runtime.cli_v1.test_mcp_clock', 'runtime.cli_v1.test_mcp_session', 'runtime.cli_v1.test_mcp_guarded', 'runtime.cli_v1.test_guarded_presentation', 'runtime.cli_v1.test_public_presentation', 'runtime.cli_v1.test_public_summary', 'runtime.cli_v1.test_post_dispatch_capture', 'runtime.cli_v1.test_cli', 'runtime.core_v1.test_contract', 'runtime.core_v1.test_compiled_gui', 'test_compiled_compatibility_v1', 'runtime.cli_v1.test_review', 'test_agent_review', 'test_receipt_references', 'test_native_exchange_v1', 'test_native_mcp_v1',
+                 'runtime.cli_v1.test_mcp_relay', 'runtime.cli_v1.test_mcp_server', 'runtime.cli_v1.test_mcp_clock', 'runtime.cli_v1.test_mcp_session', 'runtime.cli_v1.test_mcp_guarded', 'runtime.cli_v1.test_guarded_presentation', 'runtime.cli_v1.test_public_presentation', 'runtime.cli_v1.test_public_summary', 'runtime.cli_v1.test_post_dispatch_capture', 'runtime.cli_v1.test_cli', 'runtime.core_v1.test_contract', 'runtime.core_v1.test_compiled_gui', 'runtime.core_v1.test_compiled_literal_unknown_01a0ff35', 'test_compiled_compatibility_v1', 'runtime.cli_v1.test_review', 'test_agent_review', 'test_receipt_references', 'test_native_exchange_v1', 'test_native_mcp_v1',
                  'test_native_allocation_v1', 'test_native_mcp_relay_v1', 'test_native_direct_task_v1',
                  'test_native_primary_review_v1', 'test_native_brief_review_v1', 'test_native_guarded_form_v1', 'test_guarded_source_dependencies_v1', 'test_appserver_journal_close_01a0ff2d', 'test_appserver_reader_retirement_01a0ff2d'],
-    'harness': ['runtime.guarded_x11_v1.test_input_dependency', 'runtime.guarded_x11_v1.test_compiled', 'runtime.guarded_x11_v1.test_move', 'runtime.guarded_x11_v1.test_reference_lifetime', 'runtime.guarded_x11_v1.test_activation', 'runtime.guarded_x11_v1.test_deadline', 'runtime.guarded_x11_v1.test_history', 'runtime.backends.x11_v1.test_focus', 'runtime.cli_v1.test_x11_target_review', 'runtime.backends.x11_v1.test_mapping_boundary', 'runtime.backends.x11_v1.test_text_plan', 'runtime.backends.x11_v1.test_partial_execution', 'test_native_finish_after_v1', 'test_native_cleanup_v1',
+    'harness': ['runtime.guarded_x11_v1.test_input_dependency', 'runtime.guarded_x11_v1.test_compiled', 'runtime.guarded_x11_v1.test_compiled_literal_unknown_01a0ff35', 'runtime.guarded_x11_v1.test_move', 'runtime.guarded_x11_v1.test_reference_lifetime', 'runtime.guarded_x11_v1.test_activation', 'runtime.guarded_x11_v1.test_deadline', 'runtime.guarded_x11_v1.test_history', 'runtime.backends.x11_v1.test_focus', 'runtime.cli_v1.test_x11_target_review', 'runtime.backends.x11_v1.test_mapping_boundary', 'runtime.backends.x11_v1.test_text_plan', 'runtime.backends.x11_v1.test_partial_execution', 'test_native_finish_after_v1', 'test_native_cleanup_v1',
                 'test_native_handle_bridge_v1', 'test_native_tail_v1', 'runtime.distribution_v2.test_distribution', 'runtime.guarded_x11_v1.test_archive', 'runtime.distribution_v2.test_compiled_archive'],
+    'win32': ['runtime.guarded_win32_v1.test_effect', 'runtime.guarded_win32_v1.test_effect_quarantine', 'runtime.guarded_win32_v1.test_fixture_cleanup', 'runtime.guarded_win32_v1.test_kill_failure', 'runtime.guarded_win32_v1.test_late_state', 'runtime.guarded_win32_v1.test_move', 'runtime.guarded_win32_v1.test_recovery', 'runtime.guarded_win32_v1.test_sparse_effect', 'runtime.guarded_win32_v1.test_unicode_neutral', 'runtime.guarded_win32_v1.test_verifier_pending', 'runtime.guarded_win32_v1.test_worker_effect', 'runtime.backends.win32_v1.test_integration'],
 }
 
 SUITES['protocol'].append('test_app_server_eof_stop')
+SUITES['protocol'].append('test_appserver_utf8_2d0b')
+SUITES['protocol'].append('test_app_server_reply_id_5156')
+SUITES['protocol'].append('test_appserver_write_admission_e0cc')
+SUITES['protocol'].append('test_app_server_utf8')
+SUITES['protocol'].append('test_appserver_process_tree_cleanup_20261004')
+SUITES['protocol'].append('test_codex_app_server_send_deadline_v1')
+SUITES['protocol'].append('test_app_server_known_eof')
+SUITES['protocol'].append('test_app_server_runtime_eligibility')
+SUITES['protocol'].append('test_app_server_send_snapshot')
+SUITES['protocol'].append('test_appserver_bounded_close_e0cc')
+
+SUITES['protocol'].extend(['test_adaptive_acquisition_caller_v3', 'test_adaptive_acquisition_caller_custody_v3', 'test_adaptive_acquisition_caller_terminal_v3', 'test_adaptive_acquisition_invocation_93c2'])
+
+SUITES['protocol'].extend([
+    'test_adaptive_acquisition_caller_refusal_v3',
+    'test_adaptive_acquisition_caller_dispatch_v3',
+    'test_adaptive_acquisition_caller_uncertain_tail_v3',
+])
+
+SUITES['protocol'].extend(['test_adaptive_acquisition_cost_coverage', 'test_adaptive_acquisition_aggregate_cost', 'runtime.integration_checks.test_native_catalogue', 'test_cost_invocation_composition_93c2'])
+
+SUITES['protocol'].append('test_adaptive_acquisition_diagnostics_93c2')
+
+SUITES['protocol'].append('test_adaptive_acquisition_failure_metadata_93c2')
+
+SUITES["protocol"].append("test_adaptive_acquisition_caller_verify_progress_v3")
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -57,6 +84,11 @@ def main():
     (out/'result.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
     print(json.dumps({'status': report['status'], 'report': str(out/'result.json')}))
     return 0 if passed else 1
+
+SUITES['protocol'].extend(['test_usage_subset_route', 'test_caller_diagnostic_composition', 'test_caller_failure_id_composition'])
+
+SUITES['protocol'].append('test_failure_status_composition')
+SUITES['protocol'].append('runtime.cli_v1.test_receipt_empty_index_r7p4')
 
 if __name__ == '__main__':
     raise SystemExit(main())

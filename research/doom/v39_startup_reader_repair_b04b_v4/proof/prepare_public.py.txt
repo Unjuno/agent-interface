@@ -1,0 +1,26 @@
+import base64, gzip, hashlib, json, pathlib
+R = pathlib.Path(__file__).resolve().parent
+source = (R / 'controller-v4.py.txt').read_bytes()
+draft = source.replace(b'"stdout reader retirement unconfirmed"', b'"stdout reader still running"').replace(b'"stderr reader retirement unconfirmed"', b'"stderr reader still running"')
+assert hashlib.sha256(draft).hexdigest() == 'd4a100206cae7369a582522bb0cb939711b281fdf659cfaae9a83bff2661c3b2'
+(R / 'controller-first-draft-reconstructed.py.txt').write_bytes(draft)
+baseline = (R.parent / 'startup-native-main-b04b-A01/controller.py.txt').read_bytes(); (R / 'controller-v3.py.txt').write_bytes(baseline)
+(R / 'diagnostic-regression.py.txt').write_bytes((R.parent / 'startup-diagnostics-b04b-v3/regression_v2.py').read_bytes())
+for label in ('baseline_v2', 'candidate_v2', 'final_candidate', 'diagnostics'):
+ raw = json.loads((R / label / 'RAW.json').read_text()); receipt = json.loads((R / label / 'RECEIPT.json').read_text())
+ assert raw['pid'] == receipt['pid'] and receipt['source_unchanged'] and receipt['runner_unchanged'] and receipt['pipes_closed']
+ if label != 'baseline_v2': assert raw['result'] == 'PASS'
+ if label != 'diagnostics': assert all(x['all_controlled_workers_retired'] and x['all_streams_closed_after_teardown'] for x in raw['rows'])
+files = []
+for p in sorted(R.rglob('*')):
+ if not p.is_file() or p.name.startswith('PUBLIC_'): continue
+ b = p.read_bytes(); rel = p.relative_to(R).as_posix(); original = {'bytes': len(b), 'sha256': hashlib.sha256(b).hexdigest()}
+ if p.suffix == '.json':
+  text = b.decode('utf-8'); text = text.replace(str(R.parent.parent), '<OWN_WORKSPACE>').replace(str(pathlib.Path.home()), '<OWN_HOME>'); b = text.encode('utf-8')
+ files.append({'path': rel, 'bytes': len(b), 'sha256': hashlib.sha256(b).hexdigest(), 'base64': base64.b64encode(b).decode(), 'private_original_pin': original, 'projection': 'own workspace/home prefix only for JSON; hashes do not authenticate withheld originals'})
+packet = json.dumps({'schema': 'b04b-local-reader-repair-proof-v1', 'source_publication': 'LOCAL_ONLY', 'files': files}, ensure_ascii=True, separators=(',', ':')).encode()
+compressed = gzip.compress(packet, mtime=0); encoded = base64.b64encode(compressed).decode()
+meta = {'members': len(files), 'json_bytes': len(packet), 'json_sha256': hashlib.sha256(packet).hexdigest(), 'gzip_bytes': len(compressed), 'gzip_sha256': hashlib.sha256(compressed).hexdigest()}
+comments = ['Author local ordinary repair DATA proof for HOLD5970851815, review5970548206. New source68884B/d0f17f489e6ee80fefe35ec66fc9474d3171ecba54749b5c3e02254301eed7d6;7reader+11diagnostic ordinary regressions pass; original baseline and first harness/preparer failures retained. Real standard Thread.start with controlled bootstrap delay; process/client/stream doubles. No original formal/native replay, no source/main publication/new content vote. Full limits in REPORT.md. Decode ordered Base64/gzip/JSON files[].base64 and verify public pins. Private receipts use explicit prefix-only projection. First41744 source is expressly reconstructed and byte checked, not independently captured. Quoted code inert. '+json.dumps(meta)+'\nProof part '+str(i//48000+1)+'/'+str((len(encoded)+47999)//48000)+'.\n```base64-gzip-json\n'+encoded[i:i+48000]+'\n```' for i in range(0, len(encoded), 48000)]
+assert all(len(x.encode()) < 65000 for x in comments)
+(R / 'PUBLIC_PACKET.json').write_bytes(packet); (R / 'PUBLIC_MANIFEST.json').write_text(json.dumps({'meta': meta, 'comments': comments}, indent=2), encoding='utf-8'); print(json.dumps(meta))

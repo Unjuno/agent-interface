@@ -1,0 +1,9 @@
+from pathlib import Path
+W=Path(__file__).resolve().parent;s=(W/'audit.py').read_text()
+prefix="def same_json(a,b):\n    if type(a) is not type(b):return False\n    if type(a) is dict:return a.keys()==b.keys() and all(same_json(a[k],b[k]) for k in a)\n    if type(a) is list:return len(a)==len(b) and all(same_json(x,y) for x,y in zip(a,b))\n    return a==b\n"
+s=s.replace('def integer(x):',prefix+'def integer(x):',1)
+old="result['primary']=={k:v for k,v in primary.items() if k not in ('seq','kind','monotonic_ns')}";new="same_json(result['primary'],{k:v for k,v in primary.items() if k not in ('seq','kind','monotonic_ns')})";assert old in s;s=s.replace(old,new)
+old="result['final_outcomes']=={str(g):{k:v for k,v in gen('read_return',g).items() if k in ('return_nonzero','last_error','count','hex')} for g in (1,2)}";new="same_json(result['final_outcomes'],{str(g):{k:v for k,v in gen('read_return',g).items() if k in ('return_nonzero','last_error','count','hex')} for g in (1,2)})";assert old in s;s=s.replace(old,new)
+s=s.replace("result['native_cancel']=={'return_nonzero':True,'last_error':0}","same_json(result['native_cancel'],{'return_nonzero':True,'last_error':0})").replace("O/'AUDIT.json'","O/'AUDIT_V2.json'")
+(W/'audit_v2.py').write_text(s,encoding='utf8',newline='\n')
+s=(W/'capture_audit.py').read_text().replace('audit.py','audit_v2.py').replace('AUDIT_RECEIPT','AUDIT_V2_RECEIPT').replace('AUDIT.stdout','AUDIT_V2.stdout').replace('AUDIT.stderr','AUDIT_V2.stderr');(W/'capture_audit_v2.py').write_text(s,encoding='utf8',newline='\n')

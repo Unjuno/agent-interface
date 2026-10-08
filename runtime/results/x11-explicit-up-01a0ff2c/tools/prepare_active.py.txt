@@ -1,0 +1,19 @@
+import hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parents[2];work=Path(__file__).resolve().parent;out=root/'outputs/x11-explicit-up-01a0ff2c'
+old=(work/'test_explicit_up.py').read_bytes();(out/'test-v2.py.txt').write_bytes(old);(out/'run-v2.py.txt').write_bytes((work/'run.py').read_bytes())
+text=old.decode();start=text.index('ROOT=Path(');end=text.index("contract=types.ModuleType(")
+header="HERE=Path(__file__).resolve().parent\nREPOSITORY=HERE.parents[2]\nPATHS=('runtime/backends/x11_v1/backend.py','runtime/backends/x11_v1/session.py','runtime/core_v1/contract.py')\nSOURCES={path:(REPOSITORY/path).read_text(encoding='utf8') for path in PATHS}\nBACKEND_SOURCE=SOURCES['runtime/backends/x11_v1/backend.py']\n"
+text=text[:start]+header+text[end:]
+source=json.loads((out/'SOURCE_INPUTS.json').read_text(encoding='utf8'))
+for flavor in ('baseline-tree','candidate-tree'):
+    tree=work/flavor
+    for r in source['records']:
+        target=tree/r['path'];target.parent.mkdir(parents=True,exist_ok=True)
+        content=(work/'candidate_backend.py.txt').read_bytes() if flavor=='candidate-tree' and r['path'].endswith('x11_v1/backend.py') else r['content'].encode()
+        target.write_bytes(content)
+    target=tree/'runtime/backends/x11_v1/test_explicit_up_ledger.py';target.write_bytes(text.encode())
+stage=work/'stage';(stage/'runtime/backends/x11_v1').mkdir(parents=True,exist_ok=True)
+for name in ('backend.py','test_explicit_up_ledger.py'):
+    (stage/'runtime/backends/x11_v1'/name).write_bytes((work/'candidate-tree/runtime/backends/x11_v1'/name).read_bytes())
+print(json.dumps({'active_test_sha256':hashlib.sha256(text.encode()).hexdigest(),'test_body_unchanged':text[text.index('class InertClock:'):]==old.decode()[old.decode().index('class InertClock:'):],'source_default':'actual adjacent files; no source env injection; no Xlib import/native constructor'}))

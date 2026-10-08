@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: illegal-ff
+ok 1 - illegal-ff
+  ---
+  duration_ms: 5.5089
+  type: 'test'
+  ...
+# Subtest: incomplete-e3-in-string
+ok 2 - incomplete-e3-in-string
+  ---
+  duration_ms: 0.8123
+  type: 'test'
+  ...
+# Subtest: lone-continuation
+ok 3 - lone-continuation
+  ---
+  duration_ms: 0.7487
+  type: 'test'
+  ...
+# Subtest: overlong-slash
+ok 4 - overlong-slash
+  ---
+  duration_ms: 0.5926
+  type: 'test'
+  ...
+# Subtest: utf8-surrogate
+ok 5 - utf8-surrogate
+  ---
+  duration_ms: 0.6811
+  type: 'test'
+  ...
+# Subtest: incomplete-byte-at-EOF
+ok 6 - incomplete-byte-at-EOF
+  ---
+  duration_ms: 1.3507
+  type: 'test'
+  ...
+# Subtest: ordinary-ascii-is-unchanged
+ok 7 - ordinary-ascii-is-unchanged
+  ---
+  duration_ms: 0.8909
+  type: 'test'
+  ...
+# Subtest: split-valid-multibyte-survives-byte-boundaries
+ok 8 - split-valid-multibyte-survives-byte-boundaries
+  ---
+  duration_ms: 0.8884
+  type: 'test'
+  ...
+# Subtest: literal-replacement-character-is-valid
+ok 9 - literal-replacement-character-is-valid
+  ---
+  duration_ms: 0.6011
+  type: 'test'
+  ...
+# Subtest: already-decoded-text-caller-is-preserved
+ok 10 - already-decoded-text-caller-is-preserved
+  ---
+  duration_ms: 1.358
+  type: 'test'
+  ...
+# Subtest: existing-malformed-JSON-is-refused-without-consuming
+ok 11 - existing-malformed-JSON-is-refused-without-consuming
+  ---
+  duration_ms: 0.8016
+  type: 'test'
+  ...
+# Subtest: accepted-same-promise-finishes-before-malformed-byte-rejection
+ok 12 - accepted-same-promise-finishes-before-malformed-byte-rejection
+  ---
+  duration_ms: 2.0123
+  type: 'test'
+  ...
+# Subtest: unaccepted-valid-prefix-in-corrupted-chunk-is-refused
+ok 13 - unaccepted-valid-prefix-in-corrupted-chunk-is-refused
+  ---
+  duration_ms: 0.4893
+  type: 'test'
+  ...
+# Subtest: existing-BOM-JSON-refusal-is-preserved
+ok 14 - existing-BOM-JSON-refusal-is-preserved
+  ---
+  duration_ms: 0.6578
+  type: 'test'
+  ...
+# Subtest: owned-validation-listeners-retire-and-foreign-observers-stay
+ok 15 - owned-validation-listeners-retire-and-foreign-observers-stay
+  ---
+  duration_ms: 1.13
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 95.2459

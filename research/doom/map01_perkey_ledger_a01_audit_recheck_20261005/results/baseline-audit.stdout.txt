@@ -1,0 +1,16 @@
+{
+  "allocation": "MAP01-EXPECTED-INVENTORY-PROVENANCE-A01-20261005",
+  "candidate_output_status": "PASS_INVENTORY_PROVENANCE_COUNTEREXAMPLE",
+  "checks": {
+    "complete_default_control_is_bounded": true,
+    "complete_with_underdeclared_inventory_is_unknown": true,
+    "mutated_observation_contains_only_w": true,
+    "omission_with_correct_inventory_is_unknown": true,
+    "omission_with_underdeclared_inventory_is_bounded": true,
+    "raw_fixture_contains_two_distinct_keys": true
+  },
+  "imports_candidate_or_ledger": false,
+  "raw_sha256": "c29708328b3d9f6115e09cf03e832ad53f4e925f54a8eea7c89acd7cf0f50664",
+  "scope": "independent arithmetic/row-set audit; no admission-provenance source exists in the pinned fixture",
+  "status": "PASS"
+}

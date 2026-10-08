@@ -1,0 +1,44 @@
+{
+  "schema": "predicate-condition-implementation-static-audit-v1",
+  "status": "NO_MATERIAL_COMPARATOR_FLAW_FOUND_FOR_PURE_FIXTURE; EVIDENCE_TIMING_AND_HASH_LIMITS",
+  "role": "bounded local helper; no quorum vote",
+  "reviewed_source_sha256": {
+    "baseline.py": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e",
+    "candidate.py": "c05855b2c1129a67789f236d194fa5ae5e1929e72f7bd5a7acb936ffdd766569",
+    "driver.py": "628a8901ef3ef5fe21debfbfc286027cfbd2b88ab0b6a3bcf7ed14e0c2d7f06c",
+    "peer.py": "ec0e6dfb01d04fc1240f95ee477791ca15164366932b1776f3e9018c30e5a157",
+    "collect.py": "bdfe3a1fbf2a66a0b87120bfeeac6722081834adea49a0bf10c6ff9acf428e40"
+  },
+  "comparator": {
+    "finding": "Diff is restricted to wait_notification. Callable invocation and truth conversion occur outside condition; selected item is removed only using is while condition held; missing selection restarts; ordered identity comparison before wait closes append/notify-during-evaluation lost-wake race.",
+    "limits": "Arbitrary mutation/reentrant side effects, fairness and invocation count need not preserve baseline semantics. Queue-change restarts can exceed timeout under churn. Callback remains unbounded within its own call. No production or whole-call bound claim. Stale-identity and lost-wake constructions are not present in these four prospective cells."
+  },
+  "driver_causal_sequence": {
+    "finding": "Initial notice is queued, request starts, actual request deadline plus wait frame and one condition waiter are sampled, peer receipt is obtained, then notification callback starts before request deadline and owner opens response gate. Final driver prospectively requires actual peer response wire_emitted and journal received ID1 before that same internal request deadline; otherwise it records invalid-exposure error and collector stops later cells. Active rows reads ignore only unfinished newline fragments; saved final checker rejects missing final newline. Held checkpoint nominally250ms after predicate entry; owner releases nominally400ms. Separate finish gate occurs after callers retire; reader joins before client.close; driver then closes FD handles separately.",
+    "baseline_end": "After owner release, response publication versus request lock reacquisition may yield exact late return or TimeoutError. Neither should be assumed prospectively. Notification match precedence permits exact notification return after its deadline in both arms.",
+    "driver_errors": "Driver treats caller exceptions as outcomes, not driver failures. Saved checker must reject unintended healthy/candidate request exceptions, while accepting the explicitly allowed baseline-held TimeoutError. Driver exit0 alone does not prove causal result."
+  },
+  "material_evidence_limits": [
+    {
+      "location": "driver.py:80,94",
+      "issue": "The first reviewed driver04c911bf recorded gate-open only after file writes, allowing peer emission/exit to precede that event. First reviewed peer3041bf5e recorded wire_emitted only after flush, allowing journal reception to precede it.",
+      "disposition": "Parent prospectively repaired driver and peer before freeze: both gate writes have before/after brackets and wire writes have before/emitted brackets. Latest source bytes were read. Checker uses before lower bounds, preserves after-event race freedom and requires actual candidate end<=checkpoint. Original audit finding remains preserved here; no experiment source change by child."
+    },
+    {
+      "location": "driver.py:84",
+      "issue": "Checkpoint ns is sampled before non-atomic alive/frame/outcome/journal/peer snapshots. A snapshot might include a request finishing after checkpoint ns.",
+      "disposition": "Candidate by-checkpoint conclusion requires its outcome end_ns <= checkpoint ns, in addition to pending predicate and notification frame/events. Snapshots are not atomic or lock ownership authentication."
+    },
+    {
+      "location": "driver.py:8; collect.py:12-15",
+      "issue": "Native cell records bind only chosen client source hash. Helper bytes and collector bytes are not self-bound by native records.",
+      "disposition": "Parent prospective freeze and outer execution receipt must bind driver/peer/collect and checker source bytes. Checker can verify supplied source files against expected manifest but cannot infer execution identity from data alone."
+    },
+    {
+      "location": "driver.py:87-91",
+      "issue": "pause_to has a lower target only; scheduler delay can move checkpoint/release later. Nominal250ms/400ms are not exact bounds.",
+      "disposition": "Report actual ns, require >= nominal target and checkpoint < owner release; parent may prospectively impose overshoot limits. Do not claim exact fixed latency."
+    }
+  ],
+  "saved_checker_implementation": "check_saved.py exists, has not been executed or imported by child. Strict JSON and JSONL parse rejects duplicate keys, malformed documents, NaN/Infinity, overflowed nonfinite floats and final truncated JSONL. Typed equality separates bool/int. Reconstruct four exact cells, collection receipts/log hashes, complete journal and peer wire joins, request ID1, parent/peer clock event order, actual request deadline/wait frame before callback, actual source-recorded response before that deadline, baseline held overdue request/reader shared-condition identity evidence, candidate acknowledgement before checkpoint while predicate+notification pending, healthy exact values, baseline held late return OR TimeoutError, exact late notification match and terminal cleanup including EBADF9 for all three driver-closed pipe handles. Journal closure is its observed closed flag only, since driver retains no journal FD EBADF witness. Source-root files are read as bytes only and never imported. Optional expected hash manifest remains an asserted identity; parent freeze and outer container custody are external."
+}

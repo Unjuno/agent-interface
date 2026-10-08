@@ -1,0 +1,107 @@
+test_bool_clock_rejected (test_core.DecisionTests.test_bool_clock_rejected) ... FAIL
+test_counter_raw_negative_rejected (test_core.DecisionTests.test_counter_raw_negative_rejected) ... FAIL
+test_duplicate_counter_rejected (test_core.DecisionTests.test_duplicate_counter_rejected) ... FAIL
+test_duplicate_pair_arm_rejected (test_core.DecisionTests.test_duplicate_pair_arm_rejected) ... FAIL
+test_five_exact_boundary_support (test_core.DecisionTests.test_five_exact_boundary_support) ... FAIL
+test_incomplete_budget_rejected (test_core.DecisionTests.test_incomplete_budget_rejected) ... FAIL
+test_pooled_required (test_core.DecisionTests.test_pooled_required) ... FAIL
+test_pressure_required (test_core.DecisionTests.test_pressure_required) ... FAIL
+test_requires_five_pairs (test_core.DecisionTests.test_requires_five_pairs) ... FAIL
+
+======================================================================
+FAIL: test_bool_clock_rejected (test_core.DecisionTests.test_bool_clock_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 28, in test_bool_clock_rejected
+    with self.assertRaises(ValueError): core.integer(True)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_counter_raw_negative_rejected (test_core.DecisionTests.test_counter_raw_negative_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 30, in test_counter_raw_negative_rejected
+    with self.assertRaises(ValueError): core.parse_cpu('usage_usec -1\n')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_duplicate_counter_rejected (test_core.DecisionTests.test_duplicate_counter_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 32, in test_duplicate_counter_rejected
+    with self.assertRaises(ValueError): core.parse_cpu('usage_usec 1\nusage_usec 2\n')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_duplicate_pair_arm_rejected (test_core.DecisionTests.test_duplicate_pair_arm_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 26, in test_duplicate_pair_arm_rejected
+    with self.assertRaises(ValueError): core.decision(self.rows()+[self.rows()[0]])
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_five_exact_boundary_support (test_core.DecisionTests.test_five_exact_boundary_support)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 20, in test_five_exact_boundary_support
+    self.assertEqual(core.decision(cells)['status'],'SUPPORT_IMPOSED_LOAD_ONLY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UNIMPLEMENTED' != 'SUPPORT_IMPOSED_LOAD_ONLY'
+- UNIMPLEMENTED
++ SUPPORT_IMPOSED_LOAD_ONLY
+
+
+======================================================================
+FAIL: test_incomplete_budget_rejected (test_core.DecisionTests.test_incomplete_budget_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 35, in test_incomplete_budget_rejected
+    with self.assertRaises(ValueError): core.decision(cells)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_pooled_required (test_core.DecisionTests.test_pooled_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 22, in test_pooled_required
+    self.assertEqual(core.decision(self.rows(5,False))['status'],'HOLD_NOT_SUPPORTED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UNIMPLEMENTED' != 'HOLD_NOT_SUPPORTED'
+- UNIMPLEMENTED
++ HOLD_NOT_SUPPORTED
+
+
+======================================================================
+FAIL: test_pressure_required (test_core.DecisionTests.test_pressure_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 24, in test_pressure_required
+    self.assertEqual(core.decision(self.rows(6,True,False))['status'],'HOLD_NOT_SUPPORTED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UNIMPLEMENTED' != 'HOLD_NOT_SUPPORTED'
+- UNIMPLEMENTED
++ HOLD_NOT_SUPPORTED
+
+
+======================================================================
+FAIL: test_requires_five_pairs (test_core.DecisionTests.test_requires_five_pairs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/live_control/sleep_load_6067_d03_20261004_3cbf/test_core.py", line 15, in test_requires_five_pairs
+    self.assertEqual(core.decision(self.rows(4))['status'],'HOLD_NOT_SUPPORTED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UNIMPLEMENTED' != 'HOLD_NOT_SUPPORTED'
+- UNIMPLEMENTED
++ HOLD_NOT_SUPPORTED
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.001s
+
+FAILED (failures=9)

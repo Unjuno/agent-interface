@@ -1,0 +1,21 @@
+"""Run each NEW output boundary exactly once; preserve original endpoints/FAIL, no repair."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess,psutil
+r=Path(__file__).resolve().parent;f=json.loads((r/'OWNER_FREEZE.json').read_bytes());rows=[]
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,x):p.write_text(json.dumps(x,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+for x in f['helpers']:assert sha((r/x['path']).read_bytes())==x['sha256']
+for x in f['source']:assert sha((r/x['variant']/x['path']).read_bytes())==x['sha256']
+for cell in f['cells']:
+ out=Path(cell['output']);assert sha((out/'config.json').read_bytes())==cell['config_sha256'];started=datetime.now(timezone.utc).isoformat();code=None;live=False
+ with (out/'stdout.txt').open('wb') as stdout,(out/'stderr.txt').open('wb') as stderr:
+  p=subprocess.Popen(cell['argv'],cwd=r,env=dict(os.environ,TMP=str(r/'tmp'),TEMP=str(r/'tmp')),stdout=stdout,stderr=stderr)
+  put(out/'START.json',{'argv':cell['argv'],'pid':p.pid,'ppid':os.getpid(),'started_utc':started,'freeze_sha256':sha((r/'OWNER_FREEZE.json').read_bytes())})
+  try:code=p.wait(timeout=20)
+  except subprocess.TimeoutExpired:live=True
+ ended=datetime.now(timezone.utc).isoformat();absent=not psutil.pid_exists(p.pid)
+ rec={'variant':cell['variant'],'later_output':cell['later_output'],'started_utc':started,'ended_or_observed_utc':ended,'pid':p.pid,'ppid':os.getpid(),'exit_code':code,'original_pid_observed_absent':absent,'confirmed_live_at_timeout':live,'stdout_sha256':sha((out/'stdout.txt').read_bytes()),'stderr_sha256':sha((out/'stderr.txt').read_bytes()),'stdout_bytes':(out/'stdout.txt').stat().st_size,'stderr_bytes':(out/'stderr.txt').stat().st_size}
+ put(out/'RECEIPT.json',rec);assert code==0 and absent and not live,('inspect same PID, no restart',rec)
+ raw=json.loads((out/'RAW.json').read_bytes());rows.append({'variant':cell['variant'],'later_output':cell['later_output'],'scientific_disposition':raw['diagnostic_disposition'],'worker_pid':p.pid,'worker_absent':absent,'fixture_absent':raw['childAbsent'],'fixture_pid':raw['fixtureStart']['pid']})
+put(r/'OWNER_RESULT.json',{'kind':'new controlled output-channel ordinary boundary; custody successes do not relabel diagnosis FAIL','cells':rows,'controls':2,'diagnostic_failures':2,'original_tests_replayed':False});print(json.dumps(rows))

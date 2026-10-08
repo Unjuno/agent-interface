@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/bin/bash",
+    "-c",
+    "cd work/quartz-acquisition-repair-v3-01a0ff52/candidate && /run/current-system/sw/bin/python3 -B -m unittest runtime.backends.quartz_v1.test_release_quarantine runtime.backends.quartz_v1.test_release_faults runtime.backends.quartz_v1.test_acquisition_tracking runtime.backends.quartz_v1.test_integration.PureQuartzTests runtime.core_v1.test_contract runtime.core_v1.test_compiled_gui -v"
+  ],
+  "timeout_seconds": 20,
+  "stdin_sha256": null,
+  "started_utc": "2026-10-03T13:29:52.177631+00:00"
+}

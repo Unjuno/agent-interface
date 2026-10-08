@@ -1,0 +1,35 @@
+import argparse
+import hashlib
+import json
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--phase', required=True)
+parser.add_argument('--optimized', action='store_true')
+args = parser.parse_args()
+root = Path(__file__).resolve().parent
+cwd = root / 'v12-cleanup-checkout/research/doom'
+out = root / 'v12-owner-record-cleanup' / args.phase
+out.mkdir(exist_ok=False)
+test = cwd / 'test_session_map01_v12_cleanup.py'
+source = cwd / 'session_map01_v12.py'
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+command = [sys.executable, '-I'] + (['-O'] if args.optimized else []) + [str(test), '-v']
+before = {'source_sha256': sha(source.read_bytes()), 'test_sha256': sha(test.read_bytes()),
+          'source_bytes': len(source.read_bytes()), 'command': command,
+          'started_utc': datetime.now(timezone.utc).isoformat(), 'kind': 'ordinary regression'}
+(out / 'BEFORE.json').write_text(json.dumps(before, indent=2) + '\n', encoding='utf-8')
+(out / 'test-source.py.txt').write_bytes(test.read_bytes())
+(out / 'runtime-source.py.txt').write_bytes(source.read_bytes())
+result = subprocess.run(command, cwd=cwd, capture_output=True, timeout=20)
+(out / 'stdout.bin').write_bytes(result.stdout)
+(out / 'stderr.bin').write_bytes(result.stderr)
+receipt = {**before, 'ended_utc': datetime.now(timezone.utc).isoformat(), 'exit_code': result.returncode,
+           'stdout_sha256': sha(result.stdout), 'stderr_sha256': sha(result.stderr)}
+(out / 'RECEIPT.json').write_text(json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+print(json.dumps({'phase': args.phase, 'exit_code': result.returncode, 'test_sha256': before['test_sha256']}))
+print(result.stderr.decode('utf-8', errors='backslashreplace'))

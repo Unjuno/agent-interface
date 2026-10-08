@@ -1,0 +1,213 @@
+"""Ordinary v12 main EOF construction; VD/X11/image/backend are explicit fakes."""
+import argparse
+import importlib.util
+import io
+import json
+import os
+import subprocess
+import sys
+import traceback
+import types
+from datetime import datetime, timezone
+from pathlib import Path
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--source-root', type=Path, required=True)
+parser.add_argument('--case', choices=['normal', 'owner-file-refusal'], required=True)
+parser.add_argument('--out', type=Path, required=True)
+args = parser.parse_args()
+args.out.mkdir(exist_ok=False, parents=True)
+trace = []
+objects = {}
+
+def mark(action):
+    trace.append({'action': action, 'utc': datetime.now(timezone.utc).isoformat()})
+
+CHILD = '''import sys,threading
+ready=threading.Event()
+result=[]
+def consume():
+    result.append(sys.stdin.buffer.read(1))
+    ready.set()
+threading.Thread(target=consume,daemon=True).start()
+print('PRIVATE-INERT-READY',flush=True)
+released=ready.wait(12)
+print('PRIVATE-INERT-EOF' if released and result == [b''] else 'PRIVATE-INERT-CAP',flush=True)
+sys.exit(0 if released and result == [b''] else 79)
+'''
+
+class FakeSession:
+    def __init__(self):
+        self.tmp = args.out / 'fake-session-tmp'
+        self.tmp.mkdir()
+        self.name = 'FAKE:no-display'
+        self.env = {k: str(self.tmp) for k in ['XAUTHORITY', 'HOME', 'XDG_CONFIG_HOME',
+                                              'XDG_CACHE_HOME', 'XDG_RUNTIME_DIR']}
+        self.env['DISPLAY'] = self.name
+        root = types.SimpleNamespace(get_full_property=lambda atom, kind: object())
+        self.d = types.SimpleNamespace(intern_atom=lambda name: 0,
+                                       screen=lambda: types.SimpleNamespace(root=root))
+        self.close_count = 0
+        self.child = subprocess.Popen([sys.executable, '-I', '-u', '-c', CHILD],
+                                      stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                      stderr=subprocess.PIPE)
+        objects['session'] = self
+        token = self.child.stdout.readline()
+        (args.out / 'owned-child-ready.bin').write_bytes(token)
+        if token != b'PRIVATE-INERT-READY\r\n' and token != b'PRIVATE-INERT-READY\n':
+            raise RuntimeError('private child readiness mismatch')
+        mark('session-created-real-private-child')
+
+    def _wait(self, predicate, timeout, description):
+        if not predicate():
+            raise RuntimeError('fake readiness failed')
+
+    def windows(self):
+        return '0x1 0 localhost Fake Doom\n'
+
+    def focus(self, title):
+        mark('fake-focus-no-input')
+
+    def close(self):
+        self.close_count += 1
+        mark('session-close-enter')
+        if self.child.poll() is None:
+            self.child.stdin.close()
+            self.child.wait(timeout=3)
+        mark('session-close-return')
+
+class FakeGame:
+    def __init__(self):
+        self.close_count = 0
+        self.tic = 0
+        objects['game'] = self
+        mark('fake-game-created')
+
+    def __getattr__(self, name):
+        if name.startswith('set_'):
+            return lambda *unused: None
+        raise AttributeError(name)
+
+    def init(self):
+        mark('fake-game-init')
+
+    def advance_action(self, ticks, refresh):
+        self.tic += ticks
+
+    def get_episode_time(self):
+        return self.tic
+
+    def get_mode(self):
+        return 'EXPLICIT-FAKE-MODE'
+
+    def get_ticrate(self):
+        return 35
+
+    def close(self):
+        self.close_count += 1
+        mark('game-close')
+
+class FakeBackend:
+    def __init__(self, session, out, emit, signal_readers):
+        self.sequence = 0
+        self.emit = emit
+        self.owner = types.SimpleNamespace(records=[{'event': 'explicit_fake_owner', 'input_used': False}])
+        self.close_count = 0
+        objects['backend'] = self
+        if args.case == 'owner-file-refusal':
+            (out / 'owner-events.json').mkdir()
+        mark('fake-backend-created')
+
+    def snapshot(self, identifier, index):
+        self.sequence += 1
+        self.emit({'event': 'observation', 'sequence': self.sequence,
+                   'exact': False, 'explicit_fake': True, 'id': identifier, 'step': index})
+
+    def close(self):
+        self.close_count += 1
+        mark('backend-close')
+
+class FakeImage:
+    def save(self, target):
+        Path(target).write_bytes(b'EXPLICIT FAKE SCREEN; NOT PNG PIXELS\n')
+
+def install_fakes():
+    package = args.out / 'fake-vd-package'
+    package.mkdir()
+    (package / 'freedoom2.wad').write_bytes(b'EXPLICIT FAKE IWAD; NO ENGINE CONTENT\n')
+    vd = types.ModuleType('vizdoom')
+    vd.__file__ = str(package / '__init__.py')
+    vd.__version__ = 'explicit-fake-vd'
+    vd.DoomGame = FakeGame
+    vd.Mode = types.SimpleNamespace(ASYNC_SPECTATOR='explicit-fake-mode')
+    vd.ScreenResolution = types.SimpleNamespace(RES_640X480='explicit-fake-resolution')
+    vd.Button = types.SimpleNamespace(**{k: k for k in ['TURN_LEFT', 'TURN_RIGHT', 'MOVE_FORWARD',
+        'MOVE_BACKWARD', 'MOVE_LEFT', 'MOVE_RIGHT', 'ATTACK', 'USE', 'SPEED']})
+    vd.GameVariable = types.SimpleNamespace(DEATHCOUNT='fake-deaths', KILLCOUNT='fake-kills')
+    sys.modules['vizdoom'] = vd
+    backend = types.ModuleType('doom_typed_release_backend_v1')
+    backend.Backend = FakeBackend
+    backend.suite = types.SimpleNamespace(Session=FakeSession)
+    sys.modules['doom_typed_release_backend_v1'] = backend
+    hud = types.ModuleType('doom_hud_signal_v3')
+    hud.DoomStatusNumberReader = lambda *a, **k: None
+    sys.modules['doom_hud_signal_v3'] = hud
+    pil = types.ModuleType('PIL')
+    pil.ImageGrab = types.SimpleNamespace(grab=lambda **k: FakeImage())
+    sys.modules['PIL'] = pil
+
+install_fakes()
+source = args.source_root / 'research/doom/session_map01_v12.py'
+spec = importlib.util.spec_from_file_location('tested_actual_v12', source)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+sys.argv = [str(source), '--out', str(args.out / 'session-out'), '--seed', '0']
+sys.stdin = io.StringIO('')
+error = None
+main_started = datetime.now(timezone.utc).isoformat()
+try:
+    module.main()
+except BaseException as exc:
+    error = {'type': type(exc).__name__, 'message': str(exc), 'is_os_error': isinstance(exc, OSError)}
+    traceback.print_exc()
+finally:
+    main_returned = datetime.now(timezone.utc).isoformat()
+    session = objects.get('session')
+    game = objects.get('game')
+    backend = objects.get('backend')
+    report = {'schema': 'ordinary-v12-owner-record-cleanup-v1', 'case': args.case,
+              'main_started_utc': main_started, 'main_returned_utc': main_returned,
+              'main_error': error, 'input_lines': 0, 'actual_executor': str(module.Executor.__module__),
+              'session_close_at_main_return': session.close_count if session else None,
+              'game_close_at_main_return': game.close_count if game else None,
+              'backend_close_at_main_return': backend.close_count if backend else None,
+              'child_pid': session.child.pid if session else None,
+              'child_exit_at_main_return': session.child.poll() if session else None,
+              'session_tmp_exists_at_main_return': session.tmp.exists() if session else None,
+              'trace_at_main_return': list(trace),
+              'module_sources': {k: str(v.__file__) for k, v in sorted(sys.modules.items())
+                                 if k in ['executor_v12', 'executor_v11', 'executor_v5', 'executor_v3',
+                                          'lease', 'lease_cause_v1', 'lease_cause_v2', 'lease_release_v1']},
+              'fakes': ['VD/game/IWAD', 'X11/session boundary', 'backend/input owner', 'HUD', 'screen'],
+              'bounds': 'idle actual Executor; no submit/cancel/game/task/physical release claim'}
+    (args.out / 'AT-MAIN-RETURN.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+    if session:
+        if session.child.poll() is None:
+            mark('outer-wrapper-cleanup-needed')
+            try:
+                session.close()
+            except BaseException:
+                session.child.kill()
+                session.child.wait(timeout=3)
+                mark('outer-wrapper-owned-child-killed')
+        remaining = session.child.stdout.read()
+        stderr = session.child.stderr.read()
+        (args.out / 'owned-child-terminal.bin').write_bytes(remaining)
+        (args.out / 'owned-child-stderr.bin').write_bytes(stderr)
+        report['owned_child_final_exit'] = session.child.returncode
+        report['owned_child_terminal'] = remaining.decode('ascii')
+    report['trace_after_outer_cleanup'] = trace
+    (args.out / 'FINAL-RECEIPT.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps({'case': args.case, 'error_type': error['type'] if error else None,
+                      'child_exit_at_main_return': report['child_exit_at_main_return'],
+                      'owned_child_final_exit': report.get('owned_child_final_exit')}, ensure_ascii=True))

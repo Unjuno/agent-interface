@@ -1,0 +1,608 @@
+{
+  "kind": "ordinary_saved_data_regression",
+  "worker_id": "01a10197-0733-77db-8e93-1eb0819290b5",
+  "host": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "started_utc": "2026-10-03T11:52:58.315440+00:00",
+  "rows": [
+    {
+      "id": "original",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "legacy": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_dockerfile_build_smoke_t0_20261003/audit_t0.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/original"
+          ],
+          "pid": 731,
+          "started_utc": "2026-10-03T11:52:58.316132+00:00",
+          "ended_utc": "2026-10-03T11:52:58.349758+00:00",
+          "exit_code": 0,
+          "stdout": "{\"frozen_sources_checked\":3,\"image_id\":\"sha256:1c325ff52bc0515d073900c048fd1707f2beec00cfdb892ac88ded2defc1a716\",\"memory_limit_effectiveness_claimed\":false,\"payload_sha256\":\"3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383\",\"retries\":0,\"status\":\"PASS_T0_RECEIPT_AUDITED\",\"target_container_present_after_run\":false,\"wslc_builds\":1,\"wslc_runs\":1}\n",
+          "stderr": ""
+        },
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/original"
+          ],
+          "pid": 732,
+          "started_utc": "2026-10-03T11:52:58.349801+00:00",
+          "ended_utc": "2026-10-03T11:52:58.383145+00:00",
+          "exit_code": 0,
+          "stdout": "{\"frozen_inputs_checked\":7,\"image_id\":\"sha256:1c325ff52bc0515d073900c048fd1707f2beec00cfdb892ac88ded2defc1a716\",\"memory_limit_effectiveness_claimed\":false,\"payload_sha256\":\"3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383\",\"retries\":0,\"status\":\"PASS_RETAINED_RECEIPT_V2_ENGINEERING\",\"target_container_present_after_run\":false,\"wslc_builds\":1,\"wslc_runs\":1}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "hash_build.output.txt",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "677714bd12d945479e284ac51ea496d7d6671ddf61ac9153224973370d59a532",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "legacy": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_dockerfile_build_smoke_t0_20261003/audit_t0.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/hash_build.output.txt"
+          ],
+          "pid": 733,
+          "started_utc": "2026-10-03T11:52:58.384269+00:00",
+          "ended_utc": "2026-10-03T11:52:58.417264+00:00",
+          "exit_code": 0,
+          "stdout": "{\"frozen_sources_checked\":3,\"image_id\":\"sha256:1c325ff52bc0515d073900c048fd1707f2beec00cfdb892ac88ded2defc1a716\",\"memory_limit_effectiveness_claimed\":false,\"payload_sha256\":\"3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383\",\"retries\":0,\"status\":\"PASS_T0_RECEIPT_AUDITED\",\"target_container_present_after_run\":false,\"wslc_builds\":1,\"wslc_runs\":1}\n",
+          "stderr": ""
+        },
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/hash_build.output.txt"
+          ],
+          "pid": 734,
+          "started_utc": "2026-10-03T11:52:58.417323+00:00",
+          "ended_utc": "2026-10-03T11:52:58.449026+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: build.output.txt\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "hash_run.output.txt",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "68cb61a10ed43daf3deb592dcb5e46f12086bde4e7e388d6eccb3c03295cfb2e",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "legacy": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_dockerfile_build_smoke_t0_20261003/audit_t0.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/hash_run.output.txt"
+          ],
+          "pid": 735,
+          "started_utc": "2026-10-03T11:52:58.451099+00:00",
+          "ended_utc": "2026-10-03T11:52:58.482967+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"run output warning or line count mismatch\", \"status\": \"STOP_T0_RECEIPT_INVALID\"}\n",
+          "stderr": ""
+        },
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/hash_run.output.txt"
+          ],
+          "pid": 736,
+          "started_utc": "2026-10-03T11:52:58.483000+00:00",
+          "ended_utc": "2026-10-03T11:52:58.515151+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: run.output.txt\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "hash_POSTRUN_CHECK.json",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "10a643462bff4b6157c0623bc6a591a7173d50fb0d659db831b92ea505e4b663",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "legacy": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_dockerfile_build_smoke_t0_20261003/audit_t0.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/hash_POSTRUN_CHECK.json"
+          ],
+          "pid": 737,
+          "started_utc": "2026-10-03T11:52:58.516665+00:00",
+          "ended_utc": "2026-10-03T11:52:58.548739+00:00",
+          "exit_code": 0,
+          "stdout": "{\"frozen_sources_checked\":3,\"image_id\":\"sha256:1c325ff52bc0515d073900c048fd1707f2beec00cfdb892ac88ded2defc1a716\",\"memory_limit_effectiveness_claimed\":false,\"payload_sha256\":\"3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383\",\"retries\":0,\"status\":\"PASS_T0_RECEIPT_AUDITED\",\"target_container_present_after_run\":false,\"wslc_builds\":1,\"wslc_runs\":1}\n",
+          "stderr": ""
+        },
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/hash_POSTRUN_CHECK.json"
+          ],
+          "pid": 738,
+          "started_utc": "2026-10-03T11:52:58.548768+00:00",
+          "ended_utc": "2026-10-03T11:52:58.580167+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: POSTRUN_CHECK.json\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "hash_RUN.json",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "3a378b312729d84b7ce4a6e551bb8194c77dd3cb1dd6311ef6d39ec480bcb744"
+      },
+      "audits": {
+        "legacy": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_dockerfile_build_smoke_t0_20261003/audit_t0.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/hash_RUN.json"
+          ],
+          "pid": 739,
+          "started_utc": "2026-10-03T11:52:58.581486+00:00",
+          "ended_utc": "2026-10-03T11:52:58.613853+00:00",
+          "exit_code": 0,
+          "stdout": "{\"frozen_sources_checked\":3,\"image_id\":\"sha256:1c325ff52bc0515d073900c048fd1707f2beec00cfdb892ac88ded2defc1a716\",\"memory_limit_effectiveness_claimed\":false,\"payload_sha256\":\"3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383\",\"retries\":0,\"status\":\"PASS_T0_RECEIPT_AUDITED\",\"target_container_present_after_run\":false,\"wslc_builds\":1,\"wslc_runs\":1}\n",
+          "stderr": ""
+        },
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/hash_RUN.json"
+          ],
+          "pid": 740,
+          "started_utc": "2026-10-03T11:52:58.613887+00:00",
+          "ended_utc": "2026-10-03T11:52:58.645820+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: RUN.json\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "image_build",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "025246073d695284404359a1d53e987243fb869873083865dee750571653a894"
+      },
+      "audits": {
+        "legacy": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_dockerfile_build_smoke_t0_20261003/audit_t0.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/image_build"
+          ],
+          "pid": 741,
+          "started_utc": "2026-10-03T11:52:58.647181+00:00",
+          "ended_utc": "2026-10-03T11:52:58.678726+00:00",
+          "exit_code": 0,
+          "stdout": "{\"frozen_sources_checked\":3,\"image_id\":\"sha256:1c325ff52bc0515d073900c048fd1707f2beec00cfdb892ac88ded2defc1a716\",\"memory_limit_effectiveness_claimed\":false,\"payload_sha256\":\"3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383\",\"retries\":0,\"status\":\"PASS_T0_RECEIPT_AUDITED\",\"target_container_present_after_run\":false,\"wslc_builds\":1,\"wslc_runs\":1}\n",
+          "stderr": ""
+        },
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/image_build"
+          ],
+          "pid": 742,
+          "started_utc": "2026-10-03T11:52:58.678762+00:00",
+          "ended_utc": "2026-10-03T11:52:58.711765+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: RUN.json\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "image_postrun",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "f053c0b0041285b726b0ce7ea45e803eb0ff4bc6c4977c48056fc4344e6f629c"
+      },
+      "audits": {
+        "legacy": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_dockerfile_build_smoke_t0_20261003/audit_t0.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/image_postrun"
+          ],
+          "pid": 743,
+          "started_utc": "2026-10-03T11:52:58.713275+00:00",
+          "ended_utc": "2026-10-03T11:52:58.746900+00:00",
+          "exit_code": 0,
+          "stdout": "{\"frozen_sources_checked\":3,\"image_id\":\"sha256:1c325ff52bc0515d073900c048fd1707f2beec00cfdb892ac88ded2defc1a716\",\"memory_limit_effectiveness_claimed\":false,\"payload_sha256\":\"3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383\",\"retries\":0,\"status\":\"PASS_T0_RECEIPT_AUDITED\",\"target_container_present_after_run\":false,\"wslc_builds\":1,\"wslc_runs\":1}\n",
+          "stderr": ""
+        },
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/image_postrun"
+          ],
+          "pid": 744,
+          "started_utc": "2026-10-03T11:52:58.746951+00:00",
+          "ended_utc": "2026-10-03T11:52:58.778794+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: RUN.json\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "source_Dockerfile",
+      "inputs": {
+        "Dockerfile": "621c73c6aa480cb26c4164c8c1482fc489553ead40bd0814225d8c8a684b6f5c",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/source_Dockerfile"
+          ],
+          "pid": 745,
+          "started_utc": "2026-10-03T11:52:58.780212+00:00",
+          "ended_utc": "2026-10-03T11:52:58.813092+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: Dockerfile\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "source_payload.txt",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "1a2f39bcab704ac0632e7d58187a6d89bf0f8ddeb63bb14dbd18e01ed1ec10d1",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/source_payload.txt"
+          ],
+          "pid": 746,
+          "started_utc": "2026-10-03T11:52:58.814448+00:00",
+          "ended_utc": "2026-10-03T11:52:58.847105+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: payload.txt\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "source_probe.py",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "47f8fdc9844dc27406898fd4c2b8a73fa82658ec34d1c1c953cd88fcffee00c9",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/source_probe.py"
+          ],
+          "pid": 747,
+          "started_utc": "2026-10-03T11:52:58.848512+00:00",
+          "ended_utc": "2026-10-03T11:52:58.880371+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"frozen source mismatch: probe.py\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "missing_Dockerfile",
+      "inputs": {
+        "Dockerfile": null,
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/missing_Dockerfile"
+          ],
+          "pid": 748,
+          "started_utc": "2026-10-03T11:52:58.881629+00:00",
+          "ended_utc": "2026-10-03T11:52:58.913358+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"missing frozen source: Dockerfile\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "missing_payload.txt",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": null,
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/missing_payload.txt"
+          ],
+          "pid": 749,
+          "started_utc": "2026-10-03T11:52:58.914856+00:00",
+          "ended_utc": "2026-10-03T11:52:58.948612+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"missing frozen source: payload.txt\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "missing_probe.py",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": null,
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/missing_probe.py"
+          ],
+          "pid": 750,
+          "started_utc": "2026-10-03T11:52:58.949958+00:00",
+          "ended_utc": "2026-10-03T11:52:58.981916+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"missing frozen source: probe.py\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "missing_build.output.txt",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": null,
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/missing_build.output.txt"
+          ],
+          "pid": 751,
+          "started_utc": "2026-10-03T11:52:58.983276+00:00",
+          "ended_utc": "2026-10-03T11:52:59.015231+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"missing frozen source: build.output.txt\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "missing_run.output.txt",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": null,
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/missing_run.output.txt"
+          ],
+          "pid": 752,
+          "started_utc": "2026-10-03T11:52:59.016732+00:00",
+          "ended_utc": "2026-10-03T11:52:59.048869+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"missing frozen source: run.output.txt\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "missing_POSTRUN_CHECK.json",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": null,
+        "RUN.json": "518bc8c0a831d1dbc5443459d520167cd51f98241f5d3a1067c80674671fba88"
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/missing_POSTRUN_CHECK.json"
+          ],
+          "pid": 753,
+          "started_utc": "2026-10-03T11:52:59.050224+00:00",
+          "ended_utc": "2026-10-03T11:52:59.082361+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"missing frozen source: POSTRUN_CHECK.json\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "id": "missing_RUN.json",
+      "inputs": {
+        "Dockerfile": "ec8ab4d198d4a6cfc163e9cbd4098c7d68b86f0fa14f870fa5d8addee310352d",
+        "payload.txt": "3280e32e693397e74af56b9f9f0dd473dd663224a3c62883b33cbc8828d7c383",
+        "probe.py": "78a615ffacc99f453c7f81995db92d962ec0ec60069ebc3415d0a89ddcc20893",
+        "build.output.txt": "a76aa6cbfdd50dd50c647e6c582c4577115298ea1a2c102fa63bf7df84e37b4d",
+        "run.output.txt": "207e6eb72a3e616cca690fb8bb7477bef4139923224690bf49490285efcde227",
+        "POSTRUN_CHECK.json": "9e512438029a0da95f88fc5078c7fca730ddc03d0eea90d39cadced8588c563f",
+        "RUN.json": null
+      },
+      "audits": {
+        "v2": {
+          "argv": [
+            "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+            "-B",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/audit_v2.py",
+            "--root",
+            "/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197/cases/missing_RUN.json"
+          ],
+          "pid": 754,
+          "started_utc": "2026-10-03T11:52:59.083851+00:00",
+          "ended_utc": "2026-10-03T11:52:59.115968+00:00",
+          "exit_code": 1,
+          "stdout": "{\"error\": \"missing frozen source: RUN.json\", \"status\": \"STOP_RETAINED_RECEIPT_V2_INVALID\"}\n",
+          "stderr": ""
+        }
+      }
+    }
+  ],
+  "ended_utc": "2026-10-03T11:52:59.116881+00:00"
+}

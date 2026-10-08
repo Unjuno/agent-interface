@@ -1,0 +1,51 @@
+from datetime import datetime,timezone
+import ast,hashlib,json,subprocess
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1];WT=ROOT/'work/appserver-reply-id'
+P=WT/'research/live_control/appserver_reply_id_5156_20261003'
+S=WT/'research/live_control/codex_app_server_client_v2.py'
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def require(ok,label):
+    if not ok:raise ValueError(label)
+freeze=json.loads((P/'BASELINE_FREEZE.json').read_bytes())
+for n,h in freeze['inputs_sha256'].items():require(sha((P/n).read_bytes())==h,'original pin '+n)
+receipt=json.loads((P/'captures/baseline/RECEIPT.json').read_bytes())
+raw=json.loads((P/'baseline-raw.json').read_bytes())
+require(receipt['exit_code']==1 and not receipt['timed_out_or_stream_cap'],'original capture expected semantic1')
+require(raw['decision']=='FAIL_BOOLEAN_ID_ALIAS' and raw['stop_error'] is None and len(raw['rows'])==6,'complete original baseline')
+require(raw['returned']==3 and raw['boolean_returns']==1,'original alias counterexample')
+for i,r in enumerate(raw['rows']):
+    require(r['index']==i and r['natural_peer_exit0'] is True and r['issues']==[],'baseline native terminal')
+    require(not r['final_state']['reader_alive'] and r['final_state']['journal_closed'],'baseline client endpoint')
+    require(all(r['final_state']['parent_handles_after_cleanup'].values()),'owned parent handles')
+    for n,m in r['files'].items():
+        b=(P/m['path']).read_bytes();require(len(b)==m['bytes'] and sha(b)==m['sha256'],'baseline cell bytes')
+require(raw['rows'][2]['caller']['kind']=='returned' and type(raw['rows'][2]['reply_id']) is bool,'actual true-ID alias')
+require(raw['rows'][1]['caller']['kind']=='returned' and type(raw['rows'][1]['reply_id']) is float,'Number1.0 retained')
+original=(P/'baseline-client.py.txt').read_bytes();require(S.read_bytes()==original,'active initial source')
+needle=b'                    if "id" in message:\n                        self._responses[message["id"]] = message\n'
+replacement=b'                    if "id" in message:\n                        if type(message["id"]) is bool:\n                            continue\n                        self._responses[message["id"]] = message\n'
+require(original.count(needle)==1,'exact response caching site')
+candidate=original.replace(needle,replacement);ast.parse(candidate)
+require(not (P/'CANDIDATE_FREEZE.json').exists() and not (P/'candidate-client.py.txt').exists(),'candidate absent')
+S.write_bytes(candidate);(P/'candidate-client.py.txt').write_bytes(candidate)
+ast.parse(candidate)
+(P/'construct-candidate.py.txt').write_bytes(Path(__file__).read_bytes())
+inputs={p.relative_to(P).as_posix():sha(p.read_bytes()) for p in P.rglob('*') if p.is_file()}
+candidate_freeze=dict(id=freeze['id'],arm='candidate',frozen_utc=datetime.now(timezone.utc).isoformat(),
+    source_path='candidate-client.py.txt',source_sha256=sha(candidate),
+    original_baseline_freeze_sha256=sha((P/'BASELINE_FREEZE.json').read_bytes()),
+    original_baseline_raw_sha256=sha((P/'baseline-raw.json').read_bytes()),
+    inputs_sha256=inputs,command=['NATIVE_PYTHON','-B','capture.py.txt','candidate'],
+    expected_exit=0,expected_decision='PASS_BOOLEAN_ID_FILTER',native_cells=6,
+    construction_after_baseline_receipt=True,actual_execution=False)
+with (P/'CANDIDATE_FREEZE.json').open('x',encoding='utf8',newline='\n') as f:json.dump(candidate_freeze,f,indent=2);f.write('\n')
+state=json.loads((ROOT/'work/continuation.json').read_bytes());r=state['rpc_id_repair']
+r.update(baseline_invoked=True,baseline_exit=1,baseline_decision=raw['decision'],baseline_rows=6,
+    baseline_boolean_returns=1,baseline_raw_sha256=sha((P/'baseline-raw.json').read_bytes()),
+    candidate_frozen=True,candidate_sha256=sha(candidate),source_delta_lines=2,
+    candidate_freeze_sha256=sha((P/'CANDIDATE_FREEZE.json').read_bytes()))
+state.update(observed_utc=datetime.now(timezone.utc).isoformat(),next_step='Candidate six native cells once, then retained raw auditor; preserve baseline six semanticFAIL/exit1, no main.')
+(ROOT/'work/continuation.json').write_text(json.dumps(state,indent=2)+'\n',encoding='utf8')
+print(json.dumps({'baseline_rows':6,'baseline_returned':3,'baseline_boolean_returns':1,'native_terminal_all':True,
+    'candidate_source_sha256':sha(candidate),'candidate_inputs':len(inputs),'candidate_not_executed':True}))

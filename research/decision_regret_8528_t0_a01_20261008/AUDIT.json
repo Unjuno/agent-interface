@@ -1,0 +1,142 @@
+{
+  "cases": {
+    "action_set_change": {
+      "age_sequence": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "causal_attribution": "IDENTIFIABLE",
+      "integrated_regret_units": 2,
+      "status": "SCORED"
+    },
+    "age_tie_changed": {
+      "age_sequence": [
+        3,
+        4,
+        5
+      ],
+      "causal_attribution": "IDENTIFIABLE",
+      "integrated_regret_units": 3,
+      "status": "SCORED"
+    },
+    "age_tie_stable": {
+      "age_sequence": [
+        3,
+        4,
+        5
+      ],
+      "causal_attribution": "IDENTIFIABLE",
+      "integrated_regret_units": 0,
+      "status": "SCORED"
+    },
+    "causal_use_unidentified": {
+      "age_sequence": [
+        0
+      ],
+      "causal_attribution": "NOT_IDENTIFIED",
+      "integrated_regret_units": 0,
+      "status": "SCORED"
+    },
+    "fresh_misleading": {
+      "age_sequence": [
+        0
+      ],
+      "causal_attribution": "IDENTIFIABLE",
+      "integrated_regret_units": 1,
+      "status": "SCORED"
+    },
+    "hard_safety_control": {
+      "age_sequence": [
+        0
+      ],
+      "causal_attribution": "IDENTIFIABLE",
+      "integrated_regret_units": null,
+      "status": "FAIL_HARD_SAFETY"
+    },
+    "no_open_opportunity": {
+      "age_sequence": [],
+      "causal_attribution": "IDENTIFIABLE",
+      "integrated_regret_units": null,
+      "status": "NOT_APPLICABLE"
+    },
+    "unknown_truth_clock": {
+      "age_sequence": [
+        null
+      ],
+      "causal_attribution": "IDENTIFIABLE",
+      "integrated_regret_units": null,
+      "status": "UNKNOWN"
+    }
+  },
+  "comparator_cards": {
+    "action_set_change": {
+      "age_only_sum": 14,
+      "toy_unsafe_exposure_ticks": 0
+    },
+    "age_tie_changed": {
+      "age_only_sum": 12,
+      "toy_unsafe_exposure_ticks": 0
+    },
+    "age_tie_stable": {
+      "age_only_sum": 12,
+      "toy_unsafe_exposure_ticks": 0
+    },
+    "causal_use_unidentified": {
+      "age_only_sum": 0,
+      "toy_unsafe_exposure_ticks": 0
+    },
+    "fresh_misleading": {
+      "age_only_sum": 0,
+      "toy_unsafe_exposure_ticks": 0
+    },
+    "hard_safety_control": {
+      "age_only_sum": 0,
+      "toy_unsafe_exposure_ticks": 1
+    },
+    "no_open_opportunity": {
+      "age_only_sum": null,
+      "toy_unsafe_exposure_ticks": 0
+    },
+    "unknown_truth_clock": {
+      "age_only_sum": null,
+      "toy_unsafe_exposure_ticks": 0
+    }
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "hard_safety_violations": 1,
+  "mutation_controls": [
+    {
+      "name": "truth_flip",
+      "rejected": true
+    },
+    {
+      "name": "opportunity_close",
+      "rejected": true
+    },
+    {
+      "name": "action_set_change",
+      "rejected": true
+    },
+    {
+      "name": "clock_unknown",
+      "rejected": true
+    },
+    {
+      "name": "safety_event_removed",
+      "rejected": true
+    },
+    {
+      "name": "loss_mutation",
+      "rejected": true
+    },
+    {
+      "name": "lineage_mutation",
+      "rejected": true
+    }
+  ],
+  "note": "Finite synthetic method evidence only; toy unit loss is not user/task utility and does not support causal claims.",
+  "schema": "decision-regret-8528-independent-audit-v1"
+}

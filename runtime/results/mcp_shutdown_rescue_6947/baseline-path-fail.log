@@ -1,0 +1,59 @@
+test_portable_stdio_runs_outside_checkout (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_portable_stdio_runs_outside_checkout) ... Processing request of type ListToolsRequest
+Processing request of type CallToolRequest
+Processing request of type CallToolRequest
+ERROR
+test_final_image_uses_new_call_root_without_extra_observation (runtime.cli_v1.test_mcp_guarded.PublicCompiledOwnerTests.test_final_image_uses_new_call_root_without_extra_observation) ... FAIL
+
+======================================================================
+ERROR: test_portable_stdio_runs_outside_checkout (runtime.cli_v1.test_mcp_server.PublicMCPTests.test_portable_stdio_runs_outside_checkout)
+----------------------------------------------------------------------
+  + Exception Group Traceback (most recent call last):
+  |   File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py", line 118, in run
+  |     return self._loop.run_until_complete(task)
+  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/base_events.py", line 691, in run_until_complete
+  |     return future.result()
+  |            ^^^^^^^^^^^^^^^
+  |   File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_mcp_server.py", line 357, in test_portable_stdio_runs_outside_checkout
+  |     async with stdio_client(params) as (reader, writer):
+  |                ^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py", line 231, in __aexit__
+  |     await self.gen.athrow(value)
+  |   File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/outputs/6902-ci-venv-20261004/lib/python3.12/site-packages/mcp/client/stdio/__init__.py", line 183, in stdio_client
+  |     anyio.create_task_group() as tg,
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |   File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/outputs/6902-ci-venv-20261004/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 847, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Exception Group Traceback (most recent call last):
+    |   File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/outputs/6902-ci-venv-20261004/lib/python3.12/site-packages/mcp/client/stdio/__init__.py", line 189, in stdio_client
+    |     yield read_stream, write_stream
+    |   File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_mcp_server.py", line 358, in test_portable_stdio_runs_outside_checkout
+    |     async with ClientSession(reader, writer) as client:
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/outputs/6902-ci-venv-20261004/lib/python3.12/site-packages/mcp/shared/session.py", line 238, in __aexit__
+    |     return await self._task_group.__aexit__(exc_type, exc_val, exc_tb)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/outputs/6902-ci-venv-20261004/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 847, in __aexit__
+    |     raise BaseExceptionGroup(
+    | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+    +-+---------------- 1 ----------------
+      | Traceback (most recent call last):
+      |   File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_mcp_server.py", line 379, in test_portable_stdio_runs_outside_checkout
+      |     self.assertTrue(Path(row['call_directory']).is_relative_to(root/'calls'))
+      | AssertionError: False is not true
+      +------------------------------------
+
+======================================================================
+FAIL: test_final_image_uses_new_call_root_without_extra_observation (runtime.cli_v1.test_mcp_guarded.PublicCompiledOwnerTests.test_final_image_uses_new_call_root_without_extra_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-09-19/new-chat-4/work/agent-interface-6074-archive/runtime/cli_v1/test_mcp_guarded.py", line 748, in test_final_image_uses_new_call_root_without_extra_observation
+    self.assertTrue(Path(row['feedback']['image_reference']['path']).is_relative_to(root/'method'))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.412s
+
+FAILED (failures=1, errors=1)

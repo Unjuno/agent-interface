@@ -1,0 +1,295 @@
+{
+  "cases": {
+    "advancing_epoch_hash_change": {
+      "events": [
+        {
+          "capture_ns": 100,
+          "event": "typed_observation",
+          "frame_rgb_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "pointer_binding": {
+            "device": "synthetic-pointer-1",
+            "generation": 4
+          },
+          "sequence": 10,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 50
+            },
+            "health": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 100
+            }
+          }
+        },
+        {
+          "capture_ns": 200,
+          "event": "typed_observation",
+          "frame_rgb_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "pointer_binding": {
+            "device": "synthetic-pointer-1",
+            "generation": 4
+          },
+          "sequence": 11,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 200,
+              "sequence": 11,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 50
+            },
+            "health": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 200,
+              "sequence": 11,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 100
+            }
+          }
+        }
+      ],
+      "outcomes": [
+        null,
+        null
+      ]
+    },
+    "same_epoch_different_hash_cross_transport": {
+      "events": [
+        {
+          "capture_ns": 100,
+          "event": "typed_observation",
+          "frame_rgb_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "pointer_binding": {
+            "device": "synthetic-pointer-1",
+            "generation": 4
+          },
+          "sequence": 10,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 50
+            },
+            "health": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 100
+            }
+          }
+        },
+        {
+          "capture_ns": 100,
+          "event": "observation",
+          "frame_rgb_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "pointer_binding": {
+            "device": "synthetic-pointer-1",
+            "generation": 4
+          },
+          "sequence": 10,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 50
+            },
+            "health": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 100
+            }
+          }
+        }
+      ],
+      "outcomes": [
+        null,
+        {
+          "event": "paired_signal_invalidation",
+          "grants_input_authority": false,
+          "outcome": {
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "reason": "signal_pair_duplicate_epoch_mismatch",
+            "requires_new_decision": true,
+            "status": "UNKNOWN",
+            "task_success_verified": false
+          },
+          "outcome_evaluated_ns": 437821904317400,
+          "outcomes": null,
+          "reason": "signal_pair_duplicate_epoch_mismatch",
+          "requires_new_decision": true,
+          "sequence": 10,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 50
+            },
+            "health": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 100
+            }
+          }
+        }
+      ]
+    },
+    "same_epoch_same_hash_cross_transport": {
+      "events": [
+        {
+          "capture_ns": 100,
+          "event": "typed_observation",
+          "frame_rgb_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "pointer_binding": {
+            "device": "synthetic-pointer-1",
+            "generation": 4
+          },
+          "sequence": 10,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 50
+            },
+            "health": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 100
+            }
+          }
+        },
+        {
+          "capture_ns": 100,
+          "event": "observation",
+          "frame_rgb_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "pointer_binding": {
+            "device": "synthetic-pointer-1",
+            "generation": 4
+          },
+          "sequence": 10,
+          "signals": {
+            "ammo": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "ammo",
+              "status": "observed",
+              "value": 50
+            },
+            "health": {
+              "binding": {
+                "device": "synthetic-pointer-1",
+                "generation": 4
+              },
+              "capture_ns": 100,
+              "sequence": 10,
+              "signal_id": "health",
+              "status": "observed",
+              "value": 100
+            }
+          }
+        }
+      ],
+      "outcomes": [
+        null,
+        null
+      ]
+    }
+  },
+  "checks": {
+    "invalidation_grants_no_input_authority": true,
+    "newer_epoch_hash_change_preserves": true,
+    "same_epoch_hash_mismatch_invalidates": true,
+    "same_epoch_same_hash_cross_transport_preserves": true
+  },
+  "experiment": "issue59-duplicate-epoch-frame-coherence-a01-20261008",
+  "observed_labels": {
+    "advancing_epoch_hash_change": [
+      "PRESERVE",
+      "PRESERVE"
+    ],
+    "same_epoch_different_hash_cross_transport": [
+      "PRESERVE",
+      "signal_pair_duplicate_epoch_mismatch"
+    ],
+    "same_epoch_same_hash_cross_transport": [
+      "PRESERVE",
+      "PRESERVE"
+    ]
+  },
+  "scope": "Synthetic source-level monitor probe only; no game, model, GUI, OS input, physical release, semantic threat, policy quality, or task effect measured.",
+  "status": "PASS_SYNTHETIC_BOUNDARY"
+}

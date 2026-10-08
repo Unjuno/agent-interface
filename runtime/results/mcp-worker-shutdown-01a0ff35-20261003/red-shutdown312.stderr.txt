@@ -1,0 +1,134 @@
+test_started_submission_exception_waits_before_shutdown_close (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_started_submission_exception_waits_before_shutdown_close) ... FAIL
+test_started_submission_exception_keeps_report_persistence_in_shutdown (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_started_submission_exception_keeps_report_persistence_in_shutdown) ... FAIL
+test_failed_scheduling_future_does_not_end_started_worker_shutdown (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_failed_scheduling_future_does_not_end_started_worker_shutdown) ... FAIL
+test_cancelled_scheduling_future_does_not_end_started_worker_shutdown (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_cancelled_scheduling_future_does_not_end_started_worker_shutdown) ... FAIL
+
+======================================================================
+FAIL: test_started_submission_exception_waits_before_shutdown_close (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_started_submission_exception_waits_before_shutdown_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<python312-bundle>\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<python312-bundle>\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 143, in test_started_submission_exception_waits_before_shutdown_close
+    await self._assert_faulted_submission_waits_before_owner_close('raise', 'operation')
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 117, in _assert_faulted_submission_waits_before_owner_close
+    self.assertEqual(healthy.submissions, [],
+AssertionError: Lists differ: [functools.partial(<built-in method run of[117 chars]C0>)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+functools.partial(<built-in method run of _contextvars.Context object at 0x000001A494F77E40>, <function create_server.<locals>.close_owner at 0x000001A494DFE0C0>)
+
+- [functools.partial(<built-in method run of _contextvars.Context object at 0x000001A494F77E40>, <function create_server.<locals>.close_owner at 0x000001A494DFE0C0>)]
++ [] : shutdown scheduled owner close before invocation completion
+
+======================================================================
+FAIL: test_started_submission_exception_keeps_report_persistence_in_shutdown (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_started_submission_exception_keeps_report_persistence_in_shutdown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 117, in _assert_faulted_submission_waits_before_owner_close
+    self.assertEqual(healthy.submissions, [],
+AssertionError: Lists differ: [functools.partial(<built-in method run of[117 chars]A0>)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+functools.partial(<built-in method run of _contextvars.Context object at 0x000001A4960A2200>, <function create_server.<locals>.close_owner at 0x000001A494F8E2A0>)
+
+- [functools.partial(<built-in method run of _contextvars.Context object at 0x000001A4960A2200>, <function create_server.<locals>.close_owner at 0x000001A494F8E2A0>)]
++ [] : shutdown scheduled owner close before invocation completion
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<python312-bundle>\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<python312-bundle>\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 146, in test_started_submission_exception_keeps_report_persistence_in_shutdown
+    await self._assert_faulted_submission_waits_before_owner_close('raise', 'persistence')
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 126, in _assert_faulted_submission_waits_before_owner_close
+    pool.actual.result(timeout=2)
+  File "<python312-bundle>\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "<python312-bundle>\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "<python312-bundle>\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\mcp_server.py", line 302, in invoke
+    _write_json(call_root / 'report.json', report)
+  File "<python312-bundle>\Lib\unittest\mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<python312-bundle>\Lib\unittest\mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<python312-bundle>\Lib\unittest\mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 47, in write
+    gated()
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 35, in gated
+    session.backend.close.assert_not_called()
+  File "<python312-bundle>\Lib\unittest\mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'close' to not have been called. Called 1 times.
+Calls: [call()].
+
+======================================================================
+FAIL: test_failed_scheduling_future_does_not_end_started_worker_shutdown (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_failed_scheduling_future_does_not_end_started_worker_shutdown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<python312-bundle>\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<python312-bundle>\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 149, in test_failed_scheduling_future_does_not_end_started_worker_shutdown
+    await self._assert_faulted_submission_waits_before_owner_close('fail', 'operation')
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 117, in _assert_faulted_submission_waits_before_owner_close
+    self.assertEqual(healthy.submissions, [],
+AssertionError: Lists differ: [functools.partial(<built-in method run of[117 chars]C0>)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+functools.partial(<built-in method run of _contextvars.Context object at 0x000001A49612C340>, <function create_server.<locals>.close_owner at 0x000001A494F8E0C0>)
+
+- [functools.partial(<built-in method run of _contextvars.Context object at 0x000001A49612C340>, <function create_server.<locals>.close_owner at 0x000001A494F8E0C0>)]
++ [] : shutdown scheduled owner close before invocation completion
+
+======================================================================
+FAIL: test_cancelled_scheduling_future_does_not_end_started_worker_shutdown (runtime.cli_v1.test_mcp_session.OwnedMCPTests.test_cancelled_scheduling_future_does_not_end_started_worker_shutdown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<python312-bundle>\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<python312-bundle>\Lib\asyncio\base_events.py", line 691, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 152, in test_cancelled_scheduling_future_does_not_end_started_worker_shutdown
+    await self._assert_faulted_submission_waits_before_owner_close('cancel', 'operation')
+  File "<private-workspace>\work\mcp-shutdown-repo\runtime\cli_v1\test_mcp_session.py", line 117, in _assert_faulted_submission_waits_before_owner_close
+    self.assertEqual(healthy.submissions, [],
+AssertionError: Lists differ: [functools.partial(<built-in method run of[117 chars]60>)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+functools.partial(<built-in method run of _contextvars.Context object at 0x000001A4961A6EC0>, <function create_server.<locals>.close_owner at 0x000001A496101C60>)
+
+- [functools.partial(<built-in method run of _contextvars.Context object at 0x000001A4961A6EC0>, <function create_server.<locals>.close_owner at 0x000001A496101C60>)]
++ [] : shutdown scheduled owner close before invocation completion
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.147s
+
+FAILED (failures=4)

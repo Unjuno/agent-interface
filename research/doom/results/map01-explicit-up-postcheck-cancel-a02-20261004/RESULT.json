@@ -1,0 +1,13 @@
+{
+  "run_id": "EXPLICIT-UP-POSTCHECK-CANCEL-A02-20261004",
+  "classification": "STOP",
+  "candidate_invocations": 1,
+  "candidate_exit": 1,
+  "failure_phase": "harness owner-reference lookup after fake owner construction",
+  "error": "AttributeError: TransitionOwnerV4 stores InputOwnerV12 directly in owner._inner",
+  "owner_constructed": true,
+  "down_or_up_requests_sent": false,
+  "owner_close_receipt": "unavailable; process exited with this daemon thread as the candidate command terminated",
+  "hypothesis_claim": false,
+  "decision": "Runner assumed a nested owner wrapper. Do not rerun A02; preserve as harness STOP."
+}

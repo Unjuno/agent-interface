@@ -1,0 +1,43 @@
+{
+  "C": "Shared contract misconceptions remain possible. Exact typed equality makes corruption rejection a comparator check, not independent proof of the oracle.",
+  "D": "PASS_SAVED_FINITE_AUDIT only for exact 147-row match and all effective corruptions rejected; any mismatch FAIL. Source mismatch/setup error STOP. No retry of this planned check.",
+  "H": "Retained 147 rows match independently simulated integer ticks, including same-tick zero-delay and post-expiry effects; every single scalar-leaf change is rejected.",
+  "T": "One saved-only check; no study implementation imported. Every scalar leaf gets one value-changing corruption; four structural corruptions; all integer 0/1 fields get boolean-alias controls.",
+  "U": "Finite synthetic data only. No physical clock, GUI, input, model, release, performance, container or original-allocation claim. Supplemental analytical check, not new formal science.",
+  "base_sha": "effc43f8bd11f20f83c3410101c04f31c0c353f7",
+  "checker_sha256": "abc8fe064a8cafc990d4aa9606186679b020bcc4012424cef000060b11dfb295",
+  "command": [
+    "python",
+    "-B",
+    "check_saved.py",
+    "--study",
+    "../exogenous_phase_6803_derived_capture_a05_20261003_3cbf",
+    "--plan",
+    "PLAN.json",
+    "--out",
+    "RESULT.json"
+  ],
+  "coordination_issue": 6957,
+  "created_utc": "2026-10-03T12:02:41.257206+00:00",
+  "input_git_blobs": {
+    "FREEZE_02.json": "a04c96030749ac9008ae35ba00d2d8639707a4d0",
+    "REPORT.md": "f94684422c14b495ae79eae30e8aa73c84f315bc",
+    "audit.py": "ceee7c220e484101b02350f3687368e85e1c3101",
+    "candidate.py": "b720ec6089bcd4d80350ea9d31bb616864cde1f8",
+    "fixture.json": "f69674e0184f66efa5c21d6ad80054b871a031ff",
+    "formal_02/candidate/raw.json": "55643e10bcdc65e85e08c49bbff3bd33dd1f4b5b"
+  },
+  "input_sha256": {
+    "FREEZE_02.json": "3dd2f91615db18c62ddaa3ab95a6f8ca662d09588859a560df2a86bd78787373",
+    "REPORT.md": "cdc51454b3c3d1ccb6b44b37366e421e7613af8c83476971d6480f177566c3e5",
+    "audit.py": "7f0569a12165e181a4574d4312f2b779a0a87a8e42335f2c195b71cc642a53a6",
+    "candidate.py": "4a3de981bbdfaeb1aa7b211c573a8225ac2571e8c3390e8a3785d67de4a800ae",
+    "fixture.json": "4257a5c7353068ab6f958d6e018f1cc7f81d30d2db31440dad1a0ce8f258eb36",
+    "formal_02/candidate/raw.json": "6d4f41c1a092e36ffcb50ad92555dcaf26731c9aee46bafd76130a46b2549727"
+  },
+  "issue": 6969,
+  "policy": "FINAL-v5",
+  "scope": "Local Linux CPU, stdlib, read-only retained bytes; no daemon or shared allocation.",
+  "task": "supplementary saved-only integer-tick audit",
+  "worker": "/root"
+}
