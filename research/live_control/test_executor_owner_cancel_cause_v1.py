@@ -70,6 +70,10 @@ def make_owner():
     names = ("Xlib", "Xlib.X", "Xlib.XK", "Xlib.display", "Xlib.error",
              "Xlib.ext", "Xlib.ext.xtest")
     saved = {name: sys.modules.get(name) for name in names}
+    owner_module_names = ("input_owner_v12", "input_transition_owner_v3",
+                          "input_transition_owner_v4")
+    saved_owner_modules = {name: sys.modules.pop(name, None)
+                           for name in owner_module_names}
     xlib = types.ModuleType("Xlib")
     constants = types.SimpleNamespace(KeyPress=2, KeyRelease=3, ButtonRelease=5,
                                       Button1Mask=256, AnyPropertyType=0)
@@ -137,7 +141,8 @@ def make_owner():
     finally:
         queue.Queue = factory
     owner_thread = owner._inner.thread.ident
-    return owner, displays, constants, release_dequeued, lease_slot, owner_thread, saved
+    return (owner, displays, constants, release_dequeued, lease_slot, owner_thread,
+            saved, saved_owner_modules)
 
 
 class Backend:
@@ -167,7 +172,8 @@ class Backend:
 
 class ExecutorOwnerCancelCauseTests(unittest.TestCase):
     def test_cancelled_release_is_published_before_terminal(self):
-        owner, displays, constants, dequeued, lease_slot, owner_thread, saved = make_owner()
+        (owner, displays, constants, dequeued, lease_slot, owner_thread,
+         saved, saved_owner_modules) = make_owner()
         events = []
         backend = Backend(owner, lease_slot)
         executor = executor_v12.Executor(backend, events.append)
@@ -200,6 +206,11 @@ class ExecutorOwnerCancelCauseTests(unittest.TestCase):
             owner.close()
             sys.modules.pop("owner_under_test", None)
             for name, module in saved.items():
+                if module is None:
+                    sys.modules.pop(name, None)
+                else:
+                    sys.modules[name] = module
+            for name, module in saved_owner_modules.items():
                 if module is None:
                     sys.modules.pop(name, None)
                 else:

@@ -274,9 +274,16 @@ class Backend(Previous):
             return
         records = getattr(self.owner, "records", None)
         record_count = len(records) if isinstance(records, list) else None
-        transitions = self.owner.call(
-            "up_batch", self.lease, [item["key"] for item in pending]
-        )
+        try:
+            transitions = self.owner.call(
+                "up_batch", self.lease, [item["key"] for item in pending]
+            )
+        except Exception:
+            # If the owner recorded an interruption while this queued UP was
+            # in flight, let the lease surface that cause. The buffered batch
+            # remains unknown and must not be replayed.
+            self.lease.check()
+            raise
         if type(transitions) is not list or len(transitions) != len(pending):
             raise AssertionError("v4 release batch did not return one transition per UP")
         context["pending_ups"] = []
