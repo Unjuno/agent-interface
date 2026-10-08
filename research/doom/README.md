@@ -37,6 +37,7 @@ flowchart TD
 
 | Theme | Representative entry points |
 |---|---|
+| Active-turn observation delivery probe (App Server 0.160.0; #59) | [A02/A04 report](v39_appserver_tooloutput_active_turn_a02_20261008/README.md) — loopback-only mock probe confirms same-turn `toolOutput` text and PNG reached a follow-up inference only after the current response completed (1.516 s held; A04 follow-up 16 ms after release); A03 harness failure retained; no live/game or reduced-latency claim. |
 | Windows redirected-pipe readiness construction T0 (#7446) | [`windows_pipe_polling_59_t0_20261004/REPORT.md`](windows_pipe_polling_59_t0_20261004/REPORT.md) — native Windows anonymous-pipe fix passed focused poller 13/13, v13 composition 4/4, and scorer adapter 5/5; broad discovery remained non-green and no live/game effect was tested |
 | Windows pipe polling quantum comparison T1 (#7456) | [`windows_pipe_quantum_59_t1_20261004/REPORT.md`](windows_pipe_quantum_59_t1_20261004/REPORT.md) — independently audited 128 paired samples; 1 ms improved p95 by 4.902 ms but used 7.88% idle CPU against the <1% gate, so disposition is HOLD and no production quantum is selected |
 | V16 full-main lifecycle audit correction (#7568 successor) | [`v16_fullmain_independent_audit_59_20261004/README_V2.md`](v16_fullmain_independent_audit_59_20261004/README_V2.md) — preserves V1 unchanged; V2 downgrades the missing terminal trace to HOLD and adds nested key-up/sync and post-release empty-sample checks. Retained-record audit only; no live or physical-input claim |
