@@ -1,0 +1,85 @@
+import ast,hashlib,json,os,pathlib,subprocess
+p=pathlib.Path(__file__).resolve().parent;repo=p.parent/'agent-interface';G='/nix/store/a14yxcqvv9x2l9mllgpirzhvz93pgprg-git-2.54.0/bin/git';base='f474970f82d68b6648aac64f99048ad0c2fd5732';branch='fix/17-notification-identity-b64b';prefix='research/concurrency/notification_identity_repair_17_20261003_b64b/'
+def git(*args,**kwargs):return subprocess.check_output([G,'-C',str(repo),*args],**kwargs)
+def sha(b):return hashlib.sha256(b).hexdigest()
+package=p/'package';package.mkdir()
+for folder in ['baseline','candidate-run','suite-run']:
+ for source in (p/folder).iterdir():
+  if source.is_file():
+   t=package/folder/source.name;t.parent.mkdir(parents=True,exist_ok=True);t.write_bytes(source.read_bytes())
+for name in ['run_regression.py','run_regression-v1.py.txt','launcher-first-failure.txt','test_notification_identity.py','package_commit.py']:
+ (package/(name+'.txt' if name.endswith('.py') else name)).write_bytes((p/name).read_bytes())
+(package/'baseline-client.py.txt').write_bytes((p/'base/research/live_control/codex_app_server_client_v2.py').read_bytes())
+report='''# Exact notification identity repair (#17)
+
+A callback may reenter wait_notification through the same public client and
+consume the selected object. Mutable-deque enumeration then duplicates that
+object and deletes an unrelated notification, or raises RuntimeError.
+The repair snapshots references while retaining the existing Condition,
+skips objects no longer queued, and removes a matching live object by identity
+only after callback truth conversion. No outside-lock retry loop is introduced.
+Other module ASTs, EOF ordering, close behavior and public signatures are unchanged.
+
+H/T/D: exact conservation through nested public consumption; write ten
+constructor-free deterministic regressions BEFORE modifying source, require
+them and four existing EOF/queued-reply regressions to pass. C/U: directed
+adversarial callable, not observed production incidence. Known normal callers
+are pure. Blocking/unbounded recursive callbacks and #7003 reader starvation
+remain. Snapshot adds O(n) references; identity membership can cost O(n²) per
+full scan. No latency/resource improvement or whole-call recovery is claimed.
+This does not adopt the #7003/#7029 outside-lock comparators.
+
+Baseline:10 tests,3 failures/2 deque-mutation errors; PID4950 at2026-10-03
+13:53:45UTC,exit1. First candidate launcher failed BEFORE child creation:
+source/output directory collision, preserved launcher/failure. Corrected
+launcher uses separate output; candidate PID5504 at13:54:12UTC passes10/10,
+exit0. Relevant client discovery PID6073 at13:55:34UTC passes14/14,exit0,
+including existing EOF fixtures with inert process streams and four actual
+short reader threads which all retired. Homebrew CPython3.14.5/macOS, real
+deque/Condition/RLock, rich Unicode nested params. No server subprocess/native
+peer/model/GUI/task/input/release/OS timing/formal allocation executed. Own VM
+stayed stopped. Historical7003/7029/7058 allocations/raw stay immutable.
+
+Whole repository suite/hostedCI UNVERIFIED. This partial research repository
+has independently frozen formal workflows and no root pyproject/Makefile test
+entry point; indiscriminate execution crosses consumed allocation boundaries.
+Selected workflow definitions inspected: no general client test/lint command
+found. Syntax/whitespace and relevant14-test discovery are local validation.
+Skill whole-suite advice does not authorize replaying historical allocations.
+
+Reproduce the focused suite from root:
+`PYTHONPATH=research/live_control python3 -B -m unittest discover -s research/live_control -p 'test_*app_server*.py' -v`
+New test matches that pattern. Ten-test-only reproduction:
+`PYTHONPATH=research/live_control python3 -B -m unittest discover -s research/live_control -p 'test_codex_app_server_notification_identity.py' -v`.
+Raw unittest streams/receipts and first failures remain here.
+
+Worker01a0ff52-b64b /FINAL-v5/ordinary17-NOTIFICATION-IDENTITY-R01/claim5969817860.
+Source mainf474970f82d68b6648aac64f99048ad0c2fd5732,6508B clientSHA256
+2290f2f8b3d2693db7358cbfe6fca4daf0553e8e2cec9ebcf88db533352c0abb.
+Change:one client method,one regression file,this additive inert evidence.
+No workflow/sharedindex/nav change. Main sends0. Genuine fixed nonauthor
+quorum/current full-tree applicability certificate and sole fresh expected-old
+forward main sender remain separate. Broad computer-control goalACTIVE.
+'''
+(package/'README.md').write_text(report)
+(package/'SHA256SUMS').write_text(''.join(sha(x.read_bytes())+'  '+x.relative_to(package).as_posix()+'\n' for x in sorted(package.rglob('*')) if x.is_file() and x.name!='SHA256SUMS'))
+idx=p/'publication.index';env={**os.environ,'GIT_INDEX_FILE':str(idx),'GIT_NO_LAZY_FETCH':'1'};assert not idx.exists();git('read-tree',base,env=env)
+images={}
+for x in package.rglob('*'):
+ if x.is_file():images[prefix+x.relative_to(package).as_posix()]=x.read_bytes()
+for name in ['codex_app_server_client_v2.py','test_codex_app_server_notification_identity.py']:images['research/live_control/'+name]=(p/'candidate/research/live_control'/name).read_bytes()
+for path,data in sorted(images.items()):
+ if path.endswith('.py') or path.endswith('.py.txt'):ast.parse(data)
+ oid=git('hash-object','-w','--stdin',input=data).decode().strip();git('update-index','--add','--cacheinfo','100644',oid,path,env=env)
+tree=git('write-tree','--missing-ok',env=env).decode().strip();head=git('commit-tree',tree,'-p',base,input=b'fix(client): consume reentrant notifications by live identity [skip ci]\n').decode().strip()
+check=subprocess.run([G,'-C',str(repo),'diff','--check',base,head],env=env,capture_output=True);(p/'diff-check.txt').write_bytes(check.stdout+check.stderr);assert check.returncode==0
+changed=git('diff','--name-only',base,head,env=env).decode().splitlines();assert set(changed)==set(images)
+full=[]
+for path,data in sorted(images.items()):
+ assert git('show',head+':'+path,env=env)==data
+ full.append({'path':path,'bytes':len(data),'sha256':sha(data)})
+diff=git('diff','--binary','--full-index','--no-ext-diff','--no-textconv',base,head,env=env);(p/'diff.patch').write_bytes(diff)
+proposal={'policy_version':'FINAL-v5','worker_id':'01a0ff52-b64b-71d2-b2d6-19a57b40283f','task_id':'17-NOTIFICATION-IDENTITY-R01','review_epoch':'notification-identity-repair-r01-before-votes','head_sha':head,'source_tree_sha':tree,'review_base_sha':base,'ordered_parents':[base],'source_branch':branch,'images':full,'diff_sha256':sha(diff),'diff_bytes':len(diff),'committee':['01a0ff33-b04b-7b51-8194-a60b82fed8a2','01a0ff51-d447-7cb3-bb02-36d7e1d30b28','01a0ff52-e0cc-7e81-b3ed-36b1d84d7a9a'],'required_nonauthor_content_votes':2,'explicit_seat_acceptance_required':True,'conditions':['Exact client/test/evidence images; other module AST unchanged.','Condition/EOF/reader/close and users remain compatible on actual application tree.','Unbounded callbacks/reader starvation remain; O(n²) scan cost unmeasured.','Historical allocations immutable; relevant14 tests only; whole suite/CI unverified.','Actual-current nonauthor full-tree/raworderedparents/dependency certificate, live ownership/cancellation/rules and sole expected-old forward main send remain separate.'],'main_sends':0,'content_votes_observed':0}
+canonical=json.dumps(proposal,sort_keys=True,separators=(',',':'),ensure_ascii=False).encode();descriptor={'proposal':proposal,'proposal_digest':sha(canonical),'canonical_bytes':len(canonical)};(p/'proposal.json').write_text(json.dumps(descriptor,ensure_ascii=False,indent=2)+'\n')
+git('update-ref','refs/heads/'+branch,head,'0'*40)
+print(json.dumps({'head':head,'tree':tree,'files':len(images),'descriptor_digest':sha(canonical),'diff_bytes':len(diff),'branch':branch}))

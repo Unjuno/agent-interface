@@ -1,0 +1,11 @@
+import datetime, hashlib, json, os, pathlib, subprocess, sys
+p=pathlib.Path(__file__).resolve().parent
+phase=sys.argv[1]; directory=p/phase; directory.mkdir(exist_ok=False)
+source=p/('base/research/live_control' if phase=='baseline' else 'candidate/research/live_control')
+env=os.environ.copy();env['PYTHONPATH']=str(source);env['PYTHONDONTWRITEBYTECODE']='1'
+argv=[sys.executable,'-m','unittest','-v','test_notification_identity']
+start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+with (directory/'stdout.txt').open('wb') as out,(directory/'stderr.txt').open('wb') as err:
+ process=subprocess.Popen(argv,cwd=p,env=env,stdout=out,stderr=err);code=process.wait(timeout=20)
+r={'argv':argv,'pid':process.pid,'started_utc':start,'finished_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'exit_code':code,'source_sha256':hashlib.sha256((source/'codex_app_server_client_v2.py').read_bytes()).hexdigest(),'test_sha256':hashlib.sha256((p/'test_notification_identity.py').read_bytes()).hexdigest()}
+(directory/'receipt.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r));print((directory/'stderr.txt').read_text());sys.exit(code)
