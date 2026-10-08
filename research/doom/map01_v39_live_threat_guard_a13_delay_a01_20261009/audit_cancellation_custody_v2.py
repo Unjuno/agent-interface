@@ -117,8 +117,8 @@ def main():
             "Original audit is preserved. A cancelled request with no input "
             "admission or interruption lease is accounted for by its verified-empty "
             "terminal receipt. Any cancellation with an admitted lease requires a "
-            "matching token-bound owner release. The episode stopped at death before "
-            "the full live gate."
+            "matching token-bound owner release. This custody audit is scoped to "
+            "the allocation and does not determine its timing or task-effect gate."
         ),
     }
     path = root / "A13_AUDIT_RECONCILIATION.json"
