@@ -1,0 +1,12 @@
+# Pre-freeze construction log
+
+These are development checks, not formal candidate/auditor allocations; no formal output path was created or read during construction.
+
+1. Test-first RED: the candidate and independent-audit construction tests each failed their explicit missing-module assertion before implementation.
+2. First mapped-window characterization: initial tests found that a withdrawn Tk root never mapped its widgets under Xvfb, so focus stayed null and generated events were not dispatched. The fixture was changed to map a small window only inside the private Xvfb display; the candidate suite then passed.
+3. Route-strengthening RED: a new test requiring actual Entry key events failed while the adapter used a custom virtual event. The adapter was changed to deliver synthesized keypress/key-release events through Tk's default widget bindings and event loop. This does not claim physical OS input.
+4. Construction tests exposed an overlapping-Tk-root direct-probe issue and a delayed-receipt timeout shorter than the declared completion delay. The direct comparator now runs after closing the primary fixture, and the bounded wait covers the frozen receipt delay.
+5. Auditor-integrity RED/GREEN: a new mutation changed the decoy widget's raw value and replay value together while leaving candidate summaries intact; normal-mode construction initially failed to reject it. The auditor was extended to cross-check public projections against raw widget values and to verify the wrong-target decoy's actual terminal value. Running once under `python3 -O` then exposed that Python assertions disappear in optimized mode; these critical checks now use explicit errors.
+6. Native Ubuntu/WSL preflight passed under Python 3.12.3 / Tk 8.6. The same two suites subsequently passed in the selected pinned WSLc image (`Python 3.12.14`, Tk 8.6) in both normal and `-O` mode, using a directly launched Xvfb on `:99`. The image's standard `xvfb-run` failed twice before tests because `xauth` is absent; that launcher failure is retained, and direct Xvfb is the frozen route. Fontconfig emitted a non-fatal unwritable-cache warning in the container. The audit rejects four in-memory mutations; formal output files remain absent.
+
+Tests call candidate/auditor functions in memory only. They do not write `results/candidate_raw.json` or `results/audit.json`; those remain reserved for the one-shot formal commands in `PROTOCOL.md`.
