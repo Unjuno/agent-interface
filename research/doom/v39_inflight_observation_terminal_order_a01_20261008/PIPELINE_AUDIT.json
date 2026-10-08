@@ -1,6 +1,6 @@
 {
   "status": "PASS_SOURCE_VERIFIED_OBSERVATION_BEFORE_TERMINAL_FIFO",
-  "main_commit": "6da5dc940fdb97866cfb900ca747edb8c94b2790",
+  "main_commit": "dcf24013fb85304f513054a3a28ae4c8dfc70c00",
   "verified_git_blobs": [
     "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
     "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
@@ -15,7 +15,9 @@
     "9eb5ed4dcd42cae07bea69530136f78f9e65fb33",
     "1f5e0550770d383b5dec59242ea9ddf77d718890",
     "1d214a353d728b30b9b18d6120760b6703d9086e",
-    "4f33111fa27474d6eb4d3f8db22fae4bae7626c8"
+    "4f33111fa27474d6eb4d3f8db22fae4bae7626c8",
+    "cf13d630ae22a50272a766c86d7f325f352a89d7",
+    "193c2bd231795e7ee57de64aedfd741c8b814013"
   ],
   "properties": {
     "single_stdout_reader_decodes_then_enqueues_before_next_line": true,
@@ -31,7 +33,8 @@
     "finish_path_closes_executor_then_emits_score_without_snapshot": true,
     "no_active_post_terminal_observation_producer_in_pinned_session_route": true,
     "default_v12_inherits_v5_execute_before_terminal_loop": true,
-    "opt_in_v13_executes_backend_before_terminal": true
+    "opt_in_v13_executes_backend_before_terminal": true,
+    "v15_backend_override_delegates_synchronously_through_release_batch_and_typed_wrappers": true
   },
   "scope": "Static current-main source ordering proof; no live pipe scheduling, model, HUD cadence, game, OS input, release timing or task outcome.",
   "anchors": {
@@ -90,6 +93,14 @@
     "executor_v13_terminal_emit": {
       "file": "executor_v13.py",
       "line": 214
+    },
+    "v15_release2_execute": {
+      "file": "doom_typed_release_backend_v2.py",
+      "line": 23
+    },
+    "v15_release_batch_execute": {
+      "file": "doom_owner_thread_release_batch_backend_v1.py",
+      "line": 79
     },
     "backend_execute_sites": {
       "session_v8.py": {
