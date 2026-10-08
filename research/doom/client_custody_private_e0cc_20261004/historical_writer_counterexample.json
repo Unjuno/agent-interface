@@ -1,0 +1,24 @@
+{
+  "source": "private-v2",
+  "actual_selected_functions": [
+    "close",
+    "_write"
+  ],
+  "controlled_counterexample": [
+    "close returned while writer held write lock; stdin closed"
+  ],
+  "writer_error": [
+    {
+      "type": "ValueError",
+      "message": "I/O operation on closed file"
+    }
+  ],
+  "fixture_thread_retired": true,
+  "classification": "private pipe-close adoption HOLD: writer ownership must be serialized before disposing stdin",
+  "limitations": [
+    "stdlib memory stream; no real OS child/pipe/input/model action",
+    "writer failure stimulated by deliberate fixture pause",
+    "not a claim baseline permanently leaks descriptors"
+  ],
+  "next": "bounded write-lock acquisition before disposal plus closing-state refusal for future writes; avoid blocking reader/journal lock inversion"
+}
