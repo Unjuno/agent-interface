@@ -1,0 +1,16 @@
+{
+  "schema": "issue59-v39-ack-observation-order-freeze-v1",
+  "experiment": "issue59-v39-ack-observation-order-a01-20261008",
+  "kind": "paired deterministic source-slice construction; no live allocation or input",
+  "main_commit": "48496b645b1cbf4c4ddea49315972724f020343c",
+  "source": {
+    "path": "research/doom/map01_overlap_controller_v39.py",
+    "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
+  },
+  "hypothesis": "For the exact production wait helper, queue order relative to executor acknowledgement determines whether a typed health row is discarded unmonitored or left for the following monitored wait.",
+  "test": "Use the same frozen production wait helper, fake process, health row, acknowledgement row, terminal row, and monitor in two schedules: typed observation before acknowledgement and acknowledgement before typed observation.",
+  "decision": "PASS_ACK_ORDER_SENSITIVE only if the first schedule returns acknowledgement after consuming the typed row without monitor delivery, while the second schedule returns acknowledgement first and the following monitored wait delivers the typed row and invalidates.",
+  "counterhypothesis": "The helper could preserve or deliver typed observations regardless of relative queue order.",
+  "retry_policy": "One deterministic paired run. Audit and mutation tests are read-only."
+}
