@@ -1155,6 +1155,7 @@ def main():
         latest = wait(lambda r:r["event"] == "observation")
         decisions=[];model_session_id=planner.thread_id
         source_refreshes=[]
+        terminal_health_observation=None
         program_admissions=0
         for index in range(args.iterations):
             failure_cleanup.set_stage("source_refresh")
@@ -1185,17 +1186,13 @@ def main():
             (args.out/"source-refreshes.json").write_text(
                 json.dumps(source_refreshes,indent=2)+"\n")
             if source_refresh.get("status") == "terminal":
-                decisions.append({
+                terminal_health_observation = {
                     "iteration": index,
-                    "terminal_observation": {
-                        "status": "observed",
-                        "health": latest.get("signals", {}).get("health", {}).get("value"),
-                        "sequence": latest.get("sequence"),
-                    },
+                    "status": "observed",
+                    "health": latest.get("signals", {}).get("health", {}).get("value"),
+                    "sequence": latest.get("sequence"),
                     "source_refresh": dict(source_refresh, iteration=index),
-                    "model_action_discarded": False,
-                    "plan_terminal": "terminal_environment_observed",
-                })
+                }
                 break
             failure_cleanup.set_stage("cover_validity_admission")
             cover_semantic, cover_validity_semantic, cover_policy_source_iteration = reusable_cover(decisions)
@@ -1967,8 +1964,7 @@ def main():
               x["action"]["state"]=="active" and len(x["action"].get("next_cover_validity",[]))==1 and
               not x.get("model_action_discarded",False) for x in decisions),
           "model_wall_seconds":sum(x.get("model_ns", 0) for x in decisions)/1e9,
-          "terminal_health_observation":next((x["terminal_observation"] for x in decisions
-              if x.get("plan_terminal") == "terminal_environment_observed"), None),
+          "terminal_health_observation":terminal_health_observation,
           "terminal_health_policy_boundary":(
               "Observed health zero ends the episode before another model turn or input; "
               "it is a post-terminal reporting/custody path and does not claim death prevention.")}

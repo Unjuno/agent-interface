@@ -397,6 +397,24 @@ class Map01V39CoastTests(unittest.TestCase):
         self.assertLess(model_session_filter, report_path)
         self.assertLess(model_wall_sum, report_path)
 
+    def test_terminal_health_observation_is_reported_outside_planner_decisions(self):
+        source_path = Path(__file__).resolve().parent / "map01_overlap_controller_v39.py"
+        source = source_path.read_text(encoding="utf-8")
+        execute = source.index("def main(")
+        loop = source.index("for index in range(args.iterations):", execute)
+        terminal_branch = source.index('if source_refresh.get("status") == "terminal":', loop)
+        terminal_break = source.index("break", terminal_branch)
+        next_input_path = source.index('failure_cleanup.set_stage("cover_validity_admission")', terminal_break)
+        report_path = source.index('"terminal_health_observation":terminal_health_observation', next_input_path)
+        branch = source[terminal_branch:terminal_break]
+        self.assertIn("terminal_health_observation =", branch)
+        self.assertNotIn("decisions.append", branch)
+        self.assertLess(terminal_branch, terminal_break)
+        self.assertLess(terminal_break, next_input_path)
+        self.assertLess(next_input_path, report_path)
+        self.assertIn('"planner_turns":len(decisions)', source[report_path - 5000:report_path])
+        self.assertIn('x["final_action_admission"]["status"] for x in decisions', source[report_path - 3000:report_path])
+
     def test_production_initial_cover_rejection_branch_uses_caller_reset(self):
         source = Path(controller.__file__).read_text(encoding="utf-8")
         execute = source.index("def main(")
