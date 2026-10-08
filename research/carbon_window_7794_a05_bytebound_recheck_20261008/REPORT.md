@@ -2,7 +2,7 @@
 
 ## Decision
 
-**PASS_DIAGNOSTIC_SCOPED** — the one-shot candidate and auditor completed successfully and reconstructed all ten frozen cases. The first nine cases agree between the global-lexicographic and serial-ASAP comparators; the discriminator has two feasible schedules, global `A=1,B=0`, while serial-ASAP is infeasible. There were zero A02 differences and no auditor errors.
+**A05 decision: `PASS_BYTEBOUND_REPLAY_SCOPED`.** The one-shot candidate and auditor completed successfully and reconstructed all ten frozen cases. The auditor's raw JSON status is `PASS_DIAGNOSTIC_SCOPED`. The first nine cases agree between the global-lexicographic and serial-ASAP comparators; the discriminator has two feasible schedules, global `A=1,B=0`, while serial-ASAP is infeasible. There were zero A02 differences and no auditor errors.
 
 ## Reproducibility and custody
 
