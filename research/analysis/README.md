@@ -986,6 +986,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`representation_contrast_6624_t0_v1/`](representation_contrast_6624_t0_v1/)
 - [`research_failure_detector_5531_t4/`](research_failure_detector_5531_t4/)
 - [`research_failure_detector_5531_t5/`](research_failure_detector_5531_t5/)
+- [`reset_qualified_residual_learning_8661_t0_a01_20261009/`](reset_qualified_residual_learning_8661_t0_a01_20261009/)
 - [`resident_gtk_incremental_3518_v1/`](resident_gtk_incremental_3518_v1/)
 - [`resident_gtk_incremental_3518_v2/`](resident_gtk_incremental_3518_v2/)
 - [`resident_reactive_gtk_evidence_complete_3508_v1/`](resident_reactive_gtk_evidence_complete_3508_v1/)

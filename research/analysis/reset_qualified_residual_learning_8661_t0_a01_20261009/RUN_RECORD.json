@@ -1,0 +1,18 @@
+{
+  "allocation_id": "8661-T0-A01-20261009",
+  "candidate_started": "2026-10-08T19:50Z approximately; exact process start was not captured by the shell wrapper",
+  "recorded_after_audit_utc": "2026-10-08T19:51:07Z",
+  "candidate_command": "python3 src/candidate.py input/fixture.json raw/candidate.json",
+  "candidate_exit_code": 0,
+  "candidate_stdout": "empty; structured output written to raw/candidate.json",
+  "candidate_invocations": 1,
+  "auditor_command": "python3 src/auditor.py input/fixture.json raw/candidate.json audit/audit.json",
+  "auditor_exit_code": 0,
+  "auditor_invocations": 1,
+  "runtime_observed_before_run": "CPython 3.14.5, macOS 27.0 ARM64",
+  "initial_auditor_result": "PASS_METHOD_SCOPED",
+  "final_formal_disposition": "HOLD_CANDIDATE_SELF_CERTIFIES_TERMINAL",
+  "post_result_review": "candidate computes terminal_verified and uses it as its own update authorization; no separate verifier receipt is supplied",
+  "retry_count": 0,
+  "container_or_application_runtime": "none; finite standard-library simulator as specified by Issue #8661"
+}

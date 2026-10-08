@@ -1,0 +1,27 @@
+{
+  "audit": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "heldout_episodes": 24,
+  "heldout_hard_gate_regressions": {
+    "fixed": 0,
+    "learned": 0
+  },
+  "histories": 32,
+  "median_checkpoint_abs_error": {
+    "fixed": 0.6495,
+    "learned": 0.010000000000000009
+  },
+  "median_correction_actions": {
+    "fixed": 1.0,
+    "learned": 0.0
+  },
+  "mutations_detected": {
+    "omitted_reset_check": true,
+    "sign_inversion": true,
+    "stale_residual_reuse": true,
+    "trust_region_bypass": true,
+    "unsafe_update_acceptance": true
+  },
+  "scope": "finite deterministic synthetic plant only",
+  "training_episodes": 8
+}

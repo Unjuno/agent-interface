@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8661 T0 A01: [reset-qualified residual learning](analysis/reset_qualified_residual_learning_8661_t0_a01_20261009/REPORT.md) — `HOLD_CANDIDATE_SELF_CERTIFIES_TERMINAL`; favorable 8-train/24-held-out diagnostic retained, but candidate self-computes the validation flag that authorizes its own update. Independent terminal/effect receipt path remains untested; no rerun.
+
 - Issue #8313 T0 A01: [matched-context integrity fixture](analysis/proactive_interference_5947_t0_a01_20261007/REPORT.md) — `HOLD_AUDITOR_COVERAGE`; first-run evidence preserved without repair or rerun. No model/interference claim.
 
 - Issue #8604 T0 A03: [WSLc byte-reproducibility transfer](analysis/handoff_choice_complexity_8604_t0_a03_wslc_20261008/REPORT.md) — `PASS_TRANSFER_SCOPED`; candidate and audit outputs reproduce A02 byte-for-byte under WSLc. cgroup/swap warning retained; resource-limit enforcement not established. No human, latency, or product inference.
