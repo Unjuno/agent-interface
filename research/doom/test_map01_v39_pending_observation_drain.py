@@ -10,7 +10,7 @@ from executor_v12 import Executor as ExecutorV12
 from map01_overlap_controller_v39 import (
     MAX_PENDING_OBSERVATION_EVENTS, DoomCoverSignalPairMonitor,
     drain_pending_observation_events, recover_pending_observation_backlog,
-    settle_pending_observation_backlog)
+    recover_stale_cover_submission, settle_pending_observation_backlog)
 
 
 class Monitor:
@@ -56,6 +56,28 @@ def typed_signal(signal_id, value, sequence, capture_ns, binding):
 
 
 class PendingObservationDrainTests(unittest.TestCase):
+    def test_stale_initial_cover_observations_are_evaluated_and_cover_is_discarded(self):
+        incoming = queue.Queue()
+        monitor = Monitor(invalidate_on=12)
+        rejected = {"event": "rejected", "id": "cover-0",
+                    "reason": "latest observation sequence required before input"}
+        consumed = [
+            {"event": "observation", "sequence": 11},
+            {"event": "typed_observation", "sequence": 12},
+        ]
+        fresh = {"event": "observation", "sequence": 13, "image": "frame-13"}
+
+        result = recover_stale_cover_submission(
+            rejected, identifier="cover-0", expected_sequence=10,
+            consumed_events=consumed, latest={"sequence": 10},
+            incoming=incoming, wait=lambda predicate: fresh if predicate(fresh) else None,
+            observation_monitor=monitor)
+
+        self.assertEqual(monitor.seen, [11, 12])
+        self.assertEqual(result["latest"]["sequence"], 13)
+        self.assertEqual(result["cover_policy"], "discarded_until_fresh_plan")
+        self.assertEqual(result["invalidation"]["reason"], "health:below_hard_minimum")
+
     def test_queued_hard_crossing_precedes_completed_answer(self):
         incoming = queue.Queue()
         incoming.put({"event": "typed_observation", "sequence": 12})
