@@ -819,8 +819,7 @@ def main():
         latest = None
         reader_thread = threading.Thread(target=reader, daemon=True)
         reader_thread.start()
-        def wait(predicate, timeout=40, observation_monitor=None,
-                 deferred_observation_events=None):
+        def wait(predicate, timeout=40, observation_monitor=None):
             nonlocal latest
             end = time.monotonic() + timeout
             while time.monotonic() < end:
@@ -833,10 +832,6 @@ def main():
                     continue
                 if row["event"] == "observation":
                     latest = row
-                if (observation_monitor is None and
-                        deferred_observation_events is not None and
-                        row.get("event") == "typed_observation"):
-                    deferred_observation_events.append(row)
                 event_types = (getattr(observation_monitor, "event_types", {"observation"})
                                if observation_monitor is not None else set())
                 if row["event"] in event_types:
@@ -1182,10 +1177,8 @@ def main():
                   "expected_sequence":latest["sequence"],"valid_until_ns":clock_ns+25_000_000_000,
                   "steps":steps}
                 process.stdin.write(json.dumps(submit_command)+"\n");process.stdin.flush()
-                deferred_observation_events=[]
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                              (r.get("id")==identifier or r["event"]=="rejected"),
-                              deferred_observation_events=deferred_observation_events)
+                              (r.get("id")==identifier or r["event"]=="rejected"))
                 if accepted["event"]!="accepted":raise RuntimeError(accepted)
                 program_admissions+=1
                 guard_acceptance={"event":"accepted","id":identifier,
@@ -1202,14 +1195,8 @@ def main():
                 final_action_admission=running_guard.final_admission
                 if first_accepted is None:
                     first_accepted=accepted["accepted_ns"]
-                boundary=None
-                for observation in deferred_observation_events:
-                    boundary=action_monitor.observe(observation)
-                    if boundary is not None:break
-                deferred_observation_events.clear()
-                if boundary is None:
-                    boundary=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier,
-                                  observation_monitor=action_monitor)
+                boundary=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier,
+                              observation_monitor=action_monitor)
                 invalidated=boundary["event"]=="running_action_invalidation"
                 cancel_event=None
                 physical_release_event=None
