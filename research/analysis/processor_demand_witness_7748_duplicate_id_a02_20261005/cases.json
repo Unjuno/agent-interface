@@ -1,0 +1,73 @@
+{
+  "model": {
+    "processor_count": 1,
+    "speed": 1,
+    "preemptive": true,
+    "integer_time": true
+  },
+  "cases": [
+    {
+      "id": "valid_feasible_policy_miss",
+      "jobs": [
+        {
+          "id": "c0",
+          "class": "control",
+          "release": 0,
+          "execution": 1,
+          "deadline": 1,
+          "preemptible": true
+        },
+        {
+          "id": "b0",
+          "class": "best_effort",
+          "release": 0,
+          "execution": 1,
+          "deadline": 2,
+          "preemptible": true
+        }
+      ]
+    },
+    {
+      "id": "valid_joint_infeasible",
+      "jobs": [
+        {
+          "id": "c0",
+          "class": "control",
+          "release": 0,
+          "execution": 2,
+          "deadline": 3,
+          "preemptible": true
+        },
+        {
+          "id": "b0",
+          "class": "best_effort",
+          "release": 0,
+          "execution": 2,
+          "deadline": 2,
+          "preemptible": true
+        }
+      ]
+    },
+    {
+      "id": "duplicate_job_identity",
+      "jobs": [
+        {
+          "id": "c0",
+          "class": "control",
+          "release": 0,
+          "execution": 1,
+          "deadline": 1,
+          "preemptible": true
+        },
+        {
+          "id": "c0",
+          "class": "best_effort",
+          "release": 0,
+          "execution": 1,
+          "deadline": 2,
+          "preemptible": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "admission-baseline-barrier-a01-freeze-v1",
+  "base_main": "a5f9d501358b490c08055992492ab8a6084e8e3c",
+  "candidate_source_pr": 7429,
+  "candidate_source_head": "8fe1160c89cba797dacc235e28441d1660c13845",
+  "runtime": "host Python 3.14.5 on macOS; fake backend only",
+  "container_deviation": "OrbStack was not retried because the immediately preceding task turn recorded its daemon content-store preflight failure; this is a deterministic Python/thread-order construction check with no external IO.",
+  "candidate_command": "python3 candidate.py",
+  "candidate_invocations": 1,
+  "audit_command": "python3 audit.py",
+  "decision_gates": {
+    "barrier": "accepted callback completes before first backend execute",
+    "baseline_failure": "must issue no backend step; record executor admission/worker lifecycle after exception",
+    "scope": "fake backend and synthetic baseline callback only"
+  },
+  "no_retry": true
+}

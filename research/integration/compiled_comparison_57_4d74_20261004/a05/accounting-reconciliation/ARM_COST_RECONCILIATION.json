@@ -1,0 +1,169 @@
+{
+  "arms": {
+    "A": {
+      "all_attempt_input_plus_output": 187626,
+      "all_attempt_input_plus_output_per_planned_task": 15635.5,
+      "attempt_count": 14,
+      "exact": 12,
+      "preflight": {
+        "count": 2,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 11008,
+          "input_tokens": 24388,
+          "output_tokens": 114,
+          "reasoning_output_tokens": 60
+        },
+        "wait_ns": 12487795300
+      },
+      "preflight_wait_seconds": 12.4877953,
+      "task_elapsed_ns": 113616551682,
+      "task_elapsed_seconds": 113.616551682,
+      "task_input_plus_output": 163124,
+      "task_input_plus_output_per_planned_task": 13593.666666666666,
+      "task_models": 12,
+      "task_plus_preflight_wait_seconds": 126.104346982,
+      "task_plus_preflight_wait_seconds_per_planned_task": 10.508695581833333,
+      "task_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 134144,
+        "input_tokens": 162108,
+        "output_tokens": 1016,
+        "reasoning_output_tokens": 692
+      },
+      "tasks": 12
+    },
+    "B": {
+      "all_attempt_input_plus_output": 78874,
+      "all_attempt_input_plus_output_per_planned_task": 6572.833333333333,
+      "attempt_count": 6,
+      "exact": 12,
+      "preflight": {
+        "count": 2,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 23040,
+          "input_tokens": 24388,
+          "output_tokens": 107,
+          "reasoning_output_tokens": 53
+        },
+        "wait_ns": 15553387700
+      },
+      "preflight_wait_seconds": 15.5533877,
+      "task_elapsed_ns": 96743119257,
+      "task_elapsed_seconds": 96.743119257,
+      "task_input_plus_output": 54379,
+      "task_input_plus_output_per_planned_task": 4531.583333333333,
+      "task_models": 4,
+      "task_plus_preflight_wait_seconds": 112.296506957,
+      "task_plus_preflight_wait_seconds_per_planned_task": 9.358042246416668,
+      "task_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 44032,
+        "input_tokens": 54036,
+        "output_tokens": 343,
+        "reasoning_output_tokens": 235
+      },
+      "tasks": 12
+    },
+    "C": {
+      "all_attempt_input_plus_output": 79082,
+      "all_attempt_input_plus_output_per_planned_task": 6590.166666666667,
+      "attempt_count": 6,
+      "exact": 9,
+      "preflight": {
+        "count": 2,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 22016,
+          "input_tokens": 24422,
+          "output_tokens": 68,
+          "reasoning_output_tokens": 0
+        },
+        "wait_ns": 17169656900
+      },
+      "preflight_wait_seconds": 17.1696569,
+      "task_elapsed_ns": 125489109547,
+      "task_elapsed_seconds": 125.489109547,
+      "task_input_plus_output": 54592,
+      "task_input_plus_output_per_planned_task": 4549.333333333333,
+      "task_models": 4,
+      "task_plus_preflight_wait_seconds": 142.658766447,
+      "task_plus_preflight_wait_seconds_per_planned_task": 11.888230537250001,
+      "task_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 11008,
+        "input_tokens": 54200,
+        "output_tokens": 392,
+        "reasoning_output_tokens": 248
+      },
+      "tasks": 12
+    },
+    "D": {
+      "all_attempt_input_plus_output": 0,
+      "all_attempt_input_plus_output_per_planned_task": 0.0,
+      "attempt_count": 0,
+      "exact": 12,
+      "preflight": {
+        "count": 0,
+        "usage": {
+          "cache_write_input_tokens": 0,
+          "cached_input_tokens": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "reasoning_output_tokens": 0
+        },
+        "wait_ns": 0
+      },
+      "preflight_wait_seconds": 0.0,
+      "task_elapsed_ns": 29763966995,
+      "task_elapsed_seconds": 29.763966995,
+      "task_input_plus_output": 0,
+      "task_input_plus_output_per_planned_task": 0.0,
+      "task_models": 0,
+      "task_plus_preflight_wait_seconds": 29.763966995,
+      "task_plus_preflight_wait_seconds_per_planned_task": 2.480330582916667,
+      "task_usage": {
+        "cache_write_input_tokens": 0,
+        "cached_input_tokens": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "reasoning_output_tokens": 0
+      },
+      "tasks": 12
+    }
+  },
+  "comparisons": {
+    "B_vs_A_all_attempt_input_plus_output_reduction": 0.5796211612463091,
+    "B_vs_A_task_plus_preflight_wait_reduction": 0.10949535329635307,
+    "C_vs_B_all_attempt_input_plus_output_change": 0.002637117427796154,
+    "C_vs_B_task_plus_preflight_wait_change": 0.2703758141081465
+  },
+  "limits": [
+    "Task plus preflight wait excludes process startup and final scoring time.",
+    "Cached input and reasoning output are provider-reported subsets, not additive token totals.",
+    "C fails exactness at 9/12 and is not eligible for a benefit claim.",
+    "D human setup cost is unavailable; task-scope elapsed is not full setup-to-effect latency.",
+    "This is retained-JSON arithmetic, not original-host provenance, collateral-content, authority, or privacy verification."
+  ],
+  "reconciled_all_attempt_usage": {
+    "cache_write_input_tokens": 0,
+    "cached_input_tokens": 245248,
+    "input_tokens": 343542,
+    "output_tokens": 2040,
+    "reasoning_output_tokens": 1288
+  },
+  "reconciled_model_attempts": 26,
+  "schema": "a05_per_arm_all_attempt_reconciliation_v1",
+  "scope": "read-only reconciliation of retained A05 task rows and six arm/block schema preflights; no provider, GUI, or formal allocation",
+  "source_paths": [
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/RETAINED_EVIDENCE_AUDIT.json",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/A/schema-preflight.json",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/B/schema-preflight.json",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-1/C/schema-preflight.json",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/A/schema-preflight.json",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/B/schema-preflight.json",
+    "research/integration/compiled_comparison_57_4d74_20261004/a05/formal-output/block-2/C/schema-preflight.json"
+  ],
+  "source_revision": "58bcbb4c45501880db8782158ddd3add3b765984"
+}

@@ -1,0 +1,21 @@
+{
+  "freeze_id": "ISSUE-8406-T0-A01-20261008-F1",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "output": "RAW.json",
+    "sha256": "2c79a10fa6530d74ac17ea9c67816b9517c63235a4cd32fcf70a2d463d4d9f70",
+    "source_episodes": 12,
+    "update_counts": {"episodic_only": 0, "per_episode": 12, "batch_4": 3, "terminal": 1},
+    "visibility_rows_each_arm": 16
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 1,
+    "audit_json_created": false,
+    "exception": "KeyError: 0 at hostile_controls indexing schedules['per_episode'] as a list"
+  },
+  "retries": 0,
+  "disposition": "STOP_AUDITOR_KEYERROR_SCHEDULE_SHAPE",
+  "scientific_result": false
+}

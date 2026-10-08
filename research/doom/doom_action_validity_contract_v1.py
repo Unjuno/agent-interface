@@ -1,6 +1,7 @@
 """Bind a small planner-authored MAP01 validity spec to exact local signals."""
 from action_validity_admission_v1 import (
     CONTRACT_FORMAT, action_fingerprint)
+from doom_signal_value_domain_v1 import signal_value_in_domain
 
 
 FIRE_ACTIONS = {"fire", "advance_fire", "retreat_fire"}
@@ -8,10 +9,25 @@ FIELDS = {"critical_health_minimum", "maximum_health_loss",
           "minimum_ammo", "max_current_age_ms"}
 
 
+def bindings_equal_exact(left, right):
+    """Compare complete action bindings after rejecting Python type aliases."""
+    expected = {"focus", "surface", "geometry"}
+
+    def valid(binding):
+        return (type(binding) is dict and set(binding) == expected and
+                type(binding["focus"]) is int and
+                type(binding["surface"]) is int and
+                type(binding["geometry"]) is list and
+                len(binding["geometry"]) == 4 and
+                all(type(value) is int for value in binding["geometry"]))
+
+    return valid(left) and valid(right) and left == right
+
+
 def _observed(signal, signal_id):
     if (type(signal) is not dict or signal.get("format") != "observable-signal-v1" or
             signal.get("status") != "observed" or signal.get("signal_id") != signal_id or
-            type(signal.get("value")) is not int or signal["value"] < 0 or
+            not signal_value_in_domain(signal_id, signal.get("value")) or
             type(signal.get("sequence")) is not int or
             type(signal.get("capture_ns")) is not int or
             type(signal.get("binding")) is not dict):
@@ -51,7 +67,7 @@ def build_contract(commands, authored, health_signal, ammo_signal=None):
         ammo = _observed(ammo_signal, "ammo")
         if (ammo["sequence"] != health["sequence"] or
                 ammo["capture_ns"] != health["capture_ns"] or
-                ammo["binding"] != health["binding"]):
+                not bindings_equal_exact(ammo["binding"], health["binding"])):
             raise ValueError("health and ammo must share one observation epoch")
         signals["ammo"] = {"status": "observed", "value": ammo["value"]}
         predicates.append({"signal_id": "ammo", "operator": "minimum",

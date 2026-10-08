@@ -1,0 +1,24 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-audit-v2",
+  "disposition": "PASS_RAW_AUDITED_RECORD_LOSS_REPRODUCTION",
+  "runner_decision": "PASS_REPRODUCED_RECORD_LOSS",
+  "base_main_source_bindings_rechecked": 6,
+  "candidate_pr_source_bindings_rechecked": 2,
+  "cases_recomputed": 3,
+  "release_rows_by_case": {
+    "control": 1,
+    "pointer_failure": 0,
+    "keymap_failure": 0
+  },
+  "owner_source_order_positions": [
+    2626,
+    3122,
+    3269,
+    3895
+  ],
+  "mismatch_count": 0,
+  "mismatches": [],
+  "scope": "independent source-integrity, source-order, and raw-outcome audit; no candidate/test rerun",
+  "limits": "fake-display owner/bridge ordering only; no real X11, application, task effect, useful feedback, recovery, live frequency, physical keyboard, or gameplay",
+  "prior_audit_attempt": "results/audit-stop-a01/AUDIT-attempt01.json (wrapper hash-object comparison error preserved)"
+}

@@ -1,0 +1,13 @@
+import datetime,hashlib,importlib,io,json,os,sys,unittest
+from pathlib import Path
+root=Path(__file__).resolve().parent;repo=root/'candidate'
+sys.path.insert(0,str(repo));sys.path.insert(0,str(repo/'research/live_control'))
+old=importlib.import_module('test_adaptive_acquisition_caller_v3')
+new=importlib.import_module('test_adaptive_acquisition_caller_refusal_v3')
+suite=unittest.TestSuite([unittest.defaultTestLoader.loadTestsFromModule(old),unittest.defaultTestLoader.loadTestsFromModule(new)])
+result=unittest.TextTestRunner(verbosity=2).run(suite)
+label=sys.argv[1]
+data={'label':label,'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pid':os.getpid(),'optimized':not __debug__,'tests_run':result.testsRun,'failures':len(result.failures),'errors':len(result.errors),'skipped':len(result.skipped),'success':result.wasSuccessful(),'rows':new.ROWS,'source_sha256':{str(p.relative_to(repo)):hashlib.sha256(p.read_bytes()).hexdigest() for p in repo.rglob('*.py')}}
+(root/(label+'-RAW.json')).write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({k:v for k,v in data.items() if k not in {'rows','source_sha256'}}))
+raise SystemExit(0 if result.wasSuccessful() else 1)

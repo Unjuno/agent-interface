@@ -1,0 +1,42 @@
+{
+  "schema": "5749-a02-policy-input-v1",
+  "allocation": "5749-ACTION-ONLY-LABEL-BLIND-A02-20261007",
+  "choices": ["A", "B", "C"],
+  "default": "A",
+  "policies": ["static_default", "clarify_each_turn", "action_only_adaptive"],
+  "episodes": [
+    {"id": "stable_B", "turns": [
+      {"scope": "format", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "format", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "format", "consent": true, "observed_action": "B", "answer": "B", "query_allowed": true}
+    ]},
+    {"id": "one_off", "turns": [
+      {"scope": "layout", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "layout", "consent": true, "observed_action": null, "answer": null, "query_allowed": false},
+      {"scope": "layout", "consent": true, "observed_action": "A", "answer": "A", "query_allowed": true}
+    ]},
+    {"id": "scope_change", "turns": [
+      {"scope": "format", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "format", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "recipient", "consent": true, "observed_action": "C", "answer": "C", "query_allowed": true},
+      {"scope": "recipient", "consent": true, "observed_action": "C", "answer": null, "query_allowed": true}
+    ]},
+    {"id": "consent_revoked", "turns": [
+      {"scope": "sort", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "sort", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "sort", "consent": false, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "sort", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true}
+    ]},
+    {"id": "preference_change", "turns": [
+      {"scope": "theme", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "theme", "consent": true, "observed_action": "B", "answer": null, "query_allowed": true},
+      {"scope": "theme", "consent": true, "observed_action": "C", "answer": "C", "query_allowed": true},
+      {"scope": "theme", "consent": true, "observed_action": "C", "answer": null, "query_allowed": true}
+    ]},
+    {"id": "clarify_no_answer", "turns": [
+      {"scope": "spacing", "consent": false, "observed_action": null, "answer": null, "query_allowed": true},
+      {"scope": "spacing", "consent": false, "observed_action": null, "answer": "B", "query_allowed": true},
+      {"scope": "spacing", "consent": false, "observed_action": null, "answer": "B", "query_allowed": false}
+    ]}
+  ]
+}

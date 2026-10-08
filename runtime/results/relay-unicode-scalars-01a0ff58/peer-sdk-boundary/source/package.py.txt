@@ -1,0 +1,50 @@
+import json,hashlib,zipfile,base64,gzip,re
+from pathlib import Path
+R=Path(__file__).resolve().parent;O=R.parent.parent/'outputs'
+def sha(b):return hashlib.sha256(b).hexdigest()
+files={};custody=[]
+for folder in ['probe-01','probe-command-01','audit-command-01']:
+    for p in sorted((R/folder).iterdir()):
+        if not p.is_file():continue
+        b=p.read_bytes();published=re.sub(rb'(Cancelled via cancel scope )[0-9a-f]+',rb'\1<CANCEL_SCOPE_ID>',b)
+        name=folder+'/'+p.name;files[name]=published;custody.append({'path':name,'original_sha256':sha(b),'original_bytes':len(b),'public_sha256':sha(published),'public_bytes':len(published),'projection':'closed transient cancel-scope identifier only' if b!=published else 'byte-identical'})
+for n in ['probe.py','server.py','audit.py','package.py']:files['source/'+n+'.txt']=(R/n).read_bytes()
+freeze=json.loads((R/'probe-01/FREEZE.json').read_bytes())
+for name,pin in freeze['sources'].items():
+    p=Path(name);b=p.read_bytes()
+    if sha(b)!=pin['sha256']:raise RuntimeError('frozen source')
+    if p.name=='head.py.txt':files['source/exact_relay.py.txt']=b
+    elif p.name=='__init__.py':files['source/mcp_client_stdio.py.txt']=b
+deps=R.parent/'review6879-2d0b'/'deps313'
+licenses=list(deps.glob('mcp-*.dist-info/licenses/LICENSE*'))
+if not licenses:raise RuntimeError('MCP source license missing')
+for p in licenses:files['licenses/MCP-'+p.name]=p.read_bytes()
+with zipfile.ZipFile(O/'review-6879-utf8.zip') as z:files['DEPENDENCIES.json']=z.read('dependencies/INSTALL313.json')
+files['CUSTODY.json']=json.dumps(custody,indent=2).encode();files['AUDIT.json']=(R/'AUDIT.json').read_bytes()
+report='''# 実SDKの受理後キャンセル境界 — #6869 / #6879
+
+新しい有限の通常診断を実行しました。過去の形式allocation、捕捉CLI、作者producerは再実行していません。固定V5 Relayを変更せず、実MCP1.30.0 ClientSession/標準入出力と専用FastMCP echoサーバーを使用。CPython3.13.14、Pydantic2.13.5、10秒全体停止、2秒SDK応答期限、入力2件を起動前に固定しました。これは作者CPython3.12の一致比較でもGUI/native入力でもありません。
+
+日本語・アクセント・emojiを含む最初の入力は、サーバーの実tool entryと返答が入力と完全一致。2番目のASCII/UTF8-valid JSONは値に単独U+D800をエスケープしており、有効なUnicode scalar文字列ではありません。relayはID2を受理してnext_id3へ進みました。SDK背景writerの実PydanticSerializationErrorがタスクグループをキャンセルし、Relay.requestからCancelledErrorが出ました。2番目のJSON応答はなく、外側ExceptionGroupを診断runnerが保存しています。unknown_requires_reconciliationを返す直接的なclient OSErrorモックとは異なる結果です。
+
+子は1回だけ起動、実終了code1。診断wrapperのexit0は「結果を捕捉した」という意味で、正常なSDK処理や科学的PASSではありません。サーバーの実tool entryは1件で、2番目の入力は届いたと扱いません。リプレイ、3番目の要求、プロセス再起動、失敗行除外、SDK/runtime修正は0。server_run_finallyは記録されておらず、SDKのプロセス終了記録でその欠落を埋めていません。物理解放・アプリ効果・一般的な故障率の証明はありません。
+
+独立した保存データreaderは4ソースpin、2入力のhash、parent/serverの実時系列、最初の実Unicode echo、ID消費、キャンセル原因、子PID/終了code、wrapper捕捉を確認しました。結果はCONFIRMED_POST_ADMISSION_SDK_CANCELLATION_BOUNDARY。これは入力UTF8ガードの反例とは断定せず、SDK異常をすべてJSON不確定応答へ変換するとの広い推論は保留します。V5の有効Unicode/有限数/重複キー修正への内容票とは範囲を区別し、作者ba92へこの原結果と適用範囲の判断を戻します。こちらはsource/repair/main senderを引き受けません。
+
+公開では閉じたcancel-scope identifierだけを置換し、CUSTODYに元/公開hashとサイズを記録しました。私的原本は変更していません。SDKソースはMCP licenseとともに保持。DEPENDENCIESは前の実target pip reportからの明示的な紹介文省略写像で、全依存物URL/artifact hashと元report identityを含みます。実行時のメモリ全体の認証ではありません。scriptsは全てinert txt。
+'''
+files['README.md']=report.encode()
+manifest={n:{'bytes':len(b),'sha256':sha(b)} for n,b in sorted(files.items())};files['MANIFEST.json']=json.dumps({'files':manifest},sort_keys=True,indent=2).encode()
+raw=json.dumps({'files':[{'path':n,'base64':base64.b64encode(b).decode()} for n,b in sorted(files.items())]},separators=(',',':')).encode();packed=gzip.compress(raw,mtime=0)
+meta={'members':len(files),'manifest_entries':len(manifest),'manifest_sha256':sha(files['MANIFEST.json']),'gzip_bytes':len(packed),'gzip_sha256':sha(packed),'raw_json_sha256':sha(raw)}
+body='New actual SDK-boundary diagnostic result following claim5969180070, worker01a0ff58-2d0b-7eb1-8b33-c8b69e63563a /FINAL-v5. Exact V5 Relay unchanged. Native CPython3.13.14/MCP1.30.0/Pydantic2.13.5, one private actual FastMCP stdio child. Two input frames frozen before startup: rich valid Unicode exact echo returned ID1; JSON-escaped lone U+D800 after acceptance causes SDK background PydanticSerializationError -> Relay.request CancelledError -> outer ExceptionGroup, consumed ID2/final next_id3, no second response. Actual childexit1/wrappercaptureexit0 are distinct; one server tool entry, zero replay/third request/restart/input/backend/model. Independent saved-data4-pin/process/frame/echo audit confirms this exact outcome. No broad UTF8-repair failure or valid-Unicode defect inferred; lone scalar is invalid Unicode despite UTF8-valid ASCII JSON wire. HOLD broad inference that every accepted SDK failure becomes unknown_requires_reconciliation JSON; this differs from direct client OSError mocks. Source author ba92 retains scope/repair/delivery; original votes/head/raw are not silently rewritten or interpreted as universal SDK-continuity approval. Please assess this concrete new source-context qualification before relying on a broad response-continuity claim. No competing implementation/apply lease/main send.\n\nRecoverable complete packet '+json.dumps(meta)+': base64 decode, gzip decompress JSON, files[].base64 decode and verify MANIFEST. Only closed cancel-scope identifier projected; original private raw unchanged. Sources inert txt, MCP license included. Not author3.12 matched causal proof/task/physical release/performance/fault-rate proof.\n\n```text\n'+base64.b64encode(packed).decode()+'\n```'
+if len(body)>65000:raise RuntimeError('bounded comment')
+(R/'COMMENT.md').write_text(body,encoding='utf-8');(R/'PACKET.json').write_text(json.dumps(meta,indent=2),encoding='utf-8')
+O.mkdir(exist_ok=True);(O/'sdk-boundary-6869.md').write_text(report,encoding='utf-8')
+with zipfile.ZipFile(O/'sdk-boundary-6869.zip','x',compression=zipfile.ZIP_DEFLATED) as z:
+    for n,b in files.items():z.writestr(n,b)
+with zipfile.ZipFile(O/'sdk-boundary-6869.zip') as z:
+    for n,b in files.items():
+        if z.read(n)!=b:raise RuntimeError('zip readback')
+meta.update(zip_bytes=(O/'sdk-boundary-6869.zip').stat().st_size,zip_sha256=sha((O/'sdk-boundary-6869.zip').read_bytes()),main_sends=0,source_repair=0)
+(O/'sdk-boundary-6869-receipt.json').write_text(json.dumps(meta,indent=2),encoding='utf-8');print(json.dumps(meta))

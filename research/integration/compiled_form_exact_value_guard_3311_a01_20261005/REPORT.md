@@ -1,0 +1,55 @@
+# Compiled-form exact-value guard differential — Issue #3311
+
+**Experiment:** `compiled-form-guard-differential-3311-20261005-01`
+**Executed source:** `Unjuno/agent-interface` `main` at `33f354c27408bce88abb705397b3e260eb2faa51`. At packaging, current `main` is `3f24e85bff32a93fbc1ca244f7f249b843710743`; all four relevant source/test blob IDs match the checks below. The current v2 regression suite was run at its parent `21e55a7179adc0c41a1bfd31cc4f2c0fbb14c2ab` (5/5); the test and runtime blobs are identical at the packaging head.
+**Disposition:** `PASS_DIFFERENTIAL_GUARD` for the synthetic runtime branch contrast; no live desktop or efficiency disposition.
+
+## H/T/D/C/U
+
+- **H:** Under identical synthetic evidence where a form field's pixels changed but the observed value did not equal the task value, compiled method v1 may submit and report runtime completion because it guards on pixel change; v2 should yield before Submit because it requires exact value match and a present Submit target.
+- **T:** Run both current-main adapters against the same three synthetic observation rows, same compiled runtime, and the same one-use admission/execution/effect callbacks. Project only predicates declared by each interface. Stop after this one deterministic contrast; run the existing focused v2 regression suite as a separate construction check.
+- **D:** PASS only if v1 emits `enter_exact_token` then `activate_submit`, while v2 emits only `enter_exact_token` and returns `SAFE_YIELD` on the second observation. Otherwise FAIL. The runtime terminal outcome is not treated as independently scored task success.
+- **C:** A v1 false positive can be caught at the final task boundary only if the independent application scorer rejects the wrong value. V1 cannot consume the exact-value predicate because it is undeclared; the harness filters the same underlying rows to each interface's declared predicates. This tests adapter/runtime semantics, not perception quality.
+- **U:** One synthetic sequence; no population estimate. Exact-value truth was supplied by the harness, not OCR or an application. No live app, model, GUI, host IPC, user input, repair loop, token, latency, cost, or efficiency was measured. The outcome supports considering v2 in a future frozen composition and retaining independent scoring.
+
+## Result
+
+On the same synthetic rows, v1 submitted after `field_pixels_changed=true` while `field_value_matches_task=false`; its compiled runtime terminal was `TASK_SUCCEEDED` from the synthetic `submission_pixels_changed` predicate. V2 made no Submit action and yielded `SAFE_YIELD / effect_failed` after that wrong-value observation. Both executed action receipts had verified key/button release. The independent raw audit reconstructed these differences from `raw-differential.json` and passed.
+
+The current v2 regression suite passed **5/5** at parent commit `21e55a7179adc0c41a1bfd31cc4f2c0fbb14c2ab`, including the disappearing-Submit-target refusal control; its relevant source/test blobs are identical on packaging commit `3f24e85bff32a93fbc1ca244f7f249b843710743`. An earlier four-test run at the original experiment head is retained separately. This does not validate v2's observer on a live surface, integrate v2 into the frozen three-arm plan, or permit editing/restarting the one-shot #3489 allocation. A future formal comparison would need a prospective source/schema manifest for the exact-value predicate and the matched independent scorer.
+
+## Commands and environment
+
+- Differential run: `python3 work/current-main-compiled-form-guard-20261005/run_differential.py`
+- Focused regression suite: `PYTHONPATH=work/current-main-compiled-form-guard-20261005 python3 -m unittest research.live_control.test_integrated_efficiency_compiled_adapter_v2 -v`
+- Raw audit: `python3 work/current-main-compiled-form-guard-20261005/audit_raw.py`
+- Host: macOS 27.0.1, Darwin arm64, Python 3.14.5. No container/image or live allocation was used.
+
+## Provenance
+
+The experiment harness and source files were materialized from commit `33f354c27408bce88abb705397b3e260eb2faa51`. Latest `main` at packaging is `3f24e85bff32a93fbc1ca244f7f249b843710743`. The v1/v2 adapters and compiled runtime match the tested source blobs; the focused v2 test blob is `277ce05d9583ae4172ce86663d150a705eb9bb22`. Git blob IDs:
+
+- v1 adapter: `22a15b10c2bc1b4f0d04ed1eb189a97983b3c60d`
+- v2 adapter: `e88409619f943086d877dc5b741e141075e2f403`
+- compiled runtime: `93aeff9307143e996ca638e0dd0646290e289763`
+- v2 regression test: `277ce05d9583ae4172ce86663d150a705eb9bb22`
+
+To reproduce without overwriting retained evidence, copy `executed-runner.py` into a fresh temporary directory and run that copy with the full repository root on `PYTHONPATH`; the runner writes `raw-differential.json` beside itself. `audit_raw.py` independently checks the preserved raw branch/action/outcome and release events. `test-output-main-21e55.txt` preserves the latest focused suite output; `test-output-main-33f.txt` retains the earlier four-test run. A pre-run harness attempt that violated the runtime's declared-predicate contract and an initial audit-field-name assertion error are preserved in `construction-attempts.txt`; neither issued model, GUI or native input.
+
+
+## Safe rerun path qualification (2026-10-05)
+
+The original `executed-runner.py` and `raw-differential.json` remain byte-for-byte unchanged. New `rerun_safely.py` and `REPRODUCE.md` create a fresh UUID directory outside the checkout and this frozen package, copy the historical runner and auditor there, run each once, retain separate stdout/stderr, and write a `RUN.json` binding the unique run ID to current Git/runtime/source hashes and candidate/audit results. Existing run IDs are refused before candidate invocation.
+
+One fresh reproducibility run is retained under `reruns/706ce2ae83d549379efe51c21c1d72bb/`: source `main` `3bf3d49bec2aa26a9aaba38806f9e88296459356`, candidate exit 0, raw auditor exit 0 with `PASS_RAW_RECONSTRUCTION`, and raw SHA-256 `4c3c3eeb7c35d99a5f484b4d2845ec9bd7698748a11ecfbeef3248052cb7528f`. The three imported runtime/adapter blobs match the PR's frozen source blobs. A collision check with that same run ID returned 2 and the raw SHA remained unchanged.
+
+This run reproduces only the synthetic branch behavior. It does not add GUI, model, application-effect, recovery, or efficiency evidence, and does not satisfy or consume #3311/#3489 live allocations.
+
+
+## Timeout and source-stability qualification (2026-10-05)
+
+Review found that a process timeout previously escaped before a terminal run record was written. `rerun_safely.py` now records bounded-process outcomes (`completed`, `timeout`, `launch_error`, or `not_run`), preserves partial stdout/stderr when a candidate or auditor times out, and writes `RUN.json` for those terminal outcomes. It hashes the three imported source files before and after execution and marks a changed source set as a failed qualification. Detached checkouts are identified explicitly.
+
+The new two-case regression suite passed 2/2: candidate timeout and auditor timeout each produced `RUN.json` and retained partial output. Output is preserved in `wrapper-test-output.txt`; the fixture suite is `test_rerun_safely_timeouts.py`.
+
+A fresh safe rerun against current `main` `7297e709e8a52d5e014c1ce443a3b6b9d9b207af` is retained under `reruns/1ecbb040f1274e9d92a5090fc43cf44b/`. Candidate and auditor both exited 0, the independent audit returned `PASS_RAW_RECONSTRUCTION`, source hashes matched before/after, and raw SHA-256 is `e48aa3960e6d8b0e75d8121a5181828404bcad5461b7816a1529390364400c50`. Frozen historical runner and raw hashes remain unchanged (`b67ad6d8…` and `db7dfcff…`). This remains synthetic branch evidence only; the #3311 integrated desktop comparison and #3489 endpoint preflight remain unperformed.

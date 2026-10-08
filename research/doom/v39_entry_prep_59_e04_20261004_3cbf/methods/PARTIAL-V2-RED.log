@@ -1,0 +1,63 @@
+test_real_sibling_import_receipt_and_unchanged_main_arguments (test_entry.EntryBoundary.test_real_sibling_import_receipt_and_unchanged_main_arguments) ... ok
+test_refuses_any_exposure_fields_even_null (test_partial_stop.PartialStopControls.test_refuses_any_exposure_fields_even_null) ... ok
+test_refuses_imported_or_nonempty_stdout (test_partial_stop.PartialStopControls.test_refuses_imported_or_nonempty_stdout) ... ok
+test_refuses_missing_failure_identity_and_chronology (test_partial_stop.PartialStopControls.test_refuses_missing_failure_identity_and_chronology) ... ok
+test_refuses_truthy_gate_aliases (test_partial_stop.PartialStopControls.test_refuses_truthy_gate_aliases) ... ok
+test_refuses_unknown_or_successful_terminal_and_cleanup (test_partial_stop.PartialStopControls.test_refuses_unknown_or_successful_terminal_and_cleanup) ... ok
+test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) ... 
+  test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='submit') ... FAIL
+  test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='after_notification') ... FAIL
+  test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='wait_start_ns') ... FAIL
+  test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='initial') ... FAIL
+  test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='future_field') ... FAIL
+test_valid_record_preserves_stop_not_science_pass (test_partial_stop.PartialStopControls.test_valid_record_preserves_stop_not_science_pass) ... ok
+
+======================================================================
+FAIL: test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='submit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_entry_prep_59_e04_20261004_3cbf/test_partial_stop.py", line 50, in test_refuses_unrecognized_and_other_producer_exposure_fields
+    with self.subTest(field=field), self.assertRaises(ValueError):
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='after_notification')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_entry_prep_59_e04_20261004_3cbf/test_partial_stop.py", line 50, in test_refuses_unrecognized_and_other_producer_exposure_fields
+    with self.subTest(field=field), self.assertRaises(ValueError):
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='wait_start_ns')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_entry_prep_59_e04_20261004_3cbf/test_partial_stop.py", line 50, in test_refuses_unrecognized_and_other_producer_exposure_fields
+    with self.subTest(field=field), self.assertRaises(ValueError):
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='initial')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_entry_prep_59_e04_20261004_3cbf/test_partial_stop.py", line 50, in test_refuses_unrecognized_and_other_producer_exposure_fields
+    with self.subTest(field=field), self.assertRaises(ValueError):
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_refuses_unrecognized_and_other_producer_exposure_fields (test_partial_stop.PartialStopControls.test_refuses_unrecognized_and_other_producer_exposure_fields) (field='future_field')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6183-t0/research/doom/v39_entry_prep_59_e04_20261004_3cbf/test_partial_stop.py", line 50, in test_refuses_unrecognized_and_other_producer_exposure_fields
+    with self.subTest(field=field), self.assertRaises(ValueError):
+                                    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.062s
+
+FAILED (failures=5)

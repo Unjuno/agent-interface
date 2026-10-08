@@ -1,0 +1,124 @@
+{
+  "status": "PASS_SOURCE_VERIFIED_OBSERVATION_BEFORE_TERMINAL_FIFO",
+  "main_commit": "b52e37574debe61196b951624a4a0e06c67ac829",
+  "verified_git_blobs": [
+    "2241c65be63cd50165954312f4c0af2e9062dd5a",
+    "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+    "cbbef5405c29fe56018c24e120b1b87d3c39dd26",
+    "e701035302da4802e0db463035c4d653a7e7618b",
+    "f71ca01426a703e4160c9403395fed03416c772e",
+    "080fa353bc14afc8bc620e80abc38e6cf64d1259",
+    "d95d382ee9c234dab652fa8af93b233baa5225a4",
+    "094a800151b4d2b357a9aeca8b018f45d1e7f368",
+    "742f7a5368b0bf6c202fdbe0856494abb5795dce",
+    "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "9eb5ed4dcd42cae07bea69530136f78f9e65fb33",
+    "1f5e0550770d383b5dec59242ea9ddf77d718890",
+    "1d214a353d728b30b9b18d6120760b6703d9086e",
+    "4f33111fa27474d6eb4d3f8db22fae4bae7626c8",
+    "cf13d630ae22a50272a766c86d7f325f352a89d7",
+    "193c2bd231795e7ee57de64aedfd741c8b814013"
+  ],
+  "properties": {
+    "single_stdout_reader_decodes_then_enqueues_before_next_line": true,
+    "only_reader_producer_to_incoming_queue": true,
+    "session_emitter_serializes_and_flushes_each_json_line_under_lock": true,
+    "coast_observation_emitted_synchronously_during_backend_execute": true,
+    "executor_terminal_emitted_after_backend_execute_returns": true,
+    "wait_observes_policy_event_before_terminal_predicate": true,
+    "default_v12_and_opt_in_v15_use_the_serialized_session_emitter": true,
+    "active_observations_are_synchronous_inside_executor_backend_execute": true,
+    "only_direct_snapshots_are_startup_or_disabled_fixture_setup": true,
+    "controller_session_command_disables_fixture_out": true,
+    "finish_path_closes_executor_then_emits_score_without_snapshot": true,
+    "no_active_post_terminal_observation_producer_in_pinned_session_route": true,
+    "default_v12_inherits_v5_execute_before_terminal_loop": true,
+    "opt_in_v13_executes_backend_before_terminal": true,
+    "v15_backend_override_delegates_synchronously_through_release_batch_and_typed_wrappers": true
+  },
+  "scope": "Static current-main source ordering proof; no live pipe scheduling, model, HUD cadence, game, OS input, release timing or task outcome.",
+  "anchors": {
+    "controller_reader": {
+      "file": "map01_overlap_controller_v39.py",
+      "line": 813
+    },
+    "controller_wait": {
+      "file": "map01_overlap_controller_v39.py",
+      "line": 822
+    },
+    "session_emit": {
+      "file": "session_map01_v12.py",
+      "line": 97
+    },
+    "coast_snapshot": {
+      "file": "doom_typed_coast_backend_v1.py",
+      "line": 18
+    },
+    "coast_execute": {
+      "file": "coast_backend_v1.py",
+      "line": 32
+    },
+    "executor_run": {
+      "file": "executor_v5.py",
+      "line": 51
+    },
+    "executor_backend_execute": {
+      "file": "executor_v5.py",
+      "line": 58
+    },
+    "executor_terminal_emit": {
+      "file": "executor_v5.py",
+      "line": 88
+    },
+    "startup_snapshot": {
+      "file": "session_map01_v12.py",
+      "line": 263
+    },
+    "fixture_only_snapshot": {
+      "file": "session_map01_v12.py",
+      "line": 282
+    },
+    "finish_executor_close": {
+      "file": "session_map01_v12.py",
+      "line": 321
+    },
+    "finish_score_emit": {
+      "file": "session_map01_v12.py",
+      "line": 340
+    },
+    "executor_v13_backend_execute": {
+      "file": "executor_v13.py",
+      "line": 132
+    },
+    "executor_v13_terminal_emit": {
+      "file": "executor_v13.py",
+      "line": 214
+    },
+    "v15_release2_execute": {
+      "file": "doom_typed_release_backend_v2.py",
+      "line": 23
+    },
+    "v15_release_batch_execute": {
+      "file": "doom_owner_thread_release_batch_backend_v1.py",
+      "line": 79
+    },
+    "backend_execute_sites": {
+      "session_v8.py": {
+        "file": "session_v8.py",
+        "line": 22
+      },
+      "session_v9.py": {
+        "file": "session_v9.py",
+        "line": 87
+      },
+      "session_v10.py": {
+        "file": "session_v10.py",
+        "line": 20
+      },
+      "coast_backend_v1.py": {
+        "file": "coast_backend_v1.py",
+        "line": 32
+      }
+    }
+  }
+}

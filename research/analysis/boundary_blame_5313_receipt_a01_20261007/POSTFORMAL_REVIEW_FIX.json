@@ -1,0 +1,19 @@
+{
+  "kind": "post-formal PR review hardening; not a new formal allocation",
+  "reviewed_commit": "41d608d8984e34ccf5ca6ba4c7704fbcc5c65d20",
+  "finding": "audit_core.audit accepted missing/nonzero formal_native_or_model_replays and unknown top-level fields",
+  "preserved_formal_outputs": {
+    "candidate_raw_sha256": "ab3ea920aac088be34ebb6283ca8668e94af439d1305206b8676c74259fc25e7",
+    "audit_json_sha256": "e47895df85213633de799f91aa6dd75c4407aa618b8f07b9b0e66abae6e56fd4",
+    "formal_candidate_or_auditor_reruns": 0
+  },
+  "fix": "require exact top-level keys and type(replays) is int with value 0",
+  "changed_sha256": {
+    "audit_core.py": "351660494f6dfd656c3cd2d9d96c5e0825bc911313842ebbbd29675f8b1ff402",
+    "test_auditor.py": "5a56f9f9ae9c4f2062a34080bf0b10bb10092eec29e05a96e248777bc22f28fb",
+    "REPORT.md": "4bd3a4cf27a04836ae648282f37833aeefd299c515b759f0d032476dcfab3ba9"
+  },
+  "red_green": "new missing/nonzero replay-count test failed against prior auditor with PASS, then passed after fix",
+  "verification": "python3 -B -m unittest discover -s research/analysis/boundary_blame_5313_receipt_a01_20261007 -p 'test_*.py' -v: 14/14 PASS; py_compile PASS; git diff --check PASS",
+  "scope": "construction/review correction only; no new scientific result; original one-shot outcome artifacts are immutable"
+}

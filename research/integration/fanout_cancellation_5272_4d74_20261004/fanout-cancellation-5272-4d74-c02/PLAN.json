@@ -1,0 +1,24 @@
+{
+  "issue": 5272,
+  "main": "0f0f17e6c646f0856173f54d31df7a0dc87fa49c",
+  "H": "Cancel-request-only slot accounting can reuse a slot while a real asyncio coroutine remains live; terminal-and-release accounting prevents that reuse without changing a sealed FAIL decision.",
+  "T": "One fresh WSLc run, six finite real asyncio cancellation behaviors, two slot-accounting policies, identical fixed timings and event-based startup barrier. No external worker/backend effects. A next optional coroutine actually starts whenever the accounting policy refunds its single slot.",
+  "D": "METHOD_PASS_SCOPED only if independent event reconstruction exposes request-only overlap in slow cleanup and suppressed cancellation, terminal+release policy has no overlap, missing release is HOLD, mandatory unfinished is UNKNOWN, late results never alter sealed decision. No latency superiority gate; all first rows retained, no retry.",
+  "C": "Existing production schedulers may already account correctly. Cancel-request comparator deliberately models the suspect policy. Fixture release is logical coroutine-owned resource, not OS/backend reclamation.",
+  "U": "Construction only, six authored behaviors; no actual interface verifier/task/model/native/GPU, no rare-race probability or useful-task speed claim. Prior STOP allocations unchanged.",
+  "cases": [
+    "cooperative",
+    "slow_cleanup",
+    "suppressed_late",
+    "completion_race",
+    "missing_release",
+    "mandatory_unfinished"
+  ],
+  "policies": [
+    "REQUEST_ONLY",
+    "TERMINAL_RELEASE"
+  ],
+  "cleanup_seconds": 0.04,
+  "ordinary_work_seconds": 0.01,
+  "collision": "No local WSLc container; current open PR first100 and full named remote branch patterns found no 5272/fanout owner. Issue comments contain preparation STOPs only and unexecuted cancellation amendment. Bounded PR search is not exhaustive."
+}

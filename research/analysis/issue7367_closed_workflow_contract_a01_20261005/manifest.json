@@ -1,0 +1,13 @@
+{
+  "schema": "issue7367-closed-workflow-v1",
+  "entry": "frontier",
+  "nodes": {
+    "frontier": {"uses": [], "next": ["current"]},
+    "current": {"uses": [["obs-v2", "health"], ["task-intent", "target"]], "next": ["done", "compare_history", "recovery", "effect"]},
+    "compare_history": {"uses": [["obs-v1", "health"], ["obs-v2", "health"]], "next": ["done"]},
+    "recovery": {"uses": [["recovery-state", "checkpoint"], ["recovery-state", "last_action"]], "next": ["retry", "effect"]},
+    "retry": {"uses": [["recovery-state", "checkpoint"]], "next": ["recovery", "effect"]},
+    "effect": {"uses": [["external-effect", "request_id"], ["external-effect", "status"]], "next": ["done"]},
+    "done": {"uses": [], "next": []}
+  }
+}

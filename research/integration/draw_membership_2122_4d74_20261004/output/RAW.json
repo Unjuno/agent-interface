@@ -1,0 +1,1289 @@
+{
+  "rows": [
+    {
+      "case": "positive_0",
+      "arm": "fresh_read_reference",
+      "id": "positive_0__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": true,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 40,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true,
+        "replacement_executed": false,
+        "page_count": 2,
+        "new_reference_distinct": null,
+        "generations": [
+          "generation0",
+          "generation0"
+        ]
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 77589,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "bound_state": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "expected_bound": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "retained_created_reference": true,
+      "bound_guard": true,
+      "membership_equalities": [
+        true,
+        false
+      ],
+      "membership_matches": 1,
+      "visible_guard_before_membership": true,
+      "input_mutations": 1,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED",
+      "first_final_ns": 3989311836,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 45,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1900,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ],
+            "generation": "generation0"
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ],
+            "generation": "generation0"
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "6f6a8540bde9e96d91b368391ede8822c1c13c83692dad8ee40e6c6a5f2fa678",
+      "elapsed_ns": 1325138080
+    },
+    {
+      "case": "replacement_0",
+      "arm": "fresh_read_reference",
+      "id": "replacement_0__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": true,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 51,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true,
+        "replacement_executed": true,
+        "page_count": 2,
+        "new_reference_distinct": true,
+        "generations": [
+          "generation1",
+          "generation0"
+        ]
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 72061,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "bound_state": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "expected_bound": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "retained_created_reference": true,
+      "bound_guard": false,
+      "membership_equalities": [
+        false,
+        false
+      ],
+      "membership_matches": 0,
+      "visible_guard_before_membership": true,
+      "input_mutations": 0,
+      "disposition": "REFUSED_BOUND_TARGET",
+      "first_final_ns": 5258085401,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 56,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ],
+            "generation": "generation1"
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ],
+            "generation": "generation0"
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "61679384496d1b8603473bcb668d80cdea41b7067c94a06825ca4ff3b0d016a3",
+      "elapsed_ns": 1249677942
+    },
+    {
+      "case": "replacement_1",
+      "arm": "fresh_read_reference",
+      "id": "replacement_1__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": true,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 62,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true,
+        "replacement_executed": true,
+        "page_count": 2,
+        "new_reference_distinct": true,
+        "generations": [
+          "generation1",
+          "generation0"
+        ]
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 66133,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "bound_state": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "expected_bound": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "retained_created_reference": true,
+      "bound_guard": false,
+      "membership_equalities": [
+        false,
+        false
+      ],
+      "membership_matches": 0,
+      "visible_guard_before_membership": true,
+      "input_mutations": 0,
+      "disposition": "REFUSED_BOUND_TARGET",
+      "first_final_ns": 6566635033,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 67,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ],
+            "generation": "generation1"
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ],
+            "generation": "generation0"
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "4f581145a7c5a177526c77853041b8d267e8a6ac5ff5fdc603096a64e9dad3d8",
+      "elapsed_ns": 1291882583
+    },
+    {
+      "case": "positive_1",
+      "arm": "fresh_read_reference",
+      "id": "positive_1__fresh_read_reference",
+      "events": [
+        {
+          "stage": "initial_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2000,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_writer",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "rechecked_current",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "admission_read",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "final",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_100ms",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        },
+        {
+          "stage": "after_1s",
+          "objects": [
+            {
+              "name": "A",
+              "position": [
+                1900,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            },
+            {
+              "name": "B",
+              "position": [
+                2700,
+                1000
+              ],
+              "size": [
+                500,
+                500
+              ]
+            }
+          ],
+          "locked": true,
+          "titles": []
+        }
+      ],
+      "hold_reference": true,
+      "writer_exit": 0,
+      "writer": {
+        "pid": 73,
+        "before": [
+          [
+            "A",
+            1000,
+            1000
+          ],
+          [
+            "B",
+            2000,
+            1000
+          ]
+        ],
+        "after": [
+          [
+            "A",
+            1700,
+            1000
+          ],
+          [
+            "B",
+            2700,
+            1000
+          ]
+        ],
+        "locked": true,
+        "replacement_executed": false,
+        "page_count": 2,
+        "new_reference_distinct": null,
+        "generations": [
+          "generation0",
+          "generation0"
+        ]
+      },
+      "requested_wait_seconds": 0,
+      "actual_wait_ns": 65981,
+      "action": "RECHECK",
+      "current_guard_matches": true,
+      "bound_state": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "expected_bound": {
+        "name": "A",
+        "position": [
+          1700,
+          1000
+        ],
+        "size": [
+          500,
+          500
+        ]
+      },
+      "retained_created_reference": true,
+      "bound_guard": true,
+      "membership_equalities": [
+        true,
+        false
+      ],
+      "membership_matches": 1,
+      "visible_guard_before_membership": true,
+      "input_mutations": 1,
+      "setter_argument": [
+        1900,
+        1000
+      ],
+      "disposition": "SETTER_RETURNED_EFFECT_UNVERIFIED",
+      "first_final_ns": 7830451816,
+      "observer_exit": 0,
+      "observer": {
+        "pid": 78,
+        "objects": [
+          {
+            "name": "A",
+            "position": [
+              1900,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ],
+            "generation": "generation0"
+          },
+          {
+            "name": "B",
+            "position": [
+              2700,
+              1000
+            ],
+            "size": [
+              500,
+              500
+            ],
+            "generation": "generation0"
+          }
+        ],
+        "locked": true
+      },
+      "saved_sha256": "4adfb31cc7994fde151e47d41b7fc9ed387a0390d4d960922357322a142517a6",
+      "elapsed_ns": 1251085283
+    }
+  ],
+  "errors": [],
+  "parent_exit": 0,
+  "controller_pid": 1,
+  "version": "LibreOffice 25.2.3.2 520(Build:2)",
+  "cgroup": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  }
+}
