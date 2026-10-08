@@ -1,10 +1,11 @@
-A01 focused test output (helper extracted from the exact PR branch source):
+A01 focused test output (exact helper plus integration ordering check against the frozen V39 controller source, with the PR change applied):
+test_completed_future_drain_is_wired_before_answer_read ... ok
 test_empty_backlog_is_nonblocking_and_returns_no_boundary ... ok
 test_queued_hard_crossing_precedes_completed_answer ... ok
 test_soft_observation_and_terminal_preserve_completed_answer_path ... ok
 
-Ran 3 tests in 0.000s
+Ran 4 tests in 0.007s
 OK
 
-The initial standalone harness failure is retained separately at ../INITIAL_TEST_FAILURE.txt. It failed before candidate tests due to a literal backslash-n written between Python statements; the corrected harness ran the same three tests.
+The initial standalone harness failure is retained separately at ../INITIAL_TEST_FAILURE.txt. It failed before candidate tests due to a literal backslash-n written between Python statements; the corrected harness ran the focused suite.
 
