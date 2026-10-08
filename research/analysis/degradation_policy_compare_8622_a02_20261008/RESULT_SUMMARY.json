@@ -1,0 +1,25 @@
+{
+  "schema": "8622-result-summary-v1",
+  "issue_gate": "scientific fixture criteria met; final custody HOLD",
+  "policy_arms": [
+    "independence_assuming_lookup",
+    "dependency_aware_contract",
+    "unknown_dependency_fail_closed"
+  ],
+  "cases_reconstructed": 10,
+  "independence_overclaim_cases": 4,
+  "independence_overclaim_operations": 6,
+  "dependency_aware_unsupported_operations": 0,
+  "unknown_fail_closed_admitted_operations": 0,
+  "mandatory_release_obligations_verified": 10,
+  "dispatches": 0,
+  "stdout_bytes": {
+    "candidate": 12546,
+    "auditor": 4116
+  },
+  "sha256": {
+    "candidate": null,
+    "independent_auditor": null
+  },
+  "digest_capture_note": "The outer in-memory runner emitted both hashes, but the terminal-rendered record wrapped/truncated before their complete strings could be recovered. Do not infer or fabricate either digest. Raw stdout was not written to disk; no retry is permitted."
+}
