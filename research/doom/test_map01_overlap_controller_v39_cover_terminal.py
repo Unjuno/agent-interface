@@ -319,7 +319,9 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
-            def interrupt(self, handle):
+            def interrupt(self, handle, before_transport=None):
+                if before_transport is not None:
+                    before_transport()
                 trace.append("interrupt_enter")
                 interrupt_entered.set()
                 if not release_interrupt.wait(2):
@@ -369,15 +371,31 @@ class CoverTerminalTests(unittest.TestCase):
             stdin = Stdin()
 
         class Planner:
-            def interrupt(self, handle):
+            def interrupt(self, handle, before_transport=None):
                 trace.append("planner_interrupt")
-                return {"status": "interrupted"}
+                before_transport_error = None
+                if before_transport is not None:
+                    try:
+                        before_transport()
+                    except Exception as error:
+                        before_transport_error = repr(error)
+                result = {"status": "interrupted"}
+                if before_transport_error is not None:
+                    result["before_transport_error"] = before_transport_error
+                return result
 
-        with self.assertRaisesRegex(OSError, "synthetic executor pipe failure"):
+        terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
+                    "release": dict(NEUTRAL)}
+
+        def wait(predicate):
+            trace.append("terminal_wait")
+            return terminal if predicate(terminal) else None
+
+        with self.assertRaisesRegex(RuntimeError, "synthetic executor pipe failure"):
             controller.cancel_invalidated_cover(
-                Planner(), object(), Process(), lambda predicate: None, "cover-0")
+                Planner(), object(), Process(), wait, "cover-0")
 
-        self.assertEqual(trace, ["cancel_write", "planner_interrupt"])
+        self.assertEqual(trace, ["planner_interrupt", "cancel_write", "terminal_wait"])
 
     def test_cancel_write_failure_stays_primary_if_planner_interrupt_also_fails(self):
         trace = []
