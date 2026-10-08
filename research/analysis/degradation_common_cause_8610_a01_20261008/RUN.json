@@ -67,5 +67,16 @@
     "Finite authored dependency/evidence fixture only; not an empirical production dependency map.",
     "Does not establish runtime reliability, live safety, human benefit, latency, resource-limit enforcement, or product readiness.",
     "Raw candidate stdout was held in memory and is not separately retained; its SHA-256 is preserved. The independent audit JSON and case-level reconstruction are recorded here."
-  ]
+  ],
+  "internal_fixture_result": "PASS",
+  "issue_gate_disposition": "HOLD_PROTOCOL_ARM_MISMATCH",
+  "issue_gate_coverage": {
+    "independence_assuming_lookup": false,
+    "dependency_aware_contract": true,
+    "unknown_dependency_fail_closed": false,
+    "required_policy_arms": 3,
+    "implemented_policy_arms": 3,
+    "matching_required_arms": 1
+  },
+  "protocol_review": "Post-run comparison with the governing Issue #8610 H/T found that the executed binary-full-route / dependency-aware / unsafe-silent-substitution arms do not match the required independence-assuming / dependency-aware / unknown-dependency-fail-closed comparison. Preserve formal outputs and internal audit PASS; do not claim Issue #8610 hypothesis validation."
 }

@@ -1,6 +1,6 @@
 # Analytical research
 
-- [Issue #8610 T0 A01 common-cause degradation contracts](degradation_common_cause_8610_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: nine deterministic cases independently reconstructed; 11 supported outcomes beyond binary gating, 3/3 unsafe substitutions detected, zero authority/false-effect violations, release obligations 9/9, six mutations rejected. Host-only CPU method evidence; WSLc not invoked under shared ownership HOLD, no runtime/product claim.
+- [Issue #8610 T0 A01 common-cause degradation contracts](degradation_common_cause_8610_a01_20261008/REPORT.md) — internal fixture/audit PASS, but `HOLD_PROTOCOL_ARM_MISMATCH`: A01 used binary all-route refusal and unsafe substitution instead of the required independence-assuming and unknown-dependency fail-closed arms. Do not treat it as testing the #8610 hypothesis; corrected successor is #8622. No runtime/product claim.
 
 - [Issue #8604 T0 A03 WSLc byte-reproducibility transfer](handoff_choice_complexity_8604_t0_a03_wslc_20261008/REPORT.md) — `PASS_TRANSFER_SCOPED`: exact A02 candidate/audit bytes reproduced in WSLc; 24 cards/120 keys independently reconstructed, zero errors. cgroup/swap warning retained; resource-limit enforcement not established. No human, latency, or product claim.
 
