@@ -179,6 +179,20 @@ class AuditLiveV2Tests(unittest.TestCase):
                 self.assertFalse(audit["formal_pass"])
                 self.assertFalse(audit["checks"]["all_matched_cancellations_closed_empty"])
 
+    def test_unhashable_event_id_fails_closed_with_audit_result(self):
+        for event_name in ("cancel_requested", "input_released", "terminal",
+                           "input_admission", "input_release_transition"):
+            with self.subTest(event=event_name):
+                events, decisions, scorer = self.valid_case(admitted=True)
+                row = next(row for row in events if row["event"] == event_name)
+                row["id"] = []
+                audit, _ = self.run_audit(events, decisions, scorer)
+                self.assertEqual(audit["status"], "FAIL")
+                self.assertFalse(audit["formal_pass"])
+                self.assertFalse(audit["checks"]["all_matched_cancellations_closed_empty"])
+                self.assertFalse(audit["checks"]["all_relevant_event_ids_valid"])
+                self.assertEqual(audit["counts"]["malformed_event_id_rows"], 1)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

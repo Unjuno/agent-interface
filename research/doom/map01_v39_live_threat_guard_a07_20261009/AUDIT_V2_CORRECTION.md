@@ -17,3 +17,5 @@ The follow-up now requires every admitted input to have an integer `admitted_ns`
 ## Schema-type fail-closed follow-up
 
 A synthetic malformed JSON row with an array/object in `key`, `step`, or `intent_token` previously raised `TypeError` while constructing `Counter`, before an `AUDIT_V2.json` failure result could be written. Identity fields are now type-checked before building counters. Invalid fields produce a recorded `FAIL` with identity diagnostics. The expanded synthetic suite passes 16/16 normally and under `python3 -O -B`; no saved raw allocation, game, model, VM, or GUI was used.
+
+An additional malformed cancellation/event `id` could still raise before the audit was written because those values are used as `Counter` and `defaultdict` keys. The auditor now validates IDs for cancellation, admission, release-transition, input-release, and terminal rows before indexing, omits invalid rows from reconciliation, and records the invalid-ID count while forcing the aggregate custody result to `FAIL`. Synthetic array-ID mutations cover all five event types. The suite passes 17/17 normally and under `python3 -O -B`; raw allocation evidence remains untouched.
