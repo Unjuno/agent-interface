@@ -3,7 +3,9 @@ from pathlib import Path
 p=Path(__file__).resolve().parent
 freeze=json.loads((p/'FREEZE.json').read_text(encoding='utf-8')); rows=json.loads((p/'reduced_trace.json').read_text(encoding='utf-8')); result=json.loads((p/'RESULT.json').read_text(encoding='utf-8'))
 pairs=list(zip(rows,rows[1:]))
+initial=json.loads((p/'AUDIT_INITIAL_FAILURE.json').read_text(encoding='utf-8'))
 checks={
+ 'initial_audit_failure_preserved': initial['status']=='FAIL_AUDIT' and initial['checks']['scope_excludes_live_wait_correlation'] is False and all(v is True for k,v in initial['checks'].items() if k!='scope_excludes_live_wait_correlation'),
  'posthoc_status_preserved':freeze['kind'].startswith('posthoc') and result['status']=='POSTHOC_DESCRIPTIVE_ONLY',
  'source_identity_pinned':result['source_sha256']==freeze['source_sha256'],
  'typed_row_count':len(rows)==170 and result['typed_observation_count']==170,
