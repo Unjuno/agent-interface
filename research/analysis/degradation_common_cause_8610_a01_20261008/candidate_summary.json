@@ -1,0 +1,78 @@
+{
+  "schema": "8610-candidate-summary-v1",
+  "source_candidate_stdout_sha256": "6d21146f3c20c4349f7b5b9607f703871341797ae8a23084d7866f6fea50e44d",
+  "case_count": 9,
+  "cases": {
+    "healthy": {
+      "binary": [
+        "inspect_raw",
+        "present_semantics",
+        "preview_plan",
+        "show_effect_receipt"
+      ],
+      "contract": [
+        "inspect_raw",
+        "present_semantics",
+        "preview_plan",
+        "show_effect_receipt"
+      ],
+      "release_obligation": "MANDATORY_RELEASE"
+    },
+    "independent_telemetry_loss": {
+      "binary": [],
+      "contract": [
+        "inspect_raw",
+        "present_semantics",
+        "preview_plan",
+        "show_effect_receipt"
+      ],
+      "release_obligation": "MANDATORY_RELEASE"
+    },
+    "common_capture_loss": {
+      "binary": [],
+      "contract": [],
+      "release_obligation": "MANDATORY_RELEASE"
+    },
+    "common_semantic_scheduler_stall": {
+      "binary": [],
+      "contract": [
+        "inspect_raw"
+      ],
+      "release_obligation": "MANDATORY_RELEASE"
+    },
+    "common_parser_lineage_corruption": {
+      "binary": [],
+      "contract": [
+        "inspect_raw"
+      ],
+      "release_obligation": "MANDATORY_RELEASE"
+    },
+    "independent_effect_process_loss": {
+      "binary": [],
+      "contract": [
+        "inspect_raw",
+        "present_semantics",
+        "preview_plan"
+      ],
+      "release_obligation": "MANDATORY_RELEASE"
+    },
+    "stale_semantic_evidence": {
+      "binary": [],
+      "contract": [
+        "inspect_raw",
+        "show_effect_receipt"
+      ],
+      "release_obligation": "MANDATORY_RELEASE"
+    },
+    "release_channel_loss": {
+      "binary": [],
+      "contract": [],
+      "release_obligation": "MANDATORY_RELEASE"
+    },
+    "authority_owner_loss": {
+      "binary": [],
+      "contract": [],
+      "release_obligation": "MANDATORY_RELEASE"
+    }
+  }
+}

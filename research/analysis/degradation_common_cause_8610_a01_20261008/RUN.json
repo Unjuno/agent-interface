@@ -1,0 +1,71 @@
+{
+  "experiment": "8610-A01",
+  "status": "PASS_METHOD_SCOPED",
+  "audit_integrity": "PASS",
+  "formal_invocations": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0
+  },
+  "runtime": {
+    "python": "CPython 3.12.10",
+    "platform": "Windows 11 AMD64",
+    "mode": "local host processes",
+    "wslc": "not invoked; shared lane HOLD"
+  },
+  "exit_codes": {
+    "candidate": 0,
+    "auditor": 0
+  },
+  "stdout_sha256": {
+    "candidate": "6d21146f3c20c4349f7b5b9607f703871341797ae8a23084d7866f6fea50e44d",
+    "independent_auditor": "836953b941bd99f828adc8cba5a26cad83a993c346fafa94b60e7efeebb7e9e6"
+  },
+  "metrics": {
+    "scenarios": 9,
+    "additional_supported_outcomes_vs_binary": 11,
+    "unsafe_silent_substitutions_detected": 3,
+    "authority_inflation": 0,
+    "false_effect_claims": 0,
+    "mandatory_release_obligations": 9,
+    "dispatches": 0,
+    "mutation_controls_rejected": 6
+  },
+  "supported_contract_operations": {
+    "healthy": [
+      "inspect_raw",
+      "present_semantics",
+      "preview_plan",
+      "show_effect_receipt"
+    ],
+    "independent_telemetry_loss": [
+      "inspect_raw",
+      "present_semantics",
+      "preview_plan",
+      "show_effect_receipt"
+    ],
+    "common_capture_loss": [],
+    "common_semantic_scheduler_stall": [
+      "inspect_raw"
+    ],
+    "common_parser_lineage_corruption": [
+      "inspect_raw"
+    ],
+    "independent_effect_process_loss": [
+      "inspect_raw",
+      "present_semantics",
+      "preview_plan"
+    ],
+    "stale_semantic_evidence": [
+      "inspect_raw",
+      "show_effect_receipt"
+    ],
+    "release_channel_loss": [],
+    "authority_owner_loss": []
+  },
+  "limitations": [
+    "Finite authored dependency/evidence fixture only; not an empirical production dependency map.",
+    "Does not establish runtime reliability, live safety, human benefit, latency, resource-limit enforcement, or product readiness.",
+    "Raw candidate stdout was held in memory and is not separately retained; its SHA-256 is preserved. The independent audit JSON and case-level reconstruction are recorded here."
+  ]
+}
