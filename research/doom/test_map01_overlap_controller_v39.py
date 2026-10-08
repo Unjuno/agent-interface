@@ -2,6 +2,8 @@
 import sys
 import unittest
 import queue
+import tempfile
+import ast
 from argparse import Namespace
 from pathlib import Path
 
@@ -12,6 +14,120 @@ import map01_overlap_controller_v39 as controller
 
 
 class Map01V39CoastTests(unittest.TestCase):
+    def test_stale_executor_rejection_replans_from_new_image_and_hud(self):
+        from test_running_action_guard_v2 import (ready as ready_admission,
+            action as guarded_action, compiler)
+        from running_action_guard_v3 import RunningActionGuardV3
+
+        binding = {"focus": 1, "surface": 7, "geometry": [0, 0, 640, 480]}
+        old = {"event": "observation", "sequence": 3, "capture_ns": 100,
+               "pointer_binding": binding,
+               "image": "old.png", "frame_rgb_sha256": "a" * 64}
+        fresh = {"event": "observation", "sequence": 4, "capture_ns": 400,
+                 "pointer_binding": binding,
+                 "image": "fresh.png", "frame_rgb_sha256": "b" * 64}
+        for obs, health, ammo in ((old, 88, 12), (fresh, 61, 9)):
+            obs["signals"] = {
+                "health": {"status": "observed", "signal_id": "health",
+                           "value": health, "sequence": obs["sequence"],
+                           "capture_ns": obs["capture_ns"], "binding": binding},
+                "ammo": {"status": "observed", "signal_id": "ammo",
+                         "value": ammo, "sequence": obs["sequence"],
+                         "capture_ns": obs["capture_ns"], "binding": binding}}
+
+        admission = ready_admission()
+        from action_validity_admission_v1 import (
+            action_fingerprint, evaluate_action_validity)
+        action = guarded_action()
+        contract = admission["action_validity"]["contract"]
+        contract["action_fingerprint"] = action_fingerprint(action["commands"])
+        contract["source"]["sequence"] = 3
+        contract["source"]["capture_ns"] = 100
+        contract["source"]["binding"] = binding
+        contract["source"]["signals"]["health"]["value"] = 88
+        contract["predicates"][0]["value"] = 40
+        snapshot = admission["action_validity"]["snapshot"]
+        snapshot.update({"sequence": 4, "capture_ns": 200, "binding": binding})
+        snapshot["signals"]["health"]["value"] = 88
+        validity = evaluate_action_validity(action["commands"], contract,
+            snapshot, 201)
+        admission["controller_decided_ns"] = 201
+        admission["action_validity"] = validity
+        guard = RunningActionGuardV3(
+            action, admission, compiler, "test-compiler-v1")
+        incoming = queue.Queue()
+        incoming.put({"event": "observation", "sequence": 5,
+                      "capture_ns": 500, "pointer_binding": binding,
+                      "image": "fresh.png", "frame_rgb_sha256": "b" * 64,
+                      "signals": {key: dict(value, sequence=5, capture_ns=500)
+                                  for key, value in fresh["signals"].items()}})
+        incoming.put({"event": "typed_observation", "sequence": 5,
+                      "capture_ns": 500, "pointer_binding": binding,
+                      "image": "fresh.png", "frame_rgb_sha256": "b" * 64,
+                      "signals": {key: dict(value, sequence=5, capture_ns=500)
+                                  for key, value in fresh["signals"].items()}})
+        recovered = controller.recover_stale_executor_rejection(
+            {"event": "rejected", "reason":
+             "latest observation sequence required before input"},
+            identifier="plan-0-primary-0-0", expected_sequence=4,
+            controller_received_ns=220, latest=dict(old, sequence=4), incoming=incoming,
+            wait=lambda predicate, **kwargs: self.fail(
+                "queued full observation should satisfy recovery"),
+            final_action_admission=admission, running_guard=guard)
+
+        self.assertEqual(recovered["latest"]["sequence"], 5)
+        self.assertEqual(recovered["latest"]["signals"]["health"]["value"], 61)
+        self.assertEqual(recovered["guard"]["state"], controller.RUNNING_REJECTED)
+        self.assertFalse(recovered["guard"]["current_input_authority"])
+        self.assertEqual(recovered["admission"]["status"], "REJECTED_EXECUTOR_STALE_SEQUENCE")
+
+        with tempfile.TemporaryDirectory() as directory:
+            from unittest.mock import patch
+            from PIL import Image
+            root = Path(directory)
+            for name, color in (("old.png", (1, 2, 3)), ("fresh.png", (4, 5, 6))):
+                Image.new("RGB", (2, 2), color).save(root / name)
+            model_root = root / "decision-1"
+            model_root.mkdir()
+            source = dict(recovered["latest"])
+            health = source["signals"]["health"]["value"]
+            ammo = source["signals"]["ammo"]["value"]
+            planner = type("Planner", (), {"begin_turn": lambda self, prompt_text,
+                output_schema, image_path: (prompt_text, image_path)})()
+            with patch.object(controller, "win", side_effect=lambda path: str(path)):
+                turn = controller.begin_model_turn(
+                    planner, model_root, root / source["image"], [], health, ammo, {}, {})
+            self.assertEqual(Path(turn[1]), root / "fresh.png")
+            self.assertIn("health: 61", turn[0])
+            self.assertIn("ammo: 9", turn[0])
+
+        source = Path(controller.__file__).read_text(encoding="utf-8")
+        rejected = source.index('if accepted["event"]!="accepted":')
+        recovery = source.index("recover_stale_executor_rejection(", rejected)
+        assign_latest = source.index('latest = recovered["latest"]', recovery)
+        outer_continue = source.index('if stale_rejection is not None:', assign_latest)
+        tree = ast.parse(source)
+        main = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == "main")
+        loops = [node for node in ast.walk(main)
+                 if isinstance(node, ast.For) and
+                 any(isinstance(child, ast.Call) and
+                     isinstance(child.func, ast.Name) and child.func.id == "begin_model_turn"
+                     for child in ast.walk(node))]
+        self.assertEqual(len(loops), 1)
+        outer_loop = loops[0]
+        loop_body = ast.get_source_segment(source, outer_loop)
+        next_source = loop_body.index("action_source_observation=dict(latest)")
+        next_begin = loop_body.index("planner_handle=begin_model_turn(", next_source)
+        loop_start = source.index("for index in range(args.iterations):")
+        recovery_branch = source[source.index('if stale_rejection is not None:', assign_latest):]
+        continue_at = recovery_branch.index("continue")
+        self.assertLess(rejected, recovery)
+        self.assertLess(recovery, assign_latest)
+        self.assertLess(loop_start, source.index("action_source_observation=dict(latest)"))
+        self.assertLess(next_source, next_begin)
+        self.assertLess(next_source, next_begin)
+
     def test_session_command_keeps_v12_default_and_selects_v15_only_when_opted_in(self):
         args = Namespace(seed=990605, load_fixture_manifest=Path("fixture.json"))
         default = controller.session_command(args, Path("runtime"))
