@@ -1,0 +1,23 @@
+{
+  "schema": "agent-interface/v39-stale-recovery-source-refresh-freeze-v1",
+  "issue": 59,
+  "source_main_commit": "d66ee6cd4f9c09387845bc0765855cbede0c0874",
+  "candidate_branch_commit_before_this_package": "bfee6343a160417857c5fb36a786fa27b3f94a34",
+  "python": "3.11.9",
+  "platform": "Windows",
+  "cases": 1,
+  "retry_limit": 0,
+  "source_files": {
+    "research/doom/map01_overlap_controller_v39.py": {"sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607", "git_blob": "000d206310afe054fcddf66d9c417da46e0b3b2d"},
+    "research/doom/doom_source_refresh_v1.py": {"sha256": "f3a9c66bc069a98b3240f5256810123e4f61931fd648e03b3e564aedec545743", "git_blob": "51c12ff4f2816f022bb86be9f5f6a951467d38b7"},
+    "research/live_control/final_action_admission_v2.py": {"sha256": "a30da44c7cf0e886a0c0e5f41137929af25b75df4e57a96328c5275896605b01", "git_blob": "2078194e704d603c6bd864030cc570abc542455c"},
+    "research/live_control/running_action_guard_v3.py": {"sha256": "bcc0dc5961a54a315a05558d800f94ff119fa6106ed91e0fa0ba14131d470732", "git_blob": "bbefdba8edfd83e886baf556caf28aca66ac88fb"},
+    "research/doom/test_map01_overlap_controller_v39.py": {"sha256": "6bf38a9cffe5254409ec851adeaf2d46c49c6d910be1baf2097e721ff5c240cb", "git_blob": "691183f504b16fa9cedae6bd49b71baca00fcfdc"},
+    "research/doom/test_map01_v39_pending_observation_drain.py": {"sha256": "655f61982ed6cd76b6d71febead4877236659f3c6a2fdf989e8795e109390ac7", "git_blob": "aa9b40e27ccdcc994543702c14907ca17b1c7806"}
+  },
+  "decision": {
+    "positive": "newer observation sequence 6, matching empty-release intent token, fresh image, health=60, ammo=8 reach begin_model_turn after stale sequence 5 recovery and an observe request expected at sequence 5",
+    "negative": "release intent-token mismatch is refused before a planner turn",
+    "out_of_scope": ["live App Server", "Doom", "GUI", "OS input", "physical release", "task progress", "MAP01 clear"]
+  }
+}

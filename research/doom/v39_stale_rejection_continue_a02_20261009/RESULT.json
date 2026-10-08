@@ -1,0 +1,23 @@
+{
+  "status": "PASS_EXPECTED_MUTATION_REJECTION",
+  "interpretations": {
+    "pass-normal": {
+      "exit_code": 0,
+      "assertion_observed": false
+    },
+    "pass-optimized": {
+      "exit_code": 0,
+      "assertion_observed": false
+    },
+    "mutation-normal": {
+      "exit_code": 1,
+      "assertion_observed": true
+    },
+    "mutation-optimized": {
+      "exit_code": 1,
+      "assertion_observed": true
+    }
+  },
+  "decision": "The stale_rejection branch statically skips ordinary completion and continues the outer loop.",
+  "scope": "AST-only loop-control regression; no controller runtime, live/game/GUI behavior, model, OS input, physical release, or task effect"
+}

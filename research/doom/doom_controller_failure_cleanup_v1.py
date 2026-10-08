@@ -129,6 +129,8 @@ class ControllerFailureCleanup:
         events=self.events if type(self.events) is list else []
         accepted_ids={row.get('id') for row in events if type(row) is dict and
                       row.get('event')=='accepted' and type(row.get('id')) is str}
+        accepted_by_id={row.get('id'):row for row in events if type(row) is dict and
+                        row.get('event')=='accepted' and type(row.get('id')) is str}
         terminal_by_id={row.get('id'):row for row in events if type(row) is dict and
                         row.get('event')=='terminal' and type(row.get('id')) is str}
         event_set_complete=(receipt['stdout_reader_retired'] and
@@ -140,7 +142,12 @@ class ControllerFailureCleanup:
                 type(terminal_by_id[identifier].get('release')) is dict and
                 terminal_by_id[identifier]['release'].get('verified') is True and
                 terminal_by_id[identifier]['release'].get('keys_down')==[] and
-                terminal_by_id[identifier]['release'].get('buttons_down')==[]
+                terminal_by_id[identifier]['release'].get('buttons_down')==[] and
+                ('intent_token' not in terminal_by_id[identifier]['release'] or
+                 (type(accepted_by_id[identifier].get('intent_token')) is str and
+                  bool(accepted_by_id[identifier]['intent_token']) and
+                  terminal_by_id[identifier]['release'].get('intent_token') ==
+                  accepted_by_id[identifier]['intent_token']))
             for identifier in accepted_ids))
         receipt['input_release_verified_empty']=receipt['input_releases_verified_empty']
         receipt['scorer_terminal_observed']=any(
