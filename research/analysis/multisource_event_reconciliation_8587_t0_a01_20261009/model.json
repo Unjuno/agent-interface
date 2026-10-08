@@ -1,0 +1,1381 @@
+{
+  "cases": [
+    {
+      "case_id": "clean",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "client_duplicate",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 2,
+            "source_id": "C2",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "toolkit_drop",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": []
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "toolkit_duplicate",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 2,
+            "source_id": "T2",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "os_duplicate",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 2,
+            "source_id": "O2",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "os_drop",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "os_delay",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              20,
+              21
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "wrong_window",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-other"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "generation_reset",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 2,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "missing_correlation",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": null,
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "os_truncated",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": false,
+          "frontier_sequence": 0,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "benign_coalescing",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "coalesces_kinds": [
+            "redraw"
+          ],
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": null,
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "redraw",
+            "sequence": 2,
+            "source_id": "T2",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "concurrent_reorder",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        },
+        {
+          "depends_on": [],
+          "token": "a2"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              4
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a2",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              4
+            ],
+            "kind": "dispatch",
+            "sequence": 2,
+            "source_id": "C2",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              4
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a2",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              4
+            ],
+            "kind": "delivery",
+            "sequence": 2,
+            "source_id": "O2",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a2",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              4
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              4
+            ],
+            "kind": "callback",
+            "sequence": 2,
+            "source_id": "T2",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "independent_os_event",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "ambient-1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              4
+            ],
+            "kind": "independent",
+            "sequence": 2,
+            "source_id": "O2",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    },
+    {
+      "case_id": "irrelevant_redraw",
+      "coverage": {
+        "client": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "client-source-v1"
+        },
+        "os": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "os-source-v1"
+        },
+        "toolkit": {
+          "complete": true,
+          "frontier_sequence": 10,
+          "source_instance": "toolkit-source-v1"
+        }
+      },
+      "declared_actions": [
+        {
+          "depends_on": [],
+          "token": "a1"
+        }
+      ],
+      "final_state_by_source": {
+        "client": {
+          "screen": "done"
+        },
+        "os": {
+          "screen": "done"
+        },
+        "toolkit": {
+          "screen": "done"
+        }
+      },
+      "logs": {
+        "client": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              0,
+              1
+            ],
+            "kind": "dispatch",
+            "sequence": 1,
+            "source_id": "C1",
+            "window": "w-main"
+          }
+        ],
+        "os": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "delivery",
+            "sequence": 1,
+            "source_id": "O1",
+            "window": "w-main"
+          },
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": null,
+            "generation": 1,
+            "interval_ms": [
+              2,
+              3
+            ],
+            "kind": "redraw",
+            "sequence": 2,
+            "source_id": "O2",
+            "window": "w-main"
+          }
+        ],
+        "toolkit": [
+          {
+            "clock_domain": "fixture-mono",
+            "correlation_token": "a1",
+            "generation": 1,
+            "interval_ms": [
+              1,
+              2
+            ],
+            "kind": "callback",
+            "sequence": 1,
+            "source_id": "T1",
+            "window": "w-main"
+          }
+        ]
+      },
+      "max_delivery_delay_ms": 5
+    }
+  ],
+  "schema": "multisource-event-fixture-v1",
+  "stages": [
+    "client",
+    "toolkit",
+    "os"
+  ]
+}
