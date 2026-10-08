@@ -1,0 +1,32 @@
+{
+  "classification": "POSTHOC_DIAGNOSTIC_NOT_FORMAL_PASS",
+  "cohort_count": 20000,
+  "fields_outside_tolerance": [],
+  "fields_outside_tolerance_count": 0,
+  "formal_auditor_exit": 1,
+  "formal_result_preserved": true,
+  "reconstructed_metrics": {
+    "cohort_count": 20000,
+    "complete_case_coverage_of_0_25": 0.21555,
+    "complete_case_mean": 0.1749384642282789,
+    "complete_case_population_limit": 0.175,
+    "disposition": "FAIL_METHOD",
+    "exact_ht_sd": 0.04420595736624948,
+    "exact_ht_variance": 0.0019541666666666666,
+    "gates": {
+      "candidate_oracle_full_reconstruction": true,
+      "ht_coverage_within_0_006": false,
+      "mean_within_4_mcse": true,
+      "sd_within_2_5_percent": true
+    },
+    "ht_coverage_95_wald": 0.94025,
+    "ht_empirical_sd": 0.044535412362996726,
+    "ht_mean": 0.25023116666666667,
+    "ht_mean_tolerance": 0.0012503332889007366,
+    "mean_candidate_se": 0.04404756949154466,
+    "schema": "unjuno.issue8049.audit.v1",
+    "truth_risk": 0.25,
+    "units_reconstructed": 8000000
+  },
+  "tolerance_absolute": 1e-15
+}

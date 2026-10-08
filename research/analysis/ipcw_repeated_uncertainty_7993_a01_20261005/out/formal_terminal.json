@@ -1,0 +1,46 @@
+{
+  "allocation": "UNJUNO-8049-IPCW-REPEATED-UNCERTAINTY-A01-ORBSTACK-20261005",
+  "audit_sha256": null,
+  "candidate_output_sha256": "40ce896e3a5acef8bf7bc7e8b43f599d424bf6718d4bc3b32bea5baa53ea3090",
+  "formal_auditor_invocations": 1,
+  "formal_candidate_invocations": 1,
+  "frozen_manifest_sha256": "06fb14d6163b1e897b99b6c28ed34cc902f8bf2c8ef5086156cbaedb94e29ef2",
+  "retries": 0,
+  "runs": [
+    {
+      "argv": [
+        "/usr/local/bin/python",
+        "-B",
+        "/src/candidate.py",
+        "--input",
+        "/src/public_input.json",
+        "--output",
+        "/out/candidate_output.json"
+      ],
+      "exit_code": 0,
+      "role": "candidate",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "eb7960dd438cce88a4cf330830cdbba017b7d6cc1acd87b9779bb158195bf29c"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/python",
+        "-B",
+        "/src/auditor.py",
+        "--public",
+        "/src/public_input.json",
+        "--oracle",
+        "/src/oracle_input.json",
+        "--candidate",
+        "/out/candidate_output.json",
+        "--output",
+        "/out/audit.json"
+      ],
+      "exit_code": 1,
+      "role": "auditor",
+      "stderr_sha256": "fb25a1e8aa9eb09266b27c6758d2d77dabed4360fba12629672135bb55b310c6",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "status": "COMPLETED"
+}
