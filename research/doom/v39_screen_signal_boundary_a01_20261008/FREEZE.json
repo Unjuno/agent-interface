@@ -1,0 +1,23 @@
+{
+  "experiment": "issue59-screen-signal-boundary-a01-20261008",
+  "kind": "synthetic construction boundary; not a live allocation",
+  "frozen_at_utc": "2026-10-08T01:48:15Z",
+  "main_commit": "a0d0602b89b1f5a05f851728fe90684ec4bfeff5",
+  "controller_path": "research/doom/map01_overlap_controller_v39.py",
+  "controller_git_blob": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a",
+  "controller_sha256": "c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95",
+  "guard_path": "research/live_control/observable_signal_guard_v2.py",
+  "guard_git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+  "hypothesis": "DoomCoverSignalPairMonitor uses typed health/ammo evidence to invalidate a cover; an advanced-epoch screen-frame hash change alone is not evaluated as a reason to stop.",
+  "test": "One paired observation with stable health/ammo and changed frame hash versus one with health below the configured hard floor.",
+  "decision": "Capability probe only. A screen-only change may preserve cover; a hard typed health crossing must request a new decision. No tactical safety or gameplay claim.",
+  "confounds_and_limits": [
+    "Synthetic signals and frame hashes; no DOOM process, model, GUI, OS input, or physical release.",
+    "Pixel/hash change has no semantic threat interpretation.",
+    "No causal survival, policy appropriateness, useful feedback, or recovery effect measured."
+  ],
+  "retry_policy": "No live allocation used. This bounded construction run is executed once and retained; later changes require a new versioned probe.",
+  "counterhypothesis": "A raw frame hash change is not necessarily a threat or policy-relevant semantic change; generic hash-triggered cancellation could interrupt useful cover unnecessarily.",
+  "uncertainty": "Synthetic single-frame hash/HUD pair only; no semantic visual classifier, live threat, policy consequence, release timing, useful feedback, or task effect was measured.",
+  "prior_smoke": "An earlier unrecorded in-memory smoke check exercised the same two branches before this package freeze; it is not counted as the recorded candidate. This packaged candidate was run once after the freeze timestamp."
+}

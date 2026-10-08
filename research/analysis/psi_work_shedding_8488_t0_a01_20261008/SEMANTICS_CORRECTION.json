@@ -1,0 +1,37 @@
+{
+  "disposition": "HOLD_DEADLINE_SEMANTICS_MISMATCH",
+  "review_type": "post-run read-only calculation from frozen inputs and immutable raw; candidate/auditor not rerun",
+  "input_sha256": "9fa1d6348342b123a1c2e0e98536a5c68c0b21b8c388c455413456eb39d2ba8e",
+  "raw_result_sha256": "3c96d19a8edea718c0049a334ba954245cea93e5faef444813721b45b7afb94e",
+  "deadline_interpretation": "exclusive completion bound: a deadline-bearing job is missed if incomplete or completed_at >= deadline",
+  "candidate_semantics": "deadline_misses is recorded after service at tick >= deadline only if the job remains incomplete; completion during the deadline-indexed tick is treated as on time",
+  "primary_trace": {
+    "memory_burst_primary": {
+      "fixed_concurrency": {"recorded": ["O1", "R1", "V1", "V2"], "exclusive_bound": ["O1", "R1", "V1", "V2"]},
+      "queue_deadline": {"recorded": [], "exclusive_bound": ["O1", "R1", "V1"]},
+      "free_memory": {"recorded": ["O1", "R1", "V1", "V2"], "exclusive_bound": ["O1", "R1", "V1", "V2"]},
+      "psi_memory": {"recorded": [], "exclusive_bound": ["V1"]}
+    }
+  },
+  "all_rows": {
+    "rows_with_recorded_vs_exclusive_bound_disagreement": 8,
+    "total_rows": 32,
+    "disagreements": [
+      {"trace": "memory_burst_primary", "policy": "queue_deadline", "recorded": [], "exclusive_bound": ["O1", "R1", "V1"]},
+      {"trace": "memory_burst_primary", "policy": "psi_memory", "recorded": [], "exclusive_bound": ["V1"]},
+      {"trace": "memory_burst_delayed_signal", "policy": "queue_deadline", "recorded": [], "exclusive_bound": ["O1", "R1", "V1"]},
+      {"trace": "memory_burst_delayed_signal", "policy": "psi_memory", "recorded": [], "exclusive_bound": ["O1", "R1", "V1"]},
+      {"trace": "unrelated_cpu_io_pressure", "policy": "queue_deadline", "recorded": [], "exclusive_bound": ["R1", "V1"]},
+      {"trace": "psi_unavailable", "policy": "queue_deadline", "recorded": [], "exclusive_bound": ["R1", "V1"]},
+      {"trace": "recovered_memory_backlog", "policy": "fixed_concurrency", "recorded": ["O1", "V1", "V2"], "exclusive_bound": ["O1", "R1", "V1", "V2"]},
+      {"trace": "recovered_memory_backlog", "policy": "free_memory", "recorded": ["O1", "V1", "V2"], "exclusive_bound": ["O1", "R1", "V1", "V2"]}
+    ]
+  },
+  "corrected_primary_gates": {
+    "psi_beats_fixed": true,
+    "psi_beats_queue": true,
+    "psi_has_zero_primary_misses": false,
+    "formal_pass": false
+  },
+  "formal_invocations_after_freeze": {"candidate": 0, "auditor": 0}
+}

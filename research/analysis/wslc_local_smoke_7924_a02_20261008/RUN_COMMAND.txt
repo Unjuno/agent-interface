@@ -1,0 +1,3 @@
+Candidate: run the exact command recorded in FREEZE.json once from PowerShell, substituting the absolute package directory for <package-directory>. Retain combined output and exit code. Do not rerun if image is absent or command fails.
+After exit 0, retain the candidate JSON as CANDIDATE_RESULT.json byte-for-byte, then run the frozen auditor command exactly once.
+For each invocation, use only its exact CID file for `wslc container inspect`; do not list or inspect any other container. `--rm` must remove each invocation's own container.

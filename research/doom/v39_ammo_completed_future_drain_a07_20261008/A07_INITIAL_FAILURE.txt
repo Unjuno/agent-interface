@@ -1,0 +1,8 @@
+A07 initial attempt record
+
+The one-shot candidate was invoked after freezing b121ce8a6fd4a6aba8216ef73211ba773f7601ee.
+Command: python candidate.py
+Outcome: failed during static AST source-order validation before any case execution and before RESULT.json/events.jsonl were written.
+Exact error: ValueError: expected one main drain, planner-result, and final-admission site
+Cause found by read-only AST inspection: main contains multiple final_action_admission assignments; the intended final-admission assignment follows planner_result and is the earliest matching assignment after that line. This was a harness locator assumption, not a controller or experiment outcome.
+The candidate and original freeze are preserved unchanged. No candidate rerun was made.

@@ -1,0 +1,54 @@
+{
+  "candidate_sha256": "01ee3aa37706ba20c6e76c60fd79b53e476d4ab87e935f6541fa776d35d7a2f9",
+  "cross_reset_pairs_credited": 0,
+  "episode_counts": {
+    "context_only": 4,
+    "exhaustive": 64,
+    "mixed_occ": 4,
+    "order_only": 1
+  },
+  "errors": [],
+  "hostile_mutations_rejected": {
+    "collapse_context_strata": true,
+    "corrupt_universe": true,
+    "credit_cross_reset_pair": true,
+    "drop_episode": true
+  },
+  "mixed_each_episode_covers_16_ordered_pairs": true,
+  "model_sha256": "96193272741812ae13306573ccdd4b249c0cc98e87948d8e6d95f426c721cea6",
+  "mutant_detection": {
+    "context_only": {
+      "context_only": true,
+      "joint": false,
+      "order_only": false
+    },
+    "exhaustive": {
+      "context_only": true,
+      "joint": true,
+      "order_only": true
+    },
+    "mixed_occ": {
+      "context_only": true,
+      "joint": true,
+      "order_only": true
+    },
+    "order_only": {
+      "context_only": false,
+      "joint": false,
+      "order_only": true
+    }
+  },
+  "negative_control_unsafe_effect": false,
+  "obligations": {
+    "equal": true,
+    "exhaustive": 64,
+    "mixed_occ": 64
+  },
+  "row_counts": {
+    "context_only": 4,
+    "exhaustive": 128,
+    "mixed_occ": 32,
+    "order_only": 8
+  },
+  "status": "PASS"
+}

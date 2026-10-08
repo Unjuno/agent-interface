@@ -1,0 +1,31 @@
+{
+  "allocation": "GUI-REVERSIBILITY-7949-EXTERNAL-WRITE-A01-20261007",
+  "issue": 7949,
+  "parent_allocation_preserved": "gui-reversibility-7949-t0-a01-20261005",
+  "base_commit": "9fb2dd6782d1d1477a00d14be870487fd4c54fa2",
+  "branch": "research/reversibility-7949-external-write-a01-20261007",
+  "path": "research/analysis/gui_reversibility_7949_external_write_a01_20261007/",
+  "run_command": "python3 -B run_candidate.py",
+  "audit_command": "python3 -B audit.py",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retries": 0,
+  "runtime": {
+    "platform": "macOS arm64",
+    "interpreter": "native python3; exact version retained in RUN_RECORD.md",
+    "container": false,
+    "container_preflight": "OrbStack docker image ls --digests --no-trunc returned containerd blob operation not supported",
+    "network": false,
+    "model_gui_or_os_input": false
+  },
+  "cases": 10,
+  "decision": "PASS_EXTERNAL_WRITE_BOUNDARY_SCOPED only if the preregistered gates in PROTOCOL.md and Issue #7949 comment 6037156068 all pass; otherwise preserve exact FAIL/HOLD/STOP.",
+  "sha256": {
+    "PROTOCOL.md": "e5f27bc49d52a8326eb7a9123e91481282992200ed9be20447e1dbac93ef9d5a",
+    "model.json": "038f3956b333218b98084d3a1ffa27e8304a4c7e47bb61d94a3d500ca9aa0282",
+    "candidate.py": "f2c5fc5bcc377369130c0c75fb3d3c13b8927376907ecb9e66499652081dadf2",
+    "run_candidate.py": "645a50b9098f89cd689f451b314c1e484d4200bd55a7057c7bbf6bd7f7429d14",
+    "audit.py": "0cae5eda0f58ae61a1c23389dea19aaa89246841697df5a14c6d3297a1319a10",
+    "test_protocol.py": "77d1b7dd5b61900b5b8968cea9307d7f95d22bdbeb48ce28ccc51a7c408d2253"
+  }
+}

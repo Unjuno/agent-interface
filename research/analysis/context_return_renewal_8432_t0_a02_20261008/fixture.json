@@ -1,0 +1,44 @@
+{
+  "schema": "context-return-renewal-a02-fixture-v1",
+  "issue": 8432,
+  "allocation_id": "8432-context-return-method-t0-a02-20261008",
+  "context_paths": [
+    {"id": "return_A", "test_phase": "test_return_A", "context_marker": "A"},
+    {"id": "continue_B", "test_phase": "test_continue_B", "context_marker": "B"},
+    {"id": "novel_C", "test_phase": "test_novel_C", "context_marker": "C"}
+  ],
+  "baseline_test_phase": {"phase": "test_B_baseline", "context_marker": "B", "mapping_id": "B"},
+  "cue_variants": ["cue_x", "cue_y"],
+  "history_treatments": ["chronological", "context_tagged", "none"],
+  "matched_history_treatments": ["chronological", "context_tagged"],
+  "demonstration_records_per_phase": [
+    {"cue_id": "cue_x", "action": "old_choice"},
+    {"cue_id": "cue_x", "action": "corrected_choice"},
+    {"cue_id": "cue_y", "action": "corrected_choice"},
+    {"cue_id": "cue_y", "action": "old_choice"}
+  ],
+  "demonstration_phases": [
+    {"phase": "acquire_A", "context_marker": "A", "mapping_id": "A"},
+    {"phase": "correct_B", "context_marker": "B", "mapping_id": "B"}
+  ],
+  "mapping_outcomes": {
+    "A": {"old_choice": 1, "corrected_choice": 0},
+    "B": {"old_choice": 0, "corrected_choice": 1}
+  },
+  "test_trials": 4,
+  "action_support": ["old_choice", "corrected_choice"],
+  "diagnostics": {
+    "outcomes": {"old_choice": 0, "corrected_choice": 1},
+    "no_signal": {
+      "return_A": ["old_choice", "corrected_choice", "old_choice", "corrected_choice"],
+      "continue_B": ["old_choice", "corrected_choice", "old_choice", "corrected_choice"],
+      "novel_C": ["old_choice", "corrected_choice", "old_choice", "corrected_choice"]
+    },
+    "seeded_control": {
+      "return_A": ["old_choice", "old_choice", "old_choice", "old_choice"],
+      "continue_B": ["corrected_choice", "old_choice", "corrected_choice", "old_choice"],
+      "novel_C": ["corrected_choice", "old_choice", "corrected_choice", "corrected_choice"]
+    }
+  },
+  "expected_counts": {"total_episodes": 18, "matched_history_episodes": 12, "no_history_controls": 6}
+}

@@ -1,0 +1,21 @@
+# Issue #8589 T0 A01 protocol
+
+## Question and scope
+
+Does dependency-closed selective reuse preserve valid work beyond an earliest-conflict suffix in a small GUI-like DAG while conservatively handling incomplete provenance and never resubmitting an external effect? This is an offline deterministic method test. It changes no controller and performs no real GUI, model, account, task, or external effect operation.
+
+The source idea is grounded in the published preprint [REVISE: Validity-Guided Recovery for Online Revisions in Agent Workflows](https://arxiv.org/abs/2609.00643), which studies dependency-guided recovery in structured agent workflows, and [Repairing Conflicts among MVCC Transactions](https://arxiv.org/abs/1603.00542), which studies partial re-execution in database transactions. Neither establishes safe GUI-effect replay or any result for this repository. This test asks only whether the narrow distinction between computational validity and effect replay can be represented and audited in the frozen finite fixture.
+
+## H / T / D / C / U
+
+- **H:** For a complete-provenance two-branch DAG, selective validity recovery will match the finite latest-version oracle and recompute fewer nodes than both full restart and earliest-conflict suffix in at least one enumerated revision schedule, without dispatching an effect. Making the same left-branch schedule provenance-incomplete must reduce selective reuse to zero and return HOLD.
+- **T:** The graph has two independent observations, two dependent computations, one previously dispatched effect, and one historical terminal verification. Exhaust the 2×2 combinations of changed/unchanged left and right input generations. Add a paired incomplete-provenance left-change case, ambiguous effect delivery, independently verified no-effect, and a Boolean-vs-integer generation alias. The candidate emits only an offline plan. A separately written auditor reads frozen input, auditor-only truth, and candidate raw output; it does not import candidate code. Five fault controls cover missing dependency, stale-generation reuse, forged no-effect receipt, dispatch despite an idempotency assertion, and replay after ambiguous delivery.
+- **D:** `PASS_METHOD_SCOPED` iff every raw case is independently reconstructed; the left-only complete schedule recomputes fewer nodes under selective recovery than under suffix recovery; the paired incomplete schedule returns HOLD with zero selective reuse; ambiguous delivery returns HOLD/reconcile; every dispatch list is empty; and all five mutation controls are rejected. Any stale reuse, unexplained raw mismatch, or dispatch is `FAIL_AUDIT_OR_GATE`. Missing or ambiguous provenance without conservative HOLD is a failure. No observed preservation advantage is `NO_RESIDUAL`.
+- **C:** Full restart may be simplest and equally effective on short procedures; suffix recovery may capture almost all practical value; strict effect reconciliation may erase any benefit; the benefit may be specific to this authored DAG.
+- **U:** This is a tiny, hand-authored CPU fixture with perfect input/truth records. It does not estimate GUI runtime savings, model calls, latency, token use, real application correctness, user benefit, or general recovery safety. Passing cannot authorize effect dispatch, retry, compensation, or product integration.
+
+## Frozen execution boundary
+
+Use the locally cached `python:3.12-slim` image by immutable image ID `sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4` through WSLc 3.0.1.0; Python is 3.12.14, Linux amd64. No network, package installation, model, GUI, GPU, secrets, or external state. Candidate and auditor are separate one-shot containers. Candidate receives only its code and `input.json`; `truth.json` is mounted only into the auditor container. Candidate output is written once to `results/candidate_raw.json`; auditor output is written once to `results/audit.json`. Formal invocations: candidate 1, auditor 1, retries 0. Construction/unit tests are not formal invocations.
+
+The study records the container configuration but does not claim that WSLc enforces memory or CPU resource limits. It uses no host-path writes outside this additive package's results directory.

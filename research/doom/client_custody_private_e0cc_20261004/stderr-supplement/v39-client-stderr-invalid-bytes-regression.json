@@ -1,0 +1,45 @@
+{
+  "source_sha256": "3a784bc3d1d68876871ac9425adc245026c208e36041a12f0eddd84e1334d1a1",
+  "cases": [
+    {
+      "retained_tail_bytes": 512,
+      "drained_bytes": 512,
+      "stderr_reader_retired": true,
+      "stderr_bytes": 512,
+      "outcome": "response",
+      "peer_alive_at_outcome": true,
+      "reader_alive_at_outcome": true,
+      "owned_pid": 78148,
+      "terminal_exit": -15,
+      "reader_journal_pipes_retired": true
+    },
+    {
+      "retained_tail_bytes": 65536,
+      "drained_bytes": 1048576,
+      "stderr_reader_retired": true,
+      "stderr_bytes": 1048576,
+      "outcome": "response",
+      "peer_alive_at_outcome": true,
+      "reader_alive_at_outcome": true,
+      "owned_pid": 78149,
+      "terminal_exit": -15,
+      "reader_journal_pipes_retired": true
+    }
+  ],
+  "scope": "ordinary owned Python peers; invalid UTF8 stderr regression; no formal/native/model/input run",
+  "finding": "Invalid UTF8 diagnostic bytes remain raw; both output sizes return with exact drain counts and bounded tail.",
+  "limits": [
+    "No hard whole-call deadline or descendant proof",
+    "No production adoption or actual app-server task effect"
+  ],
+  "excluded_first_attempt": {
+    "reason": "fixture escape generated non-ASCII bytes literal and child SyntaxError; not candidate failure or success",
+    "preserved_directory": "work/review7220-e0cc/v6/stderr-invalid-bytes-20261004"
+  },
+  "raw_hashes": {
+    "1048576-intent.json": "b72c8c9ad9e817df55b4b9358b6a81168a8ba6b85ea210800cad06db778ed2b2",
+    "512-intent.json": "ea1742b0ef55c7e59d306cb80e5c9e3b728e8752150e3587c1c2bb0d93823b79",
+    "1048576-journal.jsonl": "9c648a3cbdf62fa8c1244b07bc5ed8404450a38970430a0a4080d77d30565f70",
+    "512-journal.jsonl": "f8ba1cf74f80718d043ffe61e145880d5134195e775a19ed35c6f031f1497ab8"
+  }
+}

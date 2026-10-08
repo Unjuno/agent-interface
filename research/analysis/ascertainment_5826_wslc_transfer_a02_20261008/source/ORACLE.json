@@ -1,0 +1,24 @@
+{
+  "format": "oracle-ascertainment-ground-truth-a01-v1",
+  "oracle_id": "independent-fixture-truth-table-a01",
+  "opportunities": [
+    {"id":"F01","has_fault":true,"fault_class":"stale_observation","severity":"major"},
+    {"id":"F02","has_fault":true,"fault_class":"stale_observation","severity":"major"},
+    {"id":"F03","has_fault":true,"fault_class":"wrong_target","severity":"major"},
+    {"id":"F04","has_fault":true,"fault_class":"wrong_target","severity":"major"},
+    {"id":"F05","has_fault":true,"fault_class":"partial_external_effect","severity":"major"},
+    {"id":"F06","has_fault":true,"fault_class":"partial_external_effect","severity":"minor"},
+    {"id":"F07","has_fault":true,"fault_class":"lost_critical_event","severity":"major"},
+    {"id":"F08","has_fault":true,"fault_class":"lost_critical_event","severity":"major"},
+    {"id":"F09","has_fault":true,"fault_class":"delayed_ack_uncertain_delivery","severity":"major"},
+    {"id":"F10","has_fault":true,"fault_class":"delayed_ack_uncertain_delivery","severity":"minor"},
+    {"id":"F11","has_fault":true,"fault_class":"unreleased_held_input","severity":"major"},
+    {"id":"F12","has_fault":true,"fault_class":"unreleased_held_input","severity":"major"},
+    {"id":"N13","has_fault":false,"fault_class":null,"severity":null},
+    {"id":"N14","has_fault":false,"fault_class":null,"severity":null},
+    {"id":"N15","has_fault":false,"fault_class":null,"severity":null},
+    {"id":"N16","has_fault":false,"fault_class":null,"severity":null},
+    {"id":"N17","has_fault":false,"fault_class":null,"severity":null},
+    {"id":"N18","has_fault":false,"fault_class":null,"severity":null}
+  ]
+}

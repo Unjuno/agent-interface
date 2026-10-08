@@ -1,0 +1,3 @@
+# A11 disposition: STOP_PRIVATE_MODEL_TAG_MISSING
+
+The single candidate invocation exited before any model generation. `/api/tags` on the dedicated A11 service at `127.0.0.1:11435` returned an empty model list; the runner then raised `expected exactly one private model tag`. The A11 store had empty `blobs`, `manifests`, and `manifests-v2` directories. No `RAW.jsonl` was created, so there are no model calls or cadence observations. Candidate invocation count is one; retries remain zero. The model pull had been run with `OLLAMA_MODELS` but without overriding the default host, and the intended store was not populated. This consumed allocation will not be repaired or rerun. The private service must be stopped after preserving this record.
