@@ -1,0 +1,5 @@
+# T1 A07 terminal STOP — invalid memory kind (2026-10-08)
+
+**Disposition: `STOP_OUTPUT_SCHEMA_VIOLATION`; no cadence result.** The one-shot candidate was intentionally interrupted after the raw output at row 36 exposed a consolidation claim with `kind=common_success`, which is outside the frozen memory schema's allowed kinds. The static prompt did not specify the general mapping from an input episode kind to its output memory claim kind. The auditor was not invoked because the candidate was incomplete; the candidate stopped during the next query after 48 recorded calls. No retry was made.
+
+The 48-row partial raw remains preserved. Candidate stdout SHA-256 `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`; stderr SHA-256 `9b6f23d882f9621b4624d58b5a175388708554018abb9c725dfb55111bc97859`. The generic prompt passed its regression against fixture-specific future literals, so this is a distinct prompt-contract gap from A06. A future fresh allocation may state a generic input-kind-to-memory-kind mapping without revealing any episode IDs, sources, fact keys, or values. Do not continue or reuse this allocation.
