@@ -33,3 +33,8 @@ These are local deterministic regression tests. No actual Doom process, model re
 
 Optimized execution: the same six suites were also run with `python -O`; 42 tests passed, exit 0. Raw output and exit are `current-main-regression-optimized-output.txt` and `current-main-regression-optimized.exit`. This confirms this focused regression set under optimized CPython; it does not add live behavior evidence.
 
+
+## Planner-to-release boundary suites
+
+On exact current main `4c203d797cd3e33168bd9177fea8e0d6ef605c6b`, the existing `persistent_planner_adapter_v2`, `final_action_admission_v2`, and `executor_v13` suites passed 30/30 normally and 30/30 under `python -O`. Raw outputs and exit codes are retained as `planner-release-{normal,optimized}.txt/.exit`. They cover interrupt/completion races, stale answer refusal, action admission and executor release-terminal custody. No live inputs or game were used.
+
