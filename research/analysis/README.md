@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8434 disturbance-order correlation T0 A01](disturbance_order_8434_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: held-out route ranking reverses across equal-marginal clustered/block versus alternating schedules; 96 source-bound cases independently reconstructed. Authored finite method fixture only, host-only after container content-store STOP; no real-interface inference.
+
 - [Successor #7452 A02 equal-denominator context × event-order comparison](ordered_context_event_coverage_7452_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent audit matches mixed and exhaustive suites on the same 64 obligations; mixed 32 rows/4 episodes versus exhaustive 128 rows/64 episodes; 4/4 hostile inputs rejected. Synthetic CPU-only evidence; A01's unequal-scope result remains unchanged.
 - [Successor #7452 A01 reset-faithful context × event-order coverage](ordered_context_event_coverage_7452_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent reconstruction validated 4 mixed reset-bounded episodes/32 rows against 128 exhaustive episodes/256 rows; all seeded mutants detected only with the combined suite; host CPU-only, synthetic method evidence.
 
@@ -465,6 +467,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`constraint_elicitation_6380_t0_v1/`](constraint_elicitation_6380_t0_v1/)
 - [`constraint_response_normalization_6437_t0_v1/`](constraint_response_normalization_6437_t0_v1/)
 - [`context_preserving_delegation_6373_t0_v1/`](context_preserving_delegation_6373_t0_v1/)
+- [`context_return_renewal_8432_t0_a01_20261008/`](context_return_renewal_8432_t0_a01_20261008/)
 - [`context_success_history_calibration_6241_t0_20261002/`](context_success_history_calibration_6241_t0_20261002/)
 - [`control_opportunity_attribution_6403_t0_v1/`](control_opportunity_attribution_6403_t0_v1/)
 - [`controlled_feedback_8072_a02_20261005/`](controlled_feedback_8072_a02_20261005/)
@@ -504,6 +507,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`dependency_aware_verifier_quorum_5314_v1/`](dependency_aware_verifier_quorum_5314_v1/)
 - [`desktop_lifecycle_rebind_3190_host_preflight_v1/`](desktop_lifecycle_rebind_3190_host_preflight_v1/)
 - [`deterministic_replay_boundary_r0_v1/`](deterministic_replay_boundary_r0_v1/)
+- [`disturbance_order_8434_t0_a01_20261008/`](disturbance_order_8434_t0_a01_20261008/)
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
@@ -1069,6 +1073,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`worker_aging_6133_t1c_20261002/`](worker_aging_6133_t1c_20261002/)
 - [`wslc_control_plane_6669_t1_20261003/`](wslc_control_plane_6669_t1_20261003/)
 - [`wslc_control_plane_survivability_6669_t0_20261002/`](wslc_control_plane_survivability_6669_t0_20261002/)
+- [`wslc_local_smoke_7924_a02_20261008/`](wslc_local_smoke_7924_a02_20261008/)
+- [`wslc_local_smoke_7924_a03_20261008/`](wslc_local_smoke_7924_a03_20261008/)
 - [`wslc_private_session_portability_20261005/`](wslc_private_session_portability_20261005/)
 - [`wslc_receipt_audit_v2_3352_01a10197/`](wslc_receipt_audit_v2_3352_01a10197/)
 - [`wslc_receipt_schema_5309_t8_20261003/`](wslc_receipt_schema_5309_t8_20261003/)
