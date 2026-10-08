@@ -1,0 +1,71 @@
+{
+  "schema": "cancel-wake-freeze-v1",
+  "allocation": "17-CANCEL-WAKE-SATURATION-A01-20261003-70ab",
+  "worker": "01a0ff52-70ab-7f10-82b3-e60375a032fb",
+  "policy": "FINAL-v5",
+  "parent_claim": 5968690087,
+  "prepared_utc": "2026-10-03T11:56:55.775771+00:00",
+  "source_base": "effc43f8bd11f20f83c3410101c04f31c0c353f7",
+  "source_sha256": {
+    "CONSTRUCTION.md": "958336eb246cfaa54cf4b5511ae30bac7c3dfc2e9dfafbc515ec4a8dcf19dbe8",
+    "INPUTS.json": "49507144a2429706b4796d459222e031450eea20b46b244f82202456e6c8db24",
+    "PROTOCOL.md": "f6389f5678112cf36b742c087367febe6423c5e12f2e2e77eb957eb9372ea350",
+    "README.md": "9239c6f35bd7ca3e45c89c6080c234b18036fbde8742e4a519fa1c6019bf599b",
+    "RUNBOOK.md": "e5fbb3369df7c43cb642478d7dc54cc44ab5b51f86627888807631634d7c0e6e",
+    "audit.py.txt": "b6f05afcbfa4dbbcfee1bdff6fc620050b8f385317f576909573c90bd06519c8",
+    "controls.py.txt": "efef4b47dacbcbc522310e9c4205f68e0710aaf44e8b919d6adb5f3f35738e19",
+    "driver.py.txt": "0d9cb5621d4ce11cab2fe3b671a0b50b29a8d525c9f74698afc04f2dce5eab08"
+  },
+  "dependency_paths": {
+    "array": "/usr/local/lib/python3.12/lib-dynload/array.cpython-312-aarch64-linux-gnu.so",
+    "datetime": "/usr/local/lib/python3.12/datetime.py",
+    "fcntl": "/usr/local/lib/python3.12/lib-dynload/fcntl.cpython-312-aarch64-linux-gnu.so",
+    "hashlib": "/usr/local/lib/python3.12/hashlib.py",
+    "json": "/usr/local/lib/python3.12/json/__init__.py",
+    "pathlib": "/usr/local/lib/python3.12/pathlib.py",
+    "platform": "/usr/local/lib/python3.12/platform.py",
+    "stat": "/usr/local/lib/python3.12/stat.py",
+    "termios": "/usr/local/lib/python3.12/lib-dynload/termios.cpython-312-aarch64-linux-gnu.so",
+    "threading": "/usr/local/lib/python3.12/threading.py",
+    "python_executable": "/usr/local/bin/python3.12",
+    "timeout_guard": "/usr/bin/timeout"
+  },
+  "dependency_sha256": {
+    "array": "3cf0a8fff8e4ea15acc18e6d0d1ab57cc4d77326f3f0e1a9e345e91dc7ee7a6b",
+    "datetime": "ef20dc6b3554cd585dddffdc573f1f9a7a54c522f2a3fb4576c44edbb1e14238",
+    "fcntl": "59265a3467fbfbf434a80c36ece54a03ca78f45149f01f9149b5b06cd6ddb3ff",
+    "hashlib": "6dbdebf270868b391080e21dc9687eddfaf321c965ad979f68d3f5c423c613ab",
+    "json": "d5d41e2c29049515d295d81a6d40b4890fbec8d8482cfb401630f8ef2f77e4d5",
+    "pathlib": "10ba48ae8063cfe7589436041d0d4628c05f427c7709cf8e75e486f8930cc32c",
+    "platform": "f5ff83f15c841792be42709a6710dc8d7a9f72791c1ae4cad719b1fb0abe0a05",
+    "stat": "052af0327eae6941b69b05c088b3e748f79995635f80ac4cc7125eb333eb4c77",
+    "termios": "dc3d17090b8e883f10d3bb186ccf08b7004bbd6aafc3b78722d5eabc4681ca7d",
+    "threading": "846f450ae794e4aab823a163f8c71d27751148af33e91dd3de886686a4e8ebfb",
+    "python_executable": "36727872f3be3469d83c23705431d90ab2b408a0ba1e3008ba3d4dd337b7f481",
+    "timeout_guard": "bd653cdde85e17eafc0dbb0478f41598b87f24ae26f20a10f2366f1df8d5eb43"
+  },
+  "environment": {
+    "python": "3.12.15 (main, Oct  1 2026, 21:52:41) [GCC 14.2.0]",
+    "kernel": "7.0.5-orbstack-00330-ge3df4e19b0a0-dirty",
+    "machine": "aarch64",
+    "cgroup": {
+      "cpu.max": "25000 100000",
+      "memory.max": "134217728",
+      "memory.swap.max": "0",
+      "pids.max": "32"
+    }
+  },
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "guest": "research-6501-async-01a0ff52-70ab",
+  "guest_id": "01M3ZNWN09NSCEPP83HXRBJH8R",
+  "limits": {
+    "collector_cap": 1,
+    "auditor_cap": 1,
+    "retries": 0,
+    "case_count": 18,
+    "max_output_bytes": 2097152,
+    "outer_seconds": 60,
+    "native_guard_seconds": 50
+  },
+  "scope": "single-owned Linux native wakepipe transport and dummy-FD cancellation; no production/input/physical-release/performance/full-goal promotion"
+}

@@ -1,0 +1,359 @@
+"""Saved-only wake-pipe auditor; no experiment or host FD access.
+
+CLI: python audit.py.txt FIRST.json INPUTS.json output.json
+Exit0 PASS, 1 HOLD (qualified contrast), 2 STOP (invalid/incomplete).
+Exclusive output creation. Synthetic controls never authenticate native runs.
+"""
+import datetime
+import hashlib
+import json
+from pathlib import Path
+import stat
+import sys
+
+# This is saved Linux evidence, including when audited on a non-Linux host.
+LINUX_EAGAIN = 11
+LINUX_EBADF = 9
+
+class Invalid(ValueError):
+    pass
+
+
+def need(condition, message):
+    if not condition:
+        raise Invalid(message)
+
+
+def integer(value, minimum=0):
+    return type(value) is int and value >= minimum
+
+
+def digest(value):
+    return isinstance(value, str) and len(value) == 64 and all(c in "0123456789abcdef" for c in value)
+
+
+def keys(value, names, where):
+    need(type(value) is dict and set(value) == set(names.split()), where + ": fields")
+
+
+def utc(value, where):
+    need(isinstance(value, str), where + ": UTC type")
+    try:
+        parsed = datetime.datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise Invalid(where + ": UTC syntax") from exc
+    need(parsed.tzinfo is not None and parsed.utcoffset() == datetime.timedelta(0), where + ": UTC offset")
+
+
+def no_duplicates(pairs):
+    result = {}
+    for key, value in pairs:
+        need(key not in result, "duplicate JSON key: " + key)
+        result[key] = value
+    return result
+
+
+def load(path):
+    raw = Path(path).read_bytes()
+    need(len(raw) <= 2 * 1024 * 1024, "input ceiling")
+    def constant(value):
+        raise Invalid("nonfinite JSON number: " + value)
+    return raw, json.loads(raw, object_pairs_hook=no_duplicates, parse_constant=constant)
+
+
+def inputs_check(cfg):
+    keys(cfg, "schema allocation pipe_size read_chunk spacing_seconds preconsumer_seconds primary_seconds thread_join_seconds case_count cases", "INPUTS")
+    need(cfg["schema"] == "cancel-wake-input-v1", "INPUTS schema")
+    need(cfg["allocation"] == "17-CANCEL-WAKE-SATURATION-A01-20261003-70ab", "allocation")
+    for name, expected in (("pipe_size", 4096), ("read_chunk", 64), ("case_count", 18), ("thread_join_seconds", 2)):
+        need(type(cfg[name]) is int and cfg[name] == expected, "INPUTS " + name)
+    for name, expected in (("spacing_seconds", .001), ("preconsumer_seconds", .025), ("primary_seconds", .5)):
+        need(type(cfg[name]) is float and cfg[name] == expected, "INPUTS " + name)
+    six = [("blocking_byte", "empty"), ("blocking_byte", "full"), ("nonblocking_drop", "empty"), ("nonblocking_drop", "full"), ("level_flag_nonblocking", "empty"), ("level_flag_nonblocking", "full")]
+    expected = []
+    for repeat, order in ((1, six), (2, list(reversed(six))), (3, six)):
+        for policy, load_name in order:
+            expected.append(dict(case_id="wake-%02d" % (len(expected) + 1), repeat=repeat, policy=policy, load=load_name))
+    need(type(cfg["cases"]) is list and cfg["cases"] == expected, "exact18 case/order")
+    for case in cfg["cases"]:
+        keys(case, "case_id repeat policy load", "case")
+        need(type(case["repeat"]) is int, "repeat type")
+
+
+def image_check(value, where):
+    keys(value, "fd dev ino mode flags fifo", where)
+    for field in ("fd", "dev", "ino", "mode", "flags"):
+        need(integer(value[field]), where + ": nonnegative typed " + field)
+    need(value["ino"] >= 1, where + ": positive pipe inode")
+    need(value["fifo"] is True and stat.S_ISFIFO(value["mode"]), where + ": pipe identity")
+
+
+def badfd(value, where):
+    keys(value, "state errno", where)
+    need(value["state"] == "ERROR" and type(value["errno"]) is int and value["errno"] == LINUX_EBADF, where + ": EBADF")
+
+
+def openfd(value, expected, where):
+    keys(value, "state image", where)
+    need(value["state"] == "OPEN", where + ": OPEN")
+    image_check(value["image"], where)
+    need(value["image"] == expected, where + ": exact owned identity")
+
+
+def counts_check(value, where):
+    keys(value, "N C", where)
+    need(integer(value["N"]) and integer(value["C"]), where + ": count types")
+
+
+def write_check(value, where):
+    keys(value, "status bytes errno start_ns end_ns", where)
+    need(integer(value["start_ns"]) and integer(value["end_ns"]) and value["start_ns"] <= value["end_ns"], where + ": times")
+    need(type(value["bytes"]) is int, where + ": byte type")
+    if value["status"] == "written":
+        need(value["bytes"] == 1 and value["errno"] is None, where + ": exact C write")
+    else:
+        need(value["status"] == "eagain" and value["bytes"] == 0 and type(value["errno"]) is int and value["errno"] == LINUX_EAGAIN, where + ": EAGAIN")
+
+
+BASE_EVENT = "seq ns utc pid tid thread event"
+EXTRA = {
+    "sender_start": "", "level_published": "", "wake_attempt": "",
+    "wake_return": "status bytes errno start_ns end_ns", "sender_done": "",
+    "preconsumer": "unread sender_done flag write_status writer_flags",
+    "consumer_start": "", "wake_read": "start_ns end_ns hex bytes",
+    "primary_deadline": "elapsed_ns", "cancel_seen": "reason unread counts",
+    "fd_closed": "label phase before after", "cancel_complete": "unread",
+    "consumer_done": "", "primary_checkpoint": "unread flag counts target_r target_w",
+    "fixture_cleanup_start": "", "fixture_cleanup_complete": "",
+}
+
+
+def observed_row(row, case, pid, contrasts):
+    tag = case["case_id"]
+    keys(row, "case status pid start_utc start_ns events errors tids pipe_size initial_fds probe prefill writer_flags preconsumer sender_wchan write primary joins final_fds end_ns end_utc", tag)
+    keys(row["case"], "case_id repeat policy load", tag + " case")
+    need(row["case"] == case and type(row["case"]["repeat"]) is int and row["status"] == "OBSERVED", tag + ": case/status")
+    need(type(row["pid"]) is int and row["pid"] == pid and integer(row["start_ns"]) and integer(row["end_ns"]) and row["start_ns"] <= row["end_ns"], tag + ": process/times")
+    utc(row["start_utc"], tag); utc(row["end_utc"], tag)
+    need(type(row["errors"]) is list and not row["errors"], tag + ": errors")
+    keys(row["tids"], "sender consumer", tag + " tids")
+    need(all(integer(v, 1) for v in row["tids"].values()), tag + ": positive native tids")
+    need(all(v != pid for v in row["tids"].values()), tag + ": worker TID differs from main PID")
+    keys(row["joins"], "sender consumer", tag + " joins")
+    need(all(v is True for v in row["joins"].values()), tag + ": joined threads")
+    need(type(row["pipe_size"]) is int and row["pipe_size"] == 4096, tag + ": capacity")
+    keys(row["initial_fds"], "wake_r wake_w target_r target_w", tag + " initial_fds")
+    initial = row["initial_fds"]
+    for label, value in initial.items():
+        image_check(value, tag + " " + label)
+        need(value["flags"] & 3 == (1 if label.endswith("_w") else 0), tag + ": FD access mode")
+        need(bool(value["flags"] & 2048) == label.startswith("wake_"), tag + ": initial O_NONBLOCK")
+    need(len({v["fd"] for v in initial.values()}) == 4, tag + ": distinct descriptors")
+    wake_id = (initial["wake_r"]["dev"], initial["wake_r"]["ino"])
+    target_id = (initial["target_r"]["dev"], initial["target_r"]["ino"])
+    need(wake_id == (initial["wake_w"]["dev"], initial["wake_w"]["ino"]) and target_id == (initial["target_w"]["dev"], initial["target_w"]["ino"]) and wake_id != target_id, tag + ": pipe pairs")
+    policy, full = case["policy"], case["load"] == "full"
+    need(integer(row["writer_flags"]) and row["writer_flags"] == (initial["wake_w"]["flags"] & ~2048 if policy == "blocking_byte" else initial["wake_w"]["flags"]), tag + ": writer flags")
+    expected_images = dict(initial)
+    expected_images["wake_w"] = dict(initial["wake_w"], flags=row["writer_flags"])
+    keys(row["prefill"], "bytes unread ns", tag + " prefill")
+    prefill = row["prefill"]
+    need(all(integer(prefill[k]) for k in ("bytes", "unread", "ns")) and prefill["bytes"] == prefill["unread"] == (4096 if full else 0), tag + ": actual initial FIONREAD/prefill")
+    need(row["start_ns"] <= prefill["ns"] <= row["end_ns"], tag + ": prefill time")
+    if full:
+        probe = row["probe"]
+        keys(probe, "status bytes errno start_ns end_ns", tag + " probe")
+        need(probe["status"] == "eagain" and type(probe["bytes"]) is int and probe["bytes"] == 0 and type(probe["errno"]) is int and probe["errno"] == LINUX_EAGAIN, tag + ": native Q EAGAIN exposure")
+        need(integer(probe["start_ns"]) and integer(probe["end_ns"]) and row["start_ns"] <= probe["start_ns"] <= probe["end_ns"] <= prefill["ns"], tag + ": probe before drain")
+    else:
+        need(row["probe"] is None, tag + ": empty probe")
+    wchan = row["sender_wchan"]
+    if type(wchan) is dict:
+        keys(wchan, "unavailable_errno", tag + " wchan")
+        need(integer(wchan["unavailable_errno"], 1), tag + ": optional wchan errno")
+    else:
+        need(isinstance(wchan, str), tag + ": optional wchan type")
+    write_check(row["write"], tag + " write")
+    write = row["write"]
+    need(row["start_ns"] <= write["start_ns"] <= write["end_ns"] <= row["end_ns"], tag + ": write within row")
+    need(type(row["events"]) is list and row["events"], tag + ": events")
+    events, by_kind, last_ns = row["events"], {}, row["start_ns"]
+    for i, event in enumerate(events):
+        need(type(event) is dict and event.get("event") in EXTRA, tag + ": event type")
+        kind = event["event"]
+        keys(event, BASE_EVENT + " " + EXTRA[kind], tag + " " + kind)
+        need(type(event["seq"]) is int and event["seq"] == i and integer(event["ns"]) and last_ns <= event["ns"] <= row["end_ns"], tag + ": event chronology")
+        last_ns = event["ns"]
+        utc(event["utc"], tag + " event")
+        need(type(event["pid"]) is int and event["pid"] == pid and integer(event["tid"], 1), tag + ": event native identity")
+        if kind in ("sender_start", "level_published", "wake_attempt", "wake_return", "sender_done"):
+            tid, thread = row["tids"]["sender"], "wake-sender"
+        elif kind in ("consumer_start", "wake_read", "primary_deadline", "cancel_seen", "cancel_complete", "consumer_done") or (kind == "fd_closed" and event["phase"] == "cancel"):
+            tid, thread = row["tids"]["consumer"], "wake-consumer"
+        else:
+            tid, thread = pid, "MainThread"
+        need(event["tid"] == tid and event["thread"] == thread, tag + ": event thread ownership")
+        by_kind.setdefault(kind, []).append(event)
+    def one(kind):
+        found = by_kind.get(kind, [])
+        need(len(found) == 1, tag + ": exactly one " + kind)
+        return found[0]
+    s, attempt, ret, sd = (one(k) for k in ("sender_start", "wake_attempt", "wake_return", "sender_done"))
+    pre, cs, cd, primary, clean, cleaned = (one(k) for k in ("preconsumer", "consumer_start", "consumer_done", "primary_checkpoint", "fixture_cleanup_start", "fixture_cleanup_complete"))
+    need(s["seq"] < attempt["seq"] < ret["seq"] < sd["seq"], tag + ": sender order")
+    need(prefill["ns"] <= s["ns"] and attempt["ns"] <= write["start_ns"] <= write["end_ns"] <= ret["ns"], tag + ": write interval")
+    need({k: ret[k] for k in write} == write, tag + ": actual write projection")
+    need(attempt["seq"] < pre["seq"] < cs["seq"] < cd["seq"] < primary["seq"] < clean["seq"] < cleaned["seq"] and sd["seq"] < primary["seq"], tag + ": primary vs cleanup chronology")
+    need(pre["ns"] - attempt["ns"] >= 25000000 and write["start_ns"] <= pre["ns"], tag + ": attempted handshake/preconsumer spacing")
+    need(events[0] == s and events[-1] == cleaned, tag + ": event boundaries")
+    need(row["preconsumer"] == pre and row["primary"] == primary, tag + ": saved checkpoint projection")
+    need(integer(pre["unread"]) and type(pre["sender_done"]) is bool and type(pre["flag"]) is bool and type(pre["writer_flags"]) is int and pre["writer_flags"] == row["writer_flags"], tag + ": preconsumer fields")
+    need(pre["unread"] == (4096 if full else 1), tag + ": qualified preconsumer FIONREAD")
+    blocking_full = full and policy == "blocking_byte"
+    need(pre["sender_done"] is (not blocking_full), tag + ": sender preconsumer completion")
+    need(pre["write_status"] == (None if blocking_full else write["status"]), tag + ": preconsumer write status")
+    need(pre["flag"] is (policy == "level_flag_nonblocking"), tag + ": retained current predicate")
+    if blocking_full:
+        need(ret["seq"] > cs["seq"], tag + ": full blocking exposure")
+    else:
+        # Frozen driver logs sender_done before publishing the done handshake.
+        need(sd["seq"] < pre["seq"], tag + ": sender done before consumer")
+    if policy == "level_flag_nonblocking":
+        published = one("level_published")
+        need(s["seq"] < published["seq"] < attempt["seq"] < pre["seq"], tag + ": publish before redundant wake")
+    else:
+        need(not by_kind.get("level_published"), tag + ": unexpected level publication")
+    need(write["status"] == ("eagain" if full and not blocking_full else "written"), tag + ": write policy")
+    admitted = b"N" * prefill["bytes"] + b"C" * write["bytes"]
+    consumed = b""
+    last_read_end = cs["ns"]
+    for read in by_kind.get("wake_read", []):
+        need(cs["seq"] < read["seq"] < cd["seq"] and integer(read["start_ns"]) and integer(read["end_ns"]) and last_read_end <= read["start_ns"] <= read["end_ns"] <= read["ns"], tag + ": read chronology")
+        last_read_end = read["end_ns"]
+        need(type(read["bytes"]) is int and 1 <= read["bytes"] <= 64 and isinstance(read["hex"], str), tag + ": per-turn read bound")
+        try:
+            data = bytes.fromhex(read["hex"])
+        except ValueError as exc:
+            raise Invalid(tag + ": read hex") from exc
+        need(data.hex() == read["hex"] and len(data) == read["bytes"] and all(b in (78, 67) for b in data), tag + ": exact N/C read bytes")
+        if b"C" in data:
+            need(write["status"] == "written" and write["start_ns"] <= read["end_ns"], tag + ": C admitted after write start")
+        consumed += data
+        need(admitted.startswith(consumed), tag + ": FIFO N before C / no phantom bytes")
+    counts = dict(N=consumed.count(b"N"), C=consumed.count(b"C"))
+    counts_check(primary["counts"], tag + " primary counts")
+    need(primary["counts"] == counts and integer(primary["unread"]) and primary["unread"] == len(admitted) - len(consumed), tag + ": primary byte conservation")
+    need(type(primary["flag"]) is bool, tag + ": primary predicate type")
+    seen = by_kind.get("cancel_seen", [])
+    completed = by_kind.get("cancel_complete", [])
+    deadline = by_kind.get("primary_deadline", [])
+    need(len(seen) <= 1 and len(completed) == len(seen), tag + ": cancel exactly once")
+    cancelled = bool(seen)
+    if cancelled:
+        need(not deadline, tag + ": cancellation vs cutoff")
+        a, z = seen[0], completed[0]
+        need(cs["seq"] < a["seq"] < z["seq"] < cd["seq"] and primary["flag"] is True, tag + ": cancellation chronology/predicate")
+        need(a["reason"] in ("level_state", "byte_C"), tag + ": cancellation reason")
+        need(a["reason"] == ("byte_C" if counts["C"] else "level_state") and (counts["C"] == 1 or policy == "level_flag_nonblocking"), tag + ": current cancellation cause")
+        counts_check(a["counts"], tag + " cancel counts")
+        need(a["counts"] == counts and type(a["unread"]) is int and type(z["unread"]) is int and a["unread"] == z["unread"] == primary["unread"], tag + ": cancellation pending bytes")
+        need(all(e["seq"] < a["seq"] for e in by_kind.get("wake_read", [])), tag + ": no reads after cancel")
+        for label in ("target_r", "target_w"):
+            badfd(primary[label], tag + " primary " + label)
+    else:
+        d = one("primary_deadline")
+        need(cs["seq"] < d["seq"] < cd["seq"] and integer(d["elapsed_ns"]) and d["elapsed_ns"] >= 500000000 and d["ns"] - cs["ns"] >= 500000000, tag + ": actual >=500ms primary cutoff")
+        need(primary["flag"] is (policy == "level_flag_nonblocking"), tag + ": uncancelled retained predicate")
+        for label in ("target_r", "target_w"):
+            openfd(primary[label], initial[label], tag + " primary " + label)
+    closes = by_kind.get("fd_closed", [])
+    need(len(closes) == 4 and {e["label"] for e in closes} == set(initial), tag + ": exactly four owned closes")
+    for close in closes:
+        label = close["label"]
+        image_check(close["before"], tag + " close " + label)
+        need(close["before"] == expected_images[label], tag + ": close owned identity/flags")
+        badfd(close["after"], tag + " close " + label)
+        cancel_close = cancelled and label.startswith("target_")
+        need(close["phase"] == ("cancel" if cancel_close else "fixture_cleanup"), tag + ": primary close vs cleanup")
+        if cancel_close:
+            need(seen[0]["seq"] < close["seq"] < completed[0]["seq"], tag + ": cancellation close chronology")
+        else:
+            need(clean["seq"] < close["seq"] < cleaned["seq"], tag + ": cleanup close chronology")
+    keys(row["final_fds"], "wake_r wake_w target_r target_w", tag + " final_fds")
+    for label, witness in row["final_fds"].items():
+        badfd(witness, tag + " final " + label)
+    expected_cancel = not (full and policy == "nonblocking_drop")
+    if cancelled != expected_cancel:
+        contrasts.append(tag + ": cancellation outcome differs")
+    if policy == "level_flag_nonblocking" and (consumed or primary["unread"] != len(admitted)):
+        contrasts.append(tag + ": level cancellation consumed wake bytes")
+    return dict(case_id=tag, cancelled=cancelled, consumed=counts, pending=primary["unread"], primary_target_state="EBADF" if cancelled else "OPEN")
+
+
+def audit(first, cfg, input_raw):
+    inputs_check(cfg)
+    keys(first, "schema allocation operation inputs_sha256 freeze_sha256 environment rows collector_disposition", "FIRST")
+    need(first["schema"] == "cancel-wake-first-v1" and first["allocation"] == cfg["allocation"], "FIRST schema/allocation")
+    need(first["inputs_sha256"] == hashlib.sha256(input_raw).hexdigest() and digest(first["freeze_sha256"]), "source custody hashes")
+    op = first["operation"]
+    keys(op, "pid argv start_utc start_ns end_utc end_ns exit_code", "operation")
+    need(integer(op["pid"], 1) and integer(op["start_ns"]) and integer(op["end_ns"]) and op["start_ns"] <= op["end_ns"], "native operation identity/time")
+    utc(op["start_utc"], "operation"); utc(op["end_utc"], "operation")
+    need(type(op["argv"]) is list and len(op["argv"]) == 3 and all(isinstance(v, str) and v for v in op["argv"]), "operation argv")
+    env = first["environment"]
+    keys(env, "python executable kernel machine cgroup dependency_sha256", "environment")
+    need(all(isinstance(env[k], str) and env[k] for k in ("python", "executable", "kernel")) and env["machine"] == "aarch64", "native environment")
+    need(env["cgroup"] == {"cpu.max": "25000 100000", "memory.max": "134217728", "memory.swap.max": "0", "pids.max": "32"}, "effective cgroup")
+    need(type(env["dependency_sha256"]) is dict and bool(env["dependency_sha256"]) and all(isinstance(k, str) and k and digest(v) for k, v in env["dependency_sha256"].items()), "dependency custody")
+    need(type(first["rows"]) is list and len(first["rows"]) == 18, "all18 first rows")
+    contrasts, summaries, stopped, previous = [], [], False, op["start_ns"]
+    for case, row in zip(cfg["cases"], first["rows"]):
+        need(type(row) is dict and row.get("case") == case, "first case/order")
+        status = row.get("status")
+        if stopped:
+            keys(row, "case status", case["case_id"] + " NOT_RUN")
+            need(status == "NOT_RUN", "STOP tail must NOT_RUN")
+        elif status == "STOP":
+            need(type(row.get("errors")) is list and bool(row["errors"]) and type(row.get("pid")) is int and row["pid"] == op["pid"], "STOP first failure evidence")
+            stopped = True
+        else:
+            need(status == "OBSERVED", "unknown/unqualified first status")
+            summary = observed_row(row, case, op["pid"], contrasts)
+            need(previous <= row["start_ns"] <= row["end_ns"] <= op["end_ns"], "fresh sequential cell chronology")
+            previous = row["end_ns"]
+            summaries.append(summary)
+    if stopped:
+        need(first["collector_disposition"] == "STOP" and type(op["exit_code"]) is int and op["exit_code"] == 2, "collector STOP custody")
+        return "STOP", ["collector preserved first STOP; no all18 qualification"], summaries
+    need(first["collector_disposition"] == "COMPLETE_FIRST_OBSERVATIONS" and type(op["exit_code"]) is int and op["exit_code"] == 0, "collector successful exit required")
+    return ("HOLD", contrasts, summaries) if contrasts else ("PASS_SCOPED_WAKE_PIPE_SATURATION", [], summaries)
+
+
+def main(argv):
+    if len(argv) != 4:
+        print("usage: audit.py.txt FIRST.json INPUTS.json output.json", file=sys.stderr)
+        return 2
+    start = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    raw_first = raw_inputs = b""
+    try:
+        raw_first, first = load(argv[1])
+        raw_inputs, cfg = load(argv[2])
+        disposition, reasons, rows = audit(first, cfg, raw_inputs)
+    except (Invalid, OSError, ValueError, TypeError, KeyError, OverflowError, RecursionError) as exc:
+        disposition, reasons, rows = "STOP", [type(exc).__name__ + ": " + str(exc)], []
+    exit_code = 0 if disposition.startswith("PASS_") else 1 if disposition == "HOLD" else 2
+    output = dict(schema="cancel-wake-audit-v1", disposition=disposition, exit_code=exit_code,
+                  reasons=reasons, qualified_rows=rows,
+                  first_sha256=hashlib.sha256(raw_first).hexdigest(),
+                  inputs_sha256=hashlib.sha256(raw_inputs).hexdigest(),
+                  audit_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                  start_utc=start, end_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                  scope="Saved-only finite evidence consistency; not native authenticity, committee vote, general safety or deadline proof.")
+    with Path(argv[3]).open("xb") as stream:
+        stream.write((json.dumps(output, sort_keys=True, indent=2) + "\n").encode())
+    print(json.dumps(dict(disposition=disposition, exit_code=exit_code), sort_keys=True))
+    return exit_code
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

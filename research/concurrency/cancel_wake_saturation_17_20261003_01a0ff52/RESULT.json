@@ -1,0 +1,457 @@
+{
+  "schema": "cancel-wake-result-v1",
+  "disposition": "PASS_SCOPED_WAKE_PIPE_SATURATION",
+  "allocation": "17-CANCEL-WAKE-SATURATION-A01-20261003-70ab",
+  "source_commit": "3bccdf99f657cc6f7426090a202fd59bee494e67",
+  "first_sha256": "1d69a35be425e7f996c3f5a0ab6e8aaad3d242410c0fd40c45741c4d7a02e9f8",
+  "audit_sha256": "2387129ff19c827955f28b8522e696b2e97b50aed643a37cac0a32eba679fc36",
+  "formal_counts": {
+    "collector": 1,
+    "saved_only_auditor": 1,
+    "retries": 0
+  },
+  "native_cells": 18,
+  "healthy_cancelled": 9,
+  "full_level_pending4096_cancelled": 3,
+  "full_blocking_after4096N_cancelled": 3,
+  "full_drop_uncancelled_primary500ms": 3,
+  "owned_fd_lifetimes_closed": 72,
+  "summary": [
+    {
+      "policy": "blocking_byte",
+      "load": "empty",
+      "n": 3,
+      "cancelled": 3,
+      "consumer_boundary_ms": {
+        "min": 0.223251,
+        "median": 0.22971,
+        "max": 0.286376
+      },
+      "caller_write_ms": {
+        "min": 0.008708,
+        "median": 0.01875,
+        "max": 0.112292
+      },
+      "N_read": [
+        0,
+        0,
+        0
+      ],
+      "C_read": [
+        1,
+        1,
+        1
+      ],
+      "wake_unread_primary": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "policy": "blocking_byte",
+      "load": "full",
+      "n": 3,
+      "cancelled": 3,
+      "consumer_boundary_ms": {
+        "min": 119.1615,
+        "median": 123.111058,
+        "max": 124.151062
+      },
+      "caller_write_ms": {
+        "min": 148.589124,
+        "median": 151.917096,
+        "max": 157.675953
+      },
+      "N_read": [
+        4096,
+        4096,
+        4096
+      ],
+      "C_read": [
+        1,
+        1,
+        1
+      ],
+      "wake_unread_primary": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "policy": "nonblocking_drop",
+      "load": "empty",
+      "n": 3,
+      "cancelled": 3,
+      "consumer_boundary_ms": {
+        "min": 0.194668,
+        "median": 0.230417,
+        "max": 0.456044
+      },
+      "caller_write_ms": {
+        "min": 0.015291,
+        "median": 0.019084,
+        "max": 0.022417
+      },
+      "N_read": [
+        0,
+        0,
+        0
+      ],
+      "C_read": [
+        1,
+        1,
+        1
+      ],
+      "wake_unread_primary": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "policy": "nonblocking_drop",
+      "load": "full",
+      "n": 3,
+      "cancelled": 0,
+      "consumer_boundary_ms": {
+        "min": 500.262349,
+        "median": 500.35385,
+        "max": 500.489683
+      },
+      "caller_write_ms": {
+        "min": 0.017375,
+        "median": 0.017875,
+        "max": 0.129667
+      },
+      "N_read": [
+        4096,
+        4096,
+        4096
+      ],
+      "C_read": [
+        0,
+        0,
+        0
+      ],
+      "wake_unread_primary": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "policy": "level_flag_nonblocking",
+      "load": "empty",
+      "n": 3,
+      "cancelled": 3,
+      "consumer_boundary_ms": {
+        "min": 0.169001,
+        "median": 0.361544,
+        "max": 0.400293
+      },
+      "caller_write_ms": {
+        "min": 0.014667,
+        "median": 0.017167,
+        "max": 0.036584
+      },
+      "N_read": [
+        0,
+        0,
+        0
+      ],
+      "C_read": [
+        0,
+        0,
+        0
+      ],
+      "wake_unread_primary": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "policy": "level_flag_nonblocking",
+      "load": "full",
+      "n": 3,
+      "cancelled": 3,
+      "consumer_boundary_ms": {
+        "min": 0.327293,
+        "median": 0.344751,
+        "max": 0.413502
+      },
+      "caller_write_ms": {
+        "min": 0.018334,
+        "median": 0.022084,
+        "max": 0.073875
+      },
+      "N_read": [
+        0,
+        0,
+        0
+      ],
+      "C_read": [
+        0,
+        0,
+        0
+      ],
+      "wake_unread_primary": [
+        4096,
+        4096,
+        4096
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "case_id": "wake-01",
+      "policy": "blocking_byte",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.286376,
+      "caller_write_ms": 0.008708,
+      "N_read": 0,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-02",
+      "policy": "blocking_byte",
+      "load": "full",
+      "cancelled": true,
+      "consumer_boundary_ms": 123.111058,
+      "caller_write_ms": 148.589124,
+      "N_read": 4096,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": "anon_pipe_write"
+    },
+    {
+      "case_id": "wake-03",
+      "policy": "nonblocking_drop",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.456044,
+      "caller_write_ms": 0.022417,
+      "N_read": 0,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-04",
+      "policy": "nonblocking_drop",
+      "load": "full",
+      "cancelled": false,
+      "consumer_boundary_ms": 500.489683,
+      "caller_write_ms": 0.129667,
+      "N_read": 4096,
+      "C_read": 0,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-05",
+      "policy": "level_flag_nonblocking",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.361544,
+      "caller_write_ms": 0.014667,
+      "N_read": 0,
+      "C_read": 0,
+      "wake_unread_primary": 1,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-06",
+      "policy": "level_flag_nonblocking",
+      "load": "full",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.327293,
+      "caller_write_ms": 0.073875,
+      "N_read": 0,
+      "C_read": 0,
+      "wake_unread_primary": 4096,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-07",
+      "policy": "level_flag_nonblocking",
+      "load": "full",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.344751,
+      "caller_write_ms": 0.018334,
+      "N_read": 0,
+      "C_read": 0,
+      "wake_unread_primary": 4096,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-08",
+      "policy": "level_flag_nonblocking",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.169001,
+      "caller_write_ms": 0.017167,
+      "N_read": 0,
+      "C_read": 0,
+      "wake_unread_primary": 1,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-09",
+      "policy": "nonblocking_drop",
+      "load": "full",
+      "cancelled": false,
+      "consumer_boundary_ms": 500.262349,
+      "caller_write_ms": 0.017375,
+      "N_read": 4096,
+      "C_read": 0,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-10",
+      "policy": "nonblocking_drop",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.194668,
+      "caller_write_ms": 0.015291,
+      "N_read": 0,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-11",
+      "policy": "blocking_byte",
+      "load": "full",
+      "cancelled": true,
+      "consumer_boundary_ms": 119.1615,
+      "caller_write_ms": 151.917096,
+      "N_read": 4096,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": "anon_pipe_write"
+    },
+    {
+      "case_id": "wake-12",
+      "policy": "blocking_byte",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.223251,
+      "caller_write_ms": 0.01875,
+      "N_read": 0,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-13",
+      "policy": "blocking_byte",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.22971,
+      "caller_write_ms": 0.112292,
+      "N_read": 0,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-14",
+      "policy": "blocking_byte",
+      "load": "full",
+      "cancelled": true,
+      "consumer_boundary_ms": 124.151062,
+      "caller_write_ms": 157.675953,
+      "N_read": 4096,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": "anon_pipe_write"
+    },
+    {
+      "case_id": "wake-15",
+      "policy": "nonblocking_drop",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.230417,
+      "caller_write_ms": 0.019084,
+      "N_read": 0,
+      "C_read": 1,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-16",
+      "policy": "nonblocking_drop",
+      "load": "full",
+      "cancelled": false,
+      "consumer_boundary_ms": 500.35385,
+      "caller_write_ms": 0.017875,
+      "N_read": 4096,
+      "C_read": 0,
+      "wake_unread_primary": 0,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-17",
+      "policy": "level_flag_nonblocking",
+      "load": "empty",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.400293,
+      "caller_write_ms": 0.036584,
+      "N_read": 0,
+      "C_read": 0,
+      "wake_unread_primary": 1,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    },
+    {
+      "case_id": "wake-18",
+      "policy": "level_flag_nonblocking",
+      "load": "full",
+      "cancelled": true,
+      "consumer_boundary_ms": 0.413502,
+      "caller_write_ms": 0.022084,
+      "N_read": 0,
+      "C_read": 0,
+      "wake_unread_primary": 4096,
+      "sender_wchan": {
+        "unavailable_errno": 2
+      }
+    }
+  ],
+  "scope": "single current owner, native wake pipe/dummy-FD cleanup; no physical input release/task effect/harddeadline/production adoption/whole-goal evidence",
+  "auditor_native_pid": "NOT_RECORDED; actual host invoking PID45392/container identity and UTC/exit retained; no invented native PID"
+}
