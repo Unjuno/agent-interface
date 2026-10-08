@@ -1,5 +1,7 @@
 # Integration research
 
+- [#622 owned-X11 held-key evidence — additive saved-data recheck](x11_readonly_held_key_622_2f23_N01/RECHECK_20261008.md) — Exact #7231 archive retained; 95 manifest entries and 82 source images reverified, and the posthoc data auditor rejects all three copied contradictions in a temporary workspace. No native replay, runtime adoption, or application-task claim.
+
 This directory contains experiments that compose previously isolated mechanisms across shared runtime, caller, recovery, effect, application, or domain boundaries.
 
 Child directories are retained integration studies. Their existence does not imply that the composed mechanism is globally promoted or production-ready.
