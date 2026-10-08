@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8675 T0 A01 cross-revision target correspondence](cross_revision_target_transport_8675_t0_20261009/REPORT.md) — `PASS_RELATIONAL_REIDENTIFICATION_SCOPED`: relational soft assignment recovered 100/300 held-out positives (+33.3 pp over both exact baselines), with 0/500 false rebinds and 0.5974% one-sided 95% upper bound; all automorphism/semantic-change controls abstained. Recovery was limited to sibling reorder; duplicate-target and wrapper cases abstained. Synthetic assignment-space proxy only, not a canonical entropic FGW or live GUI result.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -543,6 +545,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`counterexample_guided_recovery_refinement_8553_t0_a01_20261008/`](counterexample_guided_recovery_refinement_8553_t0_a01_20261008/)
 - [`coupled_visual_control_6195_t0_a01_20261008/`](coupled_visual_control_6195_t0_a01_20261008/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
+- [`cross_revision_target_transport_8675_t0_20261009/`](cross_revision_target_transport_8675_t0_20261009/)
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
 - [`crossed_verdict_repeatability_6222_t0_20261001_01/`](crossed_verdict_repeatability_6222_t0_20261001_01/)
 - [`crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/`](crossed_verdict_repeatability_6222_t1_eligibility_20261002_01/)
