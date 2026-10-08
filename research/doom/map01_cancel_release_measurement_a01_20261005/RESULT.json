@@ -1,0 +1,22 @@
+{
+  "schema": "map01-cancel-release-measurement-result-v1",
+  "verdict": "PASS_GAP_CONFIRMED",
+  "candidate_exit": 0,
+  "audit_exit": 0,
+  "observed": {
+    "admissions": 1,
+    "admission_has_actuation_id": true,
+    "admission_program_step": ["cover-cancel-a01", 7],
+    "owner_cancel_release_records": 1,
+    "owner_cancel_release_verified": true,
+    "fake_physical_keys_after_cancel": [],
+    "matching_bridge_up_receipts": 0,
+    "backend_held_after_cancel": ["F8"]
+  },
+  "scope": "One frozen fake-display cancellation trace through the current v39 bridge and InputOwner v12. No X server, GUI, game, or OS input.",
+  "limits": [
+    "No real X11/application behavior or physical keyboard claim.",
+    "No application consumption, independently useful feedback, recovery efficacy, gameplay, MAP01 result, safety, or latency claim.",
+    "The retained result identifies a missing cancellation up receipt and stale bridge-held membership only on this fake-display path."
+  ]
+}
