@@ -24,6 +24,6 @@ All estimates are synthetic finite-population arithmetic. No historical reposito
 
 ## Integrity and limits
 
-Raw ledger: candidate_raw.json (Git blob SHA to be recorded after upload).
-Audit: audit.json (Git blob SHA to be recorded after upload).
+Raw ledger: candidate_raw.json (Git blob SHA: 18be4fe82a61a231617ae6e10dfda7c89b3fdfc3).
+Audit: audit.json (Git blob SHA: 35b5da9832af5cc1769f2cb4643c485ae4c9cd17).
 Original A01 infrastructure STOP remains unchanged in Issue #8640; it is not included in A02's scientific sample and was not retried.
