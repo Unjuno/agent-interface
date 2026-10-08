@@ -3,7 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from doom_controller_failure_cleanup_v1 import ControllerFailureCleanup
+from doom_controller_failure_cleanup_v1 import (
+    ControllerFailureCleanup, reject_duplicate_json_members)
 
 OMIT_TOKEN = object()
 
@@ -34,6 +35,76 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                     scope.set_stage("source_refresh")
                     raise RuntimeError("refresh refused: release token mismatch")
             return json.loads((output / "controller-failure.json").read_text())
+
+    def run_cleanup_jsonl(self, lines):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            events = []
+            reader_errors = []
+            try:
+                for line in lines:
+                    row = json.loads(
+                        line, object_pairs_hook=reject_duplicate_json_members)
+                    events.append(row)
+            except BaseException as error:
+                reader_errors.append(f"{type(error).__name__}: {error}")
+            scope = ControllerFailureCleanup(Planner(), output)
+            scope.observe_output(events, RetiredReader(), None, None, reader_errors)
+            with self.assertRaisesRegex(RuntimeError, "refresh refused"):
+                with scope:
+                    scope.set_stage("source_refresh")
+                    raise RuntimeError("refresh refused: test cleanup")
+            receipt = json.loads(
+                (output / "controller-failure.json").read_text())
+            return receipt
+
+    def test_unique_raw_jsonl_still_certifies_empty_release(self):
+        receipt = self.run_cleanup_jsonl([
+            '{"event":"accepted","id":"source-refresh-0",'
+            '"intent_token":"lease-1"}',
+            '{"event":"terminal","id":"source-refresh-0","release":'
+            '{"verified":true,"keys_down":[],"buttons_down":[],'
+            '"keys_unknown":[],"key_state_errors":[],'
+            '"intent_token":"lease-1"}}',
+        ])
+        self.assertEqual(receipt["stdout_reader_errors"], [])
+        self.assertTrue(receipt["input_terminals_complete"])
+        self.assertTrue(receipt["input_releases_verified_empty"])
+
+    def test_duplicate_accepted_json_member_fails_closed(self):
+        receipt = self.run_cleanup_jsonl([
+            '{"event":"accepted","id":"decoy","id":"source-refresh-0",'
+            '"intent_token":"lease-1"}',
+            '{"event":"terminal","id":"source-refresh-0","release":'
+            '{"verified":true,"keys_down":[],"buttons_down":[],'
+            '"keys_unknown":[],"key_state_errors":[],'
+            '"intent_token":"lease-1"}}',
+        ])
+        self.assertEqual(len(receipt["stdout_reader_errors"]), 1)
+        self.assertIn("duplicate JSON member: 'id'",
+                      receipt["stdout_reader_errors"][0])
+        self.assertFalse(receipt["input_terminals_complete"])
+        self.assertFalse(receipt["input_releases_verified_empty"])
+
+    def test_duplicate_terminal_release_member_fails_closed(self):
+        receipt = self.run_cleanup_jsonl([
+            '{"event":"accepted","id":"source-refresh-0",'
+            '"intent_token":"lease-1"}',
+            '{"event":"terminal","id":"source-refresh-0","release":'
+            '{"verified":false,"verified":true,"keys_down":[],'
+            '"buttons_down":[],"keys_unknown":[],"key_state_errors":[],'
+            '"intent_token":"lease-1"}}',
+        ])
+        self.assertEqual(len(receipt["stdout_reader_errors"]), 1)
+        self.assertIn("duplicate JSON member: 'verified'",
+                      receipt["stdout_reader_errors"][0])
+        self.assertFalse(receipt["input_terminals_complete"])
+        self.assertFalse(receipt["input_releases_verified_empty"])
+
+    def test_escaped_duplicate_json_member_name_fails_closed(self):
+        with self.assertRaisesRegex(ValueError, "duplicate JSON member: 'id'"):
+            json.loads('{"id":"first","\\u0069d":"second"}',
+                       object_pairs_hook=reject_duplicate_json_members)
 
     def run_cleanup(self, release_token=OMIT_TOKEN, release_overrides=None,
                     missing_release_fields=()):

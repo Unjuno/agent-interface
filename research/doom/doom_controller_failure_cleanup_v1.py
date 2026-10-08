@@ -2,6 +2,17 @@
 import atexit,json,os,select,threading,time
 from collections import Counter
 
+
+def reject_duplicate_json_members(pairs):
+    """Reject duplicate object names when used as json.loads object_pairs_hook."""
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON member: {key!r}")
+        result[key] = value
+    return result
+
+
 def send_failure_finish(stream, timeout=0.25):
     """Attempt finish on an owned POSIX pipe without an unbounded flush.
 
