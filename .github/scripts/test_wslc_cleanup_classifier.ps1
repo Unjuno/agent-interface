@@ -2,6 +2,7 @@ $ErrorActionPreference = 'Stop'
 Import-Module (Join-Path $PSScriptRoot 'wslc_cleanup_receipt.psm1') -Force
 $id = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
 $cases = @(
+    @{ exit_code = 0; raw = ''; verified = $true; reason = 'empty_stdout' },
     @{ exit_code = 0; raw = '[]'; verified = $true; reason = 'empty_array' },
     @{ exit_code = 0; raw = '[{}]'; verified = $false; reason = 'container_row_remains' },
     @{ exit_code = 0; raw = '{}'; verified = $false; reason = 'cleanup_response_shape_invalid' },
