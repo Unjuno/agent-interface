@@ -53,6 +53,17 @@ WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 MAX_AUTHORED_HEALTH_LOSS = 20
 
 
+def terminal_safe_report_metrics(decisions):
+    """Summarize planner decisions without treating terminal observations as turns."""
+    planner_decisions = [row for row in decisions
+                         if row.get("plan_terminal") != "terminal_environment_observed"]
+    return {
+        "planner_turns": len(planner_decisions),
+        "historical_final_action_admission_statuses": dict(Counter(
+            row["final_action_admission"]["status"] for row in planner_decisions)),
+    }
+
+
 def reusable_cover(decisions):
     if (decisions and not decisions[-1].get("model_action_discarded") and
             not decisions[-1].get("remaining_action_discarded", False) and
@@ -1887,6 +1898,7 @@ def main():
                     typed,full,{"health":signal_reader,"ammo":ammo_reader})
                 reconciliation["sequence"]=sequence
                 typed_reconciliations.append(reconciliation)
+        decision_report_metrics = terminal_safe_report_metrics(decisions)
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
           "source_refreshes":source_refreshes,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
@@ -1945,7 +1957,7 @@ def main():
           "runtime_fixture":runtime_fixture,
           "fixture_contract":"hash/IWAD/engine/map/skill checked before load; measured control begins after load; fixture grants no action authority",
           "planner_contract":"one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
-          "planner_turns":len(decisions),
+          **decision_report_metrics,
           "planner_interruption_requests":sum(x.get("planner_interrupt") is not None for x in decisions),
           "planner_interrupted_completions":sum(x.get("planner_turn_status")=="interrupted" for x in decisions),
           "planner_ineligible_answers":sum(not x.get("planner_answer_eligible",False) for x in decisions),
@@ -1955,8 +1967,6 @@ def main():
           "cover_validity_admission_rejections":sum(
               x.get("cover_validity_admission",{}).get("status") != "admitted" for x in decisions),
           "model_actions_discarded":sum(x.get("model_action_discarded",False) for x in decisions),
-          "historical_final_action_admission_statuses":dict(Counter(
-              x["final_action_admission"]["status"] for x in decisions)),
           "cover_programs":sum(len(x.get("cover_program_ids",[])) for x in decisions),
           "cover_renewals":sum(x.get("cover_renewals",0) for x in decisions),
           "cover_renewal_gaps_ms":[gap for x in decisions for gap in x.get("cover_renewal_gaps_ms",[])],
