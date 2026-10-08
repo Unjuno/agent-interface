@@ -1,0 +1,93 @@
+{
+  "a06_context": "A06 audit found premature future conflict claims because prompt text named future fixture IDs and values. A07 removes those literals and retains same hard audit gates.",
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A07-GENERIC-PROMPT-20261008",
+  "base_main_sha": "ffd4544a4816ded386616e8e614b5a17e6c992ef",
+  "branch": "research/8406-schedule-t1-a07-generic-prompt-20261008",
+  "companion_to": 7418,
+  "construction_tests": "7/7 PASS before freeze; no A07 model generation",
+  "decision_rule": "PASS_CADENCE_SENSITIVITY_SCOPED only for >=0.10 consistent paired contrast across seeds plus clean full transition/raw audit; PASS_NO_MATERIAL_CADENCE_EFFECT_SCOPED only within margin plus all audits; failed transition/method gate => FAIL_METHOD; otherwise UNCERTAIN",
+  "delta_from_A06": [
+    "fresh allocation and seeds 4701/4702/4703",
+    "generic evidence-bounded prompt removes fixture-specific future IDs, keys and values",
+    "regression test rejects known fixture literals from the consolidation prompt",
+    "same frozen transition auditor now tests every transition with no A05/A06 outputs reused"
+  ],
+  "design": {
+    "arms": [
+      "episodic_only",
+      "per_episode",
+      "batch_2",
+      "terminal"
+    ],
+    "checkpoints": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "consolidation_calls": 30,
+    "consolidation_num_predict": 2048,
+    "format": "json",
+    "maximum_total_calls": 390,
+    "num_ctx": 8192,
+    "queries_per_checkpoint": 5,
+    "query_calls": 360,
+    "query_num_predict": 128,
+    "retries": 0,
+    "seeds": [
+      4701,
+      4702,
+      4703
+    ],
+    "temperature": 0.2,
+    "think": false,
+    "top_p": 0.9
+  },
+  "formal_auditor_invocations": 0,
+  "formal_candidate_invocations": 0,
+  "formal_retries": 0,
+  "frozen_sha256": {
+    "PRIVATE_MODEL_STORE.json": "e4f464e62920d47134f1e55bed9bae677710ea3c6ea7405cfdb80f45f1e81aff",
+    "PROTOCOL.md": "3fc09f383f00a1988cbe6ffa4e52c88a21a0db15d4755db3e787030cb3694fe1",
+    "README.md": "d2f81d2eb6b3c17046725e85e59977cd2fb5df61566c863e81272c52babe1a75",
+    "auditor.py": "0a27f8df6683b57c23ec37a7bfd3c5a1e62ebb5ea87b4dd66cc2146df3ff385d",
+    "candidate.py": "1839b252cb83436685c89df3d8f22f70384bc89ec04f680a5b1d30e582cbe246",
+    "episode_ledger.json": "a61b17332ccda9069aa76140efec15bafe48b17304e0e1622833d95ea0f81e9f",
+    "prompts.json": "48f093bb8ff4596d65d1a87ef34a99ef1c85c2123cc43f85710fdee55b5d0869",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "test_construction.py": "690051798be9abff7400c45622f9b6234ff8daf852f578487759468a30d5b65d"
+  },
+  "identity_gate": "Private tag exact digest before/after every request; runner may be empty only before first call and then must be exactly one exact-digest process before/after each request.",
+  "issue": 8406,
+  "model": {
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "host": "127.0.0.1:11435",
+    "ollama_version": "0.40.0",
+    "parameters": "8.2B",
+    "private_store": "/tmp/unjuno-8406-t1-a07-ollama-store",
+    "quantization": "Q4_K_M",
+    "request_name": "qwen3:8b",
+    "size_bytes": 5225388164
+  },
+  "package_path": "research/analysis/consolidation_schedule_7418_t1_a07_generic_prompt_20261008",
+  "pre_freeze_HEAD": "ffd4544a4816ded386616e8e614b5a17e6c992ef",
+  "raw_output": "research/analysis/consolidation_schedule_7418_t1_a07_generic_prompt_20261008/results/FORMAL_T1_A07/RAW.jsonl",
+  "runtime": {
+    "action_authority": "none",
+    "container": "none; host-local private Ollama",
+    "gui": "none",
+    "network": "loopback only",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5",
+    "user_data": "none"
+  },
+  "transition_contract": [
+    "cumulative evidence coverage, exact provenance, no duplicates or future claims",
+    "forbidden effect retained along with exact effect and source",
+    "conflict added only after both conflicting facts are visible, UNKNOWN with both source IDs",
+    "complete baseline-to-current history delta with exact paired source IDs"
+  ]
+}
