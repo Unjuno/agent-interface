@@ -1,6 +1,9 @@
 name: V19 measured-tail focused tests
 
 on:
+  push:
+    branches:
+      - 'fix/59-v19-final-sample-mkdir-20261009'
   pull_request:
     paths:
       - 'research/doom/session_map01_v19.py'
