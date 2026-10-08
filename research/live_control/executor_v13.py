@@ -125,6 +125,18 @@ class Executor(Previous):
         cancelled_pending_ups = []
         measurement_publish_error = None
         process_exception = None; process_traceback = None
+
+        def preserve_exception_custody(exc):
+            nonlocal release_batch_publication, cancelled_pending_ups
+            nonlocal measurement_publish_error
+            publication = getattr(exc, "release_batch_publication", None)
+            if isinstance(publication, dict):
+                release_batch_publication = dict(publication)
+            pending = getattr(exc, "cancelled_pending_ups", None)
+            if isinstance(pending, list):
+                cancelled_pending_ups = [dict(row) for row in pending
+                                         if isinstance(row, dict)]
+            measurement_publish_error = self._measurement_publish_error(exc)
         try:
             for index, step in enumerate(steps):
                 if lease.is_set(): raise Cancelled()
@@ -135,22 +147,18 @@ class Executor(Previous):
                 completed += 1
                 self.emit({"event": "step_completed", "id": identifier, "step": index,
                            "completed_ns": time.perf_counter_ns()})
-        except Expired:
+        except Expired as exc:
+            preserve_exception_custody(exc)
             status = "expired"
         except DecisionRequired as exc:
+            preserve_exception_custody(exc)
             status = "needs_decision"; decision_reason = str(exc) or None
-        except Cancelled:
+        except Cancelled as exc:
+            preserve_exception_custody(exc)
             status = "cancelled"
         except BaseException as exc:
             status = "failed"; error = repr(exc)
-            publication = getattr(exc, "release_batch_publication", None)
-            if isinstance(publication, dict):
-                release_batch_publication = dict(publication)
-            pending = getattr(exc, "cancelled_pending_ups", None)
-            if isinstance(pending, list):
-                cancelled_pending_ups = [dict(row) for row in pending
-                                         if isinstance(row, dict)]
-            measurement_publish_error = self._measurement_publish_error(exc)
+            preserve_exception_custody(exc)
             if not isinstance(exc, Exception):
                 process_exception = exc
                 process_traceback = exc.__traceback__
