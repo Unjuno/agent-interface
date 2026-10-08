@@ -21,6 +21,8 @@ The allocation asks whether a two-consecutive-window synthetic memory-PSI trigge
 
 This result says only that, under this exact hand-authored schedule and its discrete capacity assumptions, both the early PSI policy and the later queue policy avoided the primary deadline misses. It cannot distinguish which trigger is generally preferable; the queue trigger already catches up before any frozen mandatory deadline expires. The secondary traces are finite controls, not sampled workload evidence.
 
+Post-run source review also found that the optional-work `deferred_ticks` field is double-incremented during a shed tick for unfinished optional jobs. The independent auditor reproduces the field but does not expose this semantic counter error. Do not use that field quantitatively; see [METRIC_QUALIFICATION.md](METRIC_QUALIFICATION.md). This does not affect the preregistered deadline-miss comparison or `NO_RESIDUAL` disposition, and neither frozen output nor source was changed or rerun.
+
 The trace values, service sizes, two-worker capacity, pressure-to-one-worker mapping, thresholds, and deadlines were authored for this test. Synthetic PSI units are informed by the kernel interface's `some` pressure definition, but this model does not read Linux PSI or reproduce kernel scheduling ([Linux PSI documentation](https://docs.kernel.org/accounting/psi.html)). It is not empirical evidence about operating systems, containers, production agents, model freshness, or service SLOs. The immutable protocol must not be retuned to obtain a favorable comparison; a materially different workload or policy requires a separately named successor allocation.
 
 ## Execution and environment
