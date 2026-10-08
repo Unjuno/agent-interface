@@ -73,7 +73,11 @@ try {
     }
     $listing = ($matchingContainers -join "`n").Trim()
     # WSLc 3.0.1 emits no stdout for a successful zero-match filtered query.
-    # Treat that as empty only after the command's exit code has been checked.
+    # PowerShell also unwraps ConvertFrom-Json's empty array to $null, so
+    # recognize only the exact empty JSON array before parsing other responses.
+    if ($listing -match '^\[\s*\]$') {
+        $listing = ''
+    }
     if (-not [string]::IsNullOrWhiteSpace($listing)) {
         try {
             $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
