@@ -1,0 +1,60 @@
+{
+  "schema": "scoped-nogood-oracle-v1",
+  "scenarios": {
+    "occlusion_rearrangement": {
+      "feasible_effect_paths": [["move_blocker", "click_save"]],
+      "infeasible": {"1|click_save": "TARGET_OCCLUDED"},
+      "feasible_at": {"1|2|move_blocker": "blocker_moved", "2|2|click_save": "saved"},
+      "generation_transition": {"move_blocker": [1, 2]},
+      "plan_truth_complete": true
+    },
+    "focus_recovery": {
+      "feasible_effect_paths": [["focus_email", "type_email"]],
+      "infeasible": {"4|type_email": "FOCUS_UNAVAILABLE"},
+      "feasible_at": {"4|2|focus_email": "focus_restored", "5|2|type_email": "text_entered"},
+      "generation_transition": {"focus_email": [4, 5]},
+      "plan_truth_complete": true
+    },
+    "no_alternative": {
+      "feasible_effect_paths": [],
+      "infeasible": {"8|invoke_missing_capability": "CAPABILITY_MISSING"},
+      "feasible_at": {},
+      "generation_transition": {},
+      "plan_truth_complete": true
+    },
+    "transient_blocker_clears": {
+      "feasible_effect_paths": [["click_refresh"]],
+      "infeasible": {"11|click_refresh": "TRANSIENT_BUSY"},
+      "feasible_at": {"12|1|click_refresh": "refreshed"},
+      "generation_transition": {},
+      "plan_truth_complete": true
+    },
+    "constraint_expires": {
+      "feasible_effect_paths": [["click_submit"]],
+      "infeasible": {"13|click_submit": "TEMPORARY_MODAL"},
+      "feasible_at": {"13|3|click_submit": "submitted"},
+      "generation_transition": {},
+      "expires_at_tick": 2,
+      "plan_truth_complete": true
+    },
+    "unknown_then_recheck": {
+      "feasible_effect_paths": [["open_menu"]],
+      "infeasible": {},
+      "feasible_at": {"14|1|open_menu": "menu_opened"},
+      "unknown_is_not_infeasibility": true,
+      "plan_truth_complete": true
+    },
+    "timeout_then_recheck": {
+      "feasible_effect_paths": [["click_open"]],
+      "infeasible": {},
+      "feasible_at": {"15|1|click_open": "opened"},
+      "timeouts_are_not_infeasibility": true,
+      "plan_truth_complete": true
+    }
+  },
+  "required_properties": {
+    "no_authority": true,
+    "state_changes_invalidate": true,
+    "unknown_does_not_prune": true
+  }
+}
