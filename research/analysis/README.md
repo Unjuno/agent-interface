@@ -836,6 +836,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`negative_evidence_delivery_5865_t0a_a02_20261005/`](negative_evidence_delivery_5865_t0a_a02_20261005/)
 - [`negative_evidence_delivery_5865_t0a_a03_20261005/`](negative_evidence_delivery_5865_t0a_a03_20261005/)
 - [`negative_handoff_expiry_5865_t0_a01_20261008/`](negative_handoff_expiry_5865_t0_a01_20261008/)
+- [`negative_query_responsibility_8624_t0_a01_20261009/`](negative_query_responsibility_8624_t0_a01_20261009/)
 - [`network_adoption_shared_verifier_7741_t0_20261005/`](network_adoption_shared_verifier_7741_t0_20261005/)
 - [`network_adoption_shared_verifier_7741_t0b_20261005/`](network_adoption_shared_verifier_7741_t0b_20261005/)
 - [`network_adoption_shared_verifier_7741_t0c_20261005/`](network_adoption_shared_verifier_7741_t0c_20261005/)
