@@ -1,0 +1,23 @@
+{
+  "allocation": "RELATION-FIRST-8073-SYNTH-A01-20261006-01",
+  "audit_command": "python -B audit.py corpus.json formal/result.json formal/audit.json",
+  "base_main": "a3e6b0c1ab8d6af5c24abb88a451ce41c4ede028",
+  "candidate_command": "python -B candidate.py corpus.json formal/result.json",
+  "controls_command": "python -B test_controls_v2.py formal/result.json formal/controls.json",
+  "decision": "PASS_SYNTHETIC_RETRIEVAL_DISCRIMINATOR_SCOPED only; never #8073 METHOD_PASS",
+  "formal_invocations": 0,
+  "issue": 8073,
+  "reruns_allowed": false,
+  "schema": "relation-first-synthetic-discriminator-freeze-v2",
+  "sha256": {
+    "CONSTRUCTION.md": "2a143d4395afef3aa8e81277f75f2a375d1181b5e3952147c4ee38f752daec38",
+    "ENVIRONMENT.json": "c74dc5a4532b1080fa31dbf36c7b09fb91534f03130a42b46ebf4b3b11aca8d5",
+    "PLAN.md": "ac61ad48f2b7f9a6ac0a976b9a58952b5ef5b14c4d92eae494f54fc440dfc6f2",
+    "PREFREEZE_CORRECTION.md": "eb60c577f4a3733f573e819dd6937f28d9da2461baa55da8bb0f35974302cc73",
+    "audit.py": "a11cdf3dd151ca9a3f358a0bc7b2e516df09dc207838595c5e7174124e4dc6a6",
+    "candidate.py": "ba79193c5ee567298b39054aaefd9acadd813aba73645b51dbb449dfbf00e716",
+    "corpus.json": "c0b263adf8d139a145fa4db57a02fc76a0654ef1245c038ef4743f8002c7badd",
+    "test_controls_v2.py": "fcafa1f007f85f1c9c7b27beda53c6cb03e505a8fbe9698894ce2c957a338b51"
+  },
+  "supersedes_incomplete_prefreeze": "FREEZE.json"
+}
