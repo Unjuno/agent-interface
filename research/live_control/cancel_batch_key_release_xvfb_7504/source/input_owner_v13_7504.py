@@ -114,6 +114,8 @@ class InputOwner(Previous):
         def release(reason):
             nonlocal active,revision
             revision += 1
+            # Bound each key's XTest release request by the completion of the
+            # single batch XSync; do not add a sync or owner-state query per key.
             key_release_starts = []
             for code in list(held):
                 request_started_ns = time.perf_counter_ns()

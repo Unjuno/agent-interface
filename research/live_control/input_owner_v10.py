@@ -12,6 +12,14 @@ from Xlib.ext import xtest
 from executor_v3 import Cancelled, DecisionRequired
 
 
+class _OwnerReleaseTimingKey(str):
+    """Carries an opt-in owner-thread release interval for V11 telemetry."""
+
+    def __new__(cls, value):
+        instance = super().__new__(cls, value)
+        instance.owner_release_interval_ns = None
+        return instance
+
 class InputOwner:
     def __init__(self, display_name):
         self.requests = queue.Queue()
@@ -336,8 +344,12 @@ class InputOwner:
                             if code in held and held[code] is not lease:
                                 raise ValueError('key belongs to another intent')
                             if code in held:
+                                owner_release_requested_ns = time.perf_counter_ns()
                                 xtest.fake_input(d, X.KeyRelease, code)
                                 d.sync()
+                                owner_release_synced_ns = time.perf_counter_ns()
+                                if type(key) is _OwnerReleaseTimingKey:
+                                    key.owner_release_interval_ns = [owner_release_requested_ns, owner_release_synced_ns]
                                 del held[code]
                             result = None
                     else:
