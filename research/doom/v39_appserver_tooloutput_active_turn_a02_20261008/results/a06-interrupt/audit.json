@@ -1,0 +1,15 @@
+{
+  "disposition": "PASS_A06_RESULT_AUDIT_V2",
+  "checks": {
+    "first_turn_interrupted_and_fresh_turn_completed": true,
+    "fresh_request_precedes_release_by_barrier_and_clock": true,
+    "fresh_request_contains_text_and_png": true,
+    "both_processes_exit_zero": true,
+    "control_detects_completed_first_turn": true,
+    "control_detects_late_fresh_request": true,
+    "control_detects_missing_image": true,
+    "control_detects_abnormal_app_server_exit": true
+  },
+  "method_note": "Clock values tie at host precision; the recorded event barrier and call order establish second-request-before-release. The auditor permits equality only with that barrier true."
+}
+
