@@ -9,3 +9,10 @@ OK
 
 The initial standalone harness failure is retained separately at ../INITIAL_TEST_FAILURE.txt. It failed before candidate tests due to a literal backslash-n written between Python statements; the corrected harness ran the focused suite.
 
+Current-main retest (2026-10-08):
+GitHub main commit: a537c80de21ba24d774fb332e34fcd415db51b7d
+Controller Git blob: f7b66279d87ebc3704ccef1b6a5ce646611c890b
+Regression test Git blob: af01126e613c6b1c51e218cab6f199eb56e57efe
+Direct command `python -B -m unittest -v test_map01_v39_pending_observation_drain.py` failed before collection because the scratch directory lacked map01_stagnation_v1. This is an environment/import failure, not a test assertion result.
+Then the unchanged regression test file was run with the exact drain_pending_observation_events AST extracted from the frozen main controller source; 4/4 tests passed. This exercises the exact production helper and source-order assertion, but does not import the complete controller module.
+
