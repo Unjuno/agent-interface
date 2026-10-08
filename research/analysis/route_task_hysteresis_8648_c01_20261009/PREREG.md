@@ -22,7 +22,7 @@ For COUPLED at a converged endpoint, let A=beta*gamma*a*(1-a), B=delta*q*(1-q); 
 
 ## Hypothesis and gates
 
-H: In the held-out delta=20 slice, at least three distinct (beta,gamma) settings have at least three adjacent theta points where LOW- and HIGH-initialized COUPLED sweeps converge to distinct stable equilibria (|delta-a| >=0.25, both spectral radii <0.99) and their period utility differs by at least 0.05, while no control arm meets the same gate.
+H: In the held-out delta=20 slice, at least three distinct (beta,gamma) settings have at least three adjacent theta points where LOW- and HIGH-initialized COUPLED sweeps converge to distinct stable equilibria (|a_LOW-a_HIGH| >=0.25, both spectral radii <0.99) and their period utility differs by at least 0.05, while no control arm meets the same gate.
 
 D:
 - PASS_METHOD_SCOPED if the independent auditor reproduces all frozen profiles/endpoints, 4 arms, both directions and initial states; all required points converge or are explicitly HOLD; 5/5 in-memory mutation controls are rejected; and every arm preserves the fixed opportunity/correctness gate.
