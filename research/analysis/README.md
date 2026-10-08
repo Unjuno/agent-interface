@@ -299,6 +299,7 @@ The table below summarizes major analytical chains and representative retained o
 
 | Family | Study | Retained result | Residual empirical or successor question |
 |---|---|---|---|
+| Reliability / degradation | [`versioned_semantic_degradation_8609_t0_a01_20261009/`](versioned_semantic_degradation_8609_t0_a01_20261009/) | Issue #8609 T0 A01 `PASS_METHOD_SCOPED`: versioned contract preserved supported read-only outcomes in 320/1,024 authored states versus 1/1,024 under all-or-nothing; independent audit reconstructed all 1,024 and rejected 6/6 corruptions. | Validate the dependency/claim table against an authorized real interface before runtime integration; no fallback or safety claim follows. |
 | Recovery / coordination | [`obligation_conservation_5817_t0_v1/`](obligation_conservation_5817_t0_v1/) | Issue #5817 finite T0 `PASS_METHOD_SCOPED`: 11 histories / 14 obligation IDs; transfer and timeout preserve unresolved work, dependent/unknown tasks HOLD, independent read-only work proceeds; allocation-01 gate STOP retained. | Validate complete effect/footprint sources and crash-durable ledger semantics in an authorized live fixture before any runtime claim. |
 | Verification / evidence | [`dependency_aware_verifier_quorum_5314_v1/`](dependency_aware_verifier_quorum_5314_v1/) | Exact finite comparison shows raw counting admits more false decisions than domain-deduplicated admission under complete synthetic dependency labels, with substantial abstention; labels are not empirically attestable here. | Validate dependency provenance, overlapping domains, and outage/cost behavior in an authorized held-out successor. |
 | Decision / cost | [`guard_policy_break_even_r0_v1/`](guard_policy_break_even_r0_v1/) | Exact one-step selector for pre-guard versus postcondition-only under one commensurate recoverable-route cost model. | Measure real stale probabilities and guard/yield/failure costs in one declared population. |
@@ -1172,6 +1173,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`version_defined_intervention_6691_a02_20261003/`](version_defined_intervention_6691_a02_20261003/)
 - [`version_defined_intervention_6691_t0_20261002/`](version_defined_intervention_6691_t0_20261002/)
 - [`versioned_predicate_specialist_switch_4284_reconciled_4603_v1/`](versioned_predicate_specialist_switch_4284_reconciled_4603_v1/)
+- [`versioned_semantic_degradation_8609_t0_a01_20261009/`](versioned_semantic_degradation_8609_t0_a01_20261009/)
 - [`view_updateability_5368_t0/`](view_updateability_5368_t0/)
 - [`visual_cue_coordinate_map_successor_2043_v1/`](visual_cue_coordinate_map_successor_2043_v1/)
 - [`visual_edge_aux_570_r8_v1/`](visual_edge_aux_570_r8_v1/)
@@ -1213,7 +1215,6 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`xterm_resource_footprint_transfer_v3/`](xterm_resource_footprint_transfer_v3/)
 
 </details>
-
 <!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [Issue #7794 comparator semantics diagnostic A04](carbon_window_7794_comparator_a04_20261005/REPORT.md) — `PASS_DIAGNOSTIC_SCOPED`: independent audit reconstructed all 10 rows; nine A02 fixtures agreed and the fixed two-job discriminator separated global lexicographic from serial ASAP. Native macOS fallback; no emissions/operational claim.

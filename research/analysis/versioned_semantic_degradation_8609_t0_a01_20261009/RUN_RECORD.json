@@ -1,0 +1,71 @@
+{
+  "allocation_id": "8609-T0-A01-20261009",
+  "audit": {
+    "bytes": 175,
+    "exit_code": 0,
+    "path": "results/audit.json",
+    "sha256": "929c2aee366da055e9fd9c240ce413c915ac775b6e9b1640a9a2f07613436486",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "time": {
+      "finished": "2026-10-08T21:13:40Z",
+      "started": "2026-10-08T21:13:39Z"
+    }
+  },
+  "auditor_invocations": 1,
+  "base_main": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "candidate": {
+    "bytes": 611691,
+    "exit_code": 0,
+    "path": "results/candidate.raw.json",
+    "sha256": "3d5d6b8d400bf6824ba934e9b1fa10afc7a20b4ea2c44d4bdbdb3d57fa877dbf",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "time": {
+      "finished": "2026-10-08T21:13:35Z",
+      "started": "2026-10-08T21:13:35Z"
+    }
+  },
+  "candidate_invocations": 1,
+  "commands": {
+    "auditor": "python3 -B auditor.py model.json FREEZE.json results/candidate.raw.json > results/audit.json 2> results/auditor.stderr.txt",
+    "candidate": "python3 -B candidate.py model.json FREEZE.json > results/candidate.raw.json 2> results/candidate.stderr.txt"
+  },
+  "construction": {
+    "model_regeneration": "byte-identical to frozen model.json",
+    "standard_tests": "7/7 passed",
+    "optimized_tests": "7/7 passed"
+  },
+  "environment": {
+    "architecture": "arm64",
+    "container_status": "preflight read failure; no pull or start",
+    "os": "macOS 27.0.1",
+    "python": "CPython 3.14.5",
+    "runtime": "host CPU; standard library only"
+  },
+  "formal_retries": 0,
+  "freeze_commit": "28bd8621a38f765a7a317f1e52f6be6b2e2354d4",
+  "freeze_file_sha256": "0ebc754f3637f72521b60b570776abeec9524cdb1380f94b4d280fef9daa6057",
+  "result": {
+    "additional_readonly_rows": 319,
+    "binary_readonly_rows": 1,
+    "cases": 1024,
+    "versioned_readonly_rows": 320,
+    "auditor_errors": [],
+    "mutation_controls_rejected": 6,
+    "mutation_controls_total": 6,
+    "status": "PASS_METHOD_SCOPED"
+  },
+  "result_path": "results/",
+  "schema": "semantic-degradation-run-record-v1",
+  "source_sha256": {
+    "ENVIRONMENT.md": "1565be3cdbd3b3f8bef634b72743984d4dcf61481f10d31510cfedc844bff9e1",
+    "PROTOCOL.md": "244e699506adc12e638d9e65dcf58cfdde437a2ef6d335fbad41bece6d8bc639",
+    "README.md": "9b70fc53fa46af203df90f941c3ad4a011250d18ed365003f5c4ce523d92a3b3",
+    "auditor.py": "54f9b68519cf54a54219b62dd68c0773b5fc0d36a3633a48ef087f3147693d6c",
+    "build_model.py": "e5910a206cc845f202b9dbcc5549921285e33abd4b23d822fc21b88f7dec819c",
+    "candidate.py": "5f4915393848b5b6063583d0f4e92990f0370e780c1b60e4c26820de34dce593",
+    "model.json": "933421c7e4c3e45910fbf42baac4c84d596e7f6fe1f4fc8caf726118f96c3620",
+    "test_construction.py": "88eebcaac52617f0d1e8d730f59ede5574ab317eaf2193fd0fe413138f3ab82f"
+  }
+}
