@@ -16,4 +16,3 @@ This is a post-result construction/reproduction check. It does not rerun either 
 WSLc printed: `Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.` Accordingly, this record does not claim verified memory/swap enforcement from the requested resource flags. The finite CPU-only tests finished in under a second per suite. They use no model, GUI, human, game, network service or OS input.
 
 The read-only package's existing SHA256SUMS verified 15/15 immediately after the WSLc run, and no task-named container remained in the WSLc container listing. This is cross-environment construction reproducibility, not a new formal T0 result, live threat exposure, or evidence of real-task utility.
-
