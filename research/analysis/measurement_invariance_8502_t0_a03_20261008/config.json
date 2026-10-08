@@ -1,0 +1,23 @@
+{
+  "schema": "issue8502-t0-a03-config-v1",
+  "issue": 8502,
+  "allocation": "A03",
+  "seeds": {"F01": 850301, "F02": 850302, "F03": 850303, "F04": 850304, "F05": 850305},
+  "sample_sizes_per_group": {"F01": 1500, "F02": 1500, "F03": 1500, "F04": 1500, "F05": 20},
+  "item_count": 6,
+  "category_count": 5,
+  "cutpoints": [-1.0, -0.3, 0.3, 1.0],
+  "common_loading": 0.8,
+  "threshold_shift": 0.65,
+  "altered_loading": 0.1,
+  "min_n_per_group": 100,
+  "threshold_margin": 0.15,
+  "association_margin": 0.22,
+  "expected": {
+    "F01": {"classification": "COMPATIBLE_SCREEN", "threshold_items": [], "loading_items": []},
+    "F02": {"classification": "THRESHOLD_NONINVARIANCE", "threshold_items": [2], "loading_items": []},
+    "F03": {"classification": "LOADING_PATTERN_NONINVARIANCE", "threshold_items": [], "loading_items": [2]},
+    "F04": {"classification": "STRUCTURE_NONINVARIANCE", "threshold_items": [], "loading_items": []},
+    "F05": {"classification": "UNCERTAIN", "threshold_items": [], "loading_items": []}
+  }
+}

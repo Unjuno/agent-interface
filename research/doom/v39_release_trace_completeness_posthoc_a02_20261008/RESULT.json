@@ -1,0 +1,169 @@
+{
+  "schema": "map01-v39-release-trace-completeness-result-v3",
+  "status": "PASS_TRACE_RECONCILIATION_WITH_EARLY_EVENT_GAP",
+  "main_commit": "6149fc1856ce86de41b168de8ca12690347f524d",
+  "allocation_id": "map01-v39-coast-liveness-live-01",
+  "prior_audit_formal_pass": true,
+  "predecessor_a01": {
+    "commit": "a0d0602b89b1f5a05f851728fe90684ec4bfeff5",
+    "result_sha256": "9f9a4cbb21498b045d35434aea88490b4878855af76bf90cc0f2679dc5c67e0a",
+    "audit_sha256": "00e4938981f5ed894c6b9b67444db941a72d1319d666da64499759b7cd4b6fdd"
+  },
+  "frozen_input_sha256": {
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/owner-events.json": "cdf628825312e6eb0cd810f7d0b3a77e52c1c2f646099bc07a34b4e3a90c08b7",
+    "research/doom/results/map01-v39-coast-liveness-live-01/report.json": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+    "research/doom/results/map01-v39-coast-liveness-live-01/audit-v2.json": "bb03c350009169283f36c8f0c0a919bb18d46e828ac68b99f40a567d2f141bfc",
+    "research/doom/map01_v39_coast_liveness_live_v1_prereg.json": "f02e48e0eede9cb33e9ff4865abd20b6081d2cba4068b2cab8e137465b374770"
+  },
+  "accepted_terminal_ids_match": true,
+  "cancel_requests": 7,
+  "cancelled_terminals_with_empty_verified_release": 7,
+  "cancellations_with_prior_keys_held": 4,
+  "active_interruption_owner_receipts": 3,
+  "active_interruption_receipts_with_input_released_event": 1,
+  "active_interruption_coverage": {
+    "numerator": 1,
+    "denominator": 3
+  },
+  "active_interruption_rows": [
+    {
+      "id": "cover-1",
+      "prior_keys_held_event": true,
+      "interruption_owner_release": true,
+      "input_release_event": false,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55517927724830,
+      "terminal_ns": 55517939654608,
+      "terminal_owner_verified_ns": 55517928836946,
+      "cause_owner_verified_ns": 55517928496054,
+      "cancel_to_owner_verified_ms": 0.771224,
+      "owner_verified_to_terminal_ms": 11.158554
+    },
+    {
+      "id": "plan-3-primary-0-1",
+      "prior_keys_held_event": true,
+      "interruption_owner_release": true,
+      "input_release_event": true,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55532146908901,
+      "terminal_ns": 55532202369534,
+      "terminal_owner_verified_ns": 55532202283558,
+      "cause_owner_verified_ns": 55532149408597,
+      "cancel_to_owner_verified_ms": 2.499696,
+      "owner_verified_to_terminal_ms": 52.960937,
+      "owner_verified_to_release_event_ms": 12.902268
+    },
+    {
+      "id": "cover-4",
+      "prior_keys_held_event": true,
+      "interruption_owner_release": true,
+      "input_release_event": false,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55539834799571,
+      "terminal_ns": 55539859091157,
+      "terminal_owner_verified_ns": 55539849174411,
+      "cause_owner_verified_ns": 55539837451978,
+      "cancel_to_owner_verified_ms": 2.652407,
+      "owner_verified_to_terminal_ms": 21.639179
+    }
+  ],
+  "all_cancellation_rows": [
+    {
+      "id": "cover-0",
+      "prior_keys_held_event": false,
+      "interruption_owner_release": false,
+      "input_release_event": false,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55510657424416,
+      "terminal_ns": 55510671213200,
+      "terminal_owner_verified_ns": 55510658227636
+    },
+    {
+      "id": "cover-1",
+      "prior_keys_held_event": true,
+      "interruption_owner_release": true,
+      "input_release_event": false,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55517927724830,
+      "terminal_ns": 55517939654608,
+      "terminal_owner_verified_ns": 55517928836946,
+      "cause_owner_verified_ns": 55517928496054,
+      "cancel_to_owner_verified_ms": 0.771224,
+      "owner_verified_to_terminal_ms": 11.158554
+    },
+    {
+      "id": "cover-2",
+      "prior_keys_held_event": false,
+      "interruption_owner_release": false,
+      "input_release_event": false,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55524645803559,
+      "terminal_ns": 55524658457397,
+      "terminal_owner_verified_ns": 55524646613513
+    },
+    {
+      "id": "cover-3",
+      "prior_keys_held_event": false,
+      "interruption_owner_release": false,
+      "input_release_event": false,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55531831908949,
+      "terminal_ns": 55531844624624,
+      "terminal_owner_verified_ns": 55531832585382
+    },
+    {
+      "id": "plan-3-primary-0-1",
+      "prior_keys_held_event": true,
+      "interruption_owner_release": true,
+      "input_release_event": true,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55532146908901,
+      "terminal_ns": 55532202369534,
+      "terminal_owner_verified_ns": 55532202283558,
+      "cause_owner_verified_ns": 55532149408597,
+      "cancel_to_owner_verified_ms": 2.499696,
+      "owner_verified_to_terminal_ms": 52.960937,
+      "owner_verified_to_release_event_ms": 12.902268
+    },
+    {
+      "id": "cover-4",
+      "prior_keys_held_event": true,
+      "interruption_owner_release": true,
+      "input_release_event": false,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55539834799571,
+      "terminal_ns": 55539859091157,
+      "terminal_owner_verified_ns": 55539849174411,
+      "cause_owner_verified_ns": 55539837451978,
+      "cancel_to_owner_verified_ms": 2.652407,
+      "owner_verified_to_terminal_ms": 21.639179
+    },
+    {
+      "id": "cover-5",
+      "prior_keys_held_event": true,
+      "interruption_owner_release": false,
+      "input_release_event": false,
+      "input_release_unverified_event": false,
+      "cancel_requested_ns": 55550197971990,
+      "terminal_ns": 55550212968537,
+      "terminal_owner_verified_ns": 55550198785056
+    }
+  ],
+  "aggregate_cancel_to_owner_verified_ms": {
+    "min": 0.771224,
+    "max": 2.652407
+  },
+  "input_release_event_rows": 1,
+  "input_release_unverified_event_rows": 0,
+  "per_key_release_measurement_events": 0,
+  "owner_release_has_per_key_timestamps": false,
+  "independent_useful_feedback_timestamp": false,
+  "task_outcome": {
+    "kill_count": 1,
+    "death_count": 0,
+    "map_exit": false,
+    "episode_finished": false
+  },
+  "decision": "Aggregate owner/terminal release reconciles for all cancellations. Early input_released coverage is 1/3 for prior-key-held interrupted programs; two cover interruptions appear only in terminal receipts. This is telemetry coverage evidence, not a failed release. Per-key up time, useful application feedback, and task completion remain unmeasured."
+}

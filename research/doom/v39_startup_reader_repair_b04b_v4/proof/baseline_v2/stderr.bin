@@ -1,0 +1,67 @@
+test_stderr_pending (__main__.Regression.test_stderr_pending) ... FAIL
+test_stderr_refused (__main__.Regression.test_stderr_refused) ... FAIL
+test_stdout_join_interrupted (__main__.Regression.test_stdout_join_interrupted) ... FAIL
+test_stdout_live (__main__.Regression.test_stdout_live) ... ok
+test_stdout_pending (__main__.Regression.test_stdout_pending) ... FAIL
+test_stdout_refused (__main__.Regression.test_stdout_refused) ... FAIL
+test_stdout_retired (__main__.Regression.test_stdout_retired) ... ok
+
+======================================================================
+FAIL: test_stderr_pending (__main__.Regression.test_stderr_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 146, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 132, in run_case
+    self.assertTrue(row['same_primary'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_stderr_refused (__main__.Regression.test_stderr_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 146, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 139, in run_case
+    self.assertIs(cleanup['stderr_reader_joined'], False)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_stdout_join_interrupted (__main__.Regression.test_stdout_join_interrupted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 146, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 132, in run_case
+    self.assertTrue(row['same_primary'])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_stdout_pending (__main__.Regression.test_stdout_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 146, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 136, in run_case
+    self.assertIs(cleanup['reader_joined'], completed)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_stdout_refused (__main__.Regression.test_stdout_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 146, in <lambda>
+    setattr(Regression, 'test_' + case, lambda self, c=case: self.run_case(c))
+                                                             ^^^^^^^^^^^^^^^^
+  File "PUBLIC_OWN_PREFIX\work\startup-reader-repair-b04b-v4\regression.py", line 136, in run_case
+    self.assertIs(cleanup['reader_joined'], completed)
+AssertionError: True is not False
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.008s
+
+FAILED (failures=5)

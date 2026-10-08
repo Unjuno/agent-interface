@@ -1,0 +1,40 @@
+{
+  "schema": "a04-decision4-negative-control-order-a06-freeze-v1",
+  "parent_pr": 8206,
+  "parent_head": "86547bc337dfae72efbbeff62fa30dc2a39a82a5",
+  "frozen_at_utc": "2026-10-05T13:26:09Z",
+  "kind": "read-only audit correction; no candidate or live allocation",
+  "source": {
+    "a05_candidate_sha256": "9b72e814b085a00087739c5bf51e13f15fd8d2d14027993e0cb33a041e20fef5",
+    "a05_audit_sha256": "78d9d910488906e2623df9f75099534b8d21ca35021ddf1c835e31f873f164ec",
+    "raw_events_sha256": "31ec4ce34b502fb6873ab8a7aecb33564f5069dfc3e498399ce1aa41199d133a",
+    "report_sha256": "a3158839e9832df3bbd46b5b2f1f4341b42996639257122687d3a3290e85a8cc",
+    "raw_manifest_sha256": "33821a2072a607ed02a84fea796a1f2b8d4e8dc2c8debcf33bed08e3118790be"
+  },
+  "auditor": {
+    "path": "audit_a06.py",
+    "sha256": "c25b90a3c61fc4f80e24b820bb983115cb0e93a39b5e103ee893938549cd1df7",
+    "control_path": "test_audit_a06.py",
+    "control_sha256": "de389c9415d97aa3862ef4c0c88c7aa0fec4717020d1ad8886e6f45e458cc7fa"
+  },
+  "hypothesis": "The A05 decision-4 source and monitor references can be swapped while each still independently joins to a valid raw health=30 event; an explicit temporal-order check must reject this malformed negative-control interpretation.",
+  "checks": [
+    "Re-audit the retained 45-observation A05 candidate against unchanged A04 raw and verify source sequence/time precede monitor sequence/time.",
+    "In an isolated temporary copy, swap the A04 decision-4 report source and monitor references and update copied raw/package/freeze manifests.",
+    "Confirm the legacy A05 auditor accepts the swapped report while A06 rejects it before creating audit output."
+  ],
+  "expected": {
+    "candidate_invocations": 0,
+    "live_allocations": 0,
+    "a05_inputs_or_outputs_modified": false,
+    "a06_positive_audit_exit": 0,
+    "legacy_a05_report_swap_control_exit": 0,
+    "a06_report_swap_control_exit_nonzero": true,
+    "a06_report_swap_control_output_created": false
+  },
+  "outputs": [
+    "results/a06/audit.json",
+    "results/a06/audit_report_swap_control.json",
+    "results/a06/SHA256SUMS.txt"
+  ]
+}

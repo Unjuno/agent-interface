@@ -1,0 +1,24 @@
+{
+  "issue": 8397,
+  "allocation": "OBS-OMISSION-REGRET-8397-T0-A02-20261008",
+  "base_sha": "2f36f501f11931e052dbc3fb0000a9200bff7f50",
+  "package_path": "research/analysis/observation_omission_regret_8397_t0_a02_20261008",
+  "source_sha256": {
+    "candidate.py": "c9c4bd827cbdb63a0af761c480285741223d3f51299b79414a47e5585452c0b6",
+    "auditor.py": "8b5af23d1f1917db664f31a53cbbab57f274ed7468a125f1cec2c26d5cf3ef6a",
+    "test_construction.py": "8b6c3912ec0c46e34884607de39c5f5db6ac3667e7fa0ae6750375bef19db6a0",
+    "PROTOCOL.md": "0a71dd9c8f8bbeaf73f6560b08e8c326f3c0ee73e8b1415a8de90922ebdf57e4",
+    "CONSTRUCTION.md": "572b336e3713bed94dc881c4b33f2e82eac25b0b17a2fa38da6a107edf990f48"
+  },
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "formal_retries": 0,
+  "planned_runtime": "native macOS CPython 3.14.5 under sandbox-exec; network denied; no container/isolation claim",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.14.5",
+  "decision_rule": "PASS_METHOD_SCOPED iff independent raw-only audit matches all eight exact fixture records, cost/effect intervals, captured-undelivered control, and mandatory safety rejection; else preserve FAIL/STOP.",
+  "commands": [
+    "sandbox-exec -p '(version 1) (allow default) (deny network*)' python3 research/analysis/observation_omission_regret_8397_t0_a02_20261008/candidate.py --output research/analysis/observation_omission_regret_8397_t0_a02_20261008/results/FORMAL_A02/candidate.json > research/analysis/observation_omission_regret_8397_t0_a02_20261008/results/FORMAL_A02/candidate.stdout.txt",
+    "sandbox-exec -p '(version 1) (allow default) (deny network*)' python3 research/analysis/observation_omission_regret_8397_t0_a02_20261008/auditor.py research/analysis/observation_omission_regret_8397_t0_a02_20261008/results/FORMAL_A02/candidate.json --output research/analysis/observation_omission_regret_8397_t0_a02_20261008/results/FORMAL_A02/audit.json > research/analysis/observation_omission_regret_8397_t0_a02_20261008/results/FORMAL_A02/auditor.stdout.txt"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "decision-regret-8528-visible-v1",
+  "cases": [
+    {
+      "case_id": "age_tie_stable",
+      "ticks": [
+        {"tick":0,"opportunity_open":false,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":1,"opportunity_open":false,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":2,"opportunity_open":false,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":3,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":4,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":5,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true}
+      ]
+    },
+    {
+      "case_id": "age_tie_changed",
+      "ticks": [
+        {"tick":0,"opportunity_open":false,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":1,"opportunity_open":false,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":2,"opportunity_open":false,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":3,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":4,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},
+        {"tick":5,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true}
+      ]
+    },
+    {"case_id":"fresh_misleading","ticks":[{"tick":5,"opportunity_open":true,"delivered_state":"A","observation_tick":5,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true}]},
+    {"case_id":"no_open_opportunity","ticks":[{"tick":0,"opportunity_open":false,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},{"tick":1,"opportunity_open":false,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true}]},
+    {"case_id":"action_set_change","ticks":[{"tick":2,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},{"tick":3,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true},{"tick":4,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A"],"causal_use_identifiable":true},{"tick":5,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A"],"causal_use_identifiable":true}]},
+    {"case_id":"hard_safety_control","ticks":[{"tick":0,"opportunity_open":true,"delivered_state":"A","observation_tick":0,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":true}]},
+    {"case_id":"causal_use_unidentified","ticks":[{"tick":5,"opportunity_open":true,"delivered_state":"B","observation_tick":5,"clock_comparable":true,"admissible_actions":["A","B"],"causal_use_identifiable":false,"delivered_observation_ids":["obs-1","obs-2"]}]},
+    {"case_id":"unknown_truth_clock","ticks":[{"tick":0,"opportunity_open":true,"delivered_state":"B","observation_tick":0,"clock_comparable":false,"admissible_actions":["A","B"],"causal_use_identifiable":true}]}
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "added_consumer_executes_only_its_declared_read": true,
+    "base_main_pinned": true,
+    "candidate_source_hash_pinned": true,
+    "changed_manifest_fails_closed": true,
+    "independent_oracle_matches_baseline": true,
+    "interpreter_exposes_only_declared_reads": true,
+    "manifest_consumers_keep_exact_records": true,
+    "scope_limit_explicit": true,
+    "source_is_declared_complete_manifest": true,
+    "undeclared_dispatch_fails_closed": true,
+    "unknown_successor_fails_closed": true,
+    "unsupported_dynamic_read_fails_closed": true
+  },
+  "classification": "PASS_CLOSED_WORKFLOW_CONTRACT_SCOPED",
+  "passed": true,
+  "schema": "issue7367-closed-workflow-contract-a01-audit-v1"
+}
