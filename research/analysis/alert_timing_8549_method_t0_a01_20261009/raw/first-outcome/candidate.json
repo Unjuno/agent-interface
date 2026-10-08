@@ -1,0 +1,1061 @@
+{
+  "control_labels": [
+    {
+      "available_event_ids": [
+        "E2"
+      ],
+      "control": "t2_only",
+      "event_count": 1,
+      "history_available": false,
+      "not_in_factorial": true,
+      "purpose": "detectability_or_review_control"
+    },
+    {
+      "available_event_ids": [
+        "E1"
+      ],
+      "control": "isolated_t1",
+      "event_count": 1,
+      "history_available": false,
+      "not_in_factorial": true,
+      "purpose": "detectability_or_review_control"
+    },
+    {
+      "available_event_ids": [
+        "E1",
+        "E2"
+      ],
+      "control": "persistent_history",
+      "event_count": 2,
+      "history_available": true,
+      "not_in_factorial": true,
+      "purpose": "detectability_or_review_control"
+    }
+  ],
+  "factorial_trials": [
+    {
+      "block": 1,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        2000
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 2000,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 1,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "56a4e8fff639144a479d910a647b75e5a95b4d2e9e1dba92a3530d7c334d6602",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B01-Dtask_irrelevant-G2000",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 1,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        2000
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 2000,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 2,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "643f7422003832d4f4c21849fbe933fd75e5dbb7297432c585f5352f64e9a27c",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B01-Dprocess-G2000",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 1,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        500
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 500,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 3,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "14b2cd56677f7cfc9657e6ba0a32fb13cfe737de007ada5403ccdcb7c084e55d",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B01-Dtask_irrelevant-G0500",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 1,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        250
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 250,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 4,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "7c74afd0cbcf2374d6dbdfff530d7075ec96a057f0b7f9b322050e753f228c0a",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B01-Dtask_irrelevant-G0250",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 1,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        500
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 500,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 5,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "a7d4a1abc83fe69e6bc639fccde401c4c5568707853586aa63e52d8e919eabbb",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B01-Dprocess-G0500",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 1,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        250
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 250,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 6,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "c42397f89414036735146c881227e07796769f95ada05891e7ec0b4bf947f7de",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B01-Dprocess-G0250",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 2,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        250
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 250,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 1,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "561528b1d4a3d8d2caca07cc4f74bec4c77ccd13962461630ef8566fa6e0a05c",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B02-Dprocess-G0250",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 2,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        2000
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 2000,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 2,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "19a5e276ba3e8a727ea15085b4cb5a80a1e64970dee55551e604e277bd5c8f06",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B02-Dtask_irrelevant-G2000",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 2,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        500
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 500,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 3,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "fa4f77df998ce9aceaff863f37b481ac4f1bd266d0f95691f0b240018d0d1f23",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B02-Dprocess-G0500",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 2,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        250
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 250,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 4,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "cc7afd539987e3dfdebbb14dd9d1cf3037903d8e0db0ccaafb06ab2464063a9b",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B02-Dtask_irrelevant-G0250",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 2,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        500
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 500,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 5,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "adaefe855c63548cad5df0b7f7f7d8089512b32879a34941a491c176a76fa80e",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B02-Dtask_irrelevant-G0500",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 2,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        2000
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 2000,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 6,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "1c231202e2cc9c74f6385a6f048446b85af92e8c4266c714d18f2f6a35326168",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B02-Dprocess-G2000",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 3,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        500
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 500,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 1,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "49ebaded0c17e0ea9e6a27ad2209ba8b69bbf0e1185fdc54cebf34df8bff7acc",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B03-Dprocess-G0500",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 3,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        500
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 500,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 2,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "bef692e7f8edaefbad85b8f0e8d60f36674cb354e9c6b5c04fa19587ffd63ac3",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B03-Dtask_irrelevant-G0500",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 3,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        2000
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 2000,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 3,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "2e093a307c1f00e330d944d67306e32205a0538ef1ec4cd7ad84d74a103886eb",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B03-Dtask_irrelevant-G2000",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 3,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        250
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 250,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 4,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "851588246c05285bb0de4cf53e0876358721149f6804653d7a49e4b40e68e5c7",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B03-Dtask_irrelevant-G0250",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 3,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        250
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 250,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 5,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "6c650b5e2a35e98cb55ad71f1512ebd8c1e6087c58237a80ac99dfcbee1df82f",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B03-Dprocess-G0250",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 3,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        2000
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "effect_complete_unverified",
+        "authority_expiry_pending"
+      ],
+      "first_event_id": "E1",
+      "gap_ms": 2000,
+      "messages": [
+        "Change completed; effect not yet verified.",
+        "Approval expires soon; delivery remains unresolved."
+      ],
+      "position": 6,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "ef4b537d8328bae4d395133aa53a1acf14729f1fdb1f643089a9e79c668d3db9",
+      "second_event_id": "E2",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B03-Dprocess-G2000",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 4,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        2000
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 2000,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 1,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "40d3105024d5e5bae8a96e577359f2d2caf8e659bb086aefcecda6a5e0f6ce9c",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B04-Dprocess-G2000",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 4,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        500
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 500,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 2,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "9d5502950be9cd7d9191effeff69130809790690a62a34c8ad382c83466491b5",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B04-Dtask_irrelevant-G0500",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 4,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        2000
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 2000,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 3,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "4ecb9582b9e3cf6e18b5489e515c64f9f69515b99b1151069f09950a5b430140",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B04-Dtask_irrelevant-G2000",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 4,
+      "demand": "task_irrelevant",
+      "demand_instruction": "observe_first_but_do_not_reconcile",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        250
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 250,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 4,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "5643e71493d9f4b72b62821364ada9f50404e43bd29b63cc44c06e6977921af4",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B04-Dtask_irrelevant-G0250",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 4,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        250
+      ],
+      "event_positions": [
+        "lower",
+        "upper"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 250,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 5,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "91c69424fa2dee400ce9166cb82cc640bd1daa80f91037dddb45b91e78ca2f8a",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B04-Dprocess-G0250",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    },
+    {
+      "block": 4,
+      "demand": "process",
+      "demand_instruction": "identify_and_reconcile_first",
+      "event_count": 2,
+      "event_onset_ms": [
+        0,
+        500
+      ],
+      "event_positions": [
+        "upper",
+        "lower"
+      ],
+      "fact_ids": [
+        "authority_expiry_pending",
+        "effect_complete_unverified"
+      ],
+      "first_event_id": "E2",
+      "gap_ms": 500,
+      "messages": [
+        "Approval expires soon; delivery remains unresolved.",
+        "Change completed; effect not yet verified."
+      ],
+      "position": 6,
+      "salience": [
+        5,
+        5
+      ],
+      "schedule_sha256": "9fa51374688c5607ea4a1338df7e0593439f88aab75ce0d806fa00a55507224d",
+      "second_event_id": "E1",
+      "source_ids": [
+        "simulator://oversight-lab",
+        "simulator://oversight-lab"
+      ],
+      "t2_deadline_ms": 3000,
+      "trial_id": "B04-Dprocess-G0500",
+      "visual_duration_ms": [
+        1200,
+        1200
+      ]
+    }
+  ],
+  "fixture_id": "8549-method-fixture-v1",
+  "response_scores": [
+    {
+      "case_id": "R01",
+      "correct_t2": true,
+      "reason": "correct",
+      "target_trial_id": "B01-Dprocess-G0250"
+    },
+    {
+      "case_id": "R02",
+      "correct_t2": false,
+      "reason": "wrong_event",
+      "target_trial_id": "B01-Dprocess-G0250"
+    },
+    {
+      "case_id": "R03",
+      "correct_t2": false,
+      "reason": "wrong_source",
+      "target_trial_id": "B01-Dprocess-G0250"
+    },
+    {
+      "case_id": "R04",
+      "correct_t2": false,
+      "reason": "wrong_fact",
+      "target_trial_id": "B01-Dprocess-G0250"
+    },
+    {
+      "case_id": "R05",
+      "correct_t2": false,
+      "reason": "late",
+      "target_trial_id": "B01-Dprocess-G0250"
+    },
+    {
+      "case_id": "R06",
+      "correct_t2": false,
+      "reason": "missing",
+      "target_trial_id": "B01-Dprocess-G0250"
+    }
+  ],
+  "scope": "METHOD_ONLY_SYNTHETIC_FIXTURE"
+}

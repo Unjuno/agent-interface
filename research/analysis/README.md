@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8549 T0 A01 second-alert method validation](alert_timing_8549_method_t0_a01_20261009/REPORT.md) — `PASS_METHOD_SCOPED`: 24/24 synthetic schedules and 6/6 response scores independently reconstructed; 4/4 mutations rejected. Host-CPU method fixture only; no human attention effect or alert-spacing claim.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -395,6 +397,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`affine_receipt_5508_t14/`](affine_receipt_5508_t14/)
 - [`affine_receipt_5508_t15/`](affine_receipt_5508_t15/)
 - [`alert_actionability_5435_t4/`](alert_actionability_5435_t4/)
+- [`alert_timing_8549_method_t0_a01_20261009/`](alert_timing_8549_method_t0_a01_20261009/)
 - [`altgr_preflight_contract_successor_2171_v1/`](altgr_preflight_contract_successor_2171_v1/)
 - [`amendment_effect_6219_publication_recovery_20261003/`](amendment_effect_6219_publication_recovery_20261003/)
 - [`answer_surface_audit_6173_factored_axes_t0_20261002/`](answer_surface_audit_6173_factored_axes_t0_20261002/)
