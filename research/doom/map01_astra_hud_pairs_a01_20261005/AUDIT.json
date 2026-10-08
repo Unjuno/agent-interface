@@ -1,0 +1,16 @@
+{
+  "schema": "map01-astra-hud-pairs-a01-independent-audit",
+  "disposition": "PASS_AUDITED_SCOPED",
+  "pair_count_recomputed": 169,
+  "unique_pairs": 169,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "authority_fields_rechecked": [
+    "grants_input_authority",
+    "semantic_change_identified",
+    "task_success_verified",
+    "may_only_reduce_existing_authority"
+  ],
+  "scope": "independent deterministic replay of the frozen still-frame pair corpus only",
+  "limits": "same guard implementation by design; manual labels and single-run nonindependence remain; no live temporal behavior or task effect is audited"
+}

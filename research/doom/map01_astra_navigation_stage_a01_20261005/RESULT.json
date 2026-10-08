@@ -1,0 +1,30 @@
+{
+  "schema": "map01-astra-navigation-stage-a01-result-v1",
+  "disposition": "PASS_SCOPED_VIEWPOINT_STAGES_HOLD_EXACT_ROUTE",
+  "claim": "The retained sequence supports distinct viewpoint-stage labels but does not identify exact route progress.",
+  "annotation_method": "manual retrospective visual inspection of exact hash-bound model-input frames",
+  "annotation_count": 13,
+  "primary_command_receipts": 26,
+  "visible_change_receipts": 25,
+  "no_visible_effect_receipts": 1,
+  "contingencies_authored": 8,
+  "contingency_branches_taken": 0,
+  "terminal": {
+    "map_exit": false,
+    "player_dead": true,
+    "kill_count": 1
+  },
+  "video": {
+    "frames": 780,
+    "fps": 10.0,
+    "playback_seconds": 78.0
+  },
+  "environment": {
+    "vizdoom": "1.3.0",
+    "mode": "Mode.ASYNC_SPECTATOR",
+    "map": "MAP01",
+    "skill": 1
+  },
+  "scope_limit": "viewpoint stages do not establish coordinates, exact route, distance traveled, objective progress, or cause of death; camera rotation and translation both change the view",
+  "audit": "AUDIT.json"
+}

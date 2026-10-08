@@ -1,0 +1,99 @@
+{
+  "schema": "map01-astra-ammo-video-audit-v1",
+  "disposition": "PASS_AUDITED_POSTHOC_VIDEO_TEMPORAL_ASSOCIATION_HOLD_CAUSAL_ATTRIBUTION",
+  "decoded_frame_count": 23,
+  "endpoint_alignment_recomputed": [
+    {
+      "sequence": 117,
+      "capture_source_seconds": 35.180776337,
+      "video_frame": 176,
+      "video_pts_seconds": 17.6,
+      "mapped_source_seconds": 35.2,
+      "video_minus_capture_ms": 19.22366300000533,
+      "ammo_manual": 50,
+      "ammo_roi_sha256": "9e83d7c55e8fd7912e00a521c6b91ac53c1c6e4ba7a9813dd7d4c91f0459f5dd"
+    },
+    {
+      "sequence": 148,
+      "capture_source_seconds": 43.97575018,
+      "video_frame": 220,
+      "video_pts_seconds": 22.0,
+      "mapped_source_seconds": 44.0,
+      "video_minus_capture_ms": 24.24982000000142,
+      "ammo_manual": 48,
+      "ammo_roi_sha256": "78231c56620f75cb54248c84d7115a70dbadcd4ed6d938aa8fecf409fe29966b"
+    },
+    {
+      "sequence": 211,
+      "capture_source_seconds": 57.066683739,
+      "video_frame": 285,
+      "video_pts_seconds": 28.5,
+      "mapped_source_seconds": 57.0,
+      "video_minus_capture_ms": -66.68373899999835,
+      "ammo_manual": 37,
+      "ammo_roi_sha256": "bc3c5197fc04c1f5c5cdae2a23fa72520a4e4923ca5d7ac35556ec19f639677e"
+    }
+  ],
+  "firing_steps_recomputed": [
+    {
+      "execution_id": "cover-4",
+      "step": 0,
+      "keys": [
+        "a",
+        "space"
+      ],
+      "ack_source_seconds": 44.200767468,
+      "complete_source_seconds": 44.824778982
+    },
+    {
+      "execution_id": "cover-4",
+      "step": 2,
+      "keys": [
+        "d",
+        "space"
+      ],
+      "ack_source_seconds": 46.461358037,
+      "complete_source_seconds": 47.05353457
+    },
+    {
+      "execution_id": "cover-4",
+      "step": 4,
+      "keys": [
+        "a",
+        "space"
+      ],
+      "ack_source_seconds": 48.701664327,
+      "complete_source_seconds": 49.286174496
+    },
+    {
+      "execution_id": "cover-4",
+      "step": 6,
+      "keys": [
+        "d",
+        "space"
+      ],
+      "ack_source_seconds": 50.954232829,
+      "complete_source_seconds": 51.535803493
+    },
+    {
+      "execution_id": "cover-4",
+      "step": 8,
+      "keys": [
+        "a",
+        "space"
+      ],
+      "ack_source_seconds": 53.188048036,
+      "complete_source_seconds": 53.84406872
+    }
+  ],
+  "decrement_count_recomputed": 11,
+  "model_window_counts_recomputed": {
+    "inside": 9,
+    "straddling": 1,
+    "before": 1
+  },
+  "transition_lifecycle_overlaps_recomputed": 11,
+  "mismatch_count": 0,
+  "mismatches": [],
+  "scope": "independent video-frame decode/hash and raw event timestamp joins; HUD numerals are manual transcriptions"
+}

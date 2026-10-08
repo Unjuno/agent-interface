@@ -1,0 +1,5 @@
+Command: python research/doom/map01_astra_hud_pairs_a01_20261005/audit_stream_diagnostic.py
+Disposition: FAIL_AUDIT_IMPLEMENTATION
+Observed mismatch: wait-result-mismatch
+Inspection found the independent recomputation omitted the candidate's `first_sequence` field when comparing wait rows. Raw inputs, STREAM_FREEZE.json, stream_diagnostic.py, STREAM_RESULT.json, and original pairwise artifacts are unchanged.
+No candidate, game, model, X server, container, or OS input ran.

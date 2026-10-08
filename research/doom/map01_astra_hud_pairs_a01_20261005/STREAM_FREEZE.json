@@ -1,0 +1,38 @@
+{
+  "schema": "map01-astra-pending-observation-stream-a01-freeze",
+  "base_main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "prospective_preregistration": false,
+  "analysis_kind": "retrospective deterministic metadata audit; exploratory counts were inspected before this reproducibility wrapper was written",
+  "question": "Do exact per-capture event references and the retained hash manifest establish observation cadence and full-frame byte novelty during each model wait?",
+  "join": "530 observation events to the 419-entry local exact-frame manifest by image basename; assign observations by capture_ns to 13 report model-call intervals.",
+  "scope": "metadata only; no image bytes available for intermediate samples; no semantic or live claim",
+  "resource": "local CPU only; no container, GPU, display, model, game, or input",
+  "inputs": {
+    "research/doom/results/map01-astra-attempt-v1/report.json": {
+      "bytes": 67434,
+      "sha256": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894"
+    },
+    "research/doom/results/map01-astra-attempt-v1/events.jsonl": {
+      "bytes": 565997,
+      "sha256": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564"
+    },
+    "research/doom/results/map01-astra-attempt-v1/local-exact-frame-manifest.json": {
+      "bytes": 62413,
+      "sha256": "fd508a715446358249933dd56098a480db1a2ff2f335b2e834059604f352df47"
+    }
+  },
+  "code": {
+    "research/doom/map01_astra_hud_pairs_a01_20261005/stream_diagnostic.py": {
+      "bytes": 7569,
+      "sha256": "b162f053122c14bf7622d4d8ccdc582099734f7e75dfe3137bc5e9df797ca8b2"
+    },
+    "research/doom/map01_astra_hud_pairs_a01_20261005/test_stream_diagnostic.py": {
+      "bytes": 1834,
+      "sha256": "8105dbc3cf5cb64612ca9f838f99dc7df4fa34b8584700d8ae17e36744952afc"
+    },
+    "research/doom/map01_astra_hud_pairs_a01_20261005/STREAM_README.md": {
+      "bytes": 2323,
+      "sha256": "1ff171a7acbc6f71f023e3d305ccc7fd65a0b2ef3cd1d4a31f709cf99584f485"
+    }
+  }
+}
