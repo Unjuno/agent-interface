@@ -1,0 +1,258 @@
+{
+  "allocation_id": "ISSUE8681-CLEANUP-IDENTITY-A05-20261009",
+  "base_main_sha": "0455b0079ca29bcfe85153f280e592f5e96528f6",
+  "cases": [
+    {
+      "events": [
+        {
+          "event": "accepted",
+          "id": "one",
+          "intent_token": "lease-one"
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "intent_token": "lease-one",
+            "keys_down": [],
+            "verified": true
+          }
+        }
+      ],
+      "name": "valid_single",
+      "receipt": {
+        "accepted_duplicate_ids": [],
+        "event_identity_ambiguous": false,
+        "input_release_verified_empty": true,
+        "input_releases_verified_empty": true,
+        "input_terminals_complete": true,
+        "terminal_duplicate_ids": []
+      }
+    },
+    {
+      "events": [
+        {
+          "event": "accepted",
+          "id": "one",
+          "intent_token": "lease-one"
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [],
+            "verified": true
+          }
+        }
+      ],
+      "name": "legacy_tokenless",
+      "receipt": {
+        "accepted_duplicate_ids": [],
+        "event_identity_ambiguous": false,
+        "input_release_verified_empty": true,
+        "input_releases_verified_empty": true,
+        "input_terminals_complete": true,
+        "terminal_duplicate_ids": []
+      }
+    },
+    {
+      "events": [
+        {
+          "event": "accepted",
+          "id": "one",
+          "intent_token": "lease-one"
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "intent_token": "other-lease",
+            "keys_down": [],
+            "verified": true
+          }
+        }
+      ],
+      "name": "mismatched_token",
+      "receipt": {
+        "accepted_duplicate_ids": [],
+        "event_identity_ambiguous": false,
+        "input_release_verified_empty": false,
+        "input_releases_verified_empty": false,
+        "input_terminals_complete": true,
+        "terminal_duplicate_ids": []
+      }
+    },
+    {
+      "events": [
+        {
+          "event": "accepted",
+          "id": "one",
+          "intent_token": "lease-one"
+        },
+        {
+          "event": "accepted",
+          "id": "two",
+          "intent_token": "lease-two"
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "intent_token": "lease-one",
+            "keys_down": [],
+            "verified": true
+          }
+        },
+        {
+          "event": "terminal",
+          "id": "two",
+          "release": {
+            "buttons_down": [],
+            "intent_token": "lease-two",
+            "keys_down": [],
+            "verified": true
+          }
+        }
+      ],
+      "name": "distinct_pair",
+      "receipt": {
+        "accepted_duplicate_ids": [],
+        "event_identity_ambiguous": false,
+        "input_release_verified_empty": true,
+        "input_releases_verified_empty": true,
+        "input_terminals_complete": true,
+        "terminal_duplicate_ids": []
+      }
+    },
+    {
+      "events": [
+        {
+          "event": "accepted",
+          "id": "one",
+          "intent_token": "lease-a"
+        },
+        {
+          "event": "accepted",
+          "id": "one",
+          "intent_token": "lease-b"
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "intent_token": "lease-b",
+            "keys_down": [],
+            "verified": true
+          }
+        }
+      ],
+      "name": "duplicate_accept_one_terminal",
+      "receipt": {
+        "accepted_duplicate_ids": [
+          "one"
+        ],
+        "event_identity_ambiguous": true,
+        "input_release_verified_empty": false,
+        "input_releases_verified_empty": false,
+        "input_terminals_complete": false,
+        "terminal_duplicate_ids": []
+      }
+    },
+    {
+      "events": [
+        {
+          "event": "accepted",
+          "id": "one",
+          "intent_token": "lease-one"
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "intent_token": "lease-one",
+            "keys_down": [],
+            "verified": true
+          }
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [
+              38
+            ],
+            "verified": false
+          }
+        }
+      ],
+      "name": "duplicate_terminal_verified_then_failed",
+      "receipt": {
+        "accepted_duplicate_ids": [],
+        "event_identity_ambiguous": true,
+        "input_release_verified_empty": false,
+        "input_releases_verified_empty": false,
+        "input_terminals_complete": false,
+        "terminal_duplicate_ids": [
+          "one"
+        ]
+      }
+    },
+    {
+      "events": [
+        {
+          "event": "accepted",
+          "id": "one",
+          "intent_token": "lease-one"
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "keys_down": [
+              38
+            ],
+            "verified": false
+          }
+        },
+        {
+          "event": "terminal",
+          "id": "one",
+          "release": {
+            "buttons_down": [],
+            "intent_token": "lease-one",
+            "keys_down": [],
+            "verified": true
+          }
+        }
+      ],
+      "name": "duplicate_terminal_failed_then_verified",
+      "receipt": {
+        "accepted_duplicate_ids": [],
+        "event_identity_ambiguous": true,
+        "input_release_verified_empty": false,
+        "input_releases_verified_empty": false,
+        "input_terminals_complete": false,
+        "terminal_duplicate_ids": [
+          "one"
+        ]
+      }
+    }
+  ],
+  "claims": {
+    "gui_or_os_input": false,
+    "model_behavior": false,
+    "physical_release": false,
+    "production_duplicate_occurrence": false,
+    "runtime_or_game_behavior": false
+  },
+  "schema": "issue8681-cleanup-identity-a05-raw-v1",
+  "source_sha256": "5991e8761c26060ec95b835687620d86c53c2b511eaf12a723e4ab2fbc101e0c"
+}

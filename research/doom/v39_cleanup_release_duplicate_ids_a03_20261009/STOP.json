@@ -1,0 +1,13 @@
+{
+  "schema": "issue8681-cleanup-identity-stop-v1",
+  "allocation_id": "ISSUE8681-CLEANUP-IDENTITY-A03-20261009",
+  "predecessor_stop": "ISSUE8681-CLEANUP-IDENTITY-A02-20261009",
+  "classification": "STOP_CONSTRUCTION_FREEZE_FIELD_MISMATCH",
+  "candidate_invocations": 1,
+  "cases_executed": 0,
+  "auditor_invocations": 0,
+  "command": "python research/doom/v39_cleanup_release_duplicate_ids_a03_20261009/candidate.py",
+  "error": "KeyError: 'source_sha256'",
+  "cause": "Candidate expected source_sha256 at freeze top level; the frozen schema stores it under files.production_source.sha256.",
+  "retry_of_allocation": false
+}
