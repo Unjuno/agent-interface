@@ -1,0 +1,46 @@
+{
+  "allocation": "wslc-local-smoke-7924-a02-20261008",
+  "main_sha": "6da5dc940fdb97866cfb900ca747edb8c94b2790",
+  "branch": "research/wslc-local-smoke-7924-a02-20261008",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "PASS_PORTABILITY_SCOPED",
+    "result": "CANDIDATE_RESULT.json",
+    "cid": "9c6feaac4635708b711491165c8f571f9560c1b82d5513e942df59f03d3e4840",
+    "auto_remove_requested": true,
+    "exact_cid_inspect_exit_code": 1,
+    "exact_cid_absent": true,
+    "combined_output": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\n{\"container_network_mode\": \"none (requested by frozen command)\", \"expected_fixture_sha256\": \"a534d2138b0a8fbb37c0930c54f8c9922acbd1dd8109d9abd69c8659271dc965\", \"external_network_calls\": 0, \"fixture_sha256\": \"a534d2138b0a8fbb37c0930c54f8c9922acbd1dd8109d9abd69c8659271dc965\", \"gui_calls\": 0, \"model_calls\": 0, \"python\": \"3.12.14\", \"read_only_write_errno\": 30, \"schema\": \"wslc-local-smoke-7924-a02-v1\", \"status\": \"PASS_PORTABILITY_SCOPED\"}\n"
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 1,
+    "status": "FAIL_AUDITOR_CONTRACT",
+    "cid": "8ded2ea2d93dd3aad7d019d205a43fd6f8a3f8890afbce1e9ddceb9953125bee",
+    "auto_remove_requested": true,
+    "exact_cid_inspect_exit_code": 1,
+    "exact_cid_absent": true,
+    "exception": "KeyError: 'sha256'"
+  },
+  "runtime": {
+    "wsl_package": "3.0.1.0",
+    "wslc": "3.0.1.0",
+    "container_python": "3.12.14",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "network_mode_requested": "none",
+    "memory_requested": "512M",
+    "swap_limit_warning": true,
+    "docker_calls": 0,
+    "global_container_list_calls": 0,
+    "image_pull_policy": "never"
+  },
+  "scope": {
+    "model_calls": 0,
+    "gui_calls": 0,
+    "external_network_calls": 0,
+    "game_calls": 0,
+    "os_input_calls": 0
+  },
+  "decision": "FAIL_AUDITOR_CONTRACT; candidate runtime probe succeeded, but allocation gate requires independent auditor exit 0. First outcome final; no retries, no frozen-source edits, no AUDIT.json."
+}
