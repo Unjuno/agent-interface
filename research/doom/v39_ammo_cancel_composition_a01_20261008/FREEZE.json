@@ -1,0 +1,29 @@
+{
+  "schema": "issue59-v39-ammo-cancel-composition-freeze-v1",
+  "experiment": "issue59-v39-ammo-cancel-composition-a01-20261008",
+  "kind": "one-shot synthetic integration construction; no live allocation",
+  "main_commit": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "sources": {
+    "controller": {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a",
+      "sha256": "c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95"
+    },
+    "guard": {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    },
+    "planner_adapter": {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674"
+    }
+  },
+  "hypothesis": "In current-main V39, paired ammo at the positive floor remains soft, while ammo zero invalidates the pending cover, sends executor cancellation before planner interruption, requires a verified empty terminal, and prevents the completed old answer from being eligible.",
+  "test": "Use the actual current-main build_cover_monitor, cancel_invalidated_cover, require_cover_terminal, and PersistentPlannerAdapter. Keep health at 100; start paired ammo at 50, then test ammo 1 and ammo 0. Include a fake executor cancel-write failure.",
+  "decision": "PASS_CONSTRUCTION_COMPOSITION only if ammo 1 preserves the pending answer without cancel or interrupt; ammo 0 reaches cancel-before-interrupt, verifies empty terminal release, and rejects the old answer; and cancel-write failure still attempts interruption and remains an error.",
+  "counterhypothesis": "The ammo guard may classify zero as hard without the actual planner lifecycle rejecting an already pending answer, or the cancellation helper may mishandle empty-release or cancel-write failure.",
+  "uncertainty": "Synthetic paired observations and fake transports do not establish HUD latency, tactically correct ammo floor, real App Server behavior, physical key state, useful feedback, bounded recovery, or game outcome.",
+  "retry_policy": "Execute candidate.py once after freeze. Do not use a live allocation or repeat the candidate after an outcome."
+}
