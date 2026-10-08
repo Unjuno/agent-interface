@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #1998 A03 focused PNG payload — formal HOLD](focused_png_payload_size_1998_t0_a03_20261009/REPORT.md) — `HOLD_RUNNER_EXIT_UNCAPTURED`: one frozen candidate emitted 23 structurally parseable rows, but zsh failed after the subprocess while capturing its exit code; auditor invocation count 0, retries 0, no scientific result.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -646,6 +648,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`feedback_necessity_5927_output_custody_a01_20261004/`](feedback_necessity_5927_output_custody_a01_20261004/)
 - [`focused_observation_request_container_successor_2046_v1/`](focused_observation_request_container_successor_2046_v1/)
 - [`focused_observation_request_successor_1935_v1/`](focused_observation_request_successor_1935_v1/)
+- [`focused_png_payload_size_1998_t0_a03_20261009/`](focused_png_payload_size_1998_t0_a03_20261009/)
 - [`frame_qualified_collateral_6533_t0_20261002/`](frame_qualified_collateral_6533_t0_20261002/)
 - [`full_golden_ipc_2813_v4/`](full_golden_ipc_2813_v4/)
 - [`full_golden_ipc_2813_v5/`](full_golden_ipc_2813_v5/)
