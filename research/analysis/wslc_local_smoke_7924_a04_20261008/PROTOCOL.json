@@ -1,0 +1,23 @@
+{
+  "schema": "wslc-local-smoke-7924-a04-protocol-v1",
+  "issue": 8455,
+  "predecessor_issues": [7924, 8446],
+  "question": "Can a receipt-shape-specific independent auditor validate all retained A02 evidence and reject four isolated corruptions?",
+  "candidate_reruns": 0,
+  "a02_auditor_reruns": 0,
+  "a03_auditor_reruns": 0,
+  "pre_freeze_receipt_shape_smokes": 1,
+  "formal_a04_auditor_invocations": 1,
+  "retries_after_formal_invocation": 0,
+  "network": "none",
+  "mount": "read-only",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "runtime": "WSLc 3.0.1.0",
+  "decision_gate": "PASS_AUDIT_ONLY_SCOPED iff all immutable A02 import hashes and Git blob IDs, saved-run evidence, distinct cleanup receipt schemas, four targeted mutation rejections, and one formal WSLc auditor exit 0 validate.",
+  "scope_limits": [
+    "A02 and A03 outcomes remain FAIL_AUDITOR_CONTRACT and immutable.",
+    "Does not execute a candidate or predecessor auditor.",
+    "Does not establish Docker parity, performance, memory relief, hard memory enforcement, OOM prevention, GUI/model behavior, or general migration.",
+    "Does not use Docker, global container inventory, prior CIDs, or lifecycle operations on unrelated objects."
+  ]
+}
