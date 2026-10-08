@@ -1,0 +1,32 @@
+name: V19 measured-tail focused tests
+
+on:
+  pull_request:
+    paths:
+      - 'research/doom/session_map01_v19.py'
+      - 'research/doom/test_session_map01_v19.py'
+      - '.github/workflows/v19-measured-tail-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  focused-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout-cone-mode: true
+          sparse-checkout: |
+            research/doom
+            research/live_control
+      - name: Run focused regression tests in Python container
+        run: >-
+          docker run --rm
+          -v "${GITHUB_WORKSPACE}:/workspace"
+          -w /workspace
+          python:3.12-slim
+          python -B -m unittest research.doom.test_session_map01_v19 -v
