@@ -1,0 +1,27 @@
+{
+  "schema": "v39-v15-retry-wrapper-a06-result-v1",
+  "status": "FAIL_FROZEN_AUDITOR_CHECK",
+  "candidate_started": true,
+  "candidate_exit": 0,
+  "auditor_started": true,
+  "auditor_exit": 0,
+  "frozen_audit_status": "FAIL",
+  "posthoc_raw_behavior_status": "RAW_BEHAVIOR_CONFIRMED_AUDITOR_SCHEMA_BUG",
+  "observed": {
+    "retry_recovered": true,
+    "release_batch_verified": true,
+    "querymap_interleaved": true
+  },
+  "scope": "Synthetic fake-Xlib execution of the release-batch backend and PR #7974 owner source only. No real X11, OS input, GUI, game, model, task effect, or live V39 evidence.",
+  "artifacts": {
+    "protocol": "PROTOCOL.md",
+    "freeze": "FREEZE.json",
+    "frozen_audit": "AUDIT.json",
+    "posthoc_audit": "POSTHOC_AUDIT.json",
+    "runner_output": "RUNNER_OUTPUT.json",
+    "run_result": "RUN_RESULT.md",
+    "setup": "SETUP.json",
+    "evidence_manifest": "EVIDENCE_MANIFEST.json"
+  },
+  "resource_note": "WSLc warned swap/cgroup memory accounting unavailable; memory cap enforcement is not claimed."
+}
