@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8598 T0 A01: [censored opportunity tail regret](analysis/tail_regret_censoring_8598_t0_a01_20261008/README.md) — preregistered on an additive branch; formal run pending. Construction screening found 10/128 correctly ranked IPCW versus 20/128 resolved-only; no container, live, or product claim.
+
 - [`outputs/`](outputs/) — retained local research-session status and handoff notes; not experiment evidence unless individually cited.
 - Issue #8592 T0 A03: [bounded DPOR validation](analysis/bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`; 45,360 exhaustive schedules matched by 217 representatives, 5/5 auditor rejection controls passed in construction tests. Finite authored model only; no runtime-speed or live-safety claim. A01/A02 execution STOPs are retained and not retried.
 - Issue #8576 T0 A01: [grounded optional resume suggestions](analysis/resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 12 synthetic cases audited, 6/6 mutations rejected, WSLc CPU-only. No human-benefit claim.
