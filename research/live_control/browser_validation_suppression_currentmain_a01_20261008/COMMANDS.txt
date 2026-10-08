@@ -1,0 +1,13 @@
+(cd research/live_control/browser_validation_suppression_57_20261003_93c2_A01 && shasum -a 256 -c MANIFEST.sha256 && gzip -t proof.json.gz)
+PASS: both manifest entries; gzip integrity
+
+(cd research/live_control/browser_click_payload_57_20261004_93c2_A02 && shasum -a 256 -c MANIFEST.sha256 && gzip -t proof.json.gz)
+PASS: both manifest entries; gzip integrity
+
+python research/check_workspace_index.py --git-tree
+PASS: 161 top-level directories reachable
+
+python research/analysis/check_index.py --strict
+PASS: 777 retained result/failure directories indexed
+
+No experiment producer or archived script was executed.

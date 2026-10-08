@@ -51,3 +51,10 @@ any output. The exact failures and fixes are recorded in `RUN_LOG.md`.
 `python3 --version` returned `Python 3.14.5`. Syntax was checked in-memory for
 both scripts; `git diff --check` was run on the staged package. `SHA256SUMS.txt`
 is checked from this directory with `sha256sum -c SHA256SUMS.txt`.
+
+11. `python research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/audit_a06.py`
+    Exit 0; `PASS_A04_TRACE_AUDIT_CORRECTION_A06`; 27 checks / 45 observations; read existing A05 candidate, no candidate invocation.
+12. `python research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/test_audit_a06.py`
+    First control-harness outcome exit 1; candidate was copied outside the legacy auditor's selected `RESULT_DIR`; no audit-gap conclusion. Retained in `results/a06/audit_report_swap_control.json`.
+13. `python research/doom/map01_v39_unauthored_coast_health_threshold_replay_a01_20261005/test_audit_a07.py`
+    Exit 0; legacy A05 accepts the manifest-updated swapped report, A06 rejects before output. Control: `results/a07/audit_report_swap_control.json`.

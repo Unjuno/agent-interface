@@ -1,0 +1,5 @@
+From repository root, re-audit the retained RESULT.json without rerunning the candidate:
+
+  python -B research/doom/v39_ammo_cancel_composition_a01_20261008/audit_v2.py
+  python -B -m unittest -v research.doom.v39_ammo_cancel_composition_a01_20261008.test_audit_v2
+  python -O -B -m unittest -v research.doom.v39_ammo_cancel_composition_a01_20261008.test_audit_v2

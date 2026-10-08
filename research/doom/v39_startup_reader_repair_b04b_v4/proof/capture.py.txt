@@ -1,0 +1,17 @@
+import datetime, hashlib, json, pathlib, subprocess, sys
+R = pathlib.Path(__file__).resolve().parent
+label = sys.argv[1]; source = pathlib.Path(sys.argv[2]).resolve(); dest = R / label; dest.mkdir(exist_ok=False)
+def utc(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def pin(p):
+ b = p.read_bytes(); return {'bytes': len(b), 'sha256': hashlib.sha256(b).hexdigest()}
+argv = [sys.executable, '-X', 'utf8', str(R / 'regression.py'), str(source), str(dest / 'RAW.json')]
+before = {'utc': utc(), 'argv': argv, 'source': pin(source), 'runner': pin(R / 'regression.py')}; (dest / 'BEFORE.json').write_text(json.dumps(before, indent=2), encoding='utf-8')
+p = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE); start = utc()
+try: out, err = p.communicate(timeout=25)
+except subprocess.TimeoutExpired:
+ p.kill(); out, err = p.communicate(); raise
+finally:
+ p.stdout.close(); p.stderr.close()
+(dest / 'stdout.bin').write_bytes(out); (dest / 'stderr.bin').write_bytes(err)
+receipt = {'pid': p.pid, 'start_utc': start, 'end_utc': utc(), 'exit_code': p.returncode, 'stdout': pin(dest / 'stdout.bin'), 'stderr': pin(dest / 'stderr.bin'), 'source_unchanged': pin(source) == before['source'], 'runner_unchanged': pin(R / 'regression.py') == before['runner'], 'pipes_closed': p.stdout.closed and p.stderr.closed}
+(dest / 'RECEIPT.json').write_text(json.dumps(receipt, indent=2), encoding='utf-8'); print(json.dumps(receipt)); print(err.decode('utf-8')); sys.exit(p.returncode)

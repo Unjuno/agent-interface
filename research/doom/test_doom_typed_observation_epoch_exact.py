@@ -82,6 +82,24 @@ class TypedObservationEpochExactTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build_action_snapshot(event, contract)
 
+    def test_action_snapshot_rejects_observed_values_outside_hud_domain(self):
+        for signal_name, value in (("health", 0), ("health", 201),
+                                   ("ammo", -1), ("ammo", 1000),
+                                   ("health", True), ("ammo", 1.0)):
+            with self.subTest(signal_name=signal_name, value=value):
+                event = copy.deepcopy(self.event)
+                event["signals"][signal_name]["value"] = value
+                with self.assertRaises(ValueError):
+                    build_action_snapshot(event, self.contract)
+
+    def test_action_snapshot_accepts_in_domain_endpoints(self):
+        event = copy.deepcopy(self.event)
+        event["signals"]["health"]["value"] = 200
+        event["signals"]["ammo"]["value"] = 999
+        snapshot = build_action_snapshot(event, self.contract)
+        self.assertEqual(snapshot["signals"]["health"]["value"], 200)
+        self.assertEqual(snapshot["signals"]["ammo"]["value"], 999)
+
     def test_boolean_and_float_aliases_in_top_level_binding_are_rejected(self):
         for key in ("focus", "surface", "geometry"):
             for alias in (True, 1.0):
