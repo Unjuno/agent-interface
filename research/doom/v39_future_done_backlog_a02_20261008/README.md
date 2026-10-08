@@ -19,4 +19,3 @@ python -m research.doom.v39_future_done_backlog_a02_20261008.candidate
 python -m research.doom.v39_future_done_backlog_a02_20261008.audit
 python -m unittest -v research.doom.v39_future_done_backlog_a02_20261008.test_audit
 ```
-
