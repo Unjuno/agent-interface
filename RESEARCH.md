@@ -1,3 +1,7 @@
+# Issue #8668 T0 A02 — phase-dependent controllability under control delay (2026-10-09)
+
+`SUPPORT_FOR_PHASE_REFINEMENT_SCOPED`: a fresh finite-model allocation corrected A01's policy-counterfactual defect without modifying or rerunning A01. Candidate and independent raw-only auditor each ran once, exit 0; all 481 schedules reconstructed, five mutation controls rejected. The explicit optimistic static comparator made 102 false cancellation claims and admitted 51 unsafe retries; the phase-refined policy preserved all 228 modeled safe-removal opportunities with zero false cancellations or duplicates. This is authored-model evidence only, not an OS/GUI/application/runtime claim. See [report and checksums](research/analysis/phase_dependent_controllability_8668_t0_a02_20261009/REPORT.md), [freeze](research/analysis/phase_dependent_controllability_8668_t0_a02_20261009/FREEZE.json), [raw outputs](research/analysis/phase_dependent_controllability_8668_t0_a02_20261009/run-01/), and [Issue #8668](https://github.com/Unjuno/agent-interface/issues/8668).
+
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
 # Issue #8318 — duplicate allocation STOP custody (2026-10-07)
