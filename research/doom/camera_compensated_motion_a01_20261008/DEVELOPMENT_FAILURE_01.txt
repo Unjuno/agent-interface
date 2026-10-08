@@ -1,0 +1,3 @@
+# Development failure 01
+
+The first local invocation of probe.py stopped before result creation. The overlap helper unpacked array.shape into two names even though it received a three-dimensional RGB array. The exception was ValueError: too many values to unpack (expected 2). The helper was corrected to read height and width from array.shape[:2]. The candidate was then run once to completion and wrote run-02/RESULT.json. This is an implementation/debugging failure, not a scientific result or candidate retry after a scored outcome.
