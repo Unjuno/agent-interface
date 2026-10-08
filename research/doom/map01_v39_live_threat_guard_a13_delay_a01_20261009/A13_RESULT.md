@@ -1,0 +1,11 @@
+# A13 result — one-second relay-delay live episode
+
+**Disposition: HOLD for the timing gate.** The frozen current-main V39 controller completed 10 model turns on MAP01. The relay held the already-produced tenth `turn/completed` response once for 1.008 seconds, with no model request reissued. The episode recorded one useful independent scorer event 49.277 ms after the tenth controller model interval ended, so it did not overlap the controller's wait for that response. The controller did not consume scorer state, and this does not measure inference latency.
+
+The run exposed two hard-health guards and completed with 1 kill, 0 deaths, no MAP01 exit, health 51–100, and ammo 39–48. It had 18 accepted programs and 18 terminal records; 35 per-key release transitions matched 35 owner-thread key-up receipts. The independent cancellation reconciliation accounted for all 11 matched cancellations, including verified-empty terminal receipts where there was no active input lease. The episode did not satisfy the timing/recovery gate, and no task-completion or causal benefit is claimed.
+
+The first A12 allocation is retained as a startup STOP: its guest command referenced a misspelled entrypoint path, exited before any model turn, and did not produce a game episode. A12 was not retried. A13 used the next sequential fixture seed and added a guest-side entrypoint/fixture hash check before starting the app-server or game.
+
+The initial A13 auditor reported FAIL because its blanket cancel-to-`input_released` check did not accept cancellations with no active lease. The original audit remains unchanged. Reconciliation v3 verified 11/11 cancellation custody records; the separate treatment audit therefore classifies the episode HOLD, based on the unmet timing/recovery gate. See `A13_TREATMENT_AUDIT.json` in the private retained output for the compact raw-bound audit; full request/response and image artifacts remain local.
+
+This is one descriptive live episode. A09 is only a historical timing reference; seed and model variability prevent a causal comparison. X11 server receipts do not establish hardware key state or game consumption.

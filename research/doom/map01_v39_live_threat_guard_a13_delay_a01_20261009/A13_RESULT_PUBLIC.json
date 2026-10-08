@@ -1,0 +1,42 @@
+{
+  "schema": "map01-v39-live-threat-guard-a13-public-result-v1",
+  "allocation": "map01-v39-live-threat-guard-a13-20261009",
+  "issue": 59,
+  "status": "HOLD",
+  "source_commit": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "experiment_tree_commit": "3a1e5432f4145244861aaa6aa77a19b82afb80cf",
+  "fixture_seed": 990623,
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "model_turns_started": 10,
+  "model_turns_completed": 10,
+  "relay_treatment": {
+    "target_turn": 10,
+    "requested_delay_seconds": 1.0,
+    "observed_delay_seconds": 1.00805475,
+    "completion_response_reissued": false,
+    "useful_event_inside_controller_interval": false,
+    "useful_event_milliseconds_after_interval_end": 49.27679,
+    "event_controller_visible": false
+  },
+  "control_observations": {
+    "hard_health_guards": 2,
+    "useful_independent_scorer_events": 1,
+    "health_min": 51,
+    "health_max": 100,
+    "ammo_min": 39,
+    "ammo_max": 48,
+    "kills": 1,
+    "deaths": 0,
+    "map_exit": false,
+    "episode_finished": false
+  },
+  "release_custody": {
+    "matched_cancellations": 11,
+    "accounted_cancellations": 11,
+    "per_key_release_transitions": 35,
+    "owner_thread_keyup_receipts": 35,
+    "terminal_releases_verified_empty": true
+  },
+  "scope": "One descriptive live episode. No causal efficacy, inference-latency, generalization, or MAP01 completion claim."
+}
