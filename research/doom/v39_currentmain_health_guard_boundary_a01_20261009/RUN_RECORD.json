@@ -1,0 +1,64 @@
+{
+  "allocation_id": "V39-CURRENTMAIN-HEALTH-GUARD-BOUNDARY-59-A01-20261009",
+  "artifact_hashes": {
+    "CONSTRUCTION_LOG.md": "999ebebd8955c1c2be6b06b2a0811031a706b9c94b76fe10b0392c1c06a75bff",
+    "ENVIRONMENT.json": "48740eade3694fb3a5e58bb95d352efa4281ace29ea1dcd7dd387e65c40602a1",
+    "FREEZE.json": "a3cfe374d2cfa2305d2f0d3cff5983e3327cd80f21173604f7999a5b3574ec8b",
+    "README.md": "1439317682887c8adabf19191e5b94533725a24e18bf87d66ef4c837abf417f3",
+    "REPORT.md": "19d901b629ec003fff56240ec042276a707f6139faed990ae143f948c565def9",
+    "audit.py": "9c59a02e031f09291f4f190f349ac627c361083ac4b29c62e53adbfbfb34f20b",
+    "candidate.py": "0ef01eb8aedcf4a8bb20aa96c03bfa3d9bb0938e013d70790351af10911b0108",
+    "results/audit-tests-default-stop.txt": "5690be0b6e22a28641242603acc66973ef0c5e5a600a5dbe4d7aefc216634c7d",
+    "results/audit-tests-normal.txt": "7de83be8ceef6d38df703468022698f12a652d99eadc1b2bd6cddfc9af6485b3",
+    "results/audit-tests-optimized.txt": "7de83be8ceef6d38df703468022698f12a652d99eadc1b2bd6cddfc9af6485b3",
+    "results/audit.json": "abddf167d718a3fb3acbc3a618a1c3b28a45abe7ca44c4471c4eae09fab3771f",
+    "results/candidate.exit": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "results/candidate.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/candidate.stdout.json": "258905afc7f7e81c6a472b57eb0cb840a9f4e16da5e1e57473bcfa38b775913f",
+    "results/candidate_raw.json": "410b1416eb116a5df14b946a40c90a41c9dd4bde51f7625f257e292a2a2726ce",
+    "results/current-main-focused-normal.txt": "220e85abd8a91699c609d7908e1d728f3709490715482de9b9ec8b541b7051ed",
+    "results/current-main-focused-optimized.txt": "af05f0409cd901b9d2d6d66a24a2bd9bfeaa2d2f40272003e3111cc810485d34",
+    "run_once.sh": "f6d1b002f7e58fcf483454437aa9e51d0a55c044af2b58ac402b962eba9dcca0",
+    "test_audit.py": "c16da92457add4268c7da28a56c1144758e0d150fc733a031c3eade5050e76b6"
+  },
+  "base_commit": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "candidate": {
+    "command": "/bin/bash run_once.sh",
+    "exit_code": 0,
+    "invocations": 1,
+    "network_denied": true,
+    "raw_path": "results/candidate_raw.json",
+    "raw_sha256": "410b1416eb116a5df14b946a40c90a41c9dd4bde51f7625f257e292a2a2726ce",
+    "stderr_bytes": 0
+  },
+  "claim_scope": "synthetic health-guard software composition on exact current-main V39 controller source only",
+  "completed_utc": "2026-10-08T22:37:50.132155Z",
+  "controller_sha256": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+  "current_main_focused_tests": {
+    "modules": [
+      "research.doom.test_map01_overlap_controller_v39",
+      "research.doom.test_map01_overlap_controller_v39_dual_signal",
+      "research.doom.test_map01_v39_pending_observation_drain"
+    ],
+    "normal": "57/57 PASS",
+    "optimized": "57/57 PASS"
+  },
+  "formal_allocation_invocations": 0,
+  "independent_auditor": {
+    "checks_passed": 13,
+    "command": "python3 audit.py results/candidate_raw.json",
+    "invocations": 1,
+    "result": "PASS_METHOD_SCOPED"
+  },
+  "live_game_model_gui_container_os_input": false,
+  "mutation_tests": {
+    "corrected_harness": "Import the package-local audit.py by file path, register it in sys.modules, then run test_audit.py",
+    "default_import_command": "python3 -m unittest test_audit.py -v",
+    "default_import_disposition": "STOP_IMPORT_NAME_COLLISION",
+    "detail": "The top-level research/doom/audit.py shadowed this package's audit.py and lacked tile_transport in the sparse checkout. No candidate or auditor result was changed.",
+    "normal": "4/4 PASS",
+    "optimized": "4/4 PASS"
+  },
+  "retries": 0,
+  "schema": "v39-currentmain-health-guard-boundary-run-v1"
+}
