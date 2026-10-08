@@ -62,6 +62,7 @@ class Process:
         self.stderr = io.StringIO()
         self.sent = []
         self.wire = bytearray()
+        self.reply_threads = []
         self.reply = lambda row: None
         self.dispatch_fault = None
 
@@ -76,7 +77,17 @@ class Process:
             self.wire = bytearray(rest)
             row = json.loads(line)
             self.sent.append(row)
-            self.reply(row)
+            # Model the app-server as a separate process: it may write a fast
+            # reply while the client is returning from its final pipe syscall.
+            thread = threading.Thread(target=self.reply, args=(row,), daemon=True)
+            self.reply_threads.append(thread)
+            thread.start()
+
+    def join_replies(self):
+        for thread in self.reply_threads:
+            thread.join(timeout=1)
+            if thread.is_alive():
+                raise AssertionError("fixture reply worker did not finish")
 
 
 class ObservedLock:
@@ -132,6 +143,7 @@ class WriteAdmissionTests(unittest.TestCase):
                 process.stdout.finish()
                 client.close(timeout=1)
                 self.assertFalse(client._reader.is_alive())
+                process.join_replies()
             finally:
                 process.stdin.close()
                 process.stderr.close()
@@ -242,6 +254,7 @@ class WriteAdmissionTests(unittest.TestCase):
 
         process.reply = reply
         self.assertEqual(client.request("fixture/duplicate", timeout=1), "first")
+        process.join_replies()
         self.assertEqual(list(client._notifications), [duplicate])
         self.assert_retired(client)
 

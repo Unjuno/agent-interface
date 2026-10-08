@@ -130,20 +130,35 @@ class CodexAppServerClient:
             sent = 0
             write_attempted = False
             view = memoryview(data)
+            journal_order_locked = False
             try:
                 while sent < len(data):
                     if self._closing:
                         raise AppServerError("app-server closed during pipe send")
                     if deadline <= time.monotonic():
                         raise TimeoutError("app-server pipe send timed out")
+                    end = min(sent + 65536, len(data))
+                    final_chunk = end == len(data)
+                    if final_chunk:
+                        remaining = deadline - time.monotonic()
+                        if remaining <= 0 or not self._journal_order_lock.acquire(timeout=max(0, remaining)):
+                            raise TimeoutError("app-server journal ordering lock timed out; no final send attempted")
+                        journal_order_locked = True
+                        if deadline <= time.monotonic():
+                            self._journal_order_lock.release()
+                            journal_order_locked = False
+                            raise TimeoutError("app-server send budget expired; no final send attempted")
                     try:
                         # Bound each syscall, not the size of the JSON record.
                         write_attempted = True
-                        count = os.write(self._stdin_fd, view[sent:sent + 65536])
+                        count = os.write(self._stdin_fd, view[sent:end])
                         if count <= 0:
                             raise OSError("app-server pipe write made no progress")
                         sent += count
                     except BlockingIOError:
+                        if journal_order_locked:
+                            self._journal_order_lock.release()
+                            journal_order_locked = False
                         remaining = deadline - time.monotonic()
                         if remaining <= 0:
                             raise TimeoutError("app-server pipe send timed out")
@@ -157,21 +172,41 @@ class CodexAppServerClient:
                             waiter = select.poll()
                             waiter.register(self._stdin_fd, select.POLLOUT)
                             waiter.poll(min(remaining, 1) * 1000)
-                with self._journal_order_lock:
-                    self._record("sent", snapshot)
+                    if sent == len(data):
+                        # Hold ordering from the final write attempt through its
+                        # durable completion row so a fast reply cannot overtake it.
+                        self._record("sent", snapshot)
+                    elif journal_order_locked:
+                        # A partial final-chunk write cannot have completed a
+                        # newline-terminated message. Let the reader drain while
+                        # waiting for the remaining bytes.
+                        self._journal_order_lock.release()
+                        journal_order_locked = False
             except BaseException as error:
-                self._send_uncertain = True
                 if write_attempted:
+                    self._send_uncertain = True
                     try:
-                        self._record("send_uncertain", {
-                            "message": snapshot, "sent_bytes": sent,
-                            "total_bytes": len(data), "reason": type(error).__name__,
-                        })
+                        if journal_order_locked:
+                            self._record("send_uncertain", {
+                                "message": snapshot, "sent_bytes": sent,
+                                "total_bytes": len(data), "reason": type(error).__name__,
+                            })
+                        else:
+                            with self._journal_order_lock:
+                                self._record("send_uncertain", {
+                                    "message": snapshot, "sent_bytes": sent,
+                                    "total_bytes": len(data), "reason": type(error).__name__,
+                                })
                     except Exception:
                         pass
                 if not isinstance(error, Exception):
                     raise
+                if not write_attempted:
+                    raise
                 raise AppServerWriteUncertain(sent, len(data), type(error).__name__) from error
+            finally:
+                if journal_order_locked:
+                    self._journal_order_lock.release()
         finally:
             self._write_lock.release()
 
