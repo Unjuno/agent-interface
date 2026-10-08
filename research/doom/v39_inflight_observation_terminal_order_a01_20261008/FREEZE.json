@@ -1,7 +1,7 @@
 {
   "schema": "v39-inflight-observation-terminal-order-freeze-v1",
   "experiment": "v39-inflight-observation-terminal-order-a01-20261008",
-  "current_main_commit": "6da5dc940fdb97866cfb900ca747edb8c94b2790",
+  "current_main_commit": "dcf24013fb85304f513054a3a28ae4c8dfc70c00",
   "source": {
     "path": "research/doom/map01_overlap_controller_v39.py",
     "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
@@ -9,8 +9,8 @@
     "bytes": 85952,
     "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
   },
-  "hypothesis": "If a hard-invalidating observation line precedes the matching cover terminal but is decoded just before the completed-future snapshot, the current session emitter and controller reader preserve FIFO. In addition, source census should show that no active-session observation can be emitted after its matching terminal and before final admission.",
-  "scope": "Current-main V39 helper/wait/final-admission composition plus pinned session, backend, and executor source ordering and observation-producer census. The candidate uses a deterministic delayed-queue schedule; an AST audit verifies emitter serialization, single-reader FIFO enqueue, synchronous observation during execute, terminal after execute, and no active post-terminal observation producer. No live game/model/GUI/OS input or physical release.",
+  "hypothesis": "If a hard-invalidating observation line precedes the matching cover terminal but is decoded just before the completed-future snapshot, current session emission and reader enqueue preserve FIFO; audit every active session route, including the v15 release-batch backend override, for observation producers after terminal.",
+  "scope": "Current-main V39 helper/wait/final-admission plus pinned default and opt-in session/backend/executor source chain. Deterministic delayed-queue test; AST audit includes the v15 telemetry backend override and release-batch inheritance. No live game/model/GUI/OS input or physical release.",
   "additional_sources": [
     {
       "local_path": "source/final_action_admission_v1.py",
@@ -104,6 +104,20 @@
       "git_blob": "4f33111fa27474d6eb4d3f8db22fae4bae7626c8",
       "bytes": 2276,
       "sha256": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943"
+    },
+    {
+      "local_path": "source/doom_typed_release_backend_v2.py",
+      "path": "research/doom/doom_typed_release_backend_v2.py",
+      "git_blob": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+      "bytes": 2164,
+      "sha256": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4"
+    },
+    {
+      "local_path": "source/doom_owner_thread_release_batch_backend_v1.py",
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "git_blob": "193c2bd231795e7ee57de64aedfd741c8b814013",
+      "bytes": 18451,
+      "sha256": "c6595afa6314fbee73669ae1258fdf4ec8658ebb4c41be5f7365ba327f533581"
     }
   ]
 }
