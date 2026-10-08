@@ -1,0 +1,40 @@
+{
+  "schema": "map01-v40-finish-pipe-pressure-t4-v1",
+  "disposition": "PASS_BOUNDED_FINISH_DELIVERY_CONSTRUCTION",
+  "baseline_disposition": "FAIL_FINISH_DELIVERY_UNBOUNDED",
+  "base_commit": "6bd23799ea899e0c90a3a82299a19c55a5e073c9",
+  "baseline_controller_sha256": "0e1183a26cb0f816dcde97bb80f63f436ae306fd356a2ccef160e9ba5fe2add4",
+  "baseline_test_sha256": "0b075e89e0a4341165dee1d1a9834b7f8a6661ce386276031ae0a654f2298e6a",
+  "candidate_controller_sha256": "bb828303a2c97865e63600e7ad80d913e1870e21bde7fcd314438155073bfa66",
+  "candidate_test_sha256": "8208291ea19193bc66d846a76c5cabda4da0dbc9be0d8b14585ef3cfd9533751",
+  "audit_source_sha256": "2f914f0e3e30a0ab76981b029deb8e2d294cfc7864e1547e5da9378e048ed8c2",
+  "environment": {
+    "platform": "Windows-10-10.0.26300-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "commands": [
+    {
+      "command": "baseline focused backpressure regression",
+      "exit_code": 1
+    },
+    {
+      "command": "focused V40 candidate suite",
+      "exit_code": 0
+    },
+    {
+      "command": "py_compile candidate/controller/tests/auditor",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "candidate_tests_passed": 11,
+  "retained_process_bound_ms": 350,
+  "scope": "native Windows synthetic non-reading child pipe; no game, model, GUI, physical input, or formal #59 allocation",
+  "limitations": [
+    "Forced retirement stops only this custody object's owned child; no graceful score or application-level release is claimed after delivery timeout.",
+    "This construction does not prove all child runtimes or operating systems exhibit identical pipe behavior."
+  ]
+}
