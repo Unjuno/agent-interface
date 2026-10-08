@@ -1,7 +1,7 @@
 # V39 current-main cancel race boundary test — 2026-10-08
 
 Source commit: `f59b2494f403b33349cbf202b49d76caef3d6d82`.
-The packaged source is an exact byte-for-byte Git blob from commit `f59b2494f403b33349cbf202b49d76caef3d6d82`, verified against its tree object. Isolated AST extraction executes only `cancel_invalidated_cover()` to avoid importing model/game/runtime dependencies. No runtime source was modified.
+Source file is an exact Git blob export from `research/doom/map01_overlap_controller_v39.py`; isolated AST extraction executes only `cancel_invalidated_cover()` to avoid importing model/game/runtime dependencies. No controller or test source in the working tree was modified.
 
 Question: does current-main cover invalidation interrupt the pending planner and accept a terminal result only when cancellation or a natural completion/expiry race is paired with verified empty key/button state?
 
@@ -30,4 +30,6 @@ Result: 42 tests passed, exit 0. This adds wait-loop precedence/observation-befo
 
 These are local deterministic regression tests. No actual Doom process, model request, game clock, GUI, or OS input ran; live threat exposure, physical release, useful effect, recovery, progress and MAP01 terminal outcome remain unverified.
 
+
+Optimized execution: the same six suites were also run with `python -O`; 42 tests passed, exit 0. Raw output and exit are `current-main-regression-optimized-output.txt` and `current-main-regression-optimized.exit`. This confirms this focused regression set under optimized CPython; it does not add live behavior evidence.
 
