@@ -1,0 +1,14 @@
+{
+  "allocation": "8654-C03",
+  "disposition": "STOP_WORKFLOW_BRANCH_FILTER_MISMATCH",
+  "source_commit": "f5e8a616942b39d4a63c249d6318ba7a7934d3a1",
+  "branch": "research/8654-c03-support-sufficiency-20261009",
+  "workflow_expected_branch": "research/8654-c03-raw-custody-20261009",
+  "workflow_push_run_found": false,
+  "candidate_invocations": 0,
+  "raw_upload_invocations": 0,
+  "auditor_invocations": 0,
+  "scientific_hypothesis_evaluated": false,
+  "determination": "The frozen workflow's push branch filter did not match the actual branch name. GitHub created the branch, but no Issue 8654 C03 push run executed; the observed create-event checks were unrelated existing workflows. No candidate or auditor was invoked.",
+  "resume": "C04 is a new allocation on a new current-main branch with an exact branch-filter equality check performed before publication. C03 is not retried."
+}
