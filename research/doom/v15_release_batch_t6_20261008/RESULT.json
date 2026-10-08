@@ -1,0 +1,35 @@
+{
+  "baseline": {
+    "attribution": "TEMPORALLY_UNIQUE",
+    "causal_attribution": "NOT_ESTABLISHED",
+    "trace_integrity": "SOURCE_ROWS_JOINED"
+  },
+  "candidate_source_commit": "cebc4239cab5bd4d83b0cf8a32e945d536b9d7f0",
+  "controls": {
+    "delivery_gap": "HOLD_INCOMPLETE_RELEASE_BATCH/UNRESOLVED",
+    "duplicate_position": "HOLD_INCOMPLETE_RELEASE_BATCH/UNRESOLVED",
+    "missing_release_row": "UNRESOLVED",
+    "mixed_position_schema": "HOLD_INCOMPLETE_RELEASE_BATCH/UNRESOLVED",
+    "row_reordering": "same_disposition"
+  },
+  "disposition": "PASS_CURRENT_PRODUCER_TO_FAIL_CLOSED_ADAPTER_COMPOSITION",
+  "main_commit": "2a9052efdd155b8cdc173d216a969ea5f64a1ce9",
+  "producer": {
+    "delivery_positions": [
+      0,
+      1
+    ],
+    "delivery_states": [
+      "confirmed",
+      "confirmed"
+    ],
+    "owner_transition_verified": [
+      true,
+      true
+    ],
+    "physical_verification_authoritative": false,
+    "release_rows": 2
+  },
+  "schema": "v15-release-batch-current-producer-t6-result-v1",
+  "scope": "exact release producer methods plus frozen T5 adapter; synthetic owner, admissions, and scorer event; no physical input or causal claim"
+}
