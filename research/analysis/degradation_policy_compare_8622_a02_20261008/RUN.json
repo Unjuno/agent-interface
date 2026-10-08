@@ -1,0 +1,51 @@
+{
+  "experiment": "8622-A02",
+  "status": "HOLD_RESULT_CUSTODY",
+  "fixture_audit_status": "PASS_METHOD_SCOPED",
+  "formal_invocations": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0
+  },
+  "runtime": {
+    "python": "CPython 3.12.10",
+    "platform": "Windows 11 AMD64",
+    "mode": "host processes; stdin/stdout memory handoff",
+    "wslc": "not invoked; shared lane HOLD per #7924"
+  },
+  "exit_codes": {
+    "candidate": 0,
+    "auditor": 0
+  },
+  "stdout_bytes": {
+    "candidate": 12546,
+    "auditor": 4116
+  },
+  "stdout_sha256": {
+    "candidate": null,
+    "independent_auditor": null
+  },
+  "sha256_capture_status": "The outer in-memory runner emitted both hashes, but the terminal-rendered record wrapped/truncated before their complete strings could be recovered. Do not infer or fabricate either digest. Raw stdout was not written to disk; no retry is permitted.",
+  "audit": {
+    "audit_integrity": "PASS",
+    "cases_reconstructed": 10,
+    "independence_overclaim_cases": 4,
+    "independence_overclaim_operations": 6,
+    "dependency_aware_unsupported_operations": 0,
+    "unknown_fail_closed_cases": 1,
+    "unknown_fail_closed_admitted_operations": 0,
+    "mandatory_release_obligations_verified": 10,
+    "dispatches": 0,
+    "errors": []
+  },
+  "construction_suite": {
+    "red_expected": "ModuleNotFoundError candidate absent before implementation",
+    "green": "3/3 tests passed",
+    "mutation_controls_rejected": 6
+  },
+  "limitations": [
+    "Hand-authored finite fixture only.",
+    "No production dependency topology, empirical reliability rate, runtime reliability, human benefit, latency, deployed safety, resource enforcement, or product readiness claim.",
+    "A01 #8610 policy-arm mismatch remains separately preserved; this A02 used all three required arms but output custody is incomplete."
+  ]
+}

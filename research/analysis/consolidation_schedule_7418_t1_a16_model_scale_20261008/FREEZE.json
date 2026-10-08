@@ -1,0 +1,36 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A16-MODEL-SCALE-20261008",
+  "status": "FROZEN_PREREGISTERED_NOT_RUN",
+  "model": "qwen3:14b",
+  "model_digest": "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+  "parameter_size": "14.8B",
+  "quantization": "Q4_K_M",
+  "seeds": [
+    5601,
+    5602,
+    5603
+  ],
+  "planned_calls": {
+    "query": 360,
+    "consolidation": 30,
+    "total": 390
+  },
+  "single_intervention": "Increase Qwen3 model scale from 8B to 14B; both Q4_K_M. Prompt/queries/fixture/schedules/decoding/auditor are retained from A15.",
+  "a15_prompt_sha256": "fda487bf348e18f45676643d9eb64363a003d5f7f80d50d182990f2d3388edf4",
+  "a15_queries_sha256": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+  "preflight_sha256": "01c953bf4a61c50a80149b1abba57bf81a5c6047f54a7e6d3b3a077ca68416f4",
+  "files": {
+    "candidate.py": "c6cf5a0b0125172f96a83a100e12cd2da15ba13746fc80b536fc384b44d4a828",
+    "auditor.py": "08bfcb605c5efe12b0a59b50b13e76269e528920b307d6eff7f3c574610bddbb",
+    "preflight.py": "a256ba35b54a441f18baae187b204db9dafdf71d41d21b138252b74622afdc9c",
+    "test_construction.py": "1f44e02dcd0c4a8f611ecaa53c239af2ad6d1e95abe295c07976a3a705dd290e",
+    "episode_ledger.json": "253268b5aa698a12e455ba1d93a2fb350d40654567ba3e7fd94fd3cd92d5c347",
+    "queries.json": "7c159380507c5faf7559905c6043d87427cb536ac3fa3e3b884157b73501f666",
+    "source_t0_model.json": "b0038e69f5febf785e461d0ddff0d26277c1de7f9b967632e789b9491aa387fa",
+    "prompts.json": "fda487bf348e18f45676643d9eb64363a003d5f7f80d50d182990f2d3388edf4",
+    "README.md": "b89af3ca3e8b4e902d5a1fd4cbfc950347a4406d73df85e70bdd329d7619e0cf",
+    "PROTOCOL.md": "9a12334629dbe6b7984a1db04e83f628a6061a20735107cc4f0d95ace920edaf",
+    "RUN_RECORD.json": "ecd4fab023b49846f34daa394021eee47b3b25018def3e9d44eda50d36a45526"
+  },
+  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406#issuecomment-6052082917"
+}

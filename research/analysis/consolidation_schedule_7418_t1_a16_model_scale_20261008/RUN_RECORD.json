@@ -1,0 +1,45 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A16-MODEL-SCALE-20261008",
+  "status": "FROZEN_PREREGISTERED_NOT_RUN",
+  "created_utc": "2026-10-08",
+  "package": "research/analysis/consolidation_schedule_7418_t1_a16_model_scale_20261008",
+  "fixture_source": "research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/model.json",
+  "model": "qwen3:14b",
+  "model_parameters": "14.8B",
+  "model_quantization": "Q4_K_M",
+  "model_digest": "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+  "private_base_url": "http://127.0.0.1:11435",
+  "private_store": "/tmp/unjuno-8406-t1-a16-ollama-store",
+  "seeds": [
+    5601,
+    5602,
+    5603
+  ],
+  "arms": [
+    "episodic_only",
+    "per_episode",
+    "batch_2",
+    "terminal"
+  ],
+  "checkpoints": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "queries_per_checkpoint": 5,
+  "planned_calls": {
+    "query": 360,
+    "consolidation": 30,
+    "total": 390
+  },
+  "single_intervention_vs_a15": "Model scale increases from Qwen3 8B to Qwen3 14B; both quantized Q4_K_M. All prompt, corpus, schedule, decoding, and audit inputs are retained.",
+  "candidate_invocations_allowed": 1,
+  "auditor_invocations_allowed": 1,
+  "preflight_path": "results/FORMAL_T1_A16/PREFLIGHT.json",
+  "raw_path": "results/FORMAL_T1_A16/raw.jsonl",
+  "audit_path": "results/FORMAL_T1_A16/audit.json",
+  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406#issuecomment-6052082917"
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "v39-discarded-action-cover-reuse-comparison-v1",
+  "baseline_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "7221ec319cc11f660cbba39900eb12c4c409845b",
+  "partial_stale_action": {
+    "baseline_reuses_cover": true,
+    "candidate_reuses_cover": false
+  },
+  "completed_action_control": {
+    "candidate_reuses_cover": true
+  },
+  "legacy_record_control": {
+    "candidate_reuses_cover": true
+  },
+  "decision": "PASS; candidate suppresses stale cover reuse while preserving valid and legacy reuse",
+  "scope": "Exact AST-extracted reusable_cover functions at the frozen main and PR #8643 commits with synthetic decision receipts. No controller, monitor, planner, app, model, OS input or live task is run."
+}

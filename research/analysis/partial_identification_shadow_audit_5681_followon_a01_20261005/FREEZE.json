@@ -1,0 +1,51 @@
+{
+  "schema": "selection-aware-partial-identification-freeze-v1",
+  "issue": "Unjuno/agent-interface#5681",
+  "allocation": "SELECTION-AWARE-PARTIAL-IDENTIFICATION-5681-T0-20261005-01",
+  "question_delta": "A distinct successor hypothesis on decision-robust partial identification when shadow-audit positivity fails; not a repair or rerun of the consumed shadow-estimator T1 allocation.",
+  "base_main_sha": "86a2694c6251c2d7df2f69dbea490ec037903ff7",
+  "candidate": "candidate.py",
+  "auditor": "audit.py",
+  "input": "cases.json",
+  "construction_test": "test_method.py",
+  "source_sha256": {
+    "candidate.py": "c0152575c5fb811ee24dba6390ec53d3ef6c264a408731644f8bb4ed859c9d09",
+    "audit.py": "01bf1802e6861c726fd91e54cfdda415550d98ff700a48340d55c5090aa6c007",
+    "cases.json": "36aa14c239da5367b6490a85b8f78e285848c3bfa9501aa693deccdda328affc",
+    "test_method.py": "db6ee876e2ca971719690a9be08dcdc8d0cfc62b332eb7ed0553db40ffd9bf75"
+  },
+  "environment": {
+    "host": "Windows host, local WSL Containers (WSLc)",
+    "wslc_version": "3.0.1.0",
+    "container_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "local_image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "platform": "linux/amd64",
+    "python": "3.12.15",
+    "pull_policy": "never",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested_bytes": 134217728,
+    "memory_limit_warning": "WSLc reported: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap. Do not infer effective memory enforcement from this configuration."
+  },
+  "candidate_command": "python -B /src/candidate.py /src/cases.json /out/candidate.json",
+  "auditor_command": "python -B /src/audit.py /src/cases.json /raw/candidate.json",
+  "invocation_limits": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "formal_retries": 0,
+    "formal_replacements": 0
+  },
+  "decision_gate": {
+    "expected_cases": 8,
+    "eligible_completion_count": 30,
+    "mutation_controls": 10,
+    "threshold_rule": "ROBUST_ABOVE only if lower > threshold; ROBUST_BELOW only if upper < threshold; equality at either endpoint is HOLD",
+    "incomplete_frame": "no numeric bounds; HOLD_INCOMPLETE_FRAME",
+    "out_of_frame_event": "captured-frame bounds only; HOLD_OUT_OF_FRAME_NOT_IDENTIFIABLE",
+    "authorization_boundary": "all rows action_authority=NONE and effect_safety_gate=NOT_EVALUATED"
+  },
+  "commands": {
+    "candidate": "wslc run --pull never --network none --cpus 1 --memory 128m --tmpfs /tmp:rw,noexec,nosuid,nodev,size=8m --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<candidate-output>,target=/out --cidfile <candidate.cid> --name partial-id-5681-candidate python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/candidate.py /src/cases.json /out/candidate.json",
+    "auditor": "wslc run --pull never --network none --cpus 1 --memory 128m --tmpfs /tmp:rw,noexec,nosuid,nodev,size=8m --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<candidate-output>,target=/raw,readonly --mount type=bind,source=<audit-output>,target=/audit --cidfile <audit.cid> --name partial-id-5681-auditor python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /src/audit.py /src/cases.json /raw/candidate.json"
+  }
+}

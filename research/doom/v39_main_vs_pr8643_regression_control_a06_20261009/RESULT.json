@@ -1,0 +1,121 @@
+{
+  "schema": "v39-main-vs-pr8643-regression-control-result-v1",
+  "main_commit": "5cfe661826c5742eb26da2ba9a9304ae0cb480d4",
+  "candidate_commit": "38569db07352a8d42e08fd6711ba32c77aca20a4",
+  "dependency_base_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "overlay_paths": [
+    "research/doom/map01_overlap_controller_v39.py",
+    "research/doom/test_map01_overlap_controller_v39.py"
+  ],
+  "dependency_sources": [
+    {
+      "path": "research/doom/doom_action_snapshot_v1.py",
+      "blob": "756626d2a3745b50a32b89e1ae64b33eea24b2aa",
+      "sha256": "f6efc8c8ac0957dfa0d8cf5e8190e4e58b2e71fa328021c816f01d36af476f38"
+    },
+    {
+      "path": "research/doom/doom_action_validity_contract_v1.py",
+      "blob": "47e5d75db86dcbff010acf624ae1c7dbf68a107d",
+      "sha256": "4501627b5b191d1e7e4bfce09f97316021f841e84574531dfffb28c7d909730e"
+    },
+    {
+      "path": "research/doom/doom_controller_failure_cleanup_v1.py",
+      "blob": "d04e167ed182d5faf935e6c23132b164fe9a16ac",
+      "sha256": "e7738973991459f5fe9553383afb4000a1cbb6c755bc5763f11eab85c32dead8"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v1.py",
+      "blob": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+      "sha256": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v2.py",
+      "blob": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+      "sha256": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff"
+    },
+    {
+      "path": "research/doom/doom_hud_signal_v3.py",
+      "blob": "083338b4565176aaea560d800ce0210f17b6852f",
+      "sha256": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7"
+    },
+    {
+      "path": "research/doom/doom_signal_value_domain_v1.py",
+      "blob": "34fb7ff8659876307857b45d5c167bb0599ed704",
+      "sha256": "0e97f592d3a3f6f66120abca7f7ebfbb562d3c7a3c227635cc8bc8a7a50883f1"
+    },
+    {
+      "path": "research/doom/doom_source_refresh_v1.py",
+      "blob": "51c12ff4f2816f022bb86be9f5f6a951467d38b7",
+      "sha256": "f3a9c66bc069a98b3240f5256810123e4f61931fd648e03b3e564aedec545743"
+    },
+    {
+      "path": "research/doom/doom_typed_observation_v1.py",
+      "blob": "ddeb95efe76c32f4c77d0b1d25f08e395a536a2e",
+      "sha256": "13bc9e4e41667b612882d72c3c8a36c341b5561f849235fd0eba69c38e3a2eb1"
+    },
+    {
+      "path": "research/doom/map01_stagnation_v1.py",
+      "blob": "be03ef1295c27e25dc63df3a9121f5c7f5296bfb",
+      "sha256": "669d61eb473c486e693a478b1941a7b40102d2049e0a437e5982143544d60a54"
+    },
+    {
+      "path": "research/live_control/action_validity_admission_v1.py",
+      "blob": "31bd30bd9baf6b7d56494cc3a18b2c6c70ffbc5e",
+      "sha256": "f102cbde4f0e46c9f8e974e9f0a7d1c47f3fc662d7c8ba32699d16799d3db98a"
+    },
+    {
+      "path": "research/live_control/codex_app_server_client_v2.py",
+      "blob": "8553874221761a7807c846c7dcd66c22fc6340ff",
+      "sha256": "1d85460d2c3a22d6f7fb78f6b0e29904980dcc0bd158e6ce35d4d13a55cad0b7"
+    },
+    {
+      "path": "research/live_control/final_action_admission_v1.py",
+      "blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "sha256": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d"
+    },
+    {
+      "path": "research/live_control/final_action_admission_v2.py",
+      "blob": "cbbef5405c29fe56018c24e120b1b87d3c39dd26",
+      "sha256": "16f785d2542335a857163b9afa6c6e84b776b77d62ce36345fc28987a5ca897b"
+    },
+    {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    },
+    {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674"
+    },
+    {
+      "path": "research/live_control/running_action_guard_v1.py",
+      "blob": "d54047e78bc76f53ef47c6f70fd4a3be6318f09c",
+      "sha256": "2d5feb69efd59fdca22e0db9e561923411490eb758eab9e2b8379714e20e5c62"
+    },
+    {
+      "path": "research/live_control/running_action_guard_v2.py",
+      "blob": "4e1a36c1dbd3d78aea795a292bc4e0bf9db0b75b",
+      "sha256": "908ab4117f007c2592d96a50370c7e29a5c048cfee2d6c70d1bb66fc1b4e11e2"
+    },
+    {
+      "path": "research/live_control/running_action_guard_v3.py",
+      "blob": "bbefdba8edfd83e886baf556caf28aca66ac88fb",
+      "sha256": "bcc0dc5961a54a315a05558d800f94ff119fa6106ed91e0fa0ba14131d470732"
+    }
+  ],
+  "runs": {
+    "normal": {
+      "exit_code": 1
+    },
+    "optimized": {
+      "exit_code": 1
+    }
+  },
+  "expected_discriminating_failures": [
+    "test_stale_partial_action_does_not_reuse_discarded_remaining_cover",
+    "test_initial_cover_invalidation_cancels_before_planner_and_requires_empty_release"
+  ],
+  "decision": "DISCRIMINATING_BASELINE",
+  "scope": "Candidate PR #8643's nine controller tests against the current-main controller and its statically import-reachable direct research/doom and research/live_control Python modules extracted from the pinned main commit, normal and optimized Python. CPU-only test fixtures; no Doom, model, GUI, OS input, or live allocation."
+}

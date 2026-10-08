@@ -31,7 +31,8 @@ from codex_app_server_client_v2 import CodexAppServerClient
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 from final_action_admission_v2 import (
     decide_final_admission, record_controller_no_input,
-    record_action_validity, record_executor_admission)
+    record_action_validity, record_executor_admission,
+    record_executor_stale_rejection)
 from action_validity_admission_v1 import SNAPSHOT_FORMAT, evaluate_action_validity
 from running_action_guard_v1 import (
     ACTIVE as RUNNING_ACTIVE, BETWEEN as RUNNING_BETWEEN,
@@ -54,6 +55,7 @@ MAX_AUTHORED_HEALTH_LOSS = 20
 
 def reusable_cover(decisions):
     if (decisions and not decisions[-1].get("model_action_discarded") and
+            not decisions[-1].get("remaining_action_discarded", False) and
             decisions[-1]["action"]["state"] == "active"):
         validity = decisions[-1]["action"]["next_cover_validity"]
         return (decisions[-1]["action"]["next_cover"], validity[0],
@@ -179,6 +181,7 @@ class DoomCoverSignalPairMonitor:
         self.last_values = {name: guard.spec["source_value"]
                             for name, guard in guards.items()}
         self.last_sequence = guards["health"].spec["source_sequence"]
+        self.last_pair_sequence = self.last_sequence
         self.last_capture_ns = guards["health"].source_capture_ns
         self.last_event_kind = None
         self.last_binding = None
@@ -250,6 +253,7 @@ class DoomCoverSignalPairMonitor:
             self.last_binding = binding
             self.last_frame_rgb_sha256 = frame_hash
             self.last_event_kind = event_kind
+            self.last_pair_sequence = sequence
             return None
 
         if observation["sequence"] <= self.last_sequence:
@@ -260,6 +264,10 @@ class DoomCoverSignalPairMonitor:
                 observation, "signal_pair_nonadvancing_capture_time", signals)
         self.last_sequence = observation["sequence"]
         self.last_capture_ns = observation["capture_ns"]
+        self.last_event_kind = event_kind
+        self.last_binding = binding
+        self.last_frame_rgb_sha256 = observation.get("frame_rgb_sha256")
+        self.last_signals = signals
 
         outcomes = {name: guard.evaluate(signals[name])
                     for name, guard in self.guards.items()}
@@ -435,6 +443,40 @@ def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
     return planner_interrupt, terminal
 
 
+def cancel_initial_cover_before_planner(process, wait, cover_id):
+    """Cancel an invalidated accepted cover before creating a planner turn."""
+    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+    process.stdin.flush()
+    terminal = wait(lambda row: row["event"] == "terminal" and
+                    row.get("id") == cover_id)
+    require_cover_terminal(terminal, cancellation_requested=True)
+    return terminal
+
+
+def cover_submission_invalidation_receipt(result, terminal=None):
+    return {
+        "ack": result["ack"],
+        "submitted_sequence": result["submitted_sequence"],
+        "invalidation": result["invalidation"],
+        "coherent_source_recovery": result.get("coherent_source_recovery"),
+        "cover_cancel_terminal": terminal,
+    }
+
+
+def reset_cover_after_preacceptance_rejection(result, *, build_monitor,
+                                              select_monitor):
+    """Return a rejected initial cover to a fresh, unauthored planner source."""
+    if (type(result) is not dict or type(result.get("ack")) is not dict or
+            result["ack"].get("event") != "rejected"):
+        raise ValueError("preacceptance cover rejection required")
+    latest = result["latest"]
+    monitor, admission = build_monitor(latest)
+    monitor, admission = select_monitor(monitor, admission, [], None)
+    return {"latest": latest, "monitor": monitor, "admission": admission,
+            "receipt": (cover_submission_invalidation_receipt(result)
+                        if result.get("invalidation") is not None else None)}
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -575,6 +617,17 @@ class DoomRunningActionMonitor:
                         "typed_ready_ns", "emit_ns")}
             return result
         return None
+
+
+def replay_action_observations_before_wait(events, observation_monitor):
+    """Recheck observations consumed before the action guard was admitted."""
+    event_types = getattr(observation_monitor, "event_types", {"observation"})
+    for row in events:
+        if row.get("event") in event_types:
+            invalidation = observation_monitor.observe(row)
+            if invalidation is not None:
+                return invalidation
+    return None
 
 
 def persist_running_invalidation(root, identifier, boundary):
@@ -756,6 +809,76 @@ MAX_PENDING_OBSERVATION_EVENTS = 256
 MAX_PENDING_OBSERVATION_RECOVERY_BATCHES = 4
 
 
+def prefer_observation_invalidation(current, candidate):
+    if candidate is None:
+        return current
+    if (current is None or candidate.get("reason") ==
+            "signal_pair_duplicate_epoch_mismatch"):
+        return candidate
+    return current
+
+
+def observe_cover_submission_events(events, observation_monitor):
+    event_types = getattr(observation_monitor, "event_types", {"observation"})
+    invalidation = None
+    for row in events:
+        if row.get("event") in event_types:
+            invalidation = prefer_observation_invalidation(
+                invalidation, observation_monitor.observe(row))
+    return invalidation
+
+
+class DeferredObservationMonitor:
+    """Retain monitor outcomes while letting a bounded wait finish."""
+    def __init__(self, monitor):
+        self.monitor = monitor
+        self.event_types = getattr(monitor, "event_types", {"observation"})
+        self.invalidations = []
+
+    def observe(self, row):
+        invalidation = self.monitor.observe(row)
+        if invalidation is not None:
+            self.invalidations.append(invalidation)
+        return None
+
+
+def recover_coherent_source_after_observation(after_sequence, invalidation, *,
+                                             latest_reader, wait,
+                                             observation_monitor):
+    reason = invalidation.get("reason") if type(invalidation) is dict else None
+    required_after = after_sequence
+    invalidated_sequence = (invalidation.get("sequence")
+                            if type(invalidation) is dict else None)
+    if (type(reason) is str and reason.startswith("signal_pair_") and
+            type(invalidated_sequence) is int):
+        required_after = max(required_after, invalidated_sequence)
+    latest = latest_reader()
+    if (type(required_after) is not int or type(latest) is not dict or
+            type(latest.get("sequence")) is not int):
+        raise RuntimeError("coherent-source recovery lacks a sequence")
+    pair_sequence = getattr(observation_monitor, "last_pair_sequence", None)
+    if pair_sequence == latest["sequence"] and pair_sequence > required_after:
+        return latest, {"required_after_sequence": required_after,
+                        "invalidated_sequence": invalidated_sequence,
+                        "fresh_sequence": pair_sequence,
+                        "additional_invalidations": []}
+    deferred = DeferredObservationMonitor(observation_monitor)
+    wait(lambda _row: (observation_monitor.last_pair_sequence > required_after and
+                       latest_reader().get("sequence") ==
+                       observation_monitor.last_pair_sequence),
+         observation_monitor=deferred)
+    latest = latest_reader()
+    pair_sequence = getattr(observation_monitor, "last_pair_sequence", None)
+    if (type(latest) is not dict or type(latest.get("sequence")) is not int or
+            type(pair_sequence) is not int or pair_sequence != latest["sequence"] or
+            pair_sequence <= required_after):
+        raise RuntimeError("paired-source recovery did not produce a coherent frame")
+    return latest, {"required_after_sequence": required_after,
+                    "invalidated_sequence": invalidated_sequence,
+                    "fresh_sequence": pair_sequence,
+                    "additional_invalidations": deferred.invalidations}
+
+
 def drain_pending_observation_events(incoming, observation_monitor, terminal_id):
     """Process events already queued when a planner future becomes done."""
     latest = None
@@ -772,44 +895,184 @@ def drain_pending_observation_events(incoming, observation_monitor, terminal_id)
             break
         if row.get("event") == "observation":
             latest = row
-        if (invalidation is None and observation_monitor is not None and
-                row.get("event") in event_types):
-            invalidation = observation_monitor.observe(row)
+        if observation_monitor is not None and row.get("event") in event_types:
+            invalidation = prefer_observation_invalidation(
+                invalidation, observation_monitor.observe(row))
         if row.get("event") == "terminal" and row.get("id") == terminal_id:
             terminal = row
     return {"latest": latest, "terminal": terminal, "invalidation": invalidation,
             "pending_events": not incoming.empty()}
 
 
-def settle_pending_observation_backlog(incoming, latest, terminal_id):
+def settle_pending_observation_backlog(incoming, latest, terminal_id,
+                                      observation_monitor=None):
     """Consume a finite recovery budget; report exhaustion without retry loops."""
     batches = 0
+    invalidation = None
     while batches < MAX_PENDING_OBSERVATION_RECOVERY_BATCHES:
         if incoming.empty():
-            return {"latest": latest, "batches": batches, "exhausted": False}
-        drained = drain_pending_observation_events(incoming, None, terminal_id)
+            return {"latest": latest, "batches": batches, "exhausted": False,
+                    "invalidation": invalidation}
+        drained = drain_pending_observation_events(
+            incoming, observation_monitor, terminal_id)
         if drained["latest"] is not None:
             latest = drained["latest"]
+        invalidation = prefer_observation_invalidation(
+            invalidation, drained["invalidation"])
         batches += 1
         if not drained["pending_events"]:
-            return {"latest": latest, "batches": batches, "exhausted": False}
+            return {"latest": latest, "batches": batches, "exhausted": False,
+                    "invalidation": invalidation}
     return {"latest": latest, "batches": batches,
+            "invalidation": invalidation,
             "exhausted": not incoming.empty()}
 
 
 def recover_pending_observation_backlog(incoming, latest, source_sequence,
-                                        terminal_id, wait):
-    recovery = settle_pending_observation_backlog(incoming, latest, terminal_id)
+                                        terminal_id, wait,
+                                        observation_monitor=None):
+    recovery = settle_pending_observation_backlog(
+        incoming, latest, terminal_id, observation_monitor)
     if recovery["exhausted"]:
         return recovery
     latest = recovery["latest"]
     if latest["sequence"] <= source_sequence:
-        latest = wait(lambda row:row["event"] == "observation" and
-                      type(row.get("sequence")) is int and
-                      row["sequence"] > source_sequence)
+        predicate = lambda row:row["event"] == "observation" and \
+            type(row.get("sequence")) is int and row["sequence"] > source_sequence
+        if hasattr(observation_monitor, "last_pair_sequence"):
+            deferred = DeferredObservationMonitor(observation_monitor)
+            latest = wait(predicate, observation_monitor=deferred)
+            recovery["wait_invalidations"] = deferred.invalidations
+            for candidate in deferred.invalidations:
+                recovery["invalidation"] = prefer_observation_invalidation(
+                    recovery.get("invalidation"), candidate)
+        else:
+            latest = wait(predicate)
     recovery["latest"] = latest
     recovery["fresh_observation_sequence"] = latest["sequence"]
     return recovery
+
+
+def recover_stale_cover_submission(rejected, *, identifier, expected_sequence,
+                                   consumed_events, latest, incoming, wait,
+                                   observation_monitor, latest_reader=None):
+    """Reject stale cover authority and wait for a new planner source."""
+    if (type(rejected) is not dict or rejected.get("event") != "rejected" or
+            rejected.get("id") != identifier or rejected.get("reason") !=
+            "latest observation sequence required before input" or
+            type(expected_sequence) is not int):
+        raise ValueError("exact stale initial-cover rejection required")
+    invalidation = observe_cover_submission_events(
+        consumed_events, observation_monitor)
+    recovery = recover_pending_observation_backlog(
+        incoming, latest, expected_sequence, identifier, wait,
+        observation_monitor=observation_monitor)
+    if recovery["exhausted"]:
+        raise RuntimeError("stale initial-cover recovery budget exhausted")
+    invalidation = prefer_observation_invalidation(
+        invalidation, recovery.get("invalidation"))
+    fresh = recovery["latest"]
+    if (type(fresh) is not dict or type(fresh.get("sequence")) is not int or
+            fresh["sequence"] <= expected_sequence):
+        raise RuntimeError("stale initial cover requires a newer observation")
+    coherent_recovery = None
+    if hasattr(observation_monitor, "last_pair_sequence"):
+        latest_state = [fresh]
+        def source_reader():
+            observed = latest_reader() if latest_reader is not None else None
+            if (type(observed) is dict and
+                    type(observed.get("sequence")) is int and
+                    (type(latest_state[0]) is not dict or
+                     observed["sequence"] > latest_state[0].get("sequence", -1))):
+                latest_state[0] = observed
+            return latest_state[0]
+        fresh, coherent_recovery = recover_coherent_source_after_observation(
+            expected_sequence, invalidation, latest_reader=source_reader,
+            wait=wait, observation_monitor=observation_monitor)
+        for candidate in coherent_recovery["additional_invalidations"]:
+            invalidation = prefer_observation_invalidation(invalidation, candidate)
+    return {"latest": fresh, "recovery": recovery,
+            "invalidation": invalidation,
+            "coherent_source_recovery": coherent_recovery,
+            "cover_policy": "discarded_until_fresh_plan"}
+
+
+def submit_initial_cover_with_recovery(submit, *, identifier, latest_reader,
+                                       incoming, wait,
+                                       observation_monitor):
+    """Bind stale-cover recovery to the exact sequence sent before its ACK wait."""
+    source = latest_reader()
+    if type(source) is not dict or type(source.get("sequence")) is not int:
+        raise ValueError("initial cover requires a source observation")
+    submitted_sequence = source["sequence"]
+    consumed_events = []
+    ack = submit(consumed_events)
+    if type(ack) is not dict or ack.get("event") not in ("accepted", "rejected"):
+        raise ValueError("initial cover submit returned an invalid acknowledgement")
+    if ack["event"] == "accepted":
+        invalidation = observe_cover_submission_events(
+            consumed_events, observation_monitor)
+        latest = latest_reader()
+        coherent_recovery = None
+        if (hasattr(observation_monitor, "last_pair_sequence") and any(
+                row.get("event") in observation_monitor.event_types
+                for row in consumed_events)):
+            latest, coherent_recovery = recover_coherent_source_after_observation(
+                submitted_sequence, invalidation,
+                latest_reader=latest_reader, wait=wait,
+                observation_monitor=observation_monitor)
+            for candidate in coherent_recovery["additional_invalidations"]:
+                invalidation = prefer_observation_invalidation(
+                    invalidation, candidate)
+        return {"ack": ack, "latest": latest,
+                "submitted_sequence": submitted_sequence,
+                "recovery": None, "invalidation": invalidation,
+                "coherent_source_recovery": coherent_recovery}
+    recovery = recover_stale_cover_submission(
+        ack, identifier=identifier, expected_sequence=submitted_sequence,
+        consumed_events=consumed_events, latest=latest_reader(),
+        incoming=incoming, wait=wait,
+        observation_monitor=observation_monitor, latest_reader=latest_reader)
+    return {"ack": ack, "submitted_sequence": submitted_sequence,
+            **recovery}
+
+
+def recover_stale_executor_rejection(rejected, *, identifier,
+                                     expected_sequence, controller_received_ns,
+                                     latest, incoming, wait,
+                                     final_action_admission, running_guard):
+    """Discard a pre-acceptance stale action and return only with fresh state."""
+    if (type(rejected) is not dict or rejected.get("event") != "rejected" or
+            rejected.get("reason") !=
+            "latest observation sequence required before input" or
+            type(identifier) is not str or not identifier or
+            type(expected_sequence) is not int or
+            type(controller_received_ns) is not int or
+            type(latest) is not dict or type(latest.get("sequence")) is not int or
+            latest["sequence"] < expected_sequence):
+        raise ValueError("exact stale-sequence rejection and source required")
+    recovery = recover_pending_observation_backlog(
+        incoming, latest, expected_sequence, identifier, wait)
+    if recovery["exhausted"]:
+        raise RuntimeError(
+            "stale Executor rejection recovery budget exhausted "
+            f"after {recovery['batches']} batches at sequence "
+            f"{recovery['latest']['sequence']}")
+    fresh = recovery["latest"]
+    if (type(fresh) is not dict or type(fresh.get("sequence")) is not int or
+            fresh["sequence"] <= expected_sequence):
+        raise RuntimeError("stale Executor rejection requires a newer observation")
+    receipt = {
+        "event": "rejected", "id": identifier,
+        "reason": rejected["reason"],
+        "expected_sequence": expected_sequence,
+        "observed_sequence": fresh["sequence"],
+        "controller_received_ns": controller_received_ns,
+    }
+    admission = record_executor_stale_rejection(final_action_admission, receipt)
+    guard = running_guard.record_preacceptance_rejection(receipt)
+    return {"latest": fresh, "recovery": recovery,
+            "rejection": receipt, "admission": admission, "guard": guard}
 
 
 def main():
@@ -856,7 +1119,8 @@ def main():
         latest = None
         reader_thread = threading.Thread(target=reader, daemon=True)
         reader_thread.start()
-        def wait(predicate, timeout=40, observation_monitor=None):
+        def wait(predicate, timeout=40, observation_monitor=None,
+                 consumed_events=None):
             nonlocal latest
             end = time.monotonic() + timeout
             while time.monotonic() < end:
@@ -867,6 +1131,8 @@ def main():
                         detail="stderr not synchronously drained"
                         raise RuntimeError(f"session exited before expected event: {detail}")
                     continue
+                if consumed_events is not None:
+                    consumed_events.append(row)
                 if row["event"] == "observation":
                     latest = row
                 event_types = (getattr(observation_monitor, "event_types", {"observation"})
@@ -927,18 +1193,58 @@ def main():
             failure_cleanup.set_stage("cover_program_compile")
             cover_steps=compile_cover(cover_semantic)
             cover_ids=[];cover_terminals=[];cover_renewal_gaps_ms=[]
-            def submit_cover(identifier):
+            cover_submission_recovery=None
+            cover_submission_invalidation=None
+            def submit_cover(identifier, consumed_events=None):
                 nonlocal clock_ns
                 clock_ns=time.perf_counter_ns()
                 command={"op":"submit","id":identifier,"expected_sequence":latest["sequence"],
                   "valid_until_ns":clock_ns+25_000_000_000,"steps":cover_steps}
                 process.stdin.write(json.dumps(command)+"\n");process.stdin.flush()
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                              (r.get("id")==identifier or r["event"]=="rejected"))
-                if accepted["event"]!="accepted":raise RuntimeError(accepted)
+                              (r.get("id")==identifier or r["event"]=="rejected"),
+                              consumed_events=consumed_events)
+                if accepted["event"]!="accepted":return accepted
                 cover_ids.append(identifier);return accepted
             failure_cleanup.set_stage("cover_program_admission")
-            submit_cover(cover)
+            cover_result = submit_initial_cover_with_recovery(
+                lambda consumed:submit_cover(cover, consumed), identifier=cover,
+                latest_reader=lambda:latest,
+                incoming=incoming, wait=wait,
+                observation_monitor=validity_monitor)
+            cover_ack=cover_result["ack"]
+            if cover_ack["event"] == "rejected":
+                cover_submission_recovery = cover_result
+                reset = reset_cover_after_preacceptance_rejection(
+                    cover_result,
+                    build_monitor=lambda source:build_cover_monitor(
+                        signal_reader,source,None,index,ammo_reader=ammo_reader,
+                        requires_ammo=False),
+                    select_monitor=select_cover_monitor)
+                cover_submission_invalidation = reset["receipt"]
+                latest = reset["latest"]
+                cover = None
+                cover_semantic=[];cover_validity_semantic=None
+                cover_policy_source_iteration=None;cover_steps=[]
+                validity_monitor,validity_admission=(
+                    reset["monitor"],reset["admission"])
+            elif cover_result.get("invalidation") is not None:
+                failure_cleanup.set_stage("initial_cover_invalidation_release")
+                cancel_terminal = cancel_initial_cover_before_planner(
+                    process, wait, cover)
+                cover_terminals.append(cancel_terminal)
+                cover_submission_invalidation = \
+                    cover_submission_invalidation_receipt(
+                        cover_result, cancel_terminal)
+                latest = cover_result["latest"]
+                cover = None
+                cover_semantic=[];cover_validity_semantic=None
+                cover_policy_source_iteration=None;cover_steps=[]
+                validity_monitor,validity_admission=build_cover_monitor(
+                    signal_reader,latest,None,index,ammo_reader=ammo_reader,
+                    requires_ammo=False)
+                validity_monitor,validity_admission=select_cover_monitor(
+                    validity_monitor,validity_admission,[],None)
             failure_cleanup.set_stage("decision_artifact_prepare")
             model_root=args.out/f"decision-{index}"
             model_root.mkdir()
@@ -973,7 +1279,8 @@ def main():
                 current_terminal=None
                 while not future.done():
                     try:
-                        boundary=wait(lambda r:r["event"]=="terminal" and
+                        boundary=wait(lambda r:current_cover is not None and
+                                      r["event"]=="terminal" and
                                       r.get("id")==current_cover,timeout=.1,
                                       observation_monitor=invalidation_monitor)
                     except TimeoutError:
@@ -1018,6 +1325,8 @@ def main():
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     next_accepted=submit_cover(next_cover)
+                    if next_accepted["event"] != "accepted":
+                        raise RuntimeError(next_accepted)
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
@@ -1033,7 +1342,7 @@ def main():
                         require_cover_terminal(current_terminal)
                     if drained["invalidation"] is not None:
                         invalidation = drained["invalidation"]
-                        if current_terminal is None:
+                        if current_terminal is None and current_cover is not None:
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
                                 planner,planner_handle,process,wait,current_cover)
                             cover_terminals.append(current_terminal)
@@ -1043,7 +1352,7 @@ def main():
                             "reason": "pending_observation_backlog_limit",
                             "requires_new_decision": True,
                         }
-                        if current_terminal is None:
+                        if current_terminal is None and current_cover is not None:
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
                                 planner,planner_handle,process,wait,current_cover)
                             cover_terminals.append(current_terminal)
@@ -1058,7 +1367,7 @@ def main():
             if model_session_id is not None and observed_session_id != model_session_id:
                 raise RuntimeError("model session identity changed")
             model_session_id=observed_session_id
-            if current_terminal is None:
+            if current_terminal is None and current_cover is not None:
                 process.stdin.write(json.dumps({"op":"cancel","id":current_cover})+"\n");process.stdin.flush()
                 while current_terminal is None:
                     boundary=wait(lambda r:r["event"]=="terminal" and r.get("id")==current_cover,
@@ -1070,7 +1379,8 @@ def main():
                         current_terminal=boundary
                 cover_terminals.append(current_terminal)
             failure_cleanup.set_stage("cover_terminal_validation")
-            require_cover_terminal(current_terminal, cancellation_requested=True)
+            if current_cover is not None:
+                require_cover_terminal(current_terminal, cancellation_requested=True)
             final_action_admission=final_admission_from_planner_result(
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())
@@ -1097,7 +1407,7 @@ def main():
                   "planner_cancellation_requested":planner_result.cancellation_requested,
                   "planner_interrupt":planner_interrupt,
                   "controller_model_started_ns":model_started_ns,"controller_model_ended_ns":model_ended_ns,
-                  "cover_program_ids":cover_ids,"cover_renewals":len(cover_ids)-1,
+                  "cover_program_ids":cover_ids,"cover_renewals":max(0,len(cover_ids)-1),
                   "cover_renewal_gaps_ms":cover_renewal_gaps_ms,
                   "cover_policy":cover_semantic,"cover_policy_source_iteration":cover_policy_source_iteration,
                   "cover_validity_admission":validity_admission,
@@ -1106,7 +1416,10 @@ def main():
                   "pending_observation_recovery":recovery,
                   "policy_invalidation":invalidation,"model_action_discarded":True,
                   "discard_reason":"policy_dependency_invalidated",
-                  "cover_terminal_before_plan":True,"plan_terminal":"not_admitted"})
+                  "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
+                  "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
+                  "plan_terminal":"not_admitted"})
                 continue
             if not planner_result.answer_eligible:
                 decisions.append({"iteration":index,"source_image":str(source_image),
@@ -1121,14 +1434,17 @@ def main():
                   "planner_cancellation_requested":planner_result.cancellation_requested,
                   "planner_interrupt":planner_interrupt,"planner_error":planner_result.error,
                   "controller_model_started_ns":model_started_ns,"controller_model_ended_ns":model_ended_ns,
-                  "cover_program_ids":cover_ids,"cover_renewals":len(cover_ids)-1,
+                  "cover_program_ids":cover_ids,"cover_renewals":max(0,len(cover_ids)-1),
                   "cover_renewal_gaps_ms":cover_renewal_gaps_ms,"cover_policy":cover_semantic,
                   "cover_policy_source_iteration":cover_policy_source_iteration,
                   "cover_validity_admission":validity_admission,
                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
                   "model_action_discarded":True,"discard_reason":"planner_answer_ineligible",
-                  "cover_terminal_before_plan":True,"plan_terminal":"not_admitted"})
+                  "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
+                  "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
+                  "plan_terminal":"not_admitted"})
                 continue
             try:
                 validate_action(action)
@@ -1150,14 +1466,17 @@ def main():
                   "planner_cancellation_requested":planner_result.cancellation_requested,
                   "planner_interrupt":planner_interrupt,"controller_validation_error":str(error),
                   "controller_model_started_ns":model_started_ns,"controller_model_ended_ns":model_ended_ns,
-                  "cover_program_ids":cover_ids,"cover_renewals":len(cover_ids)-1,
+                  "cover_program_ids":cover_ids,"cover_renewals":max(0,len(cover_ids)-1),
                   "cover_renewal_gaps_ms":cover_renewal_gaps_ms,"cover_policy":cover_semantic,
                   "cover_policy_source_iteration":cover_policy_source_iteration,
                   "cover_validity_admission":validity_admission,
                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
                   "model_action_discarded":True,"discard_reason":"controller_validation_failed",
-                  "cover_terminal_before_plan":True,"plan_terminal":"not_admitted"})
+                  "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
+                  "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
+                  "plan_terminal":"not_admitted"})
                 continue
             if action["state"] != "active":
                 final_action_admission=record_controller_no_input(
@@ -1174,7 +1493,7 @@ def main():
                   "planner_cancellation_requested":planner_result.cancellation_requested,
                   "planner_interrupt":planner_interrupt,
                   "controller_model_started_ns":model_started_ns,"controller_model_ended_ns":model_ended_ns,
-                  "cover_program_ids":cover_ids,"cover_renewals":len(cover_ids)-1,
+                  "cover_program_ids":cover_ids,"cover_renewals":max(0,len(cover_ids)-1),
                   "cover_renewal_gaps_ms":cover_renewal_gaps_ms,
                   "cover_policy":cover_semantic,"cover_policy_source_iteration":cover_policy_source_iteration,
                   "cover_validity_admission":validity_admission,
@@ -1204,14 +1523,17 @@ def main():
                   "planner_cancellation_requested":planner_result.cancellation_requested,
                   "planner_interrupt":planner_interrupt,
                   "controller_model_started_ns":model_started_ns,"controller_model_ended_ns":model_ended_ns,
-                  "cover_program_ids":cover_ids,"cover_renewals":len(cover_ids)-1,
+                  "cover_program_ids":cover_ids,"cover_renewals":max(0,len(cover_ids)-1),
                   "cover_renewal_gaps_ms":cover_renewal_gaps_ms,"cover_policy":cover_semantic,
                   "cover_policy_source_iteration":cover_policy_source_iteration,
                   "cover_validity_admission":validity_admission,
                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
                   "model_action_discarded":True,"discard_reason":"action_not_current",
-                  "cover_terminal_before_plan":True,"plan_terminal":"not_admitted"})
+                  "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
+                  "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
+                  "plan_terminal":"not_admitted"})
                 continue
             grounded_capture_ns=source_health_signal["capture_ns"]
             trace=[]
@@ -1225,18 +1547,44 @@ def main():
             running_invalidation=None
             partial_execution=None
             refresh_program_ids=[]
+            stale_rejection=None
+            stale_recovery=None
             def execute_segment(identifier,commands,role,command_indices,
                                 contingency_after=None,branch_evidence=None):
-                nonlocal program_admissions,first_accepted,final_action_admission
+                nonlocal program_admissions,first_accepted,final_action_admission,latest
                 before=dict(latest);event_start=len(all_events);clock_ns=time.perf_counter_ns()
                 steps=compile_commands(commands)
                 submit_command={"op":"submit","id":identifier,
                   "expected_sequence":latest["sequence"],"valid_until_ns":clock_ns+25_000_000_000,
                   "steps":steps}
                 process.stdin.write(json.dumps(submit_command)+"\n");process.stdin.flush()
+                ack_wait_events=[]
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
-                              (r.get("id")==identifier or r["event"]=="rejected"))
-                if accepted["event"]!="accepted":raise RuntimeError(accepted)
+                              (r.get("id")==identifier or r["event"]=="rejected"),
+                              consumed_events=ack_wait_events)
+                if accepted["event"]!="accepted":
+                    if accepted.get("reason") != \
+                            "latest observation sequence required before input":
+                        raise RuntimeError(accepted)
+                    rejection_received_ns = time.perf_counter_ns()
+                    recovered = recover_stale_executor_rejection(
+                        accepted, identifier=identifier,
+                        expected_sequence=submit_command["expected_sequence"],
+                        controller_received_ns=rejection_received_ns,
+                        latest=latest, incoming=incoming, wait=wait,
+                        final_action_admission=final_action_admission,
+                        running_guard=running_guard)
+                    latest = recovered["latest"]
+                    stale_rejection = recovered["rejection"]
+                    final_action_admission = recovered["admission"]
+                    guard_receipt = recovered["guard"]
+                    return {"records": [], "invalidated": False,
+                            "partial": None, "cancel_event": None,
+                            "physical_release_event": None,
+                            "release_pending_guard": None, "terminal": None,
+                            "guard": guard_receipt,
+                            "stale_rejection": stale_rejection,
+                            "stale_recovery": recovered["recovery"]}
                 program_admissions+=1
                 guard_acceptance={"event":"accepted","id":identifier,
                                   "steps":accepted["steps"],
@@ -1252,8 +1600,12 @@ def main():
                 final_action_admission=running_guard.final_admission
                 if first_accepted is None:
                     first_accepted=accepted["accepted_ns"]
-                boundary=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier,
-                              observation_monitor=action_monitor)
+                boundary=replay_action_observations_before_wait(
+                    ack_wait_events, action_monitor)
+                if boundary is None:
+                    boundary=wait(lambda r:r["event"]=="terminal" and
+                                  r.get("id")==identifier,
+                                  observation_monitor=action_monitor)
                 invalidated=boundary["event"]=="running_action_invalidation"
                 cancel_event=None
                 physical_release_event=None
@@ -1300,14 +1652,32 @@ def main():
                         "release_pending_guard":release_pending_receipt,
                         "terminal":terminal,"guard":guard_receipt}
             def refresh_between_segments(identifier):
-                nonlocal program_admissions
+                nonlocal program_admissions,latest,final_action_admission
+                nonlocal stale_rejection,stale_recovery
                 clock_ns=time.perf_counter_ns()
+                expected_sequence=latest["sequence"]
                 process.stdin.write(json.dumps({"op":"submit","id":identifier,
-                  "expected_sequence":latest["sequence"],"valid_until_ns":clock_ns+5_000_000_000,
+                  "expected_sequence":expected_sequence,"valid_until_ns":clock_ns+5_000_000_000,
                   "steps":[{"op":"observe"}]})+"\n");process.stdin.flush()
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
                               (r.get("id")==identifier or r["event"]=="rejected"))
-                if accepted["event"]!="accepted":raise RuntimeError(accepted)
+                if accepted["event"]!="accepted":
+                    if accepted.get("reason") != \
+                            "latest observation sequence required before input":
+                        raise RuntimeError(accepted)
+                    rejection_received_ns=time.perf_counter_ns()
+                    recovered=recover_stale_executor_rejection(
+                        accepted,identifier=identifier,
+                        expected_sequence=expected_sequence,
+                        controller_received_ns=rejection_received_ns,
+                        latest=latest,incoming=incoming,wait=wait,
+                        final_action_admission=final_action_admission,
+                        running_guard=running_guard)
+                    latest=recovered["latest"]
+                    final_action_admission=recovered["admission"]
+                    stale_rejection=recovered["rejection"]
+                    stale_recovery=recovered["recovery"]
+                    return False
                 program_admissions+=1;refresh_program_ids.append(identifier)
                 boundary=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier,
                               observation_monitor=action_monitor)
@@ -1337,6 +1707,10 @@ def main():
                 result=execute_segment(f"plan-{index}-primary-{segment_start}-{segment_end}",
                     segment_commands,"primary",list(range(segment_start,segment_end+1)))
                 records=result["records"]
+                if result.get("stale_rejection") is not None:
+                    stale_rejection=result["stale_rejection"]
+                    stale_recovery=result["stale_recovery"]
+                    break
                 if result["invalidated"]:
                     running_invalidation=result["guard"]["invalidation"]
                     partial_execution=result["partial"]
@@ -1360,6 +1734,10 @@ def main():
                          "semantic_command":trigger["command"],
                          "effect_receipt":trigger["receipt"]})
                     fallback_records=fallback_result["records"]
+                    if fallback_result.get("stale_rejection") is not None:
+                        stale_rejection=fallback_result["stale_rejection"]
+                        stale_recovery=fallback_result["stale_recovery"]
+                        break
                     if fallback_result["invalidated"]:
                         running_invalidation=fallback_result["guard"]["invalidation"]
                         partial_execution=fallback_result["partial"]
@@ -1372,6 +1750,52 @@ def main():
                         f"plan-{index}-refresh-after-{segment_end}"):
                     running_invalidation=running_guard.receipt()["invalidation"]
                     break
+            if stale_rejection is not None:
+                recovery = stale_recovery
+                if recovery["exhausted"]:
+                    raise RuntimeError("stale Executor rejection recovery exhausted")
+                running_action_receipt=running_guard.receipt()
+                receipts=[row["receipt"] for row in trace]
+                decisions.append({"iteration":index,"source_image":str(source_image),
+                  "model_image":str(image),
+                  "model_image_sha256":hashlib.sha256(image.read_bytes()).hexdigest(),
+                  "action":action,"usage":usage,"model_ns":model_ns,
+                  "prior_soft_event_summary":prior_soft_event_summary,
+                  "effect_memory":effect_memory,"effect_receipts":receipts,
+                  "effect_observation_samples":sum(row["observation_samples"] for row in trace),
+                  "effect_observation_capture_ms":sum(row["observation_capture_ms"] for row in trace),
+                  "execution_trace":trace,"contingency_branch":branch,
+                  "compiled_commands":[row["command"] for row in trace],
+                  "model_session_id":model_session_id,
+                  "planner_turn_id":planner_handle.turn_id,
+                  "planner_turn_status":planner_result.status,
+                  "planner_answer_eligible":planner_result.answer_eligible,
+                  "planner_terminal_observed_ns":planner_terminal_observed_ns,
+                  "final_action_admission":final_action_admission,
+                  "running_action_guard":running_action_receipt,
+                  "executor_preacceptance_rejection":stale_rejection,
+                  "pending_observation_recovery":recovery,
+                  "running_action_invalidation":running_invalidation,
+                  "partial_execution":partial_execution,
+                  "action_refresh_program_ids":refresh_program_ids,
+                  "action_source_observation":action_source_observation,
+                  "action_source_signals":{"health":source_health_signal,
+                                            "ammo":source_ammo_signal},
+                  "action_current_signals":{"health":current_health_signal,
+                                             "ammo":current_ammo_signal},
+                  "planner_cancellation_requested":planner_result.cancellation_requested,
+                  "planner_interrupt":planner_interrupt,
+                  "controller_model_started_ns":model_started_ns,
+                  "controller_model_ended_ns":model_ended_ns,
+                  "model_action_discarded":not trace,
+                  "remaining_action_discarded":True,
+                  "discard_reason":"executor_stale_sequence_before_acceptance",
+                  "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
+                  "cover_submission_recovery":cover_submission_recovery,
+                  "cover_submission_invalidation":cover_submission_invalidation,
+                  "plan_terminal":("stale_rejected_before_next_segment" if trace
+                                   else "rejected_before_admission")})
+                continue
             if running_guard.receipt()["state"]==RUNNING_BETWEEN:
                 running_guard.record_action_complete()
             running_action_receipt=running_guard.receipt()
@@ -1404,8 +1828,10 @@ def main():
               "model_image_to_plan_accept_ns":first_accepted-grounded_capture_ns,
               "fresh_observation_to_plan_accept_ns":first_accepted-fresh_before_plan["capture_ns"],
               "fresh_sequence_at_plan":fresh_before_plan["sequence"],
-              "cover_terminal_before_plan":True,
-              "cover_program_ids":cover_ids,"cover_renewals":len(cover_ids)-1,
+              "cover_terminal_before_plan":(current_cover is None or current_terminal is not None),
+              "cover_submission_recovery":cover_submission_recovery,
+              "cover_submission_invalidation":cover_submission_invalidation,
+              "cover_program_ids":cover_ids,"cover_renewals":max(0,len(cover_ids)-1),
               "cover_renewal_gaps_ms":cover_renewal_gaps_ms,
               "cover_policy":cover_semantic,"cover_policy_source_iteration":cover_policy_source_iteration,
               "cover_validity_admission":validity_admission,

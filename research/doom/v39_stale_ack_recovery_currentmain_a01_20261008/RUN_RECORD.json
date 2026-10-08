@@ -1,0 +1,16 @@
+{
+  "base_commit": "9ee2f59ca5a75d9405a9f6a67bd6a9c3c254209e",
+  "runs": {
+    "normal": {
+      "command": "py -3.13 -m unittest research.doom.test_map01_overlap_controller_v39 research.doom.test_map01_v39_pending_observation_drain research.doom.test_overlap_controller_v39_wait research.doom.v39_stale_ack_recovery_currentmain_a01_20261008.test_stale_rejection_recovery research.live_control.test_running_action_guard_v1 research.live_control.test_running_action_guard_v2 research.live_control.test_running_action_guard_v3 research.live_control.test_final_action_admission_v2 -v",
+      "passed": true,
+      "test_count": 63
+    },
+    "optimized": {
+      "command": "py -3.13 -O -m unittest research.doom.test_map01_overlap_controller_v39 research.doom.test_map01_v39_pending_observation_drain research.doom.test_overlap_controller_v39_wait research.doom.v39_stale_ack_recovery_currentmain_a01_20261008.test_stale_rejection_recovery research.live_control.test_running_action_guard_v1 research.live_control.test_running_action_guard_v2 research.live_control.test_running_action_guard_v3 research.live_control.test_final_action_admission_v2 -v",
+      "passed": true,
+      "test_count": 63
+    }
+  },
+  "scope": "local synthetic and unit tests; no live allocation"
+}

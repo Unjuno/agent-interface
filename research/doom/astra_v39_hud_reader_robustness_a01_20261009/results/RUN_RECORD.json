@@ -1,0 +1,22 @@
+{
+  "auditor_v1_sha256": "e7a34b497e58eca4d7b55441ad3d5bf458caa18b0d7705d205fc3fe4b6d5a8b1",
+  "base_commit": "cb3fb7cea16ab57c5474164dc17b88f7ff51daa9",
+  "baseline_matches": 13,
+  "candidate_disposition": "PASS_NO_FALSE_OBSERVED_VALUE",
+  "candidate_sha256": "e8e9994405d3b0e538d99bed5368778e05eaf9d5e23b81eb43f07f6c94d3bbf9",
+  "command": "python3 analyze.py --wad <freedoom2.wad matching frozen SHA-256>",
+  "corrected_audit_sha256": "2be0fa0577bd52e1d2ed585c5a05858fb7c550fad34d6ac95549d269fba04261",
+  "corrected_audit_status": "PASS_AUDIT",
+  "corrected_auditor_sha256": "ab98413681c9e6aee50527e40786269d473d43548da7a5870cc3f1c3c6411ff4",
+  "execution_id": "v39-hud-reader-perturbation-a01-20261009",
+  "first_audit_sha256": "1d6994eb1e39703116d5bfa73dba0c2090b240494b9de2dce81a72ef86de174e",
+  "first_audit_status": "FAIL_AUDIT",
+  "freeze_sha256": "a901228ee6740af9bb76e2153d80ebf6cb7625abdb7bc466b9784b56eedcf3ef",
+  "mutation_controls": "5/5 rejected by corrected audit",
+  "perturbed_reads": 182,
+  "perturbed_unknown": 181,
+  "perturbed_wrong_observed": 0,
+  "result_sha256": "af57af9243b9470bb01fa0e7f4c9ab975b7d06340d114de53a1216910ea25e84",
+  "schema": "v39-hud-reader-perturbation-run-record-a01-v1",
+  "scope": "Offline synthetic pixel perturbation; no game, GUI, model, container, or OS input."
+}

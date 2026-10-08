@@ -1,0 +1,142 @@
+{
+  "schema": "issue8651-observation-response-factorial-protocol-v1",
+  "freeze_id": "8651-A04-20261009",
+  "issue": 8651,
+  "parent_issue": 6526,
+  "created_utc": "2026-10-09",
+  "source_main_sha": "0a9e1b95520b2725ae5b4af51be87b472569f085",
+  "claim_type": "deterministic synthetic mechanism discriminator",
+  "hypothesis": "In the deadline-sensitive transient-cue regime, active-minus-sham persisted-effect contrast under OBSERVATION_REACTIVE differs from FIXED_REPLAY by at least 0.50 absolute success-rate points; interaction magnitude in stable and no-information controls is at most 0.10.",
+  "design": {
+    "factors": {
+      "observation": [
+        "SHAM_MINIMAL",
+        "ACTIVE_LOADED"
+      ],
+      "response": [
+        "FIXED_REPLAY",
+        "OBSERVATION_REACTIVE"
+      ]
+    },
+    "cells": [
+      {
+        "observation": "SHAM_MINIMAL",
+        "response": "FIXED_REPLAY"
+      },
+      {
+        "observation": "ACTIVE_LOADED",
+        "response": "FIXED_REPLAY"
+      },
+      {
+        "observation": "SHAM_MINIMAL",
+        "response": "OBSERVATION_REACTIVE"
+      },
+      {
+        "observation": "ACTIVE_LOADED",
+        "response": "OBSERVATION_REACTIVE"
+      }
+    ],
+    "seeds_per_regime": 8,
+    "seed_blocks": [
+      {
+        "regime": "deadline_transient_cue",
+        "seeds": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "evidence": "urgent",
+        "task_deadline": 2,
+        "cue_valid_until": 2.2
+      },
+      {
+        "regime": "stable_no_transient_deadline",
+        "seeds": [
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "evidence": "urgent",
+        "task_deadline": 5,
+        "cue_valid_until": null
+      },
+      {
+        "regime": "no_decision_information",
+        "seeds": [
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "evidence": "none",
+        "task_deadline": 2,
+        "cue_valid_until": null
+      }
+    ],
+    "randomized_order": {
+      "algorithm": "four cyclic rotations of canonical cell order, repeated twice; deterministic per-regime PRNG shuffle assigns the 8 balanced orders to the 8 seeds",
+      "base_seed": 8651,
+      "positions_per_cell_per_position_per_regime": 2
+    }
+  },
+  "simulator": {
+    "time_unit": "seconds from reset",
+    "reset": "fresh state for each cell; identical regime/seed shares exogenous cue and reset id",
+    "initial_observation_at": 0,
+    "observation_costs": {
+      "SHAM_MINIMAL": 0.2,
+      "ACTIVE_LOADED": 1.2
+    },
+    "active_observation": "blocks the single event loop from request/start until completion; both levels return the current declared cue evidence",
+    "fixed_action_nominal_time": 0.5,
+    "reactive_rule": "urgent evidence: reobserve exactly once only if confirmation plus persistence can finish before task deadline and cue validity; otherwise yield. none evidence: use the fixed nominal action time. Reobserve returns current declared evidence.",
+    "allowed_choices": [
+      "REOBSERVE",
+      "SUBMIT",
+      "YIELD"
+    ],
+    "confirmation_observations": 1,
+    "input_key": "ENTER",
+    "input_release_delay": 0.05,
+    "persisted_effect_delay_after_release": 0.1,
+    "success": "independently auditable persisted effect time is at or before the task deadline"
+  },
+  "gates": {
+    "positive_interaction_min_abs": 0.5,
+    "control_interaction_max_abs": 0.1,
+    "method": "PASS_METHOD_SCOPED only if all 96 rows, reset/matching/order/timing/decision/input-release/effect receipts audit and all 4 frozen corruptions are rejected",
+    "result": "INTERACTION_SUPPORTED_SCOPED only if positive regime meets min interaction and both controls meet equivalence bound; else NO_INTERACTION_SCOPED or UNCERTAIN"
+  },
+  "scope": {
+    "no_model": true,
+    "no_live_gui": true,
+    "no_participant": true,
+    "no_os_input": true,
+    "no_external_service": true,
+    "no_live_allocation": true,
+    "limitations": [
+      "Synthetic deterministic timing/evidence only.",
+      "Not a natural mediation estimate.",
+      "No inference about real GUI observation cost, controller quality, safety, or user tempo."
+    ]
+  },
+  "successor_of": {
+    "allocation": "8651-A03-20261009",
+    "disposition": "STOP_BEFORE_CANDIDATE",
+    "reason": "A03's expected SHA-256 values did not match the exact committed source bytes, so its start gate stopped before image pull and candidate invocation. A04 recomputes and verifies hashes from the immutable commit before branch creation."
+  }
+}

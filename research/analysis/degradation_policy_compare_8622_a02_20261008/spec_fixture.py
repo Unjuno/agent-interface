@@ -1,0 +1,287 @@
+import json
+
+SPEC = json.loads(r'''{
+  "schema": "8622-degradation-policy-spec-v1",
+  "version": "policy-v1",
+  "components": {
+    "planner": [
+      "planner_process",
+      "planner_backend"
+    ],
+    "raw_observation": [
+      "capture_source",
+      "raw_adapter"
+    ],
+    "semantic_observation": [
+      "capture_source",
+      "shared_parser",
+      "semantic_scheduler"
+    ],
+    "verifier": [
+      "capture_source",
+      "shared_parser",
+      "semantic_scheduler"
+    ],
+    "effect_confirmation": [
+      "effect_source",
+      "shared_parser",
+      "effect_process"
+    ],
+    "telemetry": [
+      "event_loop",
+      "telemetry_sink"
+    ],
+    "authority": [
+      "authority_owner"
+    ],
+    "release": [
+      "release_channel"
+    ]
+  },
+  "operations": [
+    {
+      "id": "inspect_raw",
+      "requires": [
+        "raw_observation",
+        "authority",
+        "release"
+      ],
+      "evidence": [
+        "raw_fresh",
+        "raw_intact"
+      ],
+      "source": "raw_observation",
+      "claim": "RAW_OBSERVED"
+    },
+    {
+      "id": "present_semantics",
+      "requires": [
+        "semantic_observation",
+        "verifier",
+        "authority",
+        "release"
+      ],
+      "evidence": [
+        "semantic_fresh",
+        "semantic_intact"
+      ],
+      "source": "semantic_observation",
+      "claim": "SEMANTIC_VERIFIED"
+    },
+    {
+      "id": "preview_plan",
+      "requires": [
+        "planner",
+        "semantic_observation",
+        "verifier",
+        "authority",
+        "release"
+      ],
+      "evidence": [
+        "semantic_fresh",
+        "semantic_intact"
+      ],
+      "source": "planner",
+      "claim": "PREVIEW_ONLY"
+    },
+    {
+      "id": "show_effect_receipt",
+      "requires": [
+        "effect_confirmation",
+        "verifier",
+        "authority",
+        "release"
+      ],
+      "evidence": [
+        "effect_fresh",
+        "effect_intact"
+      ],
+      "source": "effect_confirmation",
+      "claim": "EFFECT_VERIFIED"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "healthy",
+      "failed_dependencies": [],
+      "corrupted_dependencies": [],
+      "unknown_services": [],
+      "naive_unavailable_services": [],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": true,
+        "semantic_intact": true,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    },
+    {
+      "id": "independent_telemetry_loss",
+      "failed_dependencies": [
+        "telemetry_sink"
+      ],
+      "corrupted_dependencies": [],
+      "unknown_services": [],
+      "naive_unavailable_services": [
+        "telemetry"
+      ],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": true,
+        "semantic_intact": true,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    },
+    {
+      "id": "common_capture_loss",
+      "failed_dependencies": [
+        "capture_source"
+      ],
+      "corrupted_dependencies": [],
+      "unknown_services": [],
+      "naive_unavailable_services": [
+        "raw_observation",
+        "semantic_observation"
+      ],
+      "evidence": {
+        "raw_fresh": false,
+        "raw_intact": false,
+        "semantic_fresh": false,
+        "semantic_intact": false,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    },
+    {
+      "id": "common_semantic_scheduler_stall",
+      "failed_dependencies": [
+        "semantic_scheduler"
+      ],
+      "corrupted_dependencies": [],
+      "unknown_services": [],
+      "naive_unavailable_services": [
+        "semantic_observation"
+      ],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": false,
+        "semantic_intact": true,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    },
+    {
+      "id": "common_parser_lineage_corruption",
+      "failed_dependencies": [],
+      "corrupted_dependencies": [
+        "shared_parser"
+      ],
+      "unknown_services": [],
+      "naive_unavailable_services": [
+        "semantic_observation"
+      ],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": true,
+        "semantic_intact": true,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    },
+    {
+      "id": "independent_effect_process_loss",
+      "failed_dependencies": [
+        "effect_process"
+      ],
+      "corrupted_dependencies": [],
+      "unknown_services": [],
+      "naive_unavailable_services": [
+        "effect_confirmation"
+      ],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": true,
+        "semantic_intact": true,
+        "effect_fresh": false,
+        "effect_intact": false
+      }
+    },
+    {
+      "id": "stale_semantic_evidence",
+      "failed_dependencies": [],
+      "corrupted_dependencies": [],
+      "unknown_services": [],
+      "naive_unavailable_services": [],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": false,
+        "semantic_intact": true,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    },
+    {
+      "id": "release_channel_loss",
+      "failed_dependencies": [
+        "release_channel"
+      ],
+      "corrupted_dependencies": [],
+      "unknown_services": [],
+      "naive_unavailable_services": [
+        "release"
+      ],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": true,
+        "semantic_intact": true,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    },
+    {
+      "id": "authority_owner_loss",
+      "failed_dependencies": [
+        "authority_owner"
+      ],
+      "corrupted_dependencies": [],
+      "unknown_services": [],
+      "naive_unavailable_services": [
+        "authority"
+      ],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": true,
+        "semantic_intact": true,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    },
+    {
+      "id": "unknown_semantic_dependency",
+      "failed_dependencies": [],
+      "corrupted_dependencies": [],
+      "unknown_services": [
+        "semantic_observation",
+        "verifier"
+      ],
+      "naive_unavailable_services": [],
+      "evidence": {
+        "raw_fresh": true,
+        "raw_intact": true,
+        "semantic_fresh": true,
+        "semantic_intact": true,
+        "effect_fresh": true,
+        "effect_intact": true
+      }
+    }
+  ]
+}''')

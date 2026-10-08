@@ -1,0 +1,22 @@
+{
+  "schema": "v39-stale-initial-cover-final-empty-freeze-v1",
+  "issue": 59,
+  "execution_id": "v39-stale-initial-cover-final-empty-a02-20261008",
+  "baseline_commit": "1f81daa690b567a9a049cc75fae8619b2660c343",
+  "candidate_commit": "a9089f0721d40c53ce982bc751d7a9ed02f9dd73",
+  "sources": {
+    "baseline": {
+      "research/doom/map01_overlap_controller_v39.py": {
+        "blob": "fec805219fec1155beb0e2608024663bc8c7e127",
+        "sha256": "e0291540efec617c4a022119399a67801d65f2087604ed374f5ced6202130754"
+      }
+    },
+    "candidate": {
+      "research/doom/map01_overlap_controller_v39.py": {
+        "blob": "cb4a45fd8556e62300fc731d05991671fc36f668",
+        "sha256": "47101f2d58c81428d837706f834dd697bc15308eefe1aaa65a956dcc3c09edd8"
+      }
+    }
+  },
+  "decision_gate": "After current-main final-empty drain misses sequence 12 and initial cover submission is stale-rejected, candidate recovery must consume and evaluate the queued hard-crossing observation, discard cover authority, and require a new planner decision without retrying cover."
+}

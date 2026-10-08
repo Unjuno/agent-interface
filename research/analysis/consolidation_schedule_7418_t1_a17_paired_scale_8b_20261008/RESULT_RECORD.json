@@ -1,0 +1,43 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A17-PAIRED-SCALE-8B-20261008",
+  "status": "FAIL_METHOD",
+  "scope": "single synthetic ledger, one local Qwen3 family, three fixed seeds; no GUI/product/action inference",
+  "model": {
+    "name": "qwen3:8b",
+    "parameters": "8.19B",
+    "quantization": "Q4_K_M",
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+  },
+  "seeds": [5601, 5602, 5603],
+  "paired_a16_seeds": true,
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "rows": 390,
+  "query_rows": 360,
+  "consolidation_rows": 30,
+  "candidate_call_errors": 0,
+  "audit_status": "FAIL_METHOD",
+  "audit_errors": 24,
+  "audit_errors_by_seed": {"5601": 8, "5602": 8, "5603": 8},
+  "accuracy_by_seed": {
+    "5601": {"episodic_only": 0.266667, "per_episode": 0.533333, "batch_2": 0.633333, "terminal": 0.666667},
+    "5602": {"episodic_only": 0.266667, "per_episode": 0.533333, "batch_2": 0.633333, "terminal": 0.666667},
+    "5603": {"episodic_only": 0.266667, "per_episode": 0.533333, "batch_2": 0.633333, "terminal": 0.666667}
+  },
+  "mean_accuracy_by_arm": {"episodic_only": 0.266667, "per_episode": 0.533333, "batch_2": 0.633333, "terminal": 0.666667},
+  "a16_mean_accuracy_by_arm": {"episodic_only": 0.8, "per_episode": 0.666667, "batch_2": 0.788889, "terminal": 0.633333},
+  "a17_minus_a16": {"episodic_only": -0.533333, "per_episode": -0.133334, "batch_2": -0.155556, "terminal": 0.033334},
+  "cost_by_arm": {
+    "episodic_only": {"calls": 90, "prompt_tokens": 31293, "completion_tokens": 2006, "duration_ms": 102726},
+    "per_episode": {"calls": 108, "prompt_tokens": 50964, "completion_tokens": 4293, "duration_ms": 189904},
+    "batch_2": {"calls": 99, "prompt_tokens": 38412, "completion_tokens": 3366, "duration_ms": 143965},
+    "terminal": {"calls": 93, "prompt_tokens": 24246, "completion_tokens": 2526, "duration_ms": 111702}
+  },
+  "exact_accuracy_reconstruction_matches_auditor": true,
+  "raw_sha256": "be195abb542aa7553823490ae84049f187ab6f976f7e199a0bb3a51691d3414b",
+  "audit_sha256": "db63226b1755033726d2c3ceb276b44ed3ea860ef96a34d765dd367cfc348f6e",
+  "metrics_sha256": "6b4649352352b2551edec8150fef905b1759608a03392d5ff5825710edf449bf",
+  "preflight_sha256": "6da8bac784df465ba4d249a5b956e457ee0ad88a5c0065ec089dad2cbb4490db",
+  "preregistration": "https://github.com/Unjuno/agent-interface/issues/8406#issuecomment-6052360718",
+  "interpretation": "A17 accuracy differences are descriptive only because transition fidelity failed. No cadence-sensitivity conclusion, model-scale causal conclusion, pooling, or GUI/product/action inference is supported."
+}
