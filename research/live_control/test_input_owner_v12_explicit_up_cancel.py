@@ -293,6 +293,17 @@ class ExplicitKeyUpCancellationTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "release pending"):
                 owner.call("down", lease, "A")
             self.assertEqual(display_instance.down, {38})
+
+            # Terminal cleanup retries the key but must preserve the original
+            # failed explicit-up receipt in the owner's event history.
+            display_instance.drop_keyreleases = 0
+            cleanup = owner.call("release", lease)
+            self.assertTrue(cleanup["verified"])
+            self.assertEqual(cleanup["keys_down"], [])
+            self.assertEqual(display_instance.down, set())
+            self.assertIn(failed_receipt, owner.records)
+            self.assertFalse(failed_receipt["server_keyup_verified"])
+            self.assertEqual(len(cleanup["key_release_attempts"]["38"]["attempts"]), 1)
         finally:
             if owner is not None:
                 owner.close()
