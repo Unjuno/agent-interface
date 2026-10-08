@@ -17,6 +17,7 @@
 - [Issue #8576 T0 A01 grounded optional resume suggestions](resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 12 finite cases independently reconstructed, 6/6 output mutations rejected; WSLc CPU method evidence only, no human-benefit claim.
 
 - [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 cases independently reconstructed, 5/5 mutations rejected, zero dispatches; synthetic DAG only, no GUI/runtime/effect-dispatch claim.
+- [Issue #8581 T0 A03 raw-artifact bypass](raw_artifact_bypass_8581_t0_a03_20261009/REPORT.md) — frozen disposition `BYPASS_DEFEATS_FEEDBACK_SCOPED`; audit reconstructed 4/4 cells and 92 events with zero errors and 5/5 mutations rejected. All cells were identical, so no differential bypass effect is demonstrated.
 - [Issue #8583 T0 A01 principal-stratum bounds](principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: four finite synthetic cases exactly reconstructed, 5/5 candidate mutations rejected; WSLc CPU method evidence only, no empirical causal or product claim.
 
 - [Issue #8488 PSI-triggered work-shedding T0 A01](psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — `HOLD_DEADLINE_SEMANTICS_MISMATCH`: strict-bound raw recheck gives fixed 4 / queue 3 / free-memory 4 / PSI 1 primary misses, so the zero-miss gate fails. The original `NO_RESIDUAL` reading is withdrawn; no runtime/container claim.
@@ -965,6 +966,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`quiet_frontier_6310_t0_20261002/`](quiet_frontier_6310_t0_20261002/)
 - [`quiet_supervision_vigilance_6503_t0_20261002/`](quiet_supervision_vigilance_6503_t0_20261002/)
 - [`r133_domain_coverage_transfer_v1/`](r133_domain_coverage_transfer_v1/)
+- [`raw_artifact_bypass_8581_t0_a03_20261009/`](raw_artifact_bypass_8581_t0_a03_20261009/)
 - [`reactance_safe_stop_6342_t0_20261003/`](reactance_safe_stop_6342_t0_20261003/)
 - [`real_option_5428_t1/`](real_option_5428_t1/)
 - [`real_option_wait_cost_monotonicity_5428_t0_20261003/`](real_option_wait_cost_monotonicity_5428_t0_20261003/)
