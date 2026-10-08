@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #59 client custody, PR #7275: [additive packet-integrity recheck](doom/client_custody_private_e0cc_20261004/RECHECK_20261008.md) — Exact 47-member packet integrity verified; the saved peer/candidate code is not rerun. Source-owner and application gates remain HOLD.
+
 - Issue #6358 C01: [private service-capacity transfer](integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) — 24 synthetic requests across six arms; explicit static routing matches ample-capacity effects under the authored held-slot fixture. No production congestion, latency, task-effect, or H_PASS claim.
 
 - Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
