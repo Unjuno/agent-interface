@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8259: [release-batch alias cleanup evidence rescue](doom/release_batch_alias_rescue_8259_20261009/README.md) — nine preserved fake-X/private-Xvfb experiment packages and a separate measurement-publication custody record; scoped construction only, with first STOP/FAIL outcomes retained. No live/game claim.
+
 - Issue #8318: [duplicate-allocation STOP custody record](analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_8318/ARCHIVAL_QUALIFICATION.md) — the repeated allocation is preserved separately and explicitly does not replace or pool with #8317's `HOLD_AUDITOR_COVERAGE`.
 
 - Issue #8313 T0 A01: [matched-context integrity fixture](analysis/proactive_interference_5947_t0_a01_20261007/REPORT.md) — `HOLD_AUDITOR_COVERAGE`; first-run evidence preserved without repair or rerun. No model/interference claim.

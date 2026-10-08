@@ -1,0 +1,14 @@
+{
+  "schema": "a04-stop-v1",
+  "outcome": "STOP",
+  "stage": "candidate freeze-integrity preflight",
+  "raw_output_exists": false,
+  "candidate_invoked_once": true,
+  "error": "NameError: name 'sha' is not defined",
+  "traceback": [
+    "File candidate.py, line 302, in main: if sha(HERE / relative) != expected:",
+    "NameError: name 'sha' is not defined"
+  ],
+  "interpretation": "No X setup or backend/executor action ran. This is a harness error and yields no evidence about V13 cleanup.",
+  "policy": "Preserve this first outcome; do not rerun A04. A corrected harness must have a new run identifier and freeze."
+}

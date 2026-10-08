@@ -1,0 +1,345 @@
+{
+  "case": {
+    "actions": [
+      [
+        "a",
+        true
+      ],
+      [
+        "A",
+        true
+      ],
+      [
+        "a",
+        false
+      ],
+      [
+        "A",
+        false
+      ]
+    ],
+    "emitted_events": [
+      {
+        "accepted_ns": 376229140909800,
+        "event": "accepted",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+        "program_sha256": "2d1fd62232324452edae50ce68184d3ae0a3378a1372cf09c8eb7b8ec8653071",
+        "steps": 1,
+        "valid_until_ns": 376239140841400
+      },
+      {
+        "event": "step_started",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "issued_ns": 376229141029100,
+        "operation": "key_batch",
+        "step": 0
+      },
+      {
+        "admitted_ns": 376229141124300,
+        "event": "input_admission",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "input_ack_ns": 376229141126400,
+        "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+        "key": "a",
+        "owner_id": "2c0493295f374ea395ceb2310c3655d8",
+        "step": 0,
+        "valid_until_ns": 376239140841400
+      },
+      {
+        "admitted_ns": 376229141204200,
+        "event": "input_admission",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "input_ack_ns": 376229141205700,
+        "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+        "key": "A",
+        "owner_id": "2c0493295f374ea395ceb2310c3655d8",
+        "step": 0,
+        "valid_until_ns": 376239140841400
+      },
+      {
+        "backend_owned_before_release": true,
+        "event": "input_release_transition",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+        "key": "a",
+        "measurement_contract_v3": "release telemetry is incomplete or publication failed; release_batch_disposition identifies the exception boundary",
+        "operation": "up",
+        "ordinary_release_candidate": false,
+        "owner_cleanup_record_count_before_release": null,
+        "owner_id": "2c0493295f374ea395ceb2310c3655d8",
+        "owner_sample_after_batch_available": false,
+        "owner_thread_keyup_receipt": null,
+        "owner_thread_keyup_verified": false,
+        "owner_thread_keyup_verified_after_batch": false,
+        "owner_transition_verified": false,
+        "physical_verification_authoritative": false,
+        "release_batch_call_outcome": "unknown_no_retry",
+        "release_batch_complete": false,
+        "release_batch_delivery_position": 0,
+        "release_batch_disposition": "step_exception",
+        "release_batch_error_type": "ValueError",
+        "release_batch_identifier": "alias-refusal-executor-cleanup-a06",
+        "release_batch_position": 0,
+        "release_batch_schema": "input-release-batch-v3",
+        "release_batch_size": 2,
+        "release_batch_step": 0,
+        "step": 0
+      },
+      {
+        "backend_owned_before_release": true,
+        "event": "input_release_transition",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+        "key": "A",
+        "measurement_contract_v3": "release telemetry is incomplete or publication failed; release_batch_disposition identifies the exception boundary",
+        "operation": "up",
+        "ordinary_release_candidate": false,
+        "owner_cleanup_record_count_before_release": null,
+        "owner_id": "2c0493295f374ea395ceb2310c3655d8",
+        "owner_sample_after_batch_available": false,
+        "owner_thread_keyup_receipt": null,
+        "owner_thread_keyup_verified": false,
+        "owner_thread_keyup_verified_after_batch": false,
+        "owner_transition_verified": false,
+        "physical_verification_authoritative": false,
+        "release_batch_call_outcome": "unknown_no_retry",
+        "release_batch_complete": false,
+        "release_batch_delivery_position": 1,
+        "release_batch_disposition": "step_exception",
+        "release_batch_error_type": "ValueError",
+        "release_batch_identifier": "alias-refusal-executor-cleanup-a06",
+        "release_batch_position": 1,
+        "release_batch_schema": "input-release-batch-v3",
+        "release_batch_size": 2,
+        "release_batch_step": 0,
+        "step": 0
+      },
+      {
+        "decision_reason": null,
+        "error": "ValueError('distinct resolved keycodes required for up_batch')",
+        "event": "terminal",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "interruption": null,
+        "release": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+          "key_release_attempts": {
+            "38": {
+              "attempts": [
+                {
+                  "attempt": 1,
+                  "keymap_after_error": null,
+                  "keymap_before_error": null,
+                  "keymap_sampled_ns": 376229141341200,
+                  "keyrelease_error": null,
+                  "keyrelease_started_ns": 376229141338400,
+                  "server_key_down_after": false,
+                  "server_key_down_before": true,
+                  "sync_error": null,
+                  "sync_returned_ns": 376229141339600
+                }
+              ],
+              "verified": true
+            }
+          },
+          "key_release_intervals_ns": [
+            {
+              "interval_ns": [
+                376229141338400,
+                376229141341200
+              ],
+              "keycode": 38
+            }
+          ],
+          "key_state_errors": [],
+          "key_state_source": "x11_query_keymap",
+          "keys_down": [],
+          "keys_unknown": [],
+          "reason": "release",
+          "release_batch_delivery": {
+            "identifier": "alias-refusal-executor-cleanup-a06",
+            "positions": [
+              {
+                "key": "a",
+                "position": 0,
+                "state": "confirmed_incomplete",
+                "step": 0
+              },
+              {
+                "key": "A",
+                "position": 1,
+                "state": "confirmed_incomplete",
+                "step": 0
+              }
+            ],
+            "schema": "release-batch-delivery-v1",
+            "size": 2,
+            "step": 0
+          },
+          "release_call_returned_ns": 376229141362700,
+          "release_call_started_ns": 376229141320700,
+          "valid_until_ns": 376239140841400,
+          "verified": true,
+          "verified_ns": 376229141347500
+        },
+        "semantic_completion": "program status only; task scoring is separate",
+        "status": "failed",
+        "steps_completed": 0,
+        "terminal_ns": 376229141618700
+      }
+    ],
+    "executor_terminal": {
+      "decision_reason": null,
+      "error": "ValueError('distinct resolved keycodes required for up_batch')",
+      "event": "terminal",
+      "id": "alias-refusal-executor-cleanup-a06",
+      "interruption": null,
+      "release": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+        "key_release_attempts": {
+          "38": {
+            "attempts": [
+              {
+                "attempt": 1,
+                "keymap_after_error": null,
+                "keymap_before_error": null,
+                "keymap_sampled_ns": 376229141341200,
+                "keyrelease_error": null,
+                "keyrelease_started_ns": 376229141338400,
+                "server_key_down_after": false,
+                "server_key_down_before": true,
+                "sync_error": null,
+                "sync_returned_ns": 376229141339600
+              }
+            ],
+            "verified": true
+          }
+        },
+        "key_release_intervals_ns": [
+          {
+            "interval_ns": [
+              376229141338400,
+              376229141341200
+            ],
+            "keycode": 38
+          }
+        ],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "release",
+        "release_batch_delivery": {
+          "identifier": "alias-refusal-executor-cleanup-a06",
+          "positions": [
+            {
+              "key": "a",
+              "position": 0,
+              "state": "confirmed_incomplete",
+              "step": 0
+            },
+            {
+              "key": "A",
+              "position": 1,
+              "state": "confirmed_incomplete",
+              "step": 0
+            }
+          ],
+          "schema": "release-batch-delivery-v1",
+          "size": 2,
+          "step": 0
+        },
+        "release_call_returned_ns": 376229141362700,
+        "release_call_started_ns": 376229141320700,
+        "valid_until_ns": 376239140841400,
+        "verified": true,
+        "verified_ns": 376229141347500
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "failed",
+      "steps_completed": 0,
+      "terminal_ns": 376229141618700
+    },
+    "owner_close_error": null,
+    "release_rows": [
+      {
+        "backend_owned_before_release": true,
+        "event": "input_release_transition",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+        "key": "a",
+        "measurement_contract_v3": "release telemetry is incomplete or publication failed; release_batch_disposition identifies the exception boundary",
+        "operation": "up",
+        "ordinary_release_candidate": false,
+        "owner_cleanup_record_count_before_release": null,
+        "owner_id": "2c0493295f374ea395ceb2310c3655d8",
+        "owner_sample_after_batch_available": false,
+        "owner_thread_keyup_receipt": null,
+        "owner_thread_keyup_verified": false,
+        "owner_thread_keyup_verified_after_batch": false,
+        "owner_transition_verified": false,
+        "physical_verification_authoritative": false,
+        "release_batch_call_outcome": "unknown_no_retry",
+        "release_batch_complete": false,
+        "release_batch_delivery_position": 0,
+        "release_batch_disposition": "step_exception",
+        "release_batch_error_type": "ValueError",
+        "release_batch_identifier": "alias-refusal-executor-cleanup-a06",
+        "release_batch_position": 0,
+        "release_batch_schema": "input-release-batch-v3",
+        "release_batch_size": 2,
+        "release_batch_step": 0,
+        "step": 0
+      },
+      {
+        "backend_owned_before_release": true,
+        "event": "input_release_transition",
+        "id": "alias-refusal-executor-cleanup-a06",
+        "intent_token": "08b5e6580f9e4733bcee8f38f3be47c5",
+        "key": "A",
+        "measurement_contract_v3": "release telemetry is incomplete or publication failed; release_batch_disposition identifies the exception boundary",
+        "operation": "up",
+        "ordinary_release_candidate": false,
+        "owner_cleanup_record_count_before_release": null,
+        "owner_id": "2c0493295f374ea395ceb2310c3655d8",
+        "owner_sample_after_batch_available": false,
+        "owner_thread_keyup_receipt": null,
+        "owner_thread_keyup_verified": false,
+        "owner_thread_keyup_verified_after_batch": false,
+        "owner_transition_verified": false,
+        "physical_verification_authoritative": false,
+        "release_batch_call_outcome": "unknown_no_retry",
+        "release_batch_complete": false,
+        "release_batch_delivery_position": 1,
+        "release_batch_disposition": "step_exception",
+        "release_batch_error_type": "ValueError",
+        "release_batch_identifier": "alias-refusal-executor-cleanup-a06",
+        "release_batch_position": 1,
+        "release_batch_schema": "input-release-batch-v3",
+        "release_batch_size": 2,
+        "release_batch_step": 0,
+        "step": 0
+      }
+    ],
+    "resolved_alias_keycodes": {
+      "A": 38,
+      "a": 38
+    },
+    "server_keycodes_down_after_executor_cleanup": []
+  },
+  "claims": {
+    "application_effect": false,
+    "doom": false,
+    "gui": false,
+    "model": false,
+    "physical_keyboard": false,
+    "real_x11": false
+  },
+  "run_id": "a06-current-main-20261007-one-shot",
+  "schema": "v39-v15-v13-alias-cleanup-a06-raw-v1",
+  "source_base": "decc1896e3e85ab2fdbb7ec4678f958eb6561d0f"
+}

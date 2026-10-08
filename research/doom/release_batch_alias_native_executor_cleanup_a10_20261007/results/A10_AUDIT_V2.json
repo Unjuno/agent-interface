@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "alias_codes_equal_nonzero": true,
+    "candidate_terminal_recorded": true,
+    "held_at_cleanup_entry": true,
+    "key_release_verified": true,
+    "neutral_observer_keymap": true,
+    "specific_alias_refusal": true,
+    "xvfb_clean_exit": true
+  },
+  "outcome": "PASS_METHOD_SCOPED",
+  "raw_sha256": "0dfa5d26e4939b376f66b971b32a89f4dc2a8f4abeacc91525b8b57bbc76992e",
+  "schema": "issue59-a10-independent-audit-v2",
+  "scope_note": "Raw code shows two distinct alias requests; owner error proves both aliases resolved and were owned before uniqueness refusal. Owner release sample confirms code held on cleanup entry."
+}

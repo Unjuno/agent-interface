@@ -1,0 +1,6 @@
+--- source/main/input_owner_v12.py
++++ source/guarded/input_owner_v12.py
+@@
+                 codes.append((key, code))
++            if len({code for _, code in codes}) != len(codes):
++                raise ValueError('distinct resolved keycodes required for up_batch')

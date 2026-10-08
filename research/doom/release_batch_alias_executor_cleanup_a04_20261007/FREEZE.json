@@ -1,0 +1,61 @@
+{
+  "C": [
+    "Fake X models only the owner/server call boundary; it is not native X11.",
+    "The duplicate keycode guard exists only in a candidate copy.",
+    "No physical keyboard, application effect, threat exposure, live game, or Issue #59 live gate is covered."
+  ],
+  "D": {
+    "FAIL": "The completed case contradicts any frozen condition.",
+    "PASS_METHOD_SCOPED": "Batch refusal propagates; V13 terminal is failed with verified cleanup; fake server reports no key down.",
+    "STOP": "Setup/candidate does not complete with a raw record; preserve first outcome and do not retry."
+  },
+  "H": "Does V13 finally cleanup an input hold after the V15 release-batch path rejects an alias batch?",
+  "T": "One fake-X composite V13/V15 case: key down a, down A, up a, up A, with both names mapped to keycode 38 and a candidate-only duplicate-code refusal guard. Capture backend exception telemetry, executor terminal release, owner records and fake server state.",
+  "audit_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\work\\v39-soft-event-routing\\research\\doom\\release_batch_alias_executor_cleanup_a04_20261007\\results\\A04_AUDIT.json",
+  "auditor_sha256": "e01cd9b3f54742168843a0006ecd354506e4d1bd7340a9f0db43850b1cd12830",
+  "base_main": "decc1896e3e85ab2fdbb7ec4678f958eb6561d0f",
+  "candidate_sha256": "c28a4a959ab71fbcc37f19af29b563ecb338b6bb47e7e4ff37e486292e29880b",
+  "guard_delta": "A03 candidate-only duplicate-resolved-keycode rejection is retained; no production source is changed.",
+  "one_shot_policy": "Single execution only. Preserve the first raw result whether PASS, FAIL, or STOP. No candidate rerun or overwrite.",
+  "preflight": {
+    "auditor_compile": "PASS",
+    "candidate_compile": "PASS",
+    "candidate_executed": false,
+    "guard_source_diff_matches_A03": true,
+    "output_absent": true,
+    "source_snapshots_pinned_to_base_main": true
+  },
+  "raw_path": "C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-3\\work\\v39-soft-event-routing\\research\\doom\\release_batch_alias_executor_cleanup_a04_20261007\\results\\A04_RAW.json",
+  "schema": "v39-v15-v13-alias-cleanup-a04-freeze-v1",
+  "source_git_blob_ids": {
+    "doom_owner_thread_release_batch_backend_v1.py": "193c2bd231795e7ee57de64aedfd741c8b814013",
+    "doom_typed_release_backend_v2.py": "cf13d630ae22a50272a766c86d7f325f352a89d7",
+    "executor_v12.py": "7e9bb6286d5f674108688ba092300a8ad2421ba9",
+    "executor_v13.py": "b9510765f34907bcfdbf25a5700e9d31d17c76b7",
+    "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "input_owner_v11.py": "842071284156d3ccc647f47135ee62a9e512cb56",
+    "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1"
+  },
+  "source_sha256": {
+    "PLAN.md": "51b0eb92867f42e20ac885bf50667c542e54d78d11b68a0ba01af1f1147785ca",
+    "audit.py": "e01cd9b3f54742168843a0006ecd354506e4d1bd7340a9f0db43850b1cd12830",
+    "candidate.py": "c28a4a959ab71fbcc37f19af29b563ecb338b6bb47e7e4ff37e486292e29880b",
+    "guarded/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "guarded/input_owner_v12.py": "ac6a58d9ee2094c391ff23819d86c08b9e53e6dc4ef63b89ac0d14a34d6552c5",
+    "guarded/input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "guarded/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "main/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "main/input_owner_v12.py": "f4c7f00817343c675f889a6f974ff5e2177a9e7ffbe47c0576b5f0174c2da3bc",
+    "main/input_transition_owner_v3.py": "d1e83054a80c61fde8e4141c9c62458aa151769359caa9965b34d315331ac73b",
+    "main/input_transition_owner_v4.py": "ea5fb38f0b00da1745c9ede0d256918a1dfdf2a473a794fa22cd28de13790598",
+    "source/current/doom_owner_thread_release_batch_backend_v1.py": "c6595afa6314fbee73669ae1258fdf4ec8658ebb4c41be5f7365ba327f533581",
+    "source/current/doom_typed_release_backend_v2.py": "7192d1a47b1677ce22584eebbec51b19c7aa55c67122d2a9c85e528ff095adf4",
+    "source/current/executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2",
+    "source/current/executor_v13.py": "5c54927e5087af42006c712ec906e2ec69e9155586730dee494dd3b5d43ced9a",
+    "source/current/executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "source/current/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "source/current/input_owner_v11.py": "4f6b61026117d4d9be8a973c65d491fe8a9b0ebbc90bd98c0738cd0aac09821c",
+    "source/current/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "alias_codes": [
+    38,
+    38
+  ],
+  "errors": [],
+  "events": [
+    {
+      "accepted_ns": 198982105549784,
+      "event": "accepted",
+      "id": "a09",
+      "intent_token": "9db9c1553e45405791fdf7a148364cf3",
+      "program_sha256": "118c44f8bac1bfd6aa34685d6f7dc703401fd53bd4b30824a84620ebe7b11b84",
+      "steps": 1,
+      "valid_until_ns": 198987105450577
+    },
+    {
+      "event": "step_started",
+      "id": "a09",
+      "issued_ns": 198982105732633,
+      "operation": "key_batch",
+      "step": 0
+    },
+    {
+      "decision_reason": null,
+      "error": "ValueError('observed input focus required')",
+      "event": "terminal",
+      "id": "a09",
+      "interruption": null,
+      "release": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "intent_token": "9db9c1553e45405791fdf7a148364cf3",
+        "key_release_attempts": {},
+        "key_release_intervals_ns": [],
+        "key_state_errors": [],
+        "key_state_source": "x11_query_keymap",
+        "keys_down": [],
+        "keys_unknown": [],
+        "reason": "release",
+        "release_call_returned_ns": 198982106401974,
+        "release_call_started_ns": 198982106004404,
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 198982106377632
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "failed",
+      "steps_completed": 0,
+      "terminal_ns": 198982106416599
+    }
+  ],
+  "keymap_after": false,
+  "limits": [
+    "One isolated Xvfb case; candidate-only alias guard; no game/model/physical keyboard/application effect."
+  ],
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "key_release_attempts": {},
+      "key_release_intervals_ns": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "release",
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 198982106377632
+    }
+  ],
+  "schema": "a09-native-v15-v13-alias-cleanup-raw-v1",
+  "status": "CANDIDATE_COMPLETE",
+  "terminal": {
+    "decision_reason": null,
+    "error": "ValueError('observed input focus required')",
+    "event": "terminal",
+    "id": "a09",
+    "interruption": null,
+    "release": {
+      "buttons_down": [],
+      "event": "owner_release",
+      "intent_token": "9db9c1553e45405791fdf7a148364cf3",
+      "key_release_attempts": {},
+      "key_release_intervals_ns": [],
+      "key_state_errors": [],
+      "key_state_source": "x11_query_keymap",
+      "keys_down": [],
+      "keys_unknown": [],
+      "reason": "release",
+      "release_call_returned_ns": 198982106401974,
+      "release_call_started_ns": 198982106004404,
+      "valid_until_ns": null,
+      "verified": true,
+      "verified_ns": 198982106377632
+    },
+    "semantic_completion": "program status only; task scoring is separate",
+    "status": "failed",
+    "steps_completed": 0,
+    "terminal_ns": 198982106416599
+  },
+  "xvfb_exit": 0
+}

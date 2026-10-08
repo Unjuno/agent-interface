@@ -1,0 +1,16 @@
+{
+  "schema": "a05-stop-v1",
+  "outcome": "STOP",
+  "stage": "executor dependency import",
+  "raw_output_exists": false,
+  "candidate_invoked_once": true,
+  "error": "ModuleNotFoundError: No module named 'executor_v5'",
+  "traceback": [
+    "candidate.py imports pinned executor_v13.py",
+    "executor_v13.py imports executor_v12.py",
+    "executor_v12.py imports executor_v5.py",
+    "ModuleNotFoundError: No module named 'executor_v5'"
+  ],
+  "interpretation": "No submitted executor action was reached. This is an incomplete source closure and yields no evidence about V13 cleanup.",
+  "policy": "Preserve this first outcome; do not rerun A05. Any expanded dependency closure needs a new run identifier and freeze."
+}
