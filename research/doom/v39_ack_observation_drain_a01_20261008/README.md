@@ -20,10 +20,10 @@ This is a deterministic unit-level source repair. It does not claim that a live 
 
 ## Result and provenance
 
-- Base: `6da5dc940fdb97866cfb900ca747edb8c94b2790` (`origin/main` at branch creation and final local comparison).
+- Base: `6da5dc940fdb97866cfb900ca747edb8c94b2790` at research freeze; the implementation is now integrated into main.
 - Implementation commit: `ccd6d72cfd49242667eff6a32a6396c1eba9c6f0`.
 - Regression: `research/doom/test_map01_v39_pair_wait_dispatch.py`.
 - Runtime path: `research/doom/map01_overlap_controller_v39.py`.
-- Pull request: [#8441](https://github.com/Unjuno/agent-interface/pull/8441), open and not merged at record creation.
+- Pull request: [#8441](https://github.com/Unjuno/agent-interface/pull/8441), merged as `ffd4544a4816ded386616e8e614b5a17e6c992ef`.
 - Local result: 3 focused tests passed in normal Python and 3 passed under `-O`; `py_compile` and `git diff --check` passed.
 - Status: scoped construction/repair PASS; live/integrated behavior HOLD. No formal allocation was used or retried.
