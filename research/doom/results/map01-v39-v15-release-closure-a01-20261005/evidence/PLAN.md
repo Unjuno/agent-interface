@@ -1,0 +1,11 @@
+# V39 measurement startup closure and inter-release query — A01
+
+## H/T/D/C/U (frozen before the one candidate invocation)
+
+- H: On main 69dd261430cb1ed875f5a76411c4a2a54777c114, the V39 measurement selection (measurement_session=true) enters session_map01_v15.py, which installs doom_owner_thread_release_batch_backend_v1.Backend and executor_v13.Executor. Running that exact backend class and its V12/V4 owner wrapper over a two-key reverse-order fake-display batch will emit confirmed per-key down/up identity and expose whether query_keymap occurs between the key-up injections.
+- T: Execute the V39 session_command function extracted from exact source for default and measurement selections; execute session_map01_v15.main() with only the V12 session main, scorer sink, and scorer stdin replaced by no-op capture stubs; then call the selected exact telemetry backend class on one F8 down, SPACE down, SPACE up, F8 up fake-display sequence. Record every fake key event, keymap query and query result, transition row, final key state and owner shutdown. One candidate process invocation.
+- D: CONFIRMED_INTER_RELEASE_SAMPLING_IN_SELECTED_V15 if exact selection/class identity is verified, both admissions and releases join by key/actuation ID in reverse release order, at least one keymap query occurs strictly between releases, final touched key state and backend hold ledger are empty, batch verification passes and authority remains false. NO_INTER_RELEASE_QUERY_OBSERVED only if the same identity/final-state gates pass with zero intervening keymap queries. Source, session selection, identity or cleanup mismatch is STOP/FAIL as specified in RESULT.json; no live or latency claim follows.
+- C: A V4 component test already observed two inter-release samples, but its backend was not the V15-selected backend. The V15 path may differ, or the same samples may be instrumentation queries that preserve correct identity and final release.
+- U: Fake Xlib and no-op startup-boundary stubs do not execute ViZDoom, real session startup dependencies, X11, application delivery, model, useful feedback, recovery or MAP01. Query count is a software operation trace only, not a timing bound.
+
+The exact current-main source blobs and Python image digest are in FROZEN_INPUTS.json. No source/runtime mutation or allocation is included.
