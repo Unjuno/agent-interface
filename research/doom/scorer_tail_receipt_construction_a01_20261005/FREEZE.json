@@ -1,0 +1,37 @@
+{
+  "schema": "map01-scorer-tail-receipt-construction-freeze-v1",
+  "classification": "offline construction against retained events; zero-duration validator invocation; no live allocation",
+  "source_commit": "c99d93a2c81945f0946173e48247bdd49e32a02a",
+  "tail_validator": {
+    "path": "research/doom/map01_scorer_stdio_adapter_v1.py",
+    "git_blob": "81dccff3358398f4ebedbba5682ea58591e78b29",
+    "sha256": "32e5ce32990644dc6c2b32759cd50d0c27013676c5cbab063b6c4611b3ca28f1"
+  },
+  "dependencies": [
+    {
+      "path": "research/doom/main_thread_scorer_polling_v1.py",
+      "git_blob": "6da85092ff022d60f4af5e5eae8b5a564e71880a",
+      "sha256": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84"
+    },
+    {
+      "path": "research/doom/independent_progress_clock_v2.py",
+      "git_blob": "f95cd2b7b19c0d1ce699f840c2ae356c4b476601",
+      "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+    }
+  ],
+  "event_inputs": [
+    {"cell": "00-coast", "git_blob": "4abe3c572bef5560307875efe266d896490b9515", "sha256": "421da1a42c80932a1a0187b5857d3be940d0921853a0113bf3b4d92079176dde"},
+    {"cell": "01-pulse", "git_blob": "8c1f8af8c47ab4e1b841695a275274ba653614f7", "sha256": "cb26d8ecf6aaf76cc7ffa2fa29c7e4dfedb45000f54c6867af4cde4fcb3b035c"},
+    {"cell": "02-pulse", "git_blob": "4b129269b2149e2553eea7dc32044d95b7e1c703", "sha256": "2d682b781a2d791a765a0208fedc0362e22b73b453f4b8a68f52cf43fbb139ba"},
+    {"cell": "03-coast", "git_blob": "e1ddd862817d16884ec3d61bc8c783443f26831a", "sha256": "160b92373c99d299ee3eed61496245c53f5dbad83696ff71c3cec0d48071644b"},
+    {"cell": "04-coast", "git_blob": "dc0748d617dfea43cf8b317b2f62345e27d58036", "sha256": "e41cfa19996d318c80fd43bdd6ced706e30ed3f463c3c80b3f5eec1a60f53df7"},
+    {"cell": "05-pulse", "git_blob": "20d4458e9e3d0a3024f8812280a6eea671ea912b", "sha256": "4ad3d39d6fa538a13253e882670fdbc5ac4390d7ffd0bcacb775afb37887906c"}
+  ],
+  "protocol": {
+    "max_duration_ns": 0,
+    "max_samples": 1,
+    "stop_when": null,
+    "primary_question": "Does the tail validator accept actual retained, verified per-key key-up receipt shapes?",
+    "not_tested": ["scorer sample", "wall-clock deadline behavior", "session/controller integration", "gameplay effect"]
+  }
+}

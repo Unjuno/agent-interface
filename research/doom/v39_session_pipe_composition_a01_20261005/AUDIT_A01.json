@@ -1,0 +1,23 @@
+{
+  "schema": "v39-session-child-pipe-a01-failure-audit-v1",
+  "disposition": "PASS_AUDIT",
+  "checks": [
+    {
+      "check": "runner_matches_freeze",
+      "pass": true
+    },
+    {
+      "check": "freeze_runner_mismatch_reproduced",
+      "pass": true
+    },
+    {
+      "check": "no_child_output",
+      "pass": true
+    },
+    {
+      "check": "held_not_scientific_result",
+      "pass": true
+    }
+  ],
+  "raw_sha256": "d56881d2dd8a37fe783da3dc71116cbca866f09537007da3ebaee3b0b999066e"
+}

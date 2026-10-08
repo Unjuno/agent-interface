@@ -1,0 +1,46 @@
+{
+  "case_checks": {
+    "normal_wait": {
+      "delivered_once": true,
+      "disposition": true,
+      "not_overrun": true,
+      "resume_count_consistent": true,
+      "sender_ok": true,
+      "tail_samples": true,
+      "termination": true,
+      "unread_after_tail": true
+    },
+    "ready_at_entry": {
+      "delivered_once": true,
+      "disposition": true,
+      "not_overrun": true,
+      "resume_count_consistent": true,
+      "sender_ok": true,
+      "tail_samples": true,
+      "termination": true,
+      "unread_after_tail": true
+    },
+    "slow_callback": {
+      "delivered_once": true,
+      "disposition": true,
+      "not_overrun": true,
+      "resume_count_consistent": true,
+      "sender_ok": true,
+      "tail_samples": true,
+      "termination": true,
+      "unread_after_tail": true
+    }
+  },
+  "disposition": "PASS_COMMAND_PRIORITY_REPAIR_CONSTRUCTION",
+  "errors": [],
+  "passed": 28,
+  "schema": "issue59-scorer-tail-command-priority-audit-v3",
+  "scope": "frozen source and Windows socketpair readiness only",
+  "source_checks": {
+    "research/doom/independent_progress_clock_v2.py": true,
+    "research/doom/main_thread_scorer_polling_v1.py": true,
+    "research/doom/map01_scorer_stdio_adapter_v1.py": true,
+    "research/doom/map01_scorer_stdio_adapter_v2.py": true
+  },
+  "total": 28
+}

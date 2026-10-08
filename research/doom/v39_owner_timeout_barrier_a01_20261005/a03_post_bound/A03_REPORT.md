@@ -1,0 +1,13 @@
+# A03 — release completes after the bounded late-drain wait
+
+**Disposition: `FAIL_POST_BOUND_LATE_RELEASE_NOT_DRAINED` (scoped synthetic schedule).** The candidate's 1.5 s owner-stop wait expired before the fake sync gate opened. The expiry owner later stopped with a verified F8 `CONFIRMED_PHYSICAL_UP`, but no bridge `input_release_measurement` was emitted and F8 remained in the bridge ledger. The executor terminal stayed `failed` with `release.verified=false`; the fake physical-key set was empty after the owner completed.
+
+The final matched comparison combines one baseline-only control supplement with the A03 v3 candidate result; the candidate was not rerun. Gate-open delay was 1.753019 s after timeout for baseline and 1.757780 s for candidate. Both arms recorded the same failed/unverified terminal, later verified physical up, stale bridge F8, and no up event. Candidate `Event.wait(1.5)` returned after 1.511856 s on this Windows schedule, an observed 11.856 ms overrun of the nominal wait; the gate opened about 245.924 ms after that wait returned. These values characterize this forced schedule only, not a hard wall-clock guarantee.
+
+The initial A03 v1 runner stopped at import before either arm. A03 v2 ran both arms but its text-edit error opened the gate immediately; that pair is retained as a protocol-deviation construction failure. A03 v3's candidate arm used the intended delayed gate, but its original baseline finalizer opened the gate early; this baseline mismatch is preserved. The v3 control supplement then ran the delayed baseline once and assembled it with the already retained candidate. Supplement runner v1 and v2 failed preflight and were not executed. All source versions, freezes, attempted outputs, and notes remain in this directory.
+
+`py -3.11 audit_a03_control.py` verifies the final freeze, saved candidate identity, complete stdout-to-result equality, both arm gate delays, terminal/release/bridge states, and preserved construction failures without executing either arm. The late-drain hypothesis is rejected for owners that remain blocked beyond the candidate wait. The result does not show how often such blocking occurs outside the fake display.
+
+Native Windows CPython 3.11 fake-display only. No real X11, OS keyboard, game, application effect, useful feedback, recovery efficacy, threat-control exposure, safety rate, or MAP01 result was tested. A release receipt is measurement evidence and grants no input authority. Issue #59's live threat-control gate remains open and unassigned.
+
+Command and audit exits are itemized in [RUN_RECORDS.md](RUN_RECORDS.md).

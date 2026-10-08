@@ -1,0 +1,16 @@
+Working directory for every command: repository root
+
+Pre-run environment checks:
+  Get-Command wslc.exe -ErrorAction SilentlyContinue
+  wsl.exe -d Ubuntu -- bash -lc 'python3 --version'
+
+Run from repository root:
+  .\research\doom\v39_perkey_scorer_tail_a01_20261005\run.ps1
+  python research/doom/v39_perkey_scorer_tail_a01_20261005/audit.py
+
+The runner computes the WSL mount path from this checkout, runs the Linux WSL
+core suite and Windows focused compatibility suite, and retains both complete
+outputs plus their exit codes in RESULT.json.
+
+Independent audit:
+  python research/doom/v39_perkey_scorer_tail_a01_20261005/audit.py

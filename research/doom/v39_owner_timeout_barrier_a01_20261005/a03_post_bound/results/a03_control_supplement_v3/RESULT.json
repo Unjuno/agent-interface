@@ -1,0 +1,96 @@
+{
+  "schema": "v39-owner-timeout-post-bound-control-supplement-v1",
+  "base_main": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "candidate_pr_7805_head": "61502e45d40b67b6d588b4e8357e42fde05a9dbe",
+  "control": {
+    "arm": "baseline",
+    "timing": {
+      "barrier_call_start_ns": 172635146973800,
+      "barrier_call_end_ns": 172637153155800,
+      "timeout_return_ns": 172637153181900,
+      "sync_gate_open_ns": 172638906200900
+    },
+    "terminal": {
+      "status": "failed",
+      "release_verified": false
+    },
+    "bridge_events": [
+      "accepted",
+      "step_started",
+      "input_admission",
+      "terminal"
+    ],
+    "up_rows": [],
+    "owner_releases": [
+      {
+        "reason": "expired",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "per_key_classifications": [
+          "CONFIRMED_PHYSICAL_UP"
+        ]
+      },
+      {
+        "reason": "stop_requested",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "per_key_classifications": []
+      }
+    ],
+    "owner_stopped_after_terminal": true,
+    "physical_empty": true,
+    "bridge_held": [
+      "F8"
+    ],
+    "event_after_terminal": false
+  },
+  "candidate": {
+    "arm": "candidate",
+    "timing": {
+      "barrier_call_start_ns": 172368458316400,
+      "barrier_call_end_ns": 172370464601300,
+      "timeout_return_ns": 172370464616900,
+      "owner_stopped_within_bound": false,
+      "late_drain_wait_ns": 1511855900,
+      "sync_gate_open_ns": 172372222396700
+    },
+    "terminal": {
+      "status": "failed",
+      "release_verified": false
+    },
+    "bridge_events": [
+      "accepted",
+      "step_started",
+      "input_admission",
+      "terminal"
+    ],
+    "up_rows": [],
+    "owner_releases": [
+      {
+        "reason": "expired",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "per_key_classifications": [
+          "CONFIRMED_PHYSICAL_UP"
+        ]
+      },
+      {
+        "reason": "stop_requested",
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": [],
+        "per_key_classifications": []
+      }
+    ],
+    "owner_stopped_after_terminal": true,
+    "physical_empty": true,
+    "bridge_held": [
+      "F8"
+    ],
+    "event_after_terminal": false
+  },
+  "scope": "matched fake-display owner-thread timeout pair with gate released 1.75 s after timeout; no real X11, OS input, game, model, useful feedback, recovery efficacy, or live MAP01 evidence"
+}

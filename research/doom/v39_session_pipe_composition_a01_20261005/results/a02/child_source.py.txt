@@ -1,0 +1,20 @@
+import json, threading, time
+from pathlib import Path
+from types import SimpleNamespace
+args = SimpleNamespace(out=Path('C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_session_pipe_composition_a01_20261005\\results\\a02'))
+lock = threading.RLock()
+events = []
+latest_observation = None
+def emit(row):
+    global latest_observation
+    with lock:
+        if row.get('event') == 'observation':
+            latest_observation = dict(row)
+        row['emit_ns'] = time.perf_counter_ns()
+        encoded = json.dumps(row)
+        with (args.out / 'events.jsonl').open('a') as stream:
+            stream.write(encoded + '\n')
+        with (args.out / 'delivered.jsonl').open('a') as stream:
+            stream.write(encoded + '\n')
+        print(encoded, flush=True)
+emit(json.loads(Path('C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-7\\work\\pr7662-audit-20261005\\research\\doom\\v39_session_pipe_composition_a01_20261005\\INPUT_EVENT.json').read_text(encoding='utf-8')))

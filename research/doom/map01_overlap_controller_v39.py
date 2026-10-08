@@ -630,12 +630,14 @@ def app_server_command():
 
 
 def session_command(args, runtime):
-    # Keep the established v12 session as the default. The opt-in v15 wrapper
-    # adds scorer-only progress sampling and per-key release telemetry without
-    # exposing scorer state through the controller event stream.
-    session = ("session_map01_v15.py"
-               if getattr(args, "measurement_session", False)
-               else "session_map01_v12.py")
+    if getattr(args, "post_release_perkey_scorer_tail", False):
+        session = "session_map01_v19.py"
+    elif getattr(args, "post_release_scorer_tail", False):
+        session = "session_map01_v18.py"
+    elif getattr(args, "measurement_session", False):
+        session = "session_map01_v15.py"
+    else:
+        session = "session_map01_v12.py"
     return [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
@@ -821,8 +823,13 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--effort", choices=("low","medium","high","xhigh","max","ultra"), required=True)
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
-    parser.add_argument("--measurement-session", action="store_true",
-                        help="opt into V15 scorer-only and per-key release telemetry")
+    session_options = parser.add_mutually_exclusive_group()
+    session_options.add_argument("--measurement-session", action="store_true",
+                                 help="opt into V15 scorer-only and per-key release telemetry")
+    session_options.add_argument("--post-release-scorer-tail", action="store_true",
+                                 help="opt into a bounded scorer-only tail after verified final key-up")
+    session_options.add_argument("--post-release-perkey-scorer-tail", action="store_true",
+                                 help="opt into a scorer-only tail after measured per-key admission and release")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
@@ -1421,6 +1428,9 @@ def main():
         score=wait(lambda r:r["event"]=="post_control_score")
         failure_cleanup.set_stage("session_reap")
         process.wait(timeout=20)
+        tail_path=runtime/"scorer-post-release-tail.json"
+        scorer_post_release_tail=(json.loads(tail_path.read_text(encoding="utf-8"))
+                                  if tail_path.is_file() else None)
         failure_cleanup.set_stage("planner_close")
         planner_client.close()
         atexit.unregister(planner_client.close)
@@ -1445,10 +1455,16 @@ def main():
                 reconciliation["sequence"]=sequence
                 typed_reconciliations.append(reconciliation)
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
+          "post_release_scorer_tail_enabled":args.post_release_scorer_tail,
+          "post_release_perkey_scorer_tail_enabled":args.post_release_perkey_scorer_tail,
+          "post_release_scorer_tail":scorer_post_release_tail,
           "source_refreshes":source_refreshes,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
-          "measurement_session":("v15_scorer_only_per_key_release"
-                                  if args.measurement_session else "v12_default"),
+          "measurement_session":(
+              "v19_perkey_post_release_tail" if args.post_release_perkey_scorer_tail
+              else "v18_post_release_tail" if args.post_release_scorer_tail
+              else "v15_scorer_only_per_key_release" if args.measurement_session
+              else "v12_default"),
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",

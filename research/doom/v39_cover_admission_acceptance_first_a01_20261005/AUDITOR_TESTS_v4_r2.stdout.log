@@ -1,0 +1,17 @@
+test_frozen_raw_passes (test_audit_v4.AuditTests.test_frozen_raw_passes) ... ok
+test_rejects_hard_event_seen_before_accept (test_audit_v4.AuditTests.test_rejects_hard_event_seen_before_accept) ... ok
+test_rejects_missing_planner_start (test_audit_v4.AuditTests.test_rejects_missing_planner_start) ... ok
+test_rejects_reordered_events (test_audit_v4.AuditTests.test_rejects_reordered_events) ... ok
+test_rejects_wrong_prior_observation (test_audit_v4.AuditTests.test_rejects_wrong_prior_observation) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.105s
+
+OK
+{
+  "status": "PASS_RAW_SOURCE_AUDIT_SCOPED",
+  "checks": 35,
+  "errors": [],
+  "claim": "with a seeded prior observation, both current main and PR #7589 start the planner before the next monitored wait consumes the accept-following hard observation",
+  "scope": "Deterministic synthetic ordering only. No cover, model, game, X server, OS input, allocation, latency, or task effect."
+}

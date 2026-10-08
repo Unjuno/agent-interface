@@ -13,6 +13,12 @@
 | Shared-runtime transfer | [Shared runtime transfer](#shared-runtime-transfer) |
 | Reproduction notes | [Reproduce](#reproduce) |
 
+## Recent source-boundary construction
+
+| Finding | Scope | Evidence |
+|---|---|---|
+| [V39 scorer-tail command readiness after the sample-boundary repair](v39_scorer_tail_command_priority_a03_20261005/REPORT.md) | Three Windows socketpair cases against the frozen PR #7692 source snapshot; no real stdin, game, GUI or live allocation | [Freeze](v39_scorer_tail_command_priority_a03_20261005/FREEZE.json), [candidate result](v39_scorer_tail_command_priority_a03_20261005/results/a03/RESULT.json), [corrected independent audit](v39_scorer_tail_command_priority_a03_20261005/results/a03/AUDIT_V2.json) |
+
 ## Track map
 
 ```mermaid
@@ -426,6 +432,20 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 # Issue #59 retained v39 ammo-timeline posthoc package
 
 [`v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md`](v39_fire_cover_ammo_timeline_59_p01_20261005/REPORT.md) — three retained fire-cover model-wait windows, seven observed ammo decreases, no zero-ammo exposure; posthoc read-only reconstruction with independent audit 5/5. Not live or causal evidence.
+
+## Per-key measured-release scorer-tail composition
+
+`session_map01_v19.py` and `map01_scorer_stdio_adapter_v3.py` add a separately
+opt-in scorer-only tail after the V39 bridge's raw `input_admission` and
+`input_release_measurement` rows pass an identity, actuation, physical-up
+bracket, and empty-backend check. The boundary is the upper timestamp of the
+confirmed physical-up sample interval. `--post-release-perkey-scorer-tail`
+selects this composition; default V12 and the existing V18 flag remain
+unchanged. Focused frozen-record, fake-session, and socket tests pass. This is
+construction evidence only: the frozen row came from a fake display, and no
+live game, OS input, authority grant, application consumption, or task effect
+was tested. See `test_map01_scorer_stdio_adapter_v3.py` and
+`test_session_map01_v19.py`.
 - [Retained V39 ammo-timeline audit mutation evidence](v39_fire_cover_ammo_timeline_audit_a01_20261005/README.md) — rescued from closed PR #7737 as audit-integrity evidence: A02 rejects all six saved-result corruptions. It does not duplicate the separate repair in #7726 or upgrade the underlying observation.
 | Astra decision-4 dense HUD replay (#59) | [`map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md`](map01_astra_wait_hud_dense_replay_59_a01_20261005/README.md) — 60 encoded frames and independent pixel-delta audit bound the first health-HUD change to game 46.8–47.0 s during model wait; the final 94→87 change straddles the observed return boundary. Posthoc single-run evidence only; no causal or live-control claim. |
 

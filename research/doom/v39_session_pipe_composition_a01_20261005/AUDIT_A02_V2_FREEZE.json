@@ -1,0 +1,23 @@
+{
+  "schema": "v39-session-child-pipe-audit-freeze-v2",
+  "audit_of": "v39-session-child-pipe-a02-20261005",
+  "frozen_at": "2026-10-05T05:42:45.9329912+09:00",
+  "candidate_was_rerun": false,
+  "candidate_result_sha256": "4f779aeea55cf05dfdf211fe6428987f6304aa6e6e8e156dc918dfbba98dd578",
+  "auditor": {
+    "file": "audit_pipe_a02_v2.py",
+    "sha256": "d848e894b9e6f7315d1db4e9e1cdc2ca88bab6539e1884909df346749239bbd8"
+  },
+  "input_sha256": "4028ca3a1dc908dc6375f840e2acd6d05f294ca67b1dc7696b4359fd085f59d7",
+  "raw_output_sha256": {
+    "CHILD_STDOUT.jsonl": "76060873ba7ec2de9e0061b5a3da47ce226bcc3eb7add81ccb93af511783614e",
+    "CHILD_STDERR.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "events.jsonl": "f389b288ac78e1137142a3df1c18e244115855ceee8f00bd171ffc6a11bbb08f",
+    "delivered.jsonl": "f389b288ac78e1137142a3df1c18e244115855ceee8f00bd171ffc6a11bbb08f",
+    "CONTROLLER_RECEIVED.json": "6b87043f2d026521c887e1c6ca9668079083803f713d3597528d84a49354fc61",
+    "RESULT.json": "4f779aeea55cf05dfdf211fe6428987f6304aa6e6e8e156dc918dfbba98dd578",
+    "RUN_RECEIPT.json": "0413456c6f232687b6c1662cc7c3b19e914811260c45673ec594b4c42bf98b5a"
+  },
+  "command": "py -3.11 audit_pipe_a02_v2.py",
+  "decision": "PASS_AUDIT only if all saved bytes, identities, round-trip rows, authority fields, process closure, and candidate disposition satisfy audit_pipe_a02_v2.py. No candidate rerun."
+}

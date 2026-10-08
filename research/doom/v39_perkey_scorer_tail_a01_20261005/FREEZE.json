@@ -1,0 +1,106 @@
+{
+  "schema": "v39-perkey-scorer-tail-a01-freeze-v1",
+  "experiment_id": "v39-perkey-scorer-tail-a01-20261005",
+  "frozen_at_utc": "2026-10-04T19:56:47.0777035Z",
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/59-admission-step-context-a05-20261005",
+  "checkout_head": "a8882e66e71f2e9705904373ed32acf824553831",
+  "observed_origin_main": "a9352dc53c783f1501046d762bc36c34bc6ab480",
+  "input_path": "research/doom/map01_v39_perkey_measurement_consumer_a03_20261005/INPUT_EVENTS.jsonl",
+  "expected_event_types": [
+    "input_admission",
+    "input_release_measurement"
+  ],
+  "expected_release_boundary_ns": 87811364949416,
+  "decision": "PASS iff exact frozen pair validates with distinct event labels, matching identity and actuation, confirmed up, empty held set, measured boundary equals expected endpoint, and command_ready tail does not consume input; focused suites pass.",
+  "environment": {
+    "windows_python": "Python 3.11.9",
+    "wsl_distribution": "Ubuntu (WSL2)",
+    "wsl_python": "Python 3.12.3",
+    "wslc_available": false,
+    "docker_required": false,
+    "rationale": "stdlib-only source/schema/socket construction tests; no container-only isolation or Engine API contract"
+  },
+  "files": [
+    {
+      "path": "research/doom/README.md",
+      "sha256": "007efde6465467f06767fe90158268746a682f0aefd95a1429963c3f41429492"
+    },
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "sha256": "3041d1df338c14f9f5b5f21e587db3a625d6acec834acec30f4f3ad16e13ebdd"
+    },
+    {
+      "path": "research/doom/map01_scorer_stdio_adapter_v1.py",
+      "sha256": "ab0558555725644c940639bbb9577d5c37eda009edeb3f298149825981f2a481"
+    },
+    {
+      "path": "research/doom/map01_scorer_stdio_adapter_v3.py",
+      "sha256": "48518dd27d8271c2b9be271b0e48bd2827240a53883d07713563faa6e7e731cc"
+    },
+    {
+      "path": "research/doom/session_map01_v19.py",
+      "sha256": "d79a97610911f0cd99830e6bd1c792a5a573c9e5d1c6003f5f3e6e2a62de8469"
+    },
+    {
+      "path": "research/doom/test_map01_scorer_stdio_adapter_v1.py",
+      "sha256": "0edcf2294069a752d0933fedd8b02c9327d76490dc9b686c2f55ebd20ce84465"
+    },
+    {
+      "path": "research/doom/test_map01_scorer_stdio_adapter_v2.py",
+      "sha256": "3fb3a70b49e6d90102b4d0b4dcad5c079950c7026c0acfeafea41d450ff40e36"
+    },
+    {
+      "path": "research/doom/test_map01_scorer_stdio_adapter_v3.py",
+      "sha256": "c743a52a5b86308fc58e66f8ba357504ebf9d633b5ade8308d6cddb293095938"
+    },
+    {
+      "path": "research/doom/test_session_map01_v18.py",
+      "sha256": "da80f6c1e732b357f22de9293918cc1fe205a1687e3634324635d4849994a819"
+    },
+    {
+      "path": "research/doom/test_session_map01_v19.py",
+      "sha256": "46928280bb0c27739964436c541ed76173f5183461b9ed2f518a161889255bbf"
+    },
+    {
+      "path": "research/doom/test_v39_tail_session_selection.py",
+      "sha256": "6b80130112f69db5184dc064729e2ebb3f59b74f21c102bcca4c8d857e25e5b1"
+    },
+    {
+      "path": "research/doom/main_thread_scorer_polling_v1.py",
+      "sha256": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84"
+    },
+    {
+      "path": "research/doom/independent_progress_clock_v2.py",
+      "sha256": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613"
+    },
+    {
+      "path": "research/doom/map01_v39_perkey_bridge_a01/bridge.py",
+      "sha256": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412"
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "sha256": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a"
+    },
+    {
+      "path": "research/doom/map01_v39_perkey_measurement_consumer_a03_20261005/INPUT_EVENTS.jsonl",
+      "sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e"
+    },
+    {
+      "path": "research/doom/v39_perkey_scorer_tail_a01_20261005/README.md",
+      "sha256": "9e52b4ce25b528dbf3419b3aaaf73c50a10b42c5abd696a8b9148c87f9d05da8"
+    },
+    {
+      "path": "research/doom/v39_perkey_scorer_tail_a01_20261005/COMMANDS.txt",
+      "sha256": "c5b02fb56a96e49dde23e818d9ddfe490177087453576618e97086722e4d48e3"
+    },
+    {
+      "path": "research/doom/v39_perkey_scorer_tail_a01_20261005/run.ps1",
+      "sha256": "e86c7eb08832676f286663c83f757aa19c619fca0e9b4054dc71eace5e63a331"
+    },
+    {
+      "path": "research/doom/v39_perkey_scorer_tail_a01_20261005/audit.py",
+      "sha256": "35a44427d60c6f7b89c5d52c94ac9734ad8ee14a7cf6d85ba5eb95189366588a"
+    }
+  ]
+}

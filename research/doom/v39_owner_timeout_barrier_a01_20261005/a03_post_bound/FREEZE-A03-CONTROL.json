@@ -1,0 +1,24 @@
+{
+  "decision": "Execute the delayed baseline only once; reuse, do not rerun, the retained A03 v3 candidate.",
+  "environment": "Native Windows fake-display construction run; WSLc and Docker Linux engine unavailable. No live allocation.",
+  "locked_files": [
+    {
+      "bytes": 2020,
+      "path": "PROTOCOL-A03-CONTROL.md",
+      "sha256": "22d683b301be5ecff7af5373e1e434fdeda00ae4a09fa5fb2725f9eb1061b77b"
+    },
+    {
+      "bytes": 7445,
+      "path": "probe_a03_control_supplement.py",
+      "sha256": "4367c9c6cdc3cbfc99eefa5c07ef503021a4a1eab7b86e771911be130ba1f2c7"
+    }
+  ],
+  "base_main": "563f636203ffd4c71e6a81968f6ad950dc53eaff",
+  "schema": "v39-owner-timeout-post-bound-control-freeze-v1",
+  "run_id": "v39-owner-timeout-post-bound-control-supplement-20261005",
+  "command": "py -3.11 probe_a03_control_supplement.py",
+  "candidate_pr_7805_head": "61502e45d40b67b6d588b4e8357e42fde05a9dbe",
+  "frozen_at": "2026-10-05T00:17:47Z",
+  "a03_v3_freeze_sha256": "9751b8c4fa6e50cd35a3794108ce0dc4fc0fd8a48eb1231ad0ab22624adc9f77",
+  "candidate_result_sha256": "a5df7e56cd3dccfb5b17986513d09ff0f6e30b99e3a828665623014a013ec628"
+}

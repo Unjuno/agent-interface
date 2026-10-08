@@ -1,0 +1,11 @@
+Command: py -3.11 run_pipe.py --source-tree 22615a96e2166619933cd7fb375fc612ec30579d
+Exit: 1
+
+Traceback (most recent call last):
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-7\work\pr7662-audit-20261005\research\doom\v39_session_pipe_composition_a01_20261005\run_pipe.py", line 216, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\user\Documents\Codex\2026-10-03\new-chat-7\work\pr7662-audit-20261005\research\doom\v39_session_pipe_composition_a01_20261005\run_pipe.py", line 80, in main
+    if sys.version.split()[0] != freeze["python_version"]:
+                                 ~~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'python_version'
