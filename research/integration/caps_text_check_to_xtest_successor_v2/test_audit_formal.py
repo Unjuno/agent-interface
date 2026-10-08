@@ -52,6 +52,17 @@ def record(arm: str, case_id: str = "C01") -> dict:
         "runtime_imports": json.loads((Path(__file__).resolve().parent / "SOURCE_MANIFEST.json").read_text())[
             "expected_imports"]["current" if arm == "current" else "guard"],
     }
+    original_events = result["entry_events"]
+    presses = [e for e in original_events if e.get("event") == "KeyPress"]
+    releases = {e["keycode"]: e for e in original_events if e.get("event") == "KeyRelease"}
+    result["entry_events"] = [
+        presses[0], {"event": "value", "value": value[:1]}, releases[38],
+        presses[1], presses[2], {"event": "value", "value": value[:2]},
+        releases[56], releases[50], presses[3], {"event": "value", "value": value},
+        releases[11], {"event": "exit", "value": value},
+    ]
+    for index, event in enumerate(result["entry_events"]):
+        event["ns"] = 100 + index
     if arm.startswith("guard-"):
         result.update(predecessor_patch_sha256="86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65",
                       barrier_patch_sha256="3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e")
@@ -78,6 +89,60 @@ class FormalAuditTest(unittest.TestCase):
                                   if not (e.get("event") == "KeyRelease" and e.get("keycode") == 50)]
         self.assertIn("Entry KeyPress/KeyRelease keycode balance",
                       audit_record("C01", "current", sample))
+
+    def test_rejects_value_and_exit_rows_moved_before_input(self):
+        raw_path = (Path(__file__).resolve().parents[1] / "caps_text_check_to_xtest_successor_v1" /
+                    "formal_runs" / "run_20261008_a01" / "C01" / "probe" / "record.json")
+        sample = json.loads(raw_path.read_text())
+        sample["study_id"] = "caps-text-query-xtest-a02-20261008"
+        sample["freeze_sha256"] = FROZEN_PLAN_SHA256
+        terminal = [e for e in sample["entry_events"] if e.get("event") in ("value", "exit")]
+        sample["entry_events"] = terminal + [
+            e for e in sample["entry_events"] if e.get("event") not in ("value", "exit")
+        ]
+        self.assertIn("Entry event chronology", audit_record("C01", "current", sample))
+
+    def test_rejects_key_release_before_its_press_even_when_time_is_monotonic(self):
+        raw_path = (Path(__file__).resolve().parents[1] / "caps_text_check_to_xtest_successor_v1" /
+                    "formal_runs" / "run_20261008_a01" / "C01" / "probe" / "record.json")
+        sample = json.loads(raw_path.read_text())
+        sample["study_id"] = "caps-text-query-xtest-a02-20261008"
+        sample["freeze_sha256"] = FROZEN_PLAN_SHA256
+        events = sample["entry_events"]
+        press_index = next(i for i, e in enumerate(events)
+                           if e.get("event") == "KeyPress" and e.get("char") == "a")
+        release_index = next(i for i, e in enumerate(events)
+                             if e.get("event") == "KeyRelease" and e.get("keycode") ==
+                             events[press_index].get("keycode"))
+        press = events[press_index]
+        release = events[release_index]
+        value_index = next(i for i, e in enumerate(events)
+                           if e.get("event") == "value" and e.get("value") == "a")
+        value = events[value_index]
+        ns = press["ns"]
+        release["ns"], press["ns"], value["ns"] = ns, ns + 1, ns + 2
+        events[:] = [e for i, e in enumerate(events)
+                     if i not in (press_index, value_index, release_index)]
+        events[press_index:press_index] = [release, press, value]
+        self.assertIn("Entry per-key chronology", audit_record("C01", "current", sample))
+
+    def test_rejects_final_value_row_before_its_character_press(self):
+        raw_path = (Path(__file__).resolve().parents[1] / "caps_text_check_to_xtest_successor_v1" /
+                    "formal_runs" / "run_20261008_a01" / "C01" / "probe" / "record.json")
+        sample = json.loads(raw_path.read_text())
+        sample["study_id"] = "caps-text-query-xtest-a02-20261008"
+        sample["freeze_sha256"] = FROZEN_PLAN_SHA256
+        events = sample["entry_events"]
+        press_index = next(i for i, e in enumerate(events)
+                           if e.get("event") == "KeyPress" and e.get("char") == "2")
+        value_index = next(i for i, e in enumerate(events)
+                           if e.get("event") == "value" and e.get("value") == "aB2")
+        press = events[press_index]
+        value = events[value_index]
+        value["ns"] = press["ns"] - 1
+        events.pop(value_index)
+        events.insert(press_index, value)
+        self.assertIn("Entry value event after character KeyPress", audit_record("C01", "current", sample))
 
     def test_protocol_draft_cannot_start_formal_allocation(self):
         study = Path(__file__).resolve().parent
@@ -171,7 +236,10 @@ class FormalAuditTest(unittest.TestCase):
             self.assertEqual(result["status"], "PASS")
             controls = mutation_controls(root)
             self.assertEqual(controls["status"], "PASS")
-            self.assertEqual(len(controls["controls"]), 15)
+            self.assertEqual(len(controls["controls"]), 18)
+            self.assertTrue(controls["controls"]["value_and_exit_before_input"]["rejected"])
+            self.assertTrue(controls["controls"]["release_before_press"]["rejected"])
+            self.assertTrue(controls["controls"]["final_value_before_character_press"]["rejected"])
 
 
 if __name__ == "__main__":

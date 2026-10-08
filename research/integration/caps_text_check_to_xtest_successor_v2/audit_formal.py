@@ -14,7 +14,7 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "0bab3d9a741e7dbe0ce09c2d3d4e9278da81f5386ab0294a119b971c8977a9bd"
+FROZEN_PLAN_SHA256 = "25fe9ad273ccc850e9ae99e3deb3f28b0418c313a409fa32af00137122bdcf9e"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
 EXPECTED_XVFB_STDERR_SHA256 = FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]
 
@@ -62,6 +62,9 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
     require(any("Xvfb" in arg for arg in server.get("argv", [])) and
             "-nolisten" in server.get("argv", []) and "tcp" in server.get("argv", []), "Xvfb argv/isolation")
     events = record.get("entry_events", [])
+    event_times = [event.get("ns") for event in events]
+    require(all(type(ns) is int for ns in event_times) and
+            event_times == sorted(event_times), "Entry event chronology")
     presses = [e for e in events if e.get("event") == "KeyPress"]
     key_releases = [e for e in events if e.get("event") == "KeyRelease"]
     character_presses = [e for e in presses if e.get("char")]
@@ -69,13 +72,46 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
             "exact Entry character sequence")
     pressed_codes = [e.get("keycode") for e in presses]
     released_codes = [e.get("keycode") for e in key_releases]
-    require(all(isinstance(code, int) for code in pressed_codes + released_codes) and
+    require(all(type(code) is int for code in pressed_codes + released_codes) and
             Counter(pressed_codes) == Counter(released_codes),
             "Entry KeyPress/KeyRelease keycode balance")
-    require(any(e.get("event") == "value" and e.get("value") == expected_value for e in events),
-            "Entry value-change journal")
-    require(any(e.get("event") == "exit" and e.get("value") == expected_value for e in events),
-            "fixture exit value")
+    held_codes: set[int] = set()
+    key_chronology_ok = True
+    for event in events:
+        kind = event.get("event")
+        if kind not in ("KeyPress", "KeyRelease"):
+            continue
+        code = event.get("keycode")
+        if type(code) is not int:
+            key_chronology_ok = False
+            continue
+        if kind == "KeyPress":
+            if code in held_codes:
+                key_chronology_ok = False
+            held_codes.add(code)
+        else:
+            if code not in held_codes:
+                key_chronology_ok = False
+            else:
+                held_codes.remove(code)
+    require(key_chronology_ok and not held_codes, "Entry per-key chronology")
+    value_rows = [(i, e) for i, e in enumerate(events) if e.get("event") == "value"]
+    expected_prefixes = [expected_value[:i] for i in range(1, len(expected_value) + 1)]
+    require([e.get("value") for _, e in value_rows] == expected_prefixes,
+            "Entry value progression")
+    causal_value_order = len(value_rows) == len(character_presses)
+    for (press_i, press), (value_i, _) in zip(
+            [(i, e) for i, e in enumerate(events) if e.get("event") == "KeyPress" and e.get("char")],
+            value_rows):
+        release_i = next((i for i, e in enumerate(events)
+                          if i > press_i and e.get("event") == "KeyRelease" and
+                          e.get("keycode") == press.get("keycode")), -1)
+        causal_value_order = causal_value_order and press_i < value_i < release_i
+    require(causal_value_order, "Entry value event after character KeyPress")
+    exit_rows = [(i, e) for i, e in enumerate(events) if e.get("event") == "exit"]
+    require(len(exit_rows) == 1 and exit_rows[0][0] == len(events) - 1 and
+            exit_rows[0][1].get("value") == expected_value,
+            "fixture exit after input")
     program = record.get("program", {})
     require(program.get("ops") == [{"op": "focus", "target": "entry"},
                                      {"op": "text", "text": "aB2"},
@@ -290,6 +326,39 @@ def mutation_controls(root: Path) -> dict:
         "wrong_freeze": lambda r: r.update(freeze_sha256="wrong"),
         "missing_backend_source": lambda r: r["runtime_imports"].pop("runtime.backends.x11_v1.backend"),
     }
+    def move_value_and_exit_before_input(record: dict) -> None:
+        terminal = [e for e in record["entry_events"] if e.get("event") in ("value", "exit")]
+        record["entry_events"] = terminal + [
+            e for e in record["entry_events"] if e.get("event") not in ("value", "exit")
+        ]
+    def move_release_before_press(record: dict) -> None:
+        events = record["entry_events"]
+        press_index = next(i for i, event in enumerate(events)
+                           if event.get("event") == "KeyPress" and event.get("char"))
+        press = events[press_index]
+        release_index = next(i for i, event in enumerate(events)
+                             if event.get("event") == "KeyRelease" and
+                             event.get("keycode") == press.get("keycode"))
+        release = events[release_index]
+        release["ns"] = press["ns"]
+        press["ns"] += 1
+        events.pop(release_index)
+        events.insert(press_index, release)
+    def move_final_value_before_character_press(record: dict) -> None:
+        events = record["entry_events"]
+        value_index = next(i for i, event in enumerate(events)
+                           if event.get("event") == "value" and
+                           event.get("value") == EXPECTED[record["arm"]][0])
+        press_index = next(i for i, event in enumerate(events)
+                           if event.get("event") == "KeyPress" and event.get("char") ==
+                           EXPECTED[record["arm"]][0][-1])
+        value = events.pop(value_index)
+        press_index -= value_index < press_index
+        value["ns"] = events[press_index]["ns"] - 1
+        events.insert(press_index, value)
+    mutations["value_and_exit_before_input"] = move_value_and_exit_before_input
+    mutations["release_before_press"] = move_release_before_press
+    mutations["final_value_before_character_press"] = move_final_value_before_character_press
     outcomes = {}
     for name, mutate in mutations.items():
         sample = deepcopy(original)
