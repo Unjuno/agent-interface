@@ -1,7 +1,7 @@
 {
   "schema": "v39-inflight-observation-terminal-order-freeze-v1",
   "experiment": "v39-inflight-observation-terminal-order-a01-20261008",
-  "current_main_commit": "520ae707c0a8882bfc0965f73b7c201b77cefedb",
+  "current_main_commit": "6da5dc940fdb97866cfb900ca747edb8c94b2790",
   "source": {
     "path": "research/doom/map01_overlap_controller_v39.py",
     "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
@@ -9,8 +9,8 @@
     "bytes": 85952,
     "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
   },
-  "hypothesis": "If a health-invalidating observation line is emitted before the matching cover terminal but is decoded just before the completed-future snapshot, session serialization and the single stdout reader preserve FIFO into the controller queue; the subsequent wait processes invalidation before terminal and final admission rejects the completed answer.",
-  "scope": "Current-main V39 helper/wait/final-admission composition plus pinned session, backend, and executor source ordering. The candidate uses a deterministic delayed-queue schedule; a separate AST audit verifies emitter serialization, single-reader FIFO enqueue, synchronous observation during execute, and terminal after execute. No live game/model/GUI/OS input or physical release.",
+  "hypothesis": "If a hard-invalidating observation line precedes the matching cover terminal but is decoded just before the completed-future snapshot, the current session emitter and controller reader preserve FIFO. In addition, source census should show that no active-session observation can be emitted after its matching terminal and before final admission.",
+  "scope": "Current-main V39 helper/wait/final-admission composition plus pinned session, backend, and executor source ordering and observation-producer census. The candidate uses a deterministic delayed-queue schedule; an AST audit verifies emitter serialization, single-reader FIFO enqueue, synchronous observation during execute, terminal after execute, and no active post-terminal observation producer. No live game/model/GUI/OS input or physical release.",
   "additional_sources": [
     {
       "local_path": "source/final_action_admission_v1.py",
@@ -83,6 +83,27 @@
       "git_blob": "9eb5ed4dcd42cae07bea69530136f78f9e65fb33",
       "bytes": 10689,
       "sha256": "fc4bad32859561c0d236f283c75d154f8221365c82b1df19c12c358d99045e6e"
+    },
+    {
+      "local_path": "source/session_v10.py",
+      "path": "research/live_control/session_v10.py",
+      "git_blob": "1f5e0550770d383b5dec59242ea9ddf77d718890",
+      "bytes": 2963,
+      "sha256": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d"
+    },
+    {
+      "local_path": "source/session_v9.py",
+      "path": "research/live_control/session_v9.py",
+      "git_blob": "1d214a353d728b30b9b18d6120760b6703d9086e",
+      "bytes": 7030,
+      "sha256": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0"
+    },
+    {
+      "local_path": "source/session_v8.py",
+      "path": "research/live_control/session_v8.py",
+      "git_blob": "4f33111fa27474d6eb4d3f8db22fae4bae7626c8",
+      "bytes": 2276,
+      "sha256": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943"
     }
   ]
 }

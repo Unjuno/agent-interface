@@ -74,6 +74,56 @@ v15text=source('session_map01_v15.py')
 assert 'base.Executor=ReleaseOrderedExecutor' in v15text
 assert 'base.main()' in v15text
 
+# Census direct snapshot producers in the session process. Only startup and
+# fixture setup call the backend directly; active samples occur inside execute.
+session_main=function(v12,'main')
+direct_snapshots=[]
+for n in ast.walk(session_main):
+    if (isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='snapshot' and
+        isinstance(n.func.value,ast.Name) and n.func.value.id=='backend'):
+        arg=n.args[0].value if n.args and isinstance(n.args[0],ast.Constant) else None
+        direct_snapshots.append((arg,n))
+assert [x[0] for x in direct_snapshots]==['initial','fixture-source']
+ready_emit=next(n for n in ast.walk(session_main) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='emit' and const_event(n,'ready'))
+stdin_loop=next(n for n in ast.walk(session_main) if isinstance(n,ast.For) and isinstance(n.iter,ast.Attribute) and isinstance(n.iter.value,ast.Name) and n.iter.value.id=='sys' and n.iter.attr=='stdin')
+initial_call=direct_snapshots[0][1]; fixture_call=direct_snapshots[1][1]
+assert ready_emit.lineno < initial_call.lineno < stdin_loop.lineno
+controller_text=source('map01_overlap_controller_v39.py')
+session_command=function(controller,'session_command')
+session_command_text=ast.get_source_segment(controller_text,session_command)
+assert '--fixture-out' not in session_command_text and '--load-fixture-manifest' in session_command_text
+finish_branch=next(n for n in ast.walk(session_main) if isinstance(n,ast.If) and isinstance(n.test,ast.Compare) and any(isinstance(c,ast.Constant) and c.value=='finish' for c in n.test.comparators))
+assert not any(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='snapshot' for n in ast.walk(finish_branch))
+finish_close=next(n for n in ast.walk(finish_branch) if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='close' and isinstance(n.func.value,ast.Name) and n.func.value.id=='executor')
+score_emit=next(n for n in ast.walk(finish_branch) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='emit' and n.args and isinstance(n.args[0],ast.Name) and n.args[0].id=='score')
+assert finish_close.lineno < score_emit.lineno
+
+# Legacy, typed, and coast observations are synchronous inside the active
+# backend.execute call; derived executor workers publish terminal afterward.
+execute_sites={}
+for filename in ('session_v8.py','session_v9.py','session_v10.py','coast_backend_v1.py'):
+    tree=module(filename)
+    cls=next(n for n in tree.body if isinstance(n,ast.ClassDef) and n.name=='Backend')
+    methods=[n for n in cls.body if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name=='execute']
+    assert len(methods)==1,filename
+    method=methods[0]
+    assert has_call(method,'snapshot') or has_call(method,'execute')
+    assert not any(isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr in ('Thread','submit') for n in ast.walk(method))
+    execute_sites[filename]=line(filename,method)
+
+v13_tree=module('executor_v13.py')
+v13_cls=next(n for n in v13_tree.body if isinstance(n,ast.ClassDef) and n.name=='Executor')
+v13_run=function(v13_tree,'_run_with_watcher_cleanup',v13_cls)
+v13_backend_execute=next(n for n in ast.walk(v13_run) if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='execute' and isinstance(n.func.value,ast.Attribute) and n.func.value.attr=='backend')
+v13_terminal_emit=next(n for n in ast.walk(v13_run) if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute) and n.func.attr=='emit' and n.args and isinstance(n.args[0],ast.Name) and n.args[0].id=='terminal')
+assert v13_backend_execute.lineno < v13_terminal_emit.lineno
+
+# v12 has no worker override and inherits v5's execute-before-terminal loop.
+v12_exec_tree=module('executor_v12.py')
+v12_cls=next(n for n in v12_exec_tree.body if isinstance(n,ast.ClassDef) and n.name=='Executor')
+assert not any(isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name in ('_run','_run_with_watcher_cleanup') for n in v12_cls.body)
+assert '--fixture-out' not in session_command_text
+
 evidence={
  'status':'PASS_SOURCE_VERIFIED_OBSERVATION_BEFORE_TERMINAL_FIFO',
  'main_commit':freeze['current_main_commit'],
@@ -85,7 +135,14 @@ evidence={
   'coast_observation_emitted_synchronously_during_backend_execute':True,
   'executor_terminal_emitted_after_backend_execute_returns':True,
   'wait_observes_policy_event_before_terminal_predicate':True,
-  'default_v12_and_opt_in_v15_use_the_serialized_session_emitter':True
+  'default_v12_and_opt_in_v15_use_the_serialized_session_emitter':True,
+  'active_observations_are_synchronous_inside_executor_backend_execute':True,
+  'only_direct_snapshots_are_startup_or_disabled_fixture_setup':True,
+  'controller_session_command_disables_fixture_out':True,
+  'finish_path_closes_executor_then_emits_score_without_snapshot':True,
+  'no_active_post_terminal_observation_producer_in_pinned_session_route':True,
+  'default_v12_inherits_v5_execute_before_terminal_loop':True,
+  'opt_in_v13_executes_backend_before_terminal':True
  },
  'scope':'Static current-main source ordering proof; no live pipe scheduling, model, HUD cadence, game, OS input, release timing or task outcome.',
  'anchors':{
@@ -96,7 +153,14 @@ evidence={
   'coast_execute':line('coast_backend_v1.py',execute),
   'executor_run':line('executor_v5.py',run),
   'executor_backend_execute':line('executor_v5.py',backend_execute),
-  'executor_terminal_emit':line('executor_v5.py',terminal_emit)
+  'executor_terminal_emit':line('executor_v5.py',terminal_emit),
+  'startup_snapshot':line('session_map01_v12.py',initial_call),
+  'fixture_only_snapshot':line('session_map01_v12.py',fixture_call),
+  'finish_executor_close':line('session_map01_v12.py',finish_close),
+  'finish_score_emit':line('session_map01_v12.py',score_emit),
+  'executor_v13_backend_execute':line('executor_v13.py',v13_backend_execute),
+  'executor_v13_terminal_emit':line('executor_v13.py',v13_terminal_emit),
+  'backend_execute_sites':execute_sites
  }
 }
 (ROOT/'PIPELINE_AUDIT.json').write_text(json.dumps(evidence,indent=2)+'\n',encoding='utf-8')
