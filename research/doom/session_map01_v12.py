@@ -20,6 +20,8 @@ from executor_v12 import Executor
 from lease import Expired
 from doom_typed_release_backend_v1 import Backend, suite
 from doom_hud_signal_v3 import DoomStatusNumberReader
+from session_identity_v1 import (bind_session_identity, SessionBoundEventSidecar,
+                                 emit_event_row)
 
 
 FIXTURE_SCHEMA = "map01_os_input_fixture_v1"
@@ -86,29 +88,32 @@ def main():
     parser.add_argument("--fixture-out", type=Path)
     parser.add_argument("--load-fixture-manifest", type=Path)
     args = parser.parse_args()
+    session_id = os.environ.get("AGENT_INTERFACE_SESSION_ID")
+    if session_id is not None and not session_id.strip():
+        raise ValueError("AGENT_INTERFACE_SESSION_ID must not be empty")
     if args.fixture_out is not None and args.fixture_out.suffix.lower() != ".png":
         parser.error("fixture-out must be a .png save container")
     args.out.mkdir(parents=True, exist_ok=False)
+    session_sidecar = SessionBoundEventSidecar(args.out, session_id)
     lock = threading.RLock()
     session = game = executor = backend = None
     control_started_ns = None
     latest_observation = None
+    event_ordinal = 0
 
     def emit(row):
-        nonlocal latest_observation
+        nonlocal latest_observation, event_ordinal
         with lock:
             if row.get("event") == "observation":
                 latest_observation = dict(row)
             row["emit_ns"] = time.perf_counter_ns()
-            encoded = json.dumps(row)
-            with (args.out / "events.jsonl").open("a") as stream:
-                stream.write(encoded + "\n")
-            with (args.out / "delivered.jsonl").open("a") as stream:
-                stream.write(encoded + "\n")
-            print(encoded, flush=True)
+            event_ordinal += 1
+            emit_event_row(args.out, row, event_ordinal, session_sidecar,
+                           lambda encoded: print(encoded, flush=True))
 
     sources = {}
-    for path in (Path(__file__), HERE.parent / "live_control/session_v8.py",
+    for path in (Path(__file__), HERE / "session_identity_v1.py",
+                 HERE.parent / "live_control/session_v8.py",
                  HERE.parent / "live_control/executor_v12.py",
                  HERE.parent / "live_control/executor_v11.py",
                  HERE.parent / "live_control/executor_v5.py",
@@ -356,8 +361,13 @@ def main():
                         backend.close()
                     finally:
                         (args.out / "owner-events.json").write_text(
-                            json.dumps(backend.owner.records, indent=2))
+                            json.dumps([bind_session_identity(row, session_id)
+                                        for row in backend.owner.records], indent=2))
         finally:
+            try:
+                session_sidecar.finalize()
+            except Exception:
+                pass
             try:
                 if game is not None:
                     game.close()

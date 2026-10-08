@@ -5,6 +5,7 @@ controller neutrality and physical-release/recovery claims.
 """
 import hashlib
 import json
+import os
 from pathlib import Path
 import uuid
 
@@ -39,6 +40,8 @@ def main():
     run_id = str(uuid.uuid4())
     original = previous._coherent_progress_sample
     original_proxy = previous._GameProxy
+    identity_key = 'AGENT_INTERFACE_SESSION_ID'
+    prior_session_id = os.environ.get(identity_key)
 
     def emit(row):
         out.mkdir(parents=True, exist_ok=True)
@@ -48,6 +51,7 @@ def main():
     sampler = AcknowledgedSampler(original, run_id, emit)
     previous._coherent_progress_sample = sampler
     previous._GameProxy = lambda inner, final_sample: ObservedGameProxy(inner, final_sample, sampler)
+    os.environ[identity_key] = run_id
     session_error = None
     try:
         return previous.main()
@@ -57,11 +61,16 @@ def main():
     finally:
         previous._coherent_progress_sample = original
         previous._GameProxy = original_proxy
+        if prior_session_id is None:
+            os.environ.pop(identity_key, None)
+        else:
+            os.environ[identity_key] = prior_session_id
         try:
             sources = out / 'sources.json'
             if sources.exists():
                 data = json.loads(sources.read_text(encoding='utf-8'))
-                for name in ('session_map01_v16.py', 'acknowledged_scorer_v1.py'):
+                for name in ('session_map01_v12.py', 'session_identity_v1.py',
+                             'session_map01_v16.py', 'acknowledged_scorer_v1.py'):
                     path = Path(__file__).parent / name
                     data['doom/' + name] = hashlib.sha256(path.read_bytes()).hexdigest()
                 sources.write_text(json.dumps(data, indent=2, sort_keys=True) + '\n', encoding='utf-8')
