@@ -1,0 +1,93 @@
+{
+  "anchor_search_radius_px": 2,
+  "auditor_sha256": "39f351f56bab7b6bbe6a574b8a61a177192e403549676f0722fbca517aa84a8c",
+  "base_commit": "677e95fce6e5d7357d3c4c16588cdedfa31bfd69",
+  "brightness_factors": [
+    0.95,
+    1.05
+  ],
+  "candidate_sha256": "3d536fc1889761f29b691e638bc416d6c09f7a5f1f7c1b3ad1ff56a3d5a0c24d",
+  "contrast_factors": [
+    0.95,
+    1.05
+  ],
+  "decision": "PASS_BOUNDED_DIAGONAL_SEARCH iff 13/13 baselines and 104/104 diagonal translations match exact manual health, 0 wrong observed values across 182 perturbed rows, and 13/13 blank controls are unknown; otherwise preserve FAIL. Candidate behavior on diagonal displacement is the preregistered outcome of interest.",
+  "evidence_commit": "677e95fce6e5d7357d3c4c16588cdedfa31bfd69",
+  "execution_id": "v39-hud-anchor-diagonal-search-a04c-20261009",
+  "expected_reads": 195,
+  "frame_count": 13,
+  "glyph_size": [
+    26,
+    38
+  ],
+  "health_local_anchor": [
+    102,
+    411
+  ],
+  "jpeg_qualities": [
+    95,
+    75
+  ],
+  "prior_a02_audit_expected_status": "PASS_AUDIT",
+  "prior_a02_audit_path": "results/audit_a02_v2.json",
+  "prior_a02_audit_sha256": "28d0a9519938b1f1d30285edcdbea49472da8a6444264ff614c6afff171b3906",
+  "prior_a02_expected_status": "PASS_BOUNDED_ANCHOR_SEARCH",
+  "prior_a02_result_path": "results/a02.json",
+  "prior_a02_result_sha256": "089a14a6f484acaa4d32be208f046a746bc0c044985ea140d415083ff16fbf50",
+  "reader_modules": [
+    "research/doom/doom_hud_signal_v1.py",
+    "research/doom/doom_hud_signal_v2.py",
+    "research/doom/doom_hud_signal_v3.py"
+  ],
+  "runtime_versions": {
+    "numpy": "2.3.4",
+    "pillow": "12.2.0",
+    "python": "3.13.14"
+  },
+  "schema": "v39-hud-anchor-search-freeze-a04-v1",
+  "scope": "New offline CPU diagnostic variant: exact-center-first A03 candidate with its eight axial fallback offsets tested on 13 retained frames and eight diagonal image translations. Does not test live capture/GUI/game, OS input, model, physical release, or task effect.",
+  "search_offsets": "A03 eight axial offsets retained unchanged; test transformations use eight diagonal offsets (±1,±1),(±2,±2)",
+  "slots": 3,
+  "source_blobs": {
+    "research/doom/doom_hud_signal_v1.py": "446ce06bd9aa1f8b73090b2816730aa7c960853b",
+    "research/doom/doom_hud_signal_v2.py": "565f13ecd721ae3f757c2eefb0a3dff4e7065763",
+    "research/doom/doom_hud_signal_v3.py": "083338b4565176aaea560d800ce0210f17b6852f"
+  },
+  "source_freeze_path": "research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json",
+  "source_freeze_sha256": "3b4d846d79cf9e284188c04587deff30e83cff02ef80508bd52809914096ead2",
+  "translation_px": [
+    [
+      1,
+      1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      -2,
+      2
+    ],
+    [
+      2,
+      -2
+    ],
+    [
+      -2,
+      -2
+    ]
+  ],
+  "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+}
