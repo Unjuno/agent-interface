@@ -74,8 +74,8 @@ def _run_measured_tail(polling, out, candidate, final_sample, *,
         outcome["termination"] = "tail_error"
         outcome["error_type"] = type(error).__name__
     output = Path(out)
-    output.mkdir(parents=True, exist_ok=True)
     try:
+        output.mkdir(parents=True, exist_ok=True)
         (output / "scorer-post-release-tail.json").write_text(
             json.dumps(outcome, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     finally:
