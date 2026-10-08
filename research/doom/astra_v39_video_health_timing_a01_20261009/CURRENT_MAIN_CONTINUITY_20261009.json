@@ -1,0 +1,16 @@
+{
+  "schema": "astra-video-health-timing-a01-current-main-continuity-v2",
+  "recorded_at_utc": "2026-10-08T23:22:50Z",
+  "latest_main_commit": "6ceb8552df13a188f6aad9cbfed88eba6eb70689",
+  "candidate_rerun": false,
+  "interpretation": "The original extraction and audit were not rerun. Current-main continuity was checked by reading GitHub's exact blob SHA for each frozen transitive input/reader path; all seven match the original freeze. This verifies source/data continuity only, not candidate execution on current main or any live/game claim.",
+  "transitive_inputs_and_reader_sources": [
+    {"path":"research/doom/results/map01-astra-attempt-v1/map01-astra-live-01-2x.mp4","frozen_base_blob":"983e2f43e878b56d0d05cd4d7db5125a55566cc8","current_main_blob":"983e2f43e878b56d0d05cd4d7db5125a55566cc8","unchanged":true},
+    {"path":"research/doom/results/map01-astra-attempt-v1/events.jsonl","frozen_base_blob":"9165cfbc768ef82a63c2662b6c0d2d7dbbb1090d","current_main_blob":"9165cfbc768ef82a63c2662b6c0d2d7dbbb1090d","unchanged":true},
+    {"path":"research/doom/results/map01-astra-attempt-v1/report.json","frozen_base_blob":"4c7ee753235f0af3cb618c85223b99ce5bbb1ae0","current_main_blob":"4c7ee753235f0af3cb618c85223b99ce5bbb1ae0","unchanged":true},
+    {"path":"research/doom/astra_v39_hud_reader_transfer_a01_20261007/FREEZE.json","frozen_base_blob":"bff85321219c4bc54ffa254a7318d16e0e0d34d9","current_main_blob":"bff85321219c4bc54ffa254a7318d16e0e0d34d9","unchanged":true},
+    {"path":"research/doom/doom_hud_signal_v1.py","frozen_base_blob":"446ce06bd9aa1f8b73090b2816730aa7c960853b","current_main_blob":"446ce06bd9aa1f8b73090b2816730aa7c960853b","unchanged":true},
+    {"path":"research/doom/doom_hud_signal_v2.py","frozen_base_blob":"565f13ecd721ae3f757c2eefb0a3dff4e7065763","current_main_blob":"565f13ecd721ae3f757c2eefb0a3dff4e7065763","unchanged":true},
+    {"path":"research/doom/doom_hud_signal_v3.py","frozen_base_blob":"083338b4565176aaea560d800ce0210f17b6852f","current_main_blob":"083338b4565176aaea560d800ce0210f17b6852f","unchanged":true}
+  ]
+}
