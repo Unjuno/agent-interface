@@ -1,0 +1,20 @@
+{
+  "auditor_exit_code": 1,
+  "auditor_result": "results/audit.json",
+  "auditor_result_sha256": "807e37b0945fe167f29a51e3da1c4d432972f04d94c5200c2a2e11f3d93d10a7",
+  "auditor_stdout_stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\n{\"status\": \"FAIL_RAW_OR_SOURCE_AUDIT\", \"decision\": \"AUDIT_FAILURE\", \"passed\": 18, \"total\": 30}\n",
+  "candidate_exit_code": 0,
+  "candidate_raw": "results/candidate.json",
+  "candidate_raw_sha256": "89259047586cdf57ea1f348ca6b5dea6007c1d259912d4fd6a3665a3d8269291",
+  "candidate_rerun": false,
+  "candidate_stdout_stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\n{\"raw\": \"/out/candidate.json\", \"cases\": 2, \"loss_server_down\": [], \"loss_terminal_status\": \"failed\"}\n",
+  "classification": "STOP_BEFORE_TREATMENT_ACTION_SCHEMA_MISMATCH",
+  "container_runtime": "WSLc 3.0.1.0",
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "observation": "Both submitted arms terminated failed before any step completed: KeyError('op'); no input_release_transition row was emitted. The plan gave a step with actions but omitted ExecutorV13-required op. The release-loss injection was not reached. The empty fake-server keymap is only the initial neutral state, not a release-recovery observation.",
+  "resource_warning": "swap limit not supported; observed memory.max 536870912, memory.swap.max=max",
+  "run_id": "a06-current-main-10be950-20261005-one-shot",
+  "schema": "v39-v15-perkey-cleanup-a06-run-v1",
+  "scope": "Harness construction failure only; no inference about current-main KeyRelease retry behavior, real X11, GUI, game, model, native/physical input, application effect, live threat, recovery or MAP01.",
+  "source_commit": "10be950b8fb6e2799b837b541577fb5f32db858d"
+}
