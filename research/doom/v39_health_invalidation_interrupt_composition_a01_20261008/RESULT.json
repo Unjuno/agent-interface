@@ -1,0 +1,200 @@
+{
+  "schema": "issue59-health-invalidation-interrupt-composition-result-v1",
+  "status": "CONSTRUCTION_OBSERVATION",
+  "main_commit": "e4db1a9115cdf4f9163bddc169a7313672b9155e",
+  "pending_model": true,
+  "cases": [
+    {
+      "case": "hard-crossing-cancel-first",
+      "maximum_health_loss": 12,
+      "health": 84,
+      "hard_minimum": 88,
+      "invalidation": "health:below_hard_minimum",
+      "cancel_fails": false,
+      "terminal": {
+        "event": "terminal",
+        "id": "cover-1",
+        "status": "cancelled",
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        }
+      },
+      "helper_error": null,
+      "answer_eligible": false,
+      "answer": null,
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1",
+          "input": "pending old observation"
+        },
+        {
+          "event": "monitor_disposition",
+          "outcome": "health:below_hard_minimum",
+          "hard_minimum": 88
+        },
+        {
+          "event": "executor_cancel_write",
+          "op": "cancel",
+          "id": "cover-1"
+        },
+        {
+          "event": "executor_cancel_flush"
+        },
+        {
+          "event": "planner_interrupt_transport",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_terminal",
+          "status": "cancelled",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        },
+        {
+          "event": "helper_returned",
+          "interrupt_outcome": "requested"
+        },
+        {
+          "event": "answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "answer_classified",
+          "answer_eligible": false,
+          "answer": null,
+          "cancellation_requested": true
+        }
+      ]
+    },
+    {
+      "case": "soft-change-preserves-cover",
+      "maximum_health_loss": 16,
+      "health": 84,
+      "hard_minimum": 84,
+      "invalidation": null,
+      "cancel_fails": false,
+      "terminal": null,
+      "helper_error": null,
+      "answer_eligible": true,
+      "answer": {
+        "action": "stale"
+      },
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1",
+          "input": "pending old observation"
+        },
+        {
+          "event": "monitor_disposition",
+          "outcome": null,
+          "hard_minimum": 84
+        },
+        {
+          "event": "answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "answer_classified",
+          "answer_eligible": true,
+          "answer": {
+            "action": "stale"
+          },
+          "cancellation_requested": false
+        }
+      ]
+    },
+    {
+      "case": "hard-crossing-cancel-write-failure",
+      "maximum_health_loss": 12,
+      "health": 84,
+      "hard_minimum": 88,
+      "invalidation": "health:below_hard_minimum",
+      "cancel_fails": true,
+      "terminal": {
+        "event": "terminal",
+        "id": "cover-1",
+        "status": "cancelled",
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        }
+      },
+      "helper_error": "executor cancel write failed before planner interruption: OSError('synthetic executor cancel failure')",
+      "answer_eligible": false,
+      "answer": null,
+      "events": [
+        {
+          "event": "thread_started",
+          "thread_id": "thread-1"
+        },
+        {
+          "event": "turn_started",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1",
+          "input": "pending old observation"
+        },
+        {
+          "event": "monitor_disposition",
+          "outcome": "health:below_hard_minimum",
+          "hard_minimum": 88
+        },
+        {
+          "event": "executor_cancel_write",
+          "op": "cancel",
+          "id": "cover-1"
+        },
+        {
+          "event": "planner_interrupt_transport",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "cover_terminal",
+          "status": "cancelled",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        },
+        {
+          "event": "helper_error",
+          "message": "executor cancel write failed before planner interruption: OSError('synthetic executor cancel failure')"
+        },
+        {
+          "event": "answer_arrived",
+          "thread_id": "thread-1",
+          "turn_id": "turn-1"
+        },
+        {
+          "event": "answer_classified",
+          "answer_eligible": false,
+          "answer": null,
+          "cancellation_requested": true
+        }
+      ]
+    }
+  ],
+  "scope": "Synthetic typed HUD and fake transport composition only; no live timing, key state, task effect, or recovery efficacy."
+}

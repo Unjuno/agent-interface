@@ -1,0 +1,9 @@
+docker run --rm --pull=never --network bridge --cpus=2 --memory=6442450944 --memory-swap=6442450944 \
+  --volume <A14>/source-main-708ca59a:/src:ro \
+  --volume <A14>:/out:rw \
+  --volume <A14>/construction-setup-a23:/out/construction-setup-a23:ro \
+  --volume C:\Users\user\.codex\auth.json:/root/.codex/auth.json:ro \
+  --entrypoint /bin/bash issue59-v39-live-env@sha256:b473b61c9dda0fab168f4a2118bd1206676dc6913122a3b9193d423426bc0b84 \
+  -lc "$(Get-Content -Raw actual-container-script.sh)"
+
+The actual script is retained in `actual-container-script.sh`. There was no `/out/container-run.sh` in A14. The mounted auth file was read-only; its contents are not part of this record. The A14 freeze did not pin a runner digest or the six-turn command, which is part of the protocol deviation.
