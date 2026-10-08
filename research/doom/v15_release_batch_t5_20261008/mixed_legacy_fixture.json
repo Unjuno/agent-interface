@@ -1,0 +1,153 @@
+{
+  "samples": [
+    {
+      "scheduled_ns": 100,
+      "sample_started_ns": 100,
+      "sample_finished_ns": 100,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "schema": "independent-progress-sample-v2",
+        "sample_ns": 100,
+        "kill_count": 0,
+        "death_count": 0,
+        "episode_finished": false,
+        "player_dead": false,
+        "map_exit": false
+      },
+      "controller_visible": false
+    },
+    {
+      "scheduled_ns": 300,
+      "sample_started_ns": 300,
+      "sample_finished_ns": 300,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "schema": "independent-progress-sample-v2",
+        "sample_ns": 300,
+        "kill_count": 1,
+        "death_count": 0,
+        "episode_finished": false,
+        "player_dead": false,
+        "map_exit": false
+      },
+      "controller_visible": false
+    }
+  ],
+  "events": [
+    {
+      "schema": "independent-progress-event-v2",
+      "event_sequence": 1,
+      "observed_ns": 300,
+      "kind": "KILL_COUNT_INCREASE",
+      "polarity": "positive",
+      "useful": true,
+      "controller_visible": false,
+      "before": {
+        "kill_count": 0
+      },
+      "after": {
+        "kill_count": 1,
+        "delta": 1
+      }
+    }
+  ],
+  "input_rows": [
+    {
+      "event": "input_admission",
+      "key": "space",
+      "id": "program-a",
+      "step": 0,
+      "owner_id": "owner-a",
+      "intent_token": "intent-a",
+      "admitted_ns": 80,
+      "input_ack_ns": 85,
+      "valid_until_ns": 900
+    },
+    {
+      "event": "input_release_transition",
+      "operation": "up",
+      "key": "space",
+      "id": "program-a",
+      "step": 0,
+      "owner_id": "owner-a",
+      "intent_token": "intent-a",
+      "release_call_started_ns": 305,
+      "release_call_returned_ns": 330,
+      "owner_thread_keyup_receipt": {
+        "event": "owner_explicit_keyup",
+        "operation": "up",
+        "key": "space",
+        "owner_id": "owner-a",
+        "intent_token": "intent-a",
+        "valid_until_ns": 900,
+        "owner_keyrelease_started_ns": 310,
+        "owner_sync_returned_ns": 320,
+        "cancel_requested_after_sync": false,
+        "server_sync_completed": true,
+        "physical_verification_authoritative": false
+      },
+      "owner_thread_keyup_verified": true,
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_verified_after_batch": true,
+      "owner_transition_verified": true,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_identifier": "program-a",
+      "release_batch_step": 0,
+      "release_batch_size": 1,
+      "release_batch_position": 0,
+      "release_batch_delivery_position": 0,
+      "release_batch_complete": true,
+      "physical_verification_authoritative": false
+    },
+    {
+      "event": "input_admission",
+      "key": "up",
+      "id": "program-a",
+      "step": 0,
+      "owner_id": "owner-a",
+      "intent_token": "intent-a",
+      "admitted_ns": 80,
+      "input_ack_ns": 85,
+      "valid_until_ns": 900
+    },
+    {
+      "event": "input_release_transition",
+      "operation": "up",
+      "key": "up",
+      "id": "program-a",
+      "step": 0,
+      "owner_id": "owner-a",
+      "intent_token": "intent-a",
+      "release_call_started_ns": 305,
+      "release_call_returned_ns": 330,
+      "owner_thread_keyup_receipt": {
+        "event": "owner_explicit_keyup",
+        "operation": "up",
+        "key": "up",
+        "owner_id": "owner-a",
+        "intent_token": "intent-a",
+        "valid_until_ns": 900,
+        "owner_keyrelease_started_ns": 310,
+        "owner_sync_returned_ns": 320,
+        "cancel_requested_after_sync": false,
+        "server_sync_completed": true,
+        "physical_verification_authoritative": false
+      },
+      "owner_thread_keyup_verified": true,
+      "owner_thread_keyup_receipt_count": 1,
+      "owner_thread_keyup_history_complete": true,
+      "owner_thread_keyup_verified_after_batch": true,
+      "owner_transition_verified": true,
+      "release_batch_schema": "input-release-batch-v3",
+      "release_batch_identifier": "program-a",
+      "release_batch_step": 0,
+      "release_batch_size": 1,
+      "release_batch_position": 0,
+      "release_batch_complete": true,
+      "physical_verification_authoritative": false
+    }
+  ]
+}

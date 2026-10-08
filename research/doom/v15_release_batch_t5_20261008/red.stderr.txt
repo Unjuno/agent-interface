@@ -1,0 +1,17 @@
+test_mixed_legacy_and_delivery_positions_fail_closed (test_delivery_batches.DeliveryBatchTests.test_mixed_legacy_and_delivery_positions_fail_closed) ... FAIL
+
+======================================================================
+FAIL: test_mixed_legacy_and_delivery_positions_fail_closed (test_delivery_batches.DeliveryBatchTests.test_mixed_legacy_and_delivery_positions_fail_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\CodexResearchTmp\computer-control-v15-batch-t5-mixed-schema-20261008\package\test_delivery_batches.py", line 76, in test_mixed_legacy_and_delivery_positions_fail_closed
+    self.assertEqual(result["trace_integrity"],"HOLD_INCOMPLETE_RELEASE_BATCH")
+AssertionError: 'SOURCE_ROWS_JOINED' != 'HOLD_INCOMPLETE_RELEASE_BATCH'
+- SOURCE_ROWS_JOINED
++ HOLD_INCOMPLETE_RELEASE_BATCH
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
