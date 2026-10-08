@@ -1,0 +1,226 @@
+{
+  "schema": "issue59-v39-observation-pump-full-loop-result-a02",
+  "status": "CONSTRUCTION_OBSERVATION",
+  "main_commit": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "cases": [
+    {
+      "case": "healthy_completion",
+      "events": [
+        {
+          "event": "observation_enqueued",
+          "sequence": 2
+        },
+        {
+          "event": "observation_enqueued",
+          "sequence": 3
+        },
+        {
+          "event": "observation_enqueued",
+          "sequence": 4
+        },
+        {
+          "event": "planner_future_poll",
+          "done": false
+        },
+        {
+          "event": "observation_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 2
+        },
+        {
+          "event": "monitor_received",
+          "sequence": 2,
+          "future_pending": true
+        },
+        {
+          "event": "observation_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 3
+        },
+        {
+          "event": "monitor_received",
+          "sequence": 3,
+          "future_pending": true
+        },
+        {
+          "event": "observation_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 4
+        },
+        {
+          "event": "monitor_received",
+          "sequence": 4,
+          "future_pending": true
+        },
+        {
+          "event": "terminal_dequeued",
+          "row_event": "terminal",
+          "id": "cover-0",
+          "status": "completed",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        },
+        {
+          "event": "cleanup_stage",
+          "stage": "cover_terminal_validation"
+        },
+        {
+          "event": "planner_future_poll",
+          "done": false
+        },
+        {
+          "event": "cover_renewed",
+          "id": "cover-0-renew-0"
+        },
+        {
+          "event": "planner_future_poll",
+          "done": false
+        },
+        {
+          "event": "terminal_dequeued",
+          "row_event": "terminal",
+          "id": "cover-1",
+          "status": "completed",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        },
+        {
+          "event": "planner_future_poll",
+          "done": false
+        },
+        {
+          "event": "planner_future_poll",
+          "done": true
+        }
+      ],
+      "submitted": [
+        "cover-0-renew-0"
+      ],
+      "cover_terminals": [
+        {
+          "event": "terminal",
+          "id": "cover-0",
+          "status": "completed",
+          "terminal_ns": 1000000003,
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        }
+      ],
+      "planner_interrupt": null,
+      "terminal": null,
+      "future_polls": 5,
+      "hard_minimum": 80
+    },
+    {
+      "case": "invalidation",
+      "events": [
+        {
+          "event": "observation_enqueued",
+          "sequence": 2
+        },
+        {
+          "event": "observation_enqueued",
+          "sequence": 3
+        },
+        {
+          "event": "planner_future_poll",
+          "done": false
+        },
+        {
+          "event": "observation_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 2
+        },
+        {
+          "event": "monitor_received",
+          "sequence": 2,
+          "future_pending": true
+        },
+        {
+          "event": "observation_dequeued",
+          "row_event": "typed_observation",
+          "sequence": 3
+        },
+        {
+          "event": "monitor_received",
+          "sequence": 3,
+          "future_pending": true
+        },
+        {
+          "event": "monitor_invalidated",
+          "reason": "health:below_hard_minimum",
+          "requires_new_decision": true,
+          "grants_input_authority": false
+        },
+        {
+          "event": "planner_interrupt_called",
+          "handle": "turn-1"
+        },
+        {
+          "event": "executor_cancel_write",
+          "op": "cancel",
+          "id": "cover-0"
+        },
+        {
+          "event": "executor_cancel_flush"
+        },
+        {
+          "event": "planner_interrupt_transport",
+          "handle": "turn-1"
+        },
+        {
+          "event": "terminal_dequeued",
+          "row_event": "terminal",
+          "id": "cover-0",
+          "status": "cancelled",
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        }
+      ],
+      "submitted": [],
+      "cover_terminals": [
+        {
+          "event": "terminal",
+          "id": "cover-0",
+          "status": "cancelled",
+          "terminal_ns": 2000000000,
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          }
+        }
+      ],
+      "planner_interrupt": {
+        "outcome": "requested",
+        "transport_accepted": true
+      },
+      "terminal": {
+        "event": "terminal",
+        "id": "cover-0",
+        "status": "cancelled",
+        "terminal_ns": 2000000000,
+        "release": {
+          "verified": true,
+          "keys_down": [],
+          "buttons_down": []
+        }
+      },
+      "future_polls": 1,
+      "hard_minimum": 80
+    }
+  ],
+  "scope": "Full frozen pending-loop AST with synthetic queues, patched cover-submit boundary, and deterministic fakes only."
+}
