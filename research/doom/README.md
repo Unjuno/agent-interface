@@ -37,10 +37,15 @@ flowchart TD
 
 | Theme | Representative entry points |
 |---|---|
+| App Server interrupt transport portability (#59) | [`v39_appserver_interrupt_macos_a01_20261008/README.md`](v39_appserver_interrupt_macos_a01_20261008/README.md) — one macOS arm64 / Codex 0.146.1 loopback-only replication of PR #8380 A06; scoped transport PASS with retained audit-v1 failure and v2 audit correction; no live/game/input claim |
+| Windows redirected-pipe readiness construction T0 (#7446) | [`windows_pipe_polling_59_t0_20261004/REPORT.md`](windows_pipe_polling_59_t0_20261004/REPORT.md) — native Windows anonymous-pipe fix passed focused poller 13/13, v13 composition 4/4, and scorer adapter 5/5; broad discovery remained non-green and no live/game effect was tested |
+| Windows pipe polling quantum comparison T1 (#7456) | [`windows_pipe_quantum_59_t1_20261004/REPORT.md`](windows_pipe_quantum_59_t1_20261004/REPORT.md) — independently audited 128 paired samples; 1 ms improved p95 by 4.902 ms but used 7.88% idle CPU against the <1% gate, so disposition is HOLD and no production quantum is selected |
 | V16 full-main lifecycle audit correction (#7568 successor) | [`v16_fullmain_independent_audit_59_20261004/README_V2.md`](v16_fullmain_independent_audit_59_20261004/README_V2.md) — preserves V1 unchanged; V2 downgrades the missing terminal trace to HOLD and adds nested key-up/sync and post-release empty-sample checks. Retained-record audit only; no live or physical-input claim |
 | V28 health-envelope counterfactual (#59) | [`v28_health_envelope_counterfactual_a01_20261005/README.md`](v28_health_envelope_counterfactual_a01_20261005/README.md) — independently audited current-V39 guard replay over five retained V28 spans and all 21 health-loss budgets; historical snapshots only, not live threat-control evidence |
 | Current-main V39 paired guard replay over retained live threat trace (#59) | [`v39_current_main_paired_guard_replay_a01_20261005/README.md`](v39_current_main_paired_guard_replay_a01_20261005/README.md) — 52 exact retained health/ammo events replayed through current-main monitor; independent raw-event audit PASS, posthoc only, no current live integration or task-effect claim |
 | v39 ammo-aware cover pair gate (#59) | [`v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md`](v39_ammo_cover_pair_guard_59_a03_20261005/REPORT.md) — ten-case paired-epoch construction PASS, audit 44/44; no current runtime integration or live behavior |
+| V39 initial cover-admission rejection evidence rescue (#7904) | [`v39_initial_admission_evidence_rescue_a01_20261008.md`](v39_initial_admission_evidence_rescue_a01_20261008.md) — preserves hard-invalidation and soft-observation stale-submit results byte-for-byte; package manifests pass, historical-source audits pass, but the current-main integration check remains HOLD |
+| v39 typed observation epoch identity (#59) | [`v39_typed_epoch_alias_59_a01_20261005/REPORT.md`](v39_typed_epoch_alias_59_a01_20261005/REPORT.md) and [label correction](v39_typed_epoch_alias_59_a01_20261005/CORRECTION.md) — source accepted eight Boolean/float epoch aliases; offline boundary evidence only, no in-tree-reader or live-effect claim |
 | V39 paired health/ammo A03 initial auditor mismatch (#7713; historical) | [`v39_ammo_cover_a03_initial_audit_failure_20261005/README.md`](v39_ammo_cover_a03_initial_audit_failure_20261005/README.md) — preserves the unique initial 25/26 AUDIT_FAILED receipt; subsequent 26/26 corrected only the auditor status label without rerunning the candidate; not a candidate failure or a new method result |
 | v39 ammo-aware renewable-cover successor (#59) | [`v39_ammo_cover_guard_59_a02_20261005/REPORT.md`](v39_ammo_cover_guard_59_a02_20261005/REPORT.md) — dual-signal construction `PASS` (24/24 audit checks); no controller integration or live evidence; paired epoch enforcement remains a prerequisite |
 | v39 ammo-aware renewable-cover boundary (#59) | [`v39_ammo_cover_guard_59_a01_20261005/REPORT.md`](v39_ammo_cover_guard_59_a01_20261005/REPORT.md) — synthetic current-source failure: zero ammo did not invalidate a notional fire-containing cover while the health guard remained valid; no live-game or input claim |
@@ -53,6 +58,9 @@ flowchart TD
 | ExecutorV13 `release_all()` BaseException A01 (#7658; superseded, integrity caveat) | [`results/v13-release-all-baseexception-59-a01-20261005/README.md`](results/v13-release-all-baseexception-59-a01-20261005/README.md) — preserves the historical baseline/candidate bytes; candidate runtime delta was superseded by #7635; the original manifest mismatches all 8 current Git blobs, so treat the package as unverified provenance, not a validated result |
 | Release-ledger sink-mutation current-main regression (#59, successor to #7669) | [`release_ledger_sink_mutation_59_a02_20261005/README.md`](release_ledger_sink_mutation_59_a02_20261005/README.md) — six complete-batch and six incomplete-cleanup mutation cases pass on the tested main snapshot; object-identity ledger binding remains unchanged; synthetic only |
 | v39/V15 per-key keymap sampling A01 — superseded candidate (#59) | [`v39_perkey_server_sample_a01_20261005/README.md`](v39_perkey_server_sample_a01_20261005/README.md) — preserves the failed inter-key `query_keymap` instrumentation hypothesis and posthoc raw reconstruction; no real-X or physical-key claim; superseded by #7881/#7917 |
+| V15 per-key owner-selection counterexample and release-batch compatibility (#59, rescued from #8079) | [`v15_perkey_import_59_e0cc_20261005/README.md`](v15_perkey_import_59_e0cc_20261005/README.md) preserves the original and post-repair A02 startup-selection FAILs; [`v15_releasebatch_legacy_owner_compat_a01_20261005/README.md`](v15_releasebatch_legacy_owner_compat_a01_20261005/README.md) records why selecting the archived owner alone is incompatible. Readback audits pass; startup/fake-X boundaries only, no live input or physical-release claim. |
+| V15 per-key owner identity confirmatory replication (#8091, rescued from #8312) | [`v15_perkey_owner_identity_recheck_a01_20261005/README.md`](v15_perkey_owner_identity_recheck_a01_20261005/README.md) — repeats the three-route source-selection finding against the frozen #8065 head with 56 source snapshots; the retained package audit reports 22/22 checks (not an independent scientific replication). Preserves the initial missing-Pillow STOP. Startup boundary only: no session/owner construction, GUI, live input, physical release, task effect, threat response, recovery, or MAP01 claim. |
+| V39/V15 static release import closure A03–A05 (#8096) | [A05 record](results/map01-v39-v15-release-closure-a05-current-main-20261005/README.md) preserves the 38-source static closure through `b5be1996`, unchanged across A03–A05 at their tested main tips. Qualification: latest checked main `349dd5f8` differs in 1/38 source blobs (`research/live_control/executor_v13.py`), so A05 is historical, not a current-main closure; A03 `SHA256SUMS` lists an absent `AUDIT.log`, while A04/A05 package checksums verify. Static provenance only; no runtime claim. |
 | V39 terminal-release cleanup send-failure A02 (#59) | [`v39_terminal_release_errors_a02_20261005/README.md`](v39_terminal_release_errors_a02_20261005/README.md) — preserves the baseline RED and 24-test synthetic candidate/source audit, including its import/test closure; no real-X or live-input claim and no candidate runtime adoption |
 | V39 terminal-release sampling formal STOP A01 (#59) | [`v39_terminal_release_sample_error_a01_20261005/README.md`](v39_terminal_release_sample_error_a01_20261005/README.md) — preserves `STOP_AUDIT_RAW_TRACE_MISSING`; the candidate exited 0 but the required output environment was omitted, so the auditor failed and no formal result is claimed |
 | v39 remaining queue-budget construction (#7084) | [`results/v39-queue-budget-01a0ff2c/RESCUE_20261004.md`](results/v39-queue-budget-01a0ff2c/RESCUE_20261004.md) — deterministic source-bound tests and preserved first failure; no live, platform, or integration claim |
@@ -82,7 +90,9 @@ flowchart TD
 | A05 unknown-kind host result and container STOP snapshot | [Closed PR #7630's nine-file host package](scorer_feedback_attribution_59_t0_a05_host_stop_20261004_ab224/RESCUE_CONTEXT.md) — exact historical Python 3.14.5 result retained separately from current A05/A06; OrbStack could not list/pull an image, so this is not a container PASS or gameplay result. |
 | V13 cancellation receipt × current ExecutorV12 composition | [Issue #59 A01](map01_v39_cancel_executor_v12_composition_a01_20261005/README.md) — fake-display scoped PASS after OrbStack failed before container startup; three runner STOPs preserved; no live-control or task-effect claim. |
 | Sustained scorer overrun and command service | [Issue #59 construction A01](scorer_command_fairness_59_20261003_01a0ff52/README.md) — 12 retained starvation witnesses; first patch/audit FAIL preserved; v2 ordinary repair passes 18 service conditions and 32 existing tests. Proposed source copies only; no live/runtime adoption. |
+| Historical V39 scorer-tail priority A01/A02 (PR #7738) | [A01 frozen result](v39_scorer_tail_command_priority_a01_20261005/README.md) and [A02 frozen result](v39_scorer_tail_command_priority_a02_20261005/README.md) — preserve starvation behavior in the exact historical adapter snapshot. A02's candidate classifier did not match `deadline_overrun`; the independent audit reconstructs the bounded failure. Current main has a separate regression-tested command-service repair, so this is historical evidence, not a current-main defect or live/game result. |
 | Startup-failure stderr custody diagnostic | [Issue #59 T0](results/issue59_startup_stderr_custody_t0_20261004/REPORT.md) — OrbStack synthetic subprocess method PASS for bounded concurrent stderr capture and primary failure preservation; does not diagnose the retained controller STOP or establish live recovery. |
+| V39 startup-custody experiment archive rescue (#6944) | [Current-main rescue record](results/v39-startup-rescue-6944-currentmain-20261008/README.md) — five immutable evidence packages retained; active controller/tests are not promoted, and the source PR conflicts with current main. |
 | Recovery-arm useful-effect gate | [Paired-adjudicator synthetic counterexample](map01_r133_recovery_coast_t1_v1/useful_effect_audit_v2/REPORT.md) — scoped PASS with 0/3 recovery kill/exit pairs; survival sufficiency remains a study-design decision |
 | Recovery useful-effect gate sensitivity | [T4 exhaustive abstract-input sweep](map01_r133_recovery_coast_t1_v1/useful_effect_sensitivity_v1/REPORT.md) — 2,916 comparator cases; coast-only events are all HOLD under a recovery-specific gate; synthetic sensitivity only |
 | Recovery guard boundary | [Retained v39 continuation-guard window diagnostic](map01_continuation_guard_window_59_t2_20261001/REPORT.md) — counterfactual health-floor timing only; candidate and auditor reruns are disclosed |
@@ -397,6 +407,7 @@ application-effect, or gameplay result. See [`owner occurrence-binding T0`](map0
 and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 
 - [v39 startup-fault ownership construction](v39_startup_cleanup_59_20261003_01a0ff52/README.md): exact caller retains a private session after missing-fixture rejection; ordinary fake-boundary evidence, no physical release/runtime repair claim.
+- [#6944 startup-cleanup evidence lineage](v39_startup_composition_b04b_v2/README.md) and [diagnostic-hook repair evidence](v39_startup_diagnostics_b04b_v3/README.md): preserve exact historical journal/caller and diagnostic results; source-specific synthetic evidence only, not current-main or full runtime qualification.
 - [Native Linux game construction: writable-CWD repair and getter-clock STOP](native_game_readiness_59_20261003_b64b/REPORT.md) — first exit139 preserved, repaired no-input STOP2; attack NOT_RUN, no useful-feedback/release/R134 claim.
 - [Native pipe/scorer known terminal and causal-audit limits](scorer_native_input_effect_59_20261003_b64b/CAUSAL_AUDIT_LIMIT_NOTE.md) — original 16-row result preserved with seven known V2 causal-order omissions; no runtime adoption or complete-audit claim.
 - [v39 v10 fake-Xlib keymap-witness source-compatibility probe](map01-v39-keymap-witness-fake-xlib-v1/README.md) — two repeated W occurrences pass through the exact v39 owner/wrapper call path with synthetic 32-byte keymap witnesses; 12 saved-result checks pass. Fake server only; no Xvfb, physical key, application, or task-effect evidence.
@@ -429,3 +440,48 @@ and [`T1`](map01_owner_occurrence_binding_59_t1_20261002/RESULT.md).
 ## V39 feedback-onset custody audit A01 (#8213)
 
 - [Preserved five-file audit package](feedback_onset_audit_a01_20261005/README.md) — 634 retained events, 39 admissions, no per-key release measurement/transition or independently timestamped in-run task-effect event; one post-control score does not locate effect onset. [Original #7602 README](feedback_onset_a01_8213_SOURCE_README.md) preserves the pre-correction replay path. Construction STOP retained; no new audit or live run.
+
+## Historical V39 release-telemetry rescue (#7378/#7385/#7395)
+
+This is an evidence-only successor. The old PRs' source, test, and selector
+edits are not copied: current-main versions of the overlapping paths differ,
+and the old three-way merge conflicts in those paths. These archives remain
+bound to their frozen historical sources and do not qualify current-main
+runtime behavior.
+
+- [First live-allocation STOP](map01-v39-per-key-release-live-t0-20261004/results/MAP01-V39-RELEASE-TELEMETRY-LIVE-59-T0-20261004-01/RUN_RESULT.md) — one candidate invocation exited before X11 session/input because of a malformed network-precondition expression; zero input actions/processes and no auditor invocation. This consumed allocation is not retried.
+- [Split-step release telemetry construction](results/map01-v39-per-key-release-telemetry-port-v1/README.md) — the frozen regression first reproduced a missing earlier-key receipt; corrected host-side focused suites passed 18/18 backend, 11/11 retained adapter, and 8/8 owner-wrapper tests. No container, X11, live input, or application-effect run is claimed.
+- [Cleanup-overlap construction and retained WSLc outcome](map01-v39-release-cleanup-overlap-v1/README.md) — execute-path host candidate passed 21/21 with owner-wrapper 8/8; saved-log audit 12/12 and mutation controls 5/5. The earlier lower-boundary WSLc outcome and swap/cgroup warning remain unchanged.
+- [Malformed cleanup/bracket follow-up](map01-v39-release-cleanup-followup-v1/RESULT.md) — exact historical parents retain their expected REDs; current-parent candidate reported 26/26 backend and 8/8 owner tests, with saved-log audit 14/14. Construction-only; no live allocation or physical-release claim.
+
+The historical saved-log auditors were rerun from this current-main checkout
+without modifying their original outputs. The overlap auditor reports 11/12:
+its execute-path assertion is tied to a test-name/assertion no longer present
+in current main. Its separate five mutation tests pass. The follow-up auditor
+reports 13/14: its three historical malformed-test names are absent from the
+current-main test file. These are source-drift re-audit FAILs, not replacements
+for the historical 12/12 and 14/14 records; no candidate or live allocation
+was rerun. See
+[`CURRENT_MAIN_REAUDIT.md`](results/map01-v39-per-key-release-telemetry-port-v1/CURRENT_MAIN_REAUDIT.md).
+
+**H/T/D/C/U:** H — per-key release receipts must survive successful steps of
+one program, while cleanup overlap or malformed timing/history cannot be
+accepted as an ordinary verified release. T — preserve the first STOP and the
+separately frozen synthetic RED/GREEN follow-ups without repeating the consumed
+allocation. D — these are source-bound construction/audit results only. C —
+fake owners and retained logs do not establish physical key state, application
+consumption, or useful feedback; the historical WSLc run also records
+unavailable swap isolation. U — current-main live V39 telemetry and task-effect
+gates remain open; this archive makes no code promotion.
+
+## PR #7414 recorder-boundary successor evidence
+
+- [Rescued construction and malformed-auditor probes](results/map01-v39-recorder-boundary-probe-7414-20261004/README.md) — recorder-boundary regression is red on #7386 parent and green after repair; candidate/auditor suite 13/13. Separate malformed keymap-hex input probe changed from uncaught `ValueError` to explicit FAIL/HOLD. Source commit/blob/SHA provenance is pinned. Synthetic construction only; no live allocation or X11 action. Original source branch remains stacked under Draft #7386/#7355 and is not directly mergeable to main.
+
+## App Server interrupt cancellation portability (#59)
+
+- [macOS 0.146.1 stream-cancel A01](v39_appserver_interrupt_stream_macos_a01_20261008/README.md) — interrupted turn completed promptly, but no provider-socket EOF/reset was observed before the held mock response release; unexpected featured-plugin metadata egress makes the overall environment disposition HOLD. One bounded run; no live/game/input claim.
+
+## Synthetic fake-Xlib key-hold bounds (historical)
+
+- [30-cycle construction record](results/map01-key-hold-bounds-construction-v1/README.md) — frozen fake-Xlib evidence reports 300/300 row checks and 11/11 aggregate checks, bounded to synthetic server-side intervals; no application, GUI, game, or task-effect claim. Source baseline is historical and stacked on #7440; see the archived scope and limitations.

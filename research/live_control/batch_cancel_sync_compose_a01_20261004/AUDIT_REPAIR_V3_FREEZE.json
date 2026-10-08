@@ -1,0 +1,23 @@
+{
+  "schema": "batch-cancel-sync-composition-a01-audit-repair-v3-freeze-v1",
+  "repair_scope": "read-only trace-byte binding before parsing; V2 semantic audit remains unchanged",
+  "candidate_reruns": 0,
+  "original_candidate_invocations": 1,
+  "v2_freeze_sha256": "a1d1b9323b274d53fbdfa21c8c0fd5e300ee1b5fbe6d12514932984d96c60c1b",
+  "raw_trace_sha256": "93f9911948d4928a2efda44b93ddbd86c9435ec3f0480d87b5e2c413d9cb1674",
+  "auditor": "audit_a01_v3.py",
+  "auditor_sha256": "aca0e7a300d05d3be79f96d2348b20e780ed49a51230f601c0f94deb77b1bab4",
+  "mutation_test": "tests/test_audit_a01_v3_trace_hash.py",
+  "mutation_test_sha256": "1ba290f856966ff0091e34f4f0c368c3019e1ecd6a901ed37b4addfa13b643e7",
+  "controls": [
+    "unchanged frozen trace passes V2 and V3",
+    "V2 accepts semantically unscored started_at and owner_id edits",
+    "V3 rejects the changed serialized trace before JSON parsing"
+  ],
+  "commands": [
+    "python3 -B tests/test_audit_a01_v2_mutations.py",
+    "python3 -B tests/test_audit_a01_v3_trace_hash.py",
+    "python3 -B audit_a01_v3.py"
+  ],
+  "disposition": "raw/candidate and V2 artifacts unchanged; additive V3 saved-data audit repair"
+}

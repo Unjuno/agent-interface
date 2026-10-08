@@ -1,0 +1,27 @@
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import subprocess
+import sys
+
+here = Path(__file__).resolve().parent
+stage, *argv = sys.argv[1:]
+folder = here / "runs" / stage
+folder.mkdir(parents=True, exist_ok=False)
+root = here.parent / "agent-interface-compiled-custody"
+receipt = {"argv": argv, "cwd": str(root), "started_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+           "scope": "ordinary own committed source/archive validation; no formal/native input"}
+(folder / "START.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+with (folder / "stdout.txt").open("xb") as out, (folder / "stderr.txt").open("xb") as err:
+    child = subprocess.Popen(argv, cwd=root, stdout=out, stderr=err)
+    receipt["pid"] = child.pid
+    (folder / "START.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+    receipt["exit_code"] = child.wait(timeout=120)
+receipt["ended_utc"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+receipt["streams"] = {name: {"bytes": (folder / name).stat().st_size, "sha256": hashlib.sha256((folder / name).read_bytes()).hexdigest()} for name in ("stdout.txt", "stderr.txt")}
+(folder / "RESULT.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+print(json.dumps(receipt, sort_keys=True))
+if receipt["exit_code"]:
+    print((folder / "stderr.txt").read_text(encoding="utf-8"))
+sys.exit(receipt["exit_code"])

@@ -1,0 +1,28 @@
+{
+  "schema": "issue59-v39-observation-pump-event-dispatch-freeze-v1",
+  "experiment": "issue59-v39-observation-pump-event-dispatch-a05-20261008",
+  "kind": "one-shot synthetic source-slice construction; no live allocation",
+  "main_commit": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "sources": {
+    "controller": {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "3f43c261e2de0b54cc1e83d2a9d53fd984d70f0a",
+      "sha256": "c4004089e82a6e6114ea6a9451fe5e9336da8b10c9f46aa02fcaa36f8a945e95"
+    },
+    "guard": {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    }
+  },
+  "hypothesis": "The frozen V39 pending-future loop consumes a typed health observation through its production wait queue, evaluates the production cover monitor while the planner future is pending, and passes a hard invalidation to production cancel_invalidated_cover before it consumes the matching terminal.",
+  "test": "Compile the exact nested wait function and the first two statements of the exact `while not future.done()` loop from the pinned controller AST. Supply one synthetic health 100 to 84 typed observation, a future that remains pending, deterministic planner/process fakes, and a verified-empty terminal. Use the actual frozen signal guard, monitor builder, monitor, and cancellation helper.",
+  "decision": "PASS_CONSTRUCTION_EVENT_PUMP only if monitor invalidation occurs while the future is pending, executor cancel precedes planner interrupt transport, the terminal follows that interrupt, and the production helper returns only after verified-empty release.",
+  "counterhypothesis": "The pending-future loop or wait dispatcher may not deliver typed observations to the active monitor, or may fail to route a hard invalidation to cancellation before terminal/answer handling.",
+  "limits": [
+    "Synthetic typed rows and deterministic fakes do not establish the real producer's HUD accuracy or cadence.",
+    "No model, game, GUI, OS input, physical key state, useful feedback, recovery efficacy, progress, or task outcome is measured.",
+    "The candidate executes pinned AST slices, not the outer controller process startup or full live runner."
+  ],
+  "retry_policy": "Run candidate once after freeze; preserve first output. Re-auditing is read-only."
+}

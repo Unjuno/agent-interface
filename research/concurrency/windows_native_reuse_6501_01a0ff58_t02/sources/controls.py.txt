@@ -1,0 +1,24 @@
+from pathlib import Path
+from datetime import datetime,timezone
+import json,hashlib,copy,runpy,os
+R=Path(__file__).resolve().parents[2];O=R/'outputs/ownedwinpipe6501-t02';W=R/'work/ownedwinpipe6501-t02';H=lambda b:hashlib.sha256(b).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat();reduce=runpy.run_path(str(W/'audit.py'))['reduce'];out=O/'controls-v1';out.mkdir(exist_ok=False);rows=[];start=now()
+cases=[('bool_event_seq','normal_B_D'),('wrong_B_read_tid','stale_handle'),('pipe_B_fd_alias','stale_handle'),('primary_result_bool_alias','stale_handle'),('final_result_read_bool_alias','stale_handle'),('late_early_generation_check','check_then_call'),('coherent_locked_completion_promotion','locked_gate'),('bool_result_pid','normal_B_D'),('cancel_wrong_generation','stale_handle')]
+for name,mode in cases:
+    e=json.loads((O/mode/'events.json').read_bytes());r=json.loads((O/mode/'RESULT.json').read_bytes());original=json.dumps({'events':e,'result':r},sort_keys=True).encode()
+    if name=='bool_event_seq':e[1]['seq']=True
+    elif name=='wrong_B_read_tid':next(x for x in e if x['kind']=='read_return' and x['generation']==2)['tid']+=1
+    elif name=='pipe_B_fd_alias':next(x for x in e if x['kind']=='pipe_owned' and x['generation']==2)['read_fd']=next(x for x in e if x['kind']=='pipe_owned' and x['generation']==1)['read_fd']
+    elif name=='primary_result_bool_alias':r['primary']['generation_B_done']=1
+    elif name=='final_result_read_bool_alias':r['final_outcomes']['2']['return_nonzero']=0
+    elif name=='late_early_generation_check':
+        x=next(x for x in e if x['kind']=='early_generation_check');e.remove(x);i=next(i for i,x in enumerate(e) if x['kind']=='action_requested');e.insert(i,x)
+        for i,x in enumerate(e):x['seq']=i;x['monotonic_ns']=e[0]['monotonic_ns']+i
+    elif name=='coherent_locked_completion_promotion':
+        x=next(x for x in e if x['kind']=='primary_snapshot');x['generation_B_done']=True;x['outcomes']['2']=dict(r['final_outcomes']['2']);r['primary']={k:v for k,v in x.items() if k not in ('seq','kind','monotonic_ns')}
+    elif name=='bool_result_pid':r['pid']=True
+    else:next(x for x in e if x['kind']=='native_cancel_requested')['requested_generation']=2
+    b=json.dumps({'events':e,'result':r},sort_keys=True).encode();assert b!=original;(out/(name+'.json')).write_bytes(b);data=json.loads(b);accepted=False;failure=None
+    try:reduce(mode,data['events'],data['result']);accepted=True
+    except (AssertionError,KeyError,ValueError,TypeError) as ex:failure=repr(ex)
+    rows.append(dict(name=name,mode=mode,bytes=len(b),sha256=H(b),accepted=accepted,failure=failure))
+report=dict(start_utc=start,end_utc=now(),pid=os.getpid(),audit_source_sha256=H((W/'audit.py').read_bytes()),controls=rows,false_accepts=sum(x['accepted'] for x in rows),native_replay=0);(O/'CONTROLS_FIRST.json').write_text(json.dumps(report,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps(report))

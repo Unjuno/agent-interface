@@ -1,0 +1,53 @@
+{
+  "allocation": "8072-FACTORIAL-ANALYSIS-8319-A03-20261008",
+  "base_commit": "8bb0beb8bfdb93deb42f1c5e999ae7f22e934612",
+  "branch": "research/8072-factorial-analysis-8319-a03-20261008",
+  "construction_tests": {
+    "command": "python3 -B -m unittest discover -s research/analysis/controlled_feedback_factorial_8319_a03_20261008 -v",
+    "result": "PASS 4/4",
+    "runtime": "CPython 3.14.5 macOS arm64, standard library only"
+  },
+  "formal_commands": {
+    "analysis": "python3 analyze.py inputs/a01_candidate.json results/analysis.json",
+    "audit": "python3 audit.py inputs/a01_candidate.json results/analysis.json results/audit.json"
+  },
+  "formal_counts_at_freeze": {
+    "a01_candidate_reruns": 0,
+    "a02_auditor_reruns": 0,
+    "a03_analysis": 0,
+    "a03_auditor": 0,
+    "retries": 0
+  },
+  "input": {
+    "path": "inputs/a01_candidate.json",
+    "sha256": "ecffd8121a289d3533c94373c8f7aba50d9c349ffd5db534e46db16522897e9d",
+    "source": "A01 candidate raw from commit 5e23f00fb98e24c078077ba4869a292d4120f7ab; exact-byte copy"
+  },
+  "metrics": [
+    "four cell summaries for development accuracy, fresh accuracy and optimism",
+    "seed-paired FULL minus CONTROLLED contrasts within each update rule",
+    "seed-paired CASE_PATCH minus STRATUM_PATCH contrasts within each feedback mode",
+    "seed-paired difference-in-differences, CASE_PATCH feedback effect minus STRATUM_PATCH feedback effect",
+    "for each finite vector: mean, median, min, max, and positive/zero/negative counts"
+  ],
+  "mutations": [
+    "exact raw row count and factorial seed/cell frame",
+    "exact type and safety/query/cohort-lock accounting",
+    "analysis output altered cell, contrast, interaction, input digest, or row count"
+  ],
+  "package": "research/analysis/controlled_feedback_factorial_8319_a03_20261008/",
+  "source_sha256": {
+    "README.md": "5622e1a292cff37fa1f5be5e832ded6c704678a87d67d6fdd668fe9f42f03aeb",
+    "analyze.py": "65efcf03df248345bd721b33a04c62faecf54c2830a70118abb6f07e7e57aba7",
+    "audit.py": "bc259299c96864fd9c77097d1b2663c9d5836eafaa6a665d5b6e3efc743c62d9",
+    "test_analysis.py": "deba7c5410a3e3928ef1a842cada414db065cbbfdbec2339a843de2db2b7726c"
+  },
+  "source_state": {
+    "a01": "HOLD_AUDITOR_GATE_FAILURE; preserve unchanged",
+    "a02": "PASS_AUDIT_ONLY; 400/400 rows, 6/6 mutations; preserve unchanged"
+  },
+  "timestamp_utc": "2026-10-07T18:51:15Z",
+  "type": "saved-data analysis only; no candidate simulation",
+  "container": "not required by Issue #8319 for pure finite CPU analysis; no isolation claim",
+  "hypothesis_limit": "finite authored simulator only; no population inference, p-value, or general researcher feedback claim"
+}

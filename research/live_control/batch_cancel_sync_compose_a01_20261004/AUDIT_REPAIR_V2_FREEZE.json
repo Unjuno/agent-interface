@@ -1,0 +1,21 @@
+{
+  "schema": "batch-cancel-sync-composition-a01-audit-repair-v2-freeze-v1",
+  "original_allocation_id": "MAP01-V39-BATCH-CANCEL-SYNC-COMPOSE-A01-20261004-01",
+  "repair_scope": "read-only auditor schema expectation only; all D criteria unchanged",
+  "original_candidate_invocations": 1,
+  "candidate_reruns": 0,
+  "candidate_sha256": "0153ce3269d10b5bb04b3526d548e055da206124c879b11b8c05f64acab6b6de",
+  "raw_trace_sha256": "93f9911948d4928a2efda44b93ddbd86c9435ec3f0480d87b5e2c413d9cb1674",
+  "original_audit_exit": 1,
+  "original_audit_stdout_sha256": "f8ac25f78364c89d526bc16914f99ea19e98711f2e9420b42bb659a28cb33723",
+  "source_manifest_sha256": "c43058b92425517d13b0814508237482000030ede522f926f2876002d67c8a69",
+  "auditor": "audit_a01_v2.py",
+  "auditor_sha256": "b841c0d61365aeabdd5f3ccd6774bf951e0cf23a472ed2dc6d2f3a91cbfc8971",
+  "mutation_test": "tests/test_audit_a01_v2_mutations.py",
+  "mutation_test_sha256": "9170dda8cbac4670463af8aab19cc6e999148e4fa057c31956a5b888a96eae20",
+  "commands": [
+    "python3 -B tests/test_audit_a01_v2_mutations.py",
+    "python3 -B audit_a01_v2.py"
+  ],
+  "disposition": "candidate/raw immutable; versioned read-only auditor repair"
+}

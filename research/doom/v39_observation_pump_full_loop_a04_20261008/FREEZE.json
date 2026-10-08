@@ -1,0 +1,28 @@
+{
+  "schema": "issue59-v39-observation-pump-full-loop-freeze-v2",
+  "experiment": "issue59-v39-observation-pump-full-loop-a04-20261008",
+  "kind": "one-shot synthetic full-loop source-slice construction; no live allocation",
+  "main_commit": "ffd4544a4816ded386616e8e614b5a17e6c992ef",
+  "sources": {
+    "controller": {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "2241c65be63cd50165954312f4c0af2e9062dd5a",
+      "sha256": "f40019dbb5bc5d23521b73f35b9b06ff18eb3c0e4d1ff7dab807835a39c9f452"
+    },
+    "guard": {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    }
+  },
+  "hypothesis": "The current-main V39 pending-future loop dispatches typed observations across two consecutively renewed matching cover terminals while the planner remains pending, and does not submit another cover after a completion poll; hard invalidation cancels the active cover before planner interrupt transport.",
+  "test": "Compile the exact nested wait function and complete pending-future loop from current-main controller AST. Use a deterministic queue with matching terminal IDs for the initial cover and each renewal, scripted planner completion after two renewal cycles, and a separate hard-health invalidation case. Use the frozen production monitor, terminal validator, and cancellation helper; replace only planner/process and cover submission boundaries.",
+  "decision": "PASS only if healthy case dispatches all queued observations while pending, observes three matching terminals, submits exactly two renewals, and has no renewal after the done=True poll; invalidation case must record cancel write/flush before planner interrupt transport and return verified-empty terminal.",
+  "counterhypothesis": "The loop may drop observations across renewals, fail to match terminals for newly renewed IDs, renew after completion, or mishandle hard invalidation/cancel ordering.",
+  "limits": [
+    "Synthetic typed rows and deterministic fakes do not establish the real producer's HUD accuracy or cadence.",
+    "No model, game, GUI, OS input, physical key state, useful feedback, recovery efficacy, progress, survival, or task outcome is measured.",
+    "The candidate executes pinned AST slices, not the outer controller process startup or full live runner."
+  ],
+  "retry_policy": "Run candidate once after freeze; preserve first output. Re-auditing is read-only."
+}

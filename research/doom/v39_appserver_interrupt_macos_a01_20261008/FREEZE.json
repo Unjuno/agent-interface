@@ -1,0 +1,51 @@
+{
+  "probe_id": "A01",
+  "frozen_at_utc": "2026-10-08T01:03:58Z",
+  "parent_issue": 59,
+  "prior_evidence": {
+    "pr": 8380,
+    "head": "b5fe97879afc23e022e23b2cbcc68deb38a9b4be",
+    "probe": "A06"
+  },
+  "source_main": "4c203d797cd3e33168bd9177fea8e0d6ef605c6b",
+  "candidate": {
+    "path": "run_a01.py",
+    "sha256": "5e5f9546b2ede7c469edd86cb009150785e4ba044a0f1680d13e1d7034f46dad"
+  },
+  "auditor": {
+    "path": "audit_a01.py",
+    "sha256": "b107f81470fc3eecb716ff800420c198c9c457cb8c7dd137f7535dfec82a898f"
+  },
+  "plan": {
+    "path": "PLAN_A01.md",
+    "sha256": "6b4ba5df06143cb278a7ac81d6e696a2f6a3b86b19153b5848a418fac831a7d6"
+  },
+  "app_server": {
+    "path": "/opt/homebrew/bin/codex",
+    "version": "codex-cli 0.146.1",
+    "sha256": "35d248101b211d6248ad4e6b8c1d441fe81236da87afb9f3e9ea51a049e9f179"
+  },
+  "host": {
+    "system": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "python": "3.14.5"
+  },
+  "isolation": {
+    "codex_home": "fresh temporary directory",
+    "provider": "127.0.0.1 only",
+    "user_environment_tokens_passed": false,
+    "analytics_enabled": false,
+    "sandbox": "read-only"
+  },
+  "preflight": {
+    "python_compile": "PASS",
+    "auditor_positive_checks": 10,
+    "auditor_mutation_controls": 5,
+    "output_directory_absent": true
+  },
+  "run_policy": {
+    "candidate_attempts": 1,
+    "retry": "none",
+    "response_release_timeout_seconds": 8
+  }
+}
