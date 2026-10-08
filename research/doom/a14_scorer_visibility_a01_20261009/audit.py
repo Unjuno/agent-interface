@@ -1,5 +1,5 @@
 """Independent source and claim-scope checks for result.json."""
-import hashlib, json, math, statistics
+import hashlib, json, math, statistics, subprocess
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 A14 = ROOT / "research/doom/v39_live_recovery_exploratory_a14_20261008"
@@ -40,4 +40,27 @@ assert result["sample_interval_ms"]["max"] == max(intervals)
 assert result["terminal_score"] == {k: score[k] for k in ("map_exit", "episode_finished", "player_dead", "death_count", "kill_count", "wall_control_ns")}
 assert "does not establish a static or threat-free scene" in result["interpretation"]
 assert "No game, model, GUI, OS input, or container was started for this analysis." in result["limits"]
-print(json.dumps({"audit_passed": True, "source_files_sha_verified": len(EXPECTED), "samples_recomputed": len(rows), "controller_visible": 0, "event_count": 0, "scope": "posthoc scorer visibility/signal only"}, indent=2))
+
+regression = json.loads((HERE / "CURRENT_MAIN_REGRESSION.json").read_text(encoding="utf-8"))
+pins = json.loads((HERE / "CURRENT_MAIN_SOURCE_PINS.json").read_text(encoding="utf-8"))
+assert regression["classification"] == "CURRENT_MAIN_MODEL_FREE_REGRESSION"
+assert regression["commit"] == pins["commit"] == "cb3fb7cea16ab57c5474164dc17b88f7ff51daa9"
+assert regression["total_tests_per_mode"] == 79
+assert regression["normal_exit"] == regression["optimized_exit"] == 0
+assert regression["source_pin_count"] == len(pins["source_files"]) == 45
+for item in pins["source_files"]:
+    blob = subprocess.check_output(["git", "show", f"{pins['commit']}:{item['path']}"], cwd=ROOT)
+    git_blob = hashlib.sha1(f"blob {len(blob)}\0".encode() + blob).hexdigest()
+    assert git_blob == item["git_blob"], item["path"]
+    assert hashlib.sha256(blob).hexdigest() == item["sha256"], item["path"]
+for mode in ("normal", "optimized"):
+    assert (HERE / f"v39-current-main-{mode}.exit").read_text().strip() == "0"
+    stderr = (HERE / f"v39-current-main-{mode}.stderr.txt").read_text(encoding="utf-8")
+    assert "Ran 79 tests" in stderr and "OK" in stderr, mode
+    assert "FAILED" not in stderr, mode
+print(json.dumps({"audit_passed": True, "a14_source_files_sha_verified": len(EXPECTED),
+                  "a14_samples_recomputed": len(rows), "a14_controller_visible": 0,
+                  "a14_event_count": 0, "current_main_commit": pins["commit"],
+                  "current_main_source_blobs_verified": len(pins["source_files"]),
+                  "current_main_tests": "79/79 normal and optimized",
+                  "scope": "A14 posthoc scorer visibility + current-main model-free regression"}, indent=2))

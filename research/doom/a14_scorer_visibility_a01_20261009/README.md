@@ -25,3 +25,9 @@ python research/doom/a14_scorer_visibility_a01_20261009/audit.py
 ```
 
 The analyzer writes `result.json`; the auditor independently reconstructs the metrics from the four SHA-pinned A14 raw files and checks the scope statement. No game, model, GUI, input, or container is started.
+
+## Current-main regression cross-check
+
+At `cb3fb7cea16ab57c5474164dc17b88f7ff51daa9`, the Windows-host model-free regression set covering V39 controller observations, dual-signal policy, cover terminal ordering, pending observation drain, and V15 measurement-session selection passed **79/79** normally and under `python -O`. The exact 45-file import/test closure is pinned in `CURRENT_MAIN_SOURCE_PINS.json`; raw stdout/stderr and exit receipts are retained beside this README. This confirms those scoped mechanics on that source snapshot; it does not establish that scorer observations are controller-visible or that the live threat-control requirement is met.
+
+The scorer command-service engineering adoption is a separate, earlier result: it tested owner-thread command servicing and a scorer-only sink with fake game/controller components. Its retained disposition excludes real-game useful feedback and latency benefit. Neither scorer result substitutes for a fresh live V39 threat exposure.
