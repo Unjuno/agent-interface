@@ -1,6 +1,7 @@
 import unittest
 from pathlib import Path
 import sys
+import importlib
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -27,6 +28,14 @@ def classification(result, name):
 
 
 class FrozenAuditorCounterexamples(unittest.TestCase):
+    def test_preserved_frozen_test_import_resolves_to_frozen_auditor_copy(self):
+        try:
+            compatibility_module = importlib.import_module("audit_recovery_censoring")
+        except ModuleNotFoundError:
+            compatibility_module = None
+        self.assertIsNotNone(compatibility_module)
+        self.assertIs(compatibility_module.analyze, frozen_analyze)
+
     def test_missing_discarded_field_is_false_positive_in_frozen_auditor(self):
         decisions = [exposed_guard(), {"iteration": 3, "fresh_sequence_at_plan": 51}]
         self.assertEqual(classification(frozen_analyze(decisions + [{"iteration": 4, "fresh_sequence_at_plan": 52}], 10),
