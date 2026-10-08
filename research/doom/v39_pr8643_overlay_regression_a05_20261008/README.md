@@ -26,3 +26,11 @@ py -3.13 -B research/doom/v39_pr8643_overlay_regression_a05_20261008/audit.py
 ```
 
 The runner uses a small temporary overlay and does not materialize a full worktree.
+
+## Output lineage and canonical A05 evidence
+
+The canonical A05 decision is bound to candidate `38569db07352a8d42e08fd6711ba32c77aca20a4` and the eight overlay blobs in `FREEZE.json`. Use `RESULT.json`, `AUDIT.stdout.txt`, and the four suite-specific stderr files (one per suite and Python mode) to interpret the four runs: 17 pending-drain tests and 9 overlap-controller tests in normal and optimized mode.
+
+The top-level `RUN.stdout.txt` is retained historical output from an earlier partial attempt. It explicitly records candidate `ce7f4a9f0eac5e38388372a2638c23734a19dee5`, seven overlay paths, and only the pending-drain suite. It is superseded for the final A05 decision and must not be combined with the later eight-file result. The generic top-level `normal.*` and `optimized.*` files are also retained legacy outputs; their exact candidate/run binding is not established, so they are not the canonical per-suite evidence.
+
+`SHA256SUMS.txt` verifies the bytes of both canonical and retained historical files. A matching checksum establishes byte integrity, not that a historical output belongs to the canonical run. No historical bytes were removed or rewritten.
