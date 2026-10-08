@@ -14,18 +14,18 @@
 
 ## Commands and custody
 
-See `COMMANDS.txt`, `FREEZE.json`, `RESULT.json`, `results/`, and `SHA256SUMS.txt`. `audit.py` checks the frozen identity, all 73 closure entries, exact 107-test receipts, and scope declaration; it does not rerun the tests.
+See `COMMANDS.txt`, `FREEZE.json`, `RESULT.json`, `results/`, and `SHA256SUMS.txt`. `audit.py` checks the frozen identity, all 73 closure entries, exact 107-test receipts, scope declaration, and SHA-256 coverage/integrity for every packaged evidence file. The derived `results/custody-audit/audit-v3.json` receipt and checksum manifest itself are excluded to avoid a self-referential digest. The audit does not rerun the tests.
 
 ## Saved-evidence audit integrity follow-up
 
-The initial saved-only verifier did not join the allocation, source-closure, scope, and exit-receipt records. Its v2 now checks those cross-record bindings plus all seven frozen module names and runtime identity. Six ordinary corruption controls reject a foreign commit, allocation ID, closure count, scope promotion, exit mismatch, or test-log count mismatch. The package remains a source/fake-X replay only; these controls add no execution or live evidence.
+The initial saved-only verifier did not join the allocation, source-closure, scope, and exit-receipt records. Its v2 checks those cross-record bindings plus all seven frozen module names and runtime identity. A v3 follow-up additionally checks the package hash manifest, rejects omitted, duplicate, escaping, or modified paths, and preserves the original v2 receipt unchanged. The package remains a source/fake-X replay only; these controls add no execution or live evidence.
 
 Construction commands:
 
 ```text
 python3 -B -m unittest -v research.doom.v39_post8736_current_main_regression_a03_20261009.test_audit
 python3 -O -B -m unittest -v research.doom.v39_post8736_current_main_regression_a03_20261009.test_audit
-python3 research/doom/v39_post8736_current_main_regression_a03_20261009/audit.py
+python3 -B research/doom/v39_post8736_current_main_regression_a03_20261009/audit.py
 ```
 
-Both test modes pass 6/6. The auditor reports `PASS_SAVED_EVIDENCE` and explicitly does not claim a formal or independent rerun.
+Both test modes pass 9/9. The v3 auditor reports `PASS_SAVED_EVIDENCE` and explicitly does not claim a formal or independent rerun.

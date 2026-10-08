@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import unittest
 import importlib.util
+import hashlib
+import tempfile
 
 spec=importlib.util.spec_from_file_location("v39_a03_saved_audit", Path(__file__).with_name("audit.py"))
 audit=importlib.util.module_from_spec(spec)
@@ -16,6 +18,9 @@ RECEIPTS=json.loads((HERE/'results/exit-codes.json').read_text())
 LOGS={mode:(HERE/'results'/f'{mode}.log').read_text() for mode in ('normal','optimized')}
 
 class SavedEvidenceAuditTests(unittest.TestCase):
+    def test_package_hash_manifest_passes(self):
+        self.assertTrue(audit.verify_hash_manifest(HERE))
+
     def test_frozen_package_passes(self):
         checks=audit.verify_records(FREEZE,RESULT,CLOSURE,RECEIPTS,LOGS)
         self.assertTrue(all(checks.values()),checks)
@@ -41,5 +46,33 @@ class SavedEvidenceAuditTests(unittest.TestCase):
         self.assertFalse(audit.verify_records(FREEZE,RESULT,CLOSURE,receipts,LOGS)['exit_receipt'])
         logs=dict(LOGS); logs['optimized']=logs['optimized'].replace('Ran 107 tests','Ran 106 tests')
         self.assertFalse(audit.verify_records(FREEZE,RESULT,CLOSURE,RECEIPTS,logs)['optimized_test_receipt'])
+
+    def test_hash_manifest_rejects_corruption_and_omission(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            payload=root/'evidence.txt'
+            payload.write_text('frozen evidence\n')
+            digest=hashlib.sha256(payload.read_bytes()).hexdigest()
+            manifest=root/'SHA256SUMS.txt'
+            manifest.write_text(f'{digest}  ./evidence.txt\n')
+            self.assertTrue(audit.verify_hash_manifest(root))
+            payload.write_text('corrupted evidence\n')
+            self.assertFalse(audit.verify_hash_manifest(root))
+            payload.write_text('frozen evidence\n')
+            manifest.write_text('')
+            self.assertFalse(audit.verify_hash_manifest(root))
+
+    def test_hash_manifest_rejects_duplicate_and_escaping_paths(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            payload=root/'evidence.txt'
+            payload.write_text('frozen evidence\n')
+            digest=hashlib.sha256(payload.read_bytes()).hexdigest()
+            manifest=root/'SHA256SUMS.txt'
+            entry=f'{digest}  ./evidence.txt\n'
+            manifest.write_text(entry+entry)
+            self.assertFalse(audit.verify_hash_manifest(root))
+            manifest.write_text(f'{digest}  ./../outside.txt\n')
+            self.assertFalse(audit.verify_hash_manifest(root))
 
 if __name__=='__main__': unittest.main(verbosity=2)

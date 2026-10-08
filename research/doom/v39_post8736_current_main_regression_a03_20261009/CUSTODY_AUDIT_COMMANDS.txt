@@ -1,3 +1,7 @@
 python3 -B -m unittest -v research.doom.v39_post8736_current_main_regression_a03_20261009.test_audit
 python3 -O -B -m unittest -v research.doom.v39_post8736_current_main_regression_a03_20261009.test_audit
-python3 research/doom/v39_post8736_current_main_regression_a03_20261009/audit.py
+python3 -B research/doom/v39_post8736_current_main_regression_a03_20261009/audit.py
+
+Follow-up audit v3 adds package-wide SHA-256 verification, including exact
+manifest coverage, duplicate/path-traversal rejection, and corruption controls.
+It leaves the earlier audit-v2 receipt unchanged and still performs no rerun.

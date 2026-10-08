@@ -3,6 +3,7 @@
 import hashlib
 import json
 from pathlib import Path
+import re
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -18,8 +19,45 @@ EXPECTED_MODULES = [
     "research.live_control.test_input_owner_v12_explicit_up_cancel",
 ]
 
+def verify_hash_manifest(root, manifest_name="SHA256SUMS.txt"):
+    """Verify that the manifest covers every package file except itself."""
+    root = Path(root)
+    manifest = root / manifest_name
+    derived_receipt = root / "results/custody-audit/audit-v3.json"
+    if not manifest.is_file() or manifest.is_symlink():
+        return False
+    entries = {}
+    try:
+        lines = manifest.read_text(encoding="utf-8").splitlines()
+        for line in lines:
+            match = re.fullmatch(r"([0-9a-f]{64})  (\./.+)", line)
+            if not match:
+                return False
+            expected, listed = match.groups()
+            relative = Path(listed[2:])
+            if relative.is_absolute() or ".." in relative.parts or listed in entries:
+                return False
+            path = root / relative
+            if path.is_symlink() or not path.is_file():
+                return False
+            entries[listed] = (expected, path)
+        actual_files = {
+            "./" + path.relative_to(root).as_posix()
+            for path in root.rglob("*")
+            if path.is_file() and path not in (manifest, derived_receipt)
+        }
+        if set(entries) != actual_files:
+            return False
+        return all(
+            hashlib.sha256(path.read_bytes()).hexdigest() == expected
+            for expected, path in entries.values()
+        )
+    except (OSError, UnicodeError):
+        return False
+
 def verify_records(freeze, result, closure, receipts, logs):
     checks = {}
+    checks["package_hash_manifest"] = verify_hash_manifest(HERE)
     checks["freeze_schema"] = freeze.get("schema") == "v39-post8736-current-main-regression-a03-freeze-v1"
     checks["result_schema"] = result.get("schema") == "v39-post8736-current-main-regression-a03-result-v1"
     checks["allocation_identity"] = freeze.get("allocation_id") == result.get("allocation_id") == EXPECTED_ALLOCATION
@@ -65,7 +103,7 @@ def main():
     receipts=json.loads((HERE/'results/exit-codes.json').read_text())
     logs={mode:(HERE/'results'/f'{mode}.log').read_text() for mode in ('normal','optimized')}
     checks=verify_records(freeze,result,closure,receipts,logs)
-    output={'schema':'v39-post8736-current-main-regression-a03-audit-v2','status':'PASS_SAVED_EVIDENCE' if all(checks.values()) else 'FAIL_SAVED_EVIDENCE','checks':checks,'check_count':len(checks),'formal_pass':False,'scope':'saved-log/source-identity custody only; no independent rerun'}
+    output={'schema':'v39-post8736-current-main-regression-a03-audit-v3','status':'PASS_SAVED_EVIDENCE' if all(checks.values()) else 'FAIL_SAVED_EVIDENCE','checks':checks,'check_count':len(checks),'formal_pass':False,'scope':'saved-log/source-identity custody including package hash manifest; no independent rerun'}
     print(json.dumps(output,indent=2,sort_keys=True))
     if not all(checks.values()): raise SystemExit(1)
 if __name__=='__main__':main()
