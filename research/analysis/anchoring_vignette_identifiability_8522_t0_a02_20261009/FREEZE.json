@@ -1,0 +1,32 @@
+{
+  "allocation_id": "ANCHORING-VIGNETTE-8522-T0-A02-20261009",
+  "base_main": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8522-vignette-identifiability-a02-20261009",
+  "candidate_input_excludes_oracle": true,
+  "candidate_invocation_limit": 1,
+  "construction_tests": "6/6 passed before freeze; includes repo-root CLI integration, truth separation, alias and misfit controls",
+  "decision": "Conditional method pass only if auditor validates recovery, detectable misfit rejection, and exact alias; calibration assumption remains NOT_IDENTIFIED if alias confirmed.",
+  "formal_runner": "sh research/analysis/anchoring_vignette_identifiability_8522_t0_a02_20261009/run_formal.sh",
+  "formal_status": "NOT_RUN_AT_FREEZE",
+  "independent_auditor_invocation_limit": 1,
+  "issue": 8522,
+  "limitations": "Exact authored probabilities only; no human ratings, workload instrument, GUI, model, route, or product claim.",
+  "package": "research/analysis/anchoring_vignette_identifiability_8522_t0_a02_20261009",
+  "python": "CPython 3.12.13 stdlib",
+  "retry_budget": 0,
+  "scientific_fixture_sha256": {
+    "candidate_input.json": "e9de0f2c403ed9e6c7675aa9ee85238799d72e37b9cdf026a8012e0f00291c43",
+    "oracle.json": "df492a14a72fc080f822ce094d09c4e81ce3d53efada79f63bd30661cf9d9cfa"
+  },
+  "source_commit": "39d87c76fc447d568806d7a4365d0183dc6df20f",
+  "source_sha256": {
+    "PLAN.md": "977f22d37c12fee397476d019881721e661fc267aed213f67b5d1280ffef8944",
+    "auditor.py": "b386420d342382fffa2b6f750a6157e1e9e3528bcda1329f42c81e6961a0891c",
+    "candidate.py": "ca2b82d2da28394ee8fd5d7151a6852f45d43bb6427ed2d82aaf7e1eac9014b4",
+    "candidate_input.json": "e9de0f2c403ed9e6c7675aa9ee85238799d72e37b9cdf026a8012e0f00291c43",
+    "oracle.json": "df492a14a72fc080f822ce094d09c4e81ce3d53efada79f63bd30661cf9d9cfa",
+    "prepare_fixture.py": "9f6a3fe295d061a692fc0cc9ac398ebb8e1c4eccf29d673913b91eb2569e1698",
+    "run_formal.sh": "d6797a419eef90bdcc2eab3fd3e9e540856f312da5a12b9b36f5e19178ba912b",
+    "test_fixture.py": "edaf54f4cf31d27182ac68f9a4e00bac74bf61fbba33190a4f6aa5cc72064c16"
+  }
+}
