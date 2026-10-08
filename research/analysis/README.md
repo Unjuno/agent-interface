@@ -715,6 +715,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`latency_source_manifest_coverage_7707_a01_20261005/`](latency_source_manifest_coverage_7707_a01_20261005/)
 - [`layered_lifetime_admission_r0_v1/`](layered_lifetime_admission_r0_v1/)
 - [`lens_law_8556_t0_a01_20261008/`](lens_law_8556_t0_a01_20261008/)
+- [`lens_law_8577_real_tk_a01_20261008/`](lens_law_8577_real_tk_a01_20261008/)
 - [`live_two_tier_applicability_v1/`](live_two_tier_applicability_v1/)
 - [`local_relevance_gating_preflight_2188_v1/`](local_relevance_gating_preflight_2188_v1/)
 - [`locale_semantic_invariance_5919_audit_review_20261001_01/`](locale_semantic_invariance_5919_audit_review_20261001_01/)
