@@ -1207,7 +1207,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 
 </details>
 
-<!-- END GENERATED ANALYSIS RESULT INDEX -->
+
+- `[cue_reliability_8654_c07_20261009/`](cue_reliability_8654_c07_20261009/)<!-- END GENERATED ANALYSIS RESULT INDEX -->
 
 - [Issue #7794 comparator semantics diagnostic A04](carbon_window_7794_comparator_a04_20261005/REPORT.md) — `PASS_DIAGNOSTIC_SCOPED`: independent audit reconstructed all 10 rows; nine A02 fixtures agreed and the fixed two-job discriminator separated global lexicographic from serial ASAP. Native macOS fallback; no emissions/operational claim.
 
