@@ -1,0 +1,28 @@
+{
+  "schema": "logical-time-fixed-overhead-t5-run-v1",
+  "allocation": "LOGICAL-TIME-SYMMETRY-7327-FIXED-OVERHEAD-T5-AUDIT-20261004-01",
+  "predecessor_allocation": "LOGICAL-TIME-SYMMETRY-7327-FIXED-OVERHEAD-T4-20261004-01",
+  "candidate_invocations": 0,
+  "auditor_invocations": 1,
+  "retry_count": 0,
+  "auditor_exit": 0,
+  "scientific_outcome": "PASS_FIXED_OVERHEAD_DISTINGUISHED",
+  "integrity": "PASS_RAW_RECONSTRUCTION",
+  "reconstructed_rows": 3,
+  "mutation_controls": 4,
+  "mutation_rejections": 4,
+  "checks": {
+    "homogeneous_traces_equal": true,
+    "zero_startup_fixed_control_equal": true,
+    "homogeneous_hazard_reaction_equal": true,
+    "fixed_startup_hazard_reaction_differs": true
+  },
+  "normalized_first_unsafe_observation": {
+    "baseline": "1/4",
+    "homogeneous_factor_2": "1/4",
+    "fixed_nonzero_startup": "9/8"
+  },
+  "raw_sha256": "f7e462942ac1ecbc426e0bb48e87b1a8e3c74831613d9493c4e1ab3e2d0f27f3",
+  "audit_sha256": "5a2ab3ec3a1e80bfb494ce7149c9a2489c6b8c703aed89de0f601416fbc12088",
+  "runtime": "CPython 3.14.5; standard library only; audit-only, no candidate"
+}

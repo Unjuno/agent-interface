@@ -1,0 +1,21 @@
+{
+  "audit": "redacted-raw-preservation-v4",
+  "checks": {
+    "published_redacted_hashes_match": true,
+    "source_png_matches_freeze": true,
+    "original_source_event_hash_matches_freeze": true,
+    "sanitized_source_event_join_matches": true,
+    "prompt_and_stdin_match_freeze": true,
+    "requested_model_and_effort_match": true,
+    "local_original_raw_hashes_match": true,
+    "local_private_permissions_match": true,
+    "private_paths_and_session_uuid_redacted": true,
+    "service_rejection_retained": true,
+    "no_final_model_response": true,
+    "exit_code_and_disposition_match": true
+  },
+  "passed": 12,
+  "total": 12,
+  "disposition": "PASS_REDACTION_AND_STOP_CUSTODY",
+  "scope": "verifies public redactions and local original custody; does not rerun A01 or evaluate image comprehension"
+}

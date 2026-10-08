@@ -1,0 +1,12 @@
+{
+  "schema": "decision-value-calibration-7934-t0-a02-v1",
+  "q_values": [0.2, 0.4, 0.6, 0.8],
+  "direct_costs": [0.02, 0.12],
+  "nuisance_cost": 0.001,
+  "budget": 0.15,
+  "seed_start": 79342000,
+  "seed_count_per_cell": 128,
+  "policies": ["cost", "entropy", "decision_value", "oracle"],
+  "marked_controls": ["distribution_shift", "unknown_mass_0_10"],
+  "routes": ["A", "B"]
+}

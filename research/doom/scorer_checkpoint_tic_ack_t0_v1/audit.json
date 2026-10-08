@@ -1,0 +1,17 @@
+{
+  "claim_scope": "source-helper behavior with synthetic fakes only",
+  "classification": "PENDING_RECEIPT_ACCEPTED_WITHOUT_TIC_ACK",
+  "controller_continues_without_ack_qualification": [
+    "refresh_no_op",
+    "refresh_two_tics",
+    "tic_changes_during_score_read"
+  ],
+  "errors": [],
+  "helper_returned_pending_status_without_ack_qualification": [
+    "refresh_no_op",
+    "refresh_two_tics",
+    "tic_changes_during_score_read"
+  ],
+  "pass": true,
+  "schema": "scorer-checkpoint-tic-ack-t0-audit-v1"
+}

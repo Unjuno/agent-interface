@@ -1,0 +1,77 @@
+{
+  "allocation": "LOOMING-YIELD-5905-T0.6-IMAGE-ONLY-20261005-A06",
+  "issue": 5905,
+  "status": "FAIL_METHOD_PROTOCOL_BOUNDARY",
+  "descriptive_method_result": "NO_INCREMENTAL_VALUE",
+  "source_base_main": "d3a51bc4c962b223d05280225042b96a033df8bf",
+  "branch": "research/5905-image-only-cues-a06-20261005",
+  "evidence_path": "research/analysis/looming_yield_5905_image_only_t0_6_a06_20261005/",
+  "a05_prior_stop": {
+    "status": "STOP_MAIN_ADVANCED_BEFORE_CANDIDATE",
+    "issue_comment": 5989490358,
+    "candidate_invocations": 0,
+    "auditor_invocations": 0,
+    "retries": 0
+  },
+  "a06_counts": {
+    "construction_container_invocations": 0,
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retry_invocations": 0
+  },
+  "container": {
+    "runtime": "Microsoft WSLc",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "network": "none",
+    "requested_cpus": 1,
+    "gpu": false,
+    "docker": false,
+    "gui_game_model_input_authority": false,
+    "effective_cpu_enforcement_verified": false,
+    "cgroup_swap_telemetry_collected": false
+  },
+  "input": {
+    "approaches": 24,
+    "controls": 6,
+    "frames_per_case": 5,
+    "resolution": "256x256 P5 grayscale",
+    "observations_manifest_sha256": "1f97f68c4a3737ff4e747924d1fff1665f340ddca4ef102e6704de1f9d7ef1b8",
+    "sealed_truth_sha256": "a5c5d034fbd7ea7a04e87ed74a248fa737f1e5eda629ad1157c00f5e5d61d7e0",
+    "observation_tree_bytes": 9855053,
+    "candidate_truth_file_mounted": false,
+    "candidate_visible_case_ids_disclosed_family": true,
+    "candidate_code_used_case_ids_only_as_output_identity": true
+  },
+  "sources": {
+    "generate.py": "48c5e65e1ac68210d05c59b637f39cdaf429416e3a73735e1328789b2ca4833",
+    "candidate.py": "afe7eb22eccbb31c98fd2792f40f4202147e82a28104bad22f0c68b7b2de48bf",
+    "audit.py": "92d2415bd59f40a267726a61c4e1608e01072d5ca65b4971c977ccfb84141d09",
+    "FREEZE.json": "1c38b03e8bb44d321ebd9c70a8fcd7ff96f4170d1bb0887d5b89d16fa758b175"
+  },
+  "outputs": {
+    "candidate_rows": 30,
+    "candidate_eligible_rows": 27,
+    "raw_reconstruction": "PASS",
+    "raw_reconstructed_rows": 30,
+    "timestamp_mutation_rejected": true,
+    "track_mutation_rejected": true,
+    "ineligible_controls": {
+      "control_occlusion": ["visible_area_loss"],
+      "control_track_swap": ["track_identity_changed"],
+      "control_timestamp_regression": ["timestamp_not_strictly_increasing"]
+    },
+    "best_true_positives_by_false_yield_budget": {
+      "0": {"pixel_change": 0, "area_growth": 6, "secant_ttc": 3},
+      "1": {"pixel_change": 2, "area_growth": 24, "secant_ttc": 24},
+      "2": {"pixel_change": 24, "area_growth": 24, "secant_ttc": 24},
+      "3": {"pixel_change": 24, "area_growth": 24, "secant_ttc": 24},
+      "4": {"pixel_change": 24, "area_growth": 24, "secant_ttc": 24},
+      "5": {"pixel_change": 24, "area_growth": 24, "secant_ttc": 24},
+      "6": {"pixel_change": 24, "area_growth": 24, "secant_ttc": 24}
+    },
+    "candidate_sha256": "d9a21574991f34887fe9636b829e5c3ad34ce6253abc730902df2856bd8f203c",
+    "audit_sha256": "ef5e4b2137549cd8b47d9c064e42239b6dd40cd570c0301489a00a6a69687566"
+  },
+  "interpretation": "TTC never strictly outperforms both simple baselines at a matched false-YIELD budget. The no-incremental-value frontier is descriptive because family labels were visible in candidate case IDs, violating the registered input-blinding condition. No post-run edits, retuning, or retries were made."
+}

@@ -27,6 +27,7 @@ New work should normally use a category directory. Existing direct-root paths re
 | Safe overlap / phase scheduling / concurrency | [`concurrency/`](concurrency/) |
 | Live desktop control and caller integration | [`live_control/`](live_control/) |
 | Continuous / real-time DOOM control | [`doom/`](doom/) |
+| Vision and perception research | [`vision/`](vision/) — source-bound computer-vision and temporal-cue evidence |
 | Observation/temporal representation | [`observation/`](observation/) |
 | Observation gating / exact delta transport | [`observation_gating/`](observation_gating/), [`observation_tiles/`](observation_tiles/) |
 | Fast bounded local decision research | [`system1/`](system1/), [`local_system1/`](local_system1/), [`needle_lora_3441_pilot_03_router/`](needle_lora_3441_pilot_03_router/) |
@@ -174,6 +175,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+- [`decision_regret_8528_t0_a01_20261008/`](decision_regret_8528_t0_a01_20261008/) — Issue #8528 finite synthetic decision-opportunity regret probe; read its protocol and audit for the authored toy-loss scope and STOP/qualification record.
 - [`gpu/`](gpu/) — archived local-GPU candidate triage snapshot and recovery status; not a current resource schedule or authorization.
 - [`archive/`](archive/) — Legacy research archive; consult included manifests and reports for scope.
 - [`archives/`](archives/) — Archived research bundles and their retained evidence indexes.
@@ -234,6 +236,8 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 
 ### Recent direct-root evidence
 
+- [`analysis/psi_work_shedding_8488_t0_a01_20261008/`](analysis/) — Issue #8488 T0 A01 is held for an exclusive-deadline semantics mismatch; see the report and append-only correction. The original `NO_RESIDUAL` interpretation was withdrawn.
+- [`carbon_window_7794_a05_bytebound_recheck_20261008/`](carbon_window_7794_a05_bytebound_recheck_20261008/) — Issue #8386 exact-byte comparator replay; consult its report for scoped disposition and unresolved freeze metadata.
 - [`cli_fault_residue_3711_revalidation_v1/`](cli_fault_residue_3711_revalidation_v1/) — retained Issue #3711 report-temp fault revalidation.
 - [`needle_lora_3441_online_stream_v1/`](needle_lora_3441_online_stream_v1/) — retained Issue #3769 streamed online role-adapter experiment.
 - [`needle_lora_3441_rank4_online_multiseed_gpu_v1/`](needle_lora_3441_rank4_online_multiseed_gpu_v1/) — retained Issue #3807 five-seed GPU rank-4 online LoRA failure; see the report for scope and limits.
@@ -285,3 +289,4 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 ### Source-bound peer reviews
 
 - [`reviews/`](reviews/) — retained peer-review records; scoped reviews are not current-tree integration certificates or live experiment results.
+- [`native-suite-wslc-a08/`](native-suite-wslc-a08/) — Issue #7372 WSLc A08 bounded run; all 205 tests passed. cgroup/swap warning leaves memory enforcement and benefit unverified.

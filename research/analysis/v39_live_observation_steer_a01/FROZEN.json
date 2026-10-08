@@ -1,0 +1,27 @@
+{
+  "artifact": "v39_live_observation_steer_a01",
+  "source_base_commit": "6a2826d391b77496b69752609a6f07b6971b4b6f",
+  "cli_version": "codex-cli 0.146.1",
+  "cli_path": "/opt/homebrew/bin/codex",
+  "cli_schema_command": "codex app-server generate-json-schema --experimental --out <DIR>",
+  "candidate_runs_max": 1,
+  "candidate_retries": 0,
+  "pending_window_seconds": 2.0,
+  "protocol_timeout_seconds": 20.0,
+  "rpc_method": "turn/steer",
+  "rpc_required_fields": [
+    "threadId",
+    "expectedTurnId",
+    "input"
+  ],
+  "observation_text": "Fresh observation seq=200; HUD health 51, ammo 38.",
+  "candidate": "probe.py --codex-bin /opt/homebrew/bin/codex --frame fixtures/v39-seq200.png --pending-window-s 2.0",
+  "candidate_sha256": "510317972d27fd6259593b8adffde2b89cc4509fcc5b64c63e9105214cf67375",
+  "test_sha256": "c4c2cf7065030844879521a67488859604215dfee2fdd4ad8c95c9b9182dc73a",
+  "fixture_sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+  "schema_sha256": {
+    "codex-cli-0.146.1-ClientRequest.json": "41188ef1f3507f7a6dfc238a935dabd39eaa71c954c27fb27e6c55c6d9dd8176",
+    "codex-cli-0.160.0-ClientRequest.json": "4a6fc883c2e84c4721bfabd6756ca5bb6e99675a8938768d8bc9cc67ff984700"
+  },
+  "isolation": "temporary CODEX_HOME; loopback-only HTTP mock; OpenAI/Codex API key variables removed; no model/game/gui/input service"
+}

@@ -1,0 +1,6 @@
+{'nested_close': True, 'worker_ident_when_close_returns': None, 'close_returned': True, 'closed_after_nested_close': True, 'worker_ident_after_close': None, 'events': ['accepted'], 'worker_alive_after_close_return': True, 'execute_called': False}
+Traceback (most recent call last):
+  File "/tmp/pr7429-reentrant-close.QiowI2/candidate.py", line 46, in <module>
+    assert not executor.active[2].is_alive()
+               ~~~~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable

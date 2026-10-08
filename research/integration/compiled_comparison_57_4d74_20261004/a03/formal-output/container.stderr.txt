@@ -1,0 +1,23 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+Traceback (most recent call last):
+  File "/study/comparison_runner.py", line 114, in <module>
+    try:main()
+        ^^^^^^
+  File "/study/comparison_runner.py", line 109, in main
+    for task in client.ready['goal']['tasks']:cached=run_task(client,arm,task,cached,root)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/comparison_runner.py", line 96, in run_task
+    if result['outcome']=='CALLER_FAILED':raise RuntimeError('caller implementation failure; stop allocation without retry')
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: caller implementation failure; stop allocation without retry
+Traceback (most recent call last):
+  File "/study/comparison_runner.py", line 114, in <module>
+    try:main()
+        ^^^^^^
+  File "/study/comparison_runner.py", line 109, in main
+    for task in client.ready['goal']['tasks']:cached=run_task(client,arm,task,cached,root)
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/study/comparison_runner.py", line 96, in run_task
+    if result['outcome']=='CALLER_FAILED':raise RuntimeError('caller implementation failure; stop allocation without retry')
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: caller implementation failure; stop allocation without retry

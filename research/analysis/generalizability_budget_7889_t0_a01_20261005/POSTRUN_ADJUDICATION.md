@@ -1,0 +1,9 @@
+# Post-run adjudication: T0 D gate not met
+
+**Corrected disposition: `FAIL_METHOD`.** This adjudication supplements and does not overwrite the frozen preregistration, input, candidate output, auditor output, or raw ledgers.
+
+The frozen `PREREGISTRATION.md` required both the task-interaction and app-interaction profiles to show at least a 0.10 decision-probability advantage for a breadth design over `repeat_cells`. The frozen machine input `study-input.json` instead encoded `interaction_breadth_advantage_min=0.075`. These two frozen files conflict. Before the run, the app-profile exact-truth difference was recalculated and the machine input threshold was changed to 0.075, but the matching sentence in `PREREGISTRATION.md` was not updated. This was not caught before candidate execution.
+
+The first candidate and independent auditor were each invoked once and exited 0. The auditor produced `PASS_METHOD_SCOPED` with 40/40 checks against the 0.075 machine input threshold. Its measured empirical breadth advantages were 0.1455 for task interaction, 0.0850 for app interaction, and 0.1255 for combined interactions. The controlling preregistered app-interaction gate is 0.10, so 0.0850 fails that gate. The overall T0 result is therefore **FAIL_METHOD**; the automated PASS label is retained as the original auditor output but is not the final disposition.
+
+No candidate or auditor rerun was made, and no frozen input was edited after observing the outcome. The raw ledgers, candidate result, audit result, original freeze, and original checksums remain available for forensic review. This correction invalidates the T0 method pass only; the independent T1 read-only result remains `HOLD_NO_IDENTIFIABLE_CROSSED_COHORT` because the historical comparison has only one Chromium app fixture and no cell-level app identity.

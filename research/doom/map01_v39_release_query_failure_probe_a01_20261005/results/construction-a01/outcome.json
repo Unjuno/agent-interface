@@ -1,0 +1,432 @@
+{
+  "schema": "map01-v39-release-query-failure-probe-a01-raw-v1",
+  "invocation": 1,
+  "source_commit": "1ef5611356ff217f0981843ae854ef871967e999",
+  "base_main": "16c74566b64f32d7fe035c7724bcfe3865863a91",
+  "cases": [
+    {
+      "case": "control",
+      "injected_failure_observed": false,
+      "injected_failure_count": 0,
+      "execution_exception": null,
+      "fake_physical_keys_at_boundary": [],
+      "owner_records_at_boundary": [
+        {
+          "event": "owner_release",
+          "reason": "cancelled",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 161794193952500,
+          "valid_until_ns": 161804193763900,
+          "per_key_release_measurements": [
+            {
+              "event": "input_release_measurement",
+              "key": "F8",
+              "id": "query-failure-control",
+              "step": 4,
+              "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+              "intent_token": "intent-release-query-probe-a01",
+              "reason": "cancelled",
+              "physical_key_measurement": {
+                "edge": "up",
+                "classification": "CONFIRMED_PHYSICAL_UP",
+                "bracket": {
+                  "status": "CONFIRMED_PHYSICAL_UP",
+                  "physical_up_interval": [
+                    161794193939100,
+                    161794193941800
+                  ],
+                  "release_id": "005c123a106b4fdc8a6b09b5dbc585dc:r2:cleanup-up:74",
+                  "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+                  "intent_token": "intent-release-query-probe-a01",
+                  "key": "F8",
+                  "grants_input_authority": false,
+                  "application_consumption_observed": false
+                },
+                "actuation_id": "005c123a106b4fdc8a6b09b5dbc585dc:g1:F8",
+                "identity_status": "RETIRED",
+                "pre_sample": {
+                  "available": true,
+                  "down": true,
+                  "started_ns": 161794193937600,
+                  "finished_ns": 161794193939100,
+                  "error": null
+                },
+                "post_sample": {
+                  "available": true,
+                  "down": false,
+                  "started_ns": 161794193941200,
+                  "finished_ns": 161794193941800,
+                  "error": null
+                },
+                "release_attempted": true,
+                "release_request_ns": 161794193939400,
+                "sync_return_ns": 161794193941100,
+                "adapter_edge": {
+                  "edge": "up",
+                  "status": "CONFIRMED_PHYSICAL_UP",
+                  "actuation_id": "005c123a106b4fdc8a6b09b5dbc585dc:g1:F8",
+                  "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+                  "intent_token": "intent-release-query-probe-a01",
+                  "key": "F8",
+                  "interval": [
+                    161794193939100,
+                    161794193941800
+                  ],
+                  "grants_input_authority": false
+                },
+                "grants_input_authority": false,
+                "application_consumption_observed": false
+              },
+              "grants_input_authority": false
+            }
+          ]
+        }
+      ],
+      "owner_release_record_count": 1,
+      "owner_release_measurement_rows": 1,
+      "bridge_release_measurement_rows": 1,
+      "bridge_event_rows": [
+        {
+          "event": "input_admission",
+          "key": "F8",
+          "admitted_ns": 161794193834800,
+          "input_ack_ns": 161794193841300,
+          "valid_until_ns": 161804193763900,
+          "physical_key_measurement": {
+            "edge": "down",
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "bracket": {
+              "status": "CONFIRMED_PHYSICAL_DOWN",
+              "physical_down_interval": [
+                161794193837700,
+                161794193842600
+              ],
+              "press_id": "005c123a106b4fdc8a6b09b5dbc585dc:r1:down:74",
+              "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+              "intent_token": "intent-release-query-probe-a01",
+              "key": "F8",
+              "grants_input_authority": false,
+              "application_consumption_observed": false
+            },
+            "actuation_id": "005c123a106b4fdc8a6b09b5dbc585dc:g1:F8",
+            "identity_status": "MINTED",
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "started_ns": 161794193835300,
+              "finished_ns": 161794193837700,
+              "error": null
+            },
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "started_ns": 161794193841500,
+              "finished_ns": 161794193842600,
+              "error": null
+            },
+            "press_request_ns": 161794193839200,
+            "sync_return_ns": 161794193841300,
+            "adapter_edge": {
+              "edge": "down",
+              "status": "CONFIRMED_PHYSICAL_DOWN",
+              "actuation_id": "005c123a106b4fdc8a6b09b5dbc585dc:g1:F8",
+              "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+              "intent_token": "intent-release-query-probe-a01",
+              "key": "F8",
+              "interval": [
+                161794193837700,
+                161794193842600
+              ],
+              "grants_input_authority": false
+            },
+            "grants_input_authority": false,
+            "application_consumption_observed": false
+          },
+          "id": "query-failure-control",
+          "step": 4,
+          "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+          "intent_token": "intent-release-query-probe-a01"
+        },
+        {
+          "event": "input_release_measurement",
+          "key": "F8",
+          "id": "query-failure-control",
+          "step": 4,
+          "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+          "intent_token": "intent-release-query-probe-a01",
+          "reason": "cancelled",
+          "physical_key_measurement": {
+            "edge": "up",
+            "classification": "CONFIRMED_PHYSICAL_UP",
+            "bracket": {
+              "status": "CONFIRMED_PHYSICAL_UP",
+              "physical_up_interval": [
+                161794193939100,
+                161794193941800
+              ],
+              "release_id": "005c123a106b4fdc8a6b09b5dbc585dc:r2:cleanup-up:74",
+              "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+              "intent_token": "intent-release-query-probe-a01",
+              "key": "F8",
+              "grants_input_authority": false,
+              "application_consumption_observed": false
+            },
+            "actuation_id": "005c123a106b4fdc8a6b09b5dbc585dc:g1:F8",
+            "identity_status": "RETIRED",
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "started_ns": 161794193937600,
+              "finished_ns": 161794193939100,
+              "error": null
+            },
+            "post_sample": {
+              "available": true,
+              "down": false,
+              "started_ns": 161794193941200,
+              "finished_ns": 161794193941800,
+              "error": null
+            },
+            "release_attempted": true,
+            "release_request_ns": 161794193939400,
+            "sync_return_ns": 161794193941100,
+            "adapter_edge": {
+              "edge": "up",
+              "status": "CONFIRMED_PHYSICAL_UP",
+              "actuation_id": "005c123a106b4fdc8a6b09b5dbc585dc:g1:F8",
+              "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+              "intent_token": "intent-release-query-probe-a01",
+              "key": "F8",
+              "interval": [
+                161794193939100,
+                161794193941800
+              ],
+              "grants_input_authority": false
+            },
+            "grants_input_authority": false,
+            "application_consumption_observed": false
+          },
+          "grants_input_authority": false
+        }
+      ],
+      "bridge_held_at_boundary": [],
+      "owner_state_at_boundary": {
+        "owner_id": "005c123a106b4fdc8a6b09b5dbc585dc",
+        "revision": 2,
+        "sample_started_ns": 161794193979000,
+        "sample_finished_ns": 161794193980700,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          0,
+          0
+        ],
+        "focus": 42,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "query_keymap_count": 5
+    },
+    {
+      "case": "pointer_failure",
+      "injected_failure_observed": true,
+      "injected_failure_count": 1,
+      "execution_exception": null,
+      "fake_physical_keys_at_boundary": [],
+      "owner_records_at_boundary": [],
+      "owner_release_record_count": 0,
+      "owner_release_measurement_rows": 0,
+      "bridge_release_measurement_rows": 0,
+      "bridge_event_rows": [
+        {
+          "event": "input_admission",
+          "key": "F8",
+          "admitted_ns": 161794194320600,
+          "input_ack_ns": 161794194327400,
+          "valid_until_ns": 161804194271100,
+          "physical_key_measurement": {
+            "edge": "down",
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "bracket": {
+              "status": "CONFIRMED_PHYSICAL_DOWN",
+              "physical_down_interval": [
+                161794194323800,
+                161794194329100
+              ],
+              "press_id": "f87c22220f7946cf95ef29800954fef0:r1:down:74",
+              "owner_id": "f87c22220f7946cf95ef29800954fef0",
+              "intent_token": "intent-release-query-probe-a01",
+              "key": "F8",
+              "grants_input_authority": false,
+              "application_consumption_observed": false
+            },
+            "actuation_id": "f87c22220f7946cf95ef29800954fef0:g1:F8",
+            "identity_status": "MINTED",
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "started_ns": 161794194321300,
+              "finished_ns": 161794194323800,
+              "error": null
+            },
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "started_ns": 161794194327600,
+              "finished_ns": 161794194329100,
+              "error": null
+            },
+            "press_request_ns": 161794194325100,
+            "sync_return_ns": 161794194327400,
+            "adapter_edge": {
+              "edge": "down",
+              "status": "CONFIRMED_PHYSICAL_DOWN",
+              "actuation_id": "f87c22220f7946cf95ef29800954fef0:g1:F8",
+              "owner_id": "f87c22220f7946cf95ef29800954fef0",
+              "intent_token": "intent-release-query-probe-a01",
+              "key": "F8",
+              "interval": [
+                161794194323800,
+                161794194329100
+              ],
+              "grants_input_authority": false
+            },
+            "grants_input_authority": false,
+            "application_consumption_observed": false
+          },
+          "id": "query-failure-pointer_failure",
+          "step": 4,
+          "owner_id": "f87c22220f7946cf95ef29800954fef0",
+          "intent_token": "intent-release-query-probe-a01"
+        }
+      ],
+      "bridge_held_at_boundary": [
+        "F8"
+      ],
+      "owner_state_at_boundary": {
+        "owner_id": "f87c22220f7946cf95ef29800954fef0",
+        "revision": 2,
+        "sample_started_ns": 161794194450300,
+        "sample_finished_ns": 161794194453100,
+        "owned_buttons": [],
+        "owned_keycodes": [
+          74
+        ],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          0,
+          0
+        ],
+        "focus": 42,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "query_keymap_count": 4
+    },
+    {
+      "case": "keymap_failure",
+      "injected_failure_observed": true,
+      "injected_failure_count": 1,
+      "execution_exception": null,
+      "fake_physical_keys_at_boundary": [],
+      "owner_records_at_boundary": [],
+      "owner_release_record_count": 0,
+      "owner_release_measurement_rows": 0,
+      "bridge_release_measurement_rows": 0,
+      "bridge_event_rows": [
+        {
+          "event": "input_admission",
+          "key": "F8",
+          "admitted_ns": 161794194831800,
+          "input_ack_ns": 161794194838900,
+          "valid_until_ns": 161804194793300,
+          "physical_key_measurement": {
+            "edge": "down",
+            "classification": "CONFIRMED_PHYSICAL_DOWN",
+            "bracket": {
+              "status": "CONFIRMED_PHYSICAL_DOWN",
+              "physical_down_interval": [
+                161794194835300,
+                161794194840500
+              ],
+              "press_id": "730f5dd7a88c41e3b80ef560ce09e320:r1:down:74",
+              "owner_id": "730f5dd7a88c41e3b80ef560ce09e320",
+              "intent_token": "intent-release-query-probe-a01",
+              "key": "F8",
+              "grants_input_authority": false,
+              "application_consumption_observed": false
+            },
+            "actuation_id": "730f5dd7a88c41e3b80ef560ce09e320:g1:F8",
+            "identity_status": "MINTED",
+            "pre_sample": {
+              "available": true,
+              "down": false,
+              "started_ns": 161794194832300,
+              "finished_ns": 161794194835300,
+              "error": null
+            },
+            "post_sample": {
+              "available": true,
+              "down": true,
+              "started_ns": 161794194839200,
+              "finished_ns": 161794194840500,
+              "error": null
+            },
+            "press_request_ns": 161794194836600,
+            "sync_return_ns": 161794194838900,
+            "adapter_edge": {
+              "edge": "down",
+              "status": "CONFIRMED_PHYSICAL_DOWN",
+              "actuation_id": "730f5dd7a88c41e3b80ef560ce09e320:g1:F8",
+              "owner_id": "730f5dd7a88c41e3b80ef560ce09e320",
+              "intent_token": "intent-release-query-probe-a01",
+              "key": "F8",
+              "interval": [
+                161794194835300,
+                161794194840500
+              ],
+              "grants_input_authority": false
+            },
+            "grants_input_authority": false,
+            "application_consumption_observed": false
+          },
+          "id": "query-failure-keymap_failure",
+          "step": 4,
+          "owner_id": "730f5dd7a88c41e3b80ef560ce09e320",
+          "intent_token": "intent-release-query-probe-a01"
+        }
+      ],
+      "bridge_held_at_boundary": [
+        "F8"
+      ],
+      "owner_state_at_boundary": {
+        "owner_id": "730f5dd7a88c41e3b80ef560ce09e320",
+        "revision": 2,
+        "sample_started_ns": 161794194954000,
+        "sample_finished_ns": 161794194956400,
+        "owned_buttons": [],
+        "owned_keycodes": [
+          74
+        ],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          0,
+          0
+        ],
+        "focus": 42,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "query_keymap_count": 5
+    }
+  ],
+  "decision": "PASS_REPRODUCED_RECORD_LOSS",
+  "defects": [],
+  "scope": "deterministic fake-display owner/bridge control-flow boundary only"
+}

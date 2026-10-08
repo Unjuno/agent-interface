@@ -1,0 +1,38 @@
+{
+  "schema": "logical-time-fixed-overhead-freeze-v1",
+  "issue": 7327,
+  "allocation": "LOGICAL-TIME-SYMMETRY-7327-FIXED-OVERHEAD-T4-20261004-01",
+  "main_commit": "68e0378362b5ce6775f253064eaad63a2da6cda9",
+  "t3_predecessor_stop": "research/analysis/logical_time_symmetry_7327_fixed_overhead_t3_20261004/STOP.md",
+  "source_paths": {
+    "spec": "research/analysis/logical_time_symmetry_7327_fixed_overhead_t4_20261004/spec.json",
+    "candidate": "research/analysis/logical_time_symmetry_7327_fixed_overhead_t3_20261004/candidate.py",
+    "auditor": "research/analysis/logical_time_symmetry_7327_fixed_overhead_t3_20261004/audit.py",
+    "preflight": "research/analysis/logical_time_symmetry_7327_fixed_overhead_t4_20261004/test_preflight.py"
+  },
+  "source_sha256": {
+    "spec.json": "beb62eb9d68fe2e44a6a820dea1141d83e965abb63770350730e216f03972a4f",
+    "candidate.py": "1010d02d72667784b96a16285dc29388095eeac7b238dd4ebf947b6fcf7935b6",
+    "audit.py": "6f6a41a0622602cf9d229de2f3cfcb990918c22ef761eaea27c23f9b6fe37b34",
+    "test_preflight.py": "149c16b2bcb231257cfc904ca2d26e73c586505e086102315851244e8c78d0ea"
+  },
+  "execution": {
+    "runtime": "CPython 3.14.5; standard library only",
+    "container": false,
+    "network": false,
+    "gui": false,
+    "game": false,
+    "model": false,
+    "gpu": false,
+    "physical_input": false
+  },
+  "invocation_budget": {"candidate": 1, "auditor": 1, "retry": 0},
+  "preflight_result": "PASS 3/3; not a formal candidate/auditor invocation",
+  "decision_gates": {
+    "homogeneous_traces_equal_all_scenarios": true,
+    "zero_startup_fixed_control_equal": true,
+    "nonzero_hazard_homogeneous_reaction_equal": true,
+    "nonzero_hazard_fixed_startup_reaction_differs": true,
+    "mutation_rejections_required": 4
+  }
+}

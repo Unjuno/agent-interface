@@ -1,0 +1,54 @@
+from pathlib import Path
+import hashlib, importlib.metadata, json, platform, subprocess, sys
+from datetime import datetime, timezone
+
+root=Path(__file__).resolve().parent
+repo=root/'agent-interface'
+private=root/'relay-deep-private-logs'
+phase=sys.argv[1]
+if phase not in ('red','green'):
+    raise ValueError('unknown phase')
+private.mkdir(exist_ok=True)
+output=private/phase
+output.mkdir(exist_ok=False)
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+def git(*args):
+    p=subprocess.run(['git',*args],cwd=repo,capture_output=True)
+    if p.returncode:
+        raise ValueError(p.stderr.decode(errors='replace'))
+    return p.stdout
+head=git('rev-parse','HEAD').decode().strip()
+paths=['runtime/cli_v1/mcp_relay.py','runtime/cli_v1/test_mcp_relay.py','runtime/cli_v1/MCP.md']
+snapshots={}
+for path in paths:
+    working=(repo/path).read_bytes()
+    committed=git('show',f'{head}:{path}')
+    name=Path(path).name
+    (output/(name+'.working.txt')).write_bytes(working)
+    (output/(name+'.committed.txt')).write_bytes(committed)
+    snapshots[path]={'working_sha256':sha(working),'committed_sha256':sha(committed),
+                     'git_blob':git('rev-parse',f'{head}:{path}').decode().strip()}
+module='runtime.cli_v1.test_mcp_relay'
+methods=['test_excessive_json_nesting_refuses_without_dispatch_or_id_consumption',
+         'test_decoder_recursion_after_acceptance_preserves_current_id',
+         'test_moderately_nested_json_preserves_forwarded_values',
+         'test_portable_relay_outside_checkout_lists_validates_and_closes']
+targets=[f'{module}.PublicRelayTests.{name}' for name in methods] if phase=='red' else [module]
+command=[sys.executable,'-B','-m','unittest','-v',*targets]
+start=datetime.now(timezone.utc).isoformat()
+p=subprocess.run(command,cwd=repo,capture_output=True)
+end=datetime.now(timezone.utc).isoformat()
+(output/'stdout.log').write_bytes(p.stdout)
+(output/'stderr.log').write_bytes(p.stderr)
+record={'phase':phase,'head':head,'python':platform.python_version(),'platform':platform.platform(),
+        'mcp':importlib.metadata.version('mcp'),'command':command,'cwd':str(repo),
+        'start_utc':start,'end_utc':end,'exit_code':p.returncode,'source':snapshots,
+        'stdout_sha256':sha(p.stdout),'stderr_sha256':sha(p.stderr),
+        'stdout_bytes':len(p.stdout),'stderr_bytes':len(p.stderr),
+        'scope':'ordinary test-first repair; committed-source real SDK list/validate/close only; no input'}
+(output/'receipt.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8')
+print(json.dumps({k:v for k,v in record.items() if k not in ('source','command','cwd')}))
+print(p.stderr.decode(errors='replace')[-1400:])
+if phase=='green' and p.returncode:
+    raise SystemExit(p.returncode)

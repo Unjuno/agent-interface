@@ -1,0 +1,14 @@
+{
+  "schema":"unjuno.issue7162.t0.freeze.v1",
+  "issue":"https://github.com/Unjuno/agent-interface/issues/7162",
+  "base_commit":"f62a18f546bdbbfdd431be0078c44f42db13d572",
+  "source_files":["README.md","PROTOCOL.md","fixture.json","candidate.py","auditor.py","test_contract.py"],
+  "candidate_invocations":1,
+  "auditor_invocations":1,
+  "retry_budget":0,
+  "factorial_rows":54,
+  "formal_outputs":["formal_01/raw.json","formal_01/audit.json"],
+  "runtime":"host-only Python standard library; no network/model/GUI/container",
+  "formal_started":false,
+  "gate":"PASS_METHOD_SCOPED only when exact oracle agreement, terminal/revoked non-revival, exact cue gating, no input authority, and all four mutation rejections hold"
+}

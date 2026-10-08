@@ -1,0 +1,65 @@
+{
+  "schema": "wsl2-wslc-cost-comparison-v1",
+  "allocation": "6389-wsl2-vs-wslc-belief-replay-a01-20261004",
+  "issue": 6389,
+  "parent_workload_issue": 5368,
+  "base_main": "13bab54ea6d91978247ecc1b70e5060db752367a",
+  "branch": "research/wsl2-wslc-migration-6389-a01-20261004",
+  "result_path": "research/analysis/wsl2_wslc_cost_6389_a01_20261004/",
+  "candidate_and_auditor_invocations_per_arm": 3,
+  "pair_order": ["native,wslc", "wslc,native", "native,wslc"],
+  "retry_policy": "none; exclusive formal output tree; preserve first failure",
+  "construction_checks": {
+    "command": "python -B -m unittest -v test_harness.py",
+    "result": "PASS_CONSTRUCTION_ONLY",
+    "tests_passed": 3
+  },
+  "docker_or_podman": false,
+  "gpu_model_gui_input": false,
+  "network_during_candidate_or_audit": "none",
+  "primary_metric": "Windows-host external wall time from each runtime CLI launch to completion of candidate or independent audit; paired iteration is candidate plus audit",
+  "decision": {
+    "pass_cost_scoped": "all outputs/audits exact and native median candidate+audit time <= 90% of WSLc median",
+    "pass_portability_only": "all outputs/audits exact but cost threshold not met",
+    "fail": "output mismatch, audit failure, or unexplained invocation result",
+    "stop": "pre-candidate source/runtime/ownership/main gate failure"
+  },
+  "source": {
+    "path": "research/analysis/belief_external_drift_5368_t0_20261003/",
+    "git_blobs": {
+      "fixture.json": "18adde887aa80a0e446a3e7951895140810a3d14",
+      "candidate.py": "7cc083b68bb3673a245e5fed634fd67aa793bd6b",
+      "runner.py": "1d931a342e43e33a44f7295d0a082326c41016e1",
+      "audit.py": "79a930f40cf0eb999f27c6afe2047163d9278869"
+    },
+    "materialized_sha256": {
+      "fixture.json": "374a6136bc5a0b5cfe39cce915625505c6a56cade870b20fb2e749aa4e7fe9d7",
+      "candidate.py": "972b711c3a6c57e09d48652884c96491a70c5ef7ea183e96b052692c6bddee0a",
+      "runner.py": "31a13ac9dee59d4d7d58fa7cb5c94afc9418477ca22d644459d6d01acf76ccdc",
+      "audit.py": "81fe3dc715afb4f9e2039a513157f608fddfef950643e0bdd6431350f3a4ad4d"
+    }
+  },
+  "wsl2": {
+    "distro": "Ubuntu 24.04, WSL2",
+    "python": "3.12.3",
+    "glibc": "2.39"
+  },
+  "wslc": {
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "local_image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "pull": "never",
+    "cpus_requested": 1,
+    "memory_requested": "512M",
+    "memory_limit_enforcement_claim": false
+  },
+  "protocol_sha256": {
+    "README.md": "216a60a80a7ace6d4338b53776296bcf142d4c4267ab5fb428088460b6d47c4e",
+    "stage_and_run.py": "e7c73bb63f59fd4b35fb11c52af89e0c551b1a677a795d4deb2776871477aa1c",
+    "measure.py": "77ea72ddaf2620a16a53bb28590f8e2eed38ced5eb2f25a8ee5fd1fd706505c7",
+    "test_harness.py": "288efdb10909520be3c38e9fd8f8344ad056de1aca539645023082e75bb2e531"
+  },
+  "formal_status": "not_run"
+}

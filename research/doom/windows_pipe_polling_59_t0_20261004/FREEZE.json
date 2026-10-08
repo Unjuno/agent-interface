@@ -1,0 +1,21 @@
+{
+  "schema": "windows-pipe-polling-construction-freeze-v1",
+  "issue": 59,
+  "base_commit": "0757ae3d71",
+  "host": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10",
+  "python_executable": "user-local executable path omitted",
+  "source_sha256": {
+    "research/doom/main_thread_scorer_polling_v1.py": "c19690d90fc072a669c52a27dc3ed447eb5afe3ab961d829044583ee9ec714e8",
+    "research/doom/session_map01_v13.py": "4cce03d81d654d1758784642c5640ecec0c84e65b92cdd1cbdd151bee5dabfb3",
+    "research/doom/test_main_thread_scorer_polling_v1.py": "bdb0eb39da5f3de29f8852a0aa0cf085f040cc0fa389b377b229040adc554640",
+    "research/doom/test_session_map01_v13.py": "d9e550e5d6e2bcf3f93c603138cecf66b8bbba1dca7593dcc420f984d37f413a",
+    "research/doom/test_map01_scorer_stdio_adapter_v1.py": "4b91297b9693752e605aa36bdbc641ea93154417e6e4b66285b990dce4849e3b"
+  },
+  "focused_tests": [
+    "research/doom/test_main_thread_scorer_polling_v1.py",
+    "research/doom/test_session_map01_v13.py",
+    "research/doom/test_map01_scorer_stdio_adapter_v1.py"
+  ],
+  "no_live_allocation": true
+}

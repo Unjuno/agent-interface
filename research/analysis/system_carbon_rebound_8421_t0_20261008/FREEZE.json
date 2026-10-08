@@ -1,0 +1,38 @@
+{
+  "schema_version": "system-carbon-rebound-t0-freeze-v1",
+  "issue": "Unjuno/agent-interface#8421",
+  "allocation": "SYSTEM-CARBON-REBOUND-8421-T0-20261008",
+  "branch": "research/system-carbon-rebound-8421-t0-20261008",
+  "base_commit": "24319711a2b4f8c782c2648522f30dc70b4c9b09",
+  "frozen_paths_sha256": {
+    "research/analysis/system_carbon_rebound_8421_t0_20261008/SOURCE.json": "16f414e11cda213d34823e5f160799bbba5638aa7fe6a0f734092fc5b92a355e",
+    "research/analysis/system_carbon_rebound_8421_t0_20261008/PROTOCOL.md": "c25961e34b5f7f27dfbc605f1765c7d8a36cf4e1813e9c4275947e7f79f56327",
+    "research/analysis/system_carbon_rebound_8421_t0_20261008/README.md": "5bfaafefa9e13d35ed4be5a3f87c5fac5fb264a5c6c370985facd40377e97afa",
+    "research/analysis/system_carbon_rebound_8421_t0_20261008/candidate.py": "d4a9ed94c99a79c8dc1246aa49d66a9c49d0d5a47343db933ab933bbcb476839",
+    "research/analysis/system_carbon_rebound_8421_t0_20261008/audit.py": "c826b4a3ef3ffb235d2da977598a4cd41a285a3faa3c0f37ea6cdfc94af7b255",
+    "research/analysis/system_carbon_rebound_8421_t0_20261008/test_contract.py": "a36f9364dbffa29b1d17601cb57a587b393e83b65e0d0c92bd74065f2474e48b"
+  },
+  "preformal_construction": {
+    "command": "python -B -m unittest discover -s research/analysis/system_carbon_rebound_8421_t0_20261008 -v",
+    "result": "PASS 4/4",
+    "py_compile": "PASS candidate.py audit.py test_contract.py",
+    "source_json_parse": "PASS",
+    "git_diff_check": "PASS",
+    "candidate_invocations": 0,
+    "auditor_invocations": 0,
+    "retries": 0
+  },
+  "execution_environment": {
+    "python": "CPython 3.12.13",
+    "dependencies": "stdlib only",
+    "container": "not used; current daemon previously failed image/content-store access with operation not supported; no isolation claim",
+    "network": "no network use by fixture or candidate"
+  },
+  "formal_gate": {
+    "candidate": "one invocation only; must exit 0 before auditor starts",
+    "auditor": "one invocation only; reads frozen source bytes and candidate RAW without importing candidate.py",
+    "retries": 0,
+    "decision": "PASS_METHOD_SCOPED only if source/input hashes, exact opportunity and activity ledgers, every component-energy row, independently recomputed summaries, all five mutation controls, and all three expected contrasts pass; otherwise preserve failure and STOP without retry",
+    "claim_boundary": "synthetic accounting-method validation only; no empirical environmental, device, provider, model, GUI, or product result"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "issue59-v39-ammo-completed-future-drain-freeze-a08-v1",
+  "experiment": "issue59-v39-ammo-completed-future-drain-a08-20261008",
+  "kind": "one-shot synthetic current-main construction; no live allocation",
+  "main_commit": "48496b645b1cbf4c4ddea49315972724f020343c",
+  "sources": {
+    "controller": {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+      "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
+    },
+    "guard": {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    },
+    "planner_adapter": {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15",
+      "sha256": "9507881697c447ec8fb82bd1ba3eb90e7873f8ab2d9fffdc2a5467abc9b5a674"
+    },
+    "final_admission_v1": {
+      "path": "research/live_control/final_action_admission_v1.py",
+      "git_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "sha256": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d"
+    },
+    "final_admission_v2": {
+      "path": "research/live_control/final_action_admission_v2.py",
+      "git_blob": "cbbef5405c29fe56018c24e120b1b87d3c39dd26",
+      "sha256": "16f785d2542335a857163b9afa6c6e84b776b77d62ce36345fc28987a5ca897b"
+    }
+  },
+  "hypothesis": "With a planner future already completed, current-main bounded drain processes queued paired ammo evidence before future.result. Ammo 1 preserves fresh action-validity eligibility; ammo 0 produces policy invalidation rejected by final admission even when the planner result itself remains answer-eligible.",
+  "test": "Execute the frozen current-main drain_pending_observation_events with actual paired health/ammo monitor and completed/empty terminal, then pass completed planner result and actual invalidation into final-admission helpers. AST locator selects the earliest final_action_admission assignment after planner_result.",
+  "decision": "PASS_CONSTRUCTION_RACE only if exact main order drains before future.result and final admission; both planner answers remain eligible; ammo 1 has no invalidation and READY_FOR_ACTION_VALIDITY; ammo 0 gives ammo:below_hard_minimum and REJECTED_POLICY_INVALIDATED with no input authority.",
+  "counterhypothesis": "The drain may classify ammo zero but fail to preserve invalidation through completed-answer final admission, or consume a terminal without verifying empty release.",
+  "limits": [
+    "Synthetic typed values and deterministic fakes do not establish real race frequency or HUD cadence.",
+    "No model, game, GUI, OS input, physical release, tactical ammo policy, recovery, progress, or task outcome is measured.",
+    "This tests the queued-completion seam and final-action gate only, not the full controller process."
+  ],
+  "retry_policy": "Run candidate once after freeze. Preserve first result and raw events; repeat only read-only audits and tests."
+}

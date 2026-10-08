@@ -1,0 +1,27 @@
+{
+  "allocation_id": "TASK-MEMORY-RETRIEVAL-7166-T0-HOST-A05-20261004",
+  "base_main": "a2f6b60ac84300d45beb82c7cf5a6e06cfc7c456",
+  "completed_observed_at_utc": "2026-10-04T04:02:44Z",
+  "candidate": {
+    "command": "python3 -I research/analysis/task_memory_retrieval_7166_t0_host_a05_20261004/candidate.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "rows": 72,
+    "output": "candidate.json",
+    "output_sha256": "3fca6123c690ff1dcb5fb9af9922dfeb5a169f09e61d42b9e4c4b3cbae880cb5"
+  },
+  "auditor": {
+    "command": "python3 -I research/analysis/task_memory_retrieval_7166_t0_host_a05_20261004/auditor.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "base_audit": "PASS",
+    "rows": 72,
+    "mutation_effective": "6/6",
+    "mutation_rejected": "6/6",
+    "disposition": "PASS_METHOD_SCOPED",
+    "output": "audit.json",
+    "output_sha256": "627cef4860bb9c08b30aa971f4ab89acc0122d81915fd8bcadc5ec997a34f564"
+  },
+  "retries": 0,
+  "claim_boundary": "finite authored contract only; no model/retrieval utility, cost, task-effect, GUI, latency, runtime, or product result"
+}
