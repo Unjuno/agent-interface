@@ -1,0 +1,47 @@
+{
+  "schema": "phase-control-delay-design-v2",
+  "issue": 8668,
+  "source_question": "Whether an event-wide controllability label is adequate when cancellation control and effect observations can be delayed across one operation's irreversible dispatch frontier.",
+  "allocation_delta_from_a01": "A01's candidate applied the cancellation-prevented plant before branching over policies. A02 evaluates each policy's cancellation action first, derives that policy's actual plant outcome independently, and only then computes that policy's report/retry decision. A01 bytes and FAIL_HARNESS disposition remain untouched.",
+  "phase_order": ["PROPOSED", "ADMITTED", "QUEUED", "EMITTED", "CONSUMED"],
+  "irreversible_frontier": "EMITTED",
+  "axes": {
+    "request_phase": ["PROPOSED", "ADMITTED", "QUEUED", "EMITTED", "CONSUMED"],
+    "control_delay_transitions": [0, 1],
+    "removal_receipt_delay_transitions": [0, 1],
+    "same_frontier_order": ["CONTROL_FIRST", "PLANT_FIRST"],
+    "effect_receipt_order": ["EFFECT_FIRST", "RELEASE_FIRST"],
+    "stale_receipt_position": ["NONE", "BEFORE_RETRY", "AFTER_RETRY"],
+    "retry_requested": [false, true]
+  },
+  "schedule_count": 481,
+  "timing_contract": {
+    "phase_index": "Index into phase_order; EMITTED occurs at index 3.",
+    "cancel_command_delivery": "request_phase_index + control_delay_transitions",
+    "operation_removal_receipt": "cancel_command_delivery + removal_receipt_delay_transitions",
+    "removal_confirmed_before_emit": "True only when the removal receipt arrives before EMITTED, or exactly at EMITTED with CONTROL_FIRST. A delivered cancel command alone is never removal proof.",
+    "effect_commit": "The operation commits when EMITTED is reached unless operation removal was confirmed before that frontier.",
+    "retry_decision": "At transition time 4.75. EFFECT_FIRST gives a committed operation's exact effect receipt at 4.1, before the retry decision. RELEASE_FIRST gives only release acknowledgement at 4.5 before the decision; a committed effect receipt arrives at 5.0 afterward. A cancel command delivered after 4.75 is unavailable to the current decision.",
+    "stale_receipt": "STALE_EFFECT_ACK(op0) is a separate operation identity and is never accepted as evidence about op1."
+  },
+  "policies": {
+    "STATIC_CANCELABLE": "Issues cancel for every phase and treats cancel-command delivery as proof of removal if no effect receipt has arrived. This intentionally optimistic static-label comparator can be false-safe.",
+    "STATIC_UNCONTROLLABLE": "Never issues cancel; keeps the operation pending and suppresses retry. A safe pre-emission cancellation opportunity is counted as missed only when retry was requested.",
+    "PHASE_REFINED": "Issues cancel only before EMITTED and admits retry only after operation-bound removal confirmation before EMITTED. Otherwise it reports COMMITTED if an effect receipt arrived, UNKNOWN if not, and suppresses retry.",
+    "FAIL_CLOSED": "Never issues cancel; reports UNKNOWN without an effect receipt and suppresses retry. This is a fail-closed baseline."
+  },
+  "input_semantics": "Every non-NONE row is a cancellation intent arriving at request_phase. Each policy decides whether to issue a cancel command. retry_requested independently indicates whether a second operation is waiting on the decision.",
+  "mutation_controls": [
+    "flip-policy-specific-plant-outcome",
+    "flip-retry-disposition",
+    "accept-stale-operation-receipt",
+    "delete-exogenous-schedule",
+    "corrupt-event-trace"
+  ],
+  "no_input_control": true,
+  "limitations": [
+    "Authored deterministic finite plant only; no actual OS, GUI backend, application, model, latency, task effect, or product behavior was measured.",
+    "The static policies are explicit comparators, not a claim that every event-level supervisor uses these policies.",
+    "The phase-refined policy is given the modeled phase and bounded delay values. Real phase observability and delay bounds are unverified."
+  ]
+}
