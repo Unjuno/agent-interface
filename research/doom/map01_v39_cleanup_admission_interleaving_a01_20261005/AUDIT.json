@@ -1,0 +1,22 @@
+{
+  "audit": "PASS_ADMISSION_RETURN_RACE_CONSTRUCTION",
+  "scope": "one fake-owner/fake-display scenario on the frozen PR #7805 candidate",
+  "attempts": {
+    "A01": "HOLD: owner state still showed F8 down, so cleanup-before-return was unproved",
+    "A02": "PASS on superseded PR head 8414805493",
+    "A03": "PASS on current pinned PR head 39264f167f"
+  },
+  "verified": {
+    "pre_return_empty_state_and_cleanup_record": true,
+    "event_order": [
+      "input_admission",
+      "input_release_measurement"
+    ],
+    "matching_actuation_and_context": true,
+    "confirmed_sampled_up_bracket": true,
+    "final_fake_display_and_bridge_state_empty": true
+  },
+  "limits": [
+    "No real OS input, X11, game, application effect, recovery benefit, or live Issue #59 allocation."
+  ]
+}
