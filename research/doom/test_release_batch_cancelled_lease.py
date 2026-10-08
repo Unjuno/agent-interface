@@ -97,13 +97,15 @@ class TransitionOwner:
 
 
 class PreviousBackend:
-    def __init__(self, session, out, emit, signal_readers, *, cancel_before_up):
+    def __init__(self, session, out, emit, signal_readers, *, cancel_before_up,
+                 cleanup_failure):
         self.owner = Owner(session.name)
         self.held = set()
         self.lease = None
         self._input_event_context = None
         self.emit = emit
         self.cancel_before_up = cancel_before_up
+        self.cleanup_failure = cleanup_failure
 
     def execute(self, _step, _cancel, identifier, index):
         self._input_event_context = (identifier, index)
@@ -113,18 +115,21 @@ class PreviousBackend:
         self.raw("Down", False)
 
     def release_all(self):
+        if self.cleanup_failure:
+            raise RuntimeError("owner cleanup failed")
         return self.owner.call("release", self.lease)
 
 
 class CancelledLeaseReleaseTests(unittest.TestCase):
-    def _run(self, *, cancelled):
+    def _run(self, *, cancelled, cleanup_failure=False):
         emitted = []
         base = types.ModuleType("doom_typed_release_backend_v2")
 
         class BackendBase(PreviousBackend):
             def __init__(self, session, out, emit, readers):
                 super().__init__(session, out, emit, readers,
-                                 cancel_before_up=cancelled)
+                                 cancel_before_up=cancelled,
+                                 cleanup_failure=cleanup_failure)
 
         base.Backend = BackendBase
         base.suite = object()
@@ -152,7 +157,10 @@ class CancelledLeaseReleaseTests(unittest.TestCase):
                                              emitted.append, {})
             backend.lease = Lease()
             backend.execute({}, backend.lease.cancel, "program-1", 0)
-            release = backend.release_all()
+            try:
+                release = backend.release_all()
+            except Exception as exc:
+                return backend, emitted, exc
             return backend, emitted, release
         finally:
             sys.path[:] = old_path
@@ -184,6 +192,18 @@ class CancelledLeaseReleaseTests(unittest.TestCase):
         self.assertEqual(len(transitions), 1)
         self.assertEqual(transitions[0]["key"], "Down")
         self.assertNotIn("cancelled_pending_ups", release)
+
+    def test_failed_owner_cleanup_preserves_unattempted_up_disposition(self):
+        backend, emitted, error = self._run(cancelled=True, cleanup_failure=True)
+        self.assertEqual(str(error), "owner cleanup failed")
+        self.assertEqual(error.cancelled_pending_ups, [{
+            "key": "Down", "identifier": "program-1", "step": 0,
+            "backend_owned_before_release": True,
+            "disposition": "not_attempted_owner_cancel_release",
+        }])
+        self.assertEqual(backend.owner._inner.up_batch_calls, 0)
+        self.assertFalse(any(row.get("event") == "input_release_transition"
+                             for row in emitted))
 
 
 if __name__ == "__main__":

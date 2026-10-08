@@ -168,6 +168,10 @@ class Executor(Previous):
                     status = "failed"; error = "input release not verified"
             except Exception as exc:
                 release = {"verified": False, "error": repr(exc)}
+                cancelled_pending = getattr(exc, "cancelled_pending_ups", None)
+                if isinstance(cancelled_pending, list):
+                    release["cancelled_pending_ups"] = [dict(row)
+                                                         for row in cancelled_pending]
                 status = "failed"
                 publication = getattr(exc, "release_batch_publication", None)
                 self._preserve_release_batch_custody(
@@ -175,6 +179,10 @@ class Executor(Previous):
                 )
             except BaseException as exc:
                 release = {"verified": False, "error": repr(exc)}
+                cancelled_pending = getattr(exc, "cancelled_pending_ups", None)
+                if isinstance(cancelled_pending, list):
+                    release["cancelled_pending_ups"] = [dict(row)
+                                                         for row in cancelled_pending]
                 status = "failed"
                 if error is None:
                     error = repr(exc)

@@ -166,6 +166,12 @@ class Backend(Previous):
             result = super().release_all()
         except BaseException as exc:
             if context is not None:
+                cancelled_pending = self._cancelled_pending_up_records(context)
+                if cancelled_pending:
+                    try:
+                        exc.cancelled_pending_ups = cancelled_pending
+                    except (AttributeError, TypeError):
+                        pass
                 if context["rows"]:
                     self._finish_incomplete_release_batch(
                         context, exc, "release_all_exception"
@@ -202,17 +208,21 @@ class Backend(Previous):
             result["release_batch_delivery"] = self._copy_delivery_ledger(ledger)
         if context is not None and context.get("cancelled_pending_ups") and isinstance(result, dict):
             result = dict(result)
-            result["cancelled_pending_ups"] = [
-                {
-                    "key": item["key"],
-                    "identifier": item["input_context"][0],
-                    "step": item["input_context"][1],
-                    "backend_owned_before_release": item["backend_owned_before_release"],
-                    "disposition": "not_attempted_owner_cancel_release",
-                }
-                for item in context["cancelled_pending_ups"]
-            ]
+            result["cancelled_pending_ups"] = self._cancelled_pending_up_records(context)
         return result
+
+    @staticmethod
+    def _cancelled_pending_up_records(context):
+        return [
+            {
+                "key": item["key"],
+                "identifier": item["input_context"][0],
+                "step": item["input_context"][1],
+                "backend_owned_before_release": item["backend_owned_before_release"],
+                "disposition": "not_attempted_owner_cancel_release",
+            }
+            for item in context.get("cancelled_pending_ups", [])
+        ]
 
     def raw(self, key, down):
         input_context = self._input_event_context
