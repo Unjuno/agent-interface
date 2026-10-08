@@ -1,0 +1,18 @@
+{
+  "disposition": "PASS_A09_HISTORY_AUDIT_V5",
+  "checks": {
+    "one_interrupted_and_one_completed_turn": true,
+    "fresh_request_precedes_release_with_text_and_image": true,
+    "late_mock_response_has_terminal_transport_outcome": true,
+    "stale_sentinel_absent_from_notifications": true,
+    "thread_read_contains_fresh_and_excludes_stale": true,
+    "both_processes_exit_zero": true,
+    "control_detects_stale_persisted_history": true,
+    "control_detects_missing_fresh_history": true,
+    "control_detects_unsupported_thread_read": true,
+    "control_detects_stale_notification": true,
+    "control_detects_duplicate_old_turn_completion": true,
+    "control_detects_missing_image": true,
+    "control_detects_abnormal_app_server_exit": true
+  }
+}

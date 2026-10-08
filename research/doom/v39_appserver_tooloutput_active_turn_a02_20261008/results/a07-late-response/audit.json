@@ -1,0 +1,16 @@
+{
+  "disposition": "PASS_A07_STALE_RESPONSE_AUDIT_V3",
+  "checks": {
+    "one_interrupted_and_one_completed_turn": true,
+    "fresh_request_precedes_release_and_contains_observation": true,
+    "late_stale_response_has_terminal_transport_outcome": true,
+    "stale_output_not_emitted": true,
+    "both_processes_exit_zero": true,
+    "control_detects_stale_output": true,
+    "control_detects_duplicate_old_turn_completion": true,
+    "control_detects_missing_fresh_image": true,
+    "control_detects_late_fresh_request": true,
+    "control_detects_abnormal_app_server_exit": true
+  }
+}
+
