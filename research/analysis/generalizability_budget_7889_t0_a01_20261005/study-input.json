@@ -1,0 +1,22 @@
+{
+  "study_id": "7889-budget-t0-a01-20261005",
+  "seed": "7889-t0-a01-frozen-seed-1",
+  "replicates": 4000,
+  "beta": 0.6,
+  "practical_margin": 0.4,
+  "designs": [
+    {"id":"repeat_cells","apps":3,"tasks_per_app":4,"repeats":8},
+    {"id":"within_app_breadth","apps":3,"tasks_per_app":16,"repeats":2},
+    {"id":"app_breadth","apps":8,"tasks_per_app":6,"repeats":2}
+  ],
+  "profiles": [
+    {"id":"main_only","app_var":0.0,"task_var":0.0,"error_var":0.36},
+    {"id":"task_interaction","app_var":0.0,"task_var":0.64,"error_var":0.36},
+    {"id":"app_interaction","app_var":0.64,"task_var":0.0,"error_var":0.36},
+    {"id":"combined_interactions","app_var":0.36,"task_var":0.64,"error_var":0.36}
+  ],
+  "rare_hard": {"hard_probability":0.01,"ordinary_contrast":0.5,"hard_contrast":-4.0,"margin":0.4},
+  "thresholds": {"component_mean_abs_error_max":0.06,"decision_frequency_abs_error_max":0.025,"main_only_breadth_advantage_max":0.04,"interaction_breadth_advantage_min":0.075},
+  "malformed_controls": ["one_missing_paired_outcome","one_unknown_outcome"],
+  "mutations": ["repeats_as_independent_tasks","omit_task_interaction","pool_away_app_effect","drop_unknown_outcome","omit_rare_hard_stratum"]
+}

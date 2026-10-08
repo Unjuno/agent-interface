@@ -1,8 +1,8 @@
-# Local container-backed research with WSL Containers
+# Local research runtimes on Windows with WSL 3.x
 
 ## Status
 
-Microsoft WSL Containers (`wslc`) is the **default local container runtime** for eligible single-container research and test iterations on this Windows host. WSL Containers is generally available with current WSL releases, including this host's WSL `3.0.1.0` / WSLc `3.0.1`; starting Docker Desktop or installing Docker Engine is not required for the covered build/run path. This is a scoped workflow migration, not a claim that every Docker workflow is interchangeable or that switching runtimes resolves memory pressure.
+Docker Desktop and Docker Engine are **not prerequisites** for the covered local research workflows on this Windows host. WSL 3.x provides two distinct local routes: run Linux tools directly in the WSL distribution when a container boundary is unnecessary, or use Microsoft WSL Containers (`wslc`) when a pinned Linux image or container lifecycle is useful. WSLc is the default local container runtime for eligible single-container work; it is not a Docker Engine replacement. This scoped migration does not claim universal Docker compatibility or that changing runtimes resolves memory pressure.
 
 The local run path is established for ordinary CPU-only tests using a pinned Linux image, `--network none`, read-only source mounts, ordinary process exit codes, and disposable containers. Use native WSL execution instead when a test does not need a container boundary and its frozen protocol permits that. Use WSLc when container isolation and image packaging are useful but no Docker Engine API/Compose behavior is required.
 
@@ -14,6 +14,28 @@ Compatibility smoke checks were recorded on 2026-10-02 and 2026-10-04 with WSL `
 - WSL emitted `kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.` The memory cap was accepted, but swap isolation was not available in this environment. These checks are not a measured Docker-vs-WSLc performance, peak-memory, or OOM-prevention comparison.
 
 Existing WSLc research evidence is also recorded in [PR #6114](https://github.com/Unjuno/agent-interface/pull/6114): a read-only, network-disabled Python replay ran two tests successfully. [PR #7020](https://github.com/Unjuno/agent-interface/pull/7020) records a narrow Dockerfile build/run. These results establish scoped Dockerless capability, not complete Docker flag parity, GUI performance, memory relief, or blanket Docker Desktop removal readiness.
+
+## Local iteration on WSL 3.x
+
+On this host, `wsl --version` reports WSL `3.0.1.0`, and `wslc version` reports WSLc `3.0.1`. These are the Windows WSL platform/container CLI versions; the installed Ubuntu distribution remains WSL2. `wslc` is included with WSL and can run eligible Linux containers without Docker Desktop or a separately installed Docker Engine.
+
+### Select the lightest compatible route
+
+1. **Native WSL first** for standard-library checks, finite analysis, source validation, and tests that do not require an image/container boundary. Use a project checkout inside the WSL Linux filesystem for Linux-heavy file workloads when practical; Windows-mounted paths have different I/O characteristics.
+2. **WSLc** when an immutable Linux image, repeatable OS-level dependency set, or container boundary is required. Keep to the verified scope below and perform a small workload-specific compatibility check before formal evidence collection.
+3. **Hosted CI or another specifically validated runtime** when the protocol needs Docker Engine API/socket, Compose, unsupported isolation/capabilities, enforceable cgroup/swap limits, a required daemon behavior, or a runtime explicitly frozen by the study. Do not silently substitute the runtime in a consumed allocation.
+
+For ordinary local iteration, do not install or launch Docker solely to satisfy an old generic “container-first” convention. For formal research, freeze the runtime, exact tool/image versions, source identities, command, and outputs before execution. A container or WSL distribution is not by itself a security boundary for untrusted code; match isolation and mounts to the threat model.
+
+A scoped local validation on current `main` (`1eac6ea9f5b91cc10a8c3dc20374b9d79ffcf179`) used the cached `python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f` (`linux/amd64`), read-only source bind, `--pull never`, `--network none`, `--cpus 1`, and `--rm`:
+
+- `python -B -m unittest -v research.analysis.test_check_index`: 17/17 PASS.
+- `research.test_workspace_git_tree` and `research.test_check_workspace_index` are not runnable with that minimal image because they spawn the `git` executable, which is absent. The attempted invocation returned 18 errors and one failure (39 tests discovered); this is an environment/image dependency mismatch, not a product test failure. It was not retried with a different image.
+- The WSLc invocation returned exit code 0 for the 17-test suite. `wslc container list --all` showed no additional container after completion. Existing stopped containers/images predated this check and were left untouched.
+
+This checks only a low-risk CPU-only subset and confirms the new local iteration route is usable on this WSL 3.x host. It does not establish faster iteration, reduced memory use, hard memory limits, complete Docker compatibility, application behavior, or readiness to replace Docker-required CI. For a test that calls Git, use an already-qualified image containing the exact needed Git version, or validate a pinned Git-bearing image as a separate construction step; do not install dependencies into the existing immutable digest at runtime.
+
+Use the normal repository guidance below for other local runs. Preserve study-specific runtime requirements and prior allocations; this check is not authorization to rewrite or repeat them.
 
 ## Recommended local invocation
 

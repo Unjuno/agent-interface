@@ -1,0 +1,49 @@
+{
+  "allocation_id": "7748-CLASS-ENUM-A01-20261005-01",
+  "issue": 8061,
+  "frozen_main": "3239217f54c199b582924ee69c7c80402f418a63",
+  "main_observed_before_formal": "7a9398add78d9095e5a85a60d324513fc3c2a1e3",
+  "freeze_sha256": "c7ce14022bbe28ff8015ada7333a15dcad3a0a2c7756234f20c66c0a5aa339a0",
+  "formal_run_utc": "2026-10-05T07:09:36Z",
+  "candidate": {
+    "command": "python3 -B research/analysis/processor_demand_witness_7748_class_enum_a01_20261005/candidate.py --output research/analysis/processor_demand_witness_7748_class_enum_a01_20261005/results/candidate.raw.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "{\"schema\": \"7748-class-enum-a01-raw-v1\", \"rows\": 7, \"output\": \"research/analysis/processor_demand_witness_7748_class_enum_a01_20261005/results/candidate.raw.json\"}",
+    "raw_sha256": "d20c8d7a62b583f1fd4da43e44783c98092a7f58089bae9202d3ab222c11dec0"
+  },
+  "raw_only_auditor": {
+    "command": "python3 -B research/analysis/processor_demand_witness_7748_class_enum_a01_20261005/audit.py --raw research/analysis/processor_demand_witness_7748_class_enum_a01_20261005/results/candidate.raw.json --output research/analysis/processor_demand_witness_7748_class_enum_a01_20261005/results/AUDIT.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "PASS_CLASS_BOUNDARY_SCOPED",
+    "cases": 7,
+    "errors": [],
+    "sha256": "ed92c33f8450499cac21f13f4f104cba5388ce29a74ec92a9528aea5cb3a3dc9"
+  },
+  "formal_retries": 0,
+  "pre_freeze_construction": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s research/analysis/processor_demand_witness_7748_class_enum_a01_20261005 -p 'test_*.py' -v",
+    "tests": 6,
+    "passed": 6,
+    "failed": 0
+  },
+  "container": {
+    "preflight": "STOP_OCI_BPF_PERMISSION_DENIED",
+    "image": "docker.io/library/python@sha256:02108f5d322dd89f1c9e552442c25acb0543dfdbc455693a5599624f20d9155d",
+    "candidate_in_container": false,
+    "auditor_in_container": false
+  },
+  "execution": {
+    "runtime": "CPython 3.14.5",
+    "host": "macOS 27.0.1 arm64",
+    "scope": "host-only deterministic standard-library experiment; no isolation/resource-enforcement claim"
+  },
+  "outcome": "PASS_CLASS_BOUNDARY_SCOPED",
+  "evidence_limits": [
+    "No full CBS or general schedulability theorem",
+    "No Agent Interface runtime/resource correspondence",
+    "No GUI, model, GPU, user, task-effect, safety, or physical-release claim",
+    "Candidate and auditor are separate implementations by one author, not independent human review"
+  ]
+}

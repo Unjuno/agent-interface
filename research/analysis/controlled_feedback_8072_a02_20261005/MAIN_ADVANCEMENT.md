@@ -1,0 +1,3 @@
+# Main advancement after frozen allocation
+
+The allocation froze at `b422026a83d0cdebbf5aa80df63fa883db4511ab`. Before publication, `origin/main` advanced to `11445a7ca200404ddc80bf7ebb1dbef86eb059de`. The diff touched 33 paths: the generated analytical README; an unrelated Codex app-server interrupt A02 package (12 paths); an unrelated #5905 image-only A07 failed-invocation package (9 paths); DOOM README plus nine retained result files; and one live-control test. It did not touch this package, `.github/workflows/analysis-index.yml`, `docs/CURRENT_GOAL.md`, or `ROADMAP.md`. The frozen experiment remains pinned to its original source/main; delivery must retain the new main content and rerun local CI on the integrated tree.

@@ -1,0 +1,39 @@
+{
+  "aggregate_checks": {
+    "30_unique_trial_rows": true,
+    "all_rows_satisfy_all_10": true,
+    "base_matches": true,
+    "frozen_head_matches": true,
+    "frozen_source_hashes_match": true,
+    "planned_count_30": true,
+    "python_fake_xlib_scope": true,
+    "row_checks_300_of_300": true,
+    "run_id_matches": true,
+    "unique_intent_tokens": true,
+    "unique_owner_instances": true
+  },
+  "aggregate_passed": 11,
+  "aggregate_total": 11,
+  "failed_rows": [],
+  "interval_summary_ns": {
+    "lower_bound_min_median_max": [
+      13800,
+      19100.0,
+      43100
+    ],
+    "upper_bound_min_median_max": [
+      41200,
+      54500.0,
+      91600
+    ],
+    "width_min_median_max": [
+      27400,
+      36200.0,
+      65000
+    ]
+  },
+  "pass": true,
+  "per_row_checks": 300,
+  "per_row_passed": 300,
+  "source_hash_failures": []
+}

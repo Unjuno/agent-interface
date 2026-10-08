@@ -1,0 +1,40 @@
+{
+  "allocation_id": "APPLICATION-QUALIFIED-DRAFT-7409-T0-A02-20261005-01",
+  "base_branch": "main",
+  "base_commit": "82b6eaa0d96f233a2f3e7acc744e3396d504cf4c",
+  "branch": "research/application-qualified-draft-7409-t0-a02-20261005",
+  "created_utc": "2026-10-05T09:56:18Z",
+  "docker_client": "29.5.2",
+  "docker_server": "29.4.0",
+  "formal_budget": {
+    "auditor_invocations": 1,
+    "auditor_only_after_candidate_exit_0": true,
+    "candidate_invocations": 1,
+    "retries": 0
+  },
+  "image": "python:3.12.12-slim@sha256:f3fa41d74a768c2fce8016b98c191ae8c1bacd8f1152870a3f9f87d350920b7c",
+  "issue": 7409,
+  "platform": "linux/arm64",
+  "preflight": {
+    "command": "docker run --rm --network none --cpus 1 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m; /src read-only; /out writable",
+    "exit_code": 0,
+    "probe_sha256": "76ddcba58b0afeeb45768d5b8ff0015fda4e7d267adbcc6d6bc5eb1a68ca7574",
+    "stderr": "",
+    "stdout": "{\"output_write_readback\": true, \"source_read\": true, \"source_write_rejected\": true}\n"
+  },
+  "runtime_limits": {
+    "cpu_or_cgroup_enforcement_verified": false,
+    "cpus_requested": 1,
+    "network": "none",
+    "rootfs": "read-only",
+    "swap_assessed": false,
+    "tmpfs": "16 MiB,noexec,nosuid"
+  },
+  "source_sha256": {
+    "PROTOCOL.md": "64152d54551c790d3710f86e0437914d7954814e4270a5eee2544752ba6ff96c",
+    "auditor.py": "41d02dc71af219b3e4cb582ddddaf3006984330ad4c063348a25ee57363d2da6",
+    "candidate.py": "7be230d3c65d3a2bb47f99fff32d1ad2d3e874b03fb96505b66365f83eecd0b6",
+    "cases.json": "c69b5b6abfb1cf010809ecdc6285fafbb0d37d95d550603159b1991cac19a26a",
+    "preflight_probe.py": "8c448ad171c99f41aca95d976ea9d973c1ed666a53d8e5fc74f113e512688e70"
+  }
+}

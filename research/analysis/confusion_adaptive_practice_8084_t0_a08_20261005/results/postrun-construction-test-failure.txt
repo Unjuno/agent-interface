@@ -1,0 +1,4 @@
+Post-formal diagnostic invocation (not an allocation call):
+  python -B -m unittest discover -s research/analysis/confusion_adaptive_practice_8084_t0_a08_20261005 -p 'test_*.py' -v
+
+Result: 3 passed, 1 failed. `test_candidate_directory_initial_allowlist` expected the construction-phase candidate directory to contain only candidate.py, but after the frozen generator had run it also correctly contained observed_counts.json. The same construction suite had passed 4/4 normal and 4/4 under -O before freeze, when the directory was in its intended initial state. This postrun failure is phase-inappropriate and does not alter the already-completed candidate/auditor allocation; no retry or source change was made.

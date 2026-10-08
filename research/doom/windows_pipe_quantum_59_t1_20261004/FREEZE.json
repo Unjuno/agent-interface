@@ -1,0 +1,28 @@
+{
+  "record_id": "windows_pipe_quantum_59_t1_20261004",
+  "issue": 59,
+  "state": "frozen_before_run",
+  "hypothesis": "On native Windows anonymous pipes, a 1 ms PeekNamedPipe polling sleep yields a meaningful command-readiness tail-latency improvement over 5 ms while staying below the preregistered CPU-use ceiling during 28.57 ms idle periods.",
+  "treatment": {
+    "control": "5 ms maximum sleep quantum after an empty PeekNamedPipe poll",
+    "candidate": "1 ms maximum sleep quantum after an empty PeekNamedPipe poll (production setting at frozen source revision)",
+    "only_difference": "sleep quantum; both arms use the same PeekNamedPipe readiness logic and Windows API configuration"
+  },
+  "protocol": {
+    "host": "native Windows; record platform release and CPython version in raw results",
+    "endpoint": "real os.pipe anonymous pipes, reader uses the production PeekNamedPipe API pattern",
+    "latency_trials_per_arm": 128,
+    "delay_ms_seeded_range": [2, 12],
+    "pairing": "each seeded writer delay is run once under each arm; arm order is independently shuffled per pair using seed 590104",
+    "idle_trials_per_arm": 70,
+    "idle_timeout_ms": 28.57,
+    "metric": "write-call-start to reader observation of bytes, measured by perf_counter_ns; process CPU divided by wall duration for each idle arm",
+    "other": "sequential, single-process; no model, game, WSL, or live input"
+  },
+  "decision_rule": "KEEP 1 ms only if the paired per-delay p95 latency improvement (5 ms minus 1 ms) is at least 1.0 ms AND candidate idle process CPU is below 1.0% of idle wall. Otherwise HOLD; no production change is authorized by this construction.",
+  "validity_gates": ["all 256 latency trials receive exactly one byte and validate it", "all 140 idle waits time out", "raw CSV rows and summary are independently recomputed by audit script", "candidate source hash is verified", "machine identity excludes user and checkout paths"],
+  "limitations": ["synthetic local anonymous pipes only", "scheduler/timer and machine load variability", "does not establish live adapter/game/task benefit", "idle CPU sample is short and host-specific"],
+  "source_revision": "fbdc3eddd65f3949948d4c0029c80b9ea8d2274a",
+  "production_quantum_s": 0.001,
+  "control_quantum_s": 0.005
+}

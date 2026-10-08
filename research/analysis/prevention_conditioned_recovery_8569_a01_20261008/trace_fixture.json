@@ -1,0 +1,27 @@
+{
+  "fixture_id": "8569-a01-two-regime-selection-v1",
+  "regimes": ["easy", "hard"],
+  "initial_mix": {"easy": "4/5", "hard": "1/5"},
+  "prevention_success": {"easy": "19/20", "hard": "1/5"},
+  "recovery_success": {
+    "A": {"easy": "49/50", "hard": "2/5"},
+    "B": {"easy": "7/10", "hard": "13/20"}
+  },
+  "controls": {
+    "no_selection": {
+      "prevention_success": {"easy": "1/2", "hard": "1/2"},
+      "recovery_success": {
+        "A": {"easy": "49/50", "hard": "2/5"},
+        "B": {"easy": "7/10", "hard": "13/20"}
+      }
+    },
+    "equal_sensitivity": {
+      "prevention_success": {"easy": "19/20", "hard": "1/5"},
+      "recovery_success": {
+        "A": {"easy": "9/10", "hard": "1/2"},
+        "B": {"easy": "4/5", "hard": "2/5"}
+      }
+    }
+  },
+  "safe_stop_outcome": "not-modeled"
+}

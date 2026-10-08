@@ -1,0 +1,5 @@
+Candidate: `python -B candidate.py` (one execution after FREEZE.json)
+Independent audit: `python -B audit.py`
+Tests: `python -B -m unittest -v research.doom.v39_authored_health_loss_boundary_a01_20261008.test_audit`
+
+No DOOM process, game, model, GUI, OS input, Docker, or formal allocation is used. The candidate loads only the frozen controller helper/monitor and typed guard source bytes from Git and executes them against synthetic observations.

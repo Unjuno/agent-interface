@@ -1,0 +1,38 @@
+from pathlib import Path
+import json,hashlib,gzip,base64,datetime
+P=Path(__file__).resolve().parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+files=[]
+for p in sorted(P.rglob('*')):
+    if not p.is_file() or p.name in {'package_saved.py','PUBLIC_PACKET.json','PUBLIC_PACKET.gz','PUBLIC_COMMENT.md','PUBLIC_MANIFEST.json','PROOF-repaired.base64'}:continue
+    raw=p.read_bytes(); public=raw; projection=None
+    if p.name in {'NATIVE_START.json','NATIVE_RESULT.json'}:
+        n=json.loads(raw); n['argv']=['python','-X','utf8','-B','server.py'];public=json.dumps(n,indent=2).encode();projection='Only private executable/workspace argv paths projected. Original byte hash retained; no original authentication claim.'
+    files.append({'path':p.relative_to(P).as_posix(),'bytes':len(public),'sha256':sha(public),'original_bytes':len(raw),'original_sha256':sha(raw),'projection':projection,'base64':base64.b64encode(public).decode()})
+packet=json.dumps({'unit':'stock-todomvc-durable-57-D01-01a0ff35-20261003','members':files},ensure_ascii=False,separators=(',',':')).encode()
+compressed=gzip.compress(packet,mtime=0)
+manifest={'members':len(files),'json_bytes':len(packet),'json_sha256':sha(packet),'gzip_bytes':len(compressed),'gzip_sha256':sha(compressed),'packaged_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()}
+(P/'PUBLIC_PACKET.json').write_bytes(packet);(P/'PUBLIC_PACKET.gz').write_bytes(compressed)
+(P/'PUBLIC_MANIFEST.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+body='''D01 first STOP — historical stock TodoMVC reload qualification, not an adoption or durability success.
+
+Worker/session suffix 01a0ff35; prior scope claim https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969256905. Source tastejs/todomvc@25a9e31eb32db752d959df18e4d214295a2875e8, unchanged 13 official files with exact Git blob and SHA256 checks. This differs materially from current MemoryStorage C06; no transfer of that result.
+
+Final freeze 12:43:37.740993 UTC predates native start and first live action. Static change-only View handler led to Enter→Tab correction before any live action; original draft/freeze retained. First actor 12:44:34.375–12:44:35.935 UTC: two observations, type title + Tab, FIRST_STOP/STOP_TASK_EFFECT. Input retained exact title, public rows 0/counter empty. Planned reload/completion/second reload were NOT executed. No private model/storage reads or injection, no replay. Durability/restart/physical input release/performance remain UNVERIFIED.
+
+Server GET ledger contains 12 requests, with no view.js or app.js requests despite pinned index references and files present. Cause unproved; response codes were not captured. Empty captured errors/warnings is not proof of successful boot. Qualification rejected; no source repair, script rename or protection bypass.
+
+Own server PID 5916 / wrapper 14140 exited 0 at 12:45:11; stdout 273 bytes, stderr 0, both pipes closed, socket -1/source unchanged. Sole /__stop navigation reported ERR_BLOCKED_BY_CLIENT but actual server ledger + FINAL proves stop effect, so no resend. Own tab closed and empty inventory at 12:45:51.688; exact server/wrapper PIDs absent at 12:49:55.047. Saved-only reader PID 20408 exited 0 at 13:01:23, checks all 23 frozen pins/13 Git blobs and rejects six full copied semantic negatives. Reader authored after execution, not a pre-registered independent scorer.
+
+Auxiliary screenshot serialization initially failed (6167 vs retained 6130 bytes), original wrong base64 retained; same buffer repaired without new capture. Final JPEG 6130 bytes SHA256 99ca3252965bae812e1967c634b4072293e16ebc3574438393f7af35feda6b2f. Rolling transport checks do not authenticate emitter. Crop shows title only, not full task-effect proof. Native argv private paths are the only two projections, with originals' hashes retained.
+
+No main writes, new PR, workers, or consumed execution replay. Full sources, MIT license, freeze/draft, actual AX/DOM/action observations, request ledger, native streams, post-run reader, six full negative inputs, screenshot and first transfer failure are recoverable below.
+'''
+body+='\nManifest: '+json.dumps(manifest,separators=(',',':'))+'\n\nDecode base64, gzip-decompress, parse JSON; decode each member base64 and verify its bytes/SHA256.\n\n```text\n'+base64.b64encode(compressed).decode()+'\n```\n'
+assert len(body.encode())<65000
+(P/'PUBLIC_COMMENT.md').write_bytes(body.encode())
+restored=json.loads(gzip.decompress(base64.b64decode(body.split('```text\n')[1].split('\n```')[0])))
+assert restored['members']==files
+for f in restored['members']:
+    b=base64.b64decode(f['base64']);assert len(b)==f['bytes'] and sha(b)==f['sha256']
+print(json.dumps({**manifest,'comment_bytes':len(body.encode()),'comment_sha256':sha(body.encode())}))

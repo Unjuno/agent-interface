@@ -1,0 +1,79 @@
+{
+  "arm_factor_values": {
+    "ephemeral": [
+      1,
+      1
+    ],
+    "persistent": [
+      1,
+      1
+    ],
+    "plain": [
+      0,
+      0
+    ]
+  },
+  "candidate_pair": [
+    "compiled symbolic representation/target handles",
+    "local continuation"
+  ],
+  "eligibility": "HOLD_T0_NO_ELIGIBLE_INDEPENDENT_PAIR",
+  "missing_factor_cells": [
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ]
+  ],
+  "observed_factor_cells": [
+    [
+      0,
+      0
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "protocol_arms": [
+    "plain",
+    "ephemeral",
+    "persistent"
+  ],
+  "reason": "The selected plan couples representation and local continuation in both compiled arms; the protocol has only plain/ephemeral/persistent, and the persistent arm adds reuse rather than an independent setting for either factor.",
+  "required_2x2_cells": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "schema": "issue-7799-pairwise-eligibility-t0-v1",
+  "scope": "source-bound eligibility only; no outcome or interaction estimate",
+  "selected_plan_facts": {
+    "ephemeral_combines_handles_and_local_continuation": true,
+    "local_execution_uses_same_compiled_interface": true,
+    "other_evidence_compression_variants_excluded": true,
+    "persistent_cold_path_matches_ephemeral": true,
+    "representation_and_local_execution_share_compiled_interface": true
+  },
+  "source_commit": "b5be19963454ce5edafc945b78b100012952dd15",
+  "source_sha256": {
+    "research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md": "1ea1ae7ed9bb99f89ed1d9e83bbe73527cd8d9450087bdeb7083385b801e27fc",
+    "research/live_control/integrated_efficiency_protocol_v1.py": "7bf02cd7bc3b2919ba81325f6026d8ce1110b0e18803e370707feac1a1c77c5a"
+  }
+}

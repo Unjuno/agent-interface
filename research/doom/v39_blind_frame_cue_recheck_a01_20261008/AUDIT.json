@@ -1,0 +1,25 @@
+{
+  "status": "PASS_PROVENANCE_AND_RECOMPUTATION",
+  "checks": {
+    "deterministic_sample_and_opaque_mapping": true,
+    "source_commit_pinned": true,
+    "sample_freeze_digest": true,
+    "36_unique_frames": true,
+    "known_missing_frame_excluded": true,
+    "sample_hashes_match_current_retention_manifest": true,
+    "complete_label_inventory": true,
+    "output_row_inventory": true,
+    "output_rows_bind_to_frozen_sources": true,
+    "independent_pixel_count_recomputation": true,
+    "recorded_blind_labels_match_join": true,
+    "recorded_confusion_table": true,
+    "result_scope_is_exploratory": true
+  },
+  "confusion": {
+    "tp": 3,
+    "fp": 0,
+    "fn": 13,
+    "tn": 18,
+    "uncertain_excluded": 2
+  }
+}

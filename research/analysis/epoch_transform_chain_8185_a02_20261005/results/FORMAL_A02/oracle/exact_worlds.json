@@ -1,0 +1,1198 @@
+{
+  "schema": "epoch-transform-a02-hidden-oracle-v1",
+  "worlds": {
+    "COMMON_MODE_UNCERTAINTY_CONTROL": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "shared": [
+            1,
+            0,
+            0,
+            1,
+            -1,
+            0
+          ]
+        },
+        {
+          "shared": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 2,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "uncertainty_control",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "COMPOSE_EPOCH_7_8_9": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          11,
+          10
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "e78": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "e89": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "composed_valid",
+      "target_boxes": [
+        [
+          10,
+          10,
+          10,
+          10
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "COMPOSE_MIXED_DPI_VALID_UPDATE": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          14,
+          5
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "client": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "crop": [
+            1,
+            0,
+            0,
+            1,
+            10,
+            0
+          ],
+          "dpi": [
+            2,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "origin": [
+            1,
+            0,
+            0,
+            1,
+            100,
+            20
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "composed_valid",
+      "target_boxes": [
+        [
+          4,
+          4,
+          6,
+          6
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "COMPOSE_NONCOMMUTING_ORDER": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          1
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "n1": [
+            1,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "n2": [
+            1,
+            0,
+            0,
+            1,
+            3,
+            0
+          ],
+          "n3": [
+            1,
+            0,
+            1,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "composed_valid",
+      "target_boxes": [
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "DIRECT_STABLE": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          10,
+          10
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "d0": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "direct",
+      "target_boxes": [
+        [
+          8,
+          8,
+          12,
+          12
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "DIRECT_TRANSLATION_REFRESH": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          10,
+          10
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "d1": [
+            1,
+            0,
+            0,
+            1,
+            5,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "direct",
+      "target_boxes": [
+        [
+          8,
+          8,
+          12,
+          12
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "DIRECT_UNIFORM_SCALE_REFRESH": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          5,
+          5
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "d2": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "direct",
+      "target_boxes": [
+        [
+          4,
+          4,
+          6,
+          6
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INDEPENDENT_ERROR_CONTROL": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          5,
+          5
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "action-path": [
+            1,
+            0,
+            0,
+            1,
+            -1,
+            0
+          ],
+          "target-path": [
+            1,
+            0,
+            0,
+            1,
+            -1,
+            0
+          ]
+        },
+        {
+          "action-path": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "target-path": [
+            1,
+            0,
+            0,
+            1,
+            -1,
+            0
+          ]
+        },
+        {
+          "action-path": [
+            1,
+            0,
+            0,
+            1,
+            -1,
+            0
+          ],
+          "target-path": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ]
+        },
+        {
+          "action-path": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "target-path": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 4,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "uncertainty_control",
+      "target_boxes": [
+        [
+          0,
+          0,
+          10,
+          10
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_DPI_CONTEXT": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "bad-context": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "context_mismatch",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_DUPLICATE_PATH": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "dup-a": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "dup-b": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "ambiguous_path",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_FORBIDDEN_REGION_OVERLAP": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          5,
+          5
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "forbidden-id": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "forbidden_overlap",
+      "forbidden_boxes": [
+        [
+          5,
+          5,
+          5,
+          5
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          10,
+          10
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_IDENTITY_SWAP": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "id": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "identity_mismatch",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_MISSING_EDGE": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {}
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "missing_path",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_NONAFFINE_REFLOW": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "aff": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "non_affine",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_REVERSED_EDGE": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "reverse": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "missing_path",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_STALE_EDGE": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "stale": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "stale_edge",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_STALE_OBSERVATION_BINDING": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "fresh": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "stale_binding",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_TARGET_BOUNDARY_UNCERTAINTY": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          10,
+          11
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "action-uncertain": [
+            1,
+            0,
+            0,
+            1,
+            -1,
+            0
+          ],
+          "target-id": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "action-uncertain": [
+            1,
+            0,
+            0,
+            1,
+            1,
+            0
+          ],
+          "target-id": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 2,
+      "expected_invalid": "boundary_uncertainty",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          10,
+          10,
+          10,
+          12
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVALID_UNIT": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          2,
+          2
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "bad-unit": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": "unit_mismatch",
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "invalid",
+      "target_boxes": [
+        [
+          0,
+          0,
+          4,
+          4
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    },
+    "INVERSE_SHEAR_PAIR_IDENTITY": {
+      "action_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "action_points": [
+        [
+          5,
+          5
+        ]
+      ],
+      "edge_assignments": [
+        {
+          "shear-a": [
+            1,
+            2,
+            0,
+            1,
+            0,
+            0
+          ],
+          "shear-b": [
+            1,
+            -2,
+            0,
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "exact_world_count": 1,
+      "expected_invalid": null,
+      "forbidden_boxes": [
+        [
+          90,
+          90,
+          92,
+          92
+        ]
+      ],
+      "stratum": "composed_control",
+      "target_boxes": [
+        [
+          4,
+          4,
+          6,
+          6
+        ]
+      ],
+      "target_errors": [
+        [
+          0,
+          0
+        ]
+      ],
+      "target_identity": "target-A"
+    }
+  }
+}

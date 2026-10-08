@@ -1,0 +1,24 @@
+{
+  "latency_trials_per_arm": 128,
+  "paired_p95_improvement_ms": 4.902185,
+  "paired_median_improvement_ms": 2.0799000000000003,
+  "latency_1ms_p95_ms": 1.641425,
+  "latency_5ms_p95_ms": 5.49952,
+  "idle": {
+    "1ms": {
+      "trials": 70,
+      "cpu_ms": 171.875,
+      "wall_ms": 2180.7805,
+      "cpu_percent": 7.881352570788303
+    },
+    "5ms": {
+      "trials": 70,
+      "cpu_ms": 31.25,
+      "wall_ms": 2193.9461,
+      "cpu_percent": 1.424374099254307
+    }
+  },
+  "decision": "HOLD",
+  "all_validity_gates_passed": true,
+  "decision_rule": "KEEP 1 ms only if the paired per-delay p95 latency improvement (5 ms minus 1 ms) is at least 1.0 ms AND candidate idle process CPU is below 1.0% of idle wall. Otherwise HOLD; no production change is authorized by this construction."
+}

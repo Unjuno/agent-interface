@@ -376,15 +376,62 @@ def build_cover_monitor(reader, source_observation, authored_validity, index,
     return monitor, receipt
 
 
+def require_cover_terminal(terminal, *, cancellation_requested=False):
+    """Require neutral closure before renewing cover or using a planner answer."""
+    allowed = ("completed", "expired", "cancelled") if cancellation_requested else (
+        "completed", "expired")
+    release = terminal.get("release") if type(terminal) is dict else None
+    if (type(terminal) is not dict or terminal.get("event") != "terminal" or
+            terminal.get("status") not in allowed or type(release) is not dict or
+            release.get("verified") is not True or release.get("keys_down") != [] or
+            release.get("buttons_down") != []):
+        raise RuntimeError(f"cover terminal lacks allowed status and verified empty release: {terminal!r}")
+
+
 def cancel_invalidated_cover(planner, planner_handle, process, wait, cover_id):
-    planner_interrupt = planner.interrupt(planner_handle)
-    process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
-    process.stdin.flush()
-    terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+    cancel_error = None
+
+    def cancel_executor_program():
+        nonlocal cancel_error
+        try:
+            process.stdin.write(json.dumps({"op": "cancel", "id": cover_id}) + "\n")
+            process.stdin.flush()
+        except BaseException as error:
+            cancel_error = error
+            raise
+
+    try:
+        planner_interrupt = planner.interrupt(
+            planner_handle, before_transport=cancel_executor_program)
+    except BaseException as interrupt_error:
+        if cancel_error is not None:
+            cancel_error.add_note(
+                "planner interrupt also failed: " + type(interrupt_error).__name__)
+            raise cancel_error from interrupt_error
+        raise
+    try:
+        terminal = wait(lambda row: row["event"] == "terminal" and row.get("id") == cover_id)
+    except BaseException as terminal_error:
+        if cancel_error is not None:
+            terminal_error.add_note(
+                "executor cancel write also failed: " + type(cancel_error).__name__)
+        raise
     release = terminal.get("release", {})
-    if (terminal.get("status") != "cancelled" or release.get("verified") is not True or
+    # The bounded cover can naturally finish or lease-expire between policy
+    # invalidation and delivery of the cancel request. Accept those terminal
+    # races only when they independently verify that no input remains held.
+    if (terminal.get("status") not in ("cancelled", "completed", "expired") or
+            release.get("verified") is not True or
             release.get("buttons_down") != [] or release.get("keys_down") != []):
         raise RuntimeError("invalidated cover did not verify empty release")
+    if cancel_error is not None:
+        raise RuntimeError(
+            "executor cancel write failed before planner interruption: "
+            + repr(cancel_error)) from cancel_error
+    if "before_transport_error" in planner_interrupt:
+        raise RuntimeError(
+            "executor cancel write failed before planner interruption: "
+            + planner_interrupt["before_transport_error"])
     return planner_interrupt, terminal
 
 
@@ -583,7 +630,13 @@ def app_server_command():
 
 
 def session_command(args, runtime):
-    return [sys.executable, str(HERE / "session_map01_v12.py"),
+    # Keep the established v12 session as the default. The opt-in v15 wrapper
+    # adds scorer-only progress sampling and per-key release telemetry without
+    # exposing scorer state through the controller event stream.
+    session = ("session_map01_v15.py"
+               if getattr(args, "measurement_session", False)
+               else "session_map01_v12.py")
+    return [sys.executable, str(HERE / session),
             "--out", str(runtime), "--seed", str(args.seed),
             "--timeout-seconds", "600", "--skill", "1",
             "--load-fixture-manifest", str(args.load_fixture_manifest.resolve())]
@@ -699,6 +752,66 @@ def temporal_sheet(sources, target):
     sheet.save(target,optimize=True)
 
 
+MAX_PENDING_OBSERVATION_EVENTS = 256
+MAX_PENDING_OBSERVATION_RECOVERY_BATCHES = 4
+
+
+def drain_pending_observation_events(incoming, observation_monitor, terminal_id):
+    """Process events already queued when a planner future becomes done."""
+    latest = None
+    terminal = None
+    invalidation = None
+    event_types = (getattr(observation_monitor, "event_types", {"observation"})
+                   if observation_monitor is not None else set())
+    # A live producer cannot make this drain unbounded, and a finite snapshot
+    # cannot strand events that arrive while the snapshot is being processed.
+    for _ in range(MAX_PENDING_OBSERVATION_EVENTS):
+        try:
+            row = incoming.get_nowait()
+        except queue.Empty:
+            break
+        if row.get("event") == "observation":
+            latest = row
+        if (invalidation is None and observation_monitor is not None and
+                row.get("event") in event_types):
+            invalidation = observation_monitor.observe(row)
+        if row.get("event") == "terminal" and row.get("id") == terminal_id:
+            terminal = row
+    return {"latest": latest, "terminal": terminal, "invalidation": invalidation,
+            "pending_events": not incoming.empty()}
+
+
+def settle_pending_observation_backlog(incoming, latest, terminal_id):
+    """Consume a finite recovery budget; report exhaustion without retry loops."""
+    batches = 0
+    while batches < MAX_PENDING_OBSERVATION_RECOVERY_BATCHES:
+        if incoming.empty():
+            return {"latest": latest, "batches": batches, "exhausted": False}
+        drained = drain_pending_observation_events(incoming, None, terminal_id)
+        if drained["latest"] is not None:
+            latest = drained["latest"]
+        batches += 1
+        if not drained["pending_events"]:
+            return {"latest": latest, "batches": batches, "exhausted": False}
+    return {"latest": latest, "batches": batches,
+            "exhausted": not incoming.empty()}
+
+
+def recover_pending_observation_backlog(incoming, latest, source_sequence,
+                                        terminal_id, wait):
+    recovery = settle_pending_observation_backlog(incoming, latest, terminal_id)
+    if recovery["exhausted"]:
+        return recovery
+    latest = recovery["latest"]
+    if latest["sequence"] <= source_sequence:
+        latest = wait(lambda row:row["event"] == "observation" and
+                      type(row.get("sequence")) is int and
+                      row["sequence"] > source_sequence)
+    recovery["latest"] = latest
+    recovery["fresh_observation_sequence"] = latest["sequence"]
+    return recovery
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -708,6 +821,8 @@ def main():
     parser.add_argument("--model", required=True)
     parser.add_argument("--effort", choices=("low","medium","high","xhigh","max","ultra"), required=True)
     parser.add_argument("--load-fixture-manifest", type=Path, required=True)
+    parser.add_argument("--measurement-session", action="store_true",
+                        help="opt into V15 scorer-only and per-key release telemetry")
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     planner_client = CodexAppServerClient(
@@ -871,12 +986,67 @@ def main():
                         break
                     current_terminal=boundary
                     cover_terminals.append(current_terminal)
+                    failure_cleanup.set_stage("cover_terminal_validation")
+                    try:
+                        require_cover_terminal(current_terminal)
+                    except RuntimeError as error:
+                        # The fatal cover error ends this control session. An
+                        # interrupt ACK does not complete await_turn, so retire
+                        # its transport if the future is still pending before
+                        # pool shutdown joins it. Keep the cover failure primary.
+                        if not future.done():
+                            try:
+                                interrupt_result = planner.interrupt(planner_handle)
+                            except BaseException as interrupt_error:
+                                error.add_note("planner interrupt failed: " +
+                                               type(interrupt_error).__name__)
+                            else:
+                                if (isinstance(interrupt_result, dict) and
+                                        interrupt_result.get("outcome") == "request_error"):
+                                    error.add_note("planner interrupt transport failed")
+                            if not future.done():
+                                try:
+                                    abort_result = planner.abort_pending_turn()
+                                except BaseException as abort_error:
+                                    error.add_note("planner transport abort failed: " +
+                                                   type(abort_error).__name__)
+                                else:
+                                    if (isinstance(abort_result, dict) and
+                                            abort_result.get("outcome") == "aborted"):
+                                        error.add_note("pending planner turn transport aborted")
+                        raise
                     if future.done():break
                     next_cover=f"cover-{index}-renew-{len(cover_ids)}"
                     next_accepted=submit_cover(next_cover)
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
+                if future.done() and invalidation is None:
+                    drained = drain_pending_observation_events(
+                        incoming, invalidation_monitor, current_cover)
+                    if drained["latest"] is not None:
+                        latest = drained["latest"]
+                    if drained["terminal"] is not None and current_terminal is None:
+                        current_terminal = drained["terminal"]
+                        cover_terminals.append(current_terminal)
+                        failure_cleanup.set_stage("cover_terminal_validation")
+                        require_cover_terminal(current_terminal)
+                    if drained["invalidation"] is not None:
+                        invalidation = drained["invalidation"]
+                        if current_terminal is None:
+                            planner_interrupt,current_terminal=cancel_invalidated_cover(
+                                planner,planner_handle,process,wait,current_cover)
+                            cover_terminals.append(current_terminal)
+                    elif drained["pending_events"]:
+                        invalidation = {
+                            "event": "policy_invalidation",
+                            "reason": "pending_observation_backlog_limit",
+                            "requires_new_decision": True,
+                        }
+                        if current_terminal is None:
+                            planner_interrupt,current_terminal=cancel_invalidated_cover(
+                                planner,planner_handle,process,wait,current_cover)
+                            cover_terminals.append(current_terminal)
                 planner_result=future.result()
                 failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()
@@ -899,10 +1069,21 @@ def main():
                     else:
                         current_terminal=boundary
                 cover_terminals.append(current_terminal)
+            failure_cleanup.set_stage("cover_terminal_validation")
+            require_cover_terminal(current_terminal, cancellation_requested=True)
             final_action_admission=final_admission_from_planner_result(
                 planner_result,planner_terminal_observed_ns,
                 invalidation,time.perf_counter_ns())
             if invalidation is not None:
+                recovery = recover_pending_observation_backlog(
+                    incoming, latest, action_source_observation["sequence"],
+                    current_cover, wait)
+                latest = recovery["latest"]
+                if recovery["exhausted"]:
+                    raise RuntimeError(
+                        "pending observation recovery budget exhausted "
+                        f"after {recovery['batches']} batches at sequence "
+                        f"{latest['sequence']}")
                 decisions.append({"iteration":index,"source_image":str(source_image),"model_image":str(image),
                   "model_image_sha256":hashlib.sha256(image.read_bytes()).hexdigest(),"action":action,
                   "effect_memory":effect_memory,"usage":usage,"model_ns":model_ns,
@@ -922,6 +1103,7 @@ def main():
                   "cover_validity_admission":validity_admission,
                   "cover_validity_soft_events":invalidation_monitor.soft_event_count,
                   "cover_validity_latest_soft_event":invalidation_monitor.latest_soft_event,
+                  "pending_observation_recovery":recovery,
                   "policy_invalidation":invalidation,"model_action_discarded":True,
                   "discard_reason":"policy_dependency_invalidated",
                   "cover_terminal_before_plan":True,"plan_terminal":"not_admitted"})
@@ -1265,6 +1447,8 @@ def main():
         report={"claim":"persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state", "model":args.model,
           "source_refreshes":source_refreshes,
           "effort":args.effort,"iterations":len(decisions),"decisions":decisions,"score":score,
+          "measurement_session":("v15_scorer_only_per_key_release"
+                                  if args.measurement_session else "v12_default"),
           "model_session_span":args.session_span,
           "model_session_ids":list(dict.fromkeys(row["model_session_id"] for row in decisions)),
           "motor_contract":"semantic commands compiled to <=450ms turns and <=900ms movement",
