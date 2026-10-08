@@ -1,0 +1,41 @@
+{
+  "allocation": "UNJUNO-8595-MEDIATION-IDENTIFIABILITY-T0-A01-20261009",
+  "base_branch": "main",
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "branch": "research/8595-mediation-identifiability-a01-20261009",
+  "construction": {
+    "candidate_auditor_replay": "PASS_METHOD_SCOPED; 1576 checks; 1536 rows; mutation controls 6/6 rejected",
+    "first_construction_test_failure": "Initial naive fixture expected 0.1; independent exact count calculation gave 81/638. Corrected before freeze. Added missing-source-support regression; final suite 6/6.",
+    "formal_auditor_invocations_before_freeze": 0,
+    "formal_candidate_invocations_before_freeze": 0,
+    "formal_outputs_absent": true,
+    "tests": "6/6 PASS"
+  },
+  "decision_gate": "PLAN.md",
+  "environment": {
+    "dependencies": "standard library only",
+    "execution_scope": "deterministic finite CPU enumeration",
+    "machine": "arm64",
+    "network": "not used",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 21.1.8 ]",
+    "runtime": "host CPython; no container semantics tested"
+  },
+  "formal_commands": {
+    "auditor": "python3.12 research/analysis/longitudinal_mediation_identifiability_8595_t0_a01_20261009/auditor.py --spec research/analysis/longitudinal_mediation_identifiability_8595_t0_a01_20261009/spec.json --raw research/analysis/longitudinal_mediation_identifiability_8595_t0_a01_20261009/results/candidate.raw.json --output research/analysis/longitudinal_mediation_identifiability_8595_t0_a01_20261009/results/audit.raw.json",
+    "candidate": "python3.12 research/analysis/longitudinal_mediation_identifiability_8595_t0_a01_20261009/candidate.py --spec research/analysis/longitudinal_mediation_identifiability_8595_t0_a01_20261009/spec.json --output research/analysis/longitudinal_mediation_identifiability_8595_t0_a01_20261009/results/candidate.raw.json",
+    "invocation_limit": "one candidate invocation, one auditor invocation, zero retries"
+  },
+  "frozen_at_utc": "2026-10-09T12:00:00+09:00",
+  "package_path": "research/analysis/longitudinal_mediation_identifiability_8595_t0_a01_20261009/",
+  "preregistration_gate": "Do not invoke formal candidate or auditor until this commit and exact input hashes are pushed and recorded on Issue #8595; verify remote readback first.",
+  "schema": "issue-8595-mediation-freeze-v1",
+  "source_sha256": {
+    "PLAN.md": "4670801c004045fc0d7fba759adab3ba727150a155b8a9686b14c6fd15ac153d",
+    "README.md": "43c4e467d026a5d206f1481575864f22a248bdf494b30808970d9b42fd3a8bce",
+    "auditor.py": "cc3ea76c66390990c2514b2a89687d686fbf8965ccdce6225c7aff25720a92e0",
+    "candidate.py": "4a15c1256eb4368c1ac2d1d433c9df69cc9ac70485ffe85aaf6e2ffa14ae1e64",
+    "spec.json": "23778d25f5958d1e9be99423d8ab91d0fea9f1fc6072792d1b130626ebd1ab5d",
+    "tests/test_construction.py": "023234801862a27371c3fd7ad95b0373fed56a5ac26cece9b2d7b638369c9503"
+  }
+}

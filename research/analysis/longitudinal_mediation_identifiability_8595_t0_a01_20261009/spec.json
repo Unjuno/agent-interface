@@ -1,0 +1,61 @@
+{
+  "schema": "issue-8595-finite-longitudinal-mediation-v1",
+  "allocation": "UNJUNO-8595-MEDIATION-IDENTIFIABILITY-T0-A01-20261009",
+  "method_delta": "Exhaustive equal-weight finite exogenous enumeration replaces Monte Carlo seeds to remove sampling error in this fully finite authored SCM. The same causal contrasts, cases, assumptions, and fail-closed objective are retained.",
+  "domains": {
+    "route_assignment_a": [0, 1],
+    "baseline_difficulty_d": [0, 1],
+    "state_noise_vl": [0, 1],
+    "mediator_noise_vm": [0, 1, 2, 3, 4, 5],
+    "outcome_noise_vy": [0, 1, 2, 3, 4, 5, 6, 7]
+  },
+  "standard_cases": [
+    {"name": "no_mediation", "l_rule": "xor_a_d_vl", "mediator_effect_numerator": 0},
+    {"name": "known_mediation", "l_rule": "vl", "mediator_effect_numerator": 2},
+    {"name": "exposure_induced_confounding", "l_rule": "xor_a_d_vl", "mediator_effect_numerator": 2},
+    {"name": "positivity_failure", "l_rule": "equals_a", "mediator_effect_numerator": 2}
+  ],
+  "structural_equations": {
+    "mediator_probability": "(1+a+d+l)/6; m=1 iff vm < 1+a+d+l",
+    "outcome_probability": "(1+a+d+l+beta*m)/8; y=1 iff vy < 1+a+d+l+beta*m",
+    "beta": "case.mediator_effect_numerator; beta=0 in no_mediation, otherwise 2",
+    "xor_a_d_vl": "l=(a+d+vl) mod 2",
+    "vl": "l=vl",
+    "equals_a": "l=a"
+  },
+  "estimand": "Interventional mediator-distribution contrast under outcome route A=1 and its L distribution: psi(g1)-psi(g0), with D baseline-standardized and M distribution g_a(m|D,L) drawn from route a. This is not a natural indirect effect.",
+  "naive_comparator": "Same contrast but omitting post-assignment L from mediator and outcome models; standardize only over D.",
+  "h_t_d_c_u": {
+    "H": "Longitudinal standardization recovers the finite interventional mediator-distribution contrast when the declared identification conditions hold; positivity failure is reported without a point estimate; naive omission of exposure-induced mediator-outcome confounding can invent a pathway; observationally identical hidden-confounding models remain nonidentified.",
+    "T": "Exhaustively enumerate four 384-row binary SCM cases, hidden observational-equivalence models, randomized mediator intervention positive control, and a separate factorial interaction; compare longitudinal g-formula, naive baseline-only contrast, and structural oracle.",
+    "D": "PASS_METHOD_SCOPED only when the independent exact-count auditor reconstructs all rows and estimands, identification statuses match, controls equal frozen values, and all six mutation controls are rejected; preserve any first failure without retry.",
+    "C": "Finite authored equations and comparator behavior may not generalize; exact enumeration removes Monte Carlo error only for these fixtures.",
+    "U": "Synthetic causal-method evidence only; no empirical exchangeability, real-world mediation, human, product, GUI, model, or live-action inference."
+  },
+  "hidden_confounding_pair": {
+    "support": "U=0..39 equally weighted independently of A",
+    "causal_mediation_model": "rm=u mod 4; ry=floor(u/4); m=1 iff rm < (1 if a=0 else 3); y=m XOR (ry=0)",
+    "hidden_common_cause_model": "A-specific U lookup yields identical observed (A,M,Y) counts, but M and Y are both functions of U and A; intervention on M does not alter Y",
+    "observed_cell_counts_per_40": {
+      "a0_m0_y0": 27, "a0_m0_y1": 3, "a0_m1_y0": 1, "a0_m1_y1": 9,
+      "a1_m0_y0": 9, "a1_m0_y1": 1, "a1_m1_y0": 3, "a1_m1_y1": 27
+    },
+    "true_interventional_mediator_effect_causal_model": 0.8,
+    "true_interventional_mediator_effect_hidden_model": 0.0,
+    "randomized_mediator_intervention_effect": 0.8
+  },
+  "frozen_gates": {
+    "all_standard_rows_per_case": 384,
+    "all_standard_rows_total": 1536,
+    "no_mediation_longitudinal_abs_max": 1e-12,
+    "naive_no_mediation_abs_min": 0.001,
+    "identified_case_longitudinal_oracle_abs_max": 1e-12,
+    "positivity_case_disposition": "NOT_IDENTIFIABLE_POSITIVITY",
+    "hidden_pair_disposition": "NOT_IDENTIFIABLE_OBSERVATIONAL_EQUIVALENCE",
+    "randomized_mediator_effect_expected": 0.8,
+    "known_case_component_factorial_interaction": 0.0,
+    "known_case_interventional_mediator_effect": 0.041666666666666664
+  },
+  "authority": "NONE; no action or task authority is modeled",
+  "execution_scope": "stdlib Python, deterministic exhaustive CPU enumeration; no network/model/GUI/OS input/container"
+}
