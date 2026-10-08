@@ -1,0 +1,29 @@
+{
+  "schema": "issue59-camera-compensated-motion-a01-run-v1",
+  "candidate_invocations": 2,
+  "candidate_failures_before_result": 1,
+  "audit_invocations": 1,
+  "retry_count": 1,
+  "attempts": [
+    {
+      "attempt": 1,
+      "classification": "DEVELOPMENT_SCRIPT_ERROR",
+      "result_written": false,
+      "error": "ValueError: too many values to unpack (expected 2) in overlap_pair when handling RGB arrays",
+      "disposition": "Corrected helper to take height and width from the first two array dimensions; no result was produced."
+    },
+    {
+      "attempt": 2,
+      "classification": "FROZEN_POSTHOC_SCREEN",
+      "output": "run-02/RESULT.json",
+      "status": "FAIL_SCOPED"
+    }
+  ],
+  "audit": {
+    "command": "python -B audit.py --repo-root <verified checkout> --package <package root>",
+    "status": "PASS_EVIDENCE_AND_RECOMPUTATION_SCOPED"
+  },
+  "source_checkout": "Historical local checkout; path omitted.",
+  "source_checkout_head": "976aa2ad51f464dc4f847fc982131b9edde2b404",
+  "qualification": "The local checkout HEAD is historical. The retained episode files were each checked against GitHub main 1aaa633c4f1aeec25e4b4617d92dd93af3b20603 via the exact retention manifest/event hashes and sample PNG blobs; the probe independently verified all 53 image hashes against that manifest."
+}
