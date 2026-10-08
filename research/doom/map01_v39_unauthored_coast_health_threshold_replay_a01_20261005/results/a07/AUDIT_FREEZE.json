@@ -1,0 +1,30 @@
+{
+  "schema": "a04-decision4-negative-control-order-a07-freeze-v1",
+  "parent_audit_correction": "results/a06/AUDIT_FREEZE.json",
+  "parent_audit_sha256": "f731b99bcb40465764ab7ca33234e9c329282fe45437362c85a16de6247a0fad",
+  "frozen_at_utc": "2026-10-05T13:29:00Z",
+  "kind": "read-only audit negative-control harness correction",
+  "source": {
+    "a05_candidate_sha256": "9b72e814b085a00087739c5bf51e13f15fd8d2d14027993e0cb33a041e20fef5",
+    "a05_audit_sha256": "78d9d910488906e2623df9f75099534b8d21ca35021ddf1c835e31f873f164ec",
+    "a06_audit_sha256": "a6f2b7f86c0b18a8424efa64fc0a3ebf89649e1f597add8fe964a135199da923",
+    "a06_auditor_sha256": "c25b90a3c61fc4f80e24b820bb983115cb0e93a39b5e103ee893938549cd1df7",
+    "report_sha256": "a3158839e9832df3bbd46b5b2f1f4341b42996639257122687d3a3290e85a8cc"
+  },
+  "control": {
+    "path": "test_audit_a07.py",
+    "sha256": "960feb720f87624fb16ff0aae7eb46c3b3f34e863374bf813ea5cedb023a1f87",
+    "delta_from_a06_control": "Copies the immutable A05 candidate into the legacy A05 auditor's selected RESULT_DIR before invoking it.",
+    "mutation": "Swap decision-4 report source and monitor references in a temporary input copy; update copied raw/package/freeze manifests.",
+    "expected": "Legacy A05 accepts the malformed negative-control order; A06 rejects before writing output."
+  },
+  "expected": {
+    "candidate_invocations": 0,
+    "live_allocations": 0,
+    "retained_a05_or_a06_bytes_modified": false,
+    "legacy_a05_exit": 0,
+    "audit_a06_exit_nonzero": true,
+    "audit_a06_output_created": false
+  },
+  "outputs": ["results/a07/audit_report_swap_control.json"]
+}

@@ -49,7 +49,11 @@ def validate(result, events, owner_events, report):
         terminal = by_id[cancel["id"]]
         release = terminal.get("release", {})
         if (terminal.get("status") != "cancelled" or release.get("verified") is not True or
-                release.get("keys_down") != [] or release.get("buttons_down") != []):
+                release.get("keys_down") != [] or release.get("buttons_down") != [] or
+                type(cancel.get("requested_ns")) is not int or
+                type(release.get("verified_ns")) is not int or
+                type(terminal.get("terminal_ns")) is not int or
+                not cancel["requested_ns"] <= release["verified_ns"] <= terminal["terminal_ns"]):
             raise ValueError(f"source terminal release invalid: {cancel['id']}")
         cause = (terminal.get("interruption") or {}).get("record")
         if cancel["id"] in held and cause is not None:

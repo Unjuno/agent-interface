@@ -1,0 +1,9 @@
+import datetime,hashlib,json,pathlib,subprocess,sys
+R=pathlib.Path(__file__).resolve().parent;D=R/'exact';D.mkdir(exist_ok=False);S=R/'controller-v3c.py.txt';T=R/'regression_v2.py'
+def pin(p):
+ b=p.read_bytes();return dict(bytes=len(b),sha256=hashlib.sha256(b).hexdigest())
+def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+argv=[sys.executable,'-X','utf8',str(T),str(S),str(D/'RAW.json')];before=dict(unit='ordinary-exact-byte-repair-v3c',argv=argv,utc=utc(),source=pin(S),runner=pin(T),reason='Restore unchanged normal-tail line endings after local source-builder caught v3b newline normalization; original v3b result retained, no formal replay.',D='All11 ordinary regressions pass on exact final source; no other-source result transferred.');(D/'BEFORE.json').write_text(json.dumps(before,indent=2)+'\n',encoding='utf-8')
+with (D/'stdout.bin').open('wb') as out,(D/'stderr.bin').open('wb') as err:
+ p=subprocess.Popen(argv,stdout=out,stderr=err);start=utc();code=p.wait(timeout=45)
+receipt=dict(pid=p.pid,start_utc=start,end_utc=utc(),exit_code=code,timeout=False,stdout=pin(D/'stdout.bin'),stderr=pin(D/'stderr.bin'),source_unchanged=pin(S)==before['source'],runner_unchanged=pin(T)==before['runner']);(D/'RECEIPT.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8');print(json.dumps(receipt));assert code==0
