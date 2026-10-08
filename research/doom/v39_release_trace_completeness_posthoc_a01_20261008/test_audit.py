@@ -37,6 +37,25 @@ class RetainedReleaseTraceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             analyze(events, self.owner, self.report, self.prior)
 
+    def test_terminal_before_cancel_is_rejected_by_candidate_and_independent_audit(self):
+        events = copy.deepcopy(self.events)
+        cancel = next(row for row in events if row.get("event") == "cancel_requested"
+                      and row.get("id") == "cover-0")
+        terminal = next(row for row in events if row.get("event") == "terminal"
+                        and row.get("id") == "cover-0")
+        # This cancellation has no interruption receipt, so it exercises the
+        # terminal-release chronology gate directly.
+        interruption = terminal.get("interruption") or {}
+        self.assertIsNone(interruption.get("record"))
+        terminal["release"]["verified_ns"] = cancel["requested_ns"] - 3
+        terminal["terminal_ns"] = cancel["requested_ns"] - 2
+        cancel["requested_ns"] += 10
+        with self.assertRaisesRegex(ValueError, "not verified empty"):
+            analyze(events, self.owner, self.report, self.prior)
+        result = analyze(self.events, self.owner, self.report, self.prior)
+        with self.assertRaisesRegex(ValueError, "source terminal release invalid"):
+            validate(result, events, self.owner, self.report)
+
     def test_coverage_result_mutation_is_rejected_by_independent_oracle(self):
         result = analyze(self.events, self.owner, self.report, self.prior)
         result["active_interruption_coverage"]["numerator"] = 3
