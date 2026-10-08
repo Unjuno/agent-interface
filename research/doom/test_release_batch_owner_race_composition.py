@@ -2,6 +2,7 @@
 import importlib
 import sys
 import threading
+import time
 import types
 import unittest
 from pathlib import Path
@@ -150,46 +151,45 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             lease = Lease()
             backend.lease = lease
             raced = []
-            # Block only the owner's response to the admitted key-down. This
-            # lets the real backend append its UP and enqueue up_batch before
-            # cancellation cleanup is allowed to win V12's request loop.
-            entered_admission = threading.Event()
-            permit_admission_return = threading.Event()
-            real_call = backend.owner.call
-            original_inner_call = backend.owner._inner.call
-
             queued_before_cancel = threading.Event()
+            v12 = backend.owner._inner
+            original_requests = v12.requests
+            gate_owner_dequeue = threading.Event()
+            owner_waiting_before_dequeue = threading.Event()
+            cancel_after_enqueue = threading.Event()
+            skip_one_dequeue = threading.Event()
+            race_clock = {}
 
-            def cancel_after_backend_precheck(operation, call_lease=None, key=None):
-                if operation == "up_batch" and not raced:
-                    raced.append(operation)
-                    call_lease.cancel.set()
-                    if not call_lease.interrupted.wait(1):
-                        raise AssertionError("owner cleanup did not complete")
-                return real_call(operation, call_lease, key)
+            class RequestGate:
+                def put(self, request):
+                    original_requests.put(request)
+                    if request[0] == "up_batch":
+                        raced.append(request[0])
+                        race_clock["enqueued_ns"] = time.perf_counter_ns()
+                        queued_before_cancel.set()
+                        lease.cancel.set()
+                        race_clock["cancel_requested_ns"] = time.perf_counter_ns()
+                        cancel_after_enqueue.set()
 
-            # Hold the actual V12 batch RPC after V3 has admitted it. The
-            # cancellation watcher can then release the key before V12
-            # dequeues the already-enqueued up_batch request.
-            def hold_queued_batch(operation, call_lease=None, key=None):
-                if operation == "up_batch":
-                    queued_before_cancel.set()
-                    if not permit_queued_batch.wait(1):
-                        raise AssertionError("test did not release queued up_batch")
-                return original_inner_call(operation, call_lease, key)
+                def get(self, timeout=None):
+                    request = original_requests.get(timeout=timeout)
+                    if (gate_owner_dequeue.is_set() and request[0] == "up_batch"
+                            and not skip_one_dequeue.is_set()):
+                        # The real RPC is already present in V12's queue. Put
+                        # it back untouched and force one loop turn so the
+                        # cancellation watcher performs cleanup before dequeue.
+                        original_requests.put(request)
+                        owner_waiting_before_dequeue.set()
+                        if not cancel_after_enqueue.is_set():
+                            raise AssertionError("owner dequeued before enqueue cancellation")
+                        race_clock["owner_dequeue_deferred_ns"] = time.perf_counter_ns()
+                        skip_one_dequeue.set()
+                        raise queue.Empty
+                    return request
 
-            permit_queued_batch = threading.Event()
-            backend.owner._inner.call = hold_queued_batch
-
-            def hold_admission_reply(operation, call_lease=None, key=None):
-                result = real_call(operation, call_lease, key)
-                if operation == "down":
-                    entered_admission.set()
-                    if not permit_admission_return.wait(1):
-                        raise AssertionError("test did not release admitted key-down")
-                return result
-
-            backend.owner.call = hold_admission_reply
+            import queue
+            v12.requests = RequestGate()
+            gate_owner_dequeue.set()
             execution_error = []
 
             def run_execute():
@@ -200,12 +200,10 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
 
             worker = threading.Thread(target=run_execute)
             worker.start()
-            self.assertTrue(entered_admission.wait(1), "key-down did not reach owner")
-            backend.owner.call = cancel_after_backend_precheck
-            permit_admission_return.set()
             self.assertTrue(queued_before_cancel.wait(1), "up_batch was not enqueued")
+            self.assertTrue(owner_waiting_before_dequeue.wait(1),
+                            "owner did not reach the controlled dequeue boundary")
             self.assertTrue(lease.interrupted.wait(1), "cancellation cleanup did not finish")
-            permit_queued_batch.set()
             worker.join(2)
             self.assertFalse(worker.is_alive(), "backend execution did not finish")
 
@@ -213,6 +211,7 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
 
             self.assertEqual(raced, ["up_batch"])
             self.assertTrue(queued_before_cancel.is_set())
+            self.assertTrue(skip_one_dequeue.is_set())
             self.assertTrue(display.keypress_delivered.is_set())
             self.assertTrue(display.release_cleanup_finished.is_set())
             self.assertTrue(lease.interruptions[-1]["verified"])
@@ -226,6 +225,12 @@ class ReleaseBatchOwnerRaceTests(unittest.TestCase):
             self.assertFalse(row["owner_thread_keyup_verified"])
             self.assertFalse(row["ordinary_release_candidate"])
             self.assertFalse(row["grants_input_authority"])
+            cleanup_verified_ns = row["owner_cleanup_record"]["verified_ns"]
+            self.assertLess(race_clock["enqueued_ns"], race_clock["cancel_requested_ns"])
+            self.assertLess(race_clock["cancel_requested_ns"],
+                            race_clock["owner_dequeue_deferred_ns"])
+            self.assertLess(race_clock["owner_dequeue_deferred_ns"], cleanup_verified_ns)
+            self.assertLessEqual(cleanup_verified_ns, row["release_call_returned_ns"])
         finally:
             if backend is not None:
                 backend.owner.close()
