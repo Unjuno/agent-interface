@@ -181,6 +181,7 @@ class DoomCoverSignalPairMonitor:
         self.last_values = {name: guard.spec["source_value"]
                             for name, guard in guards.items()}
         self.last_sequence = guards["health"].spec["source_sequence"]
+        self.last_pair_sequence = self.last_sequence
         self.last_capture_ns = guards["health"].source_capture_ns
         self.last_event_kind = None
         self.last_binding = None
@@ -252,6 +253,7 @@ class DoomCoverSignalPairMonitor:
             self.last_binding = binding
             self.last_frame_rgb_sha256 = frame_hash
             self.last_event_kind = event_kind
+            self.last_pair_sequence = sequence
             return None
 
         if observation["sequence"] <= self.last_sequence:
@@ -791,6 +793,57 @@ def observe_cover_submission_events(events, observation_monitor):
     return invalidation
 
 
+class DeferredObservationMonitor:
+    """Retain monitor outcomes while letting a bounded wait finish."""
+    def __init__(self, monitor):
+        self.monitor = monitor
+        self.event_types = getattr(monitor, "event_types", {"observation"})
+        self.invalidations = []
+
+    def observe(self, row):
+        invalidation = self.monitor.observe(row)
+        if invalidation is not None:
+            self.invalidations.append(invalidation)
+        return None
+
+
+def recover_coherent_source_after_observation(after_sequence, invalidation, *,
+                                             latest_reader, wait,
+                                             observation_monitor):
+    reason = invalidation.get("reason") if type(invalidation) is dict else None
+    required_after = after_sequence
+    invalidated_sequence = (invalidation.get("sequence")
+                            if type(invalidation) is dict else None)
+    if (type(reason) is str and reason.startswith("signal_pair_") and
+            type(invalidated_sequence) is int):
+        required_after = max(required_after, invalidated_sequence)
+    latest = latest_reader()
+    if (type(required_after) is not int or type(latest) is not dict or
+            type(latest.get("sequence")) is not int):
+        raise RuntimeError("coherent-source recovery lacks a sequence")
+    pair_sequence = getattr(observation_monitor, "last_pair_sequence", None)
+    if pair_sequence == latest["sequence"] and pair_sequence > required_after:
+        return latest, {"required_after_sequence": required_after,
+                        "invalidated_sequence": invalidated_sequence,
+                        "fresh_sequence": pair_sequence,
+                        "additional_invalidations": []}
+    deferred = DeferredObservationMonitor(observation_monitor)
+    wait(lambda _row: (observation_monitor.last_pair_sequence > required_after and
+                       latest_reader().get("sequence") ==
+                       observation_monitor.last_pair_sequence),
+         observation_monitor=deferred)
+    latest = latest_reader()
+    pair_sequence = getattr(observation_monitor, "last_pair_sequence", None)
+    if (type(latest) is not dict or type(latest.get("sequence")) is not int or
+            type(pair_sequence) is not int or pair_sequence != latest["sequence"] or
+            pair_sequence <= required_after):
+        raise RuntimeError("paired-source recovery did not produce a coherent frame")
+    return latest, {"required_after_sequence": required_after,
+                    "invalidated_sequence": invalidated_sequence,
+                    "fresh_sequence": pair_sequence,
+                    "additional_invalidations": deferred.invalidations}
+
+
 def drain_pending_observation_events(incoming, observation_monitor, terminal_id):
     """Process events already queued when a planner future becomes done."""
     latest = None
@@ -849,9 +902,17 @@ def recover_pending_observation_backlog(incoming, latest, source_sequence,
         return recovery
     latest = recovery["latest"]
     if latest["sequence"] <= source_sequence:
-        latest = wait(lambda row:row["event"] == "observation" and
-                      type(row.get("sequence")) is int and
-                      row["sequence"] > source_sequence)
+        predicate = lambda row:row["event"] == "observation" and \
+            type(row.get("sequence")) is int and row["sequence"] > source_sequence
+        if hasattr(observation_monitor, "last_pair_sequence"):
+            deferred = DeferredObservationMonitor(observation_monitor)
+            latest = wait(predicate, observation_monitor=deferred)
+            recovery["wait_invalidations"] = deferred.invalidations
+            for candidate in deferred.invalidations:
+                recovery["invalidation"] = prefer_observation_invalidation(
+                    recovery.get("invalidation"), candidate)
+        else:
+            latest = wait(predicate)
     recovery["latest"] = latest
     recovery["fresh_observation_sequence"] = latest["sequence"]
     return recovery
@@ -859,7 +920,7 @@ def recover_pending_observation_backlog(incoming, latest, source_sequence,
 
 def recover_stale_cover_submission(rejected, *, identifier, expected_sequence,
                                    consumed_events, latest, incoming, wait,
-                                   observation_monitor):
+                                   observation_monitor, latest_reader=None):
     """Reject stale cover authority and wait for a new planner source."""
     if (type(rejected) is not dict or rejected.get("event") != "rejected" or
             rejected.get("id") != identifier or rejected.get("reason") !=
@@ -879,8 +940,25 @@ def recover_stale_cover_submission(rejected, *, identifier, expected_sequence,
     if (type(fresh) is not dict or type(fresh.get("sequence")) is not int or
             fresh["sequence"] <= expected_sequence):
         raise RuntimeError("stale initial cover requires a newer observation")
+    coherent_recovery = None
+    if hasattr(observation_monitor, "last_pair_sequence"):
+        latest_state = [fresh]
+        def source_reader():
+            observed = latest_reader() if latest_reader is not None else None
+            if (type(observed) is dict and
+                    type(observed.get("sequence")) is int and
+                    (type(latest_state[0]) is not dict or
+                     observed["sequence"] > latest_state[0].get("sequence", -1))):
+                latest_state[0] = observed
+            return latest_state[0]
+        fresh, coherent_recovery = recover_coherent_source_after_observation(
+            expected_sequence, invalidation, latest_reader=source_reader,
+            wait=wait, observation_monitor=observation_monitor)
+        for candidate in coherent_recovery["additional_invalidations"]:
+            invalidation = prefer_observation_invalidation(invalidation, candidate)
     return {"latest": fresh, "recovery": recovery,
             "invalidation": invalidation,
+            "coherent_source_recovery": coherent_recovery,
             "cover_policy": "discarded_until_fresh_plan"}
 
 
@@ -899,14 +977,27 @@ def submit_initial_cover_with_recovery(submit, *, identifier, latest_reader,
     if ack["event"] == "accepted":
         invalidation = observe_cover_submission_events(
             consumed_events, observation_monitor)
-        return {"ack": ack, "latest": latest_reader(),
+        latest = latest_reader()
+        coherent_recovery = None
+        if (hasattr(observation_monitor, "last_pair_sequence") and any(
+                row.get("event") in observation_monitor.event_types
+                for row in consumed_events)):
+            latest, coherent_recovery = recover_coherent_source_after_observation(
+                submitted_sequence, invalidation,
+                latest_reader=latest_reader, wait=wait,
+                observation_monitor=observation_monitor)
+            for candidate in coherent_recovery["additional_invalidations"]:
+                invalidation = prefer_observation_invalidation(
+                    invalidation, candidate)
+        return {"ack": ack, "latest": latest,
                 "submitted_sequence": submitted_sequence,
-                "recovery": None, "invalidation": invalidation}
+                "recovery": None, "invalidation": invalidation,
+                "coherent_source_recovery": coherent_recovery}
     recovery = recover_stale_cover_submission(
         ack, identifier=identifier, expected_sequence=submitted_sequence,
         consumed_events=consumed_events, latest=latest_reader(),
         incoming=incoming, wait=wait,
-        observation_monitor=observation_monitor)
+        observation_monitor=observation_monitor, latest_reader=latest_reader)
     return {"ack": ack, "submitted_sequence": submitted_sequence,
             **recovery}
 

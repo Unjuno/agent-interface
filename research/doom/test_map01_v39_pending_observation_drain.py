@@ -162,9 +162,10 @@ class PendingObservationDrainTests(unittest.TestCase):
             "health": typed_signal("health", 50, 12, 1_100_000_000, binding),
             "ammo": typed_signal("ammo", 4, 12, 1_100_000_000, binding),
         }
-        full = {"event": "observation", "sequence": 12,
-                "capture_ns": 1_100_000_000, "pointer_binding": binding,
-                "frame_rgb_sha256": "a" * 64, "signals": signals}
+        typed = {"event": "typed_observation", "sequence": 12,
+                 "capture_ns": 1_100_000_000, "pointer_binding": binding,
+                 "frame_rgb_sha256": "a" * 64, "signals": signals}
+        full = dict(typed, event="observation")
         latest = {"sequence": 11}
         consumed = []
         monitor = DoomCoverSignalPairMonitor(
@@ -174,8 +175,8 @@ class PendingObservationDrainTests(unittest.TestCase):
             ammo_reader=SignalReader("ammo"))
 
         def submit(consumed_events):
-            consumed_events.append(full)
-            consumed.append(full)
+            consumed_events.extend([typed, full])
+            consumed.extend([typed, full])
             latest.update(full)
             return {"event": "accepted", "id": "cover-0"}
 
@@ -188,7 +189,7 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(result["invalidation"]["reason"],
                          "health:below_hard_minimum")
         self.assertEqual(monitor.last_sequence, 12)
-        self.assertEqual(consumed, [full])
+        self.assertEqual(consumed, [typed, full])
 
     def test_accepted_ack_validates_pair_after_first_hard_half_invalidates(self):
         binding = {"focus": 7, "surface": 9,
@@ -205,6 +206,20 @@ class PendingObservationDrainTests(unittest.TestCase):
                  "frame_rgb_sha256": "a" * 64, "signals": hard_signals}
         full = dict(typed, event="observation", signals=disagreeing_signals)
         latest = dict(full)
+        incoming = queue.Queue()
+        fresh_signals = {
+            "health": typed_signal("health", 95, 13, 1_200_000_000, binding),
+            "ammo": typed_signal("ammo", 4, 13, 1_200_000_000, binding),
+        }
+        fresh_typed = {"event": "typed_observation", "sequence": 13,
+                       "capture_ns": 1_200_000_000,
+                       "pointer_binding": binding,
+                       "frame_rgb_sha256": "b" * 64,
+                       "signals": fresh_signals}
+        fresh_full = dict(fresh_typed, event="observation")
+        incoming.put(typed)
+        incoming.put(fresh_typed)
+        incoming.put(fresh_full)
         monitor = DoomCoverSignalPairMonitor(
             {"health": SignalGuard("health", 100, 11, 1_000_000_000, 60),
              "ammo": SignalGuard("ammo", 4, 11, 1_000_000_000, 1)},
@@ -212,16 +227,31 @@ class PendingObservationDrainTests(unittest.TestCase):
             ammo_reader=SignalReader("ammo"))
 
         def submit(consumed_events):
-            consumed_events.extend([typed, full])
+            # The reader logs/queues typed first, but the ACK wait consumes
+            # only the full row. Pair integrity is discovered during recovery.
+            consumed_events.append(full)
             return {"event": "accepted", "id": "cover-0"}
+
+        def wait(predicate, observation_monitor=None):
+            while not incoming.empty():
+                row = incoming.get_nowait()
+                if row["event"] == "observation":
+                    latest.update(row)
+                if row["event"] in observation_monitor.event_types:
+                    observation_monitor.observe(row)
+                if predicate(row):
+                    return row
+            self.fail("coherent post-mismatch pair was not awaited")
 
         result = submit_initial_cover_with_recovery(
             submit, identifier="cover-0", latest_reader=lambda: latest,
-            incoming=queue.Queue(), wait=lambda predicate: self.fail("unexpected wait"),
+            incoming=incoming, wait=wait,
             observation_monitor=monitor)
 
         self.assertEqual(result["invalidation"]["reason"],
                          "signal_pair_duplicate_epoch_mismatch")
+        self.assertEqual(result["latest"]["sequence"], 13)
+        self.assertEqual(result["coherent_source_recovery"]["fresh_sequence"], 13)
 
     def test_backlog_drain_checks_pair_after_first_hard_half_invalidates(self):
         binding = {"focus": 7, "surface": 9,
@@ -251,6 +281,53 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(result["invalidation"]["reason"],
                          "signal_pair_duplicate_epoch_mismatch")
         self.assertTrue(incoming.empty())
+
+    def test_stale_cover_recovery_returns_newer_coherent_pair(self):
+        binding = {"focus": 7, "surface": 9,
+                   "geometry": [0, 0, 640, 480]}
+        signals = {
+            "health": typed_signal("health", 50, 12, 1_100_000_000, binding),
+            "ammo": typed_signal("ammo", 4, 12, 1_100_000_000, binding),
+        }
+        typed = {"event": "typed_observation", "sequence": 12,
+                 "capture_ns": 1_100_000_000, "pointer_binding": binding,
+                 "frame_rgb_sha256": "a" * 64, "signals": signals}
+        mismatch_signals = dict(signals)
+        mismatch_signals["health"] = typed_signal(
+            "health", 100, 12, 1_100_000_000, binding)
+        mismatch_full = dict(typed, event="observation", signals=mismatch_signals)
+        latest = {"sequence": 12, **mismatch_full}
+        incoming = queue.Queue()
+        fresh_signals = {
+            "health": typed_signal("health", 95, 13, 1_200_000_000, binding),
+            "ammo": typed_signal("ammo", 4, 13, 1_200_000_000, binding),
+        }
+        fresh_typed = {"event": "typed_observation", "sequence": 13,
+                       "capture_ns": 1_200_000_000,
+                       "pointer_binding": binding,
+                       "frame_rgb_sha256": "b" * 64,
+                       "signals": fresh_signals}
+        incoming.put(fresh_typed)
+        incoming.put(dict(fresh_typed, event="observation"))
+        monitor = DoomCoverSignalPairMonitor(
+            {"health": SignalGuard("health", 100, 11, 1_000_000_000, 60),
+             "ammo": SignalGuard("ammo", 4, 11, 1_000_000_000, 1)},
+            health_reader=SignalReader("health"),
+            ammo_reader=SignalReader("ammo"))
+        rejected = {"event": "rejected", "id": "cover-0",
+                    "reason": "latest observation sequence required before input"}
+
+        result = recover_stale_cover_submission(
+            rejected, identifier="cover-0", expected_sequence=11,
+            consumed_events=[typed, mismatch_full], latest=latest,
+            latest_reader=lambda: latest, incoming=incoming,
+            wait=lambda predicate: self.fail("queued pair should finish recovery"),
+            observation_monitor=monitor)
+
+        self.assertEqual(result["invalidation"]["reason"],
+                         "signal_pair_duplicate_epoch_mismatch")
+        self.assertEqual(result["latest"]["sequence"], 13)
+        self.assertEqual(result["coherent_source_recovery"]["fresh_sequence"], 13)
 
     def test_queued_hard_crossing_precedes_completed_answer(self):
         incoming = queue.Queue()
