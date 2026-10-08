@@ -1,0 +1,36 @@
+{
+  "allocation": "HOMOLOGY-HOMOTOPY-6586-T0-20261007-A01",
+  "base_commit": "133dafbd8f616b7d2f2ca8b14a3ba863b63f0933",
+  "run_window_utc": "2026-10-07T09:45:12Z/2026-10-07T09:45:31Z",
+  "formal_invocations": {"candidate": 1, "auditor": 1, "retries": 0},
+  "container": {
+    "image": "python:3.13-alpine",
+    "digest": "sha256:2d9aefe2fef018a7eb2c13064c89c71929800fd2e5dccdbf52ea5da5bb8d929a",
+    "platform": "linux/aarch64",
+    "network": "none",
+    "source_mount": "read-only",
+    "memory_mib": 512,
+    "cpus": 1
+  },
+  "candidate": {
+    "exit_code": 0,
+    "command": "docker run --rm --pull=never --network none --read-only --memory=512m --cpus=1 --tmpfs /tmp:rw,size=64m -v $PWD:/work:ro -w /work python:3.13-alpine python -B -I research/analysis/homology_vs_homotopy_6586_t0_20261007/candidate.py",
+    "output_sha256": "b422609df51f5cdfe00dd4b96521b40492bd5a38a4533e65b187c36b71679245",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "auditor": {
+    "exit_code": 0,
+    "command": "docker run --rm --pull=never --network none --read-only --memory=512m --cpus=1 --tmpfs /tmp:rw,size=64m -v $PWD:/work:ro -w /work python:3.13-alpine python -B -I research/analysis/homology_vs_homotopy_6586_t0_20261007/auditor.py research/analysis/homology_vs_homotopy_6586_t0_20261007/candidate-raw.json",
+    "output_sha256": "f3529b5e20a4e5b286e911f8a8f6625ac2a513e2a3938750113fdf29cac21c84",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "local_construction": {"unittest_count": 7, "unittest_result": "PASS", "syntax_compile": "PASS_WITHOUT_BYTECODE_WRITES"},
+  "result": {
+    "audit_status": "PASS",
+    "two_obstacle_words": 5461,
+    "two_obstacle_collision_buckets": 77,
+    "one_obstacle_words": 127,
+    "one_obstacle_collision_buckets": 0,
+    "controls_unknown": ["unfinished_prefix", "missing_crossing_receipt", "geometry_revision"]
+  }
+}
