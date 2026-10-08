@@ -66,7 +66,8 @@ class Map01V39CoastTests(unittest.TestCase):
             def __init__(self): self.stdin = Stdin()
         class Planner:
             def __init__(self): self.interrupted = []
-            def interrupt(self, handle):
+            def interrupt(self, handle, before_transport=None):
+                if before_transport is not None: before_transport()
                 self.interrupted.append(handle)
                 return {"status": "interrupted"}
         terminal = {"event": "terminal", "id": "cover-0", "status": "cancelled",
@@ -88,7 +89,9 @@ class Map01V39CoastTests(unittest.TestCase):
         class Process:
             stdin = Stdin()
         class Planner:
-            def interrupt(self, handle): return {"status": "interrupted"}
+            def interrupt(self, handle, before_transport=None):
+                if before_transport is not None: before_transport()
+                return {"status": "interrupted"}
 
         def wait_for_matching_terminal(terminal):
             unrelated = dict(terminal, id="other-cover")
@@ -133,7 +136,9 @@ class Map01V39CoastTests(unittest.TestCase):
         class Process:
             stdin = Stdin()
         class Planner:
-            def interrupt(self, handle): return {"status": "interrupted"}
+            def interrupt(self, handle, before_transport=None):
+                if before_transport is not None: before_transport()
+                return {"status": "interrupted"}
         for release in (
             {"verified": False, "keys_down": [], "buttons_down": []},
             {"verified": True, "keys_down": ["W"], "buttons_down": []},

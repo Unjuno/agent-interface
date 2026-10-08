@@ -1,0 +1,389 @@
+test_cancellation_still_stops_before_dispatch_after_local_clear (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_cancellation_still_stops_before_dispatch_after_local_clear) ... ok
+test_deadline_still_stops_before_dispatch_after_local_clear (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_deadline_still_stops_before_dispatch_after_local_clear) ... ok
+test_initial_malformed_fields_still_reject_before_dispatch (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_initial_malformed_fields_still_reject_before_dispatch) ... ok
+test_original_cancellation_exception_propagates (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_original_cancellation_exception_propagates) ... ok
+test_retained_admission_clear_does_not_interrupt_authorized_prefix (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_clear_does_not_interrupt_authorized_prefix) ... 
+  test_retained_admission_clear_does_not_interrupt_authorized_prefix (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_clear_does_not_interrupt_authorized_prefix) (stage=1) ... FAIL
+  test_retained_admission_clear_does_not_interrupt_authorized_prefix (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_clear_does_not_interrupt_authorized_prefix) (stage=2) ... FAIL
+test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) ... 
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'authorization': 'adapter-local-rebound'}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'authorization': ''}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'expected_sequence': 900}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'expected_sequence': True}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'valid_until_ns': 0}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'eligible': False, 'status': 'missing', 'authorization': None, 'expected_sequence': False, 'valid_until_ns': True}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'authorization': 'adapter-local-rebound'}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'authorization': ''}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'expected_sequence': 900}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'expected_sequence': True}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'valid_until_ns': 0}) ... FAIL
+  test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'eligible': False, 'status': 'missing', 'authorization': None, 'expected_sequence': False, 'valid_until_ns': True}) ... FAIL
+
+======================================================================
+FAIL: test_retained_admission_clear_does_not_interrupt_authorized_prefix (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_clear_does_not_interrupt_authorized_prefix) (stage=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 85, in test_retained_admission_clear_does_not_interrupt_authorized_prefix
+    result, _, returned, validated, dispatch = self.exercise("clear", stage)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 47, in exercise
+    result = run(interface(), {"observe": driver.observe, "admit": admit,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\compiled_gui.py", line 350, in run
+    "authorization": admission["authorization"],
+                     ~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'authorization'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 87, in test_retained_admission_clear_does_not_interrupt_authorized_prefix
+    self.fail(f"retained admission payload clearing changed dispatch: {error}")
+AssertionError: retained admission payload clearing changed dispatch: 'authorization'
+
+======================================================================
+FAIL: test_retained_admission_clear_does_not_interrupt_authorized_prefix (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_clear_does_not_interrupt_authorized_prefix) (stage=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 85, in test_retained_admission_clear_does_not_interrupt_authorized_prefix
+    result, _, returned, validated, dispatch = self.exercise("clear", stage)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 47, in exercise
+    result = run(interface(), {"observe": driver.observe, "admit": admit,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\compiled_gui.py", line 350, in run
+    "authorization": admission["authorization"],
+                     ~~~~~~~~~^^^^^^^^^^^^^^^^^
+KeyError: 'authorization'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 87, in test_retained_admission_clear_does_not_interrupt_authorized_prefix
+    self.fail(f"retained admission payload clearing changed dispatch: {error}")
+AssertionError: retained admission payload clearing changed dispatch: 'authorization'
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'authorization': 'adapter-local-rebound'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[51 chars]n': 'adapter-local-rebound', 'expected_sequenc[151 chars]000}] != [{'ac[51 chars]n': 'one-use', 'expected_sequence': 1, 'valid_[137 chars]000}]
+
+First differing element 0:
+{'act[50 chars]n': 'adapter-local-rebound', 'expected_sequenc[29 chars]0000}
+{'act[50 chars]n': 'one-use', 'expected_sequence': 1, 'valid_[15 chars]0000}
+
+  [{'action': 'enter',
+-   'authorization': 'adapter-local-rebound',
++   'authorization': 'one-use',
+    'expected_sequence': 1,
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+    'authorization': 'one-use',
+    'expected_sequence': 2,
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'authorization': ''})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[51 chars]n': '', 'expected_sequence': 1, 'valid_until_n[130 chars]000}] != [{'ac[51 chars]n': 'one-use', 'expected_sequence': 1, 'valid_[137 chars]000}]
+
+First differing element 0:
+{'act[50 chars]n': '', 'expected_sequence': 1, 'valid_until_ns': 10000000}
+{'act[50 chars]n': 'one-use', 'expected_sequence': 1, 'valid_[15 chars]0000}
+
+  [{'action': 'enter',
+-   'authorization': '',
++   'authorization': 'one-use',
+?                     +++++++
+
+    'expected_sequence': 1,
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+    'authorization': 'one-use',
+    'expected_sequence': 2,
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'expected_sequence': 900})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[82 chars]ce': 900, 'valid_until_ns': 10000000}, {'actio[108 chars]000}] != [{'ac[82 chars]ce': 1, 'valid_until_ns': 10000000}, {'action'[106 chars]000}]
+
+First differing element 0:
+{'act[55 chars]one-use', 'expected_sequence': 900, 'valid_until_ns': 10000000}
+{'act[55 chars]one-use', 'expected_sequence': 1, 'valid_until_ns': 10000000}
+
+  [{'action': 'enter',
+    'authorization': 'one-use',
+-   'expected_sequence': 900,
+?                        ^^^
+
++   'expected_sequence': 1,
+?                        ^
+
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+    'authorization': 'one-use',
+    'expected_sequence': 2,
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'expected_sequence': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 75, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertIs(type(payload["expected_sequence"]), int)
+AssertionError: <class 'bool'> is not <class 'int'>
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'valid_until_ns': 0})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[103 chars]ns': 0}, {'action': 'save', 'operation': 'save[78 chars]000}] != [{'ac[103 chars]ns': 10000000}, {'action': 'save', 'operation'[85 chars]000}]
+
+First differing element 0:
+{'act[53 chars] 'one-use', 'expected_sequence': 1, 'valid_until_ns': 0}
+{'act[53 chars] 'one-use', 'expected_sequence': 1, 'valid_until_ns': 10000000}
+
+  [{'action': 'enter',
+    'authorization': 'one-use',
+    'expected_sequence': 1,
+    'operation': 'enter',
+-   'valid_until_ns': 0},
++   'valid_until_ns': 10000000},
+?                     +++++++
+
+   {'action': 'save',
+    'authorization': 'one-use',
+    'expected_sequence': 2,
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=1, mutation={'eligible': False, 'status': 'missing', 'authorization': None, 'expected_sequence': False, 'valid_until_ns': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[50 chars]on': None, 'expected_sequence': False, 'valid_[133 chars]000}] != [{'ac[50 chars]on': 'one-use', 'expected_sequence': 1, 'valid[138 chars]000}]
+
+First differing element 0:
+{'act[49 chars]on': None, 'expected_sequence': False, 'valid_until_ns': True}
+{'act[49 chars]on': 'one-use', 'expected_sequence': 1, 'valid[16 chars]0000}
+
+  [{'action': 'enter',
+-   'authorization': None,
+?                    ^
+
++   'authorization': 'one-use',
+?                    ^   +++++
+
+-   'expected_sequence': False,
+?                        ^^^^^
+
++   'expected_sequence': 1,
+?                        ^
+
+    'operation': 'enter',
+-   'valid_until_ns': True},
+?                     ^^^^
+
++   'valid_until_ns': 10000000},
+?                     ^^^^^^^^
+
+   {'action': 'save',
+    'authorization': 'one-use',
+    'expected_sequence': 2,
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'authorization': 'adapter-local-rebound'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[172 chars]n': 'adapter-local-rebound', 'expected_sequenc[30 chars]000}] != [{'ac[172 chars]n': 'one-use', 'expected_sequence': 2, 'valid_[16 chars]000}]
+
+First differing element 1:
+{'act[48 chars]n': 'adapter-local-rebound', 'expected_sequenc[29 chars]0000}
+{'act[48 chars]n': 'one-use', 'expected_sequence': 2, 'valid_[15 chars]0000}
+
+  [{'action': 'enter',
+    'authorization': 'one-use',
+    'expected_sequence': 1,
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+-   'authorization': 'adapter-local-rebound',
++   'authorization': 'one-use',
+    'expected_sequence': 2,
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'authorization': ''})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[172 chars]n': '', 'expected_sequence': 2, 'valid_until_ns': 10000000}] != [{'ac[172 chars]n': 'one-use', 'expected_sequence': 2, 'valid_[16 chars]000}]
+
+First differing element 1:
+{'act[48 chars]n': '', 'expected_sequence': 2, 'valid_until_ns': 10000000}
+{'act[48 chars]n': 'one-use', 'expected_sequence': 2, 'valid_[15 chars]0000}
+
+  [{'action': 'enter',
+    'authorization': 'one-use',
+    'expected_sequence': 1,
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+-   'authorization': '',
++   'authorization': 'one-use',
+?                     +++++++
+
+    'expected_sequence': 2,
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'expected_sequence': 900})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[178 chars]ne-use', 'expected_sequence': 900, 'valid_until_ns': 10000000}] != [{'ac[178 chars]ne-use', 'expected_sequence': 2, 'valid_until_ns': 10000000}]
+
+First differing element 1:
+{'act[53 chars]one-use', 'expected_sequence': 900, 'valid_until_ns': 10000000}
+{'act[53 chars]one-use', 'expected_sequence': 2, 'valid_until_ns': 10000000}
+
+  [{'action': 'enter',
+    'authorization': 'one-use',
+    'expected_sequence': 1,
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+    'authorization': 'one-use',
+-   'expected_sequence': 900,
+?                        ^^^
+
++   'expected_sequence': 2,
+?                        ^
+
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'expected_sequence': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[179 chars]e-use', 'expected_sequence': True, 'valid_until_ns': 10000000}] != [{'ac[179 chars]e-use', 'expected_sequence': 2, 'valid_until_ns': 10000000}]
+
+First differing element 1:
+{'act[54 chars]ne-use', 'expected_sequence': True, 'valid_until_ns': 10000000}
+{'act[54 chars]ne-use', 'expected_sequence': 2, 'valid_until_ns': 10000000}
+
+  [{'action': 'enter',
+    'authorization': 'one-use',
+    'expected_sequence': 1,
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+    'authorization': 'one-use',
+-   'expected_sequence': True,
+?                        ^^^^
+
++   'expected_sequence': 2,
+?                        ^
+
+    'operation': 'save',
+    'valid_until_ns': 10000000}]
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'valid_until_ns': 0})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[176 chars]'one-use', 'expected_sequence': 2, 'valid_until_ns': 0}] != [{'ac[176 chars]'one-use', 'expected_sequence': 2, 'valid_until_ns': 10000000}]
+
+First differing element 1:
+{'act[51 chars] 'one-use', 'expected_sequence': 2, 'valid_until_ns': 0}
+{'act[51 chars] 'one-use', 'expected_sequence': 2, 'valid_until_ns': 10000000}
+
+  [{'action': 'enter',
+    'authorization': 'one-use',
+    'expected_sequence': 1,
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+    'authorization': 'one-use',
+    'expected_sequence': 2,
+    'operation': 'save',
+-   'valid_until_ns': 0}]
++   'valid_until_ns': 10000000}]
+?                     +++++++
+
+
+======================================================================
+FAIL: test_retained_admission_edits_do_not_rebind_dispatch_fields (runtime.core_v1.test_compiled_admission_custody_01a0ff35.CompiledAdmissionReturnCustodyTests.test_retained_admission_edits_do_not_rebind_dispatch_fields) (stage=2, mutation={'eligible': False, 'status': 'missing', 'authorization': None, 'expected_sequence': False, 'valid_until_ns': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<worker-workspace>\work\repair6934-admission-v4\red\runtime\core_v1\test_compiled_admission_custody_01a0ff35.py", line 72, in test_retained_admission_edits_do_not_rebind_dispatch_fields
+    self.assertEqual(dispatch, self.expected_dispatch(validated))
+AssertionError: Lists differ: [{'ac[171 chars]on': None, 'expected_sequence': False, 'valid_until_ns': True}] != [{'ac[171 chars]on': 'one-use', 'expected_sequence': 2, 'valid[17 chars]000}]
+
+First differing element 1:
+{'act[47 chars]on': None, 'expected_sequence': False, 'valid_until_ns': True}
+{'act[47 chars]on': 'one-use', 'expected_sequence': 2, 'valid[16 chars]0000}
+
+  [{'action': 'enter',
+    'authorization': 'one-use',
+    'expected_sequence': 1,
+    'operation': 'enter',
+    'valid_until_ns': 10000000},
+   {'action': 'save',
+-   'authorization': None,
+?                    ^
+
++   'authorization': 'one-use',
+?                    ^   +++++
+
+-   'expected_sequence': False,
+?                        ^^^^^
+
++   'expected_sequence': 2,
+?                        ^
+
+    'operation': 'save',
+-   'valid_until_ns': True}]
+?                     ^^^^
+
++   'valid_until_ns': 10000000}]
+?                     ^^^^^^^^
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.011s
+
+FAILED (failures=14)

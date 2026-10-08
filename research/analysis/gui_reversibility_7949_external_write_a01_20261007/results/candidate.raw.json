@@ -1,0 +1,143 @@
+{
+  "cases": [
+    {
+      "blind_inverse": {
+        "fields_after": {
+          "x": 0,
+          "y": 0
+        },
+        "lost_disjoint_y": false
+      },
+      "case_id": "no_interference",
+      "compensation": {
+        "claims_exact_rollback": false,
+        "event_id": "compensate-x-new-effect",
+        "fields_after": {
+          "x": 0,
+          "y": 0
+        },
+        "kind": "semantic_compensation",
+        "preserved_disjoint_fields": true
+      },
+      "disposition": "RECONCILED",
+      "field_scoped": "ELIGIBLE",
+      "history": "HISTORY_RECONCILED",
+      "whole_object": "ELIGIBLE"
+    },
+    {
+      "blind_inverse": {
+        "fields_after": {
+          "x": 0,
+          "y": 0
+        },
+        "lost_disjoint_y": true
+      },
+      "case_id": "disjoint_y_write",
+      "compensation": {
+        "claims_exact_rollback": false,
+        "event_id": "compensate-x-new-effect",
+        "fields_after": {
+          "x": 0,
+          "y": 9
+        },
+        "kind": "semantic_compensation",
+        "preserved_disjoint_fields": true
+      },
+      "disposition": "RECONCILED",
+      "field_scoped": "ELIGIBLE",
+      "history": "HISTORY_RECONCILED",
+      "whole_object": "CONFLICT"
+    },
+    {
+      "blind_inverse": {
+        "fields_after": {
+          "x": 0,
+          "y": 0
+        },
+        "lost_disjoint_y": false
+      },
+      "case_id": "same_field_write",
+      "compensation": null,
+      "disposition": "RECONCILED",
+      "field_scoped": "CONFLICT_OWNED_FIELD_CHANGED",
+      "history": "HISTORY_RECONCILED",
+      "whole_object": "CONFLICT"
+    },
+    {
+      "blind_inverse": {
+        "fields_after": {
+          "x": 0,
+          "y": 0
+        },
+        "lost_disjoint_y": false
+      },
+      "case_id": "aba_same_final_value",
+      "compensation": null,
+      "disposition": "RECONCILED",
+      "field_scoped": "CONFLICT_OWNED_FIELD_CHANGED",
+      "history": "HISTORY_RECONCILED",
+      "whole_object": "CONFLICT"
+    },
+    {
+      "blind_inverse": {
+        "fields_after": {
+          "x": 0,
+          "y": 0
+        },
+        "lost_disjoint_y": false
+      },
+      "case_id": "object_replaced",
+      "compensation": null,
+      "disposition": "RECONCILED",
+      "field_scoped": "CONFLICT_TARGET_REPLACED",
+      "history": "HISTORY_RECONCILED",
+      "whole_object": "CONFLICT"
+    },
+    {
+      "blind_inverse": "NOT_RUN",
+      "case_id": "sequence_gap",
+      "compensation": null,
+      "disposition": "UNKNOWN",
+      "field_scoped": "UNKNOWN",
+      "history": "UNKNOWN_EVENT_ORDER_OR_GAP",
+      "whole_object": "UNKNOWN"
+    },
+    {
+      "blind_inverse": "NOT_RUN",
+      "case_id": "out_of_order",
+      "compensation": null,
+      "disposition": "UNKNOWN",
+      "field_scoped": "UNKNOWN",
+      "history": "UNKNOWN_EVENT_ORDER_OR_GAP",
+      "whole_object": "UNKNOWN"
+    },
+    {
+      "blind_inverse": "NOT_RUN",
+      "case_id": "incomplete_coverage",
+      "compensation": null,
+      "disposition": "UNKNOWN",
+      "field_scoped": "UNKNOWN",
+      "history": "UNKNOWN_COVERAGE",
+      "whole_object": "UNKNOWN"
+    },
+    {
+      "blind_inverse": "NOT_RUN",
+      "case_id": "snapshot_mismatch",
+      "compensation": null,
+      "disposition": "UNKNOWN",
+      "field_scoped": "UNKNOWN",
+      "history": "UNKNOWN_SNAPSHOT_DISAGREEMENT",
+      "whole_object": "UNKNOWN"
+    },
+    {
+      "blind_inverse": "NOT_RUN",
+      "case_id": "unjournaled_revision",
+      "compensation": null,
+      "disposition": "UNKNOWN",
+      "field_scoped": "UNKNOWN",
+      "history": "UNKNOWN_SNAPSHOT_DISAGREEMENT",
+      "whole_object": "UNKNOWN"
+    }
+  ],
+  "run_id": "gui-reversibility-7949-external-write-a01-20261007"
+}

@@ -1,0 +1,84 @@
+"""Project retained ordinary repair evidence; never run the subject or child."""
+import hashlib,json,pathlib,re,subprocess,sys
+R=pathlib.Path(__file__).resolve().parent
+S=R/'source'
+A=S/'research/doom/v39_startup_repair_59_20261003_01a0ff33'
+A.mkdir(parents=True,exist_ok=False)
+def digest(b):return hashlib.sha256(b).hexdigest()
+def write(name,value):
+    p=A/name;p.parent.mkdir(parents=True,exist_ok=True)
+    p.write_bytes(value if isinstance(value,bytes) else value.encode('utf-8'))
+def js(name,value):write(name,json.dumps(value,sort_keys=True,indent=2,ensure_ascii=False)+'\n')
+labels=['first-red','green-normal','green-normal-v2','green-final-normal','green-final-optimized','release-normal','release-optimized']
+names=['PLAN.json','SOURCE_INVARIANTS.json','baseline-controller.py.txt','baseline-test.py.txt','intermediate-controller-reconstructed.py.txt','intermediate-test-reconstructed.py.txt','first-implement-error.log','startup_helper.txt','audit_saved.py','audit_saved_v2.py','independent-audit.json','independent-audit-v2.json']
+originals=[R/n for n in names]
+for label in labels:originals.extend(sorted(p for p in (R/label).rglob('*') if p.is_file()))
+# Already-public exact controller bytes retain their historical source paths.
+exact_sources={'baseline-controller.py.txt','intermediate-controller-reconstructed.py.txt'}
+replacements=[]
+for source,token in [(str(R),'<PRIVATE_WORK>'),(str(pathlib.Path(sys.executable)),'<PYTHON311>'),(str(pathlib.Path.home()),'<PRIVATE_HOME>')]:
+    for representation in [source,source.replace('\\','/'),source.replace('\\','\\\\')]:replacements.append((representation.encode(),token.encode()))
+replacements.sort(key=lambda pair:len(pair[0]),reverse=True)
+joins=[]
+for p in originals:
+    name=p.relative_to(R).as_posix();public=name+'.txt' if p.suffix=='.py' else name
+    raw=p.read_bytes();projected=raw
+    if name not in exact_sources:
+        for old,new in replacements:projected=projected.replace(old,new)
+    write(public,projected)
+    joins.append(dict(original_relative_path=name,public_path=public,original_sha256=digest(raw),public_sha256=digest(projected),original_bytes=len(raw),public_bytes=len(projected),projection='owned host path tokens' if projected!=raw else 'exact bytes'))
+for n in ['map01_overlap_controller_v39.py','test_map01_v39_startup_cleanup_01a0ff33.py','map01_motor_responder_v10.txt','map01_cover_policy_schema_v6.json']:
+    write('final-source/'+n+'.txt',(S/'research/doom'/n).read_bytes())
+write('package_v1.py.txt',pathlib.Path(__file__).read_bytes())
+write('.gitattributes','* -text\n')
+counts={label:sum(len(json.loads(p.read_bytes())['pre_external_cleanup']['process_poll']) for p in (R/label/'cases').glob('*/case-result.json')) for label in labels}
+if sum(counts.values())!=27:raise ValueError('unexpected actual child total')
+js('CORRECTIONS.json',dict(original_plan_preserved=True,original_plan_total_children=4,claim_sequential_child_wording='<=5 sequential children',actual_total_children=27,actual_by_phase=counts,max_simultaneous_owned_children_per_method=1,ordinary_repair_checks_not_formal_trials=True,editor_failure=dict(kind='mixed-newline incorrect replacement delimiter',tool_chunk='b355a1',exit_code=1,source_still_baseline=True,dependent_green_normal_run_was_mistakenly_continued=True),reader_v1_limitation='release_true changed the physical_input scope field rather than literal cleanup input_release_verified; literal original-error message absent',reader_v2='new saved-only reader adds literal error, literal release-field and typed shared mutation checks; original reader/result preserved',index_lookup_errors=['research/doom/DOOM.md absent; read-only exit1','docs/DOOM.md absent; read-only exit1'],intermediate_source_status='Exact reconstruction by reversing later single edits; hash matches contemporaneous receipts; not a previously retained filesystem original'))
+js('PUBLICATION.json',dict(schema='v39-startup-repair-publication-v1',worker='01a0ff33-b04b-7b51-8194-a60b82fed8a2',private_originals_retained=True,projection='Only owned local host paths substituted. Original hashes remain original identities; public hashes name derivatives. Already-public controller source snapshots are exact.',joins=joins))
+pins={n:digest((S/'research/doom'/n).read_bytes()) for n in ['map01_overlap_controller_v39.py','test_map01_v39_startup_cleanup_01a0ff33.py','map01_motor_responder_v10.txt','map01_cover_policy_schema_v6.json']}
+js('RESULT.json',dict(kind='ordinary engineering repair',base_sha='9c26e204c0475bee30919e3d0e6681f393078ef1',first_baseline_red='missing fixture; child live, reader live and client unclosed at main return; external fixture subsequently closes',final_normal_methods=8,final_optimized_methods=8,final_exit_codes=[0,0],saved_reader_v2_cases=16,saved_reader_v2_rejected_controls=8,total_ordinary_owned_child_invocations=27,source_pins=pins,normal_control_tail_exact_bytes=True,all_other_preexisting_function_class_ASTs_unchanged=True,formal_replays=0,actual_game_input_model=False,physical_release_verified=False,main_application=False))
+table='\n'.join('| '+label+' | '+str(json.loads((R/label/'receipt.json').read_bytes())['exit_code'])+' | '+str(counts[label])+' |' for label in labels)
+write('README.md',f'''# v39 startup ownership repair — #59
+
+Current v39 acquires its planner client, session child and stdout reader before validating the fixture and initial observation. A missing fixture raises while those resources remain live. This runtime patch attempts cleanup on any failure from client initialization through initial observation, records incomplete cleanup, and re-raises the original failure. Acquired-session stdin EOF is followed by owned-PID wait/terminate/kill stages (one second each); readers are joined and stderr is retained with an explicit 64 KiB cap. Failed client close keeps the original exit callback registered. Normal control and successful finish bytes are unchanged.
+
+Original diagnosis: [#6933](https://github.com/Unjuno/agent-interface/pull/6933), immutable head `f68715fba950d2e2c99c28ed3e30012b28602452`, actual worker e0cc. Original macOS evidence belongs to its author and is not replayed or pooled here. Own prospective assignment: [#59 comment5965936454](https://github.com/Unjuno/agent-interface/issues/59#issuecomment-5965936454); the original author acknowledged separation in [5966004735](https://github.com/Unjuno/agent-interface/pull/6933#issuecomment-5966004735).
+
+## Actual checks and preserved first outcomes
+
+Windows build26300, CPython3.11.9; native private subprocesses, pipes, threads and EOF are real. Client/planner/game/import boundaries are explicit inert fakes; zero decision iterations. Current source has eight ordinary methods, 8/8 PASS in normal mode and 8/8 PASS with `-O`; each final phase starts five private children sequentially. Tests cover missing fixture, noncooperative owned session, normal finish, initialization failure, Popen failure, client-close failure, stdout-reader start failure, and stderr overflow. The controlled noncooperative case meets its <4s assertion; this is not a whole-runtime hard bound.
+
+| Retained phase | Actual runner exit | Child invocations |
+|---|---:|---:|
+{table}
+
+All 27 child invocations are ordinary repair checks, not independent scientific trials. Original PLAN proposed four total and the claim used <=5 sequential wording; actual repeated repair phases exceed that prospective total, explicitly corrected in [CORRECTIONS.json](CORRECTIONS.json). Every retained case has external teardown records. Before external fixture teardown, final repaired cases already show acquired child/reader closure; the original RED does not.
+
+The first byte editor failed on mixed LF/CRLF source, leaving production unchanged. A dependent phase labelled green-normal was mistakenly run on baseline and failed; its label, exit1, logs and source pins are preserved, not declared green. Later source corrections were checked before tests. First reader and result remain; v2 adds literal error/release checks and rejects eight copied-record mutations. Reconstructed intermediate controller/test copies match contemporaneous receipt hashes but were reconstructed later, as [SOURCE_INVARIANTS.json](SOURCE_INVARIANTS.json) states.
+
+## Evidence custody and review
+
+[PUBLICATION.json](PUBLICATION.json) binds every retained original to its public derivative and identifies path-token projection. Original receipt log hashes describe original bytes; final normal/-O logs are unchanged. [MANIFEST.json](MANIFEST.json) binds all package files except itself. Final source snapshots duplicate the actual runtime/test and two unchanged data inputs exactly. Baseline controller bytes and mixed EOF newline are preserved exactly; archived helpers use `.py.txt` and are excluded from automatic Python discovery. The active regression module is intentionally executable and uses only standard-library fixtures with actual owned children. No workflow or discovery rule is added.
+
+Saved-only reader commands, without importing subject/tests or starting children:
+
+```
+python -B audit_saved_v2.py.txt <this-package-directory> <new-output-path>
+```
+
+This reruns a retained-data reader, not a native producer. Private originals retain their full host paths; public logs/receipts substitute owned local paths with tokens, and no authentication/session transcripts are included. Final source/test pins are in [RESULT.json](RESULT.json). Acceptance votes, head/diff digest and application records belong outside this source tree to avoid self-reference.
+
+## Limits and approval scope
+
+The patch covers resources acquired after a successful client constructor and before the first observation. A partially failing constructor, later actions/futures, descendants, stream flush blocking, game teardown, actual app-server/client journal-lock bounds, input release and useful task feedback remain outside this check. Client close is attempted with timeout1 but its implementation can block on journal/reader details; this code does not establish an overall deadline. Parent PID was not independently recorded: ownership linkage is source-qualified by the fixture Popen, child PID and trace, not a raw parent-PID attestation. Termination is not physical key release. No GUI, actual game/model, GPU, container/WSLc, or consumed formal allocation is executed by this evidence. #59/R134/#57 remain open.
+
+Content review must preserve these limits, original failures and source/raw identities. Reuse on a later main requires unchanged head/important dependency/test conditions, inspection of intervening changes, and a fresh actual-base/head/tree application record with a nonauthor linkage. Two assigned genuine nonauthor content approvals and actual required GitHub/ownership/conditional-forward gates are still required; publication does not imply application.
+''')
+index=subprocess.check_output(['git','show','HEAD:research/doom/README.md'],cwd=S)
+needle=b'| Retained raw result artifacts | [results/README.md](results/README.md) |'
+if index.count(needle)!=1:raise ValueError('DOOM navigation target')
+addition=b'\n| v39 startup failure resource repair | [Owned startup cleanup](v39_startup_repair_59_20261003_01a0ff33/README.md) |'
+(S/'research/doom/README.md').write_bytes(index.replace(needle,needle+addition))
+files={p.relative_to(A).as_posix():dict(sha256=digest(p.read_bytes()),bytes=p.stat().st_size) for p in sorted(A.rglob('*')) if p.is_file()}
+js('MANIFEST.json',dict(schema='sha256-byte-manifest-v1',files=files))
+print(json.dumps(dict(public_files=len(files)+1,manifest_entries=len(files),original_joins=len(joins),total_original_bytes=sum(x['original_bytes'] for x in joins),actual_children=counts,manifest_sha256=digest((A/'MANIFEST.json').read_bytes()))))

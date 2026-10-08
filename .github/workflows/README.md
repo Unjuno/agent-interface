@@ -30,7 +30,7 @@ GitHub Actions in this directory serve different purposes. They are grouped here
 
 ## Research execution
 
-- For local container-backed experiments on Windows, see the [`WSL Containers (wslc) pilot and migration gates`](../wslc-local-containers.md). This is a local execution option, not a replacement for GitHub Actions or for Docker-specific APIs/features that have not passed parity checks.
+- For local experiments on Windows, select native WSL when no image/isolation boundary is required, or use the [`WSL Containers (wslc) local runtime`](../wslc-local-containers.md) when a container is useful. WSLc does not provide Docker Engine APIs or Compose and is not a replacement for hosted GitHub Actions. Do not silently change a study's frozen runtime.
 - `container-lab-bundle-01.yml` — container research bundle execution.
 - `mindustry-v1602-asset-acquire-2624.yml` — manually materializes and hash-verifies the pinned Mindustry fixture for Issue #2624, then retains the artifact for 30 days; this is setup only, not a scientific result.
 - `map01-measurement-integration-live-02.yml` through `-04.yml` — scoped MAP01 measurement integration workflows.
