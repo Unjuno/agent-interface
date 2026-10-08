@@ -1,0 +1,55 @@
+{
+  "callback_count_after_resume": 1,
+  "callback_times_ns": [
+    0
+  ],
+  "command_count_after_resume": 1,
+  "command_returned_after_resume": "{\"op\":\"finish\"}",
+  "read_count_after_resume": 1,
+  "reads_before_resume": 0,
+  "scenario": {
+    "callback_finish_ns": 125,
+    "callback_start_ns": 0,
+    "command_became_readable_during_callback": true,
+    "command_json": "{\"op\":\"finish\"}",
+    "command_terminator": "LF",
+    "release_returned_ns": 0,
+    "tail_deadline_ns": 100
+  },
+  "schema": "v39-scorer-tail-command-priority-raw-a04-v1",
+  "tail": {
+    "deadline_ns": 100,
+    "deadline_overrun": true,
+    "disposition": "CENSORED",
+    "ended_ns": 125,
+    "intent_token": "a04-token-1",
+    "release_id": "a04-program-1",
+    "release_key": "d",
+    "release_returned_ns": 0,
+    "release_step": 2,
+    "schema": "map01-scorer-post-release-tail-v1",
+    "started_ns": 0,
+    "stop_condition_met": false,
+    "tail_samples": 1,
+    "termination": "command_ready",
+    "total_samples": 1
+  },
+  "tail_rows": [
+    {
+      "intent_token": "a04-token-1",
+      "missed_periods_before": 0,
+      "payload": {
+        "state": "running"
+      },
+      "post_release_tail": true,
+      "release_id": "a04-program-1",
+      "release_key": "d",
+      "release_returned_ns": 0,
+      "release_step": 2,
+      "sample_finished_ns": 125,
+      "sample_started_ns": 0,
+      "scheduled_ns": 0,
+      "start_lateness_ns": 0
+    }
+  ]
+}

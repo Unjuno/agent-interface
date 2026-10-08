@@ -1,0 +1,14 @@
+Frozen one-shot construction candidate:
+python research/doom/v39_scorer_tail_command_priority_a04_20261005/run.py
+
+Independent raw-only audit, after the candidate:
+python research/doom/v39_scorer_tail_command_priority_a04_20261005/audit.py
+
+Targeted TDD regression:
+python -m pytest research/doom/test_map01_scorer_stdio_adapter_v1.py -k command_ready_during_callback_deadline_overrun_preempts_next_scorer_sample -q
+
+Applicable adapter suites:
+python -m pytest research/doom/test_map01_scorer_stdio_adapter_v1.py research/doom/test_map01_scorer_stdio_adapter_v2.py -q
+
+Diff formatting check:
+git diff --check

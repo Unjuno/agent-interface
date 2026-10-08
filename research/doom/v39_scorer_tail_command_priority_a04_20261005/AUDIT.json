@@ -1,0 +1,104 @@
+{
+  "checks": {
+    "callback_crossed_deadline": true,
+    "command_ready_termination": true,
+    "command_was_ready": true,
+    "exact_command_returned": true,
+    "no_extra_sample": true,
+    "no_tail_read": true,
+    "one_tail_row": true,
+    "one_tail_sample": true,
+    "overrun_retained": true,
+    "raw_schema": true,
+    "release_precedes_callback": true,
+    "single_command": true,
+    "single_read": true,
+    "tail_is_censored": true
+  },
+  "raw_sha256": "99b016b6e677a6938bbd012701842a5b70fdbbc6694a8040767e8f29fa9c7ac8",
+  "schema": "v39-scorer-tail-command-priority-audit-a04-v1",
+  "scope": "Deterministic V1 adapter boundary; V2 inheritance covered by adjacent unit suite only. No real stdin, Doom, model, task effect, recovery, or MAP01 outcome.",
+  "source_checks": {
+    "research/doom/independent_progress_clock_v2.py": {
+      "actual": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+      "expected": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+      "matches": true
+    },
+    "research/doom/main_thread_scorer_polling_v1.py": {
+      "actual": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+      "expected": "32a1a4add2949c2dc65933bef0edb1903452851b44f2ee6da4a74c18dd4ade84",
+      "matches": true
+    },
+    "research/doom/map01_scorer_stdio_adapter_v1.py": {
+      "actual": "f8de125b903a9a00c817c6cf1d895a22f56a059108e56b5682b2b17bc281d1cc",
+      "expected": "f8de125b903a9a00c817c6cf1d895a22f56a059108e56b5682b2b17bc281d1cc",
+      "matches": true
+    },
+    "research/doom/map01_scorer_stdio_adapter_v2.py": {
+      "actual": "d2ce2d01d8bed7d69736940f9092e05ef3f87389a1b9b34414168847ff605e2c",
+      "expected": "d2ce2d01d8bed7d69736940f9092e05ef3f87389a1b9b34414168847ff605e2c",
+      "matches": true
+    },
+    "research/doom/test_map01_scorer_stdio_adapter_v1.py": {
+      "actual": "30011bbe4de46d32acf150f39e1b65bb61d0939348bdf4a7f3a19c9bd95cce71",
+      "expected": "30011bbe4de46d32acf150f39e1b65bb61d0939348bdf4a7f3a19c9bd95cce71",
+      "matches": true
+    },
+    "research/doom/test_map01_scorer_stdio_adapter_v2.py": {
+      "actual": "3fb3a70b49e6d90102b4d0b4dcad5c079950c7026c0acfeafea41d450ff40e36",
+      "expected": "3fb3a70b49e6d90102b4d0b4dcad5c079950c7026c0acfeafea41d450ff40e36",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/FREEZE.json": {
+      "actual": "73a4d7b7cea03c93f58d222d7d9719a880aa00d6cc095fc662673e027337d574",
+      "expected": "73a4d7b7cea03c93f58d222d7d9719a880aa00d6cc095fc662673e027337d574",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/README.md": {
+      "actual": "b77e3f56f09b7aa66ab160e5926c85f2ca7b3e4aa56488c8c618509801e654cd",
+      "expected": "b77e3f56f09b7aa66ab160e5926c85f2ca7b3e4aa56488c8c618509801e654cd",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/REPORT.md": {
+      "actual": "1232f6e4a9e33e4aaeb2f820beda252ea46f0b74a4cf74d9fa05fe1244705c5f",
+      "expected": "1232f6e4a9e33e4aaeb2f820beda252ea46f0b74a4cf74d9fa05fe1244705c5f",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/audit_v2.py": {
+      "actual": "df12fa1cff10b0696c29dc8c650bec8dc99096471dee8037dbc9a35e9566a075",
+      "expected": "df12fa1cff10b0696c29dc8c650bec8dc99096471dee8037dbc9a35e9566a075",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a03_20261005/results/a03/RESULT.json": {
+      "actual": "e97896aecfe7479c0b4dd4349d35758099364e6c4b7c2a5e072ba0345eaeae40",
+      "expected": "e97896aecfe7479c0b4dd4349d35758099364e6c4b7c2a5e072ba0345eaeae40",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/COMMANDS.txt": {
+      "actual": "666847b94f9f8ee836a25590fc9455cc74fa246f696d12161cfedc5ba0254079",
+      "expected": "666847b94f9f8ee836a25590fc9455cc74fa246f696d12161cfedc5ba0254079",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/DEVELOPMENT_RED.md": {
+      "actual": "52330620dec4821516d50180531a4daa4c0edd8f973b28fab04e6fb542fdaa01",
+      "expected": "52330620dec4821516d50180531a4daa4c0edd8f973b28fab04e6fb542fdaa01",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/README.md": {
+      "actual": "27c6cebc5c8b51187beefa0b0ab6dfa6036de6d9101f41f737454612a3c3faee",
+      "expected": "27c6cebc5c8b51187beefa0b0ab6dfa6036de6d9101f41f737454612a3c3faee",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/audit.py": {
+      "actual": "4e6341e8cc4f08f1aa4e244529d7a9ef3d85c14096a28da33f38cf9fe6f94ed6",
+      "expected": "4e6341e8cc4f08f1aa4e244529d7a9ef3d85c14096a28da33f38cf9fe6f94ed6",
+      "matches": true
+    },
+    "research/doom/v39_scorer_tail_command_priority_a04_20261005/run.py": {
+      "actual": "265b842bb900331cc0149943077a39e44fa32321e3c1292ba5e666adf29a5d01",
+      "expected": "265b842bb900331cc0149943077a39e44fa32321e3c1292ba5e666adf29a5d01",
+      "matches": true
+    }
+  },
+  "status": "PASS_CONSTRUCTION"
+}
