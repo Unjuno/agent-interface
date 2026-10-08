@@ -2,6 +2,7 @@
 from pathlib import Path
 import hashlib
 import json
+from collections import Counter, defaultdict
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
@@ -21,14 +22,36 @@ def empty_release(row):
             release.get("keys_unknown") == [])
 
 
+def in_model_interval(decision, timestamp):
+    start = decision.get("controller_model_started_ns")
+    end = decision.get("controller_model_ended_ns")
+    return (type(start) is int and type(end) is int and type(timestamp) is int and
+            start <= timestamp <= end)
+
+
+def is_hard_health_invalidation(invalidation):
+    if not isinstance(invalidation, dict):
+        return False
+    health = invalidation.get("outcomes", {}).get("health", {})
+    return (invalidation.get("reason") == "health:below_hard_minimum" or
+            (health.get("status") == "HARD_INVALIDATED" and
+             health.get("reason") == "below_hard_minimum"))
+
+
 def main():
     events = jsonl(ROOT / "episode/runtime/events.jsonl")
     scorer = jsonl(ROOT / "episode/runtime/scorer-events.jsonl")
     report = json.loads((ROOT / "episode/report.json").read_text())
-    audit = json.loads((ROOT / "AUDIT.json").read_text())
+    original_audit_path = ROOT / "AUDIT.json"
     cancellations = [row for row in events if row.get("event") == "cancel_requested"]
-    releases = {row.get("id"): row for row in events if row.get("event") == "input_released"}
-    terminals = {row.get("id"): row for row in events if row.get("event") == "terminal"}
+    releases = defaultdict(list)
+    terminals = defaultdict(list)
+    for row in events:
+        if row.get("event") == "input_released":
+            releases[row.get("id")].append(row)
+        elif row.get("event") == "terminal":
+            terminals[row.get("id")].append(row)
+    cancel_counts = Counter(row.get("id") for row in cancellations)
     rows = []
     for cancel in cancellations:
         ident = cancel.get("id")
@@ -36,29 +59,47 @@ def main():
                           row.get("id") == ident]
         transitions = [row for row in events if row.get("event") == "input_release_transition" and
                        row.get("id") == ident]
-        terminal = terminals.get(ident)
-        release_event = releases.get(ident)
+        terminal_rows = terminals.get(ident, [])
+        release_rows = releases.get(ident, [])
+        terminal = terminal_rows[0] if len(terminal_rows) == 1 else None
+        release_event = release_rows[0] if len(release_rows) == 1 else None
         has_input = bool(admitted_downs)
-        per_key_complete = all(row.get("release_batch_complete") is True and
-                               row.get("owner_thread_keyup_verified") is True
-                               for row in transitions)
+        admitted_keys = [row.get("key") for row in admitted_downs]
+        transition_keys = [row.get("key") for row in transitions]
+        per_key_complete = (bool(transitions) and
+                            all(isinstance(key, str) and key for key in admitted_keys) and
+                            all(isinstance(key, str) and key for key in transition_keys) and
+                            Counter(admitted_keys) == Counter(transition_keys) and
+                            all(row.get("release_batch_complete") is True and
+                                row.get("owner_thread_keyup_verified") is True
+                                for row in transitions))
         accounted = (bool(transitions) and per_key_complete) if has_input else not transitions
-        custody_ok = (cancel.get("matched") is True and terminal is not None and
+        custody_ok = (ident is not None and cancel_counts[ident] == 1 and
+                      cancel.get("matched") is True and len(terminal_rows) == 1 and
+                      len(release_rows) <= 1 and terminal is not None and
                       empty_release(terminal) and accounted and
                       ((release_event is not None and empty_release({"release": release_event.get("owner_release")}))
                        if has_input else release_event is None))
         rows.append({"id": ident, "matched": cancel.get("matched"),
                      "input_admitted_before_cancel": len(admitted_downs),
                      "per_key_release_transitions": len(transitions),
-                     "input_released_event_present": release_event is not None,
+                     "input_released_event_present": bool(release_rows),
                      "verified_empty_terminal": empty_release(terminal or {}),
+                     "terminal_event_count": len(terminal_rows),
+                     "input_released_event_count": len(release_rows),
                      "custody_ok": custody_ok})
     decisions = report.get("decisions", [])
-    guards = [d for d in decisions if isinstance(d.get("policy_invalidation"), dict) and
-              (d["policy_invalidation"].get("reason") == "health:below_hard_minimum" or
-               d["policy_invalidation"].get("outcomes", {}).get("health", {}).get("reason") == "below_hard_minimum")]
-    useful = [e for e in scorer if e.get("useful") is True and
-              e.get("kind") in ("KILL_COUNT_INCREASE", "MAP_EXIT")]
+    guards = []
+    for decision in decisions:
+        invalidation = decision.get("policy_invalidation")
+        if (is_hard_health_invalidation(invalidation) and
+                in_model_interval(decision, invalidation.get("monitor_received_ns")) and
+                in_model_interval(decision, invalidation.get("outcome_evaluated_ns"))):
+            guards.append(decision)
+    useful = [event for event in scorer if event.get("useful") is True and
+              event.get("kind") in ("KILL_COUNT_INCREASE", "MAP_EXIT") and
+              any(in_model_interval(decision, event.get("observed_ns"))
+                  for decision in decisions)]
     safety_ok = bool(cancellations) and all(row["custody_ok"] for row in rows)
     scope_exposed = bool(guards) and bool(useful)
     status = "PASS" if safety_ok and scope_exposed else ("HOLD" if safety_ok else "FAIL")
@@ -66,14 +107,22 @@ def main():
         "schema": "map01-v39-live-threat-guard-audit-v2",
         "allocation": "map01-v39-live-threat-guard-a07-20261009",
         "status": status,
-        "formal_pass": status == "PASS",
+        # This additive reconciliation does not re-run the original audit's
+        # source, recovery, stale-admission, or full preregistration gates.
+        "formal_pass": False,
+        "scoped_pass": status == "PASS",
         "supersedes": None,
         "preserves_original_audit_sha256": hashlib.sha256((ROOT / "AUDIT.json").read_bytes()).hexdigest(),
-        "interpretation": "The original audit required an input_released event for every matched cancellation. Four matched covers had no input_admission or per-key transition, so no per-input release event was due; each still had a verified empty terminal release. The six covers with admitted input all had a matching empty release event and complete per-key custody. Missing hard-guard exposure and useful scorer event therefore yield HOLD, not a release-safety FAIL.",
+        "interpretation": ("This versioned reconciliation checks cancellation custody and whether "
+                           "hard-health invalidation and useful scorer evidence fall inside the "
+                           "recorded model interval. PASS is scoped to these checks only; the "
+                           "original audit and full preregistered gates remain authoritative "
+                           "for any formal result."),
         "checks": {"all_matched_cancellations_closed_empty": safety_ok,
                    "all_admitted_input_cancel_releases_verified": safety_ok,
                    "hard_health_guard_exposed": bool(guards),
-                   "useful_feedback_during_pending_model": bool(useful)},
+                   "useful_feedback_during_pending_model": bool(useful),
+                   "original_audit_available": original_audit_path.is_file()},
         "counts": {"matched_cancellations": len(cancellations),
                    "cancellations_with_admitted_input": sum(r["input_admitted_before_cancel"] > 0 for r in rows),
                    "cancellations_without_admitted_input": sum(r["input_admitted_before_cancel"] == 0 for r in rows),
