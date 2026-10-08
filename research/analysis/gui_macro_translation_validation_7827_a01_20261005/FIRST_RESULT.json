@@ -1,0 +1,49 @@
+{
+  "schema": "gui-macro-tv-first-result-v1",
+  "allocation": "UNJUNO-7827-TV-A01-20261005-01",
+  "formal_invocations": {
+    "candidate": 1,
+    "auditor": 1,
+    "retries": 0
+  },
+  "candidate": {
+    "exit_code": 0,
+    "status": "PASS_TRANSLATION_VALIDATION_METHOD_SCOPED",
+    "valid_pairs": "5/5 accepted",
+    "mutations": "7/7 rejected with counterexamples",
+    "unknown": "oversized repeat UNKNOWN without certificate",
+    "baseline_missed": [
+      "drop_freshness_guard",
+      "remove_cancel_release"
+    ],
+    "stderr": "empty"
+  },
+  "auditor": {
+    "exit_code": 0,
+    "status": "FAIL_METHOD",
+    "valid_pairs": "5/5 independently replayed",
+    "mutations": "7/7 counterexample traces replayed but rows rejected for contexts_checked mismatch",
+    "observed_mutation_context_counts": {
+      "drop_freshness_guard": 1,
+      "change_effect_target": 53,
+      "reorder_noncommuting_events": 1,
+      "remove_cancel_release": 2,
+      "hide_forbidden_write_in_internal": 1,
+      "yield_becomes_continue": 53,
+      "alter_effect_postcondition": 53
+    },
+    "candidate_bug": "Candidate reports the full enumerated domain after returning early on a counterexample, so contexts_checked is inaccurate.",
+    "unknown": "UNKNOWN without certificate",
+    "errors": [
+      "mutation:drop_freshness_guard",
+      "mutation:change_effect_target",
+      "mutation:reorder_noncommuting_events",
+      "mutation:remove_cancel_release",
+      "mutation:hide_forbidden_write_in_internal",
+      "mutation:yield_becomes_continue",
+      "mutation:alter_effect_postcondition"
+    ]
+  },
+  "raw_capture": "Exact stdout/stderr are visible in the originating Codex tool result. They were not written locally; this JSON is an extracted summary, not the byte-exact raw stream.",
+  "scope": "Finite method evidence only; no macro execution authority."
+}

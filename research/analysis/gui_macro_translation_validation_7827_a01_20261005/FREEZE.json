@@ -1,0 +1,28 @@
+{
+  "schema": "gui-macro-tv-freeze-v1",
+  "allocation": "UNJUNO-7827-TV-A01-20261005-01",
+  "issue": 7827,
+  "execution_base_commit": "54af15a28d7d6d10d05221014ddf7a75d73b3e49",
+  "branch": "research/7827-tv-a01-native-wsl-20261005",
+  "runtime": {
+    "python": "3.11.9",
+    "platform": "win32",
+    "storage": "C: had zero free bytes; no local output files; candidate stdout piped in memory to auditor stdin"
+  },
+  "protocol_correction": "Supersedes stale PLAN.md base/runtime header. The finite standard-library model does not require a container boundary. Native WSL Python returned EIO; Windows Python 3.11.9 was frozen.",
+  "commands": [
+    "python -B candidate.py fixture.json model.json",
+    "python -B -c <frozen independent-auditor bootstrap> audit.py fixture.json model.json candidate.raw; candidate stdout piped via stdin"
+  ],
+  "auditor_bootstrap": "import os,sys; from pathlib import Path; audit_path,fixture_path,model_path=sys.argv[1:4]; raw=sys.stdin.buffer.read(); source=open(audit_path,'rb').read(); original=Path.read_bytes; Path.read_bytes=lambda self: raw if self.name=='candidate.raw' else original(self); sys.argv=[audit_path,fixture_path,model_path,'candidate.raw']; exec(compile(source,audit_path,'exec'),{'__name__':'__main__','__file__':audit_path})",
+  "invocation_rule": "One candidate invocation and one auditor invocation, no retries.",
+  "sha256": {
+    "PLAN.md": "C1D748CB523C1605C981B24C61768782F1FFCF9104BD3EB62B2FA9B01CCEE56D",
+    "candidate.py": "874095ED4A8267F99E3A35807F5AF91405265AC804684D99CF1E4676B3B81B00",
+    "audit.py": "6A54654DB95121C522D0A8A2ECA0FC40B942324B2BF0AABE260073776D27ACF1",
+    "fixture.json": "724CDE967E420AEC62F45DA57908962573946887A198EDBFE1D24A0B8DD23796",
+    "model.json": "5048967C4BA8205D0E8F17E02A6A8CFD421528E944D89859D3483F7424DA5FFB",
+    "test_protocol.py": "3A5462A645ADC685C37127583EFEEA1E80DBB9F658F20DA55298E703A0F46AE1"
+  },
+  "scope": "Finite method only; no GUI, runtime, model, user action, or resource-enforcement claim."
+}
