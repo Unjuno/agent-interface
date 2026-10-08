@@ -46,9 +46,11 @@
     "auditor_tests": "10/10 pass on the dedicated VM",
     "python_compile": "pass",
     "main_source_closure": "17/17 study file hashes and 11/11 runtime module hashes match",
+    "candidate_and_barrier_patches": "apply in order and compile in a temporary source copy; instrumented backend SHA-256 e885806c649acafe3550b55f2d88e070a59428008a9356fa60ce0699d4d118bb",
     "network_namespace_case_gate": "not yet exercised",
     "public_dispatch": "not run",
-    "formal_cases": "0"
+    "formal_cases": 0
   },
+  "setup_incident": "The first static patch command used git -C and modified only the backend in the disposable A02 study clone. No X server or dispatch was started. The file was restored from the pinned clean commit and checkout cleanliness verified; the patch test then passed against a separate /tmp source copy.",
   "next_gate": "Independent review of PR #8338 and protocol/auditor, then exact immutable freeze/readback before any Xvfb preflight or public-dispatch construction."
 }
