@@ -1,0 +1,39 @@
+{
+  "allocation": "UNJUNO-59-V39-CURRENT-MAIN-SOURCE-IDENTITY-A02-20261009",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/59",
+  "issue_state_at_freeze": "open",
+  "issue_assignees_at_freeze": [],
+  "current_main_sha": "b4046798ed8902745a36e8fda091204233bb06d3",
+  "historical_comparison_sha": "c1074c4dc385bae5b94ce93a5870e92c2e6ab07d",
+  "branch": "research/59-v39-main-source-identity-a02-20261009",
+  "worktree": "/Users/taka/Documents/Codex/2026-10-03/new-chat-5/work/worktrees/59-v39-main-source-identity-a01",
+  "package": "research/doom/v39_current_main_source_identity_audit_a02_20261009",
+  "source_sha256": {
+    "README.md": "d437bcd0561b1d6f435a184535a73568d31f73156684c164ebb3b080bc882774",
+    "PROTOCOL.md": "923393a666e9ce5be48d9a5b3ea29a57b9770c52c1dc24072410110f9455c4e9",
+    "audit_current_main.py": "d9be10d8046604b17ab87bb5a1138974277259f3b0a04c7f9170efb20b46ff8a"
+  },
+  "current_main_input_sha256": {
+    "research/doom/map01_overlap_controller_v39.py": "51ceed1ee329da2c64cf26300acddcf3e57b03ad8b193716709dcc0a95143607",
+    "research/doom/session_map01_v15.py": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724",
+    "research/live_control/observable_signal_guard_v2.py": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+    "research/doom/MAP01_ASTRA_SYSTEM_FAILURE_TRIAGE_V1.md": "4af4a25cdb4dc2cd1c035e7faef05d676284e0fd34542989a1371652147d2796",
+    "docs/CURRENT_GOAL.md": "740ea41efb1136b0a6e7ef66eab4505d22829b361524d214da8c640beef8d1c3"
+  },
+  "historical_input_sha256": {
+    "controller": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "session": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+  },
+  "expected_from_r139": {
+    "controller": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "session": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+  },
+  "audit_invocations_before_freeze": 0,
+  "command": "python3 -B audit_current_main.py --main-sha b4046798ed8902745a36e8fda091204233bb06d3",
+  "execution_scope": "read-only Git object access and Python AST inspection; no controller import/execution, game, GUI, model, input, or container",
+  "runtime": {
+    "python": "Python 3.14.5",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "cpu_count": 10
+  }
+}
