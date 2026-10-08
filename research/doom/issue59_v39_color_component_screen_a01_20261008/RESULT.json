@@ -1,0 +1,34 @@
+{
+  "experiment_id": "issue59-v39-color-component-screen-a01-20261008",
+  "status": "POSTHOC_EXPLORATORY_REJECTED_AS_INTERRUPT_CUE",
+  "dataset": {
+    "sample_n": 36,
+    "determinate_n": 34,
+    "uncertain_excluded": 2,
+    "source_commit": "dd9c2cde511a52cf21e80ecbb2eb9edb0dd6f2f8",
+    "label_source_merged_pr": 8472
+  },
+  "candidate": {
+    "tp": 16,
+    "fp": 18,
+    "fn": 0,
+    "tn": 0,
+    "uncertain_excluded": 2
+  },
+  "baseline_published_pr_8472": {
+    "tp": 3,
+    "fp": 0,
+    "fn": 13,
+    "tn": 18,
+    "uncertain_excluded": 2
+  },
+  "interpretation": "The fixed connected warm-color component rule detects all labeled-positive frames in this one sample but also every labeled-negative frame. It adds no useful discrimination and is rejected as an interrupt trigger.",
+  "limits": [
+    "one episode and single-reviewer frame labels",
+    "labels were accessed before candidate rule selection; this is not blinded or preregistered",
+    "runtime controller commit is not pinned",
+    "offline pixels only; no live control or task effect",
+    "not evidence against semantic/object-level recognition"
+  ]
+}
+
