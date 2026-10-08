@@ -31,7 +31,8 @@ from codex_app_server_client_v2 import CodexAppServerClient
 from persistent_planner_adapter_v2 import PersistentPlannerAdapter
 from final_action_admission_v2 import (
     decide_final_admission, record_controller_no_input,
-    record_action_validity, record_executor_admission)
+    record_action_validity, record_executor_admission,
+    record_executor_stale_rejection)
 from action_validity_admission_v1 import SNAPSHOT_FORMAT, evaluate_action_validity
 from running_action_guard_v1 import (
     ACTIVE as RUNNING_ACTIVE, BETWEEN as RUNNING_BETWEEN,
@@ -812,6 +813,44 @@ def recover_pending_observation_backlog(incoming, latest, source_sequence,
     return recovery
 
 
+def recover_stale_executor_rejection(rejected, *, identifier,
+                                     expected_sequence, controller_received_ns,
+                                     latest, incoming, wait,
+                                     final_action_admission, running_guard):
+    """Discard a pre-acceptance stale action and return only with fresh state."""
+    if (type(rejected) is not dict or rejected.get("event") != "rejected" or
+            rejected.get("reason") !=
+            "latest observation sequence required before input" or
+            type(identifier) is not str or not identifier or
+            type(expected_sequence) is not int or
+            type(controller_received_ns) is not int or
+            type(latest) is not dict or type(latest.get("sequence")) is not int or
+            latest["sequence"] < expected_sequence):
+        raise ValueError("exact stale-sequence rejection and source required")
+    recovery = recover_pending_observation_backlog(
+        incoming, latest, expected_sequence, identifier, wait)
+    if recovery["exhausted"]:
+        raise RuntimeError(
+            "stale Executor rejection recovery budget exhausted "
+            f"after {recovery['batches']} batches at sequence "
+            f"{recovery['latest']['sequence']}")
+    fresh = recovery["latest"]
+    if (type(fresh) is not dict or type(fresh.get("sequence")) is not int or
+            fresh["sequence"] <= expected_sequence):
+        raise RuntimeError("stale Executor rejection requires a newer observation")
+    receipt = {
+        "event": "rejected", "id": identifier,
+        "reason": rejected["reason"],
+        "expected_sequence": expected_sequence,
+        "observed_sequence": fresh["sequence"],
+        "controller_received_ns": controller_received_ns,
+    }
+    admission = record_executor_stale_rejection(final_action_admission, receipt)
+    guard = running_guard.record_preacceptance_rejection(receipt)
+    return {"latest": fresh, "recovery": recovery,
+            "rejection": receipt, "admission": admission, "guard": guard}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -1225,9 +1264,11 @@ def main():
             running_invalidation=None
             partial_execution=None
             refresh_program_ids=[]
+            stale_rejection=None
+            stale_recovery=None
             def execute_segment(identifier,commands,role,command_indices,
                                 contingency_after=None,branch_evidence=None):
-                nonlocal program_admissions,first_accepted,final_action_admission
+                nonlocal program_admissions,first_accepted,final_action_admission,latest
                 before=dict(latest);event_start=len(all_events);clock_ns=time.perf_counter_ns()
                 steps=compile_commands(commands)
                 submit_command={"op":"submit","id":identifier,
@@ -1236,7 +1277,29 @@ def main():
                 process.stdin.write(json.dumps(submit_command)+"\n");process.stdin.flush()
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
                               (r.get("id")==identifier or r["event"]=="rejected"))
-                if accepted["event"]!="accepted":raise RuntimeError(accepted)
+                if accepted["event"]!="accepted":
+                    if accepted.get("reason") != \
+                            "latest observation sequence required before input":
+                        raise RuntimeError(accepted)
+                    rejection_received_ns = time.perf_counter_ns()
+                    recovered = recover_stale_executor_rejection(
+                        accepted, identifier=identifier,
+                        expected_sequence=submit_command["expected_sequence"],
+                        controller_received_ns=rejection_received_ns,
+                        latest=latest, incoming=incoming, wait=wait,
+                        final_action_admission=final_action_admission,
+                        running_guard=running_guard)
+                    latest = recovered["latest"]
+                    stale_rejection = recovered["rejection"]
+                    final_action_admission = recovered["admission"]
+                    guard_receipt = recovered["guard"]
+                    return {"records": [], "invalidated": False,
+                            "partial": None, "cancel_event": None,
+                            "physical_release_event": None,
+                            "release_pending_guard": None, "terminal": None,
+                            "guard": guard_receipt,
+                            "stale_rejection": stale_rejection,
+                            "stale_recovery": recovered["recovery"]}
                 program_admissions+=1
                 guard_acceptance={"event":"accepted","id":identifier,
                                   "steps":accepted["steps"],
@@ -1300,14 +1363,32 @@ def main():
                         "release_pending_guard":release_pending_receipt,
                         "terminal":terminal,"guard":guard_receipt}
             def refresh_between_segments(identifier):
-                nonlocal program_admissions
+                nonlocal program_admissions,latest,final_action_admission
+                nonlocal stale_rejection,stale_recovery
                 clock_ns=time.perf_counter_ns()
+                expected_sequence=latest["sequence"]
                 process.stdin.write(json.dumps({"op":"submit","id":identifier,
-                  "expected_sequence":latest["sequence"],"valid_until_ns":clock_ns+5_000_000_000,
+                  "expected_sequence":expected_sequence,"valid_until_ns":clock_ns+5_000_000_000,
                   "steps":[{"op":"observe"}]})+"\n");process.stdin.flush()
                 accepted=wait(lambda r:r["event"] in ("accepted","rejected") and
                               (r.get("id")==identifier or r["event"]=="rejected"))
-                if accepted["event"]!="accepted":raise RuntimeError(accepted)
+                if accepted["event"]!="accepted":
+                    if accepted.get("reason") != \
+                            "latest observation sequence required before input":
+                        raise RuntimeError(accepted)
+                    rejection_received_ns=time.perf_counter_ns()
+                    recovered=recover_stale_executor_rejection(
+                        accepted,identifier=identifier,
+                        expected_sequence=expected_sequence,
+                        controller_received_ns=rejection_received_ns,
+                        latest=latest,incoming=incoming,wait=wait,
+                        final_action_admission=final_action_admission,
+                        running_guard=running_guard)
+                    latest=recovered["latest"]
+                    final_action_admission=recovered["admission"]
+                    stale_rejection=recovered["rejection"]
+                    stale_recovery=recovered["recovery"]
+                    return False
                 program_admissions+=1;refresh_program_ids.append(identifier)
                 boundary=wait(lambda r:r["event"]=="terminal" and r.get("id")==identifier,
                               observation_monitor=action_monitor)
@@ -1337,6 +1418,10 @@ def main():
                 result=execute_segment(f"plan-{index}-primary-{segment_start}-{segment_end}",
                     segment_commands,"primary",list(range(segment_start,segment_end+1)))
                 records=result["records"]
+                if result.get("stale_rejection") is not None:
+                    stale_rejection=result["stale_rejection"]
+                    stale_recovery=result["stale_recovery"]
+                    break
                 if result["invalidated"]:
                     running_invalidation=result["guard"]["invalidation"]
                     partial_execution=result["partial"]
@@ -1360,6 +1445,10 @@ def main():
                          "semantic_command":trigger["command"],
                          "effect_receipt":trigger["receipt"]})
                     fallback_records=fallback_result["records"]
+                    if fallback_result.get("stale_rejection") is not None:
+                        stale_rejection=fallback_result["stale_rejection"]
+                        stale_recovery=fallback_result["stale_recovery"]
+                        break
                     if fallback_result["invalidated"]:
                         running_invalidation=fallback_result["guard"]["invalidation"]
                         partial_execution=fallback_result["partial"]
@@ -1372,6 +1461,50 @@ def main():
                         f"plan-{index}-refresh-after-{segment_end}"):
                     running_invalidation=running_guard.receipt()["invalidation"]
                     break
+            if stale_rejection is not None:
+                recovery = stale_recovery
+                if recovery["exhausted"]:
+                    raise RuntimeError("stale Executor rejection recovery exhausted")
+                running_action_receipt=running_guard.receipt()
+                receipts=[row["receipt"] for row in trace]
+                decisions.append({"iteration":index,"source_image":str(source_image),
+                  "model_image":str(image),
+                  "model_image_sha256":hashlib.sha256(image.read_bytes()).hexdigest(),
+                  "action":action,"usage":usage,"model_ns":model_ns,
+                  "prior_soft_event_summary":prior_soft_event_summary,
+                  "effect_memory":effect_memory,"effect_receipts":receipts,
+                  "effect_observation_samples":sum(row["observation_samples"] for row in trace),
+                  "effect_observation_capture_ms":sum(row["observation_capture_ms"] for row in trace),
+                  "execution_trace":trace,"contingency_branch":branch,
+                  "compiled_commands":[row["command"] for row in trace],
+                  "model_session_id":model_session_id,
+                  "planner_turn_id":planner_handle.turn_id,
+                  "planner_turn_status":planner_result.status,
+                  "planner_answer_eligible":planner_result.answer_eligible,
+                  "planner_terminal_observed_ns":planner_terminal_observed_ns,
+                  "final_action_admission":final_action_admission,
+                  "running_action_guard":running_action_receipt,
+                  "executor_preacceptance_rejection":stale_rejection,
+                  "pending_observation_recovery":recovery,
+                  "running_action_invalidation":running_invalidation,
+                  "partial_execution":partial_execution,
+                  "action_refresh_program_ids":refresh_program_ids,
+                  "action_source_observation":action_source_observation,
+                  "action_source_signals":{"health":source_health_signal,
+                                            "ammo":source_ammo_signal},
+                  "action_current_signals":{"health":current_health_signal,
+                                             "ammo":current_ammo_signal},
+                  "planner_cancellation_requested":planner_result.cancellation_requested,
+                  "planner_interrupt":planner_interrupt,
+                  "controller_model_started_ns":model_started_ns,
+                  "controller_model_ended_ns":model_ended_ns,
+                  "model_action_discarded":not trace,
+                  "remaining_action_discarded":True,
+                  "discard_reason":"executor_stale_sequence_before_acceptance",
+                  "cover_terminal_before_plan":True,
+                  "plan_terminal":("stale_rejected_before_next_segment" if trace
+                                   else "rejected_before_admission")})
+                continue
             if running_guard.receipt()["state"]==RUNNING_BETWEEN:
                 running_guard.record_action_complete()
             running_action_receipt=running_guard.receipt()
