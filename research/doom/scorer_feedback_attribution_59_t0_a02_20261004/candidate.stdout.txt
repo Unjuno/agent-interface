@@ -1,0 +1,39 @@
+{
+  "actuation_intervals_supplied": 0,
+  "candidate_exit_code": 0,
+  "causation_claim": "NOT_ESTABLISHED",
+  "event_sha256": "0d99e3650ec90431a4fd2ca0bfd992be408a8d40b6e601a147be8605699529ea",
+  "historical_audit_status": "PASS_SCORER_EVENTS_RETAINED_DURING_COMMAND_WAIT_CONSTRUCTION",
+  "historical_scope": "host construction only; no MAP01, model, X11, Docker, plan/actuation binding, or causal efficacy claim",
+  "negative_event_count": 1,
+  "negative_event_timestamps_ns": [
+    30651801594085
+  ],
+  "positive_event_attribution": [
+    {
+      "causal_attribution": "NOT_ESTABLISHED",
+      "detection_interval_ns": [
+        30651715940426,
+        30651744449031
+      ],
+      "event_sequence": 1,
+      "intent_token": null,
+      "kind": "KILL_COUNT_INCREASE",
+      "possible_intent_tokens": [],
+      "reason": "no_complete_verified_intent_coverage",
+      "status": "UNRESOLVED"
+    }
+  ],
+  "positive_event_count": 1,
+  "sample_count": 13,
+  "schema": "scorer-feedback-attribution-t0-a02-v1",
+  "scope": "saved scorer-wait construction stream only; no MAP01/controller/game/model/input replay",
+  "source_hashes": {
+    "research/doom/map01_r133_recovery_coast_t1_v1/scorer_wait_construction_v1/results/formal-01/AUDIT.json": "9fbba931ff0159d657612102fa87e7323b704219779277c5a9a41bfca5ff2ac6",
+    "research/doom/map01_r133_recovery_coast_t1_v1/scorer_wait_construction_v1/results/formal-01/RAW.json": "fd07dcb1da9810d3c842ee87889b3256068185bf808ae170b68fd5dd450e9cba",
+    "research/doom/map01_r133_recovery_coast_t1_v1/scorer_wait_construction_v1/results/formal-01/scorer/scorer-events.jsonl": "0d99e3650ec90431a4fd2ca0bfd992be408a8d40b6e601a147be8605699529ea",
+    "research/doom/map01_r133_recovery_coast_t1_v1/scorer_wait_construction_v1/results/formal-01/scorer/scorer-samples.jsonl": "210ae4341db078457e7d1930adef81d2249fd1836269274e55d7ff972d91ce4d",
+    "research/doom/scorer_feedback_attribution_59_t0_a01_20261004/scorer_feedback_attribution_v1.py": "3f9b8712526c16fded9809d91dfb2e76f935cc5625ab07e297ef69d6f7ce745b"
+  },
+  "status": "PASS_SCOPED"
+}

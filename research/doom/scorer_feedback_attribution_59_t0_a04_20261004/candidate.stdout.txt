@@ -1,0 +1,158 @@
+{
+  "schema": "scorer-feedback-attribution-a04-result-v1",
+  "cases": {
+    "missing": {
+      "a03": [
+        {
+          "event_sequence": 1,
+          "kind": null,
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE",
+          "reason": "one_verified_envelope_spans_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a04": {
+        "rejected": true,
+        "error": "positive scorer event kind must be a nonempty string"
+      }
+    },
+    "null": {
+      "a03": [
+        {
+          "event_sequence": 1,
+          "kind": null,
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE",
+          "reason": "one_verified_envelope_spans_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a04": {
+        "rejected": true,
+        "error": "positive scorer event kind must be a nonempty string"
+      }
+    },
+    "empty": {
+      "a03": [
+        {
+          "event_sequence": 1,
+          "kind": "",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE",
+          "reason": "one_verified_envelope_spans_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a04": {
+        "rejected": true,
+        "error": "positive scorer event kind must be a nonempty string"
+      }
+    },
+    "whitespace": {
+      "a03": [
+        {
+          "event_sequence": 1,
+          "kind": "   ",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE",
+          "reason": "one_verified_envelope_spans_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a04": {
+        "rejected": true,
+        "error": "positive scorer event kind must be a nonempty string"
+      }
+    },
+    "non_string": {
+      "a03": [
+        {
+          "event_sequence": 1,
+          "kind": 17,
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE",
+          "reason": "one_verified_envelope_spans_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a04": {
+        "rejected": true,
+        "error": "positive scorer event kind must be a nonempty string"
+      }
+    },
+    "valid_control": {
+      "a03": [
+        {
+          "event_sequence": 2,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE",
+          "reason": "one_verified_envelope_spans_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ],
+      "a04": [
+        {
+          "event_sequence": 2,
+          "kind": "KILL_COUNT_INCREASE",
+          "detection_interval_ns": [
+            100,
+            200
+          ],
+          "status": "SINGLE_POSSIBLE_INTENT_ENVELOPE",
+          "reason": "one_verified_envelope_spans_detection_interval",
+          "possible_intent_tokens": [
+            "intent-a"
+          ],
+          "intent_token": null,
+          "causal_attribution": "NOT_ESTABLISHED"
+        }
+      ]
+    }
+  },
+  "command": "python run_a04.py",
+  "scope": "synthetic schema-boundary construction"
+}
