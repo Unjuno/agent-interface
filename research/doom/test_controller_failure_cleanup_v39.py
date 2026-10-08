@@ -34,6 +34,7 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
                 "verified": True,
                 "keys_down": [],
                 "buttons_down": [],
+                "keys_unknown": [],
             }
             if release_token is not OMIT_TOKEN:
                 release["intent_token"] = release_token
@@ -63,6 +64,48 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
     def test_release_without_optional_token_keeps_legacy_id_binding(self):
         receipt = self.run_cleanup()
         self.assertTrue(receipt["input_release_verified_empty"])
+
+    def test_unknown_key_state_prevents_empty_release_certificate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            accepted = {"event": "accepted", "id": "source-refresh-0",
+                        "intent_token": "accepted-lease"}
+            terminal = {
+                "event": "terminal", "id": "source-refresh-0",
+                "release": {"verified": True, "keys_down": [],
+                            "buttons_down": [], "keys_unknown": ["KEY_W"],
+                            "intent_token": "accepted-lease"},
+            }
+            scope = ControllerFailureCleanup(Planner(), output)
+            scope.observe_output([accepted, terminal], RetiredReader(),
+                                 lambda predicate, timeout: None, None, [])
+            with self.assertRaisesRegex(RuntimeError, "fixture"):
+                with scope:
+                    raise RuntimeError("fixture")
+            receipt = json.loads(
+                (output / "controller-failure.json").read_text())
+            self.assertFalse(receipt["input_release_verified_empty"])
+
+    def test_missing_unknown_key_state_prevents_empty_release_certificate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            accepted = {"event": "accepted", "id": "source-refresh-0",
+                        "intent_token": "accepted-lease"}
+            terminal = {
+                "event": "terminal", "id": "source-refresh-0",
+                "release": {"verified": True, "keys_down": [],
+                            "buttons_down": [],
+                            "intent_token": "accepted-lease"},
+            }
+            scope = ControllerFailureCleanup(Planner(), output)
+            scope.observe_output([accepted, terminal], RetiredReader(),
+                                 lambda predicate, timeout: None, None, [])
+            with self.assertRaisesRegex(RuntimeError, "fixture"):
+                with scope:
+                    raise RuntimeError("fixture")
+            receipt = json.loads(
+                (output / "controller-failure.json").read_text())
+            self.assertFalse(receipt["input_release_verified_empty"])
 
 
 if __name__ == "__main__":

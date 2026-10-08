@@ -143,6 +143,7 @@ class ControllerFailureCleanup:
                 terminal_by_id[identifier]['release'].get('verified') is True and
                 terminal_by_id[identifier]['release'].get('keys_down')==[] and
                 terminal_by_id[identifier]['release'].get('buttons_down')==[] and
+                terminal_by_id[identifier]['release'].get('keys_unknown')==[] and
                 ('intent_token' not in terminal_by_id[identifier]['release'] or
                  (type(accepted_by_id[identifier].get('intent_token')) is str and
                   bool(accepted_by_id[identifier]['intent_token']) and

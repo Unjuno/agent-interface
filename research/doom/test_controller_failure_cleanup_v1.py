@@ -83,7 +83,8 @@ class Tests(unittest.TestCase):
             events=[{'event':'accepted','id':'passive-1'}]
             reader=DelayedReader(events,[
                 {'event':'terminal','id':'passive-1','status':'completed',
-                 'release':{'verified':True,'keys_down':[],'buttons_down':[]}},
+                 'release':{'verified':True,'keys_down':[],'buttons_down':[],
+                            'keys_unknown':[]}},
                 {'event':'post_control_score'}])
             planner=Planner();child=Child();error=ValueError('typed source unavailable')
             wait_calls=[]
