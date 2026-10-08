@@ -67,6 +67,31 @@ test('reply persistence failure retains one effect and blocks replay',async()=>{
   assert.equal(calls,1);
 });
 
+test('presentation persistence failure retains original reply and blocks another command', async () => {
+  let calls = 0;
+  const {directory, exchange} = await fixture(async () => {
+    calls++;
+    return {attempt: 1, result: {isError: false,
+      content: [{type: 'text', text: '{"status":"observed"}'}]}};
+  });
+  const request = {id: 1, method: 'observe', args: []};
+  const presentationPath = join(directory, 'presentation-1.json');
+  await writeFile(presentationPath, 'occupied');
+
+  await assert.rejects(exchange.execute(request), /EEXIST/);
+
+  assert.equal(calls, 1);
+  assert.deepEqual(JSON.parse(await readFile(join(directory, 'request-1.json'))), request);
+  assert.deepEqual(JSON.parse(await readFile(join(directory, 'original-reply-1.json'))),
+    {attempt: 1, result: {isError: false,
+      content: [{type: 'text', text: '{"status":"observed"}'}]}});
+  assert.equal(await readFile(presentationPath, 'utf8'), 'occupied');
+  assert.ok(exchange.state().stopped);
+  assert.equal(exchange.state().next_id, 2);
+  await assert.rejects(exchange.execute({id: 2, method: 'observe', args: []}), /exchange stopped/);
+  assert.equal(calls, 1);
+});
+
 for(const command of [{id:1,method:'close',args:[]},{id:1,method:'observe',args:[],extra:true},
   {id:1,method:'observe',args:[undefined]}, {id:1,method:'observe',args:[NaN]}])
 test('invalid envelope is rejected before host or file publication: '+JSON.stringify(command),async()=>{
