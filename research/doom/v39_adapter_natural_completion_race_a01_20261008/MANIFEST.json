@@ -1,10 +1,20 @@
 {
-  "schema": "v39-adapter-natural-completion-race-a01-manifest-v1",
+  "schema": "v39-adapter-natural-completion-race-manifest-v2",
   "files": [
     {
       "path": "AUDIT.json",
       "bytes": 312,
       "sha256": "90c53e31674b197cd9d9e848b1ab0a906c00a39ebbde48e43eb69f8809ac2c11"
+    },
+    {
+      "path": "AUDIT_A02.json",
+      "bytes": 426,
+      "sha256": "6ebe107434632b60badf0248a171f93237328f2f33fc106c91cc4444e41ee07d"
+    },
+    {
+      "path": "audit_reader_race_a02.py",
+      "bytes": 1527,
+      "sha256": "9fc1bcfa958978843d57db432cb3d06951bc963aba82188301e5e28fa77bd285"
     },
     {
       "path": "audit_result.py",
@@ -17,14 +27,24 @@
       "sha256": "3d6a5d795c1e64efcb16585ee5b56535ceea722ae2b970d6958f285cebda14a3"
     },
     {
+      "path": "candidate_A02.stdout",
+      "bytes": 1726,
+      "sha256": "e902c51b5b1064abc87fae8a61f74b4e6d4ebad25b13291e08e85b6e607ff72f"
+    },
+    {
       "path": "FREEZE.json",
       "bytes": 1494,
       "sha256": "39c563f3ad09670ad1ffc9fbaff61c433d5ccb27c4fe0a05f2bd03179ef85510"
     },
     {
+      "path": "FREEZE_A02.json",
+      "bytes": 1952,
+      "sha256": "0ea742acf444cf7e6e94b76ffe9217403e321b20d7a6d4097c5607afadc27c69"
+    },
+    {
       "path": "README.md",
-      "bytes": 1432,
-      "sha256": "0b306000d4b6f25b39bcd81bb2e5e4118f27d15364a1038c4b6fccad9f0a8049"
+      "bytes": 998,
+      "sha256": "9e3508870acead6db6baf805bc4ae09ea213281d477dbcba7b23fbc3b1b26a06"
     },
     {
       "path": "reproduction.stdout",
@@ -37,6 +57,16 @@
       "sha256": "3d6a5d795c1e64efcb16585ee5b56535ceea722ae2b970d6958f285cebda14a3"
     },
     {
+      "path": "RESULT_A02.json",
+      "bytes": 1726,
+      "sha256": "e902c51b5b1064abc87fae8a61f74b4e6d4ebad25b13291e08e85b6e607ff72f"
+    },
+    {
+      "path": "RESULT_A02.sha256",
+      "bytes": 82,
+      "sha256": "76106dcfb1d40bd01c2abac34e15408402367b13a3641c586b0d5275443247ab"
+    },
+    {
       "path": "RESULT_SHA256.txt",
       "bytes": 78,
       "sha256": "a413402ed3d56545158eeeeb1cfa489004aba2aa9786035bb1efc1a444d4d101"
@@ -45,6 +75,11 @@
       "path": "run_race.py",
       "bytes": 6558,
       "sha256": "080fb10f1f451e8bbb77d036d3a4c77a330d793c3141d5c65e904b7d6a80e1be"
+    },
+    {
+      "path": "run_reader_race_a02.py",
+      "bytes": 9777,
+      "sha256": "4721bb3d87055e7df2f3584b963718cbf441c1a55a6834e8eff2239efec1abe6"
     },
     {
       "path": "source/codex_app_server_client_v2.py",
@@ -63,8 +98,8 @@
     },
     {
       "path": "VALIDATION.txt",
-      "bytes": 814,
-      "sha256": "5a25dc131c6989183c080f29753e49cdd6cf6caadeb0e09bba8fc44bec9df4ef"
+      "bytes": 404,
+      "sha256": "6c11cf2b686eae3dcb91edb604dd84949ed8f54078038363b14520109585ca17"
     }
   ]
 }

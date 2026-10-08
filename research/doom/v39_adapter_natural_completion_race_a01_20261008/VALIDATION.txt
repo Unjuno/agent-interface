@@ -1,5 +1,2 @@
-﻿Frozen current-main source Git blob IDs: controller f7b66279d87ebc3704ccef1b6a5ce646611c890b; planner adapter 879736562aa5c0637319616c9f01df22af087b15; App Server client 8553874221761a7807c846c7dcd66c22fc6340ff.
-A01 candidate: python run_race.py; PASS_COMPLETION_RETAINED_BUT_ANSWER_INVALIDATED.
-Independent audit: python audit_result.py; PASS_INDEPENDENT_SOURCE_AND_RESULT_AUDIT; 3 source blobs matched; retained result SHA-256 3d6a5d795c1e64efcb16585ee5b56535ceea722ae2b970d6958f285cebda14a3.
-Current-main handoff regression suite, frozen at 8ec1369bf81025ed433b4391871f9bb503198c19: 6/6 tests passed.
-The experiment and regression checks used simulated transports/backends and did not start a game, model, GUI, or OS input. This repository change contains only research evidence and frozen source snapshots.
+
+A02 on main 6b232760a9d3edad2f57a18bff1236b807b8f8ff: exact client stdout reader, request/notification methods, planner interrupt/await methods, and V39 cancel helper composed with an ordered in-memory JSONL stream. Result: PASS_EXACT_READER_ROUTES_COMPLETION_BEFORE_INTERRUPT_REPLY. Independent audit verifies 3/3 frozen source blobs, event order, answer rejection, empty terminal, and raw result SHA.
