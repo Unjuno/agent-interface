@@ -1,3 +1,23 @@
+# Issue #8500 T0 A01 — rejected-analogy memory finite method test (2026-10-08)
+
+`PASS_METHOD_SCOPED`: frozen deterministic scorer and independent auditor each ran once, with zero retries. All 84 rows across 12 blocks reconstructed with zero errors; all 5/5 frozen corruption controls were rejected. Invalid proposals among 14 authored invalid candidates were 8/14 (no memory), 5/14 (prose), and 2/14 (structured); base valid recall was 8/10 in every arm. All four changed-envelope controls reopened under structured memory. This is a finite hand-authored fixture result only—not real analogical reasoning, model behavior, generalization, deployed-memory effectiveness, or product benefit. Host CPython 3.12.10; no container boundary required and no Docker/WSLc comparison. See [formal report and raw evidence](research/analysis/analogy_rejection_8500_t0_a01_20261008/RESULT.md), [frozen package](research/analysis/analogy_rejection_8500_t0_a01_20261008/README.md), and [Issue #8500](https://github.com/Unjuno/agent-interface/issues/8500).
+
+# Issue #8502 T0 A03 — corrected paired-cutpoint successor (2026-10-08)
+
+A03 is a fresh-seed successor to A01 `FAIL_METHOD` and A02 `FAIL_AUDIT_ONLY`; neither old allocation was rerun or modified. Candidate and independent contingency-table auditor each ran once. All five synthetic classifications/localizations reconstructed with zero errors, and all 6/6 declared mutations were rejected: `PASS_METHOD_SCOPED`. The result is a coarse synthetic screen only—not human measurement invariance, scalar/latent-mean comparability, workload validity, accessibility, or user benefit. See [A03 report and frozen package](research/analysis/measurement_invariance_8502_t0_a03_20261008/RESULT.md) and [Issue #8502](https://github.com/Unjuno/agent-interface/issues/8502).
+
+# Issue #8502 T0 A02 — independent audit-only successor (2026-10-08)
+
+A02 preserves A01's `FAIL_METHOD` and emitted the five saved-fixture labels with six mutation controls rejected, but its own README source digest was mis-frozen. Overall disposition is `FAIL_AUDIT_ONLY`; no result is promoted. See the [A02 record](research/analysis/measurement_invariance_8502_t0_a02_20261008/RESULT.md) and [Issue #8502](https://github.com/Unjuno/agent-interface/issues/8502).
+
+# Issue #8502 T0 A01 — ordinal comparability screen (2026-10-08)
+
+A01's candidate emitted the five planned synthetic labels, but its auditor used a difference of groupwise maximum cumulative proportions instead of the maximum between-group difference, producing `FAIL_METHOD` at F02. A02 did not rerun A01 and does not override this failure. No `METHOD_PASS_SCOPED`, human data, latent-mean comparability, or accessibility inference is claimed. See the [A01 record](research/analysis/measurement_invariance_8502_t0_a01_20261008/RESULT.md).
+
+# Issue #5826 A02 — WSLc container-transfer replication (2026-10-08)
+
+`PASS_WSLc_TRANSFER_SCOPED`: byte-identical A01 source and fixture executed in WSLc using the cached pinned Python 3.12.14 linux/amd64 image. Candidate and independent auditor each exited 0; 18 opportunities / 72 rows reconstructed, union recall 9/12 with F02/F04/F08 missed by all channels, runtime/watcher estimates 7.5 / 7.0 versus known 12, and 5/5 corruption controls rejected. The unchanged auditor's `PASS_METHOD_SCOPED_HOST` / `HOLD_CONTAINER_TRANSFER` strings are preserved and documented as unconditional stale labels; execution evidence is the Linux candidate environment plus exact WSLc invocation. WSLc warned that cgroup/swap limit support is unavailable; no CPU/memory enforcement claim. This is one synthetic container-transfer result only—not a live hidden-failure rate, safety, or product claim. See [report, frozen protocol, raw artifacts and source copies](research/analysis/ascertainment_5826_wslc_transfer_a02_20261008/README.md) and [Issue #5826](https://github.com/Unjuno/agent-interface/issues/5826).
+
 # Issue #8157 A04 — prefix-local audit of retained bounded TTC allocation (2026-10-05)
 
 An audit-only successor reconstructed all 2,400 prefixes from the preserved A02 public inputs with zero candidate mismatch; its five corruption controls and source/artifact hash checks passed. The original A02 auditor's 98 mismatches are 49 point and 49 interval mismatches, all in the occlusion profile. Disposition is `PASS_RAW_RECONCILIATION_ONLY`: A02's `FAIL_METHOD` remains unscorable and A03's one-shot auditor runtime STOP remains preserved. No TTC method, vision-transfer, GUI/game, or safety result is claimed. See the [A04 report and frozen evidence](research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A04_AUDIT_ONLY/REPORT.md), [A03 STOP](research/vision/interval_ttc_bounded_error_v1/results/FORMAL_A03_AUDIT_ONLY/STOP.md), and [Issue #8157](https://github.com/Unjuno/agent-interface/issues/8157).
@@ -2390,3 +2410,6 @@ source pins, raw responses, projections, hashes, and first failures are
 preserved; no consumed remote task was rerun for rescue. See the [complete
 archive](research/integration/firecrawl_compiled_release_57_20261003_2f23/README.md)
 and [Issue #57 evidence](https://github.com/Unjuno/agent-interface/issues/57#issuecomment-5969782226).
+# Issue #8553 T0 A01 — counterexample-guided recovery refinement (2026-10-08)
+
+The frozen host-CPython candidate and independent auditor each ran once (exit 0; retries 0), reconstructing all five hand-authored finite cases with zero audit errors. CEGAR resolved the safe-separable spurious-loss case using only `p_color` (one predicate versus three in fixed-fine); a planted optimistic false-recovery witness was downgraded to `UNKNOWN`; genuine loss, equivalent aliases, and deadline exhaustion matched their declared verdicts. All 5/5 mutation controls were rejected. Disposition: `PASS_METHOD_SCOPED` for this deterministic synthetic fixture only—not evidence of live GUI state, task recovery, deadlines, runtime benefit, or general efficacy. See [report and frozen raw evidence](research/analysis/counterexample_guided_recovery_refinement_8553_t0_a01_20261008/REPORT.md) and [Issue #8553](https://github.com/Unjuno/agent-interface/issues/8553).

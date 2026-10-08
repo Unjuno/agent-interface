@@ -1,0 +1,53 @@
+{
+  "schema": "v39-cancel-before-interrupt-ack-a01-v1",
+  "status": "PASS_SOURCE_ORDERING_REPRODUCTION",
+  "scope": "Exact current-main helper AST plus deterministic fake planner/process; no live game, model or OS input.",
+  "source": {
+    "main": "4c203d797cd3e33168bd9177fea8e0d6ef605c6b",
+    "controller_blob": "e9b437979e87347f6aa4dbefffcc84e9a2d01752",
+    "planner_adapter_blob": "1a09c8752dff6a87bf8c180cb2e6fa7f43d4ad77",
+    "app_server_client_blob": "2eecb3de2d1a3d72c3276d13e148564e9c31481b"
+  },
+  "observed_order": [
+    "planner_interrupt_enter",
+    "planner_interrupt_return",
+    "executor_cancel_write",
+    "executor_cancel_flush",
+    "verified_empty_terminal"
+  ],
+  "composed_exact_method_order": [
+    "appserver_request_written",
+    "appserver_request_returned_after_injected_timeout",
+    "executor_cancel_write",
+    "executor_cancel_flush",
+    "verified_empty_terminal"
+  ],
+  "counterfactual_order": [
+    "executor_cancel_write",
+    "executor_cancel_flush",
+    "planner_interrupt_enter",
+    "verified_empty_terminal"
+  ],
+  "checks": {
+    "exact_helper_extracted_from_ast": true,
+    "cancel_absent_while_planner_interrupt_blocked": true,
+    "cancel_follows_interrupt_return": true,
+    "counterfactual_cancel_first_before_interrupt_wait": true,
+    "verified_empty_terminal_required_by_helper": true,
+    "app_server_request_waits_for_correlated_response": true,
+    "app_server_request_default_timeout_seconds": 30,
+    "exact_app_server_request_missing_response_timeout_test_passed": true,
+    "exact_v39_adapter_client_helper_composition_passed": true,
+    "fault_injection_timeout_seconds": 0.05,
+    "unit_tests_passed": 5,
+    "independent_source_audit_passed": true
+  },
+  "interpretation": "The current controller serializes executor cancellation behind a synchronous planner-interrupt response. Up to the source-configured 30-second request timeout is possible if that response does not arrive; no production delay or physical key-hold duration was measured.",
+  "not_established": [
+    "real App Server interrupt response latency",
+    "executor cancel consumption latency",
+    "physical held-key duration or OS-level release",
+    "independent application feedback, recovery, or task effect",
+    "whether cancel-first ordering improves live behavior"
+  ]
+}

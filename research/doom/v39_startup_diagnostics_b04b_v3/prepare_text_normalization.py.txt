@@ -1,0 +1,13 @@
+import pathlib
+R=pathlib.Path(__file__).resolve().parent
+s=(R/'controller-v3.py.txt').read_text(encoding='utf-8')
+old='        return repr(error) if use_repr else str(error)\n'
+assert s.count(old)==1
+(R/'controller-v3b.py.txt').write_text(s.replace(old,'        text = repr(error) if use_repr else str(error)\n        return str.__str__(text)\n'),encoding='utf-8',newline='\n')
+s=(R/'regression_v1.py').read_text(encoding='utf-8')
+s=s.replace("  class CleanupError(OSError):","  class DiagnosticText(str):\n   def __radd__(self,other):raise SystemExit('diagnostic text concatenation')\n  class ReprSubtype(OSError):\n   def __repr__(self):return DiagnosticText('diagnostic subtype')\n  class CleanupError(OSError):")
+s=s.replace("    if case=='combined_baseexception_hooks':raise CleanupError('cleanup')","    if case=='combined_baseexception_hooks':raise CleanupError('cleanup')\n    if case=='repr_string_subclass':raise ReprSubtype('cleanup')")
+s=s.replace("{'combined_baseexception_hooks','note_lookup_fault','ordinary_cleanup_error'}","{'combined_baseexception_hooks','note_lookup_fault','ordinary_cleanup_error','repr_string_subclass'}")
+s=s.replace("  if case=='ordinary_cleanup_error':", "  if case=='repr_string_subclass':self.assertEqual(attempts[0]['errors'],['planner close: diagnostic subtype']);self.assertEqual(notes,['startup cleanup incomplete; see startup-cleanup.json'])\n  if case=='ordinary_cleanup_error':")
+s=s.replace("'ordinary_cleanup_error','unicode_control'):","'ordinary_cleanup_error','unicode_control','repr_string_subclass'):")
+(R/'regression_v2.py').write_text(s,encoding='utf-8',newline='\n')

@@ -1,0 +1,81 @@
+"""Saved-data independent event reduction; no probe imports or native API calls."""
+from pathlib import Path
+import json,hashlib,sys
+R=Path(__file__).resolve().parents[2];O=R/'outputs/ownedwinpipe6501-t02';W=R/'work/ownedwinpipe6501-t02';H=lambda b:hashlib.sha256(b).hexdigest()
+MODES=('normal_B_D','stale_handle','check_then_call','locked_gate')
+def same_json(a,b):
+    if type(a) is not type(b):return False
+    if type(a) is dict:return a.keys()==b.keys() and all(same_json(a[k],b[k]) for k in a)
+    if type(a) is list:return len(a)==len(b) and all(same_json(x,y) for x,y in zip(a,b))
+    return a==b
+def integer(x):assert type(x) is int
+def boolean(x):assert type(x) is bool
+def reduce(mode,events,result):
+    assert result['mode']==mode and result['status']=='COMPLETE_OBSERVATIONS' and result['thread_alive_final'] is False
+    integer(result['pid']);integer(result['native_tid']);tid=result['native_tid'];integer(result['event_count']);assert result['event_count']==len(events)
+    by={};last=-1
+    for n,e in enumerate(events):
+        integer(e['seq']);integer(e['monotonic_ns']);assert e['seq']==n and e['monotonic_ns']>=last;last=e['monotonic_ns'];assert type(e['kind']) is str;by.setdefault(e['kind'],[]).append(e)
+        for k in ('tid','handle','read_fd','write_fd','fd','read_os_handle','write_os_handle','generation','requested_generation','active_generation','count','last_error','access','errno'):
+            if k in e:integer(e[k])
+        for k in ('return_nonzero','pending','generation_done','data_written','owner_lock_held','allowed','native_cancel_called','early_check_allowed','alive','generation_A_done','generation_B_done'):
+            if k in e:boolean(e[k])
+    def one(k):assert len(by.get(k,[]))==1;return by[k][0]
+    def gen(k,g):rows=[e for e in by.get(k,[]) if e['generation']==g];assert len(rows)==1;return rows[0]
+    assert set(by)<= {'pipe_owned','worker_enter','generation_admitted','read_enter','read_return','pending_query','thread_handle_open','early_generation_check','early_check_lock_released','write_requested','write_return','action_requested','current_generation_check','stale_request_refused','native_cancel_requested','native_cancel_return','primary_snapshot','worker_exit','thread_join','thread_handle_close','fd_closed'}
+    pipes={};fds=set();handles=set()
+    for g in (1,2):
+        p=gen('pipe_owned',g);pipes[g]=p
+        for k in ('read_fd','write_fd'):assert p[k] not in fds;fds.add(p[k])
+        for k in ('read_os_handle','write_os_handle'):assert p[k] not in handles;handles.add(p[k])
+    enter=one('worker_enter');op=one('thread_handle_open');assert enter['tid']==op['tid']==tid and op['access']==0x0041 and op['handle']>0;h=op['handle']
+    assert all(e['tid']==tid for k in ('generation_admitted','read_enter','read_return','pending_query','worker_exit','thread_join') for e in by[k])
+    a1,a2=gen('generation_admitted',1),gen('generation_admitted',2);r1,r2=gen('read_enter',1),gen('read_enter',2);v1,v2=gen('read_return',1),gen('read_return',2)
+    assert enter['seq']<a1['seq']<r1['seq']<v1['seq']<a2['seq']<r2['seq']<v2['seq']
+    assert a1['owner_lock_held'] is a2['owner_lock_held'] is True
+    assert r1['read_os_handle']==pipes[1]['read_os_handle'] and r2['read_os_handle']==pipes[2]['read_os_handle']
+    action=one('action_requested');assert action['mode']==mode and action['tid']==tid and action['handle']==h and action['active_generation']==2 and action['requested_generation']==(2 if mode=='normal_B_D' else 1)
+    def writers(g):return [e for e in by['write_requested'] if e['generation']==g]
+    wa=writers(1);assert len(wa)==1 and wa[0]['purpose']=='normal_A' and wa[0]['hex']=='44'
+    assert wa[0]['seq']<v1['seq'] # Request must precede read completion; write return may race.
+    for g in (1,2):
+        qs=[e for e in by['pending_query'] if e['generation']==g];assert len(qs)>=3
+        for q in qs:assert q['handle']==h and q['tid']==tid and q['return_nonzero'] is True and q['active_generation']==g and q['generation_done'] is False and q['data_written'] is False
+        assert all(q['pending'] is True for q in qs[-3:]);assert gen('read_enter',g)['seq']<qs[0]['seq'] and qs[-1]['seq']<(wa[0]['seq'] if g==1 else action['seq'])
+    assert (v1['return_nonzero'],v1['count'],v1['hex'])==(True,1,'44')
+    primary=one('primary_snapshot');assert primary['generation_A_done'] is True and primary['active_generation']==2 and same_json(result['primary'],{k:v for k,v in primary.items() if k not in ('seq','kind','monotonic_ns')})
+    assert same_json(result['final_outcomes'],{str(g):{k:v for k,v in gen('read_return',g).items() if k in ('return_nonzero','last_error','count','hex')} for g in (1,2)})
+    wb=writers(2);assert all(e['hex']=='44' for e in wb)
+    if mode=='check_then_call':
+        early=one('early_generation_check');release=one('early_check_lock_released');assert early['allowed'] is True and early['owner_lock_held'] is True and early['requested_generation']==early['active_generation']==1;assert early['seq']<release['seq']<wa[0]['seq']<action['seq']
+    else:assert not by.get('early_generation_check') and not by.get('early_check_lock_released')
+    if mode in ('stale_handle','check_then_call'):
+        req,ret=one('native_cancel_requested'),one('native_cancel_return');assert action['seq']<req['seq']<ret['seq']<primary['seq'] and req['seq']<v2['seq']<primary['seq']
+        for e in (req,ret):assert e['requested_generation']==1 and e['active_generation']==2 and e['handle']==h and e['tid']==tid
+        assert req['early_check_allowed'] is (mode=='check_then_call');assert ret['return_nonzero'] is True and ret['last_error']==0 and same_json(result['native_cancel'],{'return_nonzero':True,'last_error':0})
+        assert (v2['return_nonzero'],v2['last_error'],v2['count'],v2['hex'])==(False,995,0,'') and primary['generation_B_done'] is True and wb==[]
+    elif mode=='normal_B_D':
+        assert not by.get('native_cancel_requested') and not by.get('native_cancel_return');assert len(wb)==1 and wb[0]['purpose']=='primary_B' and action['seq']<wb[0]['seq']<v2['seq']<primary['seq'];assert primary['generation_B_done'] is True
+        assert (v2['return_nonzero'],v2['count'],v2['hex'])==(True,1,'44')
+    else:
+        assert not by.get('native_cancel_requested') and not by.get('native_cancel_return');c,refuse=one('current_generation_check'),one('stale_request_refused');assert c['allowed'] is False and c['owner_lock_held'] is True and c['requested_generation']==1 and c['active_generation']==2
+        assert refuse['native_cancel_called'] is False and refuse['owner_lock_held'] is True and refuse['requested_generation']==1 and refuse['active_generation']==2
+        assert action['seq']<c['seq']<refuse['seq']<primary['seq'] and primary['generation_B_done'] is False and '2' not in primary['outcomes'];assert len(wb)==1 and wb[0]['purpose']=='cleanup_B' and primary['seq']<wb[0]['seq']<v2['seq']
+        assert primary['monotonic_ns']-action['monotonic_ns']>=500_000_000;assert (v2['return_nonzero'],v2['count'],v2['hex'])==(True,1,'44')
+    for e in by['write_return']:assert e['count']==1 and any(w['generation']==e['generation'] and w['purpose']==e['purpose'] and w['seq']<e['seq'] for w in by['write_requested'])
+    assert len(by['write_return'])==len(by['write_requested'])
+    ex,join,close=one('worker_exit'),one('thread_join'),one('thread_handle_close');assert join['alive'] is False and close['handle']==h and close['return_nonzero'] is True;assert v2['seq']<ex['seq']<join['seq']<close['seq']
+    final=by['fd_closed'];assert len(final)==4 and {e['fd'] for e in final}==fds and all(e['errno']==9 and e['seq']>close['seq'] for e in final);assert all(e['fd'] in (pipes[e['generation']]['read_fd'],pipes[e['generation']]['write_fd']) for e in final)
+    return dict(mode=mode,events=len(events),stale_cancel_target=2 if mode in ('stale_handle','check_then_call') else None,primary_B_done=primary['generation_B_done'],all_owned_closed=True)
+def main():
+    freeze=json.loads((O/'FREEZE.json').read_bytes())
+    for n,pin in freeze['sources'].items():b=(R/n).read_bytes();assert len(b)==pin['bytes'] and H(b)==pin['sha256']
+    supervisor=json.loads((O/'SUPERVISOR.json').read_bytes());assert supervisor['status']=='COMPLETE_FOUR_ONCE_ONLY' and len(supervisor['children'])==4
+    rows=[]
+    for mode,c in zip(MODES,supervisor['children']):
+        assert c['mode']==mode and c['exit']==0 and c['timeout'] is False;integer(c['pid']);result=json.loads((O/mode/'RESULT.json').read_bytes());events=json.loads((O/mode/'events.json').read_bytes());assert result['pid']==c['pid'];assert c['start_utc']<=result['start_utc']<result['end_utc']<=c['end_utc'];assert result['source_sha256']==freeze['sources']['work/ownedwinpipe6501-t02/probe.py']['sha256']
+        for ch in ('stdout','stderr'):assert H((O/mode/(ch+'.txt')).read_bytes())==c[ch+'_sha256']
+        assert result['dependencies']==freeze['dependencies'];rows.append(reduce(mode,events,result))
+    report=dict(status='PASS_H_SCOPED_DIRECTED_REUSE',rows=rows,source_execution=0,native_replay=0)
+    (O/'AUDIT_V3.json').write_text(json.dumps(report,sort_keys=True,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps(report))
+if __name__=='__main__':main()

@@ -1,5 +1,6 @@
 import threading
 import unittest
+from pathlib import Path
 
 from research.live_control.persistent_planner_adapter_v2 import (
     PersistentPlannerAdapter, PlannerProtocolError,
@@ -23,6 +24,12 @@ class FakeClient:
         self.interrupts = []
         self.started = []
         self.release_completion = threading.Event()
+        self.close_calls = []
+        self.fail_interrupt = False
+
+    def close(self, timeout=5):
+        self.close_calls.append(timeout)
+        self.release_completion.set()
 
     def start_thread(self, **params):
         self.thread_count += 1
@@ -46,6 +53,8 @@ class FakeClient:
 
     def interrupt_turn(self, thread_id, turn_id):
         self.interrupts.append((thread_id, turn_id))
+        if self.fail_interrupt:
+            raise OSError("synthetic transport failure")
         return {}
 
 
@@ -70,7 +79,8 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         self.assertTrue(result.answer_eligible)
         self.assertEqual(result.answer, {"action": "forward"})
         self.assertEqual(result.usage, {"inputTokens": 7, "outputTokens": 3})
-        self.assertEqual(client.started[0][1][1], {"type": "localImage", "path": "C:\\frame.png"})
+        self.assertEqual(client.started[0][1][1], {
+            "type": "localImage", "path": str(Path("C:/frame.png"))})
 
     def test_interrupted_turn_never_admits_partial_or_completed_answer(self):
         client = FakeClient([completed()])
@@ -82,6 +92,22 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         self.assertTrue(result.cancellation_requested)
         self.assertIn("invalidated observation", result.error)
 
+    def test_abort_pending_turn_closes_transport_and_unblocks_waiter(self):
+        client = FakeClient(["WAIT", completed()])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+        box = {}
+        waiter = threading.Thread(target=lambda: box.setdefault("result", planner.await_turn(handle)))
+        waiter.start()
+        client.fail_interrupt = True
+        self.assertEqual(planner.interrupt(handle)["outcome"], "request_error")
+        planner.abort_pending_turn()
+        waiter.join(1)
+        self.assertFalse(waiter.is_alive())
+        self.assertEqual(client.close_calls, [5])
+        self.assertFalse(box["result"].answer_eligible)
+        self.assertTrue(box["result"].cancellation_requested)
+
     def test_duplicate_interrupt_sends_only_one_request(self):
         client = FakeClient([{"status": "interrupted", "items": []}])
         planner = adapter(client)
@@ -90,6 +116,69 @@ class PersistentPlannerAdapterTests(unittest.TestCase):
         self.assertEqual(planner.interrupt(handle)["outcome"], "already_requested")
         self.assertEqual(client.interrupts, [("thread-1", "turn-1")])
         self.assertFalse(planner.await_turn(handle).answer_eligible)
+
+    def test_before_transport_hook_runs_after_local_invalidation(self):
+        events = []
+
+        class EventClient(FakeClient):
+            def interrupt_turn(self, thread_id, turn_id):
+                events.append("interrupt_transport")
+                return super().interrupt_turn(thread_id, turn_id)
+
+        client = EventClient([{"status": "interrupted", "items": []}])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+
+        def cancel_input():
+            self.assertTrue(planner._cancellation_requested)
+            events.append("cancel_input")
+
+        result = planner.interrupt(handle, before_transport=cancel_input)
+
+        self.assertEqual(events, ["cancel_input", "interrupt_transport"])
+        self.assertEqual(result["outcome"], "requested")
+        self.assertFalse(planner.await_turn(handle).answer_eligible)
+
+    def test_before_transport_hook_runs_for_already_terminal_turn(self):
+        client = FakeClient([completed()])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+        planner.await_turn(handle)
+        events = []
+
+        result = planner.interrupt(handle, before_transport=lambda: events.append("cancel_input"))
+
+        self.assertEqual(result, {"outcome": "already_terminal", "status": "completed"})
+        self.assertEqual(events, ["cancel_input"])
+        self.assertEqual(client.interrupts, [])
+
+    def test_before_transport_error_does_not_skip_remote_interrupt(self):
+        client = FakeClient([{"status": "interrupted", "items": []}])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+
+        def fail_cancel_input():
+            raise OSError("synthetic executor write failure")
+
+        result = planner.interrupt(handle, before_transport=fail_cancel_input)
+
+        self.assertEqual(result["outcome"], "requested")
+        self.assertIn("synthetic executor write failure", result["before_transport_error"])
+        self.assertEqual(client.interrupts, [("thread-1", "turn-1")])
+
+    def test_base_exception_from_before_transport_still_interrupts_planner(self):
+        client = FakeClient([{"status": "interrupted", "items": []}])
+        planner = adapter(client)
+        handle = planner.begin_turn("observe", output_schema=SCHEMA)
+
+        def interrupt_input():
+            raise KeyboardInterrupt("synthetic cancellation interruption")
+
+        result = planner.interrupt(handle, before_transport=interrupt_input)
+
+        self.assertEqual(result["outcome"], "requested")
+        self.assertIn("synthetic cancellation interruption", result["before_transport_error"])
+        self.assertEqual(client.interrupts, [("thread-1", "turn-1")])
 
     def test_completion_wins_race_before_interrupt(self):
         client = FakeClient([completed()])

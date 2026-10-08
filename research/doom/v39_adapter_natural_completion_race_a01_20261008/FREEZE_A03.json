@@ -1,0 +1,26 @@
+{
+  "schema": "v39-adapter-current-main-reader-race-a03-freeze-v1",
+  "experiment": "v39-adapter-current-main-reader-race-a03-20261008",
+  "main_commit": "4a38cb226fd465bbf6b600b1e2f9aa20564f8e01",
+  "parent_experiment": "v39-adapter-natural-completion-race-a02-20261008",
+  "trigger": "Re-extract the three frozen production blobs from the named current-main commit, verify each Git blob hash, then rerun the exact stdout reader/planner race harness in a temporary isolated directory.",
+  "sources": [
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "local": "controller_v39.py",
+      "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b"
+    },
+    {
+      "path": "research/live_control/persistent_planner_adapter_v2.py",
+      "local": "persistent_planner_adapter_v2.py",
+      "git_blob": "879736562aa5c0637319616c9f01df22af087b15"
+    },
+    {
+      "path": "research/live_control/codex_app_server_client_v2.py",
+      "local": "codex_app_server_client_v2.py",
+      "git_blob": "8553874221761a7807c846c7dcd66c22fc6340ff"
+    }
+  ],
+  "scope": "Deterministic in-memory JSONL/App Server and planner composition. No live App Server, model, GUI, OS input, physical key-release measurement, threat exposure, independent useful feedback, recovery, or game completion.",
+  "allocation": "none"
+}

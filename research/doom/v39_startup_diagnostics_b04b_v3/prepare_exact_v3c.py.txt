@@ -1,0 +1,5 @@
+import pathlib
+R=pathlib.Path(__file__).resolve().parent
+s=(R/'controller-v3.py.txt').read_bytes();old=b'        return repr(error) if use_repr else str(error)\n';assert s.count(old)==1
+s=s.replace(old,b'        text = repr(error) if use_repr else str(error)\n        return str.__str__(text)\n');(R/'controller-v3c.py.txt').write_bytes(s)
+tail=b'    decisions=[];model_session_id=planner.thread_id';original=(R/'controller-v3.py.txt').read_bytes();assert original[original.index(tail):]==s[s.index(tail):]

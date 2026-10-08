@@ -1,0 +1,211 @@
+{
+  "accepted_aliases": [],
+  "baseline_source_blob": "930e1c78511b57999a0a2176cb94a31a32d166a8",
+  "baseline_source_commit": "64c77d54c1a16b63be9084be1b117b628482b377",
+  "candidate_source_sha256": "fbe3d85b1777a92595faa556a580417ba42a7ce1b8b8b65de98fb2e9bf983441",
+  "control_matched": true,
+  "result": "PASS_EXACT_IDENTITY",
+  "rows": [
+    {
+      "case": "control_exact",
+      "checks": {
+        "ammo_signal": true,
+        "full_observation": true,
+        "health_signal": true,
+        "rgb_hash": true,
+        "same_binding": true,
+        "same_epoch": true,
+        "typed_schema": true
+      },
+      "matched": true,
+      "mutation": null,
+      "result": {
+        "artifact": "/tmp/8566-green-754xdovl/frame.png",
+        "artifact_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "checks": {
+          "ammo_signal": true,
+          "full_observation": true,
+          "health_signal": true,
+          "rgb_hash": true,
+          "same_binding": true,
+          "same_epoch": true,
+          "typed_schema": true
+        },
+        "frame_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "matched": true,
+        "schema": "doom-typed-artifact-reconciliation-v1"
+      }
+    },
+    {
+      "case": "id_bool_int_alias",
+      "checks": {
+        "ammo_signal": true,
+        "full_observation": true,
+        "health_signal": true,
+        "rgb_hash": true,
+        "same_binding": true,
+        "same_epoch": false,
+        "typed_schema": true
+      },
+      "matched": false,
+      "mutation": [
+        "id",
+        true,
+        1
+      ],
+      "result": {
+        "artifact": "/tmp/8566-green-754xdovl/frame.png",
+        "artifact_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "checks": {
+          "ammo_signal": true,
+          "full_observation": true,
+          "health_signal": true,
+          "rgb_hash": true,
+          "same_binding": true,
+          "same_epoch": false,
+          "typed_schema": true
+        },
+        "frame_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "matched": false,
+        "schema": "doom-typed-artifact-reconciliation-v1"
+      }
+    },
+    {
+      "case": "step_bool_int_alias",
+      "checks": {
+        "ammo_signal": true,
+        "full_observation": true,
+        "health_signal": true,
+        "rgb_hash": true,
+        "same_binding": true,
+        "same_epoch": false,
+        "typed_schema": true
+      },
+      "matched": false,
+      "mutation": [
+        "step",
+        false,
+        0
+      ],
+      "result": {
+        "artifact": "/tmp/8566-green-754xdovl/frame.png",
+        "artifact_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "checks": {
+          "ammo_signal": true,
+          "full_observation": true,
+          "health_signal": true,
+          "rgb_hash": true,
+          "same_binding": true,
+          "same_epoch": false,
+          "typed_schema": true
+        },
+        "frame_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "matched": false,
+        "schema": "doom-typed-artifact-reconciliation-v1"
+      }
+    },
+    {
+      "case": "sequence_bool_int_alias",
+      "checks": {
+        "ammo_signal": true,
+        "full_observation": true,
+        "health_signal": true,
+        "rgb_hash": true,
+        "same_binding": true,
+        "same_epoch": false,
+        "typed_schema": true
+      },
+      "matched": false,
+      "mutation": [
+        "sequence",
+        true,
+        1
+      ],
+      "result": {
+        "artifact": "/tmp/8566-green-754xdovl/frame.png",
+        "artifact_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "checks": {
+          "ammo_signal": true,
+          "full_observation": true,
+          "health_signal": true,
+          "rgb_hash": true,
+          "same_binding": true,
+          "same_epoch": false,
+          "typed_schema": true
+        },
+        "frame_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "matched": false,
+        "schema": "doom-typed-artifact-reconciliation-v1"
+      }
+    },
+    {
+      "case": "capture_bool_int_alias",
+      "checks": {
+        "ammo_signal": true,
+        "full_observation": true,
+        "health_signal": true,
+        "rgb_hash": true,
+        "same_binding": true,
+        "same_epoch": false,
+        "typed_schema": true
+      },
+      "matched": false,
+      "mutation": [
+        "capture_ns",
+        false,
+        0
+      ],
+      "result": {
+        "artifact": "/tmp/8566-green-754xdovl/frame.png",
+        "artifact_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "checks": {
+          "ammo_signal": true,
+          "full_observation": true,
+          "health_signal": true,
+          "rgb_hash": true,
+          "same_binding": true,
+          "same_epoch": false,
+          "typed_schema": true
+        },
+        "frame_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "matched": false,
+        "schema": "doom-typed-artifact-reconciliation-v1"
+      }
+    },
+    {
+      "case": "binding_nested_bool_int_alias",
+      "checks": {
+        "ammo_signal": true,
+        "full_observation": true,
+        "health_signal": true,
+        "rgb_hash": true,
+        "same_binding": false,
+        "same_epoch": true,
+        "typed_schema": true
+      },
+      "matched": false,
+      "mutation": [
+        "binding",
+        true,
+        1
+      ],
+      "result": {
+        "artifact": "/tmp/8566-green-754xdovl/frame.png",
+        "artifact_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "checks": {
+          "ammo_signal": true,
+          "full_observation": true,
+          "health_signal": true,
+          "rgb_hash": true,
+          "same_binding": false,
+          "same_epoch": true,
+          "typed_schema": true
+        },
+        "frame_rgb_sha256": "7b5536829d0883e427f1740103a64d1b37300e1e868721243831801ed6c6c4b5",
+        "matched": false,
+        "schema": "doom-typed-artifact-reconciliation-v1"
+      }
+    }
+  ],
+  "schema": "issue8566-reconcile-alias-a01-candidate-v1"
+}

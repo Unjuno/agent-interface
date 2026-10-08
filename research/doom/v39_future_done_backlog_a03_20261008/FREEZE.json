@@ -1,0 +1,33 @@
+{
+  "schema": "issue59-v39-future-done-backlog-freeze-v1",
+  "experiment": "issue59-v39-future-done-backlog-a03-20261008",
+  "kind": "one-shot synthetic pinned-source construction; no live allocation",
+  "main_commit": "b121ce8a6fd4a6aba8216ef73211ba773f7601ee",
+  "sources": {
+    "controller": {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+      "sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
+    },
+    "guard": {
+      "path": "research/live_control/observable_signal_guard_v2.py",
+      "git_blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    },
+    "final_admission": {
+      "path": "research/live_control/final_action_admission_v1.py",
+      "git_blob": "2b3875c5c885fac0a78db2e70cbaba30ca834c67",
+      "sha256": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d"
+    }
+  },
+  "hypothesis": "The current-main completion-time backlog drain preserves a typed policy invalidation and prevents planner action admission, whether a verified terminal is already queued or cancellation must obtain one.",
+  "test": "Execute the pinned drain helper, exact completion-time if block, final-admission adapter, monitor, cancellation helper, terminal validator, and final-admission v1 decision with synthetic typed health 100→70 and deterministic queue/future/process fakes.",
+  "decision": "PASS_BACKLOG_INVALIDATION only if both paths retain policy invalidation through final admission, grant no input authority, and either preserve a matching verified terminal or cancel before interrupt transport and wait for verified-empty closure.",
+  "counterhypothesis": "The completion-time drain may lose invalidation, allow final admission, mishandle a queued terminal, or fail to cancel when no terminal is queued.",
+  "limits": [
+    "Synthetic rows and deterministic fakes do not establish real HUD accuracy/cadence or live threat exposure.",
+    "No model, game, GUI, OS input, physical key state, recovery efficacy, progress, survival, or task outcome is measured.",
+    "The candidate extracts the pinned completion-time branch and helpers; it does not run controller startup or the full live runner."
+  ],
+  "retry_policy": "Invoke candidate once after frozen-source preflight; preserve first output. Audit and mutation tests are read-only."
+}
