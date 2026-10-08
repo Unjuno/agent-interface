@@ -1,0 +1,32 @@
+{
+  "schema": "v39-v15-prepost-a03-audit-freeze-v1",
+  "issue": 7933,
+  "allocation": "V39-V15-PREPOST-A03-AUDIT-20261005-01",
+  "repository": "Unjuno/agent-interface",
+  "main_base": "46b9bc03f6f7dc38ba683c84622df9bab567df77",
+  "parent_issue": 7926,
+  "parent_commit": "6bbdc0a705b60c9794805db966889fd65006cd61",
+  "candidate_invocations_planned": 0,
+  "candidate_invocations_actual": 0,
+  "auditor_invocations_planned": 1,
+  "auditor_invocations_actual": 0,
+  "retries": 0,
+  "docker_status": "STOP: daemon reachable; image listing fails reading containerd content-store blobs with operation not supported",
+  "runtime": "host Python 3 standard library; fallback authorized by preregistration",
+  "inputs": {
+    "parent_A02_run/candidate.stdout": {
+      "git_blob": "7878e4e6aba0fe7d085f6a1e41192ef120d8b20d",
+      "sha256": "0336cfa2eeebbe48ad816168d5466938a936fcf0782211b21847df6c20038596"
+    },
+    "parent_A02/PRE-RUN.json": {
+      "git_blob": "d495956797c541f5bf6680ae31c87ce2d2d5ff00",
+      "sha256": "98581f50e8ccb3e3914aca454975e4dcd523575acf09023e42971dd1b3ce13e7"
+    },
+    "parent_A02/AUDIT.json": {
+      "git_blob": "c7f355b41c95f62c5495dcc94e53b3283ea83aa7",
+      "sha256": "9e44c3a1cfb34715ebcb551cf59fac35961afbf6363d9c31fbf648c541614ce2"
+    }
+  },
+  "auditor_source_sha256": "1be4485e149f944433f0af73c2b1e08c275434b7251e7b970e1240a2ab10efac",
+  "invocation": "python3 audit_v2.py parent_A02_run/candidate.stdout parent_A02/PRE-RUN.json parent_A02/AUDIT.json"
+}
