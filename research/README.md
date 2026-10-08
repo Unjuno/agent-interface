@@ -6,6 +6,7 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8604 T0 A03: [WSLc byte-reproducibility transfer](analysis/handoff_choice_complexity_8604_t0_a03_wslc_20261008/REPORT.md) — `PASS_TRANSFER_SCOPED`; candidate and audit outputs reproduce A02 byte-for-byte under WSLc. cgroup/swap warning retained; resource-limit enforcement not established. No human, latency, or product inference.
 - Issue #8604 T0 A02: [inert handoff-card method audit](analysis/handoff_choice_complexity_8604_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED` on eight synthetic families: 24 cards/72 option instances/120 factual keys independently reconstructed, zero errors. A01 CLI STOP remains preserved. No participant, latency, or human-comprehension result.
 - Issue #8604 T0 A01: [inert handoff-card CLI STOP record](analysis/handoff_choice_complexity_8604_t0_a01_20261008/STOP.md) — `STOP_CANDIDATE_OUTPUT_CONTRACT`; frozen CLI emitted JSON on stdout but did not create its requested file, so the auditor was not run. No retry or scientific/human-choice inference.
 
