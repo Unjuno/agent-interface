@@ -67,6 +67,7 @@
 - [Issue #7367 A01 completeness-boundary counterexample](issue7367_context_liveness_completeness_a01_20261005/README.md) — independent raw audit 7/7: a caller-asserted `graph_complete=true` misses an undeclared consumer; unknown scope correctly keeps all records. Synthetic contract counterexample only.
 - [Issue #7367 closed-workflow contract A01](issue7367_closed_workflow_contract_a01_20261005/README.md) — independent raw audit 12/12: a closed manifest-backed workflow/interpreter keeps declared reads and fails closed on dynamic/changed/undeclared paths. Scoped to workflows where every read and transition is mediated; no model or production-runtime claim.
 
+- [Issue #7799 T0 A01 pairwise eligibility](pairwise_interaction_7799_t0_a01_20261005/REPORT.md) — `HOLD_T0_NO_ELIGIBLE_INDEPENDENT_PAIR`; selected #57 protocol exposes only `(0,0)` and `(1,1)` for the two co-selected factors; independent raw audit 11/11, design rank 2/4. Source-bound eligibility only; no interaction estimate or live/model run.
 
 - [Issue #7802 machine-crash recovery T0](machine_crash_recovery_7802_t0_20261005/REPORT.md) — `PASS_METHOD_SCOPED_T0_ONLY`: 31 process/machine crash images independently reconstructed; three machine-only states, 4/4 mutations rejected. Synthetic persistence model only; no host power-loss or T1 claim.
 
