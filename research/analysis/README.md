@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
+
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
 
 - [Issue #8610 T0 A01 common-cause degradation contracts](degradation_common_cause_8610_a01_20261008/REPORT.md) — internal fixture/audit PASS, but `HOLD_PROTOCOL_ARM_MISMATCH`: A01 used binary all-route refusal and unsafe substitution instead of the required independence-assuming and unknown-dependency fail-closed arms. Do not treat it as testing the #8610 hypothesis; corrected successor is #8622. No runtime/product claim.
@@ -603,6 +605,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
 - [`episodic_memory_schedule_8406_a02_20261008/`](episodic_memory_schedule_8406_a02_20261008/)
 - [`episodic_memory_schedule_8406_t0_a01_20261008/`](episodic_memory_schedule_8406_t0_a01_20261008/)
+- [`epistemic_action_8629_t0_a01_20261008/`](epistemic_action_8629_t0_a01_20261008/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
 - [`epoch_transform_chain_8185_a02_20261005/`](epoch_transform_chain_8185_a02_20261005/)
 - [`error_carry_6081_s04_20261003/`](error_carry_6081_s04_20261003/)
