@@ -1,0 +1,11 @@
+{
+  "experiment": "issue59-screen-signal-boundary-a02-a14-posthoc-20261008",
+  "kind": "posthoc descriptive analysis of exploratory protocol-deviation run; not preregistered",
+  "source_run": "map01-v39-appserver-startup-trace-a14; retained under PR #8403",
+  "source_file": "raw/runtime/events.jsonl",
+  "source_sha256": "f161c89895d9e228dd1c3e49351f56b42cc60ad3e10c6e0a092926989524790a",
+  "source_bytes": 457736,
+  "rule": "Select 170 event=typed_observation rows in recorded order; compare each adjacent pair for frame_rgb_sha256 inequality and typed health/ammo numeric equality/inequality.",
+  "limits": ["A14 is a protocol deviation and exploratory only.", "No correlation with cover-active intervals or planner-wait intervals is computed.", "Full-frame hash change is not semantic threat evidence.", "No causal, safety, policy-quality, recovery, or task-success inference."],
+  "purpose": "Quantify how often whole-frame hashes change while the two typed HUD readings remain stable in this retained trace; assess only whether a naive whole-frame hash trigger would be indiscriminate."
+}

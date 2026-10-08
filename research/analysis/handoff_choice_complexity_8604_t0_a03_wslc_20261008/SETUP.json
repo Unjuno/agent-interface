@@ -1,0 +1,13 @@
+{
+  "schema": "8604-a03-setup-v1",
+  "construction_tests": {
+    "initial_discovery": "0 tests found because the A03 test files had not yet been copied; no candidate/auditor formal allocation was invoked.",
+    "resolution": "Copied the exact A02 test_cli.py and test_audit.py sources before freeze; subsequent A03-local runs passed 6/6 normal and 6/6 optimized."
+  },
+  "wslc_mount_preflight": {
+    "purpose": "Read-only mount/path and interpreter check only; no candidate or auditor invoked.",
+    "result": "MOUNT_OK 6; Python 3.12.14.",
+    "exit_code": 0,
+    "warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap."
+  }
+}

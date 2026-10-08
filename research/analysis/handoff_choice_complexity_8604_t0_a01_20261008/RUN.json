@@ -1,0 +1,26 @@
+{
+  "schema": "8604-run-v1",
+  "freeze_commit": "4545673dd7aabf54071056426b09d4c393a1dd92",
+  "parent_main": "f89ab7173e659c04a95841c8f2285b1f6b1a7df1",
+  "candidate": {
+    "command": "python -B candidate.py --input cards.json --output raw/candidate.json",
+    "invocations": 1,
+    "exit_status_captured": false,
+    "stdout": "Printed serialized card fixture; orchestration retained truncated rendering, not exact bytes.",
+    "requested_output": "raw/candidate.json",
+    "requested_output_created": false
+  },
+  "auditor": {
+    "invocations": 0,
+    "reason": "No custody-valid candidate output existed after the one-shot CLI invocation."
+  },
+  "construction": {
+    "tests_normal": 7,
+    "tests_optimized": 7,
+    "construction_fixed_oracle_errors": 0
+  },
+  "disposition": "STOP_CANDIDATE_OUTPUT_CONTRACT",
+  "retries": 0,
+  "source_or_input_changes_after_freeze": 0,
+  "runtime": "CPython 3.12.10; Windows x86_64; host CPU; no Docker/WSLc, participants, human data, model, network, GUI or action dispatch"
+}

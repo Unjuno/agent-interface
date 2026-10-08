@@ -6,6 +6,31 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8604 T0 A03: [WSLc byte-reproducibility transfer](analysis/handoff_choice_complexity_8604_t0_a03_wslc_20261008/REPORT.md) — `PASS_TRANSFER_SCOPED`; candidate and audit outputs reproduce A02 byte-for-byte under WSLc. cgroup/swap warning retained; resource-limit enforcement not established. No human, latency, or product inference.
+- Issue #8604 T0 A02: [inert handoff-card method audit](analysis/handoff_choice_complexity_8604_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED` on eight synthetic families: 24 cards/72 option instances/120 factual keys independently reconstructed, zero errors. A01 CLI STOP remains preserved. No participant, latency, or human-comprehension result.
+- Issue #8604 T0 A01: [inert handoff-card CLI STOP record](analysis/handoff_choice_complexity_8604_t0_a01_20261008/STOP.md) — `STOP_CANDIDATE_OUTPUT_CONTRACT`; frozen CLI emitted JSON on stdout but did not create its requested file, so the auditor was not run. No retry or scientific/human-choice inference.
+
+- Issue #8598 T0 A01: [censored opportunity tail regret](analysis/tail_regret_censoring_8598_t0_a01_20261008/REPORT.md) — `FAIL_METHOD`, audit integrity PASS: 768 cohorts/24,576 opportunities independently reconstructed; IPCW strict ranking 10/128 vs 20/128 resolved-only; all 768 partial-tail bounds contain truth, zero false unique rankings. Synthetic host-CPU only; no Docker/WSLc or live/product claim.
+
+- [`outputs/`](outputs/) — retained local research-session status and handoff notes; not experiment evidence unless individually cited.
+- Issue #8592 T0 A03: [bounded DPOR validation](analysis/bounded_dpor_8592_t0_a03_20261008/REPORT.md) — `PASS_DPOR_METHOD_SCOPED`; 45,360 exhaustive schedules matched by 217 representatives, 5/5 auditor rejection controls passed in construction tests. Finite authored model only; no runtime-speed or live-safety claim. A01/A02 execution STOPs are retained and not retried.
+- Issue #8576 T0 A01: [grounded optional resume suggestions](analysis/resume_plan_suggestions_8576_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 12 synthetic cases audited, 6/6 mutations rejected, WSLc CPU-only. No human-benefit claim.
+
+- Issue #8589 T0 A01: [effect-aware selective recovery](analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; 8/8 finite cases reconstructed, 5/5 mutations rejected, zero effect dispatches. No GUI/runtime/cost/product claim.
+- Issue #8583 T0 A01: [finite principal-stratum bounds](analysis/principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; four synthetic cases independently reconstructed, 5/5 mutations rejected, WSLc CPU-only. No empirical causal or product claim.
+
+- Issue #8571 A01: [service-debt representation invariance custody HOLD](analysis/service_debt_alias_8571_a01_20261008/CUSTODY_NOTE.md) — first-run trace and independent replay retained, but formal promotion withheld because the freeze was not committed before execution; no rerun. Synthetic diagnostic only.
+
+- Issue #8406 T0 A01, companion to #7418: [episodic-memory consolidation schedule fixture](analysis/consolidation_schedule_7418_t0_a01_20261008/REPORT.md) — `PASS_T0_METHOD_SCOPED`: four schedules and 24 source-bound snapshots independently reconstructed; no model, GUI, task-effect, or cadence-benefit claim.
+
+- Issue #8397 T0 A02: [state-conditioned observation-omission fixture](analysis/observation_omission_regret_8397_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED` on eight finite traces; pre-decision and post-completion omission preserve authored effects with fewer delivered observations, while a transition-crossing omission incurs wrong-target recovery. No model, GUI, or runtime claim.
+
+- Issue #8500 T0 A01: [rejected-analogy memory finite method test](analysis/analogy_rejection_8500_t0_a01_20261008/RESULT.md) — `PASS_METHOD_SCOPED`; candidate/auditor once each, 84 rows, 5/5 mutations rejected. Hand-authored deterministic fixture only; no model/product or Docker/WSLc comparison.
+
+- Issue #8569 A01: [prevention-conditioned recovery demand](analysis/prevention_conditioned_recovery_8569_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; exact synthetic probabilities independently reconstructed, 4/4 scoring mutations rejected, with a conditional recovery-ranking reversal. No GUI, live recovery, or empirical reliability claim.
+
+- Issue #59 client custody, PR #7275: [additive packet-integrity recheck](doom/client_custody_private_e0cc_20261004/RECHECK_20261008.md) — Exact 47-member packet integrity verified; the saved peer/candidate code is not rerun. Source-owner and application gates remain HOLD.
+
 - Issue #6358 C01: [private service-capacity transfer](integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) — 24 synthetic requests across six arms; explicit static routing matches ample-capacity effects under the authored held-slot fixture. No production congestion, latency, task-effect, or H_PASS claim.
 
 - Issue #7986 T0 A01: [action-conditioned incorrect-belief exposure](analysis/incorrect_belief_exposure_7986_t0_a01_20261005/REPORT.md) — method-scoped finite result distinguishes old-correct age from fresh-but-misbound exposure; ground truth audit-only. [Issue #7986](https://github.com/Unjuno/agent-interface/issues/7986).
@@ -173,6 +198,7 @@ For new work, prefer the narrowest existing category below rather than adding an
 - [`public_mcp_controller_lineage_2907_construction01_v1/`](integration/public_mcp_controller_lineage_2907_construction01_v1/REPORT.md) — local Docker construction boundary: same caller-owned X11 runtime session across three apps; stale observation refused and neutral input released; not MCP-session fusion or the full #2907 integration gate.
 - [`public_mcp_binding_review_2907_construction01_v1/`](integration/public_mcp_binding_review_2907_construction01_v1/REPORT.md) — local Docker public-MCP Calc modal review/rebind; old binding refused with zero emissions, new binding neutral Escape/release; scoped construction only, not observation freshness or full #2907 integration.
 - [`public_mcp_replacement_review_2907_construction01_v1/`](integration/public_mcp_replacement_review_2907_construction01_v1/REPORT.md) — public MCP Chromium root replacement boundary: a new process/window was refused by the original transient-family review, with target/revision preserved; HOLD retained because old launcher liveness was not recorded.
+- [Issue #7540 batch-release cancellation composition A01](live_control/batch_cancel_sync_compose_a01_20261004/README.md) — retained one-shot Fake-Xlib synthetic result and V3 trace-bound audit; original host-only STOP for OrbStack is preserved, and no physical input or live #59 claim follows.
 - [`measurement/`](measurement/) — scoped measurement and composition studies.
 - [#4389 / Draft PR #4410 archival qualification](measurement/key_state_piggyback_q4s8_v1/ARCHIVAL_QUALIFICATION.md) — 18 exact source/freeze/audit blobs; historical same-connection contract PASS and full-cost HOLD are preserved, but the 261-file raw capsule is missing and the reported allocation is not independently re-audited here.
 - [#3880 / Draft PR #4440 K2M6 archival qualification](measurement/clock_ipc_asymmetry_k2m6_v1/ARCHIVAL_QUALIFICATION.md) — six exact historical report/proof/verification/publication blobs; the owner-reported local PASS and raw-publication HOLD remain, with the 321-file ZIP absent and #3880's separate OrbStack gate still unresolved.
@@ -282,6 +308,8 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 
 ### Recent direct-root evidence
+- [Issue #8488 PSI-triggered shedding T0 A01](analysis/psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — post-run review found an exclusive-deadline semantics mismatch; disposition is `HOLD_DEADLINE_SEMANTICS_MISMATCH` and the original `NO_RESIDUAL` interpretation is withdrawn. See the [append-only correction](analysis/psi_work_shedding_8488_t0_a01_20261008/SEMANTICS_CORRECTION.md); no runtime/container/production claim.
+- [Issue #8471 T0 A01/A02](analysis/switched_dwell_stability_8471_t0_a01_20261008/REPORT.md) — finite exact-rational switched-mode enumeration and independent audit: 4,096 rows, 1,248 non-Schur-stable products, 129 finite-envelope crossings; A02 independently verifies 20/20 abstract emergency overrides and rejects 3/3 mutations. Method-scoped only; no runtime/safety claim.
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 frozen construction probe and independent audit for lease-expiry and causal timestamp receipt boundaries; scoped contract evidence only.
 - [`route_occupancy_5674_construction_v1/`](route_occupancy_5674_construction_v1/) — Issue #5674 finite synthetic Markov construction; empirical route/task hypothesis remains untested.
 - [`trace_reduction_5666_construction_v1/`](trace_reduction_5666_construction_v1/) — Issue #5666 host-only synthetic construction check; no independent replay, model, GUI, or authority result.
@@ -308,3 +336,5 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 - [`aoi_43_t0/`](aoi_43_t0/) — #43 retained toy construction; [accounting-defect/HOLD correction](aoi_43_t0/README.md): identical queue policies and incomparable drop counters; no demonstrated critical-retention benefit.
 
 - [`doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md`](doom/map01_cuda_hud_5752_preflight_stop_20261001/REPORT.md) — Issue #5752 allocation-01 pre-candidate record; its authoritative STOP reason and timestamp are reconciled in [CORRECTION.md](doom/map01_cuda_hud_5752_preflight_stop_20261001/CORRECTION.md). CUDA hypothesis remains untested.- [Issue #6156 escrowed optional-resource budget T0](analysis/escrow_optional_budget_6156_t0_20261002/REPORT.md) — Docker PASS_METHOD_SCOPED over 9,988 reachable states / 27,748 transitions; balanced coordination benefit and skew/crash stranded-right cost retained; no runtime claim.
+
+- [Issue #8386 A05 byte-bound carbon-window comparator replay](carbon_window_7794_a05_bytebound_recheck_20261008/REPORT.md) — `PASS_BYTEBOUND_REPLAY_SCOPED` (auditor JSON: `PASS_DIAGNOSTIC_SCOPED`): exact-byte successor replay reconstructed 10/10 finite cases with zero A02 differences and the declared discriminator; unresolved A04 freeze metadata discrepancies remain. Native Windows stdlib only; no Docker/WSLc or operational scheduler/emissions claim.

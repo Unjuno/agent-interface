@@ -1,0 +1,40 @@
+{
+  "schema": "wslc-local-smoke-7924-a04-run-v1",
+  "allocation": "wslc-local-smoke-7924-a04-20261008",
+  "freeze_commit": "b00e5cb14690ee16ee00b9665c0c280fdbba3ac8",
+  "source_main_sha": "4864ee82c11a729c26ffdcbafc4d95c9d99e1f65",
+  "branch": "research/wslc-local-smoke-7924-a04-current-main-20261008",
+  "preflight": {
+    "status": "PASS_PREFLIGHT_RECEIPT_SHAPES",
+    "invocations": 1,
+    "exit_code": 0,
+    "container_id": "184a4259ab9fffd02050c395f1ba0ba9ee75f7d322f76717a261e4b118f76f5b",
+    "exact_cid_absent": true,
+    "formal_audit": false
+  },
+  "formal_auditor": {
+    "invocations": 1,
+    "exit_code": 1,
+    "status": "FAIL_AUDITOR_CONTRACT",
+    "container_name": "unjuno-8455-a04-audit-4864ee82-82068b8f21ea",
+    "container_id": "472f68c4f75a1300b5cf227f3b21735078799f26e79750f053026662efbe7a7b",
+    "auto_remove_requested": true,
+    "exact_cid_absent_after_run": true,
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "wslc_version": "3.0.1.0",
+    "network_none_requested": true,
+    "read_only_source_mount": true,
+    "pull_never": true,
+    "cpus_requested": 1,
+    "memory_requested": "512M",
+    "memory_warning": "Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+    "memory_enforcement_claim": false,
+    "exception": "KeyError: 'cid'",
+    "combined_output": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\nTraceback (most recent call last):\n  File \"/src/auditor.py\", line 228, in <module>\n    main()\n  File \"/src/auditor.py\", line 178, in main\n    freeze = validate_frozen_a04()\n             ^^^^^^^^^^^^^^^^^^^^\n  File \"/src/auditor.py\", line 154, in validate_frozen_a04\n    receipt[\"invocation\"] == 1 and receipt[\"cid\"] == cid and\n                                     ~~~~~~~^^^^^^^\nKeyError: 'cid'\n",
+    "decision": "FAIL_AUDITOR_CONTRACT; no A02 evidence baseline was reached, no audit artifact was produced, and the formal allocation was not retried."
+  },
+  "a02_candidate_or_auditor_reruns": 0,
+  "a03_auditor_reruns": 0,
+  "docker_calls": 0,
+  "global_container_list_calls": 0
+}
