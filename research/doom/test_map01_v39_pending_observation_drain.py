@@ -220,20 +220,7 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(recovery["fresh_observation_sequence"], 12)
         self.assertIs(recovery["latest"], fresh)
 
-    def test_stale_executor_rejection_recovers_then_admits_fresh_sequence(self):
-        incoming = queue.Queue()
-
-        class EnqueueHardCrossingDuringObserve(Monitor):
-            def observe(self, row):
-                self.seen.append(row["sequence"])
-                if row["sequence"] == 11:
-                    incoming.put({"event": "typed_observation", "sequence": 12})
-                if row["sequence"] == 12:
-                    return {"event": "paired_signal_invalidation",
-                            "reason": "health:below_hard_minimum",
-                            "requires_new_decision": True}
-                return None
-
+    def test_actual_executor_stale_cover_ack_reuses_observation_received_during_wait(self):
         class Backend:
             sequence = 12
             lease = None
@@ -265,26 +252,46 @@ class PendingObservationDrainTests(unittest.TestCase):
         executor.admission_publication_errors = {}
         executor.emit = published.append
         deadline = time.perf_counter_ns() + 10_000_000_000
+        incoming = queue.Queue()
+        latest = {"sequence": 11}
+        all_events = []
+        monitor = Monitor(invalidate_on=12)
+        rows = [
+            {"event": "typed_observation", "sequence": 12},
+            {"event": "observation", "sequence": 12, "image": "frame-12"},
+        ]
 
-        with patch("executor_v12.threading.Thread", NoInputThread):
+        def submit_stale_cover():
             with self.assertRaisesRegex(
                     ValueError, "latest observation sequence required before input"):
                 executor.submit("stale-plan", [{"op": "observe"}], 11, deadline)
+            # The controller's ordinary ACK wait drains these rows before the
+            # adapter presents the matching stale rejection to the caller.
+            while rows:
+                row = rows.pop(0)
+                all_events.append(row)
+                if row["event"] == "observation":
+                    latest.update(row)
+            return {"event": "rejected", "id": "stale-plan",
+                    "reason": "latest observation sequence required before input"}
+
+        with patch("executor_v12.threading.Thread", NoInputThread):
+            recovered = submit_initial_cover_with_recovery(
+                submit_stale_cover, identifier="stale-plan",
+                latest_reader=lambda: latest, event_log=all_events,
+                incoming=incoming,
+                wait=lambda predicate: self.fail(
+                    "sequence 12 was already consumed by the ACK wait"),
+                observation_monitor=monitor)
             self.assertEqual(started, [])
             self.assertEqual(published, [])
-
-            incoming.put({"event": "observation", "sequence": 11})
-            monitor = EnqueueHardCrossingDuringObserve()
-            drained = drain_pending_observation_events(
-                incoming, monitor, "cover-race")
-            self.assertIsNotNone(drained["invalidation"])
-            fresh = {"event": "observation", "sequence": 12, "image": "frame-12"}
-            recovery = recover_pending_observation_backlog(
-                incoming, drained["latest"], 11, "cover-race",
-                lambda predicate: fresh if predicate(fresh) else None)
-            self.assertEqual(recovery["fresh_observation_sequence"], 12)
+            self.assertEqual(recovered["latest"]["sequence"], 12)
+            self.assertEqual(recovered["submitted_sequence"], 11)
+            self.assertEqual(recovered["invalidation"]["reason"],
+                             "health:below_hard_minimum")
+            self.assertEqual(monitor.seen, [12])
             executor.submit("fresh-plan", [{"op": "observe"}],
-                            recovery["fresh_observation_sequence"], deadline)
+                            recovered["latest"]["sequence"], deadline)
 
         self.assertEqual(started, ["fresh-plan"])
         self.assertEqual([event["id"] for event in published], ["fresh-plan"])
