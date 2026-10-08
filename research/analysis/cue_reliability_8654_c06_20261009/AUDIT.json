@@ -1,0 +1,18 @@
+{
+  "allocation": "C06",
+  "status": "FAIL_METHOD",
+  "raw_commit": "6434fcad13cdd0407c9f2218fdc2ec96896e5c23",
+  "source_freeze_head": "8f13efb2597fc9c3fff0f68d73d37edbf9dcbc28",
+  "runner_freeze_head": "9ac54e9dde0881c07adb6e86bdd7d8027ab3e785",
+  "candidate_sha256": "d544618f50375b26b0415219e753ba96179916462fbbf2df4bad2f17c335c5df",
+  "auditor_sha256": "f95a859a6ed5be222a32670b78a5636ebb67dcb3d11a048785fb6cd6a80e64f0",
+  "raw_manifest": "research/analysis/cue_reliability_8654_c06_20261009/RAW_MANIFEST.json",
+  "audit_invocations": 1,
+  "audit_ms": 1550.7274,
+  "summary": null,
+  "error": "SyntaxError: Cannot convert 282429536481\nGLOBAL_SHIFT to a BigInt\n    at BigInt (<anonymous>)\n    at eval (eval at main ([eval]:63:17), <anonymous>:66:86)\n    at auditC06 (eval at main ([eval]:63:17), <anonymous>:69:58)\n    at main ([eval]:66:17)\n    at [eval]:93:1\n    at [eval]:94:4\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)",
+  "limits": [
+    "finite synthetic one-step design",
+    "no GUI/model/user/runtime/safety/task-benefit claim"
+  ]
+}
