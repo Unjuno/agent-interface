@@ -55,6 +55,24 @@ censoring, duplicate iterations, and cap violations. The test constructs a
 counterexample where the frozen predicate labels malformed evidence as
 recovery while the strict classifier does not.
 
+## Applicability to the A16 outcome
+
+The retained A16 result reports zero authored-cover hard-health guard
+exposures and no `episode/report.json`; it is an allocation-level STOP after
+death, with health zero rejected at the subsequent source refresh. Therefore
+the permissive recovery predicate did not classify or cause A16's STOP. This
+review protects interpretation of a future exposed-guard run; it does not
+reclassify A16.
+
+The selected trace excerpt shows decision 11 received health 4 and proposed
+`critical_health_minimum = 1`, `maximum_health_loss = 3`; the next typed sample
+was health zero. This establishes the observed boundary and the failure to
+finish MAP01, but does not establish that a higher floor would have prevented
+death. A discriminating next live test must expose a hard guard while health
+is still in the supported positive domain and retain the ordering of guard,
+cancellation/release, and any fresh follow-up plan. It needs a distinct,
+pre-registered allocation and confirmed lane availability.
+
 ## Disposition
 
 This is a method review and independent post-run check, not live-control or
