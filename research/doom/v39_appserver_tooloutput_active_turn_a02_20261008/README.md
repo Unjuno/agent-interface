@@ -48,9 +48,20 @@ python .\run_interrupt_probe_a06.py --out-dir .\results\a06-interrupt
 python .\audit_interrupt_result_v2.py .\results\a06-interrupt
 ```
 
+## Late stale-response check (A07)
+
+[`PLAN_A07.md`](PLAN_A07.md) fixed a follow-up safety question before execution: whether a response held by the mock, tagged as stale, could surface after its turn had been interrupted and a replacement observation turn completed. A07 passed: turn 1 had exactly one `interrupted` completion, turn 2 had exactly one `completed` completion, and turn 2's request arrived before the held response was released. The mock then successfully wrote the unique `A07_STALE_AFTER_INTERRUPT` assistant response. That sentinel did not appear in App Server JSON-RPC output; the fresh-turn sentinel did appear. The independent v3 auditor passed all ten checks, including stale-output, duplicate-completion, late-request, missing-image, and abnormal-exit mutation controls. Both App Server and runner exited 0.
+
+The output proves only that this one delayed response was not surfaced in App Server notifications after interruption. It does not inspect or claim every internal history store, real-provider cancellation, controller-level action state, safety under V39, or useful task effect.
+
+```powershell
+python .\run_interrupt_probe_a07.py --out-dir .\results\a07-late-response
+python .\audit_interrupt_result_v3.py .\results\a07-late-response
+```
+
 The evidence branch was fast-forwarded from `ea2af10f1111ba614311e354dfecde1bbf653981` to current `main` `f59b2494f403b33349cbf202b49d76caef3d6d82` before files were added. The intervening main commit was unrelated; this package adds non-runtime research evidence only.
 
 ## Scope and disposition
 
-This is App Server transport construction evidence only. A02 and corrected A04 show that active-turn delivery is queued for a follow-up inference rather than interrupting the currently pending inference. A06 shows that explicitly interrupting the turn can admit a fresh observation-driven turn before the held response is released. That restart may discard useful work and requires another inference; no end-to-end latency, model decision quality, V39 interruption safety, live feedback, earlier per-key release, recovery, progress, or game outcome was measured. Keep the #59 live threat-exposure/per-key-release/useful-feedback/recovery/progress/terminal gate open. No runtime or controller source was modified by these probes.
+This is App Server transport construction evidence only. A02 and corrected A04 show that active-turn delivery is queued for a follow-up inference rather than interrupting the currently pending inference. A06 shows that explicitly interrupting the turn can admit a fresh observation-driven turn before the held response is released. In A07, a deliberately late stale response was not surfaced in App Server output after that interruption. Restarting may discard useful work and requires another inference; no end-to-end latency, model decision quality, V39 interruption safety, live feedback, earlier per-key release, recovery, progress, or game outcome was measured. Keep the #59 live threat-exposure/per-key-release/useful-feedback/recovery/progress/terminal gate open. No runtime or controller source was modified by these probes.
 
