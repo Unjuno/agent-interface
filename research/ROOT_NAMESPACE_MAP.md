@@ -177,6 +177,7 @@ The canonical top-level workspace check is [`check_workspace_index.py`](check_wo
 - [`gtk/`](gtk/) — retained GTK/X11 fixture and adapter research paths; consult each child report for scope and disposition.
 
 ### Recent additive namespaces
+- [`gui_query_dpor_8663_a01_20261009/`](gui_query_dpor_8663_a01_20261009/) — Issue #8663 synthetic predicate-aware DPOR experiment; see REPORT.md for the scoped outcome, retained auditor revisions, and protocol deviation.
 - [`decision_regret_8528_t0_a01_20261008/`](decision_regret_8528_t0_a01_20261008/) — Issue #8528 finite synthetic decision-opportunity regret probe; read its protocol and audit for the authored toy-loss scope and STOP/qualification record.
 - [`gpu/`](gpu/) — archived local-GPU candidate triage snapshot and recovery status; not a current resource schedule or authorization.
 - [`archive/`](archive/) — Legacy research archive; consult included manifests and reports for scope.
