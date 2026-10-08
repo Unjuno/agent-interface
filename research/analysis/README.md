@@ -487,6 +487,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`counterexample_guard_refinement_6645_t0_orbstack_20261003/`](counterexample_guard_refinement_6645_t0_orbstack_20261003/)
 - [`counterexample_guard_refinement_6645_t0b_orbstack_20261003/`](counterexample_guard_refinement_6645_t0b_orbstack_20261003/)
 - [`counterexample_guard_refinement_6645_t0c_orbstack_20261003/`](counterexample_guard_refinement_6645_t0c_orbstack_20261003/)
+- [`coupled_visual_control_6195_t0_a01_20261008/`](coupled_visual_control_6195_t0_a01_20261008/)
 - [`cross_handoff_pending_correction_6284_t0_20261002/`](cross_handoff_pending_correction_6284_t0_20261002/)
 - [`cross_role_meaning_drift_6351_t0_v1/`](cross_role_meaning_drift_6351_t0_v1/)
 - [`crossed_verdict_repeatability_6222_t0_20261001_01/`](crossed_verdict_repeatability_6222_t0_20261001_01/)
