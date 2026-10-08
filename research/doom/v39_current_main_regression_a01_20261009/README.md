@@ -20,11 +20,11 @@ Changed files among the prior 45 pins:
 
 The V39 controller implementation and `session_map01_v15.py` source blobs remained unchanged from the A14 pin. The three changed files were included at current-main identities in this run.
 
-The run used the bundled Python 3.12.14 runtime with Pillow 12.3.0. Initial attempts with the system Python lacked Pillow; the first extraction also omitted a test helper import. Those were harness/setup failures, not counted as candidate test failures. The complete 47-file closure was then extracted from the frozen commit and both full commands passed.
+The run used the bundled Python 3.12.14 runtime with Pillow 12.3.0. Initial attempts with the system Python lacked Pillow; the first extraction also omitted a test helper import. Those were harness/setup failures, not counted as candidate test failures. The complete 47-file closure was then extracted from the frozen commit and both full commands passed. The independent audit checks Git blob IDs and SHA-256 for both current and predecessor manifests before reconstructing source drift. A read-only Bugbot review found that the first audit version trusted predecessor blob IDs; the audit was repaired and a deliberately corrupted predecessor pin was rejected.
 
 ## Reproduction
 
-From a checkout containing the frozen commit and the 47 files in `SOURCE_PINS.json`, set the working directory to `research/doom` and run the two exact commands in `COMMANDS.txt`. This package preserves the current-main identities and output from the completed run. `audit.py` independently checks git blob IDs, SHA-256 values, source drift, and the two retained unittest transcripts; it does not rerun the tests.
+From a repository checkout containing the frozen commit, run `extract_sources.py --repo <checkout> --dest <empty-temp-directory>`. Set the working directory to `<empty-temp-directory>/research/doom` and run the two exact commands in `COMMANDS.txt`. This package preserves the current-main identities and output from the completed run. `audit.py` checks all 47 current source files, all 45 predecessor source files, the reconstructed three-file drift list, and the two saved test summaries; it does not rerun the tests.
 
 ## Scope boundary
 

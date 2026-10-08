@@ -26,6 +26,8 @@ if len(PINS["source_files"]) != FREEZE["current_source_pin_count"]:
     errors.append("current source pin count differs from freeze")
 if len(PREVIOUS["source_files"]) != FREEZE["predecessor_a14_pin_count"]:
     errors.append("predecessor source pin count differs from freeze")
+if PREVIOUS.get("commit") != FREEZE["predecessor_a14_commit"]:
+    errors.append("predecessor pin commit differs from freeze")
 
 for item in PINS["source_files"]:
     path = item["path"]
@@ -39,6 +41,20 @@ for item in PINS["source_files"]:
         errors.append(f"git blob mismatch: {path}")
     if hashlib.sha256(content).hexdigest() != item["sha256"]:
         errors.append(f"sha256 mismatch: {path}")
+
+for item in PREVIOUS["source_files"]:
+    path = item["path"]
+    try:
+        blob = git("rev-parse", f"{PREVIOUS['commit']}:{path}")
+        content = subprocess.check_output(
+            ["git", "show", f"{PREVIOUS['commit']}:{path}"])
+    except subprocess.CalledProcessError:
+        errors.append(f"missing predecessor source: {path}")
+        continue
+    if blob != item["git_blob"]:
+        errors.append(f"predecessor git blob mismatch: {path}")
+    if hashlib.sha256(content).hexdigest() != item["sha256"]:
+        errors.append(f"predecessor sha256 mismatch: {path}")
 
 current = {item["path"]: item["git_blob"] for item in PINS["source_files"]}
 changed = sorted(
@@ -73,6 +89,7 @@ print(json.dumps({
     "status": "PASS_SCOPED_SOURCE_AND_OUTPUT_AUDIT",
     "commit": PINS["commit"],
     "source_files_verified": len(PINS["source_files"]),
+    "predecessor_source_files_verified": len(PREVIOUS["source_files"]),
     "predecessor_changed_files": changed,
     "normal_tests": RESULT["normal"]["tests"],
     "optimized_tests": RESULT["optimized"]["tests"],
