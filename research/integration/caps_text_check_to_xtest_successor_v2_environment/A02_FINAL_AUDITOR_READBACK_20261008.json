@@ -1,0 +1,43 @@
+{
+  "schema": "caps-text-query-xtest-a02-auditor-readback-v1",
+  "study_id": "caps-text-query-xtest-a02-20261008",
+  "recorded_utc": "2026-10-08",
+  "vm": {
+    "name": "caps-text-xtest-a02-20261008",
+    "orbstack_id": "01M4CGDMXE66AX0J08FX7XFMCM",
+    "distro": "Ubuntu 24.04.5 LTS Noble",
+    "architecture": "arm64",
+    "creation_flags": [
+      "--isolated",
+      "--isolate-network"
+    ],
+    "host_folder_mount": false
+  },
+  "source": {
+    "github_pr": 8338,
+    "github_head": "71294f25f759b009aeca6e106429c1f6b0b02795",
+    "current_main_ref": "f72cd82d62c9d9f3860d4fa40980c56618bf5aaf",
+    "checkout_clean": true,
+    "freeze_status": "PROTOCOL_DRAFT_NOT_ALLOCATED",
+    "freeze_sha256": "e01b14533bc196bbe97f4651c73565caef46c34d711b09c84aa2aaef7a805b23",
+    "source_manifest_sha256": null,
+    "source_manifest_sha256_note": "Not captured in the available A02 evidence; deliberately not inferred.",
+    "manifest_files_verified": 17,
+    "runtime_modules_verified": 11,
+    "main_backend_sha256": "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126"
+  },
+  "validation": {
+    "auditor_tests": "12/12 pass on A02",
+    "python_compile": "pass",
+    "boolean_numeric_corruption_controls": 5,
+    "unknown_entry_event_type_rejected": true,
+    "freeze_digest_matches_auditor": true,
+    "mutation_controls": 24,
+    "current_main_candidate_patch": "applied in order with barrier patch to a temporary source copy and compiled",
+    "instrumented_backend_sha256": "e885806c649acafe3550b55f2d88e070a59428008a9356fa60ce0699d4d118bb",
+    "public_dispatch": "not run",
+    "preflight_xvfb": "not run",
+    "formal_cases": 0
+  },
+  "next_gate": "Independent review is still required. After review, freeze the reviewed protocol, commit it, and read back the exact commit before any preflight or public-dispatch execution."
+}
