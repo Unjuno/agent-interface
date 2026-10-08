@@ -51,3 +51,14 @@ Exact hashes, raw output, audit, and the one-shot environment are retained in
 [`formal_01/RAW.json`](formal_01/RAW.json), and
 [`audit_01/AUDIT.json`](audit_01/AUDIT.json). The independent audit and scope
 limits are not evidence of a deployed policy or real-world benefit.
+
+## Publication provenance
+
+The formal run was executed against freeze commit
+`751abbd3a891d44d1364a4d9b4d8d7e028796966`, based on main
+`bfcc14e08fbfe5f2f04cd0237d13559e5d62538b`. Main subsequently advanced with
+the separate #5826 analysis-index entry. This result branch was rebased to
+preserve that entry; consequently its published freeze commit has a different
+whole-tree hash. The 11 frozen experiment-package files were rechecked after
+rebase and remain hash-identical (11/11, zero mismatches). No formal candidate
+or auditor invocation was repeated.

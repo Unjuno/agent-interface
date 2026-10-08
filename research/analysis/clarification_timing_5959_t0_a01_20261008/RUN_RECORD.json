@@ -1,9 +1,20 @@
 {
   "allocation": "CLARIFICATION-TIMING-5959-T0-A01-20261008",
   "issue": 5959,
-  "frozen_commit": "751abbd3a891d44d1364a4d9b4d8d7e028796966",
+  "frozen_commit_at_execution": "751abbd3a891d44d1364a4d9b4d8d7e028796966",
+  "published_freeze_commit": "9727e8800b7056448f2b6990bbad448417734076",
+  "published_main": "1c7e05d60438137e7f2162075ef2bd931aa5bba7",
+  "post_rebase_source_hash_verification": {
+    "files_checked": 11,
+    "mismatches": 0
+  },
+  "rebase_note": "Formal execution used the local freeze commit before main advanced. Main then gained the unrelated #5826 analysis-index entry; the branch was rebased to preserve it. The published freeze commit has a different whole-tree hash, but the 11 frozen experiment package files remain byte-identical by recorded hash.",
   "base_main": "bfcc14e08fbfe5f2f04cd0237d13559e5d62538b",
-  "formal_invocations": {"candidate": 1, "auditor": 1, "retry": 0},
+  "formal_invocations": {
+    "candidate": 1,
+    "auditor": 1,
+    "retry": 0
+  },
   "commands": {
     "templates": "RUN_COMMANDS.md",
     "candidate": "docker run --name ai5959-t0-a01-candidate-20261008 --pull=never --platform linux/arm64 --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus=0.5 --memory=256m --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges --user 65532:65532 --workdir /tmp; mount candidate.js and candidate_inputs.json individually read-only; node /tmp/candidate.js --formal /tmp/candidate_inputs.json",
@@ -55,12 +66,22 @@
       "memory_bytes_requested": 268435456,
       "pids_limit_requested": 32,
       "user": "65532:65532",
-      "cap_drop": ["ALL"],
-      "candidate_mounts": ["/tmp/candidate.js:read-only", "/tmp/candidate_inputs.json:read-only"],
-      "auditor_mounts": ["/pkg:read-only"]
+      "cap_drop": [
+        "ALL"
+      ],
+      "candidate_mounts": [
+        "/tmp/candidate.js:read-only",
+        "/tmp/candidate_inputs.json:read-only"
+      ],
+      "auditor_mounts": [
+        "/pkg:read-only"
+      ]
     },
     "limit_enforcement": "requested configuration recorded; enforcement not independently measured"
   },
-  "post_run_freeze_hash_verification": {"files_checked": 11, "mismatches": 0},
+  "post_run_freeze_hash_verification": {
+    "files_checked": 11,
+    "mismatches": 0
+  },
   "disposition_scope": "Synthetic finite event semantics and authored cost-scoring method only. No participant, GUI, model, runtime scheduler, live service, or human interruption outcome."
 }
