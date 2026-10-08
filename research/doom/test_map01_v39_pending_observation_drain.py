@@ -11,6 +11,7 @@ from map01_overlap_controller_v39 import (
     MAX_PENDING_OBSERVATION_EVENTS, DoomCoverSignalPairMonitor,
     drain_pending_observation_events, recover_pending_observation_backlog,
     recover_stale_cover_submission, settle_pending_observation_backlog,
+    select_cover_monitor, reset_cover_after_preacceptance_rejection,
     submit_initial_cover_with_recovery)
 
 
@@ -515,8 +516,18 @@ class PendingObservationDrainTests(unittest.TestCase):
             self.assertEqual(recovered["invalidation"]["reason"],
                              "health:below_hard_minimum")
             self.assertEqual(monitor.seen, [12, 12])
+            reset = reset_cover_after_preacceptance_rejection(
+                recovered,
+                build_monitor=lambda source: (object(), {"authored": None,
+                                                         "source": source}),
+                select_monitor=select_cover_monitor)
+            self.assertEqual(reset["latest"]["sequence"], 12)
+            self.assertEqual(reset["admission"]["monitor_mode"],
+                             "unauthored_coast_no_policy")
+            self.assertEqual(reset["receipt"]["ack"]["event"], "rejected")
+            self.assertIsNone(reset["receipt"]["cover_cancel_terminal"])
             executor.submit("fresh-plan", [{"op": "observe"}],
-                            recovered["latest"]["sequence"], deadline)
+                            reset["latest"]["sequence"], deadline)
 
         self.assertEqual(started, ["fresh-plan"])
         self.assertEqual([event["id"] for event in published], ["fresh-plan"])
