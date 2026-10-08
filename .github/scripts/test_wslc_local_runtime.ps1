@@ -72,15 +72,17 @@ try {
         throw "Could not verify WSLc cleanup for this run's container ID (exit code $LASTEXITCODE)."
     }
     $listing = ($matchingContainers -join "`n").Trim()
-    if ($listing -notmatch '^\[\s*\]$') {
+    # WSLc 3.0.1 emits no stdout for a successful zero-match filtered query.
+    # Treat that as empty only after the command's exit code has been checked.
+    if (-not [string]::IsNullOrWhiteSpace($listing)) {
         try {
             $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
         }
         catch {
-            throw 'The scoped WSLc cleanup query did not return valid empty-array JSON; cleanup is unverified.'
+            throw 'The scoped WSLc cleanup query returned invalid JSON; cleanup is unverified.'
         }
         if ($null -eq $listedContainers -or @($listedContainers).Count -gt 0) {
-            throw 'The scoped WSLc cleanup query did not return an empty JSON array; cleanup is unverified.'
+            throw 'The scoped WSLc cleanup query returned a matching container; cleanup is unverified.'
         }
     }
 
