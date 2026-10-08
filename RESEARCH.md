@@ -1,6 +1,6 @@
 # Issue #8589 T0 A01 — effect-aware selective recovery (2026-10-08)
 
-The WSLc synthetic DAG protocol and decision gate are frozen in [the package](research/analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/PROTOCOL.md); the one-shot formal candidate and independent audit have not run yet. No GUI runtime, external-effect replay, task correctness, latency/cost, user benefit, or product claim is implied.
+`PASS_METHOD_SCOPED`: the frozen WSLc synthetic DAG candidate and independent audit each ran once; 8/8 cases reconstructed, 5/5 mutation controls rejected, and effect dispatch attempts were zero. Selective recomputation was lower than suffix recomputation in two of the eight authored cases; incomplete provenance forced HOLD with zero reuse. This is method evidence only, not GUI/runtime safety, real savings, user benefit, or product validation. See the [full report and artifacts](research/analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md), [protocol](research/analysis/recovery_validity_effect_replay_8589_t0_a01_20261008/PROTOCOL.md), and [Issue #8589](https://github.com/Unjuno/agent-interface/issues/8589).
 
 # Issue #8500 T0 A01 — rejected-analogy memory finite method test (2026-10-08)
 
