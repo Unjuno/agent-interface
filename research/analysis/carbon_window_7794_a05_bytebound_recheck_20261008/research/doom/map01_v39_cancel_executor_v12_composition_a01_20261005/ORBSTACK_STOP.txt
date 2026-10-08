@@ -1,8 +1,0 @@
-status=STOP_CONTAINER_NOT_STARTED
-context=orbstack
-image=python:3.12-slim
-command=docker run --rm --network none with source mounted read-only and output mounted separately
-daemon_error=blob read failed: operation not supported
-candidate_executed_in_container=false
-retry_policy=do not retry the same image-blob failure in this run
-fallback=native Python; not container-equivalent evidence

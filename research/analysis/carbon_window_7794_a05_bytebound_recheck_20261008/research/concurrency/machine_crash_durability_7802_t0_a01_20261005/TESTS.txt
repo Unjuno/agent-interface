@@ -1,6 +1,0 @@
-Local package checks:
-python3 -m unittest discover -s research/concurrency/machine_crash_durability_7802_t0_a01_20261005 -p 'test_*.py' -v
-python3 -m py_compile research/concurrency/machine_crash_durability_7802_t0_a01_20261005/candidate.py research/concurrency/machine_crash_durability_7802_t0_a01_20261005/audit.py research/concurrency/machine_crash_durability_7802_t0_a01_20261005/test_audit.py
-git diff --check
-
-The focused tests validate the model enumerations and confirm the independent auditor rejects a false NO_EFFECT classification plus retry authorization. Repository-wide CI is not implied by this package-local check.

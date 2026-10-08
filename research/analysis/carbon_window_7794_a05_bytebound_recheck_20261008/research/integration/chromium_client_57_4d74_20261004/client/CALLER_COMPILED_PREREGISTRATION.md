@@ -1,5 +1,0 @@
-H: caller v3 can use real checked references and invoke the compiled two-action runtime, retaining real verified task completion.
-T: New session991061; fixed points/crop from prior layout A construction; actual setup/mint retained outside caller with elapsed and durable-call accounting. Route reuse is a type-level reuse connection with fresh pre-minted references, not measured cross-task warm reuse. Actual target checks both at reuse/final stage; graph evidence then independent saved POST scoring. No model adapter or fabricated usage.
-D: caller TASK_SUCCEEDED, graph TASK_SUCCEEDED/two transitions, clear releases, one independently exact task1 POST, model calls0. Six-task benchmark remains incomplete.
-C: fixed screenshot points/layout A crop and prior human grounding cost unavailable; no zero-model economics, cold/warm/repair, image-model or full comparison claim. Prior failed outcomes immutable.
-U: One attempt only, CPU1/memory1G/network-none/user65534/image4ebbb04..., source frozen d908d8f plus local adapters. Preserve failure/stop; no retry of this allocation.

@@ -1,9 +1,0 @@
-Dataset construction execution record — 2026-09-29
-Construction seed pair: 903520260929 / 903520260930 (synthetic sentinels only; not formal allocation seeds).
-Builder: one successful invocation, exit 0; raw dataset 803928 bytes, SHA-256 d96c4072db2ee3bb1af7503a8ae98e062794072385a15099f32121a7a8caad4b.
-Frozen construction runner call count: 1. Dataset regeneration after this point: 0.
-Independent audit v1: exit 1, STOP_DATASET_CONSTRUCTION_AUDIT. The four controls for seed mutation, missing heldout, reorder, and duplicate in the selection pool behaved; the scope-overlap mutation was incorrectly applied only to the display subset, so it did not alter the underlying heldout pool and the control failed. This is a harness-control defect, not a generated-data mismatch. Preserve audit.json and audit_construction.py unchanged.
-Audit v2 is separately labelled posthoc and will read the same immutable dataset.json. It corrects only the scope-mutation fixture; it cannot upgrade any future formal decision.
-CUDA/GPU/model/Docker/formal model-run counts: 0.
-\`restore_dataset.py\` first attempt: exit 1 because strict base64 decoding rejected the retained terminal newline in the .b64 transport file. The compressed payload and original dataset were not modified. The separately labelled restore_dataset_v2.py strips transport whitespace, then verifies exact restored size and SHA-256; it writes a separate restored_dataset.json.
-

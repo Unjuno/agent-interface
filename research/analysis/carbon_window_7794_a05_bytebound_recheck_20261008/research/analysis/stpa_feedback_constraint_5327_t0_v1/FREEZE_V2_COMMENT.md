@@ -1,7 +1,0 @@
-# Separate successor allocation — Issue #5327
-
-The first allocation `stpa-feedback-constraint-5327-t0-20260930-01` is retained unchanged as `STOP_DOCKER_BIND_SOURCE_MISSING`; Docker rejected an empty source mount before starting a container, so the runner did not start. This new allocation `...-02` has a separate freeze and absent output path. It corrects only the host-side output-parent creation/validation. H/T/D/C/U, policies, schedules, semantics, thresholds, and source files are unchanged.
-
-Before freeze, the source directory was resolved and the host mount source `results/formal-02/` was created and verified to exist; the nested runner target `results/formal-02/formal-02/` was verified absent. Mount research read-only at `/workspace/research`, set `PYTHONPATH=/workspace` and working directory `/workspace`, and mount the pre-existing `results/formal-02/` at `/out`. The runner writes only to new `/out/formal-02/`. Frozen image is `python:3.12-slim`, digest `sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9`, network off, read-only root, all capabilities dropped, no-new-privileges.
-
-Formal runner exactly once: `python -B -m research.analysis.stpa_feedback_constraint_5327_t0_v1.run /out/formal-02`. Only on exit 0, raw-only audit exactly once: `python -B -m research.analysis.stpa_feedback_constraint_5327_t0_v1.audit /out/formal-02/raw.json /out/formal-02/summary.json`. No retries within either allocation. Source SHA-256 values remain those listed in `FREEZE.json`.

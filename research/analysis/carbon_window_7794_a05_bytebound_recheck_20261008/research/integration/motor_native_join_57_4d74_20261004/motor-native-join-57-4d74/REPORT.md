@@ -1,9 +1,0 @@
-# Existing MotorState bridge saved receipt qualification
-
-Unchanged adapter.py/native_result.py from main d744d19de5b4a44f5b6896898eeb25516bbaf481 were copied literally into an isolated package with an authored empty __init__ marker. Native input is literal saved P01 row1 data; no original actor or native input replay. One WSLc saved-data producer and one separate saved-data auditor each exit0/errors[]. Source freeze and first raw retained.
-
-Missing explicit context is rejected. Explicit fixture-provided context yields accepted MotorState with VERIFIED_EMPTY release; a copied controlled release failure yields accepted MotorState with FAILED release. Both retain OS_UNCONFIRMED and observed_pointer null. Accepted means schema acceptance, not permission or physical confirmation. Explicit context strings are fixture surrogates, not verified current observation/surface identity. The controlled failure is not a new native failure result.
-
-SUPPORT_EXISTING_AUTHORITY_FREE_STATE_BRIDGE; HOLD_PRODUCTION_CONTEXT_AND_CALLER_ADAPTER. Do not create a duplicate generic MotorState converter. Its output is different from caller execution decision; caller stopped/partial/recovery mappings still need qualification. Native tracked-key release does not prove global input neutrality, and no task-effect or real-time benefit is inferred. Same-author audit is not independent nonauthor scientific review. No source/backend/controller changes, model/GPU or broad ROADMAP completion claim.
-
-Source-routing findings in the separate caller-native-join intake identify this existing module and stop an unneeded prototype. Current source proposals and native measurement owners remain untouched. GitHub prospective registration unavailable under creation limit; local freeze only. Publication and nonauthor review pending.

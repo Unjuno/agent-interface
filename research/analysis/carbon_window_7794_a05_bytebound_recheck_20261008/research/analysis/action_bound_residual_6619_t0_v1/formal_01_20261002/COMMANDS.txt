@@ -1,9 +1,0 @@
-Candidate (invoked once; exit 0):
-wslc.exe run --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<absolute issue directory>,target=/input,readonly --mount type=bind,source=<absolute formal_01 directory>,target=/output python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /input/candidate.py /input/cases.json /output/raw.json
-
-Independent auditor (invoked once; exit 0):
-wslc.exe run --pull never --network none --cpus 1 --memory 512M --mount type=bind,source=<absolute issue directory>,target=/input,readonly --mount type=bind,source=<absolute formal_01 directory>,target=/output python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python /input/audit.py /input/cases.json /output/raw.json /output/audit.json
-
-Candidate container: b17f0bd409e1
-Auditor container: 03b720cc2e49
-Both used network=none. Candidate and auditor each ran exactly once. No retry.

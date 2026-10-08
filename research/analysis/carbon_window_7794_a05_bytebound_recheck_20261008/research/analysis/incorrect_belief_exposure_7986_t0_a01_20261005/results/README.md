@@ -1,1 +1,0 @@
-Formal one-shot outputs are written here. `candidate.raw.json` contains only candidate-visible observation/effect ages. `AUDIT.json` is the separate truth-sidecar adjudication bound to the frozen fixture digest.

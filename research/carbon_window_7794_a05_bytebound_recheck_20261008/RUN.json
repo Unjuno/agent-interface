@@ -1,0 +1,40 @@
+{
+  "allocation": "CARBON-WINDOW-7794-A05-BYTEBOUND-20261008-01",
+  "issue": 8386,
+  "protocol": "PROTOCOL_A05.md",
+  "freeze": "FREEZE_A05.json",
+  "started_local": "2026-10-08T10:20:44.9089939+09:00",
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "runtime": "native task-host Python stdlib CPU-only fallback",
+    "container": false,
+    "wslc": false
+  },
+  "invocations": [
+    {"command": "python -B candidate.py", "count": 1, "exit_code": 0, "stdout": "formal_a04/candidate.json", "stderr": "formal_a04/candidate.stderr.txt"},
+    {"command": "python -B auditor.py", "count": 1, "exit_code": 0, "stdout": "formal_a04/audit.json", "stderr": "formal_a04/auditor.stderr.txt"}
+  ],
+  "retries": 0,
+  "result": {
+    "status": "PASS_DIAGNOSTIC_SCOPED",
+    "cases_reconstructed": 10,
+    "a02_differences": 0,
+    "discriminator": {"global_lexicographic": {"A": 1, "B": 0}, "serial_asap": null, "same": false},
+    "errors": []
+  },
+  "raw_sha256": {
+    "candidate.json": "526eda537bb378a44f85d35fabd5fdd6743dfd13cf7a7ef1b7de215301ee4afb",
+    "audit.json": "86960147adfc92d44d4d9948e7210fd964187e6df2e4b29eac249ef031979308",
+    "candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "auditor.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "post_run_frozen_source_sha256": {
+    "a02_frozen_cases.json": "782cc4f8d85364a6bed2de55ad2b399ba9ecbbf1b43cff9a494ddacd6ab019b5",
+    "candidate.py": "edf7c02f77859c67c6e5911a082e2eef456dec8d8c1b7bdbd5f835585a455022",
+    "auditor.py": "ee79d184e4a89e2aee62ee43cb908a92332e27417ef48fa95d3ec83d5a710452",
+    "test_construction.py": "17db8c837b9800731ff5eb6de932af92c32533709097801a3634ea4557219b05"
+  },
+  "interpretation": "A05 byte-bound replay reproduced the scoped diagnostic and the A04 semantic rows. It does not repair A04's unresolved FREEZE.json and PREREGISTRATION.md hash discrepancies and is not operational scheduler, energy, emissions, or CO2 evidence."
+}

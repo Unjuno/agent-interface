@@ -1,5 +1,0 @@
-Command: docker image inspect python:3.12-slim --format '{{.Id}} {{json .RepoDigests}}'
-Runtime: OrbStack Docker context
-First outcome: STOP / infrastructure
-Error: rpc error: code = Unknown desc = blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported
-No container started and no image pull/retry was attempted. The exploratory construction probe was then run on host CPython 3.14.5; this is not container-qualified evidence.

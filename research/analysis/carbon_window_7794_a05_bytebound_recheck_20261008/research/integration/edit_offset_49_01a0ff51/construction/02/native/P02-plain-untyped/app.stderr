@@ -1,7 +1,0 @@
-QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-root'
-Traceback (most recent call last):
-  File "/src/app.py", line 61, in receive
-    reply(dict(kind='selected', **snapshot()))
-  File "/src/app.py", line 48, in reply
-    print(json.dumps(data, ensure_ascii=False), flush=True)
-UnicodeEncodeError: 'utf-8' codec can't encode character '\ude00' in position 80: surrogates not allowed

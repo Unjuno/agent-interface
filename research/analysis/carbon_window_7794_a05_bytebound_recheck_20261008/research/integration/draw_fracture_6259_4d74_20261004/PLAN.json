@@ -1,7 +1,0 @@
-{
-  "H": "separate Draw object reads across actual independent write can synthesize a goal that no controlled state/prefix satisfies",
-  "T": "two fresh docs stable/mutated; beforeA1900B2800, writerA1800 thenB2700; readA before writer, readB after; compare fresh postwrite read without further actor",
-  "D": "mutated split false satisfaction, no controlled writer prefix goal; stable and fresh refuse; original first outcome retained",
-  "C": "CPU1 memory512MiB networknone user65534 pinnedbab4dc0d no model",
-  "U": "actual app read-consistency boundary; fresh read serialized after writer is not generic atomic snapshot; no universal unobserved intermediate proof"
-}

@@ -1,9 +1,0 @@
-/* Own zero-operation relay fixture. No MCP/backend/model/native capability. */
-import {writeFileSync} from 'node:fs';
-const [started,exited]=process.argv.slice(2);let bytes=0;
-writeFileSync(started,JSON.stringify({pid:process.pid,ppid:process.ppid,started_utc:new Date().toISOString()})+'\n',{flag:'wx'});
-const guard=setTimeout(()=>{process.exitCode=77;process.stdin.destroy();},4000);
-process.stdin.on('data',chunk=>{bytes+=chunk.length;});
-process.stdin.on('end',()=>{clearTimeout(guard);});
-process.on('exit',code=>writeFileSync(exited,JSON.stringify({pid:process.pid,code,request_bytes:bytes,ended_utc:new Date().toISOString()})+'\n',{flag:'wx'}));
-process.stdin.resume();

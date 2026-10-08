@@ -1,5 +1,0 @@
-PRE-RUN: python3 -m py_compile SOURCE/candidate.py SOURCE/audit.py SOURCE/test_audit.py
-PRE-RUN: python3 -m unittest discover -s SOURCE -p test_*.py -v
-PRE-RUN: verify FREEZE.json and SOURCE_BLOBS.json hashes
-CANDIDATE: python3 SOURCE/candidate.py --out results/A01 --cycles 10 (once only)
-AUDITOR: python3 SOURCE/audit.py --raw results/A01/RAW.json --freeze FREEZE.json --out results/A01/AUDIT.json (once only, after candidate outcome)

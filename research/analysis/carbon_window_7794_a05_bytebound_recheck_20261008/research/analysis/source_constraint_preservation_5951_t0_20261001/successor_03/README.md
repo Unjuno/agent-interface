@@ -1,5 +1,0 @@
-# Successor 03 — strengthen the static trace-to-test comparator
-
-Allocation 01 and auditor-repair successor 02 remain immutable. Review found allocation 01's baseline checked source links but not the targeted atom tests expected of a traceable-refinement comparator. This successor adds a separately implemented static baseline that checks every clause atom, rejects unsupported atoms and dangling source references, and preserves explicit UNKNOWN for an ambiguous source. It intentionally has no authenticated-turn precedence rule and therefore retains an old clause even when a later authenticated source supersedes it. No candidate rerun, model call, or input/output rewrite occurs.
-
-The sole discrimination claim is now narrower and fairer: both the static baseline and source-aware candidate should reject omission, weakening, unsupported additions, and bad references; only the candidate can accept the fixture's authenticated supersession without forcing ambiguity. If the baseline output does not match the frozen expectations, the result is retained as FAIL.

@@ -1,6 +1,0 @@
-FROM sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55
-USER root
-RUN apt-get update && apt-get install -y --no-install-recommends chromium && rm -rf /var/lib/apt/lists/*
-RUN /usr/local/bin/python3 -m pip install --no-cache-dir jsonschema==4.25.1
-RUN /usr/local/bin/python3 -c "import PIL,Xlib,jsonschema; print('runner dependencies available')" && chromium --version
-ENV PYTHONDONTWRITEBYTECODE=1

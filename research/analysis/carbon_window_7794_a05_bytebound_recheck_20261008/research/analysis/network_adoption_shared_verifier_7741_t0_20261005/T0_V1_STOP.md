@@ -1,7 +1,0 @@
-# T0 v1 retained failure
-
-The frozen v1 candidate ran once on 2026-10-05 on local macOS CPython 3.14.5. It emitted 504 matched-condition groups. Candidate stdout is retained losslessly as `candidate-raw.json.gz`; its uncompressed SHA-256 is `e45f5b74b68fe17c1a4f456dacc59fa8895d3d80f9320736495ff39a71be1098`. The first independent audit is `audit.json`, SHA-256 `fd7bbd577d023e3f2448520ef0a647137adbf24d527a4a27a24aacf004938a5f`.
-
-The audit found event-accounting errors because it incorrectly required every unfinished task (including queued tasks) to have a service-start event. Correct accounting must separate never-started queued work from started-but-unfinished service. The candidate also exposed a design error in the negative controls: the auditor compared no-imitation and three-server partitioned cases against a one-server frozen case, so those controls were not matched. The candidate's reduced-cost start probability was also implemented as a conditional probability greater than one, making every offered task start; this does not implement the frozen 0.22 opportunity-start probability.
-
-The observed 16/16 peer-vs-frozen latency reversals are descriptive only and are not promoted: the gate is `METHOD_FAIL_OR_INCONCLUSIVE`, control reversal counts were nonzero, and event auditing failed. This is the immutable v1 outcome, not a PASS. A corrected protocol, if run, is a separately versioned successor and must not replace this raw result.

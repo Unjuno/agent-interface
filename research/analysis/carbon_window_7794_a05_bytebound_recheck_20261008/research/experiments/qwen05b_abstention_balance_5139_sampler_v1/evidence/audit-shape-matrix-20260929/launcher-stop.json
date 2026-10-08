@@ -1,7 +1,0 @@
-{
-  "command": "$env:PYTHONPATH='.'; python research/experiments/qwen05b_abstention_balance_5139_sampler_v1/evidence/audit-shape-matrix-20260929/probe.py",
-  "working_directory": "repository worktree root",
-  "error": "ModuleNotFoundError: No module named 'audit_results'",
-  "interpretation": "The supplemental rerun used PYTHONPATH=. from the repository root, which does not expose the experiment package modules. The primary before/after probe succeeded from the package directory with the same script. This is launcher configuration evidence, not a dataset audit result.",
-  "status": "STOP_LAUNCHER_IMPORT_PATH"
-}

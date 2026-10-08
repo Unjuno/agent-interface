@@ -1,9 +1,0 @@
-from pathlib import Path
-import json
-r=Path(__file__).resolve().parent/'source/research/integration/primary_startup_ready_57_20261003_01a0ff53'
-for name in ['public-stdin-fd-first/healthy-empty-file','public-stdin-fd-first/directory-read-error','public-stdin-writeonly-first/writeonly-file-read-error']:
- p=r/name;data=json.loads((p/'RESULT.json').read_bytes())
- print(json.dumps({'path':name,'result':data,'files':[x.name for x in p.iterdir()]}))
-for name in ['red-new-boundary','red-boundary-fixture-repair','green-new-boundary','green-focused19','green-combined22']:
- p=r/name;print(json.dumps({'path':name,'files':[x.name for x in p.iterdir()]}))
-

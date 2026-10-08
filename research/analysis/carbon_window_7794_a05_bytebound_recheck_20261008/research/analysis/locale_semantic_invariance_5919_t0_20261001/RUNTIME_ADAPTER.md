@@ -1,3 +1,0 @@
-# Runtime adapter
-
-The frozen `candidate.mjs` and `audit.mjs` were fetched byte-for-byte from this GitHub branch and evaluated in separate `functions.exec` V8 isolates using `new Function(source + "\\nreturn run;")` / `new Function(source + "\\nreturn audit;")`. Candidate and auditor were each called exactly once. The auditor is separately authored and does not import candidate code. No host subprocess, filesystem write, Docker container, GPU, model, network call, or GUI was used.

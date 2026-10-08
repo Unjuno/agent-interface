@@ -1,5 +1,0 @@
-# Accepted-sink prestart boundary — scoped construction
-
-Original exact peer8fe1160 ExecutorV12: two supplied accepted-sink failures retain an unstarted active worker; close raises cannot-join-unstarted-thread. Original raw preserved. Additive reference closes the executor, records local delivery_unknown, cancels the lease and clears only this unstarted active tuple; no accepted replay or input. Fresh reference2cases and normal/re-submit2cases pass. Five unchanged peer fake-Xlib publication regressions pass with explicit reference substitution. Four separate WSLc invocations once each, exit0; no repeated formal allocation.
-
-Zero game/model/physical input/GPU. Normal test uses empty program/stub release; regression uses fake Xlib. No physical release, V13/full concurrency, public runtime adoption or useful recovery proof. Tests/source01 use exact peer executor plus frozen earlier support; source02 also replaces owner with exact peer version for regressions. Historical absolute paths/image require fresh setup; this is not portable readiness. No public source changes and no authorization to replay consumed runs.

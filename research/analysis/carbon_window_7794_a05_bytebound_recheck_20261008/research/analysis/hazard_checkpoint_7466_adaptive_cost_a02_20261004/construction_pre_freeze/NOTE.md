@@ -1,3 +1,0 @@
-# Temporary-copy construction preview (not formal A02 output)
-
-`candidate.json.gz` is the full candidate-driver output from the pre-freeze construction copy. `audit.json` and `audit.stdout.json` are the later independent raw-only replay/mutation audit for that preview. `candidate.stdout.json` is the driver's stdout receipt. `source_snapshot/` retains the exact `prepare.py`, candidate driver, policy worker, and inputs used by the preview. All bytes are post-run hashed in `CONSTRUCTION.json` at the package root. These files are kept solely to preserve the accidental pre-freeze execution; they are excluded from the formal A02 invocation count and scientific disposition.

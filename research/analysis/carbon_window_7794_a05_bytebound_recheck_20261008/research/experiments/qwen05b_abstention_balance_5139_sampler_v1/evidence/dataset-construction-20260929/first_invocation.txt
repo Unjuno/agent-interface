@@ -1,7 +1,0 @@
-Invocation 1 — 2026-09-29 (construction harness setup only)
-Command: python -B .\build_construction.py
-Result: exit 1 before dataset generation; ModuleNotFoundError: No module named 'make_dataset'.
-Companion audit command also exited 1 before reading any raw data: ModuleNotFoundError: No module named 'audit_sampler'.
-No dataset.json or audit.json existed after this invocation. Formal model/GPU/container executions: zero.
-Repair: insert the frozen package-root ancestor into sys.path in both standalone scripts. No generator, sampler, seed, or decision gate was changed.
-

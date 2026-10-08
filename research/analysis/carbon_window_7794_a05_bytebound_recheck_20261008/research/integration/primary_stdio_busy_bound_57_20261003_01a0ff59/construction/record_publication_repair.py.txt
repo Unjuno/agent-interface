@@ -1,8 +1,0 @@
-import hashlib,json
-from pathlib import Path
-p=Path(__file__).resolve().parent;a=p/'repo/research/integration/primary_stdio_busy_bound_57_20261003_01a0ff59'
-r=json.loads((a/'RESULT.json').read_text())
-r['publication_repair']={'first_diff_check_exit':1,'retained_readback_exit':2,'detail':'copied source CR and untouched assertion-log blank spaces reported; package-only cr-at-eol and log-only -blank-at-eol attributes added. Original source/log/raw bytes not normalized or rerun.','original_first_diagnostic':'public tool result; checks/whitespace-pre-repair separately captures the unchanged unresolved diagnostic'}
-(a/'RESULT.json').write_text(json.dumps(r,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
-(a/'construction'/'record_publication_repair.py.txt').write_bytes(Path(__file__).read_bytes())
-print('publication-only attributes recorded; outcome/raw unchanged')

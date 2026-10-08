@@ -1,5 +1,0 @@
-# Issue #7452 T0 report
-
-Outcome: **PASS_METHOD_SCOPED**. The one-shot native Ubuntu WSL2 candidate and independent raw-only auditor each exited 0; retries 0. At equal 40-row budget, mixed coverage of four focus×surface assignments crossed with all 10 legal ordered event pairs detected the seeded `focus=1 ∧ surface=1 ∧ REVOKE→ACT` mutant that the separately satisfied context-pairwise and event-pair suites missed. Both approaches detected the factor-only, order-only and order-invariant controls. Independent exhaustive context×pair denominator was 80; mixed coverage was exact (40/40). Construction controls passed 5/5 and reject stratum collapse, impossible release ordering and missing target rows.
-
-This is one authored finite transfer fixture, not evidence of a natural GUI fault, a higher-order safety certificate, live runtime behavior, or reliability. Native WSL2 was used; no container/Docker experiment or portability claim. Full H/T/D/C/U, source freeze, raw output hashes, construction failure and scope limits: [`README.md`](README.md), [`FREEZE.md`](FREEZE.md), [`RESULT.md`](RESULT.md), and [`CONSTRUCTION_HISTORY.md`](CONSTRUCTION_HISTORY.md).

@@ -1,1 +1,0 @@
-{"Button": {"<Button-1>": "\n    tk::ButtonDown %W\n", "<ButtonRelease-1>": "\n    tk::ButtonUp %W\n", "<KeyPress>": ""}, "Entry": {"<Button-1>": "\n    tk::EntryButton1 %W %x\n    %W selection clear\n", "<ButtonRelease-1>": "\n    tk::CancelRepeat\n", "<KeyPress>": "\n    tk::CancelRepeat\n    tk::EntryInsert %W %A\n"}}

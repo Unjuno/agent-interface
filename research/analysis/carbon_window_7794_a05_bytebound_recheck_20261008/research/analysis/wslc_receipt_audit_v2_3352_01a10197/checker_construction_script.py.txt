@@ -1,9 +1,0 @@
-from pathlib import Path
-import ast
-p=Path('/workspace/agent-interface/research/analysis/wslc_receipt_audit_v2_3352_01a10197')
-s=(p/'verify_repair.py').read_text().replace("assert receipt['ended_utc'] >= receipt['started_utc']", "assert type(receipt['exit_code']) is int\n            assert receipt['ended_utc'] >= receipt['started_utc']")
-# Explicit checks survive python -O; this is checker construction, not a producer rerun.
-class Checks(ast.NodeTransformer):
-    def visit_Assert(self,node):
-        return ast.copy_location(ast.If(test=ast.UnaryOp(op=ast.Not(),operand=node.test),body=[ast.Raise(exc=ast.Call(func=ast.Name(id='ValueError',ctx=ast.Load()),args=[node.msg or ast.Constant(value='raw repair check failed')],keywords=[]),cause=None)],orelse=[]),node)
-tree=Checks().visit(ast.parse(s));ast.fix_missing_locations(tree);(p/'verify_repair.py').write_text(ast.unparse(tree)+'\n')

@@ -1,3 +1,0 @@
-The candidate traceback occurs at platform.platform() before select.py reaches OUT.write_text(candidate_result.json); therefore the candidate emitted no result.
-
-After container exit, docker cp could not retrieve /tmp/run/candidate_result.json. Because /tmp was tmpfs, its contents disappear when the container stops; this post-exit copy error alone is not evidence that the file was absent while the container was alive. No candidate rerun was attempted.

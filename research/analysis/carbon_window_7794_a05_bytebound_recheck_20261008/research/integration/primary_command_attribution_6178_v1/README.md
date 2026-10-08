@@ -1,3 +1,0 @@
-# PR7279 source and regression proof
-
-Decode evidence.json.gz.b64.txt as strict base64, gunzip, and verify MANIFEST plus every member length/SHA256 before reading. Source scripts are inert data in the packet; do not execute received producers. The original first-failure148-member proof is a complete nested gzip member with its original pins. Canonical LF source195 tests passed; original sources, first failures and repairs remain retained. No live SDK/GUI/model/provider or economic claims. This evidence ref is separate from PR source head and is not a content vote or main application certificate.

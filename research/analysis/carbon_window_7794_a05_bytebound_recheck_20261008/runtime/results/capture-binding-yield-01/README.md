@@ -1,5 +1,0 @@
-# Typed capture-binding yield integration
-
-Actual Calc predecessor03 failed after two completed input programs when focus changed during capture. RED regression retained four failures: three prefix positions plus native exception classification. Candidate returns SAFE_YIELD/association_changed for exactly the typed capture boundary, preserves pending effects/valid observations, publishes no inconsistent frame, and requires explicit window review. Other X11/artifact errors still propagate.
-
-89 targeted tests passed normally and with -O. Full Ubuntu-native checks passed383 protocol and192 harness tests. Source packaged from4bb9ed3055488dce995558ca3d37a20027b8321c. Fresh allocation04 failed during startup with BadWindow and is preserved. Successor05 skipped only vanished windows during title discovery, then exercised the actual typed binding change, primary modal review and explicit confirmation; saved317/529 verified after termination. These are correctness results, not matched speed/token or human-tempo qualification.

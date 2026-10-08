@@ -1,7 +1,0 @@
-import pathlib
-p=pathlib.Path(__file__).parent;s=(p/'check_saved.py').read_text(encoding='utf-8')
-marker="    assert one('cdp_during')['page_events']==[down]"
-replacement="    for kind in ['cdp_during','cdp_after','native_after']:\n        assert all(type(v['trusted']) is bool and type(v['shift']) is bool for v in one(kind)['page_events'])\n"+marker
-assert s.count(marker)==1;s=s.replace(marker,replacement)
-s=s.replace("        if n=='integer-trusted':assert type(next(x for x in c if x.get('kind')=='cdp_during')['page_events'][0]['trusted']) is bool\n",'').replace("p/'checked.json'","p/'checked-v2.json'")
-(p/'check_saved_v2.py').write_text(s,encoding='utf-8')

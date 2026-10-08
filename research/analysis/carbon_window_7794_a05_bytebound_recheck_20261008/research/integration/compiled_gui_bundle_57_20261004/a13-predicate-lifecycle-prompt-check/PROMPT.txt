@@ -1,7 +1,0 @@
-Locate the visible editable Value field and Save button in this current screenshot. Give source-image pixel points; put the field point in the empty right half away from the caret. Authorized token is t991079-1. Do not use tools. Return only the schema object.
-
-Author the contract state graph yourself; it is executed directly, not replaced by a template. Primitive vocabulary: enter_token on field; submit_form on submit.
-
-Predicate lifecycle: target_valid means the current observation contains a fresh identity check for the target selected by the current branch. It is observation-local and only a pre-action branch guard. Never place target_valid in actions[].expected_effect, because expected_effect is checked against a later post-action observation. Every action still requires its own fresh ordinary admission. exact_token_visible means OCR equals the authorized token. exact_saved_title means the independent visible saved-title cue.
-
-Require expected_effect exact_token_visible=true for enter_token and exact_saved_title=true for submit_form. Require exact_token_visible=true before submit_form and exact_saved_title=true for completion. Use one branch per state, null action/next_state/reason for complete, null reason for action. Choose the actual field text interior value_crop=[left,top,right,bottom] in full screenshot pixels; exclude border/label, include full possible value and margin. Names, states, transitions, action targets and conditions are your contract, bounded by the schema. Do not use a fixed method enum.

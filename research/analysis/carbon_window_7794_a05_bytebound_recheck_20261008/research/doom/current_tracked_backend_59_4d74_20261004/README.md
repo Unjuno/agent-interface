@@ -1,5 +1,0 @@
-# Current tracked backend import qualification
-
-One WSLc construction check stages exact Git commit31018e40b3032d02c34ddd83f49e9bd282ebd590 from canonical top-level Python source in five declared directories; SOURCE.json pins1926 staged blobs. No archived support substitution. With live_control, doom and repository root on sys.path, the unchanged public backend test imports current dependencies and passes2 mocked constructor/receipt cases, exit0. Kernel swap/cgroup warning retained; configured caps enforcement is unproven.
-
-This supports the exact dependency import layout and these two contracts, not a full dependency distribution, running session, native input, game/model effects, scorer freshness or useful recovery. Original frozen experiments in PR7493 remain unchanged. Host5.062s includes container startup and test execution; unittest0.001s is not application latency. Import itself starts no game or X server; constructor is mocked. Source is recoverable through the pinned Git commit, not duplicated in this supplement; the launcher requires the original external staging/image and is not a standalone reproduction package.

@@ -1,3 +1,0 @@
-# Base SHA amendment (pre-candidate)
-
-`PREREGISTRATION.md` records provisional main `150d5bd55d49f25830686eb529115405b08a7d59`. Main advanced before the source freeze; the allocation branch was fast-forwarded before any formal candidate/auditor invocation. The controlling exact base for this frozen allocation is `2669f307ee2176df963fad3409193da465ffe546`, recorded in `FREEZE.json` and Issue #5704 comment [#5924713983](https://github.com/Unjuno/agent-interface/issues/5704#issuecomment-5924713983). Candidate/auditor remain 0/0. Frozen source files were not edited after their hashes were established; this additive note reconciles the historical provisional base entry.

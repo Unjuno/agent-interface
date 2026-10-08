@@ -1,8 +1,0 @@
-Pre-run container inventory attempt (read-only):
-
-`docker context show` -> `orbstack`
-`docker ps --format '{{.ID}} {{.Names}} {{.Status}}'` -> empty output
-`docker info --format 'server={{.ServerVersion}} os={{.OperatingSystem}} cpus={{.NCPU}} memory={{.MemTotal}}'` -> OrbStack Server 29.4.0, 10 CPUs, 16808173568 bytes memory
-`docker image ls --digests --format '{{.Repository}}:{{.Tag}} {{.Digest}} {{.ID}}'` -> daemon error: `blob sha256:29f6ac192406dc28cf01a9d7e0d4e6ef9278d83eabdbe39fcc211407e0153cf4 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/29f6ac192406dc28cf01a9d7e0d4e6ef9278d83eabdbe39fcc211407e0153cf4: open ...: operation not supported`
-
-No container was launched and no image pull was attempted. The bounded OCR diagnostic uses the available host-native Tesseract binary; results are scoped to that macOS environment.

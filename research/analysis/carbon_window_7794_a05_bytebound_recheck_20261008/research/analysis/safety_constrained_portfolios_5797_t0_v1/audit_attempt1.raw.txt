@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "audit.py", line 59, in <module>
-    main()
-  File "audit.py", line 22, in main
-    covers = [s for s in all_sets if set.union(*(caps[i] for i in s)) == total_caps]
-TypeError: unbound method set.union() needs an argument

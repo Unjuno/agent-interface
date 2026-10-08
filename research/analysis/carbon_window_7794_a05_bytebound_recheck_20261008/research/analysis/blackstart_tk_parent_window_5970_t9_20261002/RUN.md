@@ -1,3 +1,0 @@
-# T9 run record
-
-Docker Desktop engine unavailable; the candidate ran once under private WSL2 Xvfb and the independent raw auditor ran once. Exact T3 app SHA and T9 candidate/runner/observer hashes matched the freeze. One Shift_L press/release was dispatched; app=2, observer=3 (including an extra Release at the press timestamp), X RECORD=5 raw FromServer deliveries. The parent recipient was selected. Finally release was attempted and the terminal keymap was neutral. Independent disposition remains `HOLD_PARENT_SELECTED_EVENT_MISSING` because frozen exact-stream cardinality/alignment gates did not pass. Raw evidence is unmodified.

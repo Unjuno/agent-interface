@@ -1,9 +1,0 @@
-import datetime,hashlib,json,pathlib,subprocess,sys
-P=pathlib.Path(__file__).resolve().parent;sha=lambda b:hashlib.sha256(b).hexdigest();utc=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
-directory=P/'command-audit-v2-repaired';directory.mkdir(exist_ok=False)
-freeze={'frozen_utc':utc(),'kind':'ordinary saved-only audit repair, zero producer/original-audit-main replays','pins':[{'path':x,'bytes':len((P/x).read_bytes()),'sha256':sha((P/x).read_bytes())} for x in ['audit.py','audit_v2.py','run_audit_v2.py','SQL_CONTROL_WITNESS.py','SQL_CONTROL_WITNESS.json','native-first/RAW.json','FREEZE.json']]}
-(P/'AUDIT_FREEZE_V2.json').write_text(json.dumps(freeze,sort_keys=True,indent=2)+'\n',encoding='utf-8')
-child=subprocess.Popen([sys.executable,'-X','utf8','-B',str(P/'audit_v2.py')],stdout=subprocess.PIPE,stderr=subprocess.PIPE);o,e=child.communicate(timeout=30);end=utc()
-(directory/'stdout.txt').write_bytes(o);(directory/'stderr.txt').write_bytes(e)
-receipt={'argv':['python','-X','utf8','-B','audit_v2.py'],'started_utc':freeze['frozen_utc'],'ended_utc':end,'child_pid':child.pid,'exit_code':child.returncode,'stdout_bytes':len(o),'stdout_sha256':sha(o),'stderr_bytes':len(e),'stderr_sha256':sha(e),'producer_replays':0,'main_requests':0}
-(directory/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8');print(json.dumps(receipt));print(o.decode());print(e.decode());sys.exit(child.returncode)

@@ -1,1 +1,0 @@
-Read REPORT.md. Post-effect contract detects and aborts both late replacements; original prevention/task auditor still fails. Separate first outcomes retained; no recovery/task completion or atomicity claim.

@@ -1,7 +1,0 @@
-PASS: {"audit":"PASS","minimum_memavailable_kib":98076,"control_ops":11,"stop_ms":161,"pressure_overlap_s":14.328068,"baseline_stop_ms":124}
-PASS mutations:
-false-success: REJECTED
-missing-stop-ack: REJECTED
-missing-cleanup: REJECTED
-
-Both scripts ran as network-disabled WSLc containers using the pinned Python image. Auditor container limit was 128 MiB and 0.25 CPU.

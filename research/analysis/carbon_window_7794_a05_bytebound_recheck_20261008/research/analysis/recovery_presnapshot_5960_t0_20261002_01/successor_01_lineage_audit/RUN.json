@@ -1,9 +1,0 @@
-{
-  "allocation_id": "R133-RECOVERY-PRESNAPSHOT-5960-T0-AUDIT-SUCCESSOR-20261002-01",
-  "parent_candidate_sha256": "db147417f197b4f86d9894b5638e9a265375600acbe6476802895e461e26687c",
-  "parent_candidate_invocations": 0,
-  "construction_tests": {"command": "python -m unittest -v test_lineage_audit.py", "passed": 9, "failed": 0, "status": "PASS"},
-  "formal_auditor": {"command": "python run_audit.py", "invocations": 1, "retries": 0, "exit_code": 0, "status": "PASS_AUDIT_LINEAGE_SCOPED", "rows": 864, "errors": 0},
-  "docker": "Not used; same bounded container-runtime condition as parent allocation. This successor is a deterministic offline audit.",
-  "scope": "Identity/signal integrity audit of synthetic retained evidence; no empirical GUI or recovery claim."
-}

@@ -1,9 +1,0 @@
-# V16 scorer failure during actual proxy cleanup — source repair
-
-Independent review of draft#7545/d2660e2405 found that a sampling/evidence failure could permit another update when existingV15 GameProxy.close calls final_sample. H: latching any scorer/evidence failure prevents cleanup from issuing another update, while retaining both errors if sampling and evidence publication fail together.
-
-T: three separate WSLc cachedimage/networknone/nonroot sourceRO/outRW fakegame construction outputs, no nativegame/model/input/GPU. Exact consumedsource+argv+hashes/rawstdoutstderr+exit preserved perconstruction. 01 expectedexception tests produce2ERROR/7PASS; no source repair yet. 02 adjusts only test exception capture to assert actual behavior: sameoldsource2FAIL/7PASS, actualproxy closesinner but counts2updates/2sink attempts instead of1, simultaneousupdateOSError/evidenceValueError propagatesonlyValueError. 03 source latch+BaseExceptionGroup repair:9/9PASS/exit0. No oldoutputs overwritten or regraded. No formal scientific replay.
-
-D: PASS_SOURCE_CLEANUP_COMPOSITION_SCOPED. After failure latercalls refuse before update/evidence. ExistingV15proxy still closes game. Simultaneoussampling/evidence errors preserved together. Original7case candidate result remains unchanged in acknowledged_scorer_59_4d74_20261004; new source supersedes its initial implementation without editing its evidence. Publicsource matchesconstruction03.
-
-C/U: fakegame+actualV15proxy and scorerclock/sink only, not fullnativeV16session. Terminalcache already updated externally before first acknowledgedterminalsample remains unavailable (failclosed), actualfinish-path integration not yet qualified. Timing/controller neutrality/scorefieldfreshness/usefuleffect/causality/perkeyphysicalrelease/recovery remain open. RequestedCPU1/512MiB enforcementunproven warningsretained. Source is draft opt-in, no runtimeadoption. Broader adjacent and independent rereview pending.

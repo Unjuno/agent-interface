@@ -1,7 +1,0 @@
-# Recovery status — Issue #4442
-
-**Disposition: `HOLD_FORMAL_RAW_UNAVAILABLE`.** The ten-file source/freeze package from `research/receiver-activation-lease-3880-20260926-r1` at `12fd021d000e845947fbaebeb63542eced24de5e` is preserved byte-for-byte. This is Issue #4442's receiver-local activation-token alternative contract, not a substitute for #3880's absolute host-deadline/OrbStack gate or #4440's separate K2M6 study.
-
-Issue #4442 reports that its one frozen 20-case formal allocation completed with a scoped `PASS_RECEIVER_ACTIVATION_LEASE_BOUNDARY_SCOPED`, 20/20 child exits, 542 raw-auditor checks, and 12/12 corruption controls. The branch and its matching GitHub Actions artifacts do not contain the formal rows/result/audit package; the Actions success was the unrelated Native MCP v1 check. Preserve the allocation as consumed and the result as an Issue-reported historical claim; this recovery does not independently verify it.
-
-Recovery-only validation: the original ten source blobs match exactly. In a network-disabled, read-only Linux/arm64 CPython 3.13.5 container, all eight `test_receiver.py` unit methods passed. These unit tests are not a formal rerun and do not establish cross-clock translation, measured hardware skew, GUI/model behavior, or application effect. No formal allocation was repeated or replaced; keep #4442 open pending raw-package recovery or a distinct authorized successor.

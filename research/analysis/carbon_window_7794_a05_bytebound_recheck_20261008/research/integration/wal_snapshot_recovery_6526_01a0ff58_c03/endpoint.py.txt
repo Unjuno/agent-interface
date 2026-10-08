@@ -1,7 +1,0 @@
-import hashlib,json,pathlib,sqlite3,sys
-p=pathlib.Path(sys.argv[1]); before=p.read_bytes()
-c=sqlite3.connect(p.resolve().as_uri()+'?mode=ro&immutable=1',uri=True,isolation_level=None)
-value=c.execute('SELECT revision FROM counter WHERE id=1').fetchone()[0]
-integrity=c.execute('PRAGMA integrity_check').fetchone()[0]; c.close()
-after=p.read_bytes()
-print(json.dumps({'file':p.name,'revision':value,'integrity':integrity,'db_bytes':len(before),'db_sha256':hashlib.sha256(before).hexdigest(),'unchanged':before==after},sort_keys=True))

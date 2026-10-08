@@ -1,4 +1,0 @@
-{
-  "rules":["epoch mismatch or receipt conflict => CONFLICT; never PASS","dispatch acceptance is not release/effect","target match plus unresolved child keeps obligation visible","UNKNOWN remains UNKNOWN"],
-  "expected":{"dispatch_only":"NOT_VERIFIED","released_no_effect":"NOT_VERIFIED","verified_effect":"VERIFIED","wrong_target":"CONTRADICTED","delayed_effect":"UNKNOWN","child_unresolved":"VERIFIED_WITH_CHILD_OBLIGATION","explicit_unknown":"UNKNOWN","contradictory_receipts":"CONFLICT_NOT_PASS"}
-}

@@ -1,3 +1,0 @@
-# Post-run documentation provenance note
-
-The preregistered source-manifest digest was recorded on Issue #6147 before formal launch. After execution, this README was updated to link the formal result and raw manifest. Since README.md itself was listed in the frozen source manifest, its current bytes no longer match that pre-run entry. The original manifest file and its preregistered digest have not been rewritten. All execution-bearing files (protocol, freeze, candidate/lifecycle/policy, model, fixture, auditor, runner) and formal inputs in that manifest continue to verify; the complete formal raw has its own independently verified manifest. This documentation-only post-run update does not change the bytes mounted into any formal container.

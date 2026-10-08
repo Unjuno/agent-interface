@@ -1,6 +1,0 @@
-"""Revision 3: distinguish parsed JSON witness types, retaining v1/v2."""
-from repair_v2.teardown_audit import audit as previous_audit
-
-
-def audit(raw):
-    return previous_audit(raw)
