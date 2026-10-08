@@ -1,0 +1,50 @@
+{
+  "schema": "phase-controllability-freeze-v1",
+  "issue": 8668,
+  "allocation": "PHASE-CONTROL-DELAY-8668-T0-A01-20261009",
+  "experiment": "Finite deterministic comparison of event-wide versus phase-refined cancellation decisions under bounded control and receipt delays",
+  "status_at_freeze": "NOT_RUN",
+  "base_commit": "23d1807ffad8359e0f89421ee2b9bf5783c9d5f4",
+  "branch": "research/8668-phase-control-delays-a01-20261009",
+  "output_path": "research/analysis/phase_dependent_controllability_8668_t0_a01_20261009/run-01/",
+  "runtime": {
+    "os": "Darwin arm64",
+    "python": "CPython 3.14.5",
+    "dependencies": "standard library only",
+    "container": false,
+    "network": false,
+    "gui": false,
+    "model_endpoint": false
+  },
+  "source_sha256": {
+    "README.md": "d6894922f9b38ac336267687f6a57129420ec04209f5f6af7d8ad5040ddcf7a7",
+    "candidate.py": "960ef9c63787788dfb2a2808ce4291dc976438c0b0b42b63a88b4dd85deba80e",
+    "auditor.py": "b6ed0ebcbc1c3674ac6e8bfa822099f0919ed3ec981e4f1cc67ee0ff968ba0e4"
+  },
+  "design": {
+    "phases": ["PROPOSED", "ADMITTED", "QUEUED", "EMITTED", "CONSUMED"],
+    "control_delivery_delay_transitions": [0, 1],
+    "cancel_reply_delay_transitions": [0, 1],
+    "boundary_order": ["CONTROL_FIRST", "PLANT_FIRST"],
+    "effect_and_release_receipt_order": ["EFFECT_FIRST", "RELEASE_FIRST"],
+    "effect_receipt_observation_delay_decision_boundaries": [0, 1],
+    "receipt_order_mapping": {"EFFECT_FIRST": 0, "RELEASE_FIRST": 1},
+    "stale_receipt_position": ["NONE", "BEFORE_RETRY", "AFTER_RETRY"],
+    "retry_requested": [false, true],
+    "requested_operation_schedule_count": 480,
+    "no_input_controls": 1,
+    "total_schedule_count": 481,
+    "irreversible_frontier": "EMITTED",
+    "operation_identity": "op1; stale receipt uses op0; retry uses op2"
+  },
+  "protocol": {
+    "candidate_invocations": 1,
+    "auditor_invocations_if_candidate_exit_zero": 1,
+    "retry": false,
+    "candidate_command": "python3 -B candidate.py > run-01/candidate.json",
+    "auditor_command": "python3 -B auditor.py run-01/candidate.json > run-01/audit.json",
+    "output_directory_must_be_absent_before_candidate": true,
+    "expected_decision": "PASS_METHOD_SCOPED only if README.md gates and five frozen mutation controls pass",
+    "source_and_protocol_freeze_precedes_candidate": true
+  }
+}
