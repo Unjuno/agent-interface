@@ -129,15 +129,28 @@ def build_action_snapshot(event, contract):
             "binding": binding, "signals": signals}
 
 
+def _exact_json_equal(left, right):
+    """Compare JSON-like identity fields without Python bool/int aliases."""
+    if type(left) is not type(right):
+        return False
+    if type(left) is dict:
+        return (left.keys() == right.keys() and
+                all(_exact_json_equal(left[key], right[key]) for key in left))
+    if type(left) is list:
+        return (len(left) == len(right) and
+                all(_exact_json_equal(a, b) for a, b in zip(left, right)))
+    return left == right
+
+
 def reconcile_artifact(typed, observation, readers):
     checks = {
         "typed_schema": type(typed) is dict and typed.get("schema") == SCHEMA,
         "full_observation": type(observation) is dict and
                             observation.get("event") == "observation" and
                             observation.get("exact") is True,
-        "same_epoch": all(typed.get(key) == observation.get(key)
+        "same_epoch": all(_exact_json_equal(typed.get(key), observation.get(key))
                           for key in ("id", "step", "sequence", "capture_ns")),
-        "same_binding": typed.get("pointer_binding") == observation.get("pointer_binding"),
+        "same_binding": _exact_json_equal(typed.get("pointer_binding"), observation.get("pointer_binding")),
     }
     try:
         with Image.open(Path(observation["image"])) as opened:

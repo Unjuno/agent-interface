@@ -1,0 +1,18 @@
+{
+  "schema": "issue8566-reconcile-a01-audit-v2-freeze-v1",
+  "audit_invocation": 2,
+  "candidate_rerun": false,
+  "auditor": "audit_v2.py",
+  "audit_command": "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --env SOURCE_ROOT=/src --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/audit_v2.py",
+  "sha256": {
+    "FREEZE.json": "45936cf9d07a7dd90a471d31c36d01bfe7daaffb1ef652820ab325f2e41d49f5",
+    "results/a01/AUDIT_INITIAL_FAILURE.json": "29aa9de0598c4574e46978f989bccfe58cb6de6048da76e9fca20ae2ae7210e5",
+    "results/a01/RESULT.json": "c032b799266c1fbb3441af6a483ff2c196d968e1f55cfb19c3224591fad19266",
+    "audit_v2.py": "c65a6c98474513ea8fb5bbcc1b7359e3b3e6138da967a9342c49b0da4b41fc10"
+  },
+  "runtime": "wslc 3.0.1.0; agent-interface/native-suite-wslc-a08:20261004 (image ID 1b4a8bd7c0fe); CPython 3.12.14",
+  "network": "none",
+  "cpu_limit_requested": 1,
+  "memory_limit_requested": "1G",
+  "memory_enforcement_note": "WSL reports swap/cgroup swap-limit unsupported; do not claim swap-limited execution."
+}
