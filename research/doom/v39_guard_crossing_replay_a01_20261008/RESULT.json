@@ -1,0 +1,104 @@
+{
+  "schema": "map01-v39-guard-crossing-retained-replay-a01-v1",
+  "status": "PASS_CONDITIONAL_FINITE_ENUMERATION",
+  "scope": "Posthoc application of current-main V39 health guard contract to one prior run's manual HUD readouts; no deployment or live efficacy claim.",
+  "source": "research/doom/map01_astra_wait_hud_dense_replay_59_a01_20261005/VISUAL_READOUT.json",
+  "source_sha256": "610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724",
+  "assumptions": {
+    "source_health": 100,
+    "valid_critical_minimum": "integer 1..min(source_health, 200)",
+    "valid_maximum_health_loss": "integer 0..20",
+    "invalidation_rule": "current_health < max(critical_minimum, source_health - maximum_health_loss)",
+    "ammo_rule": "for a fire cover, current ammo < 1 invalidates; this replay's sampled ammo stays >=37",
+    "freshness_binding_and_same_epoch": "assumed valid in this posthoc value-only comparison; historical readout does not preserve V39 signal receipts"
+  },
+  "enumeration": {
+    "policy_count": 2100,
+    "policies_invalidating_on_first_damage_sample_47_0": 468,
+    "policies_invalidating_later_during_wait": 222,
+    "policies_never_invalidating_during_wait": 1410,
+    "first_sample_distribution": {
+      "47.0": 468,
+      "54.8": 222,
+      "never_during_wait": 1410
+    },
+    "independent_closed_form_oracle": {
+      "health_floor_at_least_97_first_trips_at_47_0_count": 468,
+      "health_floor_95_or_96_first_trips_at_54_8_count": 222,
+      "health_floor_below_95_never_trips_in_wait_count": 1410
+    }
+  },
+  "observations": [
+    {
+      "game_seconds": 44.6,
+      "health": 100,
+      "ammo": 46,
+      "phase": "MODEL THINKING + LOCAL COVER"
+    },
+    {
+      "game_seconds": 46.8,
+      "health": 100,
+      "ammo": 44,
+      "phase": "MODEL THINKING + LOCAL COVER"
+    },
+    {
+      "game_seconds": 47.0,
+      "health": 96,
+      "ammo": 44,
+      "phase": "MODEL THINKING + LOCAL COVER"
+    },
+    {
+      "game_seconds": 53.6,
+      "health": 96,
+      "ammo": 38,
+      "phase": "MODEL THINKING + LOCAL COVER"
+    },
+    {
+      "game_seconds": 53.8,
+      "health": 96,
+      "ammo": 37,
+      "phase": "MODEL THINKING + LOCAL COVER"
+    },
+    {
+      "game_seconds": 54.6,
+      "health": 96,
+      "ammo": 37,
+      "phase": "MODEL THINKING + LOCAL COVER"
+    },
+    {
+      "game_seconds": 54.8,
+      "health": 94,
+      "ammo": 37,
+      "phase": "MODEL THINKING + LOCAL COVER"
+    },
+    {
+      "game_seconds": 56.2,
+      "health": 94,
+      "ammo": 37,
+      "phase": "MODEL THINKING + LOCAL COVER"
+    },
+    {
+      "game_seconds": 56.4,
+      "health": 87,
+      "ammo": 37,
+      "phase": "LOCAL PLAN / FEEDBACK"
+    },
+    {
+      "game_seconds": 57.0,
+      "health": 84,
+      "ammo": 37,
+      "phase": "LOCAL PLAN / FEEDBACK"
+    }
+  ],
+  "interpretation": [
+    "The fixed floor can invalidate only after the observed health falls below it; it cannot react to threat appearance while health and ammo remain unchanged.",
+    "Health first visibly reads 96 at 47.0 seconds; this can invalidate only policies with hard_minimum >= 97, conditional on fresh correctly bound observations and monitor sampling.",
+    "At 56.2 seconds health reads 94 during wait, but 87 is first sampled after return at 56.4; do not attribute that loss to wait-only policy behavior.",
+    "Counts enumerate allowed parameter combinations, not recommended policy choices or observed V39 runtime behavior."
+  ],
+  "residual_empirical_questions": [
+    "Whether current V39 observes changes at sufficient cadence during actual model waits.",
+    "Whether a triggered invalidation cancels and physically releases each held key before answer return.",
+    "Whether independently useful feedback, bounded recovery and the next action improve ammo/progress/terminal outcome under fresh live threat exposure."
+  ]
+}
