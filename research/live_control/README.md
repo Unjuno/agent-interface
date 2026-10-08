@@ -21,6 +21,7 @@ Retained [predicate Condition boundary](appserver_predicate_condition_17_2026100
 | Current project objective | [../../docs/CURRENT_GOAL.md](../../docs/CURRENT_GOAL.md) |
 | Latest cross-project handoff | [../../docs/LOCAL_RESEARCH_HANDOFF.md](../../docs/LOCAL_RESEARCH_HANDOFF.md) |
 | Current Linux research caller | [CURRENT_CLIENT.md](CURRENT_CLIENT.md) |
+| #57 finite pre-input recovery prototype (explicit import; backend composition required) | [Portable role package and checks](finite_role_recovery/README.md) |
 | EOF regression protocol registration (#59/#6953 follow-up) | [Selected-module verification and limits](appserver_eof_registration_59_01a0ff51/REPORT.md) |
 | App-server stdout-EOF stop repair (#59; native inert child scope) | [Comparison and limits](appserver_eof_stop_59_01a0ff51/REPORT.md) |
 | #8290 exited-leader process-group reap repair — historical test/archive evidence | [Original result and 285-member archive](appserver_eof_reap_59_e0cc_20261007/README.md) — host process-tree tests only; the implementation has since evolved on main, so this is not a current-head retest. |
