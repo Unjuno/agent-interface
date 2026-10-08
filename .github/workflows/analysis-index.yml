@@ -183,3 +183,5 @@ jobs:
         run: python -B -m unittest discover -s research/analysis/persistent_counterparty_8135_t0_a02_20261005 -p 'test_*.py' -v
       - name: Test Issue #8397 observation-omission T0 A01 contract
         run: python -B -m unittest discover -s research/analysis/observation_omission_8397_t0_a01_20261008 -p 'test_*.py' -v
+      - name: Test Issue #5959 clarification-timing T0 A01 contract
+        run: node research/analysis/clarification_timing_5959_t0_a01_20261008/test_construction.js
