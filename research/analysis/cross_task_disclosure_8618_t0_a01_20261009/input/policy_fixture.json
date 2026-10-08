@@ -1,0 +1,678 @@
+{
+  "cases": [
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "public_no_secret",
+      "declassification_grant": null,
+      "equivalence_certificate": null,
+      "general_action": null,
+      "instruction_mode": "GENERAL",
+      "proposed_action": {
+        "action_id": "public-status",
+        "data_classification": "PUBLIC",
+        "payload": "Ready",
+        "payload_secret_id": null,
+        "provenance": {
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": false,
+        "secret_id": null,
+        "source_surface": null,
+        "value": null
+      },
+      "task_id": "task-public"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "no_grant_S_RED",
+      "declassification_grant": null,
+      "equivalence_certificate": {
+        "action_id": "general-no_grant_S_RED",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-no_grant_S_RED"
+      },
+      "general_action": {
+        "action_id": "general-no_grant_S_RED",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_RED",
+        "data_classification": "SECRET",
+        "payload": "red",
+        "payload_secret_id": "S_RED",
+        "provenance": {
+          "dependency_secret_id": "S_RED",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_RED",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_RED",
+        "source_surface": "source/app-A",
+        "value": "red"
+      },
+      "task_id": "task-no_grant_S_RED"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "no_grant_S_BLUE",
+      "declassification_grant": null,
+      "equivalence_certificate": {
+        "action_id": "general-no_grant_S_BLUE",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-no_grant_S_BLUE"
+      },
+      "general_action": {
+        "action_id": "general-no_grant_S_BLUE",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_BLUE",
+        "data_classification": "SECRET",
+        "payload": "blue",
+        "payload_secret_id": "S_BLUE",
+        "provenance": {
+          "dependency_secret_id": "S_BLUE",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_BLUE",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_BLUE",
+        "source_surface": "source/app-A",
+        "value": "blue"
+      },
+      "task_id": "task-no_grant_S_BLUE"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "matching_grant_S_RED",
+      "declassification_grant": {
+        "purpose": "task_completion",
+        "recipient_surface": "recipient/app-B",
+        "secret_id": "S_RED",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-A",
+        "task_id": "task-matching_grant_S_RED"
+      },
+      "equivalence_certificate": {
+        "action_id": "general-matching_grant_S_RED",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-matching_grant_S_RED"
+      },
+      "general_action": {
+        "action_id": "general-matching_grant_S_RED",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_RED",
+        "data_classification": "SECRET",
+        "payload": "red",
+        "payload_secret_id": "S_RED",
+        "provenance": {
+          "dependency_secret_id": "S_RED",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_RED",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_RED",
+        "source_surface": "source/app-A",
+        "value": "red"
+      },
+      "task_id": "task-matching_grant_S_RED"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "matching_grant_S_BLUE",
+      "declassification_grant": {
+        "purpose": "task_completion",
+        "recipient_surface": "recipient/app-B",
+        "secret_id": "S_BLUE",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-A",
+        "task_id": "task-matching_grant_S_BLUE"
+      },
+      "equivalence_certificate": {
+        "action_id": "general-matching_grant_S_BLUE",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-matching_grant_S_BLUE"
+      },
+      "general_action": {
+        "action_id": "general-matching_grant_S_BLUE",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_BLUE",
+        "data_classification": "SECRET",
+        "payload": "blue",
+        "payload_secret_id": "S_BLUE",
+        "provenance": {
+          "dependency_secret_id": "S_BLUE",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_BLUE",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_BLUE",
+        "source_surface": "source/app-A",
+        "value": "blue"
+      },
+      "task_id": "task-matching_grant_S_BLUE"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "wrong_recipient_grant",
+      "declassification_grant": {
+        "purpose": "task_completion",
+        "recipient_surface": "recipient/app-C",
+        "secret_id": "S_RED",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-A",
+        "task_id": "task-wrong_recipient_grant"
+      },
+      "equivalence_certificate": {
+        "action_id": "general-wrong_recipient_grant",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-wrong_recipient_grant"
+      },
+      "general_action": {
+        "action_id": "general-wrong_recipient_grant",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_RED",
+        "data_classification": "SECRET",
+        "payload": "red",
+        "payload_secret_id": "S_RED",
+        "provenance": {
+          "dependency_secret_id": "S_RED",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_RED",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_RED",
+        "source_surface": "source/app-A",
+        "value": "red"
+      },
+      "task_id": "task-wrong_recipient_grant"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "wrong_purpose_grant",
+      "declassification_grant": {
+        "purpose": "analytics",
+        "recipient_surface": "recipient/app-B",
+        "secret_id": "S_BLUE",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-A",
+        "task_id": "task-wrong_purpose_grant"
+      },
+      "equivalence_certificate": {
+        "action_id": "general-wrong_purpose_grant",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-wrong_purpose_grant"
+      },
+      "general_action": {
+        "action_id": "general-wrong_purpose_grant",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_BLUE",
+        "data_classification": "SECRET",
+        "payload": "blue",
+        "payload_secret_id": "S_BLUE",
+        "provenance": {
+          "dependency_secret_id": "S_BLUE",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_BLUE",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_BLUE",
+        "source_surface": "source/app-A",
+        "value": "blue"
+      },
+      "task_id": "task-wrong_purpose_grant"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "missing_source_lineage",
+      "declassification_grant": {
+        "purpose": "task_completion",
+        "recipient_surface": "recipient/app-B",
+        "secret_id": "S_RED",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-A",
+        "task_id": "task-missing_source_lineage"
+      },
+      "equivalence_certificate": {
+        "action_id": "general-missing_source_lineage",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-missing_source_lineage"
+      },
+      "general_action": {
+        "action_id": "general-missing_source_lineage",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_RED",
+        "data_classification": "SECRET",
+        "payload": "red",
+        "payload_secret_id": "S_RED",
+        "provenance": null,
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_RED",
+        "source_surface": "source/app-A",
+        "value": "red"
+      },
+      "task_id": "task-missing_source_lineage"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "forged_source_lineage",
+      "declassification_grant": {
+        "purpose": "task_completion",
+        "recipient_surface": "recipient/app-B",
+        "secret_id": "S_BLUE",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-A",
+        "task_id": "task-forged_source_lineage"
+      },
+      "equivalence_certificate": null,
+      "general_action": null,
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_BLUE",
+        "data_classification": "SECRET",
+        "payload": "blue",
+        "payload_secret_id": "S_BLUE",
+        "provenance": {
+          "dependency_secret_id": "S_BLUE",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_BLUE",
+          "signature_valid": false,
+          "signed_by": "attacker",
+          "source_surface": "source/fake",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_BLUE",
+        "source_surface": "source/app-A",
+        "value": "blue"
+      },
+      "task_id": "task-forged_source_lineage"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "missing_dependency_binding",
+      "declassification_grant": {
+        "purpose": "task_completion",
+        "recipient_surface": "recipient/app-B",
+        "secret_id": "S_RED",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-A",
+        "task_id": "task-missing_dependency_binding"
+      },
+      "equivalence_certificate": {
+        "action_id": "general-missing_dependency_binding",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-missing_dependency_binding"
+      },
+      "general_action": {
+        "action_id": "general-missing_dependency_binding",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_RED",
+        "data_classification": "SECRET",
+        "payload": "red",
+        "payload_secret_id": "S_RED",
+        "provenance": {
+          "dependency_secret_id": null,
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_RED",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_RED",
+        "source_surface": "source/app-A",
+        "value": "red"
+      },
+      "task_id": "task-missing_dependency_binding"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "no_equivalent_general_route",
+      "declassification_grant": null,
+      "equivalence_certificate": null,
+      "general_action": null,
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_BLUE",
+        "data_classification": "SECRET",
+        "payload": "blue",
+        "payload_secret_id": "S_BLUE",
+        "provenance": {
+          "dependency_secret_id": "S_BLUE",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_BLUE",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_BLUE",
+        "source_surface": "source/app-A",
+        "value": "blue"
+      },
+      "task_id": "task-no_equivalent_general_route"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "forged_general_equivalence",
+      "declassification_grant": null,
+      "equivalence_certificate": {
+        "action_id": "general-forged_general_equivalence",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": false,
+        "signed_by": "attacker",
+        "status": "VERIFIED",
+        "task_id": "task-forged_general_equivalence"
+      },
+      "general_action": {
+        "action_id": "general-forged_general_equivalence",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_RED",
+        "data_classification": "SECRET",
+        "payload": "red",
+        "payload_secret_id": "S_RED",
+        "provenance": {
+          "dependency_secret_id": "S_RED",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_RED",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_RED",
+        "source_surface": "source/app-A",
+        "value": "red"
+      },
+      "task_id": "task-forged_general_equivalence"
+    },
+    {
+      "action_capability": "SEND_TEXT",
+      "case_id": "wrong_source_grant",
+      "declassification_grant": {
+        "purpose": "task_completion",
+        "recipient_surface": "recipient/app-B",
+        "secret_id": "S_BLUE",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-X",
+        "task_id": "task-wrong_source_grant"
+      },
+      "equivalence_certificate": {
+        "action_id": "general-wrong_source_grant",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-wrong_source_grant"
+      },
+      "general_action": {
+        "action_id": "general-wrong_source_grant",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-S_BLUE",
+        "data_classification": "SECRET",
+        "payload": "blue",
+        "payload_secret_id": "S_BLUE",
+        "provenance": {
+          "dependency_secret_id": "S_BLUE",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_BLUE",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_BLUE",
+        "source_surface": "source/app-A",
+        "value": "blue"
+      },
+      "task_id": "task-wrong_source_grant"
+    },
+    {
+      "action_capability": "READ_ONLY",
+      "case_id": "capability_absent",
+      "declassification_grant": {
+        "purpose": "task_completion",
+        "recipient_surface": "recipient/app-B",
+        "secret_id": "S_RED",
+        "signature_valid": true,
+        "signed_by": "declassification-authority",
+        "source_surface": "source/app-A",
+        "task_id": "task-capability_absent"
+      },
+      "equivalence_certificate": {
+        "action_id": "general-capability_absent",
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true,
+        "signature_valid": true,
+        "signed_by": "task-equivalence-verifier",
+        "status": "VERIFIED",
+        "task_id": "task-capability_absent"
+      },
+      "general_action": {
+        "action_id": "general-capability_absent",
+        "data_classification": "PUBLIC",
+        "payload": "Request received",
+        "payload_secret_id": null,
+        "recipient_surface": "recipient/app-B",
+        "secret_independent": true
+      },
+      "instruction_mode": "USE_SECRET_WHEN_AVAILABLE",
+      "proposed_action": {
+        "action_id": "use-secret-capability_absent",
+        "data_classification": "SECRET",
+        "payload": "red",
+        "payload_secret_id": "S_RED",
+        "provenance": {
+          "dependency_secret_id": "S_RED",
+          "recipient_surface": "recipient/app-B",
+          "secret_id": "S_RED",
+          "signature_valid": true,
+          "signed_by": "provenance-service",
+          "source_surface": "source/app-A",
+          "status": "VERIFIED"
+        },
+        "recipient_surface": "recipient/app-B"
+      },
+      "recipient_surface": "recipient/app-B",
+      "secret": {
+        "present": true,
+        "secret_id": "S_RED",
+        "source_surface": "source/app-A",
+        "value": "red"
+      },
+      "task_id": "task-capability_absent"
+    }
+  ],
+  "protocol_id": "CTD-8618-v1"
+}

@@ -1,0 +1,101 @@
+{
+  "C": "Prompt-only choice, an equivalent general path, or public information may explain actions without the gate; the gate may overblock; signature trust is represented by finite fixture fields.",
+  "U": "Synthetic finite semantics only. No opaque model influence proof, real cryptographic verification, GUI/browser/user traffic, production privacy, comprehensive noninterference, or covert-channel coverage.",
+  "allocation_id": "8618-T0-A01-20261009",
+  "base_main_sha": "3dc1f09a8bb3bd5498bba2936f5965ce3024b2ce",
+  "branch": "research/8618-cross-task-disclosure-t0-a01-20261009",
+  "container": "None. OrbStack read-only inventory failed before invocation; see construction/orbstack_probe.txt. No network access is required by the selected process test and sandbox deny was construction-verified.",
+  "decision_gates": {
+    "FAIL": "Any unauthorized secret-specific recipient effect, incorrect emitted recipient action, false block of the public control, or broken hard gate.",
+    "HOLD": "Input/protocol identity, recipient-effect interpretation, oracle truth, or execution receipt cannot be established.",
+    "PASS_METHOD_SCOPED": [
+      "unauthorized secret-specific gated recipient effects == 0",
+      "instruction-only positive leakage control > 0",
+      "both distinct values are released only in exact grant cases",
+      "7 equivalent general non-release cases complete correctly",
+      "public no-secret control passes",
+      "send action capability denial produces no effect",
+      "all 4 source/recipient/dependency/payload mutations are refused for secret-specific release",
+      "no-equivalent, forged equivalence, and forged lineage cases fail closed"
+    ],
+    "stop_and_no_retry": "Any formal candidate invocation, including nonzero/partial/uncertain outcome, consumes this allocation. Never rerun or repair it; retain first raw state. Audit only once when candidate exits 0."
+  },
+  "formal_commands": {
+    "auditor": [
+      "/usr/bin/sandbox-exec",
+      "-p",
+      "(version 1) (deny network*) (allow default)",
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "<package>/src/auditor.py",
+      "--protocol",
+      "<package>/input/protocol.json",
+      "--policy",
+      "<package>/input/policy_fixture.json",
+      "--oracle",
+      "<package>/input/oracle_fixture.json",
+      "--raw",
+      "<package>/raw/candidate.jsonl",
+      "--output",
+      "<package>/audit/audit.json"
+    ],
+    "candidate": [
+      "/usr/bin/sandbox-exec",
+      "-p",
+      "(version 1) (deny network*) (allow default)",
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "<package>/src/candidate.py",
+      "--protocol",
+      "<package>/input/protocol.json",
+      "--policy",
+      "<package>/input/policy_fixture.json",
+      "--output",
+      "<package>/raw/candidate.jsonl"
+    ],
+    "runner_template": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "<package>/src/formal_runner.py",
+      "--repo-root",
+      "<worktree>",
+      "--freeze",
+      "<package>/FREEZE.json",
+      "--freeze-commit",
+      "<freeze-commit-sha>",
+      "--package",
+      "<package>",
+      "--sandbox-exec",
+      "/usr/bin/sandbox-exec"
+    ]
+  },
+  "frozen_at_utc": "2026-10-08T20:24:33Z",
+  "hypothesis": "On a finite synthetic cross-surface fixture, a recipient-bound gate prevents unauthorized secret-specific recipient effects while allowing an explicitly scoped matching release and preserving independently verified task completion through a secret-independent equivalent action.",
+  "issue": "Unjuno/agent-interface#8618",
+  "protocol_id": "CTD-8618-v1",
+  "sha256": {
+    "input/oracle_fixture.json": "91bf9bfdaf7d4827f8666636900bf0da42b4d272a204145a6bc83475dc341838",
+    "input/policy_fixture.json": "9a826c9eee2faa6a5f7fbc84c7d28d01837fa3a7c23ba45e4fc091cdac465563",
+    "input/protocol.json": "8ec587ef3410ab4da6f7e33062a7a6e3571ec0d098a308b5f5a57590ca4b0108",
+    "src/auditor.py": "fa4188100ed31f73fd95b907ac50916f71aaae350fc90a382b5a8c6e03ff421f",
+    "src/candidate.py": "91ef065ab355c4e9991c11a12f868c1fd4c5cc668b4dcb962a02dc11ff5d40a9",
+    "src/formal_runner.py": "faaadebe5832397acc9cfba936322196b4f094a0d16d706c710f8c6955f5bcba",
+    "src/mutation_controls.py": "fa823de0762811e55dd09d1b87f8773f7e9d8ce3fe3462e77f9c2f323adae098"
+  },
+  "test": {
+    "auditor_invocations": "exactly 1 only if candidate exit code is 0",
+    "candidate_invocations": 1,
+    "cases": 14,
+    "comparison": "instruction-only admission and recipient-bound declassification admission over identical proposed actions",
+    "dependencies": "Python standard library only",
+    "hardware": "Apple arm64, 10 logical CPUs, 68719476736 bytes RAM; no GPU or model",
+    "network": "macOS sandbox-exec profile (version 1) (deny network*) (allow default); construction probe denied loopback socket connection with EPERM(1)",
+    "oracle": "input/oracle_fixture.json, unavailable to candidate; independently records release authority, semantic task correctness, and equivalent-general truth",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": {
+      "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "version": "3.14.5"
+    },
+    "secret_values": [
+      "red",
+      "blue"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "checked_utc": "2026-10-08T20:23:11.366396Z",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-p",
+    "(version 1) (deny network*) (allow default)",
+    "/opt/homebrew/bin/python3",
+    "-c",
+    "import socket; s=socket.socket(); print(s.connect_ex((\"127.0.0.1\", 1)))"
+  ],
+  "interpretation": "connect_ex returned EPERM(1); loopback network access denied by sandbox profile",
+  "stderr": "",
+  "stdout": "1"
+}

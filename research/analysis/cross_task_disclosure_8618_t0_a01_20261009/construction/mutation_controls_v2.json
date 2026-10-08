@@ -1,0 +1,82 @@
+{
+  "control_count": 4,
+  "passed": 4,
+  "results": [
+    {
+      "control": "source_binding",
+      "observed": {
+        "action_capability": "SEND_TEXT",
+        "baseline_effect": {
+          "action_id": "use-secret-S_RED",
+          "payload": "red",
+          "recipient_surface": "recipient/app-B"
+        },
+        "case_id": "mutation_source_binding",
+        "gate_disposition": "ALLOW_EQUIVALENT_GENERAL_ACTION",
+        "gated_effect": {
+          "action_id": "general-matching_grant_S_RED",
+          "payload": "Request received",
+          "recipient_surface": "recipient/app-B"
+        }
+      },
+      "passed": true
+    },
+    {
+      "control": "recipient_binding",
+      "observed": {
+        "action_capability": "SEND_TEXT",
+        "baseline_effect": {
+          "action_id": "use-secret-S_RED",
+          "payload": "red",
+          "recipient_surface": "recipient/app-B"
+        },
+        "case_id": "mutation_recipient_binding",
+        "gate_disposition": "ALLOW_EQUIVALENT_GENERAL_ACTION",
+        "gated_effect": {
+          "action_id": "general-matching_grant_S_RED",
+          "payload": "Request received",
+          "recipient_surface": "recipient/app-B"
+        }
+      },
+      "passed": true
+    },
+    {
+      "control": "dependency_binding",
+      "observed": {
+        "action_capability": "SEND_TEXT",
+        "baseline_effect": {
+          "action_id": "use-secret-S_RED",
+          "payload": "red",
+          "recipient_surface": "recipient/app-B"
+        },
+        "case_id": "mutation_dependency_binding",
+        "gate_disposition": "ALLOW_EQUIVALENT_GENERAL_ACTION",
+        "gated_effect": {
+          "action_id": "general-matching_grant_S_RED",
+          "payload": "Request received",
+          "recipient_surface": "recipient/app-B"
+        }
+      },
+      "passed": true
+    },
+    {
+      "control": "payload_effect",
+      "observed": {
+        "action_capability": "SEND_TEXT",
+        "baseline_effect": {
+          "action_id": "use-secret-S_RED",
+          "payload": "blue",
+          "recipient_surface": "recipient/app-B"
+        },
+        "case_id": "mutation_payload_effect",
+        "gate_disposition": "ALLOW_EQUIVALENT_GENERAL_ACTION",
+        "gated_effect": {
+          "action_id": "general-matching_grant_S_RED",
+          "payload": "Request received",
+          "recipient_surface": "recipient/app-B"
+        }
+      },
+      "passed": true
+    }
+  ]
+}

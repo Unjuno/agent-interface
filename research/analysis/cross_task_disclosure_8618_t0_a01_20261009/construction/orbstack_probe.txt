@@ -1,0 +1,4 @@
+2026-10-09 JST (local host): `orb status` reported `Running`.
+Read-only inventory command: `docker --context orbstack ps --format '{{.ID}} {{.Image}} {{.Names}} {{.Status}}'`.
+Observed result: error from daemon: `rpc error: code = Unknown desc = blob sha256:45bb44b6677192b87d5624379cbca6cccc537883c8ff84464b91fd3d612ea3f6 expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/45bb44b6677192b87d5624379cbca6cccc537883c8ff84464b91fd3d612ea3f6: open ...: operation not supported`.
+No container was launched, changed, or cleaned up. Since the test is a deterministic local fixture contract with no network-capable source code, the selected formal runner uses macOS `sandbox-exec` to deny network access instead of relying on the unavailable OrbStack container API.
