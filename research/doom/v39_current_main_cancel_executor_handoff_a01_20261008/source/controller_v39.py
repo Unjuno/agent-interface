@@ -752,6 +752,29 @@ def temporal_sheet(sources, target):
     sheet.save(target,optimize=True)
 
 
+def drain_pending_observation_events(incoming, observation_monitor, terminal_id):
+    """Process events already queued when a planner future becomes done."""
+    latest = None
+    terminal = None
+    invalidation = None
+    event_types = (getattr(observation_monitor, "event_types", {"observation"})
+                   if observation_monitor is not None else set())
+    # Snapshot the finite backlog so a live producer cannot make this drain unbounded.
+    for _ in range(incoming.qsize()):
+        try:
+            row = incoming.get_nowait()
+        except queue.Empty:
+            break
+        if row.get("event") == "observation":
+            latest = row
+        if (invalidation is None and observation_monitor is not None and
+                row.get("event") in event_types):
+            invalidation = observation_monitor.observe(row)
+        if row.get("event") == "terminal" and row.get("id") == terminal_id:
+            terminal = row
+    return {"latest": latest, "terminal": terminal, "invalidation": invalidation}
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
@@ -961,6 +984,22 @@ def main():
                     cover_renewal_gaps_ms.append((next_accepted["accepted_ns"]-
                         current_terminal["terminal_ns"])/1e6)
                     current_cover=next_cover;current_terminal=None
+                if future.done() and invalidation is None:
+                    drained = drain_pending_observation_events(
+                        incoming, invalidation_monitor, current_cover)
+                    if drained["latest"] is not None:
+                        latest = drained["latest"]
+                    if drained["terminal"] is not None and current_terminal is None:
+                        current_terminal = drained["terminal"]
+                        cover_terminals.append(current_terminal)
+                        failure_cleanup.set_stage("cover_terminal_validation")
+                        require_cover_terminal(current_terminal)
+                    if drained["invalidation"] is not None:
+                        invalidation = drained["invalidation"]
+                        if current_terminal is None:
+                            planner_interrupt,current_terminal=cancel_invalidated_cover(
+                                planner,planner_handle,process,wait,current_cover)
+                            cover_terminals.append(current_terminal)
                 planner_result=future.result()
                 failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()

@@ -36,6 +36,10 @@ def call_attr(node, name):
 
 def audit():
     freeze = json.loads((ROOT / "FREEZE.json").read_text(encoding="utf-8"))
+    prior_freeze = json.loads((ROOT / "FREEZE_MAIN_243.json").read_text(encoding="utf-8"))
+    prior_audit = json.loads((ROOT / "AUDIT_MAIN_243.json").read_text(encoding="utf-8"))
+    assert prior_freeze["current_main_commit"] == "24319711a2b4f8c782c2648522f30dc70b4c9b09"
+    assert prior_audit["result_sha256"] == sha256(ROOT / "RESULT_MAIN_243.json")
     manifest = json.loads((ROOT / "MANIFEST.json").read_text(encoding="utf-8"))
     listed = {item["path"] for item in manifest["files"]}
     actual = {path.relative_to(ROOT).as_posix() for path in ROOT.rglob("*")
@@ -101,6 +105,7 @@ def audit():
     return {
         "status": "PASS_CURRENT_MAIN_CROSS_LAYER_ORDER_AUDIT",
         "current_main_commit": freeze["current_main_commit"],
+        "prior_main_result_preserved": True,
         "current_source_files_verified": len(freeze["current_main_sources"]),
         "executor_stack_modules_verified": len(freeze["executor_stack_modules"]),
         "manifest_files_verified": len(manifest["files"]),

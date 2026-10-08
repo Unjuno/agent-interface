@@ -1,6 +1,6 @@
 # V39 current-main cancel-first ExecutorV13 handoff replay (A01)
 
-This deterministic cross-layer construction replay checks the current-main `cancel_invalidated_cover` and `PersistentPlannerAdapter.interrupt` path while an App Server interrupt response is withheld. It uses exact current-main controller, planner-adapter, and App Server client source snapshots from `24319711a2b4f8c782c2648522f30dc70b4c9b09`, plus the retained nine-module ExecutorV13 software stack pinned at `708ca59a8128f07fdb7e13a36704c6b2f79c9fb6`. The prior A01 handoff harness is also bundled and identity-pinned; this package invokes its event fixture with the actual current-main helper, not the old helper or the earlier test-only counterfactual.
+This deterministic cross-layer construction replay checks the current-main `cancel_invalidated_cover` and `PersistentPlannerAdapter.interrupt` path while an App Server interrupt response is withheld. It uses exact current-main controller, planner-adapter, and App Server client source snapshots from `8ec1369bf81025ed433b4391871f9bb503198c19`, plus the retained nine-module ExecutorV13 software stack pinned at `708ca59a8128f07fdb7e13a36704c6b2f79c9fb6`. The prior A01 handoff harness is also bundled and identity-pinned; this package invokes its event fixture with the actual current-main helper, not the old helper or the earlier test-only counterfactual.
 
 ## H/T/D/C/U
 
@@ -15,6 +15,8 @@ This deterministic cross-layer construction replay checks the current-main `canc
 `PASS_CURRENT_MAIN_HELPER_CROSS_LAYER_RELEASE_BEFORE_INTERRUPT_RESPONSE`. The observed order was `accepted → step_started → controller_cancel_write → cancel_requested → controller_cancel_flush → appserver_interrupt_request_written → input_released → terminal → appserver_interrupt_response_injected`. The in-memory owner ended with no held keys, and the helper returned a verified empty release receipt. Source hashes and the event ordering pass the independent audit in `AUDIT.json`.
 
 This is software-composition evidence only. It does not replace the still-required live threat exposure. No runtime change, planner call, GUI, game allocation, or OS input was used.
+
+The initial passing replay was frozen at main 24319711a2b4f8c782c2648522f30dc70b4c9b09. Main later changed the surrounding controller file; the cancel helper body, planner adapter, client, and harness blob identities were checked unchanged at latest main 8ec1369bf81025ed433b4391871f9bb503198c19, and the replay was rerun against that latest controller snapshot. The earlier freeze, result, and audit are retained as `FREEZE_MAIN_243.json`, `RESULT_MAIN_243.json`, and `AUDIT_MAIN_243.json`.
 
 The first harness attempt stopped before constructing ExecutorV13 because the WSL clone could not resolve its Windows-style Git alternate-object path. That fixture retrieval failure is retained in `FIXTURE_ATTEMPT_01.json`. The nine frozen ExecutorV13 source files and event harness were then bundled and hash-checked; the unchanged scenario passed on the repaired fixture.
 
