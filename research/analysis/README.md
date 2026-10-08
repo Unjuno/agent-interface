@@ -530,6 +530,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`disturbance_response_5771_t1_v3/`](disturbance_response_5771_t1_v3/)
 - [`disturbance_timescale_6604_t0_v1/`](disturbance_timescale_6604_t0_v1/)
 - [`disturbance_timescale_6604_t1_eligibility_20261002/`](disturbance_timescale_6604_t1_eligibility_20261002/)
+- [`dual_control_5309_precapture_control_a13b_20261007/`](dual_control_5309_precapture_control_a13b_20261007/)
 - [`dual_control_5309_witness_a09_20261007/`](dual_control_5309_witness_a09_20261007/)
 - [`dual_control_5309_witness_a10_20261007/`](dual_control_5309_witness_a10_20261007/)
 - [`dual_control_5309_witness_a11_20261007/`](dual_control_5309_witness_a11_20261007/)
