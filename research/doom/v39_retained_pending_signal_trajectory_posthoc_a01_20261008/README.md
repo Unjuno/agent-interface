@@ -1,30 +1,46 @@
-# V39 retained model-pending HUD trajectory posthoc A01
+# V39 retained model-pending signal trajectory, posthoc A01
 
 ## H / T / D / C / U
 
-**H.** The retained real MAP01 V39 coast-liveness run has 218 paired typed observations and six model-pending windows. Prior issue analysis discussed selected events from decision 5; it did not publish a complete reconstruction of all six intervals using each decision's admitted source signal and planner terminal timestamp.
+**H.** The retained `map01-v39-coast-liveness-live-01` episode has 218 typed HUD observations and six planner-pending windows. A reproducible reconstruction should join each decision's source image to its full observation, use that decision's `planner_terminal_observed_ns` as the window end, and retain every health/ammo transition.
 
-**T.** Freeze the retained report and event streams by SHA-256, independently reconstruct every health/ammo change from the admitted source observation through planner terminal, list authored hard-threshold crossings, and verify that delivered events match the source event stream. Do not run or modify the game, model, GUI, controller, or historical results.
+**T.** Read the immutable report, event, delivered, and scorer Git blobs pinned in `FREEZE.json`. Verify SHA-256 and byte lengths; reconcile each typed row against its full observation and signal pair; reconstruct all six source-to-terminal windows; then independently audit the authored health-guard boundaries and scorer disposition. Do not rerun or modify the game, model, GUI, controller, or historical episode.
 
-**D.** PASS when all 218 typed observations have contiguous sequence IDs and matching paired signals, source/delivered streams are byte-semantically identical, six source-to-terminal windows reconstruct exactly, threshold crossings match an independent audit, and changed result/input data is rejected.
+**D.** PASS requires byte-identical event/delivered streams, 218 contiguous typed sequences paired to 218 full observations, exact agreement with all six frozen transition tables and terminal sequences, guard floor/equality/crossing agreement with the report, and mutation rejection by tests/auditor.
 
-**C.** The reconstruction finds health loss during five of six model waits and ammo consumption during four. In decision 1, health reaches its authored hard floor of 85 (a 12-point loss from source); in decision 5, it reaches the hard floor of 51 (a 10-point loss) and later falls below it to 48. Decision 4 declines from 65 to 64/61, a 1/4-point loss that remains within its authored maximum loss of 10 and above its hard floor of 55. The retained report records one policy invalidation overall. This establishes an evidence gap inside the retained episode, not what a fresh current-main controller would do.
+**C.** Health declined in five of six pending windows. Ammo declined in three of six windows (decisions 1, 4, 5), using each window's admitted source sample through its planner terminal. During the active authored cover in decision 1, health reached floor 85 at seq62 and remained equal to it through seq70; equality is soft under the strict `< hard_minimum` rule, and no invalidation was reported. Decision 4's floor was 55; seq154 health 61 was above it. In decision 5, health equalled floor 51 from seq200 through seq217, then first fell below it to 48 at seq218; the report records invalidation at seq218. The scorer records one kill, zero deaths, no MAP01 exit, and an unfinished episode.
 
-**U.** HUD-derived health/ammo are not independent game-state ground truth. Timing association does not prove causality. The historical run ended alive but unfinished, with no exit and no useful recovery/task completion. A fresh current-main live threat run with useful recovery and a subsequent MAP01 outcome remains outstanding and separately gated.
+**U.** Health/ammo are template-derived HUD values, not independent game-state ground truth. These timestamps are a posthoc reconstruction and do not establish causality, whether the cover policy caused damage, or whether interrupting at equality would improve control. The pinned commit identifies the retained data blobs; it does not identify the exact controller source used for the historical episode. This is not a fresh current-main live run, useful-recovery result, or MAP01 completion.
 
-## Reproduced trajectory
+## Reconstructed windows
 
-| Decision | Source seq / health | Pending observations through | Health / ammo changes during pending |
+| Decision | Source seq, health/ammo | Last typed seq before planner terminal | Health/ammo changes from source |
 |---:|---:|---:|---|
-| 0 | 1 / 97 | 28 | none (97/48) |
-| 1 | 36 / 97 | 70 | seq37 91/46; seq47 91/45; seq62 85/45 (hard floor); seq64 85/44 |
-| 2 | 70 / 85 | 91 | seq76 82/44; seq81 76/44; seq90 73/44 |
-| 3 | 91 / 73 | 113 | seq97 72/44; seq103 68/44 |
-| 4 | 115 / 65 | 159 | seq125 65/42; seq143 65/41; seq144 64/41; seq154 61/41 (below hard floor 55) |
-| 5 | 166 / 61 | 218 | seq167 55/40 (~241 ms); seq177 55/39; seq193 52/39; seq194 52/38; seq200 51/38 (floor); seq212 51/37; seq218 48/37 |
+| 0 | 1, 97/48 | 28 | none (97/48) |
+| 1 | 36, 97/46 | 70 | 37: 91/46; 47: 91/45; 62: 85/45; 64: 85/44 |
+| 2 | 70, 85/44 | 91 | 76: 82/44; 81: 76/44; 90: 73/44 |
+| 3 | 91, 73/44 | 113 | 97: 72/44; 103: 68/44 |
+| 4 | 115, 65/43 | 159 | 125: 65/42; 143: 65/41; 144: 64/41; 154: 61/41 |
+| 5 | 166, 61/40 | 218 | 167: 55/40; 177: 55/39; 193: 52/39; 194: 52/38; 200: 51/38; 212: 51/37; 218: 48/37 |
 
-The six planner calls lasted 8.452, 5.720, 6.307, 6.725, 7.198, and 8.916 seconds by the report's `model_ns` measure. Capture timestamps through terminal are separately reconstructed in `RESULT.json`; the differing figures reflect the model timing field versus source-to-terminal interval.
+The table lists only changed pairs after the source row. The exact timestamps, unchanged samples, model timing fields, hashes, and guard rows are in `RESULT.json`. The six `model_ns` durations are 8.452, 5.720, 6.307, 6.725, 7.198, and 8.916 seconds; the capture-to-terminal windows are separately recorded.
 
 ## Reproduce
 
-Run `python analyze.py`, then `python audit.py`, then `python -m unittest discover -s tests -v` from this directory. Run the same test command with `python -O` as a second check. Inputs are frozen copies of the retained `report.json`, `runtime/events.jsonl`, and `runtime/delivered.jsonl`; `RESULT.json` records their hashes. No game/model/controller/GUI/OS input was invoked.
+Inputs are not duplicated: `FREEZE.json` pins the existing report and raw JSONL/score blobs by commit, Git blob ID, byte length, and SHA-256. The scripts read those exact Git objects with `git show`, so image artifacts and a mutable worktree copy are not needed.
+
+From the repository root, run the tests in normal and optimized Python:
+
+```sh
+python -B -m unittest discover -s research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/tests -v
+python -B -O -m unittest discover -s research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/tests -v
+```
+
+To reproduce the result without overwriting the retained `RESULT.json`, choose a new output path that does not already exist:
+
+```sh
+python -B research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/analyze.py --output /tmp/v39-trajectory-reproduced.json
+python -B research/doom/v39_retained_pending_signal_trajectory_posthoc_a01_20261008/audit.py /tmp/v39-trajectory-reproduced.json
+```
+
+`analyze.py` refuses to overwrite an existing output file. `audit.py` independently rereads and validates the pinned raw Git blobs; it does not modify the candidate or frozen inputs.
