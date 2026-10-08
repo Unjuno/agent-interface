@@ -1,0 +1,5 @@
+# Post-run metric qualification
+
+After the one frozen candidate and auditor invocation, source review found that `deferred_ticks` is incremented once when an optional job is suspended and a second time when that same unfinished job is encountered in the waiting queue during the same tick. The auditor independently reproduces this output, so exact reconstruction does not validate the semantic accuracy of that field.
+
+Consequently, **do not interpret or reuse `deferred_ticks` from `RAW_RESULT.json` as a quantitative deferral duration**. Although the field was not part of the original candidate-reported deadline-miss contrast, the later exclusive-deadline semantics mismatch invalidated the original `NO_RESIDUAL` interpretation; excluding this metric does not restore that conclusion or establish a formal D result. The current disposition remains `HOLD_DEADLINE_SEMANTICS_MISMATCH`. This qualification does not change the recorded raw, candidate, auditor, or freeze, and neither formal role is rerun. Any analysis needing accurate deferral duration requires a separately frozen successor allocation with a corrected counter and independently specified expected semantics.

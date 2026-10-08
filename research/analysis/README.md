@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8488 PSI-triggered work-shedding T0 A01](psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — `HOLD_DEADLINE_SEMANTICS_MISMATCH`: strict-bound raw recheck gives fixed 4 / queue 3 / free-memory 4 / PSI 1 primary misses, so the zero-miss gate fails. The original `NO_RESIDUAL` reading is withdrawn; no runtime/container claim.
+
 - [Issue #8553 T0 A01 counterexample-guided recovery refinement](counterexample_guided_recovery_refinement_8553_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 5/5 finite cases independently reconstructed; safe separator refined with `p_color` (one predicate vs fixed-fine's three); planted optimistic false recovery returned `UNKNOWN`; 5/5 mutations rejected. Hand-authored CPU-only model; no GUI/runtime/product claim.
 
 - [Issue #5309 A08 effect-witness preservation](dual_control_5309_witness_a08_20261007/REPORT.md) — `PASS_WITNESS_BOUNDARY_SCOPED`: isolated candidate/oracle mounts; 56 rows independently reconstructed. A04–A07 STOP/method-failure lineage remains preserved; synthetic-only, no GUI/runtime/product claim.
@@ -917,6 +919,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`protective_local_adaptation_6367_t0_20261004/`](protective_local_adaptation_6367_t0_20261004/)
 - [`provenance_defeasible_obligations_7817_a01_20261005/`](provenance_defeasible_obligations_7817_a01_20261005/)
 - [`provenance_memory_authority_7167_t0_20261004/`](provenance_memory_authority_7167_t0_20261004/)
+- [`psi_work_shedding_8488_t0_a01_20261008/`](psi_work_shedding_8488_t0_a01_20261008/)
 - [`quality_diversity_5908_t1_20261002/`](quality_diversity_5908_t1_20261002/)
 - [`query_version_writer_atomicity_v1/`](query_version_writer_atomicity_v1/)
 - [`quiescent_epoch_binding_5361_t1/`](quiescent_epoch_binding_5361_t1/)
