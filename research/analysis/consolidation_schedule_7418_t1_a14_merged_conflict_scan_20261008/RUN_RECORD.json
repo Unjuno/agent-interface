@@ -1,6 +1,6 @@
 {
   "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A14-MERGED-CONFLICT-SCAN-20261008",
-  "status": "FROZEN_PREREGISTERED_NOT_RUN",
+  "status": "FAIL_METHOD",
   "created_utc": "2026-10-08",
   "package": "research/analysis/consolidation_schedule_7418_t1_a14_merged_conflict_scan_20261008",
   "fixture_source": "research/analysis/episodic_memory_schedule_8406_t0_a01_20261008/model.json",
@@ -40,5 +40,14 @@
   "preflight_path": "results/FORMAL_T1_A14/PREFLIGHT.json",
   "raw_path": "results/FORMAL_T1_A14/raw.jsonl",
   "audit_path": "results/FORMAL_T1_A14/audit.json",
-  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406#issuecomment-6051753716"
+  "pre_registered_issue": "https://github.com/Unjuno/agent-interface/issues/8406#issuecomment-6051753716",
+  "preflight_sha256": "57368dc377d3e4ed681a0fe7f4147b9d6222a44cc9df0c24e95d1fc25c772268",
+  "raw_sha256": "e40a6516249a1d3c7bfb4a740f1d601159729eaa44e1376fc40d460e5e89cb47",
+  "audit_sha256": "b212b62a7db76f5071e338ab3746984315de08c62ef79f229fa617ded5834fac",
+  "raw_rows": 390,
+  "candidate_exit": "success; 390 model calls",
+  "auditor_status": "FAIL_METHOD",
+  "auditor_errors": 21,
+  "private_server_stopped": true,
+  "result_note": "Descriptive contrasts are not interpretable as schedule conclusions because transition auditor failed."
 }
