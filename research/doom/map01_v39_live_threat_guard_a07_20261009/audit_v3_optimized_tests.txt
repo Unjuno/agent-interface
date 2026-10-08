@@ -1,0 +1,20 @@
+test_admission_timestamp_after_cancel_fails_even_if_log_row_precedes (test_audit_live_v3.AuditLiveV3Tests.test_admission_timestamp_after_cancel_fails_even_if_log_row_precedes) ... ok
+test_admitted_input_with_complete_release_can_pass_scoped_reconciliation (test_audit_live_v3.AuditLiveV3Tests.test_admitted_input_with_complete_release_can_pass_scoped_reconciliation) ... ok
+test_admitted_input_without_release_fails_custody (test_audit_live_v3.AuditLiveV3Tests.test_admitted_input_without_release_fails_custody) ... ok
+test_admitted_key_without_matching_transition_fails_custody (test_audit_live_v3.AuditLiveV3Tests.test_admitted_key_without_matching_transition_fails_custody) ... ok
+test_delayed_admission_event_uses_pre_cancel_monotonic_timestamp (test_audit_live_v3.AuditLiveV3Tests.test_delayed_admission_event_uses_pre_cancel_monotonic_timestamp) ... ok
+test_duplicate_bad_terminal_cannot_be_hidden_by_later_empty_terminal (test_audit_live_v3.AuditLiveV3Tests.test_duplicate_bad_terminal_cannot_be_hidden_by_later_empty_terminal) ... ok
+test_duplicate_per_key_transition_fails_custody (test_audit_live_v3.AuditLiveV3Tests.test_duplicate_per_key_transition_fails_custody) ... ok
+test_duplicate_release_event_is_rejected (test_audit_live_v3.AuditLiveV3Tests.test_duplicate_release_event_is_rejected) ... ok
+test_guard_without_monotonic_timestamp_does_not_expose_scope (test_audit_live_v3.AuditLiveV3Tests.test_guard_without_monotonic_timestamp_does_not_expose_scope) ... ok
+test_input_admitted_after_cancel_cannot_pass_custody (test_audit_live_v3.AuditLiveV3Tests.test_input_admitted_after_cancel_cannot_pass_custody) ... ok
+test_new_audit_preserves_the_v2_result_digest (test_audit_live_v3.AuditLiveV3Tests.test_new_audit_preserves_the_v2_result_digest) ... ok
+test_no_admission_needs_only_one_verified_empty_terminal (test_audit_live_v3.AuditLiveV3Tests.test_no_admission_needs_only_one_verified_empty_terminal) ... ok
+test_out_of_window_health_guard_does_not_expose_scope (test_audit_live_v3.AuditLiveV3Tests.test_out_of_window_health_guard_does_not_expose_scope) ... ok
+test_out_of_window_scorer_does_not_expose_scope (test_audit_live_v3.AuditLiveV3Tests.test_out_of_window_scorer_does_not_expose_scope) ... ok
+test_same_counterexample_false_passes_v2_and_fails_v3 (test_audit_live_v3.AuditLiveV3Tests.test_same_counterexample_false_passes_v2_and_fails_v3) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.032s
+
+OK
