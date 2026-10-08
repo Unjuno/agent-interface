@@ -1,0 +1,207 @@
+name: Issue 8651 observation-response factorial A04
+on:
+  create:
+jobs:
+  factorial:
+    if: >-
+      github.event.ref_type == 'branch' &&
+      github.event.ref == 'research/8651-observation-response-factorial-a04-20261009'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - name: Download and validate frozen source without repository checkout
+        id: gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          root=research/analysis/observation_response_factorial_8651_a04_20261009
+          src="$RUNNER_TEMP/src"
+          evidence="$RUNNER_TEMP/evidence"
+          mkdir -p "$src/$root" "$evidence"
+          base="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA"
+          for f in PROTOCOL.json candidate.py audit.py DOCKER_FREEZE.json README.md; do
+            curl --fail --silent --show-error --location "$base/$root/$f" -o "$src/$root/$f"
+          done
+          curl --fail --silent --show-error --location "$base/.github/workflows/8651-observation-response-factorial-a04.yml" -o "$src/workflow.yml"
+          test "$GITHUB_REPOSITORY" = "Unjuno/agent-interface"
+          test "$GITHUB_EVENT_NAME" = "create"
+          test "$(jq -r '.ref_type' "$GITHUB_EVENT_PATH")" = "branch"
+          test "$(jq -r '.ref' "$GITHUB_EVENT_PATH")" = "research/8651-observation-response-factorial-a04-20261009"
+          test "$(jq -r '.branch' "$src/$root/DOCKER_FREEZE.json")" = "$GITHUB_REF_NAME"
+          test "$(jq -r '.freeze_id' "$src/$root/PROTOCOL.json")" = "8651-A04-20261009"
+          test "$(jq -r '.source_main_sha' "$src/$root/PROTOCOL.json")" = "$(jq -r '.source_main_sha' "$src/$root/DOCKER_FREEZE.json")"
+          test "$(sha256sum "$src/$root/PROTOCOL.json" | cut -d' ' -f1)" = "$(jq -r '.protocol_sha256' "$src/$root/DOCKER_FREEZE.json")"
+          test "$(sha256sum "$src/$root/candidate.py" | cut -d' ' -f1)" = "$(jq -r '.candidate_sha256' "$src/$root/DOCKER_FREEZE.json")"
+          test "$(sha256sum "$src/$root/audit.py" | cut -d' ' -f1)" = "$(jq -r '.audit_sha256' "$src/$root/DOCKER_FREEZE.json")"
+          test "$(sha256sum "$src/workflow.yml" | cut -d' ' -f1)" = "$(jq -r '.workflow_sha256' "$src/$root/DOCKER_FREEZE.json")"
+          printf '{"branch":"%s","freeze_id":"%s","source_sha":"%s","protocol_sha256":"%s"}\n' "$GITHUB_REF_NAME" "$(jq -r '.freeze_id' "$src/$root/PROTOCOL.json")" "$GITHUB_SHA" "$(jq -r '.protocol_sha256' "$src/$root/DOCKER_FREEZE.json")" > "$evidence/START_GATE.json"
+          echo "ok=1" >> "$GITHUB_OUTPUT"
+      - name: Record Docker engine and pull pinned image
+        id: image
+        if: success() && steps.gate.outputs.ok == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/src/research/analysis/observation_response_factorial_8651_a04_20261009"
+          evidence="$RUNNER_TEMP/evidence"
+          image=$(jq -r '.image' "$root/DOCKER_FREEZE.json")
+          platform=$(jq -r '.platform' "$root/DOCKER_FREEZE.json")
+          docker version --format '{{json .Server}}' > "$evidence/docker-server.json"
+          docker pull --platform "$platform" "$image"
+          docker image inspect "$image" > "$evidence/docker-image-inspect.json"
+          echo "ok=1" >> "$GITHUB_OUTPUT"
+      - name: Run deterministic candidate once in isolated Docker
+        id: candidate
+        if: success() && steps.image.outputs.ok == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/src/research/analysis/observation_response_factorial_8651_a04_20261009"
+          evidence="$RUNNER_TEMP/evidence"
+          image=$(jq -r '.image' "$root/DOCKER_FREEZE.json")
+          platform=$(jq -r '.platform' "$root/DOCKER_FREEZE.json")
+          set +e
+          docker run --interactive --pull=never --platform "$platform" --network none --read-only \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=8m --cap-drop=ALL \
+            --security-opt=no-new-privileges --pids-limit=32 --memory=128m --cpus=1 \
+            --cidfile "$evidence/candidate.cid" \
+            --mount "type=bind,source=$root/candidate.py,target=/candidate.py,readonly" \
+            --mount "type=bind,source=$root/PROTOCOL.json,target=/protocol.json,readonly" \
+            "$image" python -B /candidate.py --protocol /protocol.json --out - \
+            > "$evidence/RAW.jsonl" 2> "$evidence/candidate.stderr"
+          rc=$?
+          set -e
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          if [ -s "$evidence/candidate.cid" ]; then
+            cid=$(cat "$evidence/candidate.cid")
+            docker inspect "$cid" > "$evidence/candidate-container.json"
+            docker rm "$cid" >/dev/null
+          fi
+          if [ "$rc" -ne 0 ]; then exit "$rc"; fi
+      - name: Independently audit raw ledger and frozen mutation controls in Docker
+        id: auditor
+        if: success() && steps.candidate.outputs.exit_code == '0'
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/src/research/analysis/observation_response_factorial_8651_a04_20261009"
+          evidence="$RUNNER_TEMP/evidence"
+          image=$(jq -r '.image' "$root/DOCKER_FREEZE.json")
+          platform=$(jq -r '.platform' "$root/DOCKER_FREEZE.json")
+          set +e
+          docker run --interactive --pull=never --platform "$platform" --network none --read-only \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=8m --cap-drop=ALL \
+            --security-opt=no-new-privileges --pids-limit=32 --memory=128m --cpus=1 \
+            --cidfile "$evidence/auditor.cid" \
+            --mount "type=bind,source=$root/audit.py,target=/audit.py,readonly" \
+            --mount "type=bind,source=$root/PROTOCOL.json,target=/protocol.json,readonly" \
+            --mount "type=bind,source=$evidence/RAW.jsonl,target=/raw.jsonl,readonly" \
+            "$image" python -B /audit.py --protocol /protocol.json --raw /raw.jsonl --out - --self-test \
+            > "$evidence/AUDIT.json" 2> "$evidence/auditor.stderr"
+          rc=$?
+          set -e
+          echo "exit_code=$rc" >> "$GITHUB_OUTPUT"
+          if [ -s "$evidence/auditor.cid" ]; then
+            cid=$(cat "$evidence/auditor.cid")
+            docker inspect "$cid" > "$evidence/auditor-container.json"
+            docker rm "$cid" >/dev/null
+          fi
+          if [ "$rc" -ne 0 ]; then exit "$rc"; fi
+      - name: Retain first outcome in GitHub even on STOP or failure
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GATE_OK: ${{ steps.gate.outputs.ok || '0' }}
+          IMAGE_OK: ${{ steps.image.outputs.ok || '0' }}
+          CANDIDATE_RC: ${{ steps.candidate.outputs.exit_code || 'NOT_RUN' }}
+          AUDITOR_RC: ${{ steps.auditor.outputs.exit_code || 'NOT_RUN' }}
+          RESULTS_PATH: research/analysis/observation_response_factorial_8651_a04_20261009/results/first-outcome
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/src/research/analysis/observation_response_factorial_8651_a04_20261009"
+          evidence="$RUNNER_TEMP/evidence"
+          results=research/analysis/observation_response_factorial_8651_a04_20261009/results/first-outcome
+          mkdir -p "$evidence"
+          if [ "$GATE_OK" = "1" ] && [ "$IMAGE_OK" = "1" ] && [ "$CANDIDATE_RC" = "0" ] && [ "$AUDITOR_RC" = "0" ] && [ -s "$evidence/AUDIT.json" ]; then
+            disposition=$(jq -r '.interaction_status' "$evidence/AUDIT.json")
+          elif [ "$GATE_OK" != "1" ]; then
+            disposition="STOP_BEFORE_CANDIDATE"
+          elif [ "$CANDIDATE_RC" = "0" ] && [ "$AUDITOR_RC" = "0" ]; then
+            disposition="STOP_EVIDENCE_RETENTION_OR_AUDIT_OUTPUT"
+          else
+            disposition="STOP_OPERATIONAL_OR_AUDIT"
+          fi
+          jq -n --arg freeze_id "8651-A04-20261009" --arg source_sha "$GITHUB_SHA" \
+            --arg run_id "$GITHUB_RUN_ID" --arg attempt "$GITHUB_RUN_ATTEMPT" \
+            --arg candidate_rc "$CANDIDATE_RC" --arg auditor_rc "$AUDITOR_RC" \
+            --arg disposition "$disposition" \
+            --arg image "$(jq -r '.image' "$root/DOCKER_FREEZE.json")" \
+            --arg platform "$(jq -r '.platform' "$root/DOCKER_FREEZE.json")" \
+            '{"freeze_id":$freeze_id,"source_commit":$source_sha,"workflow_run_id":$run_id,"run_attempt":$attempt,"candidate_invocations":(if $candidate_rc=="NOT_RUN" then 0 else 1 end),"candidate_exit_code":$candidate_rc,"auditor_invocations":(if $auditor_rc=="NOT_RUN" then 0 else 1 end),"auditor_exit_code":$auditor_rc,"image":$image,"platform":$platform,"disposition":$disposition}' > "$evidence/RUN.json"
+          if [ -f "$evidence/RAW.jsonl" ]; then sha256sum "$evidence/RAW.jsonl" > "$evidence/SHA256SUMS"; fi
+          printf '## Issue #8651 A04 first outcome\n\nDisposition: **%s**\n\n- Freeze: `8651-A04-20261009`\n- Workflow run: `%s`\n- Candidate exit: `%s`\n- Auditor exit: `%s`\n' "$disposition" "$GITHUB_RUN_ID" "$CANDIDATE_RC" "$AUDITOR_RC" >> "$GITHUB_STEP_SUMMARY"
+          cp -a "$evidence/." "$RUNNER_TEMP/commit/"
+          python3 - <<'PY'
+          import base64
+          import json
+          import os
+          import pathlib
+          import urllib.parse
+          import urllib.request
+
+          repo = os.environ["GITHUB_REPOSITORY"]
+          sha = os.environ["GITHUB_SHA"]
+          branch = os.environ["GITHUB_REF_NAME"]
+          root = pathlib.Path(os.environ["RUNNER_TEMP"]) / "commit"
+          api = "https://api.github.com/repos/" + repo
+          headers = {
+              "Authorization": "Bearer " + os.environ["GH_TOKEN"],
+              "Accept": "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "Content-Type": "application/json",
+          }
+
+          def request(method, path, body=None):
+              data = None if body is None else json.dumps(body, separators=(",", ":")).encode()
+              req = urllib.request.Request(api + "/" + path, data=data, headers=headers, method=method)
+              with urllib.request.urlopen(req, timeout=60) as response:
+                  payload = response.read()
+                  return {} if not payload else json.loads(payload)
+
+          source = request("GET", "git/commits/" + sha)
+          entries = []
+          for item in sorted(root.iterdir()):
+              if not item.is_file():
+                  continue
+              blob = request("POST", "git/blobs", {
+                  "content": base64.b64encode(item.read_bytes()).decode("ascii"),
+                  "encoding": "base64",
+              })
+              entries.append({
+                  "path": os.environ["RESULTS_PATH"] + "/" + item.name,
+                  "mode": "100644",
+                  "type": "blob",
+                  "sha": blob["sha"],
+              })
+          tree = request("POST", "git/trees", {"base_tree": source["tree"]["sha"], "tree": entries})
+          commit = request("POST", "git/commits", {
+              "message": "research(#8651): retain first A04 outcome [skip ci]",
+              "tree": tree["sha"],
+              "parents": [sha],
+          })
+          ref_path = "heads/" + branch
+          current = request("GET", "git/ref/" + urllib.parse.quote(ref_path, safe="/"))
+          if current["object"]["sha"] != sha:
+              raise RuntimeError("allocation branch moved before first-outcome retention")
+          request("PATCH", "git/" + urllib.parse.quote("refs/" + ref_path, safe="/"), {
+              "sha": commit["sha"],
+              "force": False,
+          })
+          print("retained_commit=" + commit["sha"])
+          PY
