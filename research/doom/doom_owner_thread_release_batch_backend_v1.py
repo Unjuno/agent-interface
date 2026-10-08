@@ -100,7 +100,7 @@ class Backend(Previous):
 
         self._flush_pending_ups(context)
 
-        if context["rows"]:
+        if context["rows"] or context.get("cancelled_pending_ups"):
             self._release_batch.context = context
         else:
             try:
@@ -200,6 +200,18 @@ class Backend(Previous):
         if isinstance(ledger, dict) and isinstance(result, dict):
             result = dict(result)
             result["release_batch_delivery"] = self._copy_delivery_ledger(ledger)
+        if context is not None and context.get("cancelled_pending_ups") and isinstance(result, dict):
+            result = dict(result)
+            result["cancelled_pending_ups"] = [
+                {
+                    "key": item["key"],
+                    "identifier": item["input_context"][0],
+                    "step": item["input_context"][1],
+                    "backend_owned_before_release": item["backend_owned_before_release"],
+                    "disposition": "not_attempted_owner_cancel_release",
+                }
+                for item in context["cancelled_pending_ups"]
+            ]
         return result
 
     def raw(self, key, down):
@@ -240,6 +252,15 @@ class Backend(Previous):
     def _flush_pending_ups(self, context):
         pending = context.get("pending_ups", [])
         if not pending:
+            return
+        cancel = getattr(self.lease, "cancel", None)
+        cancel_requested = getattr(cancel, "is_set", None)
+        if callable(cancel_requested) and cancel_requested():
+            # The owner watcher has revoked this lease and performed its own
+            # verified release. These queued step-UPs were never attempted;
+            # do not send them through the ordinary lease-bound up_batch RPC.
+            context["cancelled_pending_ups"] = [dict(item) for item in pending]
+            context["pending_ups"] = []
             return
         records = getattr(self.owner, "records", None)
         record_count = len(records) if isinstance(records, list) else None
