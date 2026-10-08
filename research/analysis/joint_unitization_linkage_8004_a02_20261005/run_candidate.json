@@ -1,0 +1,171 @@
+{
+  "assignment_count": 4,
+  "assignments": [
+    {
+      "assignment": "S_split+L_temporal",
+      "capture_histogram": {
+        "010": 1,
+        "101": 1,
+        "110": 1
+      },
+      "component_count": 3,
+      "components": [
+        {
+          "capture_vector": "010",
+          "records": [
+            "w-02"
+          ]
+        },
+        {
+          "capture_vector": "101",
+          "records": [
+            "r-02",
+            "v-01"
+          ]
+        },
+        {
+          "capture_vector": "110",
+          "records": [
+            "r-01",
+            "w-01"
+          ]
+        }
+      ],
+      "linkage": "L_temporal",
+      "links": [
+        [
+          "r-01",
+          "w-01"
+        ],
+        [
+          "r-02",
+          "v-01"
+        ]
+      ],
+      "segmentation": "S_split"
+    },
+    {
+      "assignment": "S_split+L_crossed",
+      "capture_histogram": {
+        "010": 1,
+        "101": 1,
+        "110": 1
+      },
+      "component_count": 3,
+      "components": [
+        {
+          "capture_vector": "010",
+          "records": [
+            "w-02"
+          ]
+        },
+        {
+          "capture_vector": "101",
+          "records": [
+            "r-01",
+            "v-01"
+          ]
+        },
+        {
+          "capture_vector": "110",
+          "records": [
+            "r-02",
+            "w-01"
+          ]
+        }
+      ],
+      "linkage": "L_crossed",
+      "links": [
+        [
+          "r-01",
+          "v-01"
+        ],
+        [
+          "r-02",
+          "w-01"
+        ]
+      ],
+      "segmentation": "S_split"
+    },
+    {
+      "assignment": "S_merge+L_temporal",
+      "capture_histogram": {
+        "010": 1,
+        "111": 1
+      },
+      "component_count": 2,
+      "components": [
+        {
+          "capture_vector": "010",
+          "records": [
+            "w-02"
+          ]
+        },
+        {
+          "capture_vector": "111",
+          "records": [
+            "r-01",
+            "r-02",
+            "v-01",
+            "w-01"
+          ]
+        }
+      ],
+      "linkage": "L_temporal",
+      "links": [
+        [
+          "r-01",
+          "w-01"
+        ],
+        [
+          "r-02",
+          "v-01"
+        ]
+      ],
+      "segmentation": "S_merge"
+    },
+    {
+      "assignment": "S_merge+L_crossed",
+      "capture_histogram": {
+        "010": 1,
+        "111": 1
+      },
+      "component_count": 2,
+      "components": [
+        {
+          "capture_vector": "010",
+          "records": [
+            "w-02"
+          ]
+        },
+        {
+          "capture_vector": "111",
+          "records": [
+            "r-01",
+            "r-02",
+            "v-01",
+            "w-01"
+          ]
+        }
+      ],
+      "linkage": "L_crossed",
+      "links": [
+        [
+          "r-01",
+          "v-01"
+        ],
+        [
+          "r-02",
+          "w-01"
+        ]
+      ],
+      "segmentation": "S_merge"
+    }
+  ],
+  "channels": [
+    "runtime",
+    "watcher",
+    "verifier"
+  ],
+  "disposition": "UNIDENTIFIED"
+}
