@@ -991,6 +991,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`sunk_cost_forward_equivalence_6138_t0_20261002/`](sunk_cost_forward_equivalence_6138_t0_20261002/)
 - [`support_closed_crop_successor_1820_v1/`](support_closed_crop_successor_1820_v1/)
 - [`symmetry_reduction_6251_t0_host_20261002/`](symmetry_reduction_6251_t0_host_20261002/)
+- [`system_carbon_rebound_8421_t0_20261008/`](system_carbon_rebound_8421_t0_20261008/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_memory_retrieval_7166_t0_host_a03_20261004/`](task_memory_retrieval_7166_t0_host_a03_20261004/)
