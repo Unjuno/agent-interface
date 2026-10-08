@@ -1,0 +1,237 @@
+{
+  "schema": "v39-coast-hint-exact-stream-replay-v1",
+  "inputs": {
+    "report.json": "719db21040b843c5c91c5ff1f3d9fb2051ae1f1e008971547f39f015b4337687",
+    "events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "audit-v2.json": "bb03c350009169283f36c8f0c0a919bb18d46e828ac68b99f40a567d2f141bfc"
+  },
+  "candidate_sha256": "5262312125f9fd0d1b0951b2e5fd18ad56dcfab2ace2f2654233cb5e309740d3",
+  "rules": "Only events emitted inside an unauthored-coast model wait are fed to CoastHistory. Each typed row must pass schema/binding/value validation and reconcile against a later exact full row. Context is evaluated against each report decision's exact source image/sequence. No interrupt, policy invalidation, input authority, or action is simulated.",
+  "decisions": [
+    {
+      "decision": 0,
+      "monitor_mode": "unauthored_coast_no_policy",
+      "source_sequence": 1,
+      "historical_context": [],
+      "context_bytes": 72,
+      "typed_accepted_during_wait": 26,
+      "full_reconciled_during_wait": 26,
+      "baseline_prior_soft_event_summary": null,
+      "final_admission": "INPUT_ADMITTED"
+    },
+    {
+      "decision": 1,
+      "monitor_mode": "authored_policy_guard",
+      "source_sequence": 36,
+      "historical_context": [
+        {
+          "sequence": 26,
+          "capture_ns": 55509798247049,
+          "health": 97,
+          "ammo": 48,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 27,
+          "capture_ns": 55510133798815,
+          "health": 97,
+          "ammo": 48,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 28,
+          "capture_ns": 55510468026323,
+          "health": 97,
+          "ammo": 48,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        }
+      ],
+      "context_bytes": 558,
+      "typed_accepted_during_wait": 0,
+      "full_reconciled_during_wait": 0,
+      "baseline_prior_soft_event_summary": null,
+      "final_admission": "REJECTED_ACTION_NOT_CURRENT"
+    },
+    {
+      "decision": 2,
+      "monitor_mode": "unauthored_coast_no_policy",
+      "source_sequence": 70,
+      "historical_context": [
+        {
+          "sequence": 26,
+          "capture_ns": 55509798247049,
+          "health": 97,
+          "ammo": 48,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 27,
+          "capture_ns": 55510133798815,
+          "health": 97,
+          "ammo": 48,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 28,
+          "capture_ns": 55510468026323,
+          "health": 97,
+          "ammo": 48,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        }
+      ],
+      "context_bytes": 558,
+      "typed_accepted_during_wait": 20,
+      "full_reconciled_during_wait": 20,
+      "baseline_prior_soft_event_summary": {
+        "signal_id": "health",
+        "source_value": 97,
+        "current_value": 85,
+        "hard_minimum": 85,
+        "soft_event_count": 2,
+        "sequence": 62,
+        "observed_during_iteration": 1,
+        "cover_policy_source_iteration": 0,
+        "effect": "prior_cover_preserved",
+        "grants_input_authority": false
+      },
+      "final_admission": "REJECTED_ACTION_NOT_CURRENT"
+    },
+    {
+      "decision": 3,
+      "monitor_mode": "unauthored_coast_no_policy",
+      "source_sequence": 91,
+      "historical_context": [
+        {
+          "sequence": 89,
+          "capture_ns": 55523852170064,
+          "health": 76,
+          "ammo": 44,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 90,
+          "capture_ns": 55524193255716,
+          "health": 73,
+          "ammo": 44,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        }
+      ],
+      "context_bytes": 396,
+      "typed_accepted_during_wait": 21,
+      "full_reconciled_during_wait": 21,
+      "baseline_prior_soft_event_summary": null,
+      "final_admission": "INPUT_ADMITTED"
+    },
+    {
+      "decision": 4,
+      "monitor_mode": "authored_policy_guard",
+      "source_sequence": 115,
+      "historical_context": [
+        {
+          "sequence": 111,
+          "capture_ns": 55530872706048,
+          "health": 68,
+          "ammo": 44,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 112,
+          "capture_ns": 55531206875866,
+          "health": 68,
+          "ammo": 44,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 113,
+          "capture_ns": 55531536742633,
+          "health": 68,
+          "ammo": 44,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        }
+      ],
+      "context_bytes": 562,
+      "typed_accepted_during_wait": 0,
+      "full_reconciled_during_wait": 0,
+      "baseline_prior_soft_event_summary": null,
+      "final_admission": "INPUT_ADMITTED"
+    },
+    {
+      "decision": 5,
+      "monitor_mode": "authored_policy_guard",
+      "source_sequence": 166,
+      "historical_context": [
+        {
+          "sequence": 111,
+          "capture_ns": 55530872706048,
+          "health": 68,
+          "ammo": 44,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 112,
+          "capture_ns": 55531206875866,
+          "health": 68,
+          "ammo": 44,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        },
+        {
+          "sequence": 113,
+          "capture_ns": 55531536742633,
+          "health": 68,
+          "ammo": 44,
+          "reconciled_full_observation": true,
+          "grants_input_authority": false,
+          "task_success_verified": false
+        }
+      ],
+      "context_bytes": 562,
+      "typed_accepted_during_wait": 0,
+      "full_reconciled_during_wait": 0,
+      "baseline_prior_soft_event_summary": {
+        "signal_id": "health",
+        "source_value": 65,
+        "current_value": 61,
+        "hard_minimum": 55,
+        "soft_event_count": 2,
+        "sequence": 154,
+        "observed_during_iteration": 4,
+        "cover_policy_source_iteration": 3,
+        "effect": "prior_cover_preserved",
+        "grants_input_authority": false
+      },
+      "final_admission": "REJECTED_POLICY_INVALIDATED"
+    }
+  ],
+  "limits": [
+    "Exact deterministic replay of one retained episode; no prospective or randomized comparison.",
+    "Prompt-context presence does not establish the model will use a hint correctly or improve actions.",
+    "No prediction of cancellation, token savings, task success, or safety.",
+    "The live allocation remains consumed; this replay does not rerun or extend it."
+  ]
+}
