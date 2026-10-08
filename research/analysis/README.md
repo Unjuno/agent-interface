@@ -665,6 +665,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`gui_reversibility_7949_external_write_a03_20261007/`](gui_reversibility_7949_external_write_a03_20261007/)
 - [`gui_reversibility_7949_journal_a01_20261007/`](gui_reversibility_7949_journal_a01_20261007/)
 - [`gui_reversibility_7949_journal_duplicate_execution_20261007/`](gui_reversibility_7949_journal_duplicate_execution_20261007/)
+- [`handoff_choice_complexity_8604_t0_a01_20261008/`](handoff_choice_complexity_8604_t0_a01_20261008/)
+- [`handoff_choice_complexity_8604_t0_a02_20261008/`](handoff_choice_complexity_8604_t0_a02_20261008/)
 - [`hard_boundary_equivalence_6109_t0_20261001/`](hard_boundary_equivalence_6109_t0_20261001/)
 - [`hazard_checkpoint_7466_adaptive_cost_a02_20261004/`](hazard_checkpoint_7466_adaptive_cost_a02_20261004/)
 - [`hazard_checkpoint_7466_feedback_gate_a03_20261004/`](hazard_checkpoint_7466_feedback_gate_a03_20261004/)
