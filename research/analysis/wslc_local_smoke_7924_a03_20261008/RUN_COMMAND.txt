@@ -1,0 +1,3 @@
+One invocation only, after FREEZE.json has been committed and the unique name/CID file absence is checked:
+wslc run --rm --pull never --network none --cpus 1 --memory 512M --name unjuno-8446-a03-audit-b52e3757-eb6164e0e693 --cidfile AUDITOR_CID.txt --volume "C:\Users\junny\Documents\Codex\2026-09-19\unjuno-agent-interface-github-mcp-main-2\repo-7924-a03-resume-20261008\research\analysis\wslc_local_smoke_7924_a03_20261008:/src:ro" --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B auditor.py
+Then perform one read-only inspect of the exact CID written by this run to confirm absence after --rm. Do not call a global list, Docker, probe.py, or any A02 script. Requested memory does not imply effective enforcement.
