@@ -453,6 +453,16 @@ def cancel_initial_cover_before_planner(process, wait, cover_id):
     return terminal
 
 
+def cover_submission_invalidation_receipt(result, terminal=None):
+    return {
+        "ack": result["ack"],
+        "submitted_sequence": result["submitted_sequence"],
+        "invalidation": result["invalidation"],
+        "coherent_source_recovery": result.get("coherent_source_recovery"),
+        "cover_cancel_terminal": terminal,
+    }
+
+
 def admitted_cover_commands(commands, validity_admission):
     if validity_admission.get("status") != "admitted":
         return []
@@ -1179,12 +1189,10 @@ def main():
                 observation_monitor=validity_monitor)
             cover_ack=cover_result["ack"]
             if cover_ack["event"] == "rejected":
-                cover_submission_invalidation = {
-                    "ack": cover_result["ack"],
-                    "submitted_sequence": cover_result["submitted_sequence"],
-                    "invalidation": cover_result["invalidation"],
-                    "cover_cancel_terminal": cover_terminals[-1],
-                }
+                cover_submission_recovery = cover_result
+                if cover_result["invalidation"] is not None:
+                    cover_submission_invalidation = \
+                        cover_submission_invalidation_receipt(cover_result)
                 latest = cover_result["latest"]
                 cover = None
                 cover_semantic=[];cover_validity_semantic=None
@@ -1196,9 +1204,12 @@ def main():
                     validity_monitor,validity_admission,[],None)
             elif cover_result.get("invalidation") is not None:
                 failure_cleanup.set_stage("initial_cover_invalidation_release")
-                cover_terminals.append(cancel_initial_cover_before_planner(
-                    process, wait, cover))
-                cover_submission_recovery = cover_result
+                cancel_terminal = cancel_initial_cover_before_planner(
+                    process, wait, cover)
+                cover_terminals.append(cancel_terminal)
+                cover_submission_invalidation = \
+                    cover_submission_invalidation_receipt(
+                        cover_result, cancel_terminal)
                 latest = cover_result["latest"]
                 cover = None
                 cover_semantic=[];cover_validity_semantic=None

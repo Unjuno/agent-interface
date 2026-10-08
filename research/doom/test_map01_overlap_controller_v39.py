@@ -145,6 +145,33 @@ class Map01V39CoastTests(unittest.TestCase):
                     lambda predicate: unsafe_terminal if predicate(unsafe_terminal) else None,
                     "cover-0")
 
+    def test_cover_invalidation_receipt_distinguishes_preacceptance_from_cancel(self):
+        invalidation = {"event": "paired_signal_invalidation",
+                        "reason": "health:below_hard_minimum",
+                        "sequence": 12}
+        coherent = {"required_after_sequence": 11, "fresh_sequence": 13,
+                    "additional_invalidations": []}
+        rejected = {"ack": {"event": "rejected", "id": "cover-0"},
+                    "submitted_sequence": 11, "invalidation": invalidation,
+                    "coherent_source_recovery": coherent}
+        accepted = {"ack": {"event": "accepted", "id": "cover-0"},
+                    "submitted_sequence": 11, "invalidation": invalidation,
+                    "coherent_source_recovery": coherent}
+        terminal = {"event": "terminal", "id": "cover-0",
+                    "status": "cancelled",
+                    "release": {"verified": True, "keys_down": [],
+                                "buttons_down": []}}
+
+        before_admission = controller.cover_submission_invalidation_receipt(rejected)
+        after_admission = controller.cover_submission_invalidation_receipt(
+            accepted, terminal)
+
+        self.assertIsNone(before_admission["cover_cancel_terminal"])
+        self.assertEqual(before_admission["ack"]["event"], "rejected")
+        self.assertEqual(before_admission["coherent_source_recovery"], coherent)
+        self.assertIs(after_admission["cover_cancel_terminal"], terminal)
+        self.assertEqual(after_admission["ack"]["event"], "accepted")
+
     def test_running_invalidation_accepts_naturally_completed_cover_only_when_neutral(self):
         class Stdin:
             def write(self, value): pass
