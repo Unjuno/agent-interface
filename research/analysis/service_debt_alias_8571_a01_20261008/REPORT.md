@@ -1,7 +1,8 @@
 # Issue #8571 A01 — service-debt representation invariance
 
-Disposition: `PASS_METHOD_SCOPED`. Full result and frozen allocation inputs
-are preserved in `FORMAL_RESULT.md` and `FREEZE.json`.
+Disposition: `HOLD_CUSTODY_FREEZE_NOT_COMMITTED_BEFORE_RUN`. The numerical
+trace and independent replay are preserved; formal promotion is withheld due
+the pre-run Git custody sequence failure. See `CUSTODY_NOTE.md`.
 
 ## Construction log (pre-freeze)
 
@@ -19,7 +20,7 @@ B=4, and retains the exclusion record.
 
 - **H:** On the frozen finite shared-resource trace, the #6613 least-cumulative-service comparator keyed by caller-presented identity can be advantaged by splitting one principal's queue across aliases. Grouping by an independently supplied fixture parent should remove that alias advantage without merging genuinely distinct principals or changing hard eligibility. Splitting equal total service into smaller same-principal jobs is a separate negative/diagnostic stratum; it is not assumed to be semantically neutral in real GUI work.
 - **T:** Exact, deterministic CPU model; two principals, one serial resource, four one-tick service opportunities, eight same-priority requests all available at time zero. Enumerate all 15 set partitions of four A requests (Bell number B4): one caller, every 2-block partition, every 3-block partition, and four aliases. Compare FIFO, least cumulative service keyed by presented caller, and the same debt rule keyed by fixture-trusted parent. Add equal-total-service fragmentation, three honestly distinct principals, revoked work, missing joint grant, a deliberately false parent claim, and a mandatory release. The candidate emits attempts only. A separately implemented raw-only auditor joins a frozen outcome oracle and checks every row, policy choice, exclusion, release, wait and effect credit. No randomness or inference.
-- **D:** `PASS_METHOD_SCOPED` only if the independent replay is exact; at least one of the 14 fixed nontrivial A alias partitions increases A's four-slot consideration share under caller-keyed debt versus the one-caller control; trusted-parent debt reproduces the one-caller allocation for every partition; fragmentation does not change the four-slot service-unit allocation in its matched fixture; genuinely distinct principals remain separate; denied/revoked requests are never dispatched; the release occurs at its frozen time before any later optional dispatch; and all frozen audit mutations are rejected. All 14 partition outcomes, including nulls, remain in the report. Any safety/accounting mismatch is `FAIL_METHOD`; absent the alias discriminator is `FAIL_NO_ALIAS_ADVANTAGE_IN_FIXTURE`. These labels apply only to this authored trace.
+- **D:** The one-time local calculation and independent replay match the numerical checks, but the required pre-run commit of the frozen allocation was missed. Final disposition is `HOLD_CUSTODY_FREEZE_NOT_COMMITTED_BEFORE_RUN`; the PASS gate is not awarded. The frozen alias partitions, nulls, replay, and safety controls remain visible in `FORMAL_RESULT.md` and the raw artifacts.
 - **C:** FIFO is invariant to caller labels and may be preferable when arrival order is the legitimate right. Atomic job size, deadlines, semantic value, workload infeasibility, real identity provenance, or an already-authoritative queue policy may dominate the model. A trusted parent map is assumed input here, not implemented authentication.
 - **U:** No real users, aliases, GUI, consent, identity collection, authority path, live scheduler, or production fairness are tested. Equal service units do not establish equal semantic value. This does not transfer Moulin's queueing impossibility theorem to GUI scheduling and does not recommend collecting identity data.
 
@@ -33,7 +34,8 @@ The service-debt rule is operationalized from the retained #6613 A01 candidate (
 
 Base: `5215aab506f43c8a02470d495b7352b1326a9580`. Runtime selection follows #3352: native Ubuntu WSL is appropriate because the frozen question is a deterministic standard-library CPU simulation with no container boundary. No WSLc allocation, Docker daemon, GPU, network, live GUI, model, or OS input is used. Freeze files and hashes before the one candidate invocation; run the independent auditor exactly once only after candidate success. Outputs are collision-refusing and are never overwritten. A first formal failure is retained, not rerun.
 
-Formal invocations recorded from the frozen allocation (do not rerun):
+One candidate invocation and one independent auditor invocation were recorded;
+their freeze was not committed before execution. Preserve outputs and do not rerun:
 
 ```bash
 python3 -B candidate.py trace_fixture.json candidate_raw.json
