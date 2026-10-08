@@ -2,7 +2,7 @@
 
 ## Disposition
 
-**`NO_RESIDUAL` for this frozen trace set (the predeclared PSI-incremental hypothesis did not pass).** The deterministic method artifact is independently reconstructed (`AUDIT PASS`, 32/32 rows) and four integrity mutations are rejected, but memory-PSI shedding did **not** beat the queue/deadline baseline on the primary trace. This finite authored workload does not establish a PSI-specific advantage. No runtime or deployment recommendation follows.
+**`HOLD_DEADLINE_SEMANTICS_MISMATCH` (post-run qualification).** A post-run review found that the candidate's miss accounting does not implement the protocol's exclusive completion deadline. The original `NO_RESIDUAL` interpretation is withdrawn; see [SEMANTICS_CORRECTION.md](SEMANTICS_CORRECTION.md). The frozen candidate/raw/audit remain unchanged and are not rerun. No formal scientific D conclusion or runtime/deployment recommendation is claimed.
 
 ## Question and frozen decision
 
@@ -19,7 +19,7 @@ The allocation asks whether a two-consecutive-window synthetic memory-PSI trigge
 
 ## Interpretation and limits
 
-This result says only that, under this exact hand-authored schedule and its discrete capacity assumptions, both the early PSI policy and the later queue policy avoided the primary deadline misses. It cannot distinguish which trigger is generally preferable; the queue trigger already catches up before any frozen mandatory deadline expires. The secondary traces are finite controls, not sampled workload evidence.
+The original candidate-reported deadline-miss sets cannot be used to determine the preregistered D gate because the timing semantics mismatch affects 8/32 rows. A post-run calculation from the frozen input/raw applying the protocol's exclusive bound yields primary misses of 4 (fixed), 3 (queue), 4 (free-memory), and 1 (PSI). This suggests a finite-trace PSI-vs-comparator difference but fails the required zero-PSI-miss gate; it is diagnostic only, not a formal result. The secondary traces are finite controls, not sampled workload evidence.
 
 Post-run source review also found that the optional-work `deferred_ticks` field is double-incremented during a shed tick for unfinished optional jobs. The independent auditor reproduces the field but does not expose this semantic counter error. Do not use that field quantitatively; see [METRIC_QUALIFICATION.md](METRIC_QUALIFICATION.md). This does not affect the preregistered deadline-miss comparison or `NO_RESIDUAL` disposition, and neither frozen output nor source was changed or rerun.
 
