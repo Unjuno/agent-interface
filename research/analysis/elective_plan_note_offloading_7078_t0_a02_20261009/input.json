@@ -1,0 +1,11 @@
+{
+  "schema": "7078-t0-a01-input-v1",
+  "mandatory": [{"id": "effect-17", "role": "mandatory_unresolved_effect", "source": "ledger-4", "generation": 9}],
+  "cases": [
+    {"id": "beneficial", "q0": 0.40, "q0_kind": "future_unaided_forecast", "support_now": "source-span-1", "q1": 0.90, "safe_rediscovery_loss": 20, "forecast_write_read_cost": 1, "delivery_probability": 1.0, "source": "plan-1", "note_source": "plan-1", "generation": 9, "delivered": true},
+    {"id": "expensive", "q0": 0.90, "q0_kind": "future_unaided_forecast", "support_now": "source-span-2", "q1": 0.95, "safe_rediscovery_loss": 20, "forecast_write_read_cost": 2, "delivery_probability": 1.0, "source": "plan-2", "note_source": "plan-2", "generation": 9, "delivered": true},
+    {"id": "unreliable", "q0": 0.50, "q0_kind": "future_unaided_forecast", "support_now": "source-span-3", "q1": 0.90, "safe_rediscovery_loss": 10, "forecast_write_read_cost": 0.2, "delivery_probability": 0.1, "source": "plan-3", "note_source": "plan-3", "generation": 9, "delivered": false}
+  ],
+  "calibration_ids": ["dev-a", "dev-b"],
+  "held_out_ids": ["eval-c", "eval-d"]
+}
