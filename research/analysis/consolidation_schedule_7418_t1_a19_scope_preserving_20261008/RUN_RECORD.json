@@ -117,6 +117,23 @@
       "prefix_cluster_monte_carlo_rate": 0.436795
     }
   },
+  "decision_gate_calibration_exact_nonnull_power_audit": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 /opt/homebrew/bin/python3 audit_nonnull_power_exact.py",
+    "exit_code": 0,
+    "status": "PASS_EXACT_POWER_CROSSCHECK",
+    "source_sha256": "cb326c528c6d25748c98b6a1b24fdda32deb70a4f618e5c5ddebb08528560f12",
+    "design_sha256": "6fc07363ce71a4ab8e80f6009cd73aeff7a225451305c5581b6803d2d937b3ca",
+    "input_simulation_result_sha256": "32e78a6b53388ca61ab7d878e5d1e7242e282eb7b269eb243ed23f29613c3b10",
+    "output_sha256": "f2e5e80244bec2586ae24f0f75e5274de88d06a320f01b901356946a91e3dd57",
+    "exact_rates": {
+      "plus_0_10_iid": 0.34573707777276896,
+      "plus_0_10_perfect_prefix_clusters": 0.497282654970848,
+      "plus_0_20_iid": 0.9285979858668431,
+      "plus_0_20_perfect_prefix_clusters": 0.6542304056033534
+    },
+    "all_four_within_five_monte_carlo_standard_errors": true,
+    "scope_limit": "exact under stipulated independent arm/seed Binomial draws; no model, GUI, or real dependence measurement"
+  },
   "2026-10-08T15:06+09:00_runtime_diagnosis": {
     "orbctl_doctor_quiet_exit": 0,
     "diagnostic": "docker and docker-compose resolve to Nix executables, not OrbStack wrappers",

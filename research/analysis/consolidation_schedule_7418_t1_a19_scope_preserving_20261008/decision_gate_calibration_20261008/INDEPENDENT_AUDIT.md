@@ -22,4 +22,4 @@ PYTHONDONTWRITEBYTECODE=1 /opt/homebrew/bin/python3 audit_null_familywise_exact.
 
 Exit code 0; status `PASS_EXACT_NULL_UNION_CROSSCHECK`. Exact familywise rates were 4.1555% for independent 60-item answers and 43.5984% for six perfect prefix clusters. The Monte Carlo rates (4.1615% and 43.6795%) differed by 0.13 and 0.73 Monte Carlo standard errors. Source SHA-256: `04ca4f0f9c68d5a3784e22288f93cb14612c06da32e17b81d6435ecfcb856e3c`; output SHA-256: `86f7f10cbbe56a886496473a7235c361b7eb20891ac6f2770b4bf8c0a37117ee`.
 
-This exactly verifies the equal-accuracy null union rates only. It does not verify the non-null detection rates or actual model dependence.
+This exactly verifies the equal-accuracy null union rates only. The separate `audit_nonnull_power_exact.py` enumerates the four non-null alternatives and cross-checks all four Monte Carlo power estimates; see `EXACT_POWER_AUDIT.md` and `NONNULL_POWER_EXACT_AUDIT.json`. Neither audit measures actual model dependence.
