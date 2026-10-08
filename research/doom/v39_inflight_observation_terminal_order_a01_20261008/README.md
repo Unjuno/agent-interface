@@ -2,26 +2,30 @@
 
 ## H/T/D/C/U
 
-- **H:** If the stdout reader has decoded a hard-invalidating observation but has not yet queued it when the completed-future snapshot runs, the controller's subsequent terminal wait still observes it before a matching cover terminal, interrupts the planner, and discards the completed answer.
-- **T:** Run the exact current-main `drain_pending_observation_events` and nested `wait` functions under a deterministic threaded queue schedule. Hold a decoded observation outside the queue during the bounded snapshot, then enqueue it before the cover terminal. Use a synthetic monitor and verified-empty terminal.
-- **D:** PASS if the snapshot sees no event, the subsequent wait returns `policy_invalidation` before the matching terminal, and the dependent answer is discarded after an empty release terminal.
-- **C:** One controlled schedule tests source composition, not production thread timing or event delivery. The conclusion depends on observation and terminal lines retaining FIFO order on the same stdout stream.
-- **U:** Current Executor/backend output serialization for observations was not exercised. No game, model, GUI, OS input, physical release, real latency, useful feedback, bounded recovery efficacy, or task effect was measured.
+- **H:** A policy observation can be emitted and decoded before the future-completion snapshot but enqueued just afterward if the sole reader is paused between decode and `incoming.put`. Because it precedes the matching terminal on the same stream, the subsequent wait should process it before terminal acceptance and final admission should reject the stale answer.
+- **T:** Execute the exact current-main bounded-drain helper, nested `wait`, and final-admission functions under that delayed-reader schedule. Separately AST-audit the pinned session emitter, observation backend, executor loop, controller reader, and active observation-producer call sites.
+- **D:** PASS if the snapshot is empty, the subsequent wait returns policy invalidation before terminal, actual final admission returns `REJECTED_POLICY_INVALIDATED` without authority, and terminal release is verified empty. The source audit must establish one-reader FIFO and that active observations are emitted synchronously inside backend execution, before terminal publication.
+- **C:** Deterministic source-composition and static source-order evidence. It does not measure live pipe latency, HUD cadence, physical input, or game outcome.
+- **U:** No live threat exposure, OS-level release, useful feedback, recovery efficacy, task effect, or MAP01 outcome was measured.
 
 ## Result
 
-`PASS_INFLIGHT_OBSERVATION_INVALIDATES_BEFORE_TERMINAL`. The future-completion snapshot returned empty while the reader held the already-decoded observation. After release, the exact current-main `wait` dispatch processed the health-60 sample, returned a policy invalidation, and retained the latest observation; the matching cancelled terminal carried verified empty keys/buttons. The harness therefore rejected the completed answer. The candidate AST-extracts the current-main final-admission helper and decision functions; the source/event audit and focused test pass.
+`PASS_INFLIGHT_OBSERVATION_INVALIDATES_BEFORE_TERMINAL`. At future completion, the bounded queue snapshot was empty while the test reader held a decoded observation. The subsequent wait received the health-60 sample before the matching cancelled terminal. The frozen current-main final-admission helper and v1/v2 decision functions returned `REJECTED_POLICY_INVALIDATED`, with no input authority; terminal release had empty keys/buttons and `verified: true`.
 
-This is distinct from PR #8431 and PR #8435: those exercise observations already in the reader queue at completion, while this test holds a decoded line outside the queue during the snapshot and delivers it afterward. It tests the next scheduling boundary after the bounded queue snapshot. It narrows the implementation risk conditionally: with same-stream FIFO delivery, the ordinary wait path covers this event. Before claiming the producer ordering invariant, verify the actual current runtime event writer or collect live traces. No production code changed.
+The source audit pins the current-main production chain. The session emitter serializes and flushes each JSON line under a lock. A single stdout reader decodes and enqueues each line before reading the next. Active observation producers run synchronously inside `backend.execute`, and both the default v12 executor path and opt-in v13 path emit terminal only after that call returns. The current controller's finish path has no observation snapshot, and its fixture snapshot is disabled in the measured route. Therefore an observation can validly arrive after the future-completion queue-size snapshot, as this experiment models, but an observation emitted before its matching terminal cannot be published after that terminal in the pinned session route.
+
+This narrows the synthetic schedule in #8435: a policy observation that is already in stdout but not yet enqueued at queue-size time is reachable, and the wait path handles it safely before terminal. A post-terminal observation in the same session stream is not supported by the audited producer path. This does not establish live pipe timing, threat response, or task success. No production code changed.
 
 ## Reproduction
 
-From the repository root on Ubuntu WSL:
+From repository root on Ubuntu WSL:
 
 ```sh
 python3 research/doom/v39_inflight_observation_terminal_order_a01_20261008/run_candidate.py
-python3 -m unittest -v research.doom.v39_inflight_observation_terminal_order_a01_20261008/test_inflight_order.py
+python3 -m unittest -v research.doom.v39_inflight_observation_terminal_order_a01_20261008.test_inflight_order
+python3 -O -m unittest -v research.doom.v39_inflight_observation_terminal_order_a01_20261008.test_inflight_order
+python3 research/doom/v39_inflight_observation_terminal_order_a01_20261008/audit_runtime_order.py
 python3 research/doom/v39_inflight_observation_terminal_order_a01_20261008/audit_result.py
 ```
 
-`FREEZE.json` pins the current-main commit and controller Git blob; the test AST-extracts the production helper and nested wait function from the bundled source snapshot.
+`FREEZE.json` pins the controller, admission, session, backend, and executor source identities.
