@@ -1,6 +1,6 @@
 # V39 stale rejection → source refresh → planner input A01
 
-Date: 2026-10-09 (Asia/Tokyo)  
+Date: 2026-10-09 (Asia/Tokyo)
 Hypothesis: Issue #59, fresh-source recovery after stale Executor rejection.
 
 ## H/T/D/C/U
