@@ -20,7 +20,46 @@ def frozen_bytes(path):
     return data
 
 
+def frozen_predecessor_bytes(kind):
+    spec = FREEZE["predecessor_a01"]["artifacts"][kind]
+    commit = FREEZE["predecessor_a01"]["commit"]
+    data = subprocess.check_output(["git", "show", f"{commit}:{spec['path']}"])
+    blob = subprocess.check_output(
+        ["git", "rev-parse", f"{commit}:{spec['path']}"], text=True
+    ).strip()
+    preserved = (HERE / spec["preserved_copy"]).read_bytes()
+    if (len(data) != spec["bytes"] or hashlib.sha256(data).hexdigest() != spec["sha256"]
+            or blob != spec["git_blob"] or preserved != data):
+        raise ValueError(f"predecessor A01 artifact identity mismatch: {kind}")
+    return data
+
+
+def predecessor_provenance():
+    artifacts = FREEZE["predecessor_a01"]["artifacts"]
+    return {
+        "commit": FREEZE["predecessor_a01"]["commit"],
+        "result_sha256": artifacts["result"]["sha256"],
+        "audit_sha256": artifacts["audit"]["sha256"],
+    }
+
+
+def _has_feedback_timestamp(value):
+    timestamp_keys = {
+        "useful_feedback_ns", "independent_useful_feedback_ns",
+        "useful_feedback_timestamp_ns", "independent_useful_feedback_timestamp_ns",
+    }
+    if isinstance(value, dict):
+        if any(key in value for key in timestamp_keys):
+            return True
+        return any(_has_feedback_timestamp(item) for item in value.values())
+    if isinstance(value, list):
+        return any(_has_feedback_timestamp(item) for item in value)
+    return False
+
+
 def load_inputs():
+    for kind in ("result", "audit"):
+        frozen_predecessor_bytes(kind)
     paths = list(FREEZE["inputs"])
     loaded = {path: frozen_bytes(path) for path in paths}
     events_path = next(path for path in paths if path.endswith("events.jsonl"))
@@ -96,47 +135,65 @@ def analyze(events, owner_events, report, prior_audit):
         }
         if cause is not None:
             if (cause.get("event") != "owner_release" or cause.get("verified") is not True or
+                    cause.get("reason") != "cancelled" or
                     cause.get("keys_down") != [] or cause.get("buttons_down") != []):
                 raise ValueError(f"interruption receipt is not verified empty: {identifier}")
             verified = cause.get("verified_ns")
-            if not (cancel.get("requested_ns") <= verified <= terminal.get("terminal_ns")):
+            if (type(verified) is not int or
+                    not (cancel.get("requested_ns") <= verified <= terminal.get("terminal_ns"))):
                 raise ValueError(f"interruption timestamps out of order: {identifier}")
             row["cause_owner_verified_ns"] = verified
             row["cancel_to_owner_verified_ms"] = (verified - cancel["requested_ns"]) / 1e6
             row["owner_verified_to_terminal_ms"] = (terminal["terminal_ns"] - verified) / 1e6
             if early is not None:
                 early_owner = early.get("owner_release", {})
-                if early_owner != cause or early.get("grants_input_authority") is not False:
+                published = early.get("published_ns")
+                if (early_owner != cause or early.get("grants_input_authority") is not False or
+                        type(published) is not int or published < verified):
                     raise ValueError(f"early release event does not match owner cause: {identifier}")
                 row["owner_verified_to_release_event_ms"] = (
-                    early.get("published_ns") - verified) / 1e6
+                    published - verified) / 1e6
             if active:
                 interrupted.append(row)
+        elif early is not None:
+            raise ValueError(f"early release event lacks interruption receipt: {identifier}")
         cancellation_rows.append(row)
 
     if set(accepted) != set(terminals):
         raise ValueError("accepted/terminal ID sets differ")
-    if len(cancels) != 7 or not prior_audit.get("formal_pass"):
+    if len(cancels) != 7 or prior_audit.get("formal_pass") is not True:
         raise ValueError("unexpected retained allocation cardinality or prior audit status")
     if report.get("score", {}).get("episode_finished") is not False:
         raise ValueError("unexpected retained task outcome")
-    event_types = {row.get("event") for row in events}
+    per_key_event_count = sum(
+        row.get("event") in {"input_release_measurement", "input_release_transition"}
+        for row in events
+    )
+    covered = sum(row["input_release_event"] for row in interrupted)
+    coverage_denominator = len(interrupted)
+    terminal_only = coverage_denominator - covered
+    number_words = {0: "zero", 1: "one", 2: "two", 3: "three", 4: "four",
+                    5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine"}
+    terminal_only_word = number_words.get(terminal_only, str(terminal_only))
     return {
-        "schema": "map01-v39-release-trace-completeness-result-v2",
+        "schema": "map01-v39-release-trace-completeness-result-v3",
         "status": "PASS_TRACE_RECONCILIATION_WITH_EARLY_EVENT_GAP",
         "main_commit": MAIN,
         "allocation_id": FREEZE["allocation_id"],
         "prior_audit_formal_pass": prior_audit["formal_pass"],
+        "predecessor_a01": predecessor_provenance(),
+        "frozen_input_sha256": {
+            path: spec["sha256"] for path, spec in FREEZE["inputs"].items()
+        },
         "accepted_terminal_ids_match": True,
         "cancel_requests": len(cancels),
         "cancelled_terminals_with_empty_verified_release": len(cancellation_rows),
         "cancellations_with_prior_keys_held": sum(row["prior_keys_held_event"] for row in cancellation_rows),
         "active_interruption_owner_receipts": len(interrupted),
-        "active_interruption_receipts_with_input_released_event": sum(
-            row["input_release_event"] for row in interrupted),
+        "active_interruption_receipts_with_input_released_event": covered,
         "active_interruption_coverage": {
-            "numerator": sum(row["input_release_event"] for row in interrupted),
-            "denominator": len(interrupted),
+            "numerator": covered,
+            "denominator": coverage_denominator,
         },
         "active_interruption_rows": interrupted,
         "all_cancellation_rows": cancellation_rows,
@@ -146,19 +203,26 @@ def analyze(events, owner_events, report, prior_audit):
         },
         "input_release_event_rows": len(release_rows),
         "input_release_unverified_event_rows": len(unverified_release_rows),
-        "per_key_release_measurement_events": len(event_types.intersection(
-            {"input_release_measurement", "input_release_transition"})),
+        "per_key_release_measurement_events": per_key_event_count,
         "owner_release_has_per_key_timestamps": any(
             any(key in item for key in ("per_key", "key_release_ns", "keyup_ns"))
             for item in owner_events),
-        "independent_useful_feedback_timestamp": False,
+        "independent_useful_feedback_timestamp": _has_feedback_timestamp(
+            [events, owner_events, report]),
         "task_outcome": {
             "kill_count": report["score"].get("kill_count"),
             "death_count": report["score"].get("death_count"),
             "map_exit": report["score"].get("map_exit"),
             "episode_finished": report["score"].get("episode_finished"),
         },
-        "decision": "Aggregate owner/terminal release reconciles for all cancellations. Early input_released coverage is 1/3 for prior-key-held interrupted programs; two cover interruptions appear only in terminal receipts. This is telemetry coverage evidence, not a failed release. Per-key up time, useful application feedback, and task completion remain unmeasured.",
+        "decision": (
+            "Aggregate owner/terminal release reconciles for all cancellations. "
+            f"Early input_released coverage is {covered}/{coverage_denominator} for "
+            "prior-key-held interrupted programs; "
+            f"{terminal_only_word} cover interruptions appear only in terminal receipts. "
+            "This is telemetry coverage evidence, not a failed release. Per-key up time, "
+            "useful application feedback, and task completion remain unmeasured."
+        ),
     }
 
 

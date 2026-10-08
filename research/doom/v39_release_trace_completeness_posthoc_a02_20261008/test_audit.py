@@ -19,7 +19,8 @@ class RetainedReleaseTraceTests(unittest.TestCase):
         self.assertEqual(result["aggregate_cancel_to_owner_verified_ms"],
                          {"min": 0.771224, "max": 2.652407})
         self.assertFalse(result["owner_release_has_per_key_timestamps"])
-        self.assertTrue(validate(result, self.events, self.owner, self.report))
+        self.assertEqual(result["schema"], "map01-v39-release-trace-completeness-result-v3")
+        self.assertTrue(validate(result, self.events, self.owner, self.report, self.prior))
 
     def test_terminal_release_corruption_is_rejected(self):
         events = copy.deepcopy(self.events)
@@ -54,19 +55,19 @@ class RetainedReleaseTraceTests(unittest.TestCase):
             analyze(events, self.owner, self.report, self.prior)
         result = analyze(self.events, self.owner, self.report, self.prior)
         with self.assertRaisesRegex(ValueError, "source terminal release invalid"):
-            validate(result, events, self.owner, self.report)
+            validate(result, events, self.owner, self.report, self.prior)
 
     def test_coverage_result_mutation_is_rejected_by_independent_oracle(self):
         result = analyze(self.events, self.owner, self.report, self.prior)
         result["active_interruption_coverage"]["numerator"] = 3
         with self.assertRaises(ValueError):
-            validate(result, self.events, self.owner, self.report)
+            validate(result, self.events, self.owner, self.report, self.prior)
 
     def test_release_latency_mutation_is_rejected_by_independent_oracle(self):
         result = analyze(self.events, self.owner, self.report, self.prior)
         result["active_interruption_rows"][0]["cancel_to_owner_verified_ms"] = 0.0
         with self.assertRaises(ValueError):
-            validate(result, self.events, self.owner, self.report)
+            validate(result, self.events, self.owner, self.report, self.prior)
 
     def test_unverified_release_event_does_not_count_as_verified_coverage(self):
         events = copy.deepcopy(self.events)
@@ -77,7 +78,35 @@ class RetainedReleaseTraceTests(unittest.TestCase):
                          {"numerator": 0, "denominator": 3})
         self.assertEqual(result["input_release_event_rows"], 0)
         self.assertEqual(result["input_release_unverified_event_rows"], 1)
-        self.assertTrue(validate(result, events, self.owner, self.report))
+        self.assertTrue(validate(result, events, self.owner, self.report, self.prior))
+
+    def test_each_unreconciled_result_claim_is_rejected(self):
+        result = analyze(self.events, self.owner, self.report, self.prior)
+        mutations = {
+            "main_commit": lambda value: value.__setitem__("main_commit", "f" * 40),
+            "allocation_id": lambda value: value.__setitem__("allocation_id", "wrong-allocation"),
+            "prior_audit_formal_pass": lambda value: value.__setitem__(
+                "prior_audit_formal_pass", False),
+            "all_cancellation_rows": lambda value: value["all_cancellation_rows"][0].__setitem__(
+                "terminal_ns", -1),
+            "per_key_release_measurement_events": lambda value: value.__setitem__(
+                "per_key_release_measurement_events", 999),
+            "independent_useful_feedback_timestamp": lambda value: value.__setitem__(
+                "independent_useful_feedback_timestamp", True),
+            "decision": lambda value: value.__setitem__("decision", "everything succeeded"),
+        }
+        for field, mutate in mutations.items():
+            with self.subTest(field=field):
+                changed = copy.deepcopy(result)
+                mutate(changed)
+                with self.assertRaisesRegex(ValueError, "full result does not match"):
+                    validate(changed, self.events, self.owner, self.report, self.prior)
+
+    def test_unknown_result_field_is_rejected(self):
+        result = analyze(self.events, self.owner, self.report, self.prior)
+        result["unreviewed_claim"] = True
+        with self.assertRaisesRegex(ValueError, "full result does not match"):
+            validate(result, self.events, self.owner, self.report, self.prior)
 
     def test_duplicate_cancel_id_is_rejected(self):
         events = copy.deepcopy(self.events)
