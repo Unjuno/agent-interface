@@ -84,10 +84,18 @@ def main():
             type(step) is int and isinstance(key, str) and bool(key) and
             isinstance(token, str) and bool(token)
             for step, key, token in admitted_identities + transition_identities)
-        admitted_identity_counts = Counter(admitted_identities)
-        transition_identity_counts = Counter(transition_identities)
-        identities_unique = (all(count == 1 for count in admitted_identity_counts.values()) and
-                             all(count == 1 for count in transition_identity_counts.values()))
+        if identity_fields_ok:
+            admitted_identity_counts = Counter(admitted_identities)
+            transition_identity_counts = Counter(transition_identities)
+            identities_unique = (
+                all(count == 1 for count in admitted_identity_counts.values()) and
+                all(count == 1 for count in transition_identity_counts.values()))
+        else:
+            # Malformed JSON values can be unhashable; record a controlled FAIL
+            # instead of raising before the additive audit result is written.
+            admitted_identity_counts = Counter()
+            transition_identity_counts = Counter()
+            identities_unique = False
         per_key_complete = (bool(transitions) and
                             identity_fields_ok and identities_unique and
                             admitted_identity_counts == transition_identity_counts and
@@ -108,6 +116,8 @@ def main():
                      "verified_empty_terminal": empty_release(terminal or {}),
                      "terminal_event_count": len(terminal_rows),
                      "input_released_event_count": len(release_rows),
+                     "input_release_identity_fields_valid": identity_fields_ok,
+                     "input_release_identities_unique": identities_unique,
                      "custody_ok": custody_ok})
     decisions = report.get("decisions", [])
     guards = []
