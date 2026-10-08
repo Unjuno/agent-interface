@@ -8,7 +8,7 @@ The source literature establishes that decisions can alter future distributions 
 
 ## Frozen model
 
-State is (a,q) in [0,1]^2, where a is use share of an optional route and q is the share of a task stratum for which route-relative benefit differs. Fixed opportunity count is 100 each period. External advantage theta is swept over 21 values from -0.30 to +0.30 in 0.03 increments. Parameters are beta in {2,5,10,20}, gamma in {0.5,1,1.5,2}, delta in {2,5,10,20}. The held-out parameter slice is delta=20; all other tuples are descriptive training-grid coverage, with no tuning after execution.
+State is (a,q) in [0,1]^2, where a is use share of an optional route and q is the share of a task stratum for which route-relative benefit differs. Fixed opportunity count is 100 each period. External advantage theta is swept over 21 values from -0.30 to +0.30 in 0.03 increments. Parameters are beta in {2,10,20}, gamma in {0.5,1.5}, delta in {2,10,20}. The held-out parameter slice is delta=20; all other tuples are descriptive training-grid coverage, with no tuning after execution.
 
 Let sigmoid(z)=1/(1+exp(-z)), relaxation r=0.25, and d=theta+gamma*(q-0.5). The candidate response targets are:
 - COUPLED: a*=sigmoid(beta*d), q*=sigmoid(delta*(a-0.5)).
@@ -22,7 +22,7 @@ For COUPLED at a converged endpoint, let A=beta*gamma*a*(1-a), B=delta*q*(1-q); 
 
 ## Hypothesis and gates
 
-H: In the held-out delta=20 slice, at least three distinct (beta,gamma) settings have at least three adjacent theta points where LOW- and HIGH-initialized COUPLED sweeps converge to distinct stable equilibria (|a_LOW-a_HIGH| >=0.25, both spectral radii <0.99) and their period utility differs by at least 0.05, while no control arm meets the same gate.
+H: In the held-out delta=20 slice, at least three distinct held-out (beta,gamma) settings have at least three adjacent theta points where LOW- and HIGH-initialized COUPLED sweeps converge to distinct stable equilibria (|a_LOW-a_HIGH| >=0.25, both spectral radii <0.99) and their period utility differs by at least 0.05, while no control arm meets the same gate.
 
 D:
 - PASS_METHOD_SCOPED if the independent auditor reproduces all frozen profiles/endpoints, 4 arms, both directions and initial states; all required points converge or are explicitly HOLD; 5/5 in-memory mutation controls are rejected; and every arm preserves the fixed opportunity/correctness gate.
