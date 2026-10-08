@@ -1,0 +1,28 @@
+{
+  "events": [
+    "planner_future_done",
+    "reader_holds_decoded_observation",
+    "bounded_snapshot_empty",
+    "executor_cancel_sent",
+    "wait_returns_policy_invalidation",
+    "planner_interrupt_after_completed_answer",
+    "matching_cover_terminal",
+    "completed_answer_discarded"
+  ],
+  "status": "PASS_INFLIGHT_OBSERVATION_INVALIDATES_BEFORE_TERMINAL",
+  "snapshot_saw_event": false,
+  "monitor_saw_event_after_snapshot": true,
+  "invalidation": {
+    "reason": "health_below_authored_floor",
+    "sequence": 42
+  },
+  "latest_sequence": 42,
+  "terminal_release": {
+    "verified": true,
+    "keys_down": [],
+    "buttons_down": []
+  },
+  "answer_discarded": true,
+  "event_order_assumption": "observation line precedes matching terminal line on the same stdout stream",
+  "source_sha256": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793"
+}
