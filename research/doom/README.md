@@ -487,3 +487,8 @@ gates remain open; this archive makes no code promotion.
 ## Synthetic fake-Xlib key-hold bounds (historical)
 
 - [30-cycle construction record](results/map01-key-hold-bounds-construction-v1/README.md) — frozen fake-Xlib evidence reports 300/300 row checks and 11/11 aggregate checks, bounded to synthetic server-side intervals; no application, GUI, game, or task-effect claim. Source baseline is historical and stacked on #7440; see the archived scope and limitations.
+
+## V39 HUD health-reader transfer and perturbation (#59)
+
+- [Cross-run exact-frame transfer A01](astra_v39_hud_reader_transfer_a01_20261007/README.md) — current-main glyph reader matched 13/13 retained health labels and returned `unknown` for 13/13 blank-ROI controls. Offline reader-transfer evidence only.
+- [Pixel perturbation robustness A01](astra_v39_hud_reader_robustness_a01_20261009/README.md) — 13/13 baseline matches; 0 wrong observed labels across 182 synthetic pixel perturbations, with 181/182 returning `unknown`. The initial auditor failures are preserved; corrected posthoc audit passes 5/5 mutation controls. No live capture or task-effect claim.
