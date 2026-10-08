@@ -1,0 +1,37 @@
+{
+  "schema": "map01-astra-retained-hud-v39-guard-scenario-freeze-v1",
+  "allocation_id": "MAP01-ASTRA-V39-GUARD-REPLAY-59-A01-20261007",
+  "base_commit": "798ac5ad709168ff1d27b115f10f4f96b126bb71",
+  "source_artifacts": {
+    "VISUAL_READOUT.json": "610b77f02302150f26c7de81e46bcba5e8a4fc646d6195442c86db93c6305724",
+    "dense_replay_RESULT.json": "read from pinned main artifact; exact blob identity recorded in GitHub tree",
+    "research/doom/map01_overlap_controller_v39.py": "read-only source inspection at base_commit",
+    "research/live_control/observable_signal_guard_v2.py": "read-only source inspection at base_commit"
+  },
+  "inputs": "Ten manually transcribed, selected HUD samples from the retained 2x video; preserve their values, game clocks, phases and image digests exactly as listed in fixture.json. These are not a dense numeric health/ammo series.",
+  "protocol": {
+    "health_source_value": 100,
+    "critical_health_minimum_grid": [80, 90, 95],
+    "maximum_health_loss_grid": [0, 5, 10, 20],
+    "hard_minimum_rule": "max(critical_health_minimum, source_health - maximum_health_loss)",
+    "invalidity_rule": "first sampled health value strictly below hard_minimum; equality remains valid",
+    "pending_boundary_game_seconds": 56.2,
+    "first_returned_sample_game_seconds": 56.4,
+    "ammo_guard": "Not replayed: selected ammo values are sparse and cannot prove paired per-monitor behavior or exclude an unsampled transient below floor 1.",
+    "candidate_invocations": 1,
+    "independent_auditor_invocations": 1,
+    "retries": 0,
+    "model_calls": 0,
+    "game_gui_input_calls": 0
+  },
+  "decision_rule": "Report first observed below-floor sample for each frozen hypothetical threshold pair. Label whether it is inside the sampled pending interval (<=56.2) or at/after the observed return boundary (>=56.4). Do not infer actual V39 behavior, continuous crossing time, or operational threshold adequacy.",
+  "container": {
+    "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "cpus": 1,
+    "memory": "1g",
+    "pids_limit": 64,
+    "resource_enforcement_verified": false
+  }
+}
