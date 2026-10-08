@@ -71,16 +71,17 @@ try {
         throw "Could not verify WSLc cleanup for this run's container ID (exit code $LASTEXITCODE)."
     }
     $listing = ($matchingContainers -join "`n").Trim()
-    if ($listing) {
-        try {
-            $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
-        }
-        catch {
-            throw 'The scoped WSLc cleanup query returned an unrecognized response; cleanup is unverified.'
-        }
-        if (@($listedContainers).Count -gt 0) {
-            throw 'The scoped WSLc cleanup query returned a container; cleanup is not verified.'
-        }
+    if (-not $listing -or -not $listing.StartsWith('[')) {
+        throw 'The scoped WSLc cleanup query did not return a JSON array; cleanup is unverified.'
+    }
+    try {
+        $listedContainers = @(ConvertFrom-Json -InputObject $listing -ErrorAction Stop)
+    }
+    catch {
+        throw 'The scoped WSLc cleanup query returned malformed JSON; cleanup is unverified.'
+    }
+    if ($listedContainers.Count -gt 0) {
+        throw 'The scoped WSLc cleanup query returned a container; cleanup is not verified.'
     }
 
     Write-Output 'WSLc local runtime probe: PASS'
