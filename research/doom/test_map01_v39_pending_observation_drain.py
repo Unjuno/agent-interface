@@ -4,6 +4,7 @@ import threading
 import time
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from executor_v12 import Executor as ExecutorV12
@@ -12,7 +13,8 @@ from map01_overlap_controller_v39 import (
     drain_pending_observation_events, recover_pending_observation_backlog,
     recover_stale_cover_submission, settle_pending_observation_backlog,
     select_cover_monitor, reset_cover_after_preacceptance_rejection,
-    submit_initial_cover_with_recovery)
+    submit_initial_cover_with_recovery, build_cover_monitor,
+    final_admission_from_planner_result)
 
 
 class Monitor:
@@ -345,6 +347,73 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(result["invalidation"]["reason"],
                          "health:below_hard_minimum")
         self.assertEqual(result["terminal"]["status"], "completed")
+        self.assertTrue(incoming.empty())
+
+    def test_hard_crossing_survives_recovery_sample_before_completed_terminal(self):
+        binding = {"focus": 7, "surface": 9,
+                   "geometry": [0, 0, 640, 480]}
+        source = {"event": "observation", "sequence": 11,
+                  "capture_ns": 1_000_000_000,
+                  "pointer_binding": binding,
+                  "signals": {
+                      "health": typed_signal("health", 100, 11,
+                                              1_000_000_000, binding),
+                      "ammo": typed_signal("ammo", 4, 11,
+                                            1_000_000_000, binding),
+                  }}
+        health_reader = SignalReader("health")
+        ammo_reader = SignalReader("ammo")
+        monitor, admission = build_cover_monitor(
+            health_reader, source,
+            {"signal_id": "health", "critical_health_minimum": 60,
+             "maximum_health_loss": 20, "max_source_age_ms": 30000},
+            0, ammo_reader=ammo_reader, requires_ammo=True)
+        self.assertEqual(admission["status"], "admitted")
+        incoming = queue.Queue()
+        for event, sequence, capture_ns, health in (
+                ("typed_observation", 12, 1_100_000_000, 50),
+                ("observation", 12, 1_100_000_000, 50),
+                ("typed_observation", 13, 1_200_000_000, 95),
+                ("observation", 13, 1_200_000_000, 95)):
+            signals = {
+                "health": typed_signal("health", health, sequence,
+                                        capture_ns, binding),
+                "ammo": typed_signal("ammo", 4, sequence, capture_ns, binding),
+            }
+            incoming.put({"event": event, "sequence": sequence,
+                          "capture_ns": capture_ns,
+                          "pointer_binding": binding,
+                          "frame_rgb_sha256": "a" * 64 if sequence == 12 else "b" * 64,
+                          "signals": signals})
+        incoming.put({"event": "terminal", "id": "cover-recovery",
+                      "status": "completed",
+                      "release": {"verified": True, "keys_down": [],
+                                  "buttons_down": []}})
+
+        result = drain_pending_observation_events(
+            incoming, monitor, "cover-recovery")
+
+        self.assertEqual(result["latest"]["sequence"], 13)
+        self.assertEqual(result["terminal"]["status"], "completed")
+        self.assertEqual(result["invalidation"]["sequence"], 12)
+        self.assertEqual(result["invalidation"]["reason"],
+                         "health:below_hard_minimum")
+        self.assertIsNone(monitor.observe({
+            "event": "typed_observation", "sequence": 14,
+            "capture_ns": 1_300_000_000, "pointer_binding": binding,
+            "signals": {
+                "health": typed_signal("health", 95, 14,
+                                        1_300_000_000, binding),
+                "ammo": typed_signal("ammo", 4, 14, 1_300_000_000, binding),
+            },
+        }))
+        planner_result = SimpleNamespace(
+            handle=SimpleNamespace(turn_id="turn-1"),
+            status="completed", answer_eligible=True)
+        admission = final_admission_from_planner_result(
+            planner_result, time.perf_counter_ns(), result["invalidation"],
+            time.perf_counter_ns())
+        self.assertEqual(admission["status"], "REJECTED_POLICY_INVALIDATED")
         self.assertTrue(incoming.empty())
 
     def test_soft_observation_and_terminal_preserve_completed_answer_path(self):
