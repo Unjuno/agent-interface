@@ -61,7 +61,17 @@ python .\audit_interrupt_result_v3.py .\results\a07-late-response
 
 The evidence branch was fast-forwarded from `ea2af10f1111ba614311e354dfecde1bbf653981` to current `main` `f59b2494f403b33349cbf202b49d76caef3d6d82` before files were added. The intervening main commit was unrelated; this package adds non-runtime research evidence only.
 
+
+## Readable thread-history check (A08/A09)
+
+[`PLAN_A08.md`](PLAN_A08.md) fixed the readable-history question before A08. The A08 result met the behavioral predicates: after an interrupted first turn, a fresh same-thread turn completed before the held response was released; the mock successfully sent the late stale response; notifications omitted its sentinel; and `thread/read(includeTurns: true)` contained the fresh sentinel but not the stale one. A08 is retained as a harness HOLD because the copied runner compared its success disposition against A07's label and exited 1; its v4 auditor therefore failed the process-exit check. No behavioral failure is inferred from that runner-status defect.
+
+[`PLAN_A09.md`](PLAN_A09.md) fixed the runner label check before the corrected replay. The first A09 attempt repeated the same copied label defect and is retained under `results/a09-first-attempt`. The corrected A09 replay, using a fresh process/thread and A09 sentinels, passed: both turns and process exits had expected status, the mock's late response write completed, notifications excluded its stale sentinel, and readable thread history included fresh output and excluded stale output. Independent v5 audit passed all 13 checks, including mutation controls. This is one corrected construction replay, not an independent additional sample. See the [official `ThreadReadParams` schema](https://github.com/openai/codex/blob/main/codex-rs/app-server-protocol/schema/json/v2/ThreadReadParams.json).
+
+```powershell
+python .\\run_interrupt_probe_a09.py --out-dir .\\results\\a09-corrected-replay
+python .\\audit_interrupt_result_v5.py .\\results\\a09-corrected-replay
+```
 ## Scope and disposition
 
-This is App Server transport construction evidence only. A02 and corrected A04 show that active-turn delivery is queued for a follow-up inference rather than interrupting the currently pending inference. A06 shows that explicitly interrupting the turn can admit a fresh observation-driven turn before the held response is released. In A07, a deliberately late stale response was not surfaced in App Server output after that interruption. Restarting may discard useful work and requires another inference; no end-to-end latency, model decision quality, V39 interruption safety, live feedback, earlier per-key release, recovery, progress, or game outcome was measured. Keep the #59 live threat-exposure/per-key-release/useful-feedback/recovery/progress/terminal gate open. No runtime or controller source was modified by these probes.
-
+This is App Server transport construction evidence only. A02 and corrected A04 show that active-turn delivery is queued for a follow-up inference rather than interrupting the currently pending inference. A06 shows that explicitly interrupting the turn can admit a fresh observation-driven turn before the held response is released. In A07, a deliberately late stale response was not surfaced in App Server output after that interruption. A09 further found it absent from readable `thread/read(includeTurns: true)` history in one corrected replay. Restarting may discard useful work and requires another inference; no end-to-end latency, model decision quality, V39 interruption safety, live feedback, earlier per-key release, recovery, progress, or game outcome was measured. Keep the #59 live threat-exposure/per-key-release/useful-feedback/recovery/progress/terminal gate open. No runtime or controller source was modified by these probes.
