@@ -1,0 +1,8 @@
+from pathlib import Path
+import json,hashlib,subprocess,datetime,sys
+O=Path(__file__).resolve().parent;R=O.parent.parent/'work/effect-boundary';files=json.loads((O/'ACTUAL-SOURCE-READS.json').read_bytes());rows=[]
+for r in files:
+    b=r['utf8'].encode();p=O/'source'/r['path'];p.write_bytes(b)
+    ls=subprocess.check_output(['git','-C',str(R),'ls-tree',r['ref'],'runtime/host_v1/'+r['path']],text=True).strip();blob=ls.split()[2];actual=subprocess.check_output(['git','hash-object','--stdin'],input=b).decode().strip();assert actual==blob,(r['path'],actual,blob)
+    rows.append({'path':r['path'],'ref':r['ref'],'git_blob':blob,'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest(),'actual_MCP_url':r['url']})
+(O/'SOURCE-PINS.json').write_bytes(json.dumps(rows,indent=2).encode()+b'\n');print(json.dumps(rows))
