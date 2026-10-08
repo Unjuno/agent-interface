@@ -75,4 +75,14 @@ class SavedEvidenceAuditTests(unittest.TestCase):
             manifest.write_text(f'{digest}  ./../outside.txt\n')
             self.assertFalse(audit.verify_hash_manifest(root))
 
+    def test_hash_manifest_rejects_symlinked_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)/'package'
+            outside=Path(directory)/'outside'
+            root.mkdir(); outside.mkdir()
+            (outside/'unlisted.txt').write_text('outside payload\n')
+            (root/'linked').symlink_to(outside, target_is_directory=True)
+            (root/'SHA256SUMS.txt').write_text('')
+            self.assertFalse(audit.verify_hash_manifest(root))
+
 if __name__=='__main__': unittest.main(verbosity=2)

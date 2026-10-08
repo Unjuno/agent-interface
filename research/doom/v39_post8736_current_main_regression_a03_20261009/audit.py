@@ -2,6 +2,7 @@
 """Saved-output verifier for the exact-main V39 regression replay."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 
@@ -41,11 +42,15 @@ def verify_hash_manifest(root, manifest_name="SHA256SUMS.txt"):
             if path.is_symlink() or not path.is_file():
                 return False
             entries[listed] = (expected, path)
-        actual_files = {
-            "./" + path.relative_to(root).as_posix()
-            for path in root.rglob("*")
-            if path.is_file() and path not in (manifest, derived_receipt)
-        }
+        actual_files = set()
+        for directory, dirnames, filenames in os.walk(root, followlinks=False):
+            current = Path(directory)
+            if any((current / name).is_symlink() for name in dirnames + filenames):
+                return False
+            for name in filenames:
+                path = current / name
+                if path not in (manifest, derived_receipt):
+                    actual_files.add("./" + path.relative_to(root).as_posix())
         if set(entries) != actual_files:
             return False
         return all(
