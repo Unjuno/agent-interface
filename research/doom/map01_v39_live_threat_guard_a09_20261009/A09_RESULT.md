@@ -8,9 +8,13 @@ Allocation `map01-v39-live-threat-guard-a09-20261009` ran once on exact main
 The isolated guest and app-server both exited 0 after 58.468 seconds. The run
 completed all 10 model decisions and reached the preregistered health guard:
 typed health fell from 100 to 88 against a bound of 90 while inference was
-pending. The matching planner turn was interrupted and marked ineligible; its
-dependent answer was discarded. A newer observation was used for recovery at
-the next decision. The guard's `cover-2` cancellation has a matching
+pending. The guard outcome was evaluated 1.384 seconds after the model turn
+started; the turn became ineligible after 1.408 seconds. From guard evaluation,
+the controller requested cancellation in 1.119 ms, the owner verified empty
+input in 2.176 ms, the release event was published in 3.689 ms, and the
+dependent answer was discarded in 23.784 ms. This is pending-turn response
+evidence, not a long-inference-latency sample. A newer observation was used for
+recovery at the next decision. The guard's `cover-2` cancellation has a matching
 same-token owner release with verified empty keys/buttons/unknown state. All 21
 accepted programs have terminals, and each terminal reports verified empty
 input. Ten local-image requests have ten matching host SHA-256 receipts.
