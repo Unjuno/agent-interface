@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #5826 A01 oracle-known multi-channel ascertainment](ascertainment_5826_a01_20261008/README.md) — `PASS_METHOD_SCOPED_HOST`: 18 opportunities × four channels, union recall 9/12, three all-channel misses, naive/Chapman two-list undercount, 5/5 mutations rejected. Container transfer remains HOLD after Docker's content-store failure; synthetic oracle only.
+
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
 
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
