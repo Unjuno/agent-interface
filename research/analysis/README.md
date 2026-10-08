@@ -111,6 +111,8 @@
 - [Issue #7865 history-conditioned compensation eligibility T0 A02](history_conditioned_compensation_7865_t0_a02_20261005/REPORT.md) — PASS_METHOD_SCOPED: 28 exact oracle rows; disjoint external update preserved; A01 FAIL_HARNESS retained; finite synthetic model only.
 - [Issue #7778 demand-guarded slack reclamation T0](slack_reclamation_7778_t0_20261005/REPORT.md) — zero-overhead T0: 9 traces / 27 rows, PASS_METHOD_SCOPED/H_PASS_SCOPED; separate [T0b dispatch sensitivity](slack_reclamation_7778_dispatch_sensitivity_t0_20261005/REPORT.md): 18 traces / 108 rows, PASS_METHOD_SCOPED/H_PASS_SCOPED. Priority-only completed more optional work than guarded slack over the full overhead-0 matrix, so no scheduler promotion follows.
 
+- [Issue #7822 bounded progress T0 A01](bounded_progress_7822_a01_20261005/REPORT.md) — finite-state method pass: independent graph audit confirms safe nonblocking permits unbounded marker avoidance; bounded cases reach in 1/3 event steps, while unfair uncontrollable cycles yield safely. Host-only; no live/runtime claim.
+
 - [Issue #7161 event-centric object memory T0 — corrective audit v2](event_memory_7161_t0_20261005/AUDIT_V2_RUN.md) — raw-derived re-audit passed 5/5 and rejected 8/8 mutations; original v1 auditor's limitations are preserved explicitly.
 
 - [Issue #7162 attempted run — WITHDRAWN as duplicate/protocol mismatch](event_memory_7162_t0_20261005/WITHDRAWAL.md) — retained as noncanonical failure evidence; the canonical T0 remains authoritative and forbids UNKNOWN_EFFECT recall.
@@ -460,6 +462,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`boundary_margin_5707_typed_v1/`](boundary_margin_5707_typed_v1/)
 - [`bounded_dpor_8592_t0_a03_20261008/`](bounded_dpor_8592_t0_a03_20261008/)
 - [`bounded_path_class_switching_6586_t0_20261002/`](bounded_path_class_switching_6586_t0_20261002/)
+- [`bounded_progress_7822_a01_20261005/`](bounded_progress_7822_a01_20261005/)
 - [`bounded_skew_context_join_successor_1218_v1/`](bounded_skew_context_join_successor_1218_v1/)
 - [`bounded_voi_scheduler_4263_v1/`](bounded_voi_scheduler_4263_v1/)
 - [`braess_route_verifier_5855_horizon_ledger_a02_20261004/`](braess_route_verifier_5855_horizon_ledger_a02_20261004/)
