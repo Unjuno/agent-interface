@@ -2462,6 +2462,12 @@ The frozen host-CPython candidate and independent auditor each ran once (exit 0;
 # Issue #8257 — V39 expiry-receipt auditor correction A02 (2026-10-07)
 
 The saved A01 auditor reproducibly accepts three contradictory receipt-metadata mutations. A02 rejects those and seven additional negative controls while accepting the unchanged A01 raw: 11 cases / 22 isolated auditor subprocesses pass under normal and optimized Python; direct raw-only audit passes. The A01 candidate and raw were not rerun or changed. This is offline auditor-correction evidence only, not physical-release, live-control, or game evidence. See the [package and source-lineage qualification](research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/README.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).
+
+
+# Issue #8614 T0 A01 — adaptive holdout feedback
+
+`PASS_ADAPTIVE_FEEDBACK_METHOD_SCOPED`: the frozen candidate and independent raw-only auditor each ran once; all 13,312 synthetic rows reconstructed with zero audit errors. At 16 queries, null-family median optimism was 0.02585 (FULL_RELEASE), 0.02753 (AGGREGATE_RELEASE), and 0.00701 (REUSABLE_HOLDOUT); false-superiority rates were 72.5%, 76.6%, and 21.7%. Reusable planted-effect discovery power was 95.3% versus 100% full-release, within the frozen 10-point bound; one-shot null lockbox 95% coverage was 94.1%. This method-scoped synthetic result does not establish bias in repository results or a formal differential-privacy guarantee. See [report, freeze, raw output, and audit](research/analysis/adaptive_holdout_feedback_8614_t0_a01_20261009/REPORT.md) and [Issue #8614](https://github.com/Unjuno/agent-interface/issues/8614).
+
 # Issue #8258 — V39 typed-observation raw-retention boundary A01 (2026-10-07)
 
 The preserved construction result writes two representative typed-health/ammo and full-observation rows through the frozen session event sink; the independent saved-data audit accepts the raw rows and rejects all 5/5 nested-value, omission, ordering, and timestamp mutations. The candidate was not rerun during rescue. Current-main comparison finds only 3/5 frozen implementation sources still byte-identical, so this remains historical frozen-snapshot construction evidence—not current-main integration, live signal capture, monitor behavior, game effect, or recovery evidence. See the [artifact package and source-lineage qualification](research/doom/typed_observation_retention_a01_20261007/README.md) and [Issue #59](https://github.com/Unjuno/agent-interface/issues/59).

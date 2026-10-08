@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8614 T0 A01: [adaptive holdout feedback study](analysis/adaptive_holdout_feedback_8614_t0_a01_20261009/REPORT.md) — `PASS_ADAPTIVE_FEEDBACK_METHOD_SCOPED`; 13,312 synthetic rows independently reconstructed; reusable bounded feedback reduced null selection optimism and false superiority within the frozen power bound. No inference about repository bias or formal differential privacy.
+
 - Issue #8318: [duplicate-allocation STOP custody record](analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_8318/ARCHIVAL_QUALIFICATION.md) — the repeated allocation is preserved separately and explicitly does not replace or pool with #8317's `HOLD_AUDITOR_COVERAGE`.
 
 - Issue #8313 T0 A01: [matched-context integrity fixture](analysis/proactive_interference_5947_t0_a01_20261007/REPORT.md) — `HOLD_AUDITOR_COVERAGE`; first-run evidence preserved without repair or rerun. No model/interference claim.
