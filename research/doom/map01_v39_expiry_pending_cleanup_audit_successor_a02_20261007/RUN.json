@@ -1,0 +1,29 @@
+{
+  "schema": "map01-v39-a02-expiry-receipt-audit-v2-run-v1",
+  "host_os": "Windows",
+  "python": "CPython 3.11.9",
+  "network": "not used by the candidate, auditor, or tests",
+  "commands": [
+    {
+      "command": "python research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/test_mutation_gate_v2.py research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a01_20261005/audit_successor.py",
+      "exit_code": 1,
+      "expected": "RED: three isolated metadata false accepts reproduced in both normal and optimized modes",
+      "stdout_stderr": "results/a01-baseline-red.txt"
+    },
+    {
+      "command": "python research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/test_mutation_gate_v2.py research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/audit_successor_v2.py",
+      "exit_code": 0,
+      "expected": "11 tests pass; one positive plus ten negative controls, each tested in normal and optimized modes",
+      "stdout_stderr": "results/a02-v2-green.txt"
+    },
+    {
+      "command": "python research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a02_20261007/audit_successor_v2.py --candidate research/doom/map01_v39_expiry_pending_cleanup_audit_successor_a01_20261005/results/formal_02/candidate.json",
+      "exit_code": 0,
+      "expected": "retained raw is accepted by the corrected audit",
+      "stdout_stderr": "results/a02-v2-raw-audit.txt"
+    }
+  ],
+  "candidate_invocations": 0,
+  "retries_of_formal_or_live_allocations": 0,
+  "resource_or_live_side_effects": 0
+}
