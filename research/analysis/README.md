@@ -1,5 +1,8 @@
 # Analytical research
 
+- [Successor #7452 A02 equal-denominator context × event-order comparison](ordered_context_event_coverage_7452_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent audit matches mixed and exhaustive suites on the same 64 obligations; mixed 32 rows/4 episodes versus exhaustive 128 rows/64 episodes; 4/4 hostile inputs rejected. Synthetic CPU-only evidence; A01's unequal-scope result remains unchanged.
+- [Successor #7452 A01 reset-faithful context × event-order coverage](ordered_context_event_coverage_7452_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: independent reconstruction validated 4 mixed reset-bounded episodes/32 rows against 128 exhaustive episodes/256 rows; all seeded mutants detected only with the combined suite; host CPU-only, synthetic method evidence.
+
 - [Issue #7059 verdict-free redundancy ledger T0 A02](verdict_free_7059_t0_a02_20261007/REPORT.md) — `PASS_METHOD_SCOPED`: one candidate and one separate auditor container invocation; 10/10 synthetic case-arm rows reconstructed and 6/6 integrity mutations rejected. A01 `STOP_EXECUTION_COUNT_MISMATCH` remains unchanged. No model or human behavior claim.
 
 - [Issue #6501 T01 Windows native ReadFile cancellation comparison](../concurrency/windows_native_cancel_6501_01a0ff58_t01/REPORT.md) — Three one-shot Windows native cells characterize normal read completion, asyncio wrapper cancellation, and `CancelSynchronousIo`; the v1 saved-data audit's two false accepts and the v2 nine-control rejection are both retained. No replay, arbitrary-I/O, runtime, effect, or performance claim.
@@ -522,6 +525,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`effect_time_contract_authorization_successor_532_v1/`](effect_time_contract_authorization_successor_532_v1/)
 - [`endogenous_demand_rebound_5702_t0_v1/`](endogenous_demand_rebound_5702_t0_v1/)
 - [`entrypoint_argv_preflight_5156_v2_20261001/`](entrypoint_argv_preflight_5156_v2_20261001/)
+- [`episodic_memory_schedule_8406_a02_20261008/`](episodic_memory_schedule_8406_a02_20261008/)
+- [`episodic_memory_schedule_8406_t0_a01_20261008/`](episodic_memory_schedule_8406_t0_a01_20261008/)
 - [`epistemic_commit_5441_t4/`](epistemic_commit_5441_t4/)
 - [`epoch_transform_chain_8185_a02_20261005/`](epoch_transform_chain_8185_a02_20261005/)
 - [`error_carry_6081_s04_20261003/`](error_carry_6081_s04_20261003/)
@@ -755,6 +760,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`observation_manipulate_dynamic_certificate_v1/`](observation_manipulate_dynamic_certificate_v1/)
 - [`observation_manipulate_support_union_v1/`](observation_manipulate_support_union_v1/)
 - [`observation_o4_x11_verify_schema_readiness_v1/`](observation_o4_x11_verify_schema_readiness_v1/)
+- [`observation_omission_8397_t0_a01_20261008/`](observation_omission_8397_t0_a01_20261008/)
 - [`observation_relevance_completeness_v1/`](observation_relevance_completeness_v1/)
 - [`observation_reveal_support_closure_v1/`](observation_reveal_support_closure_v1/)
 - [`occupancy_gate_frontier_1592_v1/`](occupancy_gate_frontier_1592_v1/)
@@ -767,6 +773,8 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`oracle_boundary_swaps_6230_t0_20261002/`](oracle_boundary_swaps_6230_t0_20261002/)
 - [`oracle_boundary_swaps_6230_t0s2_20261002/`](oracle_boundary_swaps_6230_t0s2_20261002/)
 - [`oracle_bracket_5766_t0_v1/`](oracle_bracket_5766_t0_v1/)
+- [`ordered_context_event_coverage_7452_a01_20261008/`](ordered_context_event_coverage_7452_a01_20261008/)
+- [`ordered_context_event_coverage_7452_a02_20261008/`](ordered_context_event_coverage_7452_a02_20261008/)
 - [`ordered_context_history_7452_t0_20261004/`](ordered_context_history_7452_t0_20261004/)
 - [`origin_effect_binding_6500_t0_20261002/`](origin_effect_binding_6500_t0_20261002/)
 - [`owner_keyup_a18_boundary_audit_5156_20261003/`](owner_keyup_a18_boundary_audit_5156_20261003/)
@@ -985,6 +993,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`sunk_cost_forward_equivalence_6138_t0_20261002/`](sunk_cost_forward_equivalence_6138_t0_20261002/)
 - [`support_closed_crop_successor_1820_v1/`](support_closed_crop_successor_1820_v1/)
 - [`symmetry_reduction_6251_t0_host_20261002/`](symmetry_reduction_6251_t0_host_20261002/)
+- [`system_carbon_rebound_8421_t0_20261008/`](system_carbon_rebound_8421_t0_20261008/)
 - [`tail_risk_12_construction_v1/`](tail_risk_12_construction_v1/)
 - [`target_belief_audit_4150_v1/`](target_belief_audit_4150_v1/)
 - [`task_memory_retrieval_7166_t0_host_a03_20261004/`](task_memory_retrieval_7166_t0_host_a03_20261004/)

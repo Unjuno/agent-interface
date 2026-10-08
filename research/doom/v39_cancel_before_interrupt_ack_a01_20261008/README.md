@@ -28,3 +28,22 @@ This establishes a code-level latency dependency worth measuring in the next aut
 Run `python -m unittest -v research/doom/v39_cancel_before_interrupt_ack_a01_20261008/test_order.py` and `python research/doom/v39_cancel_before_interrupt_ack_a01_20261008/audit_source.py` from the repository root. Tests read source from `HEAD` using `git show`; they write no files. The deterministic block is released by the test itself; the 50 ms fault injection validates the integrated wait/timeout path, while 30 seconds remains a source-configured default, not a measured production delay.
 
 Construction note: the first run of the added client-timeout test errored before invoking the method because the generic extractor only searched module-level functions while `request` is a class method. The extractor was changed to locate that method in the parsed AST; the frozen target behavior was not altered. The final five focused tests then passed.
+
+## Current-main ExecutorV13 cross-layer replay (2026-10-08)
+
+This is an additive follow-up; it preserves the historical source identities and result above. It freezes `main` at `708ca59a8128f07fdb7e13a36704c6b2f79c9fb6`, reuses the exact current-main V39 helper, planner adapter and App Server request/interruption methods, and loads the exact current-main ExecutorV13 software stack by pinned Git blob identities in `test_handoff.py`.
+
+The replay runs two orderings with an App Server response withheld. With the current helper, the observed sequence is `interrupt request written → interrupt response injected → cancel write/flush → ExecutorV13 input_released → terminal`. With a test-only cancel-first counterfactual, it is `cancel write/flush → interrupt request written → ExecutorV13 input_released → terminal → interrupt response injected`. In both runs the exact ExecutorV13 implementation consumes the cancel, emits its release and terminal events, and the helper observes an empty release receipt. The test pins nine executor stack modules as well as the controller, adapter, and client sources.
+
+This is cross-layer software evidence that early executor cancellation permits the executor release path to progress while planner acknowledgement is delayed. The backend and owner are simulated: `owner_release` clears an in-memory held-key set. It does **not** establish OS-level or physical key release, live game effect, production timing, or safety under a live threat. It does not authorize changing controller behavior; the fresh live threat-exposure gate remains outstanding.
+
+The first integrated harness attempt failed during fixture construction because the extracted current-main client method required its original timing globals and the probe's `_write` accepted a deadline keyword. The fixture was corrected without changing target sources. The final focused suite passes six tests, and the source audit confirms pinned identities and current helper ordering.
+
+Reproduce from the repository root:
+
+```powershell
+python -m unittest -v research.doom.v39_cancel_before_interrupt_ack_a01_20261008.test_order research.doom.v39_cancel_before_interrupt_ack_a01_20261008.test_handoff
+python research.doom/v39_cancel_before_interrupt_ack_a01_20261008/audit_source.py
+```
+
+Machine-readable additive result: [`CROSS_LAYER_RESULT.json`](CROSS_LAYER_RESULT.json).

@@ -2,6 +2,7 @@
 import ast
 import copy
 import json
+import math
 import subprocess
 import threading
 import time
@@ -11,10 +12,11 @@ import unittest
 CONTROLLER = "research/doom/map01_overlap_controller_v39.py"
 ADAPTER = "research/live_control/persistent_planner_adapter_v2.py"
 CLIENT = "research/live_control/codex_app_server_client_v2.py"
+SOURCE_REF = "708ca59a8128f07fdb7e13a36704c6b2f79c9fb6"
 
 
 def source_at_head(path):
-    return subprocess.check_output(["git", "show", f"HEAD:{path}"], text=True)
+    return subprocess.check_output(["git", "show", f"{SOURCE_REF}:{path}"], text=True)
 
 
 def function_node(source, name):
@@ -57,10 +59,14 @@ def load_cancel_first_counterfactual():
 def load_exact_client_request():
     source = source_at_head(CLIENT)
     tree = ast.parse(source)
+    deadline = copy.deepcopy(next(n for n in ast.walk(tree)
+                                  if isinstance(n, ast.FunctionDef)
+                                  and n.name == "_deadline"))
     node = copy.deepcopy(next(n for n in ast.walk(tree)
                               if isinstance(n, ast.FunctionDef) and n.name == "request"))
-    module = ast.Module(body=[node], type_ignores=[])
-    namespace = {"json": json, "time": time, "AppServerError": RuntimeError}
+    module = ast.Module(body=[deadline, node], type_ignores=[])
+    namespace = {"json": json, "time": time, "threading": threading, "math": math,
+                 "AppServerError": RuntimeError}
     exec(compile(ast.fix_missing_locations(module), CLIENT, "exec"), namespace)
     return namespace["request"]
 
@@ -199,7 +205,7 @@ class CancellationOrderingTests(unittest.TestCase):
                 self._closed = False
                 self.sent = []
 
-            def _write(self, message, request_id=None):
+            def _write(self, message, deadline=None, request_id=None):
                 self.sent.append((message, request_id))
                 self._pending.add(request_id)
 
@@ -229,7 +235,7 @@ class CancellationOrderingTests(unittest.TestCase):
                 self._pending = set()
                 self._closed = False
 
-            def _write(self, message, request_id=None):
+            def _write(self, message, deadline=None, request_id=None):
                 events.append(("appserver_request_written", time.monotonic_ns()))
                 self._pending.add(request_id)
 
@@ -243,10 +249,15 @@ class CancellationOrderingTests(unittest.TestCase):
 
         app.request = MethodType(bounded_request, app)
         app.interrupt_turn = MethodType(client_interrupt, app)
+        handle = SimpleNamespace(thread_id="t", turn_id="u")
+        require_active = load_class_method(
+            "research/live_control/persistent_planner_adapter_v2.py",
+            "PersistentPlannerAdapter", "_require_active")
         planner = SimpleNamespace(
             _lock=threading.RLock(), _terminal_status=None,
             _cancellation_requested=False, _interrupt_response=None,
-            client=app, _require_active=lambda _handle: None)
+            _active=handle, client=app)
+        planner._require_active = MethodType(require_active, planner)
         planner.interrupt = MethodType(planner_interrupt, planner)
         process = Process(events)
 
@@ -257,8 +268,7 @@ class CancellationOrderingTests(unittest.TestCase):
             events.append(("terminal", time.monotonic_ns()))
             return row
 
-        result = helper(planner, SimpleNamespace(thread_id="t", turn_id="u"),
-                        process, wait, "cover-composed")
+        result = helper(planner, handle, process, wait, "cover-composed")
         names = [name for name, _ in events]
         self.assertEqual(names, ["appserver_request_written", "appserver_request_returned",
                                  "cancel_write", "cancel_flush", "terminal"])
