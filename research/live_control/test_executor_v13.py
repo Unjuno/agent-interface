@@ -68,6 +68,40 @@ class ExecutorV13Tests(unittest.TestCase):
         self.assertFalse(terminal["release"]["verified"])
         self.assertEqual(terminal["release"]["cancelled_pending_ups"], disposition)
 
+    def test_execute_exception_preserves_cancelled_pending_up_in_terminal_release(self):
+        disposition = [{"key": "space", "identifier": "step-failure",
+                        "step": 2, "backend_owned_before_release": True,
+                        "disposition": "not_attempted_owner_cancel_release"}]
+
+        class StepFailureDispositionBackend(Backend):
+            def execute(self, step, lease, identifier, index):
+                self.started.set()
+                error = RuntimeError("later operation failed")
+                error.cancelled_pending_ups = disposition
+                raise error
+
+        backend = StepFailureDispositionBackend()
+        events = []
+        terminal_received = threading.Event()
+
+        def emit(event):
+            events.append(event)
+            if event.get("event") == "terminal":
+                terminal_received.set()
+
+        executor = Executor(backend, emit)
+        try:
+            executor.submit("step-failure", [{"op": "pointer_drag"}], 1,
+                            time.perf_counter_ns() + 1_000_000_000)
+            self.assertTrue(terminal_received.wait(1), "terminal event timeout")
+        finally:
+            executor.close()
+
+        terminal = next(row for row in events if row.get("event") == "terminal")
+        self.assertEqual(terminal["status"], "failed")
+        self.assertTrue(terminal["release"]["verified"])
+        self.assertEqual(terminal["release"].get("cancelled_pending_ups"), disposition)
+
     def test_release_all_baseexception_preserves_custody_in_failed_terminal(self):
         publication = {
             "schema": "release-batch-delivery-v1", "identifier": "cleanup-interrupt",
