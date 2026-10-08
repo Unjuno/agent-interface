@@ -1,0 +1,24 @@
+{
+  "schema": "origin-effect-binding-6500-design-v1",
+  "issue": 6500,
+  "allocation": "ORIGIN-EFFECT-BINDING-6500-ORB-T0-20261002-01",
+  "cases": ["LEGIT_LOW_RISK", "LEGIT_HIGH_RISK_SCORE", "LOOKALIKE_LOW_RISK_SCORE", "WINDOW_REUSE_STALE_GENERATION", "POST_CAPTURE_REPLACEMENT", "UNKNOWN_PROCESS_PROVENANCE", "UNTRUSTED_EMBEDDED_CONTENT", "WRONG_EFFECT_RECIPIENT"],
+  "policies": ["VISUAL_ONLY", "SIMILARITY_ALARM", "ORIGIN_BOUND"],
+  "expected_rows": 24,
+  "similarity_alarm_threshold": 0.8,
+  "mutation_ids": ["origin_swap", "stale_generation", "similarity_score_inversion", "omit_embedded_origin", "target_identity_change", "recipient_misbinding"],
+  "formal_counts": {"candidate_containers": 1, "auditor_containers": 1, "retries": 0},
+  "container": {
+    "context": "orbstack",
+    "image": "python:3.12-slim-bookworm@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/arm64",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory": "256m",
+    "pids_limit": 64,
+    "read_only_rootfs": true,
+    "source_read_only": true,
+    "output_separate_writable_mount": true
+  }
+}

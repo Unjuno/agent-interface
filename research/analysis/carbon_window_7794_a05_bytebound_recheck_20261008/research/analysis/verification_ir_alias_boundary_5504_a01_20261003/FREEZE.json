@@ -1,0 +1,85 @@
+{
+  "allocation": "5504-A01-alias-boundary",
+  "frozen_utc": "2026-10-03T10:41:45.7635090Z",
+  "registration": "https://github.com/Unjuno/agent-interface/issues/5504#issuecomment-5968198522",
+  "owner_thread": "01a0b97b-0305-7f33-b0b4-01deb7c1d20c",
+  "local_preparation_commit": "29c2acdd7ce06a7e88f4534a8e9c8a6269260152",
+  "main_method_anchor": "fe8df8cac718a128100a3e332575fc8ed4270c68",
+  "review_verdict": "READY_TO_FREEZE_SCOPED",
+  "source_sha256": {
+    "audit.py": "6d3968614d2f46f5d32191657eb506837e063c1e17b629dd5f611f0a6dd65d04",
+    "capture_run.py": "942f005827a8f19231146c60b66a1739a57e08c50e2a64c4cd9752a0f918fe00",
+    "modelchecker.py": "4340f0af05414aa74ab001240acd3e3841e7c77ad0051a7a6084b55fa698978e",
+    "test_audit.py": "900cd42f4d912509511269460d324efe541ee7eab8b8c8ba976a5745c9bcb7dc",
+    "test_capture.py": "d807261ec6bec6e4bea7e489720200d8e0efda7b50217ab7359045d029bb386d",
+    "test_modelchecker.py": "686d3e597bbd9e6e412a9f964300e029566576ca19c4b227ae6b7d523a21fc44",
+    "SCHEMA.md": "4f0ab70a20e1e2c433d147bda0766f1a071154572b1bd2b01cfaf786e50cff0e",
+    "PROOF.md": "9d7dcffd8fb7749ffaae37ca7d43b290eea067757991b7323d6f53e29c893b6c",
+    "DECISION_RULE.md": "d1426c6c6e945dceaf7ed0be593ae805c675031948f56a214373650e07077ec5",
+    ".gitattributes": "235953e389922d0ef48cfa945bdfc7006e873d75b75abc63339cb0d4499c3017",
+    "ALLOCATION.md": "d9e92ec398d0751df2b3b8b703c3a0dd4ec95a63a9ca0e3c46890c5f7d6b5981"
+  },
+  "predicates": [
+    "authority",
+    "current",
+    "effect_safe",
+    "dependencies_acyclic",
+    "reversible"
+  ],
+  "states": 32,
+  "oracle": "PASS iff all five predicates are true",
+  "expected": {
+    "restricted": {
+      "status": "ONTOLOGY_INSUFFICIENT",
+      "observable_class_count": 16,
+      "conflicting_classes": 1,
+      "witness_ids": [
+        "case_030",
+        "case_031"
+      ],
+      "decisions": null
+    },
+    "complete": {
+      "status": "EXPRESSIBLE",
+      "observable_class_count": 32,
+      "conflicting_classes": 0,
+      "decisions": 32,
+      "fail": 31,
+      "pass": 1
+    },
+    "audit": {
+      "status": "PASS",
+      "errors": [],
+      "rows_checked": 32,
+      "observable_classes_restricted": 16,
+      "conflicting_classes": 1,
+      "complete_decisions": 32
+    }
+  },
+  "formal_limit": {
+    "host_modelchecker": 1,
+    "host_read_only_auditor": 1,
+    "retries": 0,
+    "consumed_previous_producer": 0,
+    "wslc": 0,
+    "docker": 0,
+    "gpu_model_gui": 0
+  },
+  "launch": {
+    "timeout_seconds": 30,
+    "outer": "python capture_run.py (direct, unfiltered; no runpy/monkeypatch)",
+    "modelchecker": [
+      "python",
+      "-B",
+      "modelchecker.py"
+    ],
+    "auditor": [
+      "python",
+      "-B",
+      "audit.py",
+      "formal/modelchecker-01/stdout.txt"
+    ]
+  },
+  "stop_rule": "Any frozen integrity/launch/execution/audit failure consumes and closes this allocation; retain first evidence, no repair/rerun",
+  "scope": "Synthetic finite expressibility only; shared WSLc HOLD unchanged; real IR, oracle truth, runtime, memory, benefit and global roadmap NOT_EVALUATED"
+}

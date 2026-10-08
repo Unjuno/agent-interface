@@ -1,0 +1,74 @@
+"""Effective copied-record negatives; reads saved bytes, never recollects."""
+import hashlib
+import importlib.util
+from importlib.machinery import SourceFileLoader
+import json
+from pathlib import Path
+import sys
+import unittest
+HERE=Path(__file__).resolve().parent
+source=HERE/'auditor_v2.py'
+if not source.exists():source=HERE/'auditor_v2.py.txt'
+loader=SourceFileLoader('auditor_v2',str(source))
+definition=importlib.util.spec_from_loader(loader.name,loader)
+auditor_v2=importlib.util.module_from_spec(definition);loader.exec_module(auditor_v2)
+
+ROOT=Path(__file__).resolve().parent.parent
+OUT=Path(sys.argv[1]);sys.argv=sys.argv[:1]
+OUT.mkdir(exist_ok=False)
+freeze=json.loads((ROOT/'FREEZE.json').read_bytes());samples={}
+with (ROOT/'measure-01/raw.jsonl').open('rb') as f:
+    for line in f:
+        row=json.loads(line)
+        if row['kind']=='warmup' and row['arm']=='baseline':samples[row['case']]=row['methods'][0]
+        if len(samples)==3:break
+if set(samples)!=set(freeze['inputs']):raise RuntimeError('three retained specimens')
+labels=['keep-only-first-clock','keep-only-first-cancelled','all-journals-last','swap-first-clock-cancelled',
+        'omit-one-clock','omit-one-cancelled','duplicate-clock','duplicate-cancelled','first-journal-front']
+rows=[];witnesses=[]
+def changed(method,label):
+    m=json.loads(auditor_v2.canon(method));trace=m['trace']
+    if label.startswith('keep-only-first-'):
+        kind=label[len('keep-only-first-'):];seen=False;kept=[]
+        for r in trace:
+            if r['kind']==kind:
+                if seen:continue
+                seen=True
+            kept.append(r)
+        m['trace']=kept
+    elif label=='all-journals-last':m['trace']=[r for r in trace if r['kind']!='journal']+[r for r in trace if r['kind']=='journal']
+    elif label=='swap-first-clock-cancelled':
+        a=next(i for i,r in enumerate(trace) if r['kind']=='clock');b=next(i for i,r in enumerate(trace) if r['kind']=='cancelled')
+        trace[a],trace[b]=trace[b],trace[a]
+    elif label.startswith('omit-one-'):
+        kind=label[len('omit-one-'):];del trace[next(i for i,r in enumerate(trace) if r['kind']==kind)]
+    elif label.startswith('duplicate-'):
+        kind=label[len('duplicate-'):];i=next(i for i,r in enumerate(trace) if r['kind']==kind);trace.insert(i,json.loads(auditor_v2.canon(trace[i])))
+    else:
+        i=next(i for i,r in enumerate(trace) if r['kind']=='journal');trace.insert(0,trace.pop(i))
+    if auditor_v2.canon(m)==auditor_v2.canon(method):raise RuntimeError('ineffective copy')
+    return m
+
+class SavedScheduleRegression(unittest.TestCase):
+    def test_originals(self):
+        for case,m in samples.items():
+            with self.subTest(case=case):
+                auditor_v2.verify_method(m,freeze['inputs'][case]);rows.append(dict(case=case,label='original',accepted=True))
+
+    def test_effective_schedule_copies(self):
+        for case,m in samples.items():
+            for label in labels:
+                with self.subTest(case=case,label=label):
+                    witness=changed(m,label);witnesses.append(dict(case=case,label=label,method=witness))
+                    accepted=True;reason=None
+                    try:auditor_v2.verify_method(witness,freeze['inputs'][case])
+                    except ValueError as e:accepted=False;reason=str(e)
+                    rows.append(dict(case=case,label=label,accepted=accepted,reason=reason,copy_sha256=hashlib.sha256(auditor_v2.canon(witness)).hexdigest()))
+                    self.assertFalse(accepted,'changed complete callback schedule must reject')
+                    self.assertEqual(reason,'complete source-derived callback schedule')
+
+result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(SavedScheduleRegression))
+(OUT/'rows.json').write_bytes(auditor_v2.canon(rows))
+(OUT/'complete-copies.json').write_bytes(auditor_v2.canon(witnesses))
+print(json.dumps(dict(rows=len(rows),copies=len(witnesses),failures=len(result.failures),errors=len(result.errors),success=result.wasSuccessful()),sort_keys=True))
+raise SystemExit(0 if result.wasSuccessful() else 1)

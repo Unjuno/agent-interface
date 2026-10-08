@@ -1,0 +1,288 @@
+{
+  "request": {
+    "after": 0,
+    "events": [
+      "observation"
+    ],
+    "timeout": 30
+  },
+  "reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "ready",
+        "app": "inkscape",
+        "task": "Move the red rectangle right while preserving its size and vertical position.",
+        "goal": {
+          "token": "t000236",
+          "a": 789,
+          "b": 479,
+          "dx": 30,
+          "setup_readiness_captures": 2
+        },
+        "presentation": "full",
+        "servo_schema": {
+          "op": "pointer_servo",
+          "program_constraint": "must be the only step",
+          "required": {
+            "source_sequence": "integer; latest observation sequence",
+            "box": "[x,y,width,height] integers; size 4..96; spatial detail required",
+            "target_delta": "[dx,dy] integers; each -32..32",
+            "points": "2..32 objects {x: integer, y: integer}; within source frame",
+            "duration_ms": "integer 1..5000; initial path only",
+            "max_corrections": "integer 1..3"
+          },
+          "fixed": {
+            "search_radius_px": 32,
+            "max_correction_px": 24,
+            "tolerance_px": 1,
+            "reply_timeout_ms": 1000,
+            "feedback_delay_ms": 80
+          },
+          "outcomes": [
+            "local_goal_reached",
+            "lost",
+            "ambiguous",
+            "invalid_frame",
+            "same_observation",
+            "update_limit"
+          ],
+          "completion": "non-goal outcome gives needs_decision; local goal is not independent task success"
+        },
+        "operations": [
+          "submit",
+          "pointer_reply",
+          "cancel",
+          "clock",
+          "finish"
+        ],
+        "guided_fields": [
+          "points",
+          "duration_ms",
+          "reply_timeout_ms",
+          "max_updates",
+          "feedback_delay_ms"
+        ],
+        "reply_fields": [
+          "ticket",
+          "sequence",
+          "command"
+        ],
+        "emit_started_ns": 78170991669
+      },
+      {
+        "event": "observation",
+        "id": "initial",
+        "step": 0,
+        "sequence": 1,
+        "capture_ns": 78185559060,
+        "context_ns": 78190774461,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/append-cost-01/03-append/runtime/001.png",
+        "image_reused": false,
+        "image_prepare_ns": 31313427,
+        "image_ready_ns": 78236865517,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 4.690203,
+        "wire_bytes": 67751,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "input_state_before": {
+          "owner_id": "f8ea0616150e42e382b00750f1036c22",
+          "revision": 0,
+          "sample_started_ns": 78179518038,
+          "sample_finished_ns": 78179937191,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": null,
+          "active_lease_time_valid": false,
+          "cancel_requested": false
+        },
+        "input_state_after": {
+          "owner_id": "f8ea0616150e42e382b00750f1036c22",
+          "revision": 0,
+          "sample_started_ns": 78241309590,
+          "sample_finished_ns": 78241584720,
+          "owned_buttons": [],
+          "owned_keycodes": [],
+          "physical_pointer_mask": 0,
+          "pointer": [
+            640,
+            400
+          ],
+          "focus": 6291464,
+          "active_lease_deadline_ns": null,
+          "active_lease_time_valid": false,
+          "cancel_requested": false
+        },
+        "owner_revision_unchanged": true,
+        "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+        "emit_started_ns": 78241643151
+      }
+    ],
+    "cursor": 2,
+    "returned_ns": 78246504176,
+    "authority": "none",
+    "acknowledgement": "not implied"
+  },
+  "continuation": {
+    "format": "received-continuation-v1",
+    "session": "/tmp/agent-interface-events-wyn3bein/events.sock",
+    "cursor": 2,
+    "record_hashes": [
+      "2e8928c93dab648ce049bc3b19e9473f56b895ddab5b0c3558cb5f319668d532",
+      "109e44d323c2bdf423b369d322a91e8dd0ee8445507e9ef0c6eb473da12645db"
+    ],
+    "observation": {
+      "event": "observation",
+      "id": "initial",
+      "step": 0,
+      "sequence": 1,
+      "capture_ns": 78185559060,
+      "context_ns": 78190774461,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/append-cost-01/03-append/runtime/001.png",
+      "image_reused": false,
+      "image_prepare_ns": 31313427,
+      "image_ready_ns": 78236865517,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 4.690203,
+      "wire_bytes": 67751,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "input_state_before": {
+        "owner_id": "f8ea0616150e42e382b00750f1036c22",
+        "revision": 0,
+        "sample_started_ns": 78179518038,
+        "sample_finished_ns": 78179937191,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 6291464,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "input_state_after": {
+        "owner_id": "f8ea0616150e42e382b00750f1036c22",
+        "revision": 0,
+        "sample_started_ns": 78241309590,
+        "sample_finished_ns": 78241584720,
+        "owned_buttons": [],
+        "owned_keycodes": [],
+        "physical_pointer_mask": 0,
+        "pointer": [
+          640,
+          400
+        ],
+        "focus": 6291464,
+        "active_lease_deadline_ns": null,
+        "active_lease_time_valid": false,
+        "cancel_requested": false
+      },
+      "owner_revision_unchanged": true,
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "emit_started_ns": 78241643151
+    },
+    "observation_cursor": 2,
+    "pending_clock": null,
+    "clocks": {},
+    "channel_closed": false,
+    "authority": "none"
+  },
+  "requested_clock_id": null,
+  "matched_clock": null,
+  "authority": "none; current observation and admission still required"
+}

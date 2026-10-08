@@ -1,0 +1,31 @@
+import importlib.util
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from urllib.parse import urlsplit
+
+root=Path(__file__).parent/'temporal-goal-C02'; run=root/'primary-C02'
+module_spec=importlib.util.spec_from_file_location('raw_auditor',root/'audit.py')
+module=importlib.util.module_from_spec(module_spec); module_spec.loader.exec_module(module)
+data=module.read(run,json.loads((root/'cases.json').read_bytes()))
+events=data['phases']['final']['tables']['events']; requests=data['phases']['final']['tables']['requests']
+last=0; result=[]
+for row in data['ui']:
+    if row['kind'] not in {'form','observe','response'}: continue
+    if row['kind']=='response': req=next(r for r in requests if r['event_id']==row['receipt']['event_id'])
+    else:
+        u=urlsplit(row['dom']['url']); path=u.path+('?' +u.query if u.query else '')
+        req=next(r for r in requests if r['request_id']>last and r['path']==path and r['method']=='GET')
+    last=req['request_id']
+    time_count=sum(e['mono_ns']<req['mono_ns'] for e in events)
+    journal_events=[r['event_id'] for r in requests if r['request_id']<=req['request_id'] and r['event_id'] is not None]
+    journal_count=max(journal_events,default=0)
+    if time_count!=journal_count:
+        result.append(dict(ui_index=row['index'],kind=row['kind'],case=row['case_id'],request_id=req['request_id'],
+            request_mono_ns=req['mono_ns'],strict_clock_count=time_count,journal_count=journal_count,
+            same_clock_events=[dict(event_id=e['event_id'],mono_ns=e['mono_ns']) for e in events if e['mono_ns']==req['mono_ns']]))
+path=root/'audit-01'/'DIAGNOSIS.json'
+path.write_text(json.dumps(dict(utc=datetime.now(timezone.utc).isoformat(),first_error='public current view matches server event history',
+    actual_exitcode=1,first_mismatches=result[:4],mismatches=len(result),producer_replays=0,
+    remedy='use committed event-to-request identity/order in single-handler serialized app; timestamps are not a total causal order'),indent=2),encoding='utf-8')
+print(json.dumps(dict(mismatches=len(result),first=result[:1])))

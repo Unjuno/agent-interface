@@ -1,0 +1,136 @@
+name: Issue 5590 Docker T1 bounded reproduction
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - 'research/analysis/missing_outcome_bounds_5590_docker_t1_20261001/**'
+      - '.github/workflows/issue-5590-manski-docker-t1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  docker-t1:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Create result directory
+        run: mkdir -p "$GITHUB_WORKSPACE/results/docker-t1-01" "$GITHUB_WORKSPACE/source" "$GITHUB_WORKSPACE/audit-input"
+
+      - name: Current-main, exact-head, freeze and bounded-source start gate
+        env:
+          REF: ${{ github.event.pull_request.head.sha }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          REPOSITORY: ${{ github.repository }}
+          EXPECTED_MAIN: b92f2abb21e796150287135a74599fea64cc9759
+          EXPECTED_FREEZE_SHA256: 802d0c2e9e363a64761e50ecfdccaf408cc11c531be1581a31cb79758a6b8be1
+          EXPECTED_MANIFEST_SHA256: eff8a2c803126c0c7c4d060d613486b3db051402ec70e005e92ec10ad4449fff
+        run: |
+          python3 - <<'PY' > "$GITHUB_WORKSPACE/results/docker-t1-01/preflight.json" 2> "$GITHUB_WORKSPACE/results/docker-t1-01/preflight.stderr.txt"
+          import hashlib, json, os, pathlib, time, urllib.request
+
+          repo = os.environ["REPOSITORY"]
+          expected_main = os.environ["EXPECTED_MAIN"]
+          if os.environ["BASE_SHA"] != expected_main:
+              raise SystemExit("STOP: PR base differs from frozen current main")
+          deadline = time.monotonic() + 30.0
+
+          def get(url, cap=262144):
+              remaining = deadline - time.monotonic()
+              if remaining <= 0:
+                  raise TimeoutError("total bounded source-fetch deadline exceeded")
+              request = urllib.request.Request(url, headers={"User-Agent": "issue-5590-docker-t1", "Accept": "application/vnd.github+json"})
+              with urllib.request.urlopen(request, timeout=min(6.0, remaining)) as response:
+                  data = response.read(cap + 1)
+              if len(data) > cap:
+                  raise ValueError("bounded source file exceeds 256 KiB")
+              return data
+
+          main_obj = json.loads(get(f"https://api.github.com/repos/{repo}/commits/main"))
+          main_sha = main_obj["sha"]
+          if main_sha != expected_main:
+              raise SystemExit("STOP: current main drifted after preregistration")
+          package = "research/analysis/missing_outcome_bounds_5590_docker_t1_20261001"
+          base = f"https://raw.githubusercontent.com/{repo}/{os.environ['REF']}/{package}/"
+          freeze_bytes = get(base + "FREEZE.json")
+          if hashlib.sha256(freeze_bytes).hexdigest() != os.environ["EXPECTED_FREEZE_SHA256"]:
+              raise SystemExit("STOP: frozen metadata digest mismatch")
+          freeze = json.loads(freeze_bytes)
+          if freeze.get("allocation") != "MANSKI-SHARP-MISSING-OUTCOME-5590-GHA-T1-20261001-01":
+              raise SystemExit("STOP: allocation identity mismatch")
+          if freeze.get("frozen_main_sha") != expected_main:
+              raise SystemExit("STOP: freeze/main mismatch")
+          manifest = get(base + "SHA256SUMS.txt")
+          if hashlib.sha256(manifest).hexdigest() != os.environ["EXPECTED_MANIFEST_SHA256"]:
+              raise SystemExit("STOP: source-manifest digest mismatch")
+          expected_names = {"audit.py", "candidate.py", "ledger.json", "test_bounds.py"}
+          entries = []
+          for line in manifest.decode("ascii").splitlines():
+              digest, name = line.split("  ", 1)
+              if name in ("", ".", "..") or pathlib.PurePosixPath(name).name != name:
+                  raise SystemExit("STOP: unsafe source path")
+              entries.append((digest, name))
+          if {name for _, name in entries} != expected_names or len(entries) != len(expected_names):
+              raise SystemExit("STOP: frozen source inventory mismatch")
+          root = pathlib.Path(os.environ["GITHUB_WORKSPACE"]) / "source"
+          (root / "FREEZE.json").write_bytes(freeze_bytes)
+          (root / "SHA256SUMS.txt").write_bytes(manifest)
+          (root / "WORKFLOW_REF.txt").write_text(os.environ["REF"] + "\n", encoding="ascii")
+          for digest, name in entries:
+              data = get(base + name)
+              if hashlib.sha256(data).hexdigest() != digest:
+                  raise SystemExit("STOP: source digest mismatch: " + name)
+              (root / name).write_bytes(data)
+          print(json.dumps({"status":"PASS_PREFLIGHT","allocation":freeze["allocation"],"main_sha":main_sha,"pr_base_sha":os.environ["BASE_SHA"],"head_sha":os.environ["REF"],"files":len(entries),"transport_seconds":round(time.monotonic()-(deadline-30.0),3)},sort_keys=True))
+          PY
+
+      - name: Verify frozen files and pull pinned container image
+        run: |
+          cd "$GITHUB_WORKSPACE/source"
+          sha256sum -c SHA256SUMS.txt
+          docker pull python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+          docker image inspect python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f --format '{{.Id}} {{.Os}}/{{.Architecture}} {{json .RepoDigests}}' > "$GITHUB_WORKSPACE/results/docker-t1-01/image.txt"
+          docker version > "$GITHUB_WORKSPACE/results/docker-t1-01/docker-version.txt"
+          python3 -c 'import json,platform; print(json.dumps({"python":platform.python_version(),"platform":platform.platform()}))' > "$GITHUB_WORKSPACE/results/docker-t1-01/runner-environment.json"
+
+      - name: One construction-test container invocation
+        id: construction
+        run: |
+          set +e
+          docker run --rm --network none --read-only --cpus=1 --memory=256m --pids-limit=64 --cap-drop=ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount "type=bind,src=$GITHUB_WORKSPACE/source,dst=/src,readonly" --workdir /src python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B -m unittest -v test_bounds.py > "$GITHUB_WORKSPACE/results/docker-t1-01/construction.stdout.txt" 2> "$GITHUB_WORKSPACE/results/docker-t1-01/construction.stderr.txt"
+          result=$?
+          printf '%s\n' "$result" > "$GITHUB_WORKSPACE/results/docker-t1-01/construction.exit_code"
+          exit "$result"
+
+      - name: One candidate container invocation
+        id: candidate
+        if: steps.construction.outcome == 'success'
+        run: |
+          set +e
+          docker run --rm --network none --read-only --cpus=1 --memory=256m --pids-limit=64 --cap-drop=ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount "type=bind,src=$GITHUB_WORKSPACE/source,dst=/src,readonly" --mount "type=bind,src=$GITHUB_WORKSPACE/results/docker-t1-01,dst=/out" --workdir /src python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B candidate.py ledger.json /out/raw.json > "$GITHUB_WORKSPACE/results/docker-t1-01/candidate.stdout.txt" 2> "$GITHUB_WORKSPACE/results/docker-t1-01/candidate.stderr.txt"
+          result=$?
+          printf '%s\n' "$result" > "$GITHUB_WORKSPACE/results/docker-t1-01/candidate.exit_code"
+          exit "$result"
+
+      - name: One independent raw-only auditor container invocation
+        id: auditor
+        if: steps.candidate.outcome == 'success'
+        run: |
+          cp "$GITHUB_WORKSPACE/source/audit.py" "$GITHUB_WORKSPACE/audit-input/audit.py"
+          cp "$GITHUB_WORKSPACE/source/ledger.json" "$GITHUB_WORKSPACE/audit-input/ledger.json"
+          cp "$GITHUB_WORKSPACE/results/docker-t1-01/raw.json" "$GITHUB_WORKSPACE/audit-input/raw.json"
+          set +e
+          docker run --rm --network none --read-only --cpus=1 --memory=256m --pids-limit=64 --cap-drop=ALL --security-opt no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount "type=bind,src=$GITHUB_WORKSPACE/audit-input,dst=/input,readonly" --workdir /input python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B audit.py ledger.json raw.json > "$GITHUB_WORKSPACE/results/docker-t1-01/AUDIT.json" 2> "$GITHUB_WORKSPACE/results/docker-t1-01/auditor.stderr.txt"
+          result=$?
+          printf '%s\n' "$result" > "$GITHUB_WORKSPACE/results/docker-t1-01/auditor.exit_code"
+          exit "$result"
+
+      - name: Upload exact allocation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-5590-docker-t1-${{ github.run_id }}
+          path: results/docker-t1-01/
+          if-no-files-found: warn

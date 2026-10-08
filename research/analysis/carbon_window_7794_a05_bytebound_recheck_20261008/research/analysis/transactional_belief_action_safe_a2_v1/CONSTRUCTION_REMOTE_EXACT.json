@@ -1,0 +1,635 @@
+{
+  "candidate_digest": "47b8487c31e53b46d38459b595689b376c186f1580aa226685dfa6935877c0ff",
+  "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "digests_equal": true,
+  "directed_controls": {
+    "commit_advance_act": {
+      "final": {
+        "accepted": true,
+        "action_safe": false,
+        "after_phase": "COMMITTED",
+        "before_phase": "COMMITTED",
+        "current_generation": 1,
+        "history": [
+          [
+            0,
+            0
+          ]
+        ],
+        "op": "TRY_ACTION",
+        "support_generation": 0
+      },
+      "steps": [
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "NONE",
+          "current_generation": 0,
+          "history": [],
+          "op": "OBS0",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "VALIDATED",
+          "before_phase": "TENTATIVE",
+          "current_generation": 0,
+          "history": [],
+          "op": "VALIDATE",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "VALIDATED",
+          "current_generation": 0,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "COMMIT",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "COMMITTED",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "ADVANCE",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": false,
+          "after_phase": "COMMITTED",
+          "before_phase": "COMMITTED",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "TRY_ACTION",
+          "support_generation": 0
+        }
+      ],
+      "trace": [
+        "OBS0",
+        "VALIDATE",
+        "COMMIT",
+        "ADVANCE",
+        "TRY_ACTION"
+      ]
+    },
+    "commit_contradict_act": {
+      "final": {
+        "accepted": true,
+        "action_safe": false,
+        "after_phase": "QUARANTINED",
+        "before_phase": "QUARANTINED",
+        "current_generation": 0,
+        "history": [
+          [
+            0,
+            0
+          ]
+        ],
+        "op": "TRY_ACTION",
+        "support_generation": 0
+      },
+      "steps": [
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "NONE",
+          "current_generation": 0,
+          "history": [],
+          "op": "OBS0",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "VALIDATED",
+          "before_phase": "TENTATIVE",
+          "current_generation": 0,
+          "history": [],
+          "op": "VALIDATE",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "VALIDATED",
+          "current_generation": 0,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "COMMIT",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "QUARANTINED",
+          "before_phase": "COMMITTED",
+          "current_generation": 0,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "CONTRADICT",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": false,
+          "after_phase": "QUARANTINED",
+          "before_phase": "QUARANTINED",
+          "current_generation": 0,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "TRY_ACTION",
+          "support_generation": 0
+        }
+      ],
+      "trace": [
+        "OBS0",
+        "VALIDATE",
+        "COMMIT",
+        "CONTRADICT",
+        "TRY_ACTION"
+      ]
+    },
+    "commit_from_tentative": {
+      "final": {
+        "accepted": false,
+        "action_safe": null,
+        "after_phase": "TENTATIVE",
+        "before_phase": "TENTATIVE",
+        "current_generation": 0,
+        "history": [],
+        "op": "COMMIT",
+        "support_generation": 0
+      },
+      "steps": [
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "NONE",
+          "current_generation": 0,
+          "history": [],
+          "op": "OBS0",
+          "support_generation": 0
+        },
+        {
+          "accepted": false,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "TENTATIVE",
+          "current_generation": 0,
+          "history": [],
+          "op": "COMMIT",
+          "support_generation": 0
+        }
+      ],
+      "trace": [
+        "OBS0",
+        "COMMIT"
+      ]
+    },
+    "commit_then_act": {
+      "final": {
+        "accepted": true,
+        "action_safe": true,
+        "after_phase": "COMMITTED",
+        "before_phase": "COMMITTED",
+        "current_generation": 0,
+        "history": [
+          [
+            0,
+            0
+          ]
+        ],
+        "op": "TRY_ACTION",
+        "support_generation": 0
+      },
+      "steps": [
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "NONE",
+          "current_generation": 0,
+          "history": [],
+          "op": "OBS0",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "VALIDATED",
+          "before_phase": "TENTATIVE",
+          "current_generation": 0,
+          "history": [],
+          "op": "VALIDATE",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "VALIDATED",
+          "current_generation": 0,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "COMMIT",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": true,
+          "after_phase": "COMMITTED",
+          "before_phase": "COMMITTED",
+          "current_generation": 0,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "TRY_ACTION",
+          "support_generation": 0
+        }
+      ],
+      "trace": [
+        "OBS0",
+        "VALIDATE",
+        "COMMIT",
+        "TRY_ACTION"
+      ]
+    },
+    "duplicate_advance": {
+      "final": {
+        "accepted": false,
+        "action_safe": null,
+        "after_phase": "NONE",
+        "before_phase": "NONE",
+        "current_generation": 1,
+        "history": [],
+        "op": "ADVANCE",
+        "support_generation": -1
+      },
+      "steps": [
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "NONE",
+          "before_phase": "NONE",
+          "current_generation": 1,
+          "history": [],
+          "op": "ADVANCE",
+          "support_generation": -1
+        },
+        {
+          "accepted": false,
+          "action_safe": null,
+          "after_phase": "NONE",
+          "before_phase": "NONE",
+          "current_generation": 1,
+          "history": [],
+          "op": "ADVANCE",
+          "support_generation": -1
+        }
+      ],
+      "trace": [
+        "ADVANCE",
+        "ADVANCE"
+      ]
+    },
+    "fresh_recommit_act": {
+      "final": {
+        "accepted": true,
+        "action_safe": true,
+        "after_phase": "COMMITTED",
+        "before_phase": "COMMITTED",
+        "current_generation": 1,
+        "history": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "op": "TRY_ACTION",
+        "support_generation": 1
+      },
+      "steps": [
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "NONE",
+          "current_generation": 0,
+          "history": [],
+          "op": "OBS0",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "VALIDATED",
+          "before_phase": "TENTATIVE",
+          "current_generation": 0,
+          "history": [],
+          "op": "VALIDATE",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "VALIDATED",
+          "current_generation": 0,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "COMMIT",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "COMMITTED",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "ADVANCE",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "COMMITTED",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "OBS1",
+          "support_generation": 1
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "VALIDATED",
+          "before_phase": "TENTATIVE",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "VALIDATE",
+          "support_generation": 1
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "VALIDATED",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "op": "COMMIT",
+          "support_generation": 1
+        },
+        {
+          "accepted": true,
+          "action_safe": true,
+          "after_phase": "COMMITTED",
+          "before_phase": "COMMITTED",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "op": "TRY_ACTION",
+          "support_generation": 1
+        }
+      ],
+      "trace": [
+        "OBS0",
+        "VALIDATE",
+        "COMMIT",
+        "ADVANCE",
+        "OBS1",
+        "VALIDATE",
+        "COMMIT",
+        "TRY_ACTION"
+      ]
+    },
+    "stale_commit_reobserve_no_recommit_act": {
+      "final": {
+        "accepted": true,
+        "action_safe": false,
+        "after_phase": "TENTATIVE",
+        "before_phase": "TENTATIVE",
+        "current_generation": 1,
+        "history": [
+          [
+            0,
+            0
+          ]
+        ],
+        "op": "TRY_ACTION",
+        "support_generation": 1
+      },
+      "steps": [
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "NONE",
+          "current_generation": 0,
+          "history": [],
+          "op": "OBS0",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "VALIDATED",
+          "before_phase": "TENTATIVE",
+          "current_generation": 0,
+          "history": [],
+          "op": "VALIDATE",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "VALIDATED",
+          "current_generation": 0,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "COMMIT",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "COMMITTED",
+          "before_phase": "COMMITTED",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "ADVANCE",
+          "support_generation": 0
+        },
+        {
+          "accepted": true,
+          "action_safe": null,
+          "after_phase": "TENTATIVE",
+          "before_phase": "COMMITTED",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "OBS1",
+          "support_generation": 1
+        },
+        {
+          "accepted": true,
+          "action_safe": false,
+          "after_phase": "TENTATIVE",
+          "before_phase": "TENTATIVE",
+          "current_generation": 1,
+          "history": [
+            [
+              0,
+              0
+            ]
+          ],
+          "op": "TRY_ACTION",
+          "support_generation": 1
+        }
+      ],
+      "trace": [
+        "OBS0",
+        "VALIDATE",
+        "COMMIT",
+        "ADVANCE",
+        "OBS1",
+        "TRY_ACTION"
+      ]
+    }
+  },
+  "directed_controls_pass": true,
+  "elapsed_seconds": 0.034158022999974946,
+  "first_mismatch": null,
+  "formal_invocations": 0,
+  "formal_source_sha256": "a4ec5b5255926db908eb60b4452bae4842a88e4030a7d96a77125b6d06198868",
+  "max_depth": 5,
+  "metrics": {
+    "candidate_action_safe_total": 30,
+    "candidate_oracle_mismatch": 0,
+    "commit_from_unvalidated_admissions": 0,
+    "commit_from_unvalidated_attempts": 2563,
+    "committed_only_unsafe_stale_or_contradicted": 4,
+    "committed_only_unsafe_total": 8,
+    "contradicted_action_opportunities": 2,
+    "contradicted_action_safe_admissions": 0,
+    "fresh_recommit_action_safe": 0,
+    "provenance_retained_across_generation_change": 34,
+    "stale_action_opportunities": 2,
+    "stale_generation_action_safe_admissions": 0,
+    "trace_count_including_empty": 19608,
+    "transition_count": 19607
+  },
+  "mode": "construction",
+  "operation_alphabet": [
+    "OBS0",
+    "OBS1",
+    "VALIDATE",
+    "COMMIT",
+    "ADVANCE",
+    "CONTRADICT",
+    "TRY_ACTION"
+  ],
+  "oracle_digest": "47b8487c31e53b46d38459b595689b376c186f1580aa226685dfa6935877c0ff",
+  "replacements": 0,
+  "reruns": 0,
+  "task": "TRANSACTIONAL-BELIEF-ACTION-SAFE-A2-20260919-002",
+  "tuning_after_freeze": 0
+}

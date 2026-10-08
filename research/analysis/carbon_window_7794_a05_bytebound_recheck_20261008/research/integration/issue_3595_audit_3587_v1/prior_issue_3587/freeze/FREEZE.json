@@ -1,0 +1,29 @@
+{
+  "schema": "agent-interface/issue-3587-freeze-v1",
+  "issue": 3587,
+  "source_revision": "02b6efb970e66f2169c01c49b1fa6a4ebb5e23f2",
+  "portable_archive": {
+    "path": "agent-interface-runtime.pyz",
+    "bytes": 157384,
+    "sha256": "e2f50196e7ac67372fd0c480dbee473d26cc84d33e09806900f1efe7c8e7e624",
+    "manifest_sha256": "cb4b63359ca75e082157b3a49159e5a4d2f9e5c81ae754a27b30f7c27c17bd2c"
+  },
+  "runner": {
+    "path": "../container_smoke.py",
+    "sha256": "c4ba017b3685d6d4ba78cea2b8ccbecdae6d769e41712da4c1c87e1b88135f75"
+  },
+  "auditor": {
+    "path": "../audit.py",
+    "sha256": "5aaa31729068403e3bf52579ca6b16252395a3aaa7c3b54f992c3fa46b6b54d5"
+  },
+  "container": {
+    "name": "issue-3573-portable-mcp-orbstack:20260920",
+    "image_id": "sha256:63caf7c08199c6dc0712d000543aa19038a17ecbaf5ece309ec0c445a9c48a8a",
+    "platform": "linux/arm64",
+    "network": "none",
+    "root_filesystem": "read-only"
+  },
+  "formal_allocations": 3,
+  "construction_allocations_excluded": 1,
+  "formal_status": "NOT_RUN_AT_FREEZE"
+}

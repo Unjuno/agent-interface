@@ -1,0 +1,84 @@
+{
+  "base": "40072ec1962afe9fe1a9f6ade79ce36a2e8cc93f",
+  "decision": "PASS_PREFLIGHT_WALL_ACCOUNTING_RECONSTRUCTED_SCOPED",
+  "formal_invocation": 1,
+  "integrity_ok": true,
+  "limits": [
+    "posthoc retained-evidence reconstruction; no new model or GUI call",
+    "preflight model subprocess lifetime includes CLI/process overhead and is not model inference time",
+    "sequential phase-sum applies only to the retained preflight-then-task schedule",
+    "no population latency, monetary cost, human-tempo, or second-domain speed claim"
+  ],
+  "original_audit_elapsed_is_task_phase_only": true,
+  "original_observed_token_break_even_task": 2,
+  "original_retained_disposition": "RETAIN",
+  "persistent_phase_complete_faster_than": {
+    "ephemeral": true,
+    "plain": true
+  },
+  "protocol_dependency": {
+    "git_blob_sha": "e8e5ee9e3abb66cb7673ac90ec9074820a16cac9",
+    "path": "research/live_control/integrated_efficiency_protocol_v1.py",
+    "role": "read-only scoring dependency proving retained audit elapsed excludes preflight wall time"
+  },
+  "reason_token_break_even_not_recomputed": "retained protocol already charges preflight input tokens; this allocation changes only wall-time endpoint accounting",
+  "rows": {
+    "ephemeral": {
+      "checks": {
+        "endpoint_compatible": true,
+        "model_call_performed": true,
+        "model_effort_match": true,
+        "preflight_elapsed_positive": true,
+        "process_exit_zero": true,
+        "process_lifetime_positive": true,
+        "process_within_preflight": true
+      },
+      "phase_complete_elapsed_ms": "80378.859099",
+      "preflight_elapsed_ms": "7140.746175",
+      "preflight_input_tokens_already_charged": 7967,
+      "preflight_model_subprocess_lifetime_ms": "6845.2538",
+      "preflight_outer_minus_subprocess_ms": "295.492375",
+      "retained_final_input_tokens": 63779,
+      "task_phase_elapsed_ms": "73238.112924"
+    },
+    "persistent": {
+      "checks": {
+        "endpoint_compatible": true,
+        "model_call_performed": true,
+        "model_effort_match": true,
+        "preflight_elapsed_positive": true,
+        "process_exit_zero": true,
+        "process_lifetime_positive": true,
+        "process_within_preflight": true
+      },
+      "phase_complete_elapsed_ms": "51627.109593",
+      "preflight_elapsed_ms": "7495.828365",
+      "preflight_input_tokens_already_charged": 7965,
+      "preflight_model_subprocess_lifetime_ms": "7190.1764",
+      "preflight_outer_minus_subprocess_ms": "305.651965",
+      "retained_final_input_tokens": 26563,
+      "task_phase_elapsed_ms": "44131.281228"
+    },
+    "plain": {
+      "checks": {
+        "endpoint_compatible": true,
+        "model_call_performed": true,
+        "model_effort_match": true,
+        "preflight_elapsed_positive": true,
+        "process_exit_zero": true,
+        "process_lifetime_positive": true,
+        "process_within_preflight": true
+      },
+      "phase_complete_elapsed_ms": "62754.198912",
+      "preflight_elapsed_ms": "6341.907755",
+      "preflight_input_tokens_already_charged": 7868,
+      "preflight_model_subprocess_lifetime_ms": "5858.4102",
+      "preflight_outer_minus_subprocess_ms": "483.497555",
+      "retained_final_input_tokens": 63128,
+      "task_phase_elapsed_ms": "56412.291157"
+    }
+  },
+  "schema": "integrated_efficiency_preflight_wall_result_v1",
+  "task": "INTEGRATED-EFFICIENCY-PREFLIGHT-WALL-ACCOUNTING-20260917-001",
+  "token_break_even_recomputed": false
+}

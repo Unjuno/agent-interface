@@ -1,0 +1,36 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 797,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "pointer_move",
+      "x": 820,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "pointer_move",
+      "x": 843,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    }
+  ],
+  "rationale": "Probe three unexplored infrastructure icons to locate the control explicitly identified as Build roads.",
+  "intent": "inspect",
+  "expected_effect": "Tooltips identify the three infrastructure controls and reveal whether one opens road construction.",
+  "checkpoint": null
+}

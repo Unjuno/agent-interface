@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "issue": 6442,
+  "allocation": "SOFT-REVISIT-BIAS-5756-T0-20261002-01",
+  "planned_branch": "research/soft-revisit-bias-5756-t0-wslc-20261002",
+  "planned_path": "research/analysis/soft_revisit_bias_5756_t0_wslc_20261002/",
+  "intake_main_sha": "eacb1346866f660d9d34eb36cd9691fd8184e5ff",
+  "allocation_stage": "PRE_RUN_STOP_NO_EXECUTABLE_OR_FIXTURE_FREEZE",
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "construction_container_invocations": 0,
+  "h": "A bounded soft revisit penalty using visible inspection-confidence and child-revision cues recovers more targets behind incompletely inspected or changed children than hard visited-branch exclusion, without extra revisits on stable-complete controls; epoch changes still invalidate old observations.",
+  "t": {
+    "fixture_count": 32,
+    "policy_count": 4,
+    "policy_fixture_rows": 128,
+    "events_per_row_max": 12,
+    "strata": {
+      "stable_complete": 8,
+      "partial_first_inspection": 8,
+      "same_epoch_child_revision_hint": 8,
+      "no_target_or_ambiguous_alias": 4,
+      "forbidden_nonreversible_edge": 4
+    },
+    "policies": [
+      "current-cue ranking / no revisit memory",
+      "hard visited-branch exclusion",
+      "soft recency-inspection-confidence penalty / maximum one revisit per branch",
+      "safe exhaustive depth-first search"
+    ],
+    "runtime": "Microsoft WSLc, offline, pinned cached Python linux/amd64 image python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f; --pull never --network none --cpus 0.25 --memory 512m --user 65534:65534; read-only source/input binds and separate output. Requested memory cap is not evidence of kernel enforcement."
+  },
+  "d": {
+    "minimum_soft_partial_revised_targets": 14,
+    "maximum_hard_exclusion_partial_revised_targets": 2,
+    "maximum_soft_stable_complete_revisits": 0,
+    "required_corruption_controls_rejected": 5,
+    "required_auditor_errors": 0,
+    "safety_or_integrity_defect": "FAIL_STOP",
+    "clean_unmet_policy_threshold": "HOLD"
+  },
+  "c": "Synthetic labels, costs, confidence, revision hints and target schedules are authored; they may deliberately favor the soft policy. No natural GUI dynamics, perception noise, latency or task effect is measured.",
+  "u": "One deterministic synthetic policy set on one WSLc host only. No model/LLM benefit, live unfamiliar-GUI transfer, general optimality, real-world cost reduction, safety guarantee or product claim.",
+  "disposition": "STOP_PARALLEL_HOST_ALLOCATION_ACTIVE",
+  "source_scope": "This is an intake/protocol snapshot, not a frozen executable candidate, frozen fixture schedule, formal run, or scientific result."
+}

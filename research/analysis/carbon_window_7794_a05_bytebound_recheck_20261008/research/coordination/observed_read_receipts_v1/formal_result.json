@@ -1,0 +1,306 @@
+{
+  "allocation": "observed-read-receipts-20260916-a1",
+  "rerun_budget": 0,
+  "rows": [
+    {
+      "case_id": "m01",
+      "committed": true,
+      "decision": "a1|b1",
+      "final": {
+        "events": [
+          {
+            "detail": "1->2",
+            "kind": "generation",
+            "seq": 1
+          }
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          },
+          "U": {
+            "revision": 1,
+            "value": "u1"
+          }
+        }
+      },
+      "mismatches": [],
+      "policy": "broad",
+      "scenario": "stable",
+      "token": [
+        {
+          "key": "A",
+          "revision": 1
+        },
+        {
+          "key": "B",
+          "revision": 1
+        },
+        {
+          "key": "U",
+          "revision": 1
+        }
+      ],
+      "truth_commit": true,
+      "truthful": true
+    },
+    {
+      "case_id": "m02",
+      "committed": true,
+      "decision": "a1|b1",
+      "final": {
+        "events": [
+          {
+            "detail": "1->2",
+            "kind": "generation",
+            "seq": 1
+          }
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          },
+          "U": {
+            "revision": 1,
+            "value": "u1"
+          }
+        }
+      },
+      "mismatches": [],
+      "policy": "observed",
+      "scenario": "stable",
+      "token": [
+        {
+          "key": "A",
+          "revision": 1
+        },
+        {
+          "key": "B",
+          "revision": 1
+        }
+      ],
+      "truth_commit": true,
+      "truthful": true
+    },
+    {
+      "case_id": "m03",
+      "committed": false,
+      "decision": "a1|b1",
+      "final": {
+        "events": [
+          {
+            "detail": "A:a1->a2:r2",
+            "kind": "mutation",
+            "seq": 1
+          }
+        ],
+        "generation": 1,
+        "kv": {
+          "A": {
+            "revision": 2,
+            "value": "a2"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          },
+          "U": {
+            "revision": 1,
+            "value": "u1"
+          }
+        }
+      },
+      "mismatches": [
+        {
+          "current": 2,
+          "expected": 1,
+          "key": "A"
+        }
+      ],
+      "policy": "broad",
+      "scenario": "relevant_A_change",
+      "token": [
+        {
+          "key": "A",
+          "revision": 1
+        },
+        {
+          "key": "B",
+          "revision": 1
+        },
+        {
+          "key": "U",
+          "revision": 1
+        }
+      ],
+      "truth_commit": false,
+      "truthful": true
+    },
+    {
+      "case_id": "m04",
+      "committed": false,
+      "decision": "a1|b1",
+      "final": {
+        "events": [
+          {
+            "detail": "A:a1->a2:r2",
+            "kind": "mutation",
+            "seq": 1
+          }
+        ],
+        "generation": 1,
+        "kv": {
+          "A": {
+            "revision": 2,
+            "value": "a2"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          },
+          "U": {
+            "revision": 1,
+            "value": "u1"
+          }
+        }
+      },
+      "mismatches": [
+        {
+          "current": 2,
+          "expected": 1,
+          "key": "A"
+        }
+      ],
+      "policy": "observed",
+      "scenario": "relevant_A_change",
+      "token": [
+        {
+          "key": "A",
+          "revision": 1
+        },
+        {
+          "key": "B",
+          "revision": 1
+        }
+      ],
+      "truth_commit": false,
+      "truthful": true
+    },
+    {
+      "case_id": "m05",
+      "committed": false,
+      "decision": "a1|b1",
+      "final": {
+        "events": [
+          {
+            "detail": "U:u1->u2:r2",
+            "kind": "mutation",
+            "seq": 1
+          }
+        ],
+        "generation": 1,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          },
+          "U": {
+            "revision": 2,
+            "value": "u2"
+          }
+        }
+      },
+      "mismatches": [
+        {
+          "current": 2,
+          "expected": 1,
+          "key": "U"
+        }
+      ],
+      "policy": "broad",
+      "scenario": "unrelated_U_change",
+      "token": [
+        {
+          "key": "A",
+          "revision": 1
+        },
+        {
+          "key": "B",
+          "revision": 1
+        },
+        {
+          "key": "U",
+          "revision": 1
+        }
+      ],
+      "truth_commit": true,
+      "truthful": false
+    },
+    {
+      "case_id": "m06",
+      "committed": true,
+      "decision": "a1|b1",
+      "final": {
+        "events": [
+          {
+            "detail": "U:u1->u2:r2",
+            "kind": "mutation",
+            "seq": 1
+          },
+          {
+            "detail": "1->2",
+            "kind": "generation",
+            "seq": 2
+          }
+        ],
+        "generation": 2,
+        "kv": {
+          "A": {
+            "revision": 1,
+            "value": "a1"
+          },
+          "B": {
+            "revision": 1,
+            "value": "b1"
+          },
+          "U": {
+            "revision": 2,
+            "value": "u2"
+          }
+        }
+      },
+      "mismatches": [],
+      "policy": "observed",
+      "scenario": "unrelated_U_change",
+      "token": [
+        {
+          "key": "A",
+          "revision": 1
+        },
+        {
+          "key": "B",
+          "revision": 1
+        }
+      ],
+      "truth_commit": true,
+      "truthful": true
+    }
+  ],
+  "task": "COORD-OBSERVED-READ-RECEIPTS-20260916-018"
+}

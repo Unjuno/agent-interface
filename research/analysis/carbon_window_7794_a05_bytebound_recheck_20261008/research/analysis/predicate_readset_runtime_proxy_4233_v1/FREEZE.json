@@ -1,0 +1,65 @@
+{
+  "schema": "agent-interface-research-freeze-v1",
+  "issue": 4766,
+  "parent_issue": 4233,
+  "allocation": "predicate-read-tracing-4233-20260927-01",
+  "base_main": "de342e0f8d055cadd3854ab8502ac1eba0ba87f3",
+  "branch": "research/predicate-readset-runtime-proxy-4233-20260927",
+  "path": "research/analysis/predicate_readset_runtime_proxy_4233_v1/",
+  "image": {
+    "reference": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "tag_at_inspection": "python:3.12-slim-bookworm",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "network": "none",
+    "pull": false,
+    "cpu_limit": 1,
+    "memory_limit": "512m",
+    "pids_limit": 64,
+    "source_mount": "read-only",
+    "rootfs": "read-only",
+    "capabilities": "all-dropped",
+    "no_new_privileges": true
+  },
+  "formal_design": {
+    "states": 8,
+    "predicates": ["READY_TO_SUBMIT", "TARGET_MATCH"],
+    "policies": ["FULL_RECOMPUTE", "DYNAMIC_READSET", "STATIC_DECLARED", "STATIC_ALL"],
+    "observations": 64,
+    "formal_runner_invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning": 0,
+    "construction_formal_rows": 0
+  },
+  "source_sha256": {
+    "PREREGISTRATION.md": "81531d316d095d51b22ab343153e915d5974129c80055a2e97daa1b8f8922286",
+    "trace.json": "5a60df268a80551f860d2b7859356f677ea01278b27d41ed2ef82036ddb8bc97",
+    "study.py": "bbbb49c57c97034f9ab63986434060ce0c16d6d45601c188b648dc01fdaa0ad3",
+    "audit.py": "2f332c7a1f415d1990e76d00143ff15edf17ee9f4440e2afcaba767099041083",
+    "test_audit.py": "8b522579956f8a588cf0897225961d563041f7e749632cee0760c21c3698125b"
+  },
+  "construction_excluded": {
+    "construction_01": "test and auditor expectation failure: nested parent paths were not yet included",
+    "construction_02": "auditor expectation failure: it required exact dynamic reads for non-dynamic policies",
+    "construction_03": {
+      "unit_tests": "3/3 pass",
+      "runner_rows": 64,
+      "auditor": "PASS_DYNAMIC_READSET_SCOPED",
+      "auditor_errors": [],
+      "mutation_controls": "8/8 rejected",
+      "metrics": {
+        "dynamic_unsafe_reuse": 0,
+        "dynamic_false_invalidations": 0,
+        "dynamic_unrelated_hits": 4,
+        "static_declared_unsafe_reuse": 1,
+        "static_all_false_invalidations": 9
+      }
+    }
+  },
+  "formal_commands": {
+    "runner": "docker run --rm --pull=never --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus=1 --memory=512m --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=64m -v $SRC:/src:ro -v $FORMAL:/out:rw -w /src sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python -B study.py trace.json /out/raw.jsonl",
+    "auditor_separate_container": "docker run --rm --pull=never --network none --read-only --security-opt=no-new-privileges --cap-drop=ALL --cpus=1 --memory=512m --pids-limit=64 --tmpfs /tmp:rw,noexec,nosuid,size=64m -v $SRC:/src:ro -v $RAW:/input/raw.jsonl:ro -v $AUDIT:/audit:rw -w /src sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e python -B audit.py trace.json /input/raw.jsonl /audit/audit.json"
+  },
+  "decision": "PASS_DYNAMIC_READSET_SCOPED only when every gate in PREREGISTRATION.md passes; otherwise preserve first formal STOP/HOLD/FAIL without rerun."
+}

@@ -1,0 +1,28 @@
+{
+  "allocation": "view-updateability-5368-t0-hostcpu-20261003-a01",
+  "timestamp_utc": "2026-10-02T18:03:29Z",
+  "host": "Windows local host CPU",
+  "python": "3.11.9",
+  "commands": [
+    {"command": "python research\\analysis\\view_updateability_5368_t0\\gate.py", "invocations": 1, "exit_code": 0},
+    {"command": "python research\\analysis\\view_updateability_5368_t0\\audit.py", "invocations": 1, "exit_code": 0}
+  ],
+  "candidate_rows": 9,
+  "baseline_rows": 9,
+  "audit_status": "PASS_READONLY",
+  "audit_matches": "9/9",
+  "baseline_admissions": 9,
+  "baseline_false_admissions": 7,
+  "candidate_admissions": 2,
+  "candidate_false_admissions_in_declared_fixture": 0,
+  "disambiguation_requests": 5,
+  "untranslatable": 1,
+  "unknown_model": 1,
+  "authority_or_effect_emitted": false,
+  "sha256": {
+    "candidate.jsonl": "0286db0b918720968ee2a5ea60e4a64191761f3b00241dbf692dfcc8cbaacc6c",
+    "baseline.jsonl": "327ef9b4c8c42da6fc4681107dde187c83feca3346593d5dc1458249c32d86a2",
+    "audit.json": "c1012d41b9ffea3bdef9efad05285c61b17be3896f94ed7f7cbc366c6e8f0b6a"
+  }
+}
+

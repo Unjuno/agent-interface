@@ -1,0 +1,33 @@
+{
+  "schema": "mindustry_repeat_fixture_protocol_freeze_v1",
+  "task": "MINDUSTRY-REPEAT-FIXTURE-PROTOCOL-20260917-001",
+  "issue": 868,
+  "base": "c833289b3a632c69087e8b51209f92a8eddda707",
+  "formal_invocations_before_freeze": 0,
+  "formal_output_present_before_freeze": false,
+  "source_git_blobs": {
+    "PLAN.md": "9409dfa3ea9a932b6c1f171a8eb7dc587157971e",
+    "audit.py": "92dced938865480770321085fac23e7a61dd5ee3",
+    "candidate_mod.js": "2bf9392c811ba16529086f75fe93644f95006361",
+    "coordinator.py": "f813196c438b340dcb70b3325a4c4468a93bfb44",
+    "corruption_controls.py": "c87cb79bda249fbe3572bd53c25dd4fafe83d64d",
+    "fixture.json": "7b755a82ea90e68747b96d5fc146755be1ec7113",
+    "protocol.py": "f568eb50ed3fa2cf769b8af956228c888a3d76f5",
+    "run_formal.py": "b263e526117888f0f35a81006f85066e8247006c",
+    "test_mechanics.py": "f9eda6a6ade066385ae08aef3434d05b080c84c6",
+    "prereg.json": "f4b9d2b1630b2fa9146ca3599554f8fd501e379b"
+  },
+  "construction": {
+    "py_compile": "PASS",
+    "mechanics": "PASS",
+    "node_check": "PASS",
+    "formal_output": "ABSENT",
+    "provider_calls": 0,
+    "live_authority": "none"
+  },
+  "retained_dependencies": {
+    "predecessor_repeat_reset_result_blob": "ae4d6143370117c2c3655e61ed62a570060d55b2",
+    "real_resize_backend_blob": "e09be2a5acc5e746acab262504ca0ef27fc757b5",
+    "upstream_item_module_blob": "59e068a3bf9e430a524c4e87da6b8947fc54fb8f"
+  }
+}

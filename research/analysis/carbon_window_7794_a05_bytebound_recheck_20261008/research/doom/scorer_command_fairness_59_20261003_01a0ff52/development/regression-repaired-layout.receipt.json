@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "sources/regressions",
+    "-v"
+  ],
+  "PYTHONPATH": "PACKAGE/sources/fair",
+  "started_utc": "2026-10-03T01:48:10.131469+00:00",
+  "finished_utc": "2026-10-03T01:48:10.283697+00:00",
+  "exit_code": 0,
+  "repair": "unchanged clock test loads adjacent file; export identical dependency in its original layout",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "1503c2887b7031b6e641062da43a9fec77d45ad7df5ccd1d9e6c7dbb7926e1a9"
+}

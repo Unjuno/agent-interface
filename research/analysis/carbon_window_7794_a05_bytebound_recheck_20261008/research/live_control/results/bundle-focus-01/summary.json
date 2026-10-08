@@ -1,0 +1,51 @@
+[
+  {
+    "case": "select_button",
+    "target_step": 0,
+    "kind": "button",
+    "success": true,
+    "physical_down_verified": true,
+    "focus_transfer_ns": 6006069878,
+    "physical_release_while_output_blocked": true,
+    "release_to_terminal_ms": 2.247432,
+    "no_tail_admission": true,
+    "fresh_observation_same_deadline_no_cause": true,
+    "cleanup": {
+      "engine": "close returned",
+      "backend": "close returned",
+      "controller": "close returned",
+      "session": "close returned"
+    }
+  },
+  {
+    "case": "field_button",
+    "target_step": 2,
+    "kind": "button",
+    "success": true,
+    "physical_down_verified": true,
+    "focus_transfer_ns": 9239058118,
+    "physical_release_while_output_blocked": true,
+    "release_to_terminal_ms": 7.546479,
+    "no_tail_admission": true,
+    "fresh_observation_same_deadline_no_cause": true,
+    "cleanup": {
+      "engine": "close returned",
+      "backend": "close returned",
+      "controller": "close returned",
+      "session": "close returned"
+    }
+  },
+  {
+    "case": "select_all_modifier",
+    "target_step": 3,
+    "kind": "key",
+    "success": false,
+    "error": "AssertionError('target admission not reached')",
+    "cleanup": {
+      "engine": "close returned",
+      "backend": "close returned",
+      "controller": "close returned",
+      "session": "close returned"
+    }
+  }
+]

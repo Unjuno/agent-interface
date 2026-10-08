@@ -1,0 +1,48 @@
+Construction-clock-48 exact build, preflight, and run record
+
+Runtime: OrbStack Docker Engine, linux/arm64. Image tag `agent-interface-map01-clock-counter-v1:20260920`, image ID/manifest `sha256:fdf45a138d5b025499f6808ae0b8a04a12d2ad4643e6618f913a85e1cfe64e17`. Upstream Farama ViZDoom 1.3.0 commit `c8e0a31182d98c6f40a65674283e736b851e8e59`; pybind11 `f5fbe867d2d26e4a0a9177a51f6e568868ad3dc8`. Freedoom 0.13.0 WAD SHA-256 `a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b`. Current-main exact scorer and imports were read-only mounted, with hashes in `SHA256SUMS.txt`.
+
+The instrumented `VIZ_Tic()` naked stub reads `CNTVCT_EL0` in its first machine instruction and immediately branches to a C body. A build-time unstripped object is copied to `/opt/vizdoom-counter-audit/viz_main.cpp.o`; preflight also checks the linked engine opcode sequence. `CNTVCT_EL0` getter call boundaries use a small compiled CPython C wrapper so source entries and all scorer API calls use the same hardware counter domain. Container root and WAD/scorer mounts were read-only, network was disabled, and `/tmp` was an isolated tmpfs. Only this experiment result directory was mounted writable. The formal result path was not mounted.
+
+From repository root, build:
+
+```sh
+docker build --platform linux/arm64 --progress=plain \
+  -t agent-interface-map01-clock-counter-v1:20260920 \
+  -f research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-48/Dockerfile \
+  research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-48 \
+  > research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-48/image-build.log 2>&1
+```
+
+No-game preflight (checks counter and disassembly before any session):
+
+```sh
+docker run --rm --platform linux/arm64 --network none --read-only \
+  --entrypoint python agent-interface-map01-clock-counter-v1:20260920 \
+  /probe48.py --preflight-only
+```
+
+Three-session construction run:
+
+```sh
+docker run --rm --platform linux/arm64 --network none --read-only --workdir /tmp \
+  --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-48:/results" \
+  -v "$PWD/research/doom/session_map01_v13.py:/scorer/session_map01_v13.py:ro" \
+  -v "$PWD/research/doom/map01_scorer_stdio_adapter_v1.py:/scorer/map01_scorer_stdio_adapter_v1.py:ro" \
+  -v "$PWD/research/doom/main_thread_scorer_polling_v1.py:/scorer/main_thread_scorer_polling_v1.py:ro" \
+  -v "$PWD/research/doom/independent_progress_clock_v2.py:/scorer/independent_progress_clock_v2.py:ro" \
+  -v /tmp/agent-interface-3300-freedoom.rVM7UB/unpacked/freedoom-0.13.0/freedoom2.wad:/assets/freedoom2.wad:ro \
+  agent-interface-map01-clock-counter-v1:20260920 \
+  > research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-48/container.log 2>&1
+```
+
+Independent audit:
+
+```sh
+python3 research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-48/audit48.py \
+  research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-48/raw.json \
+  > research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-48/audit.json
+```
+
+All failed source-patch, disassembly, import, and masked-build-artifact attempts are separately preserved (`image-build-attempt-*.log`, `preflight-attempt-*.log`, `run-attempt-01.log`, `disassembly-inspection.log`). None produced a session or was included in the three audited rows. Formal allocation remains 0/120.

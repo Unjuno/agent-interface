@@ -1,0 +1,50 @@
+{
+  "schema": "issue-5521-t3-docker-gha-freeze-v1",
+  "status": "FROZEN_BEFORE_CANDIDATE",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/5521",
+  "allocation": "5521-ANERGY-EXPIRY-POLICY-GHA-20261001-01",
+  "frozen_at_utc": "2026-10-01T03:44:27Z",
+  "main_sha": "0afd3e33b9da5e8ed4c8307609fec3264d4b93f2",
+  "base_comparison": "No changes under research/experiments/issue_5521_anergy_t3/ or the new workflow path between f0d5aa9d7fb73e5801f8d6190009e56c72583057 and this main SHA.",
+  "branch": "research/5521-anergy-t3-container-20261001-01",
+  "experiment_path": "research/experiments/issue_5521_anergy_t3/results/gha-01/",
+  "workflow": ".github/workflows/issue-5521-anergy-t3-container.yml",
+  "workflow_sha256": "eae9d827cb50d695aa766a63f403a0d47fbb41163bbbb78399dd023bcc8efb7c",
+  "schedule_sha256": "2904ac3889b5451af9fee658dd666f573a370e55a34507d36ca831032c30c48f",
+  "hypothesis": "Under the identical frozen 10-event schedule, clear-on-expiry permits a same-fingerprint/same-generation recheck and admission while EXPIRED-tombstone refuses without a verifier check; both preserve the generation-1 no-effect invariant across worker process exits/reloads.",
+  "H_T_D_C_U": {
+    "H": "The two expiry policies yield the preregistered distinct tick-9 decisions while preserving restart state and producing no generation-1 effect.",
+    "T": "A single push-triggered workflow runs clear and tombstone as separate matrix jobs, each starting one pinned-image Docker candidate container and three worker subprocesses across two serialized-state restart boundaries. A third independent Docker container on a separate runner audits the combined 35-record raw JSONL. No workflow_dispatch and no retries.",
+    "D": "PASS only for both Docker exits 0; exactly 35 raw records; three unique worker PIDs and zero exit codes per arm; restart and full state hashes reconcile; arms equal except tick 9; no gen-1 effect; clear=6 verifier checks/4 effects and tombstone=5/3; independent auditor passes and rejects both frozen corruption controls. Semantic counterexample=FAIL; image/source/runner/audit/provenance problem=STOP.",
+    "C": "Deterministic finite authored FSM and this exact 10-event schedule; one policy factor changes at expiry disposition.",
+    "U": "GitHub-hosted Docker on standard public ARM64 runners, not local or OrbStack execution. Candidate and auditor containers have --network none, read-only rootfs, 1 CPU, 256 MiB, pids limit 64, no Linux capabilities, no-new-privileges and a bounded tmpfs. This does not establish durable-storage/crash consistency, GUI behavior, semantic fingerprint quality, fairness/usefulness, product safety or production suitability."
+  },
+  "environment": {
+    "runner": "ubuntu-24.04-arm (standard GitHub-hosted public runner)",
+    "billing": "Standard GitHub-hosted runner use is free for public repositories per https://docs.github.com/en/billing/concepts/product-billing/github-actions",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "network": "none inside all three experiment containers; host runner must pull the exact image",
+    "resources": "1 CPU, 256 MiB memory, 64 pids, read-only root filesystem, 16 MiB tmpfs /tmp",
+    "candidate_jobs": 2,
+    "independent_audit_jobs": 1,
+    "workflow_timeout_minutes": 5,
+    "workflow_rerun_policy": "none; preserve first run and all uploaded outputs"
+  },
+  "source_sha256": {
+    "PLAN.md": "eca9534f2bcd937dfd1d90e56b58f97cd50af944f5ec63855d484cc740790555",
+    "run.py": "1830d2672912548aafd9ebc8be4516afc341b1f7e44002aff648ed20d75a9978",
+    "audit.py": "f4ebb67fb926ed0c5e90b561b950f2e77ee12089a3fdeee590875637a398124c",
+    "test_t3.py": "aa8a0e8d9706a8877c9f8eb5ed8cdca5b57ee7c9ac31e00a56b3c129c735501a",
+    "container_arm.py": "b33b37056d46bed3fdf8db880cd07cf67e362fea2ddb310e174d2549dc63d45a",
+    "assemble_container_raw.py": "8c65340b98d25f71dafbd8b5cb973bef7452410e4673dd31c67a2e1993a504ca",
+    "audit_container.py": "a366e82119d8933be59d48f9c53fffd276b5a33b093a2f86f985952d0fa4e419",
+    "test_container_arm.py": "bdf052946143b1737f409db829056586d4d69cc78f5efb9daaf9d41ee61402d0"
+  },
+  "pre_candidate_local_ci": {
+    "unittest": "python3 -m unittest discover -s research/experiments/issue_5521_anergy_t3 -p 'test*.py' -v: 4/4 PASS",
+    "py_compile": "PASS",
+    "workflow_yaml_syntax": "Ruby YAML parser PASS",
+    "git_diff_check": "PASS"
+  }
+}

@@ -1,0 +1,10 @@
+{"kind": "ready", "ns": 2903730621, "pid": 12, "identity": {"display": ":111", "window": 2097152, "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003", "cell": "keepalive-healthy", "keys": {"F8": 74, "F9": 75}}}
+{"kind": "dispatch_start", "ns": 2906117881, "pid": 12, "program": {"schema": "agent-interface/program-v1", "program_id": "owned-7034", "source": {"observation_seq": 1, "binding_revision": 1}, "authority": {"lease_id": "private-7034", "expires_at_ns": 6906115232}, "terminal": {"release_all_required": true}, "ops": [{"op": "focus", "target": "owned"}, {"op": "key_state", "key": "F8", "down": true}, {"op": "key_state", "key": "F9", "down": true}, {"op": "wait_update", "timeout_ms": 40}, {"op": "release_all"}]}}
+{"kind": "positive_check", "ns": 2907839786, "pid": 12, "key": "F8", "permitted": true}
+{"kind": "native_start", "ns": 2907855818, "pid": 12, "key": "F8"}
+{"kind": "native_end", "ns": 2908020492, "pid": 12, "key": "F8"}
+{"kind": "positive_check", "ns": 2908862417, "pid": 12, "key": "F9", "permitted": true}
+{"kind": "native_start", "ns": 2908879090, "pid": 12, "key": "F9"}
+{"kind": "native_end", "ns": 2909013584, "pid": 12, "key": "F9"}
+{"kind": "dispatch_return", "ns": 2949719756, "pid": 12, "receipt": {"status": "completed", "admission": "accepted", "required_capabilities": ["clock.monotonic", "event.feedback", "input.keyboard", "input.release_all", "window.focus"], "execution": {"started_ns": 2907322547, "ended_ns": 2949697385, "emissions": 4, "program_emissions": 4, "observations": [], "releases": [{"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 2949695028}], "waits": [{"operation_index": 3, "requested_ms": 40, "started_ns": 2909032141, "completed": true, "kind": "fixed_delay", "update_observed": null, "ended_ns": 2949160269}], "activations": [], "completed_ops": [0, 1, 2, 3, 4]}, "recovery_required": false}}
+{"kind": "owner_done", "ns": 2949799803, "pid": 12}

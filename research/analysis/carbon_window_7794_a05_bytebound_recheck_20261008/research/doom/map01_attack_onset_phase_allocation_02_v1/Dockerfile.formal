@@ -1,0 +1,6 @@
+FROM --platform=linux/amd64 map01-attack-onset-formal:20260927
+ENV DEBIAN_FRONTEND=noninteractive PYTHONDONTWRITEBYTECODE=1 PIP_NO_INDEX=1 DISPLAY=:99
+# Reuse the exact offline wheel set already copied into the predecessor image.
+# The Xlib wheel SHA-256 is recorded in the predecessor stop evidence and is
+# independently checked before this image is built.
+RUN python -m pip install --no-index --no-deps --find-links=/opt/wheels python-xlib==0.33 six==1.17.0

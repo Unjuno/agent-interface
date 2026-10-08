@@ -1,0 +1,43 @@
+{
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "rows": [
+    {
+      "cached_session_id": "session-current",
+      "case_id": "same_session",
+      "completed_actions": 0,
+      "effect": null,
+      "execute_adapter_calls": 1,
+      "final_payload": {
+        "cached_session_id": "session-current",
+        "target_id": "target-1"
+      },
+      "outcome": "EXECUTION_INCOMPLETE",
+      "request_session_id": "session-current",
+      "reuse_payload": {
+        "cached_session_id": "session-current",
+        "target_id": "target-1"
+      }
+    },
+    {
+      "cached_session_id": "session-prior",
+      "case_id": "stale_cached_session",
+      "completed_actions": 0,
+      "effect": null,
+      "execute_adapter_calls": 1,
+      "final_payload": {
+        "cached_session_id": "session-prior",
+        "target_id": "target-1"
+      },
+      "outcome": "EXECUTION_INCOMPLETE",
+      "request_session_id": "session-current",
+      "reuse_payload": {
+        "cached_session_id": "session-prior",
+        "target_id": "target-1"
+      }
+    }
+  ],
+  "schema": "issue-2928-current-caller-session-binding-raw-v1",
+  "source_git_blob": "7faf042304728ce91a3e4f89d465b251ea0bf70d",
+  "source_sha256": "8517d130d7336b27e6ddfc0ee06629d2b1183070cf845c3ef4ada8adc3cd79ca"
+}

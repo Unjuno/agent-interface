@@ -1,0 +1,27 @@
+{
+  "agreement": {
+    "independent": true,
+    "omitted_dependency_exposes_false_admission": true,
+    "shared": true,
+    "surface_alias_is_conservative": true,
+    "unknown_fails_closed": true
+  },
+  "classifications": {
+    "aliased_surface_control": "SERIAL_CONFLICT",
+    "independent": "OVERLAP_ELIGIBLE",
+    "omitted_shared_file_control": "OVERLAP_ELIGIBLE",
+    "shared": "SERIAL_CONFLICT",
+    "unknown": "SERIAL_UNKNOWN"
+  },
+  "decision": "PASS_RESOURCE_FOOTPRINT_XTERM_TRANSFER_SCOPED",
+  "pinned": {
+    "report_blob": "eb7c3fd431b333b7b5ee9c8958d59eb56c1d5094",
+    "result_blob": "5286763730c8442bf6b43cbc1038c655a46121fa"
+  },
+  "published_outcomes": {
+    "independent_median_wall_ms": 168.087279,
+    "overlap_independent": ["A_DONE", "B_DONE"],
+    "overlap_shared_negative": ["B_DONE", "B_DONE"],
+    "serial_independent_median_wall_ms": 320.8507305
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "added_file": "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+  "author": "01a0ff59-2f23-7ff0-ba99-cc5cb8d494fc",
+  "created_utc": "2026-10-03T04:11:01.469913+00:00",
+  "main_write": false,
+  "new_command": "node --test research/live_control/test_native_relay_client_v1.mjs research/live_control/test_relay_host_timeline_v1.mjs runtime/host_v1/test_relay_client.mjs runtime/host_v1/test_relay_host.mjs runtime/host_v1/test_evidence_capacity.mjs runtime/host_v1/test_text_acknowledgment.mjs runtime/host_v1/test_primary_caller.mjs runtime/host_v1/test_primary_mint.mjs runtime/host_v1/test_primary_mint_many.mjs runtime/host_v1/test_primary_input.mjs runtime/host_v1/test_primary_window_review.mjs runtime/host_v1/test_primary_exchange.mjs runtime/host_v1/test_primary_stdio.mjs runtime/host_v1/test_primary_stdio_backpressure.mjs",
+  "new_workflow_sha256": "ec80a647b93ad678e71bf9505f17ae915308a7e36c6a3e19a1479e4964042f9d",
+  "node22_runtime": {
+    "archive_bytes": 35574076,
+    "archive_sha256": "2b0ff57b049cda1bbcea2240eec20467018713c1efe1f7360c2681859b90ed71",
+    "ended_utc": "2026-10-03T04:09:32.036533+00:00",
+    "index_url": "https://nodejs.org/download/release/index.json",
+    "license_retained": true,
+    "node_exe_bytes": 86973768,
+    "node_exe_sha256": "9c9245166b4a8e182e0b797da9c20136117ff24368eaff1fec8343a123c8db0e",
+    "release_date": "2026-09-23",
+    "scope": "Private Windows test runtime only; no global install/PATH/configuration changes, not redistributed.",
+    "started_utc": "2026-10-03T04:09:26.313908+00:00",
+    "version": "v22.23.3",
+    "zip_url": "https://nodejs.org/download/release/v22.23.3/node-v22.23.3-win-x64.zip"
+  },
+  "observed_main": "3e93df3755b8ae8e2e063ed8f61524989e4bf3df",
+  "old_command": "node --test research/live_control/test_native_relay_client_v1.mjs research/live_control/test_relay_host_timeline_v1.mjs runtime/host_v1/test_relay_client.mjs runtime/host_v1/test_relay_host.mjs runtime/host_v1/test_evidence_capacity.mjs runtime/host_v1/test_text_acknowledgment.mjs runtime/host_v1/test_primary_caller.mjs runtime/host_v1/test_primary_mint.mjs runtime/host_v1/test_primary_mint_many.mjs runtime/host_v1/test_primary_input.mjs runtime/host_v1/test_primary_window_review.mjs runtime/host_v1/test_primary_exchange.mjs runtime/host_v1/test_primary_stdio.mjs",
+  "old_workflow_sha256": "4045524671875777b9c3e100746951dab2ba7027dfe3a8c5ce405f27c6b6c2ce",
+  "only_workflow_edit": "One filename append; every other byte identical.",
+  "ordinary_verification": "Execute exact proposed Node selection on Windows Node22; do not rerun original child-pipe/science producer or unchanged Python/native integration step.",
+  "overlap_git_checks": [
+    {
+      "head": "dbe05f5ce33b6827dbd3d09e8a85da1e2d20f51a",
+      "pr": 6919,
+      "workflow_equal_v1": true
+    },
+    {
+      "head": "fe42dd5d002d37c186b8aee367461d32cb53df6d",
+      "pr": 6879,
+      "workflow_equal_v1": true
+    },
+    {
+      "head": "7a855e614ce97ac4153e2e54f7bc150e9ec60917",
+      "pr": 6874,
+      "workflow_equal_v1": true
+    },
+    {
+      "head": "4a3c51dd86c592892fa92df523b822e7bce548e2",
+      "pr": 6900,
+      "workflow_equal_v1": true
+    },
+    {
+      "head": "414daf7150c671191049cdb0bfcb22b59fd82845",
+      "pr": 6434,
+      "workflow_equal_v1": true
+    }
+  ],
+  "scope": "CI source/test selection only; no new native input/model/backend/resource/deadline guarantee.",
+  "source_pins": [
+    {
+      "bytes": 10350,
+      "path": "research/live_control/native_relay_client_v1.mjs",
+      "sha256": "5de65441284d1c30364bf7ec57643a7d2d925d5cc8a2c16c42224be13bef6918"
+    },
+    {
+      "bytes": 8424,
+      "path": "research/live_control/relay_host_timeline_v1.mjs",
+      "sha256": "1194a02ff4fc5eed6d34c85ea212f46db6782c7d7e3028235e04428f4666753b"
+    },
+    {
+      "bytes": 9646,
+      "path": "research/live_control/test_native_relay_client_v1.mjs",
+      "sha256": "878f1a6092741f88ac6169482c1173befb4e2249ac6fc29ff673dcb06c21f4b3"
+    },
+    {
+      "bytes": 13621,
+      "path": "research/live_control/test_relay_host_timeline_v1.mjs",
+      "sha256": "82d34bfcade5e09186bdfde38e0b92e2b340a3ef9384818bba9de3d66306a763"
+    },
+    {
+      "bytes": 9906,
+      "path": "runtime/host_v1/FEEDBACK.md",
+      "sha256": "34ee27804c10cfb0981c126ef6f640dfc5f3ef75e8cc4d31ad0ad8bccab44433"
+    },
+    {
+      "bytes": 39539,
+      "path": "runtime/host_v1/README.md",
+      "sha256": "41f9147d72f1a029465714cb86e1377428791126d4dd1bc302331f0eb07b357e"
+    },
+    {
+      "bytes": 63,
+      "path": "runtime/host_v1/__init__.py",
+      "sha256": "ad15f5f3b7513a9400201abc6bbd055a809cdec8517072ed0e3f4af7ca11344d"
+    },
+    {
+      "bytes": 1985,
+      "path": "runtime/host_v1/file_publication.py",
+      "sha256": "90898c9f758e9fd84bd0e9fcb4e42ef4e7fa8cccf3268fe478ebc49c5b645ccd"
+    },
+    {
+      "bytes": 13596,
+      "path": "runtime/host_v1/primary_caller.mjs",
+      "sha256": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e"
+    },
+    {
+      "bytes": 4236,
+      "path": "runtime/host_v1/primary_exchange.mjs",
+      "sha256": "e3bbaa6cb79beede5882f47c42d46ae4c405b5392575b8a62a48de3177353420"
+    },
+    {
+      "bytes": 5745,
+      "path": "runtime/host_v1/primary_stdio.mjs",
+      "sha256": "c4ff21ad4a52f1532917ea304cd6bd19aabdd1baf933109147b231098d08c3a1"
+    },
+    {
+      "bytes": 12382,
+      "path": "runtime/host_v1/relay_client.mjs",
+      "sha256": "34201c4655f8d0db0e463f840772af27333949d19e117293759271e71856d3e8"
+    },
+    {
+      "bytes": 11930,
+      "path": "runtime/host_v1/relay_host.mjs",
+      "sha256": "7c83f07126f90761a1d74abf92681a6d1441b0f9320025956c7b025fdbca3984"
+    },
+    {
+      "bytes": 3955,
+      "path": "runtime/host_v1/test_evidence_capacity.mjs",
+      "sha256": "495f0770083c0e4ab16bdd07ea6629ae095e7e5cb2994092c7941c3662f48f92"
+    },
+    {
+      "bytes": 18291,
+      "path": "runtime/host_v1/test_primary_caller.mjs",
+      "sha256": "7c680655bcb9f97c4d80145404a0d00c0b1b7977ad72225fe8701e1a8ad401fd"
+    },
+    {
+      "bytes": 6326,
+      "path": "runtime/host_v1/test_primary_exchange.mjs",
+      "sha256": "16d4e35451d2febccb956799b94818c42b4763b397d065d6d132a5038774179d"
+    },
+    {
+      "bytes": 6458,
+      "path": "runtime/host_v1/test_primary_input.mjs",
+      "sha256": "4ffb79b9219a757fdf8466ffdab233f7ae67c9df9f1df2f3956bbe2fec2fddf7"
+    },
+    {
+      "bytes": 2468,
+      "path": "runtime/host_v1/test_primary_mint.mjs",
+      "sha256": "865cfa77243177f9bc2f2a188b30837a16fc61461ef892e458026bc1cd42ba4b"
+    },
+    {
+      "bytes": 3782,
+      "path": "runtime/host_v1/test_primary_mint_many.mjs",
+      "sha256": "fa3cb6c55b7835f24535f3cd6482e71091c456b9b7cdb7a6ec0168cb54144d88"
+    },
+    {
+      "bytes": 7831,
+      "path": "runtime/host_v1/test_primary_stdio.mjs",
+      "sha256": "bf7a41c4954af4b64bbbe97f2923c362509a1931ec39705ecb380f5463915cee"
+    },
+    {
+      "bytes": 3403,
+      "path": "runtime/host_v1/test_primary_stdio_backpressure.mjs",
+      "sha256": "89cf485c7e130c377190c58afca3741fd750a5a76b9d5cc3ab958ae5d6353bef"
+    },
+    {
+      "bytes": 2342,
+      "path": "runtime/host_v1/test_primary_window_review.mjs",
+      "sha256": "3f1407b1d112977d90fd03dd1e7c1a8754311b3bcab7cb4ca4995a1c071bce21"
+    },
+    {
+      "bytes": 10709,
+      "path": "runtime/host_v1/test_relay_client.mjs",
+      "sha256": "4e9f692a76e614fe2db0f28a6a6663e557affd61bcb262b2f587b6ad5c27d380"
+    },
+    {
+      "bytes": 16845,
+      "path": "runtime/host_v1/test_relay_host.mjs",
+      "sha256": "fe80c00ebda9c1390cee39b011b8a7b543ae71b6f99e40c6cd5c68edbfb85415"
+    },
+    {
+      "bytes": 4956,
+      "path": "runtime/host_v1/test_text_acknowledgment.mjs",
+      "sha256": "31447856af7dec62661d8c2a1c08594736a82d0db7d2419f23e48c36f27f0dd7"
+    },
+    {
+      "bytes": 15056,
+      "path": "runtime/integration_checks/host_timing.py",
+      "sha256": "9e7d207de0de4a0f35b15137afad5eea89381763633e7711e696bd07c2bdfee6"
+    }
+  ],
+  "unchanged_old_package_files": 125,
+  "v1_head": "f497a9fabcb1393d6858da057475a8e2c4abd2e3",
+  "v1_review_base": "cb13a10dce358649458f5aea00947b8aa43fc5b8",
+  "workflow_path": ".github/workflows/native-mcp-v1.yml"
+}

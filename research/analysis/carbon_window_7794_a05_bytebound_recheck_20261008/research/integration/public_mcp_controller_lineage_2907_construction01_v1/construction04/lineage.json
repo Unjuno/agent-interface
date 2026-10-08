@@ -1,0 +1,216 @@
+{
+  "authority_granted": false,
+  "backend_object_identity": 131918314771840,
+  "cleanup": {
+    "apps_terminated": 3,
+    "owned_pids": [
+      26,
+      67,
+      87,
+      111,
+      132,
+      133,
+      151,
+      153,
+      170,
+      211,
+      220,
+      221
+    ],
+    "xvfb_alive_before_cleanup": true
+  },
+  "dispatches": [
+    {
+      "case": "stale-observation",
+      "receipt": {
+        "result": {
+          "backend_emissions": 0,
+          "error": "STALE_OBSERVATION",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "status": "refused"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      }
+    },
+    {
+      "case": "fresh-neutral-no-lease",
+      "receipt": {
+        "result": {
+          "admission": "accepted",
+          "execution": {
+            "completed_ops": [
+              0,
+              1
+            ],
+            "emissions": 2,
+            "ended_ns": 20150189016432,
+            "observations": [],
+            "program_emissions": 2,
+            "releases": [
+              {
+                "buttons_down": [],
+                "keys_down": [],
+                "monotonic_ns": 20150189013572,
+                "verified": true
+              }
+            ],
+            "started_ns": 20150187940940,
+            "waits": []
+          },
+          "recovery_required": false,
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all"
+          ],
+          "status": "completed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 228,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction04/images/19ef0c38ae164468a9ef493904303207.png",
+          "sha256": "b7adbfd93fc97a4eeeb76516e6477e819553601ed653466345a25d963e60fbc9",
+          "source_raw_sha256": "8eafc7bd411c1f02b9e972a83d2b0a4164eefc5ef51e6b63ad7acc78be4ad44f",
+          "timing_ns": {
+            "converted": 20150130444349,
+            "encoded": 20150138635288,
+            "hashed": 20150143853450,
+            "started": 20150130360339,
+            "written": 20150143716770
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20150130192808,
+        "capture_started_ns": 20150129628134,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 4194311,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "8eafc7bd411c1f02b9e972a83d2b0a4164eefc5ef51e6b63ad7acc78be4ad44f",
+        "target": "inkscape",
+        "width": 320
+      },
+      "sequence": 1,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "inkscape",
+      "window_id": 4194311
+    },
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 1260,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction04/images/6d7df0cfbbc54734a7892fe572c0ed2e.png",
+          "sha256": "0a97a9387f096eeab11c60153580ab66a53ba1482726935e9b9d515f93be00c9",
+          "source_raw_sha256": "d4cf9a2b0d9fe33ba48d54ccbec34de973c0462c566ce86d2a17f720bfdef313",
+          "timing_ns": {
+            "converted": 20150151215723,
+            "encoded": 20150152407617,
+            "hashed": 20150156036838,
+            "started": 20150151146708,
+            "written": 20150155878166
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20150150982726,
+        "capture_started_ns": 20150150618748,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 6292261,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "d4cf9a2b0d9fe33ba48d54ccbec34de973c0462c566ce86d2a17f720bfdef313",
+        "target": "calc",
+        "width": 320
+      },
+      "sequence": 2,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "calc",
+      "window_id": 6292261
+    },
+    {
+      "binding_revision": 1,
+      "image_sha256": null,
+      "input_dispatched": false,
+      "observation": {
+        "artifact": {
+          "bytes": 10191,
+          "height": 160,
+          "mime_type": "image/png",
+          "path": "/evidence/construction04/images/6a037a11cbc14b93a05f7ffd7057ae03.png",
+          "sha256": "f9e88a2632511187324674cd7ac27cc95d3f5d0c43f4b7d97606e13c6e0bdab6",
+          "source_raw_sha256": "10b35f4d18c648498fffe90474dfa2eee5f5c59693fb0fa4518a11702b4468a8",
+          "timing_ns": {
+            "converted": 20150162374105,
+            "encoded": 20150163927470,
+            "hashed": 20150167890963,
+            "started": 20150162325526,
+            "written": 20150167718261
+          },
+          "width": 320
+        },
+        "bytes": 204800,
+        "capture_ended_ns": 20150162180923,
+        "capture_started_ns": 20150161952338,
+        "frame": "window_client",
+        "height": 160,
+        "native_window_id": 8388611,
+        "region": [
+          0,
+          0,
+          320,
+          160
+        ],
+        "sha256": "10b35f4d18c648498fffe90474dfa2eee5f5c59693fb0fa4518a11702b4468a8",
+        "target": "chromium",
+        "width": 320
+      },
+      "sequence": 3,
+      "side_effect_authority": false,
+      "status": "returned",
+      "target": "chromium",
+      "window_id": 8388611
+    }
+  ],
+  "release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 20150189342210,
+    "verified": true
+  },
+  "session_id": "47df52d5d7508c2e830c46b3",
+  "session_object_identity": 131918312927936
+}
+

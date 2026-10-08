@@ -1,0 +1,251 @@
+[
+    {
+        "Id": "c82c35fabcd5596b1a4af8bd6747f00cf226293551c2ded421d2319c4069335c",
+        "Created": "2026-10-03T02:41:17.554623219Z",
+        "Path": "/usr/bin/python3",
+        "Args": [
+            "-B",
+            "python3",
+            "-B",
+            "/src/run.py",
+            "--cases",
+            "/src/construction_cases.json",
+            "--output",
+            "/out/construction01",
+            "--construction"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 2,
+            "Error": "",
+            "StartedAt": "2026-10-03T02:41:17.633830411Z",
+            "FinishedAt": "2026-10-03T02:41:17.706156414Z"
+        },
+        "Image": "sha256:2b2227efdf73f5b81c660af2a8f014a0e7ed492cdd54204f55e4318287764821",
+        "ResolvConfPath": "/var/lib/docker/containers/c82c35fabcd5596b1a4af8bd6747f00cf226293551c2ded421d2319c4069335c/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/c82c35fabcd5596b1a4af8bd6747f00cf226293551c2ded421d2319c4069335c/hostname",
+        "HostsPath": "/var/lib/docker/containers/c82c35fabcd5596b1a4af8bd6747f00cf226293551c2ded421d2319c4069335c/hosts",
+        "LogPath": "/var/lib/docker/containers/c82c35fabcd5596b1a4af8bd6747f00cf226293551c2ded421d2319c4069335c/c82c35fabcd5596b1a4af8bd6747f00cf226293551c2ded421d2319c4069335c-json.log",
+        "Name": "/clipboard36-x11-01a0ff51-construction01",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": null,
+            "Tmpfs": {
+                "/tmp": "rw,nosuid,size=64m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 536870912,
+            "NanoCpus": 500000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 1073741824,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 128,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/mnt/clipboard36-x11-src-01a0ff51",
+                    "Target": "/src",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/mnt/clipboard36-x11-out-01a0ff51",
+                    "Target": "/out"
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/mnt/clipboard36-x11-src-01a0ff51",
+                "Destination": "/src",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/mnt/clipboard36-x11-out-01a0ff51",
+                "Destination": "/out",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "c82c35fabcd5",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "QT_QPA_PLATFORM=xcb",
+                "QT_LOGGING_RULES=qt.qpa.*=false",
+                "PYTHONDONTWRITEBYTECODE=1",
+                "OMP_NUM_THREADS=1",
+                "QT_XCB_GL_INTEGRATION=none"
+            ],
+            "Cmd": [
+                "python3",
+                "-B",
+                "/src/run.py",
+                "--cases",
+                "/src/construction_cases.json",
+                "--output",
+                "/out/construction01",
+                "--construction"
+            ],
+            "Image": "clipboard36-x11-01a0ff51:v1",
+            "Volumes": null,
+            "WorkingDir": "/src",
+            "Entrypoint": [
+                "/usr/bin/python3",
+                "-B"
+            ],
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "db3ded5fe1b07a4294392091475236a30bd00b048d79da1c33fca23cbf2f6d9f",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:2b2227efdf73f5b81c660af2a8f014a0e7ed492cdd54204f55e4318287764821",
+            "size": 1184,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]

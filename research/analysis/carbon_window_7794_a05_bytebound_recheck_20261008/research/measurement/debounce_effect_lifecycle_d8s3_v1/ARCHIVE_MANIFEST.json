@@ -1,0 +1,27 @@
+{
+  "schema": "agent-interface/retrospective-evidence-archive-v1",
+  "issue": 4426,
+  "retrospective_publication": true,
+  "scientific_reruns_for_publication": 0,
+  "original_zip": {
+    "sha256": "69bf4a8bf23c14a2451ce9407cc40989f994100c7e0fb3d789c93e695db555bb",
+    "members": 314
+  },
+  "canonical_tar_xz": {
+    "decoded_bytes": 73836,
+    "sha256": "ca08faeea1bcb181b9f10524eca2397d1f54052c47d6c9916997b7a55e54a32d",
+    "base64_chars": 98448,
+    "base64_sha256": "057957d9f7782db0781c640d131efee7fe11cdfe764750639d6250b95c350c9d",
+    "tar_members_including_directories": 355
+  },
+  "parts": [
+    {"path":"evidence.part01.b64","bytes":10000,"git_blob":"8b9e3eca69abda6245229eea62b5216e0728bf2f","sha256":"ec09132cd35282ee538ddb2b150c8ba38c47ce23e7183f15d03e8e6fb8694fa0"},
+    {"path":"evidence.part02.b64","bytes":10000,"git_blob":"74a532ee522d89ff5c0e942d4bc0538d23b8c884","sha256":"8390830b937057341ef5abdec60c87ac2d89281ce11ba84b9c82746cd89bec3e"},
+    {"path":"evidence.part03.b64","bytes":10000,"git_blob":"4e4035e03d0f3e343712fc9346a047969134c04f","sha256":"0f945394e04ef182d45da6fcc4a236e4e4be6fed3f87369a65d7c067e22b466b"},
+    {"path":"evidence.part04.b64","bytes":20000,"git_blob":"97277ea17b922a539d3e6646a9d610765ed3fe44","sha256":"7b3949ef053f454c72d4f1655eb08f8e8ca5dd32e63224b638a8d55334f1bf46"},
+    {"path":"evidence.part05.b64","bytes":20000,"git_blob":"876327569dd6101d3b47902ef02c045e0f7be2d9","sha256":"46e39d2ba26b8f54fb2cf66c65050b8ee15317fdb470ab3f6299ef979c3c7d83"},
+    {"path":"evidence.part06.b64","bytes":20000,"git_blob":"60092523428cd57f9751734b2ffcd6e4d0c722ff","sha256":"84b6139bbee2ef06fabeae3f466a71e3448680ba5f30b6491c07cf6634f7d8f9"},
+    {"path":"evidence.part07.b64","bytes":8448,"git_blob":"b68cd450365a957eaf2f1d3194441ffce5fe6f55","sha256":"4d60dd2f2aa0489a84d8e48be2f589482171d47224a02599848473642d6c1e1f"}
+  ],
+  "restore": "Concatenate parts in numeric order, strict-base64 decode, require canonical_tar_xz SHA-256, then safe-extract into a new directory. Run the retained verify.py from the restored study; it is read-only and does not launch scientific actors."
+}

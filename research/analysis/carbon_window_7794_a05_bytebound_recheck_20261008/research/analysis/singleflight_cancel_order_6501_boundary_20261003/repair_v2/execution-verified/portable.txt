@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "<PRIVATE_WORKSPACE>\outputs\singleflight-cancel-order-public-v4\repair_v2\verify_retained.py", line 31, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "<PRIVATE_WORKSPACE>\outputs\singleflight-cancel-order-public-v4\repair_v2\verify_retained.py", line 27, in main
+    for line in (ROOT.parent/'SHA256SUMS').read_text().splitlines():
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_PYTHON_ROOT>\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_PYTHON_ROOT>\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '<PRIVATE_WORKSPACE>\\outputs\\singleflight-cancel-order-public-v4\\SHA256SUMS'

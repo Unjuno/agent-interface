@@ -1,0 +1,211 @@
+"""Independent typed saved-data review; imports no client, test suite, or peer helper."""
+import ast
+import base64
+import copy
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import traceback
+
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parents[1]
+OWN=ROOT/'work/repairs/appserver-journal-close-02'
+SAVED=ROOT/'outputs/appserver-journal-close-02'
+START=datetime.datetime.now(datetime.timezone.utc).isoformat()
+FRAME={'method':'owned/late-frame','params':{'marker':'reader-retirement-v2'}}
+
+def sha(raw):return hashlib.sha256(raw).hexdigest()
+def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+def need(value,label):
+    if not value:raise ValueError(label)
+def exact(value,expected,label):need(canonical(value)==canonical(expected),label)
+def integer(value,label):need(type(value) is int and value>=0,label)
+def decoded(value):need(type(value) is str,'base64 string');return base64.b64decode(value,validate=True)
+def load(path):return json.loads(path.read_bytes())
+def date(value):return datetime.datetime.fromisoformat(value)
+def fields(row,expected):
+    for key,value in expected.items():exact(row[key],value,key)
+
+def new_row(row,stage):
+    method=row['method']
+    healthy=method=='test_healthy_eof_retires_reader_and_journal'
+    journal=method!='test_live_reader_without_journal_reports_incomplete_and_keeps_frame'
+    fields(row,{'kind':'new-owned-parent-plus-independent-writer-pipe','held_writer':not healthy,'journal_enabled':journal,
+       'configured_close_seconds':0.05,'observation_checkpoint_seconds':0.5,'parent_exit_before_close':0,
+       'parent_final_exit':0,'parent_stderr_base64':'','close_done_at_checkpoint':True,
+       'reader_alive_at_checkpoint':not healthy,'journal_lock_locked_at_checkpoint':False,
+       'reader_alive_after_release':False,'caller_alive_after_release':False,'actual_client_closed':True,
+       'actual_responses':{},'second_close':{'return_value':None},'parent_driver_closed_handles':[True,True,True]})
+    need('driver_parent_kill_required' not in row and 'driver_writer_kill_required' not in row,'no killed native cell')
+    cp=row['first_outcome']
+    for key in ['start_ns','end_ns']:integer(cp[key],key)
+    integer(row['first_checkpoint_ns'],'checkpoint clock')
+    need(cp['start_ns']<=cp['end_ns']<=row['first_checkpoint_ns'],'clock order ties allowed')
+    refused=stage!='red' and not healthy
+    expected_keys={'start_ns','end_ns','error_type','error_message'} if refused else {'start_ns','end_ns','return_value'}
+    exact(sorted(cp),sorted(expected_keys),'outcome keys')
+    fields(cp,{'error_type':'TimeoutError','error_message':'app-server reader close timed out'} if refused else {'return_value':None})
+    if not healthy:
+        fields(row,{'writer_ready_bytes':0,'writer_exit_before_close':None,'writer_final_exit':0,
+                    'writer_stderr_base64':'','writer_driver_closed_handles':[True,True]})
+    lost=(stage=='red' and not healthy and journal)
+    exact(row['reader_errors'],[{'type':'ValueError','message':'I/O operation on closed file.'}] if lost else [],'reader errors')
+    exact(row['actual_notifications'],[FRAME] if not healthy and not lost else [],'late notification custody')
+    if journal:
+        fields(row,{'journal_closed_at_checkpoint':healthy or stage=='red','journal_final_closed':True})
+        need(decoded(row['journal_before_release_base64'])==b'','empty pre-release journal')
+        raw=decoded(row['journal_final_base64']); records=[json.loads(line) for line in raw.splitlines()]
+        need(len(records)==int(not healthy and not lost),'exact journal count')
+        if records:
+            exact(sorted(records[0]),['direction','message','observed_ns'],'received journal keys')
+            fields(records[0],{'direction':'received','message':FRAME})
+            integer(records[0]['observed_ns'],'journal typed clock');need(records[0]['observed_ns']>0,'positive journal clock')
+    else:
+        fields(row,dict.fromkeys(['journal_before_release_base64','journal_final_base64','journal_closed_at_checkpoint','journal_final_closed']))
+    need(len(row['native_handles'])==(1 if healthy else 2),'one parent / optional writer')
+    for handle in row['native_handles']:
+        integer(handle['pid'],'native PID');need(handle['pid']>0,'positive native PID')
+        need(date(handle['spawn_started_utc'])<=date(handle['spawn_returned_utc']),'spawn envelope')
+    return {'method':method,'reader_refused':refused,'reader_frame_lost':lost,'journal_present':journal,
+            'late_notifications':len(row['actual_notifications']),'reader_retired_after_release':True}
+
+def old_row(row):
+    method=row['method']
+    if row['kind']=='pure-owned-objects':
+        expected={
+          'test_already_closed_journal_does_not_acquire_contended_lock':{'return_value':None,'journal_close_calls':0,'journal_closed':True,'holder_lock_remains_locked':True},
+          'test_explicit_none_timeout_preserves_unlimited_journal_mode':{'return_value':None,'journal_close_calls':1,'journal_closed':True,'lock_released':True,'reader_join_timeout':None},
+          'test_explicit_none_timeout_without_journal_preserves_reader_join':{'return_value':None,'reader_join_timeout':None,'lock_released':True},
+          'test_journal_close_exception_preserves_error_and_releases_lock':{'same_error_instance':True,'error_type':'ValueError','journal_close_calls':1,'journal_closed':False,'lock_released':True},
+        }[method]
+        exact(row,{'kind':'pure-owned-objects','method':method,**expected},'exact pure old row')
+        return {'method':method,'preserved':True}
+    held=method!='test_uncontended_journal_retires_without_changing_bytes'
+    journal=method!='test_no_journal_does_not_acquire_contended_lock'
+    fields(row,{'kind':'owned-native-silent-transport','journal_enabled':journal,'fixture_held_lock':held,
+      'configured_wait_seconds':0.05,'fixed_checkpoint_seconds':0.25,'completed_at_checkpoint':True,
+      'caller_alive_at_checkpoint':False,'child_exit_at_checkpoint':1,'final_child_exit':1,'reader_alive_at_checkpoint':False,
+      'journal_lock_still_locked':held,'client_pipes_closed_at_checkpoint':[False,False,False],
+      'final_reader_alive':False,'final_caller_alive':False,'driver_closed_pipe_handles':[True,True,True]})
+    # Bind the saved Windows terminate() outcome without claiming a portable exit number.
+    cp=row['checkpoint_outcome']
+    integer(row['child_pid'],'old native PID');need(row['child_pid']>0,'old positive PID')
+    for key in ['start_ns','end_ns']:integer(cp[key],key)
+    integer(row['checkpoint_ns'],'old checkpoint clock')
+    need(cp['start_ns']<=cp['end_ns']<=row['checkpoint_ns'],'old clock order')
+    exact(row['cleanup_outcome'],cp,'first result immutable through cleanup')
+    if held and journal:
+        exact(sorted(cp),['end_ns','error_message','error_type','start_ns'],'journal refusal keys')
+        fields(cp,{'error_type':'TimeoutError','error_message':'app-server journal close timed out'})
+    else:
+        exact(sorted(cp),['end_ns','return_value','start_ns'],'old healthy result keys');fields(cp,{'return_value':None})
+    if journal:
+        fields(row,{'journal_closed_at_checkpoint':not held,'journal_bytes_equal_seed_at_checkpoint':True,
+                    'final_journal_closed':True,'final_journal_bytes_equal_seed':True})
+        need(decoded(row['journal_seed_base64'])==decoded(row['journal_final_base64']),'old exact journal seed custody')
+    else:
+        fields(row,dict.fromkeys(['journal_closed_at_checkpoint','journal_bytes_equal_seed_at_checkpoint','final_journal_closed',
+                    'final_journal_bytes_equal_seed','journal_seed_base64','journal_final_base64']))
+    return {'method':method,'preserved':True}
+
+def main():
+    before=(HERE/'owned-v1-client.py.txt').read_bytes(); after=(OWN/'codex_app_server_client_v2.py').read_bytes()
+    needle=b'        self._reader.join(timeout=timeout)\n'
+    guard=needle+b'        if self._reader.is_alive():\n            raise TimeoutError("app-server reader close timed out")\n'
+    need(before.count(needle)==1 and before.replace(needle,guard,1)==after,'exact104B reader guard only')
+    oldtest=(HERE/'owned-v1-test.py.txt').read_bytes(); adapted=(OWN/'test_appserver_journal_close_01a0ff2d.py').read_bytes()
+    n=b'        self.timeout = timeout\n'; add=n+b'\n    def is_alive(self):\n        return False\n'
+    need(oldtest.count(n)==1 and oldtest.replace(n,add,1)==adapted,'exact46B retired-reader double only; all old assertions unchanged')
+    newtest=(OWN/'test_appserver_reader_retirement_01a0ff2d.py').read_bytes()
+    for raw in (before,after,oldtest,adapted,newtest):ast.parse(raw)
+    old_methods={n.name for cls in ast.parse(adapted).body if isinstance(cls,ast.ClassDef) for n in cls.body if isinstance(n,ast.FunctionDef) and n.name.startswith('test_')}
+    new_methods={n.name for cls in ast.parse(newtest).body if isinstance(cls,ast.ClassDef) for n in cls.body if isinstance(n,ast.FunctionDef) and n.name.startswith('test_')}
+    need(len(old_methods)==7 and len(new_methods)==3,'exact7old+3new methods')
+    writer=next(n.value.value for n in ast.parse(newtest).body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='WRITER' for t in n.targets))
+    freeze=load(SAVED/'FREEZE_BEFORE_RED.json'); fix=load(SAVED/'FIX_BEFORE_GREEN.json')
+    exact(freeze['source_sha256_before'],sha(before),'freeze original source')
+    exact(freeze['old_test_sha256'],sha(oldtest),'freeze original test')
+    exact(freeze['adapted_test_sha256'],sha(adapted),'freeze adapted test')
+    exact(freeze['new_test_sha256'],sha(newtest),'freeze new test')
+    fields(fix,{'before_sha256':sha(before),'after_sha256':sha(after),'after_bytes':len(after),'only_changed_method':'close'})
+    rows=[]; summaries=[]; receipts=[]; semantic={}
+    for stage,count,exit_code in [('red',3,1),('green-normal',10,0),('green-optimized',10,0)]:
+        folder=SAVED/stage; intent=load(folder/'INTENT.json'); receipt=load(folder/'receipt.json')
+        for key,value in intent.items():exact(receipt[key],value,'prospective command intent '+key)
+        fields(receipt,{'stage':stage,'exit_code':exit_code,'ordinary_repair_regression':True,'peer_or_formal_replay':False})
+        need(date(receipt['driver_started_utc'])<=date(receipt['written_before_native_start_utc'])<=date(receipt['started_utc'])<=date(receipt['ended_utc']),'actual command UTC envelope')
+        need(date(freeze['freeze_utc'])<date(receipt['started_utc']),'prospective definition freeze')
+        if stage!='red':need(date(fix['created_before_green_utc'])<date(receipt['started_utc']),'prospective source repair')
+        for name,pin in receipt['identities'].items():
+            raw=(folder/('executed-'+name+'.txt')).read_bytes()
+            exact({'bytes':len(raw),'sha256':sha(raw)},pin,'executed image '+name)
+            expected=before if name=='codex_app_server_client_v2.py' and stage=='red' else after if name=='codex_app_server_client_v2.py' else adapted if name=='test_appserver_journal_close_01a0ff2d.py' else newtest
+            need(raw==expected,'exact source/test freeze image')
+        for stream in ('stdout','stderr'):
+            raw=(folder/(stream+'.log')).read_bytes()
+            fields(receipt,{stream+'_bytes':len(raw),stream+'_sha256':sha(raw)})
+        stderr=(folder/'stderr.log').read_text(encoding='utf-8')
+        need(('Ran '+str(count)+' tests in ') in stderr,'actual test count')
+        need(('FAILED (failures=2)' if stage=='red' else '\nOK\n') in stderr.replace('\r\n','\n'),'actual unittest result')
+        files=sorted((folder/'cases').glob('*.json'));need(len(files)==count,'saved row count')
+        seen=set(); normalized=[]; child_count=0
+        for path in files:
+            row=load(path);need(row['method']==path.stem and row['method'] not in seen,'unique selected method');seen.add(row['method'])
+            if row['kind']=='new-owned-parent-plus-independent-writer-pipe':
+                norm=new_row(row,stage)
+                for index,handle in enumerate(row['native_handles']):
+                    need(date(receipt['started_utc'])<=date(handle['spawn_started_utc'])<=date(handle['spawn_returned_utc'])<=date(receipt['ended_utc']),'native handle within actual command')
+                    exact(handle['argv'][:4],[receipt['argv'][0],'-B','-u','-c'],'new native command prefix')
+                    if index==0:exact(handle['argv'][4:],[ 'pass' ],'owned parent command')
+                    else:
+                        need(len(handle['argv'])==6,'owned writer command denominator')
+                        exact(handle['argv'][4],writer,'exact frozen writer source')
+                        need(Path(handle['argv'][5]).name=='writer-ready','fixed empty ready sidecar')
+                child_count+=len(row['native_handles'])
+            else:
+                norm=old_row(row);child_count+=int(row['kind']=='owned-native-silent-transport')
+            rows.append({'stage':stage,'file':str(path.relative_to(SAVED)),'sha256':sha(path.read_bytes()),'row':row})
+            normalized.append(norm)
+        exact(sorted(seen),sorted(new_methods if stage=='red' else old_methods|new_methods),'actual selected saved methods')
+        summaries.append({'stage':stage,'rows':count,'transport_process_invocations_declared_by_rows':child_count,'native_command_pid':receipt['pid'],
+                          'started_utc':receipt['started_utc'],'ended_utc':receipt['ended_utc'],'exit_code':exit_code,'semantic_rows':normalized})
+        semantic[stage]=normalized;receipts.append(receipt)
+    exact(semantic['green-normal'],semantic['green-optimized'],'typed normal/-O semantic results')
+    controls=[]
+    def challenge(label,stage,method,edit):
+        original=next(r['row'] for r in rows if r['stage']==stage and r['row']['method']==method)
+        mutated=copy.deepcopy(original);edit(mutated);need(canonical(original)!=canonical(mutated),'effective copy')
+        try:
+            (new_row(mutated,stage) if mutated['kind']=='new-owned-parent-plus-independent-writer-pipe' else old_row(mutated))
+        except (ValueError,KeyError) as error:
+            controls.append({'label':label,'copy_sha256':sha(canonical(mutated)),'rejected':True,'reason':str(error),'copy':mutated})
+        else:raise ValueError('accepted semantic copy '+label)
+    live='test_live_reader_preserves_journal_and_late_frame'
+    challenge('Boolean-exit-alias','green-normal',live,lambda r:r.update(parent_final_exit=False))
+    challenge('normal-return-relabel','green-normal',live,lambda r:r.update(first_outcome={'start_ns':r['first_outcome']['start_ns'],'end_ns':r['first_outcome']['end_ns'],'return_value':None}))
+    challenge('closed-live-journal','green-normal',live,lambda r:r.update(journal_closed_at_checkpoint=True))
+    challenge('late-frame-lost','green-normal',live,lambda r:r.update(actual_notifications=[]))
+    challenge('no-journal-reader-retired-relabel','green-normal','test_live_reader_without_journal_reports_incomplete_and_keeps_frame',lambda r:r.update(reader_alive_at_checkpoint=False))
+    challenge('old-error-instance-alias','green-normal','test_journal_close_exception_preserves_error_and_releases_lock',lambda r:r.update(same_error_instance=1))
+    result={'review_pid':os.getpid(),'started_utc':START,'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'source_sha256':sha(Path(__file__).read_bytes()),'role':'same-author auxiliary saved-data/source review only; not a nonauthor vote',
+            'final_source_sha256':sha(after),'adapted_test_sha256':sha(adapted),'new_test_sha256':sha(newtest),
+            'exact104B_guard_only':True,'exact46B_test_double_only':True,'all_old_test_assertions_unchanged':True,
+            'saved_rows':23,'summaries':summaries,'row_images':[{k:v for k,v in r.items() if k!='row'} for r in rows],
+            'controls':controls,'repository_client_test_or_peer_imports':0,'native_subject_process_replays':0,
+            'limits':['notification late-frame route observed; response-ID route unchanged-source inference',
+                      'live-reader/already-closed-journal conditional precedence follows exact source; no new dynamic cell',
+                      'None tests preserve retired-double API values; not an unbounded-wait physical measurement',
+                      'saved handles/outcomes are author records, not new identity-authenticated process observations']}
+    with (HERE/'final-saved-review.json').open('x',encoding='utf-8',newline='\n') as handle:json.dump(result,handle,sort_keys=True,indent=2);handle.write('\n')
+    print(json.dumps({k:v for k,v in result.items() if k not in ['controls','row_images','summaries']},sort_keys=True))
+    print(json.dumps(summaries,sort_keys=True))
+
+try:
+    main()
+except Exception:
+    with (HERE/'final-review-first-error.txt').open('x',encoding='utf-8',newline='\n') as handle:traceback.print_exc(file=handle)
+    with (HERE/'final-review-first-error-receipt.json').open('x',encoding='utf-8') as handle:json.dump({'pid':os.getpid(),'started_utc':START,'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source_sha256':sha(Path(__file__).read_bytes())},handle,indent=2)
+    raise

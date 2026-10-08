@@ -1,0 +1,15 @@
+{
+  "task": "COORD-INTENT-GC-WATERMARK-20260917-022",
+  "container_first": true,
+  "history_capacity": 2,
+  "measured_order": [
+    "id_only_after_gc",
+    "watermark_expired_replay",
+    "watermark_fresh_reuse",
+    "watermark_retained_conflict"
+  ],
+  "formal_runner_max_invocations": 1,
+  "no_tuning_after_formal_result": true,
+  "retirement_mechanism": "scalar retired_through_seq",
+  "intent_ordering": "monotonic contiguous issuer sequence"
+}

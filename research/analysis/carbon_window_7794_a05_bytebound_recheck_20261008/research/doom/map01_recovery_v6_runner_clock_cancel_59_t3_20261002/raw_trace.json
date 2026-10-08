@@ -1,0 +1,321 @@
+{
+  "allocation": "MAP01-V6-RUNNER-CLOCK-CANCEL-59-T3-20261002-01",
+  "base_commit": "2240189b46c5f393bb7b1d5080e8eace748b0251",
+  "candidate_invocations": 1,
+  "cases": [
+    {
+      "cancel_observed_ns": 109451966449000,
+      "case": "A-clock-before-cancel-within-lease",
+      "clock_delay_ms": 400,
+      "clock_return_ns": 109451966338200,
+      "events": [
+        {
+          "accepted_ns": 109450939602200,
+          "event": "accepted",
+          "id": "pair0-bounded_recovery-prelude",
+          "program_sha256": "66ecccf2ef176de5dd84df941f63595d609de387974bbe1c0cede2dfe3795bbc",
+          "steps": 2,
+          "valid_until_ns": 109452939486500
+        },
+        {
+          "event": "step_started",
+          "id": "pair0-bounded_recovery-prelude",
+          "issued_ns": 109450940123600,
+          "operation": "hold",
+          "step": 0
+        },
+        {
+          "completed_ns": 109450940134100,
+          "event": "step_completed",
+          "id": "pair0-bounded_recovery-prelude",
+          "step": 0
+        },
+        {
+          "event": "step_started",
+          "id": "pair0-bounded_recovery-prelude",
+          "issued_ns": 109450940137700,
+          "operation": "observe",
+          "step": 1
+        },
+        {
+          "completed_ns": 109450940140100,
+          "event": "step_completed",
+          "id": "pair0-bounded_recovery-prelude",
+          "step": 1
+        },
+        {
+          "event": "input_released",
+          "id": "pair0-bounded_recovery-prelude",
+          "release_ns": 109450940142800,
+          "verified": true
+        },
+        {
+          "error": null,
+          "event": "terminal",
+          "id": "pair0-bounded_recovery-prelude",
+          "release": {
+            "verified": true
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "completed",
+          "steps_completed": 2,
+          "terminal_ns": 109450940175300
+        },
+        {
+          "accepted_ns": 109450940444800,
+          "event": "accepted",
+          "id": "pair0-bounded_recovery-fallback",
+          "program_sha256": "e3b223f89098399b2766ed6b4ccdb2fa31a96122054783e566cccb45ec6381e8",
+          "steps": 1,
+          "valid_until_ns": 109452940253800
+        },
+        {
+          "event": "step_started",
+          "id": "pair0-bounded_recovery-fallback",
+          "issued_ns": 109450940516700,
+          "operation": "hold",
+          "step": 0
+        },
+        {
+          "event": "cancel_requested",
+          "id": "pair0-bounded_recovery-fallback",
+          "matched": true,
+          "requested_ns": 109451966379100
+        },
+        {
+          "completed_ns": 109451966450600,
+          "event": "step_completed",
+          "id": "pair0-bounded_recovery-fallback",
+          "step": 0
+        },
+        {
+          "event": "input_released",
+          "id": "pair0-bounded_recovery-fallback",
+          "release_ns": 109451966459100,
+          "verified": true
+        },
+        {
+          "error": null,
+          "event": "terminal",
+          "id": "pair0-bounded_recovery-fallback",
+          "release": {
+            "verified": true
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "completed",
+          "steps_completed": 1,
+          "terminal_ns": 109451966460900
+        }
+      ],
+      "fallback_terminal_status": "completed",
+      "lease_ms_from_planner_start": 2000,
+      "planner_end_ns": 109451966341700,
+      "planner_start_ns": 109450940253600,
+      "planner_wait_ms": 600,
+      "release_ns": 109451966459100,
+      "runner_arm_summary": {
+        "arm": "BOUNDED_RECOVERY",
+        "fallback_id": "pair0-bounded_recovery-fallback",
+        "fallback_terminal_status": "completed",
+        "guard_cancel_reason": null,
+        "input_bounds": {
+          "event_count": 13,
+          "window_duration_ns": 1026087900
+        },
+        "pair_index": 0,
+        "planner_window": {
+          "duration_ns": 1026087900,
+          "end_boundary_phase": "immediately_after_delay_before_fallback_cleanup",
+          "end_ns": 109451966341700,
+          "start_ns": 109450940253800
+        },
+        "score": {
+          "mock": true,
+          "path": "score.json"
+        },
+        "scorer_events": [],
+        "scorer_summary": {
+          "mock": true,
+          "path": "scorer-summary.json"
+        },
+        "source_capture_ns": 109450934439500,
+        "source_health": {
+          "health": 100
+        },
+        "source_sequence": 8,
+        "source_typed_frame_sha256": "synthetic-frame",
+        "terminal_release_verified": true
+      },
+      "terminal_release_verified": true,
+      "timer_expired_ns": 109451550501500,
+      "timer_started_ns": 109450940282800
+    },
+    {
+      "cancel_observed_ns": null,
+      "case": "B-lease-before-clock-return",
+      "clock_delay_ms": 1600,
+      "clock_return_ns": 109454234914800,
+      "events": [
+        {
+          "accepted_ns": 109452015015300,
+          "event": "accepted",
+          "id": "pair0-bounded_recovery-prelude",
+          "program_sha256": "66ecccf2ef176de5dd84df941f63595d609de387974bbe1c0cede2dfe3795bbc",
+          "steps": 2,
+          "valid_until_ns": 109454014846600
+        },
+        {
+          "event": "step_started",
+          "id": "pair0-bounded_recovery-prelude",
+          "issued_ns": 109452015211700,
+          "operation": "hold",
+          "step": 0
+        },
+        {
+          "completed_ns": 109452015216800,
+          "event": "step_completed",
+          "id": "pair0-bounded_recovery-prelude",
+          "step": 0
+        },
+        {
+          "event": "step_started",
+          "id": "pair0-bounded_recovery-prelude",
+          "issued_ns": 109452015218500,
+          "operation": "observe",
+          "step": 1
+        },
+        {
+          "completed_ns": 109452015219700,
+          "event": "step_completed",
+          "id": "pair0-bounded_recovery-prelude",
+          "step": 1
+        },
+        {
+          "event": "input_released",
+          "id": "pair0-bounded_recovery-prelude",
+          "release_ns": 109452015221500,
+          "verified": true
+        },
+        {
+          "error": null,
+          "event": "terminal",
+          "id": "pair0-bounded_recovery-prelude",
+          "release": {
+            "verified": true
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "completed",
+          "steps_completed": 2,
+          "terminal_ns": 109452015240400
+        },
+        {
+          "accepted_ns": 109452015547600,
+          "event": "accepted",
+          "id": "pair0-bounded_recovery-fallback",
+          "program_sha256": "e3b223f89098399b2766ed6b4ccdb2fa31a96122054783e566cccb45ec6381e8",
+          "steps": 1,
+          "valid_until_ns": 109453515353600
+        },
+        {
+          "event": "step_started",
+          "id": "pair0-bounded_recovery-fallback",
+          "issued_ns": 109452015663600,
+          "operation": "hold",
+          "step": 0
+        },
+        {
+          "event": "input_released",
+          "id": "pair0-bounded_recovery-fallback",
+          "release_ns": 109453528745600,
+          "verified": true
+        },
+        {
+          "error": null,
+          "event": "terminal",
+          "id": "pair0-bounded_recovery-fallback",
+          "release": {
+            "verified": true
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "expired",
+          "steps_completed": 0,
+          "terminal_ns": 109453528770700
+        },
+        {
+          "event": "cancel_requested",
+          "id": "pair0-bounded_recovery-fallback",
+          "matched": false,
+          "requested_ns": 109454234939200
+        }
+      ],
+      "fallback_terminal_status": "expired",
+      "lease_ms_from_planner_start": 1500,
+      "planner_end_ns": 109454234917400,
+      "planner_start_ns": 109452015353400,
+      "planner_wait_ms": 600,
+      "release_ns": 109453528745600,
+      "runner_arm_summary": {
+        "arm": "BOUNDED_RECOVERY",
+        "fallback_id": "pair0-bounded_recovery-fallback",
+        "fallback_terminal_status": "expired",
+        "guard_cancel_reason": null,
+        "input_bounds": {
+          "event_count": 12,
+          "window_duration_ns": 2219563800
+        },
+        "pair_index": 0,
+        "planner_window": {
+          "duration_ns": 2219563800,
+          "end_boundary_phase": "immediately_after_delay_before_fallback_cleanup",
+          "end_ns": 109454234917400,
+          "start_ns": 109452015353600
+        },
+        "score": {
+          "mock": true,
+          "path": "score.json"
+        },
+        "scorer_events": [],
+        "scorer_summary": {
+          "mock": true,
+          "path": "scorer-summary.json"
+        },
+        "source_capture_ns": 109452009815700,
+        "source_health": {
+          "health": 100
+        },
+        "source_sequence": 8,
+        "source_typed_frame_sha256": "synthetic-frame",
+        "terminal_release_verified": true
+      },
+      "terminal_release_verified": true,
+      "timer_expired_ns": 109452618340200,
+      "timer_started_ns": 109452015390700
+    }
+  ],
+  "docker_used": false,
+  "host": "win32",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "retries": 0,
+  "schema": "map01-v6-runner-clock-cancel-t3-v1",
+  "scope": "exact frozen v6 _run_arm; mock base/JsonSession; actual executor-v10 and Lease Git objects",
+  "sources": {
+    "executor": {
+      "bytes": 4202,
+      "git_blob": "e0a31884307eeac405094a624e3a63222acc656f",
+      "path": "research/live_control/executor_v10.py",
+      "sha256": "e55f82e6f15c39914a4213873d39386205a792c98b54d0cf54be0812c69ecb2e"
+    },
+    "lease": {
+      "bytes": 899,
+      "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "path": "research/live_control/lease.py",
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    "v6_runner": {
+      "bytes": 6464,
+      "git_blob": "10344582ffa2ce339bc48dd8d680512a71f4eddc",
+      "path": "research/doom/map01_recovery_cover_mechanism_v6_runner.py",
+      "sha256": "9790becf98104b3a956c73bee945266a8517e41c2396c1a8b29c924e14d26012"
+    }
+  }
+}

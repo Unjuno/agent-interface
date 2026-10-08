@@ -1,0 +1,35 @@
+--- event_socket_v11.py
++++ event_socket_initial_observation_gate_v1.py
+@@ -2,7 +2,7 @@
+ 
+ Commands forward unchanged with a session-local at-most-one write attempt.
+ """
+-import argparse,json,socket,socketserver,subprocess,sys,tempfile,threading
++import argparse,json,os,socket,socketserver,subprocess,sys,tempfile,threading,time
+ from pathlib import Path
+ from event_cursor_v5 import EventCursor
+ from command_once_v2 import CommandOnce
+@@ -101,12 +101,22 @@
+             cancel_server=BoundedServer(str(cancel_path),Handler);cancel_server.cancel_lane=True
+             cancel_server.slots=threading.BoundedSemaphore(2)
+             cancel_thread=threading.Thread(target=cancel_server.serve_forever,daemon=True);cancel_thread.start()
++            initial_ready=threading.Event();initial_trace={}
+             def consume():
+                 try:
+-                    for line in process.stdout:cursor.append(json.loads(line))
++                    for line in process.stdout:
++                        record=json.loads(line);cursor.append(record)
++                        if (record.get('event')=='observation' and record.get('id')=='initial' and record.get('exact') is True):
++                            initial_trace['initial_append_ns']=time.perf_counter_ns();initial_ready.set()
+                 except Exception as exc:failures.append(repr(exc))
+                 finally:cursor.close()
+             reader=threading.Thread(target=consume,daemon=True);reader.start()
++            if not initial_ready.wait(8):
++                process.terminate();process.wait(timeout=2);reader.join(timeout=2)
++                raise RuntimeError('existing initial observation event not observed')
++            initial_trace['endpoint_publish_ns']=time.perf_counter_ns()
++            trace_path=os.environ.get('AI_INITIAL_OBSERVATION_TRACE')
++            if trace_path:Path(trace_path).write_text(json.dumps(initial_trace,sort_keys=True)+'\n')
+             print(json.dumps(dict(event='observation_socket',socket=str(socket_path),cancel_socket=str(cancel_path),input='optional once-only command forwarding; ordinary runtime admission',authority='no lease renewal; session-local deduplication')),flush=True)
+             try:code=process.wait();reader.join()
+             finally:

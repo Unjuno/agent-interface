@@ -1,0 +1,25 @@
+{
+  "all_rejected": true,
+  "controls": {
+    "candidate_selection": {
+      "rejected": true,
+      "returncode": 1,
+      "stdout": "{\"counts\": {\"baseline_overlap_violations\": 8, \"candidate_correct\": 32, \"candidate_deopt_liveness\": 12, \"candidate_nonoverlap_preserved\": 4, \"candidate_overlap_violations\": 1}, \"decision\": \"FAIL_AUTHORITY_ARBITRATION\", \"errors\": [\"m03-authority_guarded:selected:{'locomotion': 'deopt'}:{'locomotion': 'threat'}\", \"candidate_override:1\"], \"schema\": \"agent-interface/map01-threat-deopt-arbitration-audit-v1\"}"
+    },
+    "correct_flag": {
+      "rejected": true,
+      "returncode": 1,
+      "stdout": "{\"counts\": {\"baseline_overlap_violations\": 8, \"candidate_correct\": 32, \"candidate_deopt_liveness\": 12, \"candidate_nonoverlap_preserved\": 4, \"candidate_overlap_violations\": 0}, \"decision\": \"FAIL_AUTHORITY_ARBITRATION\", \"errors\": [\"m00-latest_ready:correct_flag\"], \"schema\": \"agent-interface/map01-threat-deopt-arbitration-audit-v1\"}"
+    },
+    "duplicate_id": {
+      "rejected": true,
+      "returncode": 1,
+      "stdout": "{\"counts\": {\"baseline_overlap_violations\": 8, \"candidate_correct\": 32, \"candidate_deopt_liveness\": 12, \"candidate_nonoverlap_preserved\": 4, \"candidate_overlap_violations\": 0}, \"decision\": \"FAIL_AUTHORITY_ARBITRATION\", \"errors\": [\"duplicate_ids\"], \"schema\": \"agent-interface/map01-threat-deopt-arbitration-audit-v1\"}"
+    },
+    "missing_row": {
+      "rejected": true,
+      "returncode": 1,
+      "stdout": "{\"counts\": {\"baseline_overlap_violations\": 8, \"candidate_correct\": 31, \"candidate_deopt_liveness\": 12, \"candidate_nonoverlap_preserved\": 4, \"candidate_overlap_violations\": 0}, \"decision\": \"FAIL_AUTHORITY_ARBITRATION\", \"errors\": [\"row_count:63\", \"candidate_correct:31\"], \"schema\": \"agent-interface/map01-threat-deopt-arbitration-audit-v1\"}"
+    }
+  }
+}

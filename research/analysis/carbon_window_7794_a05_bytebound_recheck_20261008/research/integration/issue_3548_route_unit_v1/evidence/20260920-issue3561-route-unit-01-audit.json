@@ -1,0 +1,63 @@
+{
+  "checks": {
+    "api_capture_matches_request": true,
+    "api_exactly_one_attempt": true,
+    "api_fixture_reaped": true,
+    "api_image_hashes": true,
+    "api_no_authority": true,
+    "api_request_semantics": true,
+    "api_returned_capture": true,
+    "cli_capture_matches_request": true,
+    "cli_exactly_one_attempt": true,
+    "cli_exit_zero": true,
+    "cli_fixture_reaped": true,
+    "cli_image_hashes": true,
+    "cli_no_authority": true,
+    "cli_request_semantics": true,
+    "cli_returned_capture": true,
+    "exactly_three_routes": true,
+    "frozen_experiment_commit": true,
+    "frozen_source_commit": true,
+    "linux_arm64": true,
+    "manifest_matches": true,
+    "matching_dimensions": true,
+    "matching_pixel_hashes": true,
+    "mcp_capture_matches_request": true,
+    "mcp_child_identified_and_reaped": true,
+    "mcp_exactly_one_attempt": true,
+    "mcp_exposes_observe": true,
+    "mcp_fixture_reaped": true,
+    "mcp_image_block_matches_png": true,
+    "mcp_image_hashes": true,
+    "mcp_no_authority": true,
+    "mcp_request_semantics": true,
+    "mcp_returned_capture": true,
+    "mcp_separate_png_block": true,
+    "mcp_version_pinned": true,
+    "runtime_isolated": true,
+    "source_hashes_match": true
+  },
+  "disposition": "PASS_UNIT_ROUTE_EQUIVALENCE",
+  "evidence_root": "/evidence/20260920-issue3561-route-unit-01",
+  "routes": [
+    {
+      "elapsed_ns": 61027599,
+      "pixel_sha256": "8403ba12891a93904dd5015f80c8a11d98af41f86cd427906eea381be690b536",
+      "png_sha256": "c7d6ceedb02407b9a572a2334868e2a34aa2c1676845b9954d5f1a31fa9ad6d1",
+      "route": "api"
+    },
+    {
+      "elapsed_ns": 86647316,
+      "pixel_sha256": "8403ba12891a93904dd5015f80c8a11d98af41f86cd427906eea381be690b536",
+      "png_sha256": "c7d6ceedb02407b9a572a2334868e2a34aa2c1676845b9954d5f1a31fa9ad6d1",
+      "route": "cli"
+    },
+    {
+      "elapsed_ns": 353423898,
+      "pixel_sha256": "8403ba12891a93904dd5015f80c8a11d98af41f86cd427906eea381be690b536",
+      "png_sha256": "c7d6ceedb02407b9a572a2334868e2a34aa2c1676845b9954d5f1a31fa9ad6d1",
+      "route": "mcp"
+    }
+  ],
+  "scope": "one no-input X11 observation across public API, CLI and stdio MCP; no model/task or efficiency claim"
+}

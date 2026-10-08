@@ -1,0 +1,2586 @@
+{
+  "atomicity": "one admission+effect+release transaction per proposal",
+  "bounds": {
+    "max_trace_events": 4,
+    "retained_records_per_table": 16
+  },
+  "cases": [
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_state_two_independent",
+      "id": "same_state_two_independent--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_state_two_independent",
+      "id": "same_state_two_independent--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-C",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "C",
+            "retry_intent": "retry-C",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_state_three_independent",
+      "id": "same_state_three_independent--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-C",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "C",
+            "retry_intent": "retry-C",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_state_three_independent",
+      "id": "same_state_three_independent--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-C",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "C",
+            "retry_intent": "retry-C",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_state_three_independent",
+      "id": "same_state_three_independent--2",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-C",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "C",
+            "retry_intent": "retry-C",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_state_three_independent",
+      "id": "same_state_three_independent--3",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-C",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "C",
+            "retry_intent": "retry-C",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_state_three_independent",
+      "id": "same_state_three_independent--4",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-C",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "C",
+            "retry_intent": "retry-C",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_state_three_independent",
+      "id": "same_state_three_independent--5",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "retry-attempt",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_producer_retry",
+      "id": "same_producer_retry--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "retry-attempt",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_producer_retry",
+      "id": "same_producer_retry--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "transition",
+          "update": {
+            "incarnations": {
+              "next": 1,
+              "other": 1,
+              "save": 2
+            }
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-inc2",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 2,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "changed_incarnation",
+      "id": "changed_incarnation--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-revision2",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 2,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_intent_same_generation",
+      "id": "different_intent_same_generation--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-revision2",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 2,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_intent_same_generation",
+      "id": "different_intent_same_generation--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-other",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "other"
+          }
+        }
+      ],
+      "family": "different_target_same_coordinates",
+      "id": "different_target_same_coordinates--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-other",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "other"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_target_same_coordinates",
+      "id": "different_target_same_coordinates--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-value2",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 2
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_parameters_distinct_work",
+      "id": "different_parameters_distinct_work--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-value2",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 2
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_parameters_distinct_work",
+      "id": "different_parameters_distinct_work--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-double",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "double-click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_operation",
+      "id": "different_operation--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-double",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "double-click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_operation",
+      "id": "different_operation--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-2",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-2",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_opportunity_same_generation",
+      "id": "different_opportunity_same_generation--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-2",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-2",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "different_opportunity_same_generation",
+      "id": "different_opportunity_same_generation--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "next1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "page1-next",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "next"
+          }
+        },
+        {
+          "kind": "transition",
+          "update": {
+            "generation": 2
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "next2",
+            "deadline": 10,
+            "generation": 2,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "page2-next",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "next"
+          }
+        }
+      ],
+      "family": "next_after_verified_transition",
+      "id": "next_after_verified_transition--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "SUPERSEDED",
+          "oracle_goal": null,
+          "postcondition_satisfied": true,
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "late_verified_satisfied",
+      "id": "late_verified_satisfied--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "transition",
+          "update": {
+            "generation": 2
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "REJECT_STALE",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "late_stale_after_transition",
+      "id": "late_stale_after_transition--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "REJECT_RETRY_CONFLICT",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "retry2",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 2
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "retry_changed_parameters",
+      "id": "retry_changed_parameters--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": null,
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_session",
+      "id": "missing_session--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": null,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_revision",
+      "id": "missing_revision--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": null,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_generation",
+      "id": "missing_generation--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": null
+          }
+        }
+      ],
+      "family": "missing_target",
+      "id": "missing_target--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": null,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_incarnation",
+      "id": "missing_incarnation--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": null,
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_operation",
+      "id": "missing_operation--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": null,
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_opportunity",
+      "id": "missing_opportunity--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": null,
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_params",
+      "id": "missing_params--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": null,
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_producer",
+      "id": "missing_producer--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": null,
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "missing_retry_intent",
+      "id": "missing_retry_intent--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "YIELD_IDENTITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "ambiguous",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "ambiguous_identity",
+      "id": "ambiguous_identity--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "REJECT_AUTHORITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": false,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "unauthorized_equivalent_first",
+      "id": "unauthorized_equivalent_first--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "REJECT_AUTHORITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": false,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "unauthorized_equivalent_late",
+      "id": "unauthorized_equivalent_late--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 9,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "deadline_9",
+      "id": "deadline_9--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 10,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "deadline_10",
+      "id": "deadline_10--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 11,
+          "oracle_deny": "REJECT_EXPIRED",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "deadline_11",
+      "id": "deadline_11--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 11,
+          "oracle_deny": "REJECT_EXPIRED",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "expired_cached_equivalent",
+      "id": "expired_cached_equivalent--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "transition",
+          "update": {
+            "revoked": true
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "REJECT_AUTHORITY",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "release",
+          "oracle_deny": "RELEASED",
+          "oracle_goal": null
+        }
+      ],
+      "family": "revoked_cached_equivalent",
+      "id": "revoked_cached_equivalent--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s2",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_attempt_different_session",
+      "id": "same_attempt_different_session--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G2",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s2",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "same_attempt_different_session",
+      "id": "same_attempt_different_session--1",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "REJECT_STALE",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 0,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "stale_incarnation",
+      "id": "stale_incarnation--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": "REJECT_STALE",
+          "oracle_goal": null,
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": "work-save-1",
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 0,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "stale_intent",
+      "id": "stale_intent--0",
+      "subset": "shared_id_primary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": null,
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": null,
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "common_id_absent_residual",
+      "id": "common_id_absent_residual--0",
+      "subset": "identity_assignment_boundary"
+    },
+    {
+      "events": [
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-B",
+            "authorized": true,
+            "common_work_id": null,
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "B",
+            "retry_intent": "retry-B",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        },
+        {
+          "kind": "proposal",
+          "now": 1,
+          "oracle_deny": null,
+          "oracle_goal": "G1",
+          "proposal": {
+            "attempt": "attempt-A",
+            "authorized": true,
+            "common_work_id": null,
+            "deadline": 10,
+            "generation": 1,
+            "identity": "exact",
+            "incarnation": 1,
+            "operation": "click",
+            "opportunity": "save-once-1",
+            "params": {
+              "value": 1
+            },
+            "producer": "A",
+            "retry_intent": "retry-A",
+            "revision": 1,
+            "session": "s",
+            "target": "save"
+          }
+        }
+      ],
+      "family": "common_id_absent_residual",
+      "id": "common_id_absent_residual--1",
+      "subset": "identity_assignment_boundary"
+    }
+  ],
+  "randomness": "none",
+  "schema": "effect-coalescing-finite-v1"
+}

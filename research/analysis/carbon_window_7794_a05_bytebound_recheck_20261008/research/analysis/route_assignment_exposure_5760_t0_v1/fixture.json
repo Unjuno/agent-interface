@@ -1,0 +1,17 @@
+{
+  "allocation": "5760-route-assignment-t0-20261001-01",
+  "scenarios": {
+    "selection_reversal": [
+      {"task":"E1","difficulty":"easy","A_path":"local","A_success":1,"A_time":1,"B_success":1,"B_time":5},
+      {"task":"E2","difficulty":"easy","A_path":"local","A_success":1,"A_time":1,"B_success":1,"B_time":5},
+      {"task":"H1","difficulty":"hard","A_path":"fallback","A_success":0,"A_time":10,"B_success":1,"B_time":5},
+      {"task":"H2","difficulty":"hard","A_path":"fallback","A_success":0,"A_time":10,"B_success":1,"B_time":5}
+    ],
+    "exposure_independent_null": [
+      {"task":"E1","difficulty":"easy","A_path":"local","A_success":1,"A_time":4,"B_success":1,"B_time":5},
+      {"task":"E2","difficulty":"easy","A_path":"fallback","A_success":1,"A_time":4,"B_success":1,"B_time":5},
+      {"task":"H1","difficulty":"hard","A_path":"local","A_success":1,"A_time":4,"B_success":1,"B_time":5},
+      {"task":"H2","difficulty":"hard","A_path":"fallback","A_success":1,"A_time":4,"B_success":1,"B_time":5}
+    ]
+  }
+}

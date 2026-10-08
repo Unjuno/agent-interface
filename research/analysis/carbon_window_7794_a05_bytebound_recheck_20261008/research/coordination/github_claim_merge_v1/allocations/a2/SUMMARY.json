@@ -1,0 +1,67 @@
+{
+  "actual_evidence_corruptions_rejected": 13,
+  "auditor_test_methods": 2,
+  "bookkeeping_sha256": "d867b9582a341f3318bd25542e660d648a7a1b43285b382be3c0e28b13a17de0",
+  "cases": 3,
+  "core_freeze": "6fa89190a1f80065a13a1f000aae3c7dd4f8d53a",
+  "decision": "PASS_BOUNDED_CLAIM_MERGE_SCOPED",
+  "duplicate_final": [
+    "SYNTHETIC-A"
+  ],
+  "evidence_sha256": "c517a61daf45791f01a9992fd592baf3493013a5d8041497cfd7672ec3ef3cce",
+  "github_sha_mismatch_409": 4,
+  "independent_final": [
+    "SYNTHETIC-A",
+    "SYNTHETIC-B"
+  ],
+  "limitations": "Sequential scripted MCP calls, not simultaneous HTTP, distinct principals, production leases, scope completeness, fairness or latency/rate evidence.",
+  "max_B_recovery_PUTs_per_case": 1,
+  "mcp_update_calls": 9,
+  "policy_unit_tests": 10,
+  "prior_allocation": "003 stopped after 2 PUTs due bookkeeping permissions; not pooled; no completed case",
+  "second_race_final": [
+    "SYNTHETIC-A",
+    "SYNTHETIC-C"
+  ],
+  "simulated_legal_read_PUT_orders": 90,
+  "source_checks": [
+    {
+      "git_blob": "d282d85d938c7da05b45e3e72045ea7f6568e221",
+      "path": "audit.py",
+      "sha256": "f608b33dd842a61e76b538c8a76999c0b67575005908c168534ad42927db881b"
+    },
+    {
+      "git_blob": "0bdb1d663fc7ee301c5659aca231327fa4966667",
+      "path": "environment.json",
+      "sha256": "8e0225b22040fb7d6e028f1091ebc214123e276f70d217c285f64704b4017514"
+    },
+    {
+      "git_blob": "67c6094954824c2b4499e471f080c7c8dfef5cbd",
+      "path": "payloads.json",
+      "sha256": "d3bd9c3e51cfe1b9edd202acdfe6d705667a7f3b95bc6c1fb2ba9c6a84562c84"
+    },
+    {
+      "git_blob": "032d907ba9ca47d3970c5678a2a4147bdedf8ab9",
+      "path": "plan.json",
+      "sha256": "770675920e445892fd58e8016cbb3e7fb1b58ce8a47892c83284d63405f39dee"
+    },
+    {
+      "git_blob": "4c206c7a4dbdb63ebb4587bbbe9d5e3f6d07d908",
+      "path": "policy.py",
+      "sha256": "1f7aa32c9f11ccc7ab5558512158c5f2de6b908571d0b865e21dce3016c19292"
+    },
+    {
+      "git_blob": "339dafdb632fc336758fafdf88b7baa184d37248",
+      "path": "test_audit.py",
+      "sha256": "73e87cf2514a7e619803832a75287a5f030bc82e5d0cb661a508dbc87a7f1f8b"
+    },
+    {
+      "git_blob": "caa895093e977e787729bb299bad3ba6ab6af093",
+      "path": "test_policy.py",
+      "sha256": "1631af0b95dcd3fd9307dca94d79f0496fc908697b6934bb4b7391bf824020e1"
+    }
+  ],
+  "successful_updates": 5,
+  "supervision_freeze": "367bfdd7e52da2c379aa5554f0d0af1751e6f32f",
+  "task": "COORD-GITHUB-CLAIM-MERGE-20260916-004"
+}

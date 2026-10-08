@@ -1,0 +1,251 @@
+{
+  "algebra": {
+    "delayed_root_modulus_squared": "6/5",
+    "delayed_unstable_oscillatory": true,
+    "fresh_closed_loop_pole": "-1/5",
+    "fresh_stable": true,
+    "one_step_delayed_characteristic": "z^2-z+6/5"
+  },
+  "allocation_id": "DELAY-GAIN-STABILITY-6195-T0-HOST-20261001-01",
+  "candidate_sha256": "5a0d9b55e288ea46ae89ae41273b57c23016d72463bc58c45fa25bfae6cf0e2c",
+  "frozen_model": {
+    "bounded_input_cap": "1/2",
+    "forbidden_abs_state": "3/2",
+    "gain": "6/5",
+    "horizon": 8,
+    "plant": "x[t+1]=x[t]+u[t]",
+    "x0": "1"
+  },
+  "main_sha": "3d33fe482ad55e99943f2c7b40e92c685c3bf92a",
+  "mutation_controls": [
+    {
+      "case": "missing_actuation_history",
+      "expected": "YIELD",
+      "observed": "YIELD"
+    },
+    {
+      "arrival_order": [
+        9,
+        8
+      ],
+      "case": "newer_arrival_older_source",
+      "expected": "YIELD_STALE_SOURCE",
+      "observed": "YIELD_STALE_SOURCE",
+      "source_order": [
+        7,
+        4
+      ]
+    },
+    {
+      "case": "target_swap",
+      "current_target": "B",
+      "expected": "YIELD_TARGET_MISMATCH",
+      "observed": "YIELD_TARGET_MISMATCH",
+      "source_target": "A"
+    },
+    {
+      "actual_next": "-3/5",
+      "case": "wrong_plant_gain",
+      "expected": "YIELD_MODEL_MISMATCH",
+      "nominal_next": "-1/5",
+      "observed": "YIELD_MODEL_MISMATCH",
+      "residual": "-2/5",
+      "tolerance": "1/10"
+    },
+    {
+      "case": "release_lag_prefix",
+      "expected": "REFUSE_PREFIX_CROSSING",
+      "forbidden_boundary": "1",
+      "held_input": "2/5",
+      "lag_steps": 1,
+      "next_state": "6/5",
+      "observed": "REFUSE_PREFIX_CROSSING",
+      "start": "4/5"
+    }
+  ],
+  "runtime": {
+    "device": "host CPU; no GPU/CUDA",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9"
+  },
+  "schema": "agent-interface/6195-delay-gain-t0-candidate-v1",
+  "scope": "finite authored scalar method fixture only; no GUI, game, model, human, physical input, task effect, or runtime claim",
+  "trajectories": [
+    {
+      "first_forbidden_step": null,
+      "inputs": [
+        "-6/5",
+        "6/25",
+        "-6/125",
+        "6/625",
+        "-6/3125",
+        "6/15625",
+        "-6/78125",
+        "6/390625"
+      ],
+      "mode": "fresh",
+      "source_ticks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "states": [
+        "1",
+        "-1/5",
+        "1/25",
+        "-1/125",
+        "1/625",
+        "-1/3125",
+        "1/15625",
+        "-1/78125",
+        "1/390625"
+      ]
+    },
+    {
+      "first_forbidden_step": 5,
+      "inputs": [
+        "-6/5",
+        "-6/5",
+        "6/25",
+        "42/25",
+        "174/125",
+        "-78/125",
+        "-1434/625",
+        "-966/625"
+      ],
+      "mode": "naive_delayed",
+      "source_ticks": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "states": [
+        "1",
+        "-1/5",
+        "-7/5",
+        "-29/25",
+        "13/25",
+        "239/125",
+        "161/125",
+        "-629/625",
+        "-319/125"
+      ]
+    },
+    {
+      "first_forbidden_step": null,
+      "inputs": [
+        "-6/5",
+        "6/25",
+        "-6/125",
+        "6/625",
+        "-6/3125",
+        "6/15625",
+        "-6/78125",
+        "6/390625"
+      ],
+      "mode": "history_aware",
+      "source_ticks": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "states": [
+        "1",
+        "-1/5",
+        "1/25",
+        "-1/125",
+        "1/625",
+        "-1/3125",
+        "1/15625",
+        "-1/78125",
+        "1/390625"
+      ]
+    },
+    {
+      "first_forbidden_step": null,
+      "inputs": [
+        "-6/5",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "mode": "capped_hold",
+      "source_ticks": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "states": [
+        "1",
+        "-1/5",
+        "-1/5",
+        "-1/5",
+        "-1/5",
+        "-1/5",
+        "-1/5",
+        "-1/5",
+        "-1/5"
+      ]
+    },
+    {
+      "first_forbidden_step": null,
+      "inputs": [
+        "-1/2",
+        "-1/2",
+        "-1/2",
+        "0",
+        "1/2",
+        "1/2",
+        "0",
+        "-1/2"
+      ],
+      "mode": "naive_delayed",
+      "source_ticks": [
+        0,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "states": [
+        "1",
+        "1/2",
+        "0",
+        "-1/2",
+        "-1/2",
+        "0",
+        "1/2",
+        "1/2",
+        "0"
+      ]
+    }
+  ]
+}
+

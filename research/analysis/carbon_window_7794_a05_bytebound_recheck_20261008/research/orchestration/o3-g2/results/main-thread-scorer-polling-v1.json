@@ -1,0 +1,152 @@
+{
+  "schema": "main-thread-scorer-polling-construction-v1",
+  "task": "O3-G2-SCORER-POLLING-BOUNDARY-001",
+  "base_commit": "64b286722adaf4daae8936cc373d44c559bd86da",
+  "result_class": "PASS_SYNTHETIC_BOUNDARY_INTEGRATION_UNPROVEN",
+  "tests": {
+    "executed": 12,
+    "passed": 12,
+    "failed": 0,
+    "framework": "unittest",
+    "py_compile": "PASS"
+  },
+  "benchmark": {
+    "schema": "main-thread-scorer-polling-benchmark-v1",
+    "environment": {
+      "python": "3.13.5",
+      "implementation": "CPython",
+      "kernel": "6.18.44",
+      "machine": "x86_64",
+      "cpu_model": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "cpu_clock": "not pinned / unavailable",
+      "concurrency": "main polling thread + one synthetic pipe writer thread"
+    },
+    "workload": {
+      "repetitions": 12,
+      "duration_s_each": 1.0,
+      "sample_hz": 35.0,
+      "command_hz": 50.0,
+      "sample_callback": "thread-id dictionary only",
+      "command_transport": "os.pipe + select.select"
+    },
+    "totals": {
+      "samples": 420,
+      "commands": 588,
+      "missed_sample_periods": 0
+    },
+    "sample_start_lateness_us": {
+      "median": 159.234,
+      "p95": 294.167,
+      "p99": 1332.817,
+      "max": 2559.266
+    },
+    "sample_callback_duration_us": {
+      "median": 4.801,
+      "p95": 5.755,
+      "max": 51.643
+    },
+    "command_write_to_handler_us": {
+      "median": 137.564,
+      "p95": 290.068,
+      "p99": 944.342,
+      "max": 1709.187
+    },
+    "runs": [
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      },
+      {
+        "samples": 35,
+        "commands": 49,
+        "missed_sample_periods": 0
+      }
+    ],
+    "scope": "synthetic Linux pipe/select scheduling only; no ViZDoom, X11, model, GUI, or session integration"
+  },
+  "source_sha256": {
+    "main_thread_scorer_polling_v1.py": "0a82819748603b77726d3d7053da7f6cba5cf0a0d5bcd9a79f4272554cf6af0a",
+    "test_main_thread_scorer_polling_v1.py": "ab9b19a055253f10de409864d17dc86e25c71a227af375398ea4c1c1a7a4f4e3",
+    "benchmark_main_thread_scorer_polling_v1.py": "91bf49622df3d57353966edda1ffde76717d4120a4ae505793d439dc6da06960"
+  },
+  "upstream_source_review": {
+    "vizdoom_commit": "9bbf2f25c8ab8b59709d27a1640f89e61f6205d5",
+    "doomgame_get_game_variable": "direct delegation to DoomController::getGameVariable after isRunning check",
+    "documented_same_object_thread_safety": "NOT_FOUND",
+    "repository_mutex_lock_search": "NO_RESULTS_IN_SEARCH_SCOPE",
+    "interpretation": "absence of a documented/sourced lock is not proof of unsafety; background DoomGame polling remains unauthorized without direct validation"
+  },
+  "contract": {
+    "game_owner_thread": "future sample_fn and command_handler execute synchronously on run() caller thread",
+    "scorer_sink": "separate callback; module contains no controller emitter",
+    "late_sampling": "one current sample plus explicit missed-period count; no fabricated catch-up timestamps",
+    "input": "readiness-driven fd bytes with bounded line buffer and fail-closed partial EOF"
+  },
+  "limitations": [
+    "No vizdoom package is installed in this container; no DoomGame call was executed.",
+    "No MAP01, X11, model, GUI, or OS-input integration was executed.",
+    "Synthetic command writer is a separate thread; actual controller stdin scheduling may differ.",
+    "Sample callback is trivial; real get_game_variable and scorer persistence costs are unmeasured.",
+    "Linux select/fd readiness behavior is not a cross-platform guarantee.",
+    "A main-thread event-loop rewrite could change session behavior and requires a separate versioned integration lease."
+  ],
+  "disposition": "RETAIN_PRIMITIVE; REQUIRE_VERSIONED_SESSION_INTEGRATION_VALIDATION_BEFORE_LIVE_ALLOCATION"
+}

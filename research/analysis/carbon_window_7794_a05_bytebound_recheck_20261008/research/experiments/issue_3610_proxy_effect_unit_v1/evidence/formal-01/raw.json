@@ -1,0 +1,1009 @@
+{
+  "allocation_id": "issue3610-proxy-effect-unit-formal-01",
+  "arms": [
+    "ordinary_screenshot",
+    "proxy_image",
+    "structured_proxy",
+    "hybrid"
+  ],
+  "cases": [
+    "positive",
+    "no_effect",
+    "stale_version",
+    "target_replaced",
+    "unavailable",
+    "ambiguous",
+    "macro_failure"
+  ],
+  "formal_invocations": 1,
+  "freeze_sha256": "9f2773e045423f049a89d20c04ca8a7f4f0fa998bce4e24b93b0a1b8e7c23e2c",
+  "image_id": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+  "issue": 3610,
+  "platform": "linux/arm64",
+  "result_sha256": "f63eb0b780b73946839434afb1b5fcf67f1c3fcd8f6b0349c2fabbb8be2cc1d3",
+  "retries": 0,
+  "rows": [
+    {
+      "arm": "ordinary_screenshot",
+      "case": "positive",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 6,
+          "role": "xvfb",
+          "start_ticks": "5815303"
+        },
+        {
+          "pid": 10,
+          "role": "fixture",
+          "start_ticks": "5815306"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "ordinary_screenshot__positive",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "ordinary_screenshot",
+      "case": "no_effect",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 11,
+          "role": "xvfb",
+          "start_ticks": "5815307"
+        },
+        {
+          "pid": 14,
+          "role": "fixture",
+          "start_ticks": "5815309"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "ordinary_screenshot__no_effect",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "ordinary_screenshot",
+      "case": "stale_version",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 15,
+          "role": "xvfb",
+          "start_ticks": "5815310"
+        },
+        {
+          "pid": 18,
+          "role": "fixture",
+          "start_ticks": "5815313"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "ordinary_screenshot__stale_version",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "ordinary_screenshot",
+      "case": "target_replaced",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 19,
+          "role": "xvfb",
+          "start_ticks": "5815314"
+        },
+        {
+          "pid": 22,
+          "role": "fixture",
+          "start_ticks": "5815317"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "ordinary_screenshot__target_replaced",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "ordinary_screenshot",
+      "case": "unavailable",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 23,
+          "role": "xvfb",
+          "start_ticks": "5815317"
+        },
+        {
+          "pid": 26,
+          "role": "fixture",
+          "start_ticks": "5815320"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "ordinary_screenshot__unavailable",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "ordinary_screenshot",
+      "case": "ambiguous",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 27,
+          "role": "xvfb",
+          "start_ticks": "5815321"
+        },
+        {
+          "pid": 30,
+          "role": "fixture",
+          "start_ticks": "5815324"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "ordinary_screenshot__ambiguous",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "ordinary_screenshot",
+      "case": "macro_failure",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 31,
+          "role": "xvfb",
+          "start_ticks": "5815325"
+        },
+        {
+          "pid": 34,
+          "role": "fixture",
+          "start_ticks": "5815328"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "ordinary_screenshot__macro_failure",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "proxy_image",
+      "case": "positive",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 35,
+          "role": "xvfb",
+          "start_ticks": "5815329"
+        },
+        {
+          "pid": 38,
+          "role": "fixture",
+          "start_ticks": "5815332"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "proxy_image__positive",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "proxy_image",
+      "case": "no_effect",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 39,
+          "role": "xvfb",
+          "start_ticks": "5815333"
+        },
+        {
+          "pid": 42,
+          "role": "fixture",
+          "start_ticks": "5815336"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "proxy_image__no_effect",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "proxy_image",
+      "case": "stale_version",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 43,
+          "role": "xvfb",
+          "start_ticks": "5815336"
+        },
+        {
+          "pid": 46,
+          "role": "fixture",
+          "start_ticks": "5815339"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "proxy_image__stale_version",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "proxy_image",
+      "case": "target_replaced",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 47,
+          "role": "xvfb",
+          "start_ticks": "5815339"
+        },
+        {
+          "pid": 50,
+          "role": "fixture",
+          "start_ticks": "5815342"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "proxy_image__target_replaced",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "proxy_image",
+      "case": "unavailable",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 51,
+          "role": "xvfb",
+          "start_ticks": "5815342"
+        },
+        {
+          "pid": 54,
+          "role": "fixture",
+          "start_ticks": "5815345"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "proxy_image__unavailable",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "proxy_image",
+      "case": "ambiguous",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 55,
+          "role": "xvfb",
+          "start_ticks": "5815346"
+        },
+        {
+          "pid": 58,
+          "role": "fixture",
+          "start_ticks": "5815348"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "proxy_image__ambiguous",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "proxy_image",
+      "case": "macro_failure",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 59,
+          "role": "xvfb",
+          "start_ticks": "5815349"
+        },
+        {
+          "pid": 62,
+          "role": "fixture",
+          "start_ticks": "5815352"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "proxy_image__macro_failure",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "structured_proxy",
+      "case": "positive",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 63,
+          "role": "xvfb",
+          "start_ticks": "5815353"
+        },
+        {
+          "pid": 66,
+          "role": "fixture",
+          "start_ticks": "5815356"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "structured_proxy__positive",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "structured_proxy",
+      "case": "no_effect",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 67,
+          "role": "xvfb",
+          "start_ticks": "5815358"
+        },
+        {
+          "pid": 70,
+          "role": "fixture",
+          "start_ticks": "5815361"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "structured_proxy__no_effect",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "structured_proxy",
+      "case": "stale_version",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 71,
+          "role": "xvfb",
+          "start_ticks": "5815361"
+        },
+        {
+          "pid": 74,
+          "role": "fixture",
+          "start_ticks": "5815364"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "structured_proxy__stale_version",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "structured_proxy",
+      "case": "target_replaced",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 75,
+          "role": "xvfb",
+          "start_ticks": "5815365"
+        },
+        {
+          "pid": 78,
+          "role": "fixture",
+          "start_ticks": "5815368"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "structured_proxy__target_replaced",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "structured_proxy",
+      "case": "unavailable",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 79,
+          "role": "xvfb",
+          "start_ticks": "5815369"
+        },
+        {
+          "pid": 82,
+          "role": "fixture",
+          "start_ticks": "5815371"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "structured_proxy__unavailable",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "structured_proxy",
+      "case": "ambiguous",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 83,
+          "role": "xvfb",
+          "start_ticks": "5815372"
+        },
+        {
+          "pid": 86,
+          "role": "fixture",
+          "start_ticks": "5815375"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "structured_proxy__ambiguous",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "structured_proxy",
+      "case": "macro_failure",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 87,
+          "role": "xvfb",
+          "start_ticks": "5815376"
+        },
+        {
+          "pid": 90,
+          "role": "fixture",
+          "start_ticks": "5815378"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "structured_proxy__macro_failure",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "hybrid",
+      "case": "positive",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 91,
+          "role": "xvfb",
+          "start_ticks": "5815379"
+        },
+        {
+          "pid": 94,
+          "role": "fixture",
+          "start_ticks": "5815381"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "hybrid__positive",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "hybrid",
+      "case": "no_effect",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 95,
+          "role": "xvfb",
+          "start_ticks": "5815382"
+        },
+        {
+          "pid": 98,
+          "role": "fixture",
+          "start_ticks": "5815385"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "hybrid__no_effect",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "hybrid",
+      "case": "stale_version",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 99,
+          "role": "xvfb",
+          "start_ticks": "5815386"
+        },
+        {
+          "pid": 102,
+          "role": "fixture",
+          "start_ticks": "5815389"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "hybrid__stale_version",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "hybrid",
+      "case": "target_replaced",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 103,
+          "role": "xvfb",
+          "start_ticks": "5815390"
+        },
+        {
+          "pid": 106,
+          "role": "fixture",
+          "start_ticks": "5815393"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "hybrid__target_replaced",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "hybrid",
+      "case": "unavailable",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 107,
+          "role": "xvfb",
+          "start_ticks": "5815394"
+        },
+        {
+          "pid": 110,
+          "role": "fixture",
+          "start_ticks": "5815397"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "hybrid__unavailable",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "hybrid",
+      "case": "ambiguous",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 111,
+          "role": "xvfb",
+          "start_ticks": "5815398"
+        },
+        {
+          "pid": 114,
+          "role": "fixture",
+          "start_ticks": "5815401"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "hybrid__ambiguous",
+      "socket_disappeared": true
+    },
+    {
+      "arm": "hybrid",
+      "case": "macro_failure",
+      "decision": null,
+      "emissions": 0,
+      "error": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+      "fixture_events": [],
+      "fixture_events_sha256": null,
+      "input_ack": false,
+      "process_exit_codes": {
+        "fixture_current": -15,
+        "xvfb": 0
+      },
+      "processes": [
+        {
+          "pid": 115,
+          "role": "xvfb",
+          "start_ticks": "5815401"
+        },
+        {
+          "pid": 118,
+          "role": "fixture",
+          "start_ticks": "5815405"
+        }
+      ],
+      "release_verified": false,
+      "reply": {
+        "after_state": null,
+        "decision": null,
+        "emissions": 0,
+        "input_ack": false
+      },
+      "row_id": "hybrid__macro_failure",
+      "socket_disappeared": true
+    }
+  ],
+  "source_commit": "a7a3662b033854b7155b41d6d8c09e660c11de01",
+  "source_manifest_sha256": "06f7adb1cfa99f5d7dbd784fafbf42570609558fd4d6a62e22176d59bb9ef4e5"
+}

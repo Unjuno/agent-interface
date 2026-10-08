@@ -1,0 +1,58 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "calc-pixel-admission",
+  "method": "enter-read-save-yield",
+  "method_version": "1",
+  "session_scope": "native-x11:08e03c1af3794b349279c991a866cd02",
+  "outcome": "RUNTIME_FAILED",
+  "reason": "execution_failed",
+  "completed_transitions": 0,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 59105126598224,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "92487ea8a18a19c7fcfe0b94d9a3a144958c37322f318c94aaa3fc66ef4464d9",
+      "predicates": {
+        "present": true,
+        "main_focus": true,
+        "handoff": false
+      }
+    }
+  ],
+  "transitions": [],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "start",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "present": true,
+        "main_focus": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter",
+      "status": "refused",
+      "action_id": "action-bfaa7c73bac6416fb2b3be7f3b2f4318",
+      "release_verified": false
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "RUNTIME_FAILED",
+      "reason": "execution_failed",
+      "completed_transitions": 0
+    }
+  ],
+  "latest_evidence_ref": "observation-2",
+  "pending_effect": null,
+  "started_ns": 59105125427946,
+  "ended_ns": 59105645694179,
+  "elapsed_ns": 520266233,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

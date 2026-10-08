@@ -1,0 +1,125 @@
+{
+  "case_count": 5,
+  "cases": [
+    {
+      "case_id": "deadline-5s",
+      "disposition": "HOLD",
+      "offset_lower_ns": 258333333,
+      "offset_upper_ns": 341666667,
+      "post_probe_remaining_ns": 4750000000,
+      "probe_bounds_ns": [
+        [
+          258333333,
+          341666666
+        ],
+        [
+          258333333,
+          341666666
+        ],
+        [
+          258333333,
+          341666667
+        ]
+      ],
+      "uncertainty_width_ns": 83333334
+    },
+    {
+      "case_id": "deadline-5s249ms",
+      "disposition": "HOLD",
+      "offset_lower_ns": 258333333,
+      "offset_upper_ns": 341666667,
+      "post_probe_remaining_ns": 4999000000,
+      "probe_bounds_ns": [
+        [
+          258333333,
+          341666666
+        ],
+        [
+          258333333,
+          341666666
+        ],
+        [
+          258333333,
+          341666667
+        ]
+      ],
+      "uncertainty_width_ns": 83333334
+    },
+    {
+      "case_id": "deadline-5s250ms",
+      "disposition": "SEND",
+      "offset_lower_ns": 258333333,
+      "offset_upper_ns": 341666667,
+      "post_probe_remaining_ns": 5000000000,
+      "probe_bounds_ns": [
+        [
+          258333333,
+          341666666
+        ],
+        [
+          258333333,
+          341666666
+        ],
+        [
+          258333333,
+          341666667
+        ]
+      ],
+      "uncertainty_width_ns": 83333334
+    },
+    {
+      "case_id": "deadline-6s",
+      "disposition": "SEND",
+      "offset_lower_ns": 258333333,
+      "offset_upper_ns": 341666667,
+      "post_probe_remaining_ns": 5750000000,
+      "probe_bounds_ns": [
+        [
+          258333333,
+          341666666
+        ],
+        [
+          258333333,
+          341666666
+        ],
+        [
+          258333333,
+          341666667
+        ]
+      ],
+      "uncertainty_width_ns": 83333334
+    },
+    {
+      "case_id": "uncertainty-over-1s",
+      "disposition": "HOLD_UNCERTAINTY",
+      "offset_lower_ns": -41666667,
+      "offset_upper_ns": 1241666666,
+      "post_probe_remaining_ns": null,
+      "probe_bounds_ns": [
+        [
+          -41666667,
+          41666666
+        ],
+        [
+          1158333333,
+          1241666666
+        ],
+        [
+          -41666667,
+          41666667
+        ]
+      ],
+      "uncertainty_width_ns": 1283333333
+    }
+  ],
+  "disposition": "PASS_BOUNDARY_CONSTRUCTION_SCOPED",
+  "errors": [],
+  "limits": [
+    "synthetic clocks only",
+    "no real socket, MAP01, model, OS input, freshness, or game efficacy",
+    "not authorization for any live allocation"
+  ],
+  "raw_sha256": "da4ef210d0469fc3e93a839b4f61c0335ca8d7174990e04d6b1885afe9d2ef12",
+  "schema": "issue-5054-independent-boundary-audit-v1",
+  "source_sha256": "edd4cea89c541d42457e8c48992d3efe1bcb0ab7610489b47e8efa60660aab3a"
+}

@@ -1,0 +1,9 @@
+{
+  "oracle_only": true,
+  "safe_next_action": {
+    "uncertain_delivery": "INSPECT_DELIVERY_RECEIPT",
+    "partial_edit": "INSPECT_UNVERIFIED_FIELD",
+    "no_effect_stale_target": "REFRESH_TARGET_BEFORE_ANY_RETRY"
+  },
+  "emergency_case": "immediate release bypasses all synthesis requirements"
+}

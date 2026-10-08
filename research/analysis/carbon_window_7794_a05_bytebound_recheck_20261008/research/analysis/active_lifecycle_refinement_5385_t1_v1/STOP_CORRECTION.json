@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "correction_of": "STOP.json",
+  "experiment": "issue-5385-t1-finite-alternating-refinement",
+  "allocation_id": "ACTIVE-AUTOMATA-5385-T1-DESKTOP-20261001-01",
+  "recorded_at_utc": "2026-10-01T04:47:00Z",
+  "correction": "The earlier STOP.json reason saying the slot had expired is incorrect. At STOP assessment the observed UTC clock was 2026-09-30 19:35 UTC while the assigned window was 20:15–20:30 UTC; the window was still in the future.",
+  "corrected_disposition": "STOP_BEFORE_START_MAIN_DRIFT_AND_FREEZE_PROVENANCE",
+  "evidence": [
+    "The allocation is terminated and must not be used: frozen source_main_sha e32ace71fa1158ca8d5eec13fe620a1a51c1ff00 differed from then-current main 8ee4ff891a54827b3df3df297cdb849e2aea428e.",
+    "Branch FREEZE.json retained a placeholder source_commit and source_manifest_sha256 did not match the branch SOURCE_MANIFEST.json.",
+    "The shared queue and exact Docker inventory had not been freshly reconciled at the start gate."
+  ],
+  "invocation_counts": {
+    "candidate": 0,
+    "auditor": 0,
+    "docker_container": 0,
+    "retries": 0
+  },
+  "interpretation": "The expired-window phrase is withdrawn. The no-invocation counts and decision not to launch remain correct. No scientific result is claimed. This allocation is relinquished before its window and is not transferable/reusable.",
+  "successor_rule": "Any experiment requires a new allocation ID, current-main refreeze, internally consistent manifest/freeze, and a new queue/start-gate check."
+}

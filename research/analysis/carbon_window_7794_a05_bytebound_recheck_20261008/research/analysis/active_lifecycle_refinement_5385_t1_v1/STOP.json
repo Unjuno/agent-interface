@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "experiment": "issue-5385-t1-finite-alternating-refinement",
+  "disposition": "STOP_WINDOW_EXPIRED_AND_START_GATES_UNVERIFIABLE",
+  "allocation_id": "ACTIVE-AUTOMATA-5385-T1-DESKTOP-20261001-01",
+  "branch": "research/active-lifecycle-refinement-5385-t1-20261001",
+  "recorded_at_utc": "2026-10-01T04:40:00Z",
+  "latest_main_observed": "8ee4ff891a54827b3df3df297cdb849e2aea428e",
+  "scheduled_window_utc": [
+    "2026-09-30T20:15:00Z",
+    "2026-09-30T20:30:00Z"
+  ],
+  "formal_candidate_invocations": 0,
+  "independent_auditor_invocations": 0,
+  "docker_container_invocations": 0,
+  "retries": 0,
+  "reasons": [
+    "The unique self-assigned interval had expired before this continuation resumed; no invocation is permitted outside it.",
+    "The authoritative coordination issue #5085 records Docker inventory/ownership as unknown at 2026-09-30 09:42 UTC and identifies other exact CPU/container requests; no fresh exact owner-confirmed interval is present for this allocation.",
+    "The branch freeze points at e32ace71fa1158ca8d5eec13fe620a1a51c1ff00 while current main is 8ee4ff891a54827b3df3df297cdb849e2aea428e.",
+    "The branch FREEZE.json retains a placeholder source_commit and its source_manifest_sha256 does not match the manifest currently on the branch."
+  ],
+  "construction_only": {
+    "host_unit_tests": "3/3 PASS",
+    "formal_candidate_claim": "none",
+    "scientific_hypothesis_verdict": "NOT_EVALUATED"
+  },
+  "preserved_evidence": {
+    "local_compressed_raw_bytes": 56990,
+    "local_compressed_raw_sha256": "6e9e9bedc6a9c78f2aa479e4edda341250dd04151b433d349f834d320bc33740",
+    "remote_git_blob_sha": "f7ba07a54b0a9ef06a9e23d7aebd48034ac7639e",
+    "remote_git_blob_size": 56990,
+    "remote_git_blob_sha256": "6e9e9bedc6a9c78f2aa479e4edda341250dd04151b433d349f834d320bc33740",
+    "byte_for_byte_match": true
+  },
+  "next_step": "Any formal successor requires a fresh unique allocation, fresh source freeze on current main, corrected manifest/freeze provenance and an exact non-overlapping owner-confirmed slot. Do not reuse or retry this allocation."
+}

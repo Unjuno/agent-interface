@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "decision": "RETAIN_EVIDENCE_TARGET_AUTHORITY_PAIR_V2",
+  "preflight_model_calls": 0,
+  "cases": {
+    "positive": {
+      "authority_class": "TARGET_REFERENCE_ONLY",
+      "diagnostic": "matched",
+      "point": [
+        506,
+        79
+      ],
+      "button_downs": 1,
+      "durable_calls": 18,
+      "exact_frames": 52,
+      "reported_input_tokens": {
+        "anchor_evidence": 8103,
+        "expanded_selection": 8386
+      },
+      "timing_ms": {
+        "slot_detection": 145.644306,
+        "anchor_hover_submit_to_return": 1284.669604,
+        "decision_start_to_anchor_receipt_ready": 1495.611906,
+        "decision_start_to_semantic_selection": 21967.964084,
+        "decision_start_to_evaluation_return": 26774.318393
+      }
+    },
+    "no-match": {
+      "authority_class": "NO_TARGET_AUTHORITY",
+      "diagnostic": "no_match_in_observed_set",
+      "point": null,
+      "button_downs": 0,
+      "durable_calls": 12,
+      "exact_frames": 41,
+      "reported_input_tokens": {
+        "anchor_evidence": 8104,
+        "expanded_selection": 8399
+      },
+      "timing_ms": {
+        "slot_detection": 150.919164,
+        "anchor_hover_submit_to_return": 1288.210137,
+        "decision_start_to_anchor_receipt_ready": 1498.253331,
+        "decision_start_to_semantic_selection": 17984.643577,
+        "decision_start_to_evaluation_return": 18694.465383
+      }
+    }
+  },
+  "same_model": "gpt-5.6-luna low",
+  "subagents": 0,
+  "scope": "one fixed-seed positive/no-match OpenTTD pair with deterministic wrong-anchor injection; no natural error rate, causal speedup, token saving, broad reliability or human-tempo claim"
+}

@@ -1,0 +1,7523 @@
+{
+  "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+  "cells": [
+    {
+      "arm": "keepalive",
+      "before_emergency": {
+        "buttons": 0,
+        "end_ns": 3011828974,
+        "keys": [],
+        "start_ns": 3011609349
+      },
+      "cleanup": [],
+      "completed_ns": 3018341422,
+      "emergency": [],
+      "errors": [],
+      "events": [
+        {
+          "keycode": 74,
+          "kind": "press",
+          "received_ns": 2908729069,
+          "server_ms": 2907
+        },
+        {
+          "keycode": 75,
+          "kind": "press",
+          "received_ns": 2911170445,
+          "server_ms": 2908
+        },
+        {
+          "keycode": 74,
+          "kind": "release",
+          "received_ns": 2950198961,
+          "server_ms": 2949
+        },
+        {
+          "keycode": 75,
+          "kind": "release",
+          "received_ns": 2950204727,
+          "server_ms": 2949
+        }
+      ],
+      "final_query": {
+        "buttons": 0,
+        "end_ns": 3013271258,
+        "keys": [],
+        "start_ns": 3013187956
+      },
+      "id": "keepalive-healthy",
+      "initial": {
+        "buttons": 0,
+        "end_ns": 2566642621,
+        "keys": [],
+        "start_ns": 2566491984
+      },
+      "keycodes": {
+        "F8": 74,
+        "F9": 75
+      },
+      "owner_argv": [
+        "/usr/local/bin/python3",
+        "-B",
+        "/src/method/owner.py",
+        "{\"display\": \":111\", \"window\": 2097152, \"identity\": {\"display\": \":111\", \"window\": 2097152, \"allocation\": \"X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003\", \"cell\": \"keepalive-healthy\", \"keys\": {\"F8\": 74, \"F9\": 75}}, \"paused\": false, \"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"owned-7034\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1}, \"authority\": {\"lease_id\": \"private-7034\", \"expires_at_ns\": 0}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"owned\"}, {\"op\": \"key_state\", \"key\": \"F8\", \"down\": true}, {\"op\": \"key_state\", \"key\": \"F9\", \"down\": true}, {\"op\": \"wait_update\", \"timeout_ms\": 40}, {\"op\": \"release_all\"}]}}"
+      ],
+      "owner_exit": 0,
+      "owner_pid": 12,
+      "owner_rows": [
+        {
+          "identity": {
+            "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+            "cell": "keepalive-healthy",
+            "display": ":111",
+            "keys": {
+              "F8": 74,
+              "F9": 75
+            },
+            "window": 2097152
+          },
+          "kind": "ready",
+          "ns": 2903730621,
+          "pid": 12
+        },
+        {
+          "kind": "dispatch_start",
+          "ns": 2906117881,
+          "pid": 12,
+          "program": {
+            "authority": {
+              "expires_at_ns": 6906115232,
+              "lease_id": "private-7034"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "owned"
+              },
+              {
+                "down": true,
+                "key": "F8",
+                "op": "key_state"
+              },
+              {
+                "down": true,
+                "key": "F9",
+                "op": "key_state"
+              },
+              {
+                "op": "wait_update",
+                "timeout_ms": 40
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "owned-7034",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        {
+          "key": "F8",
+          "kind": "positive_check",
+          "ns": 2907839786,
+          "permitted": true,
+          "pid": 12
+        },
+        {
+          "key": "F8",
+          "kind": "native_start",
+          "ns": 2907855818,
+          "pid": 12
+        },
+        {
+          "key": "F8",
+          "kind": "native_end",
+          "ns": 2908020492,
+          "pid": 12
+        },
+        {
+          "key": "F9",
+          "kind": "positive_check",
+          "ns": 2908862417,
+          "permitted": true,
+          "pid": 12
+        },
+        {
+          "key": "F9",
+          "kind": "native_start",
+          "ns": 2908879090,
+          "pid": 12
+        },
+        {
+          "key": "F9",
+          "kind": "native_end",
+          "ns": 2909013584,
+          "pid": 12
+        },
+        {
+          "kind": "dispatch_return",
+          "ns": 2949719756,
+          "pid": 12,
+          "receipt": {
+            "admission": "accepted",
+            "execution": {
+              "activations": [],
+              "completed_ops": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "emissions": 4,
+              "ended_ns": 2949697385,
+              "observations": [],
+              "program_emissions": 4,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 2949695028,
+                  "verified": true
+                }
+              ],
+              "started_ns": 2907322547,
+              "waits": [
+                {
+                  "completed": true,
+                  "ended_ns": 2949160269,
+                  "kind": "fixed_delay",
+                  "operation_index": 3,
+                  "requested_ms": 40,
+                  "started_ns": 2909032141,
+                  "update_observed": null
+                }
+              ]
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "clock.monotonic",
+              "event.feedback",
+              "input.keyboard",
+              "input.release_all",
+              "window.focus"
+            ],
+            "status": "completed"
+          }
+        },
+        {
+          "kind": "owner_done",
+          "ns": 2949799803,
+          "pid": 12
+        }
+      ],
+      "paused": false,
+      "pipe_eof_ns": 2960234202,
+      "prearmed": {
+        "at_ns": 2566790094,
+        "identity": {
+          "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+          "cell": "keepalive-healthy",
+          "display": ":111",
+          "keys": {
+            "F8": 74,
+            "F9": 75
+          },
+          "window": 2097152
+        }
+      },
+      "retired_ns": 2960306053,
+      "samples": [
+        {
+          "buttons": 0,
+          "end_ns": 2568824225,
+          "keys": [],
+          "start_ns": 2568665906
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2571193191,
+          "keys": [],
+          "start_ns": 2571060023
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2573496437,
+          "keys": [],
+          "start_ns": 2573381899
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2575868011,
+          "keys": [],
+          "start_ns": 2575751573
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2578254493,
+          "keys": [],
+          "start_ns": 2578094961
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2580723545,
+          "keys": [],
+          "start_ns": 2580540286
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2583096673,
+          "keys": [],
+          "start_ns": 2582962934
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2585486548,
+          "keys": [],
+          "start_ns": 2585367575
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2587990008,
+          "keys": [],
+          "start_ns": 2587831039
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2590415513,
+          "keys": [],
+          "start_ns": 2590263220
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2592770155,
+          "keys": [],
+          "start_ns": 2592605688
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2595161571,
+          "keys": [],
+          "start_ns": 2594990571
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2597645081,
+          "keys": [],
+          "start_ns": 2597435910
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2600104705,
+          "keys": [],
+          "start_ns": 2599890694
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2602463638,
+          "keys": [],
+          "start_ns": 2602314094
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2604832795,
+          "keys": [],
+          "start_ns": 2604657264
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2607515102,
+          "keys": [],
+          "start_ns": 2607392368
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2609897353,
+          "keys": [],
+          "start_ns": 2609741444
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2612233269,
+          "keys": [],
+          "start_ns": 2612122300
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2614574521,
+          "keys": [],
+          "start_ns": 2614404411
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2617032923,
+          "keys": [],
+          "start_ns": 2616792963
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2619594741,
+          "keys": [],
+          "start_ns": 2619449365
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2621985867,
+          "keys": [],
+          "start_ns": 2621877968
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2624322091,
+          "keys": [],
+          "start_ns": 2624215394
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2626636565,
+          "keys": [],
+          "start_ns": 2626522954
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2628956248,
+          "keys": [],
+          "start_ns": 2628827535
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2631358999,
+          "keys": [],
+          "start_ns": 2631192325
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2633743497,
+          "keys": [],
+          "start_ns": 2633626294
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2636202416,
+          "keys": [],
+          "start_ns": 2636018670
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2638511246,
+          "keys": [],
+          "start_ns": 2638390652
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2640833689,
+          "keys": [],
+          "start_ns": 2640725121
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2643269872,
+          "keys": [],
+          "start_ns": 2643141258
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2645620537,
+          "keys": [],
+          "start_ns": 2645502115
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2647907661,
+          "keys": [],
+          "start_ns": 2647804964
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2650242424,
+          "keys": [],
+          "start_ns": 2650119891
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2652568489,
+          "keys": [],
+          "start_ns": 2652452874
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2654913537,
+          "keys": [],
+          "start_ns": 2654758898
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2657269467,
+          "keys": [],
+          "start_ns": 2657120089
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2659589275,
+          "keys": [],
+          "start_ns": 2659484521
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2661873738,
+          "keys": [],
+          "start_ns": 2661769490
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2664215880,
+          "keys": [],
+          "start_ns": 2664102371
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2666494643,
+          "keys": [],
+          "start_ns": 2666392420
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2668872097,
+          "keys": [],
+          "start_ns": 2668715407
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2671270520,
+          "keys": [],
+          "start_ns": 2671038529
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2673815681,
+          "keys": [],
+          "start_ns": 2673641351
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2676178644,
+          "keys": [],
+          "start_ns": 2676028942
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2678750130,
+          "keys": [],
+          "start_ns": 2678564840
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2681155924,
+          "keys": [],
+          "start_ns": 2681013610
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2683593395,
+          "keys": [],
+          "start_ns": 2683428573
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2685992246,
+          "keys": [],
+          "start_ns": 2685885196
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2688307010,
+          "keys": [],
+          "start_ns": 2688194969
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2690853758,
+          "keys": [],
+          "start_ns": 2690544373
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2693243244,
+          "keys": [],
+          "start_ns": 2693071321
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2695569153,
+          "keys": [],
+          "start_ns": 2695458441
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2697895334,
+          "keys": [],
+          "start_ns": 2697745740
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2700226733,
+          "keys": [],
+          "start_ns": 2700110722
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2702597181,
+          "keys": [],
+          "start_ns": 2702485723
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2704967638,
+          "keys": [],
+          "start_ns": 2704846965
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2707305439,
+          "keys": [],
+          "start_ns": 2707173167
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2709840445,
+          "keys": [],
+          "start_ns": 2709723458
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2712241795,
+          "keys": [],
+          "start_ns": 2712089941
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2714587423,
+          "keys": [],
+          "start_ns": 2714444980
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2717032217,
+          "keys": [],
+          "start_ns": 2716831146
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2719394181,
+          "keys": [],
+          "start_ns": 2719265590
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2721894134,
+          "keys": [],
+          "start_ns": 2721671540
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2724280637,
+          "keys": [],
+          "start_ns": 2724153101
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2726691651,
+          "keys": [],
+          "start_ns": 2726517601
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2728992355,
+          "keys": [],
+          "start_ns": 2728871191
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2731296859,
+          "keys": [],
+          "start_ns": 2731193976
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2733637782,
+          "keys": [],
+          "start_ns": 2733523645
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2735948302,
+          "keys": [],
+          "start_ns": 2735813074
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2738340275,
+          "keys": [],
+          "start_ns": 2738224638
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2740680369,
+          "keys": [],
+          "start_ns": 2740565054
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2743004308,
+          "keys": [],
+          "start_ns": 2742880902
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2745367713,
+          "keys": [],
+          "start_ns": 2745227532
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2747765648,
+          "keys": [],
+          "start_ns": 2747617960
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2750185527,
+          "keys": [],
+          "start_ns": 2750030853
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2752621406,
+          "keys": [],
+          "start_ns": 2752448886
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2754972177,
+          "keys": [],
+          "start_ns": 2754885662
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2757510744,
+          "keys": [],
+          "start_ns": 2757199874
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2760128420,
+          "keys": [],
+          "start_ns": 2759937935
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2762465403,
+          "keys": [],
+          "start_ns": 2762340624
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2764824917,
+          "keys": [],
+          "start_ns": 2764716080
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2767214358,
+          "keys": [],
+          "start_ns": 2767049560
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2769696130,
+          "keys": [],
+          "start_ns": 2769555634
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2773048806,
+          "keys": [],
+          "start_ns": 2772944778
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2775370410,
+          "keys": [],
+          "start_ns": 2775231661
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2777934788,
+          "keys": [],
+          "start_ns": 2777752367
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2780287846,
+          "keys": [],
+          "start_ns": 2780152227
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2782666137,
+          "keys": [],
+          "start_ns": 2782534762
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2784983286,
+          "keys": [],
+          "start_ns": 2784870993
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2787283522,
+          "keys": [],
+          "start_ns": 2787177625
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2789678995,
+          "keys": [],
+          "start_ns": 2789535359
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2792111748,
+          "keys": [],
+          "start_ns": 2791964228
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2794475133,
+          "keys": [],
+          "start_ns": 2794326844
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2796785549,
+          "keys": [],
+          "start_ns": 2796670552
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2799060985,
+          "keys": [],
+          "start_ns": 2798960265
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2801546063,
+          "keys": [],
+          "start_ns": 2801391236
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2803872582,
+          "keys": [],
+          "start_ns": 2803775231
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2806330935,
+          "keys": [],
+          "start_ns": 2806188184
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2808728658,
+          "keys": [],
+          "start_ns": 2808621075
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2811035136,
+          "keys": [],
+          "start_ns": 2810901193
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2813445691,
+          "keys": [],
+          "start_ns": 2813285846
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2815907516,
+          "keys": [],
+          "start_ns": 2815791505
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2818225272,
+          "keys": [],
+          "start_ns": 2818102601
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2820549089,
+          "keys": [],
+          "start_ns": 2820401584
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2822929354,
+          "keys": [],
+          "start_ns": 2822749385
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2825341221,
+          "keys": [],
+          "start_ns": 2825223814
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2827678885,
+          "keys": [],
+          "start_ns": 2827564486
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2830088433,
+          "keys": [],
+          "start_ns": 2829946865
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2832367308,
+          "keys": [],
+          "start_ns": 2832271042
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2834667722,
+          "keys": [],
+          "start_ns": 2834562558
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2837180293,
+          "keys": [],
+          "start_ns": 2837028646
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2839495005,
+          "keys": [],
+          "start_ns": 2839378753
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2841825963,
+          "keys": [],
+          "start_ns": 2841693896
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2844205718,
+          "keys": [],
+          "start_ns": 2844089203
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2846471773,
+          "keys": [],
+          "start_ns": 2846379106
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2848829002,
+          "keys": [],
+          "start_ns": 2848632878
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2851162018,
+          "keys": [],
+          "start_ns": 2851035431
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2853492343,
+          "keys": [],
+          "start_ns": 2853359725
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2855825831,
+          "keys": [],
+          "start_ns": 2855699874
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2858205783,
+          "keys": [],
+          "start_ns": 2858037271
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2860607482,
+          "keys": [],
+          "start_ns": 2860466085
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2862958948,
+          "keys": [],
+          "start_ns": 2862824226
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2865289256,
+          "keys": [],
+          "start_ns": 2865171466
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2867631495,
+          "keys": [],
+          "start_ns": 2867492521
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2870020364,
+          "keys": [],
+          "start_ns": 2869881329
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2872411309,
+          "keys": [],
+          "start_ns": 2872295298
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2874752471,
+          "keys": [],
+          "start_ns": 2874603394
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2877198488,
+          "keys": [],
+          "start_ns": 2876993963
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2879710052,
+          "keys": [],
+          "start_ns": 2879532550
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2882130071,
+          "keys": [],
+          "start_ns": 2881980475
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2884505375,
+          "keys": [],
+          "start_ns": 2884378660
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2886822067,
+          "keys": [],
+          "start_ns": 2886720444
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2889170158,
+          "keys": [],
+          "start_ns": 2889068492
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2891607440,
+          "keys": [],
+          "start_ns": 2891474838
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2893999136,
+          "keys": [],
+          "start_ns": 2893836938
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2896494208,
+          "keys": [],
+          "start_ns": 2896244949
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2898868508,
+          "keys": [],
+          "start_ns": 2898759054
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2901165133,
+          "keys": [],
+          "start_ns": 2901031452
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2903529762,
+          "keys": [],
+          "start_ns": 2903369383
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2905904885,
+          "keys": [],
+          "start_ns": 2905746850
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2906242142,
+          "keys": [],
+          "start_ns": 2906109585
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2908597068,
+          "keys": [
+            74
+          ],
+          "start_ns": 2908468473
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2911033704,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2910897513
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2913529708,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2913336989
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2916106033,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2915741605
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2918758814,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2918598101
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2921126048,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2920997145
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2923532932,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2923384207
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2925909545,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2925754241
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2928362173,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2928195866
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2930722100,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2930615866
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2933273943,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2933123182
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2935631741,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2935522371
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2938041278,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2937890501
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2940390202,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2940264102
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2942761081,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2942614322
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2945215959,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2945080702
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2947621575,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 2947494919
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2950065199,
+          "keys": [],
+          "start_ns": 2949888901
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2952526437,
+          "keys": [],
+          "start_ns": 2952400599
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2954929583,
+          "keys": [],
+          "start_ns": 2954801144
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2957470535,
+          "keys": [],
+          "start_ns": 2957320650
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2959946210,
+          "keys": [],
+          "start_ns": 2959785754
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2960411465,
+          "keys": [],
+          "start_ns": 2960308506
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2960651235,
+          "keys": [],
+          "start_ns": 2960559373
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2963203566,
+          "keys": [],
+          "start_ns": 2963017577
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2965689234,
+          "keys": [],
+          "start_ns": 2965540913
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2968200321,
+          "keys": [],
+          "start_ns": 2967922450
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2970660517,
+          "keys": [],
+          "start_ns": 2970511807
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2973110705,
+          "keys": [],
+          "start_ns": 2972986675
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2975483376,
+          "keys": [],
+          "start_ns": 2975367292
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2977902707,
+          "keys": [],
+          "start_ns": 2977775770
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2980270413,
+          "keys": [],
+          "start_ns": 2980159448
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2982669422,
+          "keys": [],
+          "start_ns": 2982509591
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2985066394,
+          "keys": [],
+          "start_ns": 2984966726
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2987464160,
+          "keys": [],
+          "start_ns": 2987331426
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2989923000,
+          "keys": [],
+          "start_ns": 2989766958
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2992313609,
+          "keys": [],
+          "start_ns": 2992194971
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2994700947,
+          "keys": [],
+          "start_ns": 2994585835
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2997021617,
+          "keys": [],
+          "start_ns": 2996928732
+        },
+        {
+          "buttons": 0,
+          "end_ns": 2999400825,
+          "keys": [],
+          "start_ns": 2999283015
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3001767034,
+          "keys": [],
+          "start_ns": 3001658071
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3004159755,
+          "keys": [],
+          "start_ns": 3004040662
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3006622532,
+          "keys": [],
+          "start_ns": 3006462586
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3009087668,
+          "keys": [],
+          "start_ns": 3008966912
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3011464905,
+          "keys": [],
+          "start_ns": 3011363785
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3012382904,
+          "keys": [],
+          "start_ns": 3012322409
+        }
+      ],
+      "start_sent_ns": 2906106054,
+      "stdout_sha256": "b84408294decc8e3e1753269f2181780e70daa3f7817efc109a806840d049f5a",
+      "xvfb_exit": 0,
+      "xvfb_pid": 9
+    },
+    {
+      "accepted_ns": 3385223810,
+      "arm": "keepalive",
+      "before_emergency": {
+        "buttons": 0,
+        "end_ns": 3886810983,
+        "keys": [],
+        "start_ns": 3886700788
+      },
+      "checkpoint": {
+        "at_ns": 3536277653,
+        "owner_alive": true,
+        "query": {
+          "buttons": 0,
+          "end_ns": 3536200268,
+          "keys": [],
+          "start_ns": 3536126881
+        }
+      },
+      "cleanup": [
+        {
+          "end_ns": 3385464278,
+          "key": "F8",
+          "keycode": 74,
+          "kind": "release",
+          "start_ns": 3385354789
+        }
+      ],
+      "completed_ns": 3892325013,
+      "emergency": [],
+      "errors": [],
+      "events": [
+        {
+          "keycode": 74,
+          "kind": "press",
+          "received_ns": 3382682579,
+          "server_ms": 3382
+        },
+        {
+          "keycode": 74,
+          "kind": "release",
+          "received_ns": 3385738218,
+          "server_ms": 3385
+        },
+        {
+          "keycode": 75,
+          "kind": "press",
+          "received_ns": 3787846774,
+          "server_ms": 3785
+        },
+        {
+          "keycode": 75,
+          "kind": "release",
+          "received_ns": 3826660763,
+          "server_ms": 3825
+        }
+      ],
+      "exposure": {
+        "buttons": 0,
+        "end_ns": 3385148168,
+        "keys": [
+          74
+        ],
+        "start_ns": 3385081405
+      },
+      "final_query": {
+        "buttons": 0,
+        "end_ns": 3888152499,
+        "keys": [],
+        "start_ns": 3887995771
+      },
+      "id": "keepalive-paused",
+      "initial": {
+        "buttons": 0,
+        "end_ns": 3040148757,
+        "keys": [],
+        "start_ns": 3040050868
+      },
+      "keycodes": {
+        "F8": 74,
+        "F9": 75
+      },
+      "owner_argv": [
+        "/usr/local/bin/python3",
+        "-B",
+        "/src/method/owner.py",
+        "{\"display\": \":112\", \"window\": 2097152, \"identity\": {\"display\": \":112\", \"window\": 2097152, \"allocation\": \"X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003\", \"cell\": \"keepalive-paused\", \"keys\": {\"F8\": 74, \"F9\": 75}}, \"paused\": true, \"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"owned-7034\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1}, \"authority\": {\"lease_id\": \"private-7034\", \"expires_at_ns\": 0}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"owned\"}, {\"op\": \"key_state\", \"key\": \"F8\", \"down\": true}, {\"op\": \"key_state\", \"key\": \"F9\", \"down\": true}, {\"op\": \"wait_update\", \"timeout_ms\": 40}, {\"op\": \"release_all\"}]}}"
+      ],
+      "owner_exit": 0,
+      "owner_pid": 17,
+      "owner_rows": [
+        {
+          "identity": {
+            "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+            "cell": "keepalive-paused",
+            "display": ":112",
+            "keys": {
+              "F8": 74,
+              "F9": 75
+            },
+            "window": 2097152
+          },
+          "kind": "ready",
+          "ns": 3378051330,
+          "pid": 17
+        },
+        {
+          "kind": "dispatch_start",
+          "ns": 3379902517,
+          "pid": 17,
+          "program": {
+            "authority": {
+              "expires_at_ns": 7379899515,
+              "lease_id": "private-7034"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "owned"
+              },
+              {
+                "down": true,
+                "key": "F8",
+                "op": "key_state"
+              },
+              {
+                "down": true,
+                "key": "F9",
+                "op": "key_state"
+              },
+              {
+                "op": "wait_update",
+                "timeout_ms": 40
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "owned-7034",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        {
+          "key": "F8",
+          "kind": "positive_check",
+          "ns": 3382102382,
+          "permitted": true,
+          "pid": 17
+        },
+        {
+          "key": "F8",
+          "kind": "native_start",
+          "ns": 3382119522,
+          "pid": 17
+        },
+        {
+          "key": "F8",
+          "kind": "native_end",
+          "ns": 3382315084,
+          "pid": 17
+        },
+        {
+          "key": "F9",
+          "kind": "positive_check",
+          "ns": 3383032312,
+          "permitted": true,
+          "pid": 17
+        },
+        {
+          "key": "F9",
+          "kind": "pause_entered",
+          "ns": 3383045330,
+          "pid": 17
+        },
+        {
+          "key": "F9",
+          "kind": "resume_received",
+          "ns": 3785385873,
+          "pid": 17
+        },
+        {
+          "key": "F9",
+          "kind": "native_start",
+          "ns": 3785421198,
+          "pid": 17
+        },
+        {
+          "key": "F9",
+          "kind": "native_end",
+          "ns": 3785591040,
+          "pid": 17
+        },
+        {
+          "kind": "dispatch_return",
+          "ns": 3826159153,
+          "pid": 17,
+          "receipt": {
+            "admission": "accepted",
+            "execution": {
+              "activations": [],
+              "completed_ops": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "emissions": 4,
+              "ended_ns": 3826141583,
+              "observations": [],
+              "program_emissions": 4,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 3826139102,
+                  "verified": true
+                }
+              ],
+              "started_ns": 3381559329,
+              "waits": [
+                {
+                  "completed": true,
+                  "ended_ns": 3825735367,
+                  "kind": "fixed_delay",
+                  "operation_index": 3,
+                  "requested_ms": 40,
+                  "started_ns": 3785605855,
+                  "update_observed": null
+                }
+              ]
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "clock.monotonic",
+              "event.feedback",
+              "input.keyboard",
+              "input.release_all",
+              "window.focus"
+            ],
+            "status": "completed"
+          }
+        },
+        {
+          "kind": "owner_done",
+          "ns": 3826242891,
+          "pid": 17
+        }
+      ],
+      "paused": true,
+      "pipe_eof_ns": 3836313151,
+      "prearmed": {
+        "at_ns": 3040237858,
+        "identity": {
+          "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+          "cell": "keepalive-paused",
+          "display": ":112",
+          "keys": {
+            "F8": 74,
+            "F9": 75
+          },
+          "window": 2097152
+        }
+      },
+      "release_query": {
+        "buttons": 0,
+        "end_ns": 3385525236,
+        "keys": [],
+        "start_ns": 3385465903
+      },
+      "request_ns": 3385223054,
+      "resume_sent_ns": 3785317885,
+      "retired_ns": 3836382871,
+      "samples": [
+        {
+          "buttons": 0,
+          "end_ns": 3042622966,
+          "keys": [],
+          "start_ns": 3042518473
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3045011405,
+          "keys": [],
+          "start_ns": 3044899447
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3047526751,
+          "keys": [],
+          "start_ns": 3047376070
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3049986739,
+          "keys": [],
+          "start_ns": 3049874860
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3052334074,
+          "keys": [],
+          "start_ns": 3052175133
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3054718847,
+          "keys": [],
+          "start_ns": 3054592492
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3057088641,
+          "keys": [],
+          "start_ns": 3056974331
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3059389647,
+          "keys": [],
+          "start_ns": 3059263283
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3061714293,
+          "keys": [],
+          "start_ns": 3061595025
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3063990511,
+          "keys": [],
+          "start_ns": 3063881376
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3066370419,
+          "keys": [],
+          "start_ns": 3066264517
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3068658496,
+          "keys": [],
+          "start_ns": 3068542482
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3071223109,
+          "keys": [],
+          "start_ns": 3070895526
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3073612906,
+          "keys": [],
+          "start_ns": 3073481041
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3075957373,
+          "keys": [],
+          "start_ns": 3075846092
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3078380025,
+          "keys": [],
+          "start_ns": 3078253670
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3080846842,
+          "keys": [],
+          "start_ns": 3080620074
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3083263433,
+          "keys": [],
+          "start_ns": 3083109836
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3085764615,
+          "keys": [],
+          "start_ns": 3085624370
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3088170260,
+          "keys": [],
+          "start_ns": 3087980434
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3090486318,
+          "keys": [],
+          "start_ns": 3090372595
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3092898171,
+          "keys": [],
+          "start_ns": 3092727528
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3095321068,
+          "keys": [],
+          "start_ns": 3095106457
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3097734232,
+          "keys": [],
+          "start_ns": 3097594050
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3100132878,
+          "keys": [],
+          "start_ns": 3099959593
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3102468509,
+          "keys": [],
+          "start_ns": 3102341791
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3104789605,
+          "keys": [],
+          "start_ns": 3104673018
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3107193053,
+          "keys": [],
+          "start_ns": 3106995445
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3109658187,
+          "keys": [],
+          "start_ns": 3109526488
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3112079385,
+          "keys": [],
+          "start_ns": 3111887467
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3114541268,
+          "keys": [],
+          "start_ns": 3114415764
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3116893797,
+          "keys": [],
+          "start_ns": 3116742249
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3119179664,
+          "keys": [],
+          "start_ns": 3119077401
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3121642489,
+          "keys": [],
+          "start_ns": 3121514494
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3124063175,
+          "keys": [],
+          "start_ns": 3123888133
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3126379063,
+          "keys": [],
+          "start_ns": 3126272913
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3128705058,
+          "keys": [],
+          "start_ns": 3128583137
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3131039322,
+          "keys": [],
+          "start_ns": 3130908417
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3133316647,
+          "keys": [],
+          "start_ns": 3133210638
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3135592489,
+          "keys": [],
+          "start_ns": 3135477991
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3137902732,
+          "keys": [],
+          "start_ns": 3137791753
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3140221555,
+          "keys": [],
+          "start_ns": 3140128460
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3142543210,
+          "keys": [],
+          "start_ns": 3142424993
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3144910402,
+          "keys": [],
+          "start_ns": 3144792813
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3147376373,
+          "keys": [],
+          "start_ns": 3147136314
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3149726154,
+          "keys": [],
+          "start_ns": 3149583495
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3152185762,
+          "keys": [],
+          "start_ns": 3151996491
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3154518581,
+          "keys": [],
+          "start_ns": 3154402413
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3156867511,
+          "keys": [],
+          "start_ns": 3156733072
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3159276782,
+          "keys": [],
+          "start_ns": 3159111674
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3161695584,
+          "keys": [],
+          "start_ns": 3161596658
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3164148491,
+          "keys": [],
+          "start_ns": 3163976226
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3166485844,
+          "keys": [],
+          "start_ns": 3166376627
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3168838248,
+          "keys": [],
+          "start_ns": 3168718653
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3171137519,
+          "keys": [],
+          "start_ns": 3171016712
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3173459688,
+          "keys": [],
+          "start_ns": 3173333718
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3175907748,
+          "keys": [],
+          "start_ns": 3175756411
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3178511036,
+          "keys": [],
+          "start_ns": 3178144705
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3181192034,
+          "keys": [],
+          "start_ns": 3180904429
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3183742651,
+          "keys": [],
+          "start_ns": 3183569538
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3186256761,
+          "keys": [],
+          "start_ns": 3186005096
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3188799305,
+          "keys": [],
+          "start_ns": 3188600276
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3191212599,
+          "keys": [],
+          "start_ns": 3191081482
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3193564500,
+          "keys": [],
+          "start_ns": 3193425093
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3195923482,
+          "keys": [],
+          "start_ns": 3195805946
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3198333570,
+          "keys": [],
+          "start_ns": 3198138670
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3200937811,
+          "keys": [],
+          "start_ns": 3200793287
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3203284691,
+          "keys": [],
+          "start_ns": 3203152536
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3205729668,
+          "keys": [],
+          "start_ns": 3205553549
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3208144171,
+          "keys": [],
+          "start_ns": 3207959517
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3210576546,
+          "keys": [],
+          "start_ns": 3210428684
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3213040860,
+          "keys": [],
+          "start_ns": 3212862103
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3215517802,
+          "keys": [],
+          "start_ns": 3215390111
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3217859324,
+          "keys": [],
+          "start_ns": 3217721151
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3220174722,
+          "keys": [],
+          "start_ns": 3220030313
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3222488498,
+          "keys": [],
+          "start_ns": 3222359969
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3224901910,
+          "keys": [],
+          "start_ns": 3224788999
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3227201282,
+          "keys": [],
+          "start_ns": 3227118020
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3229553523,
+          "keys": [],
+          "start_ns": 3229446844
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3231921234,
+          "keys": [],
+          "start_ns": 3231811741
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3234425982,
+          "keys": [],
+          "start_ns": 3234281292
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3236786815,
+          "keys": [],
+          "start_ns": 3236663723
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3239206635,
+          "keys": [],
+          "start_ns": 3239118819
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3241663643,
+          "keys": [],
+          "start_ns": 3241541815
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3244055652,
+          "keys": [],
+          "start_ns": 3243941177
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3246358788,
+          "keys": [],
+          "start_ns": 3246244997
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3248683084,
+          "keys": [],
+          "start_ns": 3248521968
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3251090314,
+          "keys": [],
+          "start_ns": 3250946172
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3253405492,
+          "keys": [],
+          "start_ns": 3253297530
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3255727971,
+          "keys": [],
+          "start_ns": 3255615996
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3258056688,
+          "keys": [],
+          "start_ns": 3257941727
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3260380781,
+          "keys": [],
+          "start_ns": 3260237593
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3262735223,
+          "keys": [],
+          "start_ns": 3262605040
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3265286414,
+          "keys": [],
+          "start_ns": 3265032307
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3268042833,
+          "keys": [],
+          "start_ns": 3267724623
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3270596643,
+          "keys": [],
+          "start_ns": 3270398183
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3273186233,
+          "keys": [],
+          "start_ns": 3272953842
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3275788622,
+          "keys": [],
+          "start_ns": 3275505626
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3278316678,
+          "keys": [],
+          "start_ns": 3278132111
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3280922022,
+          "keys": [],
+          "start_ns": 3280572272
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3283415487,
+          "keys": [],
+          "start_ns": 3283196421
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3286147417,
+          "keys": [],
+          "start_ns": 3285898979
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3288770738,
+          "keys": [],
+          "start_ns": 3288547777
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3291394179,
+          "keys": [],
+          "start_ns": 3291144063
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3293842997,
+          "keys": [],
+          "start_ns": 3293718837
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3296262213,
+          "keys": [],
+          "start_ns": 3296057488
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3298739415,
+          "keys": [],
+          "start_ns": 3298603759
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3301121452,
+          "keys": [],
+          "start_ns": 3300969452
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3303594618,
+          "keys": [],
+          "start_ns": 3303422863
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3305985405,
+          "keys": [],
+          "start_ns": 3305822099
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3308284436,
+          "keys": [],
+          "start_ns": 3308182511
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3310805403,
+          "keys": [],
+          "start_ns": 3310528330
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3313116563,
+          "keys": [],
+          "start_ns": 3312988735
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3315425246,
+          "keys": [],
+          "start_ns": 3315292156
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3317758946,
+          "keys": [],
+          "start_ns": 3317625996
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3320604284,
+          "keys": [],
+          "start_ns": 3320490152
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3322907203,
+          "keys": [],
+          "start_ns": 3322788569
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3325183171,
+          "keys": [],
+          "start_ns": 3325066874
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3327511580,
+          "keys": [],
+          "start_ns": 3327396774
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3329777369,
+          "keys": [],
+          "start_ns": 3329684101
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3332186160,
+          "keys": [],
+          "start_ns": 3332039738
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3334547342,
+          "keys": [],
+          "start_ns": 3334423490
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3336887894,
+          "keys": [],
+          "start_ns": 3336761312
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3339208989,
+          "keys": [],
+          "start_ns": 3339101456
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3341612450,
+          "keys": [],
+          "start_ns": 3341501122
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3344031055,
+          "keys": [],
+          "start_ns": 3343903100
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3346540713,
+          "keys": [],
+          "start_ns": 3346387937
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3349068928,
+          "keys": [],
+          "start_ns": 3348945588
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3351443113,
+          "keys": [],
+          "start_ns": 3351317436
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3353936686,
+          "keys": [],
+          "start_ns": 3353765160
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3356363543,
+          "keys": [],
+          "start_ns": 3356234812
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3358838366,
+          "keys": [],
+          "start_ns": 3358706213
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3361072893,
+          "keys": [],
+          "start_ns": 3360995250
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3363370477,
+          "keys": [],
+          "start_ns": 3363276854
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3365702998,
+          "keys": [],
+          "start_ns": 3365601891
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3368121553,
+          "keys": [],
+          "start_ns": 3367993127
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3370494181,
+          "keys": [],
+          "start_ns": 3370405990
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3372794696,
+          "keys": [],
+          "start_ns": 3372687475
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3375077269,
+          "keys": [],
+          "start_ns": 3374981637
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3377374992,
+          "keys": [],
+          "start_ns": 3377295755
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3379741666,
+          "keys": [],
+          "start_ns": 3379599382
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3380035944,
+          "keys": [],
+          "start_ns": 3379893418
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3382590645,
+          "keys": [
+            74
+          ],
+          "start_ns": 3382491498
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3384938827,
+          "keys": [
+            74
+          ],
+          "start_ns": 3384803470
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3385661739,
+          "keys": [],
+          "start_ns": 3385602095
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3388065321,
+          "keys": [],
+          "start_ns": 3387857167
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3390453809,
+          "keys": [],
+          "start_ns": 3390310348
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3392817684,
+          "keys": [],
+          "start_ns": 3392702438
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3395213008,
+          "keys": [],
+          "start_ns": 3395124866
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3397617063,
+          "keys": [],
+          "start_ns": 3397465487
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3400037339,
+          "keys": [],
+          "start_ns": 3399855896
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3402404274,
+          "keys": [],
+          "start_ns": 3402295711
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3404783698,
+          "keys": [],
+          "start_ns": 3404675463
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3407190148,
+          "keys": [],
+          "start_ns": 3407067172
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3409561891,
+          "keys": [],
+          "start_ns": 3409452104
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3411877675,
+          "keys": [],
+          "start_ns": 3411751193
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3414368325,
+          "keys": [],
+          "start_ns": 3414187904
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3416713916,
+          "keys": [],
+          "start_ns": 3416575604
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3419068037,
+          "keys": [],
+          "start_ns": 3418975709
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3421505669,
+          "keys": [],
+          "start_ns": 3421417971
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3423864039,
+          "keys": [],
+          "start_ns": 3423731638
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3426150172,
+          "keys": [],
+          "start_ns": 3426041370
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3428691769,
+          "keys": [],
+          "start_ns": 3428446953
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3431108509,
+          "keys": [],
+          "start_ns": 3430968588
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3433529585,
+          "keys": [],
+          "start_ns": 3433397971
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3435929219,
+          "keys": [],
+          "start_ns": 3435816033
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3438301585,
+          "keys": [],
+          "start_ns": 3438216281
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3440685387,
+          "keys": [],
+          "start_ns": 3440524762
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3443100270,
+          "keys": [],
+          "start_ns": 3442956980
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3445607059,
+          "keys": [],
+          "start_ns": 3445389654
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3448026043,
+          "keys": [],
+          "start_ns": 3447897222
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3450513988,
+          "keys": [],
+          "start_ns": 3450303270
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3452910776,
+          "keys": [],
+          "start_ns": 3452767250
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3455310630,
+          "keys": [],
+          "start_ns": 3455184971
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3457674141,
+          "keys": [],
+          "start_ns": 3457582667
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3460098273,
+          "keys": [],
+          "start_ns": 3459947445
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3462521664,
+          "keys": [],
+          "start_ns": 3462424908
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3464919967,
+          "keys": [],
+          "start_ns": 3464746719
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3467525616,
+          "keys": [],
+          "start_ns": 3467402215
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3469898341,
+          "keys": [],
+          "start_ns": 3469781090
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3472161423,
+          "keys": [],
+          "start_ns": 3472061780
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3474485370,
+          "keys": [],
+          "start_ns": 3474379475
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3476806805,
+          "keys": [],
+          "start_ns": 3476704512
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3479356603,
+          "keys": [],
+          "start_ns": 3479210957
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3481942724,
+          "keys": [],
+          "start_ns": 3481816797
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3484232736,
+          "keys": [],
+          "start_ns": 3484139672
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3486532646,
+          "keys": [],
+          "start_ns": 3486462181
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3488822747,
+          "keys": [],
+          "start_ns": 3488741055
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3491180008,
+          "keys": [],
+          "start_ns": 3491084696
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3493460697,
+          "keys": [],
+          "start_ns": 3493392065
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3495811150,
+          "keys": [],
+          "start_ns": 3495717480
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3498093458,
+          "keys": [],
+          "start_ns": 3498022797
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3500451613,
+          "keys": [],
+          "start_ns": 3500322579
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3502776400,
+          "keys": [],
+          "start_ns": 3502662529
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3505128030,
+          "keys": [],
+          "start_ns": 3505007718
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3507597483,
+          "keys": [],
+          "start_ns": 3507407851
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3510007034,
+          "keys": [],
+          "start_ns": 3509842468
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3512291608,
+          "keys": [],
+          "start_ns": 3512211794
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3514613995,
+          "keys": [],
+          "start_ns": 3514490898
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3517018051,
+          "keys": [],
+          "start_ns": 3516885248
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3519505294,
+          "keys": [],
+          "start_ns": 3519273608
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3522115322,
+          "keys": [],
+          "start_ns": 3522009451
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3524421812,
+          "keys": [],
+          "start_ns": 3524344661
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3526705098,
+          "keys": [],
+          "start_ns": 3526608637
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3529042475,
+          "keys": [],
+          "start_ns": 3528927710
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3531288409,
+          "keys": [],
+          "start_ns": 3531215224
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3533622174,
+          "keys": [],
+          "start_ns": 3533506794
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3535979930,
+          "keys": [],
+          "start_ns": 3535891444
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3536339676,
+          "keys": [],
+          "start_ns": 3536283592
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3538651830,
+          "keys": [],
+          "start_ns": 3538541442
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3541046443,
+          "keys": [],
+          "start_ns": 3540884444
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3543367296,
+          "keys": [],
+          "start_ns": 3543287568
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3545721117,
+          "keys": [],
+          "start_ns": 3545596250
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3548103105,
+          "keys": [],
+          "start_ns": 3547970125
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3550393551,
+          "keys": [],
+          "start_ns": 3550293650
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3552732808,
+          "keys": [],
+          "start_ns": 3552652981
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3555059368,
+          "keys": [],
+          "start_ns": 3554949523
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3557555299,
+          "keys": [],
+          "start_ns": 3557407505
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3559895885,
+          "keys": [],
+          "start_ns": 3559759801
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3562230497,
+          "keys": [],
+          "start_ns": 3562125261
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3564568784,
+          "keys": [],
+          "start_ns": 3564452874
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3566960630,
+          "keys": [],
+          "start_ns": 3566839084
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3569319413,
+          "keys": [],
+          "start_ns": 3569194526
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3571822497,
+          "keys": [],
+          "start_ns": 3571633326
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3574227996,
+          "keys": [],
+          "start_ns": 3574023738
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3576600562,
+          "keys": [],
+          "start_ns": 3576488038
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3578976273,
+          "keys": [],
+          "start_ns": 3578863634
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3581423408,
+          "keys": [],
+          "start_ns": 3581193784
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3583876323,
+          "keys": [],
+          "start_ns": 3583734851
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3586268477,
+          "keys": [],
+          "start_ns": 3586145723
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3588645762,
+          "keys": [],
+          "start_ns": 3588551061
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3591067470,
+          "keys": [],
+          "start_ns": 3590949761
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3593455130,
+          "keys": [],
+          "start_ns": 3593307050
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3595821588,
+          "keys": [],
+          "start_ns": 3595734460
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3598229223,
+          "keys": [],
+          "start_ns": 3598112790
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3600761030,
+          "keys": [],
+          "start_ns": 3600587024
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3603151518,
+          "keys": [],
+          "start_ns": 3603017346
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3605507893,
+          "keys": [],
+          "start_ns": 3605385553
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3607916758,
+          "keys": [],
+          "start_ns": 3607786450
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3610284803,
+          "keys": [],
+          "start_ns": 3610151676
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3612661503,
+          "keys": [],
+          "start_ns": 3612526283
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3615064897,
+          "keys": [],
+          "start_ns": 3614937792
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3617557702,
+          "keys": [],
+          "start_ns": 3617381374
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3619957804,
+          "keys": [],
+          "start_ns": 3619799297
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3622421581,
+          "keys": [],
+          "start_ns": 3622261116
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3624912461,
+          "keys": [],
+          "start_ns": 3624775722
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3627240450,
+          "keys": [],
+          "start_ns": 3627161876
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3629564144,
+          "keys": [],
+          "start_ns": 3629457801
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3631968091,
+          "keys": [],
+          "start_ns": 3631801610
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3634540479,
+          "keys": [],
+          "start_ns": 3634398729
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3637011230,
+          "keys": [],
+          "start_ns": 3636883883
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3639597767,
+          "keys": [],
+          "start_ns": 3639412949
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3642063059,
+          "keys": [],
+          "start_ns": 3641934814
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3644409265,
+          "keys": [],
+          "start_ns": 3644318406
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3646747201,
+          "keys": [],
+          "start_ns": 3646631765
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3649270122,
+          "keys": [],
+          "start_ns": 3649035434
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3651706095,
+          "keys": [],
+          "start_ns": 3651584066
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3654145194,
+          "keys": [],
+          "start_ns": 3654040358
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3656443252,
+          "keys": [],
+          "start_ns": 3656333070
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3658934247,
+          "keys": [],
+          "start_ns": 3658723907
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3661393695,
+          "keys": [],
+          "start_ns": 3661270114
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3663899418,
+          "keys": [],
+          "start_ns": 3663710680
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3666341010,
+          "keys": [],
+          "start_ns": 3666179326
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3668742758,
+          "keys": [],
+          "start_ns": 3668617573
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3671131240,
+          "keys": [],
+          "start_ns": 3670930969
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3673468155,
+          "keys": [],
+          "start_ns": 3673350384
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3675785023,
+          "keys": [],
+          "start_ns": 3675672576
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3678127234,
+          "keys": [],
+          "start_ns": 3678019759
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3680488224,
+          "keys": [],
+          "start_ns": 3680366987
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3682849498,
+          "keys": [],
+          "start_ns": 3682735790
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3685354617,
+          "keys": [],
+          "start_ns": 3685206871
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3687682952,
+          "keys": [],
+          "start_ns": 3687579953
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3690021723,
+          "keys": [],
+          "start_ns": 3689903254
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3692352798,
+          "keys": [],
+          "start_ns": 3692258239
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3694648752,
+          "keys": [],
+          "start_ns": 3694533648
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3697016260,
+          "keys": [],
+          "start_ns": 3696873996
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3699328456,
+          "keys": [],
+          "start_ns": 3699228440
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3701722567,
+          "keys": [],
+          "start_ns": 3701624508
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3704083579,
+          "keys": [],
+          "start_ns": 3703939273
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3706467702,
+          "keys": [],
+          "start_ns": 3706349618
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3708848572,
+          "keys": [],
+          "start_ns": 3708739397
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3711151560,
+          "keys": [],
+          "start_ns": 3711060176
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3713501626,
+          "keys": [],
+          "start_ns": 3713376580
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3715936186,
+          "keys": [],
+          "start_ns": 3715788959
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3718375850,
+          "keys": [],
+          "start_ns": 3718278705
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3720879832,
+          "keys": [],
+          "start_ns": 3720729219
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3723272913,
+          "keys": [],
+          "start_ns": 3723171261
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3725706335,
+          "keys": [],
+          "start_ns": 3725485101
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3728115431,
+          "keys": [],
+          "start_ns": 3727948904
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3730491069,
+          "keys": [],
+          "start_ns": 3730400158
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3732856265,
+          "keys": [],
+          "start_ns": 3732712153
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3735248139,
+          "keys": [],
+          "start_ns": 3735124456
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3737647254,
+          "keys": [],
+          "start_ns": 3737484866
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3740046325,
+          "keys": [],
+          "start_ns": 3739892818
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3742376510,
+          "keys": [],
+          "start_ns": 3742274272
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3744705151,
+          "keys": [],
+          "start_ns": 3744561936
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3747580586,
+          "keys": [],
+          "start_ns": 3747143741
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3750362808,
+          "keys": [],
+          "start_ns": 3749882104
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3752740846,
+          "keys": [],
+          "start_ns": 3752645518
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3755114830,
+          "keys": [],
+          "start_ns": 3755010906
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3757537773,
+          "keys": [],
+          "start_ns": 3757352462
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3760044854,
+          "keys": [],
+          "start_ns": 3759950195
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3762463508,
+          "keys": [],
+          "start_ns": 3762284788
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3765129123,
+          "keys": [],
+          "start_ns": 3764912037
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3767543842,
+          "keys": [],
+          "start_ns": 3767422077
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3770032082,
+          "keys": [],
+          "start_ns": 3769901232
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3772419696,
+          "keys": [],
+          "start_ns": 3772253684
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3774919921,
+          "keys": [],
+          "start_ns": 3774795023
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3777460480,
+          "keys": [],
+          "start_ns": 3777290337
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3779990190,
+          "keys": [],
+          "start_ns": 3779818615
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3782677272,
+          "keys": [],
+          "start_ns": 3782461694
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3785171829,
+          "keys": [],
+          "start_ns": 3784989504
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3785426700,
+          "keys": [],
+          "start_ns": 3785341071
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3787762382,
+          "keys": [
+            75
+          ],
+          "start_ns": 3787675809
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3790092234,
+          "keys": [
+            75
+          ],
+          "start_ns": 3789964240
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3792390458,
+          "keys": [
+            75
+          ],
+          "start_ns": 3792296068
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3794708646,
+          "keys": [
+            75
+          ],
+          "start_ns": 3794610396
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3797065602,
+          "keys": [
+            75
+          ],
+          "start_ns": 3796930141
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3799510383,
+          "keys": [
+            75
+          ],
+          "start_ns": 3799392049
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3802035838,
+          "keys": [
+            75
+          ],
+          "start_ns": 3801904072
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3804439907,
+          "keys": [
+            75
+          ],
+          "start_ns": 3804329388
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3807024228,
+          "keys": [
+            75
+          ],
+          "start_ns": 3806828786
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3809525859,
+          "keys": [
+            75
+          ],
+          "start_ns": 3809373161
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3811876771,
+          "keys": [
+            75
+          ],
+          "start_ns": 3811750491
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3814306982,
+          "keys": [
+            75
+          ],
+          "start_ns": 3814179422
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3816642224,
+          "keys": [
+            75
+          ],
+          "start_ns": 3816537828
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3819031823,
+          "keys": [
+            75
+          ],
+          "start_ns": 3818908544
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3821387627,
+          "keys": [
+            75
+          ],
+          "start_ns": 3821251183
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3823856858,
+          "keys": [
+            75
+          ],
+          "start_ns": 3823711660
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3826488305,
+          "keys": [],
+          "start_ns": 3826212172
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3828934152,
+          "keys": [],
+          "start_ns": 3828805779
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3831294881,
+          "keys": [],
+          "start_ns": 3831167115
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3833748471,
+          "keys": [],
+          "start_ns": 3833604783
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3836210309,
+          "keys": [],
+          "start_ns": 3836112794
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3836453056,
+          "keys": [],
+          "start_ns": 3836385137
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3836646308,
+          "keys": [],
+          "start_ns": 3836584502
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3839038853,
+          "keys": [],
+          "start_ns": 3838877433
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3841455469,
+          "keys": [],
+          "start_ns": 3841305121
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3843968917,
+          "keys": [],
+          "start_ns": 3843820338
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3846491487,
+          "keys": [],
+          "start_ns": 3846287910
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3849059503,
+          "keys": [],
+          "start_ns": 3848924193
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3851607315,
+          "keys": [],
+          "start_ns": 3851411340
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3854443221,
+          "keys": [],
+          "start_ns": 3854289982
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3856880511,
+          "keys": [],
+          "start_ns": 3856745058
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3859256970,
+          "keys": [],
+          "start_ns": 3859122148
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3861772743,
+          "keys": [],
+          "start_ns": 3861599260
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3864333428,
+          "keys": [],
+          "start_ns": 3864200296
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3866765824,
+          "keys": [],
+          "start_ns": 3866623000
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3869208478,
+          "keys": [],
+          "start_ns": 3869064860
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3871737342,
+          "keys": [],
+          "start_ns": 3871600140
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3874321562,
+          "keys": [],
+          "start_ns": 3874125550
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3876988415,
+          "keys": [],
+          "start_ns": 3876822790
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3879387194,
+          "keys": [],
+          "start_ns": 3879247019
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3881843724,
+          "keys": [],
+          "start_ns": 3881658982
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3884169509,
+          "keys": [],
+          "start_ns": 3884072426
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3886518140,
+          "keys": [],
+          "start_ns": 3886396377
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3887245866,
+          "keys": [],
+          "start_ns": 3887187807
+        }
+      ],
+      "start_sent_ns": 3379890372,
+      "stdout_sha256": "3c671d4cc91d529e47e982184f9aec6dc9733f940d34ace9fcdeea676b4e70e3",
+      "xvfb_exit": 0,
+      "xvfb_pid": 14
+    },
+    {
+      "arm": "terminate_before_accept",
+      "before_emergency": {
+        "buttons": 0,
+        "end_ns": 4347673723,
+        "keys": [],
+        "start_ns": 4347609295
+      },
+      "cleanup": [],
+      "completed_ns": 4352429256,
+      "emergency": [],
+      "errors": [],
+      "events": [
+        {
+          "keycode": 74,
+          "kind": "press",
+          "received_ns": 4246105625,
+          "server_ms": 4245
+        },
+        {
+          "keycode": 75,
+          "kind": "press",
+          "received_ns": 4248519924,
+          "server_ms": 4246
+        },
+        {
+          "keycode": 74,
+          "kind": "release",
+          "received_ns": 4286910608,
+          "server_ms": 4286
+        },
+        {
+          "keycode": 75,
+          "kind": "release",
+          "received_ns": 4286916568,
+          "server_ms": 4286
+        }
+      ],
+      "final_query": {
+        "buttons": 0,
+        "end_ns": 4348844925,
+        "keys": [],
+        "start_ns": 4348788129
+      },
+      "id": "terminate_before_accept-healthy",
+      "initial": {
+        "buttons": 0,
+        "end_ns": 3913352004,
+        "keys": [],
+        "start_ns": 3913266803
+      },
+      "keycodes": {
+        "F8": 74,
+        "F9": 75
+      },
+      "owner_argv": [
+        "/usr/local/bin/python3",
+        "-B",
+        "/src/method/owner.py",
+        "{\"display\": \":113\", \"window\": 2097152, \"identity\": {\"display\": \":113\", \"window\": 2097152, \"allocation\": \"X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003\", \"cell\": \"terminate_before_accept-healthy\", \"keys\": {\"F8\": 74, \"F9\": 75}}, \"paused\": false, \"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"owned-7034\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1}, \"authority\": {\"lease_id\": \"private-7034\", \"expires_at_ns\": 0}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"owned\"}, {\"op\": \"key_state\", \"key\": \"F8\", \"down\": true}, {\"op\": \"key_state\", \"key\": \"F9\", \"down\": true}, {\"op\": \"wait_update\", \"timeout_ms\": 40}, {\"op\": \"release_all\"}]}}"
+      ],
+      "owner_exit": 0,
+      "owner_pid": 22,
+      "owner_rows": [
+        {
+          "identity": {
+            "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+            "cell": "terminate_before_accept-healthy",
+            "display": ":113",
+            "keys": {
+              "F8": 74,
+              "F9": 75
+            },
+            "window": 2097152
+          },
+          "kind": "ready",
+          "ns": 4242397954,
+          "pid": 22
+        },
+        {
+          "kind": "dispatch_start",
+          "ns": 4243546173,
+          "pid": 22,
+          "program": {
+            "authority": {
+              "expires_at_ns": 8243542739,
+              "lease_id": "private-7034"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "owned"
+              },
+              {
+                "down": true,
+                "key": "F8",
+                "op": "key_state"
+              },
+              {
+                "down": true,
+                "key": "F9",
+                "op": "key_state"
+              },
+              {
+                "op": "wait_update",
+                "timeout_ms": 40
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "owned-7034",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        {
+          "key": "F8",
+          "kind": "positive_check",
+          "ns": 4245163829,
+          "permitted": true,
+          "pid": 22
+        },
+        {
+          "key": "F8",
+          "kind": "native_start",
+          "ns": 4245180231,
+          "pid": 22
+        },
+        {
+          "key": "F8",
+          "kind": "native_end",
+          "ns": 4245390442,
+          "pid": 22
+        },
+        {
+          "key": "F9",
+          "kind": "positive_check",
+          "ns": 4246314110,
+          "permitted": true,
+          "pid": 22
+        },
+        {
+          "key": "F9",
+          "kind": "native_start",
+          "ns": 4246333755,
+          "pid": 22
+        },
+        {
+          "key": "F9",
+          "kind": "native_end",
+          "ns": 4246589502,
+          "pid": 22
+        },
+        {
+          "kind": "dispatch_return",
+          "ns": 4287231171,
+          "pid": 22,
+          "receipt": {
+            "admission": "accepted",
+            "execution": {
+              "activations": [],
+              "completed_ops": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "emissions": 4,
+              "ended_ns": 4287208413,
+              "observations": [],
+              "program_emissions": 4,
+              "releases": [
+                {
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "monotonic_ns": 4287205843,
+                  "verified": true
+                }
+              ],
+              "started_ns": 4244877953,
+              "waits": [
+                {
+                  "completed": true,
+                  "ended_ns": 4286719082,
+                  "kind": "fixed_delay",
+                  "operation_index": 3,
+                  "requested_ms": 40,
+                  "started_ns": 4246605846,
+                  "update_observed": null
+                }
+              ]
+            },
+            "recovery_required": false,
+            "required_capabilities": [
+              "clock.monotonic",
+              "event.feedback",
+              "input.keyboard",
+              "input.release_all",
+              "window.focus"
+            ],
+            "status": "completed"
+          }
+        },
+        {
+          "kind": "owner_done",
+          "ns": 4287314996,
+          "pid": 22
+        }
+      ],
+      "paused": false,
+      "pipe_eof_ns": 4296627817,
+      "prearmed": {
+        "at_ns": 3913451432,
+        "identity": {
+          "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+          "cell": "terminate_before_accept-healthy",
+          "display": ":113",
+          "keys": {
+            "F8": 74,
+            "F9": 75
+          },
+          "window": 2097152
+        }
+      },
+      "retired_ns": 4296695136,
+      "samples": [
+        {
+          "buttons": 0,
+          "end_ns": 3917458925,
+          "keys": [],
+          "start_ns": 3917290263
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3920200949,
+          "keys": [],
+          "start_ns": 3919705880
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3922593530,
+          "keys": [],
+          "start_ns": 3922457674
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3924977646,
+          "keys": [],
+          "start_ns": 3924843840
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3927348738,
+          "keys": [],
+          "start_ns": 3927209847
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3929714078,
+          "keys": [],
+          "start_ns": 3929592494
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3931988861,
+          "keys": [],
+          "start_ns": 3931882698
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3934335167,
+          "keys": [],
+          "start_ns": 3934222043
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3936655415,
+          "keys": [],
+          "start_ns": 3936573162
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3938977412,
+          "keys": [],
+          "start_ns": 3938849934
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3941323897,
+          "keys": [],
+          "start_ns": 3941190429
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3943714513,
+          "keys": [],
+          "start_ns": 3943512569
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3946131350,
+          "keys": [],
+          "start_ns": 3945964898
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3948408529,
+          "keys": [],
+          "start_ns": 3948312106
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3950682069,
+          "keys": [],
+          "start_ns": 3950575995
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3952975837,
+          "keys": [],
+          "start_ns": 3952851243
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3955299487,
+          "keys": [],
+          "start_ns": 3955163734
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3957675616,
+          "keys": [],
+          "start_ns": 3957544048
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3959964263,
+          "keys": [],
+          "start_ns": 3959843331
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3962328652,
+          "keys": [],
+          "start_ns": 3962213110
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3964639648,
+          "keys": [],
+          "start_ns": 3964507251
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3966974922,
+          "keys": [],
+          "start_ns": 3966855038
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3969299420,
+          "keys": [],
+          "start_ns": 3969203427
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3971670728,
+          "keys": [],
+          "start_ns": 3971513961
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3974142957,
+          "keys": [],
+          "start_ns": 3973935880
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3976477388,
+          "keys": [],
+          "start_ns": 3976365822
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3978837655,
+          "keys": [],
+          "start_ns": 3978716059
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3981347255,
+          "keys": [],
+          "start_ns": 3981159217
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3983763617,
+          "keys": [],
+          "start_ns": 3983639903
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3986113202,
+          "keys": [],
+          "start_ns": 3986006696
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3988589876,
+          "keys": [],
+          "start_ns": 3988456121
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3990990889,
+          "keys": [],
+          "start_ns": 3990843197
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3993414628,
+          "keys": [],
+          "start_ns": 3993312207
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3995772180,
+          "keys": [],
+          "start_ns": 3995668022
+        },
+        {
+          "buttons": 0,
+          "end_ns": 3998226642,
+          "keys": [],
+          "start_ns": 3998084438
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4000664194,
+          "keys": [],
+          "start_ns": 4000539502
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4002999978,
+          "keys": [],
+          "start_ns": 4002868424
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4005298068,
+          "keys": [],
+          "start_ns": 4005169180
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4007656296,
+          "keys": [],
+          "start_ns": 4007491680
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4009963027,
+          "keys": [],
+          "start_ns": 4009855219
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4012303738,
+          "keys": [],
+          "start_ns": 4012160893
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4014695802,
+          "keys": [],
+          "start_ns": 4014537334
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4017092107,
+          "keys": [],
+          "start_ns": 4016896572
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4019524508,
+          "keys": [],
+          "start_ns": 4019392648
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4021833653,
+          "keys": [],
+          "start_ns": 4021724446
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4024187895,
+          "keys": [],
+          "start_ns": 4024039255
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4026528535,
+          "keys": [],
+          "start_ns": 4026400765
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4029061054,
+          "keys": [],
+          "start_ns": 4028700618
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4031446020,
+          "keys": [],
+          "start_ns": 4031284251
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4033825457,
+          "keys": [],
+          "start_ns": 4033687588
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4036249292,
+          "keys": [],
+          "start_ns": 4036077757
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4038611307,
+          "keys": [],
+          "start_ns": 4038507570
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4040917711,
+          "keys": [],
+          "start_ns": 4040792938
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4043360924,
+          "keys": [],
+          "start_ns": 4043202734
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4045646060,
+          "keys": [],
+          "start_ns": 4045536719
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4047972125,
+          "keys": [],
+          "start_ns": 4047840383
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4050472528,
+          "keys": [],
+          "start_ns": 4050276707
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4053078770,
+          "keys": [],
+          "start_ns": 4052714723
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4055476422,
+          "keys": [],
+          "start_ns": 4055346625
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4057911652,
+          "keys": [],
+          "start_ns": 4057789539
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4060313769,
+          "keys": [],
+          "start_ns": 4060137674
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4062627785,
+          "keys": [],
+          "start_ns": 4062518092
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4065131262,
+          "keys": [],
+          "start_ns": 4064890500
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4067571275,
+          "keys": [],
+          "start_ns": 4067440428
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4070044896,
+          "keys": [],
+          "start_ns": 4069805115
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4072592610,
+          "keys": [],
+          "start_ns": 4072355509
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4074974839,
+          "keys": [],
+          "start_ns": 4074843850
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4077418323,
+          "keys": [],
+          "start_ns": 4077223683
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4079780521,
+          "keys": [],
+          "start_ns": 4079634392
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4082111361,
+          "keys": [],
+          "start_ns": 4081996306
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4084475505,
+          "keys": [],
+          "start_ns": 4084284676
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4086871692,
+          "keys": [],
+          "start_ns": 4086754671
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4089215034,
+          "keys": [],
+          "start_ns": 4089060941
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4091570751,
+          "keys": [],
+          "start_ns": 4091409960
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4093952849,
+          "keys": [],
+          "start_ns": 4093833500
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4096265016,
+          "keys": [],
+          "start_ns": 4096151176
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4098737639,
+          "keys": [],
+          "start_ns": 4098576633
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4101173979,
+          "keys": [],
+          "start_ns": 4100997577
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4103602897,
+          "keys": [],
+          "start_ns": 4103479247
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4105890122,
+          "keys": [],
+          "start_ns": 4105781566
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4108209936,
+          "keys": [],
+          "start_ns": 4108063408
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4110518452,
+          "keys": [],
+          "start_ns": 4110433718
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4112858877,
+          "keys": [],
+          "start_ns": 4112752797
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4115303553,
+          "keys": [],
+          "start_ns": 4115129788
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4117828797,
+          "keys": [],
+          "start_ns": 4117685685
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4120192883,
+          "keys": [],
+          "start_ns": 4120061713
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4122553084,
+          "keys": [],
+          "start_ns": 4122443190
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4124866003,
+          "keys": [],
+          "start_ns": 4124744904
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4127213644,
+          "keys": [],
+          "start_ns": 4127062738
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4129616633,
+          "keys": [],
+          "start_ns": 4129493410
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4131936339,
+          "keys": [],
+          "start_ns": 4131791670
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4134373004,
+          "keys": [],
+          "start_ns": 4134218949
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4136688741,
+          "keys": [],
+          "start_ns": 4136585983
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4139011888,
+          "keys": [],
+          "start_ns": 4138898677
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4141305837,
+          "keys": [],
+          "start_ns": 4141202371
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4143658416,
+          "keys": [],
+          "start_ns": 4143517403
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4146112099,
+          "keys": [],
+          "start_ns": 4145958876
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4148406378,
+          "keys": [],
+          "start_ns": 4148294579
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4150753559,
+          "keys": [],
+          "start_ns": 4150609365
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4153160542,
+          "keys": [],
+          "start_ns": 4153052524
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4155525338,
+          "keys": [],
+          "start_ns": 4155418584
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4158153706,
+          "keys": [],
+          "start_ns": 4158011713
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4160511944,
+          "keys": [],
+          "start_ns": 4160382889
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4162848869,
+          "keys": [],
+          "start_ns": 4162731060
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4165242190,
+          "keys": [],
+          "start_ns": 4165079704
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4167550284,
+          "keys": [],
+          "start_ns": 4167438182
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4169966543,
+          "keys": [],
+          "start_ns": 4169836214
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4172226022,
+          "keys": [],
+          "start_ns": 4172105018
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4174570076,
+          "keys": [],
+          "start_ns": 4174464444
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4176970533,
+          "keys": [],
+          "start_ns": 4176812144
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4179312119,
+          "keys": [],
+          "start_ns": 4179196909
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4181680957,
+          "keys": [],
+          "start_ns": 4181523500
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4184051938,
+          "keys": [],
+          "start_ns": 4183912276
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4186444747,
+          "keys": [],
+          "start_ns": 4186264981
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4188810060,
+          "keys": [],
+          "start_ns": 4188655832
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4191156823,
+          "keys": [],
+          "start_ns": 4191044659
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4193628535,
+          "keys": [],
+          "start_ns": 4193428613
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4195967342,
+          "keys": [],
+          "start_ns": 4195860805
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4198268055,
+          "keys": [],
+          "start_ns": 4198141326
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4200683004,
+          "keys": [],
+          "start_ns": 4200554268
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4203127458,
+          "keys": [],
+          "start_ns": 4202991962
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4205569148,
+          "keys": [],
+          "start_ns": 4205374076
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4207971271,
+          "keys": [],
+          "start_ns": 4207831995
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4210423970,
+          "keys": [],
+          "start_ns": 4210216147
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4212819909,
+          "keys": [],
+          "start_ns": 4212652286
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4215169957,
+          "keys": [],
+          "start_ns": 4215054844
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4217539928,
+          "keys": [],
+          "start_ns": 4217418270
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4219875548,
+          "keys": [],
+          "start_ns": 4219728948
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4222193813,
+          "keys": [],
+          "start_ns": 4222043943
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4224545996,
+          "keys": [],
+          "start_ns": 4224414597
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4226889308,
+          "keys": [],
+          "start_ns": 4226796503
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4229250700,
+          "keys": [],
+          "start_ns": 4229075105
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4231663810,
+          "keys": [],
+          "start_ns": 4231515521
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4234081169,
+          "keys": [],
+          "start_ns": 4233922695
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4236400233,
+          "keys": [],
+          "start_ns": 4236279448
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4238750381,
+          "keys": [],
+          "start_ns": 4238644942
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4241031941,
+          "keys": [],
+          "start_ns": 4240922228
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4243392680,
+          "keys": [],
+          "start_ns": 4243297563
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4243624508,
+          "keys": [],
+          "start_ns": 4243534874
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4246010255,
+          "keys": [
+            74
+          ],
+          "start_ns": 4245864506
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4248421481,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4248246299
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4250836444,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4250691334
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4253239050,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4253129137
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4255657808,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4255580576
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4257951217,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4257857805
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4260235685,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4260140047
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4262707071,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4262581965
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4265019933,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4264923084
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4267431127,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4267318922
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4269781506,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4269683999
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4272188766,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4272087128
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4274553412,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4274419170
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4277102963,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4276869525
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4279650667,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4279489055
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4282062366,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4281909661
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4284432961,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4284322305
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4286761452,
+          "keys": [
+            74,
+            75
+          ],
+          "start_ns": 4286617600
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4289198726,
+          "keys": [],
+          "start_ns": 4289083105
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4291657957,
+          "keys": [],
+          "start_ns": 4291523954
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4294116839,
+          "keys": [],
+          "start_ns": 4293953307
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4296526958,
+          "keys": [],
+          "start_ns": 4296414736
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4296764068,
+          "keys": [],
+          "start_ns": 4296697331
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4296944370,
+          "keys": [],
+          "start_ns": 4296883638
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4299251879,
+          "keys": [],
+          "start_ns": 4299153562
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4301602208,
+          "keys": [],
+          "start_ns": 4301432940
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4303987117,
+          "keys": [],
+          "start_ns": 4303846538
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4306479777,
+          "keys": [],
+          "start_ns": 4306330465
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4308837630,
+          "keys": [],
+          "start_ns": 4308734428
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4311157688,
+          "keys": [],
+          "start_ns": 4311050836
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4313495122,
+          "keys": [],
+          "start_ns": 4313371220
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4315952357,
+          "keys": [],
+          "start_ns": 4315801772
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4318484943,
+          "keys": [],
+          "start_ns": 4318296249
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4321062275,
+          "keys": [],
+          "start_ns": 4320885578
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4323464539,
+          "keys": [],
+          "start_ns": 4323325780
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4325842898,
+          "keys": [],
+          "start_ns": 4325736418
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4328203790,
+          "keys": [],
+          "start_ns": 4328094441
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4330595411,
+          "keys": [],
+          "start_ns": 4330449278
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4333019158,
+          "keys": [],
+          "start_ns": 4332888241
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4335399055,
+          "keys": [],
+          "start_ns": 4335270635
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4337727489,
+          "keys": [],
+          "start_ns": 4337626611
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4340148103,
+          "keys": [],
+          "start_ns": 4339969740
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4342609727,
+          "keys": [],
+          "start_ns": 4342468178
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4344961309,
+          "keys": [],
+          "start_ns": 4344864639
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4347473966,
+          "keys": [],
+          "start_ns": 4347244459
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4348049461,
+          "keys": [],
+          "start_ns": 4347989529
+        }
+      ],
+      "start_sent_ns": 4243531691,
+      "stdout_sha256": "ed9458a0f5bb9756034bca779a5457f052e7d96aa4d3893b73f7c4e58ccf9dff",
+      "xvfb_exit": 0,
+      "xvfb_pid": 19
+    },
+    {
+      "accepted_ns": 4706047103,
+      "arm": "terminate_before_accept",
+      "before_emergency": {
+        "buttons": 0,
+        "end_ns": 5157547011,
+        "keys": [],
+        "start_ns": 5157481242
+      },
+      "checkpoint": {
+        "at_ns": 4856545650,
+        "owner_alive": false,
+        "query": {
+          "buttons": 0,
+          "end_ns": 4856415105,
+          "keys": [],
+          "start_ns": 4856342122
+        }
+      },
+      "cleanup": [
+        {
+          "end_ns": 4706412935,
+          "key": "F8",
+          "keycode": 74,
+          "kind": "release",
+          "start_ns": 4706283783
+        }
+      ],
+      "completed_ns": 5161953035,
+      "emergency": [],
+      "errors": [],
+      "events": [
+        {
+          "keycode": 74,
+          "kind": "press",
+          "received_ns": 4702025719,
+          "server_ms": 4701
+        },
+        {
+          "keycode": 74,
+          "kind": "release",
+          "received_ns": 4706702454,
+          "server_ms": 4706
+        }
+      ],
+      "exposure": {
+        "buttons": 0,
+        "end_ns": 4704514716,
+        "keys": [
+          74
+        ],
+        "start_ns": 4704446816
+      },
+      "final_query": {
+        "buttons": 0,
+        "end_ns": 5158795060,
+        "keys": [],
+        "start_ns": 5158735072
+      },
+      "id": "terminate_before_accept-paused",
+      "initial": {
+        "buttons": 0,
+        "end_ns": 4375920926,
+        "keys": [],
+        "start_ns": 4375769941
+      },
+      "keycodes": {
+        "F8": 74,
+        "F9": 75
+      },
+      "kill_sent_ns": 4704638666,
+      "owner_argv": [
+        "/usr/local/bin/python3",
+        "-B",
+        "/src/method/owner.py",
+        "{\"display\": \":114\", \"window\": 2097152, \"identity\": {\"display\": \":114\", \"window\": 2097152, \"allocation\": \"X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003\", \"cell\": \"terminate_before_accept-paused\", \"keys\": {\"F8\": 74, \"F9\": 75}}, \"paused\": true, \"program\": {\"schema\": \"agent-interface/program-v1\", \"program_id\": \"owned-7034\", \"source\": {\"observation_seq\": 1, \"binding_revision\": 1}, \"authority\": {\"lease_id\": \"private-7034\", \"expires_at_ns\": 0}, \"terminal\": {\"release_all_required\": true}, \"ops\": [{\"op\": \"focus\", \"target\": \"owned\"}, {\"op\": \"key_state\", \"key\": \"F8\", \"down\": true}, {\"op\": \"key_state\", \"key\": \"F9\", \"down\": true}, {\"op\": \"wait_update\", \"timeout_ms\": 40}, {\"op\": \"release_all\"}]}}"
+      ],
+      "owner_exit": -9,
+      "owner_pid": 27,
+      "owner_rows": [
+        {
+          "identity": {
+            "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+            "cell": "terminate_before_accept-paused",
+            "display": ":114",
+            "keys": {
+              "F8": 74,
+              "F9": 75
+            },
+            "window": 2097152
+          },
+          "kind": "ready",
+          "ns": 4698693708,
+          "pid": 27
+        },
+        {
+          "kind": "dispatch_start",
+          "ns": 4699430316,
+          "pid": 27,
+          "program": {
+            "authority": {
+              "expires_at_ns": 8699427436,
+              "lease_id": "private-7034"
+            },
+            "ops": [
+              {
+                "op": "focus",
+                "target": "owned"
+              },
+              {
+                "down": true,
+                "key": "F8",
+                "op": "key_state"
+              },
+              {
+                "down": true,
+                "key": "F9",
+                "op": "key_state"
+              },
+              {
+                "op": "wait_update",
+                "timeout_ms": 40
+              },
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "owned-7034",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        {
+          "key": "F8",
+          "kind": "positive_check",
+          "ns": 4701295678,
+          "permitted": true,
+          "pid": 27
+        },
+        {
+          "key": "F8",
+          "kind": "native_start",
+          "ns": 4701314219,
+          "pid": 27
+        },
+        {
+          "key": "F8",
+          "kind": "native_end",
+          "ns": 4701459772,
+          "pid": 27
+        },
+        {
+          "key": "F9",
+          "kind": "positive_check",
+          "ns": 4702156341,
+          "permitted": true,
+          "pid": 27
+        },
+        {
+          "key": "F9",
+          "kind": "pause_entered",
+          "ns": 4702171451,
+          "pid": 27
+        }
+      ],
+      "paused": true,
+      "pipe_eof_ns": 4706006590,
+      "prearmed": {
+        "at_ns": 4376046720,
+        "identity": {
+          "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003",
+          "cell": "terminate_before_accept-paused",
+          "display": ":114",
+          "keys": {
+            "F8": 74,
+            "F9": 75
+          },
+          "window": 2097152
+        }
+      },
+      "reaped_ns": 4705786658,
+      "release_query": {
+        "buttons": 0,
+        "end_ns": 4706482216,
+        "keys": [],
+        "start_ns": 4706418462
+      },
+      "request_ns": 4704637672,
+      "retired_ns": 5106773185,
+      "samples": [
+        {
+          "buttons": 0,
+          "end_ns": 4381102797,
+          "keys": [],
+          "start_ns": 4380902605
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4383471853,
+          "keys": [],
+          "start_ns": 4383325566
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4385824898,
+          "keys": [],
+          "start_ns": 4385680556
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4388171655,
+          "keys": [],
+          "start_ns": 4388064729
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4390553568,
+          "keys": [],
+          "start_ns": 4390391836
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4393076446,
+          "keys": [],
+          "start_ns": 4392901085
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4395365368,
+          "keys": [],
+          "start_ns": 4395274694
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4397623859,
+          "keys": [],
+          "start_ns": 4397530136
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4399902007,
+          "keys": [],
+          "start_ns": 4399781813
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4402201977,
+          "keys": [],
+          "start_ns": 4402098374
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4404520029,
+          "keys": [],
+          "start_ns": 4404402590
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4407011000,
+          "keys": [],
+          "start_ns": 4406875981
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4409282720,
+          "keys": [],
+          "start_ns": 4409174638
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4411591153,
+          "keys": [],
+          "start_ns": 4411459992
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4413930877,
+          "keys": [],
+          "start_ns": 4413787508
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4416299945,
+          "keys": [],
+          "start_ns": 4416068336
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4418716477,
+          "keys": [],
+          "start_ns": 4418555678
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4421066140,
+          "keys": [],
+          "start_ns": 4420940898
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4423437917,
+          "keys": [],
+          "start_ns": 4423324127
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4425804363,
+          "keys": [],
+          "start_ns": 4425707544
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4428359022,
+          "keys": [],
+          "start_ns": 4428105520
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4431025153,
+          "keys": [],
+          "start_ns": 4430906375
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4433436847,
+          "keys": [],
+          "start_ns": 4433279132
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4435841349,
+          "keys": [],
+          "start_ns": 4435700274
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4438252050,
+          "keys": [],
+          "start_ns": 4438080785
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4440576721,
+          "keys": [],
+          "start_ns": 4440460808
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4442927156,
+          "keys": [],
+          "start_ns": 4442830920
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4445282369,
+          "keys": [],
+          "start_ns": 4445127022
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4447650049,
+          "keys": [],
+          "start_ns": 4447531710
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4449984868,
+          "keys": [],
+          "start_ns": 4449847462
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4452397709,
+          "keys": [],
+          "start_ns": 4452288516
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4454745658,
+          "keys": [],
+          "start_ns": 4454634172
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4457068229,
+          "keys": [],
+          "start_ns": 4456933538
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4459387059,
+          "keys": [],
+          "start_ns": 4459284848
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4461723396,
+          "keys": [],
+          "start_ns": 4461597384
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4463991761,
+          "keys": [],
+          "start_ns": 4463889958
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4466339748,
+          "keys": [],
+          "start_ns": 4466235731
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4468635413,
+          "keys": [],
+          "start_ns": 4468534279
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4470986415,
+          "keys": [],
+          "start_ns": 4470849093
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4473356027,
+          "keys": [],
+          "start_ns": 4473236774
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4475667599,
+          "keys": [],
+          "start_ns": 4475552694
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4477977951,
+          "keys": [],
+          "start_ns": 4477856627
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4480397873,
+          "keys": [],
+          "start_ns": 4480193928
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4482780579,
+          "keys": [],
+          "start_ns": 4482614495
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4485198148,
+          "keys": [],
+          "start_ns": 4485074159
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4487530685,
+          "keys": [],
+          "start_ns": 4487404163
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4489876204,
+          "keys": [],
+          "start_ns": 4489769294
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4492180675,
+          "keys": [],
+          "start_ns": 4492058353
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4494550394,
+          "keys": [],
+          "start_ns": 4494420536
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4496902294,
+          "keys": [],
+          "start_ns": 4496749361
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4499265789,
+          "keys": [],
+          "start_ns": 4499135940
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4501561290,
+          "keys": [],
+          "start_ns": 4501443220
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4503874864,
+          "keys": [],
+          "start_ns": 4503758846
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4506178330,
+          "keys": [],
+          "start_ns": 4506049244
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4508548256,
+          "keys": [],
+          "start_ns": 4508417154
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4511162489,
+          "keys": [],
+          "start_ns": 4510979196
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4513584930,
+          "keys": [],
+          "start_ns": 4513371790
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4516172129,
+          "keys": [],
+          "start_ns": 4515960227
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4518566483,
+          "keys": [],
+          "start_ns": 4518411514
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4520881528,
+          "keys": [],
+          "start_ns": 4520779611
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4523305059,
+          "keys": [],
+          "start_ns": 4523162329
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4525677732,
+          "keys": [],
+          "start_ns": 4525542839
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4528039660,
+          "keys": [],
+          "start_ns": 4527874803
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4530413083,
+          "keys": [],
+          "start_ns": 4530285747
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4532780642,
+          "keys": [],
+          "start_ns": 4532651694
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4535121715,
+          "keys": [],
+          "start_ns": 4534986899
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4537669097,
+          "keys": [],
+          "start_ns": 4537401838
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4540220816,
+          "keys": [],
+          "start_ns": 4540057579
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4542602322,
+          "keys": [],
+          "start_ns": 4542454949
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4544954574,
+          "keys": [],
+          "start_ns": 4544813089
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4547294669,
+          "keys": [],
+          "start_ns": 4547143168
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4549791220,
+          "keys": [],
+          "start_ns": 4549492015
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4552346713,
+          "keys": [],
+          "start_ns": 4552087695
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4554800828,
+          "keys": [],
+          "start_ns": 4554640731
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4557147849,
+          "keys": [],
+          "start_ns": 4557012813
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4559459366,
+          "keys": [],
+          "start_ns": 4559335390
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4561945061,
+          "keys": [],
+          "start_ns": 4561706332
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4564282674,
+          "keys": [],
+          "start_ns": 4564127738
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4566717143,
+          "keys": [],
+          "start_ns": 4566564187
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4569104484,
+          "keys": [],
+          "start_ns": 4568983520
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4571399305,
+          "keys": [],
+          "start_ns": 4571304054
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4573748533,
+          "keys": [],
+          "start_ns": 4573617882
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4576113397,
+          "keys": [],
+          "start_ns": 4575991546
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4578428934,
+          "keys": [],
+          "start_ns": 4578280880
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4580926091,
+          "keys": [],
+          "start_ns": 4580753319
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4583275754,
+          "keys": [],
+          "start_ns": 4583131520
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4585555594,
+          "keys": [],
+          "start_ns": 4585454989
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4587846641,
+          "keys": [],
+          "start_ns": 4587723004
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4590174263,
+          "keys": [],
+          "start_ns": 4590055880
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4592507033,
+          "keys": [],
+          "start_ns": 4592357241
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4594885633,
+          "keys": [],
+          "start_ns": 4594727191
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4597212108,
+          "keys": [],
+          "start_ns": 4597098078
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4599592143,
+          "keys": [],
+          "start_ns": 4599459344
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4601968206,
+          "keys": [],
+          "start_ns": 4601811302
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4604279807,
+          "keys": [],
+          "start_ns": 4604149028
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4606569390,
+          "keys": [],
+          "start_ns": 4606466061
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4608998251,
+          "keys": [],
+          "start_ns": 4608879157
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4611358796,
+          "keys": [],
+          "start_ns": 4611209791
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4613783448,
+          "keys": [],
+          "start_ns": 4613599435
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4616186497,
+          "keys": [],
+          "start_ns": 4616071850
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4618611205,
+          "keys": [],
+          "start_ns": 4618453488
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4620912581,
+          "keys": [],
+          "start_ns": 4620821947
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4623338093,
+          "keys": [],
+          "start_ns": 4623173753
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4625716521,
+          "keys": [],
+          "start_ns": 4625566081
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4628179982,
+          "keys": [],
+          "start_ns": 4627966143
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4630725844,
+          "keys": [],
+          "start_ns": 4630595507
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4633277433,
+          "keys": [],
+          "start_ns": 4633138507
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4635653699,
+          "keys": [],
+          "start_ns": 4635511779
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4637960495,
+          "keys": [],
+          "start_ns": 4637847643
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4640224638,
+          "keys": [],
+          "start_ns": 4640125880
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4642588315,
+          "keys": [],
+          "start_ns": 4642485240
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4644880857,
+          "keys": [],
+          "start_ns": 4644756824
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4647211717,
+          "keys": [],
+          "start_ns": 4647076995
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4649589932,
+          "keys": [],
+          "start_ns": 4649475788
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4651923869,
+          "keys": [],
+          "start_ns": 4651789571
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4654315165,
+          "keys": [],
+          "start_ns": 4654150614
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4656775456,
+          "keys": [],
+          "start_ns": 4656657796
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4659138754,
+          "keys": [],
+          "start_ns": 4659010685
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4661517571,
+          "keys": [],
+          "start_ns": 4661379758
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4663813520,
+          "keys": [],
+          "start_ns": 4663725341
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4666187949,
+          "keys": [],
+          "start_ns": 4666059890
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4668519971,
+          "keys": [],
+          "start_ns": 4668420396
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4670862229,
+          "keys": [],
+          "start_ns": 4670733996
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4673144753,
+          "keys": [],
+          "start_ns": 4673039172
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4675417610,
+          "keys": [],
+          "start_ns": 4675342224
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4677746637,
+          "keys": [],
+          "start_ns": 4677613729
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4680119974,
+          "keys": [],
+          "start_ns": 4679952955
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4682583756,
+          "keys": [],
+          "start_ns": 4682460737
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4685034416,
+          "keys": [],
+          "start_ns": 4684906720
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4687348048,
+          "keys": [],
+          "start_ns": 4687264085
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4689705849,
+          "keys": [],
+          "start_ns": 4689574086
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4692171247,
+          "keys": [],
+          "start_ns": 4692062347
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4694554430,
+          "keys": [],
+          "start_ns": 4694436565
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4696954621,
+          "keys": [],
+          "start_ns": 4696847744
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4699281169,
+          "keys": [],
+          "start_ns": 4699189852
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4699546738,
+          "keys": [],
+          "start_ns": 4699413331
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4701904632,
+          "keys": [
+            74
+          ],
+          "start_ns": 4701801592
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4704187254,
+          "keys": [
+            74
+          ],
+          "start_ns": 4704092122
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4705886300,
+          "keys": [
+            74
+          ],
+          "start_ns": 4705788967
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4706624620,
+          "keys": [],
+          "start_ns": 4706563661
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4708997124,
+          "keys": [],
+          "start_ns": 4708847762
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4711315423,
+          "keys": [],
+          "start_ns": 4711204958
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4713637230,
+          "keys": [],
+          "start_ns": 4713498751
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4716036673,
+          "keys": [],
+          "start_ns": 4715878471
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4718441299,
+          "keys": [],
+          "start_ns": 4718290797
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4720843021,
+          "keys": [],
+          "start_ns": 4720724259
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4723234722,
+          "keys": [],
+          "start_ns": 4723081263
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4725655701,
+          "keys": [],
+          "start_ns": 4725551266
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4728055341,
+          "keys": [],
+          "start_ns": 4727903567
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4730399458,
+          "keys": [],
+          "start_ns": 4730293919
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4732846695,
+          "keys": [],
+          "start_ns": 4732665635
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4735303214,
+          "keys": [],
+          "start_ns": 4735154733
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4737617704,
+          "keys": [],
+          "start_ns": 4737499898
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4740082341,
+          "keys": [],
+          "start_ns": 4739909951
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4742395161,
+          "keys": [],
+          "start_ns": 4742292928
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4744750880,
+          "keys": [],
+          "start_ns": 4744630219
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4747134502,
+          "keys": [],
+          "start_ns": 4747004637
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4749645677,
+          "keys": [],
+          "start_ns": 4749355073
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4752225940,
+          "keys": [],
+          "start_ns": 4752119938
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4754579586,
+          "keys": [],
+          "start_ns": 4754469728
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4756964091,
+          "keys": [],
+          "start_ns": 4756800783
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4759308135,
+          "keys": [],
+          "start_ns": 4759191732
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4761649566,
+          "keys": [],
+          "start_ns": 4761547723
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4764208972,
+          "keys": [],
+          "start_ns": 4764090809
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4766715926,
+          "keys": [],
+          "start_ns": 4766593103
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4769084224,
+          "keys": [],
+          "start_ns": 4768931972
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4771499068,
+          "keys": [],
+          "start_ns": 4771348951
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4773838478,
+          "keys": [],
+          "start_ns": 4773700389
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4776201011,
+          "keys": [],
+          "start_ns": 4776093422
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4778556464,
+          "keys": [],
+          "start_ns": 4778430429
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4781135884,
+          "keys": [],
+          "start_ns": 4780798409
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4783742027,
+          "keys": [],
+          "start_ns": 4783586167
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4786155771,
+          "keys": [],
+          "start_ns": 4786005199
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4788542827,
+          "keys": [],
+          "start_ns": 4788443054
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4790924953,
+          "keys": [],
+          "start_ns": 4790808772
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4793272851,
+          "keys": [],
+          "start_ns": 4793148139
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4795683102,
+          "keys": [],
+          "start_ns": 4795537389
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4798056067,
+          "keys": [],
+          "start_ns": 4797959931
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4800356878,
+          "keys": [],
+          "start_ns": 4800248327
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4802816099,
+          "keys": [],
+          "start_ns": 4802666238
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4805211118,
+          "keys": [],
+          "start_ns": 4805058492
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4807596201,
+          "keys": [],
+          "start_ns": 4807455957
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4810060564,
+          "keys": [],
+          "start_ns": 4809855665
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4812521574,
+          "keys": [],
+          "start_ns": 4812323108
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4814864052,
+          "keys": [],
+          "start_ns": 4814736995
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4817437257,
+          "keys": [],
+          "start_ns": 4817293044
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4819844675,
+          "keys": [],
+          "start_ns": 4819684091
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4822230460,
+          "keys": [],
+          "start_ns": 4822090200
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4824770538,
+          "keys": [],
+          "start_ns": 4824651953
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4827178124,
+          "keys": [],
+          "start_ns": 4827025962
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4829675509,
+          "keys": [],
+          "start_ns": 4829494175
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4832090110,
+          "keys": [],
+          "start_ns": 4831932460
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4834551328,
+          "keys": [],
+          "start_ns": 4834336739
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4836902546,
+          "keys": [],
+          "start_ns": 4836798848
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4839257673,
+          "keys": [],
+          "start_ns": 4839144549
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4841648439,
+          "keys": [],
+          "start_ns": 4841483004
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4844089369,
+          "keys": [],
+          "start_ns": 4843922134
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4846652954,
+          "keys": [],
+          "start_ns": 4846393600
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4849072217,
+          "keys": [],
+          "start_ns": 4848944162
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4851508521,
+          "keys": [],
+          "start_ns": 4851380019
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4853864180,
+          "keys": [],
+          "start_ns": 4853729170
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4856190020,
+          "keys": [],
+          "start_ns": 4856040968
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4856654095,
+          "keys": [],
+          "start_ns": 4856551985
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4859049828,
+          "keys": [],
+          "start_ns": 4858897071
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4861390757,
+          "keys": [],
+          "start_ns": 4861276588
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4863730802,
+          "keys": [],
+          "start_ns": 4863615687
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4866124530,
+          "keys": [],
+          "start_ns": 4865977072
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4868501712,
+          "keys": [],
+          "start_ns": 4868365749
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4870914990,
+          "keys": [],
+          "start_ns": 4870797855
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4873319872,
+          "keys": [],
+          "start_ns": 4873155718
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4875709560,
+          "keys": [],
+          "start_ns": 4875557760
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4878101577,
+          "keys": [],
+          "start_ns": 4877990488
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4880473788,
+          "keys": [],
+          "start_ns": 4880307979
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4882818470,
+          "keys": [],
+          "start_ns": 4882713468
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4885146780,
+          "keys": [],
+          "start_ns": 4885034697
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4887543221,
+          "keys": [],
+          "start_ns": 4887414404
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4889858018,
+          "keys": [],
+          "start_ns": 4889758748
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4892143476,
+          "keys": [],
+          "start_ns": 4892069298
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4894508175,
+          "keys": [],
+          "start_ns": 4894360728
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4896923671,
+          "keys": [],
+          "start_ns": 4896814909
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4899350648,
+          "keys": [],
+          "start_ns": 4899223304
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4901726387,
+          "keys": [],
+          "start_ns": 4901600592
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4904134594,
+          "keys": [],
+          "start_ns": 4904030689
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4906545550,
+          "keys": [],
+          "start_ns": 4906388587
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4908961801,
+          "keys": [],
+          "start_ns": 4908791638
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4911305689,
+          "keys": [],
+          "start_ns": 4911203816
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4913676558,
+          "keys": [],
+          "start_ns": 4913506690
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4916075754,
+          "keys": [],
+          "start_ns": 4915960016
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4918399044,
+          "keys": [],
+          "start_ns": 4918303445
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4920890891,
+          "keys": [],
+          "start_ns": 4920611376
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4923258535,
+          "keys": [],
+          "start_ns": 4923152108
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4925569803,
+          "keys": [],
+          "start_ns": 4925473607
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4927887793,
+          "keys": [],
+          "start_ns": 4927781317
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4930191048,
+          "keys": [],
+          "start_ns": 4930131016
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4932477849,
+          "keys": [],
+          "start_ns": 4932371731
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4934811958,
+          "keys": [],
+          "start_ns": 4934690919
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4937183458,
+          "keys": [],
+          "start_ns": 4937046302
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4939571056,
+          "keys": [],
+          "start_ns": 4939478761
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4941927696,
+          "keys": [],
+          "start_ns": 4941801556
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4944193589,
+          "keys": [],
+          "start_ns": 4944103236
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4946643930,
+          "keys": [],
+          "start_ns": 4946482808
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4948961690,
+          "keys": [],
+          "start_ns": 4948862741
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4951277312,
+          "keys": [],
+          "start_ns": 4951170001
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4953587836,
+          "keys": [],
+          "start_ns": 4953464430
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4955978607,
+          "keys": [],
+          "start_ns": 4955793081
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4958304849,
+          "keys": [],
+          "start_ns": 4958206435
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4960720022,
+          "keys": [],
+          "start_ns": 4960620128
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4963108000,
+          "keys": [],
+          "start_ns": 4963017088
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4965442149,
+          "keys": [],
+          "start_ns": 4965316747
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4967751957,
+          "keys": [],
+          "start_ns": 4967628750
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4970050013,
+          "keys": [],
+          "start_ns": 4969945459
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4972331283,
+          "keys": [],
+          "start_ns": 4972240693
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4974647457,
+          "keys": [],
+          "start_ns": 4974557321
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4976972865,
+          "keys": [],
+          "start_ns": 4976901487
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4979256197,
+          "keys": [],
+          "start_ns": 4979167098
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4981587471,
+          "keys": [],
+          "start_ns": 4981441025
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4983970647,
+          "keys": [],
+          "start_ns": 4983820834
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4986289586,
+          "keys": [],
+          "start_ns": 4986182320
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4988598057,
+          "keys": [],
+          "start_ns": 4988516867
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4990951512,
+          "keys": [],
+          "start_ns": 4990854639
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4993439578,
+          "keys": [],
+          "start_ns": 4993312359
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4995772253,
+          "keys": [],
+          "start_ns": 4995654498
+        },
+        {
+          "buttons": 0,
+          "end_ns": 4998264022,
+          "keys": [],
+          "start_ns": 4998040352
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5000850543,
+          "keys": [],
+          "start_ns": 5000753351
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5003329547,
+          "keys": [],
+          "start_ns": 5003205417
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5005867755,
+          "keys": [],
+          "start_ns": 5005721792
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5008314499,
+          "keys": [],
+          "start_ns": 5008163013
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5010630828,
+          "keys": [],
+          "start_ns": 5010539379
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5013096141,
+          "keys": [],
+          "start_ns": 5012960406
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5015556390,
+          "keys": [],
+          "start_ns": 5015373023
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5017997252,
+          "keys": [],
+          "start_ns": 5017859610
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5020270409,
+          "keys": [],
+          "start_ns": 5020185956
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5022559787,
+          "keys": [],
+          "start_ns": 5022455330
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5024932333,
+          "keys": [],
+          "start_ns": 5024810156
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5027275664,
+          "keys": [],
+          "start_ns": 5027172872
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5029647568,
+          "keys": [],
+          "start_ns": 5029514362
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5032071654,
+          "keys": [],
+          "start_ns": 5031894593
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5034402493,
+          "keys": [],
+          "start_ns": 5034283943
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5036802680,
+          "keys": [],
+          "start_ns": 5036656878
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5039196902,
+          "keys": [],
+          "start_ns": 5039080129
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5041575248,
+          "keys": [],
+          "start_ns": 5041470862
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5043896480,
+          "keys": [],
+          "start_ns": 5043796861
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5046332157,
+          "keys": [],
+          "start_ns": 5046153293
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5048687546,
+          "keys": [],
+          "start_ns": 5048543413
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5051140391,
+          "keys": [],
+          "start_ns": 5051004314
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5053457956,
+          "keys": [],
+          "start_ns": 5053349637
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5055851236,
+          "keys": [],
+          "start_ns": 5055679619
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5058393613,
+          "keys": [],
+          "start_ns": 5058178477
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5060816627,
+          "keys": [],
+          "start_ns": 5060661774
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5063154812,
+          "keys": [],
+          "start_ns": 5063047631
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5065557891,
+          "keys": [],
+          "start_ns": 5065425843
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5067922395,
+          "keys": [],
+          "start_ns": 5067834536
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5070394039,
+          "keys": [],
+          "start_ns": 5070264812
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5072784115,
+          "keys": [],
+          "start_ns": 5072634961
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5075172982,
+          "keys": [],
+          "start_ns": 5075044849
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5077478642,
+          "keys": [],
+          "start_ns": 5077379375
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5079877748,
+          "keys": [],
+          "start_ns": 5079719875
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5082388334,
+          "keys": [],
+          "start_ns": 5082253357
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5084894906,
+          "keys": [],
+          "start_ns": 5084719456
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5087283062,
+          "keys": [],
+          "start_ns": 5087135014
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5089701890,
+          "keys": [],
+          "start_ns": 5089552909
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5092053135,
+          "keys": [],
+          "start_ns": 5091937822
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5094441234,
+          "keys": [],
+          "start_ns": 5094284627
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5096863985,
+          "keys": [],
+          "start_ns": 5096712744
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5099335284,
+          "keys": [],
+          "start_ns": 5099174470
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5101706930,
+          "keys": [],
+          "start_ns": 5101606495
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5104099506,
+          "keys": [],
+          "start_ns": 5103972467
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5106451535,
+          "keys": [],
+          "start_ns": 5106319495
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5106666393,
+          "keys": [],
+          "start_ns": 5106596474
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5106906479,
+          "keys": [],
+          "start_ns": 5106774648
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5107146898,
+          "keys": [],
+          "start_ns": 5107076468
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5109496289,
+          "keys": [],
+          "start_ns": 5109367510
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5111934987,
+          "keys": [],
+          "start_ns": 5111770630
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5114282020,
+          "keys": [],
+          "start_ns": 5114167038
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5116696199,
+          "keys": [],
+          "start_ns": 5116556215
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5119373320,
+          "keys": [],
+          "start_ns": 5119175277
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5121875363,
+          "keys": [],
+          "start_ns": 5121704816
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5124197945,
+          "keys": [],
+          "start_ns": 5124098500
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5126580061,
+          "keys": [],
+          "start_ns": 5126465578
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5128912084,
+          "keys": [],
+          "start_ns": 5128803223
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5131232963,
+          "keys": [],
+          "start_ns": 5131124717
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5133640582,
+          "keys": [],
+          "start_ns": 5133499550
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5135979884,
+          "keys": [],
+          "start_ns": 5135846743
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5138389978,
+          "keys": [],
+          "start_ns": 5138277331
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5140897818,
+          "keys": [],
+          "start_ns": 5140613939
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5143276355,
+          "keys": [],
+          "start_ns": 5143148995
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5145691893,
+          "keys": [],
+          "start_ns": 5145496633
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5148055274,
+          "keys": [],
+          "start_ns": 5147939009
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5150348810,
+          "keys": [],
+          "start_ns": 5150238897
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5152681692,
+          "keys": [],
+          "start_ns": 5152575517
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5155020712,
+          "keys": [],
+          "start_ns": 5154895886
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5157356352,
+          "keys": [],
+          "start_ns": 5157230990
+        },
+        {
+          "buttons": 0,
+          "end_ns": 5157914007,
+          "keys": [],
+          "start_ns": 5157859575
+        }
+      ],
+      "start_sent_ns": 4699410409,
+      "stdout_sha256": "75b9adce305294c1f3d1e1da20c5341d9ea9df1ae2941e13e22d8bec11a7ab96",
+      "xvfb_exit": 0,
+      "xvfb_pid": 24
+    }
+  ],
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "ended_ns": 5168367607,
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python": "3.12.15 (main, Oct  1 2026, 21:47:32) [GCC 14.2.0]",
+  "schema": "requested-process-fence/raw-v1",
+  "source_hashes": {
+    "method/owner.py": "fb92f5bc3289af2bd80554ae254c5ecad4379e782ded0e3068f3ca85254f3941",
+    "method/producer.py": "48b6b2dbe06f1c13a2475ccfc47b3fa7b440f7d117e69043dfe44ca6cbdd7598",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "sources/runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e"
+  },
+  "started_ns": 2478396403
+}

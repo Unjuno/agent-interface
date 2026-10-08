@@ -1,0 +1,27 @@
+{
+  "allocation": "safety-graph-live-x11-3066-20260926-v3-01",
+  "issue": 3066,
+  "frozen_commit": "d2c394d5a10b9e0c59bbb8bd59e40fda26f38054",
+  "base_main_commit": "da411bf55844fe19d1f0ab95f1ff123af7f98d63",
+  "formal_invocations": 1,
+  "formal_rows": 14,
+  "formal_exit_code": 0,
+  "auditor_exit_code": 2,
+  "auditor_decision": "FAIL_SAFETY_GRAPH_HIDDEN_DEPENDENCY",
+  "release_violations": [
+    {"case": "bare/cleanup_failure", "ms_after_lease_deadline": 71.177191, "allowed_grace_ms": 50, "ms_beyond_grace": 21.177191},
+    {"case": "openbox/cleanup_failure", "ms_after_lease_deadline": 70.903452, "allowed_grace_ms": 50, "ms_beyond_grace": 20.903452}
+  ],
+  "display_stall_ms_after_lease_deadline": {"bare": 42.37, "openbox": 42.30},
+  "terminal_f8_up_rows": 14,
+  "unknown_dependency_typed_stop_rows": 2,
+  "unknown_dependency_worker_rows": 0,
+  "undeclared_named_socket_alias_rows": 14,
+  "unclassified_socket_fd_findings": 55,
+  "raw_sha256": "a3724d3a6671a3ddadf40b5ed19c8943085cb81ecab855d7c7fdc11510a89590",
+  "audit_sha256": "a591101ff52089ed07cdeb633a993242e7cc12f14f22c8633f25c41721f050f4",
+  "scope": "synthetic F8 on current-main X11 facade, Xvfb and Openbox only; no physical HID or task-effect claim",
+  "reruns": 0,
+  "replacements": 0,
+  "post_result_tuning": 0
+}

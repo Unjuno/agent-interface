@@ -1,0 +1,14 @@
+{
+  "allocation": "stpa-feedback-constraint-5327-t0-20260930-01",
+  "status": "STOP_DOCKER_BIND_SOURCE_MISSING",
+  "docker_exit_code": 125,
+  "container_started": false,
+  "runner_started": false,
+  "output_source": "expected research/analysis/stpa_feedback_constraint_5327_t0_v1/results/formal-01; parent results directory did not exist",
+  "observed_error": "docker: Error response from daemon: invalid mount config for type bind: field Source must not be empty",
+  "cause": "PowerShell Resolve-Path failed for the missing results parent and yielded an empty source string, which was passed into the Docker bind mount.",
+  "raw_matrix_written": false,
+  "audit": "not run; runner never started",
+  "retry": "no retry under this allocation; any execution requires a new freeze and absent output path",
+  "construction_tests_before_freeze": "6/6 passed"
+}

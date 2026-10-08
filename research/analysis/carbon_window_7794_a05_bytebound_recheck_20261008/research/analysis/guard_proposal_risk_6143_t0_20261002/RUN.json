@@ -1,0 +1,50 @@
+{
+  "allocation": "GUARD-PROPOSAL-RISK-6143-T0-20261002-01",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6143",
+  "result": "PASS_METHOD_SCOPED",
+  "scope": "Exact finite synthetic method check only; no empirical agent/model/product result.",
+  "main_base": "981ba1ee20259ff36465d25aceef62fd3554a7e9",
+  "container_image": "python:3.13.5-slim@sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "container_policy": {
+    "network": "none",
+    "read_only_root": true,
+    "source_mount": "read-only",
+    "writable_mount": "runs/formal-01 only",
+    "cpus": 1,
+    "memory_mb": 256,
+    "pids_limit": 64,
+    "capabilities": "drop all",
+    "no_new_privileges": true,
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=16m"
+  },
+  "commands": [
+    "python /work/runner.py --input /work/fixture.json --output /out/candidate_result.json",
+    "python /work/audit.py --input /work/fixture.json --candidate /out/candidate_result.json --output /out/audit_result.json"
+  ],
+  "formal_invocations": {"candidate": 1, "independent_auditor": 1, "retries": 0},
+  "exit_codes": {"candidate": 0, "independent_auditor": 0},
+  "audit": {
+    "status": "PASS_METHOD_SCOPED",
+    "replayed_world_weight": "1",
+    "compensation_control_caught": true,
+    "null_control_not_flagged": true,
+    "protective_control_not_flagged": true,
+    "errors": []
+  },
+  "key_exact_results": {
+    "fixed_conservative_guard_on_task_harm": "33/512",
+    "guard_induced_aggressive_guard_on_task_harm": "117/512",
+    "absolute_harm_difference": "21/128",
+    "materiality_margin": "1/10",
+    "harmful_action_rejection_rate_both_guarded_policies": "3/4",
+    "fixed_conservative_guard_on_refusal_rate": "119/344",
+    "guard_induced_aggressive_guard_on_refusal_rate": "215/392",
+    "fixed_conservative_guard_on_unfinished": "31/256",
+    "guard_induced_aggressive_guard_on_unfinished": "79/256"
+  },
+  "construction": {"tests_passed": 8, "tests_failed": 0, "mutation_controls_passed": 1, "py_compile": "pass"},
+  "raw_outputs": {
+    "runs/formal-01/candidate_result.json": "6b0e7e4e621ab3f3d19a3e361810e64e8017258f02556a29ade11f8e81089dad",
+    "runs/formal-01/audit_result.json": "7f5086a92929301e7d670d50f3c749925a1e3db26a8b9e2f6ac7bff0cb51216d"
+  }
+}

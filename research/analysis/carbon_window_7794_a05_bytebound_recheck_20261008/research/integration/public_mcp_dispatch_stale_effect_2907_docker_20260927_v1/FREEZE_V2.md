@@ -1,0 +1,31 @@
+# Successor allocation 02 — public MCP stale refusal and Chromium effect
+
+Allocation: `public-mcp-dispatch-stale-effect-2907-docker-20260927-02`  
+Parent: open #2907; integration gate #2789  
+Branch: `research/public-mcp-dispatch-stale-effect-2907-docker-20260927`  
+Status before formal invocation: frozen; formal MCP calls = 0  
+Execution: local Docker Desktop only. No GitHub Actions/workflow.
+
+## Why a fresh successor
+
+Allocation 01 is consumed and immutable. Its original result remains `STOP_OR_FAIL_CALLER`: the initial five MCP responses used nested public receipt envelopes, while `interface_close` returned a flat management report. Allocation 01 did not persist the effect oracle and did not run retained-result reads. Offline reconstruction confirmed stale refusal and fresh dispatch/release, but cannot establish the missing persistent effect/readbacks. This allocation changes only the successor caller/parser/evidence retention and uses an entirely fresh container, Chromium instance, server session, marker, and output path. No data or inference is pooled as a formal PASS between allocations.
+
+## H/T/D/C/U
+
+- **H:** A fresh public persistent-X11 stdio MCP session can refuse a stale observation-bound input program before backend emissions, execute a fixed fresh caller program with an independently verified local Chromium title effect and verified release, explicitly close the same session, and return six retained read-only results.
+- **T:** Launch one owner-bound Chromium in a fresh local `linux/amd64` Docker container. Open a local HTML fixture carrying unique marker `agent-mcp-effect-2907-20260927-02`. Through public MCP only: discover tools; observe twice; dispatch an F6 program bound to sequence 1 while current sequence is 2; only upon exact stale refusal with zero emissions, dispatch sequence-2 Ctrl+L/local-file-URI/Enter/release_all; independently query the identified window's `WM_NAME` and persist `effect_receipt.json` **before** the third observation; observe again, explicitly close, and retrieve each of six calls. One formal runner invocation; no retry, model/provider/network, or out-of-MCP GUI input. Run the frozen raw-only audit once in a separate Docker container with `--network none --read-only`.
+- **D:** Scoped PASS only if the stale response is refused with `STALE_OBSERVATION` and zero backend emissions; the fresh dispatch completes with positive program emissions and every release verified with no keys/buttons down; persisted independent marker/title/window-ID match; all six calls bind one session; close reports closed and release attempted; all six retained reads finish as no-op reads in that same session; clean owned process/X socket shutdown; independent audit has zero errors and rejects all six corruption controls. Any contrary result is a FAIL kept verbatim. Any transport/setup/evidence interruption is a typed STOP/HOLD. Neither can be retried or relabeled.
+- **C:** Main/runtime source closure and five relevant public MCP/session/X11/core source Git blobs are exactly the identities in allocation 01 `FREEZE.md`; runtime closure SHA-256 `cf93b6cbefcd9fda5e02c82335cd9189e3ac31f303ed1b38253bcac1258a1b5d`. Derived image `public-mcp-three-app-2907:formal01`, ID `sha256:b2b42660e35475baf5ef7a546a8c6901c39f04f69266cd9eebfe49c7ed49ea09`, Linux/amd64; base image ID `sha256:eaf46582f96fd46a1ad6a240928b4c2a828de3d058a4b1490bbadf708d5a52d3`. Frozen helpers: inherited `runner.py` `47668fdd02600c1e13c7f43387f05b5ef3c71490be9b6f41e37ea8a986b08d75`; predecessor runner `runner_effect.py` `be6b29bc7d70cc1554d61615f2aeee6a3a5e715d6f10d92bc5206da654452497`, auditor `auditor_effect.py` `acb869e50202a2108d0e9742f5a4153fbcee5793a17a290e2fe615b577de04a`, test `test_effect_runner.py` `f04ca7404818ed664875b63c225033822254db10159336b6cbec10d7b11af098`. Successor runner `runner_effect_v2.py` `a9002d83f829dd7821d99d19598784f17bff44798ced8dcbaec9708975656507`; auditor `auditor_effect_v2.py` `4cbebe8f264e2d79df60f5cce469be74bcd6e35211e402f87c1beab511c29746`; construction tests `test_effect_runner_v2.py` `971688db6181eefb31b08b94d3fe5725b135edf3cfa044e787FDBE5A13905408`. Construction tests passed 3/3 in local Docker before this freeze, without starting X/MCP or input.
+- **U:** One scripted Chromium title-navigation effect and one stale-sequence counterexample only. Caller-supplied sequence/binding and fixture lease fields do not test production controller behavior or lease issuance/authenticity. This is not the complete #2907 focus/modal/geometry/replacement/return schedule, the six-task #2789 acceptance, a model-mediated task evaluation, or a claim of utility/performance/reliability/readiness. The title oracle establishes only this deterministic local effect.
+
+## Frozen local execution
+
+Only fresh output path: `formal02/`. The formal container uses `--network none --pids-limit 512 --memory 4g --cpus 4`, pinned image, read-only source/helper/experiment mounts, and only the evidence mount writable. Mount the immutable earlier public MCP helper directory read-only at `/legacy` and source closure at `/source`; expose source closure as `/opt/importroot/runtime`. Set `PYTHONPATH=/experiment:/legacy:/opt/importroot`, `SOURCE_COMMIT=eb9e74925b5d1d274f76cb3cbdd9071b67cbe1fe`, `EXPERIMENT_IMAGE_ID=sha256:b2b42660e35475baf5ef7a546a8c6901c39f04f69266cd9eebfe49c7ed49ea09`, `OUTPUT_DIR=/evidence/formal02`; invoke `python3 -B /experiment/runner_effect_v2.py` exactly once.
+
+Only fresh audit path: `audit02/`. The audit is a separate no-network, read-only Docker container; formal bundle and source scripts read-only; dedicated audit output writable. It calls no MCP tool and sends no input. Do not change any frozen script, image, source, gate, or path after preregistration. Preserve the complete first formal and audit outputs as emitted, including FAIL/STOP/HOLD; no retries or continuation.
+
+## First-allocation immutable record
+
+`formal01/result.json` SHA-256: `f5dc5868ecf5cfef09e683a17be3ceba91eb82f07847ed15fa2769e15813b028`  
+`audit01/audit01/audit.json` SHA-256: `abe9028bd4840417c25900752109e71c1ccfef3a0bb48bb9aa38c51ae5fd32ae`  
+Original label and disposition are retained in `STOP01.md`. The successor does not rewrite or claim completion of #2907/#2789.

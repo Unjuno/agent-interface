@@ -1,0 +1,58 @@
+{
+  "schema": "issue-2766-control-target-successor-result-v1",
+  "parent_disposition": "HOLD_RUNTIME_INPUTS_INCOMPLETE",
+  "capsule": {
+    "status": "PASS_RESTORED",
+    "verified_members": 110,
+    "part_checks": "7/7 exact capsule SHA-256 matches",
+    "decoded_xz_sha256": "d7821c8d35acc2276b6fdd90597993bdb469348805b41d8614af0404296afdb0"
+  },
+  "retained_formal_audit": {
+    "decision": "PASS_RAW_AUDIT",
+    "cases": 18,
+    "decisions": 23,
+    "errors": [],
+    "published_after_cancel": 0,
+    "partial_missing": 0
+  },
+  "parent_controls": {
+    "controls": 12,
+    "rejected": 10,
+    "decision": "HOLD_EVIDENCE_AUDIT_INCOMPLETE",
+    "non_rejections": ["wrong_g", "publish_after_cancel"]
+  },
+  "targeted_successor_controls": {
+    "tests": 2,
+    "passed": 2,
+    "wrong_g": {
+      "case": "active_run_low_p",
+      "mutation": "g_ns=0",
+      "expected_oracle_disposition": "WAIT",
+      "retained_copied_disposition": "RUN",
+      "auditor_rejection": "decision:active_run_low_p:precompute:RUN!=WAIT"
+    },
+    "publish_after_cancel": {
+      "case": "active_compute_invalidation",
+      "mutation": "published_reusable=true",
+      "auditor_rejection": "published_after_cancel:active_compute_invalidation"
+    }
+  },
+  "original_construction_suite": {
+    "docker_python": "3.13.15",
+    "tests": 6,
+    "passed": 6,
+    "failed": 0
+  },
+  "host_environment_incident": {
+    "python": "3.12.10 Windows",
+    "tests": 6,
+    "passed": 5,
+    "failed": 1,
+    "failure": "calibration test expected g_ns > 0 but timer returned 0; preserved, not relabeled"
+  },
+  "formal_allocation": {
+    "new_formal_cases": 0,
+    "parent_formal_cases_rerun": 0
+  },
+  "scope": "control-target construction and retained evidence restorability only; no policy/runtime/task-effect promotion"
+}

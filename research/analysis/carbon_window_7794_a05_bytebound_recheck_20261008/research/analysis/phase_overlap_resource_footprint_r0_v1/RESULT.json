@@ -1,0 +1,85 @@
+{
+  "corruption_controls": {
+    "disjoint_not_conflict": true,
+    "omitted_dependency_discriminator": true,
+    "reverse_predicate_rejected": true,
+    "rw_conflict_detected": true,
+    "surface_only_discriminator": true,
+    "unknown_fail_closed": true
+  },
+  "counts": {
+    "complete_overlap_admissions": 116856,
+    "complete_overlap_mismatches": 0,
+    "complete_overlap_schedule_checks": 233712,
+    "declared_conflict_serializations": 303048,
+    "omitted_dependency_admissions": 303048,
+    "omitted_dependency_mismatches": 248496,
+    "order_A_B_rows": 209952,
+    "order_B_A_rows": 209952,
+    "program_vectors": 104976,
+    "rows": 419904,
+    "surface_only_mismatches": 248496
+  },
+  "decision": "PASS_PHASE_OVERLAP_RESOURCE_FOOTPRINT_SERIALIZABILITY_SCOPED",
+  "digest": "4391782cbe317d7a8948c92804ff7a112eeba38dfbf9c0b8a4780430f252c229",
+  "examples": {
+    "omitted_dependency": {
+      "initial": [
+        2,
+        0,
+        1
+      ],
+      "ops": {
+        "AI": "READ_r0",
+        "AT": "READ_r0",
+        "BI": "READ_r0",
+        "BT": "SET0_r0"
+      },
+      "order": [
+        "A",
+        "B"
+      ]
+    },
+    "surface_only": {
+      "initial": [
+        2,
+        0,
+        1
+      ],
+      "ops": {
+        "AI": "READ_r0",
+        "AT": "READ_r0",
+        "BI": "READ_r0",
+        "BT": "SET0_r0"
+      },
+      "order": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  "formal_invocations": 1,
+  "initial_states": [
+    [
+      0,
+      1,
+      2
+    ],
+    [
+      2,
+      0,
+      1
+    ]
+  ],
+  "operation_count": 18,
+  "replacements": 0,
+  "reruns": 0,
+  "resources": [
+    0,
+    1,
+    2
+  ],
+  "task": "PHASE-OVERLAP-RESOURCE-FOOTPRINT-SERIALIZABILITY-R0-20260918-001",
+  "tuning_after_freeze": 0,
+  "unknown_parallel_admissions": 0
+}

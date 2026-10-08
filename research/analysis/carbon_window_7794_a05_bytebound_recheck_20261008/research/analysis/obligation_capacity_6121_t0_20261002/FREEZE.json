@@ -1,0 +1,52 @@
+{
+  "schema": "unjuno-research-freeze-v1",
+  "issue": 6121,
+  "allocation_id": "OBLIGATION-CAPACITY-6121-T0-HOST-20261001-01",
+  "owner_thread_id": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "resource_scope": "local Windows host CPU only; no exclusive shared GPU/Docker/OrbStack reservation; no container or WSL workload",
+  "planned_window_utc": {
+    "start": "2026-10-01T16:37:00Z",
+    "end": "2026-10-01T17:00:00Z"
+  },
+  "current_main_at_freeze": "981ba1ee20259ff36465d25aceef62fd3554a7e9",
+  "branch": "research/obligation-capacity-6121-t0-20261002",
+  "source_commit": "db4b8c08cc328aad030423cb19be0c7e99416a86",
+  "path": "research/analysis/obligation_capacity_6121_t0_20261002/",
+  "files": {
+    "PLAN.md": {
+      "git_blob_sha1": "902529763e53875833afbc056d5d67ace65f52a",
+      "sha256": "fd90da0cd0b34f141ce18835a20f9cb5ef2d02f1f33ce38c0a7d794d68634baa"
+    },
+    "fixture.json": {
+      "git_blob_sha1": "2e0cc9e1dbfd30db2a510c7d5929134de30ad68a",
+      "sha256": "9f49219434923bb1dcdb5bcc953b97829512f65e6245d5601953d6565aa88ed9"
+    },
+    "candidate.py": {
+      "git_blob_sha1": "2893f928df5b7783993cbca7d53485da05c44010",
+      "sha256": "b4a7d82e19d0171f7c6f77d796abffe6c58f5920391a0819ae15e751f20466f3"
+    },
+    "audit.py": {
+      "git_blob_sha1": "2f2f7d6e6a8f25ba62fc4260cb0af6b72f9219e4",
+      "sha256": "64043a87b5a2ce26e78c7d062aac8d419f73558f837042fa8dbe92bb7f9940c7"
+    }
+  },
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows local host",
+    "docker_service": "Stopped/Manual; Docker Desktop read-only inventory timed out at 6 seconds",
+    "wsl": "archlinux launch returned Wsl/Service/CreateInstance/E_FAIL",
+    "gpu": "not used"
+  },
+  "execution": {
+    "candidate_command": "python candidate.py fixture.json candidate.jsonl",
+    "candidate_max_invocations": 1,
+    "auditor_command": "python audit.py fixture.json candidate.jsonl audit.json",
+    "auditor_max_invocations": 1,
+    "retry_budget": 0,
+    "network": "not used",
+    "model_loads": 0,
+    "gpu_or_cuda_calls": 0,
+    "gui_or_application_effects": 0
+  },
+  "decision": "PASS_METHOD_SCOPED only under PLAN.md criteria; otherwise preserve exact FAIL/HOLD without retry."
+}

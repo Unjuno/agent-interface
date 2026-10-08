@@ -1,0 +1,47 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "model_calls": 0,
+  "durable_calls": 10,
+  "method": {
+    "id": "openttd.transparent_station_signs",
+    "expanded_step": {
+      "op": "chord",
+      "modifier": "Control_L",
+      "key": "1"
+    },
+    "source_url": "https://wiki.openttd.org/en/Manual/Hotkeys"
+  },
+  "image": {
+    "dimensions": [
+      1280,
+      800
+    ],
+    "paused_stability_changed_pixels": 0,
+    "before_sha256": "0afcf7e299654f21d8ea5938148a5bc16d2e1d7df7990e09812d7cf457f6f07e",
+    "after_sha256": "f76238af2f2a1fa4af5005c97782d35a96adc9f3f3c720e0366cc36d602bc1ba",
+    "changed_pixels": 1151,
+    "total_pixels": 1024000,
+    "changed_fraction": 0.0011240234375,
+    "difference_bounds": [
+      138,
+      234,
+      1053,
+      734
+    ]
+  },
+  "task_state": {
+    "independent_success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "bidirectional_connections": false,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "save_unchanged": true
+  },
+  "decision": "retain as a paired sign/surface candidate",
+  "scope": "paused second-geometry view-transform feasibility only; no model judgment, task success, latency or token claim",
+  "audit_sha256": "fe0e46676a86128ccebcbc083cbbcad422af404194f3da456ecf6e58716c67e7"
+}

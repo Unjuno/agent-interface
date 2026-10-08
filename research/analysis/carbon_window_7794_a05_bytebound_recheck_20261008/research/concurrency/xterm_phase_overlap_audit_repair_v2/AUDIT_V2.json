@@ -1,0 +1,39 @@
+{
+  "arm_counts": {
+    "overlap_independent": 6,
+    "overlap_shared_negative": 6,
+    "serial_independent": 6,
+    "serial_shared": 6
+  },
+  "audit_invocations": 1,
+  "decision": "PASS_REAL_XTERM_PHASE_OVERLAP_AUDIT_REPAIR_SCOPED",
+  "errors": [],
+  "median_reduction_ms": 152.7634515,
+  "overlap_median_ms": 168.087279,
+  "overlap_serial_ratio": 0.5238799947192266,
+  "pass": true,
+  "predecessor_decision": "FAIL_REAL_XTERM_PHASE_OVERLAP",
+  "predecessor_errors_retained": [
+    "serial_order:serial_independent-02",
+    "serial_order:serial_independent-04",
+    "serial_order:serial_shared-03",
+    "serial_order:serial_independent-01",
+    "serial_order:serial_independent-05",
+    "serial_order:serial_shared-00",
+    "serial_order:serial_shared-05",
+    "serial_order:serial_independent-03",
+    "serial_order:serial_shared-02",
+    "serial_order:serial_independent-00",
+    "serial_order:serial_shared-04",
+    "serial_order:serial_shared-01"
+  ],
+  "predecessor_sha256": {
+    "PREDECESSOR_AUDIT.json": "2fa51e9e8f4c8830a1ab101d37922f1a3bd7272d3932ff4667402c562006ed75",
+    "PREDECESSOR_RAW_CASES.json": "6426b6425764adc585585eff915faea504d1ddabac38ae34720660e277ce37f8",
+    "PREDECESSOR_RESULT.json": "07c44477c1e1a4ebf032ebd6443bb2bc7d8b0fab8e5a1324b7500780182946e0",
+    "PREDECESSOR_SCHEDULE.json": "a87aee9a7eb3194b950c41f85a210683c4b7321767357b125ec595544fb50cd8"
+  },
+  "reruns": 0,
+  "serial_median_ms": 320.8507305,
+  "tuning": 0
+}

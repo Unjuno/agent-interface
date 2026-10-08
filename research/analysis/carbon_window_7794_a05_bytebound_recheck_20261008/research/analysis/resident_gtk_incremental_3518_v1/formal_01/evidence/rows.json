@@ -1,0 +1,974 @@
+[
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "valid",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESIDENT_INCREMENTAL",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "valid",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "LAST_MESSAGE",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "valid",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "MESSAGE_COUNT",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "valid",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESTART_REPLAY_UNGUARDED",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "true_then_revoke",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "revoke",
+        "seq": 2,
+        "target": "A"
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESIDENT_INCREMENTAL",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [],
+    "case": "true_then_revoke",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "revoke",
+        "seq": 2,
+        "target": "A"
+      }
+    ],
+    "gui_title": "resident-fixture:0",
+    "key_release_verified": true,
+    "policy": "LAST_MESSAGE",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 0,
+    "transport_count": 0
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "true_then_revoke",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "revoke",
+        "seq": 2,
+        "target": "A"
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "MESSAGE_COUNT",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "true_then_revoke",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "revoke",
+        "seq": 2,
+        "target": "A"
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESTART_REPLAY_UNGUARDED",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [],
+    "case": "revoke_first",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "revoke",
+        "seq": 1,
+        "target": "A"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:0",
+    "key_release_verified": true,
+    "policy": "RESIDENT_INCREMENTAL",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 0,
+    "transport_count": 0
+  },
+  {
+    "action_event_indices": [
+      1
+    ],
+    "case": "revoke_first",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "revoke",
+        "seq": 1,
+        "target": "A"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "LAST_MESSAGE",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      1
+    ],
+    "case": "revoke_first",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "revoke",
+        "seq": 1,
+        "target": "A"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "MESSAGE_COUNT",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      1
+    ],
+    "case": "revoke_first",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "revoke",
+        "seq": 1,
+        "target": "A"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESTART_REPLAY_UNGUARDED",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [],
+    "case": "replacement_delayed_old",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 2,
+        "kind": "replace",
+        "seq": 1,
+        "target": "B"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:0",
+    "key_release_verified": true,
+    "policy": "RESIDENT_INCREMENTAL",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 0,
+    "transport_count": 0
+  },
+  {
+    "action_event_indices": [
+      1
+    ],
+    "case": "replacement_delayed_old",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 2,
+        "kind": "replace",
+        "seq": 1,
+        "target": "B"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "LAST_MESSAGE",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      1
+    ],
+    "case": "replacement_delayed_old",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 2,
+        "kind": "replace",
+        "seq": 1,
+        "target": "B"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "MESSAGE_COUNT",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      1
+    ],
+    "case": "replacement_delayed_old",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 2,
+        "kind": "replace",
+        "seq": 1,
+        "target": "B"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESTART_REPLAY_UNGUARDED",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "out_of_order_false",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 3,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": false
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESIDENT_INCREMENTAL",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [],
+    "case": "out_of_order_false",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 3,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": false
+      }
+    ],
+    "gui_title": "resident-fixture:0",
+    "key_release_verified": true,
+    "policy": "LAST_MESSAGE",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 0,
+    "transport_count": 0
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "out_of_order_false",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 3,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": false
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "MESSAGE_COUNT",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "out_of_order_false",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 3,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": false
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESTART_REPLAY_UNGUARDED",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      1
+    ],
+    "case": "duplicate_true",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": false
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESIDENT_INCREMENTAL",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      2
+    ],
+    "case": "duplicate_true",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": false
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "LAST_MESSAGE",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      1,
+      2
+    ],
+    "case": "duplicate_true",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": false
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:2",
+    "key_release_verified": true,
+    "policy": "MESSAGE_COUNT",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 2,
+    "transport_count": 2
+  },
+  {
+    "action_event_indices": [
+      1,
+      2
+    ],
+    "case": "duplicate_true",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": false
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 2,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:2",
+    "key_release_verified": true,
+    "policy": "RESTART_REPLAY_UNGUARDED",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 2,
+    "transport_count": 2
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "restart_replay",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 2,
+        "kind": "restart",
+        "seq": 0,
+        "target": "A"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "RESIDENT_INCREMENTAL",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      2
+    ],
+    "case": "restart_replay",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 2,
+        "kind": "restart",
+        "seq": 0,
+        "target": "A"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:1",
+    "key_release_verified": true,
+    "policy": "LAST_MESSAGE",
+    "screen_after_sha256": "41348ee692dbddeffdf5e17befd569798b6040a4e79c9e09c6b710d5534fc5e3",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 1,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0,
+      2
+    ],
+    "case": "restart_replay",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 2,
+        "kind": "restart",
+        "seq": 0,
+        "target": "A"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:2",
+    "key_release_verified": true,
+    "policy": "MESSAGE_COUNT",
+    "screen_after_sha256": "98fc3e012458457084365407f1fd54d2bb546b1f0a04c639c11df40570cbd933",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 2,
+    "transport_count": 2
+  },
+  {
+    "action_event_indices": [
+      0,
+      2
+    ],
+    "case": "restart_replay",
+    "effect_enabled": true,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      },
+      {
+        "gen": 2,
+        "kind": "restart",
+        "seq": 0,
+        "target": "A"
+      },
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:2",
+    "key_release_verified": true,
+    "policy": "RESTART_REPLAY_UNGUARDED",
+    "screen_after_sha256": "98fc3e012458457084365407f1fd54d2bb546b1f0a04c639c11df40570cbd933",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": true,
+    "task_effect_count": 2,
+    "transport_count": 2
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "effect_off",
+    "effect_enabled": false,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:0",
+    "key_release_verified": true,
+    "policy": "RESIDENT_INCREMENTAL",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 0,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "effect_off",
+    "effect_enabled": false,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:0",
+    "key_release_verified": true,
+    "policy": "LAST_MESSAGE",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 0,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "effect_off",
+    "effect_enabled": false,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:0",
+    "key_release_verified": true,
+    "policy": "MESSAGE_COUNT",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 0,
+    "transport_count": 1
+  },
+  {
+    "action_event_indices": [
+      0
+    ],
+    "case": "effect_off",
+    "effect_enabled": false,
+    "events": [
+      {
+        "gen": 1,
+        "kind": "obs",
+        "seq": 1,
+        "target": "A",
+        "value": true
+      }
+    ],
+    "gui_title": "resident-fixture:0",
+    "key_release_verified": true,
+    "policy": "RESTART_REPLAY_UNGUARDED",
+    "screen_after_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_before_sha256": "8eaee15325e6c864d37171cae00c2c407dfb81bf35d2ddd8e1bb057c5793e8b1",
+    "screen_changed": false,
+    "task_effect_count": 0,
+    "transport_count": 1
+  }
+]

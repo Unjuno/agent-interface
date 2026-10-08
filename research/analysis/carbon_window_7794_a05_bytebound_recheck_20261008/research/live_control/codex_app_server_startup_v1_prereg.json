@@ -1,0 +1,53 @@
+{
+  "status": "PREREGISTERED_BEFORE_COMMAND_FREE_RUN",
+  "allocation_id": "codex-app-server-startup-v1",
+  "objective": "measure whether a capability-minimized persistent planner thread removes avoidable app-server startup wait",
+  "model_turns_max": 0,
+  "model_calls_max": 0,
+  "arms": [
+    "baseline",
+    "minimal"
+  ],
+  "replicates_per_arm": 3,
+  "order": [
+    [
+      "baseline",
+      1
+    ],
+    [
+      "minimal",
+      1
+    ],
+    [
+      "minimal",
+      2
+    ],
+    [
+      "baseline",
+      2
+    ],
+    [
+      "baseline",
+      3
+    ],
+    [
+      "minimal",
+      3
+    ]
+  ],
+  "primary_metric": "thread/start request to response milliseconds",
+  "secondary_metric": "MCP startup notification count after 500ms observation",
+  "output": "results-local/codex-app-server-startup-v1",
+  "command": [
+    "python",
+    "research/live_control/benchmark_codex_app_server_startup_v1.py",
+    "results-local/codex-app-server-startup-v1"
+  ],
+  "failure_disposition": "retain first failure; no automatic retry",
+  "source_sha256": {
+    "research/live_control/benchmark_codex_app_server_startup_v1.py": "f4db5bfaeedc21367974214fecc189661be79523f2021bfd4f54e90ac4dcc739",
+    "research/live_control/codex_app_server_client_v2.py": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b"
+  },
+  "parent_commit": "11142da0ecca1688034038adb6346ae7960ad2ef",
+  "scope": "same-host command-free startup mechanics; no model, task, token, planner latency or cross-machine claim"
+}

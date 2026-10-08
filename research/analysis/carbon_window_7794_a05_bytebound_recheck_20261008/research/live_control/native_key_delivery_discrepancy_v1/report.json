@@ -1,0 +1,262 @@
+{
+  "status": "SAME_OPERATIONS_DIFFERENT_SAVED_EFFECT",
+  "root_cause": "unknown",
+  "controlled_comparison": false,
+  "rows": [
+    {
+      "run": "native-target-recovery-01",
+      "actions_sha256": "64ee5eb3f9c3ec406962905fb8cbd0691398e61bd1b1e4f41066970239ab4a78",
+      "program_path": "runtime\\results\\native-target-recovery-01\\allocation\\run\\bridge\\program-guarded-d6f1b054f25a4ae281524aba2f00240b.json",
+      "program_sha256": "c6be4820ba0c261a5ce7fe9701a06c7431fda6a30fe993006c3f8de25e34bf53",
+      "operations": [
+        {
+          "op": "focus",
+          "target": "app"
+        },
+        {
+          "op": "pointer_move",
+          "frame": "screen_physical_px",
+          "x": 600,
+          "y": 378
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": true
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": false
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "s"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "execution": {
+        "started_ns": 34862186638626,
+        "ended_ns": 34862416846795,
+        "emissions": 19,
+        "program_emissions": 19,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 34862416844410
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "saved_geometry": {
+        "x": "60",
+        "y": "50",
+        "width": "40",
+        "height": "30",
+        "transform": null
+      },
+      "evaluation": {
+        "success": true,
+        "actual": {
+          "x": "60",
+          "y": "50",
+          "width": "40",
+          "height": "30",
+          "transform": null
+        },
+        "known_ns": 34862631327722
+      }
+    },
+    {
+      "run": "native-multiapp-integration-01",
+      "actions_sha256": "d6dcac2799e996f788385ef68ae81f85c23e3da4452d74f87b2812a22f026205",
+      "program_path": "runtime\\results\\native-multiapp-integration-01\\allocation\\run\\bridge\\program-guarded-dbc56e26d3604bd584aab4e11b92610c.json",
+      "program_sha256": "8cf8d2fb30dda2273bf27632b86424c0805ff95f75159ae51567df48a0fa6739",
+      "operations": [
+        {
+          "op": "focus",
+          "target": "app"
+        },
+        {
+          "op": "pointer_move",
+          "frame": "screen_physical_px",
+          "x": 600,
+          "y": 378
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": true
+        },
+        {
+          "op": "pointer_button",
+          "button": "left",
+          "down": false
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "Right"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "keys": [
+            "CTRL",
+            "s"
+          ],
+          "op": "key_chord"
+        },
+        {
+          "op": "release_all"
+        }
+      ],
+      "execution": {
+        "started_ns": 35318725888070,
+        "ended_ns": 35318926817653,
+        "emissions": 19,
+        "program_emissions": 19,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 35318926814785
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ]
+      },
+      "saved_geometry": {
+        "x": "62",
+        "y": "50",
+        "width": "40",
+        "height": "30",
+        "transform": null
+      },
+      "evaluation": {
+        "success": true,
+        "applications": {
+          "calc": {
+            "success": true,
+            "actual": [
+              244,
+              185
+            ],
+            "known_ns": 35395617849498
+          },
+          "inkscape": {
+            "success": true,
+            "actual": {
+              "x": "62",
+              "y": "50",
+              "width": "40",
+              "height": "30",
+              "transform": null
+            },
+            "known_ns": 35395618531395
+          }
+        }
+      }
+    }
+  ]
+}

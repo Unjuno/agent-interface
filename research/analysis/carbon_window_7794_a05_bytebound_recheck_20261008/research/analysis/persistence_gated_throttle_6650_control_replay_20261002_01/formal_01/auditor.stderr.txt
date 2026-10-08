@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/src/research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01/auditor.py", line 81, in <module>
+    result = execute(Path(sys.argv[1]))
+  File "/src/research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01/auditor.py", line 58, in execute
+    if sha256(path) != freeze[key]:
+                       ~~~~~~^^^^^
+KeyError: 'fixture_sha256'

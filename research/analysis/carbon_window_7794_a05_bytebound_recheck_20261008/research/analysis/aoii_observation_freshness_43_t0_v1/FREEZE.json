@@ -1,0 +1,21 @@
+{
+  "allocation": "AOII-OBSERVATION-FRESHNESS-43-T0-20261001-02",
+  "status": "FROZEN_BEFORE_CANDIDATE",
+  "issue": 43,
+  "source_main": "bd9c4c5ceca68f4dc09bb39d27b140a987b68656",
+  "path": "research/analysis/aoii_observation_freshness_43_t0_v1/",
+  "host": "macOS arm64, CPython 3.14.5, standard library only",
+  "formal_container": false,
+  "candidate_command": "python3 candidate.py > raw.jsonl",
+  "audit_command": "python3 audit.py raw.jsonl",
+  "tests_command": "python3 -m unittest -v test_method.py",
+  "no_retry": true,
+  "network_model_gui_input_user_data": false,
+  "source_sha256": {
+    "PREREGISTRATION.md": "e6d96bf4323928f9f9d2cd6bc80be449464f9b5f28ec6e818f03757ef9b93fe2",
+    "candidate.py": "d80fd58d9a536fba13cc295c220b22fc5d20f0e99fd33add6bebe420ba756d30",
+    "audit.py": "5aa87a9290a878c1a58a5d4b59ec870b20088473815b1659898bc41a4c298cb4",
+    "test_method.py": "0ff61ebf726fba6ed79c5d84c54456885b57b8b633abec33f934104bd70c7d21"
+  },
+  "trace_sha256": "95c476735d81277c12895001cb662f2a0a939213864d0c1ffa3a992598dd16a4"
+}

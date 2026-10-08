@@ -1,0 +1,128 @@
+{
+  "app_sha256": "fe24b580beaf048921352cc49ec380ba6f3122240c9197a1b62fc766d72afa63",
+  "observer_sha256": "9cf262115e2be737337e0ed93ad2b775b1890746da8d5dcfad5b4909744d5e14",
+  "run": {
+    "app_rows": [
+      {
+        "actuation_id": "t11-06b5da311d304cc3b01e216cdb661d66:keypress",
+        "causal_parent_ids": [
+          "act:t11-06b5da311d304cc3b01e216cdb661d66:keypress"
+        ],
+        "event_id": "app:1",
+        "keycode": 38,
+        "keysym": "a",
+        "kind": "KeyPress",
+        "mono_ns": 29102688191926,
+        "source": "app",
+        "source_seq": 1,
+        "state": 0,
+        "time": 29102684,
+        "value": ""
+      },
+      {
+        "actuation_id": "t11-06b5da311d304cc3b01e216cdb661d66:keyrelease",
+        "causal_parent_ids": [
+          "act:t11-06b5da311d304cc3b01e216cdb661d66:keyrelease"
+        ],
+        "event_id": "app:2",
+        "keycode": 38,
+        "keysym": "a",
+        "kind": "KeyRelease",
+        "mono_ns": 29102709075851,
+        "source": "app",
+        "source_seq": 2,
+        "state": 0,
+        "time": 29102706,
+        "value": "a"
+      }
+    ],
+    "epoch": "t11-06b5da311d304cc3b01e216cdb661d66",
+    "error": null,
+    "initial_neutral": true,
+    "keycode": 38,
+    "keysym": "a",
+    "observer_rows": [
+      {
+        "detail": 38,
+        "kind": "KeyRelease",
+        "root_xid": 543,
+        "seq": 3,
+        "state": 0,
+        "time": 29102684,
+        "type": 3,
+        "window_xid": 2097170
+      },
+      {
+        "detail": 38,
+        "kind": "KeyPress",
+        "root_xid": 543,
+        "seq": 4,
+        "state": 0,
+        "time": 29102684,
+        "type": 2,
+        "window_xid": 2097170
+      },
+      {
+        "detail": 38,
+        "kind": "KeyRelease",
+        "root_xid": 543,
+        "seq": 5,
+        "state": 0,
+        "time": 29102706,
+        "type": 3,
+        "window_xid": 2097170
+      }
+    ],
+    "ready": {
+      "parent_xid": 2097170,
+      "ready": true,
+      "selected_xids": [
+        2097170
+      ],
+      "selection_error": null,
+      "tk_root_xid": 2097169
+    },
+    "record_blocks": [
+      {
+        "category": 4,
+        "client_swapped": false,
+        "data_hex": ""
+      },
+      {
+        "category": 0,
+        "client_swapped": false,
+        "data_hex": "022694005c12bc011f020000120020000000000000028001d801580100000100"
+      },
+      {
+        "category": 0,
+        "client_swapped": false,
+        "data_hex": "032613005c12bc011f020000120020000000000000028001d801580100000100"
+      },
+      {
+        "category": 0,
+        "client_swapped": false,
+        "data_hex": "022613005c12bc011f020000120020000000000000028001d801580100000100"
+      },
+      {
+        "category": 0,
+        "client_swapped": false,
+        "data_hex": "0326a9007212bc011f020000120020000000000000028001d801580100000100"
+      },
+      {
+        "category": 0,
+        "client_swapped": false,
+        "data_hex": "032613007212bc011f020000120020000000000000028001d801580100000100"
+      }
+    ],
+    "record_errors": [
+      "TypeError(\"cannot convert 'NoneType' object to bytes\")"
+    ],
+    "release_attempted": true,
+    "schema": "blackstart-nonmodifier-trace-t11-raw-v1",
+    "terminal_neutral": true
+  },
+  "runner_exit_code": 0,
+  "schema": "blackstart-nonmodifier-trace-t11-wrapper-v1",
+  "stderr": "",
+  "stdout": ""
+}

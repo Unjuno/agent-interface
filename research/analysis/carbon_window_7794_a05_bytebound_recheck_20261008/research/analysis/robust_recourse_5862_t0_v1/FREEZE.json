@@ -1,0 +1,28 @@
+{
+  "schema": "5862-belief-robust-recourse-freeze-v1",
+  "issue": 5862,
+  "allocation": "5862-ROBUST-RECOURSE-T0-20261001-01",
+  "branch": "research/robust-recourse-5862-t0-20261001",
+  "publicationBaseMain": "7e94ba9fdbfbff8d32d5dde27c086f2eb7582775",
+  "workflowRunNumber": 1,
+  "sourcePath": "research/analysis/robust_recourse_5862_t0_v1",
+  "candidateInvocations": 1,
+  "auditorInvocations": 1,
+  "image": "python:3.12.14-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform": "linux/amd64",
+  "network": "none",
+  "readOnlyRoot": true,
+  "pidsLimit": 32,
+  "memoryMiB": 128,
+  "cpus": 1,
+  "expectedCases": 7,
+  "expectedStates": 16,
+  "expectedTransitions": 23,
+  "mutationControls": 6,
+  "sourceSha256": {
+    "candidate.py": "d11495292d46839b7e3b589a2a65f8b5422b469a1da93074accd72cd891ca410",
+    "fixture.json": "eaa6acaf73e267d7faade1de775441d922f5f6edf800534da9d7ad5d100303d7",
+    "audit.py": "cd12c3f16859a9cd8882db5c1fc48d22203a1a55b0bb6e99bb8297cb3dbf7338",
+    "test_t0.py": "d23d83db451918b78ea1470c945a381fa7749ec235b0f41cb38b53e4ad4ec32b"
+  }
+}

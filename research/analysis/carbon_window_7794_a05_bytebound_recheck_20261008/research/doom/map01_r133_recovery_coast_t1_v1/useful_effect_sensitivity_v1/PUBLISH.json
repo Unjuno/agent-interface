@@ -1,0 +1,10 @@
+{
+  "schema": "r133-useful-effect-sensitivity-publication-v1",
+  "operation": "lossless gzip archive of the already-frozen candidate RAW.json; no candidate or auditor rerun",
+  "command": "gzip -n -c results/sensitivity-01/RAW.json > results/sensitivity-01/RAW.json.gz",
+  "uncompressed_sha256": "97a0fa96a95db65eba8dbecefe6dff5522651af1f3e2d120c14f6bf9c99cee9c",
+  "compressed_sha256": "e0aa96f1fba18dbd7efdba340fd5f996cde98c48ef29c847155d4d6a1a70af3f",
+  "compressed_bytes": 14144,
+  "verification": "gzip -dc output SHA-256 equals the original candidate RUN.json raw_sha256",
+  "scientific_evidence_changed": false
+}

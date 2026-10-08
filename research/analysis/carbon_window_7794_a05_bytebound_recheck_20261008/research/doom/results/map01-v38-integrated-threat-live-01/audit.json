@@ -1,0 +1,56 @@
+{
+  "schema": "map01-v38-integrated-live-audit-v1",
+  "formal_pass": true,
+  "completed": true,
+  "integrated_running_path_exposed": true,
+  "dynamic_revocation_exposed": false,
+  "decision": "INTEGRATED_PATH_EXPOSED_RETAIN_LIMITED",
+  "checks": {
+    "sources": true,
+    "first_outcome_exists": true,
+    "model_and_effort": true,
+    "bounded_decisions": true,
+    "continuous_game": true,
+    "exact_frames": true,
+    "typed_reconciled": true,
+    "matched_terminals": true,
+    "empty_release": true,
+    "plan_admissions_count": true,
+    "independent_score": true,
+    "no_current_authority_at_close": true,
+    "receipt_order": true,
+    "rejected_no_input": true,
+    "running_program_binding": true,
+    "status_counts": true,
+    "early_release_causally_closed": true
+  },
+  "statuses": {
+    "INPUT_ADMITTED": 1,
+    "REJECTED_ACTION_NOT_CURRENT": 1,
+    "REJECTED_POLICY_INVALIDATED": 4
+  },
+  "counts": {
+    "accepted": 7,
+    "plan_accepted": 1,
+    "exact_observations": 119,
+    "typed": 119,
+    "early_releases": 0
+  },
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 31730575972,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 54903076373217
+  },
+  "scope": "one finite same-fixture real-time integrated v38 planner episode; no MAP01-clear, cross-domain, reliability, causal speed/token or human-tempo claim"
+}

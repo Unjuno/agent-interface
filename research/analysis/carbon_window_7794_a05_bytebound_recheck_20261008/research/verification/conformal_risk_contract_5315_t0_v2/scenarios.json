@@ -1,0 +1,9 @@
+{
+  "arms": [
+    {"id":"iid_reference","population_id":"synthetic-iid-v1","version":"verifier-v1","age_hours":1,"exchangeable":true,"n":1000,"selected":40,"selected_errors":40,"checklist_errors":0,"assumption_status":"VALIDATED"},
+    {"id":"temporal_shift","population_id":"synthetic-iid-v1","version":"verifier-v1","age_hours":30,"exchangeable":false,"n":1000,"selected":100,"selected_errors":100,"checklist_errors":5,"assumption_status":"SHIFT_DETECTED"},
+    {"id":"ui_layout_shift","population_id":"synthetic-ui-v2","version":"verifier-v2","age_hours":1,"exchangeable":false,"n":1000,"selected":150,"selected_errors":120,"checklist_errors":10,"assumption_status":"SHIFT_DETECTED"},
+    {"id":"task_family_shift","population_id":"synthetic-family-v2","version":"verifier-v1","age_hours":1,"exchangeable":false,"n":1000,"selected":200,"selected_errors":100,"checklist_errors":5,"assumption_status":"SHIFT_DETECTED"},
+    {"id":"adaptive_repeated_query","population_id":"synthetic-iid-v1","version":"verifier-v1","age_hours":1,"exchangeable":false,"n":1000,"selected":50,"selected_errors":40,"checklist_errors":20,"assumption_status":"INVALIDATED"}
+  ]
+}

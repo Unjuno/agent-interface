@@ -1,0 +1,1296 @@
+{
+  "allocation": "visual-temporal-570-stale-contour-r7-20260927-01",
+  "arms": [
+    "CURRENT_RAW",
+    "PAIRED_HISTORY",
+    "STALE_CONTOUR"
+  ],
+  "construction_cases": [
+    {
+      "case_id": "construct-positive",
+      "current_sha256": "4dd348b7d4d01380c8f5a563a35904a86ba7dff5d74fe86e6ebc71562db3f281",
+      "present": true,
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320779,
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ]
+    },
+    {
+      "case_id": "construct-absent",
+      "current_sha256": "fed9a8d598403aba9cb3af8c46f6955219bd5dbed4143d6de2853b318f9fd196",
+      "present": false,
+      "prior_sha256": "83e0385f3247a6915e5bf1e545a1ef42f5758f9f01a9c5a3018f2b216951621e",
+      "seed": 9320887,
+      "target_box": null
+    }
+  ],
+  "font_sha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a",
+  "formal_calls": 36,
+  "formal_cases": [
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-01-current_raw",
+      "current_path": "screen-01-current.png",
+      "current_sha256": "770b352125918cadea93279f4a955adf24875ae93e970dde53421af58ad8c7a1",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-01-current_raw.png",
+      "presentation_sha256": "770b352125918cadea93279f4a955adf24875ae93e970dde53421af58ad8c7a1",
+      "prior_path": "screen-01-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320101,
+      "source_case_id": "screen-01",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-01-paired_history",
+      "current_path": "screen-01-current.png",
+      "current_sha256": "770b352125918cadea93279f4a955adf24875ae93e970dde53421af58ad8c7a1",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-01-paired_history.png",
+      "presentation_sha256": "df5fea5d0cdbcc45e4176936a3de9dda1dacb317519434e4dcd99e8579101d53",
+      "prior_path": "screen-01-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320101,
+      "source_case_id": "screen-01",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-01-stale_contour",
+      "current_path": "screen-01-current.png",
+      "current_sha256": "770b352125918cadea93279f4a955adf24875ae93e970dde53421af58ad8c7a1",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          598,
+          766,
+          638
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-01-stale_contour.png",
+      "presentation_sha256": "92c50d4eece3c28c4da5dad114def7ac5f24d4beeb69c84015a4bc426fa443cb",
+      "prior_path": "screen-01-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320101,
+      "source_case_id": "screen-01",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-02-paired_history",
+      "current_path": "screen-02-current.png",
+      "current_sha256": "2de96251d08d3bf317d51d0a1009e9f617145dd5b44a69f193f7a086bfa6f998",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-02-paired_history.png",
+      "presentation_sha256": "6c91ed7b7065d778e7689d5d5fa9cb61ffa04c8c24ef29392dbbfe58980c8b3b",
+      "prior_path": "screen-02-prior.png",
+      "prior_sha256": "ca007cbaa2cc1e456c31414bb0ce30369108292402f3f38e6acf06a58788ee8e",
+      "seed": 9320204,
+      "source_case_id": "screen-02",
+      "stale_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "target_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-02-stale_contour",
+      "current_path": "screen-02-current.png",
+      "current_sha256": "2de96251d08d3bf317d51d0a1009e9f617145dd5b44a69f193f7a086bfa6f998",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          346,
+          766,
+          386
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-02-stale_contour.png",
+      "presentation_sha256": "5ed969c50e9511ebad786ed857b777822c80674a669595b53094b206b396f7af",
+      "prior_path": "screen-02-prior.png",
+      "prior_sha256": "ca007cbaa2cc1e456c31414bb0ce30369108292402f3f38e6acf06a58788ee8e",
+      "seed": 9320204,
+      "source_case_id": "screen-02",
+      "stale_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "target_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-02-current_raw",
+      "current_path": "screen-02-current.png",
+      "current_sha256": "2de96251d08d3bf317d51d0a1009e9f617145dd5b44a69f193f7a086bfa6f998",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-02-current_raw.png",
+      "presentation_sha256": "2de96251d08d3bf317d51d0a1009e9f617145dd5b44a69f193f7a086bfa6f998",
+      "prior_path": "screen-02-prior.png",
+      "prior_sha256": "ca007cbaa2cc1e456c31414bb0ce30369108292402f3f38e6acf06a58788ee8e",
+      "seed": 9320204,
+      "source_case_id": "screen-02",
+      "stale_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "target_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-03-stale_contour",
+      "current_path": "screen-03-current.png",
+      "current_sha256": "278175fe6aa42c027c709ee2634bf9c3c2e17ec8001e7836c87f9cfdc7374bec",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          598,
+          766,
+          638
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-03-stale_contour.png",
+      "presentation_sha256": "fed7a64b6d19e89d731cdbf795d78884393e084b480c2e9990409b21ed5edbbb",
+      "prior_path": "screen-03-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320307,
+      "source_case_id": "screen-03",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-03-current_raw",
+      "current_path": "screen-03-current.png",
+      "current_sha256": "278175fe6aa42c027c709ee2634bf9c3c2e17ec8001e7836c87f9cfdc7374bec",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-03-current_raw.png",
+      "presentation_sha256": "278175fe6aa42c027c709ee2634bf9c3c2e17ec8001e7836c87f9cfdc7374bec",
+      "prior_path": "screen-03-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320307,
+      "source_case_id": "screen-03",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-03-paired_history",
+      "current_path": "screen-03-current.png",
+      "current_sha256": "278175fe6aa42c027c709ee2634bf9c3c2e17ec8001e7836c87f9cfdc7374bec",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-03-paired_history.png",
+      "presentation_sha256": "5a64e83c33f21284cc9360920a1852104dc731c0836cf4cdc695a47db895083c",
+      "prior_path": "screen-03-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320307,
+      "source_case_id": "screen-03",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-04-current_raw",
+      "current_path": "screen-04-current.png",
+      "current_sha256": "77eb98cc9c169995e18a7f04990936df580df220ccd56dae9471975dbc253d18",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-04-current_raw.png",
+      "presentation_sha256": "77eb98cc9c169995e18a7f04990936df580df220ccd56dae9471975dbc253d18",
+      "prior_path": "screen-04-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320410,
+      "source_case_id": "screen-04",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-04-paired_history",
+      "current_path": "screen-04-current.png",
+      "current_sha256": "77eb98cc9c169995e18a7f04990936df580df220ccd56dae9471975dbc253d18",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-04-paired_history.png",
+      "presentation_sha256": "75655ea0321e18e2a9f88bd5515484b772a256fe72878798f4fcaef96953dd2a",
+      "prior_path": "screen-04-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320410,
+      "source_case_id": "screen-04",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-04-stale_contour",
+      "current_path": "screen-04-current.png",
+      "current_sha256": "77eb98cc9c169995e18a7f04990936df580df220ccd56dae9471975dbc253d18",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          430,
+          766,
+          470
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-04-stale_contour.png",
+      "presentation_sha256": "da77f6a1cad0df5cddeff484701535ce551d6ce38e6e76591261bcc290a9b7fa",
+      "prior_path": "screen-04-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320410,
+      "source_case_id": "screen-04",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-05-paired_history",
+      "current_path": "screen-05-current.png",
+      "current_sha256": "e9922957820b651090ce9e37d7e3a81dd798a584d0115b3528e14da7d61ffab2",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-05-paired_history.png",
+      "presentation_sha256": "0e5b01065207aeb8287dfe964e0381e9ddcfcbdcabba6cd3b62c03bc4552ba66",
+      "prior_path": "screen-05-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320513,
+      "source_case_id": "screen-05",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-05-stale_contour",
+      "current_path": "screen-05-current.png",
+      "current_sha256": "e9922957820b651090ce9e37d7e3a81dd798a584d0115b3528e14da7d61ffab2",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          430,
+          766,
+          470
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-05-stale_contour.png",
+      "presentation_sha256": "a3b8d02cb603768736e2d3d8d344395211bfa5286d6a2ef9d8216764a5a430f7",
+      "prior_path": "screen-05-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320513,
+      "source_case_id": "screen-05",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-05-current_raw",
+      "current_path": "screen-05-current.png",
+      "current_sha256": "e9922957820b651090ce9e37d7e3a81dd798a584d0115b3528e14da7d61ffab2",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-05-current_raw.png",
+      "presentation_sha256": "e9922957820b651090ce9e37d7e3a81dd798a584d0115b3528e14da7d61ffab2",
+      "prior_path": "screen-05-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320513,
+      "source_case_id": "screen-05",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-06-stale_contour",
+      "current_path": "screen-06-current.png",
+      "current_sha256": "fd754a426990ba55fb00f7c7ea41b6a672b59b86065b0f21473e03d07a3a3379",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          598,
+          766,
+          638
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-06-stale_contour.png",
+      "presentation_sha256": "8854503ac55be693ecc4b2cb76a043353a55f3686466e9a03de9915f29965d8e",
+      "prior_path": "screen-06-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320616,
+      "source_case_id": "screen-06",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-06-current_raw",
+      "current_path": "screen-06-current.png",
+      "current_sha256": "fd754a426990ba55fb00f7c7ea41b6a672b59b86065b0f21473e03d07a3a3379",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-06-current_raw.png",
+      "presentation_sha256": "fd754a426990ba55fb00f7c7ea41b6a672b59b86065b0f21473e03d07a3a3379",
+      "prior_path": "screen-06-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320616,
+      "source_case_id": "screen-06",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-06-paired_history",
+      "current_path": "screen-06-current.png",
+      "current_sha256": "fd754a426990ba55fb00f7c7ea41b6a672b59b86065b0f21473e03d07a3a3379",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-06-paired_history.png",
+      "presentation_sha256": "579396b71765b64ad1e3166ff431b76135aa51f92177164c222821c454c8503c",
+      "prior_path": "screen-06-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320616,
+      "source_case_id": "screen-06",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-07-current_raw",
+      "current_path": "screen-07-current.png",
+      "current_sha256": "1f8aebbf3bcfb71b2ab6200a8a2680fcc1eb229b5e9ab1876a435cc0389a2069",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-07-current_raw.png",
+      "presentation_sha256": "1f8aebbf3bcfb71b2ab6200a8a2680fcc1eb229b5e9ab1876a435cc0389a2069",
+      "prior_path": "screen-07-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320719,
+      "source_case_id": "screen-07",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-07-paired_history",
+      "current_path": "screen-07-current.png",
+      "current_sha256": "1f8aebbf3bcfb71b2ab6200a8a2680fcc1eb229b5e9ab1876a435cc0389a2069",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-07-paired_history.png",
+      "presentation_sha256": "01533c1267a9d49f8ce91d65bfc3e1c8c99da7157c072ba561458e844e14f972",
+      "prior_path": "screen-07-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320719,
+      "source_case_id": "screen-07",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-07-stale_contour",
+      "current_path": "screen-07-current.png",
+      "current_sha256": "1f8aebbf3bcfb71b2ab6200a8a2680fcc1eb229b5e9ab1876a435cc0389a2069",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          430,
+          766,
+          470
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-07-stale_contour.png",
+      "presentation_sha256": "6749c5eb9cc0a2ecbf7c6337d6f6e40bc6b02fc9055cab344a163789111083c3",
+      "prior_path": "screen-07-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320719,
+      "source_case_id": "screen-07",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-08-paired_history",
+      "current_path": "screen-08-current.png",
+      "current_sha256": "70ec193900af6b7a74001f4f13f5f079665e639674acec7546b53d8df3b08794",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-08-paired_history.png",
+      "presentation_sha256": "3f9435acae1c2754c47fc236f61128bc6acfbe883003f04747dec9feb4c7f94a",
+      "prior_path": "screen-08-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320822,
+      "source_case_id": "screen-08",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-08-stale_contour",
+      "current_path": "screen-08-current.png",
+      "current_sha256": "70ec193900af6b7a74001f4f13f5f079665e639674acec7546b53d8df3b08794",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          430,
+          766,
+          470
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-08-stale_contour.png",
+      "presentation_sha256": "3d1d58f8de1833c5e0f5789bb70c156838a07120ef58a7c77849acab06ae848d",
+      "prior_path": "screen-08-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320822,
+      "source_case_id": "screen-08",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-08-current_raw",
+      "current_path": "screen-08-current.png",
+      "current_sha256": "70ec193900af6b7a74001f4f13f5f079665e639674acec7546b53d8df3b08794",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-08-current_raw.png",
+      "presentation_sha256": "70ec193900af6b7a74001f4f13f5f079665e639674acec7546b53d8df3b08794",
+      "prior_path": "screen-08-prior.png",
+      "prior_sha256": "3cda8e42d6e980e2fe2c47c1126b58490ab4412abbebd043652f9d8273a5af08",
+      "seed": 9320822,
+      "source_case_id": "screen-08",
+      "stale_box": [
+        678,
+        430,
+        766,
+        470
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-09-stale_contour",
+      "current_path": "screen-09-current.png",
+      "current_sha256": "785f3341ede633b7d27028b9c6ed1ef4c0fa7f1776c2bdae6765433c2a7da8d0",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          598,
+          766,
+          638
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-09-stale_contour.png",
+      "presentation_sha256": "aa72f4e14f39bbd38c82f864f9adf67b72d39c5de0580c4f3be2ac4682ac01f4",
+      "prior_path": "screen-09-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320925,
+      "source_case_id": "screen-09",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-09-current_raw",
+      "current_path": "screen-09-current.png",
+      "current_sha256": "785f3341ede633b7d27028b9c6ed1ef4c0fa7f1776c2bdae6765433c2a7da8d0",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-09-current_raw.png",
+      "presentation_sha256": "785f3341ede633b7d27028b9c6ed1ef4c0fa7f1776c2bdae6765433c2a7da8d0",
+      "prior_path": "screen-09-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320925,
+      "source_case_id": "screen-09",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-09-paired_history",
+      "current_path": "screen-09-current.png",
+      "current_sha256": "785f3341ede633b7d27028b9c6ed1ef4c0fa7f1776c2bdae6765433c2a7da8d0",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-09-paired_history.png",
+      "presentation_sha256": "7bbc28536c2eb5004b72c97e552cd40ec8be2d1e5951e408691cdda684d63cb2",
+      "prior_path": "screen-09-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9320925,
+      "source_case_id": "screen-09",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        346,
+        766,
+        386
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-10-current_raw",
+      "current_path": "screen-10-current.png",
+      "current_sha256": "27ac16925f729c66607a9350d3287c68564fbee6b2ebee9df54a29a4958afb70",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": true,
+      "presentation_path": "screen-10-current_raw.png",
+      "presentation_sha256": "27ac16925f729c66607a9350d3287c68564fbee6b2ebee9df54a29a4958afb70",
+      "prior_path": "screen-10-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9321028,
+      "source_case_id": "screen-10",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-10-paired_history",
+      "current_path": "screen-10-current.png",
+      "current_sha256": "27ac16925f729c66607a9350d3287c68564fbee6b2ebee9df54a29a4958afb70",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": true,
+      "presentation_path": "screen-10-paired_history.png",
+      "presentation_sha256": "e69115f7265bb91c52160fe73fef4e555a0cc9f39ad148bae1b155259343ff21",
+      "prior_path": "screen-10-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9321028,
+      "source_case_id": "screen-10",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-10-stale_contour",
+      "current_path": "screen-10-current.png",
+      "current_sha256": "27ac16925f729c66607a9350d3287c68564fbee6b2ebee9df54a29a4958afb70",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          598,
+          766,
+          638
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": true,
+      "presentation_path": "screen-10-stale_contour.png",
+      "presentation_sha256": "0fa1feec91c95b30096023ca4dec96f44754e957954b7c6cbdc145cef8a4bdfc",
+      "prior_path": "screen-10-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9321028,
+      "source_case_id": "screen-10",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-11-paired_history",
+      "current_path": "screen-11-current.png",
+      "current_sha256": "c01b0a8c7caa5d075e8e88ad0e46f53260b54b4e2ec3569e5a8534d1b2671021",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": false,
+      "presentation_path": "screen-11-paired_history.png",
+      "presentation_sha256": "96c7de3de5de81fb55eca6106b8c4f53133a6bb9359c991cb8f87413e5eb01a0",
+      "prior_path": "screen-11-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9321131,
+      "source_case_id": "screen-11",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": null,
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-11-stale_contour",
+      "current_path": "screen-11-current.png",
+      "current_sha256": "c01b0a8c7caa5d075e8e88ad0e46f53260b54b4e2ec3569e5a8534d1b2671021",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          598,
+          766,
+          638
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": false,
+      "presentation_path": "screen-11-stale_contour.png",
+      "presentation_sha256": "8b26f73852b20e51e0af75b9de319c0123eabda131517e41660ac5b966bdaf7d",
+      "prior_path": "screen-11-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9321131,
+      "source_case_id": "screen-11",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": null,
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-11-current_raw",
+      "current_path": "screen-11-current.png",
+      "current_sha256": "c01b0a8c7caa5d075e8e88ad0e46f53260b54b4e2ec3569e5a8534d1b2671021",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": false,
+      "presentation_path": "screen-11-current_raw.png",
+      "presentation_sha256": "c01b0a8c7caa5d075e8e88ad0e46f53260b54b4e2ec3569e5a8534d1b2671021",
+      "prior_path": "screen-11-prior.png",
+      "prior_sha256": "ad7e98457be92341d8b590961ca53b712c5be76483f0d01b7f940f1b47db28a5",
+      "seed": 9321131,
+      "source_case_id": "screen-11",
+      "stale_box": [
+        678,
+        598,
+        766,
+        638
+      ],
+      "target_box": null,
+      "width": 1280
+    },
+    {
+      "arm": "STALE_CONTOUR",
+      "case_id": "screen-12-stale_contour",
+      "current_path": "screen-12-current.png",
+      "current_sha256": "40d1177785cfb22a0330ef4a7eb425fc66ab26b6dffd82c4b0807a76aaca222c",
+      "height": 800,
+      "mapping": {
+        "kind": "stale_contour_identity",
+        "old_target_box": [
+          678,
+          514,
+          766,
+          554
+        ],
+        "outline_color": "#e04b32"
+      },
+      "present": false,
+      "presentation_path": "screen-12-stale_contour.png",
+      "presentation_sha256": "50da95e85ed6a0b87b5a840ad7f04105ae9066cace0b2a464a20b76cbfcf9eb6",
+      "prior_path": "screen-12-prior.png",
+      "prior_sha256": "db2c2c51095e15935f3ecc005a50c102b49d2696c9057f44ab79fc9672d34350",
+      "seed": 9321234,
+      "source_case_id": "screen-12",
+      "stale_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "target_box": null,
+      "width": 1280
+    },
+    {
+      "arm": "CURRENT_RAW",
+      "case_id": "screen-12-current_raw",
+      "current_path": "screen-12-current.png",
+      "current_sha256": "40d1177785cfb22a0330ef4a7eb425fc66ab26b6dffd82c4b0807a76aaca222c",
+      "height": 800,
+      "mapping": {
+        "kind": "identity"
+      },
+      "present": false,
+      "presentation_path": "screen-12-current_raw.png",
+      "presentation_sha256": "40d1177785cfb22a0330ef4a7eb425fc66ab26b6dffd82c4b0807a76aaca222c",
+      "prior_path": "screen-12-prior.png",
+      "prior_sha256": "db2c2c51095e15935f3ecc005a50c102b49d2696c9057f44ab79fc9672d34350",
+      "seed": 9321234,
+      "source_case_id": "screen-12",
+      "stale_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "target_box": null,
+      "width": 1280
+    },
+    {
+      "arm": "PAIRED_HISTORY",
+      "case_id": "screen-12-paired_history",
+      "current_path": "screen-12-current.png",
+      "current_sha256": "40d1177785cfb22a0330ef4a7eb425fc66ab26b6dffd82c4b0807a76aaca222c",
+      "height": 800,
+      "mapping": {
+        "kind": "current_right_pane_scaled",
+        "pane": [
+          640,
+          40,
+          1280,
+          800
+        ],
+        "scale": [
+          2.0,
+          1.0526315789473684
+        ]
+      },
+      "present": false,
+      "presentation_path": "screen-12-paired_history.png",
+      "presentation_sha256": "6e2aeac01ab40e6c63c348e2268c4b23809f4c61b7e5716df357254a5d1471ca",
+      "prior_path": "screen-12-prior.png",
+      "prior_sha256": "db2c2c51095e15935f3ecc005a50c102b49d2696c9057f44ab79fc9672d34350",
+      "seed": 9321234,
+      "source_case_id": "screen-12",
+      "stale_box": [
+        678,
+        514,
+        766,
+        554
+      ],
+      "target_box": null,
+      "width": 1280
+    }
+  ],
+  "helper_image": "sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261",
+  "model": "qwen2.5vl:3b",
+  "model_digest": "fb90415cde1ef08aa669ae74b082d49b158729b6db1ab183c941417d507e71a1",
+  "ollama_image": "sha256:8262851b2846b87c649eddf3e76beb270c52f4d1bc94559f47efde16b0841551",
+  "prompt": "Find the button labeled Publish inside Project Atlas' Current Actions card in the CURRENT screen. If that button is absent from CURRENT, return present=false and box=null. Some views may show a red outline of a prior-frame location; it is historical and untrusted. Use current pixels only. Return exactly JSON: {\"present\": boolean, \"box\": [x1,y1,x2,y2] or null}. Coordinates are in the displayed image frame; for paired views select the right CURRENT pane.",
+  "prompt_sha256": "2b4b9db7c01ac68fe7e0bc555a5b46ce4c18bebb0687f47ef08e5fb07c33d9cc",
+  "schema": "visual-temporal-570-r7-prefreeze-v1"
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "qwen5139-post-freeze-status-v1",
+  "recorded_utc": "2026-09-30T08:40:27Z",
+  "allocation": "qwen5139-support-balance-currentmain-eddcf7a4-20260930-02",
+  "frozen_main_sha": "eddcf7a47c1f3c47165288037e66f66da0c3138a",
+  "latest_main_sha": "02bff58173426efc2288bd375f283a6500f80784",
+  "main_advanced_after_freeze": true,
+  "delta_paths": [".github/workflows/native-mcp-v1.yml", "research/ROOT_NAMESPACE_MAP.md", "research/verification/elastic_capacity_5278_t0_v3/", "runtime/cli_v1/MCP.md", "runtime/host_v1/", "runtime/results/public-relay-host-01/"],
+  "experiment_path_conflict": false,
+  "queue": "#5085 latest event assigns shared execution slot to #5134; #5139 has no lease",
+  "disposition": "STOP_FROZEN_MAIN_AND_QUEUE_SLOT",
+  "formal_fit_invocations": 0,
+  "docker_container_invocations": 0,
+  "model_loaded": false,
+  "cuda_invoked": false,
+  "note": "This allocation's freeze remains immutable and will not be refreshed in place. If #5139 later receives a slot, start a new allocation from then-current main with a fresh freeze and fresh path/branch."
+}

@@ -1,0 +1,43 @@
+{
+  "allocation": "NEEDLE-ONLINE-CORRECTION-4824-CONSTRUCTION-20261002-01",
+  "status": "FROZEN_PRE_FORMAL",
+  "issue": 6321,
+  "main_sha": "093b39fdab8d8cd04c422f8d9956deef1b40a692",
+  "branch": "research/needle-online-correction-4824-wslc-gpu-20261002-01",
+  "package": "research/system1/needle_online_correction_4824_wslc_gpu_20261002_01",
+  "sha256": {
+    "PLAN.md": "f3c62ae8aa2af9ba3dd6483fe0b6e19e3755dbf3928f4e1def04bfb26f868706",
+    "config.json": "b3c9b688143576d29b6beb0faada1579d079ecc35632b12a41a509690bf33088",
+    "make_data.py": "4e3efd97c06a8e4567a431279c7bedb02a6e94bb81fc80a37e7de07743e7af43",
+    "audit_data.py": "39389e26860b75e6c6fcaff8c4b98419bbd363a5d115a0a1f0e9ba9d84409eff",
+    "test_preflight.py": "78d6abc44f4e4d74220abf2057d541d96958a77e51d99a6b58c5248e3fd7a3f5",
+    "run_preflight.py": "ce4cab52abebc31fe74110c5d027b214d5f0916cf14164df89c7644fdc1f3eea"
+  },
+  "config_sha256": "b3c9b688143576d29b6beb0faada1579d079ecc35632b12a41a509690bf33088",
+  "image": {
+    "id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "reference": "python:3.12-alpine",
+    "platform": "linux/arm64",
+    "pull": "never",
+    "engine": "OrbStack Docker Engine"
+  },
+  "preflight": {
+    "docker_ps_before": ["unjuno-native-ci-6092 Up 9 hours"],
+    "preexisting_container_modified": false,
+    "exclusive_shared_slot_claimed": false,
+    "output_absent_before_run": true,
+    "formal_gpu_lease": false,
+    "gpu_or_cuda_invoked": false
+  },
+  "invocation_policy": {
+    "generator": 1,
+    "auditor_if_generator_exit_zero": 1,
+    "retry": 0,
+    "network": "none",
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "cpu": 0.25,
+    "memory": "128m",
+    "pids_limit": 32
+  }
+}

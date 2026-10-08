@@ -1,0 +1,31 @@
+{
+  "schema": "integrated_efficiency_cumulative_wall_fixture_v1",
+  "task": "INTEGRATED-EFFICIENCY-CUMULATIVE-WALL-PAYBACK-20260917-001",
+  "issue": 922,
+  "publication_base": "e8508fb103e4813ef93a456474957fc56436e0a0",
+  "sources": {
+    "report_json": {"path": "research/live_control/results/integrated-efficiency-live-01/report.json", "git_blob": "57954e7608f823ec031600a12e0062eeceafdcf4"},
+    "preflight_wall_result": {"path": "research/integration/integrated_efficiency_preflight_wall_accounting_v1/RESULT.json", "git_blob": "89e8bc08d4d81f93a496eac83437ad77a06f1214"}
+  },
+  "arms": {
+    "plain": {
+      "preflight_ns": 6341907755,
+      "task_elapsed_ns": [9410429011, 9026306868, 8903676705, 9127145957, 10500222246, 9444510370],
+      "routes": ["cold", "cold", "cold", "cold", "cold", "cold"],
+      "expected_final_ns": 62754198912
+    },
+    "ephemeral": {
+      "preflight_ns": 7140746175,
+      "task_elapsed_ns": [13285716767, 10936863427, 11093969417, 12556640965, 12740828532, 12624093816],
+      "routes": ["cold", "cold", "cold", "cold", "cold", "cold"],
+      "expected_final_ns": 80378859099
+    },
+    "persistent": {
+      "preflight_ns": 7495828365,
+      "task_elapsed_ns": [11024952714, 3928656439, 4303159860, 12341465157, 5737587039, 6795460019],
+      "routes": ["cold", "reuse", "reuse", "repair", "reuse", "reuse"],
+      "expected_final_ns": 51627109593
+    }
+  },
+  "retained_token_break_even_task": 2
+}

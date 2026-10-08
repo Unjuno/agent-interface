@@ -1,0 +1,52 @@
+{
+  "app_rows": [],
+  "archive_inventory": {
+    "archive_sha256": "5f153824d677503275f268e2aef9c9971d5f0a3f369c573feaa1a5d10604ad8d",
+    "regular_file_count": 324,
+    "source_hashes": {
+      "app.py": "a186f8e89a897e97ca08f7a31f3fe726629c13a28274c1458a51b502251b5204",
+      "observer.py": "73d64839373c7af29354e7c38601304b90a0a9eadde5546afa7623e0c7aa9162"
+    },
+    "tar_member_count": 425
+  },
+  "clock_fields_used_for_causal_decision": false,
+  "disposition": "HOLD_INCOMPLETE_OR_NONNEUTRAL",
+  "driver_rows": [
+    {
+      "actuation_id": "t2-f5950ec2274b4d93bfd05e50defd7460:shift-1",
+      "driver_seq": 1,
+      "event_kind": "KeyPress",
+      "keycode": 50,
+      "mono_ns": 22791686682258,
+      "phase": "arm_request"
+    },
+    {
+      "actuation_id": null,
+      "driver_seq": 2,
+      "error": "TimeoutError",
+      "message": "timed out waiting for isolated fixture state",
+      "mono_ns": 22796694650734,
+      "phase": "runner_exception"
+    }
+  ],
+  "observer_rows": [
+    {
+      "actuation_id": "t2-f5950ec2274b4d93bfd05e50defd7460:shift-1",
+      "consumer": "observer",
+      "control_seq": 1,
+      "epoch": "t2-f5950ec2274b4d93bfd05e50defd7460",
+      "kind": "arm_ack",
+      "mono_ns": 22791692671923
+    }
+  ],
+  "preflight_stop_v1_preserved": true,
+  "runner": {
+    "error": "TimeoutError",
+    "message": "timed out waiting for isolated fixture state",
+    "schema": "blackstart-prospective-x11-trace-run-v1",
+    "status": "STOP"
+  },
+  "runner_returncode": 2,
+  "runner_stderr_tail": "",
+  "schema": "blackstart-prospective-causal-trace-candidate-v2"
+}

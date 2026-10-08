@@ -1,0 +1,41 @@
+{
+  "pending": {
+    "status": "pending",
+    "submission_committed": true,
+    "resumed_read_only": false,
+    "stage": 1,
+    "decision_sha256": "f01d215da56840fb67135a13842cf6be78a9555e84c366179b45f5dce18d7fe3",
+    "started_ns": 24204899517501,
+    "committed_ns": 24204931301507,
+    "returned_ns": 24204937291523,
+    "image": null,
+    "authority": "none",
+    "recovery": "Resume this exact request read-only; do not submit it again."
+  },
+  "resume": {
+    "exchange": {
+      "submission_committed": true,
+      "resumed_read_only": true,
+      "started_ns": 24224011451784,
+      "committed_ns": 24224024422038,
+      "returned_ns": 24224065581378
+    },
+    "outcome_summary": {
+      "reported_status": "finished",
+      "evaluation_success": true,
+      "action_status": "completed",
+      "feedback_status": "matched",
+      "cleanup_status": "completed"
+    },
+    "image_reference": {
+      "status": "image",
+      "sequence": 7,
+      "capture_ns": 24205525316502,
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-pending-resume-01/bridge/images/353528b2edd04f59ba6bcda8529e4557.png",
+      "relative_path": "bridge/images/353528b2edd04f59ba6bcda8529e4557.png",
+      "sha256": "cda322f1db5ab7aa112c9bb786174c8d33c7c2f3bb3396a14a68eadaf77fdabb",
+      "authority": "none",
+      "freshness": "historical referenced capture; no new observation"
+    }
+  }
+}

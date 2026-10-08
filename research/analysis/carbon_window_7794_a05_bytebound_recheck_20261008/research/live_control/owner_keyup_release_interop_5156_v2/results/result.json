@@ -1,0 +1,95 @@
+{
+  "authority_grants": 0,
+  "intake_commit": "d8ca8bfed9cd8d84201c91645e4ed25364181d3f",
+  "negative_case_ids": [
+    "unknown_reason",
+    "missing_identity",
+    "wrong_identity",
+    "extra_identity",
+    "bool_button",
+    "out_of_range_button",
+    "authority_true",
+    "authority_missing",
+    "missing_caller_bracket",
+    "inverted_caller_bracket",
+    "auto_caller_timestamp",
+    "auto_request_id",
+    "auto_explicit_operation",
+    "explicit_autonomous_reason",
+    "duplicate_owner_sequence",
+    "omitted_positive",
+    "duplicated_positive",
+    "source_drift",
+    "output_collision"
+  ],
+  "negative_failures": [
+    "source_drift"
+  ],
+  "negative_rejected": {
+    "authority_missing": true,
+    "authority_true": true,
+    "auto_caller_timestamp": true,
+    "auto_explicit_operation": true,
+    "auto_request_id": true,
+    "bool_button": true,
+    "duplicate_owner_sequence": true,
+    "duplicated_positive": true,
+    "explicit_autonomous_reason": true,
+    "extra_identity": true,
+    "inverted_caller_bracket": true,
+    "missing_caller_bracket": true,
+    "missing_identity": true,
+    "omitted_positive": true,
+    "out_of_range_button": true,
+    "output_collision": true,
+    "source_drift": false,
+    "unknown_reason": true,
+    "wrong_identity": true
+  },
+  "platform": "win32",
+  "positive_case_ids": [
+    "auto.cancelled",
+    "auto.expired",
+    "auto.focus_changed",
+    "auto.stop_requested",
+    "auto.surface_changed",
+    "auto.thread_exit",
+    "explicit.key_up.string",
+    "explicit.button_up.integer"
+  ],
+  "positive_exact_coverage": true,
+  "positive_failures": [
+    "auto.cancelled",
+    "auto.expired",
+    "auto.focus_changed",
+    "auto.stop_requested",
+    "auto.surface_changed",
+    "auto.thread_exit",
+    "explicit.key_up.string",
+    "explicit.button_up.integer"
+  ],
+  "positive_outcomes": {
+    "auto.cancelled": false,
+    "auto.expired": false,
+    "auto.focus_changed": false,
+    "auto.stop_requested": false,
+    "auto.surface_changed": false,
+    "auto.thread_exit": false,
+    "explicit.button_up.integer": false,
+    "explicit.key_up.string": false
+  },
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "scope": "SYNTHETIC_SCHEMA_COMPATIBILITY_ONLY",
+  "source_blob_ids": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_transition_owner_v3.py": "0ea631abcf6272f0538a9ef9198ad8069b47b464",
+    "research/live_control/owner_keyup_release_semantics_5156_v2/release_protocol_v2.py": "55272e127073a84c9eb541bc650fee74f3fc7123"
+  },
+  "source_sha256": {
+    "research/live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "research/live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "research/live_control/owner_keyup_release_semantics_5156_v2/release_protocol_v2.py": "3ae2ad7ca09bdd6572080aa55ce9fae9cb24a566629c95bf9736220098f134cd"
+  },
+  "status": "FAIL_SOURCE_SUPPORTED_FORM_REJECTED",
+  "x11_observed": false
+}

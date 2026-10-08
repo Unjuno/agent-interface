@@ -1,0 +1,27 @@
+{
+  "baseline": {
+    "clock_boundary": 0,
+    "endpoint_wait_ms": [454.451367, 467.338846, 464.942758],
+    "median_endpoint_wait_ms": 464.942758,
+    "n": 3,
+    "timeout": 3
+  },
+  "candidate": {
+    "clock_boundary": 3,
+    "endpoint_wait_ms": [1204.76365, 1249.210346, 1345.011604],
+    "median_endpoint_wait_ms": 1249.210346,
+    "median_publish_to_clock_ms": 1.159069,
+    "median_ready_emit_to_publish_ms": 0.561417,
+    "n": 3,
+    "publish_to_clock_ms": [1.10336, 1.159069, 1.567005],
+    "ready_emit_to_publish_ms": [0.619931, 0.561417, 0.425221],
+    "timeout": 0
+  },
+  "claim_boundary": "Natural ready-event gating preserves a later 150 ms clock wait in a source-derived persistent-socket harness with 300 ms startup. It moves waiting to readiness; no real-GUI/full-runtime/speed/token/reliability claim.",
+  "corruption_controls": "3/3 rejected",
+  "decision": "PASS_EXISTING_RUNTIME_READY_GATE_SCOPED",
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "negative_controls": "3/3 fail closed",
+  "task": "PERSISTENT-RUNTIME-NATURAL-READY-GATE-20260917-001"
+}

@@ -1,0 +1,513 @@
+{
+  "state": "terminal",
+  "exchanges": [
+    {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 5,
+        "request_id": "clock-e52b9839234a4d75a00856a8a19d84d9",
+        "command": {
+          "op": "clock"
+        }
+      },
+      "started_ns": 33354927026,
+      "returned_ns": 33381230457,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "clock-e52b9839234a4d75a00856a8a19d84d9"
+            },
+            "received_ns": 33361514915,
+            "emit_started_ns": 33361517231
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 33371032684,
+            "sequence": 1,
+            "emit_started_ns": 33371039523
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 33381002226,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "clock-e52b9839234a4d75a00856a8a19d84d9",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    },
+    {
+      "request": {
+        "after": 4,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 15,
+        "action_id": "advance-observation",
+        "request_id": "program-25e9d72271b9423c8697f1eaccc2a5d0",
+        "command": {
+          "op": "submit",
+          "id": "advance-observation",
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "expected_sequence": 1,
+          "valid_until_ns": 63371032684
+        }
+      },
+      "started_ns": 33387795940,
+      "returned_ns": 33509132127,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "advance-observation",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "program-25e9d72271b9423c8697f1eaccc2a5d0",
+              "valid_until_ns": 63371032684
+            },
+            "received_ns": 33393782755,
+            "emit_started_ns": 33393785647
+          },
+          {
+            "event": "accepted",
+            "id": "advance-observation",
+            "steps": 1,
+            "valid_until_ns": 63371032684,
+            "accepted_ns": 33405414155,
+            "emit_started_ns": 33405417413
+          },
+          {
+            "event": "step_started",
+            "id": "advance-observation",
+            "step": 0,
+            "operation": "observe",
+            "issued_ns": 33415768747,
+            "emit_started_ns": 33415773286
+          },
+          {
+            "event": "observation",
+            "id": "advance-observation",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 33442383540,
+            "context_ns": 33450193982,
+            "context": [
+              [
+                "windows",
+                "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+              ],
+              [
+                "active_window",
+                6291463
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/001.png",
+            "image_reused": true,
+            "image_prepare_ns": 3795750,
+            "image_ready_ns": 33462795949,
+            "input_focus_before": 6291464,
+            "input_focus_after": 6291464,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 6.414834,
+            "wire_bytes": 281,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 33477616569
+          },
+          {
+            "event": "step_completed",
+            "id": "advance-observation",
+            "step": 0,
+            "completed_ns": 33486889010,
+            "emit_started_ns": 33486893453
+          },
+          {
+            "event": "terminal",
+            "id": "advance-observation",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 33498135759,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 33498206962,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 33498209218
+          }
+        ],
+        "cursor": 10,
+        "returned_ns": 33508920468,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "program-25e9d72271b9423c8697f1eaccc2a5d0",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    }
+  ],
+  "program_sent": true,
+  "source_image": {
+    "status": "image",
+    "sequence": 1,
+    "capture_ns": 6080702041,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "last_reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "advance-observation",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "transport_request_id": "program-25e9d72271b9423c8697f1eaccc2a5d0",
+          "valid_until_ns": 63371032684
+        },
+        "received_ns": 33393782755,
+        "emit_started_ns": 33393785647
+      },
+      {
+        "event": "accepted",
+        "id": "advance-observation",
+        "steps": 1,
+        "valid_until_ns": 63371032684,
+        "accepted_ns": 33405414155,
+        "emit_started_ns": 33405417413
+      },
+      {
+        "event": "step_started",
+        "id": "advance-observation",
+        "step": 0,
+        "operation": "observe",
+        "issued_ns": 33415768747,
+        "emit_started_ns": 33415773286
+      },
+      {
+        "event": "observation",
+        "id": "advance-observation",
+        "step": 0,
+        "sequence": 2,
+        "capture_ns": 33442383540,
+        "context_ns": 33450193982,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/001.png",
+        "image_reused": true,
+        "image_prepare_ns": 3795750,
+        "image_ready_ns": 33462795949,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 6.414834,
+        "wire_bytes": 281,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 33477616569
+      },
+      {
+        "event": "step_completed",
+        "id": "advance-observation",
+        "step": 0,
+        "completed_ns": 33486889010,
+        "emit_started_ns": 33486893453
+      },
+      {
+        "event": "terminal",
+        "id": "advance-observation",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 33498135759,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 33498206962,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 33498209218
+      }
+    ],
+    "cursor": 10,
+    "returned_ns": 33508920468,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-25e9d72271b9423c8697f1eaccc2a5d0",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "advance-observation",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 33498135759,
+      "valid_until_ns": null
+    },
+    "terminal_ns": 33498206962,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 33498209218
+  },
+  "image": {
+    "status": "image",
+    "sequence": 2,
+    "capture_ns": 33442383540,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "continuation_batch": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "advance-observation",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "transport_request_id": "program-25e9d72271b9423c8697f1eaccc2a5d0",
+          "valid_until_ns": 63371032684
+        },
+        "received_ns": 33393782755,
+        "emit_started_ns": 33393785647
+      },
+      {
+        "event": "accepted",
+        "id": "advance-observation",
+        "steps": 1,
+        "valid_until_ns": 63371032684,
+        "accepted_ns": 33405414155,
+        "emit_started_ns": 33405417413
+      },
+      {
+        "event": "step_started",
+        "id": "advance-observation",
+        "step": 0,
+        "operation": "observe",
+        "issued_ns": 33415768747,
+        "emit_started_ns": 33415773286
+      },
+      {
+        "event": "observation",
+        "id": "advance-observation",
+        "step": 0,
+        "sequence": 2,
+        "capture_ns": 33442383540,
+        "context_ns": 33450193982,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/pointer-view-stale-01/runtime/001.png",
+        "image_reused": true,
+        "image_prepare_ns": 3795750,
+        "image_ready_ns": 33462795949,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 6.414834,
+        "wire_bytes": 281,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 33477616569
+      },
+      {
+        "event": "step_completed",
+        "id": "advance-observation",
+        "step": 0,
+        "completed_ns": 33486889010,
+        "emit_started_ns": 33486893453
+      },
+      {
+        "event": "terminal",
+        "id": "advance-observation",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 33498135759,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 33498206962,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 33498209218
+      }
+    ],
+    "cursor": 10,
+    "returned_ns": 33508920468,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-25e9d72271b9423c8697f1eaccc2a5d0",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies"
+}

@@ -1,0 +1,342 @@
+{
+  "schema": "ai-route-multiverse-fixture-v1",
+  "allocation": "route-efficiency-multiverse-5827-t0-20261001-01",
+  "registry": [
+    {
+      "id": "completion_primary",
+      "estimand": "task_completion_latency",
+      "family": "primary",
+      "unit": "ms",
+      "rule": "paired guarded-minus-direct; retain every pair; finite censor bounds; open censoring HOLD"
+    },
+    {
+      "id": "completion_lower",
+      "estimand": "task_completion_latency",
+      "family": "same_estimand_sensitivity",
+      "unit": "ms",
+      "rule": "use lower bound for finite censored completion interval"
+    },
+    {
+      "id": "completion_upper",
+      "estimand": "task_completion_latency",
+      "family": "same_estimand_sensitivity",
+      "unit": "ms",
+      "rule": "use upper bound for finite censored completion interval"
+    },
+    {
+      "id": "safe_termination",
+      "estimand": "time_to_typed_safe_termination",
+      "family": "different_estimand",
+      "unit": "ms"
+    },
+    {
+      "id": "model_wait",
+      "estimand": "model_active_wait",
+      "family": "different_estimand",
+      "unit": "ms"
+    },
+    {
+      "id": "human_work",
+      "estimand": "human_residual_work",
+      "family": "different_estimand",
+      "unit": "ms"
+    },
+    {
+      "id": "capture_feedback",
+      "estimand": "capture_to_verified_effect",
+      "family": "different_estimand",
+      "unit": "ms",
+      "start_field": "image_capture_ms",
+      "end_field": "first_verified_effect_ms"
+    },
+    {
+      "id": "delivery_feedback",
+      "estimand": "delivery_to_verified_effect",
+      "family": "different_estimand",
+      "unit": "ms",
+      "start_field": "image_delivery_ms",
+      "end_field": "first_verified_effect_ms"
+    },
+    {
+      "id": "tokens",
+      "estimand": "provider_token_usage",
+      "family": "different_estimand",
+      "unit": "tokens",
+      "rule": "missing required value is HOLD, never zero"
+    }
+  ],
+  "cohorts": [
+    {
+      "id": "stable_positive",
+      "pairs": [
+        {
+          "task_id": "s1",
+          "phase": "cold",
+          "direct": {
+            "completion_status": "complete",
+            "completion_ms": 20000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 900,
+            "image_capture_ms": 1200,
+            "image_delivery_ms": 1600,
+            "first_verified_effect_ms": 5000,
+            "model_active_ms": 6000,
+            "human_residual_ms": 1000,
+            "tokens": 220
+          },
+          "guarded": {
+            "completion_status": "complete",
+            "completion_ms": 17000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 800,
+            "image_capture_ms": 1300,
+            "image_delivery_ms": 2000,
+            "first_verified_effect_ms": 5200,
+            "model_active_ms": 5000,
+            "human_residual_ms": 1000,
+            "tokens": 200
+          }
+        },
+        {
+          "task_id": "s2",
+          "phase": "cold",
+          "direct": {
+            "completion_status": "complete",
+            "completion_ms": 30000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 1100,
+            "image_capture_ms": 6000,
+            "image_delivery_ms": 6400,
+            "first_verified_effect_ms": 11000,
+            "model_active_ms": 10000,
+            "human_residual_ms": 1000,
+            "tokens": 360
+          },
+          "guarded": {
+            "completion_status": "complete",
+            "completion_ms": 24000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 900,
+            "image_capture_ms": 6100,
+            "image_delivery_ms": 6800,
+            "first_verified_effect_ms": 11000,
+            "model_active_ms": 8000,
+            "human_residual_ms": 1000,
+            "tokens": 310
+          }
+        },
+        {
+          "task_id": "s3",
+          "phase": "warm",
+          "direct": {
+            "completion_status": "complete",
+            "completion_ms": 25000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 1000,
+            "image_capture_ms": 10000,
+            "image_delivery_ms": 10500,
+            "first_verified_effect_ms": 16000,
+            "model_active_ms": 9000,
+            "human_residual_ms": 2000,
+            "tokens": 300
+          },
+          "guarded": {
+            "completion_status": "complete",
+            "completion_ms": 22000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 700,
+            "image_capture_ms": 10050,
+            "image_delivery_ms": 10800,
+            "first_verified_effect_ms": 16500,
+            "model_active_ms": 7500,
+            "human_residual_ms": 2000,
+            "tokens": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "definition_sensitive",
+      "pairs": [
+        {
+          "task_id": "censored1",
+          "phase": "warm",
+          "direct": {
+            "completion_status": "complete",
+            "completion_ms": 20000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 1000,
+            "image_capture_ms": null,
+            "image_delivery_ms": null,
+            "first_verified_effect_ms": null,
+            "model_active_ms": 4000,
+            "human_residual_ms": 5000,
+            "tokens": 200
+          },
+          "guarded": {
+            "completion_status": "censored_unknown",
+            "completion_ms": null,
+            "completion_bounds_ms": [
+              15000,
+              45000
+            ],
+            "effect_status": "UNKNOWN",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 1000,
+            "image_capture_ms": null,
+            "image_delivery_ms": null,
+            "first_verified_effect_ms": null,
+            "model_active_ms": 6000,
+            "human_residual_ms": 12000,
+            "tokens": 210
+          }
+        }
+      ]
+    },
+    {
+      "id": "different_estimands_tradeoff",
+      "pairs": [
+        {
+          "task_id": "tradeoff1",
+          "phase": "cold",
+          "direct": {
+            "completion_status": "complete",
+            "completion_ms": 40000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 1000,
+            "image_capture_ms": 3000,
+            "image_delivery_ms": 3500,
+            "first_verified_effect_ms": 9000,
+            "model_active_ms": 12000,
+            "human_residual_ms": 5000,
+            "tokens": 400
+          },
+          "guarded": {
+            "completion_status": "complete",
+            "completion_ms": 30000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 1000,
+            "image_capture_ms": 2800,
+            "image_delivery_ms": 3300,
+            "first_verified_effect_ms": 8500,
+            "model_active_ms": 9000,
+            "human_residual_ms": 20000,
+            "tokens": 420
+          }
+        }
+      ]
+    },
+    {
+      "id": "safe_stop_control",
+      "pairs": [
+        {
+          "task_id": "stop1",
+          "phase": "warm",
+          "direct": {
+            "completion_status": "safe_stop",
+            "completion_ms": null,
+            "completion_bounds_ms": [
+              60000,
+              null
+            ],
+            "effect_status": "UNKNOWN",
+            "collateral_errors": 0,
+            "safe_termination_ms": 12000,
+            "dispatch_ms": 1000,
+            "image_capture_ms": null,
+            "image_delivery_ms": null,
+            "first_verified_effect_ms": null,
+            "model_active_ms": 6000,
+            "human_residual_ms": 3000,
+            "tokens": 160
+          },
+          "guarded": {
+            "completion_status": "safe_stop",
+            "completion_ms": null,
+            "completion_bounds_ms": [
+              60000,
+              null
+            ],
+            "effect_status": "UNKNOWN",
+            "collateral_errors": 0,
+            "safe_termination_ms": 8000,
+            "dispatch_ms": 1000,
+            "image_capture_ms": null,
+            "image_delivery_ms": null,
+            "first_verified_effect_ms": null,
+            "model_active_ms": 5000,
+            "human_residual_ms": 4000,
+            "tokens": 170
+          }
+        }
+      ]
+    },
+    {
+      "id": "collateral_control",
+      "pairs": [
+        {
+          "task_id": "collateral1",
+          "phase": "cold",
+          "direct": {
+            "completion_status": "complete",
+            "completion_ms": 24000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 0,
+            "safe_termination_ms": null,
+            "dispatch_ms": 1000,
+            "image_capture_ms": null,
+            "image_delivery_ms": null,
+            "first_verified_effect_ms": null,
+            "model_active_ms": 8000,
+            "human_residual_ms": 1000,
+            "tokens": 250
+          },
+          "guarded": {
+            "completion_status": "complete",
+            "completion_ms": 20000,
+            "completion_bounds_ms": null,
+            "effect_status": "PASS_VERIFIED",
+            "collateral_errors": 1,
+            "safe_termination_ms": null,
+            "dispatch_ms": 1000,
+            "image_capture_ms": null,
+            "image_delivery_ms": null,
+            "first_verified_effect_ms": null,
+            "model_active_ms": 7000,
+            "human_residual_ms": 1000,
+            "tokens": 240
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "cell": "v39 decision index 2; request at health 85, ammo 44",
+  "classification": "UNKNOWN_INTERVENTION_MARGIN",
+  "decision_reason_after_model": "REJECTED_PREDICATE",
+  "decision_status_after_model": "REJECTED_ACTION_NOT_CURRENT",
+  "errors": [],
+  "first_observed_health_loss": {
+    "ammo": 44,
+    "capture_ns": 55519816371806,
+    "emit_ns": 55519829635969,
+    "frame_rgb_sha256": "5006e4ddce6d1cd79af3040e61dce3fa3a59fe7a7819471018daa872ae33e0c7",
+    "health": 82,
+    "sequence": 76
+  },
+  "interpretation": "Threat was visible before a subsequent typed HUD health decrement during model wait, but this cell records no local guard decision or effective intervention; HUD health loss is not an irreversible-harm oracle.",
+  "latest_typed_state_available_before_request": {
+    "ammo": 44,
+    "capture_ns": 55518044200372,
+    "emit_ns": 55518065253849,
+    "health": 85,
+    "sequence": 71
+  },
+  "model_request_start_ns": 55518341448372,
+  "request_to_first_loss_capture_ms": 1474.923434,
+  "request_to_first_loss_delivery_ms": 1488.187597,
+  "schema": "map01-v39-detectability-margin-posthoc-v1",
+  "scope": "read-only posthoc reconstruction of one retained v39 synthetic fixture episode; no candidate, model, game, container, or input invocation",
+  "status": "HOLD_NO_EFFECTIVE_INTERVENTION_BOUND_V39_CELL",
+  "t_effective_ns": null,
+  "t_gate_ns": null,
+  "t_harm_irreversible_ns": null,
+  "timeline": [
+    {
+      "ammo": 45,
+      "capture_ns": 55515889031943,
+      "emit_ns": 55515906044332,
+      "frame_rgb_sha256": "161b1d73ee2bbcb9117512042c7122ec25527724cc6704702ac776f1125bd358",
+      "health": 91,
+      "sequence": 61
+    },
+    {
+      "ammo": 45,
+      "capture_ns": 55515991409029,
+      "emit_ns": 55516007364503,
+      "frame_rgb_sha256": "332dd5cfa9a510c1695ed25c3e486b7ce79c85a4212d721392b5ba6cd40be147",
+      "health": 85,
+      "sequence": 62
+    },
+    {
+      "ammo": 44,
+      "capture_ns": 55517716224725,
+      "emit_ns": 55517731378871,
+      "frame_rgb_sha256": "5dc8e135fe970720c584291880be1ea2d6e1a728374f2144682417e3c3d1727a",
+      "health": 85,
+      "sequence": 70
+    },
+    {
+      "ammo": 44,
+      "capture_ns": 55518044200372,
+      "emit_ns": 55518065253849,
+      "frame_rgb_sha256": "50fb299af8ad9656b3fcd9a2d928452b450ebb32cf577fd458071d60712ad3da",
+      "health": 85,
+      "sequence": 71
+    },
+    {
+      "ammo": 44,
+      "capture_ns": 55519816371806,
+      "emit_ns": 55519829635969,
+      "frame_rgb_sha256": "5006e4ddce6d1cd79af3040e61dce3fa3a59fe7a7819471018daa872ae33e0c7",
+      "health": 82,
+      "sequence": 76
+    },
+    {
+      "ammo": 44,
+      "capture_ns": 55521520199689,
+      "emit_ns": 55521532586270,
+      "frame_rgb_sha256": "fb918d9050629c787ccb26d648ed4f14041907cdae1a34632952d9196ddf82ec",
+      "health": 76,
+      "sequence": 81
+    },
+    {
+      "ammo": 44,
+      "capture_ns": 55524193255716,
+      "emit_ns": 55524204257013,
+      "frame_rgb_sha256": "1b6c2e143f53b5d31369b23ab9af05e55b72c2662a04f0989bc280eb8f2585b0",
+      "health": 73,
+      "sequence": 90
+    }
+  ],
+  "visible_by_capture_ns": 55515889031943,
+  "visible_by_sequence": 61
+}

@@ -1,0 +1,130 @@
+{
+  "allocation_id": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01",
+  "base_main_sha": "a5756d9b31231a4d64268610236622ac44c36f1f",
+  "candidate_invocations": 1,
+  "claim_boundary": "single Xvfb / python-xlib owner integration mechanism only; no gameplay or MAP01 evidence",
+  "positive_control": {
+    "keycode": 25,
+    "repeat_events": [
+      {
+        "keycode": 25,
+        "time_ns": 3286717148,
+        "type": "KeyPress",
+        "window": "A"
+      },
+      {
+        "keycode": 25,
+        "time_ns": 3387579824,
+        "type": "KeyPress",
+        "window": "A"
+      },
+      {
+        "keycode": 25,
+        "time_ns": 3437699567,
+        "type": "KeyPress",
+        "window": "A"
+      },
+      {
+        "keycode": 25,
+        "time_ns": 3487999084,
+        "type": "KeyPress",
+        "window": "A"
+      }
+    ],
+    "verified_release": true,
+    "window": "A"
+  },
+  "repeat_schedule": {
+    "global_auto_repeat_enabled": true,
+    "key_auto_repeat_enabled": true,
+    "xset_command": [
+      "xset",
+      "r",
+      "rate",
+      "100",
+      "20"
+    ],
+    "xset_query_stdout": "Keyboard Control:\n  auto repeat:  on    key click percent:  0    LED mask:  00000000\n  XKB indicators:\n    00: Caps Lock:   off    01: Num Lock:    off    02: Scroll Lock: off\n    03: Compose:     off    04: Kana:        off    05: Sleep:       off\n    06: Suspend:     off    07: Mute:        off    08: Misc:        off\n    09: Mail:        off    10: Charging:    off    11: Shift Lock:  off\n    12: Group 2:     off    13: Mouse Keys:  off\n  auto repeat delay:  100    repeat rate:  20\n  auto repeating keys:  00ffffffdffffbbf\n                        fadfffefffedffff\n                        9fffffffffffffff\n                        fff7ffffffffffff\n  bell percent:  50    bell pitch:  400    bell duration:  100\nPointer Control:\n  acceleration:  2/1    threshold:  4\nScreen Saver:\n  prefer blanking:  yes    allow exposures:  yes\n  timeout:  600    cycle:  600\nColors:\n  default colormap:  0x20    BlackPixel:  0x0    WhitePixel:  0xffffff\nFont Path:\n  built-ins\nDPMS (Display Power Management Signaling):\n  Server does not have the DPMS Extension\n",
+    "xset_stderr": "",
+    "xset_stdout": ""
+  },
+  "retries": 0,
+  "schema": "issue59-focus-repeat-owner-raw-v1",
+  "source_git_blobs": {
+    "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1"
+  },
+  "source_sha256": {
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "trial": {
+    "focus_change": {
+      "from": "A",
+      "observed_focus": "B",
+      "observed_ns": 3541406148,
+      "request_ns": 3541266097,
+      "sync_returned_ns": 3541348893,
+      "to": "B"
+    },
+    "new_focus_event_pump": {
+      "complete": true,
+      "error": null,
+      "events": [
+        {
+          "keycode": 25,
+          "time_ns": 3543397546,
+          "type": "KeyRelease",
+          "window": "B"
+        }
+      ],
+      "fence_completed": true,
+      "started_ns": 3530741202,
+      "stopped_ns": 3643983205,
+      "subscribed": true,
+      "subscription_ns": 3531134330,
+      "window": "B"
+    },
+    "owner_admission": {
+      "ack_ns": 3538181635,
+      "admitted_ns": 3538051054,
+      "keycode": 25,
+      "window": "A"
+    },
+    "owner_focus_samples": [
+      {
+        "finished_ns": 3538044436,
+        "focus": "A",
+        "started_ns": 3537867921
+      },
+      {
+        "finished_ns": 3538319850,
+        "focus": "A",
+        "started_ns": 3538203038
+      },
+      {
+        "finished_ns": 3540778302,
+        "focus": "A",
+        "started_ns": 3540449726
+      },
+      {
+        "finished_ns": 3542962737,
+        "focus": "B",
+        "started_ns": 3542882883
+      }
+    ],
+    "owner_release": {
+      "keycode": 25,
+      "keys_down": [],
+      "reason": "focus_changed",
+      "verified": true,
+      "verified_empty": true,
+      "verified_ns": 3543199670
+    }
+  },
+  "xvfb_exit_code": 0,
+  "xvfb_lock_removed": true,
+  "xvfb_socket_removed": true
+}

@@ -1,0 +1,403 @@
+[
+  {
+    "allocation": "safety-graph-live-x11-3066-20260927-v4-01",
+    "app_release_ns": 5059114776763,
+    "authority_deadline_ms": 150,
+    "case_index": 0,
+    "cleanup": {
+      "observer": {
+        "exited": true,
+        "pid": 12,
+        "returncode": 0,
+        "stopped_ns": 5059130190377
+      },
+      "openbox": {
+        "exited": true,
+        "pid": null,
+        "returncode": null
+      },
+      "xvfb": {
+        "exited": true,
+        "pid": 7,
+        "returncode": 0,
+        "stopped_ns": 5059145781989
+      }
+    },
+    "cleanup_supervisor_pid": 1,
+    "config": "bare",
+    "construction_only": true,
+    "display": ":630",
+    "ended_ns": 5059128774916,
+    "expected_input": "F8",
+    "grace_ms": 50,
+    "key_down_observed": {
+      "keycode": 74,
+      "kind": "press",
+      "monotonic_ns": 5058939834791,
+      "server_time": 5058939,
+      "window_id": 4194304
+    },
+    "key_down_observer_ns": 5058939834791,
+    "keymap_release_upper_bound_ns": 5059114610703,
+    "keymap_transitions": [
+      {
+        "down": false,
+        "kind": "initial",
+        "observed_ns": 5058327307557
+      },
+      {
+        "down": true,
+        "kind": "transition",
+        "observed_ns": 5058940167470
+      },
+      {
+        "down": false,
+        "kind": "transition",
+        "observed_ns": 5059114610703
+      }
+    ],
+    "observer_events": [
+      {
+        "keycode": 74,
+        "kind": "press",
+        "monotonic_ns": 5058939834791,
+        "server_time": 5058939,
+        "window_id": 4194304
+      },
+      {
+        "keycode": 74,
+        "kind": "release",
+        "monotonic_ns": 5059114776763,
+        "server_time": 5059114,
+        "window_id": 4194304
+      }
+    ],
+    "observer_pid": 12,
+    "parent_stdout_link": "pipe:[75949]",
+    "post_cleanup_key_down": false,
+    "post_cleanup_release_transition": {
+      "down": false,
+      "kind": "transition",
+      "observed_ns": 5059114610703
+    },
+    "processes": [
+      {
+        "argv": [
+          "python3",
+          "-B",
+          "/exp/run.py",
+          "--construction",
+          "/work"
+        ],
+        "display": null,
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[63403]",
+          "11": "pipe:[75950]",
+          "2": "pipe:[63404]",
+          "3": "socket:[75946]",
+          "4": "pipe:[75941]",
+          "6": "pipe:[75942]",
+          "7": "pipe:[75947]",
+          "8": "pipe:[75949]",
+          "9": "pipe:[75948]"
+        },
+        "fd_snapshot_races": [
+          "5"
+        ],
+        "pid": 1,
+        "ppid": 0,
+        "present": true,
+        "role": "runner",
+        "state": "R",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "Xvfb",
+          ":630",
+          "-screen",
+          "0",
+          "640x480x24",
+          "-nolisten",
+          "tcp",
+          "-ac"
+        ],
+        "display": ":630",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[75941]",
+          "2": "pipe:[75942]",
+          "3": "anon_inode:[eventpoll]",
+          "4": "pipe:[73066]",
+          "5": "pipe:[73066]",
+          "6": "socket:[73067]",
+          "7": "socket:[73068]",
+          "8": "socket:[73071]",
+          "9": "socket:[73073]"
+        },
+        "pid": 7,
+        "ppid": 1,
+        "present": true,
+        "role": "xvfb",
+        "state": "S",
+        "unix_socket_paths": [
+          "/tmp/.X11-unix/X630",
+          "@/tmp/.X11-unix/X630"
+        ]
+      },
+      {
+        "pid": null,
+        "present": false,
+        "role": "openbox",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/observer.py",
+          "--meta",
+          "/work/00-bare-cleanup_failure/observer.meta.json",
+          "--events",
+          "/work/00-bare-cleanup_failure/observer.events.jsonl"
+        ],
+        "display": ":630",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[75947]",
+          "2": "pipe:[75948]",
+          "3": "socket:[72152]",
+          "4": "/work/00-bare-cleanup_failure/observer.events.jsonl"
+        },
+        "pid": 12,
+        "ppid": 1,
+        "present": true,
+        "role": "observer",
+        "state": "S",
+        "unix_socket_paths": []
+      },
+      {
+        "argv": [
+          "/usr/local/bin/python3",
+          "/exp/run.py",
+          "--worker",
+          "--display",
+          ":630",
+          "--xid",
+          "4194304",
+          "--schedule",
+          "cleanup_failure",
+          "--start-receipt",
+          "/work/00-bare-cleanup_failure/worker.start.json"
+        ],
+        "display": ":630",
+        "fd_links": {
+          "0": "/dev/null",
+          "1": "pipe:[75949]",
+          "2": "pipe:[75950]",
+          "3": "socket:[76915]"
+        },
+        "pid": 14,
+        "ppid": 1,
+        "present": true,
+        "role": "worker",
+        "state": "S",
+        "unix_socket_paths": []
+      }
+    ],
+    "recovery_receipt_observed_ns": 5059109889664,
+    "recovery_receipt_to_release_finish_ms": 4.410574,
+    "recovery_trigger": {
+      "kind": "typed_runtime_recovery_required",
+      "observed_ns": 5059109889664,
+      "recovery_required": true,
+      "runtime_status": "execution_failed"
+    },
+    "release_witness_upper_bound_ns": 5059114610703,
+    "result_pipe_read_ns": 5059109848103,
+    "runner_pid": 1,
+    "schedule": "cleanup_failure",
+    "schedule_order": [
+      "cleanup_failure"
+    ],
+    "started_ns": 5058115032854,
+    "supervisor_attempt_count": 1,
+    "supervisor_release": {
+      "finished_ns": 5059114300238,
+      "release": {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 5059114299103,
+        "verified": true
+      },
+      "started_ns": 5059114019711
+    },
+    "target_mapped_ns": 5058523068138,
+    "target_xid": 4194304,
+    "terminal_key_down": false,
+    "unix_sockets_by_inode": {
+      "72152": "",
+      "73067": "@/tmp/.X11-unix/X630",
+      "73068": "/tmp/.X11-unix/X630",
+      "73071": "/tmp/.X11-unix/X630",
+      "73073": "/tmp/.X11-unix/X630",
+      "75946": ""
+    },
+    "wm_pid": null,
+    "worker_pid": 14,
+    "worker_receipt": {
+      "authority_deadline_ns": 5059087101584,
+      "authority_lease_ms": 150,
+      "dispatch_result": {
+        "result": {
+          "admission": "accepted",
+          "error": "BACKEND_EXECUTION_FAILED",
+          "execution": {
+            "completed_ops": [
+              0,
+              1,
+              2
+            ],
+            "emissions": 1,
+            "ended_ns": 5059059820993,
+            "error": "RuntimeError('INJECTED_RELEASE_PATH_FAILURE')",
+            "failed_op": 3,
+            "failed_op_effect": "unknown; may have emitted partial input",
+            "observations": [],
+            "program_emissions": 1,
+            "releases": [
+              {
+                "error": "RuntimeError('INJECTED_RELEASE_PATH_FAILURE')",
+                "monotonic_ns": 5059059818432,
+                "verified": false
+              }
+            ],
+            "started_ns": 5058939188318,
+            "waits": [
+              {
+                "completed": true,
+                "ended_ns": 5059059801729,
+                "kind": "fixed_delay",
+                "operation_index": 2,
+                "requested_ms": 120,
+                "started_ns": 5058939704604,
+                "update_observed": null
+              }
+            ]
+          },
+          "recovery_required": true,
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "status": "execution_failed"
+        },
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned"
+      },
+      "fault_injected_release_method": true,
+      "finished_ns": 5059059904929,
+      "loaded_runtime": {
+        "backend": "__main__.FailingReleaseBackend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 14,
+      "schedule": "cleanup_failure",
+      "started_ns": 5058937101584,
+      "wait_update_ms": 120
+    },
+    "worker_returncode": 0,
+    "worker_snapshot_after": {
+      "pid": 14,
+      "present": false,
+      "role": "worker"
+    },
+    "worker_snapshot_at_keydown": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":630",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "cleanup_failure",
+        "--start-receipt",
+        "/work/00-bare-cleanup_failure/worker.start.json"
+      ],
+      "display": ":630",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[75949]",
+        "2": "pipe:[75950]",
+        "3": "socket:[76915]"
+      },
+      "pid": 14,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "S",
+      "unix_socket_paths": []
+    },
+    "worker_snapshot_start": {
+      "argv": [
+        "/usr/local/bin/python3",
+        "/exp/run.py",
+        "--worker",
+        "--display",
+        ":630",
+        "--xid",
+        "4194304",
+        "--schedule",
+        "cleanup_failure",
+        "--start-receipt",
+        "/work/00-bare-cleanup_failure/worker.start.json"
+      ],
+      "display": ":630",
+      "fd_links": {
+        "0": "/dev/null",
+        "1": "pipe:[75949]",
+        "2": "pipe:[75950]"
+      },
+      "pid": 14,
+      "ppid": 1,
+      "present": true,
+      "role": "worker",
+      "state": "R"
+    },
+    "worker_start_receipt": {
+      "authority_deadline_ns": 5059087101584,
+      "authority_lease_ms": 150,
+      "fault_injected_release_method": true,
+      "loaded_runtime": {
+        "backend": "__main__.FailingReleaseBackend",
+        "dispatch_facade": "runtime.cli_v1.api.dispatch",
+        "session": "runtime.backends.x11_v1.session.X11RuntimeSession"
+      },
+      "pid": 14,
+      "schedule": "cleanup_failure",
+      "started_ns": 5058937101584,
+      "wait_update_ms": 120
+    },
+    "worker_stderr": "",
+    "worker_stdout": "Xlib.xauth: warning, no xauthority details available\n{\"authority_deadline_ns\": 5059087101584, \"authority_lease_ms\": 150, \"dispatch_result\": {\"result\": {\"admission\": \"accepted\", \"error\": \"BACKEND_EXECUTION_FAILED\", \"execution\": {\"completed_ops\": [0, 1, 2], \"emissions\": 1, \"ended_ns\": 5059059820993, \"error\": \"RuntimeError('INJECTED_RELEASE_PATH_FAILURE')\", \"failed_op\": 3, \"failed_op_effect\": \"unknown; may have emitted partial input\", \"observations\": [], \"program_emissions\": 1, \"releases\": [{\"error\": \"RuntimeError('INJECTED_RELEASE_PATH_FAILURE')\", \"monotonic_ns\": 5059059818432, \"verified\": false}], \"started_ns\": 5058939188318, \"waits\": [{\"completed\": true, \"ended_ns\": 5059059801729, \"kind\": \"fixed_delay\", \"operation_index\": 2, \"requested_ms\": 120, \"started_ns\": 5058939704604, \"update_observed\": null}]}, \"recovery_required\": true, \"required_capabilities\": [\"clock.monotonic\", \"event.feedback\", \"input.keyboard\", \"input.release_all\", \"window.focus\"], \"status\": \"execution_failed\"}, \"schema\": \"agent-interface/runtime-dispatch-result-v1\", \"status\": \"returned\"}, \"fault_injected_release_method\": true, \"finished_ns\": 5059059904929, \"loaded_runtime\": {\"backend\": \"__main__.FailingReleaseBackend\", \"dispatch_facade\": \"runtime.cli_v1.api.dispatch\", \"session\": \"runtime.backends.x11_v1.session.X11RuntimeSession\"}, \"pid\": 14, \"schedule\": \"cleanup_failure\", \"started_ns\": 5058937101584, \"wait_update_ms\": 120}\n",
+    "worker_stdout_fd": 8,
+    "worker_stdout_link": "pipe:[75949]",
+    "xvfb_pid": 7
+  },
+  {
+    "allocation": "safety-graph-live-x11-3066-20260927-v4-01",
+    "case_index": 1,
+    "config": "openbox",
+    "construction_only": true,
+    "error": "RuntimeError('HOLD_KEY_PRESS_NOT_OBSERVED')",
+    "execution_disposition": "STOP_CONSTRUCTION_ONLY",
+    "schedule": "cleanup_failure",
+    "traceback": "Traceback (most recent call last):\n  File \"/exp/run.py\", line 552, in construction\n    row = run_case(config, schedule, index, out)\n  File \"/exp/run.py\", line 377, in run_case\n    raise RuntimeError(\"HOLD_KEY_PRESS_NOT_OBSERVED\")\nRuntimeError: HOLD_KEY_PRESS_NOT_OBSERVED\n"
+  }
+]

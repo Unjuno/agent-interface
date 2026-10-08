@@ -1,0 +1,1538 @@
+{
+  "allocation_id": "issue3572-xserver-lifetime-formal-02",
+  "authority": 0,
+  "decision": "PASS_XSERVER_LIFETIME_BINDING_REQUIRED_SCOPED",
+  "formal_invocations": 1,
+  "freeze_sha256": "e72e9982f9090f4d78b74d1e4ec5e75858a3bc362c9875bbc067b907674f03d5",
+  "image_id": "sha256:fa36aca92a682831d72b7e49bf05a9c6e31e68eadb06f3d2728360ceb1e9f6cb",
+  "input_calls": 0,
+  "issue": 3572,
+  "issued_receipts": [
+    {
+      "receipt_id": "be2204f1a888381666b55c1ccf3b20cd",
+      "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc"
+    },
+    {
+      "receipt_id": "4c71d089220eaf448aa37920040b8b5b",
+      "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc"
+    },
+    {
+      "receipt_id": "859a8b9497a07275c510152117d91a3b",
+      "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191"
+    },
+    {
+      "receipt_id": "6a11678cbce060780ebb0d247affeb0a",
+      "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191"
+    },
+    {
+      "receipt_id": "e33ccbdcb2c9cf8f6d44c6b714cfda38",
+      "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9"
+    },
+    {
+      "receipt_id": "7385b7f51dfcdfdc7b256b0eb454a02d",
+      "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9"
+    },
+    {
+      "receipt_id": "81252d1d31aa9a0daac2f12e4481b378",
+      "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b"
+    },
+    {
+      "receipt_id": "4c9462eedd64f2c9bdd77dcc2270ffe1",
+      "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b"
+    }
+  ],
+  "negative_controls": [
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "forged_server_token",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "receipt_token_forged_or_changed"
+      },
+      "rep": 0
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "missing_server_token",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "receipt_token_forged_or_changed"
+      },
+      "rep": 0
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "unknown_receipt_id",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "unknown_receipt"
+      },
+      "rep": 0
+    },
+    {
+      "detected": true,
+      "expected": "INVALID",
+      "name": "authority_escalation",
+      "observed": {
+        "classification": "INVALID",
+        "reason": "authority_not_none"
+      },
+      "rep": 0
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "changed_backend",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "core_mismatch:backend"
+      },
+      "rep": 0
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "changed_client_id",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "core_mismatch:top_level_client_id"
+      },
+      "rep": 0
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "known_transient_mismatch",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "refinement_mismatch:transient_for"
+      },
+      "rep": 0
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "forged_server_token",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "receipt_token_forged_or_changed"
+      },
+      "rep": 1
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "missing_server_token",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "receipt_token_forged_or_changed"
+      },
+      "rep": 1
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "unknown_receipt_id",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "unknown_receipt"
+      },
+      "rep": 1
+    },
+    {
+      "detected": true,
+      "expected": "INVALID",
+      "name": "authority_escalation",
+      "observed": {
+        "classification": "INVALID",
+        "reason": "authority_not_none"
+      },
+      "rep": 1
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "changed_backend",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "core_mismatch:backend"
+      },
+      "rep": 1
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "changed_client_id",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "core_mismatch:top_level_client_id"
+      },
+      "rep": 1
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "known_transient_mismatch",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "refinement_mismatch:transient_for"
+      },
+      "rep": 1
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "forged_server_token",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "receipt_token_forged_or_changed"
+      },
+      "rep": 2
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "missing_server_token",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "receipt_token_forged_or_changed"
+      },
+      "rep": 2
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "unknown_receipt_id",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "unknown_receipt"
+      },
+      "rep": 2
+    },
+    {
+      "detected": true,
+      "expected": "INVALID",
+      "name": "authority_escalation",
+      "observed": {
+        "classification": "INVALID",
+        "reason": "authority_not_none"
+      },
+      "rep": 2
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "changed_backend",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "core_mismatch:backend"
+      },
+      "rep": 2
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "changed_client_id",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "core_mismatch:top_level_client_id"
+      },
+      "rep": 2
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "known_transient_mismatch",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "refinement_mismatch:transient_for"
+      },
+      "rep": 2
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "forged_server_token",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "receipt_token_forged_or_changed"
+      },
+      "rep": 3
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "missing_server_token",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "receipt_token_forged_or_changed"
+      },
+      "rep": 3
+    },
+    {
+      "detected": true,
+      "expected": "REJECT",
+      "name": "unknown_receipt_id",
+      "observed": {
+        "classification": "REJECT",
+        "reason": "unknown_receipt"
+      },
+      "rep": 3
+    },
+    {
+      "detected": true,
+      "expected": "INVALID",
+      "name": "authority_escalation",
+      "observed": {
+        "classification": "INVALID",
+        "reason": "authority_not_none"
+      },
+      "rep": 3
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "changed_backend",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "core_mismatch:backend"
+      },
+      "rep": 3
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "changed_client_id",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "core_mismatch:top_level_client_id"
+      },
+      "rep": 3
+    },
+    {
+      "detected": true,
+      "expected": "MISMATCH",
+      "name": "known_transient_mismatch",
+      "observed": {
+        "classification": "MISMATCH",
+        "reason": "refinement_mismatch:transient_for"
+      },
+      "rep": 3
+    }
+  ],
+  "pairs": [
+    {
+      "core_identity_equal": true,
+      "g1": {
+        "context": {
+          "geometry": [
+            20,
+            20,
+            100,
+            60
+          ],
+          "root_xid": 543,
+          "top_level_xid": 2097152,
+          "transient_property_present": false,
+          "wm_class": [
+            "typed-recovery-lifetime",
+            "TypedRecoveryFixture"
+          ],
+          "wm_name": "typed-recovery-lifetime"
+        },
+        "display": ":149",
+        "generation": "r0-G1",
+        "geometry_reread": [
+          20,
+          20,
+          100,
+          60
+        ],
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "identity_reread": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "identity_reread_top_level_xid": 2097152,
+        "same_generation_requery_equal": true,
+        "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc",
+        "socket_path": "/tmp/.X11-unix/X149",
+        "socket_present_after_start": true,
+        "xvfb_pid": 6,
+        "xvfb_start_ticks": "5382054"
+      },
+      "g1_cleanup": {
+        "exit_code": 0,
+        "exit_observed": true,
+        "socket_disappeared": true,
+        "stderr": ""
+      },
+      "g2": {
+        "context": {
+          "geometry": [
+            20,
+            20,
+            100,
+            60
+          ],
+          "root_xid": 543,
+          "top_level_xid": 2097152,
+          "transient_property_present": false,
+          "wm_class": [
+            "typed-recovery-lifetime",
+            "TypedRecoveryFixture"
+          ],
+          "wm_name": "typed-recovery-lifetime"
+        },
+        "display": ":149",
+        "generation": "r0-G2",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "server_instance_id": "5ac876922b35d8f54f7d5c699a9bb9a3bde96049288cc26b7950f735ed2e1997",
+        "socket_path": "/tmp/.X11-unix/X149",
+        "socket_present_after_start": true,
+        "xvfb_pid": 12,
+        "xvfb_start_ticks": "5382058"
+      },
+      "g2_cleanup": {
+        "exit_code": 0,
+        "exit_observed": true,
+        "socket_disappeared": true,
+        "stderr": ""
+      },
+      "rep": 0,
+      "same_root_xid": true,
+      "same_xid": true,
+      "server_tokens_distinct": true
+    },
+    {
+      "core_identity_equal": true,
+      "g1": {
+        "context": {
+          "geometry": [
+            20,
+            20,
+            100,
+            60
+          ],
+          "root_xid": 543,
+          "top_level_xid": 2097152,
+          "transient_property_present": false,
+          "wm_class": [
+            "typed-recovery-lifetime",
+            "TypedRecoveryFixture"
+          ],
+          "wm_name": "typed-recovery-lifetime"
+        },
+        "display": ":149",
+        "generation": "r1-G1",
+        "geometry_reread": [
+          20,
+          20,
+          100,
+          60
+        ],
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "identity_reread": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "identity_reread_top_level_xid": 2097152,
+        "same_generation_requery_equal": true,
+        "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191",
+        "socket_path": "/tmp/.X11-unix/X149",
+        "socket_present_after_start": true,
+        "xvfb_pid": 17,
+        "xvfb_start_ticks": "5382063"
+      },
+      "g1_cleanup": {
+        "exit_code": 0,
+        "exit_observed": true,
+        "socket_disappeared": true,
+        "stderr": ""
+      },
+      "g2": {
+        "context": {
+          "geometry": [
+            20,
+            20,
+            100,
+            60
+          ],
+          "root_xid": 543,
+          "top_level_xid": 2097152,
+          "transient_property_present": false,
+          "wm_class": [
+            "typed-recovery-lifetime",
+            "TypedRecoveryFixture"
+          ],
+          "wm_name": "typed-recovery-lifetime"
+        },
+        "display": ":149",
+        "generation": "r1-G2",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "server_instance_id": "267b2b4130e204759aba505c5e450eb527f21d7797c93114bc139bf94a7f1106",
+        "socket_path": "/tmp/.X11-unix/X149",
+        "socket_present_after_start": true,
+        "xvfb_pid": 22,
+        "xvfb_start_ticks": "5382067"
+      },
+      "g2_cleanup": {
+        "exit_code": 0,
+        "exit_observed": true,
+        "socket_disappeared": true,
+        "stderr": ""
+      },
+      "rep": 1,
+      "same_root_xid": true,
+      "same_xid": true,
+      "server_tokens_distinct": true
+    },
+    {
+      "core_identity_equal": true,
+      "g1": {
+        "context": {
+          "geometry": [
+            20,
+            20,
+            100,
+            60
+          ],
+          "root_xid": 543,
+          "top_level_xid": 2097152,
+          "transient_property_present": false,
+          "wm_class": [
+            "typed-recovery-lifetime",
+            "TypedRecoveryFixture"
+          ],
+          "wm_name": "typed-recovery-lifetime"
+        },
+        "display": ":149",
+        "generation": "r2-G1",
+        "geometry_reread": [
+          20,
+          20,
+          100,
+          60
+        ],
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "identity_reread": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "identity_reread_top_level_xid": 2097152,
+        "same_generation_requery_equal": true,
+        "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9",
+        "socket_path": "/tmp/.X11-unix/X149",
+        "socket_present_after_start": true,
+        "xvfb_pid": 27,
+        "xvfb_start_ticks": "5382072"
+      },
+      "g1_cleanup": {
+        "exit_code": 0,
+        "exit_observed": true,
+        "socket_disappeared": true,
+        "stderr": ""
+      },
+      "g2": {
+        "context": {
+          "geometry": [
+            20,
+            20,
+            100,
+            60
+          ],
+          "root_xid": 543,
+          "top_level_xid": 2097152,
+          "transient_property_present": false,
+          "wm_class": [
+            "typed-recovery-lifetime",
+            "TypedRecoveryFixture"
+          ],
+          "wm_name": "typed-recovery-lifetime"
+        },
+        "display": ":149",
+        "generation": "r2-G2",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "server_instance_id": "977c78f2bf055a11504f62e2f67529fabeaed1e2f8663809c43f7e5bd2aa95cb",
+        "socket_path": "/tmp/.X11-unix/X149",
+        "socket_present_after_start": true,
+        "xvfb_pid": 32,
+        "xvfb_start_ticks": "5382075"
+      },
+      "g2_cleanup": {
+        "exit_code": 0,
+        "exit_observed": true,
+        "socket_disappeared": true,
+        "stderr": ""
+      },
+      "rep": 2,
+      "same_root_xid": true,
+      "same_xid": true,
+      "server_tokens_distinct": true
+    },
+    {
+      "core_identity_equal": true,
+      "g1": {
+        "context": {
+          "geometry": [
+            20,
+            20,
+            100,
+            60
+          ],
+          "root_xid": 543,
+          "top_level_xid": 2097152,
+          "transient_property_present": false,
+          "wm_class": [
+            "typed-recovery-lifetime",
+            "TypedRecoveryFixture"
+          ],
+          "wm_name": "typed-recovery-lifetime"
+        },
+        "display": ":149",
+        "generation": "r3-G1",
+        "geometry_reread": [
+          20,
+          20,
+          100,
+          60
+        ],
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "identity_reread": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "identity_reread_top_level_xid": 2097152,
+        "same_generation_requery_equal": true,
+        "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b",
+        "socket_path": "/tmp/.X11-unix/X149",
+        "socket_present_after_start": true,
+        "xvfb_pid": 37,
+        "xvfb_start_ticks": "5382080"
+      },
+      "g1_cleanup": {
+        "exit_code": 0,
+        "exit_observed": true,
+        "socket_disappeared": true,
+        "stderr": ""
+      },
+      "g2": {
+        "context": {
+          "geometry": [
+            20,
+            20,
+            100,
+            60
+          ],
+          "root_xid": 543,
+          "top_level_xid": 2097152,
+          "transient_property_present": false,
+          "wm_class": [
+            "typed-recovery-lifetime",
+            "TypedRecoveryFixture"
+          ],
+          "wm_name": "typed-recovery-lifetime"
+        },
+        "display": ":149",
+        "generation": "r3-G2",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "server_instance_id": "25207485bc50590ba42c86395ceed7d2767e77aff01176930df3381a25412d67",
+        "socket_path": "/tmp/.X11-unix/X149",
+        "socket_present_after_start": true,
+        "xvfb_pid": 42,
+        "xvfb_start_ticks": "5382085"
+      },
+      "g2_cleanup": {
+        "exit_code": 0,
+        "exit_observed": true,
+        "socket_disappeared": true,
+        "stderr": ""
+      },
+      "rep": 3,
+      "same_root_xid": true,
+      "same_xid": true,
+      "server_tokens_distinct": true
+    }
+  ],
+  "reruns": 0,
+  "result_sha256": "d1d46c36e32630b7b60146aff475276b1726ee9bdc3cfe3c5eb2c3db67465869",
+  "rows": [
+    {
+      "bound": "ACCEPT",
+      "case": "same_generation",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "CURRENT_TYPED",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "be2204f1a888381666b55c1ccf3b20cd",
+        "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc",
+        "task_input_granted": false
+      },
+      "rep": 0,
+      "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "bound_result": {
+        "classification": "ACCEPT",
+        "reason": "all_observed_identity_equal",
+        "typed_classification": "EXACT_MATCH"
+      },
+      "case": "same_generation",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "LIFETIME_BOUND",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "4c71d089220eaf448aa37920040b8b5b",
+        "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc",
+        "task_input_granted": false
+      },
+      "rep": 0,
+      "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "case": "cross_generation_stale",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "CURRENT_TYPED",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "be2204f1a888381666b55c1ccf3b20cd",
+        "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc",
+        "task_input_granted": false
+      },
+      "rep": 0,
+      "server_instance_id": "5ac876922b35d8f54f7d5c699a9bb9a3bde96049288cc26b7950f735ed2e1997",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "REJECT",
+      "bound_result": {
+        "classification": "REJECT",
+        "reason": "server_instance_mismatch"
+      },
+      "case": "cross_generation_stale",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "LIFETIME_BOUND",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "4c71d089220eaf448aa37920040b8b5b",
+        "server_instance_id": "3e77f92cc298da7543b01304e18bb575d7dbd8e10fc553da4cf1f57dd69626bc",
+        "task_input_granted": false
+      },
+      "rep": 0,
+      "server_instance_id": "5ac876922b35d8f54f7d5c699a9bb9a3bde96049288cc26b7950f735ed2e1997",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "case": "same_generation",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "CURRENT_TYPED",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "859a8b9497a07275c510152117d91a3b",
+        "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191",
+        "task_input_granted": false
+      },
+      "rep": 1,
+      "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "bound_result": {
+        "classification": "ACCEPT",
+        "reason": "all_observed_identity_equal",
+        "typed_classification": "EXACT_MATCH"
+      },
+      "case": "same_generation",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "LIFETIME_BOUND",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "6a11678cbce060780ebb0d247affeb0a",
+        "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191",
+        "task_input_granted": false
+      },
+      "rep": 1,
+      "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "case": "cross_generation_stale",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "CURRENT_TYPED",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "859a8b9497a07275c510152117d91a3b",
+        "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191",
+        "task_input_granted": false
+      },
+      "rep": 1,
+      "server_instance_id": "267b2b4130e204759aba505c5e450eb527f21d7797c93114bc139bf94a7f1106",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "REJECT",
+      "bound_result": {
+        "classification": "REJECT",
+        "reason": "server_instance_mismatch"
+      },
+      "case": "cross_generation_stale",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "LIFETIME_BOUND",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "6a11678cbce060780ebb0d247affeb0a",
+        "server_instance_id": "47de5c42ec4753a53a79d7948ba1319c01aab6c078fc4445b39eebc450c0b191",
+        "task_input_granted": false
+      },
+      "rep": 1,
+      "server_instance_id": "267b2b4130e204759aba505c5e450eb527f21d7797c93114bc139bf94a7f1106",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "case": "same_generation",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "CURRENT_TYPED",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "e33ccbdcb2c9cf8f6d44c6b714cfda38",
+        "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9",
+        "task_input_granted": false
+      },
+      "rep": 2,
+      "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "bound_result": {
+        "classification": "ACCEPT",
+        "reason": "all_observed_identity_equal",
+        "typed_classification": "EXACT_MATCH"
+      },
+      "case": "same_generation",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "LIFETIME_BOUND",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "7385b7f51dfcdfdc7b256b0eb454a02d",
+        "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9",
+        "task_input_granted": false
+      },
+      "rep": 2,
+      "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "case": "cross_generation_stale",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "CURRENT_TYPED",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "e33ccbdcb2c9cf8f6d44c6b714cfda38",
+        "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9",
+        "task_input_granted": false
+      },
+      "rep": 2,
+      "server_instance_id": "977c78f2bf055a11504f62e2f67529fabeaed1e2f8663809c43f7e5bd2aa95cb",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "REJECT",
+      "bound_result": {
+        "classification": "REJECT",
+        "reason": "server_instance_mismatch"
+      },
+      "case": "cross_generation_stale",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "LIFETIME_BOUND",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "7385b7f51dfcdfdc7b256b0eb454a02d",
+        "server_instance_id": "9b51deafa12f7412a02f85f906754ed8f306f6bf7cdc3325112ccd38d21157c9",
+        "task_input_granted": false
+      },
+      "rep": 2,
+      "server_instance_id": "977c78f2bf055a11504f62e2f67529fabeaed1e2f8663809c43f7e5bd2aa95cb",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "case": "same_generation",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "CURRENT_TYPED",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "81252d1d31aa9a0daac2f12e4481b378",
+        "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b",
+        "task_input_granted": false
+      },
+      "rep": 3,
+      "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "bound_result": {
+        "classification": "ACCEPT",
+        "reason": "all_observed_identity_equal",
+        "typed_classification": "EXACT_MATCH"
+      },
+      "case": "same_generation",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "LIFETIME_BOUND",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "4c9462eedd64f2c9bdd77dcc2270ffe1",
+        "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b",
+        "task_input_granted": false
+      },
+      "rep": 3,
+      "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "ACCEPT",
+      "case": "cross_generation_stale",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "CURRENT_TYPED",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "81252d1d31aa9a0daac2f12e4481b378",
+        "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b",
+        "task_input_granted": false
+      },
+      "rep": 3,
+      "server_instance_id": "25207485bc50590ba42c86395ceed7d2767e77aff01176930df3381a25412d67",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    },
+    {
+      "bound": "REJECT",
+      "bound_result": {
+        "classification": "REJECT",
+        "reason": "server_instance_mismatch"
+      },
+      "case": "cross_generation_stale",
+      "current_identity": {
+        "backend": {
+          "state": "KNOWN",
+          "value": "x11"
+        },
+        "top_level_client_id": {
+          "state": "KNOWN",
+          "value": 2097152
+        },
+        "transient_for": {
+          "state": "KNOWN_NULL"
+        }
+      },
+      "policy": "LIFETIME_BOUND",
+      "receipt": {
+        "action_admission_eligible": false,
+        "authority": "none",
+        "identity": {
+          "backend": {
+            "state": "KNOWN",
+            "value": "x11"
+          },
+          "top_level_client_id": {
+            "state": "KNOWN",
+            "value": 2097152
+          },
+          "transient_for": {
+            "state": "KNOWN_NULL"
+          }
+        },
+        "receipt_id": "4c9462eedd64f2c9bdd77dcc2270ffe1",
+        "server_instance_id": "bacdbe40e98e0dce71c86ca7178158d41b6ffce00dabdfa9b18d4aa50535e34b",
+        "task_input_granted": false
+      },
+      "rep": 3,
+      "server_instance_id": "25207485bc50590ba42c86395ceed7d2767e77aff01176930df3381a25412d67",
+      "typed": {
+        "classification": "EXACT_MATCH",
+        "reason": "all_observed_identity_equal"
+      }
+    }
+  ],
+  "source_commit": "61311817969251b814cb00b568a75c91a3591d3e",
+  "source_manifest_sha256": "f04218a37ceef81df305a7242adb8c0fae75fae5dce555901d45577e73b5db3b"
+}

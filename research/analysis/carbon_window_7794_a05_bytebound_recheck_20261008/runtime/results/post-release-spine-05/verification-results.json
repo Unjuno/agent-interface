@@ -1,0 +1,43 @@
+{
+  "normal": {
+    "exit_code": 0,
+    "status": "HOLD_PRIMARY_PROTOCOL_DEVIATIONS",
+    "members": 418
+  },
+  "optimized": {
+    "exit_code": 0,
+    "status": "HOLD_PRIMARY_PROTOCOL_DEVIATIONS",
+    "members": 418
+  },
+  "rehashedControls": [
+    {
+      "control": "wrong-score",
+      "rejected": true,
+      "reason": "independent score"
+    },
+    {
+      "control": "held-key",
+      "rejected": true,
+      "reason": "public neutral close"
+    },
+    {
+      "control": "hidden-direct-input",
+      "rejected": true,
+      "reason": "input outcome"
+    }
+  ],
+  "nextCallerConstruction": {
+    "exit_code": 0,
+    "liveIntegration": false,
+    "cases": [
+      "wrong tool before dispatch",
+      "missing review argument before host",
+      "original error response retained",
+      "incomplete input STOP",
+      "held input STOP",
+      "neutral success",
+      "close after STOP"
+    ]
+  },
+  "fullComparisonAccepted": false
+}

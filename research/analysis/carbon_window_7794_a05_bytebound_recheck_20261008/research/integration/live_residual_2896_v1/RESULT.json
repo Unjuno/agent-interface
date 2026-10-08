@@ -1,0 +1,23 @@
+{
+  "task": "LIVE-RESIDUAL-2896-DATAURL-TITLE-001",
+  "decision": "PASS_LIVE_RESIDUAL_BOUNDARY_SCOPED",
+  "issue": 2896,
+  "image": "mixed-app-identity-2782-local@sha256:e6ced3789130dae21c7b42b7b9d25cd590a271a77910e16c01d2edf87e44cee6",
+  "network": "none",
+  "counters": {
+    "model_calls": 0,
+    "network_calls": 0,
+    "authority_grants": 0
+  },
+  "gates": {
+    "caller_visible_request": true,
+    "binding_same": true,
+    "independent_effect": true,
+    "stale_control": "YIELD_STALE_BINDING",
+    "ambiguous_control": "YIELD_AMBIGUOUS_BINDING",
+    "libreoffice_control": "HOLD_EFFECT_NOT_INDEPENDENTLY_OBSERVED"
+  },
+  "receipt_set_sha256": "b785858a91eef2a58b5bd39944b972bfe38d9e0b73b8f546070a5ca39c2d1aea",
+  "local_bundle_sha256": "b4c74075800ffcd6ee8ede5b1fe98c6ab37283a7a7cfc89badb50f824c5f70f0",
+  "scope": "scoped residual evidence only; no model benefit, product, human-tempo, or broad generality claim"
+}

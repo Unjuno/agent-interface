@@ -1,0 +1,42 @@
+{
+  "allocation": "effect-owner-deadline-4195-20260923-01",
+  "audit_run": false,
+  "complete_case_ids": [
+    "formal-0-APP_CHECK_ONLY-EARLY_LONG",
+    "formal-0-APP_CHECK_ONLY-EARLY_SHORT",
+    "formal-0-APP_CHECK_ONLY-NEAR_SHORT",
+    "formal-0-SINK_POSTHOC_CHECK-EARLY_LONG",
+    "formal-0-SINK_POSTHOC_CHECK-EARLY_SHORT",
+    "formal-0-SINK_POSTHOC_CHECK-NEAR_SHORT",
+    "formal-0-SINK_PRECOMMIT_DEADLINE-EARLY_LONG",
+    "formal-0-SINK_PRECOMMIT_DEADLINE-EARLY_SHORT",
+    "formal-0-SINK_PRECOMMIT_DEADLINE-NEAR_SHORT"
+  ],
+  "complete_rows": 9,
+  "controls_run": false,
+  "disposition": "STOP_EXTERNAL_EXECUTION_TIMEOUT",
+  "expected_rows": 36,
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "freeze_sha256": "ec743d1c9ebd634f0e6349114d958bff33c717fbf4ab23ce1a38a2d8fdc6092f",
+  "notes": [
+    "Outer execution tool timed out before runner serialized ROWS.json.",
+    "Nine case row.json files are complete; a tenth case directory exists without row.json.",
+    "Do not rerun or pool this consumed allocation. Construction PASS remains separate and excluded."
+  ],
+  "outer_tool_timeout_seconds": 45,
+  "partial_case_dirs": [
+    "formal-0-APP_CHECK_ONLY-NEAR_LONG"
+  ],
+  "rows_json_present": false,
+  "source_sha256": {
+    "ENVIRONMENT.json": "77330d05a278ac8d1eadfb74df2d86c3a925c57fdd4ad2b7206009aaae24a7e9",
+    "PLAN.md": "d3c30d17008af0e028495d07737622edbdb4064622e994897692a4b275181547",
+    "SCHEDULE.json": "15c386d7cf60c45f7c952d088d78438754cd1f780af572bfb9e39650d38d5742",
+    "app_worker.py": "8f7d34ce0e14cd31c44e9d86221e8c6a68e619d9a416450ac136b6d7d52575e7",
+    "audit.py": "62432355377282e1ce84296bd0d62918dc0126e5df3b2e7bd69f2471dbce27e0",
+    "controls.py": "c8fad3d6bec7eb7e3f149a7a3e1bdd0c2fd1f2a2fb8042aec2f80afebc1521b1",
+    "run.py": "6c6d07e82ef71f610fc90d6a655742def4fc4000e3b379f257e18a0d8dab15c1",
+    "sink_worker.py": "a61feb8a18b429e96be9154348ee3006caab325443b77b033bdf2f9b0ad0f48b"
+  }
+}

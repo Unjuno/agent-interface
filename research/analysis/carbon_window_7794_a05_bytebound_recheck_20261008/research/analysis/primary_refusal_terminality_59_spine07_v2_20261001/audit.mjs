@@ -1,0 +1,8 @@
+import fs from 'node:fs';
+const x=JSON.parse(fs.readFileSync(0,'utf8')),names=['malformed-envelope','null-json-envelope','valid-envelope','declared-refusal','transport-throw'];
+if(x.schema!=='primary-refusal-terminality-spine07-v2-candidate-v1'||x.upstreamBlob!=='b2f27b6cda362db24e906090f33c4813d60f2867'||x.candidateSourceSha256!=='f8ddede770165eb66d988c8830e661fa5ce98c6dadd8ee4f7be68a92bea9c250'||x.rows?.length!==5||x.rows.some((r,i)=>r.name!==names[i]))process.exit(2);const [m,n,v,r,t]=x.rows;
+if(!(m.firstError==='TypeError'&&m.stoppedBeforePrimaryContinues&&m.secondAttempted&&m.secondRejected&&m.effectfulHostCalls===1&&m.closeAllowed&&m.finalStop))process.exit(3);
+if(!(n.firstError==='TypeError'&&n.stoppedBeforePrimaryContinues&&n.secondAttempted&&n.secondRejected&&n.effectfulHostCalls===1&&n.closeAllowed&&n.finalStop))process.exit(4);
+if(!(v.firstError===null&&!v.stoppedBeforePrimaryContinues&&!v.secondAttempted&&v.effectfulHostCalls===1&&v.closeAllowed&&v.finalStop===null))process.exit(5);
+if(!(r.firstError===null&&!r.stoppedBeforePrimaryContinues&&!r.secondAttempted&&r.effectfulHostCalls===1&&r.closeAllowed&&r.finalStop===null))process.exit(6);
+if(!(t.firstError==='TypeError'&&t.stoppedBeforePrimaryContinues&&t.secondAttempted&&t.secondRejected&&t.effectfulHostCalls===1&&t.closeAllowed&&t.finalStop))process.exit(7);process.stdout.write(JSON.stringify({audit:'PASS_RAW_ONLY_CONSISTENCY',rows:5})+'\n');

@@ -1,0 +1,348 @@
+{
+  "baseline_auditor": {
+    "all_brackets_omitted": [],
+    "empty": [],
+    "one_bracket_deleted": [],
+    "pristine": []
+  },
+  "candidate_mutation_results": {
+    "all_brackets_omitted": [
+      "release_bracket_count_mismatch",
+      "admitted_key_release_coverage_mismatch",
+      "caller:0:bracket_count_mismatch",
+      "caller:2:bracket_count_mismatch"
+    ],
+    "empty_trace": [
+      "admission_count_mismatch",
+      "caller_count_mismatch",
+      "release_bracket_count_mismatch",
+      "terminal_count_mismatch",
+      "admitted_key_release_coverage_mismatch",
+      "caller:0:bracket_count_mismatch",
+      "caller:2:bracket_count_mismatch"
+    ],
+    "keycode_tampered": [
+      "release:0:keycode_mismatch"
+    ],
+    "one_admission_deleted": [
+      "admission_count_mismatch",
+      "admission:0:intent_mismatch",
+      "admission:0:key_identity_mismatch",
+      "admission:0:receipt_key_mismatch",
+      "admission:1:key_identity_mismatch",
+      "admission:1:receipt_key_mismatch"
+    ],
+    "one_bracket_deleted": [
+      "release_bracket_count_mismatch",
+      "release:0:intent_token_mismatch",
+      "release:0:keycode_mismatch",
+      "release:0:trigger_class_mismatch",
+      "release:0:reason_mismatch",
+      "release:0:key_mismatch",
+      "release:0:caller_nesting_invalid",
+      "release:1:keycode_mismatch",
+      "admitted_key_release_coverage_mismatch",
+      "caller:2:bracket_count_mismatch"
+    ],
+    "terminal_deleted": [
+      "terminal_count_mismatch",
+      "terminal:0:reason_mismatch"
+    ],
+    "timestamp_inverted": [
+      "release:0:owner_time_invalid",
+      "release:0:caller_nesting_invalid"
+    ]
+  },
+  "candidate_pristine_errors": [],
+  "existing_owner_suite": {
+    "errors": 0,
+    "failures": 0,
+    "stdout": "test_aggregate_cleanup_records_each_key_after_one_shared_sync (test_owner_integration.OwnerIntegrationTests.test_aggregate_cleanup_records_each_key_after_one_shared_sync) ... ok\ntest_cancel_after_partial_multi_key_admission_releases_owned_keys (test_owner_integration.OwnerIntegrationTests.test_cancel_after_partial_multi_key_admission_releases_owned_keys) ... ok\ntest_expiry_focus_loss_and_stop_are_classified_without_extra_syncs (test_owner_integration.OwnerIntegrationTests.test_expiry_focus_loss_and_stop_are_classified_without_extra_syncs) ... ok\ntest_explicit_up_emits_owner_request_and_sync_bracket (test_owner_integration.OwnerIntegrationTests.test_explicit_up_emits_owner_request_and_sync_bracket) ... ok\ntest_explicit_up_request_failure_emits_no_success_bracket (test_owner_integration.OwnerIntegrationTests.test_explicit_up_request_failure_emits_no_success_bracket) ... ok\ntest_explicit_up_sync_failure_emits_no_success_bracket (test_owner_integration.OwnerIntegrationTests.test_explicit_up_sync_failure_emits_no_success_bracket) ... ok\ntest_fatal_owner_failure_uses_thread_finalizer_release_class (test_owner_integration.OwnerIntegrationTests.test_fatal_owner_failure_uses_thread_finalizer_release_class) ... ok\ntest_fatal_owner_release_error_fails_closed_without_success_record (test_owner_integration.OwnerIntegrationTests.test_fatal_owner_release_error_fails_closed_without_success_record) ... ok\ntest_inverted_owner_clock_keeps_release_record_but_fails_order_audit (test_owner_integration.OwnerIntegrationTests.test_inverted_owner_clock_keeps_release_record_but_fails_order_audit) ... ok\ntest_owner_bracket_is_nested_within_pinned_v3_caller_bracket (test_owner_integration.OwnerIntegrationTests.test_owner_bracket_is_nested_within_pinned_v3_caller_bracket) ... ok\ntest_raw_only_auditor_accepts_nested_identity_bound_record (test_owner_integration.OwnerIntegrationTests.test_raw_only_auditor_accepts_nested_identity_bound_record) ... ok\ntest_raw_only_auditor_rejects_inversion_identity_and_authority_corruption (test_owner_integration.OwnerIntegrationTests.test_raw_only_auditor_rejects_inversion_identity_and_authority_corruption) ... ok\ntest_stale_intent_cannot_release_current_held_key (test_owner_integration.OwnerIntegrationTests.test_stale_intent_cannot_release_current_held_key) ... ok\ntest_v10_and_v11_explicit_release_requests_and_sync_counts_match (test_owner_integration.OwnerIntegrationTests.test_v10_and_v11_explicit_release_requests_and_sync_counts_match) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.048s\n\nOK\n",
+    "tests_run": 14
+  },
+  "owner_behavior": {
+    "all_terminals_verified_neutral": true,
+    "expected_request_sequence": [
+      [
+        2,
+        38
+      ],
+      [
+        3,
+        38
+      ],
+      [
+        2,
+        56
+      ],
+      [
+        2,
+        38
+      ],
+      [
+        3,
+        56
+      ],
+      [
+        3,
+        38
+      ]
+    ],
+    "terminal_count": 3,
+    "v10_final_keys_down": [],
+    "v10_requests": [
+      [
+        2,
+        38
+      ],
+      [
+        3,
+        38
+      ],
+      [
+        2,
+        56
+      ],
+      [
+        2,
+        38
+      ],
+      [
+        3,
+        56
+      ],
+      [
+        3,
+        38
+      ]
+    ],
+    "v10_sync_count": 7,
+    "v10_v11_behavior_equivalent": true,
+    "v11_final_keys_down": [],
+    "v11_requests": [
+      [
+        2,
+        38
+      ],
+      [
+        3,
+        38
+      ],
+      [
+        2,
+        56
+      ],
+      [
+        2,
+        38
+      ],
+      [
+        3,
+        56
+      ],
+      [
+        3,
+        38
+      ]
+    ],
+    "v11_sync_count": 7
+  },
+  "runtime": {
+    "execution": "host fake-Xlib; no real display or input",
+    "platform": "darwin",
+    "python": "3.14.5"
+  },
+  "status": "PASS_RELEASE_INVENTORY_AUDIT_CONSTRUCTION",
+  "trace": {
+    "admissions": [
+      {
+        "intent_token": "intent-explicit",
+        "key": "a",
+        "keycode": 38,
+        "owner_id": "5156-owner-v1",
+        "receipt": {
+          "admitted_ns": 179637653682625,
+          "event": "input_admission",
+          "input_ack_ns": 179637653683791,
+          "intent_token": "intent-explicit",
+          "key": "a",
+          "valid_until_ns": 179657653667916
+        }
+      },
+      {
+        "intent_token": "intent-cleanup",
+        "key": "b",
+        "keycode": 56,
+        "owner_id": "5156-owner-v1",
+        "receipt": {
+          "admitted_ns": 179637653746083,
+          "event": "input_admission",
+          "input_ack_ns": 179637653746958,
+          "intent_token": "intent-cleanup",
+          "key": "b",
+          "valid_until_ns": 179657653669833
+        }
+      },
+      {
+        "intent_token": "intent-cleanup",
+        "key": "a",
+        "keycode": 38,
+        "owner_id": "5156-owner-v1",
+        "receipt": {
+          "admitted_ns": 179637653760750,
+          "event": "input_admission",
+          "input_ack_ns": 179637653761500,
+          "intent_token": "intent-cleanup",
+          "key": "a",
+          "valid_until_ns": 179657653669833
+        }
+      }
+    ],
+    "caller_receipts": [
+      {
+        "intent_token": "intent-explicit",
+        "key": "a",
+        "operation": "up",
+        "owner_id": "5156-owner-v1",
+        "receipt": {
+          "cancel_requested_at_request": false,
+          "event": "input_release_transition",
+          "focus_invalid_at_request": false,
+          "grants_input_authority": false,
+          "intent_token": "intent-explicit",
+          "key": "a",
+          "lease_time_valid_at_request": true,
+          "measurement_contract": "caller brackets unchanged InputOwner v10 explicit release; no owner/X11 state sample or telemetry publication occurs inside this per-input call",
+          "operation": "up",
+          "ordinary_release_candidate": true,
+          "owner_id": "5156-owner-v1",
+          "owner_transition_verified": null,
+          "release_call_bracket_ns": 24583,
+          "release_call_returned_ns": 179637653720041,
+          "release_call_started_ns": 179637653695458,
+          "transition_schema": "input-release-transition-v3",
+          "valid_until_ns": 179657653667916
+        },
+        "returned_ns": 179637653720041,
+        "started_ns": 179637653695458
+      },
+      {
+        "intent_token": "intent-explicit",
+        "key": null,
+        "operation": "release",
+        "owner_id": "5156-owner-v1",
+        "receipt": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "intent-explicit",
+          "keys_down": [],
+          "reason": "release",
+          "release_call_returned_ns": 179637653737083,
+          "release_call_started_ns": 179637653723625,
+          "valid_until_ns": 179657653667916,
+          "verified": true,
+          "verified_ns": 179637653732250
+        },
+        "returned_ns": 179637653737083,
+        "started_ns": 179637653723625
+      },
+      {
+        "intent_token": "intent-cleanup",
+        "key": null,
+        "operation": "release",
+        "owner_id": "5156-owner-v1",
+        "receipt": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "intent_token": "intent-cleanup",
+          "keys_down": [],
+          "reason": "release",
+          "release_call_returned_ns": 179637653783833,
+          "release_call_started_ns": 179637653768791,
+          "valid_until_ns": 179657653669833,
+          "verified": true,
+          "verified_ns": 179637653779416
+        },
+        "returned_ns": 179637653783833,
+        "started_ns": 179637653768791
+      }
+    ],
+    "owner_records": [
+      {
+        "event": "owner_key_release_bracket",
+        "grants_input_authority": false,
+        "intent_token": "intent-explicit",
+        "key": "a",
+        "keycode": 38,
+        "owner_id": "5156-owner-v1",
+        "physical_key_up_claimed": false,
+        "reason": "explicit_up",
+        "request_returned_ns": 179637653708541,
+        "request_started_ns": 179637653707583,
+        "schema": "owner-key-release-bracket-v1",
+        "shared_sync_returned_ns": 179637653708833,
+        "timing_valid": true,
+        "trigger_class": "explicit_up"
+      },
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "release",
+        "valid_until_ns": 179657653667916,
+        "verified": true,
+        "verified_ns": 179637653732250
+      },
+      {
+        "event": "owner_key_release_bracket",
+        "grants_input_authority": false,
+        "intent_token": "intent-cleanup",
+        "key": null,
+        "keycode": 56,
+        "owner_id": "5156-owner-v1",
+        "physical_key_up_claimed": false,
+        "reason": "release",
+        "request_returned_ns": 179637653775000,
+        "request_started_ns": 179637653774250,
+        "schema": "owner-key-release-bracket-v1",
+        "shared_sync_returned_ns": 179637653776083,
+        "timing_valid": true,
+        "trigger_class": "owner_lease_cleanup"
+      },
+      {
+        "event": "owner_key_release_bracket",
+        "grants_input_authority": false,
+        "intent_token": "intent-cleanup",
+        "key": null,
+        "keycode": 38,
+        "owner_id": "5156-owner-v1",
+        "physical_key_up_claimed": false,
+        "reason": "release",
+        "request_returned_ns": 179637653775750,
+        "request_started_ns": 179637653775250,
+        "schema": "owner-key-release-bracket-v1",
+        "shared_sync_returned_ns": 179637653776083,
+        "timing_valid": true,
+        "trigger_class": "owner_lease_cleanup"
+      },
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "release",
+        "valid_until_ns": 179657653669833,
+        "verified": true,
+        "verified_ns": 179637653779416
+      },
+      {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "close",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 179637653792000
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema": "gpu-a09-six-worker-memory-sharing-freeze-v1",
+  "issue": 6329,
+  "allocation": "GPU-MEMORY-SHARING-4972-20261002-09",
+  "seed": 49720261009,
+  "base_main_sha": "8d9b496dd23b72bf73ca06756e23c329f5489735",
+  "branch": "research/gpu-six-worker-memory-sharing-4972-a09b-20261002",
+  "source_snapshot_commit": "9fa229617acf264409496693900c9ccf2cc9fa5f",
+  "path": "research/analysis/gpu_six_worker_memory_sharing_4972_a09_20261002/",
+  "frozen_at_utc": "2026-10-01T23:40:23Z",
+  "runtime": {
+    "platform": "WSL Arch Linux",
+    "container_engine": "rootful Podman 6.1.3",
+    "oci_runtime": "crun",
+    "nvidia_container_toolkit": "1.20.0; CDI",
+    "image": "pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+    "image_platform": "linux/amd64",
+    "rootful_store_present_at_freeze": false,
+    "rootless_store_present_at_freeze": false,
+    "candidate_network": "none",
+    "image_pull_during_candidate": false
+  },
+  "gpu_observation_at_freeze": {
+    "windows": "NVIDIA GeForce RTX 3080 Laptop GPU; 0% utilization; 0 MiB used; 16384 MiB total",
+    "wsl": "NVIDIA GeForce RTX 3080 Laptop GPU; 0 MiB used; 16177 MiB free"
+  },
+  "capacity_observation": {
+    "windows_c_free_bytes": 83247697920,
+    "wsl_available_memory_bytes": 15714082816,
+    "wsl_root_available_bytes": 998646005760
+  },
+  "contract": {
+    "workers": 6,
+    "worker_tensor_elements": 25165824,
+    "dtype": "int64",
+    "working_set_bytes": 201326592,
+    "operations": 20,
+    "allocator_fraction": 0.05,
+    "min_free_before_bytes": 10737418240,
+    "min_free_during_bytes": 4294967296,
+    "max_aggregate_allocator_peak_bytes": 8589934592
+  },
+  "construction_tests": {
+    "python": "3.11.9",
+    "passed": 9,
+    "failed": 0
+  },
+  "source_sha256": {
+    "README": "1fe86efecb62119cdc0c572839d77004d8994e823d67ddff3e91b10f56ecbe1c",
+    "PREREG": "369189cf600943acc6a4725a9b451ec0dde85b76c9d7556453d67457c99cc3ba",
+    "RUN_COMMANDS": "1f59b2dec6f432d4032085cc8a07ac3e0f7170aa9390b04b4158ce4e589d48c8",
+    "runner": "7b395daa5f3f30bcf8ad7c8ba81b77863170908b71446aff2aa43126d3b7a073",
+    "audit": "d3489048f7f76a14831a77f3cab7454da7c77429f81b5f4d6c03e9500dcb9c13",
+    "tests": "729ad2c7c7b975af3fa4e7d179592990d9669286cf7ee60e08ebb2a84987c60f"
+  },
+  "source_bytes": {
+    "README": 426,
+    "PREREG": 3258,
+    "RUN_COMMANDS": 2921,
+    "runner": 4326,
+    "audit": 5492,
+    "tests": 2844
+  },
+  "invocations": {
+    "candidate": 0,
+    "auditor": 0,
+    "retries": 0
+  },
+  "status": "PREREGISTERED; CUDA image absent at freeze; candidate not run pending exact image and start gates.",
+  "current_main_at_freeze": "9ef3b1537f0ca1bbc8ac0814c380d62ece56032b",
+  "branch_base_main_sha": "8d9b496dd23b72bf73ca06756e23c329f5489735",
+  "main_advance_review": {
+    "compare_status": "ahead by unrelated commits",
+    "compare_head": "9ef3b1537f0ca1bbc8ac0814c380d62ece56032b",
+    "changed_paths": [
+      "runtime/integration_checks/delivered_capture.py",
+      "runtime/integration_checks/native.py",
+      "runtime/integration_checks/test_delivered_capture.py",
+      "runtime/results/delivered-capture-caller-01/"
+    ],
+    "overlap_with_experiment_path": false
+  },
+  "user_authorization": "User explicitly selected a shared-load memory-feasibility exploration; 6 concurrent workers, bounded VRAM, no speedup claim.",
+  "coordination": {
+    "issue": 5085,
+    "comment_id": 5942753083,
+    "status": "non-exclusive window request pending; no grant is inferred from GPU idleness"
+  }
+}

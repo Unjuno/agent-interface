@@ -1,0 +1,50 @@
+{
+  "schema": "unjuno.issue6645.counterexample-guard-refinement.freeze.v1",
+  "allocation_id": "CGREF-6645-T0C-ORB-20261003-03",
+  "issue": 6645,
+  "base_sha": "c33380b3b08792a331ee11f7aee05e3d41437e3e",
+  "predecessors": [
+    {"allocation_id":"CGREF-6645-T0-ORB-20261003-01","status":"STOP_PRE_FORMAL","formal_candidate_invocations":0,"formal_auditor_invocations":0},
+    {"allocation_id":"CGREF-6645-T0B-ORB-20261003-02","status":"STOP_PRE_FORMAL_LAUNCH","formal_candidate_invocations":0,"formal_auditor_invocations":0}
+  ],
+  "source_root": "research/analysis/counterexample_guard_refinement_6645_t0b_orbstack_20261003/",
+  "runtime": {
+    "engine": "OrbStack Docker",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "python": "3.12.14",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_requested": "512m",
+    "pids_limit": 64,
+    "read_only_rootfs": true,
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "memory_enforcement_claim": false
+  },
+  "construction_gate": {"source_allocation":"CGREF-6645-T0B-ORB-20261003-02","tests":13,"passed":13,"exit_code":0},
+  "formal_limits": {
+    "candidate_invocations_max": 1,
+    "auditor_invocations_max": 1,
+    "retries": 0,
+    "candidate_output": "results/formal_01/candidate/raw.json",
+    "audit_output": "results/formal_01/auditor/audit.json",
+    "overwrite": false
+  },
+  "sha256": {
+    "PROTOCOL.md": "015f63e9e82ebca3e0fb8d36cd1697f92810c88146a93913d0410a3f59c1033d",
+    "run_candidate_a03.py": "c23cc1ca7f01ca2eac2de0b606efe840e952a6cc57ec2879dcef55124b04fc8b",
+    "run_audit_a03.py": "38ce9d61b091a5db4c0b4c71e6661e62d4fef8037a5fb8de2d204fe96cb4779d",
+    "README.md": "73d1c88f0fcea2727dcfeb6e7d1b06be78d3bb6ed6e6c1031230475a42379460",
+    "source/PROTOCOL.md": "118fa9607dabf81ae9d1bfaab2ddb8d4a041380c9c974136fbb6c135f8651d8c",
+    "source/fixture.json": "7e213021d7d2fd15e65754c445bb7cb92ae9a83cf0dfd4538b7a2470b230faa3",
+    "source/candidate.py": "751d083d25f54fcf0478c863432bb47117a567dc1905acde7e04b62a315bf49f",
+    "source/run_candidate.py": "4e7ded0b997b0a04a74aea61873d7ac47c5ae82c81641341451d32e3a0a54921",
+    "source/auditor.py": "f604f5b710886f0ffde33e7a765b6975dae5f659f26b19e0966230679f13caff",
+    "source/run_audit.py": "f10dac05e5e01c3ded0bc150650a281c895607c2afd3aa9fc3efb9d1288ab00b",
+    "source/test_protocol.py": "dcc64a35a00a4f6f19f2ceade9c7266f7f19fabff9de93ccb50231b3a6655557",
+    "source/README.md": "4ea77e8ab961d94d220d81224ec7f9943af5665db369d81c56f9d96055633ce6"
+  }
+}

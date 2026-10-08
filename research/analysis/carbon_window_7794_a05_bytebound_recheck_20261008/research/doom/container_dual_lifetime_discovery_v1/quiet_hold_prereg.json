@@ -1,0 +1,13 @@
+{
+  "schema":"dual-lifetime-quiet-hold-development-prereg-v1",
+  "task_id":"container-dual-lifetime-quiet-hold-20260915-v1",
+  "runtime_source_base":"9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "upstream_result":"container-dual-lifetime-map01-20260915-v1",
+  "question":"Is capture work inside the active hold the dominant cause of delayed fresh observation after owner-enforced authority expiry?",
+  "arms":{"capture_hold":"dual-lifetime executor with unchanged capture-coupled hold","quiet_hold":"same dual-lifetime executor and owner deadline; only in-hold snapshots are removed"},
+  "conditions":{"seeds":[993200,993201,993202],"matched_pairs":3,"order":["capture_hold,quiet_hold","quiet_hold,capture_hold","capture_hold,quiet_hold"],"action":{"op":"hold","keys":["Shift_L"],"duration_ms":2000},"authority_deadline_after_runtime_clock_ms":600,"episode_timeout_seconds":60,"post_authority_lifecycle_budget_ms":400},
+  "primary":"verified owner release -> candidate passive post-authority full-observation capture",
+  "hard_gates":["verified empty release all sessions","zero input admissions after verified release","exactly one post-authority observation within lifecycle budget","terminal authority_ended with owner reason expired","five-field final scorer agreement all sessions"],
+  "decision":{"PROMOTE_QUIET_HOLD_MECHANISM":"all hard gates pass and paired median fresh-capture improvement >=10 ms with median deadline-to-empty regression <=2 ms","HOLD":"gates pass but threshold not met","REJECT":"any hard gate fails"},
+  "stop_rule":"one smoke pair then exactly three fresh matched pairs; no retry/extension for favorable result"
+}

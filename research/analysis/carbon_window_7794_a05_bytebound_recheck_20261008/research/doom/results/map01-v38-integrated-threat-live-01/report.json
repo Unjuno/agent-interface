@@ -1,0 +1,4974 @@
+{
+  "claim": "persistent typed planner plus immediate and running action invalidation from a fixed real-MAP01 threat state",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 6,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-v38-integrated-threat-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "8515ecf18e7694ca6c8cc8a1ff7dde4e3236bd15fcec98e0c6330ec7d168bf91",
+      "action": {
+        "assessment": "A hostile target is visible ahead across the hazard-striped gap; engage from the current position with a bounded shot and maintain lateral movement for safety.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "fire",
+            "extent": "pulse"
+          }
+        ],
+        "contingencies": [],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "signal_id": "health",
+            "critical_health_minimum": 35,
+            "maximum_health_loss": 12,
+            "max_source_age_ms": 30000
+          }
+        ],
+        "action_validity": [
+          {
+            "critical_health_minimum": 50,
+            "maximum_health_loss": 8,
+            "minimum_ammo": 1,
+            "max_current_age_ms": 700
+          }
+        ]
+      },
+      "usage": {
+        "total": {
+          "totalTokens": 9509,
+          "inputTokens": 9283,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 226,
+          "reasoningOutputTokens": 72
+        },
+        "last": {
+          "totalTokens": 9509,
+          "inputTokens": 9283,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 226,
+          "reasoningOutputTokens": 72
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 8086119509,
+      "prior_soft_event_summary": null,
+      "effect_memory": [],
+      "effect_receipts": [
+        {
+          "action": "fire",
+          "extent": "pulse",
+          "result": "no_visible_effect",
+          "normalized_mae": 0.00030773420479302834,
+          "no_visible_effect_threshold_lte": 0.015,
+          "after_sequence": 29,
+          "effect_observed_ns": 54879969966539,
+          "samples": 2,
+          "plan_accept_to_first_capture_ms": 55.242834,
+          "plan_accept_to_last_capture_ms": 154.451782,
+          "capture_ms_total": 6.340512,
+          "scope": "viewport pixels only"
+        }
+      ],
+      "effect_observation_samples": 2,
+      "effect_observation_capture_ms": 6.340512,
+      "execution_trace": [
+        {
+          "id": "plan-0-primary-0-0",
+          "role": "primary",
+          "command_index": 0,
+          "command": {
+            "action": "fire",
+            "extent": "pulse"
+          },
+          "accepted_ns": 54879815514757,
+          "terminal_ns": 54880063874744,
+          "receipt": {
+            "action": "fire",
+            "extent": "pulse",
+            "result": "no_visible_effect",
+            "normalized_mae": 0.00030773420479302834,
+            "no_visible_effect_threshold_lte": 0.015,
+            "after_sequence": 29,
+            "effect_observed_ns": 54879969966539,
+            "samples": 2,
+            "plan_accept_to_first_capture_ms": 55.242834,
+            "plan_accept_to_last_capture_ms": 154.451782,
+            "capture_ms_total": 6.340512,
+            "scope": "viewport pixels only"
+          },
+          "observation_samples": 2,
+          "observation_capture_ms": 6.340512
+        }
+      ],
+      "contingency_branch": null,
+      "compiled_commands": [
+        {
+          "action": "fire",
+          "extent": "pulse"
+        }
+      ],
+      "model_session_id": "01a0a37f-2752-74e2-9bf4-4593d47465aa",
+      "planner_turn_id": "01a0a37f-4926-7403-88e4-5a461de1ee17",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_terminal_observed_ns": 54879727003629,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "INPUT_ADMITTED",
+        "reason": "fresh_executor_acceptance_after_action_validation",
+        "planner_terminal": {
+          "turn_id": "01a0a37f-4926-7403-88e4-5a461de1ee17",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 54879727003629
+        },
+        "policy_invalidation": null,
+        "controller_decided_ns": 54879767806189,
+        "input_authority_admitted": true,
+        "executor_admission": {
+          "event": "accepted",
+          "id": "plan-0-primary-0-0",
+          "accepted_ns": 54879815514757
+        },
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": {
+          "format": "action-validity-admission-v1",
+          "status": "VALID_CURRENT",
+          "reason": "all_authored_observable_predicates_hold",
+          "action_may_proceed_to_executor_admission": true,
+          "requires_new_decision": false,
+          "grants_input_authority": false,
+          "contract": {
+            "format": "action-validity-contract-v1",
+            "action_fingerprint": "c77b86840cfee56673240c6c14991a60f69ba445e603e6746bd3846eeee1f489",
+            "source": {
+              "sequence": 1,
+              "capture_ns": 54871230115157,
+              "binding": {
+                "focus": 6291472,
+                "surface": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ]
+              },
+              "signals": {
+                "health": {
+                  "status": "observed",
+                  "value": 97
+                },
+                "ammo": {
+                  "status": "observed",
+                  "value": 48
+                }
+              }
+            },
+            "max_current_age_ms": 700,
+            "predicates": [
+              {
+                "signal_id": "health",
+                "operator": "minimum",
+                "value": 50
+              },
+              {
+                "signal_id": "health",
+                "operator": "max_decrease_from_source",
+                "value": 8
+              },
+              {
+                "signal_id": "ammo",
+                "operator": "minimum",
+                "value": 1
+              }
+            ]
+          },
+          "snapshot": {
+            "format": "action-admission-snapshot-v1",
+            "sequence": 27,
+            "capture_ns": 54879577616783,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 97
+              },
+              "ammo": {
+                "status": "observed",
+                "value": 48
+              }
+            }
+          },
+          "controller_decided_ns": 54879806866522,
+          "checks": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "expected": 50,
+              "observed": 97,
+              "passed": true
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "expected": 8,
+              "observed": 97,
+              "passed": true
+            },
+            {
+              "signal_id": "ammo",
+              "operator": "minimum",
+              "expected": 1,
+              "observed": 48,
+              "passed": true
+            }
+          ]
+        }
+      },
+      "running_action_guard": {
+        "schema": "running-action-guard-v3",
+        "state": "COMPLETED",
+        "planner_action": {
+          "commands": [
+            {
+              "action": "fire",
+              "extent": "pulse"
+            }
+          ],
+          "contingencies": [],
+          "action_validity": [
+            {
+              "critical_health_minimum": 50,
+              "maximum_health_loss": 8,
+              "minimum_ammo": 1,
+              "max_current_age_ms": 700
+            }
+          ]
+        },
+        "planner_action_fingerprint": "5deac46e4be06a764de304a1af3c037ce6c0684c31fb945fa5289dff2fe8ffc0",
+        "compiler_identity": "map01_overlap_controller_v38.compile_commands",
+        "historical_first_admission": {
+          "event": "accepted",
+          "id": "plan-0-primary-0-0",
+          "accepted_ns": 54879815514757
+        },
+        "program_bindings": [
+          {
+            "planner_action_fingerprint": "5deac46e4be06a764de304a1af3c037ce6c0684c31fb945fa5289dff2fe8ffc0",
+            "compiler_identity": "map01_overlap_controller_v38.compile_commands",
+            "program_fingerprint": "5503d83f995f590a917e62c509bafa450bb74a65f6228d1c38f62eb497a9e8ca",
+            "program": {
+              "role": "primary",
+              "semantic_commands": [
+                {
+                  "action": "fire",
+                  "extent": "pulse"
+                }
+              ],
+              "command_indices": [
+                0
+              ],
+              "contingency_after": null,
+              "compiled_steps": [
+                {
+                  "op": "hold",
+                  "keys": [
+                    "space"
+                  ],
+                  "duration_ms": 100
+                }
+              ]
+            },
+            "submit": {
+              "command": {
+                "op": "submit",
+                "id": "plan-0-primary-0-0",
+                "expected_sequence": 27,
+                "valid_until_ns": 54904807432752,
+                "steps": [
+                  {
+                    "op": "hold",
+                    "keys": [
+                      "space"
+                    ],
+                    "duration_ms": 100
+                  }
+                ]
+              },
+              "sent_ns": 54879807432752
+            },
+            "accepted": {
+              "event": "accepted",
+              "id": "plan-0-primary-0-0",
+              "steps": 1,
+              "program_sha256": "709584229e7b692e4b1bcff9e1daea453a5fd9f9657cec8462d5f334e35b934a",
+              "accepted_ns": 54879815514757
+            },
+            "branch_evidence": null
+          }
+        ],
+        "running_validity": {
+          "schema": "running-action-guard-v1",
+          "state": "COMPLETED",
+          "action": [
+            {
+              "action": "fire",
+              "extent": "pulse"
+            }
+          ],
+          "contract": {
+            "format": "action-validity-contract-v1",
+            "action_fingerprint": "c77b86840cfee56673240c6c14991a60f69ba445e603e6746bd3846eeee1f489",
+            "source": {
+              "sequence": 1,
+              "capture_ns": 54871230115157,
+              "binding": {
+                "focus": 6291472,
+                "surface": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ]
+              },
+              "signals": {
+                "health": {
+                  "status": "observed",
+                  "value": 97
+                },
+                "ammo": {
+                  "status": "observed",
+                  "value": 48
+                }
+              }
+            },
+            "max_current_age_ms": 700,
+            "predicates": [
+              {
+                "signal_id": "health",
+                "operator": "minimum",
+                "value": 50
+              },
+              {
+                "signal_id": "health",
+                "operator": "max_decrease_from_source",
+                "value": 8
+              },
+              {
+                "signal_id": "ammo",
+                "operator": "minimum",
+                "value": 1
+              }
+            ]
+          },
+          "active_program": null,
+          "program_admissions": [
+            {
+              "event": "accepted",
+              "id": "plan-0-primary-0-0",
+              "accepted_ns": 54879815514757
+            }
+          ],
+          "program_terminals": [
+            {
+              "event": "terminal",
+              "id": "plan-0-primary-0-0",
+              "status": "completed",
+              "error": null,
+              "steps_completed": 1,
+              "release": {
+                "event": "owner_release",
+                "reason": "release",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 54880063795209,
+                "valid_until_ns": 54904807432752
+              },
+              "interruption": null,
+              "decision_reason": null,
+              "terminal_ns": 54880063874744,
+              "semantic_completion": "program status only; task scoring is separate",
+              "emit_ns": 54880063877588
+            }
+          ],
+          "validity_checks": [
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "c77b86840cfee56673240c6c14991a60f69ba445e603e6746bd3846eeee1f489",
+                "source": {
+                  "sequence": 1,
+                  "capture_ns": 54871230115157,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 97
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 48
+                    }
+                  }
+                },
+                "max_current_age_ms": 700,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 50
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 8
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 27,
+                "capture_ns": 54879577616783,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "health": {
+                    "status": "observed",
+                    "value": 97
+                  },
+                  "ammo": {
+                    "status": "observed",
+                    "value": 48
+                  }
+                }
+              },
+              "controller_decided_ns": 54879806866522,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 50,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 8,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 48,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "c77b86840cfee56673240c6c14991a60f69ba445e603e6746bd3846eeee1f489",
+                "source": {
+                  "sequence": 1,
+                  "capture_ns": 54871230115157,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 97
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 48
+                    }
+                  }
+                },
+                "max_current_age_ms": 700,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 50
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 8
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 28,
+                "capture_ns": 54879870757591,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 48
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 97
+                  }
+                }
+              },
+              "controller_decided_ns": 54879888582852,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 50,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 8,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 48,
+                  "passed": true
+                }
+              ]
+            },
+            {
+              "format": "action-validity-admission-v1",
+              "status": "VALID_CURRENT",
+              "reason": "all_authored_observable_predicates_hold",
+              "action_may_proceed_to_executor_admission": true,
+              "requires_new_decision": false,
+              "grants_input_authority": false,
+              "contract": {
+                "format": "action-validity-contract-v1",
+                "action_fingerprint": "c77b86840cfee56673240c6c14991a60f69ba445e603e6746bd3846eeee1f489",
+                "source": {
+                  "sequence": 1,
+                  "capture_ns": 54871230115157,
+                  "binding": {
+                    "focus": 6291472,
+                    "surface": 6291472,
+                    "geometry": [
+                      321,
+                      180,
+                      640,
+                      480
+                    ]
+                  },
+                  "signals": {
+                    "health": {
+                      "status": "observed",
+                      "value": 97
+                    },
+                    "ammo": {
+                      "status": "observed",
+                      "value": 48
+                    }
+                  }
+                },
+                "max_current_age_ms": 700,
+                "predicates": [
+                  {
+                    "signal_id": "health",
+                    "operator": "minimum",
+                    "value": 50
+                  },
+                  {
+                    "signal_id": "health",
+                    "operator": "max_decrease_from_source",
+                    "value": 8
+                  },
+                  {
+                    "signal_id": "ammo",
+                    "operator": "minimum",
+                    "value": 1
+                  }
+                ]
+              },
+              "snapshot": {
+                "format": "action-admission-snapshot-v1",
+                "sequence": 29,
+                "capture_ns": 54879969966539,
+                "binding": {
+                  "focus": 6291472,
+                  "surface": 6291472,
+                  "geometry": [
+                    321,
+                    180,
+                    640,
+                    480
+                  ]
+                },
+                "signals": {
+                  "ammo": {
+                    "status": "observed",
+                    "value": 48
+                  },
+                  "health": {
+                    "status": "observed",
+                    "value": 97
+                  }
+                }
+              },
+              "controller_decided_ns": 54879988541457,
+              "checks": [
+                {
+                  "signal_id": "health",
+                  "operator": "minimum",
+                  "expected": 50,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "health",
+                  "operator": "max_decrease_from_source",
+                  "expected": 8,
+                  "observed": 97,
+                  "passed": true
+                },
+                {
+                  "signal_id": "ammo",
+                  "operator": "minimum",
+                  "expected": 1,
+                  "observed": 48,
+                  "passed": true
+                }
+              ]
+            }
+          ],
+          "invalidation": null,
+          "cancellation": null,
+          "current_input_authority": false,
+          "physical_input_may_be_down": false,
+          "physical_release_verified": true,
+          "requires_new_decision": false,
+          "grants_input_authority": false
+        },
+        "invalidation": null,
+        "cancellation": null,
+        "current_input_authority": false,
+        "physical_input_may_be_down": false,
+        "physical_release_verified": true,
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "authority_semantics": "root current_input_authority is authoritative; historical_first_admission records only the first past Executor acceptance",
+        "active_intent": null,
+        "early_physical_releases": [],
+        "program_terminal_pending": false
+      },
+      "running_action_invalidation": null,
+      "partial_execution": null,
+      "action_refresh_program_ids": [],
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 54871641112147,
+      "controller_model_ended_ns": 54879727231656,
+      "model_image_to_plan_accept_ns": 8585399600,
+      "fresh_observation_to_plan_accept_ns": 237897974,
+      "fresh_sequence_at_plan": 27,
+      "cover_terminal_before_plan": true,
+      "cover_program_ids": [
+        "cover-0"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 97,
+          "maximum_health_loss": 0,
+          "hard_minimum": 97,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 97,
+          "sequence": 1,
+          "capture_ns": 54871230115157,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.3586387434554974
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "plan_terminal": "completed",
+      "model_action_discarded": false,
+      "remaining_action_discarded": false
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/029.png",
+      "model_image": "results-local/doom/map01-v38-integrated-threat-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "0bdcc9f37594f63227608aeb6afd1381af0adbfc8943294fbcd897cc0ac384c8",
+      "action": {
+        "assessment": "The view is unchanged after firing, so advance position with a short forward movement rather than repeating the ineffective attack.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ],
+        "contingencies": [
+          {
+            "after_command": 0,
+            "condition": "no_visible_effect",
+            "commands": [
+              {
+                "action": "turn_left",
+                "extent": "pulse"
+              }
+            ]
+          }
+        ],
+        "next_cover": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          }
+        ],
+        "next_cover_validity": [
+          {
+            "signal_id": "health",
+            "critical_health_minimum": 35,
+            "maximum_health_loss": 12,
+            "max_source_age_ms": 30000
+          }
+        ],
+        "action_validity": [
+          {
+            "critical_health_minimum": 50,
+            "maximum_health_loss": 8,
+            "minimum_ammo": 0,
+            "max_current_age_ms": 700
+          }
+        ]
+      },
+      "effect_memory": [
+        "fire"
+      ],
+      "usage": {
+        "total": {
+          "totalTokens": 19861,
+          "inputTokens": 19302,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 559,
+          "reasoningOutputTokens": 232
+        },
+        "last": {
+          "totalTokens": 10352,
+          "inputTokens": 10019,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 333,
+          "reasoningOutputTokens": 160
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 11418359885,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a37f-2752-74e2-9bf4-4593d47465aa",
+      "planner_turn_id": "01a0a37f-6b46-7fd0-9512-6ab48537873f",
+      "planner_turn_status": "completed",
+      "planner_answer_eligible": true,
+      "planner_terminal_observed_ns": 54891788108542,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_ACTION_NOT_CURRENT",
+        "reason": "REJECTED_PREDICATE",
+        "planner_terminal": {
+          "turn_id": "01a0a37f-6b46-7fd0-9512-6ab48537873f",
+          "status": "completed",
+          "answer_eligible": true,
+          "terminal_observed_ns": 54891788108542
+        },
+        "policy_invalidation": null,
+        "controller_decided_ns": 54891820419691,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": {
+          "format": "action-validity-admission-v1",
+          "status": "REJECTED_PREDICATE",
+          "reason": "health_max_decrease_from_source_failed",
+          "action_may_proceed_to_executor_admission": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "contract": {
+            "format": "action-validity-contract-v1",
+            "action_fingerprint": "3e9babc43311c382651d332cb5e7edeb3e0825d21e8ce4aeb23b69e6c2a3be3b",
+            "source": {
+              "sequence": 29,
+              "capture_ns": 54879969966539,
+              "binding": {
+                "focus": 6291472,
+                "surface": 6291472,
+                "geometry": [
+                  321,
+                  180,
+                  640,
+                  480
+                ]
+              },
+              "signals": {
+                "health": {
+                  "status": "observed",
+                  "value": 97
+                }
+              }
+            },
+            "max_current_age_ms": 700,
+            "predicates": [
+              {
+                "signal_id": "health",
+                "operator": "minimum",
+                "value": 50
+              },
+              {
+                "signal_id": "health",
+                "operator": "max_decrease_from_source",
+                "value": 8
+              }
+            ]
+          },
+          "snapshot": {
+            "format": "action-admission-snapshot-v1",
+            "sequence": 91,
+            "capture_ns": 54891674674144,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "signals": {
+              "health": {
+                "status": "observed",
+                "value": 85
+              }
+            }
+          },
+          "controller_decided_ns": 54891851532383,
+          "checks": [
+            {
+              "signal_id": "health",
+              "operator": "minimum",
+              "expected": 50,
+              "observed": 85,
+              "passed": true
+            },
+            {
+              "signal_id": "health",
+              "operator": "max_decrease_from_source",
+              "expected": 8,
+              "observed": 85,
+              "passed": false
+            }
+          ]
+        }
+      },
+      "action_source_signals": {
+        "health": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 97,
+          "sequence": 29,
+          "capture_ns": 54879969966539,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.3586387434554974
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "ammo": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "ammo",
+          "value": 48,
+          "sequence": 29,
+          "capture_ns": 54879969966539,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 7,
+              "best_score": 0.060526315789473685,
+              "second_score": 0.05204460966542751
+            },
+            {
+              "slot": 1,
+              "digit": 4,
+              "best_digit": 4,
+              "best_score": 0.9386189258312021,
+              "second_score": 0.2905759162303665
+            },
+            {
+              "slot": 2,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9353233830845771,
+              "second_score": 0.3518987341772152
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        }
+      },
+      "action_current_signals": {
+        "health": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 85,
+          "sequence": 91,
+          "capture_ns": 54891674674144,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9328358208955224,
+              "second_score": 0.34430379746835443
+            },
+            {
+              "slot": 2,
+              "digit": 5,
+              "best_digit": 5,
+              "best_score": 0.9239373601789709,
+              "second_score": 0.3394736842105263
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "ammo": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "ammo",
+          "value": 47,
+          "sequence": 91,
+          "capture_ns": 54891674674144,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 7,
+              "best_score": 0.060526315789473685,
+              "second_score": 0.05204460966542751
+            },
+            {
+              "slot": 1,
+              "digit": 4,
+              "best_digit": 4,
+              "best_score": 0.9386189258312021,
+              "second_score": 0.2905759162303665
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.34554973821989526
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        }
+      },
+      "planner_cancellation_requested": false,
+      "planner_interrupt": null,
+      "controller_model_started_ns": 54880369967882,
+      "controller_model_ended_ns": 54891788327767,
+      "cover_program_ids": [
+        "cover-1"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        }
+      ],
+      "cover_policy_source_iteration": 0,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": {
+          "signal_id": "health",
+          "critical_health_minimum": 35,
+          "maximum_health_loss": 12,
+          "max_source_age_ms": 30000
+        },
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 35,
+          "maximum_health_loss": 12,
+          "hard_minimum": 85,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 97,
+          "sequence": 29,
+          "capture_ns": 54879969966539,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9274193548387096,
+              "second_score": 0.31413612565445026
+            },
+            {
+              "slot": 2,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9368421052631579,
+              "second_score": 0.3586387434554974
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 2,
+      "cover_validity_latest_soft_event": {
+        "sequence": 73,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 85,
+          "sequence": 73,
+          "capture_ns": 54888321642011,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9328358208955224,
+              "second_score": 0.34430379746835443
+            },
+            {
+              "slot": 2,
+              "digit": 5,
+              "best_digit": 5,
+              "best_score": 0.9239373601789709,
+              "second_score": 0.3394736842105263
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-1",
+          "signal_id": "health",
+          "status": "SOFT_CHANGED",
+          "reason": "within_validity_envelope",
+          "source_value": 97,
+          "current_value": 85,
+          "hard_minimum": 85,
+          "source_age_ms": 8351.675472,
+          "keep_existing_policy": true,
+          "requires_new_decision": false,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54888407531584,
+        "signal_extracted_ns": 54888424265157,
+        "outcome_evaluated_ns": 54888424295955,
+        "signal_extraction_ms": 16.733573,
+        "outcome_evaluation_ms": 0.030798
+      },
+      "model_action_discarded": true,
+      "discard_reason": "action_not_current",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/091.png",
+      "model_image": "results-local/doom/map01-v38-integrated-threat-live-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "0270b0cba0f2f6cb2dab1cbf9ade0c622071411b603d66a42bf0635003f611bd",
+      "action": null,
+      "effect_memory": [],
+      "usage": {
+        "total": {
+          "totalTokens": 19861,
+          "inputTokens": 19302,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 559,
+          "reasoningOutputTokens": 232
+        },
+        "last": {
+          "totalTokens": 10352,
+          "inputTokens": 10019,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 333,
+          "reasoningOutputTokens": 160
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 2706911629,
+      "prior_soft_event_summary": {
+        "signal_id": "health",
+        "source_value": 97,
+        "current_value": 85,
+        "hard_minimum": 85,
+        "soft_event_count": 2,
+        "sequence": 73,
+        "observed_during_iteration": 1,
+        "cover_policy_source_iteration": 0,
+        "effect": "prior_cover_preserved",
+        "grants_input_authority": false
+      },
+      "model_session_id": "01a0a37f-2752-74e2-9bf4-4593d47465aa",
+      "planner_turn_id": "01a0a37f-992c-7460-9faf-35b6b32682de",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_terminal_observed_ns": 54894834592186,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "01a0a37f-992c-7460-9faf-35b6b32682de",
+          "status": "interrupted",
+          "answer_eligible": false,
+          "terminal_observed_ns": 54894834592186
+        },
+        "policy_invalidation": {
+          "sequence": 100,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 79,
+            "sequence": 100,
+            "capture_ns": 54894702718780,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 7,
+                "best_digit": 7,
+                "best_score": 0.9342105263157895,
+                "second_score": 0.3586387434554974
+              },
+              {
+                "slot": 2,
+                "digit": 9,
+                "best_digit": 9,
+                "best_score": 0.9301075268817204,
+                "second_score": 0.31413612565445026
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-2",
+            "signal_id": "health",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 85,
+            "current_value": 79,
+            "hard_minimum": 85,
+            "source_age_ms": 3028.044636,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54894788244596,
+          "signal_extracted_ns": 54894802304099,
+          "outcome_evaluated_ns": 54894802334005,
+          "signal_extraction_ms": 14.059503,
+          "outcome_evaluation_ms": 0.029906
+        },
+        "controller_decided_ns": 54894834736364,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": null
+      },
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 54892127823251,
+      "controller_model_ended_ns": 54894834734880,
+      "cover_program_ids": [
+        "cover-2"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 85,
+          "maximum_health_loss": 0,
+          "hard_minimum": 85,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 85,
+          "sequence": 91,
+          "capture_ns": 54891674674144,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9328358208955224,
+              "second_score": 0.34430379746835443
+            },
+            {
+              "slot": 2,
+              "digit": 5,
+              "best_digit": 5,
+              "best_score": 0.9239373601789709,
+              "second_score": 0.3394736842105263
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 100,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 79,
+          "sequence": 100,
+          "capture_ns": 54894702718780,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9301075268817204,
+              "second_score": 0.31413612565445026
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-2",
+          "signal_id": "health",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "source_value": 85,
+          "current_value": 79,
+          "hard_minimum": 85,
+          "source_age_ms": 3028.044636,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54894788244596,
+        "signal_extracted_ns": 54894802304099,
+        "outcome_evaluated_ns": 54894802334005,
+        "signal_extraction_ms": 14.059503,
+        "outcome_evaluation_ms": 0.029906
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/100.png",
+      "model_image": "results-local/doom/map01-v38-integrated-threat-live-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "12edd85dd1572386d8449d205769f1ede0b1dbe5bf8abde20998157497963395",
+      "action": null,
+      "effect_memory": [],
+      "usage": {
+        "total": {
+          "totalTokens": 19861,
+          "inputTokens": 19302,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 559,
+          "reasoningOutputTokens": 232
+        },
+        "last": {
+          "totalTokens": 10352,
+          "inputTokens": 10019,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 333,
+          "reasoningOutputTokens": 160
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 2702167116,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a37f-2752-74e2-9bf4-4593d47465aa",
+      "planner_turn_id": "01a0a37f-a4e6-7f52-a195-05893536c508",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_terminal_observed_ns": 54897827682048,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "01a0a37f-a4e6-7f52-a195-05893536c508",
+          "status": "interrupted",
+          "answer_eligible": false,
+          "terminal_observed_ns": 54897827682048
+        },
+        "policy_invalidation": {
+          "sequence": 109,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 78,
+            "sequence": 109,
+            "capture_ns": 54897678156731,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 7,
+                "best_digit": 7,
+                "best_score": 0.9342105263157895,
+                "second_score": 0.3586387434554974
+              },
+              {
+                "slot": 2,
+                "digit": 8,
+                "best_digit": 8,
+                "best_score": 0.9378109452736318,
+                "second_score": 0.35443037974683544
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-3",
+            "signal_id": "health",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 79,
+            "current_value": 78,
+            "hard_minimum": 79,
+            "source_age_ms": 2975.437951,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54897774942414,
+          "signal_extracted_ns": 54897792402872,
+          "outcome_evaluated_ns": 54897792437584,
+          "signal_extraction_ms": 17.460458,
+          "outcome_evaluation_ms": 0.034712
+        },
+        "controller_decided_ns": 54897827837445,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": null
+      },
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 54895125666879,
+      "controller_model_ended_ns": 54897827833995,
+      "cover_program_ids": [
+        "cover-3"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 79,
+          "maximum_health_loss": 0,
+          "hard_minimum": 79,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 79,
+          "sequence": 100,
+          "capture_ns": 54894702718780,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 9,
+              "best_digit": 9,
+              "best_score": 0.9301075268817204,
+              "second_score": 0.31413612565445026
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 109,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 78,
+          "sequence": 109,
+          "capture_ns": 54897678156731,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9378109452736318,
+              "second_score": 0.35443037974683544
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-3",
+          "signal_id": "health",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "source_value": 79,
+          "current_value": 78,
+          "hard_minimum": 79,
+          "source_age_ms": 2975.437951,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54897774942414,
+        "signal_extracted_ns": 54897792402872,
+        "outcome_evaluated_ns": 54897792437584,
+        "signal_extraction_ms": 17.460458,
+        "outcome_evaluation_ms": 0.034712
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 4,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/109.png",
+      "model_image": "results-local/doom/map01-v38-integrated-threat-live-01/decision-4/temporal-sheet.png",
+      "model_image_sha256": "ec36a7f86ee4ead564101d8981f3b7e0c31d80b69731dc73abecfba58620195b",
+      "action": null,
+      "effect_memory": [],
+      "usage": null,
+      "model_ns": 623713653,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a37f-2752-74e2-9bf4-4593d47465aa",
+      "planner_turn_id": "01a0a37f-b0ab-7340-999e-aa28dfdc46ee",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_terminal_observed_ns": 54898763348728,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "01a0a37f-b0ab-7340-999e-aa28dfdc46ee",
+          "status": "interrupted",
+          "answer_eligible": false,
+          "terminal_observed_ns": 54898763348728
+        },
+        "policy_invalidation": {
+          "sequence": 112,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 74,
+            "sequence": 112,
+            "capture_ns": 54898626080916,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 7,
+                "best_digit": 7,
+                "best_score": 0.9342105263157895,
+                "second_score": 0.3586387434554974
+              },
+              {
+                "slot": 2,
+                "digit": 4,
+                "best_digit": 4,
+                "best_score": 0.9386189258312021,
+                "second_score": 0.29842931937172773
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-4",
+            "signal_id": "health",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 78,
+            "current_value": 74,
+            "hard_minimum": 78,
+            "source_age_ms": 947.924185,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54898714213056,
+          "signal_extracted_ns": 54898730349658,
+          "outcome_evaluated_ns": 54898730380641,
+          "signal_extraction_ms": 16.136602,
+          "outcome_evaluation_ms": 0.030983
+        },
+        "controller_decided_ns": 54898763531143,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": null
+      },
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 54898139815625,
+      "controller_model_ended_ns": 54898763529278,
+      "cover_program_ids": [
+        "cover-4"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 78,
+          "maximum_health_loss": 0,
+          "hard_minimum": 78,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 78,
+          "sequence": 109,
+          "capture_ns": 54897678156731,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 8,
+              "best_digit": 8,
+              "best_score": 0.9378109452736318,
+              "second_score": 0.35443037974683544
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 112,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 74,
+          "sequence": 112,
+          "capture_ns": 54898626080916,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 4,
+              "best_digit": 4,
+              "best_score": 0.9386189258312021,
+              "second_score": 0.29842931937172773
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-4",
+          "signal_id": "health",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "source_value": 78,
+          "current_value": 74,
+          "hard_minimum": 78,
+          "source_age_ms": 947.924185,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54898714213056,
+        "signal_extracted_ns": 54898730349658,
+        "outcome_evaluated_ns": 54898730380641,
+        "signal_extraction_ms": 16.136602,
+        "outcome_evaluation_ms": 0.030983
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    },
+    {
+      "iteration": 5,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/112.png",
+      "model_image": "results-local/doom/map01-v38-integrated-threat-live-01/decision-5/temporal-sheet.png",
+      "model_image_sha256": "a2f51b026cf7bfceff9d03249bddd186d977e8ec77485241a7d1e64d9bed663f",
+      "action": null,
+      "effect_memory": [],
+      "usage": {
+        "total": {
+          "totalTokens": 19861,
+          "inputTokens": 19302,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 559,
+          "reasoningOutputTokens": 232
+        },
+        "last": {
+          "totalTokens": 10352,
+          "inputTokens": 10019,
+          "cachedInputTokens": 0,
+          "cacheWriteInputTokens": 0,
+          "outputTokens": 333,
+          "reasoningOutputTokens": 160
+        },
+        "modelContextWindow": 258400
+      },
+      "model_ns": 1951557865,
+      "prior_soft_event_summary": null,
+      "model_session_id": "01a0a37f-2752-74e2-9bf4-4593d47465aa",
+      "planner_turn_id": "01a0a37f-b46c-7c80-8f8c-898e0cd011dc",
+      "planner_turn_status": "interrupted",
+      "planner_answer_eligible": false,
+      "planner_terminal_observed_ns": 54901054229158,
+      "final_action_admission": {
+        "schema": "final-action-admission-v2",
+        "status": "REJECTED_POLICY_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "planner_terminal": {
+          "turn_id": "01a0a37f-b46c-7c80-8f8c-898e0cd011dc",
+          "status": "interrupted",
+          "answer_eligible": false,
+          "terminal_observed_ns": 54901054229158
+        },
+        "policy_invalidation": {
+          "sequence": 119,
+          "signal": {
+            "format": "observable-signal-v1",
+            "status": "observed",
+            "signal_id": "health",
+            "value": 71,
+            "sequence": 119,
+            "capture_ns": 54900915841886,
+            "binding": {
+              "focus": 6291472,
+              "surface": 6291472,
+              "geometry": [
+                321,
+                180,
+                640,
+                480
+              ]
+            },
+            "slots": [
+              {
+                "slot": 0,
+                "digit": null,
+                "best_digit": 5,
+                "best_score": 0.058165548098434,
+                "second_score": 0.055762081784386616
+              },
+              {
+                "slot": 1,
+                "digit": 7,
+                "best_digit": 7,
+                "best_score": 0.9342105263157895,
+                "second_score": 0.3586387434554974
+              },
+              {
+                "slot": 2,
+                "digit": 1,
+                "best_digit": 1,
+                "best_score": 0.9591078066914498,
+                "second_score": 0.21144278606965175
+              }
+            ],
+            "evidence": "hash-bound WAD glyph foreground exact-match",
+            "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+          },
+          "outcome": {
+            "format": "observable-signal-guard-outcome-v1",
+            "guard_id": "map01-5",
+            "signal_id": "health",
+            "status": "HARD_INVALIDATED",
+            "reason": "below_hard_minimum",
+            "source_value": 74,
+            "current_value": 71,
+            "hard_minimum": 74,
+            "source_age_ms": 2289.76097,
+            "keep_existing_policy": false,
+            "requires_new_decision": true,
+            "grants_input_authority": false,
+            "may_only_preserve_or_reduce_existing_authority": true,
+            "semantic_change_identified": true,
+            "task_success_verified": false
+          },
+          "monitor_received_ns": 54901004939464,
+          "signal_extracted_ns": 54901019769575,
+          "outcome_evaluated_ns": 54901019801632,
+          "signal_extraction_ms": 14.830111,
+          "outcome_evaluation_ms": 0.032057
+        },
+        "controller_decided_ns": 54901054327852,
+        "input_authority_admitted": false,
+        "executor_admission": null,
+        "revocation": null,
+        "grants_input_authority": false,
+        "action_validity": null
+      },
+      "planner_cancellation_requested": true,
+      "planner_interrupt": {
+        "outcome": "requested",
+        "response": {}
+      },
+      "controller_model_started_ns": 54899102768408,
+      "controller_model_ended_ns": 54901054326273,
+      "cover_program_ids": [
+        "cover-5"
+      ],
+      "cover_renewals": 0,
+      "cover_renewal_gaps_ms": [],
+      "cover_policy": [],
+      "cover_policy_source_iteration": null,
+      "cover_validity_admission": {
+        "status": "admitted",
+        "authored": null,
+        "effective": {
+          "signal_id": "health",
+          "critical_health_minimum": 74,
+          "maximum_health_loss": 0,
+          "hard_minimum": 74,
+          "max_source_age_ms": 30000
+        },
+        "source_signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 74,
+          "sequence": 112,
+          "capture_ns": 54898626080916,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 4,
+              "best_digit": 4,
+              "best_score": 0.9386189258312021,
+              "second_score": 0.29842931937172773
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "grants_input_authority": false
+      },
+      "cover_validity_soft_events": 0,
+      "cover_validity_latest_soft_event": null,
+      "policy_invalidation": {
+        "sequence": 119,
+        "signal": {
+          "format": "observable-signal-v1",
+          "status": "observed",
+          "signal_id": "health",
+          "value": 71,
+          "sequence": 119,
+          "capture_ns": 54900915841886,
+          "binding": {
+            "focus": 6291472,
+            "surface": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ]
+          },
+          "slots": [
+            {
+              "slot": 0,
+              "digit": null,
+              "best_digit": 5,
+              "best_score": 0.058165548098434,
+              "second_score": 0.055762081784386616
+            },
+            {
+              "slot": 1,
+              "digit": 7,
+              "best_digit": 7,
+              "best_score": 0.9342105263157895,
+              "second_score": 0.3586387434554974
+            },
+            {
+              "slot": 2,
+              "digit": 1,
+              "best_digit": 1,
+              "best_score": 0.9591078066914498,
+              "second_score": 0.21144278606965175
+            }
+          ],
+          "evidence": "hash-bound WAD glyph foreground exact-match",
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "outcome": {
+          "format": "observable-signal-guard-outcome-v1",
+          "guard_id": "map01-5",
+          "signal_id": "health",
+          "status": "HARD_INVALIDATED",
+          "reason": "below_hard_minimum",
+          "source_value": 74,
+          "current_value": 71,
+          "hard_minimum": 74,
+          "source_age_ms": 2289.76097,
+          "keep_existing_policy": false,
+          "requires_new_decision": true,
+          "grants_input_authority": false,
+          "may_only_preserve_or_reduce_existing_authority": true,
+          "semantic_change_identified": true,
+          "task_success_verified": false
+        },
+        "monitor_received_ns": 54901004939464,
+        "signal_extracted_ns": 54901019769575,
+        "outcome_evaluated_ns": 54901019801632,
+        "signal_extraction_ms": 14.830111,
+        "outcome_evaluation_ms": 0.032057
+      },
+      "model_action_discarded": true,
+      "discard_reason": "policy_dependency_invalidated",
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "not_admitted"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 31730575972,
+    "death_count": 0,
+    "kill_count": 0,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 54903076373217
+  },
+  "model_session_span": 6,
+  "model_session_ids": [
+    "01a0a37f-2752-74e2-9bf4-4593d47465aa"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "effect_receipt_contract": "reuse the final exact sample already emitted by each hold; retain full local receipts but expose only no-visible-effect action names to the model",
+  "soft_event_context_contract": "expose only the newest validated typed soft event from the preceding control interval in the already-required next planner turn; add no image, model call, input authority or mid-turn boundary",
+  "final_action_admission_contract": "historical transition receipt only after running guard creation: planner eligibility, controller policy/validation decision and first fresh Executor acceptance remain retained; it is not current authority",
+  "running_action_contract": "the root running-action-v3 receipt is authoritative after guard creation; every primary/fallback semantic slice is deterministically recompiled and bound to the exact submitted steps, Executor program SHA-256 and lease token; invalidation requires a matched cancel, then exposes independently verified empty physical release while terminal closure remains pending; inter-segment input still requires a fresh passive observation",
+  "typed_observation_contract": "health/ammo and RGB SHA-256 are extracted from the captured in-memory frame and emitted before transport/artifact publication; every retained full observation must later match epoch, binding, RGB hash and both signal values",
+  "typed_observations": 119,
+  "typed_artifact_reconciliations": [
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f2913c27965dfdb78134e34089dedaeb5482ee8a41d8dd96a1c4090647174dd4",
+      "artifact_rgb_sha256": "f2913c27965dfdb78134e34089dedaeb5482ee8a41d8dd96a1c4090647174dd4",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/001.png",
+      "sequence": 1
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "24e97a7f6eb34fc28e5be9a7f3f652bebad3bef8999d41d5cf90bd5700e02370",
+      "artifact_rgb_sha256": "24e97a7f6eb34fc28e5be9a7f3f652bebad3bef8999d41d5cf90bd5700e02370",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/002.png",
+      "sequence": 2
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "656a641c6c23bbcf166a16898257d2b85d2774d523a1ffa352aff1c7fe7c441e",
+      "artifact_rgb_sha256": "656a641c6c23bbcf166a16898257d2b85d2774d523a1ffa352aff1c7fe7c441e",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/003.png",
+      "sequence": 3
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "6c9c0cd4390174847f4fe500ac398944eb328ad06fee208fb0794f7e7cb9cc7f",
+      "artifact_rgb_sha256": "6c9c0cd4390174847f4fe500ac398944eb328ad06fee208fb0794f7e7cb9cc7f",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/004.png",
+      "sequence": 4
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "5a2e33e17ca847c61d4456f54c0372a8a9cbf38a3c83fa0a61a23b1eee93307c",
+      "artifact_rgb_sha256": "5a2e33e17ca847c61d4456f54c0372a8a9cbf38a3c83fa0a61a23b1eee93307c",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/005.png",
+      "sequence": 5
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "fc2b3a15cbb3e612785f21c6a05903108a739b9e5e3c5c5139a282b7a5cf0c28",
+      "artifact_rgb_sha256": "fc2b3a15cbb3e612785f21c6a05903108a739b9e5e3c5c5139a282b7a5cf0c28",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/006.png",
+      "sequence": 6
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "16f113cccf3208b11d1c6181c939d9c25713e058c20b28908b3a3e5d73e2832c",
+      "artifact_rgb_sha256": "16f113cccf3208b11d1c6181c939d9c25713e058c20b28908b3a3e5d73e2832c",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/007.png",
+      "sequence": 7
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "4d2dd43f48264b7b78b2d6ae0af04a5783c23bb0a8454e2c7de8c8ae433029d8",
+      "artifact_rgb_sha256": "4d2dd43f48264b7b78b2d6ae0af04a5783c23bb0a8454e2c7de8c8ae433029d8",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/008.png",
+      "sequence": 8
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f1268733e33328e0900b6f36416e569b477276e30dd46ee8c11b1aa85efcbf35",
+      "artifact_rgb_sha256": "f1268733e33328e0900b6f36416e569b477276e30dd46ee8c11b1aa85efcbf35",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/009.png",
+      "sequence": 9
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "7d56d66ad91d73cc1fd82b1512616eebe0adeb4732e2708bc3db03b399d14589",
+      "artifact_rgb_sha256": "7d56d66ad91d73cc1fd82b1512616eebe0adeb4732e2708bc3db03b399d14589",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/010.png",
+      "sequence": 10
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "9aacfe88fd641ccf7d7d398568e365bcd382aa89dc19eaa013edba0d050c0667",
+      "artifact_rgb_sha256": "9aacfe88fd641ccf7d7d398568e365bcd382aa89dc19eaa013edba0d050c0667",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/011.png",
+      "sequence": 11
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "7c47bcefa4f3d3e47652a94309a57c4f0a3b3ceba7fa54098e8bb396c4e11c28",
+      "artifact_rgb_sha256": "7c47bcefa4f3d3e47652a94309a57c4f0a3b3ceba7fa54098e8bb396c4e11c28",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/012.png",
+      "sequence": 12
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "72950426c7999626873755e3e07bdb63a4fed72e6c54378d7237013d7b9af543",
+      "artifact_rgb_sha256": "72950426c7999626873755e3e07bdb63a4fed72e6c54378d7237013d7b9af543",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/013.png",
+      "sequence": 13
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "51b83d2a2f893f3a826a87a65208115ed8fcdc3fee91f51f24b22bb119d9c071",
+      "artifact_rgb_sha256": "51b83d2a2f893f3a826a87a65208115ed8fcdc3fee91f51f24b22bb119d9c071",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/014.png",
+      "sequence": 14
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "37f642f8cbead843cbdab208cc584c9d155ccc8e97642c73666a917f6f62b905",
+      "artifact_rgb_sha256": "37f642f8cbead843cbdab208cc584c9d155ccc8e97642c73666a917f6f62b905",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/015.png",
+      "sequence": 15
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "5bb49b24e1a90a00fd15449c146dcbf3ef0b56eb193f4a6f24f0e9d6578c022b",
+      "artifact_rgb_sha256": "5bb49b24e1a90a00fd15449c146dcbf3ef0b56eb193f4a6f24f0e9d6578c022b",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/016.png",
+      "sequence": 16
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "e3a1c3f2e8f4805b014608b716fd094ed18620f240240a6ce3da215a84c15ee2",
+      "artifact_rgb_sha256": "e3a1c3f2e8f4805b014608b716fd094ed18620f240240a6ce3da215a84c15ee2",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/017.png",
+      "sequence": 17
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "2f2a718726c68db1a3aef459746d7834752fda058b0bcbe327a40ad5277573c6",
+      "artifact_rgb_sha256": "2f2a718726c68db1a3aef459746d7834752fda058b0bcbe327a40ad5277573c6",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/018.png",
+      "sequence": 18
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "a692544a31c4a3bcddd108d3a35b7f557d6f1406084e69ed4b72db047711d4f1",
+      "artifact_rgb_sha256": "a692544a31c4a3bcddd108d3a35b7f557d6f1406084e69ed4b72db047711d4f1",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/019.png",
+      "sequence": 19
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "6a9c5e94209a63b02512ac1bca0a1e89b43047f4fb0c52a055869b28d15a973e",
+      "artifact_rgb_sha256": "6a9c5e94209a63b02512ac1bca0a1e89b43047f4fb0c52a055869b28d15a973e",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/020.png",
+      "sequence": 20
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "1b0fa992e9f9b4604b9c186be8db48e461a6258b9850286e68f828705f373710",
+      "artifact_rgb_sha256": "1b0fa992e9f9b4604b9c186be8db48e461a6258b9850286e68f828705f373710",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/021.png",
+      "sequence": 21
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "2f6f60c0d91ec7429c4860dcc717cf6c8e4d7d33241d092f0d0a7f959145c581",
+      "artifact_rgb_sha256": "2f6f60c0d91ec7429c4860dcc717cf6c8e4d7d33241d092f0d0a7f959145c581",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/022.png",
+      "sequence": 22
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "cb15712fc9747e3f44ad5693a11bcf5be4f49f51fe12b890f5068c4c5bd3918a",
+      "artifact_rgb_sha256": "cb15712fc9747e3f44ad5693a11bcf5be4f49f51fe12b890f5068c4c5bd3918a",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/023.png",
+      "sequence": 23
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "addb50d30e709f690f4dc5b2058aa72a8b777caf9c583208580053d67df41eb1",
+      "artifact_rgb_sha256": "addb50d30e709f690f4dc5b2058aa72a8b777caf9c583208580053d67df41eb1",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/024.png",
+      "sequence": 24
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "a1b0bfcb643cd3b6e2ab51ed81ac9178d21e9776819a7cc8acd006417b5a717f",
+      "artifact_rgb_sha256": "a1b0bfcb643cd3b6e2ab51ed81ac9178d21e9776819a7cc8acd006417b5a717f",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/025.png",
+      "sequence": 25
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "3ff101c6c83780084502fd989e3c768fed31142f3990edf8d63fff5c12e6552b",
+      "artifact_rgb_sha256": "3ff101c6c83780084502fd989e3c768fed31142f3990edf8d63fff5c12e6552b",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/026.png",
+      "sequence": 26
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "38756f80045c2cf40c6b098a0f0c8b625136456b06e5738b68af67c31e0c3081",
+      "artifact_rgb_sha256": "38756f80045c2cf40c6b098a0f0c8b625136456b06e5738b68af67c31e0c3081",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/027.png",
+      "sequence": 27
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "2f3ca8b28faaff017fe9bac0019c1ac07dd4fafe0c1e0dbe0a7b125d9d355d28",
+      "artifact_rgb_sha256": "2f3ca8b28faaff017fe9bac0019c1ac07dd4fafe0c1e0dbe0a7b125d9d355d28",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/028.png",
+      "sequence": 28
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "2dcab468bd5b26cf02e102fe1fd0973c39fa592856e5b645d4c7b4d4c0ec3358",
+      "artifact_rgb_sha256": "2dcab468bd5b26cf02e102fe1fd0973c39fa592856e5b645d4c7b4d4c0ec3358",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/029.png",
+      "sequence": 29
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "283f6006891558ea34dded941fb7b7191df9f0f68e9025c5fa70d1db2c29a5fa",
+      "artifact_rgb_sha256": "283f6006891558ea34dded941fb7b7191df9f0f68e9025c5fa70d1db2c29a5fa",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/030.png",
+      "sequence": 30
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "9c274c19cef2d61876a232dc6904b646197d36bda2aef1c95ea91a48bd261076",
+      "artifact_rgb_sha256": "9c274c19cef2d61876a232dc6904b646197d36bda2aef1c95ea91a48bd261076",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/031.png",
+      "sequence": 31
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "0ab3eff922fc416a26023758c15e26fe202b65e07837d91011077c0c4db1a2ca",
+      "artifact_rgb_sha256": "0ab3eff922fc416a26023758c15e26fe202b65e07837d91011077c0c4db1a2ca",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/032.png",
+      "sequence": 32
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "abf080f1cb8f199e1e7cd15a0e149deb06ad48bac0d338f6d4cd08cc2544e51c",
+      "artifact_rgb_sha256": "abf080f1cb8f199e1e7cd15a0e149deb06ad48bac0d338f6d4cd08cc2544e51c",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/033.png",
+      "sequence": 33
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "3d2affef5ec66c0944b59c62102fc69b5a0225af320fbce8aa896c5a81b39f00",
+      "artifact_rgb_sha256": "3d2affef5ec66c0944b59c62102fc69b5a0225af320fbce8aa896c5a81b39f00",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/034.png",
+      "sequence": 34
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "c32b2d01284c73fa495b9f1d8bbf8e54ec0bbd39508cec4c8bd29dc926b8c1b6",
+      "artifact_rgb_sha256": "c32b2d01284c73fa495b9f1d8bbf8e54ec0bbd39508cec4c8bd29dc926b8c1b6",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/035.png",
+      "sequence": 35
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "213218bec6b7f16a479389131d546a22ab69813acf758b715b5579e894c1137f",
+      "artifact_rgb_sha256": "213218bec6b7f16a479389131d546a22ab69813acf758b715b5579e894c1137f",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/036.png",
+      "sequence": 36
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "aef0e7983b0717a9c103d48749b51e636a8e549ad52de616af45f8fc80c8292d",
+      "artifact_rgb_sha256": "aef0e7983b0717a9c103d48749b51e636a8e549ad52de616af45f8fc80c8292d",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/037.png",
+      "sequence": 37
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "93bdeddc6c8b587edf1f5ba058e224d396fa76cb7b62eb546bd6dfb7d9030658",
+      "artifact_rgb_sha256": "93bdeddc6c8b587edf1f5ba058e224d396fa76cb7b62eb546bd6dfb7d9030658",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/038.png",
+      "sequence": 38
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "8edcfb330719d9cfa06f9ca6e7b751529419e283b97b81bb8365ade963e461fd",
+      "artifact_rgb_sha256": "8edcfb330719d9cfa06f9ca6e7b751529419e283b97b81bb8365ade963e461fd",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/039.png",
+      "sequence": 39
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "b6304535535033bfdf1a92a051fd39a86e8f3acdf9ac1661c9486250a171e062",
+      "artifact_rgb_sha256": "b6304535535033bfdf1a92a051fd39a86e8f3acdf9ac1661c9486250a171e062",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/040.png",
+      "sequence": 40
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "3299a751fd36a02369ba4bdf8970c0dc502a13d587cd93a343cf033c4ea84b21",
+      "artifact_rgb_sha256": "3299a751fd36a02369ba4bdf8970c0dc502a13d587cd93a343cf033c4ea84b21",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/041.png",
+      "sequence": 41
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "430c2fc0e302559f96a03db87c728d363ef885012c625c4896157bbd8b465b04",
+      "artifact_rgb_sha256": "430c2fc0e302559f96a03db87c728d363ef885012c625c4896157bbd8b465b04",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/042.png",
+      "sequence": 42
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "64f5377a686e47df04a26f8f6f2aaa82514c99d850c2f7a8da055059c6cc1289",
+      "artifact_rgb_sha256": "64f5377a686e47df04a26f8f6f2aaa82514c99d850c2f7a8da055059c6cc1289",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/043.png",
+      "sequence": 43
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "1c982150386a3d5cac7b90f0e7661ca3ab62f240d6bf1e958b32a1b8d9e3a85b",
+      "artifact_rgb_sha256": "1c982150386a3d5cac7b90f0e7661ca3ab62f240d6bf1e958b32a1b8d9e3a85b",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/044.png",
+      "sequence": 44
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "58e307dd9e925901ff4642bcd75b541b54c243f397401ad37970e43ae3520656",
+      "artifact_rgb_sha256": "58e307dd9e925901ff4642bcd75b541b54c243f397401ad37970e43ae3520656",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/045.png",
+      "sequence": 45
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "45b1f93b434017f652f26f27ca7eb9d7b98f77e7fff0788cdedb670692d05f54",
+      "artifact_rgb_sha256": "45b1f93b434017f652f26f27ca7eb9d7b98f77e7fff0788cdedb670692d05f54",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/046.png",
+      "sequence": 46
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "7291ed523c9145d9635cf1c8c53e5c506a82ed79cc5cf2aeac7a6075b911fd70",
+      "artifact_rgb_sha256": "7291ed523c9145d9635cf1c8c53e5c506a82ed79cc5cf2aeac7a6075b911fd70",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/047.png",
+      "sequence": 47
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "4dd0238464fb0070aeec7c598792a5142dc60ef7066e845886f2d151bf7fa130",
+      "artifact_rgb_sha256": "4dd0238464fb0070aeec7c598792a5142dc60ef7066e845886f2d151bf7fa130",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/048.png",
+      "sequence": 48
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "4eaa35fd11a0f30cc243562c2676d18cc63090c8db4591fe9f81fd891a14068c",
+      "artifact_rgb_sha256": "4eaa35fd11a0f30cc243562c2676d18cc63090c8db4591fe9f81fd891a14068c",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/049.png",
+      "sequence": 49
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "9ac33e24de78e9de1e540a4dbe5a294f345507f48f52701786818c46d1768512",
+      "artifact_rgb_sha256": "9ac33e24de78e9de1e540a4dbe5a294f345507f48f52701786818c46d1768512",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/050.png",
+      "sequence": 50
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "5db4bd93a2d3b1ba06a7fa7bf2ef9c845a2fc5bd95bb6e7794944ce5a9da381b",
+      "artifact_rgb_sha256": "5db4bd93a2d3b1ba06a7fa7bf2ef9c845a2fc5bd95bb6e7794944ce5a9da381b",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/051.png",
+      "sequence": 51
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "84253ce0fba23df24658c3877860d15acc100e8ccca1a36fc381bf37950c3dad",
+      "artifact_rgb_sha256": "84253ce0fba23df24658c3877860d15acc100e8ccca1a36fc381bf37950c3dad",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/052.png",
+      "sequence": 52
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "01d81bd02c9fbebf61337cc43cdfb239e7284767484c4596878284cb0e288a4d",
+      "artifact_rgb_sha256": "01d81bd02c9fbebf61337cc43cdfb239e7284767484c4596878284cb0e288a4d",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/053.png",
+      "sequence": 53
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "ddaeb7d0dcbe5192ba114eb49052d28ec67663d6172ca49900b12c1a9a9521bc",
+      "artifact_rgb_sha256": "ddaeb7d0dcbe5192ba114eb49052d28ec67663d6172ca49900b12c1a9a9521bc",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/054.png",
+      "sequence": 54
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "31d8f8f88751b81b2ed35bd27e3df91890a10fb9cb3cffaec6821c2d6ea76974",
+      "artifact_rgb_sha256": "31d8f8f88751b81b2ed35bd27e3df91890a10fb9cb3cffaec6821c2d6ea76974",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/055.png",
+      "sequence": 55
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "8899dcf7413be947462d91ee82c13d958c20167dbfceb06acc64343d7a272fc9",
+      "artifact_rgb_sha256": "8899dcf7413be947462d91ee82c13d958c20167dbfceb06acc64343d7a272fc9",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/056.png",
+      "sequence": 56
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "90fd9a5036127bebe0283e903a2233bbcf23216b9e5b8b76c7b391257336ed3c",
+      "artifact_rgb_sha256": "90fd9a5036127bebe0283e903a2233bbcf23216b9e5b8b76c7b391257336ed3c",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/057.png",
+      "sequence": 57
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "b366632c0cec5233b5efad7ee3e1f7397de723f94391b7dd4175848e46014b49",
+      "artifact_rgb_sha256": "b366632c0cec5233b5efad7ee3e1f7397de723f94391b7dd4175848e46014b49",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/058.png",
+      "sequence": 58
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "31b2f2a66c2ca11082ef05239ee9597726d0f6bfcb54c0fd41138df05e165367",
+      "artifact_rgb_sha256": "31b2f2a66c2ca11082ef05239ee9597726d0f6bfcb54c0fd41138df05e165367",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/059.png",
+      "sequence": 59
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "dd96539111bb7a67f1b8b49373d7f5f5b59362ffdc1dbb7a3ea0fe86c06474a3",
+      "artifact_rgb_sha256": "dd96539111bb7a67f1b8b49373d7f5f5b59362ffdc1dbb7a3ea0fe86c06474a3",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/060.png",
+      "sequence": 60
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "c1e05526c03bee39d2b1966b199a04748c916c9cec069ce68ca60ce1b88a6f3a",
+      "artifact_rgb_sha256": "c1e05526c03bee39d2b1966b199a04748c916c9cec069ce68ca60ce1b88a6f3a",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/061.png",
+      "sequence": 61
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "0ab8ff4caeda76d32f135848ce77f6a43e88c7fee902f41201a2bff30e29bbb6",
+      "artifact_rgb_sha256": "0ab8ff4caeda76d32f135848ce77f6a43e88c7fee902f41201a2bff30e29bbb6",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/062.png",
+      "sequence": 62
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "34f681a5019be01aa30621bc94f08dd06bcf5ef598253462f1c0bc1803d323e7",
+      "artifact_rgb_sha256": "34f681a5019be01aa30621bc94f08dd06bcf5ef598253462f1c0bc1803d323e7",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/063.png",
+      "sequence": 63
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "b001f35ec3d04f1bb0f914314b5d54d942c7940db06f7ebaeddcdceeb1d029b1",
+      "artifact_rgb_sha256": "b001f35ec3d04f1bb0f914314b5d54d942c7940db06f7ebaeddcdceeb1d029b1",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/064.png",
+      "sequence": 64
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d7b41ec98062417340c13d7f3c13d8a1c29b40771c45ab18499c2e4ee663a245",
+      "artifact_rgb_sha256": "d7b41ec98062417340c13d7f3c13d8a1c29b40771c45ab18499c2e4ee663a245",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/065.png",
+      "sequence": 65
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "b0242f8e015d1a4ca75c403bf01a7747cb7bd2e65845b3eae83a3041213f0854",
+      "artifact_rgb_sha256": "b0242f8e015d1a4ca75c403bf01a7747cb7bd2e65845b3eae83a3041213f0854",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/066.png",
+      "sequence": 66
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "e6e80a8c92fb79e7b7eeadde0761f9640e9ff1e2318cf9a88e92622ae75f6ec7",
+      "artifact_rgb_sha256": "e6e80a8c92fb79e7b7eeadde0761f9640e9ff1e2318cf9a88e92622ae75f6ec7",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/067.png",
+      "sequence": 67
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "4202a8d53e204ea72a0803e7eef8a30cbf183758885dcbd4606c437fc0015ccc",
+      "artifact_rgb_sha256": "4202a8d53e204ea72a0803e7eef8a30cbf183758885dcbd4606c437fc0015ccc",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/068.png",
+      "sequence": 68
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f6ac2623e0c591c23d0898718939f2873b242fd7441e3e76cc493dcadea0362c",
+      "artifact_rgb_sha256": "f6ac2623e0c591c23d0898718939f2873b242fd7441e3e76cc493dcadea0362c",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/069.png",
+      "sequence": 69
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f2b4b0cd95b48e351bd512c0b2d46c8a9b80740c3fb2f362128f198775b28202",
+      "artifact_rgb_sha256": "f2b4b0cd95b48e351bd512c0b2d46c8a9b80740c3fb2f362128f198775b28202",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/070.png",
+      "sequence": 70
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f2029acd98ea090e061c3dcda1d9b30b5bf475b1072466fa57ba9f993606bd7b",
+      "artifact_rgb_sha256": "f2029acd98ea090e061c3dcda1d9b30b5bf475b1072466fa57ba9f993606bd7b",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/071.png",
+      "sequence": 71
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "c69f743a4c76ed75f680d5e4d126d0e564b3a87ba32169f2403273adc951dd8d",
+      "artifact_rgb_sha256": "c69f743a4c76ed75f680d5e4d126d0e564b3a87ba32169f2403273adc951dd8d",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/072.png",
+      "sequence": 72
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f8c0b04ef30cf908b9f5e4f333f724fa29e4f3ea292cad660679e5ba35f250a5",
+      "artifact_rgb_sha256": "f8c0b04ef30cf908b9f5e4f333f724fa29e4f3ea292cad660679e5ba35f250a5",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/073.png",
+      "sequence": 73
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "1fba9d91808ee5cb36e6156759c12234778736d503fcb991d4910794474b5d1e",
+      "artifact_rgb_sha256": "1fba9d91808ee5cb36e6156759c12234778736d503fcb991d4910794474b5d1e",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/074.png",
+      "sequence": 74
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "5c4b8929120c18c629a16b4cb813eaa25a26a3e60bb69e481abd97fd00f08723",
+      "artifact_rgb_sha256": "5c4b8929120c18c629a16b4cb813eaa25a26a3e60bb69e481abd97fd00f08723",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/075.png",
+      "sequence": 75
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "c0eccd66eb79b218f6f82e1404ab38d1194688c2cabf61765803490ec304c716",
+      "artifact_rgb_sha256": "c0eccd66eb79b218f6f82e1404ab38d1194688c2cabf61765803490ec304c716",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/076.png",
+      "sequence": 76
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "08375fe2f19c0ef71c7721205da27ea05c7b7814f5c2cfd4cce43cd42deebddf",
+      "artifact_rgb_sha256": "08375fe2f19c0ef71c7721205da27ea05c7b7814f5c2cfd4cce43cd42deebddf",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/077.png",
+      "sequence": 77
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "cc8293a6330fc0138b4c2f61b18424ffd4c3ead745da4332ae58e2f9f6102bae",
+      "artifact_rgb_sha256": "cc8293a6330fc0138b4c2f61b18424ffd4c3ead745da4332ae58e2f9f6102bae",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/078.png",
+      "sequence": 78
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "08bafca860a3e805eb03bbde183095e5d91663fc3ffd8547426151ba7b9d52ee",
+      "artifact_rgb_sha256": "08bafca860a3e805eb03bbde183095e5d91663fc3ffd8547426151ba7b9d52ee",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/079.png",
+      "sequence": 79
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "a02e9020be3e8f5732847bcf3fc117071010ff5e908b05b113ce1a8b73c4e4f9",
+      "artifact_rgb_sha256": "a02e9020be3e8f5732847bcf3fc117071010ff5e908b05b113ce1a8b73c4e4f9",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/080.png",
+      "sequence": 80
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f01f9c928355b0420d88cee57b5e30723cd0bf41f450f09ae44a5b3184e8058c",
+      "artifact_rgb_sha256": "f01f9c928355b0420d88cee57b5e30723cd0bf41f450f09ae44a5b3184e8058c",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/081.png",
+      "sequence": 81
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "8aba353dfc1212d0733bf1b45581db60537afd4a3894d1679a30b6d9e13cbd90",
+      "artifact_rgb_sha256": "8aba353dfc1212d0733bf1b45581db60537afd4a3894d1679a30b6d9e13cbd90",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/082.png",
+      "sequence": 82
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "85af0bec7863b5e7bfd77256a3ec51ce427d58081e6e99a342ae0ce9edf1ffe6",
+      "artifact_rgb_sha256": "85af0bec7863b5e7bfd77256a3ec51ce427d58081e6e99a342ae0ce9edf1ffe6",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/083.png",
+      "sequence": 83
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "3d4d99d48b504eaa89b77a789862f3bdfab3cf4e612fa7e656628acfc6b1807f",
+      "artifact_rgb_sha256": "3d4d99d48b504eaa89b77a789862f3bdfab3cf4e612fa7e656628acfc6b1807f",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/084.png",
+      "sequence": 84
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d2c57483651da2aa11de9b1b702b21a4784cb766ce6b87b76aedc4d0bd502e2c",
+      "artifact_rgb_sha256": "d2c57483651da2aa11de9b1b702b21a4784cb766ce6b87b76aedc4d0bd502e2c",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/085.png",
+      "sequence": 85
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "6a641d5507a3b661729ba9285e7cb594881d05bdd8f3c8c94bb521429f395d9b",
+      "artifact_rgb_sha256": "6a641d5507a3b661729ba9285e7cb594881d05bdd8f3c8c94bb521429f395d9b",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/086.png",
+      "sequence": 86
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "c3ab81b80f60f472ed3e9eb8749a5635781f9ac1b38431fde51336430c2a26cb",
+      "artifact_rgb_sha256": "c3ab81b80f60f472ed3e9eb8749a5635781f9ac1b38431fde51336430c2a26cb",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/087.png",
+      "sequence": 87
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "c20ccb2f670684c4714b414d874ca3b361b17b29d1dabb54dbb59e54d6d75d9e",
+      "artifact_rgb_sha256": "c20ccb2f670684c4714b414d874ca3b361b17b29d1dabb54dbb59e54d6d75d9e",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/088.png",
+      "sequence": 88
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "dc3e7a23e9594a2484a510c7ed0a7f87b2cfc4f70a99cf6778c4010dfe89bfde",
+      "artifact_rgb_sha256": "dc3e7a23e9594a2484a510c7ed0a7f87b2cfc4f70a99cf6778c4010dfe89bfde",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/089.png",
+      "sequence": 89
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "e8d35185912df93f51f4767c82dfb4c457356d6526e5f42af79019fef1597a22",
+      "artifact_rgb_sha256": "e8d35185912df93f51f4767c82dfb4c457356d6526e5f42af79019fef1597a22",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/090.png",
+      "sequence": 90
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "8941c103534f177721bb6174d4890de3ffa7985cedf3ecf26d89e524a6d7f0ae",
+      "artifact_rgb_sha256": "8941c103534f177721bb6174d4890de3ffa7985cedf3ecf26d89e524a6d7f0ae",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/091.png",
+      "sequence": 91
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "2b5021f9c7c5d49ece503e05f968ff45770445e8fd31cfbef78201151d8f0d74",
+      "artifact_rgb_sha256": "2b5021f9c7c5d49ece503e05f968ff45770445e8fd31cfbef78201151d8f0d74",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/092.png",
+      "sequence": 92
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "e5266167f0810de60cc2edebb01b589668b262aac452b9f922f497efbee03d72",
+      "artifact_rgb_sha256": "e5266167f0810de60cc2edebb01b589668b262aac452b9f922f497efbee03d72",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/093.png",
+      "sequence": 93
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "83b98d93434912e9363f5c16858fff801a87cf1fadc112c1b1ce8d58ad574447",
+      "artifact_rgb_sha256": "83b98d93434912e9363f5c16858fff801a87cf1fadc112c1b1ce8d58ad574447",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/094.png",
+      "sequence": 94
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "229df61fbee8bf734d94ba29e8b3201bd0651686f173a7f4cd4edc8667f4808e",
+      "artifact_rgb_sha256": "229df61fbee8bf734d94ba29e8b3201bd0651686f173a7f4cd4edc8667f4808e",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/095.png",
+      "sequence": 95
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "b1e59807755ae3d0fac4ee8b38c9789711c67cd6a2e918206b0d1f653a4300e3",
+      "artifact_rgb_sha256": "b1e59807755ae3d0fac4ee8b38c9789711c67cd6a2e918206b0d1f653a4300e3",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/096.png",
+      "sequence": 96
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "cf462521981c2f1fa61523c5a74416dc277eb886c5b2504684939c6d1435e0d2",
+      "artifact_rgb_sha256": "cf462521981c2f1fa61523c5a74416dc277eb886c5b2504684939c6d1435e0d2",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/097.png",
+      "sequence": 97
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "a1d56953df9cbd9c6171d96258d3b1cfc4e5b08c4d81c83880d65894f7a6792d",
+      "artifact_rgb_sha256": "a1d56953df9cbd9c6171d96258d3b1cfc4e5b08c4d81c83880d65894f7a6792d",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/098.png",
+      "sequence": 98
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "70fd195d0c9f77bae82402004297b1f6ca40124734013e7fd23a625bc965278f",
+      "artifact_rgb_sha256": "70fd195d0c9f77bae82402004297b1f6ca40124734013e7fd23a625bc965278f",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/099.png",
+      "sequence": 99
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "0031b8c9f3cf147cd167b72ad3ed2bbd31e8ecf2b8ddd5a53b0d8e1bea3577d2",
+      "artifact_rgb_sha256": "0031b8c9f3cf147cd167b72ad3ed2bbd31e8ecf2b8ddd5a53b0d8e1bea3577d2",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/100.png",
+      "sequence": 100
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "b9ca755bafeda15b5a701dc232a7ba3b16fb17d42c876ccda7dc446635cff0a1",
+      "artifact_rgb_sha256": "b9ca755bafeda15b5a701dc232a7ba3b16fb17d42c876ccda7dc446635cff0a1",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/101.png",
+      "sequence": 101
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "475e66b91f3732349541f26cec64f361d95b87e35cea75aa43cae375e931fe15",
+      "artifact_rgb_sha256": "475e66b91f3732349541f26cec64f361d95b87e35cea75aa43cae375e931fe15",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/102.png",
+      "sequence": 102
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "30edcbf749fca6697e110bd957574cf76e2e276a0cbab4b77f51bc9a1c1b34ac",
+      "artifact_rgb_sha256": "30edcbf749fca6697e110bd957574cf76e2e276a0cbab4b77f51bc9a1c1b34ac",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/103.png",
+      "sequence": 103
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "6e0f10c06fa935affee7be0932b10a2a6fc6ad5e7e7fd3479958b13acfeffd79",
+      "artifact_rgb_sha256": "6e0f10c06fa935affee7be0932b10a2a6fc6ad5e7e7fd3479958b13acfeffd79",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/104.png",
+      "sequence": 104
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "0d5c72573e72a195347e7b1d0d53b3f2a63fcd3fa9acea8e0c8a9c5d3829af3d",
+      "artifact_rgb_sha256": "0d5c72573e72a195347e7b1d0d53b3f2a63fcd3fa9acea8e0c8a9c5d3829af3d",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/105.png",
+      "sequence": 105
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "ade375fb77a8b97aad2f2d67a5c41ac5b96067326dc5e54782673d7789c27139",
+      "artifact_rgb_sha256": "ade375fb77a8b97aad2f2d67a5c41ac5b96067326dc5e54782673d7789c27139",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/106.png",
+      "sequence": 106
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "3c361ea5da7384dd050ec5a9cd5a590b1651e9c840c54f7ae9eb62ea5b5018bf",
+      "artifact_rgb_sha256": "3c361ea5da7384dd050ec5a9cd5a590b1651e9c840c54f7ae9eb62ea5b5018bf",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/107.png",
+      "sequence": 107
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "7dc5b60a23a36b9653f6ad041f729287685e46e301f8353efba8b9ca4c422208",
+      "artifact_rgb_sha256": "7dc5b60a23a36b9653f6ad041f729287685e46e301f8353efba8b9ca4c422208",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/108.png",
+      "sequence": 108
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "f78ee8e488423d3bd5ffb9ffd9ddfeb50005a0417f701f80165a9926fc8e0b87",
+      "artifact_rgb_sha256": "f78ee8e488423d3bd5ffb9ffd9ddfeb50005a0417f701f80165a9926fc8e0b87",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/109.png",
+      "sequence": 109
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "4bd3bd60d6012bd6e81d988556f71bb75e928d3cb4445912d182aefc5efeefb2",
+      "artifact_rgb_sha256": "4bd3bd60d6012bd6e81d988556f71bb75e928d3cb4445912d182aefc5efeefb2",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/110.png",
+      "sequence": 110
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "cae3735cf6f115231e2e9090d0fa797f338d4dca9b8b936d96c22fbc71a9c3af",
+      "artifact_rgb_sha256": "cae3735cf6f115231e2e9090d0fa797f338d4dca9b8b936d96c22fbc71a9c3af",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/111.png",
+      "sequence": 111
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "7c1da20011f18ca4e86d01304d18f1f66623d20f33ae6ec3ff041d6b2f8172a6",
+      "artifact_rgb_sha256": "7c1da20011f18ca4e86d01304d18f1f66623d20f33ae6ec3ff041d6b2f8172a6",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/112.png",
+      "sequence": 112
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "384723dc82a34a69fbb0e9d9f5da92bc8ba68f097968faa53ab47483b6032769",
+      "artifact_rgb_sha256": "384723dc82a34a69fbb0e9d9f5da92bc8ba68f097968faa53ab47483b6032769",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/113.png",
+      "sequence": 113
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "428c13119ec13766d8b2c3869eb3fe6bd49dbb26d71e8fab1fed1988c6f2d075",
+      "artifact_rgb_sha256": "428c13119ec13766d8b2c3869eb3fe6bd49dbb26d71e8fab1fed1988c6f2d075",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/114.png",
+      "sequence": 114
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d8735cc966a3a323ea2a3271cc7e6f7af90e90ad4a69482272d73fdd4d6b725e",
+      "artifact_rgb_sha256": "d8735cc966a3a323ea2a3271cc7e6f7af90e90ad4a69482272d73fdd4d6b725e",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/115.png",
+      "sequence": 115
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "6c86e83a01d225cc5b5dc31c4f2a726eaf201803eda80bf7a0a32d58cc06a967",
+      "artifact_rgb_sha256": "6c86e83a01d225cc5b5dc31c4f2a726eaf201803eda80bf7a0a32d58cc06a967",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/116.png",
+      "sequence": 116
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d3e65cf6eb26e9c550e784fb8e2c9a1ba4c7c3d4dd46ae5a6be6d20c1298d800",
+      "artifact_rgb_sha256": "d3e65cf6eb26e9c550e784fb8e2c9a1ba4c7c3d4dd46ae5a6be6d20c1298d800",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/117.png",
+      "sequence": 117
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "d0266f7a9c9ae8491d713f6bf57d673f0b6c8cc8113ce0f2b115b82848f8cbba",
+      "artifact_rgb_sha256": "d0266f7a9c9ae8491d713f6bf57d673f0b6c8cc8113ce0f2b115b82848f8cbba",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/118.png",
+      "sequence": 118
+    },
+    {
+      "schema": "doom-typed-artifact-reconciliation-v1",
+      "matched": true,
+      "checks": {
+        "typed_schema": true,
+        "full_observation": true,
+        "same_epoch": true,
+        "same_binding": true,
+        "rgb_hash": true,
+        "ammo_signal": true,
+        "health_signal": true
+      },
+      "frame_rgb_sha256": "35e56412d772be965f820d50c81f9a1c5785fe4aed0e96c251b925d1dca2389e",
+      "artifact_rgb_sha256": "35e56412d772be965f820d50c81f9a1c5785fe4aed0e96c251b925d1dca2389e",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-v38-integrated-threat-live-01/runtime/119.png",
+      "sequence": 119
+    }
+  ],
+  "typed_artifact_reconciled": 119,
+  "typed_artifact_reconciliation_failures": 0,
+  "typed_capture_to_ready_ms": [
+    10.772955,
+    14.938215,
+    46.094342,
+    12.532423,
+    9.128203,
+    8.968146,
+    11.527216,
+    10.462902,
+    8.15484,
+    8.872849,
+    10.195539,
+    7.854381,
+    9.353517,
+    11.600141,
+    11.275584,
+    8.087141,
+    9.736223,
+    8.612089,
+    9.577365,
+    9.045822,
+    9.676282,
+    11.174169,
+    9.956647,
+    9.035467,
+    8.874065,
+    12.145976,
+    10.914143,
+    10.095289,
+    9.106594,
+    11.917786,
+    16.381339,
+    26.596163,
+    13.067579,
+    11.660687,
+    7.883377,
+    9.143825,
+    10.495371,
+    9.441148,
+    12.009628,
+    8.896507,
+    9.80051,
+    8.837623,
+    9.560546,
+    12.257046,
+    8.790711,
+    11.419721,
+    8.445767,
+    8.704155,
+    8.570441,
+    11.897444,
+    9.010402,
+    12.549875,
+    10.872118,
+    9.686273,
+    9.719237,
+    8.043206,
+    10.319883,
+    7.542342,
+    10.262245,
+    8.823876,
+    9.372257,
+    7.918186,
+    10.636199,
+    8.445879,
+    11.414035,
+    9.137983,
+    11.065901,
+    11.569102,
+    14.636113,
+    10.858575,
+    8.953497,
+    13.338037,
+    11.12315,
+    10.941904,
+    9.725591,
+    10.72905,
+    10.014806,
+    7.849137,
+    10.059667,
+    8.760654,
+    9.169089,
+    10.100511,
+    11.250284,
+    10.442867,
+    11.45088,
+    10.266615,
+    9.320515,
+    9.305279,
+    10.318672,
+    8.469049,
+    9.142842,
+    9.295003,
+    19.842045,
+    8.171396,
+    10.300119,
+    9.349674,
+    10.780243,
+    11.604642,
+    7.809503,
+    8.922141,
+    10.620219,
+    14.919351,
+    10.160951,
+    9.168612,
+    10.171469,
+    7.454876,
+    10.011083,
+    9.305121,
+    11.780464,
+    11.329618,
+    10.7447,
+    8.57305,
+    11.161958,
+    11.643501,
+    8.044947,
+    8.662886,
+    7.905989,
+    7.946054,
+    10.309463
+  ],
+  "typed_ready_to_emit_ms": [
+    3.478787,
+    6.034185,
+    16.202984,
+    3.795968,
+    3.198658,
+    3.223218,
+    3.291463,
+    2.803822,
+    3.059812,
+    3.160355,
+    2.696041,
+    3.354535,
+    3.319729,
+    2.94529,
+    2.834629,
+    3.51551,
+    3.685234,
+    3.349935,
+    2.782633,
+    2.864046,
+    2.7387,
+    2.542281,
+    2.904732,
+    3.196091,
+    2.897582,
+    3.226934,
+    3.504409,
+    2.874215,
+    4.28003,
+    3.164653,
+    3.241554,
+    7.494564,
+    3.532049,
+    4.512233,
+    4.864046,
+    2.679709,
+    3.267656,
+    2.770957,
+    3.014085,
+    2.864171,
+    2.699227,
+    2.932161,
+    3.262239,
+    3.208354,
+    3.625762,
+    2.755548,
+    2.742247,
+    2.982477,
+    2.722344,
+    2.850523,
+    2.853967,
+    4.04045,
+    2.924644,
+    2.785979,
+    2.698335,
+    2.778883,
+    3.848911,
+    2.620714,
+    2.759186,
+    3.097713,
+    2.756033,
+    2.996061,
+    2.841873,
+    3.125712,
+    2.99339,
+    2.704904,
+    2.856472,
+    3.962719,
+    3.226768,
+    4.420805,
+    2.722719,
+    2.918778,
+    2.720478,
+    2.834616,
+    2.743568,
+    3.708334,
+    2.736205,
+    3.230103,
+    2.673264,
+    3.057037,
+    3.025829,
+    4.868047,
+    3.322992,
+    2.643621,
+    3.220636,
+    3.057573,
+    2.691324,
+    2.621354,
+    3.218415,
+    3.280888,
+    2.638661,
+    2.965298,
+    6.579724,
+    2.776406,
+    2.753068,
+    3.279457,
+    2.691888,
+    2.956312,
+    3.420494,
+    3.315828,
+    2.719788,
+    3.088169,
+    2.825706,
+    5.463445,
+    2.735129,
+    2.66569,
+    2.677272,
+    2.771146,
+    3.687841,
+    2.750211,
+    3.836635,
+    2.696588,
+    3.464466,
+    3.420734,
+    3.307632,
+    3.323966,
+    3.293448,
+    3.228923,
+    3.185943
+  ],
+  "typed_capture_to_artifact_ready_ms": [
+    105.4269,
+    78.585303,
+    165.762601,
+    84.325982,
+    76.291003,
+    72.619816,
+    77.630251,
+    82.929158,
+    71.591355,
+    80.573477,
+    83.44516,
+    71.938216,
+    79.757305,
+    77.960392,
+    77.855709,
+    77.626383,
+    72.981161,
+    74.952724,
+    70.387945,
+    76.518112,
+    73.300902,
+    82.8386,
+    71.84765,
+    73.425892,
+    72.558895,
+    79.90561,
+    107.536371,
+    70.829514,
+    74.801542,
+    87.294507,
+    127.0473,
+    150.927901,
+    88.887628,
+    89.127078,
+    83.41798,
+    77.715772,
+    83.263279,
+    80.705654,
+    96.012315,
+    86.474554,
+    81.948388,
+    85.732002,
+    86.521976,
+    88.909165,
+    78.223494,
+    82.788474,
+    75.604069,
+    82.385376,
+    80.528562,
+    84.027229,
+    79.150589,
+    94.785154,
+    92.186999,
+    87.989931,
+    87.473714,
+    87.972686,
+    87.74782,
+    83.072525,
+    84.213814,
+    80.99116,
+    79.20396,
+    77.011383,
+    81.272897,
+    77.980317,
+    92.049534,
+    88.448707,
+    87.43505,
+    86.512122,
+    102.118588,
+    84.637171,
+    81.145144,
+    87.559271,
+    81.427948,
+    87.79156,
+    78.923581,
+    82.680425,
+    79.748914,
+    80.906987,
+    79.606369,
+    81.703376,
+    87.36656,
+    89.605581,
+    85.643461,
+    87.347432,
+    85.201382,
+    77.565551,
+    77.689832,
+    79.077543,
+    83.968093,
+    81.915169,
+    90.690228,
+    82.821268,
+    148.287072,
+    83.642543,
+    79.475696,
+    79.726814,
+    75.791432,
+    82.363598,
+    73.928636,
+    80.803525,
+    78.568612,
+    165.084685,
+    81.278187,
+    79.992661,
+    78.894505,
+    68.330103,
+    73.355141,
+    76.825773,
+    90.437498,
+    80.019892,
+    135.687099,
+    80.685962,
+    93.83007,
+    145.003232,
+    68.350822,
+    74.91102,
+    68.43084,
+    71.605972,
+    83.165073
+  ],
+  "typed_emit_to_artifact_ready_ms": [
+    91.175158,
+    57.612903,
+    103.465275,
+    67.997591,
+    63.964142,
+    60.428452,
+    62.811572,
+    69.662434,
+    60.376703,
+    68.540273,
+    70.55358,
+    60.7293,
+    67.084059,
+    63.414961,
+    63.745496,
+    66.023732,
+    59.559704,
+    62.9907,
+    58.027947,
+    64.608244,
+    60.88592,
+    69.12215,
+    58.986271,
+    61.194334,
+    60.787248,
+    64.5327,
+    93.117819,
+    57.86001,
+    61.414918,
+    72.212068,
+    107.424407,
+    116.837174,
+    72.288,
+    72.954158,
+    70.670557,
+    65.892238,
+    69.500252,
+    68.493549,
+    80.988602,
+    74.713876,
+    69.448651,
+    73.962218,
+    73.699191,
+    73.443765,
+    65.807021,
+    68.613205,
+    64.416055,
+    70.698744,
+    69.235777,
+    69.279262,
+    67.28622,
+    78.194829,
+    78.390237,
+    75.517679,
+    75.056142,
+    77.150597,
+    73.579026,
+    72.909469,
+    71.192383,
+    69.069571,
+    67.07567,
+    66.097136,
+    67.794825,
+    66.408726,
+    77.642109,
+    76.60582,
+    73.512677,
+    70.980301,
+    84.255707,
+    69.357791,
+    69.468928,
+    71.302456,
+    67.58432,
+    74.01504,
+    66.454422,
+    68.243041,
+    66.997903,
+    69.827747,
+    66.873438,
+    69.885685,
+    75.171642,
+    74.637023,
+    71.070185,
+    74.260944,
+    70.529866,
+    64.241363,
+    65.677993,
+    67.15091,
+    70.431006,
+    70.165232,
+    78.908725,
+    70.560967,
+    121.865303,
+    72.694741,
+    66.422509,
+    67.097683,
+    62.319301,
+    67.802644,
+    62.698639,
+    68.565556,
+    65.228605,
+    147.077165,
+    68.29153,
+    65.360604,
+    65.987907,
+    58.209537,
+    60.666786,
+    64.749506,
+    74.969193,
+    65.940063,
+    121.105764,
+    69.416324,
+    79.203646,
+    129.938997,
+    56.998243,
+    62.924168,
+    57.231403,
+    60.430995,
+    69.669667
+  ],
+  "effect_receipt_extra_steps": 0,
+  "contingency_contract": "preplanned no-visible-effect fallback skips the primary tail and runs without another model call",
+  "contingencies_authored": 1,
+  "contingency_branches_taken": 0,
+  "contingency_branch_latency_ms": [],
+  "program_admissions": 1,
+  "action_refresh_programs": 0,
+  "running_action_invalidations": 0,
+  "running_action_revocations": 0,
+  "running_action_intersegment_rejections": 0,
+  "running_action_program_bindings": 1,
+  "historical_first_executor_admissions": 1,
+  "current_input_authority_true_at_decision_close": 0,
+  "extra_program_admissions_vs_one_bundle": 0,
+  "effect_receipt_commands": 1,
+  "effect_observation_samples": 2,
+  "effect_observation_capture_ms": 6.340512,
+  "game_continued_during_model_calls": true,
+  "runtime_fixture": {
+    "manifest": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/fixtures/map01-threat-contact-v2/fixture.json",
+    "manifest_sha256": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4",
+    "save": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/fixtures/map01-threat-contact-v2/save.png",
+    "save_sha256": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+    "before_load_tic": 94,
+    "after_load_tic": 1366,
+    "source_episode_tic": 1366,
+    "setup_input_contract": "fixture state reached through the same X11 Executor and recorded OS-input/coast programs; save is setup-only"
+  },
+  "fixture_contract": "hash/IWAD/engine/map/skill checked before load; measured control begins after load; fixture grants no action authority",
+  "planner_contract": "one capability-minimized app-server process; stable typed thread/turn ownership; invalidation interrupts the matching turn and no cancelled or stale answer is admitted",
+  "planner_turns": 6,
+  "planner_interruption_requests": 4,
+  "planner_interrupted_completions": 4,
+  "planner_ineligible_answers": 4,
+  "policy_invalidation_contract": "effective health floor is max(critical_health_minimum, fresh source health - schema-bounded maximum_health_loss); soft change may only preserve admitted cover; hard, unknown, expired or binding-mismatched evidence cancels cover and discards the dependent model action; it never grants input authority or proves success",
+  "policy_invalidations": 4,
+  "cover_validity_soft_events": 2,
+  "cover_validity_admission_rejections": 0,
+  "model_actions_discarded": 5,
+  "historical_final_action_admission_statuses": {
+    "INPUT_ADMITTED": 1,
+    "REJECTED_ACTION_NOT_CURRENT": 1,
+    "REJECTED_POLICY_INVALIDATED": 4
+  },
+  "cover_programs": 6,
+  "cover_renewals": 0,
+  "cover_renewal_gaps_ms": [],
+  "model_authored_cover_policies": 1,
+  "model_authored_cover_validity_envelopes": 1,
+  "model_wall_seconds": 27.488829657
+}

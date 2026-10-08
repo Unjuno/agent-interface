@@ -1,0 +1,35 @@
+{
+  "allocation": "outcome-replay-20260916-a3",
+  "audited_cases": 80,
+  "base": "c6d195473be0aa876cc991093262494209c7971f",
+  "corruption_controls": {
+    "authority_in_receipt": "REJECTED",
+    "bad_causal_order": "REJECTED",
+    "duplicate_effect": "REJECTED",
+    "historical_result_changed": "REJECTED",
+    "lost_ack_relabelled": "REJECTED"
+  },
+  "manifest_files_verified": 644,
+  "policies": {
+    "outcome_first": {
+      "cases": 40,
+      "contradiction": 0,
+      "duplicate_effects": 0,
+      "effects": 30,
+      "historical_case": 25,
+      "new_stale_effects": 0,
+      "repeat_response_shape_drift": 0
+    },
+    "validate_first": {
+      "cases": 40,
+      "contradiction": 10,
+      "duplicate_effects": 0,
+      "effects": 30,
+      "historical_case": 25,
+      "new_stale_effects": 0,
+      "repeat_response_shape_drift": 10
+    }
+  },
+  "receiver_processes": 240,
+  "status": "PASS_SCOPED_CANDIDATE"
+}

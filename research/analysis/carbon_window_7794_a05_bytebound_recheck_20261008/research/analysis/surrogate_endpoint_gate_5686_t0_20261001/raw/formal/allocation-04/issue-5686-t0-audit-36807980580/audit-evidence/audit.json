@@ -1,0 +1,129 @@
+{
+  "attempt_count": 24,
+  "errors": [],
+  "results": {
+    "common_cause": {
+      "attempt_count": 8,
+      "disposition": "REJECT_INTERMEDIATE_ONLY_EFFECT",
+      "naive_intermediate_only_rule_promotes": true,
+      "strata": [
+        {
+          "attempts": 4,
+          "delta_harm": 0.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": 0.0,
+          "incomplete": false,
+          "stratum": "route_a"
+        },
+        {
+          "attempts": 4,
+          "delta_harm": 0.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": 0.0,
+          "incomplete": false,
+          "stratum": "route_b"
+        }
+      ],
+      "world": "common_cause"
+    },
+    "concordant": {
+      "attempt_count": 4,
+      "disposition": "DIRECTION_CONCORDANT_IN_OBSERVED_STRATA_PREDICTIVE_VALIDITY_UNESTABLISHED",
+      "naive_intermediate_only_rule_promotes": true,
+      "strata": [
+        {
+          "attempts": 2,
+          "delta_harm": 0.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": 1.0,
+          "incomplete": false,
+          "stratum": "route_a"
+        },
+        {
+          "attempts": 2,
+          "delta_harm": 0.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": 1.0,
+          "incomplete": false,
+          "stratum": "route_b"
+        }
+      ],
+      "world": "concordant"
+    },
+    "incomplete": {
+      "attempt_count": 4,
+      "disposition": "UNCERTAIN_INCOMPLETE_ENDPOINTS",
+      "naive_intermediate_only_rule_promotes": true,
+      "strata": [
+        {
+          "attempts": 2,
+          "delta_harm": 0.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": -1.0,
+          "incomplete": true,
+          "stratum": "route_a"
+        },
+        {
+          "attempts": 2,
+          "delta_harm": 0.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": -1.0,
+          "incomplete": true,
+          "stratum": "route_b"
+        }
+      ],
+      "world": "incomplete"
+    },
+    "paradox": {
+      "attempt_count": 4,
+      "disposition": "REJECT_NONCOMPENSABLE_SAFETY_REGRESSION",
+      "naive_intermediate_only_rule_promotes": true,
+      "strata": [
+        {
+          "attempts": 2,
+          "delta_harm": 1.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": -1.0,
+          "incomplete": false,
+          "stratum": "route_a"
+        },
+        {
+          "attempts": 2,
+          "delta_harm": 1.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": -1.0,
+          "incomplete": false,
+          "stratum": "route_b"
+        }
+      ],
+      "world": "paradox"
+    },
+    "unrelated": {
+      "attempt_count": 4,
+      "disposition": "REJECT_INTERMEDIATE_ONLY_EFFECT",
+      "naive_intermediate_only_rule_promotes": true,
+      "strata": [
+        {
+          "attempts": 2,
+          "delta_harm": 0.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": 0.0,
+          "incomplete": false,
+          "stratum": "route_a"
+        },
+        {
+          "attempts": 2,
+          "delta_harm": 0.0,
+          "delta_speed_benefit_ms": 10.0,
+          "delta_utility": 0.0,
+          "incomplete": false,
+          "stratum": "route_b"
+        }
+      ],
+      "world": "unrelated"
+    }
+  },
+  "scope": "synthetic authored finite cases only; no empirical surrogate validated",
+  "status": "PASS_SURROGATE_GATE_SCOPED",
+  "world_count": 5
+}

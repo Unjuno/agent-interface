@@ -1,0 +1,43 @@
+{
+  "schema": "hidden-cause-sensitivity-t1-workflow-stop-v1",
+  "disposition": "STOP_WORKFLOW_VALIDATION_BEFORE_JOB",
+  "run_id": 36715852694,
+  "run_url": "https://github.com/Unjuno/agent-interface/actions/runs/36715852694",
+  "source_commit": "f09a0bd0a5a8d683a950df1b360670aaa1f194ca",
+  "event": "push",
+  "observed": {
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs": 0,
+    "artifacts": 0,
+    "candidate_invocations": 0,
+    "docker_image_pull_started": false,
+    "github_cli_diagnostic": "This run likely failed because of a workflow file issue."
+  },
+  "root_cause": {
+    "status": "probable",
+    "finding": "jobs.<job_id>.env referenced ${{ runner.temp }} via OUTPUT_DIR; runner context is not available in jobs.<job_id>.env according to GitHub's context-availability table. The fix uses the runner-provided RUNNER_TEMP environment variable inside run steps.",
+    "source": "https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability",
+    "documentation": "https://docs.github.com/en/actions/reference/workflows-and-actions/contexts#context-availability"
+  },
+  "recovery": "Correct workflow source and output paths in a separate PR. The failed run had no job and did not invoke the candidate; do not re-run the failed run. The first candidate invocation will occur once on the repair PR's main push, if all one-shot prerequisites pass.",
+  "limits": [
+    "This is a workflow infrastructure/validation STOP, not a scientific FAIL.",
+    "No candidate or independent audit execution occurred.",
+    "The formal T1 remains pending."
+  ],
+  "repair_validation": {
+    "interpreter": "Python 3.12.10",
+    "checks": [
+      "PASS_YAML_PARSE_CONTEXT_SCOPE_SOURCE_COMPILE",
+      "PASS_T1_INPUT_STRUCTURE_ONLY claims=16 pairs=8 scientific_result=NONE"
+    ],
+    "repaired_source_sha256": {
+      "run_workflow": "2e1ef4c6f25d698ccbf4a78feeb4a40f015b7fa71224bceec7b543738a5b47df",
+      "audit_workflow": "0b946a0000de04a4b4790718ffe24d17db83d159d537101787956bd9a81e721c",
+      "independent_auditor": "fefceddc5defc50f132f1da9bdad9e0fce44dac665360fdfd85044486635f2eb",
+      "input_preflight": "18d64ec7079e74d15b2323f89cc86158f40ee325b2d471ce2949e5f558553540"
+    }
+  },
+  "repair_summary": "Use RUNNER_TEMP in runner shell steps, freeze input/candidate SHA-256 in both preflight and independent audit, commit failed-run status and upload execution-status.json on all outcomes, and require both pull/container steps to succeed in the audit-only workflow."
+}

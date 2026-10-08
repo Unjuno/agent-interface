@@ -1,0 +1,134 @@
+{
+  "allocation_id": "MAP01-TERMINAL-WAIT-BOUNDARY-3211-T5-CONTAINER-20261002-01",
+  "candidate_invocations": 1,
+  "candidate_source_t4_git_blob": "afd5d4ea1bbbede29ecb67ff49f6e944b4d22320",
+  "cases": [
+    {
+      "case": "within_bound",
+      "child_exit_code": 0,
+      "child_reaped": true,
+      "disposition": "MATCHED_TERMINAL",
+      "events": [
+        {
+          "child_emit_monotonic_ns": 1186250390130,
+          "event": "ready"
+        },
+        {
+          "child_emit_monotonic_ns": 1186270626934,
+          "event": "terminal",
+          "id": "fallback-within"
+        }
+      ],
+      "expected_id": "fallback-within",
+      "reader_joined": true,
+      "trace_byte_count": 152,
+      "trace_file": "within_bound/session-events.jsonl",
+      "trace_sha256": "bcae60d940b288979b8b3f2cc1c7a27d30fe3f2ce5dada1818094a967bdd45aa",
+      "wait_deadline_ns": 1187758599498,
+      "wait_end_ns": 1186276401621,
+      "wait_error": null,
+      "wait_return": {
+        "child_emit_monotonic_ns": 1186270626934,
+        "event": "terminal",
+        "id": "fallback-within"
+      },
+      "wait_start_ns": 1186258599498
+    },
+    {
+      "case": "wrong_id",
+      "child_exit_code": -15,
+      "child_reaped": true,
+      "disposition": "TIMEOUT",
+      "events": [
+        {
+          "child_emit_monotonic_ns": 1186339995402,
+          "event": "ready"
+        },
+        {
+          "child_emit_monotonic_ns": 1186360204259,
+          "event": "terminal",
+          "id": "other-terminal"
+        }
+      ],
+      "expected_id": "fallback-expected",
+      "reader_joined": true,
+      "trace_byte_count": 151,
+      "trace_file": "wrong_id/session-events.jsonl",
+      "trace_sha256": "54ef966e4a7e16837e756b4a420084692a9309dbcc59bae9c85e172bf5e01352",
+      "wait_deadline_ns": 1186946764259,
+      "wait_end_ns": 1186947002405,
+      "wait_error": {
+        "message": "session event timeout",
+        "type": "TimeoutError"
+      },
+      "wait_return": null,
+      "wait_start_ns": 1186346764259
+    },
+    {
+      "case": "absent",
+      "child_exit_code": -15,
+      "child_reaped": true,
+      "disposition": "TIMEOUT",
+      "events": [
+        {
+          "child_emit_monotonic_ns": 1187009304383,
+          "event": "ready"
+        }
+      ],
+      "expected_id": "fallback-absent",
+      "reader_joined": true,
+      "trace_byte_count": 62,
+      "trace_file": "absent/session-events.jsonl",
+      "trace_sha256": "8a615bdbb85ac7f66148fdc4a64b284186d4a2d50d9a7f3a59ecae92f52279cb",
+      "wait_deadline_ns": 1187139035829,
+      "wait_end_ns": 1187139266342,
+      "wait_error": {
+        "message": "session event timeout",
+        "type": "TimeoutError"
+      },
+      "wait_return": null,
+      "wait_start_ns": 1187019035829
+    },
+    {
+      "case": "late_exact",
+      "child_exit_code": 0,
+      "child_reaped": true,
+      "disposition": "TIMEOUT",
+      "events": [
+        {
+          "child_emit_monotonic_ns": 1187197516365,
+          "event": "ready"
+        },
+        {
+          "child_emit_monotonic_ns": 1187447940326,
+          "event": "terminal",
+          "id": "fallback-late"
+        }
+      ],
+      "expected_id": "fallback-late",
+      "reader_joined": true,
+      "trace_byte_count": 150,
+      "trace_file": "late_exact/session-events.jsonl",
+      "trace_sha256": "64e068ad73e8305f2cd0ba3bf23b50014e70bce390b1457267dba5e50df8b953",
+      "wait_deadline_ns": 1187255062588,
+      "wait_end_ns": 1187255353996,
+      "wait_error": {
+        "message": "session event timeout",
+        "type": "TimeoutError"
+      },
+      "wait_return": null,
+      "wait_start_ns": 1187205062588
+    }
+  ],
+  "freeze_sha256": "56daa018be6eeb463e621855b97851270fdee73676d74b830eb511b70c5ce204",
+  "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "main_sha": "c4d2d4b1ccf4512ec79af75bd8eaecfcada39947",
+  "retries": 0,
+  "runner_git_blob": "f5caf71a743a563b7de046b82d44db7ebe49e829",
+  "runtime": {
+    "platform": "linux",
+    "python": "3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]"
+  },
+  "schema": "map01-terminal-wait-boundary-container-candidate-v1",
+  "synthetic_child_cases": 4
+}

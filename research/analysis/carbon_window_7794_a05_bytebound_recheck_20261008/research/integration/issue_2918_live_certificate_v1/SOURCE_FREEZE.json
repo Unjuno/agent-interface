@@ -1,0 +1,24 @@
+{
+  "allocation": "Issue 2918 live MANIPULATE_TO certificate transfer allocation 01",
+  "base_main": "e6f74d3b9fef0467327823ab97cb15f0dbe59ac4",
+  "container_image": "issue-3548-route-unit:20260920",
+  "container_image_id": "sha256:0e35cdb51a82e59d359ec09b85ce835d9217a1eab65b68ce1871c9b0a85014c9",
+  "platform": "linux/arm64",
+  "network": "none",
+  "root_filesystem": "read-only",
+  "source_mount": "/repo:ro",
+  "writable_mount": "/out",
+  "xvfb": "Xvfb :99 -screen 0 1280x800x24 -nolisten tcp",
+  "formal_command": "docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m -e PYTHONDONTWRITEBYTECODE=1 -e OUT=/out -v <source>:/repo:ro -v <fresh-output>:/out:rw -w /repo --entrypoint /bin/sh issue-3548-route-unit:20260920 -lc '<start Xvfb :99; wait for xdpyinfo; python3 -B research/integration/issue_2918_live_certificate_v1/run_live_allocation.py>'",
+  "audit_command": "docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -e PYTHONDONTWRITEBYTECODE=1 -v <source>:/repo:ro -v <formal-output>:/out:ro -w /repo issue-3548-route-unit:20260920 python3 -B research/integration/issue_2918_live_certificate_v1/audit_live_allocation.py /out",
+  "sha256": {
+    "research/analysis/observation_manipulate_dynamic_certificate_v1/model.py": "a6247953fa3a25051866c97d37d6eb053dd63f76b5573e05e494cab03c065eb2",
+    "research/analysis/observation_manipulate_dynamic_certificate_v1/live_candidate.py": "8cd92785f15a388c07b44f3f98001950d1fd616d42c191395963fa0a75599ef5",
+    "research/integration/issue_2918_live_certificate_v1/run_live_allocation.py": "e67cda1ea204cfb7d29751de71d9690c619a953f47a5ab9bb86529cd78209d24",
+    "research/integration/issue_2918_live_certificate_v1/audit_live_allocation.py": "a8a80e224872e5f6240a4a7945727de9fd564e0a8a8f365165fa7f6ea58881b0"
+  },
+  "formal_observation_count": 12,
+  "retry_policy": "one formal runner invocation; no retry or tuning after start",
+  "construction_only_gates": ["source syntax", "container imports", "#1904 expected ES certificate", "synthetic PNG decoding", "previous-certificate reuse", "stale-yield"],
+  "authority": {"input_dispatched": false, "side_effect_authority": false}
+}

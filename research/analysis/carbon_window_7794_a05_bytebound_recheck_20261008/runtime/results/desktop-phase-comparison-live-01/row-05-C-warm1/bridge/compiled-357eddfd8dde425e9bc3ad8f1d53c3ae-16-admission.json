@@ -1,0 +1,37 @@
+{
+  "request": {
+    "interface_id": "calc-pixel-admission",
+    "session_scope": "native-x11:44d8b55dc2e44fc59e01c757367603cf",
+    "action": "save",
+    "operation": "request_save",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "sheet_context",
+      "identity_predicate": "present",
+      "dependencies": [
+        "present",
+        "main_focus"
+      ]
+    },
+    "observation": {
+      "sequence": 5,
+      "captured_ns": 12079157936493,
+      "surface": "x11-window-8389124",
+      "predicates": {
+        "present": true,
+        "main_focus": true,
+        "handoff": false,
+        "cells_match": true
+      },
+      "evidence_ref": "observation-5",
+      "evidence_digest": "1fd7e461c5eb229b8e0ae935284934c42b0c288046dce4f60b4be9f5198eec24"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "45f4ba0c5aec461782742ae306c72a61",
+    "expected_sequence": 5,
+    "valid_until_ns": 12080657936493
+  }
+}

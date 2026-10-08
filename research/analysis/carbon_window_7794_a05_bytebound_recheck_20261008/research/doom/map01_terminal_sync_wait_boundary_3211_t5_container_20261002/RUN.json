@@ -1,0 +1,40 @@
+{
+  "schema": "map01-terminal-wait-boundary-container-run-v1",
+  "allocation_id": "MAP01-TERMINAL-WAIT-BOUNDARY-3211-T5-CONTAINER-20261002-01",
+  "base_main_sha": "c4d2d4b1ccf4512ec79af75bd8eaecfcada39947",
+  "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform": "linux/amd64",
+  "network": "none",
+  "limits": {"cpus": 1, "memory_mib": 512, "pids": 64, "read_only_root": true},
+  "construction": {
+    "host_unittest": "PASS 4/4",
+    "container_attempts": 3,
+    "container_preflight_failures": [
+      "unittest discover rejected a non-package start directory; candidate not invoked",
+      "incorrect host bind-mount source failed to expose the test file; candidate not invoked"
+    ],
+    "final_container_unittest": "PASS 4/4"
+  },
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "retries": 0,
+    "raw_receipt": "results/container-01/candidate.json",
+    "raw_receipt_sha256": "D19E9DA7BE4D188C7309D426494F5C845FBEB06B9C55F190BDD4B4DC8FFC2A43",
+    "cases": {
+      "within_bound": "MATCHED_TERMINAL; child reaped; reader joined",
+      "wrong_id": "TIMEOUT with other-terminal retained; child reaped; reader joined",
+      "absent": "TIMEOUT with no terminal retained; child reaped; reader joined",
+      "late_exact": "TIMEOUT then exact terminal retained after deadline; child reaped; reader joined"
+    }
+  },
+  "independent_auditor": {
+    "invocations": 1,
+    "exit_code": 1,
+    "retries": 0,
+    "terminal_disposition": "HOLD_AUDIT_ARTIFACT_WRITE_PATH_PREEXISTED",
+    "failure": "audit() returned before output persistence; pathlib.Path('/audit').mkdir(parents=True, exist_ok=False) raised FileExistsError because the host bind-mount target already existed. No audit.json was written."
+  },
+  "overall_disposition": "HOLD_AUDIT_ARTIFACT_WRITE_PATH_PREEXISTED",
+  "scope": "Synthetic JsonSession.wait boundary in a pinned CPU container only. No original recovery-arm cause, MAP01 outcome, production fix, GPU/CUDA, model/provider, network, GUI/game, or OS input claim."
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "needle-cross-process-preflight-stop-v1",
+  "allocation": "needle-cross-process-publication-5045-v1",
+  "issue": 5045,
+  "observed_at": "2026-09-28",
+  "stage": "pre-formal static integration check",
+  "disposition": "STOP_PREFLIGHT_FREEZE_SCHEMA_MISMATCH",
+  "evidence": {
+    "freeze_file": "research/system1/needle_cross_process_publication_5045_v1/FREEZE.json",
+    "freeze_blob_sha": "1c254b4031c88af26f73c2c8b50129a0518ee1c5",
+    "input_sha_location": "freeze.input.sha256",
+    "orchestrator_file": "research/system1/needle_cross_process_publication_5045_v1/formal.py",
+    "orchestrator_blob_sha": "d4d3dd0799d07a0d9de397d33c33c520975a66f0",
+    "orchestrator_reads": "freeze[\"input_sha256\"]",
+    "deterministic_failure": "KeyError: input_sha256 because the frozen JSON defines the digest only at freeze.input.sha256",
+    "failure_precedes": "output-directory creation and all Docker invocation"
+  },
+  "formal_runner_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "docker_formal_invocations": 0,
+  "output_created": false,
+  "construction_evidence": "Prior standalone construction tests do not exercise the host orchestrator against the registered freeze schema.",
+  "interpretation": "Harness/integration preflight defect, not a scientific outcome; no cross-process observation; H remains untested.",
+  "preservation": "Do not edit the original FREEZE.json or formal.py in place, and do not run this allocation. Preserve prior STOP/resource and construction receipts.",
+  "successor": "Create a new additive issue/branch/path with corrected orchestrator, a regression test that runs a non-Docker preflight against the actual freeze schema, exact hashes read back from GitHub before Docker, and a fresh formal allocation."
+}

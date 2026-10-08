@@ -1,0 +1,118 @@
+{
+  "heldout_translation_positive_accepts_by_seed": {
+    "8962800": {
+      "control": 0,
+      "treatment": 40
+    },
+    "8962900": {
+      "control": 0,
+      "treatment": 40
+    },
+    "8963000": {
+      "control": 0,
+      "treatment": 40
+    },
+    "8963100": {
+      "control": 0,
+      "treatment": 40
+    },
+    "8963200": {
+      "control": 0,
+      "treatment": 40
+    }
+  },
+  "prediction_rows": 2400,
+  "schema": "tiny-visual-target-position-decision-rates-v1",
+  "stratum_label_rates": {
+    "control:base:negative": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 200,
+      "rows": 200,
+      "yield": 0
+    },
+    "control:base:positive": {
+      "accept": 200,
+      "accept_rate": 1.0,
+      "reject": 0,
+      "rows": 200,
+      "yield": 0
+    },
+    "control:translation_a:negative": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 200,
+      "rows": 200,
+      "yield": 0
+    },
+    "control:translation_a:positive": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 25,
+      "rows": 200,
+      "yield": 175
+    },
+    "control:translation_b:negative": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 200,
+      "rows": 200,
+      "yield": 0
+    },
+    "control:translation_b:positive": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 43,
+      "rows": 200,
+      "yield": 157
+    },
+    "treatment:base:negative": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 200,
+      "rows": 200,
+      "yield": 0
+    },
+    "treatment:base:positive": {
+      "accept": 200,
+      "accept_rate": 1.0,
+      "reject": 0,
+      "rows": 200,
+      "yield": 0
+    },
+    "treatment:translation_a:negative": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 200,
+      "rows": 200,
+      "yield": 0
+    },
+    "treatment:translation_a:positive": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 0,
+      "rows": 200,
+      "yield": 200
+    },
+    "treatment:translation_b:negative": {
+      "accept": 0,
+      "accept_rate": 0.0,
+      "reject": 200,
+      "rows": 200,
+      "yield": 0
+    },
+    "treatment:translation_b:positive": {
+      "accept": 200,
+      "accept_rate": 1.0,
+      "reject": 0,
+      "rows": 200,
+      "yield": 0
+    }
+  },
+  "thresholds": {
+    "accept_min": 0.75,
+    "classification": 0.5,
+    "yield_min": 0.25
+  }
+}
+

@@ -1,0 +1,48 @@
+{
+  "allocation": "PREFIX-OBLIGATIONS-6749-T0-WSLC-20261003-A01",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "rows": 8640,
+    "raw_sha256": "12aa81b815bf7d92bca7d8b6b315c50c1377385c002ce609ccb0abd8a111a6ba",
+    "image_id": "sha256:aba87d5b36c5d403d96883d583f2562e9aa5b6b03597f22c92b16d15576280b0",
+    "container": "issue-6749-prefix-candidate-20261003-a01",
+    "receipt": "candidate/COMMAND.txt"
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "PASS_METHOD_SCOPED",
+    "errors": [],
+    "prefix_rows": 8640,
+    "disposition_counts": {"INVALID": 2160, "PASS": 60, "PROVISIONAL": 5250, "STABLE_FAIL": 1170},
+    "mutation_controls_rejected": {
+      "drop_pending_mandatory": true,
+      "forge_optional_completion": true,
+      "mix_metric_into_disposition_counts": true,
+      "relabel_invalid_as_current": true,
+      "treat_timeout_as_complete": true
+    },
+    "authority_or_external_effects": 0,
+    "audit_sha256": "f0555d9bb17b97068a70a9a0521594f31c7c372d97210fda7b866fc201a99f7c",
+    "image_id": "sha256:ca32b84cba7c93869fbcabe6e8b715066bbd8a67130aaf6a083c78e5772fb92f",
+    "container": "issue-6749-prefix-auditor-20261003-a01",
+    "receipt": "auditor/COMMAND.txt"
+  },
+  "retries": 0,
+  "construction_runs": 2,
+  "network": "none",
+  "cpu_limit": 1,
+  "memory_requested": "512m",
+  "memory_enforcement": "unverified; kernel cgroup/swap unsupported warning observed",
+  "gpu": false,
+  "external_effects": 0,
+  "final_disposition": "PASS_METHOD_SCOPED",
+  "limitations": [
+    "Authored finite event contract only; not live verifier correctness or application behavior.",
+    "No latency/performance benefit measured.",
+    "No GUI, model, task data, action, user study, or runtime integration.",
+    "WSLc substituted for OrbStack by explicit user direction; no engine-equivalence claim.",
+    "Memory-limit enforcement not verified."
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "reader": "audit_saved_v2.py",
+  "reader_sha256": "54fbb5f71ee20304690a7b6149ce8ced3c7039a3f0ca8fb39aa955cff3dbed46",
+  "created_utc": "2026-10-03T07:31:49.089231+00:00",
+  "original_errors": [],
+  "rejected": 12,
+  "accepted": 0,
+  "runtime_imports_or_native_children": 0,
+  "scope": "Copied saved-result sensitivity; original live source/data unchanged; no authenticity or exhaustive audit claim."
+}
+[
+  {
+    "name": "deadline-present",
+    "rejected": true,
+    "errors": [
+      "full-short-current/before-deadline"
+    ]
+  },
+  {
+    "name": "caller-not-blocked",
+    "rejected": true,
+    "errors": [
+      "full-short-current/before-deadline"
+    ]
+  },
+  {
+    "name": "wrong-source-line",
+    "rejected": true,
+    "errors": [
+      "full-short-current/before-deadline"
+    ]
+  },
+  {
+    "name": "poison-cleared",
+    "rejected": true,
+    "errors": [
+      "full-short-existing_writer/finite-poison"
+    ]
+  },
+  {
+    "name": "followup-extra-write",
+    "rejected": true,
+    "errors": [
+      "full-short-existing_writer/no-followup-write"
+    ]
+  },
+  {
+    "name": "followup-write-count-bool",
+    "rejected": true,
+    "errors": [
+      "full-short-existing_writer/followup-count-types"
+    ]
+  },
+  {
+    "name": "followup-record-count-bool",
+    "rejected": true,
+    "errors": [
+      "full-short-existing_writer/followup-count-types"
+    ]
+  },
+  {
+    "name": "native-exit-bool",
+    "rejected": true,
+    "errors": [
+      "full-short-current/peer-exit-native-mac"
+    ]
+  },
+  {
+    "name": "healthy-wrong-result",
+    "rejected": true,
+    "errors": [
+      "healthy-current/healthy"
+    ]
+  },
+  {
+    "name": "ready-mode-wrong",
+    "rejected": true,
+    "errors": [
+      "full-short-current/peer-ready"
+    ]
+  },
+  {
+    "name": "wire-size-bool",
+    "rejected": true,
+    "errors": [
+      "full-short-current/wire-join"
+    ]
+  },
+  {
+    "name": "reap-unknown",
+    "rejected": true,
+    "errors": [
+      "full-short-current/final-owned"
+    ]
+  }
+]

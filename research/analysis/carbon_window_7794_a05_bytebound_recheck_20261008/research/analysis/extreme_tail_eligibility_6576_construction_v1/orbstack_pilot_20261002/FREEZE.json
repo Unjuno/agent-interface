@@ -1,0 +1,45 @@
+{
+  "schema": "unjuno.agent-interface.issue-6576.orbstack-pilot-freeze.v1",
+  "allocation": "EXTREME-TAIL-ELIGIBILITY-6576-ORB-PILOT-20261002-01",
+  "formal_t0": false,
+  "repository": "Unjuno/agent-interface",
+  "branch": "research/extreme-tail-runtime-shift-6576-20261002",
+  "source_head": "53d786ecd5d87f5e7a227f733d1cb51ef0b0d190",
+  "execution_environment": {
+    "platform": "OrbStack isolated Linux machine",
+    "machine_name": "agent-interface-6576-pilot-isolated-20261002",
+    "machine_id": "01M3XZS49N838DMW6JACC3B5CD",
+    "distro": "Ubuntu 24.04.5 LTS",
+    "architecture": "arm64",
+    "python": "3.12.3",
+    "cpus": 2,
+    "memory_bytes": 4294967296,
+    "cgroup_cpu_max": "200000 100000",
+    "cgroup_memory_max": "4294967296",
+    "swap_observed": "/dev/zram0 16425396 KiB total (4 KiB used), /dev/vdc 1048572 KiB total (0 used)",
+    "isolated": true,
+    "isolate_network": true,
+    "docker_container": false
+  },
+  "case_count": 1,
+  "seed": 65761001,
+  "n_train": 4000,
+  "n_holdout": 4000,
+  "candidate_invocations_before_run": 0,
+  "auditor_invocations_before_run": 0,
+  "retries_allowed": 0,
+  "sha256": {
+    "PREREGISTRATION.md": "0a8808b5597faa51d54ef2f0faccfbcd9f23e78557324d0bb29f1c8060fa8a2f",
+    "cases.json": "395cc683768645794aec04ffa65dc79a59f3c4612dc8c93504b76c2beb721939",
+    "t0_candidate.py": "d474ed30c29866d3cccf0e8e593bea5135a227878a32636714f40062c54d4107",
+    "t0_audit.py": "4e37d74b3568e9b1ee88063263a8f2cb186f47eded9d357fc13e326f6e76483a",
+    "gate.py": "006380d64f8c5859e950efb19da8623a89a7b722489619ef2c25411e66b20ff4",
+    "tailid_equivalent.py": "1931b354fedb3db2a5cda9c52cdd4c1e9002bb04dbe952980704c282777a63c4"
+  },
+  "outputs": {
+    "candidate": "candidate.raw.json",
+    "candidate_exit": "candidate.exit",
+    "auditor": "audit.txt",
+    "auditor_exit": "audit.exit"
+  }
+}

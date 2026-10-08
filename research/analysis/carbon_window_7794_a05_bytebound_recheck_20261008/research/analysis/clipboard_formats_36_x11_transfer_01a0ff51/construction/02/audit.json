@@ -1,0 +1,146 @@
+{
+  "schema": "clipboard36-x11-transfer-audit-v1",
+  "status": "PASS_X11_MIME_TRANSFER_METHOD_SCOPED",
+  "construction": true,
+  "raw_sha256": "ba64ee0950a4e7091132811c08a8459f8df563fbec69960e16c65f29dfd6214f",
+  "errors": [],
+  "findings": [
+    {
+      "id": "P00",
+      "effect": {
+        "text": "Setup",
+        "bold": true
+      },
+      "summary_eligible": true,
+      "manifest_eligible": true,
+      "effect_correct": true
+    }
+  ],
+  "corruption_controls": [
+    {
+      "name": "omitted_case",
+      "required_error": "roster",
+      "rejected": true,
+      "errors": [
+        "roster"
+      ]
+    },
+    {
+      "name": "duplicate_case",
+      "required_error": "roster",
+      "rejected": true,
+      "errors": [
+        "roster"
+      ]
+    },
+    {
+      "name": "offscreen_platform",
+      "required_error": "P00:platform",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:platform"
+      ]
+    },
+    {
+      "name": "boolean_pid",
+      "required_error": "P00:process",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:process"
+      ]
+    },
+    {
+      "name": "float_owner",
+      "required_error": "P00:owner",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:owner"
+      ]
+    },
+    {
+      "name": "false_exit_alias",
+      "required_error": "P00:cleanup",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:cleanup"
+      ]
+    },
+    {
+      "name": "changed_focus",
+      "required_error": "P00:focus",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:focus"
+      ]
+    },
+    {
+      "name": "held_keyboard",
+      "required_error": "P00:release",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:release"
+      ]
+    },
+    {
+      "name": "boolean_command_exit",
+      "required_error": "P00:native_command",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:native_command"
+      ]
+    },
+    {
+      "name": "paste_command_relabel",
+      "required_error": "P00:native_command",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:native_command"
+      ]
+    },
+    {
+      "name": "missing_key_release",
+      "required_error": "P00:key_release",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:key_release"
+      ]
+    },
+    {
+      "name": "transport_digest_changed",
+      "required_error": "P00:transport:text/html",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:transport:text/html"
+      ]
+    },
+    {
+      "name": "saved_html_digest_changed",
+      "required_error": "P00:saved_hash:document.html",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:saved_hash:document.html"
+      ]
+    },
+    {
+      "name": "dump_relabel",
+      "required_error": "P00:saved_effect",
+      "rejected": true,
+      "errors": [
+        "P00:row_record",
+        "P00:saved_effect"
+      ]
+    }
+  ],
+  "exclusive_consumed_format_proven": false
+}

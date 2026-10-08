@@ -1,0 +1,49 @@
+{
+  "base": "65c096610dbcbe63c7a3e649af2665954a1bfb12",
+  "freeze_commit": "ee625aababf221b7087b977b396c3aff4e7e5f93",
+  "source_archive_sha256": "6c12cda620940fa31f895b4d1bf9ca3bd0458b9b459d0e61f17f4bf7628b474c",
+  "full_evidence": {
+    "files_in_manifest": 314,
+    "bytes": 7018452,
+    "sha256": "5d735664fe5b7f80bc6756df930d15d2e18f7d27aa8b75ae770b9a7c28d7c149",
+    "filename": "map01_pixel_return_stop_v1_evidence.tar.xz"
+  },
+  "archive_fresh_verification": {
+    "files_verified": 314,
+    "frozen_audit_byte_equal": true,
+    "numeric_replay_byte_equal": true,
+    "live_reruns": 0
+  },
+  "evidence_raw_sha256": "ecdbf124acb8b1e0a47825859f5c81645d99e3cc4db9ac9b750265024efdf6cc",
+  "evidence_encoded_sha256": "c7809910606fdc9c92cb525b78c16d2499c8a89a762d243a03f62ec443c26f4a",
+  "evidence_limit": "numeric replay only; full source/native input/PNG audit requires the full conversation archive",
+  "postmeasurement_publication_checks": {
+    "numerical_replay": "PASS",
+    "exact_report_restoration": true,
+    "lossless_result_values_restoration": true,
+    "existing_directory_refusal": true,
+    "modified_payload_rejection": true
+  },
+  "files": {
+    "REPORT.md": {
+      "bytes": 6798,
+      "sha256": "158be676762ddda714582672c36165961bc5030d4c367590f40d4215695e3e26",
+      "git_blob": "b0f40bad2395fee7e0e514c6328aeded8e0e1ef9"
+    },
+    "replay.py": {
+      "bytes": 3898,
+      "sha256": "fa7123a53c4c33b9de5fd40495953377a5ba0ddb1dafe3d5b7ff6a57dc5a8a7f",
+      "git_blob": "a40f3e2fc9002b39d6bf15ff696ec343923856ec"
+    },
+    "evidence.json.xz.b64": {
+      "bytes": 12781,
+      "sha256": "c7809910606fdc9c92cb525b78c16d2499c8a89a762d243a03f62ec443c26f4a",
+      "git_blob": "13b4d0641d67f7d4a8981317563fcd73fbd8d1f7"
+    },
+    "source.tar.xz.b64": {
+      "bytes": 13713,
+      "sha256": "a42be9ec06da0559b19fee6b258455f3e17c0216bd276b29a9232db66939dec2",
+      "git_blob": "65ba66b5e6b5f2e0ff2ac4a40958c01cec6a0cec"
+    }
+  }
+}

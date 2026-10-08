@@ -1,0 +1,59 @@
+{
+  "cases": {
+    "all_pending_initial_period": {
+      "bounds": {
+        "ROUTE_I": {
+          "lower": "0",
+          "n": 3,
+          "upper": "1"
+        },
+        "ROUTE_J": {
+          "lower": "0",
+          "n": 3,
+          "upper": "1"
+        }
+      },
+      "classification": "NO_RANKING"
+    },
+    "equal_delay_null": {
+      "bounds": {
+        "ROUTE_C": {
+          "lower": "1/2",
+          "n": 4,
+          "upper": "1/2"
+        },
+        "ROUTE_D": {
+          "lower": "1/2",
+          "n": 4,
+          "upper": "1/2"
+        }
+      },
+      "classification": "NO_PREFERENCE"
+    },
+    "fast_receipt_complete_case_inversion": {
+      "bounds": {},
+      "classification": "NONIDENTIFIABLE"
+    },
+    "informative_censoring_or_ambiguous_attribution": {
+      "bounds": {},
+      "classification": "NONIDENTIFIABLE"
+    },
+    "known_window_noninformative_censoring": {
+      "bounds": {
+        "ROUTE_E": {
+          "lower": "1/4",
+          "n": 4,
+          "upper": "1/2"
+        },
+        "ROUTE_F": {
+          "lower": "3/4",
+          "n": 4,
+          "upper": "1"
+        }
+      },
+      "classification": "SELECT:ROUTE_F"
+    }
+  },
+  "checkpoint": 5,
+  "schema": "pending-route-candidate-v1"
+}

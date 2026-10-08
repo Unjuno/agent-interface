@@ -1,0 +1,24 @@
+{
+  "schema": "issue-5521-t3-allocation-stop-v1",
+  "allocation": "5521-ANERGY-EXPIRY-POLICY-GHA-20261001-02",
+  "classification": "STOP_BEFORE_CANDIDATE",
+  "workflow_run": "https://github.com/Unjuno/agent-interface/actions/runs/36812760498",
+  "run_id": 36812760498,
+  "attempt": 1,
+  "head_sha": "207fa7cea55611cf37fdd31a8be72338dbafdb7f",
+  "candidate_jobs": {
+    "clear": {"job_id": 110211215530, "result": "failure", "artifact_id": 11140177395, "artifact_digest": "sha256:5589cfe907e8c97be5433db22a6b35839c81d8349373c040ebbcc5dcd35d118e"},
+    "tombstone": {"job_id": 110211215227, "result": "failure", "artifact_id": 11139997555, "artifact_digest": "sha256:06b6ae8ffda78c9ea3af7603102c227ca6f2818a76344de6b10c76217644bcae"}
+  },
+  "independent_auditor": "skipped; candidate jobs failed frozen provenance preflight",
+  "preflight_failure": "candidate script loaded gha-01/FREEZE.json, which does not define source_main_sha; corrected workflow must load gha-02/FREEZE.json",
+  "evidence": {
+    "clear_host_environment_sha256": "d5b9b89ac128b846f701453b4f1d409e1b44ef02e5ae207b9d90c7a5d6f493fe",
+    "tombstone_host_environment_sha256": "d2ac53c9c99176fdbdf976bdd3311c7cf38480ef51b81e5f85f87f4c36e9e7ef"
+  },
+  "candidate_containers_started": 0,
+  "auditor_containers_started": 0,
+  "image_pull_started": false,
+  "scientific_result": "NONE; this is a frozen provenance path mismatch, not a semantic FAIL or PASS",
+  "retry_policy": "No rerun of this allocation. Any corrected execution is a separately preregistered allocation."
+}

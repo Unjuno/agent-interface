@@ -1,0 +1,104 @@
+{
+  "allocation_id": "CEX-GUARD-REFINEMENT-6645-T0-20261002-01",
+  "arms": [
+    "UNCHANGED_GUARD",
+    "INVALIDATE_ALL_FALLBACK",
+    "EXACT_STATE_BLACKLIST",
+    "CANDIDATE_REFINEMENT",
+    "ORACLE_MINIMAL_DIAGNOSTIC"
+  ],
+  "cache_invalidation": {
+    "invalidated": [
+      "cache_skill_a_shape1",
+      "cache_skill_b_shape2"
+    ],
+    "retained": [
+      "cache_skill_c_independent"
+    ]
+  },
+  "changed_predicates": [
+    "context_current",
+    "focus_current"
+  ],
+  "counterexample_events": [
+    {
+      "candidate_terms": [],
+      "classification_consumed": "REAL_GUARD_MISS",
+      "counterexample_id": "ce_real_source",
+      "result": "UNKNOWN_OBSERVATIONAL_ALIAS",
+      "state_id": "harmful_source_stale"
+    },
+    {
+      "candidate_terms": [],
+      "classification_consumed": "REAL_GUARD_MISS",
+      "counterexample_id": "ce_real_modal",
+      "result": "UNKNOWN_NO_VALID_CONTROL_PRESERVING_TERM",
+      "state_id": "harmful_modal_open"
+    },
+    {
+      "candidate_terms": [
+        "context_current",
+        "focus_current"
+      ],
+      "classification_consumed": "REAL_GUARD_MISS",
+      "counterexample_id": "ce_real_dual",
+      "result": "REFINEMENT_ALTERNATIVES_RETAINED",
+      "state_id": "harmful_dual_miss"
+    },
+    {
+      "candidate_terms": [],
+      "classification_consumed": "SPURIOUS_ORACLE_OR_TRACE",
+      "counterexample_id": "ce_spurious",
+      "result": "NO_REFINEMENT_NONREAL",
+      "state_id": "safe_common_a"
+    },
+    {
+      "candidate_terms": [],
+      "classification_consumed": "OUT_OF_SCOPE",
+      "counterexample_id": "ce_out_of_scope",
+      "result": "NO_REFINEMENT_NONREAL",
+      "state_id": "out_of_scope_state"
+    },
+    {
+      "candidate_terms": [],
+      "classification_consumed": "UNRESOLVED",
+      "counterexample_id": "ce_unresolved",
+      "result": "NO_REFINEMENT_NONREAL",
+      "state_id": "harmful_unresolved_class"
+    }
+  ],
+  "decisions": {
+    "harmful_alias_hidden_family": "UNKNOWN",
+    "harmful_dual_miss": "REFUSE_AND_DEOPT",
+    "harmful_modal_open": "UNKNOWN",
+    "harmful_source_stale": "UNKNOWN",
+    "harmful_unresolved_class": "HOLD_NO_SAFE_FALLBACK",
+    "out_of_scope_state": "OUT_OF_SCOPE",
+    "safe_alias_hidden_family": "UNKNOWN",
+    "safe_common_a": "ADMIT",
+    "safe_generation_two": "ADMIT",
+    "safe_rare_control": "UNKNOWN",
+    "safe_unresolved_class": "HOLD_NO_SAFE_FALLBACK"
+  },
+  "fallback": {
+    "authority_after": 0,
+    "authority_before": 0,
+    "route": "GENERIC_SEMANTIC_PATH",
+    "task_input_replays": 0
+  },
+  "refinement_alternatives": [
+    {
+      "counterexample_id": "ce_real_dual",
+      "terms": [
+        "context_current"
+      ]
+    },
+    {
+      "counterexample_id": "ce_real_dual",
+      "terms": [
+        "focus_current"
+      ]
+    }
+  ],
+  "schema": "cex-guard-refinement-raw-v1"
+}

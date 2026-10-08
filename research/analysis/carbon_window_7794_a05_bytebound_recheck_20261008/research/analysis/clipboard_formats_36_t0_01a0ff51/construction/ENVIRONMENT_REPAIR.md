@@ -1,0 +1,5 @@
+# Construction environment repair
+
+Initial own guest research-clipboard-36-01a0ff51 was created with --isolated and --isolate-network and only two selective mounts. Its first Docker build stopped before Qt acquisition because runc's device-cgroup BPF query returned EPERM. Build output is retained at image-build-01-oci-stop.log; no experimental candidate/auditor/formal allocation was invoked.
+
+The failure matches OrbStack upstream issue https://github.com/orbstack/orbstack/issues/2429, which specifically concerns nested Docker in --isolated Linux machines. No system sandbox or approval denial occurred. The failed guest was stopped, without deleting it or its build evidence. A separately named ordinary dedicated OrbStack guest is used for the permitted Docker path, with its own Engine. This ordinary guest has OrbStack's standard macOS integration; it is not a host security sandbox. Experimental containers use only this task's read-only source, own output mount, network none, no privilege option, and resource bounds. No existing machine/engine or another worker's process was modified. The final environment is frozen before the first experiment invocation.

@@ -1,0 +1,17 @@
+{
+  "allocation": "x11-region-frame-move-4439-localdocker-v1-20260927",
+  "attempt": "construction-01-excluded",
+  "status": "STOP_XAUTHORITY_NOT_INHERITED",
+  "formal_rows": 0,
+  "construction_rows": 0,
+  "source_sha256": "1c53f09b603158cff32321906af39bbbcf19d232846a92216c03574a700780f3",
+  "image_id": "sha256:1c334ebd65f4b1bfe81cc84c90780ea01e6f70c0f7b18cd89c09e03406460238",
+  "command": "docker run --rm --pull=never --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m --cpus=1 --memory=512m --pids-limit=64 --security-opt=no-new-privileges --user 0:0 ... python /study/runner.py --mode construction --out /out/construct01",
+  "raw_file_bytes": 0,
+  "raw_file_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "observed": "Xlib Display() timed out because wait_x created a local DISPLAY/XAUTHORITY mapping but did not place XAUTHORITY in os.environ for Python-Xlib authentication lookup. The first case failed before any X11 window/capture was created.",
+  "captured_child_diagnostic": "The first runner version used unread Popen pipes and did not preserve Xvfb stderr. This is recorded as a diagnostic-capture limitation; the wrapper output retained the Python traceback and X client timeout. The revised frozen runner drains and hashes Xvfb stdout/stderr and includes startup diagnostics on timeout.",
+  "correction_boundary": "Set DISPLAY and XAUTHORITY in the process environment during the local authenticated connection probe; drain child logs. No hypothesis, case schedule, treatment, decision gate, raw formal input, or formal allocation changed.",
+  "formal_invocations": 0,
+  "construction_retries": 0
+}

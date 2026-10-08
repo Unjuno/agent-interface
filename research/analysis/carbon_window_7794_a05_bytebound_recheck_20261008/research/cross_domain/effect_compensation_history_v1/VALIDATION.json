@@ -1,0 +1,44 @@
+{
+  "audit_byte_identical": true,
+  "construction_not_in_formal_ids": true,
+  "corruption_controls": {
+    "all_rejected": true,
+    "count": 5,
+    "controls": [
+      {"name": "flip_phase_label", "rejected": true},
+      {"name": "flip_final_only_label", "rejected": true},
+      {"name": "delete_wrong_effect_event", "rejected": true},
+      {"name": "corrupt_final_state", "rejected": true},
+      {"name": "reverse_timestamps", "rejected": true}
+    ]
+  },
+  "formal_case_dirs": 30,
+  "manifest_files": 71,
+  "manifest_mismatches": [],
+  "plan_sha256": "4e64ac458cf5ace06309d51d45f9669988b6a7818489488ee20fb433fce274b9",
+  "plan_sha_match": true,
+  "raw_archive": {
+    "bytes": 12524,
+    "path": "effect_compensation_history_evidence.tar.xz",
+    "sha256": "944d14c37088f1a1b11e83b0e10ce5eaaab20fd8af5d6284bac38da14e4046f8"
+  },
+  "remote_prefreeze_source_identity": {
+    "all_exact_remote_bytes_prefrozen": false,
+    "mismatched_file": "experiment.py",
+    "remote_prefreeze_git_blob": "61264f0e4309d76c1d709cdaf95ca8905b117feb",
+    "remote_prefreeze_sha256": "e6be19e54057a10a4a374f96c177c0d5f9b837cf548ef74501a5e463539d5a02",
+    "measured_sha256": "a91c3e3cd735cc57ee58849c8fa38114fce345cf3cfb584c7ad91c9687bfe4dc",
+    "difference": "three comment-only lines",
+    "ast_equal": true,
+    "normalized_three_scenario_outputs_equal": true,
+    "exact_measured_git_blob_published_posthoc": "0b8b1af01ea4df9fd55622af566609fb8aced1ad",
+    "formal_cases_rerun": 0
+  },
+  "source_hash_match_in_raw_archive": {
+    "audit.py": true,
+    "experiment.py": true,
+    "receiver.py": true,
+    "test_contract.py": true
+  },
+  "tests_returncode": 0
+}

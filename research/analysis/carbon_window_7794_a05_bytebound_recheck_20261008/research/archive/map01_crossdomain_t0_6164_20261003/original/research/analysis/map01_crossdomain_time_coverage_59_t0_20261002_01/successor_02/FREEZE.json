@@ -1,0 +1,60 @@
+{
+  "allocation_id": "R133-CROSSDOMAIN-TIME-COVERAGE-59-T0-20261002-02",
+  "status": "FROZEN_PRE_CANDIDATE",
+  "source_main_sha": "f9633921c93530054b0d7320b1665df114050d52",
+  "predecessor_head_sha": "edb62ea4f935c3bf987010623c6aa103306ce14e",
+  "predecessor_candidate_sha256": "cd179a5e02ae669367d93c6b2647d3cecc5f6035429d01b73f5bff978e265dbc",
+  "predecessor_freeze_sha256": "35f158b207746affd76147a6a9a752253023b21b2ff978bbc65632b0529b173e",
+  "auditor_source_sha256": "b177d4d7e0334b76206724081e578b1ac5abaae393de96d0ee24d551f4804e17",
+  "package_sha256": {
+    "PLAN.md": "06c3ae54258b6f32e842cef1cb0f0c80b7315ea8c017e54119e03470d59115a3",
+    "README.md": "c9adc31ad1f8546dfacb6a36dd333d8c4d41b0669a1c9cc5a5845359ee61d8e0",
+    "candidate_v2.py": "a202282ff1afb15afeff50ea958528b57f274f4044e61a0d829b03a9b0b0cba4",
+    "run_candidate_v2.py": "61988be959365422908b7c33a016d27703037224e9484b017f20f317320b6a79",
+    "audit_v2.py": "b1649537a5e57ca60c7d37f866851fc18c937b62307b1aec3d254c849a6d988f",
+    "run_audit_v2.py": "b177d4d7e0334b76206724081e578b1ac5abaae393de96d0ee24d551f4804e17",
+    "test_candidate_v2.py": "dea08b3326ed393af7c782cdcdf6d547ec859a7946eef2177f84df65adc19e75",
+    "test_audit_v2.py": "dcbacd1916da9adcf9b1bdfe725968875341e141d32e8a371d5e4bb121583444"
+  },
+  "inputs": {
+    "doom-v38-events.jsonl": {
+      "path": "research/doom/results/map01-v38-integrated-threat-live-01/runtime/events.jsonl",
+      "source_ref": "279ee4aee96c5646360239409931821726566aa2",
+      "git_blob_sha": "02d65d49b61feadbdec2e051bd23d1ca845d5df1",
+      "sha256": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3"
+    },
+    "doom-v39-events.jsonl": {
+      "path": "research/doom/results/map01-v39-coast-liveness-live-01/runtime/events.jsonl",
+      "source_ref": "279ee4aee96c5646360239409931821726566aa2",
+      "git_blob_sha": "cbaeed9c7ba27b53cef9d10730ae33313371ad9a",
+      "sha256": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381"
+    },
+    "doom-analysis.json": {
+      "path": "research/doom/results/map01-v38-v39-control-tempo-posthoc-v1/analysis.json",
+      "source_ref": "279ee4aee96c5646360239409931821726566aa2",
+      "git_blob_sha": "dc2286e956dfbc2481710cd6400cd58470bae4b7",
+      "sha256": "7b7541174c39fac708ba6c28f371f40fb68bf71743e66c9fbcb517d45e78bf71"
+    },
+    "openttd-events.jsonl": {
+      "path": "research/live_control/results/timing-envelope-openttd-l-06/fixed-astra/runtime/events.jsonl",
+      "source_ref": "279ee4aee96c5646360239409931821726566aa2",
+      "git_blob_sha": "8ccb166927329313bb316b2cd40208c49119c10c",
+      "sha256": "b9e707b006a918b232f6d8915adc6a95e4d7e4ee789fec7ef4e1fba7e2df61ae"
+    },
+    "openttd-observer.txt": {
+      "path": "research/live_control/results/timing-envelope-openttd-l-06/fixed-astra/runtime/game-stderr.txt",
+      "source_ref": "279ee4aee96c5646360239409931821726566aa2",
+      "git_blob_sha": "1a5c1167d15cddf674ad9060f3d44bbedcfcf005",
+      "sha256": "4bcfb5b2632e9b2dc76f5e3f67a73f30cbd6b142578b495f0b204a2ec9696ca4"
+    },
+    "openttd-audit.json": {
+      "path": "research/live_control/results/timing-envelope-openttd-l-06/posthoc-audit.json",
+      "source_ref": "279ee4aee96c5646360239409931821726566aa2",
+      "git_blob_sha": "4875434559d95b7049bc4e4aa278e496e46a2f6e",
+      "sha256": "8377e663d6f3b88eb41b73d85212f903f21b4879010835f9e2d1f100de4bee5c"
+    }
+  },
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "retries": 0
+}

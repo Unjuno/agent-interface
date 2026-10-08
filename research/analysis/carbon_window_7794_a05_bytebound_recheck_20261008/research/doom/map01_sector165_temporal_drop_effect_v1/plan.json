@@ -1,0 +1,19 @@
+{
+  "schema":"agent-interface/map01-sector165-temporal-drop-plan-v1",
+  "task":"MAP01-SECTOR165-TEMPORAL-DROP-EFFECT-20260917-004",
+  "publication_base":"cd4fe74fb886864a56dfe2fb8f66e65bbab06caa",
+  "formal_reruns":0,
+  "cases":[
+    {"id":"case-00","class":"drop","seed":993700,"heading":35},
+    {"id":"case-01","class":"wall","seed":993706,"heading":null},
+    {"id":"case-02","class":"drop","seed":993702,"heading":55},
+    {"id":"case-03","class":"drop","seed":993704,"heading":75},
+    {"id":"case-04","class":"drop","seed":993701,"heading":35},
+    {"id":"case-05","class":"drop","seed":993703,"heading":55},
+    {"id":"case-06","class":"wall","seed":993707,"heading":null},
+    {"id":"case-07","class":"drop","seed":993705,"heading":75}
+  ],
+  "action":{"use_s":0.08,"forward_s":0.45,"settle_s":0.35},
+  "temporal":{"requested_sleep_s":0.02,"max_pair_dt_ms":100.0,"min_frames":8,"min_eligible_pairs":6},
+  "pixel_relation":{"roi":[20,300,20,620],"min_tracks":80,"median_dy_threshold_px":-20.0}
+}

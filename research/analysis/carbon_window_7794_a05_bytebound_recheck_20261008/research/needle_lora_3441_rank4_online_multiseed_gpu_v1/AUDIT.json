@@ -1,0 +1,49 @@
+{
+  "disposition": "FAIL_ONLINE_RANK_CAPACITY_GPU",
+  "feedback_p95_ms": 33.335,
+  "integrity": true,
+  "means": {
+    "A": [
+      0.969970703125,
+      0.963623046875,
+      0.957763671875,
+      0.966796875,
+      0.95556640625
+    ],
+    "rank2_online": [
+      0.94140625,
+      0.9326171875,
+      0.93310546875,
+      0.958251953125,
+      0.936767578125
+    ],
+    "rank4_batch": [
+      0.951904296875,
+      0.929931640625,
+      0.953369140625,
+      0.9580078125,
+      0.953125
+    ],
+    "rank4_online": [
+      0.015625,
+      0.014892578125,
+      0.022216796875,
+      0.013427734375,
+      0.019287109375
+    ]
+  },
+  "rank4_minus_rank2_mean": -0.92333984375,
+  "rank4_online_vs_batch_abs_by_seed": [
+    0.936279296875,
+    0.9150390625,
+    0.93115234375,
+    0.944580078125,
+    0.933837890625
+  ],
+  "result_sha256": "2ae484327db48fd1f428e2f724887edcdc06da771f0df97c5d2cfbda7a7d7bf0",
+  "row_counts": {
+    "rows_per_role_seed": 4096,
+    "seeds": 5
+  },
+  "source_hash_note": "Runner hash is independently pinned in FREEZE.json; auditor must compare it before formal result acceptance."
+}

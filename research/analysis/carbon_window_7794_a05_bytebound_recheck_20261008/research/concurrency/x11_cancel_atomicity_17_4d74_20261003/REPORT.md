@@ -1,0 +1,32 @@
+# X11 cancellation acceptance and native injection — #7012
+
+One first WSLc/native Xvfb allocation reconstructed two separate results: POST_ACCEPTED_INPUT_COUNTEREXAMPLE for the precheck composition; ATOMIC_SERIALIZATION_WITH_CANCEL_REACHABILITY_DELAY for the atomic composition. This is a tradeoff result, with HOLD on unconditional safety/runtime promotion. Current public X11 session has no exported cancellation contract, so this is prospective composition evidence rather than an alleged API regression.
+
+## Executed result
+
+| Arm | Request to accepted marker | Request to verified release | State near request+151ms | F9 native ordering |
+|---|---:|---:|---|---|
+| Precheck, paused |0.003570ms|0.584542ms|Cancellation accepted, keys neutral; program pending|Positive native bracket starts400.185130ms after accepted marker|
+| Atomic, paused |400.319828ms|400.836024ms|Cancellation pending, F8 down; program pending|Positive native bracket ends29,395ns before cancellation mutex acquisition|
+
+Both healthy arms complete exactly two native positive calls and four application key events, with F8/F9 independently observed held and then neutral. Dispatch intervals43.578697ms/43.435210ms are single observations, not latency estimates or hard bounds. Every cell has4 exact app events, no unrelated logical key/button state, neutral terminal query, no live owned threads, and Xvfb exit0. Samples54/222/223/53 (552 total), eight positive native calls and16 app events. Request/acceptance/native-call/application-receipt clocks remain distinct. In the atomic cell the app receives F9 after the accepted marker by1.841696ms, but its native bracket ended before mutex acquisition; this delayed receipt is not post-acceptance injection. A short atomic F9 pulse can be missed by the sampler; absence is not a safety proof.
+
+## Custody and validation
+
+Frozen source commit5b281ea2c4cb785d529605d859b26242052c8559; FREEZE SHA256a673929b4696c041aabbf6b02de917e480650eafda15e9f9a8585e897ff69848. Raw SHA2568f90882ca2114f34575b7b463c5ffc50bd8fa752e7125476f3074076ee2dfe9a; audit SHA256a22ec2b94339ae5db94279079bf24d4985f185a8a56956f57f5634501569ae7b. PLAN+8 pinned files are the entire separate read-only candidate input; the candidate cannot read the saved-only auditor or hand oracle. All source pins before/after match. Producer once11:30:11–11:30:16UTC exit0; frozen saved-only auditor once11:30:27–11:30:28UTC exit0; retries0. Each phase retains actual host argv/PIDs/clock/raw streams and stopped WSLc inspection. Auditor never imports producer/gate/Xlib. Its scientific predicates/hand schedule were independently authored by integration_snapshot before outcomes; publication_gate found the prefreeze schema defect; root repaired only that schema join and retirement chronology before freeze. No claim of a post-result nonauthor approval is made by this report.
+
+Ordinary construction01 passes11 tests but its hand fixture omitted the real raw first_disposition. Preserve the first auditor/test/launcher/PLAN images and PASS, not regrade it. After repair, construction02 passes12 tests including17 coherent hand-oracle corruptions. These are construction controls, not new native replications or actual-raw mutation counts. Method/source bytes were not changed after the native result.
+
+Python3.12.15/Linux6.18.40.1-microsoft-standard-WSL2/amd64; immutable image865bfbcc86992769ec9b8311a2344b67c664639d96d7cf0d5c407df9c2c500ed. Requested1CPU/512MiB/networknone, user65534, private64MiB tmpfs. Actual cpu.max100000100000, memory.max536870912, pids.maxmax. All warnings about unsupported swap limits are retained. Cgroup values/configuration are not adversarial enforcement proof. No image build, Pillow installation, Docker, host display, physical device, GPU or model call. Original withdrawn PNG setup probes/download are preserved separately; no PNG cells were run here.
+
+## Interpretation and next integration decision
+
+#6999 demonstrated release reachability while PNG was stalled. #7010 demonstrated that cleanup alone does not revoke a queued positive input. #7012 adds a native witness that a separate positive precheck remains racy after accepted cancellation; one common mutex moves that race into cancellation reachability. Use these three different results together, without pooling counts or changing predecessor PASS/FAIL/raw. Neither thread-only composition qualifies a supervised timely safety control plane. The next #17 decision must require jointly observable bounded request-to-accepted/release behavior during a paused owner critical section and zero post-accepted positive input; independent process/authority fencing remains a distinct candidate to assess before spending another allocation. #59 still needs per-key timing, independent useful feedback and bounded recovery; #57 needs matched all-attempt model/token/quality/latency evidence.
+
+Limitations: deliberate Event.wait pause releases the interpreter; native wrapper brackets are not XTEST syscall timestamps; accepted_ns is after Event.set, an observed upper marker bound; same-process mutex, owned private Xvfb and one finite schedule do not cover arbitrary X-server/native/GIL/process failures, cross-backend methods, physical devices, reliability rates, hard deadlines, task semantics, human tempo or whole roadmap completion. Broader goals remain open.
+
+## Additional applicable delivery checks
+
+Current main research namespace unit/temp-Git fixtures pass22/22 on the Windows host; their exact six source images, command receipt and output are retained under validation/. This cached science image lacks Git, so no fake container-CI claim is made for those checks. Study construction12/12 and native raw audit already passed and were not rerun. Existing unchanged hosted #3270 scorer replay checks completed success at result466098cf; they are deterministic historical scorer fixtures and do not independently qualify this native experiment. Branch-protection read returned403 for integration permission, repository rulesets read returned[]; normal PR merge enforcement remains authoritative, no bypass or unobserved rules claim.
+
+Scientific validation consists of the independently authored prefreeze saved-only predicates, independent prefreeze source review, actual first native raw and exact-scope data reconstruction. Additional post-result nonauthor review has been invited; none is claimed or counted. Archival PR delivery does not promote either composition to a production safety design.

@@ -1,0 +1,31 @@
+{
+  "auditor_invocations": 1,
+  "candidate_invocations": 1,
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/python",
+        "-B",
+        "/src/run_candidate.py",
+        "/out/C01/rows"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/usr/local/bin/python",
+        "-B",
+        "/src/independent_audit.py",
+        "/out/C01/rows"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "cpu_count": 12,
+  "elapsed_ns": 550905314,
+  "finished_utc": "2026-10-03T00:44:55.429413+00:00",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.41",
+  "python": "3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]",
+  "retries": 0,
+  "started_utc": "2026-10-03T00:44:54.870999+00:00"
+}

@@ -1,0 +1,48 @@
+{
+  "allocation": "PATH-CLASS-6586-T0-20261002-01",
+  "audited_rows": 18,
+  "errors": [
+    "blocked_class_gain/novel_cell:missing_action_after_observation",
+    "blocked_class_gain/visited_edge_backtrack:missing_action_after_observation",
+    "blocked_class_gain/class_aware:missing_action_after_observation",
+    "viable_same_class/novel_cell:missing_action_after_observation",
+    "viable_same_class/visited_edge_backtrack:missing_action_after_observation",
+    "viable_same_class/class_aware:missing_action_after_observation",
+    "same_class_dead_end/novel_cell:missing_action_after_observation",
+    "same_class_dead_end/visited_edge_backtrack:missing_action_after_observation",
+    "same_class_dead_end/class_aware:missing_action_after_observation",
+    "unsupported_false_cue/novel_cell:missing_action_after_observation",
+    "unsupported_false_cue/visited_edge_backtrack:missing_action_after_observation",
+    "unsupported_false_cue/class_aware:missing_action_after_observation",
+    "dynamic_epoch_invalidation/novel_cell:missing_action_after_observation",
+    "dynamic_epoch_invalidation/visited_edge_backtrack:missing_action_after_observation",
+    "dynamic_epoch_invalidation/class_aware:missing_action_after_observation"
+  ],
+  "main_sha": "f1d8f6319ad6a1d6fd7f0219c17bb13f48fae7aa",
+  "mutations_rejected": {},
+  "primary_metrics": {
+    "class_aware": {
+      "backtracks": 1,
+      "goal_observed": true,
+      "input_actions": 5,
+      "observations": 6,
+      "total_counted_events": 11
+    },
+    "novel_cell": {
+      "backtracks": 4,
+      "goal_observed": true,
+      "input_actions": 11,
+      "observations": 12,
+      "total_counted_events": 23
+    },
+    "visited_edge_backtrack": {
+      "backtracks": 4,
+      "goal_observed": true,
+      "input_actions": 11,
+      "observations": 12,
+      "total_counted_events": 23
+    }
+  },
+  "scope": "Finite authored graph method result only; host execution was not container-isolated and establishes no real topological inference, GUI/DOOM behavior, runtime benefit, or product claim.",
+  "status": "FAIL_OR_HOLD"
+}

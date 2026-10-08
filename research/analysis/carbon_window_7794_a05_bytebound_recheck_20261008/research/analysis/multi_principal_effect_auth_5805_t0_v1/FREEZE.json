@@ -1,0 +1,26 @@
+{
+  "issue": 5805,
+  "allocation": "synthetic T0 method construction; no live allocation",
+  "base_main": "043ff4bd321ddf89cc3ced0e74f63435bda093f0",
+  "branch": "research/multi-principal-auth-5805-t0-main-043ff4bd-20261001",
+  "path": "research/analysis/multi_principal_effect_auth_5805_t0_v1/",
+  "runtime": "Python 3.12.10; standard library only",
+  "container": "not used; Docker Desktop daemon unavailable; no image ID",
+  "candidate_sha256": "c2701a01e04cdc2a850650089a5a2a4472b60addbe99bb1af85ab901fc9e11e1",
+  "independent_auditor_sha256": "410606c460f42d24057dd47b86e987f1d05486bddae9ca18eaf051b308dd3e68",
+  "tests_sha256": "36234ebf180d8c7e29e683003d75d124c4d3abdb8fbd816731e031114842005e",
+  "fixture": {
+    "owners": ["A", "B"],
+    "direct_grant_states_per_owner": ["absent", "valid", "stale", "forged", "deny"],
+    "co_owned_direct_state_pairs": 25,
+    "policies": ["requester_only", "all_required", "scoped_delegation"],
+    "additional_controls": ["private_A", "unknown_owner", "exact_delegation", "wrong_scope_delegation", "stale_delegation", "valid_bound_release", "invalid_bound_release"]
+  },
+  "H": "On a finite co-owned resource fixture, requiring current grants from all required owners blocks cross-owner effects that requester-only admission permits; exact narrow delegation restores only scoped progress.",
+  "T": "Enumerate all 25 ordered direct-grant state pairs and evaluate three policies (75 decisions); separately evaluate seven ownership/delegation/safety controls using the frozen fixture.",
+  "D": "METHOD_PASS_SCOPED only if requester-only exposes the planted unauthorized co-owner cases; all-required and scoped-delegation admit no co-owned case without valid direct grants or exact current delegation; veto/stale/forged/unknown/out-of-scope fail closed; single-owner valid task works without B; correctly bound safety release works independently of mutation grants, invalid binding does not; independent audit agrees.",
+  "C": "The fixture stipulates principal/resource mapping, valid grant state and delegation. It does not authenticate actual human identity, ownership, signatures, consent, revocation timing, operating-system ACL enforcement, or application effects.",
+  "U": "Only two principals, one requestor, one resource class and finite state labels; no concurrency, multi-hop delegation, real GUI, external ACL, human study, legal conclusion or product claim.",
+  "commands": ["python candidate.py", "python audit.py", "pytest -q"],
+  "decision": "No code/input edits, parameter tuning, or retry after the frozen candidate run. Any mismatch is retained as FAIL/HOLD; no live T1 follows from this T0."
+}

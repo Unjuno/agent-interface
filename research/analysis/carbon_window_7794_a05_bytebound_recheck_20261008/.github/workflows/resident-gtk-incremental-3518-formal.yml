@@ -1,0 +1,24 @@
+name: resident-gtk-incremental-3518-formal-audit
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/resident_gtk_incremental_3518_v1/**'
+      - '.github/workflows/resident-gtk-incremental-3518-formal.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/analysis/resident_gtk_incremental_3518_v1/**'
+      - '.github/workflows/resident-gtk-incremental-3518-formal.yml'
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit retained formal rows independently
+        run: python research/analysis/resident_gtk_incremental_3518_v1/formal_01/audit_formal.py research/analysis/resident_gtk_incremental_3518_v1/formal_01/evidence/rows.json
+      - name: Test candidate construction
+        working-directory: research/analysis/resident_gtk_incremental_3518_v1
+        run: python -m unittest -v

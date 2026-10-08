@@ -1,0 +1,58 @@
+{
+  "issue": 6999,
+  "status": "PASS_PUBLIC_X11_PNG_RELEASE_BOUNDARY_SCOPED",
+  "cells": 12,
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "scientific_reruns": 0,
+  "raw_sha256": "f94c0fbb2fcd28ad01978b7366a7495c3d3ba33a08a122e64b7b4e7679daa9f2",
+  "freeze_sha256": "ff861003c4c5b1546aba2a191d35dab5cac0324276b94f2d663df26ef1d34493",
+  "frozen_files_unchanged": 24,
+  "fault_confirmed_up_ms": {
+    "coupled": [
+      402.813136,
+      403.170888,
+      404.459686
+    ],
+    "separate": [
+      3.073723,
+      2.823555,
+      2.683346
+    ]
+  },
+  "actual_checkpoint_ms": [
+    151.085848,
+    150.455595,
+    150.626304,
+    150.742263,
+    153.417234,
+    151.549601,
+    150.837347,
+    150.876639,
+    150.725805,
+    151.261057,
+    150.720555,
+    150.402137
+  ],
+  "sample_counts": [
+    60,
+    58,
+    123,
+    123,
+    55,
+    56,
+    131,
+    147,
+    59,
+    58,
+    132,
+    138
+  ],
+  "neutral_terminal_cells": 12,
+  "exact_app_event_cells": 12,
+  "local_ci_host_tests": 38,
+  "saved_negative_controls": 12,
+  "container_local_ci": "FAIL_MISSING_GIT",
+  "hard_deadline_established": false,
+  "production_plane_integrated": false
+}

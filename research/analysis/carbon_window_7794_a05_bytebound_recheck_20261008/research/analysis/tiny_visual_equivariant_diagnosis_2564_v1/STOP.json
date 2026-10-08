@@ -1,0 +1,15 @@
+{
+  "issue": "https://github.com/Unjuno/agent-interface/issues/4817",
+  "allocation": "tiny-visual-equivariant-diagnosis-2564-20260927-01",
+  "status": "STOP_DIAGNOSTIC_COMPLETE_NO_FORMAL_RUN",
+  "formal_fits": 0,
+  "construction_seed": 8964300,
+  "gradient_check": "PASS: 45/45 parameter values; max symmetric relative error 6.680001566667943e-08",
+  "balanced_lr_step_sweep": "FAIL_COMPETENCE: 5x5 task stayed at or near chance for all tested schedules through 4000 steps; all fits < 55 seconds each",
+  "balanced_geometry_sensitivity": "5x5: 57.5%; 3x3: 61.875%; 1x1: 100% training accuracy; one seed, construction-only",
+  "scientific_interpretation": "Evidence points to the 3x3 local detector plus global max-pooling discarding extent on this task; not a general CNN conclusion, sole-cause not established.",
+  "stop_reason": "The intended 5x5 task did not reach construction competence. Per #4817's gate, do not allocate formal seeds. A separate successor may test an extent-aware architecture.",
+  "invalid_diagnostic_preserved": "An earlier geometry run accidentally used positive-only labels; its output is retained but excluded from inference.",
+  "recorded_at_utc": "2026-09-27T09:36:00Z"
+}
+

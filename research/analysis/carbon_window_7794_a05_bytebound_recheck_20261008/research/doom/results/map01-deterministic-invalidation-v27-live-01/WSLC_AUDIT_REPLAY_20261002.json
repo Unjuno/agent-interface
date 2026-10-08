@@ -1,0 +1,92 @@
+{
+  "schema": "map01-v27-wslc-audit-replay-v1",
+  "verification_id": "map01-deterministic-invalidation-v27-wslc-audit-20261002-01",
+  "scope": "posthoc read-only WSLc replay of the retained raw-only auditor; the frozen live candidate was not rerun",
+  "freeze": {
+    "checkout_commit": "28340596c91f61b664ec670f95791c2ceeee6bcd",
+    "allocation_id": "map01-deterministic-invalidation-v27-live-01",
+    "preregistration_sha256": "4e52b668a4561ee1a6d52df9399809eab326d13ec86c88bdc3100f8816e45b64",
+    "auditor_path": "research/doom/audit_map01_deterministic_invalidation_v27_live_v1.py",
+    "auditor_sha256": "d4acc59db66c934c5eee33a36faecf4158ec07160e97c57d29d38b7c410a9888",
+    "retention_manifest_sha256": "3b47baee761510135f9207adc15baed5e11f5f26f1c13644aab9f1236f32729d",
+    "retained_report_sha256": "8d6384f9449d4df34d3a3cfe0d4e71330b9cbe9480eff2c0d7e63d3a9bea1de2",
+    "retained_protocol_sha256": "71b8228b7d53893d0245de283ece05861fc00b2f170464a8d935fd71636deabd",
+    "retained_audit_sha256": "8ec4db5a4e2429a7a40d7d3c7c6137896c449729c5c0c415859072fc50a05531",
+    "source_identity_gate": "all 10 preregistered source SHA-256 values matched before container invocation"
+  },
+  "runtime": {
+    "engine": "Microsoft WSL Containers (wslc.exe)",
+    "wsl_version": "3.0.1.0",
+    "kernel": "6.18.40.1-1",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_config_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "python": "3.12.14",
+    "network": "none",
+    "source_and_raw_mount": "read-only",
+    "requested_cpus": 1,
+    "requested_memory": "512M",
+    "resource_warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+    "resource_enforcement_claim": "none; limits were requested but not independently measured",
+    "gpu": "not requested; this file-hash/raw JSON audit has no GPU-dependent computation",
+    "docker": "not used"
+  },
+  "invocations": {
+    "retained_original_live_allocation": {
+      "candidate": 1,
+      "independent_raw_only_auditor": 1,
+      "retries": 0,
+      "source": "unchanged original retained run"
+    },
+    "this_wslc_replay": {
+      "candidate": 0,
+      "raw_only_auditor": 1,
+      "retries": 0,
+      "exit_code": 0
+    }
+  },
+  "auditor_result": {
+    "schema": "map01-deterministic-invalidation-v27-live-audit-v1",
+    "passed": true,
+    "allocation_id": "map01-deterministic-invalidation-v27-live-01",
+    "disposition": "RETAINED_DETERMINISTIC_COMPOSITION_PASS",
+    "planner_threads": 1,
+    "planner_turn_statuses": ["interrupted", "completed"],
+    "planner_interrupts": 1,
+    "first_turn_usage": "absent_unknown_not_zero",
+    "second_turn_cumulative_usage": {
+      "totalTokens": 9639,
+      "inputTokens": 9357,
+      "cachedInputTokens": 7936,
+      "cacheWriteInputTokens": 0,
+      "outputTokens": 282,
+      "reasoningOutputTokens": 197
+    },
+    "verified_program_releases": 3,
+    "discarded_action_plan_admissions": 0,
+    "discarded_cover_inheritance": 0,
+    "metrics": {
+      "capture_to_invalidation_detection_ms": 76.228353,
+      "detection_to_interrupt_send_ms": 0.024975,
+      "interrupt_send_to_ack_ms": 2.192292,
+      "interrupt_send_to_completion_ms": 3.278596,
+      "detection_to_cover_release_ms": 24.057146
+    },
+    "score": {
+      "map_exit": false,
+      "episode_finished": false,
+      "player_dead": false,
+      "death_count": 0,
+      "kill_count": 0
+    },
+    "decision": "the controller-level composition gate passes; remove injection arguments and return to natural multi-domain benchmark and efficiency work",
+    "limits": "one injected construction event, not a natural visual change; no gameplay, latency distribution, token-savings, reliability or MAP01-clear claim"
+  },
+  "comparison": "the WSLc replay emitted the same audit fields and values as the existing retained audit.json; no retained source, raw, report, or audit file was modified",
+  "container_command": "wslc.exe run --rm --pull never --network none --cpus 1 --memory 512M --volume \"$REPO:/src:ro\" python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python3 -B -c <read-only wrapper redirecting audit.json to /tmp>",
+  "raw_inputs": {
+    "retained_files": 96,
+    "retained_bytes": 6472270,
+    "source_hashes": "enumerated by the frozen preregistration and rechecked by the auditor",
+    "input_hashes": "enumerated and verified by retention-manifest.json"
+  }
+}

@@ -1,0 +1,11 @@
+Invocation 1 (wrong unittest import context; preserved failure):
+python -B -m unittest -v work/5531-cut-sensitivity-t5/test_audit.py
+ImportError: No module named 'audit_raw'. No tests executed.
+
+Invocation 2 (correct package context):
+python -B -m unittest -v test_audit
+Ran 3 tests in 0.002s
+OK
+
+Tests: frozen raw accepted; all nine per-row count corruptions rejected;
+Docker disclosure corruption rejected.

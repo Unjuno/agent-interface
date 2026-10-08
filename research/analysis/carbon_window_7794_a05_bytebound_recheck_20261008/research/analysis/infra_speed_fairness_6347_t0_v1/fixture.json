@@ -1,0 +1,38 @@
+{
+  "schema": "infra-speed-fairness-6347-fixture-v1",
+  "ticks": "integer; ready=origin+compute_delay+transport_delay",
+  "batch_window": 5,
+  "rotation_initial": "A",
+  "paired_delay_swap": [
+    {"id":"paired-fast-A","origin":0,"compute":{"A":0,"B":1},"transport":{"A":0,"B":0},"deadline":40,"completion_cost":{"A":1,"B":1},"grant":{"A":"active","B":"active"},"evidence_expiry":{"A":40,"B":40},"resource":"focus","rights":"equal","conflict":true},
+    {"id":"paired-fast-B","origin":0,"compute":{"A":1,"B":0},"transport":{"A":0,"B":0},"deadline":40,"completion_cost":{"A":1,"B":1},"grant":{"A":"active","B":"active"},"evidence_expiry":{"A":40,"B":40},"resource":"focus","rights":"equal","conflict":true}
+  ],
+  "heldout_opportunities": [
+    {"id":"holdout-01","origin":{"A":0,"B":0},"delay":{"A":0,"B":3}},
+    {"id":"holdout-02","origin":{"A":10,"B":10},"delay":{"A":4,"B":0}},
+    {"id":"holdout-03","origin":{"A":20,"B":20},"delay":{"A":1,"B":4}},
+    {"id":"holdout-04","origin":{"A":30,"B":30},"delay":{"A":3,"B":1}},
+    {"id":"holdout-05","origin":{"A":40,"B":40},"delay":{"A":0,"B":2}},
+    {"id":"holdout-06","origin":{"A":50,"B":50},"delay":{"A":4,"B":2}},
+    {"id":"holdout-07","origin":{"A":60,"B":60},"delay":{"A":2,"B":0}},
+    {"id":"holdout-08","origin":{"A":70,"B":70},"delay":{"A":1,"B":3}},
+    {"id":"holdout-09","origin":{"A":80,"B":80},"delay":{"A":3,"B":0}},
+    {"id":"holdout-10","origin":{"A":90,"B":90},"delay":{"A":0,"B":4}},
+    {"id":"holdout-11","origin":{"A":100,"B":100},"delay":{"A":2,"B":4}},
+    {"id":"holdout-12","origin":{"A":110,"B":110},"delay":{"A":4,"B":1}}
+  ],
+  "boundary_controls": [
+    {"id":"phase-before-close","origin":{"A":0,"B":4},"delay":{"A":0,"B":0}},
+    {"id":"phase-after-close","origin":{"A":0,"B":6},"delay":{"A":0,"B":0}},
+    {"id":"strategic-late-send","origin":{"A":0,"B":0},"delay":{"A":0,"B":0},"send_offset":{"A":0,"B":4}},
+    {"id":"repeated-tie-rotation","origin":{"A":0,"B":0},"delay":{"A":0,"B":0},"repetitions":6}
+  ],
+  "safety_controls": [
+    {"id":"critical-interrupt","kind":"critical","origin":{"A":0,"B":0},"delay":{"A":0,"B":1}},
+    {"id":"short-deadline-bypass","kind":"short_deadline","origin":{"A":0,"B":0},"delay":{"A":0,"B":1},"deadline_after_origin":3},
+    {"id":"revoked-during-window","kind":"revoked","origin":{"A":0,"B":0},"delay":{"A":0,"B":1},"revoke_at":3,"revoked_principal":"A"},
+    {"id":"expired-evidence","kind":"expired","origin":{"A":0,"B":0},"delay":{"A":0,"B":1},"evidence_expiry_at":2,"expired_principal":"A"},
+    {"id":"disjoint-negative-control","kind":"disjoint","origin":{"A":0,"B":0},"delay":{"A":0,"B":1}},
+    {"id":"rights-unresolved","kind":"no_rights","origin":{"A":0,"B":0},"delay":{"A":0,"B":1}}
+  ]
+}

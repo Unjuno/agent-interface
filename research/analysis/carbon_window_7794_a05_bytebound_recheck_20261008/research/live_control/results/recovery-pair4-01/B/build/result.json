@@ -1,0 +1,540 @@
+{
+  "view": {
+    "format": "pointer-report-view-v1",
+    "payload": {
+      "state": "terminal",
+      "exchanges": [
+        {
+          "request": {
+            "after": 31,
+            "events": [
+              "clock"
+            ],
+            "timeout": 5,
+            "request_id": "clock-b1370227dcaf45b6823e2f0aabc2b6fa",
+            "command": {
+              "op": "clock"
+            }
+          },
+          "started_ns": 133282395632,
+          "returned_ns": 133306400407,
+          "reply": {
+            "status": "boundary",
+            "records": [
+              {
+                "event": "command",
+                "command": {
+                  "op": "clock",
+                  "transport_request_id": "clock-b1370227dcaf45b6823e2f0aabc2b6fa"
+                },
+                "emitted_ns": 133292500022
+              },
+              {
+                "event": "clock",
+                "runtime_ns": 133294799676,
+                "sequence": 4,
+                "emitted_ns": 133294804225
+              }
+            ],
+            "cursor": 33,
+            "returned_ns": 133303322917,
+            "authority": "none",
+            "acknowledgement": "not implied",
+            "command_receipt": {
+              "request_id": "clock-b1370227dcaf45b6823e2f0aabc2b6fa",
+              "replayed": false,
+              "state": "stdin_flushed"
+            }
+          }
+        },
+        {
+          "request": {
+            "after": 33,
+            "events": [
+              "terminal"
+            ],
+            "timeout": 15,
+            "action_id": "build-road",
+            "request_id": "program-8cf9f408415b42bb8b0c6dd85c289014",
+            "command": {
+              "op": "submit",
+              "id": "build-road",
+              "steps": [
+                {
+                  "op": "pointer_click",
+                  "x": 709,
+                  "y": 90
+                },
+                {
+                  "op": "pointer_drag",
+                  "points": [
+                    {
+                      "x": 685,
+                      "y": 383
+                    },
+                    {
+                      "x": 641,
+                      "y": 400
+                    },
+                    {
+                      "x": 609,
+                      "y": 417
+                    }
+                  ],
+                  "duration_ms": 300
+                },
+                {
+                  "op": "observe"
+                }
+              ],
+              "expected_sequence": 4,
+              "valid_until_ns": 163294799676
+            }
+          },
+          "started_ns": 133309360732,
+          "returned_ns": 134112506576,
+          "reply": {
+            "status": "boundary",
+            "records": [
+              {
+                "event": "command",
+                "command": {
+                  "expected_sequence": 4,
+                  "id": "build-road",
+                  "op": "submit",
+                  "steps": [
+                    {
+                      "op": "pointer_click",
+                      "x": 709,
+                      "y": 90
+                    },
+                    {
+                      "duration_ms": 300,
+                      "op": "pointer_drag",
+                      "points": [
+                        {
+                          "x": 685,
+                          "y": 383
+                        },
+                        {
+                          "x": 641,
+                          "y": 400
+                        },
+                        {
+                          "x": 609,
+                          "y": 417
+                        }
+                      ]
+                    },
+                    {
+                      "op": "observe"
+                    }
+                  ],
+                  "transport_request_id": "program-8cf9f408415b42bb8b0c6dd85c289014",
+                  "valid_until_ns": 163294799676
+                },
+                "emitted_ns": 133322815573
+              },
+              {
+                "event": "accepted",
+                "id": "build-road",
+                "steps": 3,
+                "valid_until_ns": 163294799676,
+                "accepted_ns": 133324805457,
+                "emitted_ns": 133324808526
+              },
+              {
+                "event": "step_started",
+                "id": "build-road",
+                "step": 0,
+                "operation": "pointer_click",
+                "issued_ns": 133334007484,
+                "emitted_ns": 133334009353
+              },
+              {
+                "event": "pointer_admission",
+                "operation": "move",
+                "payload": {
+                  "x": 709,
+                  "y": 90
+                },
+                "admitted_ns": 133346920838,
+                "input_ack_ns": 133347077121,
+                "valid_until_ns": 163294799676,
+                "surface": 10485762,
+                "id": "build-road",
+                "step": 0,
+                "emitted_ns": 133347142297
+              },
+              {
+                "event": "pointer_admission",
+                "operation": "button_down",
+                "payload": 1,
+                "admitted_ns": 133356962285,
+                "input_ack_ns": 133357140963,
+                "valid_until_ns": 163294799676,
+                "surface": 10485762,
+                "id": "build-road",
+                "step": 0,
+                "emitted_ns": 133357253479
+              },
+              {
+                "event": "observation",
+                "id": "build-road",
+                "step": 0,
+                "sequence": 5,
+                "capture_ns": 133408856241,
+                "context_ns": 133413749097,
+                "context": [
+                  [
+                    "windows",
+                    "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+                  ],
+                  [
+                    "active_window",
+                    10485762
+                  ]
+                ],
+                "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair4-01/B/runtime/005.png",
+                "image_reused": false,
+                "image_prepare_ns": 54120973,
+                "image_ready_ns": 133499549543,
+                "input_focus_before": 10485762,
+                "input_focus_after": 10485762,
+                "focus_samples_match": true,
+                "pointer_binding": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "pointer_context_before": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "pointer_context_after": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "capture_ms": 3.256489,
+                "wire_bytes": 192174,
+                "exact": true,
+                "semantic_completion": "unknown",
+                "emitted_ns": 133506411850
+              },
+              {
+                "event": "step_completed",
+                "id": "build-road",
+                "step": 0,
+                "completed_ns": 133509004354,
+                "emitted_ns": 133509007990
+              },
+              {
+                "event": "step_started",
+                "id": "build-road",
+                "step": 1,
+                "operation": "pointer_drag",
+                "issued_ns": 133520983704,
+                "emitted_ns": 133520988966
+              },
+              {
+                "event": "pointer_admission",
+                "operation": "move",
+                "payload": {
+                  "x": 685,
+                  "y": 383
+                },
+                "admitted_ns": 133530924420,
+                "input_ack_ns": 133531057350,
+                "valid_until_ns": 163294799676,
+                "surface": 10485762,
+                "id": "build-road",
+                "step": 1,
+                "emitted_ns": 133531108790
+              },
+              {
+                "event": "pointer_admission",
+                "operation": "button_down",
+                "payload": 1,
+                "admitted_ns": 133541871047,
+                "input_ack_ns": 133542047303,
+                "valid_until_ns": 163294799676,
+                "surface": 10485762,
+                "id": "build-road",
+                "step": 1,
+                "emitted_ns": 133542124814
+              },
+              {
+                "event": "pointer_admission",
+                "operation": "move",
+                "payload": {
+                  "x": 641,
+                  "y": 400
+                },
+                "admitted_ns": 133702278464,
+                "input_ack_ns": 133702470509,
+                "valid_until_ns": 163294799676,
+                "surface": 10485762,
+                "id": "build-road",
+                "step": 1,
+                "emitted_ns": 133702527277
+              },
+              {
+                "event": "pointer_admission",
+                "operation": "move",
+                "payload": {
+                  "x": 609,
+                  "y": 417
+                },
+                "admitted_ns": 133857167842,
+                "input_ack_ns": 133857269751,
+                "valid_until_ns": 163294799676,
+                "surface": 10485762,
+                "id": "build-road",
+                "step": 1,
+                "emitted_ns": 133857317604
+              },
+              {
+                "event": "observation",
+                "id": "build-road",
+                "step": 1,
+                "sequence": 6,
+                "capture_ns": 133868205229,
+                "context_ns": 133873426489,
+                "context": [
+                  [
+                    "windows",
+                    "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+                  ],
+                  [
+                    "active_window",
+                    10485762
+                  ]
+                ],
+                "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair4-01/B/runtime/006.png",
+                "image_reused": false,
+                "image_prepare_ns": 50059158,
+                "image_ready_ns": 133956643445,
+                "input_focus_before": 10485762,
+                "input_focus_after": 10485762,
+                "focus_samples_match": true,
+                "pointer_binding": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "pointer_context_before": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "pointer_context_after": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "capture_ms": 6.007556,
+                "wire_bytes": 194065,
+                "exact": true,
+                "semantic_completion": "unknown",
+                "emitted_ns": 133959680312
+              },
+              {
+                "event": "step_completed",
+                "id": "build-road",
+                "step": 1,
+                "completed_ns": 133961924698,
+                "emitted_ns": 133961927949
+              },
+              {
+                "event": "step_started",
+                "id": "build-road",
+                "step": 2,
+                "operation": "observe",
+                "issued_ns": 133973524737,
+                "emitted_ns": 133973526707
+              },
+              {
+                "event": "observation",
+                "id": "build-road",
+                "step": 2,
+                "sequence": 7,
+                "capture_ns": 133989850974,
+                "context_ns": 133994090944,
+                "context": [
+                  [
+                    "windows",
+                    "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+                  ],
+                  [
+                    "active_window",
+                    10485762
+                  ]
+                ],
+                "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair4-01/B/runtime/007.png",
+                "image_reused": false,
+                "image_prepare_ns": 49961925,
+                "image_ready_ns": 134078258707,
+                "input_focus_before": 10485762,
+                "input_focus_after": 10485762,
+                "focus_samples_match": true,
+                "pointer_binding": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "pointer_context_before": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "pointer_context_after": {
+                  "focus": 10485762,
+                  "surface": 10485762,
+                  "geometry": [
+                    129,
+                    40,
+                    1024,
+                    720
+                  ]
+                },
+                "capture_ms": 5.09487,
+                "wire_bytes": 191594,
+                "exact": true,
+                "semantic_completion": "unknown",
+                "emitted_ns": 134082220375
+              },
+              {
+                "event": "step_completed",
+                "id": "build-road",
+                "step": 2,
+                "completed_ns": 134083547910,
+                "emitted_ns": 134083551103
+              },
+              {
+                "event": "terminal",
+                "id": "build-road",
+                "status": "completed",
+                "error": null,
+                "steps_completed": 3,
+                "release": {
+                  "event": "owner_release",
+                  "reason": "release",
+                  "verified": true,
+                  "buttons_down": [],
+                  "keys_down": [],
+                  "verified_ns": 134095503221,
+                  "valid_until_ns": 163294799676
+                },
+                "terminal_ns": 134095540336,
+                "semantic_completion": "program status only; task scoring is separate",
+                "emitted_ns": 134095543014
+              }
+            ],
+            "cursor": 51,
+            "returned_ns": 134108567263,
+            "authority": "none",
+            "acknowledgement": "not implied",
+            "command_receipt": {
+              "request_id": "program-8cf9f408415b42bb8b0c6dd85c289014",
+              "replayed": false,
+              "state": "stdin_flushed"
+            }
+          }
+        }
+      ],
+      "program_sent": true,
+      "source_image": {
+        "status": "image",
+        "sequence": 4,
+        "capture_ns": 122311388305,
+        "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair4-01/B/runtime/004.png",
+        "relative_path": "004.png",
+        "sha256": "1573a179d3cbf7659ac89435ff957a8d71e6cccc59250252ca9e037f52d1521f",
+        "authority": "none",
+        "freshness": "historical referenced capture; no new observation"
+      },
+      "image": {
+        "status": "image",
+        "sequence": 7,
+        "capture_ns": 133989850974,
+        "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair4-01/B/runtime/007.png",
+        "relative_path": "007.png",
+        "sha256": "af8993346047e8163f627abdc155af9ddead8c6c0acf7c028e955421fbbea395",
+        "authority": "none",
+        "freshness": "historical referenced capture; no new observation"
+      },
+      "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies"
+    },
+    "references": {
+      "last_reply": [
+        "exchanges",
+        1,
+        "reply"
+      ],
+      "continuation_batch": [
+        "exchanges",
+        1,
+        "reply"
+      ],
+      "terminal": [
+        "exchanges",
+        1,
+        "reply",
+        "records",
+        17
+      ]
+    }
+  },
+  "image": {
+    "status": "image",
+    "sequence": 7,
+    "capture_ns": 133989850974,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair4-01/B/runtime/007.png",
+    "relative_path": "007.png",
+    "sha256": "af8993346047e8163f627abdc155af9ddead8c6c0acf7c028e955421fbbea395",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  }
+}

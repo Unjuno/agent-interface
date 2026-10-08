@@ -1,0 +1,16 @@
+{
+  "schema": "human-return-resumption-start-gate-stop-v1",
+  "allocation": "HUMAN-RETURN-RESUMPTION-6492-T0-20261002-03",
+  "status": "STOP_BEFORE_CANDIDATE_PARALLEL_ISSUE_WORK",
+  "branch_head_at_last_main_refresh": "95431dc7537e55782dd3997fe04b55a729b91fe6",
+  "start_gate_main_at_discovery": "95431dc7537e55782dd3997fe04b55a729b91fe6",
+  "parallel_pr": "https://github.com/Unjuno/agent-interface/pull/6499",
+  "parallel_branch": "research/human-return-own-work-6492-t0-20261002",
+  "parallel_scope": "six synthetic cases x timing-only/preserved-view/optional-cue; candidate and independent audit executed; six corruptions rejected",
+  "candidate_invocations": 0,
+  "independent_auditor_invocations": 0,
+  "retries": 0,
+  "container_started": false,
+  "output_paths_created": false,
+  "reason": "The frozen start gate required stopping on a concurrent #6492 ownership/result change. PR #6499 contains an already-executed T0 for three arms. No overlapping candidate was launched. The not-yet-covered immediate_modal arm is retained as a potential distinct additive successor, not represented as tested."
+}

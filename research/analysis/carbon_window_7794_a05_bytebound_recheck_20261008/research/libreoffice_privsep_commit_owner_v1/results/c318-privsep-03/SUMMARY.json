@@ -1,0 +1,250 @@
+{
+  "allocation": "c318-privsep-03",
+  "order": [
+    "stable",
+    "path_replace_attempt"
+  ],
+  "rows": [
+    {
+      "adversarial": false,
+      "arm": "01-stable",
+      "authority_dir_final": {
+        "ctime_ns": 1789522646067419053,
+        "dev": 28,
+        "gid": 1001,
+        "ino": 1311425,
+        "mode": "0o755",
+        "mtime_ns": 1789522646067419053,
+        "size": 4096,
+        "uid": 0
+      },
+      "authority_dir_initial": {
+        "ctime_ns": 1789522640349990510,
+        "dev": 28,
+        "gid": 1001,
+        "ino": 1311425,
+        "mode": "0o755",
+        "mtime_ns": 1789522640349990510,
+        "size": 4096,
+        "uid": 0
+      },
+      "backend_emissions": 43,
+      "calc_window_id": 4194704,
+      "classification": "PASS_CAPABILITY_COMMIT_OWNER",
+      "final_check_target": {
+        "ctime_ns": 1789522640361437994,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1311457,
+        "mode": "0o644",
+        "mtime_ns": 1789522640356115752,
+        "sha256": "b3d120ba4d9ffa1d5094de0bec2a91b4008f43c7e6e3a4243716de6d6c01eb81",
+        "size": 4838,
+        "uid": 0
+      },
+      "final_score": {
+        "bytes": 6011,
+        "cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null},
+        "path": "/mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/01-stable/authority/target.xlsx",
+        "sha256": "1213426f5872f62a779e2f9ee742f93e399641313d12dade7d88c3dc8a5e1845"
+      },
+      "final_target": {
+        "ctime_ns": 1789522646067419053,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1312264,
+        "mode": "0o644",
+        "mtime_ns": 1789522646067314017,
+        "sha256": "1213426f5872f62a779e2f9ee742f93e399641313d12dade7d88c3dc8a5e1845",
+        "size": 6011,
+        "uid": 0
+      },
+      "format_confirm_enter_sent": true,
+      "gui_gid": 1002,
+      "gui_uid": 1001,
+      "gui_user": "ai_gui",
+      "lo_alive_at_score": true,
+      "modal_names_1": ["Confirm File Format"],
+      "modal_names_2": [],
+      "plan_target": {
+        "ctime_ns": 1789522640361437994,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1311457,
+        "mode": "0o644",
+        "mtime_ns": 1789522640356115752,
+        "sha256": "b3d120ba4d9ffa1d5094de0bec2a91b4008f43c7e6e3a4243716de6d6c01eb81",
+        "size": 4838,
+        "uid": 0
+      },
+      "plan_valid_at_check": true,
+      "publish_ended_ns": 577315455637,
+      "publish_recheck_target": {
+        "ctime_ns": 1789522640361437994,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1311457,
+        "mode": "0o644",
+        "mtime_ns": 1789522640356115752,
+        "sha256": "b3d120ba4d9ffa1d5094de0bec2a91b4008f43c7e6e3a4243716de6d6c01eb81",
+        "size": 4838,
+        "uid": 0
+      },
+      "publish_recheck_valid": true,
+      "publish_started_ns": 577315174288,
+      "published": true,
+      "release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 576578785739, "verified": true},
+      "soffice_processes": [
+        {
+          "cmd": "/usr/lib/libreoffice/program/soffice.bin -env:UserInstallation=file:///mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/01-stable/gui/profile --nologo --nodefault --nofirststartwizard --norestore /mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/01-stable/gui/staging.xlsx ",
+          "euid": 1001,
+          "pid": 1509
+        }
+      ],
+      "source_blobs": {"backend_x11.py": "b4f8e043ce4f8929d446e038418ea0fd3655bab0", "office_backend.py": "3aeca10f62fb1366bcdd5fad561509cfcc0d91ab"},
+      "staging_score": {
+        "bytes": 6011,
+        "cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null},
+        "path": "/mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/01-stable/gui/staging.xlsx",
+        "sha256": "1213426f5872f62a779e2f9ee742f93e399641313d12dade7d88c3dc8a5e1845"
+      },
+      "writer": null
+    },
+    {
+      "adversarial": true,
+      "arm": "02-path-replace-attempt",
+      "authority_dir_final": {
+        "ctime_ns": 1789522657195276797,
+        "dev": 28,
+        "gid": 1001,
+        "ino": 1311624,
+        "mode": "0o755",
+        "mtime_ns": 1789522657195276797,
+        "size": 4096,
+        "uid": 0
+      },
+      "authority_dir_initial": {
+        "ctime_ns": 1789522650754034450,
+        "dev": 28,
+        "gid": 1001,
+        "ino": 1311624,
+        "mode": "0o755",
+        "mtime_ns": 1789522650754034450,
+        "size": 4096,
+        "uid": 0
+      },
+      "backend_emissions": 43,
+      "calc_window_id": 4194704,
+      "classification": "PASS_CAPABILITY_COMMIT_OWNER",
+      "external_exists_after_writer_attempt": true,
+      "final_check_target": {
+        "ctime_ns": 1789522650765247771,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1312268,
+        "mode": "0o644",
+        "mtime_ns": 1789522650759104117,
+        "sha256": "fd9c9ad22c14cdd0a6dee7f5d07522e5891200588ee3752803b4922aa55ce94f",
+        "size": 4838,
+        "uid": 0
+      },
+      "final_score": {
+        "bytes": 6011,
+        "cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null},
+        "path": "/mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/02-path-replace-attempt/authority/target.xlsx",
+        "sha256": "f52bd2cf6ebb3b5ca72eb78bf9f5401119a2f60a6e32c3c3f6f178e2529a82b6"
+      },
+      "final_target": {
+        "ctime_ns": 1789522657195276797,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1311157,
+        "mode": "0o644",
+        "mtime_ns": 1789522657195165952,
+        "sha256": "f52bd2cf6ebb3b5ca72eb78bf9f5401119a2f60a6e32c3c3f6f178e2529a82b6",
+        "size": 6011,
+        "uid": 0
+      },
+      "format_confirm_enter_sent": true,
+      "gui_gid": 1002,
+      "gui_uid": 1001,
+      "gui_user": "ai_gui",
+      "lo_alive_at_score": true,
+      "modal_names_1": ["Confirm File Format"],
+      "modal_names_2": [],
+      "plan_target": {
+        "ctime_ns": 1789522650765247771,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1312268,
+        "mode": "0o644",
+        "mtime_ns": 1789522650759104117,
+        "sha256": "fd9c9ad22c14cdd0a6dee7f5d07522e5891200588ee3752803b4922aa55ce94f",
+        "size": 4838,
+        "uid": 0
+      },
+      "plan_valid_at_check": true,
+      "publish_ended_ns": 588443314081,
+      "publish_recheck_target": {
+        "ctime_ns": 1789522650765247771,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1312268,
+        "mode": "0o644",
+        "mtime_ns": 1789522650759104117,
+        "sha256": "fd9c9ad22c14cdd0a6dee7f5d07522e5891200588ee3752803b4922aa55ce94f",
+        "size": 4838,
+        "uid": 0
+      },
+      "publish_recheck_valid": true,
+      "publish_started_ns": 588443064741,
+      "published": true,
+      "release": {"buttons_down": [], "keys_down": [], "monotonic_ns": 587115711859, "verified": true},
+      "soffice_processes": [
+        {
+          "cmd": "/usr/lib/libreoffice/program/soffice.bin -env:UserInstallation=file:///mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/02-path-replace-attempt/gui/profile --nologo --nodefault --nofirststartwizard --norestore /mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/02-path-replace-attempt/gui/staging.xlsx ",
+          "euid": 1001,
+          "pid": 1611
+        }
+      ],
+      "source_blobs": {"backend_x11.py": "b4f8e043ce4f8929d446e038418ea0fd3655bab0", "office_backend.py": "3aeca10f62fb1366bcdd5fad561509cfcc0d91ab"},
+      "staging_score": {
+        "bytes": 6011,
+        "cells": {"A1": "office", "A2": "preview", "A3": null, "B1": null},
+        "path": "/mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/02-path-replace-attempt/gui/staging.xlsx",
+        "sha256": "f52bd2cf6ebb3b5ca72eb78bf9f5401119a2f60a6e32c3c3f6f178e2529a82b6"
+      },
+      "target_after_writer_attempt": {
+        "ctime_ns": 1789522650765247771,
+        "dev": 28,
+        "gid": 0,
+        "ino": 1312268,
+        "mode": "0o644",
+        "mtime_ns": 1789522650759104117,
+        "sha256": "fd9c9ad22c14cdd0a6dee7f5d07522e5891200588ee3752803b4922aa55ce94f",
+        "size": 4838,
+        "uid": 0
+      },
+      "writer": {
+        "dst": "/mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/02-path-replace-attempt/authority/target.xlsx",
+        "egid": 1002,
+        "ended_ns": 588317420319,
+        "errno": 13,
+        "error": "PermissionError(13, 'Permission denied')",
+        "euid": 1001,
+        "ok": false,
+        "src": "/mnt/data/libreoffice_privsep_commit_owner_v1/scored/c318-privsep-03/02-path-replace-attempt/gui/external.xlsx",
+        "started_ns": 588317373489
+      }
+    }
+  ],
+  "schema": "agent-interface/libreoffice-privsep-commit-owner-v1",
+  "source_blobs": {"backend_x11.py": "b4f8e043ce4f8929d446e038418ea0fd3655bab0", "office_backend.py": "3aeca10f62fb1366bcdd5fad561509cfcc0d91ab"},
+  "source_sha256": {
+    "audit_v3.py": "5535e3aaa6330076776bffd421a4fee9c5b046cd581e281a50e3ecd4f8ead358",
+    "backend_x11.py": "78b99f3f528bdb1504740d079d460fdb7ee43c1d2b2cb0d88cb2b1cf3996d940",
+    "office_backend.py": "d9ecc0d645e206be91d7f06b67ff8b24b239077cff56aac5431b7507bc726c74",
+    "runner_v3.py": "8e88d63e8d3db5bc02decde94b27b3a3e037eafba9917c09444d945557463a1c",
+    "score_xlsx.py": "1a176c9fef7ab61b5b615c1e191a539acad2eab65d4c1006c7911459b9f43978"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "request": {
+    "interface_id": "composition-comparison",
+    "session_scope": "native-x11:965d0bf38d43447fbed6520a0e435fbd",
+    "action": "enter",
+    "operation": "enter_exact_token",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "field",
+      "identity_predicate": "field_present",
+      "dependencies": [
+        "field_present"
+      ]
+    },
+    "observation": {
+      "sequence": 2,
+      "captured_ns": 22931166110476,
+      "surface": "x11-window-2097182",
+      "predicates": {
+        "field_present": true,
+        "submit_present": true,
+        "field_accepted": false,
+        "saved_cue": false
+      },
+      "evidence_ref": "observation-2",
+      "evidence_digest": "b4369c94d404f55fe2278650ff65bdf4ad9a70174e9699e7f3cb4b31b68ce23e"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "0452abf820114a0885c767b896467718",
+    "expected_sequence": 2,
+    "valid_until_ns": 22932666110476
+  }
+}

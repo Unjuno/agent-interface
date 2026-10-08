@@ -1,0 +1,55 @@
+"""Four prospective directed mutations, finite independent source copies."""
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+root = Path(__file__).resolve().parent
+source = root / 'receipt-adoption-v1'
+out = root / 'receipt-adoption-mutations'
+out.mkdir()
+guard = '        if self.execution_started_ns is None or receipt.started_ns < self.execution_started_ns:\n            raise ContractError("execution receipt starts before accepted begin")\n'
+original = (source / 'runtime/kernel/lifecycle.py').read_bytes()
+if original.count(guard.encode()) != 1:
+    raise SystemExit('guard identity changed before mutation')
+cases = [
+    ('missing', guard, '', 'test_prebegin_start_refused_without_consuming_any_state', 'failure'),
+    ('reversed', 'receipt.started_ns < self.execution_started_ns', 'receipt.started_ns > self.execution_started_ns', 'test_prebegin_start_refused_without_consuming_any_state', 'failure'),
+    ('reject-equality', 'receipt.started_ns < self.execution_started_ns', 'receipt.started_ns <= self.execution_started_ns', 'test_same_tick_and_later_start_are_accepted', 'contract-error'),
+    ('consume-before-refusal', guard, '        self.execution = receipt\n' + guard, 'test_prebegin_start_refused_without_consuming_any_state', 'failure'),
+]
+results = []
+for label, before, after, target, expected in cases:
+    cwd = out / label
+    shutil.copytree(source / 'runtime', cwd / 'runtime')
+    mutant = original.replace(before.encode(), after.encode(), 1)
+    (cwd / 'runtime/kernel/lifecycle.py').write_bytes(mutant)
+    (source / f'mutant-{label}.py.txt').write_bytes(mutant)
+    test_id = 'runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.' + target
+    script = '''import json, unittest
+suite=unittest.defaultTestLoader.loadTestsFromName(TEST_ID)
+r=unittest.TestResult()
+suite.run(r)
+print(json.dumps({'tests_run':r.testsRun,'failures':[[str(t),s] for t,s in r.failures],'errors':[[str(t),s] for t,s in r.errors],'success':r.wasSuccessful()}))
+raise SystemExit(0 if r.wasSuccessful() else 1)
+'''.replace('TEST_ID', repr(test_id))
+    command = [sys.executable, '-B', '-c', script]
+    child = subprocess.run(command, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=30)
+    raw = child.stdout
+    record = json.loads(raw)
+    expected_detection = child.returncode == 1 and record['tests_run'] == 1 and not record['success']
+    if expected == 'failure':
+        expected_detection &= bool(record['failures']) and not record['errors']
+    else:
+        expected_detection &= bool(record['errors']) and not record['failures'] and all('ContractError: execution receipt starts before accepted begin' in e[1] for e in record['errors'])
+    private = root / 'receipt-adoption-private' / f'mutant-{label}.raw.json'
+    private.write_bytes(raw)
+    published = raw.replace(str(root).encode().replace(b'\\', b'\\\\'), b'PRIVATE_WORK')
+    (source / f'mutant-{label}.result.json').write_bytes(published)
+    results.append({'mutation': label, 'target': test_id, 'expected_detection': expected, 'detected': bool(expected_detection), 'child_exit_code': child.returncode, 'tests_run': record['tests_run'], 'failures': len(record['failures']), 'errors': len(record['errors']), 'source_sha256': hashlib.sha256(mutant).hexdigest(), 'private_result_sha256': hashlib.sha256(raw).hexdigest(), 'published_result_sha256': hashlib.sha256(published).hexdigest(), 'stderr_sha256': hashlib.sha256(child.stderr).hexdigest()})
+    print(json.dumps(results[-1]))
+summary = {'kind': 'ordinary directed corruption controls; not formal reruns', 'candidate_sha256': hashlib.sha256(original).hexdigest(), 'results': results, 'all_detected': all(r['detected'] for r in results)}
+(source / 'MUTATIONS.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8', newline='\n')
+raise SystemExit(0 if summary['all_detected'] else 1)

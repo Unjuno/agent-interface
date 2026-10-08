@@ -1,0 +1,14 @@
+{
+  "allocation": "Issue #2918 allocation 04 audit-only successor",
+  "status": "HOLD_INTENT_EPOCH_CAPTURE_NOT_COMPLETE",
+  "audit_invocations": 1,
+  "runner_invocations": 0,
+  "auditor_exit_code": 1,
+  "failure": "AssertionError at pixel comparison for intent_epoch_mismatch: sampled (UNRECOGNIZED, UNRECOGNIZED, UNRECOGNIZED, UNRECOGNIZED), oracle [1,1,1,0]",
+  "independent_observation": "The hash-matched PNG for the intent-mismatch row is entirely black. A second fixture window created for ambiguous-target testing occupied the same root coordinates and obscured the target window before the final capture; X11 GetImage does not provide valid pixels for obscured window regions.",
+  "preceding_audit_gates": "All earlier receipt, lineage, checksum and pixel assertions completed without raising; no success report was written because the intent-mismatch pixel gate failed.",
+  "formal_api_calls": 0,
+  "raw_input_changed": false,
+  "retry": "No repeat audit and no change to allocation-03 raw data. A new allocation must keep ambiguous windows non-overlapping and capture a complete intent-mismatch observation.",
+  "scope": "fixture observation validity failure; no conclusion about the certificate-transfer hypothesis"
+}

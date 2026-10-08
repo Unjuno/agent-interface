@@ -1,0 +1,797 @@
+{
+  "allocation_id": "release-client-wait-live-02",
+  "verification": {
+    "research/live_control/release_client_wait_live_v2.py": true,
+    "research/live_control/audit_release_client_wait_live_v2.py": true,
+    "research/live_control/release_event_socket_v2.py": true,
+    "research/live_control/release_event_socket_v1.py": true,
+    "research/live_control/release_event_scope_v1.py": true,
+    "research/live_control/release_event_cursor_v1.py": true,
+    "research/live_control/release_pending_action_v1.py": true,
+    "research/live_control/release_recovery_backend_v1.py": true,
+    "research/live_control/unix_json_deadline.py": true,
+    "research/live_control/executor_v13.py": true,
+    "research/live_control/executor_v12.py": true,
+    "research/live_control/executor_v11.py": true,
+    "research/live_control/executor_v5.py": true,
+    "research/live_control/executor_v3.py": true,
+    "research/live_control/lease_release_v1.py": true,
+    "research/live_control/lease_cause_v2.py": true,
+    "research/live_control/lease_cause_v1.py": true,
+    "research/live_control/lease.py": true,
+    "research/live_control/cause_session_v1.py": true,
+    "research/live_control/input_owner_v10.py": true,
+    "research/live_control/session_v8.py": true,
+    "research/live_control/quiet_window.py": true,
+    "research/live_control/session_v7.py": true,
+    "research/live_control/session_v6.py": true,
+    "research/live_control/input_owner_v2.py": true,
+    "research/live_control/session_v5.py": true,
+    "research/live_control/input_owner.py": true,
+    "research/live_control/session_v4.py": true,
+    "research/observation_tiles/tile_transport.py": true,
+    "research/observation_tiles/image_artifact.py": true,
+    "research/observation_gating/gui_suite.py": true,
+    "research/real_apps_v1/real_app_suite_v1.py": true,
+    "output_absent": true,
+    "one_episode_no_retry": true,
+    "zero_model": true,
+    "thresholds": true
+  },
+  "scope": "one distinct private-Xvfb Inkscape held-click focus interruption repairing server registration retention; matched same-stream Unix clients and one passive recovery observation; no model, token, task-success, general speedup or human-tempo claim",
+  "passed": true,
+  "checks": {
+    "same_runtime_stream": true,
+    "both_waiting_before_focus": true,
+    "early_boundary_is_verified_release": true,
+    "pending_client_state": true,
+    "terminal_client_boundary": true,
+    "early_resume_same_terminal": true,
+    "lease_and_cause_match": true,
+    "real_post_release_observation": true,
+    "early_reply_smaller": true,
+    "round_trip_accounting": true,
+    "focus_to_early_threshold": true,
+    "early_advantage_threshold": true,
+    "terminal_threshold": true,
+    "zero_model_retry_cancel": true
+  },
+  "goal": {
+    "token": "t000210",
+    "a": 493,
+    "b": 107,
+    "dx": 36,
+    "setup_readiness_captures": 3
+  },
+  "accepted": {
+    "event": "accepted",
+    "id": "release-client-pointer-click-02",
+    "steps": 1,
+    "program_sha256": "63a44bd6c72dd8acdfd503368b5d49f58c5908f992cbf1653ffc6b0dccf0ab13",
+    "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+    "valid_until_ns": 39976245085875,
+    "accepted_ns": 39971245222597,
+    "runtime_emit_ns": 39971245223688
+  },
+  "focus_request_ns": 39971275836043,
+  "server_request_receipts": [
+    {
+      "request_id": "early-release",
+      "received_ns": 39971251671509,
+      "request": {
+        "after": 0,
+        "events": [
+          "input_released",
+          "terminal"
+        ],
+        "timeout": 5,
+        "action_id": "release-client-pointer-click-02",
+        "request_id": "early-release"
+      }
+    },
+    {
+      "request_id": "terminal-only",
+      "received_ns": 39971252397797,
+      "request": {
+        "after": 0,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 5,
+        "action_id": "release-client-pointer-click-02",
+        "request_id": "terminal-only"
+      }
+    }
+  ],
+  "server_request_receipt_artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-client-wait-live-02/server-requests-before-focus.json",
+  "server_request_receipt_sha256": "f79cd813a06de701c3e29c2bc3189f60940b759385ede2bc56ee9d15f3ace9f9",
+  "clients": {
+    "early": {
+      "request": {
+        "after": 0,
+        "events": [
+          "input_released",
+          "terminal"
+        ],
+        "timeout": 5,
+        "action_id": "release-client-pointer-click-02",
+        "request_id": "early-release"
+      },
+      "client_started_ns": 39971250834370,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "observation",
+            "id": "initial",
+            "step": 0,
+            "sequence": 1,
+            "capture_ns": 39971176289212,
+            "context_ns": 39971180886353,
+            "context": [
+              [
+                "windows",
+                "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+              ],
+              [
+                "active_window",
+                6291463
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-client-wait-live-02/001.png",
+            "image_reused": false,
+            "image_prepare_ns": 38208493,
+            "image_ready_ns": 39971234066049,
+            "input_focus_before": 6291464,
+            "input_focus_after": 6291464,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 3.3676,
+            "wire_bytes": 67754,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "runtime_emit_ns": 39971244986924
+          },
+          {
+            "event": "accepted",
+            "id": "release-client-pointer-click-02",
+            "steps": 1,
+            "program_sha256": "63a44bd6c72dd8acdfd503368b5d49f58c5908f992cbf1653ffc6b0dccf0ab13",
+            "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+            "valid_until_ns": 39976245085875,
+            "accepted_ns": 39971245222597,
+            "runtime_emit_ns": 39971245223688
+          },
+          {
+            "event": "step_started",
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "operation": "pointer_click",
+            "issued_ns": 39971245438778,
+            "runtime_emit_ns": 39971245439737
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "move",
+            "payload": {
+              "x": 618,
+              "y": 391
+            },
+            "admitted_ns": 39971246807280,
+            "input_ack_ns": 39971246982839,
+            "valid_until_ns": 39976245085875,
+            "surface": 6291463,
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "runtime_emit_ns": 39971247049410
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "button_down",
+            "payload": 1,
+            "admitted_ns": 39971248445560,
+            "input_ack_ns": 39971248649865,
+            "valid_until_ns": 39976245085875,
+            "surface": 6291463,
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "runtime_emit_ns": 39971248703106
+          },
+          {
+            "event": "input_released",
+            "id": "release-client-pointer-click-02",
+            "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+            "owner_release": {
+              "event": "owner_release",
+              "reason": "focus_changed",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 39971296354733,
+              "valid_until_ns": 39976245085875
+            },
+            "published_ns": 39971296972551,
+            "program_terminal_pending": true,
+            "grants_input_authority": false,
+            "runtime_emit_ns": 39971296981122
+          }
+        ],
+        "cursor": 6,
+        "cursor_returned_ns": 39971297490611,
+        "authority": "none",
+        "request_id": "early-release",
+        "server_response_ns": 39971297496329
+      },
+      "client_returned_ns": 39971298205500,
+      "response_bytes": 2634
+    },
+    "terminal": {
+      "request": {
+        "after": 0,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 5,
+        "action_id": "release-client-pointer-click-02",
+        "request_id": "terminal-only"
+      },
+      "client_started_ns": 39971251261088,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "observation",
+            "id": "initial",
+            "step": 0,
+            "sequence": 1,
+            "capture_ns": 39971176289212,
+            "context_ns": 39971180886353,
+            "context": [
+              [
+                "windows",
+                "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+              ],
+              [
+                "active_window",
+                6291463
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-client-wait-live-02/001.png",
+            "image_reused": false,
+            "image_prepare_ns": 38208493,
+            "image_ready_ns": 39971234066049,
+            "input_focus_before": 6291464,
+            "input_focus_after": 6291464,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 3.3676,
+            "wire_bytes": 67754,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "runtime_emit_ns": 39971244986924
+          },
+          {
+            "event": "accepted",
+            "id": "release-client-pointer-click-02",
+            "steps": 1,
+            "program_sha256": "63a44bd6c72dd8acdfd503368b5d49f58c5908f992cbf1653ffc6b0dccf0ab13",
+            "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+            "valid_until_ns": 39976245085875,
+            "accepted_ns": 39971245222597,
+            "runtime_emit_ns": 39971245223688
+          },
+          {
+            "event": "step_started",
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "operation": "pointer_click",
+            "issued_ns": 39971245438778,
+            "runtime_emit_ns": 39971245439737
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "move",
+            "payload": {
+              "x": 618,
+              "y": 391
+            },
+            "admitted_ns": 39971246807280,
+            "input_ack_ns": 39971246982839,
+            "valid_until_ns": 39976245085875,
+            "surface": 6291463,
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "runtime_emit_ns": 39971247049410
+          },
+          {
+            "event": "pointer_admission",
+            "operation": "button_down",
+            "payload": 1,
+            "admitted_ns": 39971248445560,
+            "input_ack_ns": 39971248649865,
+            "valid_until_ns": 39976245085875,
+            "surface": 6291463,
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "runtime_emit_ns": 39971248703106
+          },
+          {
+            "event": "input_released",
+            "id": "release-client-pointer-click-02",
+            "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+            "owner_release": {
+              "event": "owner_release",
+              "reason": "focus_changed",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 39971296354733,
+              "valid_until_ns": 39976245085875
+            },
+            "published_ns": 39971296972551,
+            "program_terminal_pending": true,
+            "grants_input_authority": false,
+            "runtime_emit_ns": 39971296981122
+          },
+          {
+            "event": "post_release_observation_started",
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "grants_input_authority": false,
+            "runtime_emit_ns": 39971299424512
+          },
+          {
+            "event": "observation",
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 39971310118518,
+            "context_ns": 39971318630720,
+            "context": [
+              [
+                "windows",
+                "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+              ],
+              [
+                "active_window",
+                0
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-client-wait-live-02/002.png",
+            "image_reused": false,
+            "image_prepare_ns": 30677279,
+            "image_ready_ns": 39971370116612,
+            "input_focus_before": 16777216,
+            "input_focus_after": 16777216,
+            "focus_samples_match": true,
+            "pointer_binding": null,
+            "pointer_context_before": {
+              "focus": 16777216,
+              "surface": null,
+              "geometry": null
+            },
+            "pointer_context_after": {
+              "focus": 16777216,
+              "surface": null,
+              "geometry": null
+            },
+            "capture_ms": 6.464163,
+            "wire_bytes": 16395,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "runtime_emit_ns": 39971377712668
+          },
+          {
+            "event": "post_release_observation_complete",
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "sequence": 2,
+            "grants_input_authority": false,
+            "runtime_emit_ns": 39971377779477
+          },
+          {
+            "event": "terminal",
+            "id": "release-client-pointer-click-02",
+            "status": "needs_decision",
+            "error": null,
+            "steps_completed": 0,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 39971299307614,
+              "valid_until_ns": null
+            },
+            "interruption": {
+              "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 39971296354733,
+                "valid_until_ns": 39976245085875
+              }
+            },
+            "decision_reason": "focus_changed",
+            "terminal_ns": 39971377862166,
+            "semantic_completion": "program status only; task scoring is separate",
+            "runtime_emit_ns": 39971377863185
+          }
+        ],
+        "cursor": 10,
+        "cursor_returned_ns": 39971378127643,
+        "authority": "none",
+        "request_id": "terminal-only",
+        "server_response_ns": 39971378133862
+      },
+      "client_returned_ns": 39971378529013,
+      "response_bytes": 4591
+    },
+    "early_resume": {
+      "request": {
+        "after": 6,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 5,
+        "action_id": "release-client-pointer-click-02",
+        "request_id": "early-resume"
+      },
+      "client_started_ns": 39971378818145,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "post_release_observation_started",
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "grants_input_authority": false,
+            "runtime_emit_ns": 39971299424512
+          },
+          {
+            "event": "observation",
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 39971310118518,
+            "context_ns": 39971318630720,
+            "context": [
+              [
+                "windows",
+                "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+              ],
+              [
+                "active_window",
+                0
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-client-wait-live-02/002.png",
+            "image_reused": false,
+            "image_prepare_ns": 30677279,
+            "image_ready_ns": 39971370116612,
+            "input_focus_before": 16777216,
+            "input_focus_after": 16777216,
+            "focus_samples_match": true,
+            "pointer_binding": null,
+            "pointer_context_before": {
+              "focus": 16777216,
+              "surface": null,
+              "geometry": null
+            },
+            "pointer_context_after": {
+              "focus": 16777216,
+              "surface": null,
+              "geometry": null
+            },
+            "capture_ms": 6.464163,
+            "wire_bytes": 16395,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "runtime_emit_ns": 39971377712668
+          },
+          {
+            "event": "post_release_observation_complete",
+            "id": "release-client-pointer-click-02",
+            "step": 0,
+            "sequence": 2,
+            "grants_input_authority": false,
+            "runtime_emit_ns": 39971377779477
+          },
+          {
+            "event": "terminal",
+            "id": "release-client-pointer-click-02",
+            "status": "needs_decision",
+            "error": null,
+            "steps_completed": 0,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 39971299307614,
+              "valid_until_ns": null
+            },
+            "interruption": {
+              "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+              "record": {
+                "event": "owner_release",
+                "reason": "focus_changed",
+                "verified": true,
+                "buttons_down": [],
+                "keys_down": [],
+                "verified_ns": 39971296354733,
+                "valid_until_ns": 39976245085875
+              }
+            },
+            "decision_reason": "focus_changed",
+            "terminal_ns": 39971377862166,
+            "semantic_completion": "program status only; task scoring is separate",
+            "runtime_emit_ns": 39971377863185
+          }
+        ],
+        "cursor": 10,
+        "cursor_returned_ns": 39971379306307,
+        "authority": "none",
+        "request_id": "early-resume",
+        "server_response_ns": 39971379307456
+      },
+      "client_returned_ns": 39971379476837,
+      "response_bytes": 2133
+    }
+  },
+  "pending_state": {
+    "state": "input_released_terminal_pending",
+    "action_id": "release-client-pointer-click-02",
+    "physical_release_verified": true,
+    "program_terminal_pending": true,
+    "current_input_authority": false,
+    "accepted": {
+      "event": "accepted",
+      "id": "release-client-pointer-click-02",
+      "steps": 1,
+      "program_sha256": "63a44bd6c72dd8acdfd503368b5d49f58c5908f992cbf1653ffc6b0dccf0ab13",
+      "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+      "valid_until_ns": 39976245085875,
+      "accepted_ns": 39971245222597,
+      "runtime_emit_ns": 39971245223688
+    },
+    "released": {
+      "event": "input_released",
+      "id": "release-client-pointer-click-02",
+      "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+      "owner_release": {
+        "event": "owner_release",
+        "reason": "focus_changed",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 39971296354733,
+        "valid_until_ns": 39976245085875
+      },
+      "published_ns": 39971296972551,
+      "program_terminal_pending": true,
+      "grants_input_authority": false,
+      "runtime_emit_ns": 39971296981122
+    },
+    "terminal": null,
+    "uncertainty": null
+  },
+  "closed_state": {
+    "state": "terminal_received",
+    "action_id": "release-client-pointer-click-02",
+    "physical_release_verified": true,
+    "program_terminal_pending": false,
+    "current_input_authority": false,
+    "accepted": {
+      "event": "accepted",
+      "id": "release-client-pointer-click-02",
+      "steps": 1,
+      "program_sha256": "63a44bd6c72dd8acdfd503368b5d49f58c5908f992cbf1653ffc6b0dccf0ab13",
+      "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+      "valid_until_ns": 39976245085875,
+      "accepted_ns": 39971245222597,
+      "runtime_emit_ns": 39971245223688
+    },
+    "released": {
+      "event": "input_released",
+      "id": "release-client-pointer-click-02",
+      "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+      "owner_release": {
+        "event": "owner_release",
+        "reason": "focus_changed",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 39971296354733,
+        "valid_until_ns": 39976245085875
+      },
+      "published_ns": 39971296972551,
+      "program_terminal_pending": true,
+      "grants_input_authority": false,
+      "runtime_emit_ns": 39971296981122
+    },
+    "terminal": {
+      "event": "terminal",
+      "id": "release-client-pointer-click-02",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 39971299307614,
+        "valid_until_ns": null
+      },
+      "interruption": {
+        "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+        "record": {
+          "event": "owner_release",
+          "reason": "focus_changed",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 39971296354733,
+          "valid_until_ns": 39976245085875
+        }
+      },
+      "decision_reason": "focus_changed",
+      "terminal_ns": 39971377862166,
+      "semantic_completion": "program status only; task scoring is separate",
+      "runtime_emit_ns": 39971377863185
+    },
+    "uncertainty": null
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "release-client-pointer-click-02",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 39971299307614,
+      "valid_until_ns": null
+    },
+    "interruption": {
+      "intent_token": "23903da7e23f4541b6f29131c6e796a0",
+      "record": {
+        "event": "owner_release",
+        "reason": "focus_changed",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 39971296354733,
+        "valid_until_ns": 39976245085875
+      }
+    },
+    "decision_reason": "focus_changed",
+    "terminal_ns": 39971377862166,
+    "semantic_completion": "program status only; task scoring is separate",
+    "runtime_emit_ns": 39971377863185
+  },
+  "post_release_observations": [
+    {
+      "event": "observation",
+      "id": "release-client-pointer-click-02",
+      "step": 0,
+      "sequence": 2,
+      "capture_ns": 39971310118518,
+      "context_ns": 39971318630720,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          0
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/release-client-wait-live-02/002.png",
+      "image_reused": false,
+      "image_prepare_ns": 30677279,
+      "image_ready_ns": 39971370116612,
+      "input_focus_before": 16777216,
+      "input_focus_after": 16777216,
+      "focus_samples_match": true,
+      "pointer_binding": null,
+      "pointer_context_before": {
+        "focus": 16777216,
+        "surface": null,
+        "geometry": null
+      },
+      "pointer_context_after": {
+        "focus": 16777216,
+        "surface": null,
+        "geometry": null
+      },
+      "capture_ms": 6.464163,
+      "wire_bytes": 16395,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "runtime_emit_ns": 39971377712668
+    }
+  ],
+  "metrics_ms": {
+    "focus_to_runtime_release_ms": 20.51869,
+    "focus_to_early_client_ms": 22.369457,
+    "focus_to_terminal_client_ms": 102.69297,
+    "early_client_wait_advantage_ms": 80.323513,
+    "focus_to_early_final_terminal_ms": 103.640794,
+    "runtime_release_to_terminal_ms": 81.507433
+  },
+  "early_exchanges": 2,
+  "terminal_only_exchanges": 1,
+  "model_calls": 0,
+  "retry_count": 0
+}

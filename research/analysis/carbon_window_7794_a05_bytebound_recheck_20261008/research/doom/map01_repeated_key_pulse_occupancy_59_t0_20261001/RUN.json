@@ -1,0 +1,18 @@
+{
+  "allocation_id": "MAP01-REPEATED-KEY-PULSE-OCCUPANCY-59-T0-20261001-01",
+  "main_sha": "f54e7665f099e78d11cff9ca28e812782aac33d1",
+  "candidate_source_pr": 6094,
+  "candidate_source_commit": "3983343f6773f118b92652c5e7f72a34b9eda7a2",
+  "status": "PASS_REPRESENTATION_BOUNDARY_SCOPED",
+  "commands": [
+    {"argv": ["python", "candidate.py"], "exit_code": 0, "invocations": 1},
+    {"argv": ["python", "audit.py"], "exit_code": 0, "invocations": 1}
+  ],
+  "retries": 0,
+  "host": "Windows local; CPython 3.12.10; CPU-only",
+  "docker_engine": "not available; bounded query timed out after 5 seconds; com.docker.service Stopped/Manual",
+  "raw_sha256": "7efcceb24c8a267e1db7b1342efe90724787e1f4371ecf28a8c599cc0c1ee9cb",
+  "audit_sha256": "222dcc4669805b2954f2f1ee4371d17638bbc6433336c096332977d8d33b5ee1",
+  "interpretation": "candidate fails closed for repeated same-key occurrences; independent oracle resolves two synthetic 20-40 ns intervals",
+  "scope": "synthetic representation boundary; no live key occupancy or task effect"
+}

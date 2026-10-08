@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "allocation": "gpu-exact-frame-gate-1564-20260928-01",
+  "issue": 4957,
+  "parent_issue": 1564,
+  "created_at_utc": "2026-09-27 17:43:19 UTC",
+  "intake_main_sha": "f0b9ed74736729a4fdd04f2205a834a777befde1",
+  "latest_main_before_freeze": "58386990aa73f3291556e613a43f50b72a5a6b32",
+  "branch": "research/observation-gpu-exact-frame-1564-20260928",
+  "branch_pre_freeze_sha": "571765e3c628b69d71fa39d99bd2c94183406a90",
+  "branch_parent_shas": [
+    "58386990aa73f3291556e613a43f50b72a5a6b32",
+    "cf7f4dcd931133d39a3bf40859de243488aebc78"
+  ],
+  "additive_path": "research/measurement/observation_gpu_exact_frame_1564_v1/",
+  "source_files": {
+    "run_benchmark.py": {
+      "git_blob": "040d56b93c793028929d131e3061d4fff88847ce",
+      "sha256": "5a82d825a25003336605d46598efd6fb998ef6d7d4a7ecc03a795bb4d65019a3"
+    },
+    "audit_result.py": {
+      "git_blob": "0e534a159f937f36a155a7617ca37bac3bec0ee0",
+      "sha256": "f69305abdc43f2081d75b2fbbfc3c0d82addfc77abe079e96f365e82bb25d015"
+    },
+    "test_audit_result.py": {
+      "git_blob": "e9620fd25d25eabba0417887e5c087d8b1c74a14",
+      "sha256": "38b32cbce11301c353b4bacfc1eb2a5bc008cb6b5bd82733c25798e9400216dc"
+    },
+    "PREFLIGHT.json": {
+      "git_blob": "445d9251cc4c20a99e62eb7bde0999493e555d53",
+      "sha256": "0cf7732d65775895289371783333408ee070f771b3ae9a3cab2ffd11eb3de3bc"
+    }
+  },
+  "runtime": {
+    "docker_desktop": "29.8.0",
+    "platform": "linux/amd64",
+    "os_kernel": "Linux 6.6.114.1-microsoft-standard-WSL2 x86_64 glibc 2.35",
+    "image_id": "sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac",
+    "image_entrypoint": [
+      "python",
+      "/src/runner.py"
+    ],
+    "entrypoint_override": [
+      "python"
+    ],
+    "python": "3.11.10 conda-forge",
+    "numpy": "2.1.2",
+    "pytorch": "2.5.1+cu121",
+    "torch_cuda_runtime": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "driver": "581.57",
+    "prelaunch_gpu_receipt": "16384 MiB total, 0 MiB used, 0% utilization"
+  },
+  "formal_run": {
+    "invocations": 1,
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "fresh writable; initially empty",
+    "limits": {
+      "cpus": 1,
+      "memory": "4g",
+      "pids": 64
+    },
+    "tmpfs": "/tmp:rw,nosuid,nodev,size=256m",
+    "seeds": [
+      156400,
+      156401,
+      156402
+    ],
+    "sizes_rgba": [
+      [
+        64,
+        64
+      ],
+      [
+        1920,
+        1080
+      ],
+      [
+        3840,
+        2160
+      ]
+    ],
+    "cases": [
+      "UNCHANGED",
+      "ONE_CHANNEL_PIXEL_CHANGE"
+    ],
+    "warmups_per_case_per_arm": 3,
+    "paired_repeats_per_case": 25,
+    "order": "CPU-first on even pair index, CUDA-first on odd pair index",
+    "cpu_arm": "numpy.array_equal on contiguous host uint8 RGBA arrays",
+    "cuda_arm": "upload both arrays on every call, torch.equal, torch.cuda.synchronize before host monotonic timer stops",
+    "output": "result.json"
+  },
+  "commands": {
+    "formal": "docker run --rm --pull=never --gpus all --network none --read-only --cpus=1 --memory=4g --pids-limit=64 --tmpfs /tmp:rw,nosuid,nodev,size=256m -e PYTHONDONTWRITEBYTECODE=1 -e NVIDIA_DRIVER_VERSION=581.57 --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\gpu-exact-frame-4957,target=/src,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\gpu-exact-frame-4957\\out,target=/out -w /out --entrypoint python sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac /src/run_benchmark.py",
+    "audit": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1g --pids-limit=32 --tmpfs /tmp:rw,nosuid,nodev,size=128m -e PYTHONDONTWRITEBYTECODE=1 --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\gpu-exact-frame-4957,target=/src,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\gpu-exact-frame-4957\\out,target=/raw,readonly --workdir /raw --entrypoint python sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac /src/audit_result.py /raw/result.json"
+  },
+  "decisions": {
+    "pass": "all six exactness rows correct and CUDA unchanged-frame median below CPU at both 1920x1080 and 3840x2160",
+    "reject": "runtime/provenance/exactness/audit pass but either large-size CUDA median is not lower",
+    "stop": "any source/runtime/GPU/execution/audit gate fails; no inference from timings"
+  },
+  "retry_policy": "No retry, replacement, tuning, environment switch, or sample exclusion for the formal benchmark.",
+  "scope": "Synthetic host-resident inputs on one Windows/Docker Desktop/RTX3080 Laptop host. No live capture, model, task, energy, GPU-resident upstream, natural workload, or product claim."
+}

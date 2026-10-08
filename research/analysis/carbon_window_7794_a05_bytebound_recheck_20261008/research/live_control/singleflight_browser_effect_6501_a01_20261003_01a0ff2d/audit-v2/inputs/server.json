@@ -1,0 +1,1988 @@
+{
+  "schema": "6501-browser-server-v1",
+  "clock": "time.perf_counter_ns nanoseconds; server-only comparisons",
+  "events": [
+    {
+      "seq": 0,
+      "ns": 9618074128700,
+      "event": "setup",
+      "case": "cold_equivalent",
+      "policy": "independent"
+    },
+    {
+      "seq": 1,
+      "ns": 9618387529100,
+      "event": "read_arrived",
+      "read_id": 1,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 2,
+      "ns": 9618387534000,
+      "event": "read_service_begin",
+      "read_id": 1
+    },
+    {
+      "seq": 3,
+      "ns": 9618387754900,
+      "event": "read_arrived",
+      "read_id": 2,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 4,
+      "ns": 9618568139300,
+      "event": "read_return",
+      "read_id": 1,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-1"
+    },
+    {
+      "seq": 5,
+      "ns": 9618568308200,
+      "event": "read_service_begin",
+      "read_id": 2
+    },
+    {
+      "seq": 6,
+      "ns": 9618646789600,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "cold_equivalent/w1/A",
+      "evidence_ref": "read-1",
+      "accepted": true
+    },
+    {
+      "seq": 7,
+      "ns": 9618748709700,
+      "event": "read_return",
+      "read_id": 2,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-2"
+    },
+    {
+      "seq": 8,
+      "ns": 9618808326400,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "cold_equivalent/w2/A",
+      "evidence_ref": "read-2",
+      "accepted": true
+    },
+    {
+      "seq": 9,
+      "ns": 9618855928700,
+      "event": "case_closed",
+      "case": "cold_equivalent",
+      "policy": "independent",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 10,
+      "ns": 9618855935200,
+      "event": "setup",
+      "case": "cold_equivalent",
+      "policy": "predicate"
+    },
+    {
+      "seq": 11,
+      "ns": 9619072791600,
+      "event": "read_arrived",
+      "read_id": 3,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 12,
+      "ns": 9619072794300,
+      "event": "read_service_begin",
+      "read_id": 3
+    },
+    {
+      "seq": 13,
+      "ns": 9619253297000,
+      "event": "read_return",
+      "read_id": 3,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-3"
+    },
+    {
+      "seq": 14,
+      "ns": 9619328074000,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "cold_equivalent/w1/A",
+      "evidence_ref": "read-3",
+      "accepted": true
+    },
+    {
+      "seq": 15,
+      "ns": 9619415225500,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "cold_equivalent/w2/A",
+      "evidence_ref": "read-3",
+      "accepted": true
+    },
+    {
+      "seq": 16,
+      "ns": 9619462975100,
+      "event": "case_closed",
+      "case": "cold_equivalent",
+      "policy": "predicate",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 1,
+      "active_reads": 0
+    },
+    {
+      "seq": 17,
+      "ns": 9619462981400,
+      "event": "setup",
+      "case": "cold_equivalent",
+      "policy": "scoped"
+    },
+    {
+      "seq": 18,
+      "ns": 9619676552200,
+      "event": "read_arrived",
+      "read_id": 4,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 19,
+      "ns": 9619676554800,
+      "event": "read_service_begin",
+      "read_id": 4
+    },
+    {
+      "seq": 20,
+      "ns": 9619856775900,
+      "event": "read_return",
+      "read_id": 4,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "cold_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "cold_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "cold_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-4"
+    },
+    {
+      "seq": 21,
+      "ns": 9619908578700,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "cold_equivalent/w1/A",
+      "evidence_ref": "read-4",
+      "accepted": true
+    },
+    {
+      "seq": 22,
+      "ns": 9619991026500,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "cold_equivalent/w2/A",
+      "evidence_ref": "read-4",
+      "accepted": true
+    },
+    {
+      "seq": 23,
+      "ns": 9620061782700,
+      "event": "case_closed",
+      "case": "cold_equivalent",
+      "policy": "scoped",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 1,
+      "active_reads": 0
+    },
+    {
+      "seq": 24,
+      "ns": 9620061788000,
+      "event": "setup",
+      "case": "warm_equivalent",
+      "policy": "scoped"
+    },
+    {
+      "seq": 25,
+      "ns": 9620256864600,
+      "event": "read_arrived",
+      "read_id": 5,
+      "phase": "warmup",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 26,
+      "ns": 9620256867300,
+      "event": "read_service_begin",
+      "read_id": 5
+    },
+    {
+      "seq": 27,
+      "ns": 9620437246100,
+      "event": "read_return",
+      "read_id": 5,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-5"
+    },
+    {
+      "seq": 28,
+      "ns": 9620453205100,
+      "event": "read_arrived",
+      "read_id": 6,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 29,
+      "ns": 9620453207400,
+      "event": "read_service_begin",
+      "read_id": 6
+    },
+    {
+      "seq": 30,
+      "ns": 9620633466300,
+      "event": "read_return",
+      "read_id": 6,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-6"
+    },
+    {
+      "seq": 31,
+      "ns": 9620693379400,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "warm_equivalent/w1/A",
+      "evidence_ref": "read-6",
+      "accepted": true
+    },
+    {
+      "seq": 32,
+      "ns": 9620774454700,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "warm_equivalent/w2/A",
+      "evidence_ref": "read-6",
+      "accepted": true
+    },
+    {
+      "seq": 33,
+      "ns": 9620811021700,
+      "event": "case_closed",
+      "case": "warm_equivalent",
+      "policy": "scoped",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 34,
+      "ns": 9620811028000,
+      "event": "setup",
+      "case": "warm_equivalent",
+      "policy": "independent"
+    },
+    {
+      "seq": 35,
+      "ns": 9621026611300,
+      "event": "read_arrived",
+      "read_id": 7,
+      "phase": "warmup",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 36,
+      "ns": 9621026613900,
+      "event": "read_service_begin",
+      "read_id": 7
+    },
+    {
+      "seq": 37,
+      "ns": 9621207286400,
+      "event": "read_return",
+      "read_id": 7,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-7"
+    },
+    {
+      "seq": 38,
+      "ns": 9621223076600,
+      "event": "read_arrived",
+      "read_id": 8,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 39,
+      "ns": 9621223079100,
+      "event": "read_service_begin",
+      "read_id": 8
+    },
+    {
+      "seq": 40,
+      "ns": 9621223544400,
+      "event": "read_arrived",
+      "read_id": 9,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 41,
+      "ns": 9621403478700,
+      "event": "read_return",
+      "read_id": 8,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-8"
+    },
+    {
+      "seq": 42,
+      "ns": 9621403608100,
+      "event": "read_service_begin",
+      "read_id": 9
+    },
+    {
+      "seq": 43,
+      "ns": 9621459083100,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "warm_equivalent/w1/A",
+      "evidence_ref": "read-8",
+      "accepted": true
+    },
+    {
+      "seq": 44,
+      "ns": 9621583925700,
+      "event": "read_return",
+      "read_id": 9,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-9"
+    },
+    {
+      "seq": 45,
+      "ns": 9621641975000,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "warm_equivalent/w2/A",
+      "evidence_ref": "read-9",
+      "accepted": true
+    },
+    {
+      "seq": 46,
+      "ns": 9621683652000,
+      "event": "case_closed",
+      "case": "warm_equivalent",
+      "policy": "independent",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 3,
+      "active_reads": 0
+    },
+    {
+      "seq": 47,
+      "ns": 9621683656700,
+      "event": "setup",
+      "case": "warm_equivalent",
+      "policy": "predicate"
+    },
+    {
+      "seq": 48,
+      "ns": 9621892203300,
+      "event": "read_arrived",
+      "read_id": 10,
+      "phase": "warmup",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 49,
+      "ns": 9621892206100,
+      "event": "read_service_begin",
+      "read_id": 10
+    },
+    {
+      "seq": 50,
+      "ns": 9622072781400,
+      "event": "read_return",
+      "read_id": 10,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-10"
+    },
+    {
+      "seq": 51,
+      "ns": 9622086406300,
+      "event": "read_arrived",
+      "read_id": 11,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 52,
+      "ns": 9622086412600,
+      "event": "read_service_begin",
+      "read_id": 11
+    },
+    {
+      "seq": 53,
+      "ns": 9622266925400,
+      "event": "read_return",
+      "read_id": 11,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "warm_equivalent",
+        "target": "A",
+        "generation": 1,
+        "digest": "warm_equivalent/A/1/READY",
+        "predicate": "ready",
+        "window": "warm_equivalent",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-11"
+    },
+    {
+      "seq": 54,
+      "ns": 9622307644000,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "warm_equivalent/w1/A",
+      "evidence_ref": "read-11",
+      "accepted": true
+    },
+    {
+      "seq": 55,
+      "ns": 9622389543300,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "warm_equivalent/w2/A",
+      "evidence_ref": "read-11",
+      "accepted": true
+    },
+    {
+      "seq": 56,
+      "ns": 9622428732700,
+      "event": "case_closed",
+      "case": "warm_equivalent",
+      "policy": "predicate",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 57,
+      "ns": 9622428738200,
+      "event": "setup",
+      "case": "mixed_targets",
+      "policy": "predicate"
+    },
+    {
+      "seq": 58,
+      "ns": 9622633534000,
+      "event": "read_arrived",
+      "read_id": 12,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 59,
+      "ns": 9622633536500,
+      "event": "read_service_begin",
+      "read_id": 12
+    },
+    {
+      "seq": 60,
+      "ns": 9622813779200,
+      "event": "read_return",
+      "read_id": 12,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-12"
+    },
+    {
+      "seq": 61,
+      "ns": 9622874189600,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "mixed_targets/w1/A",
+      "evidence_ref": "read-12",
+      "accepted": true
+    },
+    {
+      "seq": 62,
+      "ns": 9622923188000,
+      "event": "case_closed",
+      "case": "mixed_targets",
+      "policy": "predicate",
+      "generation": 1,
+      "commits": {
+        "w1": "A"
+      },
+      "reads": 1,
+      "active_reads": 0
+    },
+    {
+      "seq": 63,
+      "ns": 9622923193200,
+      "event": "setup",
+      "case": "mixed_targets",
+      "policy": "scoped"
+    },
+    {
+      "seq": 64,
+      "ns": 9623130679300,
+      "event": "read_arrived",
+      "read_id": 13,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 65,
+      "ns": 9623130682500,
+      "event": "read_service_begin",
+      "read_id": 13
+    },
+    {
+      "seq": 66,
+      "ns": 9623131098600,
+      "event": "read_arrived",
+      "read_id": 14,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "B",
+        "generation": 1,
+        "digest": "mixed_targets/B/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "B",
+        "generation": 1,
+        "digest": "mixed_targets/B/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 67,
+      "ns": 9623310883800,
+      "event": "read_return",
+      "read_id": 13,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-13"
+    },
+    {
+      "seq": 68,
+      "ns": 9623311532600,
+      "event": "read_service_begin",
+      "read_id": 14
+    },
+    {
+      "seq": 69,
+      "ns": 9623358484200,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "mixed_targets/w1/A",
+      "evidence_ref": "read-13",
+      "accepted": true
+    },
+    {
+      "seq": 70,
+      "ns": 9623492169200,
+      "event": "read_return",
+      "read_id": 14,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "B",
+        "generation": 1,
+        "digest": "mixed_targets/B/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-14"
+    },
+    {
+      "seq": 71,
+      "ns": 9623539671300,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "B",
+      "generation": 1,
+      "intent": "mixed_targets/w2/B",
+      "evidence_ref": "read-14",
+      "accepted": true
+    },
+    {
+      "seq": 72,
+      "ns": 9623584353200,
+      "event": "case_closed",
+      "case": "mixed_targets",
+      "policy": "scoped",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "B"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 73,
+      "ns": 9623584358100,
+      "event": "setup",
+      "case": "mixed_targets",
+      "policy": "independent"
+    },
+    {
+      "seq": 74,
+      "ns": 9623798490800,
+      "event": "read_arrived",
+      "read_id": 15,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 75,
+      "ns": 9623798494000,
+      "event": "read_service_begin",
+      "read_id": 15
+    },
+    {
+      "seq": 76,
+      "ns": 9623799212000,
+      "event": "read_arrived",
+      "read_id": 16,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "B",
+        "generation": 1,
+        "digest": "mixed_targets/B/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "B",
+        "generation": 1,
+        "digest": "mixed_targets/B/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 77,
+      "ns": 9623978724400,
+      "event": "read_return",
+      "read_id": 15,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "A",
+        "generation": 1,
+        "digest": "mixed_targets/A/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-15"
+    },
+    {
+      "seq": 78,
+      "ns": 9623978874200,
+      "event": "read_service_begin",
+      "read_id": 16
+    },
+    {
+      "seq": 79,
+      "ns": 9624023817600,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "mixed_targets/w1/A",
+      "evidence_ref": "read-15",
+      "accepted": true
+    },
+    {
+      "seq": 80,
+      "ns": 9624159221800,
+      "event": "read_return",
+      "read_id": 16,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "mixed_targets",
+        "target": "B",
+        "generation": 1,
+        "digest": "mixed_targets/B/1/READY",
+        "predicate": "ready",
+        "window": "mixed_targets",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-16"
+    },
+    {
+      "seq": 81,
+      "ns": 9624207436900,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "B",
+      "generation": 1,
+      "intent": "mixed_targets/w2/B",
+      "evidence_ref": "read-16",
+      "accepted": true
+    },
+    {
+      "seq": 82,
+      "ns": 9624253159700,
+      "event": "case_closed",
+      "case": "mixed_targets",
+      "policy": "independent",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "B"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 83,
+      "ns": 9624253164900,
+      "event": "setup",
+      "case": "generation_change",
+      "policy": "scoped"
+    },
+    {
+      "seq": 84,
+      "ns": 9624450385000,
+      "event": "read_arrived",
+      "read_id": 17,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 85,
+      "ns": 9624450388800,
+      "event": "read_service_begin",
+      "read_id": 17
+    },
+    {
+      "seq": 86,
+      "ns": 9624475471400,
+      "event": "generation_flip",
+      "generation": 2
+    },
+    {
+      "seq": 87,
+      "ns": 9624513628700,
+      "event": "read_arrived",
+      "read_id": 18,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 2,
+        "digest": "generation_change/A/2/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 2,
+        "digest": "generation_change/A/2/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 88,
+      "ns": 9624693419900,
+      "event": "read_return",
+      "read_id": 17,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-17"
+    },
+    {
+      "seq": 89,
+      "ns": 9624693966600,
+      "event": "read_service_begin",
+      "read_id": 18
+    },
+    {
+      "seq": 90,
+      "ns": 9624874562500,
+      "event": "read_return",
+      "read_id": 18,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 2,
+        "digest": "generation_change/A/2/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-18"
+    },
+    {
+      "seq": 91,
+      "ns": 9624925477700,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 2,
+      "intent": "generation_change/w2/A",
+      "evidence_ref": "read-18",
+      "accepted": true
+    },
+    {
+      "seq": 92,
+      "ns": 9624968165500,
+      "event": "case_closed",
+      "case": "generation_change",
+      "policy": "scoped",
+      "generation": 2,
+      "commits": {
+        "w2": "A"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 93,
+      "ns": 9624968178800,
+      "event": "setup",
+      "case": "generation_change",
+      "policy": "predicate"
+    },
+    {
+      "seq": 94,
+      "ns": 9625194961600,
+      "event": "read_arrived",
+      "read_id": 19,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 95,
+      "ns": 9625194964400,
+      "event": "read_service_begin",
+      "read_id": 19
+    },
+    {
+      "seq": 96,
+      "ns": 9625229379300,
+      "event": "generation_flip",
+      "generation": 2
+    },
+    {
+      "seq": 97,
+      "ns": 9625462568000,
+      "event": "read_return",
+      "read_id": 19,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-19"
+    },
+    {
+      "seq": 98,
+      "ns": 9625485876800,
+      "event": "case_closed",
+      "case": "generation_change",
+      "policy": "predicate",
+      "generation": 2,
+      "commits": {},
+      "reads": 1,
+      "active_reads": 0
+    },
+    {
+      "seq": 99,
+      "ns": 9625485886600,
+      "event": "setup",
+      "case": "generation_change",
+      "policy": "independent"
+    },
+    {
+      "seq": 100,
+      "ns": 9625736281100,
+      "event": "read_arrived",
+      "read_id": 20,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 101,
+      "ns": 9625736283600,
+      "event": "read_service_begin",
+      "read_id": 20
+    },
+    {
+      "seq": 102,
+      "ns": 9625793837300,
+      "event": "generation_flip",
+      "generation": 2
+    },
+    {
+      "seq": 103,
+      "ns": 9625838164800,
+      "event": "read_arrived",
+      "read_id": 21,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 2,
+        "digest": "generation_change/A/2/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 2,
+        "digest": "generation_change/A/2/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 104,
+      "ns": 9626018007500,
+      "event": "read_return",
+      "read_id": 20,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 1,
+        "digest": "generation_change/A/1/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-20"
+    },
+    {
+      "seq": 105,
+      "ns": 9626018134900,
+      "event": "read_service_begin",
+      "read_id": 21
+    },
+    {
+      "seq": 106,
+      "ns": 9626198844800,
+      "event": "read_return",
+      "read_id": 21,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "generation_change",
+        "target": "A",
+        "generation": 2,
+        "digest": "generation_change/A/2/READY",
+        "predicate": "ready",
+        "window": "generation_change",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-21"
+    },
+    {
+      "seq": 107,
+      "ns": 9626239860500,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 2,
+      "intent": "generation_change/w2/A",
+      "evidence_ref": "read-21",
+      "accepted": true
+    },
+    {
+      "seq": 108,
+      "ns": 9626281744800,
+      "event": "case_closed",
+      "case": "generation_change",
+      "policy": "independent",
+      "generation": 2,
+      "commits": {
+        "w2": "A"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 109,
+      "ns": 9626281754300,
+      "event": "setup",
+      "case": "late_caller",
+      "policy": "independent"
+    },
+    {
+      "seq": 110,
+      "ns": 9626515569600,
+      "event": "read_arrived",
+      "read_id": 22,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 111,
+      "ns": 9626515572500,
+      "event": "read_service_begin",
+      "read_id": 22
+    },
+    {
+      "seq": 112,
+      "ns": 9626695620300,
+      "event": "read_return",
+      "read_id": 22,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-22"
+    },
+    {
+      "seq": 113,
+      "ns": 9626743716500,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "late_caller/w1/A",
+      "evidence_ref": "read-22",
+      "accepted": true
+    },
+    {
+      "seq": 114,
+      "ns": 9626783542700,
+      "event": "read_arrived",
+      "read_id": 23,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 115,
+      "ns": 9626783545200,
+      "event": "read_service_begin",
+      "read_id": 23
+    },
+    {
+      "seq": 116,
+      "ns": 9626964162100,
+      "event": "read_return",
+      "read_id": 23,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-23"
+    },
+    {
+      "seq": 117,
+      "ns": 9627006600700,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "late_caller/w2/A",
+      "evidence_ref": "read-23",
+      "accepted": true
+    },
+    {
+      "seq": 118,
+      "ns": 9627047521100,
+      "event": "case_closed",
+      "case": "late_caller",
+      "policy": "independent",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 119,
+      "ns": 9627047525800,
+      "event": "setup",
+      "case": "late_caller",
+      "policy": "scoped"
+    },
+    {
+      "seq": 120,
+      "ns": 9627251746700,
+      "event": "read_arrived",
+      "read_id": 24,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 121,
+      "ns": 9627251749300,
+      "event": "read_service_begin",
+      "read_id": 24
+    },
+    {
+      "seq": 122,
+      "ns": 9627432314400,
+      "event": "read_return",
+      "read_id": 24,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-24"
+    },
+    {
+      "seq": 123,
+      "ns": 9627475126300,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "late_caller/w1/A",
+      "evidence_ref": "read-24",
+      "accepted": true
+    },
+    {
+      "seq": 124,
+      "ns": 9627507623900,
+      "event": "read_arrived",
+      "read_id": 25,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 125,
+      "ns": 9627507626100,
+      "event": "read_service_begin",
+      "read_id": 25
+    },
+    {
+      "seq": 126,
+      "ns": 9627688292300,
+      "event": "read_return",
+      "read_id": 25,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-25"
+    },
+    {
+      "seq": 127,
+      "ns": 9627740042000,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "late_caller/w2/A",
+      "evidence_ref": "read-25",
+      "accepted": true
+    },
+    {
+      "seq": 128,
+      "ns": 9627775505300,
+      "event": "case_closed",
+      "case": "late_caller",
+      "policy": "scoped",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 2,
+      "active_reads": 0
+    },
+    {
+      "seq": 129,
+      "ns": 9627775511300,
+      "event": "setup",
+      "case": "late_caller",
+      "policy": "predicate"
+    },
+    {
+      "seq": 130,
+      "ns": 9627989725500,
+      "event": "read_arrived",
+      "read_id": 26,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 131,
+      "ns": 9627989728200,
+      "event": "read_service_begin",
+      "read_id": 26
+    },
+    {
+      "seq": 132,
+      "ns": 9628170140700,
+      "event": "read_return",
+      "read_id": 26,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-26"
+    },
+    {
+      "seq": 133,
+      "ns": 9628224100500,
+      "event": "commit",
+      "request_id": "w1",
+      "target": "A",
+      "generation": 1,
+      "intent": "late_caller/w1/A",
+      "evidence_ref": "read-26",
+      "accepted": true
+    },
+    {
+      "seq": 134,
+      "ns": 9628267441800,
+      "event": "read_arrived",
+      "read_id": 27,
+      "phase": "offered",
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "dom_snapshot": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      }
+    },
+    {
+      "seq": 135,
+      "ns": 9628267444700,
+      "event": "read_service_begin",
+      "read_id": 27
+    },
+    {
+      "seq": 136,
+      "ns": 9628447976500,
+      "event": "read_return",
+      "read_id": 27,
+      "scope": {
+        "verifier": "dom-ready-v1",
+        "source": "late_caller",
+        "target": "A",
+        "generation": 1,
+        "digest": "late_caller/A/1/READY",
+        "predicate": "ready",
+        "window": "late_caller",
+        "role": "read_only"
+      },
+      "value": "READY",
+      "evidence_ref": "read-27"
+    },
+    {
+      "seq": 137,
+      "ns": 9628491181300,
+      "event": "commit",
+      "request_id": "w2",
+      "target": "A",
+      "generation": 1,
+      "intent": "late_caller/w2/A",
+      "evidence_ref": "read-27",
+      "accepted": true
+    },
+    {
+      "seq": 138,
+      "ns": 9628721933500,
+      "event": "case_closed",
+      "case": "late_caller",
+      "policy": "predicate",
+      "generation": 1,
+      "commits": {
+        "w1": "A",
+        "w2": "A"
+      },
+      "reads": 2,
+      "active_reads": 0
+    }
+  ],
+  "active_reads_at_close": 0,
+  "listener_closed": true,
+  "thread_terminal": true
+}

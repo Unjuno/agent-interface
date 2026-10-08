@@ -1,0 +1,161 @@
+test_corrupted_count_gate_is_rejected (test_audit_v2.T2GateAuditTests.test_corrupted_count_gate_is_rejected) ... FAIL
+test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) ... 
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_iid_abstention_at_most_25pct', value=True) ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_iid_abstention_at_most_25pct', value=0) ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_iid_abstention_at_most_25pct', value='False') ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_iid_abstention_at_most_25pct', value=None) ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_zero_ood_false_pass', value=True) ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_zero_ood_false_pass', value=0) ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_zero_ood_false_pass', value='False') ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_zero_ood_false_pass', value=None) ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='corpus_counts_fixed', value=False) ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='corpus_counts_fixed', value=1) ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='corpus_counts_fixed', value='True') ... FAIL
+  test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='corpus_counts_fixed', value=None) ... FAIL
+test_exact_gate_keys_required (test_audit_v2.T2GateAuditTests.test_exact_gate_keys_required) ... FAIL
+test_false_pass_relabeling_is_rejected (test_audit_v2.T2GateAuditTests.test_false_pass_relabeling_is_rejected) ... FAIL
+test_honest_synthetic_pass_is_not_hardcoded_to_fail (test_audit_v2.T2GateAuditTests.test_honest_synthetic_pass_is_not_hardcoded_to_fail) ... ok
+test_nonfinite_and_boolean_numeric_values_are_rejected (test_audit_v2.T2GateAuditTests.test_nonfinite_and_boolean_numeric_values_are_rejected) ... FAIL
+test_original_negative_evidence_is_integrity_valid_fail (test_audit_v2.T2GateAuditTests.test_original_negative_evidence_is_integrity_valid_fail) ... ok
+test_rows_denominators_and_families_are_independent_checks (test_audit_v2.T2GateAuditTests.test_rows_denominators_and_families_are_independent_checks) ... FAIL
+
+======================================================================
+FAIL: test_corrupted_count_gate_is_rejected (test_audit_v2.T2GateAuditTests.test_corrupted_count_gate_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 30, in test_corrupted_count_gate_is_rejected
+    self.assertFalse(r["integrity_pass"], r)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_iid_abstention_at_most_25pct', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_iid_abstention_at_most_25pct', value=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_iid_abstention_at_most_25pct', value='False')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_iid_abstention_at_most_25pct', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_zero_ood_false_pass', value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_zero_ood_false_pass', value=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_zero_ood_false_pass', value='False')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='combined_zero_ood_false_pass', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='corpus_counts_fixed', value=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='corpus_counts_fixed', value=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='corpus_counts_fixed', value='True')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_boolean_gate_values_required (test_audit_v2.T2GateAuditTests.test_exact_boolean_gate_values_required) (key='corpus_counts_fixed', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 54, in test_exact_boolean_gate_values_required
+    self.assertFalse(result["integrity_pass"], result)
+AssertionError: True is not false : {'integrity_pass': True, 'errors': [], 'scientific_disposition': 'FAIL_HELDOUT_LEXICAL_BOUNDARY'}
+
+======================================================================
+FAIL: test_exact_gate_keys_required (test_audit_v2.T2GateAuditTests.test_exact_gate_keys_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 36, in test_exact_gate_keys_required
+    self.assertFalse(self.check(changed)["integrity_pass"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_false_pass_relabeling_is_rejected (test_audit_v2.T2GateAuditTests.test_false_pass_relabeling_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 61, in test_false_pass_relabeling_is_rejected
+    self.assertFalse(result["integrity_pass"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_nonfinite_and_boolean_numeric_values_are_rejected (test_audit_v2.T2GateAuditTests.test_nonfinite_and_boolean_numeric_values_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 69, in test_nonfinite_and_boolean_numeric_values_are_rejected
+    self.assertFalse(self.check(changed)["integrity_pass"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rows_denominators_and_families_are_independent_checks (test_audit_v2.T2GateAuditTests.test_rows_denominators_and_families_are_independent_checks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/ac864d2e1baf/runtime-issue-astra/t2-original/gate_audit_v2/test_audit_v2.py", line 85, in test_rows_denominators_and_families_are_independent_checks
+    self.assertFalse(self.check(changed)["integrity_pass"])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.008s
+
+FAILED (failures=17)

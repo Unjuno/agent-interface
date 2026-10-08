@@ -1,0 +1,113 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "event.feedback",
+    "input.keyboard",
+    "input.release_all",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 6394435970943,
+    "ended_ns": 6394588781756,
+    "emissions": 27,
+    "program_emissions": 2,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 6394588777834
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 2,
+        "requested_ms": 100,
+        "started_ns": 6394487599251,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 6394587782830
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 18,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "format_excel",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "format_excel",
+      "point": [
+        783,
+        462
+      ],
+      "observed_box": [
+        751,
+        454,
+        64,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 18,
+      "valid_until_ns": 6395875631880,
+      "patch_sha256": "daba0fab22c36fa0b6a0034616b5be3eb232924cd525941d5f958ee79a33d11b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 19,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "format_excel",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "format_excel",
+      "point": [
+        783,
+        462
+      ],
+      "observed_box": [
+        751,
+        454,
+        64,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 19,
+      "valid_until_ns": 6395936401119,
+      "patch_sha256": "daba0fab22c36fa0b6a0034616b5be3eb232924cd525941d5f958ee79a33d11b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "baseline_rows_passed": 60,
+  "controls": [
+    {
+      "control": "index_alias",
+      "rejected": true,
+      "diagnostic": "case field index",
+      "copy_sha256": "9834088bc89461cffff00d6f05cfc17127823cf0b2a600194575836cde30ef24"
+    },
+    {
+      "control": "owner",
+      "rejected": true,
+      "diagnostic": "owner",
+      "copy_sha256": "0e46dfec06b8e42cba94595293b2fd7bf5869a6f3b5846f490e2d81755820413"
+    },
+    {
+      "control": "clock_float",
+      "rejected": true,
+      "diagnostic": "monotone exact integer event time",
+      "copy_sha256": "09f2fe3529f509ec4cc83a97b437a310efecf6db7cd73be93d2ad5e105a96e69"
+    },
+    {
+      "control": "receipt_alias",
+      "rejected": true,
+      "diagnostic": "event 12: expected sink_enter exact fields/types",
+      "copy_sha256": "742169ec842abc0a55c61fb1470a76b2a3b906a70dac254026749a4493bd783a"
+    },
+    {
+      "control": "payload",
+      "rejected": true,
+      "diagnostic": "event 12: expected sink_enter exact fields/types",
+      "copy_sha256": "520a9e8c7f04dfd95a1721c88e41ac977cb03fe8091b3321346f4caa7fcce4f5"
+    },
+    {
+      "control": "timeout_alias",
+      "rejected": true,
+      "diagnostic": "event 15: expected wait_enter exact fields/types",
+      "copy_sha256": "0b157c9a26c331c28439b34063cba6e8e5b6211a9a607cd3495dbd798be73274"
+    },
+    {
+      "control": "commands",
+      "rejected": true,
+      "diagnostic": "command payload isolation and completion",
+      "copy_sha256": "f5cb096d559a5730812bf1be74c9d4963c6aa65d73d24dce7a4e0684cfe38353"
+    },
+    {
+      "control": "unread",
+      "rejected": true,
+      "diagnostic": "unread/termination",
+      "copy_sha256": "887932ad8d103bb8f4e700335cf99007f357da395ea89fbc829e989cbcca7e74"
+    },
+    {
+      "control": "stats_alias",
+      "rejected": true,
+      "diagnostic": "source stats reconstructed",
+      "copy_sha256": "b0233c639ab829486c8aeae411837e5856d526dcff5c6432e766ae2fadeaed30"
+    },
+    {
+      "control": "missing_clock",
+      "rejected": true,
+      "diagnostic": "event 8: expected clock exact fields/types",
+      "copy_sha256": "40995bb5c36324b3c930b968b6dc59c8233440ae2004c5aa3fe3c2815f581c82"
+    },
+    {
+      "control": "missing_row",
+      "rejected": true,
+      "diagnostic": "coverage",
+      "copy_sha256": "fd7cea669490e3ead066ce0c0bc37f56987b703b749f5cfa96675dad81ca7bdb"
+    },
+    {
+      "control": "reordered_rows",
+      "rejected": true,
+      "diagnostic": "case field adapter",
+      "copy_sha256": "ad80c6c80ecca15407cd5860cd9db39c97fe716b2d2e920da5978a27e4decf95"
+    }
+  ],
+  "raw_sha256": "d3dcb1d79b6f75f3f498b5ff4160bf08de62431e1af17a5c87ea68acda91af82",
+  "no_candidate_or_trial_replay": true
+}

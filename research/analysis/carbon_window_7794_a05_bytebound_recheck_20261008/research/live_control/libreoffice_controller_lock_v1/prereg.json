@@ -1,0 +1,31 @@
+{
+  "task_id": "LO-XMODEL-CONTROLLER-LOCK-20260916-410",
+  "issue": 414,
+  "publication_base": "f224cc42c083c9139185e3f89800fcd21bbea0a4",
+  "branch": "research/libreoffice-controller-lock-20260916-410",
+  "scope": "research/live_control/libreoffice_controller_lock_v1/**",
+  "allocation": "lo-controller-lock-20260916-a1",
+  "environment": {
+    "libreoffice": "25.2.3.2 520(Build:2)",
+    "python": "/usr/bin/python3",
+    "uno_transport": "local TCP socket",
+    "document": "private:factory/sdraw",
+    "object": "com.sun.star.drawing.RectangleShape"
+  },
+  "arms": ["locked_stable", "locked_intervening_write"],
+  "repetitions_per_arm": 5,
+  "initial_positions": {"A": 1000, "B": 5000},
+  "intervening_A_position": 1700,
+  "stale_controller_target": 1200,
+  "decision": {
+    "retain": "CONTROLLER_LOCK_NOT_SEMANTIC_EXCLUSION_SCOPED",
+    "requirements": [
+      "locked_stable 5/5 final A=1200 B=5000",
+      "locked_intervening_write 5/5 external A=1700 while controllers locked",
+      "locked_intervening_write 5/5 final A=1200 B=5000",
+      "event order lock_verified < external_write_complete < stale_write < unlock",
+      "independent audit pass"
+    ]
+  },
+  "limits": "One LibreOffice version, Draw RectangleShape, local UNO, deterministic injected ordering; no crash/distributed/performance/general claim."
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "argv": [
+      "<LOCAL_PYTHON>",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "test_auditor_v2"
+    ],
+    "ended_utc": "2026-10-03T03:35:58.132726+00:00",
+    "exit_code": 0,
+    "formal_replayed": false,
+    "kind": "retained-data verification",
+    "label": "tests",
+    "started_utc": "2026-10-03T03:35:57.868875+00:00",
+    "stdout_sha256": "282245129a33dffc364180515c6933363409cd646a20bafb08a0f086f899bf8f"
+  },
+  {
+    "argv": [
+      "<LOCAL_PYTHON>",
+      "-B",
+      "auditor_v2.py",
+      "<PRIVATE_WORKSPACE>\\outputs\\singleflight-cancel-order\\run01\\candidate-raw.json",
+      "--expected-raw-sha256",
+      "60759e1b49d03a7d83bb3968b892c2c349f7e89842f17aa645043785421a580b",
+      "--output",
+      "<PRIVATE_WORKSPACE>\\outputs\\singleflight-cancel-order-public-v4\\repair_v2\\execution-verified\\audit-v2.json"
+    ],
+    "ended_utc": "2026-10-03T03:35:58.249950+00:00",
+    "exit_code": 0,
+    "formal_replayed": false,
+    "kind": "retained-data verification",
+    "label": "audit",
+    "started_utc": "2026-10-03T03:35:58.132726+00:00",
+    "stdout_sha256": "f0987443958d0b84b06c3e872eb1859fd66253d9e0fdc5eb93b5cf718a45d6b3"
+  }
+]

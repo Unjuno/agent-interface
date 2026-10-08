@@ -1,0 +1,3 @@
+The first publication index check failed because ordinary git add omitted two ignored stderr logs. The producer and saved audit were already terminal; neither was rerun or edited. Explicit git add --sparse -f included both original logs, after which all22 manifested source/result bytes matched their staged Git blob identities and all26 archive paths were present. The CRLF-aware diff check passed. This is an evidence-packaging failure and correction, not a changed experimental outcome.
+
+No PR creation was attempted in this segment before the recorded 2026-10-03 22:35:38 UTC minimum retry time. Git push succeeded. Branch publication does not prove main delivery or hosted CI completion.

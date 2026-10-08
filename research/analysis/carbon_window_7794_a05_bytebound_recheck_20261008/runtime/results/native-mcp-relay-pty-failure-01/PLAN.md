@@ -1,0 +1,2 @@
+# Relay live trial before allocation
+Explicit JSON-line requests over one persistent relay/SDK connection, seed 991120, max stages2, Inkscape. Primary must inspect returned image and public goal before authoring input. No decision-file path in relay. One application allocation, no sensors/Docker actions. Preserve stdout protocol and exact requests. Same action recipe if observed scene supports it. Do not replay on missing/partial output. EOF is not cleanup; finish explicitly and confirm same owner terminal.

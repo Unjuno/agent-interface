@@ -1,0 +1,43 @@
+{
+  "allocation": "issue5243-terminate-reset-20260930/construction-01",
+  "status": "PASS_PRIVATE_XVFB_RESET_TERMINATION_CONSTRUCTION_ONLY",
+  "formal_input_run": false,
+  "probe_invocations": 1,
+  "host_mount_ns_inode": 4026532221,
+  "child_mount_ns_inode": 4026532241,
+  "private_namespace": true,
+  "socket_mount": {
+    "target": "/tmp/.X11-unix",
+    "fstype": "tmpfs",
+    "source": "none",
+    "mode": "01777"
+  },
+  "xlib": {
+    "display": ":98",
+    "screen": [640, 480],
+    "socket_present_while_connected": true
+  },
+  "xvfb": {
+    "natural_exit": true,
+    "exit_code": 0,
+    "signal_fallback": false
+  },
+  "host_socket_before": {
+    "mode": "0777",
+    "inode": 2,
+    "device": 38
+  },
+  "host_socket_after": {
+    "mode": "0777",
+    "inode": 2,
+    "device": 38
+  },
+  "auditor_stdout_status": "PASS_PRIVATE_XVFB_RESET_TERMINATION_CONSTRUCTION_ONLY",
+  "auditor_checks": 12,
+  "corruption_controls_rejected": 6,
+  "auditor_stderr_empty": true,
+  "auditor_exit_code_capture": "unavailable-empty-file",
+  "auditor_initial_launch_path_error_preserved": true,
+  "raw_evidence": "results/construction-01/",
+  "scope": "single Arch WSL2 private-Xvfb construction only"
+}

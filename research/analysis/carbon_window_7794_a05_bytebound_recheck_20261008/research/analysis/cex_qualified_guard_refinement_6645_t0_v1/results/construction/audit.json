@@ -1,0 +1,58 @@
+{
+  "allocation_id": "CEX-GUARD-REFINEMENT-6645-T0-20261002-01",
+  "ambiguous_state_count": 5,
+  "arm_comparison": {
+    "CANDIDATE_REFINEMENT": {
+      "harmful_admitted": 0,
+      "harmful_deopt": 1,
+      "harmful_unknown": 4,
+      "valid_admitted": 2,
+      "valid_deopt": 0,
+      "valid_unknown": 3
+    },
+    "EXACT_STATE_BLACKLIST": {
+      "harmful_admitted": 1,
+      "harmful_deopt": 4,
+      "harmful_unknown": 0,
+      "valid_admitted": 4,
+      "valid_deopt": 1,
+      "valid_unknown": 0
+    },
+    "INVALIDATE_ALL_FALLBACK": {
+      "harmful_admitted": 0,
+      "harmful_deopt": 4,
+      "harmful_unknown": 1,
+      "valid_admitted": 0,
+      "valid_deopt": 4,
+      "valid_unknown": 1
+    },
+    "ORACLE_MINIMAL_DIAGNOSTIC": {
+      "harmful_admitted": 0,
+      "harmful_deopt": 5,
+      "harmful_unknown": 0,
+      "valid_admitted": 5,
+      "valid_deopt": 0,
+      "valid_unknown": 0
+    },
+    "UNCHANGED_GUARD": {
+      "harmful_admitted": 4,
+      "harmful_deopt": 1,
+      "harmful_unknown": 0,
+      "valid_admitted": 4,
+      "valid_deopt": 1,
+      "valid_unknown": 0
+    }
+  },
+  "audit_status": "PASS_METHOD_SCOPED",
+  "counterexample_count": 6,
+  "errors": [],
+  "invalidated_sibling_caches": [
+    "cache_skill_a_shape1",
+    "cache_skill_b_shape2"
+  ],
+  "raw_counterexample_events": 6,
+  "refinement_alternative_count": 2,
+  "schema": "cex-guard-refinement-audit-v1",
+  "scope": "deterministic finite fixture only; no live GUI, runtime safety, task-effect or production claim",
+  "state_count": 11
+}

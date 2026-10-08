@@ -1,0 +1,92 @@
+{
+  "schema": "6284-cross-handoff-pending-correction-falsification-v1",
+  "target_version": "goal-1",
+  "policies": ["visible_state_only", "typed_handoff", "correction_conservation", "retry_plus_obligation_ledger"],
+  "cases": [
+    {
+      "id": "delayed_same_resource_new_intent",
+      "target": "panel_open_once",
+      "actors": ["owner-A", "owner-B"],
+      "operations": [
+        {"op": "issue", "actor": "owner-A", "intent": "intent-A", "attempt": "attempt-A1", "operation": "op-A", "goal": "goal-1", "effect_key": "panel/open", "resource": "panel", "effect": "open_panel", "delivery": "accepted", "visible": "closed"},
+        {"op": "handoff", "from": "owner-A", "to": "owner-B", "goal": "goal-1", "visible": "closed", "pending": ["op-A"]},
+        {"op": "issue", "actor": "owner-B", "intent": "intent-B", "attempt": "attempt-B1", "operation": "op-B", "goal": "goal-1", "effect_key": "panel/open", "resource": "panel", "effect": "open_panel", "delivery": "accepted", "visible": "closed"},
+        {"op": "effect", "operation": "op-A", "effect": "opened", "time": 8},
+        {"op": "effect", "operation": "op-B", "effect": "already_open_noop", "time": 9}
+      ],
+      "alias": {},
+      "footprints_complete": true
+    },
+    {
+      "id": "late_effect_after_handoff_partial_then_duplicate",
+      "target": "document_value_7",
+      "actors": ["owner-A", "owner-B", "owner-C"],
+      "operations": [
+        {"op": "issue", "actor": "owner-A", "intent": "intent-A", "attempt": "attempt-A1", "operation": "op-A", "goal": "goal-1", "effect_key": "doc/set-7", "resource": "doc", "effect": "set_value_7", "delivery": "ambiguous", "visible": "value_0"},
+        {"op": "handoff", "from": "owner-A", "to": "owner-B", "goal": "goal-1", "visible": "value_0", "pending": ["op-A"]},
+        {"op": "issue", "actor": "owner-B", "intent": "intent-B", "attempt": "attempt-B1", "operation": "op-B", "goal": "goal-1", "effect_key": "doc/set-7", "resource": "doc", "effect": "set_value_7", "delivery": "accepted", "visible": "value_0"},
+        {"op": "effect", "operation": "op-A", "effect": "partial", "time": 8},
+        {"op": "handoff", "from": "owner-B", "to": "owner-C", "goal": "goal-1", "visible": "value_3", "pending": ["op-B"]},
+        {"op": "issue", "actor": "owner-C", "intent": "intent-C", "attempt": "attempt-C1", "operation": "op-C", "goal": "goal-1", "effect_key": "doc/set-7", "resource": "doc", "effect": "set_value_7", "delivery": "accepted", "visible": "value_3"},
+        {"op": "effect", "operation": "op-B", "effect": "value_7", "time": 11},
+        {"op": "effect", "operation": "op-C", "effect": "already_7_noop", "time": 12}
+      ],
+      "alias": {},
+      "footprints_complete": true
+    },
+    {
+      "id": "dedupe-expired-new-intent",
+      "target": "send_notice_once",
+      "actors": ["owner-A", "owner-B"],
+      "operations": [
+        {"op": "issue", "actor": "owner-A", "intent": "intent-A", "attempt": "attempt-A1", "operation": "op-A", "goal": "goal-1", "effect_key": "notice/send", "resource": "notice", "effect": "send_notice", "delivery": "ambiguous", "visible": "not_sent"},
+        {"op": "handoff", "from": "owner-A", "to": "owner-B", "goal": "goal-1", "visible": "not_sent", "pending": ["op-A"], "dedupe_expired": true},
+        {"op": "issue", "actor": "owner-B", "intent": "intent-B", "attempt": "attempt-B1", "operation": "op-B", "goal": "goal-1", "effect_key": "notice/send", "resource": "notice", "effect": "send_notice", "delivery": "accepted", "visible": "not_sent"},
+        {"op": "effect", "operation": "op-A", "effect": "sent", "time": 10},
+        {"op": "effect", "operation": "op-B", "effect": "duplicate_send", "time": 11}
+      ],
+      "alias": {},
+      "footprints_complete": true
+    },
+    {
+      "id": "semantic_overlap_unknown_footprint",
+      "target": "one_export",
+      "actors": ["owner-A", "owner-B"],
+      "operations": [
+        {"op": "issue", "actor": "owner-A", "intent": "intent-A", "attempt": "attempt-A1", "operation": "op-A", "goal": "goal-1", "effect_key": "export/create", "resource": "workspace/item-7", "effect": "create_export", "delivery": "accepted", "visible": "absent"},
+        {"op": "handoff", "from": "owner-A", "to": "owner-B", "goal": "goal-1", "visible": "absent", "pending": ["op-A"]},
+        {"op": "issue", "actor": "owner-B", "intent": "intent-B", "attempt": "attempt-B1", "operation": "op-B", "goal": "goal-1", "effect_key": "export/create", "resource": "unknown", "effect": "create_export", "delivery": "accepted", "visible": "absent"},
+        {"op": "effect", "operation": "op-A", "effect": "created", "time": 8},
+        {"op": "effect", "operation": "op-B", "effect": "duplicate_created", "time": 9}
+      ],
+      "alias": {},
+      "footprints_complete": false
+    },
+    {
+      "id": "distinct_goal_and_safety_release",
+      "target": "goal_2_after_goal_1_and_release",
+      "actors": ["owner-A", "owner-B"],
+      "operations": [
+        {"op": "issue", "actor": "owner-A", "intent": "intent-A", "attempt": "attempt-A1", "operation": "op-A", "goal": "goal-1", "effect_key": "panel/open", "resource": "panel", "effect": "open_panel", "delivery": "accepted", "visible": "closed"},
+        {"op": "release", "actor": "owner-A", "operation": "release-A", "goal": "goal-1", "effect_key": "input/release", "resource": "input", "effect": "release_all", "delivery": "required"},
+        {"op": "handoff", "from": "owner-A", "to": "owner-B", "goal": "goal-2", "visible": "closed", "pending": ["op-A", "release-A"], "goal_changed": true},
+        {"op": "effect", "operation": "release-A", "effect": "released", "time": 2},
+        {"op": "effect", "operation": "op-A", "effect": "opened", "time": 8}
+      ],
+      "alias": {},
+      "footprints_complete": true
+    },
+    {
+      "id": "resource_alias_complete_footprint",
+      "target": "single_toggle",
+      "actors": ["owner-A", "owner-B"],
+      "operations": [
+        {"op": "issue", "actor": "owner-A", "intent": "intent-A", "attempt": "attempt-A1", "operation": "op-A", "goal": "goal-1", "effect_key": "toggle/one", "resource": "window-7", "effect": "toggle", "delivery": "ambiguous", "visible": "off"},
+        {"op": "handoff", "from": "owner-A", "to": "owner-B", "goal": "goal-1", "visible": "off", "pending": ["op-A"]},
+        {"op": "issue", "actor": "owner-B", "intent": "intent-B", "attempt": "attempt-B1", "operation": "op-B", "goal": "goal-1", "effect_key": "toggle/one", "resource": "window-7-alias", "effect": "toggle", "delivery": "accepted", "visible": "off"}
+      ],
+      "alias": {"window-7-alias": "window-7"},
+      "footprints_complete": true
+    }
+  ]
+}

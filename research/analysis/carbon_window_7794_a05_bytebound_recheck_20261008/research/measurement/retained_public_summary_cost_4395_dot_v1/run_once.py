@@ -1,0 +1,205 @@
+"""One source-frozen finite retained-input cost characterization, no dispatch."""
+import argparse
+import copy
+import gc
+import hashlib
+import importlib.util
+import json
+import math
+import os
+from pathlib import Path
+import platform
+import resource
+import statistics
+import sys
+import time
+import traceback
+import tracemalloc
+import types
+
+CASES=('entry','save','refusal')
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+def outcome_for(errors):
+    return ('STOP_CLOCK_GRANULARITY' if errors and all(e.startswith('clock_') or ':granularity_or_type' in e for e in errors)
+            else 'FAIL_PRESERVATION_OR_EVIDENCE')
+
+def final_receipt(root,out,before,freeze_sha,receipt_error):
+    after={}
+    for name in before:
+        try:after[name]=sha((root/name).read_bytes())
+        except OSError as exc:after[name]={'error':str(exc)}
+    outputs={str(f.relative_to(out)):sha(f.read_bytes()) for f in out.rglob('*') if f.is_file()}
+    return {'source_before':before,'source_after':after,'source_unchanged':before==after,'output_hashes':outputs,
+            'freeze_sha256':freeze_sha,'outer_wall_budget_seconds':30,
+            'observed_rlimit_as':list(resource.getrlimit(resource.RLIMIT_AS)),
+            'observed_rlimit_cpu':list(resource.getrlimit(resource.RLIMIT_CPU)),
+            'observed_cpu_affinity':sorted(os.sched_getaffinity(0)),
+            'max_rss_kib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,'exception':receipt_error}
+
+def save(path, obj):
+    with path.open('x') as stream:
+        json.dump(obj,stream,indent=2,allow_nan=False)
+        stream.write('\n'); stream.flush(); os.fsync(stream.fileno())
+
+def load_modules(root):
+    for name in ('runtime','runtime.cli_v1','runtime.core_v1'):
+        if name in sys.modules:
+            raise ValueError('unexpected preexisting namespace '+name)
+        module=types.ModuleType(name)
+        module.__path__=[str(root/'upstream'/Path(*name.split('.')))]
+        sys.modules[name]=module
+    loaded={}
+    for name in ('runtime.core_v1.sequence','runtime.cli_v1.public_presentation','runtime.cli_v1.public_summary'):
+        path=root/'upstream'/Path(*name.split('.')).with_suffix('.py')
+        spec=importlib.util.spec_from_file_location(name,path)
+        module=importlib.util.module_from_spec(spec)
+        sys.modules[name]=module; spec.loader.exec_module(module)
+        loaded[name]=module
+    return {
+        'FULL_V3':lambda value:value,
+        'PACED_BRIEF':loaded['runtime.cli_v1.public_presentation'].brief_public_report,
+        'PUBLIC_SUMMARY':loaded['runtime.cli_v1.public_summary'].summarize_public_dispatch}
+
+def controls(root, out, raw, audit):
+    """Coherent output mutations update hashes, isolating semantic validation."""
+    results=[]
+    mutations=[
+        ('release_omitted','entry/PUBLIC_SUMMARY',lambda v:v['receipt']['execution_summary'].__setitem__('releases',[])),
+        ('outcome_changed','entry/PUBLIC_SUMMARY',lambda v:v['outcome_summary'].__setitem__('execution_status','refused')),
+        ('source_digest_changed','save/PUBLIC_SUMMARY',lambda v:v['receipt']['source'].__setitem__('sha256','0'*64)),
+        ('wrong_call','entry/PUBLIC_SUMMARY',lambda v:v.__setitem__('call_id','foreign-call')),
+        ('wrong_retrieval','save/PUBLIC_SUMMARY',lambda v:v['presentation']['retrieve']['arguments'].__setitem__('call_id','foreign-call')),
+        ('false_refusal_success','refusal/PUBLIC_SUMMARY',lambda v:v['outcome_summary'].__setitem__('execution_status','completed')),
+        ('wait_count_changed','entry/PUBLIC_SUMMARY',lambda v:v['receipt']['execution_summary']['wait_summary'].__setitem__('count',999)),
+        ('integer_release_flag','entry/PUBLIC_SUMMARY',lambda v:v['outcome_summary'].__setitem__('input_release_verified',1)),
+    ]
+    for name,key,mutation in mutations:
+        copied=copy.deepcopy(raw); directory=out/'controls'/name; directory.mkdir(parents=True)
+        for record in copied['outputs'].values():
+            path=directory/record['file']; path.parent.mkdir(parents=True,exist_ok=True)
+            path.write_bytes((out/record['file']).read_bytes())
+        record=copied['outputs'][key]; path=directory/record['file']
+        old=path.read_bytes(); value=json.loads(old); mutation(value)
+        new=json.dumps(value,allow_nan=False).encode('utf-8')
+        path.write_bytes(new); record.update(sha256=sha(new),bytes=len(new))
+        for row in copied['rows']:
+            if row['case']+'/'+row['policy']==key:
+                row['output_sha256s']=[sha(new)]*row['count']
+        for row in copied['memory']:
+            if row['case']+'/'+row['policy']==key:row['output_sha256']=sha(new)
+        save(directory/'RAW.json',copied)
+        errors=audit(root,directory,copied)
+        result={'name':name,'changed_canonical_json':json.dumps(json.loads(old),sort_keys=True)!=json.dumps(value,sort_keys=True),'errors':errors,'rejected':bool(errors)}
+        results.append(result); save(directory/'RESULT.json',result)
+    for name,mutation in [
+        ('missing_measured_row',lambda v:v['rows'].pop()),
+        ('clock_boolean',lambda v:v['rows'][-1].__setitem__('wall_ns',True)),
+        ('nonfinite_memory',lambda v:v['memory'][0].__setitem__('net_bytes',float('nan'))),
+        ('source_hash_changed',lambda v:v['source_hashes'].__setitem__('harness.py','0'*64)),
+    ]:
+        copied=copy.deepcopy(raw); mutation(copied)
+        errors=audit(root,out,copied)
+        results.append({'name':name,'changed_canonical_json':json.dumps(raw,sort_keys=True)!=json.dumps(copied,sort_keys=True),'errors':errors,'rejected':bool(errors)})
+        # A literal NaN is retained only in this explicitly invalid mutation.
+        directory=out/'controls'/name; directory.mkdir(parents=True)
+        with (directory/'RAW.invalid.json').open('x') as stream:json.dump(copied,stream,indent=2)
+        save(directory/'RESULT.json',results[-1])
+    save(out/'CONTROLS.json',results)
+    return results
+
+def main():
+    p=argparse.ArgumentParser();p.add_argument('--freeze-sha256',required=True);p.add_argument('--output',required=True)
+    args=p.parse_args();root=Path(__file__).resolve().parent;out=Path(args.output).resolve()
+    out.mkdir(exist_ok=False); started=time.monotonic_ns();before={};receipt_error=None
+    try:
+        resource.setrlimit(resource.RLIMIT_AS,(256*1024*1024,256*1024*1024))
+        resource.setrlimit(resource.RLIMIT_CPU,(15,15))
+        cpu_id=min(os.sched_getaffinity(0));os.sched_setaffinity(0,{cpu_id})
+        save(out/'PREFLIGHT.json',{'observed_rlimit_as':list(resource.getrlimit(resource.RLIMIT_AS)),
+            'observed_rlimit_cpu':list(resource.getrlimit(resource.RLIMIT_CPU)),
+            'observed_cpu_affinity':sorted(os.sched_getaffinity(0)),
+            'requested_freeze_sha256':args.freeze_sha256})
+        if sha((root/'FREEZE.json').read_bytes())!=args.freeze_sha256:raise ValueError('freeze identity')
+        freeze=json.loads((root/'FREEZE.json').read_text())
+        before={name:sha((root/name).read_bytes()) for name in freeze['files']}
+        if before!=freeze['files']:raise ValueError('source/input hash mismatch')
+        if len(before)!=freeze['file_count']:raise ValueError('freeze count')
+        import harness
+        import oracle
+        producers=load_modules(root)
+        corpus={c:json.loads((root/'inputs'/f'{c}-full.json').read_bytes()) for c in CASES}
+        input_before={c:oracle.canonical(v) for c,v in corpus.items()}
+        raw={'schema':'retained-public-projection-cost-v1','source_hashes':before,'freeze_sha256':args.freeze_sha256,'outputs':{},'rows':[],'memory':[],
+             'gui_or_action_dispatches':0,'input_object_before_sha256':{c:sha(v) for c,v in input_before.items()},'environment':{'python':sys.version,'platform':platform.platform(),'cpu_affinity':sorted(os.sched_getaffinity(0)),'address_space_limit_bytes':256*1024*1024,'cpu_limit_seconds':15,'gc_enabled':gc.isenabled()}}
+        empty=[]
+        for _ in range(64):
+            w=time.perf_counter_ns();c=time.process_time_ns();ce=time.process_time_ns();we=time.perf_counter_ns()
+            empty.append([we-w,ce-c])
+        wr=max(1,math.ceil(time.get_clock_info('perf_counter').resolution*1e9));cr=max(1,math.ceil(time.get_clock_info('process_time').resolution*1e9))
+        wm=sorted(x[0] for x in empty)[31];cm=sorted(x[1] for x in empty)[31]
+        raw['clock']={'wall_resolution_ns':wr,'cpu_resolution_ns':cr,'empty_brackets':empty,'empty_wall_median_low_ns':wm,'empty_cpu_median_low_ns':cm,'minimum_ns':max(1000*wr,1000*cr,100*wm,100*cm)}
+        (out/'outputs').mkdir()
+        with (out/'EVENTS.jsonl').open('x') as journal:
+            for phase in ('warmup','measured'):
+                for case in CASES:
+                    for index,order in enumerate(harness.orders()):
+                        for policy in order:
+                            row, outputs=harness.batch(producers[policy],corpus[case],1 if phase=='warmup' else 3,measured=phase=='measured')
+                            key=case+'/'+policy
+                            if key not in raw['outputs']:
+                                file='outputs/'+case+'-'+policy+'.json'
+                                with (out/file).open('xb') as stream:stream.write(outputs[0])
+                                raw['outputs'][key]={'file':file,'sha256':sha(outputs[0]),'bytes':len(outputs[0])}
+                            row.update(phase=phase,case=case,order=index,policy=policy,output_sha256s=[sha(data) for data in outputs])
+                            raw['rows'].append(row);journal.write(json.dumps(row,allow_nan=False)+'\n');journal.flush();os.fsync(journal.fileno())
+                            del outputs
+            for case in CASES:
+                for policy in harness.POLICIES:
+                    gc.collect();tracemalloc.start(1);base,_=tracemalloc.get_traced_memory();tracemalloc.reset_peak()
+                    value=producers[policy](corpus[case]);data=harness.wire_bytes(value)
+                    current,peak=tracemalloc.get_traced_memory();tracemalloc.stop()
+                    row={'case':case,'policy':policy,'net_bytes':current-base,'peak_bytes':peak-base,'output_sha256':sha(data),
+                         'scope':'one call; projected object plus serialized bytes alive; source objects/imports excluded; traced Python allocations only'}
+                    raw['memory'].append(row);journal.write(json.dumps({'memory':row})+'\n');journal.flush();os.fsync(journal.fileno())
+                    del value,data
+        raw['inputs_unchanged']=all(input_before[c]==oracle.canonical(v) for c,v in corpus.items())
+        raw['input_object_after_sha256']={c:sha(oracle.canonical(v)) for c,v in corpus.items()}
+        raw['counts']={'warmup':54,'measured':162,'memory':9,'total':225}
+        after={name:sha((root/name).read_bytes()) for name in before}
+        if before!=after:raise ValueError('frozen source changed during invocation')
+        save(out/'RAW.json',raw)
+        errors=oracle.audit(root,out,raw);save(out/'AUDIT.json',{'errors':errors})
+        if errors:
+            disposition=outcome_for(errors)
+            save(out/'RESULT.json',{'disposition':disposition,'errors':errors,'first_outcome_preserved':True})
+            return 1
+        checked=controls(root,out,raw,oracle.audit)
+        if not all(c['changed_canonical_json'] and c['rejected'] for c in checked):
+            save(out/'RESULT.json',{'disposition':'HOLD_CORRUPTION_CONTROL','controls':checked});return 1
+        summary=[]
+        for case in CASES:
+            for policy in harness.POLICIES:
+                rows=[r for r in raw['rows'] if r['phase']=='measured' and r['case']==case and r['policy']==policy]
+                wall=[r['wall_ns']/r['count'] for r in rows];cpu=[r['cpu_ns']/r['count'] for r in rows]
+                memory=next(r for r in raw['memory'] if r['case']==case and r['policy']==policy)
+                summary.append({'case':case,'policy':policy,'samples':len(rows),'calls_per_batch':3,'bytes':raw['outputs'][case+'/'+policy]['bytes'],
+                  'wall_ns_per_call_batch_estimate':{'median':statistics.median(wall),'min':min(wall),'max':max(wall)},
+                  'cpu_ns_per_call_batch_estimate':{'median':statistics.median(cpu),'min':min(cpu),'max':max(cpu)},'memory':memory})
+        result={'disposition':'PASS_RETAINED_PUBLIC_PROJECTION_COST_CHARACTERIZATION','rows':summary,'elapsed_ns':time.monotonic_ns()-started,'scope':'finite retained metadata; no end-to-end speedup, token or default-adoption claim','first_outcome_preserved':True}
+        save(out/'RESULT.json',result)
+        print(json.dumps({'disposition':result['disposition'],'elapsed_ns':result['elapsed_ns'],'controls':len(checked)}))
+        return 0
+    except BaseException as error:
+        receipt_error=type(error).__name__+':'+str(error)
+        save(out/'STOP.json',{'disposition':'STOP_EXECUTION_OR_PREFLIGHT','type':type(error).__name__,'error':str(error),'traceback':traceback.format_exc(),'elapsed_ns':time.monotonic_ns()-started})
+        raise
+    finally:
+        # Also retain source/resource/output closure for normal STOP/FAIL/HOLD,
+        # and for catchable exceptions. Forced termination still needs outer exit.
+        save(out/'RECEIPT.json',final_receipt(root,out,before,args.freeze_sha256,receipt_error))
+
+if __name__=='__main__':
+    raise SystemExit(main())

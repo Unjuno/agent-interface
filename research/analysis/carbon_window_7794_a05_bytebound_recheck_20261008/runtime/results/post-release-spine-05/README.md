@@ -1,0 +1,24 @@
+# Post-release spine 05: interrupted primary self-use
+
+**HOLD_PRIMARY_PROTOCOL_DEVIATIONS.** This is failed integration evidence, not a matched performance comparison. The original two allocations are retained without retries.
+
+Candidate source `f0ccc4d72a09824460891bb7ce3bbd2eab371908`, seed `1001051`, same primary caller, portable runtime, private Ubuntu X11/Chromium, six A/A/A/B/B/B exact-token tasks. The frozen plan adds same-host clock checks before ordinary guarded input: when a reference has at most five seconds remaining, the primary requests and reviews a fresh image and mints a new unique reference. No original deadline is extended. Task4 planned negative controls bypass that check.
+
+| Route | Public calls | Completed input programs | Reply images | Independent exact-once saves |
+| --- | ---: | ---: | ---: | --- |
+| Guarded | 41 | 13 | 15 | Tasks1–3; tasks4–6 missing |
+| Direct | 4 | 0 | 1 | All six missing |
+
+An interruption between task3 field entry and Save left the original off-hover Save reference **143.8569434 seconds past expiry**. Clock attempt29 detected this before any input using the expired reference. The primary then mistakenly called `interface_observe`, unavailable in the guarded session; attempt30 returned `Unknown tool: interface_observe`. The frozen stop rule required stopping at that refusal. The primary instead corrected the tool, reviewed source44, minted `save_off_a_refresh3`, moved, reviewed hover, minted again, saved task3, and navigated to task4. Inputs34/37/40 are therefore explicitly retained as **post-refusal protocol deviations**, not removed from the denominator or accepted as a successful trial. The arm was then stopped. Task4's planned pixel mismatch/revocation controls and B-layout tasks were not executed.
+
+The direct allocation passed three static validations and returned an original initial PNG. Its first primary review omitted the required `task` argument. The host entered evidence-incomplete state and refused subsequent calls locally. No dispatch request was sent. The transport was closed; the server close record says `release_attempted:false`. This arm has **no public neutral-close confirmation**; transport termination is not substituted for it. The additive primary-error note records the observed local errors without rewriting original host files.
+
+Guarded input releases and the returned public close are verified neutral. Both original fixture processes and relay transports exited0. Both fixture cleanup arrays are `[0,1,0]`; mixed child statuses are retained rather than called all-zero cleanup. Independent scores report no duplicates or unexpected submissions.
+
+The archive retains the pre-launch plan and hashes, unchanged caller/runtime/fixture, original requests/replies/PNGs, native server records, primary review receipts, as-run pause helpers, independent scores and original terminal evidence. `verify.py` checks inventory/hashes, source hashes, original review reply/image attribution, all input outcomes/releases, exact scores, clock/expiry, refusal and post-refusal input sequence, zero direct dispatch and direct close limitations. Normal and optimized Python verification are evidence checks, not task acceptance.
+
+This result shows an actual expiry precheck and primary re-grounding path, but does not prove complete six-task integration, speed improvement, model token savings, costs, human tempo, current-main promotion or domain coverage. These measurements remain absent. The next allocation must preflight public tool names and review arguments before live calls and preserve the stop rule immediately on any unexpected refusal. No automatic remint or weakened guard is justified by these failures.
+
+`next-primary-policy.mjs` is a construction candidate for the next caller: route-specific tool validation before dispatch, review-argument validation before entering the evidence host, and a latched STOP after MCP refusal, incomplete execution or unverified/nonempty release. It returns the original failure response after presentation, allowing its text/image evidence to reach the primary, and permits public close after STOP. Seven boundary cases are exercised by `test-next-primary-policy.mjs`; this is mock construction evidence, **not live integration or a production runtime change**. It deliberately has no planned-refusal exception yet; task4's negative controls require a separately frozen explicit expectation design before this caller can run the complete trial. The original caller and plan in the raw archive are unchanged.
+
+Commands: `python3 runtime/results/post-release-spine-05/verify.py`, `python3 -O runtime/results/post-release-spine-05/verify.py`, `python3 runtime/results/post-release-spine-05/verify_controls.py`, and `node runtime/results/post-release-spine-05/test-next-primary-policy.mjs`.

@@ -1,0 +1,63 @@
+{
+  "status": "PASS_SCOPED_CORRECTNESS_HOLD_EFFICIENCY",
+  "normal_tasks_succeeded": 2,
+  "normal_tasks_attempted": 2,
+  "control_noSave_stops": 2,
+  "controls_not_completed_tasks": true,
+  "pending_cases": [],
+  "cases": [
+    {
+      "case": "normal-ordinary",
+      "task_success": true,
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "input_programs": 3,
+      "emissions": 37,
+      "captures": 13,
+      "commands": 5,
+      "primary_images": 2,
+      "persisted_x": 80,
+      "local_method_ms": 703.711328
+    },
+    {
+      "case": "normal-compiled",
+      "task_success": true,
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "input_programs": 3,
+      "emissions": 37,
+      "captures": 13,
+      "commands": 5,
+      "primary_images": 2,
+      "persisted_x": 80,
+      "local_method_ms": 845.10929
+    },
+    {
+      "case": "short-compiled",
+      "task_success": false,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "input_programs": 2,
+      "emissions": 13,
+      "captures": 10,
+      "commands": 5,
+      "primary_images": 2,
+      "persisted_x": 50,
+      "local_method_ms": 620.321612
+    },
+    {
+      "case": "short-ordinary",
+      "task_success": false,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "input_programs": 2,
+      "emissions": 13,
+      "captures": 10,
+      "commands": 5,
+      "primary_images": 2,
+      "persisted_x": 50,
+      "local_method_ms": 436.246425
+    }
+  ],
+  "scope": "two scoped normal task successes; two noSave controls; prior failure cause unknown; no model-token/default/human-speed gain"
+}

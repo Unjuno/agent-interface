@@ -1,0 +1,61 @@
+{
+  "schema": "agent-interface/review-v1",
+  "authority": "none",
+  "receipt": {
+    "source": {
+      "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/native-key-boundary-study-01/run-3/reply-2.json",
+      "sha256": "7d19648b15dee8b9a9c15b23547333bdd88e41eb59a5ce0b2286c832763ab3ba"
+    },
+    "native_result": {
+      "authority_granted": false,
+      "cleanup": {
+        "descendants_verified": false,
+        "ended_ns": 19137240166800,
+        "errors": [],
+        "owner_exit_verified": false,
+        "processes": [
+          {
+            "pid": 12930,
+            "returncode": 0
+          },
+          {
+            "pid": 12934,
+            "returncode": 1
+          },
+          {
+            "pid": 12939,
+            "returncode": -15
+          }
+        ],
+        "schema": "agent-interface/native-cleanup-v1",
+        "scope": "artifact_copy_connections_and_tracked_processes",
+        "started_ns": 19137180152454,
+        "status": "completed",
+        "tracked_processes_terminal": true
+      },
+      "decision_sha256": "8ad44a6dcb2334d1af691361bfff16689813ae042ad9b452f5e20c47816ece1c",
+      "evaluation": {
+        "actual": {
+          "height": "30",
+          "transform": null,
+          "width": "40",
+          "x": "86",
+          "y": "50"
+        },
+        "known_ns": 19137165669029,
+        "success": true
+      },
+      "stage": 2,
+      "status": "finished"
+    }
+  },
+  "image": null,
+  "image_status": "no_observation",
+  "exchange": {
+    "submission_committed": true,
+    "resumed_read_only": false,
+    "started_ns": 19137135836587,
+    "committed_ns": 19137163296562,
+    "returned_ns": 19137282786850
+  }
+}

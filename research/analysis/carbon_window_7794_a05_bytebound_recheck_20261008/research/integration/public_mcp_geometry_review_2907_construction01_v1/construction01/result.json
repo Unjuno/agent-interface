@@ -1,0 +1,654 @@
+{
+  "authority_granted": false,
+  "decision": "HOLD_GEOMETRY_REVIEW_GATE_UNMET",
+  "model_calls": 0,
+  "network_calls": 0,
+  "trace": {
+    "calls": [
+      {
+        "call_id": "511aa548d4104d52af572ccfdab415cd",
+        "operation": "inspect_target"
+      },
+      {
+        "call_id": "435438b7813a41b4b253c43e759e643d",
+        "operation": "review_target"
+      },
+      {
+        "call_id": "be70badda42f483eb120d26045a8dbd8",
+        "operation": "dispatch"
+      },
+      {
+        "call_id": "56d6f8cc886d486b949c38b99b1f8c4f",
+        "operation": "dispatch"
+      },
+      {
+        "call_id": "6a2b3bdc70054e4fa68078a494fa142d",
+        "operation": "close"
+      }
+    ],
+    "close": {
+      "authority_granted": false,
+      "call_directory": "/evidence/construction01/server-receipts/6a2b3bdc70054e4fa68078a494fa142d",
+      "call_id": "6a2b3bdc70054e4fa68078a494fa142d",
+      "connection_close_attempted": true,
+      "release_attempted": false,
+      "restart_allowed": false,
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 1,
+        "error": null,
+        "mode": "persistent-x11",
+        "recovery_required": false,
+        "restart_allowed": false,
+        "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+        "state": "closed",
+        "targets": {
+          "calc": 6292261
+        }
+      },
+      "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+      "status": "closed"
+    },
+    "decision": "HOLD_INCOMPLETE",
+    "fresh_dispatch": {
+      "authority": "none",
+      "call_directory": "/evidence/construction01/server-receipts/56d6f8cc886d486b949c38b99b1f8c4f",
+      "call_id": "56d6f8cc886d486b949c38b99b1f8c4f",
+      "image_error": "record batch required",
+      "image_status": "needs_review",
+      "input_dispatched": false,
+      "observation": {
+        "error": "SESSION_BINDING_REVISION_MISMATCH",
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "error": null,
+          "mode": "persistent-x11",
+          "recovery_required": false,
+          "restart_allowed": false,
+          "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+          "state": "open",
+          "targets": {
+            "calc": 6292261
+          }
+        },
+        "status": "invalid_request"
+      },
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": "SESSION_BINDING_REVISION_MISMATCH",
+        "failure_phase": null,
+        "reported_status": "invalid_request"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "error": "SESSION_BINDING_REVISION_MISMATCH",
+          "input_dispatched": false,
+          "operation_invoked": false,
+          "session": {
+            "authority_granted": false,
+            "binding_revision": 1,
+            "error": null,
+            "mode": "persistent-x11",
+            "recovery_required": false,
+            "restart_allowed": false,
+            "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+            "state": "open",
+            "targets": {
+              "calc": 6292261
+            }
+          },
+          "status": "invalid_request"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 386,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "error": "SESSION_BINDING_REVISION_MISMATCH",
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "session": {
+              "authority_granted": false,
+              "binding_revision": 1,
+              "error": null,
+              "mode": "persistent-x11",
+              "recovery_required": false,
+              "restart_allowed": false,
+              "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+              "state": "open",
+              "targets": {
+                "calc": 6292261
+              }
+            },
+            "status": "invalid_request"
+          },
+          "sha256": "9e1fbfd21e074e8ad4c5b6e464d2dbd0b14bcd1093ba4fd2f111d73a281375ca"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 1,
+        "error": null,
+        "mode": "persistent-x11",
+        "recovery_required": false,
+        "restart_allowed": false,
+        "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+        "state": "open",
+        "targets": {
+          "calc": 6292261
+        }
+      },
+      "side_effect_authority": null,
+      "status": "invalid_request"
+    },
+    "geometry_after": {
+      "HEIGHT": 981,
+      "WIDTH": 1600,
+      "X": 0,
+      "Y": 38
+    },
+    "geometry_after_dispatch": {
+      "HEIGHT": 981,
+      "WIDTH": 1600,
+      "X": 0,
+      "Y": 38
+    },
+    "geometry_before": {
+      "HEIGHT": 981,
+      "WIDTH": 1600,
+      "X": 0,
+      "Y": 38
+    },
+    "initial_observation": {
+      "authority": "none",
+      "call_directory": "/evidence/construction01/server-receipts/ba1a85a05fa648fa8e70e8292a69c6d2",
+      "call_id": "ba1a85a05fa648fa8e70e8292a69c6d2",
+      "image_reference": {
+        "authority": "none",
+        "capture_ns": 22696377383171,
+        "freshness": "historical referenced capture; no new observation",
+        "observation_id": "233ac9641bdd49468b612b02a2f7be0d",
+        "path": "/evidence/construction01/server-receipts/ba1a85a05fa648fa8e70e8292a69c6d2/images/af780d0bdb514de99a9cf75203a880d4.png",
+        "recorded_capture": {
+          "capture_ended_ns": 22696377564881,
+          "capture_started_ns": 22696377383171,
+          "frame": "window_client",
+          "height": 120,
+          "native_window_id": 6292261,
+          "region": [
+            0,
+            0,
+            160,
+            120
+          ],
+          "target": "calc",
+          "width": 160
+        },
+        "relative_path": "images/af780d0bdb514de99a9cf75203a880d4.png",
+        "sha256": "371367883ebee5c2b85961f2a021c387ca9525e44e22858b1693ffdfcc38455e",
+        "status": "image"
+      },
+      "image_status": "image",
+      "input_dispatched": false,
+      "observation": {
+        "input_dispatched": false,
+        "observation": {
+          "artifact": {
+            "bytes": 4774,
+            "height": 120,
+            "mime_type": "image/png",
+            "path": "/evidence/construction01/server-receipts/ba1a85a05fa648fa8e70e8292a69c6d2/images/af780d0bdb514de99a9cf75203a880d4.png",
+            "sha256": "371367883ebee5c2b85961f2a021c387ca9525e44e22858b1693ffdfcc38455e",
+            "source_raw_sha256": "8d2a0efd965b9824613ff6490464e60446286ab15eb771f121ea44dcc0797218",
+            "timing_ns": {
+              "converted": 22696377710987,
+              "encoded": 22696413914729,
+              "hashed": 22696421325828,
+              "started": 22696377661228,
+              "written": 22696421265503
+            },
+            "width": 160
+          },
+          "bytes": 76800,
+          "capture_ended_ns": 22696377564881,
+          "capture_started_ns": 22696377383171,
+          "frame": "window_client",
+          "height": 120,
+          "native_window_id": 6292261,
+          "region": [
+            0,
+            0,
+            160,
+            120
+          ],
+          "sha256": "8d2a0efd965b9824613ff6490464e60446286ab15eb771f121ea44dcc0797218",
+          "target": "calc",
+          "width": 160
+        },
+        "observation_id": "233ac9641bdd49468b612b02a2f7be0d",
+        "schema": "agent-interface/runtime-observation-v1",
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "error": null,
+          "mode": "persistent-x11",
+          "recovery_required": false,
+          "restart_allowed": false,
+          "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+          "state": "open",
+          "targets": {
+            "calc": 6292261
+          }
+        },
+        "side_effect_authority": false,
+        "status": "returned"
+      },
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": null,
+        "failure_phase": null,
+        "reported_status": "returned"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "input_dispatched": false,
+          "observation": {
+            "artifact": {
+              "bytes": 4774,
+              "height": 120,
+              "mime_type": "image/png",
+              "path": "/evidence/construction01/server-receipts/ba1a85a05fa648fa8e70e8292a69c6d2/images/af780d0bdb514de99a9cf75203a880d4.png",
+              "sha256": "371367883ebee5c2b85961f2a021c387ca9525e44e22858b1693ffdfcc38455e",
+              "source_raw_sha256": "8d2a0efd965b9824613ff6490464e60446286ab15eb771f121ea44dcc0797218",
+              "timing_ns": {
+                "converted": 22696377710987,
+                "encoded": 22696413914729,
+                "hashed": 22696421325828,
+                "started": 22696377661228,
+                "written": 22696421265503
+              },
+              "width": 160
+            },
+            "bytes": 76800,
+            "capture_ended_ns": 22696377564881,
+            "capture_started_ns": 22696377383171,
+            "frame": "window_client",
+            "height": 120,
+            "native_window_id": 6292261,
+            "region": [
+              0,
+              0,
+              160,
+              120
+            ],
+            "sha256": "8d2a0efd965b9824613ff6490464e60446286ab15eb771f121ea44dcc0797218",
+            "target": "calc",
+            "width": 160
+          },
+          "observation_id": "233ac9641bdd49468b612b02a2f7be0d",
+          "schema": "agent-interface/runtime-observation-v1",
+          "session": {
+            "authority_granted": false,
+            "binding_revision": 1,
+            "error": null,
+            "mode": "persistent-x11",
+            "recovery_required": false,
+            "restart_allowed": false,
+            "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+            "state": "open",
+            "targets": {
+              "calc": 6292261
+            }
+          },
+          "side_effect_authority": false,
+          "status": "returned"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 1289,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "input_dispatched": false,
+            "observation": {
+              "artifact": {
+                "bytes": 4774,
+                "height": 120,
+                "mime_type": "image/png",
+                "path": "/evidence/construction01/server-receipts/ba1a85a05fa648fa8e70e8292a69c6d2/images/af780d0bdb514de99a9cf75203a880d4.png",
+                "sha256": "371367883ebee5c2b85961f2a021c387ca9525e44e22858b1693ffdfcc38455e",
+                "source_raw_sha256": "8d2a0efd965b9824613ff6490464e60446286ab15eb771f121ea44dcc0797218",
+                "timing_ns": {
+                  "converted": 22696377710987,
+                  "encoded": 22696413914729,
+                  "hashed": 22696421325828,
+                  "started": 22696377661228,
+                  "written": 22696421265503
+                },
+                "width": 160
+              },
+              "bytes": 76800,
+              "capture_ended_ns": 22696377564881,
+              "capture_started_ns": 22696377383171,
+              "frame": "window_client",
+              "height": 120,
+              "native_window_id": 6292261,
+              "region": [
+                0,
+                0,
+                160,
+                120
+              ],
+              "sha256": "8d2a0efd965b9824613ff6490464e60446286ab15eb771f121ea44dcc0797218",
+              "target": "calc",
+              "width": 160
+            },
+            "observation_id": "233ac9641bdd49468b612b02a2f7be0d",
+            "schema": "agent-interface/runtime-observation-v1",
+            "session": {
+              "authority_granted": false,
+              "binding_revision": 1,
+              "error": null,
+              "mode": "persistent-x11",
+              "recovery_required": false,
+              "restart_allowed": false,
+              "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+              "state": "open",
+              "targets": {
+                "calc": 6292261
+              }
+            },
+            "side_effect_authority": false,
+            "status": "returned"
+          },
+          "sha256": "2924b4d46977c77053c71b10bb030fc862b0b5fa2f97e884d32b7168ede4c917"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 1,
+        "error": null,
+        "mode": "persistent-x11",
+        "recovery_required": false,
+        "restart_allowed": false,
+        "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+        "state": "open",
+        "targets": {
+          "calc": 6292261
+        }
+      },
+      "side_effect_authority": false,
+      "status": "returned"
+    },
+    "initial_session": {
+      "authority_granted": false,
+      "binding_revision": 1,
+      "error": null,
+      "mode": "persistent-x11",
+      "recovery_required": false,
+      "restart_allowed": false,
+      "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+      "state": "open",
+      "targets": {
+        "calc": 6292261
+      }
+    },
+    "inspect": {
+      "authority_granted": false,
+      "binding_revision": 1,
+      "call_directory": "/evidence/construction01/server-receipts/511aa548d4104d52af572ccfdab415cd",
+      "call_id": "511aa548d4104d52af572ccfdab415cd",
+      "evidence": {
+        "family_root": 6292261,
+        "focus_path": [
+          6293547
+        ],
+        "geometry": [
+          532,
+          402,
+          535,
+          215
+        ],
+        "title": "Tip of the Day: 1/225",
+        "transient_chain": [
+          6293547,
+          6292261
+        ],
+        "window_id": 6293547,
+        "wm_class": [
+          "libreoffice",
+          "libreoffice-calc"
+        ]
+      },
+      "expires_at_ns": 22742250061514,
+      "image_status": "image",
+      "input_dispatched": false,
+      "observation_report": {
+        "input_dispatched": false,
+        "observation": {
+          "artifact": {
+            "bytes": 82175,
+            "height": 900,
+            "mime_type": "image/png",
+            "path": "/evidence/construction01/server-receipts/511aa548d4104d52af572ccfdab415cd/images/2aac4609545b4655ae9c888552fb4464.png",
+            "sha256": "7e4707be12f4e1e1975213eb45aad7a03c0c3ed393ae274a248ed8847ad51c31",
+            "source_raw_sha256": "ec9e096d0e546e2c858c809c8a40890d3d00ca738807f439ec9b563f26ad25cb",
+            "timing_ns": {
+              "converted": 22712208617124,
+              "encoded": 22712235401051,
+              "hashed": 22712248185586,
+              "started": 22712205360917,
+              "written": 22712245442646
+            },
+            "width": 1500
+          },
+          "bytes": 5400000,
+          "capture_ended_ns": 22712202463369,
+          "capture_started_ns": 22712186755148,
+          "frame": "screen_physical_px",
+          "height": 900,
+          "native_window_id": 6292261,
+          "region": [
+            0,
+            0,
+            1500,
+            900
+          ],
+          "sha256": "ec9e096d0e546e2c858c809c8a40890d3d00ca738807f439ec9b563f26ad25cb",
+          "target": "calc",
+          "width": 1500
+        },
+        "observation_id": "6df8a6d40e1a4babb3c3cf50ca801f1d",
+        "schema": "agent-interface/runtime-observation-v1",
+        "side_effect_authority": false,
+        "status": "returned"
+      },
+      "review_id": "3c02f380990b42899fab428a9c51300b",
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 1,
+        "error": null,
+        "mode": "persistent-x11",
+        "recovery_required": false,
+        "restart_allowed": false,
+        "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+        "state": "open",
+        "targets": {
+          "calc": 6292261
+        }
+      },
+      "status": "needs_review",
+      "target": "calc"
+    },
+    "resize_command": {
+      "returncode": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    "review": {
+      "authority_granted": false,
+      "call_directory": "/evidence/construction01/server-receipts/435438b7813a41b4b253c43e759e643d",
+      "call_id": "435438b7813a41b4b253c43e759e643d",
+      "error": "ValueError('missing, expired or mismatched target review')",
+      "input_dispatched": false,
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 1,
+        "error": null,
+        "mode": "persistent-x11",
+        "recovery_required": false,
+        "restart_allowed": false,
+        "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+        "state": "open",
+        "targets": {
+          "calc": 6292261
+        }
+      },
+      "status": "needs_review"
+    },
+    "stale_dispatch": {
+      "authority": "none",
+      "call_directory": "/evidence/construction01/server-receipts/be70badda42f483eb120d26045a8dbd8",
+      "call_id": "be70badda42f483eb120d26045a8dbd8",
+      "image_error": "record batch required",
+      "image_status": "needs_review",
+      "input_dispatched": false,
+      "observation": {
+        "error": "SESSION_BINDING_REVISION_MISMATCH",
+        "input_dispatched": false,
+        "operation_invoked": false,
+        "session": {
+          "authority_granted": false,
+          "binding_revision": 1,
+          "error": null,
+          "mode": "persistent-x11",
+          "recovery_required": false,
+          "restart_allowed": false,
+          "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+          "state": "open",
+          "targets": {
+            "calc": 6292261
+          }
+        },
+        "status": "invalid_request"
+      },
+      "outcome_summary": {
+        "cleanup_error": null,
+        "error": "SESSION_BINDING_REVISION_MISMATCH",
+        "failure_phase": null,
+        "reported_status": "invalid_request"
+      },
+      "receipt": {
+        "authority": "none",
+        "events": [],
+        "latest_observations": [],
+        "motor_state_validation": {
+          "accepted": false,
+          "present": false,
+          "reason": "missing"
+        },
+        "omitted_from_view": 0,
+        "record_counts": {},
+        "report": {
+          "error": "SESSION_BINDING_REVISION_MISMATCH",
+          "input_dispatched": false,
+          "operation_invoked": false,
+          "session": {
+            "authority_granted": false,
+            "binding_revision": 1,
+            "error": null,
+            "mode": "persistent-x11",
+            "recovery_required": false,
+            "restart_allowed": false,
+            "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+            "state": "open",
+            "targets": {
+              "calc": 6292261
+            }
+          },
+          "status": "invalid_request"
+        },
+        "schema": "agent-interface/receipt-view-v1",
+        "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+        "source": {
+          "bytes": 386,
+          "kind": "received_bytes",
+          "path": null,
+          "raw_report": {
+            "error": "SESSION_BINDING_REVISION_MISMATCH",
+            "input_dispatched": false,
+            "operation_invoked": false,
+            "session": {
+              "authority_granted": false,
+              "binding_revision": 1,
+              "error": null,
+              "mode": "persistent-x11",
+              "recovery_required": false,
+              "restart_allowed": false,
+              "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+              "state": "open",
+              "targets": {
+                "calc": 6292261
+              }
+            },
+            "status": "invalid_request"
+          },
+          "sha256": "9e1fbfd21e074e8ad4c5b6e464d2dbd0b14bcd1093ba4fd2f111d73a281375ca"
+        }
+      },
+      "schema": "agent-interface/review-v1",
+      "session": {
+        "authority_granted": false,
+        "binding_revision": 1,
+        "error": null,
+        "mode": "persistent-x11",
+        "recovery_required": false,
+        "restart_allowed": false,
+        "session_id": "274351a934ae4389bc8c81ae7c3178b3",
+        "state": "open",
+        "targets": {
+          "calc": 6292261
+        }
+      },
+      "side_effect_authority": null,
+      "status": "invalid_request"
+    },
+    "tools": [
+      "interface_close",
+      "interface_dispatch",
+      "interface_inspect_target",
+      "interface_observe",
+      "interface_results",
+      "interface_review_target",
+      "interface_validate"
+    ]
+  }
+}

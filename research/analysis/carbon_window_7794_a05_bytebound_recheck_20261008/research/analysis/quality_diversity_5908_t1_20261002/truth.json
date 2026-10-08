@@ -1,0 +1,20 @@
+{
+  "schema": "agent-interface.quality-diversity-5908.truth.v1",
+  "admission": {
+    "c00":{"admit":true,"reason":"legal"},"c01":{"admit":true,"reason":"legal"},"c02":{"admit":true,"reason":"legal"},"c03":{"admit":true,"reason":"legal"},
+    "c04":{"admit":true,"reason":"legal"},"c05":{"admit":true,"reason":"legal"},"c06":{"admit":true,"reason":"legal"},"c07":{"admit":true,"reason":"legal"},
+    "c08":{"admit":false,"reason":"invalid-source"},"c09":{"admit":false,"reason":"oracle-shortcut"},"c10":{"admit":false,"reason":"invalid-target"},"c11":{"admit":false,"reason":"oracle-shortcut"}
+  },
+  "evaluation": {
+    "c00":{"mechanism":"M_STALE_TARGET","trace":{"phase":"target-check","local_state":"aligned","event":"stale-target-refusal"}},
+    "c01":{"mechanism":"M_STALE_TARGET","trace":{"phase":"target-check","local_state":"aligned","event":"stale-target-refusal"}},
+    "c02":{"mechanism":"M_STALE_TARGET","trace":{"phase":"target-check","local_state":"aligned","event":"stale-target-refusal"}},
+    "c03":{"mechanism":"M_STALE_TARGET","trace":{"phase":"target-check","local_state":"aligned","event":"stale-target-refusal"}},
+    "c04":{"mechanism":"M_RELEASE_GAP","trace":{"phase":"release","local_state":"occupied","event":"release-gap"}},
+    "c05":{"mechanism":"M_RELEASE_GAP","trace":{"phase":"release","local_state":"occupied","event":"release-gap"}},
+    "c06":{"mechanism":null,"trace":{"phase":"verify","local_state":"unknown","event":"no-failure"}},
+    "c07":{"mechanism":null,"trace":{"phase":"observe","local_state":"fresh","event":"no-failure"}}
+  },
+  "expected_mechanisms":["M_STALE_TARGET","M_RELEASE_GAP"],
+  "interpretation":"All labels and mechanisms are synthetic and planted; not an empirical failure taxonomy."
+}

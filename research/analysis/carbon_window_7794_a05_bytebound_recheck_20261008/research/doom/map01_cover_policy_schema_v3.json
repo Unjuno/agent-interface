@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "assessment",
+    "state",
+    "commands",
+    "contingencies",
+    "next_cover"
+  ],
+  "properties": {
+    "assessment": {
+      "type": "string",
+      "maxLength": 180
+    },
+    "state": {
+      "enum": [
+        "active",
+        "dead",
+        "exit_or_transition"
+      ]
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action",
+          "extent"
+        ],
+        "properties": {
+          "action": {
+            "enum": [
+              "turn_left",
+              "turn_right",
+              "forward",
+              "backward",
+              "strafe_left",
+              "strafe_right",
+              "use",
+              "fire",
+              "advance_fire",
+              "retreat_fire"
+            ]
+          },
+          "extent": {
+            "enum": [
+              "pulse",
+              "short",
+              "medium",
+              "long"
+            ]
+          }
+        }
+      }
+    },
+    "contingencies": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "after_command",
+          "condition",
+          "commands"
+        ],
+        "properties": {
+          "after_command": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 4
+          },
+          "condition": {
+            "type": "string",
+            "const": "no_visible_effect"
+          },
+          "commands": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "action",
+                "extent"
+              ],
+              "properties": {
+                "action": {
+                  "enum": [
+                    "turn_left",
+                    "turn_right",
+                    "forward",
+                    "backward",
+                    "strafe_left",
+                    "strafe_right",
+                    "use",
+                    "fire",
+                    "advance_fire",
+                    "retreat_fire"
+                  ]
+                },
+                "extent": {
+                  "enum": [
+                    "pulse",
+                    "short",
+                    "medium",
+                    "long"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "next_cover": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "action",
+          "extent"
+        ],
+        "properties": {
+          "action": {
+            "enum": [
+              "backward",
+              "strafe_left",
+              "strafe_right",
+              "fire",
+              "retreat_fire"
+            ]
+          },
+          "extent": {
+            "enum": [
+              "pulse",
+              "short",
+              "medium",
+              "long"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

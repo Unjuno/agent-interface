@@ -1,0 +1,44 @@
+{
+  "allocation": "ISSUE5841-T0-HOST-20261001-01",
+  "auditor_invocations": 1,
+  "base_main": "8f18bb65d75deaaafedb8b4e6ebbd430371c1d05",
+  "candidate_raw_sha256": "e8ac70f6c7cac937f1bcd8869e3a361aa7d72de0c0fb5d734cbe756a8c3dfb9c",
+  "errors": [],
+  "independent_truth_table": [
+    {
+      "id": "clean_null",
+      "true_primary_delta": 0.0,
+      "truth_class": "CLEAN_NULL"
+    },
+    {
+      "id": "primary_benefit",
+      "true_primary_delta": 0.5,
+      "truth_class": "TRUE_PRIMARY_BENEFIT"
+    },
+    {
+      "id": "route_missingness",
+      "true_primary_delta": 0.0,
+      "truth_class": "NULL_WITH_ROUTE_DEPENDENT_MISSINGNESS"
+    },
+    {
+      "id": "foreign_join",
+      "true_primary_delta": 0.0,
+      "truth_class": "NULL_WITH_FOREIGN_JOIN"
+    },
+    {
+      "id": "export_drift",
+      "true_primary_delta": 0.0,
+      "truth_class": "NULL_WITH_ENDPOINT_EXPORT_DRIFT"
+    },
+    {
+      "id": "real_collateral",
+      "true_primary_delta": 0.5,
+      "truth_class": "TRUE_PRIMARY_BENEFIT_WITH_REAL_COLLATERAL"
+    }
+  ],
+  "mutation_controls": {
+    "changed_assignment_seal_rejected": true,
+    "omitted_control_row_rejected": true
+  },
+  "status": "PASS_METHOD_SCOPED"
+}

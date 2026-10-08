@@ -1,0 +1,42 @@
+{
+  "issue": 5715,
+  "parent_issue": 5707,
+  "predecessor_issue": 5709,
+  "allocation": "boundary-margin-5707-policy-pair-20261001-01",
+  "disposition": "PASS_METHOD_SCOPED",
+  "publication_base": "dc53e1ac7def5b150809dbfe3d4c910d66a85fa0",
+  "branch": "research/5707-policy-pair-t0-20261001",
+  "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "network": "none",
+  "source_git_blob": {
+    "runner.py": "dfa9112cf19c289b0b1b0b0b55c8409f6741011f",
+    "audit.py": "747ba61697981f155bcdb031e15d7b1f53bc4986",
+    "test_audit.py": "ce8d7e566926c8a0e15fd54ac4cffd28c623fe8d"
+  },
+  "source_sha256": {
+    "runner.py": "28b264c265755522410114fcffd2770be108b95af2a76be5962b9574ec00054c",
+    "audit.py": "b7984f7180f48842f63ccacbabd4a3c1e19377838c7913dc3f5504b144866efb",
+    "test_audit.py": "15efa6182d3484799f967500da204fa018d35e744c4ed3c40ff497741c81cdf2"
+  },
+  "checks": {
+    "preflight_command": "docker run --rm --name ai-5715-preflight-20261001 --network none --read-only --tmpfs /tmp -v $PWD:/src:ro -w /src/research/analysis/boundary_margin_5707_policy_pair_v1 python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B -m unittest -v test_audit.py",
+    "formal_command": "docker run --rm --name ai-5715-policy-pair-formal-20261001 --network none --read-only --tmpfs /tmp -v $PWD:/src:ro -v $PWD/out:/out:rw python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/research/analysis/boundary_margin_5707_policy_pair_v1/runner.py /out/raw.jsonl",
+    "audit_command": "docker run --rm --name ai-5715-policy-pair-audit-20261001 --network none --read-only --tmpfs /tmp -v $PWD:/src:ro -v $PWD/out:/out:ro -w /src/research/analysis/boundary_margin_5707_policy_pair_v1 python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B audit.py /out/raw.jsonl",
+    "preflight_tests_passed": 6,
+    "formal_runner_invocations": 1,
+    "formal_runner_exit": 0,
+    "raw_audit": "PASS_METHOD_SCOPED",
+    "audited_rows": 6,
+    "audit_errors": [],
+    "early_min_margin_ms": 60,
+    "late_min_margin_ms": 10,
+    "forbidden_effects_early": 0,
+    "forbidden_effects_late": 0
+  },
+  "artifacts": {
+    "out/raw.jsonl": "bdb2edc6e9653dafb17898d5569e3dc3afe71927ec25c00b4b060528fd639e88"
+  },
+  "retries": 0,
+  "formal_reruns": 0,
+  "utc": "2026-10-01T02:50:38Z"
+}

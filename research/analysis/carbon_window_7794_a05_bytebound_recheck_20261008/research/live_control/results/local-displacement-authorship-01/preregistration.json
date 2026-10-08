@@ -1,0 +1,45 @@
+{
+  "status": "preregistered_before_model_execution",
+  "question": "can the model author a strict target patch from one presented source frame whose condition accepts retained exact 24px samples and rejects retained exact 20px samples",
+  "order": [
+    "luna-1",
+    "astra-1",
+    "astra-2",
+    "luna-2"
+  ],
+  "routes": {
+    "luna": {
+      "model": "gpt-5.6-luna",
+      "effort": "low"
+    },
+    "astra": {
+      "model": "gpt-6-astra",
+      "effort": "medium"
+    }
+  },
+  "image": "C:\\Users\\junny\\Documents\\New project\\agent-interface\\research\\live_control\\results\\local-displacement-x11-02\\target\\001.png",
+  "image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+  "prompt_sha256": "9cb286ca213c99c598b695a8b9becd22f8c101efd53de0e50feff571a5598768",
+  "source_sequence": 1,
+  "retained_evaluation": {
+    "target": "local-displacement-x11-02/target observations 7 and 8; independently reconstructed delta [24,0]",
+    "partial": "local-displacement-x11-02/partial observations 8 and 9; independently reconstructed delta [20,0]"
+  },
+  "primary_endpoint": "strict parse and local evaluator: target met, partial not met",
+  "secondary_endpoints": [
+    "box",
+    "target overlap",
+    "reported input/cached/output tokens",
+    "runner wall time"
+  ],
+  "decision_rule": "advance a route only if both first outputs parse strictly and each authored condition returns met on both target samples and non-met on both partial samples; otherwise hold that route; no retries or replacement",
+  "interpretation": "fixed-context model authorship feasibility over retained frames; no live model-controlled input, speed, population, generalization or promotion claim",
+  "sources": {
+    "preregister_local_displacement_authorship_v1.py": "8276006e396a40fe9a3b3f6fbebebf271b5005e995a449460c18f83ea43d21ef",
+    "run_local_displacement_authorship_v1.py": "5dfa7e1f102f2afe9ad033240ba1c327323d3d3a56ecbdad0894e9c096903f7d",
+    "parse_local_displacement_author_v1.py": "97234d076b9a5f5a841a34a471dac1f0294a4becb613b060be696ce65786a6ba",
+    "local_displacement_postcondition_v1.py": "03ceb1dda1c64de76a8968c825e3731eea038158e84cfe8f541cfc12dc45566d",
+    "visual_anchor.py": "98275ec4781976ee566872915b3e5403f9c548fac5b37f091b9a66f2329ada7b",
+    "model_pair_runner_v2.py": "31c59f88eeac7eebe8470d875934db87a6bb8395f444a812ccb6fb9444191f77"
+  }
+}

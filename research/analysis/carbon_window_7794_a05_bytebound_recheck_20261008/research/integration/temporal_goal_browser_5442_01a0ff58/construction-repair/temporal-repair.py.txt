@@ -1,0 +1,46 @@
+import hashlib
+import json
+import shutil
+from datetime import datetime, timezone
+from pathlib import Path
+
+old=Path(__file__).parent/'temporal-goal'; new=Path(__file__).parent/'temporal-goal-C02'
+new.mkdir(exist_ok=False)
+freeze=json.loads((old/'FREEZE.json').read_bytes())
+for pin in freeze['sources']:
+    path=old/pin['path']; assert hashlib.sha256(path.read_bytes()).hexdigest()==pin['sha256']
+    shutil.copy2(path,new/path.name)
+# Publicly render invented binding metadata. Do not try another hidden-value read API.
+path=new/'app.py'; text=path.read_text(encoding='utf-8')
+text=text.replace("'<input type=\"hidden\" name=\"'+key+'\" value=\"'+html.escape(value,quote=True)+'\">'",
+    "'<label>Binding '+html.escape(key)+' <input type=\"text\" readonly name=\"'+key+'\" value=\"'+html.escape(value,quote=True)+'\"></label>'")
+if text==path.read_text(encoding='utf-8'): raise ValueError('expected exact repair site absent')
+path.write_text(text,encoding='utf-8',newline='\n')
+for name in ['cases.json','prepare_cases.py','launch.py','freeze.py','fixture.py','construction.py','PLAN.md']:
+    path=new/name; text=path.read_text(encoding='utf-8').replace('C01','C02')
+    path.write_text(text,encoding='utf-8',newline='\n')
+path=new/'actor.js'; path.write_text(path.read_text(encoding='utf-8').replace('makeTemporalActor(','makeTemporalActor2(',1),encoding='utf-8',newline='\n')
+with (new/'REVISION.md').open('x',encoding='utf-8') as h:
+    h.write('''# C02 prospective construction repair after C01 pre-action HOLD
+
+C01 immutable source freeze f829503042d6e558060f978e7e2a58d1583ae4016fc2711ee41e2934c9ec874b.
+Its first form was read, but documented CUA returned all hidden input values as <redacted>.
+Identity validation stopped before fill/click/send: zero task/disturbance events. The actual UI trace,
+first error, original empty bytes, stop snapshot, server graceful exit0 and closed-tab receipt are retained.
+No alternative hidden-input retrieval route was attempted; C01 remains HOLD, not a successful ten-case result.
+
+C02 is an ordinary authorized construction repair with a new instance/source/namespace/output, not an unchanged
+allocation rerun. App now shows its invented operation binding fields as public readonly text inputs; actor still
+checks the same exact identity/version/goal fields through the same documented DOM API. No predicate, budget,
+case history or threshold is relaxed. This explicitly needs authored-app public binding support and makes no
+arbitrary-app claim. A disposable read-only preflight on a separate instance verifies public binding visibility
+before C02 source freeze. Preflight sends no task edit. Then only one C02 primary instance; no further source edits,
+primary restart or submission retry. C01 is retained separately and never combined as 20 successful cases.
+''')
+# Source base is retained. Current main is a separate publication dependency check, not a hidden source upgrade.
+path=new/'freeze.py'; text=path.read_text(encoding='utf-8').replace("'PLAN.md','VARIABLES.md']","'PLAN.md','VARIABLES.md','REVISION.md']")
+text=text.replace("checks=15,exitcode=0,","checks=15,exitcode=0,")
+path.write_text(text,encoding='utf-8',newline='\n')
+preflight=new/'construction-preflight'; preflight.mkdir(exist_ok=False)
+print(json.dumps(dict(utc=datetime.now(timezone.utc).isoformat(),old_pins_verified=len(freeze['sources']),
+    new_root=str(new),repair='public readonly invented bindings; no hidden-value bypass')))

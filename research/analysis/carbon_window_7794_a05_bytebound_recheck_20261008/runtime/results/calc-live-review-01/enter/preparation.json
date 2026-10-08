@@ -1,0 +1,49 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "calc-enter-991073",
+    "expected_sequence": 1,
+    "valid_until_ns": 76917542249,
+    "decision_evidence": {
+      "delivery_id": "delivery:2",
+      "observation_sequence": 1,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "text",
+        "text": "772"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "text",
+        "text": "709"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      }
+    ]
+  },
+  "image": {
+    "status": "image",
+    "sequence": 1,
+    "capture_ns": 31267844962,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-calc-991073/001.png",
+    "relative_path": "001.png",
+    "sha256": "96fedae81d3b200b2d6d899e0030e07e560c05cc4380f32d8ed1eeeaa2e35a0c",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 71917542249,
+  "lease_ms": 5000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

@@ -1,0 +1,347 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "input.text",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 3031978097424,
+      "ended_ns": 3032268962584,
+      "emissions": 20,
+      "program_emissions": 20,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 3032268958724
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 3,
+          "requested_ms": 20,
+          "started_ns": 3031981777629,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 3032001973013
+        },
+        {
+          "operation_index": 5,
+          "requested_ms": 20,
+          "started_ns": 3032002678238,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 3032022879593
+        },
+        {
+          "operation_index": 8,
+          "requested_ms": 100,
+          "started_ns": 3032023954372,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 3032124234148
+        },
+        {
+          "operation_index": 10,
+          "requested_ms": 20,
+          "started_ns": 3032125196219,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 3032145406911
+        },
+        {
+          "operation_index": 12,
+          "requested_ms": 20,
+          "started_ns": 3032146110680,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 3032166364832
+        },
+        {
+          "operation_index": 15,
+          "requested_ms": 100,
+          "started_ns": 3032168140175,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 3032268309509
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ]
+    },
+    "recovery_required": false
+  },
+  "compilation": {
+    "kind": "bounded_text_gap",
+    "source_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "compact-enter-1002088",
+      "source": {
+        "observation_seq": 1,
+        "binding_revision": 1
+      },
+      "authority": {
+        "lease_id": "compact-primary-enter",
+        "expires_at_ns": 3033946689470
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "app"
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "Home"
+          ]
+        },
+        {
+          "op": "text",
+          "text": "317",
+          "gap_ms": 20
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "ENTER"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "text",
+          "text": "529",
+          "gap_ms": 20
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "ENTER"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "operation_sources": [
+      {
+        "source_operation_index": 0,
+        "expanded_occurrence": 1
+      },
+      {
+        "source_operation_index": 1,
+        "expanded_occurrence": 1
+      },
+      {
+        "source_operation_index": 2,
+        "character_index": 0,
+        "phase": "text"
+      },
+      {
+        "source_operation_index": 2,
+        "character_index": 1,
+        "phase": "gap_before_character"
+      },
+      {
+        "source_operation_index": 2,
+        "character_index": 1,
+        "phase": "text"
+      },
+      {
+        "source_operation_index": 2,
+        "character_index": 2,
+        "phase": "gap_before_character"
+      },
+      {
+        "source_operation_index": 2,
+        "character_index": 2,
+        "phase": "text"
+      },
+      {
+        "source_operation_index": 3,
+        "expanded_occurrence": 1
+      },
+      {
+        "source_operation_index": 4,
+        "expanded_occurrence": 1
+      },
+      {
+        "source_operation_index": 5,
+        "character_index": 0,
+        "phase": "text"
+      },
+      {
+        "source_operation_index": 5,
+        "character_index": 1,
+        "phase": "gap_before_character"
+      },
+      {
+        "source_operation_index": 5,
+        "character_index": 1,
+        "phase": "text"
+      },
+      {
+        "source_operation_index": 5,
+        "character_index": 2,
+        "phase": "gap_before_character"
+      },
+      {
+        "source_operation_index": 5,
+        "character_index": 2,
+        "phase": "text"
+      },
+      {
+        "source_operation_index": 6,
+        "expanded_occurrence": 1
+      },
+      {
+        "source_operation_index": 7,
+        "expanded_occurrence": 1
+      },
+      {
+        "source_operation_index": 8,
+        "expanded_occurrence": 1
+      }
+    ]
+  },
+  "post_dispatch_inspection": {
+    "review_id": "eed8ddef3bad4c7e98f643ad959e44fc",
+    "target": "app",
+    "binding_revision": 1,
+    "evidence": {
+      "window_id": 8389124,
+      "focus_path": [
+        8389124
+      ],
+      "transient_chain": [
+        8389124
+      ],
+      "family_root": 8389124,
+      "title": "sheet-1002088.xlsx \u2014 LibreOffice Calc",
+      "wm_class": [
+        "libreoffice",
+        "libreoffice-calc"
+      ],
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "expires_at_ns": 3062412344666,
+    "status": "needs_review",
+    "input_dispatched": false,
+    "authority_granted": false,
+    "review_request": {
+      "tool": "interface_review_target",
+      "arguments": {
+        "target": "app",
+        "window_id": 8389124,
+        "review_id": "eed8ddef3bad4c7e98f643ad959e44fc",
+        "screen_region": [
+          0,
+          0,
+          1280,
+          800
+        ]
+      }
+    },
+    "review_request_scope": "Candidate call after your explicit review of this evidence; not executed. The one-use ID expires at expires_at_ns and target evidence is rechecked. Retained results do not renew it. No input authority or replay permission.",
+    "observation_report": {
+      "schema": "agent-interface/runtime-observation-v1",
+      "observation_id": "e64250789bee41058a63a2c2f42f87f6",
+      "side_effect_authority": false,
+      "input_dispatched": false,
+      "status": "returned",
+      "observation": {
+        "bytes": 4096000,
+        "sha256": "eb6ac892e26942e47edc8265c6620313a557dff7c5254f4e66ca181555d14add",
+        "width": 1280,
+        "height": 800,
+        "target": "app",
+        "native_window_id": 8389124,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "capture_started_ns": 3032370387422,
+        "capture_ended_ns": 3032377250758,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/common-public-pixel-admission-01/compact/public/images/36983a722b9342eb9685661d742b7812.png",
+          "sha256": "cd3c9abcddcaa533276429823780aaba19c3288d0fcfb074c1e2169dd3d64235",
+          "bytes": 59672,
+          "width": 1280,
+          "height": 800,
+          "source_raw_sha256": "eb6ac892e26942e47edc8265c6620313a557dff7c5254f4e66ca181555d14add",
+          "timing_ns": {
+            "started": 3032379493692,
+            "converted": 3032381694983,
+            "encoded": 3032407939162,
+            "written": 3032408276676,
+            "hashed": 3032410646001
+          }
+        }
+      }
+    },
+    "capture_wait": {
+      "requested_ms": 100,
+      "started_ns": 3032269066421,
+      "completed": true,
+      "update_observed": null,
+      "ended_ns": 3032369228579
+    },
+    "started_ns": 3032269061467,
+    "ended_ns": 3032412376200,
+    "scope": "Metadata sampled after dispatch. Not atomically bound to its image; no redraw or task completion acknowledgement. Review explicitly; retained lookup does not renew the review ID."
+  }
+}

@@ -1,0 +1,791 @@
+{
+  "green": {
+    "classification": "ordinary actual-owner/fixture-relay regression construction; not old comparison/auditor allocation",
+    "rows": [
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/lifecycle_probe.mjs",
+          "ready_input",
+          "work/primary-stream-lifecycle-v2/candidate",
+          "<owner-work>/green/ready_input"
+        ],
+        "ended_utc": "2026-10-03T04:35:27.697605+00:00",
+        "exit_code": 0,
+        "fixture.exit.json": {
+          "bytes": 0,
+          "code": 0,
+          "pid": 61715
+        },
+        "fixture.started.json": {
+          "pid": 61715,
+          "ppid": 61714
+        },
+        "fixture_pid_absent": true,
+        "host/exit.json": {
+          "code": 0.0,
+          "signal": null
+        },
+        "owner.summary.json": {
+          "events": [
+            {
+              "kind": "write_enter",
+              "status": "ready"
+            },
+            {
+              "kind": "input_destroy",
+              "ready_write_unacknowledged": true
+            },
+            {
+              "kind": "after_input_turn",
+              "settled": false
+            },
+            {
+              "kind": "write_ack",
+              "status": "ready"
+            },
+            {
+              "kind": "owner_rejected",
+              "message": "injected ready_input channel failure",
+              "original_identity": true
+            }
+          ],
+          "exit": {
+            "code": 0,
+            "signal": null
+          },
+          "initialListeners": {
+            "input": 0,
+            "output": 0
+          },
+          "listeners": {
+            "input": 0,
+            "output": 0
+          },
+          "outcome": {
+            "kind": "rejected",
+            "message": "injected ready_input channel failure",
+            "original_identity": true
+          },
+          "scenario": "ready_input",
+          "writeIntents": [
+            {
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "ready"
+            }
+          ]
+        },
+        "scenario": "ready_input",
+        "started_utc": "2026-10-03T04:35:27.596064+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "a345ff2f37e239fe59c2e918e0cce355b12c6bf2a6ef01aa3e5c0b155b9fec1f",
+        "timed_out": false
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/lifecycle_probe.mjs",
+          "ready_output",
+          "work/primary-stream-lifecycle-v2/candidate",
+          "<owner-work>/green/ready_output"
+        ],
+        "ended_utc": "2026-10-03T04:35:27.803699+00:00",
+        "exit_code": 0,
+        "fixture.exit.json": {
+          "bytes": 0,
+          "code": 0,
+          "pid": 61721
+        },
+        "fixture.started.json": {
+          "pid": 61721,
+          "ppid": 61716
+        },
+        "fixture_pid_absent": true,
+        "host/exit.json": {
+          "code": 0,
+          "signal": null
+        },
+        "owner.summary.json": {
+          "events": [
+            {
+              "kind": "write_enter",
+              "status": "ready"
+            },
+            {
+              "kind": "write_error_callback",
+              "status": "ready"
+            },
+            {
+              "kind": "owner_rejected",
+              "message": "injected ready_output channel failure",
+              "original_identity": true
+            }
+          ],
+          "exit": {
+            "code": 0,
+            "signal": null
+          },
+          "initialListeners": {
+            "input": 0,
+            "output": 0
+          },
+          "listeners": {
+            "input": 0,
+            "output": 0
+          },
+          "outcome": {
+            "kind": "rejected",
+            "message": "injected ready_output channel failure",
+            "original_identity": true
+          },
+          "scenario": "ready_output",
+          "writeIntents": [
+            {
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "ready"
+            }
+          ]
+        },
+        "scenario": "ready_output",
+        "started_utc": "2026-10-03T04:35:27.698421+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "8331666aee4681a42e266e59c6181a95f604f41b76c61e318324d71f7ef8057a",
+        "timed_out": false
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/lifecycle_probe.mjs",
+          "terminal_output",
+          "work/primary-stream-lifecycle-v2/candidate",
+          "<owner-work>/green/terminal_output"
+        ],
+        "ended_utc": "2026-10-03T04:35:27.908332+00:00",
+        "exit_code": 0,
+        "fixture.exit.json": {
+          "bytes": 0,
+          "code": 0,
+          "pid": 61726
+        },
+        "fixture.started.json": {
+          "pid": 61726,
+          "ppid": 61722
+        },
+        "fixture_pid_absent": true,
+        "host/exit.json": {
+          "code": 0,
+          "signal": null
+        },
+        "owner.summary.json": {
+          "events": [
+            {
+              "kind": "write_enter",
+              "status": "ready"
+            },
+            {
+              "kind": "write_ack",
+              "status": "ready"
+            },
+            {
+              "kind": "input_eof"
+            },
+            {
+              "kind": "write_enter",
+              "status": "terminal"
+            },
+            {
+              "kind": "write_error_callback",
+              "status": "terminal"
+            },
+            {
+              "kind": "owner_rejected",
+              "message": "injected terminal_output channel failure",
+              "original_identity": true
+            }
+          ],
+          "exit": {
+            "code": 0,
+            "signal": null
+          },
+          "initialListeners": {
+            "input": 0,
+            "output": 0
+          },
+          "listeners": {
+            "input": 0,
+            "output": 0
+          },
+          "outcome": {
+            "kind": "rejected",
+            "message": "injected terminal_output channel failure",
+            "original_identity": true
+          },
+          "scenario": "terminal_output",
+          "writeIntents": [
+            {
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "ready"
+            },
+            {
+              "exit": {
+                "code": 0,
+                "signal": null
+              },
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "terminal"
+            }
+          ]
+        },
+        "scenario": "terminal_output",
+        "started_utc": "2026-10-03T04:35:27.804527+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "1f14503a58fe4a6826387f4d829e13c507377f883b7c95ba1bd14f0390e11679",
+        "timed_out": false
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/lifecycle_probe.mjs",
+          "normal_eof",
+          "work/primary-stream-lifecycle-v2/candidate",
+          "<owner-work>/green/normal_eof"
+        ],
+        "ended_utc": "2026-10-03T04:35:28.010458+00:00",
+        "exit_code": 0,
+        "fixture.exit.json": {
+          "bytes": 0,
+          "code": 0,
+          "pid": 61732
+        },
+        "fixture.started.json": {
+          "pid": 61732,
+          "ppid": 61730
+        },
+        "fixture_pid_absent": true,
+        "host/exit.json": {
+          "code": 0,
+          "signal": null
+        },
+        "owner.summary.json": {
+          "events": [
+            {
+              "kind": "write_enter",
+              "status": "ready"
+            },
+            {
+              "kind": "write_ack",
+              "status": "ready"
+            },
+            {
+              "kind": "input_eof"
+            },
+            {
+              "kind": "write_enter",
+              "status": "terminal"
+            },
+            {
+              "kind": "write_ack",
+              "status": "terminal"
+            },
+            {
+              "kind": "owner_resolved"
+            }
+          ],
+          "exit": {
+            "code": 0,
+            "signal": null
+          },
+          "initialListeners": {
+            "input": 0,
+            "output": 0
+          },
+          "listeners": {
+            "input": 0,
+            "output": 0
+          },
+          "outcome": {
+            "kind": "resolved"
+          },
+          "scenario": "normal_eof",
+          "writeIntents": [
+            {
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "ready"
+            },
+            {
+              "exit": {
+                "code": 0,
+                "signal": null
+              },
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "terminal"
+            }
+          ]
+        },
+        "scenario": "normal_eof",
+        "started_utc": "2026-10-03T04:35:27.909353+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e76e6e52e1f1348c6981c486f05af65f588dc4c5ecf0a6545057041803260938",
+        "timed_out": false
+      }
+    ]
+  },
+  "pending-green": {
+    "classification": "two additional ordinary actual-owner pending-reply checks, not old consumed allocation",
+    "rows": [
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/pending_probe.mjs",
+          "pending_success",
+          "<owner-work>/candidate",
+          "<owner-work>/pending-green/pending_success"
+        ],
+        "ended_utc": "2026-10-03T04:38:22.620279+00:00",
+        "exit_code": 0,
+        "fixture.exit.json": {
+          "code": 0,
+          "pending": false,
+          "pid": 62727,
+          "requests": 1
+        },
+        "fixture.started.json": {
+          "pid": 62727,
+          "ppid": 62726
+        },
+        "fixture_pid_absent": true,
+        "host/exit.json": {
+          "code": 0,
+          "signal": null
+        },
+        "owner.summary.json": {
+          "events": [
+            {
+              "kind": "output",
+              "status": "ready"
+            },
+            {
+              "kind": "actual_request_accepted",
+              "request": {
+                "arguments": {},
+                "id": 1,
+                "tool": "interface_clock"
+              }
+            },
+            {
+              "kind": "input_failure"
+            },
+            {
+              "kind": "pending_observed_before_release",
+              "settled": false
+            },
+            {
+              "kind": "reply_released"
+            },
+            {
+              "kind": "output",
+              "status": "returned"
+            },
+            {
+              "kind": "owner_rejected",
+              "message": "original pending input failure",
+              "original_identity": true
+            }
+          ],
+          "exit": {
+            "code": 0,
+            "signal": null
+          },
+          "listeners": {
+            "input": 0,
+            "output": 0
+          },
+          "rows": [
+            {
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "ready"
+            },
+            {
+              "result": {
+                "attempt": 1,
+                "caller_state": {
+                  "stopped": null
+                },
+                "id": 1,
+                "images": [],
+                "method": "call",
+                "next_id": 2,
+                "original_reply_path": "<owner-work>/pending-green/pending_success/exchange/original-reply-1.json",
+                "presented_text": [
+                  {
+                    "isError": false,
+                    "schema": "agent-interface/mcp-result-status-v1"
+                  },
+                  "{\"status\":\"clock\",\"fixture\":\"original once\"}"
+                ]
+              },
+              "schema": "agent-interface/primary-stdio-v1",
+              "status": "returned"
+            }
+          ],
+          "scenario": "pending_success"
+        },
+        "scenario": "pending_success",
+        "started_utc": "2026-10-03T04:38:22.507651+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "dff67ca8a550c040ec2221a6d9810601d00838bc0e863bc80287cdd087992390",
+        "timed_out": false
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/pending_probe.mjs",
+          "pending_persistence_failure",
+          "<owner-work>/candidate",
+          "<owner-work>/pending-green/pending_persistence_failure"
+        ],
+        "ended_utc": "2026-10-03T04:38:22.733456+00:00",
+        "exit_code": 0,
+        "fixture.exit.json": {
+          "code": 0,
+          "pending": false,
+          "pid": 62734,
+          "requests": 1
+        },
+        "fixture.started.json": {
+          "pid": 62734,
+          "ppid": 62729
+        },
+        "fixture_pid_absent": true,
+        "host/exit.json": {
+          "code": 0,
+          "signal": null
+        },
+        "owner.summary.json": {
+          "events": [
+            {
+              "kind": "output",
+              "status": "ready"
+            },
+            {
+              "kind": "actual_request_accepted",
+              "request": {
+                "arguments": {},
+                "id": 1,
+                "tool": "interface_clock"
+              }
+            },
+            {
+              "kind": "input_failure"
+            },
+            {
+              "kind": "pending_observed_before_release",
+              "settled": false
+            },
+            {
+              "kind": "reply_released"
+            },
+            {
+              "kind": "output",
+              "status": "command_error"
+            },
+            {
+              "kind": "owner_rejected",
+              "message": "original pending input failure",
+              "original_identity": true
+            }
+          ],
+          "exit": {
+            "code": 0,
+            "signal": null
+          },
+          "listeners": {
+            "input": 0,
+            "output": 0
+          },
+          "rows": [
+            {
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "ready"
+            },
+            {
+              "command_id": 1,
+              "command_method": "call",
+              "error": "Error: EEXIST: file already exists, open '<owner-work>/pending-green/pending_persistence_failure/exchange/original-reply-1.json'",
+              "replay_allowed": false,
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 2,
+                "stopped": "Error: EEXIST: file already exists, open '<owner-work>/pending-green/pending_persistence_failure/exchange/original-reply-1.json'; inspect retained original files; never replay input"
+              },
+              "status": "command_error"
+            }
+          ],
+          "scenario": "pending_persistence_failure"
+        },
+        "scenario": "pending_persistence_failure",
+        "started_utc": "2026-10-03T04:38:22.621263+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "3461e685d15068e5271665aec60b99107b306d153251f096b05b013febc526f1",
+        "timed_out": false
+      }
+    ]
+  },
+  "red": {
+    "classification": "ordinary actual-owner/fixture-relay regression construction; not old comparison/auditor allocation",
+    "rows": [
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/lifecycle_probe.mjs",
+          "ready_input",
+          "work/primary-stream-lifecycle-v2/baseline",
+          "<owner-work>/red/ready_input"
+        ],
+        "ended_utc": "2026-10-03T04:29:01.711583+00:00",
+        "exit_code": 1,
+        "fixture.exit.json": {
+          "bytes": 0,
+          "code": 0,
+          "pid": 60287
+        },
+        "fixture.started.json": {
+          "pid": 60287,
+          "ppid": 1
+        },
+        "fixture_pid_absent": true,
+        "scenario": "ready_input",
+        "started_utc": "2026-10-03T04:29:01.654694+00:00",
+        "stderr_sha256": "adbb5043a99a7c0379a159ad9b5782c0649a5029abc22c3755ae2cef7cb93062",
+        "stdout_sha256": "a90998de7039b0bbd3bee797a68e0f0b1062a11db52453dbe0ef3c165c4b80ba",
+        "timed_out": false
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/lifecycle_probe.mjs",
+          "ready_output",
+          "work/primary-stream-lifecycle-v2/baseline",
+          "<owner-work>/red/ready_output"
+        ],
+        "ended_utc": "2026-10-03T04:29:01.824415+00:00",
+        "exit_code": 1,
+        "fixture.exit.json": {
+          "bytes": 0,
+          "code": 0,
+          "pid": 60294
+        },
+        "fixture.started.json": {
+          "pid": 60294,
+          "ppid": 1
+        },
+        "fixture_pid_absent": true,
+        "scenario": "ready_output",
+        "started_utc": "2026-10-03T04:29:01.765933+00:00",
+        "stderr_sha256": "cc869a25c0343b1604b9dc6af03502b90423ad8140699216479742621bf2ead2",
+        "stdout_sha256": "5f7cec714bd0ee32c4888857278dcea4068921443e57971502dddab811133e92",
+        "timed_out": false
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/lifecycle_probe.mjs",
+          "terminal_output",
+          "work/primary-stream-lifecycle-v2/baseline",
+          "<owner-work>/red/terminal_output"
+        ],
+        "ended_utc": "2026-10-03T04:29:01.980250+00:00",
+        "exit_code": 1,
+        "fixture.exit.json": {
+          "bytes": 0,
+          "code": 0,
+          "pid": 60302
+        },
+        "fixture.started.json": {
+          "pid": 60302,
+          "ppid": 60298
+        },
+        "fixture_pid_absent": true,
+        "host/exit.json": {
+          "code": 0,
+          "signal": null
+        },
+        "scenario": "terminal_output",
+        "started_utc": "2026-10-03T04:29:01.875367+00:00",
+        "stderr_sha256": "e7836f1d85b59d152b3c891a8e2d715e5eeab5a6a67980b422b814ec9a8a1368",
+        "stdout_sha256": "af0a6347b27c11c447a893592a760ccce79cfbdcbf4640c41620e0dd2637fb52",
+        "timed_out": false
+      },
+      {
+        "argv": [
+          "/opt/homebrew/bin/node",
+          "<owner-work>/lifecycle_probe.mjs",
+          "normal_eof",
+          "work/primary-stream-lifecycle-v2/baseline",
+          "<owner-work>/red/normal_eof"
+        ],
+        "ended_utc": "2026-10-03T04:29:02.084263+00:00",
+        "exit_code": 0,
+        "fixture.exit.json": {
+          "bytes": 0,
+          "code": 0,
+          "pid": 60308
+        },
+        "fixture.started.json": {
+          "pid": 60308,
+          "ppid": 60305
+        },
+        "fixture_pid_absent": true,
+        "host/exit.json": {
+          "code": 0,
+          "signal": null
+        },
+        "owner.summary.json": {
+          "events": [
+            {
+              "kind": "write_enter",
+              "status": "ready"
+            },
+            {
+              "kind": "write_ack",
+              "status": "ready"
+            },
+            {
+              "kind": "input_eof"
+            },
+            {
+              "kind": "write_enter",
+              "status": "terminal"
+            },
+            {
+              "kind": "write_ack",
+              "status": "terminal"
+            },
+            {
+              "kind": "owner_resolved"
+            }
+          ],
+          "exit": {
+            "code": 0,
+            "signal": null
+          },
+          "initialListeners": {
+            "input": 0,
+            "output": 0
+          },
+          "listeners": {
+            "input": 0,
+            "output": 0
+          },
+          "outcome": {
+            "kind": "resolved"
+          },
+          "scenario": "normal_eof",
+          "writeIntents": [
+            {
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "ready"
+            },
+            {
+              "exit": {
+                "code": 0,
+                "signal": null
+              },
+              "schema": "agent-interface/primary-stdio-v1",
+              "state": {
+                "busy": false,
+                "caller_state": {
+                  "stopped": null
+                },
+                "next_id": 1,
+                "stopped": null
+              },
+              "status": "terminal"
+            }
+          ]
+        },
+        "scenario": "normal_eof",
+        "started_utc": "2026-10-03T04:29:01.981223+00:00",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "e76e6e52e1f1348c6981c486f05af65f588dc4c5ecf0a6545057041803260938",
+        "timed_out": false
+      }
+    ]
+  }
+}

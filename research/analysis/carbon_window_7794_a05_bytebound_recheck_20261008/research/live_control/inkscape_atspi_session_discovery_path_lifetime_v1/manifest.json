@@ -1,0 +1,21 @@
+{
+  "archive": {
+    "bytes": 23626,
+    "path": "evidence.tar.gz",
+    "sha256": "bf7b2a6eadf68b0f06ceb8de8e591dff8871a0a2777270371993300c19edc717"
+  },
+  "audit_correction": "audit.py is frozen original; audit_v2.py adds only exact GetAddress equality gate discovered post-formal; raw measurement unchanged",
+  "decision": "REJECT_SESSION_DISCOVERY_ALONE_AS_DEFUNCT_CAUSE_SCOPED",
+  "issue": 505,
+  "measured_cases": 6,
+  "publication_base": "8f08418c71a0a8919dd70b0b762cbae99a239bed",
+  "schema": "inkscape-atspi-session-discovery-path-lifetime-retention-v1",
+  "task": "INKSCAPE-ATSPI-SESSION-DISCOVERY-PATH-LIFETIME-20260916-028",
+  "frozen_source_sha256": {
+    "run_case.py": "308e48c0ae7e628e8470ff2edd31be050a840882f2a3a05f3a1804cde5ee502d",
+    "native_dbus.py": "3a6044c2f88d0828f50b5234f61390df46ee5876c1f2046fa802c481b6d3ea1e",
+    "audit.py": "9e993da0e1bd174a6874fcd782b56841e1de3d21aa672314a7d643f618cad9b2",
+    "prereg.json": "4daeb16832a4a7245a3bf80b471eed12cb07d304b0b4284674df083e923a5e74"
+  },
+  "archive_contents": "exact frozen source/prereg/audits, six measured result.json files and case logs, corruption controls, environment, construction summary and chroot-template manifest"
+}

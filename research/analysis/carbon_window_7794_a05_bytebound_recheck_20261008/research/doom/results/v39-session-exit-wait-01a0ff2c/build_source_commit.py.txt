@@ -1,0 +1,85 @@
+from pathlib import Path
+import base64,datetime,hashlib,json,os,shutil,subprocess
+code=Path(__file__).parent;root=code.parents[1];out=root/'outputs/v39-wait-repair-01a0ff2c';repo=root/'work/agent-interface'
+base='7c40e6023ac7e89d3cc0f1d4c222a331102b60eb';branch='fix/v39-session-exit-wait-01a0ff2c';prefix='research/doom/results/v39-session-exit-wait-01a0ff2c'
+def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def oid(b):return hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+def git(*args,input=None,env=None):
+    e=dict(os.environ,GIT_NO_LAZY_FETCH='1');e.update(env or {})
+    p=subprocess.run(['git','-C',str(repo),*args],input=input,capture_output=True,env=e)
+    if p.returncode:raise ValueError('git '+repr(args)+': '+p.stderr.decode(errors='replace'))
+    return p.stdout
+if git('status','--porcelain').strip():raise ValueError('own clone unexpectedly dirty')
+workflow=json.loads((out/'WORKFLOW_INSPECTION.json').read_bytes())
+if workflow['missing'] or len(workflow['inventory'])!=229:raise ValueError('workflow unknown')
+for match in workflow['matching_events']:
+    if match['event']=='create' and match['jobs'][0]['if']!="github.event.ref_type == 'branch' && github.event.ref == 'research/5716-identifiability-docker-construction-20261001-01'":raise ValueError('create guard drift')
+    if 'issue4242' in match['path'] and match['jobs'][0]['if']!="github.event.pull_request.head.ref == 'research/native-handle-destroy-generation-a2-20260923'":raise ValueError('formal guard drift')
+stage=out/'publication';stage.mkdir(exist_ok=False);package=stage/prefix;package.mkdir(parents=True)
+home=str(Path.home());workspace=str(root)
+def project(v):
+    if isinstance(v,str):
+        for a,b in [(workspace,'<WORKSPACE>'),(workspace.replace('\\','/'),'<WORKSPACE>'),(home,'<USER_HOME>'),(home.replace('\\','/'),'<USER_HOME>')]:v=v.replace(a,b)
+        return v
+    if isinstance(v,list):return [project(x) for x in v]
+    if isinstance(v,dict):return {project(k):project(x) for k,x in v.items()}
+    return v
+records=[]
+skip={'baseline.py.txt','candidate.py.txt','combined-startup.py.txt','claim-response.stdout.json'}
+for p in sorted(out.iterdir()):
+    if not p.is_file() or p.name in skip:continue
+    b=p.read_bytes()
+    if p.suffix=='.json' and b.strip():pb=(json.dumps(project(json.loads(b)),indent=2,ensure_ascii=False)+'\n').encode()
+    else:pb=project(b.decode('utf-8')).encode()
+    (package/p.name).write_bytes(pb);records.append({'file':p.name,'original_sha256':sha(b),'public_sha256':sha(pb),'original_bytes':len(b),'public_bytes':len(pb),'projection':b!=pb})
+for p in code.glob('*.py'):(package/(p.name+'.txt')).write_bytes(p.read_bytes())
+prior=root/'outputs/v39-session-stderr-01a0ff2c';capsule=(prior/'public-capsule.json.gz').read_bytes()
+if sha(capsule)!='7e3cacf7ce2e39762942bb43696d3bedda86ddb8a84b2cc88167f5ccb9555890':raise ValueError('native witness capsule drift')
+(package/'native-witness.json.gz').write_bytes(capsule)
+(package/'PUBLIC_PROJECTIONS.json').write_text(json.dumps({'policy':'Workspace/user-home strings and JSON layout are explicit derivatives. Original source/controller bytes live at pinned Git refs, originals/first receipts remain private. Code/test semantics and numeric results unchanged; hashes do not prove authenticity. Native72-image capsule already contains explicit projected originals/hash joins.','files':records},indent=2)+'\n',encoding='utf-8')
+(package/'.gitattributes').write_text('*.log -text whitespace=-blank-at-eol\n*.gz -text\n',encoding='utf-8')
+readme='''# v39 normal session-exit wait repair
+
+The current nested wait synchronously reads stderr after detecting parent exit. An actual session descendant can keep that writer open past wait's deadline. Replace that sole detail assignment with a constant diagnostic, retaining the same RuntimeError/prefix and every other production byte. This gives no strict50ms whole-call bound: the inherited queue minimum is100ms. Optional diagnostics and noncooperative teardown remain separate owner responsibilities.
+
+Base7c40e6023ac7e89d3cc0f1d4c222a331102b60eb; original file Git321ec02e5c3c8bd87c6370e4a5e90bb3013d4241/SHA256cbc44c171f9d83417380af4fb5c06ef7dbf9bb2862c2c40a997bd66f3a985e5e. Candidate SHA256a0bcfa076970b7cf6d048155478952958280b7958e0bbe486c0f1f12a55e4f0e. Public/private source snapshots are identified by actual Git bytes, not invented execution origins.
+
+Ordinary Windows11 build26200/CPython3.12.10 regression: first baseline7 methods fail1/error1/exit1; first repaired7 normal exit0 and first repaired7 -O exit0. The new stdlib test extracts literal wait without importing PIL/game/backend/client. It preserves queued terminal priority, observation/latest, policy and typed-running invalidation identity/priority and live-parent timeout. Actual PID/UTC/full streams/source/test/runner/freeze receipts are retained. A wrapper initially searched LF-only OK against CRLF native stderr after actual green exit0; original green was inspected, never rerun. Only the previously unstarted -O arm then ran. No guessed wrapper PID.
+
+Selected-source composition: exact #6944 startup candidate aa0f889066834fe4c408838504b29a4cabb0fa39, full file Git8dcb1694032121a9ec2f362348fb81b8fd60b0b1, receives the same sole replacement. All other startup-file bytes stay unchanged. First combined7 normal and first combined7 -O exit0. This is selected-source checking, not a full combined tree/application certificate, real startup/backend or an author's27-child replay. The first workflow helper parsed its directory README as YAML after both composition children finished0; repaired static-only suffix handling did not repeat them.
+
+Prior native witness is source-qualified, not rerun: original private6-cell construction, six parents+two descendants terminal0. Original held arm remained in literal wait's read at364.9102ms checkpoint after parent0 with child259; no-drain comparator returned118.3325ms while its writer remained live at355.0793ms checkpoint. Healthy/closed-writer controls remain consistent. The candidate wait AST exactly matches that prior no-drain comparator; actual original source bytes are identical. Single construction times are not latency estimates/task benefit. Original saved-reader equality failure and subsequent8 effective copied corruptions/refusals remain within the recoverable72-image gzip38021bytes/SHA2567e3cacf7ce2e39762942bb43696d3bedda86ddb8a84b2cc88167f5ccb9555890. Decoded TextIO/newline-normalized stderr is not claimed original pipe bytes. Review must not launch its retained fixture/collector/run code. Original report: https://github.com/Unjuno/agent-interface/pull/6944#issuecomment-5967153132 .
+
+Archive code ends.py.txt; the gzip packet has no automatic unpack/import. Only the new actual stdlib test is a discovery entry.229 exact current workflow images examined: create/formal branch-specific guards exclude this branch, the generic replay is a deterministic stdlib scheduler test and navigation/index checks are optional. The two intervening old measurement workflows use self/prereg paths, outside this repair's delta. No workflow edit or dispatch. Source proposal uses skip-ci message to reduce optional hosted load; real required conditions remain an application-time gate.
+
+Parent #59 source claim5967216468; prior witness claim5967063200/result5967166692. Actual source owner01a0ff2c-34fb-73a0-b3aa-bdf13badf325, FINAL-v5. #6944 startup and #6953 client owners/branches/archives remain untouched. No WSLc, model, GUI, input, game, GPU, container, shared runtime/apply lease or main send. No physical input release, full recovery bound, useful feedback, R134/#59/#57/task/token/efficiency completion claim. Whole-runtime/full CI was not run. Exact content votes and fresh-current base/tree application are separate.
+'''
+(package/'README.md').write_text(readme,encoding='utf-8',newline='\n')
+files={p.name:{'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for p in sorted(package.iterdir()) if p.is_file()}
+(package/'MANIFEST.json').write_text(json.dumps({'files':files},indent=2)+'\n',encoding='utf-8')
+controller=stage/'research/doom/map01_overlap_controller_v39.py';controller.parent.mkdir(parents=True,exist_ok=True);controller.write_bytes((out/'candidate.py.txt').read_bytes())
+test=stage/'research/doom/test_overlap_controller_v39_wait.py';test.write_bytes((code/'test_overlap_controller_v39_wait.py').read_bytes())
+for p in package.iterdir():
+    if p.is_file() and p.suffix!='.gz' and (home.encode() in p.read_bytes() or home.replace('\\','/').encode() in p.read_bytes()):raise ValueError('unprojected private home')
+mapping={p.relative_to(stage).as_posix():p.read_bytes() for p in stage.rglob('*') if p.is_file()}
+index=out/'source-index';env={'GIT_INDEX_FILE':str(index)};git('read-tree',base,env=env)
+for path,b in mapping.items():
+    blob=git('hash-object','-w','--stdin',input=b).decode().strip()
+    if blob!=oid(b):raise ValueError('Git byte identity')
+    git('update-index','--add','--cacheinfo','100644,'+blob+','+path,env=env)
+tree=git('write-tree','--missing-ok',env=env).decode().strip();head=git('commit-tree',tree,'-p',base,input=b'fix(doom): avoid synchronous stderr drain in session-exit wait [skip ci]\n').decode().strip()
+git('update-ref','refs/heads/'+branch,head,'0'*40)
+delta=git('diff','--name-only',base,head).decode().splitlines()
+if set(delta)!=set(mapping):raise ValueError('unexpected source delta')
+for path,b in mapping.items():
+    if git('show',head+':'+path)!=b:raise ValueError('committed byte mismatch')
+check=subprocess.run(['git','-C',str(repo),'diff','--check',base,head],capture_output=True,env=dict(os.environ,GIT_NO_LAZY_FETCH='1'))
+(out/'diff-check.stdout.log').write_bytes(check.stdout);(out/'diff-check.stderr.log').write_bytes(check.stderr)
+if check.returncode:raise ValueError('actual attribute diff check failed')
+diff=git('diff','--no-ext-diff','--binary','--full-index',base,head);(out/'review.diff').write_bytes(diff)
+result={'utc':now(),'branch':branch,'base':base,'head':head,'tree':tree,'parent':base,'paths':{path:{'mode':'100644','git_blob':oid(b),'sha256':sha(b),'bytes':len(b)} for path,b in sorted(mapping.items())},'diff_sha256':sha(diff),'diff_bytes':len(diff),'manifest_sha256':sha((package/'MANIFEST.json').read_bytes()),'manifest_targets':len(files),'changed_paths':len(mapping),'active_paths':2,'privacy_check':True,'diff_check_exit':check.returncode,'remote_sent':False,'main_send_attempts':0}
+(out/'SOURCE_COMMIT.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+index.resolve().relative_to(out.resolve());index.unlink()
+(out/'INDEX_CLEANUP.json').write_text(json.dumps({'utc':now(),'resolved_own_index':str(index.resolve()),'removed':not index.exists(),'reason':'recreatable own temporary index after all commit/source byte checks; no raw removed'},indent=2)+'\n',encoding='utf-8')
+print(json.dumps({'head':head,'tree':tree,'changed_paths':len(mapping),'active_paths':2,'archive_manifest_targets':len(files),'diff_check':check.returncode}))

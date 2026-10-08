@@ -1,0 +1,49 @@
+{
+  "schema": "soft-event-context-strict-auditor-t2-v1",
+  "issue": 6561,
+  "predecessor_pr": 6591,
+  "allocation_id": "SOFT-EVENT-AUDITOR-STRICT-T2-20261002-01",
+  "main_sha_at_freeze": "ce89f11fcff33b83de4a9b9ded7b89bf764b5f09",
+  "t1_source_head": "b45f6182a4735046a2be837e2c65c4a36dfb1ad8",
+  "t1_evidence_head": "1b51a657e4b83396bb0f669b7bd212200ed2f028",
+  "t1_input_sha256": {
+    "T1_SPEC.json": "35EC90674834B975AB5DCD66FAC6A9DC60FD0375C9842887B9912B0FDC8451D8",
+    "raw_packets.json": "D5DD9C5A817C9EF08052B67C68F1DE4DBADA64457A39A31F990841F0063AB8DA",
+    "target_auditor_outcomes.json": "4C777EA852761CEB3D040322FEA700BD7DFAB93BE3FFCC859C4F7E0D493A277B",
+    "target_auditor.py": "80DEED749EBAF0EDBD9CD3637F1B60C467E9C6D059FBCFDC627AD5D422FB5710",
+    "candidate.py": "00EE096CCED15CD0844917CCB45D3145F080B1E3CD216DF0CCA3BF95C8BACC6F",
+    "signal_guard_v2.py": "7BE055C4BD68A1528F4B2B02B543435BD64465EA42D4452F5597D6DCE08442A0"
+  },
+  "expected_external_binding": {
+    "session": "fixture-1"
+  },
+  "soft_changed_contract": {
+    "status": "SOFT_CHANGED",
+    "keep_existing_policy": true,
+    "requires_new_decision": false,
+    "grants_input_authority": false,
+    "may_only_preserve_or_reduce_existing_authority": true,
+    "semantic_change_identified": true,
+    "task_success_verified": false
+  },
+  "cases": [
+    "CONTROL_CONTRACT_COMPLETE",
+    "MUTATION_REBOUND_CASE_AND_EVENT_BINDING",
+    "MUTATION_GRANTS_INPUT_AUTHORITY_TRUE",
+    "MUTATION_REQUIRES_NEW_DECISION_TRUE",
+    "MUTATION_KEEP_EXISTING_POLICY_FALSE",
+    "MUTATION_OMIT_REQUIRED_GUARD_FIELDS"
+  ],
+  "hypothesis": "A raw-only auditor anchored to an out-of-band expected binding and the complete frozen SOFT_CHANGED guard contract will accept the contract-complete control and reject common-mode rebinding, each contradictory authority/decision flag, and omission of required guard flags.",
+  "test": "Use the retained T1 synthetic packet bytes without rerunning its generator or target auditor. Derive a new contract-complete control by adding only the two guard fields omitted by the T1 packet fixture, with values taken from the frozen signal_guard_v2 implementation. Apply five preregistered one-location-or-paired mutations, run the new strict auditor once per packet in-process, retain every packet and classification, then run a separate raw-only auditor once.",
+  "decision": "PASS_T2_STRICT_AUDITOR_SCOPED only when the complete control is accepted and all five mutations are rejected for the declared reason family, the retained T1 target outputs still show that the old auditor accepted its four original corruptions, all source/input hashes match, and the separate auditor reports zero errors. Otherwise FAIL or STOP by source/retention gate; no retry.",
+  "costs": "Local Windows CPython 3.11.9 CPU only; finite JSON packets; no WSLc/container, GPU/CUDA, model, GUI, game, network call by the experiment, or user-input effect.",
+  "known_t1_fixture_gap": "T1 raw guard outcomes omit may_only_preserve_or_reduce_existing_authority and semantic_change_identified, although frozen signal_guard_v2 emits them. T2 preserves T1 files unchanged and adds those two frozen-contract fields only in its new control fixture before applying mutations.",
+  "unknowns": [
+    "Whether the production caller supplies a trustworthy expected session binding outside the packet.",
+    "Whether another production consumer independently validates these guard fields.",
+    "Any live planner decision, task effect, survival benefit, or MAP01 completion."
+  ],
+  "retry_policy": "Construction tests are preparation only. One T2 candidate invocation and, only on candidate exit 0, one separate T2 raw-only audit. No T1 candidate/auditor replay and no retries or substitute data."
+}
+

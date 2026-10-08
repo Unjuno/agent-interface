@@ -1,0 +1,139 @@
+[
+  {
+    "proposal": {
+      "kind": "act",
+      "steps": [
+        {
+          "op": "text",
+          "text": "480"
+        },
+        {
+          "op": "key",
+          "key": "Return"
+        },
+        {
+          "op": "text",
+          "text": "192"
+        },
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "s"
+        }
+      ],
+      "rationale": "Enter 480 in A1 and 192 in A2, then save the existing workbook; stop after Save in case a format confirmation appears."
+    },
+    "resolution": {
+      "request_id": "448309d9bf9e4f7090c1c73d45a0a883",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-181955db863641f1acb0f2c0c3819555",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 3,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 89339409656,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "f97b4bccf0b74012abc8a8b06383f082",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 89280143421,
+            "valid_until_ns": 118830146930
+          }
+        },
+        "decision_reason": "focus_changed",
+        "post_release_observation": {
+          "captures": 2,
+          "sequences": [
+            7,
+            8
+          ],
+          "equal_sample_pair": true,
+          "error": null,
+          "stopped": false,
+          "authority": "none; no input or lease renewal",
+          "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+          "elapsed_ms": 270.633011
+        },
+        "terminal_ns": 89618949882,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 89618954714
+      },
+      "authority": "none"
+    }
+  },
+  {
+    "proposal": {
+      "kind": "act",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": 782,
+          "y": 463,
+          "duration_ms": 80
+        }
+      ],
+      "rationale": "The worksheet visibly contains A1=480 and A2=192, and the Excel-format confirmation dialog is open; choose Use Excel 2007\u2013365 Format to complete the requested save."
+    },
+    "resolution": {
+      "request_id": "59798703888c47269a3923bd905875f6",
+      "terminal": {
+        "event": "terminal",
+        "id": "durable-4c587374f51b477b989e8eddc220c788",
+        "status": "needs_decision",
+        "error": null,
+        "steps_completed": 0,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 97215097565,
+          "valid_until_ns": null
+        },
+        "interruption": {
+          "intent_token": "3ed8aba1fe984940a01202ce13bc4df1",
+          "record": {
+            "event": "owner_release",
+            "reason": "focus_changed",
+            "verified": true,
+            "buttons_down": [],
+            "keys_down": [],
+            "verified_ns": 97145213622,
+            "valid_until_ns": 126960673545
+          }
+        },
+        "decision_reason": "focus_changed",
+        "post_release_observation": {
+          "captures": 2,
+          "sequences": [
+            11,
+            12
+          ],
+          "equal_sample_pair": false,
+          "error": null,
+          "stopped": false,
+          "authority": "none; no input or lease renewal",
+          "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+          "elapsed_ms": 292.57774
+        },
+        "terminal_ns": 97520368529,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 97520378121
+      },
+      "authority": "none"
+    }
+  }
+]

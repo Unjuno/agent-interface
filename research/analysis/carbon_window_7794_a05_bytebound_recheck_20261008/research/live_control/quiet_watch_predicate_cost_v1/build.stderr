@@ -1,0 +1,8 @@
+native_predicate.c:41:1: warning: missing initializer for field 'm_slots' of 'struct PyModuleDef' [-Wmissing-field-initializers]
+   41 | };
+      | ^
+In file included from /usr/include/python3.13/Python.h:95,
+                 from native_predicate.c:2:
+/usr/include/python3.13/moduleobject.h:113:21: note: 'm_slots' declared here
+  113 |   PyModuleDef_Slot *m_slots;
+      |                     ^~~~~~~

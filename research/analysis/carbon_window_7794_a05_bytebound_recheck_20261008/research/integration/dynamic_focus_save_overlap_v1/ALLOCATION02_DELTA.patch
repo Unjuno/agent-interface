@@ -1,0 +1,11 @@
+--- a/source/study.py
++++ b/source/study.py
+@@ -115,7 +115,7 @@
+ def b_script(path):
+  path.write_text("""import json,os,sys,termios,time,pathlib\nfd=0;a=termios.tcgetattr(fd);a[0]&=~(termios.IXON|termios.ICRNL);a[3]&=~(termios.ICANON|termios.ECHO);termios.tcsetattr(fd,termios.TCSANOW,a)\np=pathlib.Path(sys.argv[1]); rows=[]\nwhile True:\n c=os.read(0,1)\n if not c: break\n rows.append({'byte':c.hex(),'ns':time.monotonic_ns()});p.write_text(json.dumps(rows,separators=(',',':')))\n if c==b'b': break\n""")
+ def run_case(case,outdir):
+- out=pathlib.Path(outdir);out.mkdir(parents=True,exist_ok=False);(out/'Xauthority').write_bytes(b'');(out/'home').mkdir()
++ out=pathlib.Path(outdir).resolve();out.mkdir(parents=True,exist_ok=False);(out/'Xauthority').write_bytes(b'');(out/'home').mkdir()
+  app=case['app'];size=case['size'];policy=case['policy'];schedule=case['schedule'];idx=case['index'];n=APPS[app][size]
+  doc=out/('a.svg' if app=='inkscape' else 'a.odt')
+  if app=='inkscape':make_svg(doc,n)

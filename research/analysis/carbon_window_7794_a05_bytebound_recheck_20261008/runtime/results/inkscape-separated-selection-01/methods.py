@@ -1,0 +1,84 @@
+import copy,json,time
+from runtime.guarded_x11_v1 import compiled
+from runtime.guarded_x11_v1.bridge import read_window_title
+class Stop(Exception):
+ def __init__(self,reason):self.reason=reason
+
+def cue(rgb):
+ if rgb.mode!='RGB' or rgb.size!=(1000,700):return 'unknown'
+ def ratio(box,fn):
+  p=list(rgb.crop(box).getdata());return sum(fn(v) for v in p)/len(p)
+ left=(340,300,350,315);right=(399,300,404,315)
+ red=lambda p:p[0]>=240 and p[1]<=16 and p[2]<=16
+ white=lambda p:min(p)>=240
+ if ratio(left,red)>=.98 and ratio(right,white)>=.98:return 'initial'
+ if ratio(left,white)>=.98 and ratio(right,red)>=.98:return 'moved'
+ return 'unknown'
+
+def run_move(bridge,case,refs,route,steps):
+ started=time.monotonic_ns();deadline=started+2_000_000_000;trace=[];inputs=[];observations=[]
+ scope=bridge.scope;revision=bridge.binding_revision
+ def save(name,row):(case/(name+'.json')).write_text(json.dumps(row,indent=2)+'\n')
+ def perceive(native,rgb):
+  state=cue(rgb);title=read_window_title(bridge.backend.d,bridge.backend.targets[bridge.target]) or ''
+  predicates={'context_present':rgb.crop(refs['box']).tobytes()==refs['pixels'],'initial_shape':state=='initial','moved_shape':True if state=='moved' else ('unknown' if state=='unknown' else False),'clean_title':'*' not in title}
+  trace.append({'event':'predicate_known','known_ns':time.monotonic_ns(),'sequence':native['sequence'],'predicates':copy.deepcopy(predicates),'sampled_title':title,'title_atomic_with_image':False});return predicates
+ def verify(payload,native,rgb):return {'status':'succeeded','evidence_ref':payload['observation']['evidence_ref']}
+ tail=[*([{'op':'key_chord','keys':['Right']} for _ in range(steps)]),{'op':'wait_update','timeout_ms':100}]
+ bindings={'move':{'interaction':'keyboard','offset':refs['offset'],'tail':tail},'save':{'interaction':'keyboard','offset':refs['offset'],'tail':[{'op':'key_chord','keys':['CTRL','s']},{'op':'wait_update','timeout_ms':100}]}}
+ interface={'format':'compiled-gui-interface-v1','interface_id':'inkscape-guarded-transfer','session_scope':scope,'surface':compiled.surface(bridge),'predicates':['context_present','initial_shape','moved_shape','clean_title'],'symbols':{'context':{'kind':'target_reference','target_reference':'context','identity_predicate':'context_present','dependencies':['context_present','initial_shape']},'save_context':{'kind':'target_reference','target_reference':'context','identity_predicate':'context_present','dependencies':['context_present','moved_shape']}},'actions':{'move':{'target_symbol':'context','operation':'move_rectangle','expected_effect':{'moved_shape':True}},'save':{'target_symbol':'save_context','operation':'save','expected_effect':{'moved_shape':True,'clean_title':True}}},'method':{'name':'move-check-save','version':'1','initial_state':'initial','max_transitions':2,'max_runtime_ms':2000,'states':{'initial':{'branches':[{'when':{'context_present':True,'initial_shape':True,'clean_title':True},'outcome':'action','action':'move','next_state':'moved','reason':None}]},'moved':{'branches':[{'when':{'context_present':True,'moved_shape':True},'outcome':'action','action':'save','next_state':'done','reason':None}]},'done':{'branches':[{'when':{'moved_shape':True,'clean_title':True},'outcome':'complete','action':None,'next_state':None,'reason':None}]}}}}
+ original=bridge._save
+ def retain(name,row):
+  if name.startswith('result-') and ('execution' in row or row.get('input_dispatched') is False):inputs.append(copy.deepcopy(row))
+  original(name,row)
+ bridge._save=retain
+ try:
+  save('method-plan',{'interface':interface,'bindings':bindings,'route':route,'context_region':refs['box'],'predicate_regions':[[340,300,350,315],[399,300,404,315]],'caller_budget_ns':2_000_000_000})
+  if route=='compiled':
+   raw=compiled.run(bridge,interface,bindings,perceive=perceive,verify_effect=verify);observations=raw['observations']
+  elif route=='ordinary':
+   count=0
+   def observe():
+    if time.monotonic_ns()>=deadline:raise Stop('budget_exhausted')
+    native=bridge.observe();rgb=bridge.history[native['sequence']][1];p=perceive(native,rgb)
+    if bridge.scope!=scope or bridge.binding_revision!=revision or bridge.review_required:raise Stop('association_changed')
+    observations.append({'sequence':native['sequence'],'predicates':p,'evidence_ref':'observation-'+str(native['sequence']),'evidence_digest':native['native']['artifact']['sha256']})
+    return p
+   try:
+    p=observe()
+    if p['context_present'] is not True or p['initial_shape'] is not True or p['clean_title'] is not True:raise Stop('unknown_state')
+    for action in ['move','save']:
+     if time.monotonic_ns()>=deadline:raise Stop('budget_exhausted')
+     if action=='save' and p['moved_shape'] is not True:raise Stop('effect_unavailable')
+     native,rgb=bridge.history[bridge.sequence];resolution=bridge.store.resolve_point('context',refs['offset'],native,rgb,time.monotonic_ns(),session_scope=scope)
+     if not resolution['eligible']:raise Stop('authority_unavailable')
+     result=bridge.keyboard('context',refs['offset'],tail=copy.deepcopy(bindings[action]['tail']),expires_at_ns=min(deadline,resolution['valid_until_ns']))
+     releases=result.get('execution',{}).get('releases',[])
+     if not releases or not all(x.get('verified') is True and x.get('keys_down')==[] and x.get('buttons_down')==[] for x in releases):raise Stop('release_unverified')
+     if result['status']!='completed' or result.get('recovery_required') is not False:raise Stop('execution_failed')
+     count+=1;p=observe()
+     for key,value in interface['actions'][action]['expected_effect'].items():
+      if p[key]=='unknown':raise Stop('effect_unavailable')
+      if p[key] is not value:raise Stop('effect_failed')
+     verify({'observation':observations[-1]},None,None)
+     if time.monotonic_ns()>=deadline:raise Stop('budget_exhausted')
+    raw={'outcome':'TASK_SUCCEEDED','reason':'method_complete','completed_transitions':count}
+   except Stop as e:raw={'outcome':'SAFE_YIELD','reason':e.reason,'completed_transitions':count}
+  else:raise ValueError('unknown route')
+  save('method-raw',raw);save('method-trace',trace);save('method-inputs',inputs)
+  common={k:raw[k] for k in ['outcome','reason','completed_transitions']};common.update(inputs=len(inputs),local_observations=len(observations),elapsed_ns=time.monotonic_ns()-started,scope='local pixel/title cue only; no independent persistence or human/model latency');save('method-common',common);return common
+ except Exception as error:save('method-exception',{'error':repr(error),'trace':trace,'inputs':inputs,'replay_allowed':False});raise
+ finally:bridge._save=original
+
+def run_method(bridge,case,refs,route,steps):
+ marker=case/'selection-input.json'
+ if marker.exists():return run_move(bridge,case,refs,route,steps)
+ start=time.monotonic_ns();deadline=start+2_000_000_000
+ before=bridge.observe()
+ result=bridge.keyboard('context',refs['offset'],tail=[{'op':'key_chord','keys':['CTRL','A']},{'op':'wait_update','timeout_ms':100}],expires_at_ns=deadline)
+ marker.write_text(json.dumps(result,indent=2))
+ releases=result.get('execution',{}).get('releases',[])
+ if result.get('status')!='completed' or not releases or not all(x.get('verified') is True and x.get('keys_down')==[] and x.get('buttons_down')==[] for x in releases):raise RuntimeError('selection input incomplete; no automatic next action')
+ after=bridge.observe()
+ row={'outcome':'SELECTION_INPUT_COMPLETED','reason':'requires_primary_selection_review','completed_transitions':1,'inputs':1,'local_observations':2,'elapsed_ns':time.monotonic_ns()-start,'scope':'delivery only; primary must inspect selection before second invocation','before_sequence':before['sequence'],'after_sequence':after['sequence']}
+ (case/'selection-common.json').write_text(json.dumps(row,indent=2));return row

@@ -1,0 +1,273 @@
+{
+  "audit_passed": true,
+  "audit_sha256": "9511b8e4215a42f04bcff3234db71b5c52df2cadeabe36fd30855f9fb18d1ca5",
+  "rows": [
+    {
+      "arm": "coarse",
+      "exact_frames": 15,
+      "task_score": {
+        "success": false,
+        "actual": {
+          "x": 58.474575,
+          "y": 50.0,
+          "width": 40.0,
+          "height": 30.0
+        },
+        "checks": {
+          "x": false,
+          "y": true,
+          "width": true,
+          "height": true
+        },
+        "expected": {
+          "x": 66.95,
+          "y": 50,
+          "width": 40,
+          "height": 30
+        },
+        "scope": "saved untransformed fixture rectangle geometry only; not full SVG equivalence"
+      },
+      "phases": [
+        {
+          "phase": "pressed",
+          "pointer": [
+            618,
+            391
+          ],
+          "bbox": [
+            597,
+            374,
+            642,
+            407
+          ]
+        },
+        {
+          "phase": "motion-1",
+          "pointer": [
+            628,
+            391
+          ],
+          "bbox": [
+            597,
+            374,
+            642,
+            407
+          ]
+        },
+        {
+          "phase": "motion-2",
+          "pointer": [
+            638,
+            391
+          ],
+          "bbox": [
+            606,
+            374,
+            652,
+            407
+          ]
+        },
+        {
+          "phase": "released",
+          "pointer": [
+            638,
+            391
+          ],
+          "bbox": [
+            606,
+            374,
+            652,
+            407
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "fine_start",
+      "exact_frames": 16,
+      "task_score": {
+        "success": false,
+        "actual": {
+          "x": 58.474575,
+          "y": 50.0,
+          "width": 40.0,
+          "height": 30.0
+        },
+        "checks": {
+          "x": false,
+          "y": true,
+          "width": true,
+          "height": true
+        },
+        "expected": {
+          "x": 66.95,
+          "y": 50,
+          "width": 40,
+          "height": 30
+        },
+        "scope": "saved untransformed fixture rectangle geometry only; not full SVG equivalence"
+      },
+      "phases": [
+        {
+          "phase": "pressed",
+          "pointer": [
+            618,
+            391
+          ],
+          "bbox": [
+            597,
+            374,
+            642,
+            407
+          ]
+        },
+        {
+          "phase": "motion-1",
+          "pointer": [
+            619,
+            391
+          ],
+          "bbox": [
+            597,
+            374,
+            642,
+            407
+          ]
+        },
+        {
+          "phase": "motion-2",
+          "pointer": [
+            628,
+            391
+          ],
+          "bbox": [
+            597,
+            374,
+            642,
+            407
+          ]
+        },
+        {
+          "phase": "motion-3",
+          "pointer": [
+            638,
+            391
+          ],
+          "bbox": [
+            606,
+            374,
+            652,
+            407
+          ]
+        },
+        {
+          "phase": "released",
+          "pointer": [
+            638,
+            391
+          ],
+          "bbox": [
+            606,
+            374,
+            652,
+            407
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "visual_correction",
+      "exact_frames": 15,
+      "task_score": {
+        "success": true,
+        "actual": {
+          "x": 66.94915,
+          "y": 50.0,
+          "width": 40.0,
+          "height": 30.0
+        },
+        "checks": {
+          "x": true,
+          "y": true,
+          "width": true,
+          "height": true
+        },
+        "expected": {
+          "x": 66.95,
+          "y": 50,
+          "width": 40,
+          "height": 30
+        },
+        "scope": "saved untransformed fixture rectangle geometry only; not full SVG equivalence"
+      },
+      "phases": [
+        {
+          "phase": "pressed",
+          "pointer": [
+            618,
+            391
+          ],
+          "bbox": [
+            597,
+            374,
+            642,
+            407
+          ]
+        },
+        {
+          "phase": "motion-1",
+          "pointer": [
+            628,
+            391
+          ],
+          "bbox": [
+            597,
+            374,
+            642,
+            407
+          ]
+        },
+        {
+          "phase": "motion-2",
+          "pointer": [
+            638,
+            391
+          ],
+          "bbox": [
+            606,
+            374,
+            652,
+            407
+          ]
+        },
+        {
+          "phase": "corrected",
+          "pointer": [
+            648,
+            391
+          ],
+          "bbox": [
+            616,
+            374,
+            662,
+            407
+          ]
+        },
+        {
+          "phase": "released",
+          "pointer": [
+            648,
+            391
+          ],
+          "bbox": [
+            616,
+            374,
+            662,
+            407
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": "Pointer sample precedes capture, not atomic held proof. Diagnostic subclass adds observations/correction outside public path semantics; no model-use, speed or generalization claim."
+}

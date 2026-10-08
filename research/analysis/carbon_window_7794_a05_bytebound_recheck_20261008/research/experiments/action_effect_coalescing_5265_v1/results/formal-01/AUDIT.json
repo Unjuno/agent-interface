@@ -1,0 +1,41 @@
+{
+  "case_count": 10,
+  "corruption_controls": [
+    {
+      "name": "effect_count",
+      "rejected": true
+    },
+    {
+      "name": "case_order",
+      "rejected": true
+    },
+    {
+      "name": "target_incarnation",
+      "rejected": true
+    },
+    {
+      "name": "expected_decision",
+      "rejected": true
+    },
+    {
+      "name": "authority_claim",
+      "rejected": true
+    },
+    {
+      "name": "duplicate_case",
+      "rejected": true
+    },
+    {
+      "name": "workload_hash",
+      "rejected": true
+    }
+  ],
+  "corruption_controls_rejected": 7,
+  "equivalent_duplicate_effects_coalesced": 1,
+  "equivalent_duplicate_effects_control": 2,
+  "errors": [],
+  "raw_bytes": 29332,
+  "raw_sha256": "a1fe2d136d9dadaee3ea9672b5156e6a3aac4eedb2df09a13586a7fb402296f9",
+  "source_errors": [],
+  "status": "PASS_CROSS_PRODUCER_EFFECT_COALESCING_SCOPED"
+}

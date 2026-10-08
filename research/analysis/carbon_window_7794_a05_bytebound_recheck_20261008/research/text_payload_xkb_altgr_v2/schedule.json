@@ -1,0 +1,33 @@
+{
+  "schema": "xkb-altgr-direct-schedule-v1",
+  "task": "XKB-ALTGR-DIRECT-PREFLIGHT-20260916-002",
+  "layout": "de",
+  "variant": "",
+  "repetitions": 3,
+  "payloads": [
+    "a",
+    "A",
+    "?",
+    "@",
+    "[",
+    "]",
+    "\\",
+    "{",
+    "}",
+    "|",
+    "~",
+    "A@[]\\{}|~Z",
+    "^",
+    "`",
+    "A^Z",
+    "A`Z"
+  ],
+  "orders": [
+    [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+    [15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0],
+    [5,6,7,8,9,10,11,12,13,14,15,0,1,2,3,4]
+  ],
+  "historical_two_level_rejected_single_chars": ["@","[","\\","]","^","`","{","|","}","~"],
+  "expected_candidate_direct_recovered_single_chars": ["@","[","]","\\","{","}","|","~"],
+  "expected_candidate_dead_key_refusals_single_chars": ["^","`"]
+}

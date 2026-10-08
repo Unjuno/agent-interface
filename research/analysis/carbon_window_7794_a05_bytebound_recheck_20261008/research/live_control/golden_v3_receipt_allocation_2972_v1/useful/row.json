@@ -1,0 +1,139 @@
+{
+  "adapter_result": {
+    "authority_granted": false,
+    "cleanup_error": null,
+    "lifecycle": [
+      "dispatch"
+    ],
+    "native_status": "completed",
+    "partial_effects": [],
+    "program_completed": true,
+    "raw_dispatch": {
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "emissions": 19,
+          "ended_ns": 23561648456992,
+          "observations": [
+            {
+              "bytes": 288000,
+              "height": 180,
+              "sha256": "110e182c3dbfc8b3c95bf3662cb9c7bc3fff4d5ad6162fbd7dd227e5f6fe6bf5",
+              "width": 400
+            }
+          ],
+          "program_emissions": 19,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 23561648454992,
+              "verified": true
+            }
+          ],
+          "started_ns": 23561543912844
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "capture.frame",
+          "clock.monotonic",
+          "display.geometry",
+          "event.feedback",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "schema": "agent-interface/runtime-dispatch-result-v1",
+      "status": "returned"
+    },
+    "schema": "golden-v3-result-v2",
+    "status": "partial",
+    "task_success": null,
+    "usage": {}
+  },
+  "authority_granted": false,
+  "case": "useful",
+  "cleanup": "released",
+  "delivery": "confirmed",
+  "disposition": "SUCCESS",
+  "effect": "useful",
+  "events_path": "/out/allocation-a1/useful/events.jsonl",
+  "formal_receipt": {
+    "authority_grants": 0,
+    "binding_revision": 1,
+    "case": "USEFUL_EFFECT",
+    "cleanup": {
+      "failure_reason": null,
+      "release_verified": true,
+      "status": "clean"
+    },
+    "delivery": null,
+    "effect_receipt": {
+      "saved": true,
+      "text": "useful"
+    },
+    "input_ledger": [
+      {
+        "key": "u",
+        "type": "key_press"
+      },
+      {
+        "key": "s",
+        "type": "key_press"
+      },
+      {
+        "key": "e",
+        "type": "key_press"
+      },
+      {
+        "key": "f",
+        "type": "key_press"
+      },
+      {
+        "key": "u",
+        "type": "key_press"
+      },
+      {
+        "key": "l",
+        "type": "key_press"
+      },
+      {
+        "key": "Control_L",
+        "type": "key_press"
+      },
+      {
+        "key": "s",
+        "type": "key_press"
+      },
+      {
+        "key": null,
+        "type": "save"
+      }
+    ],
+    "observation_revision": 1,
+    "replay_allowed": false,
+    "replay_count": 0,
+    "session_id": "gtk-matrix-useful",
+    "window_id": "2097155"
+  },
+  "independent_effect": {
+    "saved": true,
+    "text": "useful"
+  },
+  "replay_allowed": false
+}

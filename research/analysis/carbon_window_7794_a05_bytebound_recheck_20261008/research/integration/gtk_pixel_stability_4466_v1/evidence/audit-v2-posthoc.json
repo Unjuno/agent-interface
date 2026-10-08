@@ -1,0 +1,364 @@
+{
+  "actual_capture_count": 15,
+  "allocation": "issue4466-visibility-formal01",
+  "artifact_manifest": {
+    "cleanup.json": {
+      "bytes": 201,
+      "sha256": "b5498d70e5706c6cb100bee70e5962e821b6308cb9d119c7b9cdd817e37c1c3f"
+    },
+    "decoy-meta.json": {
+      "bytes": 63,
+      "sha256": "bf17113e49ef7bd6401580baa5ddda3af5e6f1fae283f4b4310ba0facb4f6149"
+    },
+    "decoy.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "decoy.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "decoy_moved-decoy-01.xwd": {
+      "bytes": 291197,
+      "sha256": "db37e4502e486223ad26f221656cda28775333c74db6040aeda209197d2abcfb"
+    },
+    "decoy_moved-decoy-02.xwd": {
+      "bytes": 291197,
+      "sha256": "db37e4502e486223ad26f221656cda28775333c74db6040aeda209197d2abcfb"
+    },
+    "decoy_moved-decoy-03.xwd": {
+      "bytes": 291197,
+      "sha256": "db37e4502e486223ad26f221656cda28775333c74db6040aeda209197d2abcfb"
+    },
+    "decoy_moved-target-01.xwd": {
+      "bytes": 291197,
+      "sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70"
+    },
+    "decoy_moved-target-02.xwd": {
+      "bytes": 291197,
+      "sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70"
+    },
+    "decoy_moved-target-03.xwd": {
+      "bytes": 291197,
+      "sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70"
+    },
+    "decoy_overlapping-decoy-01.xwd": {
+      "bytes": 291197,
+      "sha256": "b7a721f0fef8e19c5060380489a74beb852007f6970ffe04eb3b3b8b863d7e41"
+    },
+    "decoy_overlapping-decoy-02.xwd": {
+      "bytes": 291197,
+      "sha256": "ed838d51b76108783332b8a56f315135cc006ae57efe93a9e6b0152546fbe716"
+    },
+    "decoy_overlapping-decoy-03.xwd": {
+      "bytes": 291197,
+      "sha256": "b7a721f0fef8e19c5060380489a74beb852007f6970ffe04eb3b3b8b863d7e41"
+    },
+    "decoy_overlapping-target-01.xwd": {
+      "bytes": 291197,
+      "sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77"
+    },
+    "decoy_overlapping-target-02.xwd": {
+      "bytes": 291197,
+      "sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77"
+    },
+    "decoy_overlapping-target-03.xwd": {
+      "bytes": 291197,
+      "sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77"
+    },
+    "run-summary.json": {
+      "bytes": 29739,
+      "sha256": "abdf9029ee20b50aceca4ed20a63886d6b66bf6873ae1dfcdb222080156f71e2"
+    },
+    "target-meta.json": {
+      "bytes": 42,
+      "sha256": "b5458445625d3ef9764458b73c937e747e1479cc00f0b983b8257560335a3abf"
+    },
+    "target.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "target_only-target-01.xwd": {
+      "bytes": 291197,
+      "sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70"
+    },
+    "target_only-target-02.xwd": {
+      "bytes": 291197,
+      "sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70"
+    },
+    "target_only-target-03.xwd": {
+      "bytes": 291197,
+      "sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70"
+    },
+    "xvfb.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "cleanup": [
+    {
+      "pid": 23,
+      "returncode": -15,
+      "role": "decoy"
+    },
+    {
+      "pid": 10,
+      "returncode": -15,
+      "role": "target"
+    },
+    {
+      "pid": 7,
+      "returncode": 0,
+      "role": "xvfb"
+    }
+  ],
+  "decision": "PASS_NO_INPUT_STABILITY_GATE_CALIBRATED",
+  "errors": [],
+  "expected_capture_count": 15,
+  "formal_2606_acceptance": false,
+  "identities": {
+    "decoy_moved/decoy": {
+      "active_window": "_NET_ACTIVE_WINDOW:  not found.\n",
+      "focus": "PointerRoot",
+      "geometry": {
+        "height": 180,
+        "width": 400,
+        "x": 400,
+        "y": 0
+      },
+      "pid": 23,
+      "title": "AgentInterfaceGtkFixture",
+      "viewable": true,
+      "xid": 4194307
+    },
+    "decoy_moved/target": {
+      "active_window": "_NET_ACTIVE_WINDOW:  not found.\n",
+      "focus": "PointerRoot",
+      "geometry": {
+        "height": 180,
+        "width": 400,
+        "x": 0,
+        "y": 0
+      },
+      "pid": 10,
+      "title": "AgentInterfaceGtkFixture",
+      "viewable": true,
+      "xid": 2097155
+    },
+    "decoy_overlapping/decoy": {
+      "active_window": "_NET_ACTIVE_WINDOW:  not found.\n",
+      "focus": "PointerRoot",
+      "geometry": {
+        "height": 180,
+        "width": 400,
+        "x": 0,
+        "y": 0
+      },
+      "pid": 23,
+      "title": "AgentInterfaceGtkFixture",
+      "viewable": true,
+      "xid": 4194307
+    },
+    "decoy_overlapping/target": {
+      "active_window": "_NET_ACTIVE_WINDOW:  not found.\n",
+      "focus": "PointerRoot",
+      "geometry": {
+        "height": 180,
+        "width": 400,
+        "x": 0,
+        "y": 0
+      },
+      "pid": 10,
+      "title": "AgentInterfaceGtkFixture",
+      "viewable": true,
+      "xid": 2097155
+    },
+    "target_only/target": {
+      "active_window": "_NET_ACTIVE_WINDOW:  not found.\n",
+      "focus": "PointerRoot",
+      "geometry": {
+        "height": 180,
+        "width": 400,
+        "x": 0,
+        "y": 0
+      },
+      "pid": 10,
+      "title": "AgentInterfaceGtkFixture",
+      "viewable": true,
+      "xid": 2097155
+    }
+  },
+  "model_calls": 0,
+  "provider_calls": 0,
+  "repeated_target_comparisons": [
+    {
+      "bbox": null,
+      "changed_ignored_bits_only": 0,
+      "changed_raw_pixel_values": 0,
+      "changed_rgb_pixels": 0,
+      "left": "target_only-target-01.xwd",
+      "left_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "left_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "right": "target_only-target-02.xwd",
+      "right_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "right_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "stage": "target_only"
+    },
+    {
+      "bbox": null,
+      "changed_ignored_bits_only": 0,
+      "changed_raw_pixel_values": 0,
+      "changed_rgb_pixels": 0,
+      "left": "target_only-target-02.xwd",
+      "left_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "left_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "right": "target_only-target-03.xwd",
+      "right_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "right_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "stage": "target_only"
+    },
+    {
+      "bbox": null,
+      "changed_ignored_bits_only": 0,
+      "changed_raw_pixel_values": 0,
+      "changed_rgb_pixels": 0,
+      "left": "decoy_overlapping-target-01.xwd",
+      "left_file_sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77",
+      "left_rgb_sha256": "0e89e5d755de20a0a96681c385ffcd1c64e8ae3b7d56d1c7c0c351a81cc46513",
+      "right": "decoy_overlapping-target-02.xwd",
+      "right_file_sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77",
+      "right_rgb_sha256": "0e89e5d755de20a0a96681c385ffcd1c64e8ae3b7d56d1c7c0c351a81cc46513",
+      "stage": "decoy_overlapping"
+    },
+    {
+      "bbox": null,
+      "changed_ignored_bits_only": 0,
+      "changed_raw_pixel_values": 0,
+      "changed_rgb_pixels": 0,
+      "left": "decoy_overlapping-target-02.xwd",
+      "left_file_sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77",
+      "left_rgb_sha256": "0e89e5d755de20a0a96681c385ffcd1c64e8ae3b7d56d1c7c0c351a81cc46513",
+      "right": "decoy_overlapping-target-03.xwd",
+      "right_file_sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77",
+      "right_rgb_sha256": "0e89e5d755de20a0a96681c385ffcd1c64e8ae3b7d56d1c7c0c351a81cc46513",
+      "stage": "decoy_overlapping"
+    },
+    {
+      "bbox": null,
+      "changed_ignored_bits_only": 0,
+      "changed_raw_pixel_values": 0,
+      "changed_rgb_pixels": 0,
+      "left": "decoy_moved-target-01.xwd",
+      "left_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "left_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "right": "decoy_moved-target-02.xwd",
+      "right_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "right_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "stage": "decoy_moved"
+    },
+    {
+      "bbox": null,
+      "changed_ignored_bits_only": 0,
+      "changed_raw_pixel_values": 0,
+      "changed_rgb_pixels": 0,
+      "left": "decoy_moved-target-02.xwd",
+      "left_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "left_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "right": "decoy_moved-target-03.xwd",
+      "right_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "right_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "stage": "decoy_moved"
+    }
+  ],
+  "scope": "posthoc audit v2 of the single frozen #4466 allocation",
+  "source_audit": {
+    "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py": {
+      "actual": "2F8ED8C604AFBCF5DD43363D2EDE4950E70AA9F7EAE70A4B795DECF4FEB4BB3B",
+      "expected": "2F8ED8C604AFBCF5DD43363D2EDE4950E70AA9F7EAE70A4B795DECF4FEB4BB3B",
+      "match": true,
+      "present": true
+    },
+    "research/integration/gtk_effect_control_3240_v1/Dockerfile": {
+      "actual": "C25A47317BD606666675D20AD3899D94F77055BA5A3C206198AC085A7C881412",
+      "expected": "C25A47317BD606666675D20AD3899D94F77055BA5A3C206198AC085A7C881412",
+      "match": true,
+      "present": true
+    },
+    "research/integration/gtk_effect_control_3240_v1/fixture_render_decoy.py": {
+      "actual": "D6E8BF1AC0D4551EFCA372B30360EE0964FAF6F7629DCB6AD8FB1AA70E9B19EC",
+      "expected": "D6E8BF1AC0D4551EFCA372B30360EE0964FAF6F7629DCB6AD8FB1AA70E9B19EC",
+      "match": true,
+      "present": true
+    },
+    "research/integration/gtk_pixel_stability_4466_v1/CONSTRUCTION_PLAN.md": {
+      "actual": "C14EC6B7971298980E794270790A4E19DA6BB499FCE6B84305971B362202C055",
+      "expected": "C14EC6B7971298980E794270790A4E19DA6BB499FCE6B84305971B362202C055",
+      "match": true,
+      "present": true
+    },
+    "research/integration/gtk_pixel_stability_4466_v1/PREREG.md": {
+      "actual": "BD139CA81F33810DA322C95FA4B9BF66548CC25AE026545A136001BF8CDA8827",
+      "expected": "BD139CA81F33810DA322C95FA4B9BF66548CC25AE026545A136001BF8CDA8827",
+      "match": true,
+      "present": true
+    },
+    "research/integration/gtk_pixel_stability_4466_v1/README.md": {
+      "actual": "3E64DA56A530565B7125714E4ADEBE531C01E50C132FFA0A7223E82C2B517F36",
+      "expected": "3E64DA56A530565B7125714E4ADEBE531C01E50C132FFA0A7223E82C2B517F36",
+      "match": true,
+      "present": true
+    },
+    "research/integration/gtk_pixel_stability_4466_v1/audit_visibility.py": {
+      "actual": "490989C3E25D7EA4FAB61731805EB251A0C4EB1BA828628A04327D121EC5D6E5",
+      "expected": "490989C3E25D7EA4FAB61731805EB251A0C4EB1BA828628A04327D121EC5D6E5",
+      "match": true,
+      "present": true
+    },
+    "research/integration/gtk_pixel_stability_4466_v1/construct_visibility.py": {
+      "actual": "CD5EEAEE84D7001C0082046D3761EE38A2733A19F633D743BA44E6828941C5E7",
+      "expected": "CD5EEAEE84D7001C0082046D3761EE38A2733A19F633D743BA44E6828941C5E7",
+      "match": true,
+      "present": true
+    }
+  },
+  "stage_transition_comparisons": [
+    {
+      "bbox": [
+        0,
+        0,
+        399,
+        179
+      ],
+      "changed_ignored_bits_only": 0,
+      "changed_raw_pixel_values": 72000,
+      "changed_rgb_pixels": 72000,
+      "left": "target_only-target-03.xwd",
+      "left_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "left_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016",
+      "right": "decoy_overlapping-target-01.xwd",
+      "right_file_sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77",
+      "right_rgb_sha256": "0e89e5d755de20a0a96681c385ffcd1c64e8ae3b7d56d1c7c0c351a81cc46513"
+    },
+    {
+      "bbox": [
+        0,
+        0,
+        399,
+        179
+      ],
+      "changed_ignored_bits_only": 0,
+      "changed_raw_pixel_values": 72000,
+      "changed_rgb_pixels": 72000,
+      "left": "decoy_overlapping-target-03.xwd",
+      "left_file_sha256": "4ecc6335399676c61aa3900431d643d957a13bece72d14978b52f72fae777f77",
+      "left_rgb_sha256": "0e89e5d755de20a0a96681c385ffcd1c64e8ae3b7d56d1c7c0c351a81cc46513",
+      "right": "decoy_moved-target-01.xwd",
+      "right_file_sha256": "f02495cd1421c886770ccae82fa0cfc0d9077c067e22959b07d19e5f16992e70",
+      "right_rgb_sha256": "d3a3d5ac7a5cc075444c65345ce07e32bb6def5b634701321af6ff02c724e016"
+    }
+  ]
+}

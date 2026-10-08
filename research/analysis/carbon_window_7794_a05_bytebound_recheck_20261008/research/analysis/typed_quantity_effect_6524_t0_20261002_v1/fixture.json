@@ -1,0 +1,31 @@
+{
+  "contract": {
+    "target_id": "field-height",
+    "quantity_kind": "distance",
+    "dimension": "length",
+    "target_value": "1.2",
+    "target_unit": "m",
+    "tolerance": "0",
+    "required_effect_count": 1,
+    "rounding_mode": "HALF_EVEN",
+    "decimal_places": 3
+  },
+  "units": {
+    "m": {"dimension": "length", "canonical": "m", "factor": "1"},
+    "cm": {"dimension": "length", "canonical": "m", "factor": "0.01"},
+    "kg": {"dimension": "mass", "canonical": "kg", "factor": "1"}
+  },
+  "cases": [
+    {"id":"equivalent_cm_to_m","intent":{"value":"1.2","unit":"m","tolerance":"0"},"entry":{"number":"120","unit_at_entry":"cm","unit_at_save":"cm"},"app":{"save":true,"effect_count":1,"save_id":"save-01"}},
+    {"id":"same_number_wrong_unit","intent":{"value":"1.2","unit":"m","tolerance":"0"},"entry":{"number":"1.2","unit_at_entry":"cm","unit_at_save":"cm"},"app":{"save":true,"effect_count":1,"save_id":"save-02"}},
+    {"id":"wrong_dimension_same_numeral","intent":{"value":"1.2","unit":"m","tolerance":"0"},"entry":{"number":"1.2","unit_at_entry":"kg","unit_at_save":"kg"},"app":{"save":true,"effect_count":1,"save_id":"save-03"}},
+    {"id":"wrong_kind_same_dimension","intent":{"value":"1.2","unit":"m","tolerance":"0","quantity_kind":"height","dimension":"length"},"entry":{"number":"1.2","unit_at_entry":"m","unit_at_save":"m"},"app":{"save":true,"effect_count":1,"save_id":"save-03b","quantity_kind":"distance"}},
+    {"id":"selector_switched_after_entry","intent":{"value":"1.2","unit":"m","tolerance":"0"},"entry":{"number":"120","unit_at_entry":"cm","unit_at_save":"m"},"app":{"save":true,"effect_count":1,"save_id":"save-04"}},
+    {"id":"rounding_within_tolerance","intent":{"value":"1.234","unit":"m","tolerance":"0.001"},"entry":{"number":"123.46","unit_at_entry":"cm","unit_at_save":"cm"},"app":{"save":true,"effect_count":1,"save_id":"save-05","decimal_places":3,"rounding_mode":"HALF_EVEN"}},
+    {"id":"rounding_outside_tolerance","intent":{"value":"1.234","unit":"m","tolerance":"0.001"},"entry":{"number":"123.7","unit_at_entry":"cm","unit_at_save":"cm"},"app":{"save":true,"effect_count":1,"save_id":"save-06","decimal_places":3,"rounding_mode":"HALF_EVEN"}},
+    {"id":"no_effect_existing_value","intent":{"value":"1.2","unit":"m","tolerance":"0"},"entry":{"number":"1.2","unit_at_entry":"m","unit_at_save":"m"},"app":{"save":false,"effect_count":0,"save_id":null,"prior":{"value":"1.2","unit":"m","dimension":"length","quantity_kind":"distance"}}},
+    {"id":"unknown_unit","intent":{"value":"1.2","unit":"m","tolerance":"0"},"entry":{"number":"1.2","unit_at_entry":"widget","unit_at_save":"widget"},"app":{"save":true,"effect_count":1,"save_id":"save-08"}},
+    {"id":"unknown_rounding","intent":{"value":"1.234","unit":"m","tolerance":"0.001"},"entry":{"number":"123.4567","unit_at_entry":"cm","unit_at_save":"cm"},"app":{"save":true,"effect_count":1,"save_id":"save-09","decimal_places":3,"rounding_mode":"UNDECLARED"}},
+    {"id":"duplicate_effect","intent":{"value":"1.2","unit":"m","tolerance":"0"},"entry":{"number":"1.2","unit_at_entry":"m","unit_at_save":"m"},"app":{"save":true,"effect_count":2,"save_id":"save-10"}}
+  ]
+}

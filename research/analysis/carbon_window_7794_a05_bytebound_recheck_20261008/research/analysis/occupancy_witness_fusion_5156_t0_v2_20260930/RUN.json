@@ -1,0 +1,45 @@
+{
+  "allocation_id": "R133_OCCUPANCY_WITNESS_FUSION_5156_T0_V2_20260930_01",
+  "freeze_id": "R133_OCCUPANCY_WITNESS_FUSION_5156_T0_V2_20260930_01",
+  "base_main_at_freeze_and_launch": "79e7c9af7e7fa3371f5ca3994c6b72e6cdb8456c",
+  "environment": "Windows host, CPython 3.12.10, standard library only",
+  "container": "NOT_INVOKED_NO_EXACT_5085_ASSIGNMENT",
+  "candidate": {
+    "command": "python -B run_t0.py",
+    "working_directory": "research/analysis/occupancy_witness_fusion_5156_t0_v2_20260930",
+    "exit_code": 0,
+    "rows": 7889,
+    "valid_cases": 7875,
+    "corruption_controls": 14,
+    "output": "results/t0-02/raw.json",
+    "sha256": "DC3CADA0FB32CBACCC239076D2934ED578375DF0FDD0C68E8DC930A8643B6812"
+  },
+  "independent_raw_only_audit": {
+    "command": "python -B audit_t0.py results/t0-02/raw.json",
+    "exit_code": 0,
+    "decision": "PASS_INTERVAL_FUSION_CONSTRUCTION_ONLY",
+    "checks": 7889,
+    "errors": [],
+    "strictly_narrower_than_both": 586,
+    "output": "results/t0-02/audit.json",
+    "sha256": "986DD2A700BA63BC6D321D3EFCFB56DA619D041C2E38E4AFECF2CB3560889E89"
+  },
+  "construction_tests": {
+    "command": "python -B -m unittest -v test_fusion.py",
+    "runs": 2,
+    "passed_each_run": 12,
+    "before_freeze_runs": 1,
+    "after_outcome_runs": 1
+  },
+  "retries_or_replacements": 0,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "gui_or_input_calls": 0,
+  "network_calls": 0,
+  "authority_grants": 0,
+  "predecessor_attempt_01": {
+    "disposition": "STOP_STALE_MAIN_BEFORE_RUN",
+    "runner_invocations": 0,
+    "record": "predecessor_attempt_01/STOP.json"
+  }
+}

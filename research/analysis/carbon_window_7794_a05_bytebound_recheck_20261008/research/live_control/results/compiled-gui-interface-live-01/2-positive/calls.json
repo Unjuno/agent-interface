@@ -1,0 +1,1852 @@
+[
+  {
+    "begin_ns": 59347497212806,
+    "end_ns": 59347566193965,
+    "result": {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "ca8cd9a9f5c144939bd2be54514dba60"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "ca8cd9a9f5c144939bd2be54514dba60"
+            },
+            "received_ns": 59347521462447,
+            "emit_started_ns": 59347521472472
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59347530920763,
+            "sequence": 1,
+            "emit_started_ns": 59347530932906
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 59347544995101,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "ca8cd9a9f5c144939bd2be54514dba60",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "ca8cd9a9f5c144939bd2be54514dba60": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59347530920763,
+                "sequence": 1,
+                "emit_started_ns": 59347530932906
+              },
+              "echo_cursor": 3,
+              "record_cursor": 4
+            }
+          },
+          "cursor": 4,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 18.447097,
+            "capture_ns": 59347372288621,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59347382751747,
+            "emit_started_ns": 59347439657654,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "initial",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/001.png",
+            "image_prepare_ns": 32865805,
+            "image_ready_ns": 59347433490077,
+            "image_reused": false,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 1,
+            "step": 0,
+            "wire_bytes": 35166
+          },
+          "observation_cursor": 2,
+          "pending_clock": null,
+          "record_hashes": [
+            "4bd09defa7d5de3780149edd140c0d62dbe4f339a152de10893d7b2924c4c353",
+            "505a1e0da87ca714b4984824b7bf4028cedaf6d254aef00efeef194364270951",
+            "9599b99b7bac06c402bb2f77c4c95cd6d608f5b659352f47ebd8c70b2fd5295e",
+            "30265225900face073f6c3c3fdedca3c4990db0f2e7af54368404b027b6a7509"
+          ],
+          "session": "/tmp/agent-interface-events-pvpbak2x/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "ca8cd9a9f5c144939bd2be54514dba60",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59347530920763,
+            "sequence": 1,
+            "emit_started_ns": 59347530932906
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59347582511397,
+    "end_ns": 59348715992980,
+    "result": {
+      "request": {
+        "after": 4,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 8,
+        "action_id": "durable-6708c6e493f148e684039e6a7540f6a9",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 1,
+          "valid_until_ns": 59357530920763,
+          "steps": [
+            {
+              "op": "chord",
+              "modifier": "Control_L",
+              "key": "l"
+            },
+            {
+              "op": "text",
+              "text": "http://127.0.0.1:37363/"
+            },
+            {
+              "op": "key",
+              "key": "Return"
+            },
+            {
+              "op": "settle",
+              "quiet_ms": 80,
+              "timeout_ms": 500
+            }
+          ],
+          "id": "durable-6708c6e493f148e684039e6a7540f6a9"
+        },
+        "request_id": "9a3ac6ac82824598a1d01957d592d4a5"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+              "op": "submit",
+              "steps": [
+                {
+                  "key": "l",
+                  "modifier": "Control_L",
+                  "op": "chord"
+                },
+                {
+                  "op": "text",
+                  "text": "http://127.0.0.1:37363/"
+                },
+                {
+                  "key": "Return",
+                  "op": "key"
+                },
+                {
+                  "op": "settle",
+                  "quiet_ms": 80,
+                  "timeout_ms": 500
+                }
+              ],
+              "transport_request_id": "9a3ac6ac82824598a1d01957d592d4a5",
+              "valid_until_ns": 59357530920763
+            },
+            "received_ns": 59347597026706,
+            "emit_started_ns": 59347597030489
+          },
+          {
+            "event": "accepted",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "steps": 4,
+            "coordinate_resolutions": 0,
+            "valid_until_ns": 59357530920763,
+            "accepted_ns": 59347607107750,
+            "emit_started_ns": 59347607111674
+          },
+          {
+            "event": "step_started",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 0,
+            "operation": "chord",
+            "issued_ns": 59347618726225,
+            "emit_started_ns": 59347618729611
+          },
+          {
+            "event": "input_admission",
+            "key": "Control_L",
+            "admitted_ns": 59347634763958,
+            "input_ack_ns": 59347635469077,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347635591433
+          },
+          {
+            "event": "input_admission",
+            "key": "l",
+            "admitted_ns": 59347650878035,
+            "input_ack_ns": 59347651144385,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347651254117
+          },
+          {
+            "event": "observation",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 59347677895163,
+            "context_ns": 59347686421616,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/002.png",
+            "image_reused": false,
+            "image_prepare_ns": 23063646,
+            "image_ready_ns": 59347727484396,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 9.072653,
+            "wire_bytes": 1107,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59347734657474
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 0,
+            "completed_ns": 59347743369039,
+            "emit_started_ns": 59347743382393
+          },
+          {
+            "event": "step_started",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 1,
+            "operation": "text",
+            "issued_ns": 59347756222865,
+            "emit_started_ns": 59347756228078
+          },
+          {
+            "event": "input_admission",
+            "key": "h",
+            "admitted_ns": 59347771965922,
+            "input_ack_ns": 59347772626124,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347772789536
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 59347792599308,
+            "input_ack_ns": 59347793039613,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347793249839
+          },
+          {
+            "event": "input_admission",
+            "key": "t",
+            "admitted_ns": 59347808975691,
+            "input_ack_ns": 59347809527334,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347809687875
+          },
+          {
+            "event": "input_admission",
+            "key": "p",
+            "admitted_ns": 59347827631852,
+            "input_ack_ns": 59347828110832,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347828264490
+          },
+          {
+            "event": "input_admission",
+            "key": "Shift_L",
+            "admitted_ns": 59347842642246,
+            "input_ack_ns": 59347843241498,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347843413622
+          },
+          {
+            "event": "input_admission",
+            "key": "semicolon",
+            "admitted_ns": 59347856364818,
+            "input_ack_ns": 59347856989126,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347857294968
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 59347874590312,
+            "input_ack_ns": 59347875033326,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347875207176
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 59347889758093,
+            "input_ack_ns": 59347890277268,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347890467775
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 59347906235409,
+            "input_ack_ns": 59347906787114,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347906966451
+          },
+          {
+            "event": "input_admission",
+            "key": "2",
+            "admitted_ns": 59347920692101,
+            "input_ack_ns": 59347921078940,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347921153725
+          },
+          {
+            "event": "input_admission",
+            "key": "7",
+            "admitted_ns": 59347937018884,
+            "input_ack_ns": 59347937426900,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347937627021
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 59347951077171,
+            "input_ack_ns": 59347951421306,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347951602289
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 59347966577071,
+            "input_ack_ns": 59347966868185,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347966950691
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 59347982192413,
+            "input_ack_ns": 59347982723775,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347982885656
+          },
+          {
+            "event": "input_admission",
+            "key": "0",
+            "admitted_ns": 59347999012597,
+            "input_ack_ns": 59347999369083,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59347999459898
+          },
+          {
+            "event": "input_admission",
+            "key": "period",
+            "admitted_ns": 59348013815874,
+            "input_ack_ns": 59348014179433,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348014266399
+          },
+          {
+            "event": "input_admission",
+            "key": "1",
+            "admitted_ns": 59348028140645,
+            "input_ack_ns": 59348028540914,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348028705550
+          },
+          {
+            "event": "input_admission",
+            "key": "Shift_L",
+            "admitted_ns": 59348044205443,
+            "input_ack_ns": 59348044661351,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348044829273
+          },
+          {
+            "event": "input_admission",
+            "key": "semicolon",
+            "admitted_ns": 59348055274815,
+            "input_ack_ns": 59348055615853,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348055819526
+          },
+          {
+            "event": "input_admission",
+            "key": "3",
+            "admitted_ns": 59348075086812,
+            "input_ack_ns": 59348075536903,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348075654875
+          },
+          {
+            "event": "input_admission",
+            "key": "7",
+            "admitted_ns": 59348090068769,
+            "input_ack_ns": 59348090360917,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348090440589
+          },
+          {
+            "event": "input_admission",
+            "key": "3",
+            "admitted_ns": 59348104462762,
+            "input_ack_ns": 59348104758439,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348104859371
+          },
+          {
+            "event": "input_admission",
+            "key": "6",
+            "admitted_ns": 59348120047974,
+            "input_ack_ns": 59348120383662,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348120574464
+          },
+          {
+            "event": "input_admission",
+            "key": "3",
+            "admitted_ns": 59348135444742,
+            "input_ack_ns": 59348135831830,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348135989569
+          },
+          {
+            "event": "input_admission",
+            "key": "slash",
+            "admitted_ns": 59348151849540,
+            "input_ack_ns": 59348152172083,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348152260799
+          },
+          {
+            "event": "observation",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 1,
+            "sequence": 3,
+            "capture_ns": 59348177190276,
+            "context_ns": 59348187287921,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/003.png",
+            "image_reused": false,
+            "image_prepare_ns": 23210980,
+            "image_ready_ns": 59348240186606,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 9.245969,
+            "wire_bytes": 24822,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348250261734
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 1,
+            "completed_ns": 59348258808781,
+            "emit_started_ns": 59348258813736
+          },
+          {
+            "event": "step_started",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 2,
+            "operation": "key",
+            "issued_ns": 59348272632631,
+            "emit_started_ns": 59348272637582
+          },
+          {
+            "event": "input_admission",
+            "key": "Return",
+            "admitted_ns": 59348286534930,
+            "input_ack_ns": 59348286961862,
+            "valid_until_ns": 59357530920763,
+            "emit_started_ns": 59348287099440
+          },
+          {
+            "event": "observation",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 2,
+            "sequence": 4,
+            "capture_ns": 59348323412658,
+            "context_ns": 59348334398041,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop about:blank - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/003.png",
+            "image_reused": true,
+            "image_prepare_ns": 3040423,
+            "image_ready_ns": 59348349087188,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 17.489908,
+            "wire_bytes": 324,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348366629608
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 2,
+            "completed_ns": 59348381694427,
+            "emit_started_ns": 59348381703854
+          },
+          {
+            "event": "step_started",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 3,
+            "operation": "settle",
+            "issued_ns": 59348397654321,
+            "emit_started_ns": 59348397664425
+          },
+          {
+            "event": "observation",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 3,
+            "sequence": 5,
+            "capture_ns": 59348421977883,
+            "context_ns": 59348431415810,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/005.png",
+            "image_reused": false,
+            "image_prepare_ns": 27602170,
+            "image_ready_ns": 59348494082665,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.511771,
+            "wire_bytes": 24812,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348504356819
+          },
+          {
+            "event": "observation",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 3,
+            "sequence": 6,
+            "capture_ns": 59348546393250,
+            "context_ns": 59348555346986,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 2346739,
+            "image_ready_ns": 59348566612632,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 9.381165,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348577106408
+          },
+          {
+            "event": "observation",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 3,
+            "sequence": 7,
+            "capture_ns": 59348615101679,
+            "context_ns": 59348627338922,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 2143128,
+            "image_ready_ns": 59348637660436,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.573527,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348648159071
+          },
+          {
+            "event": "settle_result",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 3,
+            "reason": "pixel_quiet",
+            "samples": 3,
+            "sequence": 7,
+            "elapsed_ms": 244.032144,
+            "quiet_ms": 80,
+            "timeout_ms": 500,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348658463764
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 3,
+            "completed_ns": 59348671481318,
+            "emit_started_ns": 59348671487521
+          },
+          {
+            "event": "terminal",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59348687855582,
+              "valid_until_ns": 59357530920763
+            },
+            "terminal_ns": 59348687995809,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59348687998914
+          }
+        ],
+        "cursor": 50,
+        "returned_ns": 59348703191226,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "9a3ac6ac82824598a1d01957d592d4a5",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "ca8cd9a9f5c144939bd2be54514dba60": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59347530932906,
+                "event": "clock",
+                "runtime_ns": 59347530920763,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            }
+          },
+          "cursor": 50,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "step": 3,
+            "sequence": 7,
+            "capture_ns": 59348615101679,
+            "context_ns": 59348627338922,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 2143128,
+            "image_ready_ns": 59348637660436,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 5.573527,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348648159071
+          },
+          "observation_cursor": 47,
+          "pending_clock": null,
+          "record_hashes": [
+            "4bd09defa7d5de3780149edd140c0d62dbe4f339a152de10893d7b2924c4c353",
+            "505a1e0da87ca714b4984824b7bf4028cedaf6d254aef00efeef194364270951",
+            "9599b99b7bac06c402bb2f77c4c95cd6d608f5b659352f47ebd8c70b2fd5295e",
+            "30265225900face073f6c3c3fdedca3c4990db0f2e7af54368404b027b6a7509",
+            "c73c86e4b2688e1b7c69bdcb129c2591a09e120e8849be50337e5201ac9a5bdf",
+            "0f725ff23e9dd04fc7e0e2c91c031f64946c03521ff3c68381484354f2ba7f8c",
+            "0eae5739899930a607ff2e12d68114b9cbbc67b13b9adf10a51f4c1e26b12bd6",
+            "4c1ce3b19c52f09a667e36d2082f8f9314cd7dcfd0f0568ccf76ce839e07fc51",
+            "2c41c0240badf5fa2696e370e3d48576b5becc1c48177d9ab2d44d994dde3af8",
+            "afe78bc5d586c72a04fee0bcf147a43b5235b4e2c752982c43e849c7d77749ff",
+            "7d81a7f24d5858dec9637c01b3d2914eb6056538b933162fbde096e3554d23da",
+            "2f6519fa566322dc9860f661cdcf62a9f975cd0e895ce1c626836074336b6656",
+            "13db4229d9f8f01f180886e26e011f997f19c51c53a57e971394d880f1a54698",
+            "4de1fad4c63eca23e236ab81f61a285afbab2c2c423e9c0c4a763ca8f1540423",
+            "ca0071b93d3dca105b2a8ff4fa801510b335a2a0fd200cdb0e881c420d60ef49",
+            "989d596f29eb5f19687f2ed14d023c16999167a19e4123e665c24d1fa227ec50",
+            "8cb362f3cf0870eff6585208629a7433cb7401bfd9286d03048119ba40751c01",
+            "b8a7770fa0d9585a55279bb41237f84644cc17d4913f87c725a40ac58f440b0e",
+            "3ce900fba14b7bb182eaf6bafc6b500b22c55e0f928a3691c378bef82e2a1ef9",
+            "e1055193c37b9e2ae4c9e04a29c2eec221554d0964beb391488f1a57fa651095",
+            "f919bc83ba9af482b7a510ce069a12b7a47439a06f3a9f6717ed3042964e44ec",
+            "6afce5dd85773736c81be997b4679542f2f9ad0f19ee1a2252ff52f52298ce48",
+            "d20e9cdf3bc12f38b17aafc4ac99d3f0f54c482a3153d621590ecedc031e9cd0",
+            "2f8fb8ae6e5b105014d3cce482a4906971bb54107301cfe0b683c08dff0e7099",
+            "1be806a50f54a91185ff4aa6db8304a76baca775995786ff32e3c5c230b7c76d",
+            "8d6152e0f89879672a324a066240f969bffcea770bd5b6ef3b26ffef276c48ae",
+            "473294e083b42c192be9ca94039862c64b5dd330309079226c0e765fb801de46",
+            "55b2923d575bafc28c7af6297012de5329fa936d0919b703e3abcf8d9ba9f6c2",
+            "e7f84c2e2fd9f7ad3832288a957f16c788facc6c5ce1dc56cb1bca7add93844f",
+            "a526ae1df245530699c5c23021ce9ca29ace9430aaa2477411a5b96709149645",
+            "46d997676c1cea7af3672f665fa3bca1bc47c0d6a186abf9586dc49532a80dc4",
+            "3cdf8438371f9e88de7d8976de42f3fa80c2a12331362777ffd0192b2ebe2ac0",
+            "de2408f403c34715821d7136a9504c1c53cb19f140b070b7c3a7b835b486cf27",
+            "558d556a701bdac7f79d28bd6ea325160f351d06ff649a08baee546a8f5ab19b",
+            "8614281d52a099527f37a158cdbb7a0b4c129f7e91c8a4ffec7b198f625a734f",
+            "5f6bc8f3c8a1288c7c1a30eead2816e234b03f56fa110e291c0f57917635bd5d",
+            "165ab36ad3d6766d4fc6f2ff0c6012b4a9f2725e10f297fc8d96db41ff0872de",
+            "1dd3bb39a8395fd93694058417bcadae4721e1d8fac24a9f57021d416b669429",
+            "191eb4d946a48f315f352729f43a00a84d639d71faff645825caf6c1c89f87fb",
+            "68d37c0c807dc7b640987141d90534eb8c5ed2cd2d8c913b8f54b32b02b2a84b",
+            "d008ed10799612c6b55a243d10b98ef2a8d88c82857216d9a660a419f4c319e6",
+            "7c3126405f5c78d833062c60bb7062a4dacfd184821910649d258ee6db587481",
+            "bfcbc0842bcbc7c6db3181a30a2bf418cb5ea5f1c86548940ada649dea3697e9",
+            "883cffb8494a1dd44f8cac30517ede9eeefddf00d26edbd59be769a46e2866ab",
+            "d30cea75c4bec234d2690373f8da975a6fae81d3c55942198af189b353c504f7",
+            "54442eda8e99863115643acb80a6ca8b9e98fae8cbe5747f657878dc419487b2",
+            "cd9aed4036884bef8b3dcd9779334e86e3ad0361df2ba399d130111c6e3c80fa",
+            "60bbb9dc7b969fd0d9bc439f807373627b5978a600a0d903bf6324e5c307bb4d",
+            "06c88d2e8dee4b19a8a7f0176b60408bcb8603ebbd43da0f96f940e37142a0cf",
+            "73cccc56891f8be7584c7bb99143b4cdc38742b22957e6ef1c26b90256df6a5c"
+          ],
+          "session": "/tmp/agent-interface-events-pvpbak2x/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "9a3ac6ac82824598a1d01957d592d4a5",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 4,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59348687855582,
+              "valid_until_ns": 59357530920763
+            },
+            "terminal_ns": 59348687995809,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59348687998914
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59348738297525,
+    "end_ns": 59348782982683,
+    "result": {
+      "request": {
+        "after": 50,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "80fab1906ae94a599aa1dbca5e419475"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "80fab1906ae94a599aa1dbca5e419475"
+            },
+            "received_ns": 59348749708506,
+            "emit_started_ns": 59348749711591
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59348757059582,
+            "sequence": 7,
+            "emit_started_ns": 59348757064878
+          }
+        ],
+        "cursor": 52,
+        "returned_ns": 59348772958533,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "80fab1906ae94a599aa1dbca5e419475",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "ca8cd9a9f5c144939bd2be54514dba60": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59347530932906,
+                "event": "clock",
+                "runtime_ns": 59347530920763,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "80fab1906ae94a599aa1dbca5e419475": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59348757059582,
+                "sequence": 7,
+                "emit_started_ns": 59348757064878
+              },
+              "echo_cursor": 51,
+              "record_cursor": 52
+            }
+          },
+          "cursor": 52,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 5.573527,
+            "capture_ns": 59348615101679,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59348627338922,
+            "emit_started_ns": 59348648159071,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-6708c6e493f148e684039e6a7540f6a9",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/005.png",
+            "image_prepare_ns": 2143128,
+            "image_ready_ns": 59348637660436,
+            "image_reused": true,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 7,
+            "step": 3,
+            "wire_bytes": 326
+          },
+          "observation_cursor": 47,
+          "pending_clock": null,
+          "record_hashes": [
+            "4bd09defa7d5de3780149edd140c0d62dbe4f339a152de10893d7b2924c4c353",
+            "505a1e0da87ca714b4984824b7bf4028cedaf6d254aef00efeef194364270951",
+            "9599b99b7bac06c402bb2f77c4c95cd6d608f5b659352f47ebd8c70b2fd5295e",
+            "30265225900face073f6c3c3fdedca3c4990db0f2e7af54368404b027b6a7509",
+            "c73c86e4b2688e1b7c69bdcb129c2591a09e120e8849be50337e5201ac9a5bdf",
+            "0f725ff23e9dd04fc7e0e2c91c031f64946c03521ff3c68381484354f2ba7f8c",
+            "0eae5739899930a607ff2e12d68114b9cbbc67b13b9adf10a51f4c1e26b12bd6",
+            "4c1ce3b19c52f09a667e36d2082f8f9314cd7dcfd0f0568ccf76ce839e07fc51",
+            "2c41c0240badf5fa2696e370e3d48576b5becc1c48177d9ab2d44d994dde3af8",
+            "afe78bc5d586c72a04fee0bcf147a43b5235b4e2c752982c43e849c7d77749ff",
+            "7d81a7f24d5858dec9637c01b3d2914eb6056538b933162fbde096e3554d23da",
+            "2f6519fa566322dc9860f661cdcf62a9f975cd0e895ce1c626836074336b6656",
+            "13db4229d9f8f01f180886e26e011f997f19c51c53a57e971394d880f1a54698",
+            "4de1fad4c63eca23e236ab81f61a285afbab2c2c423e9c0c4a763ca8f1540423",
+            "ca0071b93d3dca105b2a8ff4fa801510b335a2a0fd200cdb0e881c420d60ef49",
+            "989d596f29eb5f19687f2ed14d023c16999167a19e4123e665c24d1fa227ec50",
+            "8cb362f3cf0870eff6585208629a7433cb7401bfd9286d03048119ba40751c01",
+            "b8a7770fa0d9585a55279bb41237f84644cc17d4913f87c725a40ac58f440b0e",
+            "3ce900fba14b7bb182eaf6bafc6b500b22c55e0f928a3691c378bef82e2a1ef9",
+            "e1055193c37b9e2ae4c9e04a29c2eec221554d0964beb391488f1a57fa651095",
+            "f919bc83ba9af482b7a510ce069a12b7a47439a06f3a9f6717ed3042964e44ec",
+            "6afce5dd85773736c81be997b4679542f2f9ad0f19ee1a2252ff52f52298ce48",
+            "d20e9cdf3bc12f38b17aafc4ac99d3f0f54c482a3153d621590ecedc031e9cd0",
+            "2f8fb8ae6e5b105014d3cce482a4906971bb54107301cfe0b683c08dff0e7099",
+            "1be806a50f54a91185ff4aa6db8304a76baca775995786ff32e3c5c230b7c76d",
+            "8d6152e0f89879672a324a066240f969bffcea770bd5b6ef3b26ffef276c48ae",
+            "473294e083b42c192be9ca94039862c64b5dd330309079226c0e765fb801de46",
+            "55b2923d575bafc28c7af6297012de5329fa936d0919b703e3abcf8d9ba9f6c2",
+            "e7f84c2e2fd9f7ad3832288a957f16c788facc6c5ce1dc56cb1bca7add93844f",
+            "a526ae1df245530699c5c23021ce9ca29ace9430aaa2477411a5b96709149645",
+            "46d997676c1cea7af3672f665fa3bca1bc47c0d6a186abf9586dc49532a80dc4",
+            "3cdf8438371f9e88de7d8976de42f3fa80c2a12331362777ffd0192b2ebe2ac0",
+            "de2408f403c34715821d7136a9504c1c53cb19f140b070b7c3a7b835b486cf27",
+            "558d556a701bdac7f79d28bd6ea325160f351d06ff649a08baee546a8f5ab19b",
+            "8614281d52a099527f37a158cdbb7a0b4c129f7e91c8a4ffec7b198f625a734f",
+            "5f6bc8f3c8a1288c7c1a30eead2816e234b03f56fa110e291c0f57917635bd5d",
+            "165ab36ad3d6766d4fc6f2ff0c6012b4a9f2725e10f297fc8d96db41ff0872de",
+            "1dd3bb39a8395fd93694058417bcadae4721e1d8fac24a9f57021d416b669429",
+            "191eb4d946a48f315f352729f43a00a84d639d71faff645825caf6c1c89f87fb",
+            "68d37c0c807dc7b640987141d90534eb8c5ed2cd2d8c913b8f54b32b02b2a84b",
+            "d008ed10799612c6b55a243d10b98ef2a8d88c82857216d9a660a419f4c319e6",
+            "7c3126405f5c78d833062c60bb7062a4dacfd184821910649d258ee6db587481",
+            "bfcbc0842bcbc7c6db3181a30a2bf418cb5ea5f1c86548940ada649dea3697e9",
+            "883cffb8494a1dd44f8cac30517ede9eeefddf00d26edbd59be769a46e2866ab",
+            "d30cea75c4bec234d2690373f8da975a6fae81d3c55942198af189b353c504f7",
+            "54442eda8e99863115643acb80a6ca8b9e98fae8cbe5747f657878dc419487b2",
+            "cd9aed4036884bef8b3dcd9779334e86e3ad0361df2ba399d130111c6e3c80fa",
+            "60bbb9dc7b969fd0d9bc439f807373627b5978a600a0d903bf6324e5c307bb4d",
+            "06c88d2e8dee4b19a8a7f0176b60408bcb8603ebbd43da0f96f940e37142a0cf",
+            "73cccc56891f8be7584c7bb99143b4cdc38742b22957e6ef1c26b90256df6a5c",
+            "30c54c740857678ab13a9c70475e58ba7cb40b8cdb336158f2c8389b02066d86",
+            "94d38d1559d70eb3131b863760c19a70c4ef7fb3cfb3aacbddc959dd4fe0f47e"
+          ],
+          "session": "/tmp/agent-interface-events-pvpbak2x/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "80fab1906ae94a599aa1dbca5e419475",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59348757059582,
+            "sequence": 7,
+            "emit_started_ns": 59348757064878
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59348805489025,
+    "end_ns": 59348932662549,
+    "result": {
+      "request": {
+        "after": 52,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 8,
+        "action_id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+        "command": {
+          "op": "submit",
+          "expected_sequence": 7,
+          "valid_until_ns": 59358757059582,
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "id": "durable-b4bebb03a4774ac2a548274ce7395a1f"
+        },
+        "request_id": "4d41ec538ff2454195a6e621c0171c13"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 7,
+              "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "4d41ec538ff2454195a6e621c0171c13",
+              "valid_until_ns": 59358757059582
+            },
+            "received_ns": 59348816590638,
+            "emit_started_ns": 59348816595588
+          },
+          {
+            "event": "accepted",
+            "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+            "steps": 1,
+            "coordinate_resolutions": 0,
+            "valid_until_ns": 59358757059582,
+            "accepted_ns": 59348827551380,
+            "emit_started_ns": 59348827556100
+          },
+          {
+            "event": "step_started",
+            "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+            "step": 0,
+            "operation": "observe",
+            "issued_ns": 59348840193831,
+            "emit_started_ns": 59348840196289
+          },
+          {
+            "event": "observation",
+            "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+            "step": 0,
+            "sequence": 8,
+            "capture_ns": 59348865166388,
+            "context_ns": 59348871220094,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 1681271,
+            "image_ready_ns": 59348879316379,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 9.471186,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348887068918
+          },
+          {
+            "event": "step_completed",
+            "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+            "step": 0,
+            "completed_ns": 59348895040205,
+            "emit_started_ns": 59348895048594
+          },
+          {
+            "event": "terminal",
+            "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59348908084767,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59348908176516,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59348908229511
+          }
+        ],
+        "cursor": 58,
+        "returned_ns": 59348923035685,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "4d41ec538ff2454195a6e621c0171c13",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "80fab1906ae94a599aa1dbca5e419475": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59348757064878,
+                "event": "clock",
+                "runtime_ns": 59348757059582,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            },
+            "ca8cd9a9f5c144939bd2be54514dba60": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59347530932906,
+                "event": "clock",
+                "runtime_ns": 59347530920763,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            }
+          },
+          "cursor": 58,
+          "format": "received-continuation-v1",
+          "observation": {
+            "event": "observation",
+            "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+            "step": 0,
+            "sequence": 8,
+            "capture_ns": 59348865166388,
+            "context_ns": 59348871220094,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/005.png",
+            "image_reused": true,
+            "image_prepare_ns": 1681271,
+            "image_ready_ns": 59348879316379,
+            "input_focus_before": 6291459,
+            "input_focus_after": 6291459,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "surface": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ]
+            },
+            "capture_ms": 9.471186,
+            "wire_bytes": 326,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 59348887068918
+          },
+          "observation_cursor": 56,
+          "pending_clock": null,
+          "record_hashes": [
+            "4bd09defa7d5de3780149edd140c0d62dbe4f339a152de10893d7b2924c4c353",
+            "505a1e0da87ca714b4984824b7bf4028cedaf6d254aef00efeef194364270951",
+            "9599b99b7bac06c402bb2f77c4c95cd6d608f5b659352f47ebd8c70b2fd5295e",
+            "30265225900face073f6c3c3fdedca3c4990db0f2e7af54368404b027b6a7509",
+            "c73c86e4b2688e1b7c69bdcb129c2591a09e120e8849be50337e5201ac9a5bdf",
+            "0f725ff23e9dd04fc7e0e2c91c031f64946c03521ff3c68381484354f2ba7f8c",
+            "0eae5739899930a607ff2e12d68114b9cbbc67b13b9adf10a51f4c1e26b12bd6",
+            "4c1ce3b19c52f09a667e36d2082f8f9314cd7dcfd0f0568ccf76ce839e07fc51",
+            "2c41c0240badf5fa2696e370e3d48576b5becc1c48177d9ab2d44d994dde3af8",
+            "afe78bc5d586c72a04fee0bcf147a43b5235b4e2c752982c43e849c7d77749ff",
+            "7d81a7f24d5858dec9637c01b3d2914eb6056538b933162fbde096e3554d23da",
+            "2f6519fa566322dc9860f661cdcf62a9f975cd0e895ce1c626836074336b6656",
+            "13db4229d9f8f01f180886e26e011f997f19c51c53a57e971394d880f1a54698",
+            "4de1fad4c63eca23e236ab81f61a285afbab2c2c423e9c0c4a763ca8f1540423",
+            "ca0071b93d3dca105b2a8ff4fa801510b335a2a0fd200cdb0e881c420d60ef49",
+            "989d596f29eb5f19687f2ed14d023c16999167a19e4123e665c24d1fa227ec50",
+            "8cb362f3cf0870eff6585208629a7433cb7401bfd9286d03048119ba40751c01",
+            "b8a7770fa0d9585a55279bb41237f84644cc17d4913f87c725a40ac58f440b0e",
+            "3ce900fba14b7bb182eaf6bafc6b500b22c55e0f928a3691c378bef82e2a1ef9",
+            "e1055193c37b9e2ae4c9e04a29c2eec221554d0964beb391488f1a57fa651095",
+            "f919bc83ba9af482b7a510ce069a12b7a47439a06f3a9f6717ed3042964e44ec",
+            "6afce5dd85773736c81be997b4679542f2f9ad0f19ee1a2252ff52f52298ce48",
+            "d20e9cdf3bc12f38b17aafc4ac99d3f0f54c482a3153d621590ecedc031e9cd0",
+            "2f8fb8ae6e5b105014d3cce482a4906971bb54107301cfe0b683c08dff0e7099",
+            "1be806a50f54a91185ff4aa6db8304a76baca775995786ff32e3c5c230b7c76d",
+            "8d6152e0f89879672a324a066240f969bffcea770bd5b6ef3b26ffef276c48ae",
+            "473294e083b42c192be9ca94039862c64b5dd330309079226c0e765fb801de46",
+            "55b2923d575bafc28c7af6297012de5329fa936d0919b703e3abcf8d9ba9f6c2",
+            "e7f84c2e2fd9f7ad3832288a957f16c788facc6c5ce1dc56cb1bca7add93844f",
+            "a526ae1df245530699c5c23021ce9ca29ace9430aaa2477411a5b96709149645",
+            "46d997676c1cea7af3672f665fa3bca1bc47c0d6a186abf9586dc49532a80dc4",
+            "3cdf8438371f9e88de7d8976de42f3fa80c2a12331362777ffd0192b2ebe2ac0",
+            "de2408f403c34715821d7136a9504c1c53cb19f140b070b7c3a7b835b486cf27",
+            "558d556a701bdac7f79d28bd6ea325160f351d06ff649a08baee546a8f5ab19b",
+            "8614281d52a099527f37a158cdbb7a0b4c129f7e91c8a4ffec7b198f625a734f",
+            "5f6bc8f3c8a1288c7c1a30eead2816e234b03f56fa110e291c0f57917635bd5d",
+            "165ab36ad3d6766d4fc6f2ff0c6012b4a9f2725e10f297fc8d96db41ff0872de",
+            "1dd3bb39a8395fd93694058417bcadae4721e1d8fac24a9f57021d416b669429",
+            "191eb4d946a48f315f352729f43a00a84d639d71faff645825caf6c1c89f87fb",
+            "68d37c0c807dc7b640987141d90534eb8c5ed2cd2d8c913b8f54b32b02b2a84b",
+            "d008ed10799612c6b55a243d10b98ef2a8d88c82857216d9a660a419f4c319e6",
+            "7c3126405f5c78d833062c60bb7062a4dacfd184821910649d258ee6db587481",
+            "bfcbc0842bcbc7c6db3181a30a2bf418cb5ea5f1c86548940ada649dea3697e9",
+            "883cffb8494a1dd44f8cac30517ede9eeefddf00d26edbd59be769a46e2866ab",
+            "d30cea75c4bec234d2690373f8da975a6fae81d3c55942198af189b353c504f7",
+            "54442eda8e99863115643acb80a6ca8b9e98fae8cbe5747f657878dc419487b2",
+            "cd9aed4036884bef8b3dcd9779334e86e3ad0361df2ba399d130111c6e3c80fa",
+            "60bbb9dc7b969fd0d9bc439f807373627b5978a600a0d903bf6324e5c307bb4d",
+            "06c88d2e8dee4b19a8a7f0176b60408bcb8603ebbd43da0f96f940e37142a0cf",
+            "73cccc56891f8be7584c7bb99143b4cdc38742b22957e6ef1c26b90256df6a5c",
+            "30c54c740857678ab13a9c70475e58ba7cb40b8cdb336158f2c8389b02066d86",
+            "94d38d1559d70eb3131b863760c19a70c4ef7fb3cfb3aacbddc959dd4fe0f47e",
+            "5fba7c2b81f0a24ed8146710ea61c9cc57e81389858b82a2c53f38587b337a13",
+            "a449d37480d6cac2279bf3e0dbd7d47c24c3f280eb4e5c3c34af09e4de809f65",
+            "8963c45ac13354a88b27dd2590c62608a78bc3a0c7ddd6f1533cdd61d15acf7c",
+            "f4d05064231ec574529e9cea921e19aa14140778078e951fba7f5499bda55d7a",
+            "c8df077b0623b8d3c35e808a87705b89d72605dfe12d49661b8a4f83a43bcfc4",
+            "d73226c88c2db9444557cf567b98ecaa2716536dc14d224558beb66b8ede91a9"
+          ],
+          "session": "/tmp/agent-interface-events-pvpbak2x/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "4d41ec538ff2454195a6e621c0171c13",
+          "terminal": {
+            "event": "terminal",
+            "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 59348908084767,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 59348908176516,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 59348908229511
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  },
+  {
+    "begin_ns": 59362428648013,
+    "end_ns": 59362468061003,
+    "result": {
+      "request": {
+        "after": 58,
+        "events": [
+          "clock"
+        ],
+        "timeout": 3,
+        "command": {
+          "op": "clock"
+        },
+        "request_id": "2d46e41a572c425198e5f3c09ce90e87"
+      },
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "2d46e41a572c425198e5f3c09ce90e87"
+            },
+            "received_ns": 59362438097875,
+            "emit_started_ns": 59362438100828
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 59362446246336,
+            "sequence": 8,
+            "emit_started_ns": 59362446284245
+          }
+        ],
+        "cursor": 60,
+        "returned_ns": 59362457595647,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "2d46e41a572c425198e5f3c09ce90e87",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      },
+      "state": {
+        "authority": "none",
+        "continuation": {
+          "authority": "none",
+          "channel_closed": false,
+          "clocks": {
+            "80fab1906ae94a599aa1dbca5e419475": {
+              "echo_cursor": 51,
+              "record": {
+                "emit_started_ns": 59348757064878,
+                "event": "clock",
+                "runtime_ns": 59348757059582,
+                "sequence": 7
+              },
+              "record_cursor": 52
+            },
+            "ca8cd9a9f5c144939bd2be54514dba60": {
+              "echo_cursor": 3,
+              "record": {
+                "emit_started_ns": 59347530932906,
+                "event": "clock",
+                "runtime_ns": 59347530920763,
+                "sequence": 1
+              },
+              "record_cursor": 4
+            },
+            "2d46e41a572c425198e5f3c09ce90e87": {
+              "record": {
+                "event": "clock",
+                "runtime_ns": 59362446246336,
+                "sequence": 8,
+                "emit_started_ns": 59362446284245
+              },
+              "echo_cursor": 59,
+              "record_cursor": 60
+            }
+          },
+          "cursor": 60,
+          "format": "received-continuation-v1",
+          "observation": {
+            "capture_ms": 9.471186,
+            "capture_ns": 59348865166388,
+            "context": [
+              [
+                "windows",
+                "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+              ],
+              [
+                "active_window",
+                6291459
+              ]
+            ],
+            "context_ns": 59348871220094,
+            "emit_started_ns": 59348887068918,
+            "event": "observation",
+            "exact": true,
+            "focus_samples_match": true,
+            "id": "durable-b4bebb03a4774ac2a548274ce7395a1f",
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/compiled-gui-interface-live-01/2-positive/runtime/005.png",
+            "image_prepare_ns": 1681271,
+            "image_ready_ns": 59348879316379,
+            "image_reused": true,
+            "input_focus_after": 6291459,
+            "input_focus_before": 6291459,
+            "pointer_binding": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_after": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "pointer_context_before": {
+              "focus": 6291459,
+              "geometry": [
+                10,
+                10,
+                1050,
+                780
+              ],
+              "surface": 6291459
+            },
+            "semantic_completion": "unknown",
+            "sequence": 8,
+            "step": 0,
+            "wire_bytes": 326
+          },
+          "observation_cursor": 56,
+          "pending_clock": null,
+          "record_hashes": [
+            "4bd09defa7d5de3780149edd140c0d62dbe4f339a152de10893d7b2924c4c353",
+            "505a1e0da87ca714b4984824b7bf4028cedaf6d254aef00efeef194364270951",
+            "9599b99b7bac06c402bb2f77c4c95cd6d608f5b659352f47ebd8c70b2fd5295e",
+            "30265225900face073f6c3c3fdedca3c4990db0f2e7af54368404b027b6a7509",
+            "c73c86e4b2688e1b7c69bdcb129c2591a09e120e8849be50337e5201ac9a5bdf",
+            "0f725ff23e9dd04fc7e0e2c91c031f64946c03521ff3c68381484354f2ba7f8c",
+            "0eae5739899930a607ff2e12d68114b9cbbc67b13b9adf10a51f4c1e26b12bd6",
+            "4c1ce3b19c52f09a667e36d2082f8f9314cd7dcfd0f0568ccf76ce839e07fc51",
+            "2c41c0240badf5fa2696e370e3d48576b5becc1c48177d9ab2d44d994dde3af8",
+            "afe78bc5d586c72a04fee0bcf147a43b5235b4e2c752982c43e849c7d77749ff",
+            "7d81a7f24d5858dec9637c01b3d2914eb6056538b933162fbde096e3554d23da",
+            "2f6519fa566322dc9860f661cdcf62a9f975cd0e895ce1c626836074336b6656",
+            "13db4229d9f8f01f180886e26e011f997f19c51c53a57e971394d880f1a54698",
+            "4de1fad4c63eca23e236ab81f61a285afbab2c2c423e9c0c4a763ca8f1540423",
+            "ca0071b93d3dca105b2a8ff4fa801510b335a2a0fd200cdb0e881c420d60ef49",
+            "989d596f29eb5f19687f2ed14d023c16999167a19e4123e665c24d1fa227ec50",
+            "8cb362f3cf0870eff6585208629a7433cb7401bfd9286d03048119ba40751c01",
+            "b8a7770fa0d9585a55279bb41237f84644cc17d4913f87c725a40ac58f440b0e",
+            "3ce900fba14b7bb182eaf6bafc6b500b22c55e0f928a3691c378bef82e2a1ef9",
+            "e1055193c37b9e2ae4c9e04a29c2eec221554d0964beb391488f1a57fa651095",
+            "f919bc83ba9af482b7a510ce069a12b7a47439a06f3a9f6717ed3042964e44ec",
+            "6afce5dd85773736c81be997b4679542f2f9ad0f19ee1a2252ff52f52298ce48",
+            "d20e9cdf3bc12f38b17aafc4ac99d3f0f54c482a3153d621590ecedc031e9cd0",
+            "2f8fb8ae6e5b105014d3cce482a4906971bb54107301cfe0b683c08dff0e7099",
+            "1be806a50f54a91185ff4aa6db8304a76baca775995786ff32e3c5c230b7c76d",
+            "8d6152e0f89879672a324a066240f969bffcea770bd5b6ef3b26ffef276c48ae",
+            "473294e083b42c192be9ca94039862c64b5dd330309079226c0e765fb801de46",
+            "55b2923d575bafc28c7af6297012de5329fa936d0919b703e3abcf8d9ba9f6c2",
+            "e7f84c2e2fd9f7ad3832288a957f16c788facc6c5ce1dc56cb1bca7add93844f",
+            "a526ae1df245530699c5c23021ce9ca29ace9430aaa2477411a5b96709149645",
+            "46d997676c1cea7af3672f665fa3bca1bc47c0d6a186abf9586dc49532a80dc4",
+            "3cdf8438371f9e88de7d8976de42f3fa80c2a12331362777ffd0192b2ebe2ac0",
+            "de2408f403c34715821d7136a9504c1c53cb19f140b070b7c3a7b835b486cf27",
+            "558d556a701bdac7f79d28bd6ea325160f351d06ff649a08baee546a8f5ab19b",
+            "8614281d52a099527f37a158cdbb7a0b4c129f7e91c8a4ffec7b198f625a734f",
+            "5f6bc8f3c8a1288c7c1a30eead2816e234b03f56fa110e291c0f57917635bd5d",
+            "165ab36ad3d6766d4fc6f2ff0c6012b4a9f2725e10f297fc8d96db41ff0872de",
+            "1dd3bb39a8395fd93694058417bcadae4721e1d8fac24a9f57021d416b669429",
+            "191eb4d946a48f315f352729f43a00a84d639d71faff645825caf6c1c89f87fb",
+            "68d37c0c807dc7b640987141d90534eb8c5ed2cd2d8c913b8f54b32b02b2a84b",
+            "d008ed10799612c6b55a243d10b98ef2a8d88c82857216d9a660a419f4c319e6",
+            "7c3126405f5c78d833062c60bb7062a4dacfd184821910649d258ee6db587481",
+            "bfcbc0842bcbc7c6db3181a30a2bf418cb5ea5f1c86548940ada649dea3697e9",
+            "883cffb8494a1dd44f8cac30517ede9eeefddf00d26edbd59be769a46e2866ab",
+            "d30cea75c4bec234d2690373f8da975a6fae81d3c55942198af189b353c504f7",
+            "54442eda8e99863115643acb80a6ca8b9e98fae8cbe5747f657878dc419487b2",
+            "cd9aed4036884bef8b3dcd9779334e86e3ad0361df2ba399d130111c6e3c80fa",
+            "60bbb9dc7b969fd0d9bc439f807373627b5978a600a0d903bf6324e5c307bb4d",
+            "06c88d2e8dee4b19a8a7f0176b60408bcb8603ebbd43da0f96f940e37142a0cf",
+            "73cccc56891f8be7584c7bb99143b4cdc38742b22957e6ef1c26b90256df6a5c",
+            "30c54c740857678ab13a9c70475e58ba7cb40b8cdb336158f2c8389b02066d86",
+            "94d38d1559d70eb3131b863760c19a70c4ef7fb3cfb3aacbddc959dd4fe0f47e",
+            "5fba7c2b81f0a24ed8146710ea61c9cc57e81389858b82a2c53f38587b337a13",
+            "a449d37480d6cac2279bf3e0dbd7d47c24c3f280eb4e5c3c34af09e4de809f65",
+            "8963c45ac13354a88b27dd2590c62608a78bc3a0c7ddd6f1533cdd61d15acf7c",
+            "f4d05064231ec574529e9cea921e19aa14140778078e951fba7f5499bda55d7a",
+            "c8df077b0623b8d3c35e808a87705b89d72605dfe12d49661b8a4f83a43bcfc4",
+            "d73226c88c2db9444557cf567b98ecaa2716536dc14d224558beb66b8ede91a9",
+            "34b20e5ceecea39d98432853facd60858662261018974fb055164923119d7953",
+            "8006356029545f5c795f1a2add60906f7eab83fd899da072b829a3e9ed2be20f"
+          ],
+          "session": "/tmp/agent-interface-events-pvpbak2x/events.sock"
+        },
+        "format": "durable-submit-v4",
+        "last_resolution": {
+          "request_id": "2d46e41a572c425198e5f3c09ce90e87",
+          "clock": {
+            "event": "clock",
+            "runtime_ns": 59362446246336,
+            "sequence": 8,
+            "emit_started_ns": 59362446284245
+          },
+          "authority": "none"
+        },
+        "pending": null
+      }
+    }
+  }
+]

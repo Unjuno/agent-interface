@@ -1,0 +1,8 @@
+{
+  "invocation": 1,
+  "exit_code": 0,
+  "stdout_sha256": "candidate.stdout.txt (manifested separately)",
+  "stderr": "empty",
+  "command": "docker run --pull=never --rm --platform linux/arm64 --network none --cpus=1 --memory=512m --pids-limit=64 --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=<package>,target=/work,readonly --mount type=bind,source=<formal-01>,target=/out --workdir /work python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b python -B candidate.py /work/results/formal-01/RAW_USED.json.xz /out/candidate.json",
+  "container_removed": true
+}

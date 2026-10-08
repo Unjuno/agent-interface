@@ -1,0 +1,40 @@
+{
+  "schema": "scheduler-cost-import-boundary-container-run-v1",
+  "allocation": "scheduler-cost-import-boundary-2868-20260928-01",
+  "issue": 5044,
+  "phase": "formal",
+  "container": {
+    "runtime": "OrbStack Docker",
+    "id": "da849c12378e6c5da9ea919c7e751c45dc379a2c3a434e64827cef8c7e8dae21",
+    "created_utc": "2026-09-27T20:33:23.594645759Z",
+    "image": "python:3.12-slim-bookworm",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/arm64",
+    "network": "none",
+    "read_only_root": true,
+    "limits": {"cpus": 0.25, "memory": "512m", "pids": 64},
+    "capabilities_dropped": "ALL",
+    "no_new_privileges": true
+  },
+  "command": [
+    "docker", "run", "--rm", "--pull=never", "--platform=linux/arm64", "--network=none",
+    "--read-only", "--cpus=0.25", "--memory=512m", "--pids-limit=64",
+    "--cap-drop=ALL", "--security-opt=no-new-privileges",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/src,destination=/src,readonly",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/input,destination=/input,readonly",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/results/formal01,destination=/out",
+    "--tmpfs", "/tmp:rw,nosuid,nodev,size=16m",
+    "python:3.12-slim-bookworm", "python", "-B", "/src/runner.py",
+    "--input", "/input/scenarios.json", "--formal", "/out"
+  ],
+  "exit_code": 0,
+  "invocation_count": 1,
+  "retry_count": 0,
+  "output": {
+    "path": "raw.json",
+    "bytes": 2928716,
+    "sha256": "a9999afb3c44a5b358ddd8b15714bc5afde4fdb1565226a31be253044e9d17cf",
+    "rows": 225,
+    "worker_processes": 225
+  }
+}

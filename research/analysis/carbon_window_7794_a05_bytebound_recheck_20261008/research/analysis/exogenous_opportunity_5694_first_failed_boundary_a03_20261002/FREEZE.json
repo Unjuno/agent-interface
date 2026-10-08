@@ -1,0 +1,67 @@
+{
+  "allocation_id": "EXOGENOUS-OPPORTUNITY-BOUNDARY-5694-A03-20261002-01",
+  "main_sha": "a11b1d811aea94d65a7c7a66073f1c9a7d024624",
+  "branch": "research/exogenous-opportunity-5694-first-failed-boundary-a03-20261002",
+  "artifact_path": "research/analysis/exogenous_opportunity_5694_first_failed_boundary_a03_20261002/",
+  "owner": "Codex desktop autonomous-research task; native Windows CPU only",
+  "window_utc": {
+    "start": "2026-10-02T19:40:00Z",
+    "stop": "2026-10-02T19:55:00Z"
+  },
+  "runtime": {
+    "platform": "Windows AMD64",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr 2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "dependencies": "Python standard library only",
+    "container": null,
+    "gpu": false,
+    "network": false,
+    "gui_or_input": false
+  },
+  "budget": {
+    "candidate_invocations": 1,
+    "independent_auditor_invocations": 1,
+    "retries": 0,
+    "candidate_command": "python -B candidate.py --fixture fixture.json --out execution/formal-01/candidate.raw.json",
+    "auditor_command": "python -B auditor.py --fixture fixture.json --raw execution/formal-01/candidate.raw.json --out execution/formal-01/audit.json"
+  },
+  "output_collision_check_utc": "2026-10-02T19:36:03Z",
+  "output_paths_absent_at_check": [
+    "execution/formal-01/candidate.raw.json",
+    "execution/formal-01/audit.json"
+  ],
+  "fixture": {
+    "sha256": "eb0c8e3688589e245e9ed085a51a968c3bbce0a6c61651c17a75e804c709a8b3",
+    "bytes": 4083,
+    "episodes": 9,
+    "exogenous_opportunities": 8,
+    "ledger_rows_including_not_applicable": 9,
+    "random_seed": null
+  },
+  "sha256": {
+    "candidate.py": "59c2259dd6ff2cdbab8befae92294a8d8fd9950da3930008fbc9777edf2e8fa3",
+    "auditor.py": "688ea5bf6dee17a57713b76034b3b0cce1f545b2ab1365b3ab604d36f6c16077",
+    "fixture.json": "eb0c8e3688589e245e9ed085a51a968c3bbce0a6c61651c17a75e804c709a8b3",
+    "test_protocol.py": "65fda149ef9e3dd71b550efe13d5e2b84cbf42ccd50171b6a0f0d5071d455640",
+    "PREREGISTRATION.md": "1714c1bfc1a0f0adb3e4d42e4dc67ae8e560986f0362556865b2e5542215696a",
+    "PRE_FORMAL.md": "d6d2b1d5c59f9036d3e9c75917228fe34951894b7fdbb6d458d904f2a03ad9f1"
+  },
+  "construction": {
+    "command": "python -B -m unittest discover -s . -p 'test_*.py' -v",
+    "final_tests": "8/8 PASS",
+    "py_compile": "PASS",
+    "pre_freeze_initial_test_failure": "7/8; receipt-detail label mismatch; corrected before this freeze and preserved in PRE_FORMAL.md"
+  },
+  "decision": {
+    "expected_phase_hit": "eligible_effect",
+    "expected_phase_miss": "not_acquired",
+    "expected_planner_stall": "delivered_no_decision",
+    "expected_censoring": "UNKNOWN/right_censored",
+    "expected_clock_unsynced": "UNKNOWN/clock_unsynced",
+    "expected_safe_stop": "decision_no_eligible_effect/safe_stop",
+    "expected_no_clock": "NOT_APPLICABLE",
+    "raw_corruption_controls": 5,
+    "success": "PASS_METHOD_SCOPED",
+    "failure": "FAIL_METHOD or STOP, per preregistration"
+  },
+  "scope": "Authored finite measurement-method fixture only; no live coordinated-omission, GUI, task, safety, human-tempo, model, product, or performance claim."
+}

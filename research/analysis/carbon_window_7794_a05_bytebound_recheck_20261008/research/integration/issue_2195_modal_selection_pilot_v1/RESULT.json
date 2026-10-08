@@ -1,0 +1,39 @@
+{
+  "schema": "agent-interface/issue-2195-modal-selection-pilot-result-v1",
+  "issue": 2195,
+  "freeze": "FREEZE.json",
+  "decision": "HOLD_PILOT_INFERENCE_TIMEOUT",
+  "requests_planned": 6,
+  "requests_started": 1,
+  "responses_received": 0,
+  "client_timeouts": 1,
+  "not_started": 5,
+  "retries": 0,
+  "task_input_dispatches": 0,
+  "model_action_recommendations_executed": 0,
+  "raw_output": {
+    "path": "evidence/responses.json",
+    "sha256": "d0fcc3bb0c9e427a45bfdc42b9abffb7ba7b14a11c997c89dc0282bd670affa9",
+    "records": 1,
+    "record_case_id": "RECOVERED_MODAL_EXACT",
+    "record_has_model_response": false,
+    "error": "The request was canceled due to the configured HttpClient.Timeout of 240 seconds elapsing."
+  },
+  "independent_audit": {
+    "freeze_hashes_rechecked_before_inference": true,
+    "raw_record_count_matches_started_requests": true,
+    "ollama_still_computing_after_client_timeout": true,
+    "ollama_eventually_unloaded_without_manual_termination": true,
+    "decision_rows_scored": 0,
+    "posthoc_read_only_integrity_audit": {
+      "path": "AUDIT_READ_ONLY.json",
+      "disposition": "PASS_HOLD_EVIDENCE_INTEGRITY",
+      "checks_passed": 18,
+      "sha256": "f25720cdd7ad12a1418e13b6c0ca783ca1ad8470517b556d1073ac7ac3867d30",
+      "auditor": "audit_hold_evidence.ps1",
+      "auditor_sha256": "e0c7a34d2f1d2b8fc9de981f41f81fa46cf10fa52b1bf7a2fc23431d5d3f5ca5",
+      "scope": "read-only integrity re-audit; no model response or scientific decision rows"
+    }
+  },
+  "scope": "local construction feasibility only; no model-selection result and no Issue #2195 acceptance"
+}

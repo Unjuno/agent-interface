@@ -1,0 +1,121 @@
+{
+  "controls": {
+    "preexisting_output": {
+      "cleanup": {
+        "clean": true,
+        "final_absent": false,
+        "stage_leftovers": []
+      },
+      "error": {
+        "message": "output must be absent: /tmp/tmpmvmz4oii/ready",
+        "type": "ValueError"
+      }
+    },
+    "symlink_jar": {
+      "cleanup": {
+        "clean": false,
+        "final_absent": false,
+        "stage_leftovers": []
+      },
+      "error": null
+    },
+    "wrong_jar": {
+      "cleanup": {
+        "clean": true,
+        "final_absent": true,
+        "stage_leftovers": []
+      },
+      "error": {
+        "message": "identity mismatch: /tmp/tmpllemv299/jar-src: bytes=22 sha256=bba9b87f816f3380f6c4f1c72fac138a1ae18b2229379659d3655635389bbd84",
+        "type": "ValueError"
+      }
+    },
+    "wrong_save": {
+      "cleanup": {
+        "clean": true,
+        "final_absent": true,
+        "stage_leftovers": []
+      },
+      "error": {
+        "message": "identity mismatch: /tmp/tmp22nm6t2k/save-src: bytes=23 sha256=bac9803ff994d7254fa43c63b64dc9313888b4a3f547ebc512d9513223899b2b",
+        "type": "ValueError"
+      }
+    }
+  },
+  "decision": "FAIL_MINDUSTRY_ASSET_MATERIALIZER_MECHANICS",
+  "formal_invocation": 1,
+  "formal_reruns": 0,
+  "gates": {
+    "good_status": true,
+    "jar_exact": true,
+    "manifest_exact": true,
+    "preexisting_refused_unchanged": true,
+    "published_files": false,
+    "save_exact": true,
+    "symlink_rejected_clean": false,
+    "wrong_jar_rejected_clean": true,
+    "wrong_save_rejected_clean": true
+  },
+  "good": {
+    "jar": {
+      "bytes": 22,
+      "sha256": "46016cca4041e609c8ac17c5381a7ad73ca0cd4f52fd9f94deb2e6cfd3cba9a5"
+    },
+    "manifest": {
+      "files": {
+        "jar": {
+          "bytes": 22,
+          "name": "Mindustry-v160.2-complete.jar",
+          "sha256": "46016cca4041e609c8ac17c5381a7ad73ca0cd4f52fd9f94deb2e6cfd3cba9a5"
+        },
+        "save": {
+          "bytes": 23,
+          "name": "canonical.msav",
+          "sha256": "588fe7a5937427af7f2d5797e89d91668312d413024e34008cb897dda5f7919e"
+        }
+      },
+      "schema": "mindustry_asset_materialized_v1",
+      "status": "ASSETS_READY"
+    },
+    "manifest_file": {
+      "files": {
+        "jar": {
+          "bytes": 22,
+          "name": "Mindustry-v160.2-complete.jar",
+          "sha256": "46016cca4041e609c8ac17c5381a7ad73ca0cd4f52fd9f94deb2e6cfd3cba9a5"
+        },
+        "save": {
+          "bytes": 23,
+          "name": "canonical.msav",
+          "sha256": "588fe7a5937427af7f2d5797e89d91668312d413024e34008cb897dda5f7919e"
+        }
+      },
+      "schema": "mindustry_asset_materialized_v1",
+      "status": "ASSETS_READY"
+    },
+    "published_files": [
+      "MANIFEST.json",
+      "Mindustry-v160.2-complete.jar",
+      "canonical.msav"
+    ],
+    "save": {
+      "bytes": 23,
+      "sha256": "588fe7a5937427af7f2d5797e89d91668312d413024e34008cb897dda5f7919e"
+    }
+  },
+  "production_identities": {
+    "jar": {
+      "bytes": 87022576,
+      "name": "Mindustry-v160.2-complete.jar",
+      "sha256": "7f210295dfffb4c17b582b27bab41f4dde83f557f00f0877572fdac943f40539"
+    },
+    "save": {
+      "git_blob": "7663b25633d853a257fbb407723fe85579120111",
+      "name": "canonical.msav",
+      "sha256": "8fff67b0c130ee59a3838c92754b73225a506902bd4838dcc3f1fb5be286cbed"
+    }
+  },
+  "schema": "mindustry_asset_materializer_result_v1",
+  "scope": "offline materialization mechanics only; no real Mindustry asset, GUI, model, or live result",
+  "task": "MINDUSTRY-ASSET-MATERIALIZER-20260917-001"
+}

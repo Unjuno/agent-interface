@@ -1,0 +1,103 @@
+{
+  "schema": "map01-occurrence-key-occupancy-cases-v1",
+  "allocation_id": "MAP01-OCCURRENCE-KEY-OCCUPANCY-59-T0-20261001-01",
+  "cases": [
+    {
+      "case_id": "single_w",
+      "expected_class": "bounded",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"release_sync_ns":140,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":200,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "repeat_w_twice",
+      "expected_class": "bounded",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"release_sync_ns":140,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-2","key":"W","press_request_ns":200,"press_sync_ns":210,"down_sample_ns":211,"release_request_ns":230,"release_sync_ns":240,"up_sample_ns":241,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":300,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "repeat_w_three",
+      "expected_class": "bounded",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"release_sync_ns":140,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-2","key":"W","press_request_ns":200,"press_sync_ns":210,"down_sample_ns":211,"release_request_ns":230,"release_sync_ns":240,"up_sample_ns":241,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-3","key":"W","press_request_ns":300,"press_sync_ns":310,"down_sample_ns":311,"release_request_ns":330,"release_sync_ns":340,"up_sample_ns":341,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":400,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "interleaved_w_space_w",
+      "expected_class": "bounded",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":140,"release_sync_ns":150,"up_sample_ns":151,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"space-1","key":"SPACE","press_request_ns":120,"press_sync_ns":125,"down_sample_ns":126,"release_request_ns":170,"release_sync_ns":175,"up_sample_ns":176,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-2","key":"W","press_request_ns":200,"press_sync_ns":205,"down_sample_ns":206,"release_request_ns":240,"release_sync_ns":245,"up_sample_ns":246,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":300,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "missing_interval_id",
+      "expected_class": "unknown",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"release_sync_ns":140,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"key":"W","press_request_ns":200,"press_sync_ns":210,"down_sample_ns":211,"release_request_ns":230,"release_sync_ns":240,"up_sample_ns":241,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":300,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "duplicate_interval_id",
+      "expected_class": "unknown",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"release_sync_ns":140,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":200,"press_sync_ns":210,"down_sample_ns":211,"release_request_ns":230,"release_sync_ns":240,"up_sample_ns":241,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":300,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "ambiguous_same_key_overlap",
+      "expected_class": "unknown",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":105,"down_sample_ns":106,"release_request_ns":160,"release_sync_ns":165,"up_sample_ns":166,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-2","key":"W","press_request_ns":150,"press_sync_ns":151,"down_sample_ns":152,"release_request_ns":200,"release_sync_ns":205,"up_sample_ns":206,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":300,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "cross_action_interval",
+      "expected_class": "unknown",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"release_sync_ns":140,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"key_interval","action_id":"act-2","epoch":9,"interval_id":"w-2","key":"W","press_request_ns":200,"press_sync_ns":210,"down_sample_ns":211,"release_request_ns":230,"release_sync_ns":240,"up_sample_ns":241,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":300,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "nonempty_terminal",
+      "expected_class": "unknown",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"release_sync_ns":140,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":200,"keys_down":["W"],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "boolean_timestamp",
+      "expected_class": "unknown",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":true,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"release_sync_ns":140,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":200,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    },
+    {
+      "case_id": "missing_release_ack",
+      "expected_class": "unknown",
+      "events": [
+        {"kind":"key_interval","action_id":"act-1","epoch":9,"interval_id":"w-1","key":"W","press_request_ns":100,"press_sync_ns":110,"down_sample_ns":111,"release_request_ns":130,"up_sample_ns":141,"source":"input-owner-v11"},
+        {"kind":"verified_empty","action_id":"act-1","epoch":9,"timestamp_ns":200,"keys_down":[],"source":"xquerykeymap"}
+      ]
+    }
+  ]
+}

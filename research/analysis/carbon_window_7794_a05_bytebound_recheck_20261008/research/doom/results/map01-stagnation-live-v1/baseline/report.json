@@ -1,0 +1,1472 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 40,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "330874d3af05b33bb2bed39d7d9d359b117425b3a7e9d01fd470f1044a5183c9",
+      "action": {
+        "assessment": "Corridor ahead is clear and unchanged; advance toward the doorway.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 81,
+        "reasoning_output_tokens": 37
+      },
+      "model_ns": 6041972999,
+      "model_session_id": "01a0a0ab-50cb-7000-9cf5-4d03c78600d4",
+      "controller_model_started_ns": 7424779556760,
+      "controller_model_ended_ns": 7430922513980,
+      "model_image_to_plan_accept_ns": 6540815303,
+      "fresh_observation_to_plan_accept_ns": 314767146,
+      "fresh_sequence_at_plan": 21,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/028.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "f65655be3ade469b1c32df5b5ad03b00976b78b6668ab6e55de076bc16171eba",
+      "action": {
+        "assessment": "Entered a larger room; no enemies visible. Continue forward toward the central structure.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9538,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 108,
+        "reasoning_output_tokens": 61
+      },
+      "model_ns": 7612501981,
+      "model_session_id": "01a0a0ab-50cb-7000-9cf5-4d03c78600d4",
+      "controller_model_started_ns": 7432213160725,
+      "controller_model_ended_ns": 7439933489088,
+      "model_image_to_plan_accept_ns": 8185826670,
+      "fresh_observation_to_plan_accept_ns": 208584282,
+      "fresh_sequence_at_plan": 55,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/060.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "1ed38475712f13830d6154ee9f91ce8a66e40e8bd632cab40a409f98793b7fca",
+      "action": {
+        "assessment": "At a prominent ACM wall panel or door directly ahead; activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10120,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 67,
+        "reasoning_output_tokens": 22
+      },
+      "model_ns": 6615111325,
+      "model_session_id": "01a0a0ab-50cb-7000-9cf5-4d03c78600d4",
+      "controller_model_started_ns": 7440995783065,
+      "controller_model_ended_ns": 7447704252544,
+      "model_image_to_plan_accept_ns": 7204330489,
+      "fresh_observation_to_plan_accept_ns": 135974437,
+      "fresh_sequence_at_plan": 84,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/083.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "c1937f542d9cf1e0d9bbe5edd6be31ddfab642d5b3aaf2ff545f9e61a8e27be5",
+      "action": {
+        "assessment": "The panel did not open; now too close to the wall. Turn left to search for the route onward.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10661,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 95,
+        "reasoning_output_tokens": 41
+      },
+      "model_ns": 7130830631,
+      "model_session_id": "01a0a0ab-50cb-7000-9cf5-4d03c78600d4",
+      "controller_model_started_ns": 7448361675957,
+      "controller_model_ended_ns": 7455623401658,
+      "model_image_to_plan_accept_ns": 7723192636,
+      "fresh_observation_to_plan_accept_ns": 96541003,
+      "fresh_sequence_at_plan": 113,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 4,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/116.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-4/temporal-sheet.png",
+      "model_image_sha256": "abf16872b0e3029a7059f43304966c8653899991b4b730680587c73184ce6cba",
+      "action": {
+        "assessment": "At a close wall or doorway with no visible threat; make a small turn to search for an exit or usable control.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 151,
+        "reasoning_output_tokens": 95
+      },
+      "model_ns": 7970947792,
+      "model_session_id": "01a0a0ab-cca2-7073-b33e-1602473a98f8",
+      "controller_model_started_ns": 7456481730993,
+      "controller_model_ended_ns": 7464558170748,
+      "model_image_to_plan_accept_ns": 7920399672,
+      "fresh_observation_to_plan_accept_ns": 104255202,
+      "fresh_sequence_at_plan": 147,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 5,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/151.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-5/temporal-sheet.png",
+      "model_image_sha256": "12660f627b71004691d72900e0cbd19b64fcd9fdf5dd4224da00e751987d83f8",
+      "action": {
+        "assessment": "The small right turn exposed only the side wall; re-center toward the AGM doorway and try using it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9608,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 60
+      },
+      "model_ns": 7331611013,
+      "model_session_id": "01a0a0ab-cca2-7073-b33e-1602473a98f8",
+      "controller_model_started_ns": 7465479935591,
+      "controller_model_ended_ns": 7472913826054,
+      "model_image_to_plan_accept_ns": 7497586974,
+      "fresh_observation_to_plan_accept_ns": 188463825,
+      "fresh_sequence_at_plan": 178,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 6,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/181.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-6/temporal-sheet.png",
+      "model_image_sha256": "8172339b0c8a05e5f901bd0304d63c75832a764fe0f4de6bad151f202a4308b2",
+      "action": {
+        "assessment": "The view is stalled against the AGM wall, so rotate farther left and move away to reorient in the corridor.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10203,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 93,
+        "reasoning_output_tokens": 30
+      },
+      "model_ns": 8761606235,
+      "model_session_id": "01a0a0ab-cca2-7073-b33e-1602473a98f8",
+      "controller_model_started_ns": 7473890137628,
+      "controller_model_ended_ns": 7482765769279,
+      "model_image_to_plan_accept_ns": 8655186310,
+      "fresh_observation_to_plan_accept_ns": 104224101,
+      "fresh_sequence_at_plan": 216,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 7,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/225.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-7/temporal-sheet.png",
+      "model_image_sha256": "7695877f094b4fb763e470f20d82cc067e75cf5ca47fc857adda967ff95f2b77",
+      "action": {
+        "assessment": "The last movement shifted into a close side wall/light panel; turn left to face the passage and advance cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10770,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 111,
+        "reasoning_output_tokens": 49
+      },
+      "model_ns": 8403041813,
+      "model_session_id": "01a0a0ab-cca2-7073-b33e-1602473a98f8",
+      "controller_model_started_ns": 7484203705703,
+      "controller_model_ended_ns": 7492702445793,
+      "model_image_to_plan_accept_ns": 8504002115,
+      "fresh_observation_to_plan_accept_ns": 262908824,
+      "fresh_sequence_at_plan": 254,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 8,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/263.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-8/temporal-sheet.png",
+      "model_image_sha256": "0ff03b4bac805d15a9267c9e8f43d2d2fef123301b46e5787318dfb8cee0e8ce",
+      "action": {
+        "assessment": "Stalled against a wall; turn away and advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 128,
+        "reasoning_output_tokens": 77
+      },
+      "model_ns": 7682194422,
+      "model_session_id": "01a0a0ac-5f89-7c23-8f2c-538eacf34099",
+      "controller_model_started_ns": 7494118858053,
+      "controller_model_ended_ns": 7501903645818,
+      "model_image_to_plan_accept_ns": 6860751320,
+      "fresh_observation_to_plan_accept_ns": 200102377,
+      "fresh_sequence_at_plan": 291,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 9,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/301.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-9/temporal-sheet.png",
+      "model_image_sha256": "00f2250c297dc1948cd0a3350ac1c95aa73a5d0e25bbdedfbaae3cac389d88d4",
+      "action": {
+        "assessment": "Still pressed against the wall; reverse the turn and back out.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "backward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9585,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 104,
+        "reasoning_output_tokens": 50
+      },
+      "model_ns": 7595180155,
+      "model_session_id": "01a0a0ac-5f89-7c23-8f2c-538eacf34099",
+      "controller_model_started_ns": 7503352699090,
+      "controller_model_ended_ns": 7511027114036,
+      "model_image_to_plan_accept_ns": 8027278540,
+      "fresh_observation_to_plan_accept_ns": 109942090,
+      "fresh_sequence_at_plan": 329,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 10,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/338.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-10/temporal-sheet.png",
+      "model_image_sha256": "eb76c2dd9e1271155ab6488bb35706df478361ef29dbfa06816eea79d7fa401e",
+      "action": {
+        "assessment": "The corridor is now visible; move forward cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10163,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 104,
+        "reasoning_output_tokens": 63
+      },
+      "model_ns": 8045769145,
+      "model_session_id": "01a0a0ac-5f89-7c23-8f2c-538eacf34099",
+      "controller_model_started_ns": 7512318328863,
+      "controller_model_ended_ns": 7520461697468,
+      "model_image_to_plan_accept_ns": 8506596854,
+      "fresh_observation_to_plan_accept_ns": 274888648,
+      "fresh_sequence_at_plan": 366,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 11,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/371.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-11/temporal-sheet.png",
+      "model_image_sha256": "ff66a029384fc08049222f9abe493380cc76ac15864cd8e45003552e5fb85dd3",
+      "action": {
+        "assessment": "Stalled against the wall; turn left toward the visible corridor and advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10741,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 88,
+        "reasoning_output_tokens": 33
+      },
+      "model_ns": 8484467510,
+      "model_session_id": "01a0a0ac-5f89-7c23-8f2c-538eacf34099",
+      "controller_model_started_ns": 7521336117518,
+      "controller_model_ended_ns": 7529905109394,
+      "model_image_to_plan_accept_ns": 8926978446,
+      "fresh_observation_to_plan_accept_ns": 291730435,
+      "fresh_sequence_at_plan": 400,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 12,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/410.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-12/temporal-sheet.png",
+      "model_image_sha256": "bf264136d159ecfc9ea0b35f1b6a80c570549150d640785860a2937e7330ad6c",
+      "action": {
+        "assessment": "Facing a wall with no visible threat; turn away and advance cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 130,
+        "reasoning_output_tokens": 59
+      },
+      "model_ns": 7220773573,
+      "model_session_id": "01a0a0ac-f0e7-7a93-9c66-590aa50ab80c",
+      "controller_model_started_ns": 7531373830187,
+      "controller_model_ended_ns": 7538680480878,
+      "model_image_to_plan_accept_ns": 7697409779,
+      "fresh_observation_to_plan_accept_ns": 193585206,
+      "fresh_sequence_at_plan": 435,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 13,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/452.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-13/temporal-sheet.png",
+      "model_image_sha256": "12260136f9bc4f73c92b065df8f9b19a4e6cd8fee5b2ce2ea281407c54ce19ea",
+      "action": {
+        "assessment": "The view is pressed against a wall near a corner; turn left and move away cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9587,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 118,
+        "reasoning_output_tokens": 43
+      },
+      "model_ns": 7266545078,
+      "model_session_id": "01a0a0ac-f0e7-7a93-9c66-590aa50ab80c",
+      "controller_model_started_ns": 7540970297446,
+      "controller_model_ended_ns": 7548324433045,
+      "model_image_to_plan_accept_ns": 5805239704,
+      "fresh_observation_to_plan_accept_ns": 75463906,
+      "fresh_sequence_at_plan": 479,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 14,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/496.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-14/temporal-sheet.png",
+      "model_image_sha256": "ce42a8236bc9f5033d61b23fe571f7c95c00d5005f46f240ae90f66ac9df9c4d",
+      "action": {
+        "assessment": "The temporal sheet shows continued wall contact and a stall; reverse orientation decisively, then advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10179,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 92,
+        "reasoning_output_tokens": 24
+      },
+      "model_ns": 8281023942,
+      "model_session_id": "01a0a0ac-f0e7-7a93-9c66-590aa50ab80c",
+      "controller_model_started_ns": 7550574569609,
+      "controller_model_ended_ns": 7558948284643,
+      "model_image_to_plan_accept_ns": 8695302285,
+      "fresh_observation_to_plan_accept_ns": 139898018,
+      "fresh_sequence_at_plan": 526,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 15,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/541.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-15/temporal-sheet.png",
+      "model_image_sha256": "02e95b6cb9c26c9fa168c1c4f8fa9199a626f97fe4455ae009f7672c38534a8b",
+      "action": {
+        "assessment": "A bright door or lift panel is visible on the right; approach and activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10745,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 116,
+        "reasoning_output_tokens": 43
+      },
+      "model_ns": 8724011652,
+      "model_session_id": "01a0a0ac-f0e7-7a93-9c66-590aa50ab80c",
+      "controller_model_started_ns": 7560970189079,
+      "controller_model_ended_ns": 7569781625003,
+      "model_image_to_plan_accept_ns": 8716182258,
+      "fresh_observation_to_plan_accept_ns": 331263679,
+      "fresh_sequence_at_plan": 572,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 16,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/588.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-16/temporal-sheet.png",
+      "model_image_sha256": "c18f50e30dbf6f00dc84f016a0df7c3e6ab364bbf30c19908c56212031544ec1",
+      "action": {
+        "assessment": "Facing a tight corner or wall; make a small rightward correction to search for an opening.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 110,
+        "reasoning_output_tokens": 59
+      },
+      "model_ns": 6673715185,
+      "model_session_id": "01a0a0ad-8f8b-7573-9ff3-2dd50961c0f9",
+      "controller_model_started_ns": 7571977130316,
+      "controller_model_ended_ns": 7578748206423,
+      "model_image_to_plan_accept_ns": 6992023146,
+      "fresh_observation_to_plan_accept_ns": 104427262,
+      "fresh_sequence_at_plan": 612,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 17,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/616.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-17/temporal-sheet.png",
+      "model_image_sha256": "074a24c93feecb8a83303346c179c4c37811c2ebaac43ae40d61703abc5a415f",
+      "action": {
+        "assessment": "The rightward turn reveals a likely passage or marked wall ahead; advance cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9567,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 123,
+        "reasoning_output_tokens": 76
+      },
+      "model_ns": 7653350145,
+      "model_session_id": "01a0a0ad-8f8b-7573-9ff3-2dd50961c0f9",
+      "controller_model_started_ns": 7579487948293,
+      "controller_model_ended_ns": 7587238275804,
+      "model_image_to_plan_accept_ns": 7676692551,
+      "fresh_observation_to_plan_accept_ns": 170689248,
+      "fresh_sequence_at_plan": 644,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 18,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/649.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-18/temporal-sheet.png",
+      "model_image_sha256": "e179ad9c859b067adc559a0582bed740caa4f207a77dd7dedfbd72689b4e9d91",
+      "action": {
+        "assessment": "Now pressed close to the marked brown wall; turn right to reorient away from it and find the corridor.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10164,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 92,
+        "reasoning_output_tokens": 38
+      },
+      "model_ns": 6339413998,
+      "model_session_id": "01a0a0ad-8f8b-7573-9ff3-2dd50961c0f9",
+      "controller_model_started_ns": 7588122652661,
+      "controller_model_ended_ns": 7594551192474,
+      "model_image_to_plan_accept_ns": 6779948763,
+      "fresh_observation_to_plan_accept_ns": 337539639,
+      "fresh_sequence_at_plan": 671,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 19,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/674.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-19/temporal-sheet.png",
+      "model_image_sha256": "e8ce1ccd22b1e8c4932d40a482c4f04657f5614503e1d1f3de910be450fbe972",
+      "action": {
+        "assessment": "A barred doorway or interactive structure is now directly beside the player; try opening it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10730,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 72,
+        "reasoning_output_tokens": 24
+      },
+      "model_ns": 6351852716,
+      "model_session_id": "01a0a0ad-8f8b-7573-9ff3-2dd50961c0f9",
+      "controller_model_started_ns": 7595240423924,
+      "controller_model_ended_ns": 7601688422658,
+      "model_image_to_plan_accept_ns": 6657651993,
+      "fresh_observation_to_plan_accept_ns": 303747333,
+      "fresh_sequence_at_plan": 697,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 20,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/700.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-20/temporal-sheet.png",
+      "model_image_sha256": "4f1d0300c28cd785ba1d49fb0ea331bc6592e87df3964acfaf2b414ac299a6fb",
+      "action": {
+        "assessment": "Entering an open corridor; no immediate threat visible. Advance carefully.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 92,
+        "reasoning_output_tokens": 48
+      },
+      "model_ns": 6790246285,
+      "model_session_id": "01a0a0ae-060e-7e73-822c-18b5712e2c78",
+      "controller_model_started_ns": 7602337218214,
+      "controller_model_ended_ns": 7609218034675,
+      "model_image_to_plan_accept_ns": 7298709035,
+      "fresh_observation_to_plan_accept_ns": 159541158,
+      "fresh_sequence_at_plan": 723,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 21,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/730.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-21/temporal-sheet.png",
+      "model_image_sha256": "e6c3da1b82c6e714100078a6981c912eb77ac5939fccba30ca10c0884448c2d0",
+      "action": {
+        "assessment": "The advance reached a wall or closed side panel; correct orientation left toward the corridor.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9549,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 42
+      },
+      "model_ns": 7540087289,
+      "model_session_id": "01a0a0ae-060e-7e73-822c-18b5712e2c78",
+      "controller_model_started_ns": 7610416487463,
+      "controller_model_ended_ns": 7618059807529,
+      "model_image_to_plan_accept_ns": 7307788366,
+      "fresh_observation_to_plan_accept_ns": 320930178,
+      "fresh_sequence_at_plan": 757,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 22,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/765.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-22/temporal-sheet.png",
+      "model_image_sha256": "a50279fb20d8fce39760f2ce5a9e0baa5a03ebeb46f6a3a6add24d8881952b20",
+      "action": {
+        "assessment": "Movement is stalled against the wall with no temporal change; rotate right to recover the corridor.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10122,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 63
+      },
+      "model_ns": 8388126783,
+      "model_session_id": "01a0a0ae-060e-7e73-822c-18b5712e2c78",
+      "controller_model_started_ns": 7619266816746,
+      "controller_model_ended_ns": 7627771510818,
+      "model_image_to_plan_accept_ns": 8184493886,
+      "fresh_observation_to_plan_accept_ns": 307204413,
+      "fresh_sequence_at_plan": 794,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 23,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/803.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-23/temporal-sheet.png",
+      "model_image_sha256": "84609208650f46aac36b7b21f90ebcc7dca007eb6956b694fe0283739370482d",
+      "action": {
+        "assessment": "Still pressed against the wall with no meaningful progress; back away and reorient left in small corrections.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10717,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 160,
+        "reasoning_output_tokens": 82
+      },
+      "model_ns": 8758568466,
+      "model_session_id": "01a0a0ae-060e-7e73-822c-18b5712e2c78",
+      "controller_model_started_ns": 7629107626295,
+      "controller_model_ended_ns": 7637962786554,
+      "model_image_to_plan_accept_ns": 9108457003,
+      "fresh_observation_to_plan_accept_ns": 120749695,
+      "fresh_sequence_at_plan": 834,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 24,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/850.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-24/temporal-sheet.png",
+      "model_image_sha256": "5991d7057654b23b50e28ea2d17c5eb65e6307ca425188e6fec974fd33637b4d",
+      "action": {
+        "assessment": "Near a doorway at the right edge; move toward it and try opening it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 118,
+        "reasoning_output_tokens": 53
+      },
+      "model_ns": 7559173028,
+      "model_session_id": "01a0a0ae-99f8-79d3-9cef-a10a348a581d",
+      "controller_model_started_ns": 7640181625844,
+      "controller_model_ended_ns": 7647832858086,
+      "model_image_to_plan_accept_ns": 8037076577,
+      "fresh_observation_to_plan_accept_ns": 248473086,
+      "fresh_sequence_at_plan": 876,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 25,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/887.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-25/temporal-sheet.png",
+      "model_image_sha256": "e89b2f566a384efbb9aeba0c764930ab2085e02a8316e32db339d00b74d8fa4e",
+      "action": {
+        "assessment": "Doorway opened into a large room with visible distant threats; advance while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9575,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 81,
+        "reasoning_output_tokens": 33
+      },
+      "model_ns": 6172692574,
+      "model_session_id": "01a0a0ae-99f8-79d3-9cef-a10a348a581d",
+      "controller_model_started_ns": 7649503266864,
+      "controller_model_ended_ns": 7655766935319,
+      "model_image_to_plan_accept_ns": 6634816126,
+      "fresh_observation_to_plan_accept_ns": 324703675,
+      "fresh_sequence_at_plan": 906,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 26,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/913.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-26/temporal-sheet.png",
+      "model_image_sha256": "e0d2a371875d4df55ed30b1b69a2f1212085f50ac47486a6f8d8ea96bc25e09a",
+      "action": {
+        "assessment": "Took minor damage and is pressed against a nearby surface; retreat while firing to regain room orientation.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10130,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 129,
+        "reasoning_output_tokens": 57
+      },
+      "model_ns": 8348267330,
+      "model_session_id": "01a0a0ae-99f8-79d3-9cef-a10a348a581d",
+      "controller_model_started_ns": 7656991779085,
+      "controller_model_ended_ns": 7665436450657,
+      "model_image_to_plan_accept_ns": 8852431652,
+      "fresh_observation_to_plan_accept_ns": 96729794,
+      "fresh_sequence_at_plan": 956,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 27,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/968.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-27/temporal-sheet.png",
+      "model_image_sha256": "8f34858687225729a7a7e8d260e88f55dda4262affec105181337a9121362cc5",
+      "action": {
+        "assessment": "In the room under fire, with reduced health and low ammo; retreat while strafing to cover.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10733,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 144,
+        "reasoning_output_tokens": 71
+      },
+      "model_ns": 9583574249,
+      "model_session_id": "01a0a0ae-99f8-79d3-9cef-a10a348a581d",
+      "controller_model_started_ns": 7667243404970,
+      "controller_model_ended_ns": 7676927997274,
+      "model_image_to_plan_accept_ns": 10120003734,
+      "fresh_observation_to_plan_accept_ns": 110446312,
+      "fresh_sequence_at_plan": 1017,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 28,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1030.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-28/temporal-sheet.png",
+      "model_image_sha256": "abbdeb09aafcb15686fa200893b3142d232a67245b81ae97ee63078863fd5ba3",
+      "action": {
+        "assessment": "Visible enemy fireball ahead; advance while firing to engage and avoid the threat.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 98,
+        "reasoning_output_tokens": 50
+      },
+      "model_ns": 7015289095,
+      "model_session_id": "01a0a0af-31cf-7a12-8402-ba6c3141b071",
+      "controller_model_started_ns": 7679046594086,
+      "controller_model_ended_ns": 7686158808729,
+      "model_image_to_plan_accept_ns": 7611293215,
+      "fresh_observation_to_plan_accept_ns": 108207562,
+      "fresh_sequence_at_plan": 1066,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 29,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1071.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-29/temporal-sheet.png",
+      "model_image_sha256": "1efc9d93ce403ae4e97ad84c39b3955dab06affd77e51a573d6ad1a1f4d3d726",
+      "action": {
+        "assessment": "Pressed against the wall after advancing; reposition left to regain the open combat area.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9555,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 123,
+        "reasoning_output_tokens": 67
+      },
+      "model_ns": 7721337878,
+      "model_session_id": "01a0a0af-31cf-7a12-8402-ba6c3141b071",
+      "controller_model_started_ns": 7687280768771,
+      "controller_model_ended_ns": 7695069513811,
+      "model_image_to_plan_accept_ns": 8360835800,
+      "fresh_observation_to_plan_accept_ns": 97160640,
+      "fresh_sequence_at_plan": 1112,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 30,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1120.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-30/temporal-sheet.png",
+      "model_image_sha256": "2e131abc8d849942eb9d71e570d2321dfe04cc4ee0cc08bd58525facc6ef375a",
+      "action": {
+        "assessment": "Still facing the wall; turn left and strafe away to reorient toward the room.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "strafe_right",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10152,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 89,
+        "reasoning_output_tokens": 29
+      },
+      "model_ns": 7458566153,
+      "model_session_id": "01a0a0af-31cf-7a12-8402-ba6c3141b071",
+      "controller_model_started_ns": 7696517291646,
+      "controller_model_ended_ns": 7704070835212,
+      "model_image_to_plan_accept_ns": 8059949180,
+      "fresh_observation_to_plan_accept_ns": 84275049,
+      "fresh_sequence_at_plan": 1147,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 31,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1156.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-31/temporal-sheet.png",
+      "model_image_sha256": "31cd8930c46314e7d08dd9464ad7274892d10f40bd51339f20d8956223ffa50c",
+      "action": {
+        "assessment": "An open doorway and possible threat are visible to the left; move toward it while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "advance_fire",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10715,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 96,
+        "reasoning_output_tokens": 37
+      },
+      "model_ns": 8130320374,
+      "model_session_id": "01a0a0af-31cf-7a12-8402-ba6c3141b071",
+      "controller_model_started_ns": 7705576761056,
+      "controller_model_ended_ns": 7713807364887,
+      "model_image_to_plan_accept_ns": 8741360997,
+      "fresh_observation_to_plan_accept_ns": 154502113,
+      "fresh_sequence_at_plan": 1183,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 32,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1191.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-32/temporal-sheet.png",
+      "model_image_sha256": "f317cbc32f5633d42bedd2a9c27c93e8fef6dcf23eb12fe5633fdeb79c9c470d",
+      "action": {
+        "assessment": "In a new room facing a doorway with visible activity/items ahead; advance cautiously while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 131,
+        "reasoning_output_tokens": 81
+      },
+      "model_ns": 8621739697,
+      "model_session_id": "01a0a0af-bf2d-7282-81ff-fc73442f8ed5",
+      "controller_model_started_ns": 7715216677047,
+      "controller_model_ended_ns": 7723906619906,
+      "model_image_to_plan_accept_ns": 9212098705,
+      "fresh_observation_to_plan_accept_ns": 157646069,
+      "fresh_sequence_at_plan": 1233,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 33,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1240.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-33/temporal-sheet.png",
+      "model_image_sha256": "17b69ce5430b15dbf617a059198ddcd9d28c097da60790f680d78700c9c4ef09",
+      "action": {
+        "assessment": "The latest frame is pressed against a wall, indicating an over-advanced or misaligned approach; correct orientation left toward the nearby room.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9588,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 129,
+        "reasoning_output_tokens": 62
+      },
+      "model_ns": 7324079332,
+      "model_session_id": "01a0a0af-bf2d-7282-81ff-fc73442f8ed5",
+      "controller_model_started_ns": 7725217896330,
+      "controller_model_ended_ns": 7732632508228,
+      "model_image_to_plan_accept_ns": 7869481958,
+      "fresh_observation_to_plan_accept_ns": 247797171,
+      "fresh_sequence_at_plan": 1278,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 34,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1286.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-34/temporal-sheet.png",
+      "model_image_sha256": "2babceb7d966737f2aa4b3c6085d92c5f52ff3448662a0ac2babfd783be6fa71",
+      "action": {
+        "assessment": "Inside a small room facing a raised platform with pickups; move forward briefly to collect or inspect them.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10191,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 112,
+        "reasoning_output_tokens": 61
+      },
+      "model_ns": 8688158376,
+      "model_session_id": "01a0a0af-bf2d-7282-81ff-fc73442f8ed5",
+      "controller_model_started_ns": 7734015707709,
+      "controller_model_ended_ns": 7742820399750,
+      "model_image_to_plan_accept_ns": 9299104054,
+      "fresh_observation_to_plan_accept_ns": 354079673,
+      "fresh_sequence_at_plan": 1314,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 35,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1319.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-35/temporal-sheet.png",
+      "model_image_sha256": "c4fe86d32c116c0bedc59a1f67f7477a58d92b69f8d9024982de932d5884d06c",
+      "action": {
+        "assessment": "The pickup was collected, but the player is now facing a corner beside the blue-lit structure; turn left and move out toward the room.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10777,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 136,
+        "reasoning_output_tokens": 68
+      },
+      "model_ns": 8169872724,
+      "model_session_id": "01a0a0af-bf2d-7282-81ff-fc73442f8ed5",
+      "controller_model_started_ns": 7743771906260,
+      "controller_model_ended_ns": 7752078165926,
+      "model_image_to_plan_accept_ns": 8749231882,
+      "fresh_observation_to_plan_accept_ns": 324637572,
+      "fresh_sequence_at_plan": 1346,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 36,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1357.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-36/temporal-sheet.png",
+      "model_image_sha256": "0bd2040d26b08c3944297e6100de792a14331d49e5bf37e8af824d23bd393ad4",
+      "action": {
+        "assessment": "Facing a wall near blue-lit architecture; no visible threat. Turn away and advance to resume exploration.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8983,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 97,
+        "reasoning_output_tokens": 37
+      },
+      "model_ns": 7136341470,
+      "model_session_id": "01a0a0b0-5580-7113-968f-8968e076b732",
+      "controller_model_started_ns": 7753739855094,
+      "controller_model_ended_ns": 7760967497948,
+      "model_image_to_plan_accept_ns": 7656777695,
+      "fresh_observation_to_plan_accept_ns": 174898869,
+      "fresh_sequence_at_plan": 1381,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 37,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1391.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-37/temporal-sheet.png",
+      "model_image_sha256": "f07ef2b85e81cb880b65d21386680d839d45c03acef66872687b3ee8b98928c1",
+      "action": {
+        "assessment": "At a blue-lit door or switch area; attempt interaction, then move through if it opens.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9554,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 82,
+        "reasoning_output_tokens": 24
+      },
+      "model_ns": 6305158348,
+      "model_session_id": "01a0a0b0-5580-7113-968f-8968e076b732",
+      "controller_model_started_ns": 7762507278009,
+      "controller_model_ended_ns": 7768917998425,
+      "model_image_to_plan_accept_ns": 6834049245,
+      "fresh_observation_to_plan_accept_ns": 263181875,
+      "fresh_sequence_at_plan": 1413,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 38,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1420.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-38/temporal-sheet.png",
+      "model_image_sha256": "e6403a827be1f1d81d51b7e1adb7f91b7729b101d7d77c40d533ecce9679cc31",
+      "action": {
+        "assessment": "Temporal frames show no movement; the player is stalled facing the blue door edge. Re-align right and activate it again.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10110,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 96,
+        "reasoning_output_tokens": 24
+      },
+      "model_ns": 7228006355,
+      "model_session_id": "01a0a0b0-5580-7113-968f-8968e076b732",
+      "controller_model_started_ns": 7769994747174,
+      "controller_model_ended_ns": 7777305918750,
+      "model_image_to_plan_accept_ns": 7658505808,
+      "fresh_observation_to_plan_accept_ns": 129647466,
+      "fresh_sequence_at_plan": 1444,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 39,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-reflex-baseline-seed-990606-01/runtime/1454.png",
+      "model_image": "results-local/doom/map01-motor-reflex-baseline-seed-990606-01/decision-39/temporal-sheet.png",
+      "model_image_sha256": "0d2013fc89f1eb68d155d60b950695e61db7a68bda3d29235cac90a02406b4a0",
+      "action": {
+        "assessment": "The blue door has opened, revealing a passage beyond. Advance through it and scan slightly left.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10680,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 81,
+        "reasoning_output_tokens": 22
+      },
+      "model_ns": 7641868755,
+      "model_session_id": "01a0a0b0-5580-7113-968f-8968e076b732",
+      "controller_model_started_ns": 7778687685499,
+      "controller_model_ended_ns": 7786418246462,
+      "model_image_to_plan_accept_ns": 8093773262,
+      "fresh_observation_to_plan_accept_ns": 278312579,
+      "fresh_sequence_at_plan": 1480,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 363289669105,
+    "death_count": 0,
+    "kill_count": 2,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 7787793598047
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a0ab-50cb-7000-9cf5-4d03c78600d4",
+    "01a0a0ab-cca2-7073-b33e-1602473a98f8",
+    "01a0a0ac-5f89-7c23-8f2c-538eacf34099",
+    "01a0a0ac-f0e7-7a93-9c66-590aa50ab80c",
+    "01a0a0ad-8f8b-7573-9ff3-2dd50961c0f9",
+    "01a0a0ae-060e-7e73-822c-18b5712e2c78",
+    "01a0a0ae-99f8-79d3-9cef-a10a348a581d",
+    "01a0a0af-31cf-7a12-8402-ba6c3141b071",
+    "01a0a0af-bf2d-7282-81ff-fc73442f8ed5",
+    "01a0a0b0-5580-7113-968f-8968e076b732"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "game_continued_during_model_calls": true,
+  "model_wall_seconds": 304.767395871
+}

@@ -1,0 +1,149 @@
+{
+  "scope": "one known visual construction episode; no held-out performance or global verifier claim",
+  "runtime_program_timings": [
+    {
+      "id": "select",
+      "accept_to_first_image_ready_ms": 324.053799,
+      "accept_to_terminal_ms": 807.443188
+    },
+    {
+      "id": "plan-bends",
+      "accept_to_first_image_ready_ms": 573.914221,
+      "accept_to_terminal_ms": 3697.461976
+    },
+    {
+      "id": "build",
+      "accept_to_first_image_ready_ms": 235.242073,
+      "accept_to_terminal_ms": 835.362424
+    },
+    {
+      "id": "pause-review",
+      "accept_to_first_image_ready_ms": 301.851502,
+      "accept_to_terminal_ms": 1018.021016
+    }
+  ],
+  "exact_frames": 18,
+  "accepted_programs": 4,
+  "rejected_programs": 0,
+  "visual_recoveries": [],
+  "visual_review_sequences": [
+    1,
+    4,
+    11,
+    14,
+    18
+  ],
+  "initial_copper": 200,
+  "post_control_copper": 294,
+  "final_copper": 343,
+  "delivery_copper": 49,
+  "delivery_ticks": 600.0242613554001,
+  "initial_capture_to_last_terminal_ms": 84966.544525,
+  "initial_capture_to_evaluation_ms": 117358.199626,
+  "finish_to_evaluation_ms": 10143.269363,
+  "between_program_gaps_ms": [
+    20273.629521,
+    18027.494673,
+    22881.607201
+  ],
+  "score_controls": {
+    "zero_delivery": {
+      "status": "CONTRADICTED",
+      "contract_satisfied": false,
+      "wrong_targets": [],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 0,
+      "delivery_observed": false,
+      "simulation_ticks": 2022.0941940546036,
+      "guard_tiles": 112,
+      "initial_to_final_copper_net": 94,
+      "delivery_ticks": 600.0242613554001,
+      "delivery_layout_unchanged": true,
+      "scope": "Eight-tile bent-route construction with separate post-control delivery; local final-state guard only",
+      "wrong_directions": []
+    },
+    "pending_build": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "invalid_delivery_measurement",
+      "detail": "delivery requires an integer zero pending-plan count"
+    },
+    "unpaused_baseline": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "invalid delivery baseline"
+    },
+    "short_window": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "delivery window too short"
+    },
+    "changed_layout": {
+      "status": "CONTRADICTED",
+      "contract_satisfied": false,
+      "wrong_targets": [],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 49,
+      "delivery_observed": true,
+      "simulation_ticks": 2022.0941940546036,
+      "guard_tiles": 112,
+      "initial_to_final_copper_net": 143,
+      "delivery_ticks": 600.0242613554001,
+      "delivery_layout_unchanged": false,
+      "scope": "Eight-tile bent-route construction with separate post-control delivery; local final-state guard only",
+      "wrong_directions": []
+    },
+    "negative_initial_net": {
+      "status": "VERIFIED",
+      "contract_satisfied": true,
+      "wrong_targets": [],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 49,
+      "delivery_observed": true,
+      "simulation_ticks": 2022.0941940546036,
+      "guard_tiles": 112,
+      "initial_to_final_copper_net": -100,
+      "delivery_ticks": 600.0242613554001,
+      "delivery_layout_unchanged": true,
+      "scope": "Eight-tile bent-route construction with separate post-control delivery; local final-state guard only",
+      "wrong_directions": []
+    },
+    "wrong_direction": {
+      "status": "CONTRADICTED",
+      "contract_satisfied": false,
+      "wrong_targets": [],
+      "collateral_tiles": [],
+      "source_config_preserved": true,
+      "core_location_preserved": true,
+      "copper_delta": 49,
+      "delivery_observed": true,
+      "simulation_ticks": 2022.0941940546036,
+      "guard_tiles": 112,
+      "initial_to_final_copper_net": 143,
+      "delivery_ticks": 600.0242613554001,
+      "delivery_layout_unchanged": true,
+      "scope": "Eight-tile bent-route construction with separate post-control delivery; local final-state guard only",
+      "wrong_directions": [
+        [
+          139,
+          51
+        ]
+      ]
+    },
+    "nan_tick": {
+      "status": "UNKNOWN",
+      "contract_satisfied": null,
+      "reason": "invalid_delivery_measurement",
+      "detail": "invalid phase tick"
+    }
+  },
+  "model_tokens": null,
+  "model_receipt_ns": null,
+  "audit_sha256": "0df3b523c3a225c7b031e9f50584a72b2f5705063b7870bf554769125a30e277"
+}

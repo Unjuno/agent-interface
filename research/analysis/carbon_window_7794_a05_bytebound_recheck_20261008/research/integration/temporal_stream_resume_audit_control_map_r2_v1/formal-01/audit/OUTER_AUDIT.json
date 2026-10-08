@@ -1,0 +1,20 @@
+{
+  "allocation": "temporal-resume-control-map-cleanup-20260928-01",
+  "kind": "independent_raw_only_auditor",
+  "invocations": 1,
+  "exit_code": 0,
+  "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "platform": "linux/amd64",
+  "engine": "OrbStack Docker Engine 29.4.0, host linux/aarch64",
+  "pull": "never",
+  "network": "none",
+  "results_mount": "read-only",
+  "evidence_mount": "read-only",
+  "source_capsule_mount": "read-only",
+  "auditor_mount": "read-only",
+  "writable_mounts": ["formal-01/audit output"],
+  "resource_limits": {"cpus": 1, "memory": "1g", "pids": 64, "tmpfs_tmp": "128m"},
+  "command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus=1 --memory=1g --pids-limit=64 --cap-drop=ALL --security-opt=no-new-privileges --tmpfs /tmp:rw,nosuid,nodev,noexec,size=128m -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_r1_v1:/capsule:ro -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_r1_v1/formal-01:/evidence:ro -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_audit_control_map_r2_v1/formal-01:/results:ro -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_audit_control_map_r2_v1/formal-01/audit:/out:rw -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_audit_control_map_r2_v1:/study:ro --entrypoint /bin/sh sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419 -c 'python -B -S /capsule/restore_source.py /tmp/source && python -B -S /study/audit_raw.py --results /results --source /tmp/source --evidence /evidence --output /out/AUDIT.json --controls-output /out/AUDIT_CONTROLS.json'",
+  "combined_output": "/capsule/restore_source.py:18: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.\n  t.extractall(out)\nPASS_SOURCE_RESTORE 19\n{\"allocation\": \"temporal-resume-control-map-cleanup-20260928-01\", \"corruption_control_errors\": [], \"corruption_controls_rejected\": 8, \"corruption_controls_total\": 8, \"decision\": \"PASS_CONTROL_MAP_CLEANUP_SCOPED\", \"effective_rejections\": 11, \"errors\": [], \"evidence_tree_sha256\": \"2b74cdf4c3e21baa19f94d838165efca5ca144affd80ede5b60ce65bd23cbc42\", \"input_manifest_sha256\": \"1584edb3a45202b3e816d2a9735708265dae279fd4e18d8680fded7756cc3855\", \"mutation_count\": 11, \"source_tree_sha256\": \"99b557b75d49f9aa30e4b94e239eec2533f2ee18461beaaaffdd51920fc5d0c5\"}\n",
+  "stream_capture": "exec tool returned combined stdout/stderr; per-stream separation unavailable"
+}

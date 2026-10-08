@@ -1,0 +1,29 @@
+{
+  "schema": "scheduler-selection-result-v1",
+  "issue": 4978,
+  "parent_issue": 2868,
+  "allocation": "issue2868-scheduler-selection-20260928-02",
+  "decision": "PASS_SCHEDULER_SELECTION_SEMANTICS_SCOPED",
+  "formal_invocations": {"runner": 1, "independent_audit": 1},
+  "worker_rows": 48,
+  "H": "Correctly reconstructing the trace reason reconciled all worker traces without weakening the independent corruption gates.",
+  "T": "8 fixed scenarios x 3 policies x 2 repeats, 48 fresh worker processes. One formal local Docker runner and one separate fresh Docker audit container. Image python:3.12-slim, linux/amd64, image ID sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9; CPU 1, memory 512m, pids 64, network none, read-only root, no GPU. Freeze SHA-256 d87d7f4a68c6194535d106a43f3b6458eaabb4704ddd1ed1d66d25ce22e8b06c.",
+  "D": "PASS: 48/48 unique rows, exact reference traces and states, deterministic repeats, stable-list/eligible-heap semantics agree, all scenario gates pass, freeze identity verified, and 11/11 corruption controls rejected.",
+  "C": "Deterministic synthetic one-operation-per-tick scheduler model only; no performance measurement or claim.",
+  "U": "Does not establish production scheduler adoption, speedup, live GUI/task behavior, model utility, GPU benefit, or cross-domain generality.",
+  "runner": {
+    "exit": 0,
+    "rows": 48,
+    "raw_sha256": "0585860f2d073db3afb56d3a8429ceeb88e8c2d98125050fcb948a5e4b0cd622",
+    "raw_sha_file_sha256": "500c7619ee9c0632c9a71eb8b2413680bb756639178197baa655574099b2d947"
+  },
+  "independent_audit": {
+    "exit": 0,
+    "decision": "PASS_SCHEDULER_SELECTION_SEMANTICS_SCOPED",
+    "errors": [],
+    "corruption_controls_rejected": 11,
+    "report_sha256": "c9d1840cdfcf67c0707e8898055d9c8b550806fec0c773d10cbc36e6f83777ff",
+    "report_sha_file_sha256": "dbdc1ac64a197100ca8e28d5fed370038f26fa4a90eb50f95f0393892350f240"
+  },
+  "formal_claims": {"performance": false, "gpu": false, "production": false}
+}

@@ -1,0 +1,26 @@
+{
+  "attempt_count": 32,
+  "audit_v1_sha256": "469c0555d875f998a85f545419fb3a92f344287f1515a014880ab50e9290e3b5",
+  "audit_version": "v2-read-only",
+  "global_optimality_claims": 0,
+  "mutation_controls": {
+    "altered_comparison_family": true,
+    "duplicate_attempt": true,
+    "forged_safety": true,
+    "missing_attempt": true,
+    "repeated_sealed_variant": true,
+    "unadjusted_promotion": true,
+    "unsupported_global_best": true
+  },
+  "predecessor_audit_disposition": "STOP_AUDITOR_REPORT_SERIALIZATION",
+  "raw_sha256": "64f387c791f6bd87efdb05f07c9418a7631012f5203cb14bfacef3f8432ac7ea",
+  "runner_sha256": "f9e0d06048538c8e942ed450938b8550348aafc0a093be2c6f17c8fc9b7448bc",
+  "scenario_labels": {
+    "fast_but_unsafe": "HARD_SAFETY_STOP",
+    "multiple_survivors": "HOLD_MULTIPLE_COMPARISON_UNADJUSTED",
+    "screened_out_is_best": "SURVIVOR_VS_BASELINE_ONLY_NO_GLOBAL_OPTIMALITY"
+  },
+  "scope": "authored finite deterministic claim-boundary fixtures only",
+  "status": "PASS_CLAIM_BOUNDARY_SCOPED",
+  "world_sha256": "5329331f1948d7db6fb58244473dddbc1391c841c709b6de9b8ede31a7316441"
+}

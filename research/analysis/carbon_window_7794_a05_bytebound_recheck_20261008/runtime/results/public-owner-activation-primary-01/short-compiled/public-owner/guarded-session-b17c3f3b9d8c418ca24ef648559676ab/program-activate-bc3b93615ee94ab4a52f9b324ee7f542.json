@@ -1,0 +1,25 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "activate-bc3b93615ee94ab4a52f9b324ee7f542",
+  "source": {
+    "observation_seq": 1,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-x11-5b8fc4eedbab4d709949508039ee56ce",
+    "expires_at_ns": 1647716846746
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "activate",
+      "target": "app",
+      "timeout_ms": 300
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

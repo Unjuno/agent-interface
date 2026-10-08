@@ -1,0 +1,33 @@
+{
+  "schema": "quiescent-reclamation-finite-model-freeze-v1",
+  "issue": 5361,
+  "allocation": "QSR-5361-T0-FINITE-MODEL-20261001-01",
+  "branch": "research/qsr-authority-reclamation-5361-t0-20261001",
+  "path": "research/analysis/quiescent_reclamation_5361_t0_20261001/",
+  "base_main_sha": "3d6ffc76d535309cf3820ed33cb9327354f03648",
+  "base_main_observed_utc": "2026-10-01T09:19:33Z",
+  "seed": null,
+  "source_sha256": {
+    "PREREGISTRATION.md": "222c45b7ba3fffcb8fbd025519be768267fe48ef72b6ea96e468fa07dc26563c",
+    "run_model.py": "c1fe0fada9b642a7fa41a0326196c27a4e1454389297759f5b46b53f3a070160",
+    "audit_raw.py": "75744a426505dfe79240e89bc84c0a2ff68c80a2f3aa5222b4b0f700bd577c31",
+    "test_contract.py": "93dc0f48410310c739a7228b0835633d6800c67698cb758fcb5271fecebccb5a"
+  },
+  "environment": {
+    "python": "3.11.9",
+    "platform": "Windows 11 local host CPU",
+    "execution_boundary": "host-only deterministic finite-state replay; no Docker lease, no GPU"
+  },
+  "protocol": {
+    "readers": 2,
+    "events": ["A0", "A1", "R", "U0", "U1", "Q0", "Q1", "Q0_STALE", "F"],
+    "exploration": "breadth-first reachable-state enumeration, one transition per event from every reachable state",
+    "candidate_invocations_allowed": 1,
+    "auditor_invocations_allowed": 1,
+    "retries_allowed": 0
+  },
+  "candidate_command": "py -3.11 -B run_model.py",
+  "auditor_command": "py -3.11 -B audit_raw.py",
+  "outputs_must_be_absent_at_start": ["candidate_raw.json", "audit_receipt.json"],
+  "launch_state": "FROZEN_NOT_STARTED"
+}

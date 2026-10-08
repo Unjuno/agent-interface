@@ -1,0 +1,364 @@
+{
+  "mint_program": [
+    {
+      "op": "target_handle_mint",
+      "name": "road_construction_opener",
+      "coordinate_frame": "window_content",
+      "box": [
+        812,
+        43,
+        16,
+        16
+      ],
+      "ttl_ms": 60000,
+      "freshness_ms": 1000,
+      "search_radius": 0,
+      "allowed_transformations": [
+        "window_translation"
+      ]
+    }
+  ],
+  "minted": {
+    "event": "target_handle_minted",
+    "id": "durable-f51605ce2b234b3b8784af168d5f61fb",
+    "step": 0,
+    "minted_ns": 35060910494771,
+    "handle": "58d57dd6cf743469c6bca2572169c819",
+    "name": "road_construction_opener",
+    "status": "VALID",
+    "created_sequence": 1,
+    "expires_ns": 35120910494771,
+    "allowed_transformations": [
+      "window_translation"
+    ],
+    "patch_sha256": "0234411127bc45276f6c2fb20bb104ae3cb157c850e506a9d4f240739f8f2979",
+    "authority": "observational reference only; grants no input authority",
+    "emitted_ns": 35060914957604
+  },
+  "surface_move": {
+    "event": "test_surface_moved",
+    "id": "durable-143122c89e6a4018b78ff62280154c0a",
+    "step": 0,
+    "before": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        65,
+        40,
+        1152,
+        720
+      ]
+    },
+    "after": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        82,
+        60,
+        1152,
+        720
+      ]
+    },
+    "authority": "fault injection only; grants no input authority",
+    "emitted_ns": 35061162117193
+  },
+  "fresh_observation": {
+    "event": "observation",
+    "id": "durable-8811862f762a447eb7fa18375cd755f3",
+    "step": 0,
+    "sequence": 3,
+    "capture_ns": 35061299444273,
+    "context_ns": 35061303686139,
+    "context": [
+      [
+        "windows",
+        "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+      ],
+      [
+        "active_window",
+        10485762
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/openttd-target-handle-live-01/live/runtime/003.png",
+    "image_reused": false,
+    "image_prepare_ns": 50323286,
+    "image_ready_ns": 35061403768874,
+    "input_focus_before": 10485762,
+    "input_focus_after": 10485762,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        82,
+        60,
+        1152,
+        720
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        82,
+        60,
+        1152,
+        720
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        82,
+        60,
+        1152,
+        720
+      ]
+    },
+    "capture_ms": 3.495173,
+    "wire_bytes": 358752,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emitted_ns": 35061408604715
+  },
+  "click_program": [
+    {
+      "op": "pointer_click_target",
+      "target_handle": "58d57dd6cf743469c6bca2572169c819",
+      "offset": [
+        8,
+        8
+      ],
+      "button": 1,
+      "duration_ms": 40
+    }
+  ],
+  "revalidation": {
+    "event": "target_handle_revalidated",
+    "step": 0,
+    "eligible": true,
+    "status": "REVALIDATED",
+    "handle": "58d57dd6cf743469c6bca2572169c819",
+    "authority": "resolution only; ordinary admission remains required",
+    "reason": "exact_region_match",
+    "name": "road_construction_opener",
+    "point": [
+      837,
+      71
+    ],
+    "observed_box": [
+      829,
+      63,
+      16,
+      16
+    ],
+    "binding_translation": [
+      17,
+      20
+    ],
+    "local_translation": [
+      0,
+      0
+    ],
+    "sequence": 3,
+    "valid_until_ns": 35062299444273,
+    "patch_sha256": "0234411127bc45276f6c2fb20bb104ae3cb157c850e506a9d4f240739f8f2979",
+    "id": "durable-3e0c769bb76645cd8e1100a4039d1808",
+    "resolved_ns": 35061550562243,
+    "emitted_ns": 35061550568133
+  },
+  "pointer_admissions": [
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 837,
+        "y": 71
+      },
+      "admitted_ns": 35061587224986,
+      "input_ack_ns": 35061587615111,
+      "valid_until_ns": 35071485472542,
+      "surface": 10485762,
+      "id": "durable-3e0c769bb76645cd8e1100a4039d1808",
+      "step": 0,
+      "emitted_ns": 35061587806067
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 35061600536163,
+      "input_ack_ns": 35061600949351,
+      "valid_until_ns": 35071485472542,
+      "surface": 10485762,
+      "id": "durable-3e0c769bb76645cd8e1100a4039d1808",
+      "step": 0,
+      "emitted_ns": 35061601160817
+    }
+  ],
+  "terminal": {
+    "event": "terminal",
+    "id": "durable-3e0c769bb76645cd8e1100a4039d1808",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 35061776801505,
+      "valid_until_ns": 35071485472542
+    },
+    "terminal_ns": 35061776845059,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 35061776847613
+  },
+  "post_click_observation": {
+    "event": "observation",
+    "id": "durable-3e0c769bb76645cd8e1100a4039d1808",
+    "step": 0,
+    "sequence": 4,
+    "capture_ns": 35061659421295,
+    "context_ns": 35061666561472,
+    "context": [
+      [
+        "windows",
+        "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+      ],
+      [
+        "active_window",
+        10485762
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/openttd-target-handle-live-01/live/runtime/004.png",
+    "image_reused": false,
+    "image_prepare_ns": 49879797,
+    "image_ready_ns": 35061757956372,
+    "input_focus_before": 10485762,
+    "input_focus_after": 10485762,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        82,
+        60,
+        1152,
+        720
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        82,
+        60,
+        1152,
+        720
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        82,
+        60,
+        1152,
+        720
+      ]
+    },
+    "capture_ms": 4.73007,
+    "wire_bytes": 311204,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emitted_ns": 35061763202302
+  },
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "success": false,
+    "checks": {
+      "target_owned_roads": false,
+      "ordered_bidirectional_connections": false,
+      "forbidden_tiles_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "contract": {
+      "x": 44,
+      "y": 10,
+      "width": 64,
+      "target": [
+        684,
+        685,
+        686,
+        750,
+        814
+      ],
+      "forbidden": [
+        748,
+        749,
+        812,
+        813
+      ],
+      "owner": 0,
+      "guard": [
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        810,
+        811,
+        812,
+        813,
+        814,
+        815,
+        816,
+        874,
+        875,
+        876,
+        877,
+        878,
+        879,
+        880,
+        938,
+        939,
+        940,
+        941,
+        942,
+        943,
+        944
+      ]
+    },
+    "emitted_ns": 35062396745083
+  },
+  "bridge_exit_code": 0,
+  "click_submit_to_return_ms": 280.790469,
+  "durable_calls": 8
+}

@@ -1,0 +1,53 @@
+diff --git a/src/vizdoom/src/viz_main.cpp b/src/vizdoom/src/viz_main.cpp
+index 1f2681b..0000000 100755
+--- a/src/vizdoom/src/viz_main.cpp
++++ b/src/vizdoom/src/viz_main.cpp
+@@ -215,7 +215,48 @@ void VIZ_AsyncStartTic(){
+     }
+ }
+ 
++#include <time.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <stdint.h>
++
++/* Excluded construction instrumentation: in-memory samples at VIZ_Tic entry. */
++struct VIZ_TicEntryRecordV2 {
++    uint64_t pid;
++    uint64_t monotonic_ns;
++    int32_t gametic;
++    int32_t viz_time;
++};
++
++static const uint32_t VIZ_TIC_ENTRY_CAPACITY = 8192;
++static VIZ_TicEntryRecordV2 vizTicEntryRecords[VIZ_TIC_ENTRY_CAPACITY] = {};
++static uint32_t vizTicEntryCount = 0;
++
++static void __attribute__((destructor)) VIZ_FlushTicEntryRecords(){
++    if(vizTicEntryCount == 0) return;
++    int fd = open("/tmp/vizdoom-tic-entry-v2.bin", O_WRONLY | O_CREAT | O_TRUNC, 0600);
++    if(fd < 0) return;
++    const char *data = reinterpret_cast<const char *>(vizTicEntryRecords);
++    size_t remaining = vizTicEntryCount * sizeof(VIZ_TicEntryRecordV2);
++    while(remaining > 0){
++        ssize_t written = write(fd, data, remaining);
++        if(written <= 0) break;
++        data += written;
++        remaining -= (size_t)written;
++    }
++    close(fd);
++}
++
+ void VIZ_Tic(){
++    struct timespec ts;
++    if(clock_gettime(CLOCK_MONOTONIC, &ts) == 0 && vizTicEntryCount < VIZ_TIC_ENTRY_CAPACITY){
++        vizTicEntryRecords[vizTicEntryCount++] = {
++            (uint64_t)getpid(),
++            (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec,
++            (int32_t)gametic,
++            (int32_t)vizTime
++        };
++    }
+ 
+     VIZ_DebugMsg(2, VIZ_FUNC, "tic: %d, vizTime: %d", gametic, vizTime);
+     VIZ_DebugMsg(4, VIZ_FUNC, "rngseed: %d, use_staticrng: %d, staticrngseed: %d", rngseed, use_staticrng, staticrngseed);

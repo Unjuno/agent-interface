@@ -1,0 +1,20 @@
+{
+  "encoding": "concatenate parts in listed order -> base64 decode -> gzip decompress",
+  "packed_base64_sha256": "bea4e69eb6bf67ea4f568de95dc548e7240664b1c9a9e3fb5c9f6c02f55a7f5b",
+  "packed_base64_size": 46208,
+  "parts": [
+    {"file": "raw-first-result.part00.b64", "sha256": "2027a78e92f4ef3e0936dfa299e8d4119aaeed422b22b77a131614f2dc8bd3a1", "size": 7800},
+    {"file": "raw-first-result.part01a.b64", "sha256": "0d127557d2e106ce9e12d7ecb7dcb4cc3048e31e1fef279bb882d5c18fc8ce01", "size": 3900},
+    {"file": "raw-first-result.part01b.b64", "sha256": "8e7f73d8e7fca3c1413763f6f5a24a29e81ceb9bf922242b4285669c8e95a146", "size": 3900},
+    {"file": "raw-first-result.part02a.b64", "sha256": "5bc8cbcbfdf73aea58c01592530d42c806bffe46799e205c7c9929a7ea65559b", "size": 3900},
+    {"file": "raw-first-result.part02b.b64", "sha256": "ef4e6908672805b0254ce17adfd4dc96f0540b709f1ace31d81114d66112f134", "size": 3900},
+    {"file": "raw-first-result.part03.b64", "sha256": "755691ca7229dff5e60f05903263e75b0056bec178bd98bc202e8a31a785a3de", "size": 7800},
+    {"file": "raw-first-result.part04a.b64", "sha256": "75f251cf4aa60b2660d0c9e88a2e3082d77527562a084838e826062ba0deb406", "size": 3900},
+    {"file": "raw-first-result.part04b.b64", "sha256": "1fa17fd025deaf0205b2bd3e4b14c23d7c79e90fb21a86051abdf1803b6cb75a", "size": 3900},
+    {"file": "raw-first-result.part05.b64", "sha256": "3fd79de40c38b6f76063ec52a94fc175b1ffb837669228bff6686000400e65c2", "size": 7208}
+  ],
+  "reconstruct": "cat raw-first-result.part00.b64 raw-first-result.part01a.b64 raw-first-result.part01b.b64 raw-first-result.part02a.b64 raw-first-result.part02b.b64 raw-first-result.part03.b64 raw-first-result.part04a.b64 raw-first-result.part04b.b64 raw-first-result.part05.b64 | base64 -d | gzip -dc > raw-first-result.jsonl",
+  "schema": "container-x11-bounded-recovery-raw-manifest-v2",
+  "uncompressed_jsonl_sha256": "9037fe0f3393e8cefa50225362ee2caec661a34dc64381cdaabd0b4fd2194cd3",
+  "uncompressed_jsonl_size": 236588
+}

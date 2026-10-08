@@ -1,0 +1,64 @@
+{
+  "allocation_id": "MATCHED-BOUNDARY-SPECTRUM-6640-T1-CPU-20261002-01",
+  "owner_thread": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "issue": 6640,
+  "base_main_sha": "3d768b0b1db255b5dacd099769a30a1b952a3f99",
+  "branch": "research/matched-boundary-spectrum-6640-t1-cpu-20261002-r1",
+  "path": "research/analysis/matched_boundary_spectrum_6640_t1_20261002/",
+  "planned_window_utc": {
+    "start": "2026-10-02T10:10:00Z",
+    "end": "2026-10-02T10:30:00Z"
+  },
+  "runtime": {
+    "name": "Microsoft WSLc",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_request": "512M",
+    "memory_enforcement_claim": false,
+    "warning": "WSLc reports swap-limit cgroup support unavailable; configured memory request is not claimed as effective enforced isolation."
+  },
+  "resource_preflight": {
+    "c_drive_free_bytes_observed": 105212522496,
+    "wslc_existing_container_count": 36,
+    "wslc_running_count": 0,
+    "wslc_created_count": 0,
+    "preexisting_containers_modified_or_removed": false,
+    "gpu_requested_or_used": false,
+    "docker_desktop_or_podman_used": false
+  },
+  "fixture": {
+    "seed_count": 32,
+    "strata": ["easy/direct", "easy/guarded", "hard/direct", "hard/guarded"],
+    "attempts_per_stratum_per_seed": 64,
+    "row_count": 8192,
+    "hidden_truth_separate_from_candidate": true,
+    "null_means_unknown_not_unexposed": true,
+    "historical_cohort_t0": "HOLD_NO_COMPARABLE_SPECTRUM"
+  },
+  "gate": {
+    "matched_mrr_improvement_over_each_of_unstratified_first_symptom_random": 0.10,
+    "matched_all_faults_top2_min_fraction": 0.75,
+    "all_seed_rows_and_attempt_ids_required": true,
+    "cache_no_overlap_must_be_explicit": true,
+    "interpretation_must_disclaim_causality": true,
+    "formal_candidate_invocations": 1,
+    "separate_raw_auditor_invocations": 1,
+    "retries": 0
+  },
+  "sha256": {
+    "PROTOCOL.md": "9c35ba053aee0b5d713dc2601203a0e7e7a6225db9bbe183fb9f4ba99cb05cb5",
+    "make_fixture.py": "78bf8798a562ee47534963e4b04435f235e831c677a660dd866996491cf148fe",
+    "candidate.py": "b2e0d207e0d42ee8e2b69b0bb7d591be5db60d7329face976f8333acdf7da64e",
+    "auditor.py": "ada4a7cd17efbc9f6cd7cade216a7c380d06f10f4fe5e897755737c4ae64be9f",
+    "fixture.json": "dd4c17dbd46c49326985b331b24758a1070dd82f346b57e8753efa9f47688696",
+    "oracle.json": "96f30b0b134e1f35d50705cbb104b330cedf90f38215eb94db50ce0bae0b3c67",
+    "test_t1.py": "22f2dda3ee74b5ac8ddd0795d030f6e7fa76f055fb1459e395ba93f9cf3f1155"
+  },
+  "formal_outputs_must_be_absent_at_preflight": [
+    "results/allocation-01/candidate/candidate.json",
+    "results/allocation-01/audit/audit.json"
+  ]
+}

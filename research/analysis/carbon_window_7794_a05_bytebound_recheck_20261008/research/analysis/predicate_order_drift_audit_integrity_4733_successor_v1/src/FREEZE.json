@@ -1,0 +1,60 @@
+{
+  "schema": "predicate-order-audit-hardening-successor-freeze-v1",
+  "issue": 4994,
+  "predecessor_issue": 4959,
+  "allocation": "predicate-order-audit-hardening-successor-4959-20260928-01",
+  "intake_main": "2dadbde96a3774614f0dff8b51f95dbef9d05716",
+  "branch": "research/predicate-order-audit-hardening-4959-successor-20260928",
+  "path": "research/analysis/predicate_order_drift_audit_integrity_4733_successor_v1/",
+  "hypothesis": "The exact 336-row baseline passes the additive auditor; all declared mutation/type/nonfinite controls reject; correctly rounded valid weights pass; independent raw replay verifies all rows and summaries.",
+  "inputs": {
+    "legacy_audit": {
+      "git_blob": "1a6cc0e46b32d4cd6989aed118d003cce4cfe399",
+      "remote_bytes": 6248,
+      "local_materialized_bytes": 6247,
+      "local_sha256": "cfae6e34bdbf37ca89ed2b6e96b933a42c46ef9d1dc7912364b7a33e6e532d18",
+      "materialization": "GitHub blob ends LF-CRLF; local patch materialization normalizes the final CRLF; runner/auditor restore that one CR byte in memory and assert Git blob."
+    },
+    "archive_base64": {
+      "git_blob": "c38dd2002f201d49b6fc261caff019550a4bf4bc",
+      "remote_bytes": 5326,
+      "local_materialized_bytes": 5325,
+      "local_sha256": "407a2c042467b661b306fb725a58af735cd5304e2e3741c7d6943e80a925420d",
+      "materialization": "GitHub blob ends CRLF; local patch materialization normalizes final CRLF; runner/auditor restore that one CR byte in memory and assert Git blob."
+    },
+    "raw_sha256": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d",
+    "inherited_hardened_auditor_git_blob": "b314562f69633f2d4771d531ee747d7a856db2e4",
+    "inherited_tests_git_blob": "342b9c52c57335cd958ed1dce4a153cd98484ef3"
+  },
+  "source_sha256": {
+    "src/audit_hardened.py": "4da3d454175eb551de25901cec839a7fe62dfb14cdd86234b9b7caa2b7210178",
+    "src/test_audit_hardened.py": "04d920fdddd0eebd1d88d7c380c46e897aecc0969892f34d5f59afbe67a709b5",
+    "src/run_probe.py": "ef55e94f851ea7581c191e4b7618a2439d49f755be11046bf64acb8069faa828",
+    "src/independent_audit.py": "37596474fc289197f1df0d089ff3b2ed7ce24b9875f3d5b39d95d9ee1fce8d73",
+    "src/local_entry.sh": "ad20e0b7de43ad6cc8316a34e32aac785a048a2bc511332a32126db6497f6779"
+  },
+  "container": {
+    "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "network": "none",
+    "pull": "never",
+    "rootfs": "read-only",
+    "cpus": 0.25,
+    "memory": "512m",
+    "pids": 32,
+    "gpu": false,
+    "mounts": {
+      "src": "/src:ro",
+      "input": "/input:ro",
+      "output": "/out:rw"
+    }
+  },
+  "decision": {
+    "PASS": "baseline pass, mutation/type controls reject, rounded-valid passes, independent 336-row replay exact, raw/source hashes unchanged",
+    "HOLD": "unchanged baseline rejected",
+    "FAIL": "any malformed/mutated input accepted or valid rounded control rejected",
+    "STOP": "any provenance, image, command, execution, or independent audit gate fails"
+  },
+  "invocation_count": 1,
+  "retries": 0
+}

@@ -1,0 +1,75 @@
+{
+  "audit_byte_identical": true,
+  "byte_equal": true,
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-I",
+        "-S",
+        "-B",
+        "test_contract.py"
+      ],
+      "exit": 0,
+      "stderr_sha256": "b487758c4322d5ed0eaecc009c9ea8189b2e10c6971fcf7519386485efff095e",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python",
+        "-I",
+        "-S",
+        "-B",
+        "audit.py",
+        "--input",
+        "formal/allocation-01",
+        "--freeze",
+        "FREEZE.json",
+        "--out",
+        "/mnt/data/publication/e58c-RECHECK.json"
+      ],
+      "exit": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "55db08678d101ff2ee0b95b013bca816323b4846957b35110779a566a2e96202"
+    }
+  ],
+  "file_count": 113,
+  "formal_reruns": 0,
+  "packaging_controls": {
+    "absolute_member_part": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "changed_part": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "missing_part": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "occupied_destination": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "reordered_parts": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "wrong_expanded_hash": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    },
+    "wrong_file_count": {
+      "no_output_mutation": true,
+      "refused": true,
+      "returncode": 1
+    }
+  }
+}

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/tmp/issue2849-work/research/integration/issue_2849_task1_orbstack_smoke_v2/interactive_integrated_efficiency_task1_v2.py", line 12, in <module>
+    implementation.main()
+  File "/tmp/issue2849-work/research/live_control/cause_servo_interactive_v4.py", line 39, in main
+    session=suite.Session();goal,output,server=suite.prepare(session,args.app,args.seed,args.chromium)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/issue2849-work/research/integration/issue_2849_task1_orbstack_smoke_v2/integrated_efficiency_runtime_task1_v2.py", line 27, in prepare
+    session.wait_window("about:blank", 20.0)
+  File "/tmp/issue2849-work/research/real_apps_v1/real_app_suite_v1.py", line 50, in wait_window
+    self._wait(lambda: needle in self.windows(),timeout,f'window {needle}')
+  File "/tmp/issue2849-work/research/observation_gating/gui_suite.py", line 119, in _wait
+    return super()._wait(fn, timeout, label)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/issue2849-work/research/real_apps_v1/real_app_suite_v1.py", line 44, in _wait
+    raise TimeoutError(label)
+TimeoutError: window about:blank

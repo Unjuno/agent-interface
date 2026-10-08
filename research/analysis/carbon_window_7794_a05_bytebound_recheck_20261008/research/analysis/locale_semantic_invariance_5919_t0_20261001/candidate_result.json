@@ -1,0 +1,159 @@
+{
+  "schema": "locale-semantic-invariance-candidate-result/v1",
+  "fixture_id": "locale-semantic-5919-t0-20261001-v1",
+  "candidate_invocations": 1,
+  "cases": [
+    {
+      "id": "benign_theme_label_layout",
+      "kind": "benign",
+      "baseline": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "localized": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "exact_rendered_equal": false,
+      "visual_proxy_missed_regression": false,
+      "english_only_baseline_pass": true
+    },
+    {
+      "id": "benign_decimal_locale",
+      "kind": "benign",
+      "baseline": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "localized": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "exact_rendered_equal": false,
+      "visual_proxy_missed_regression": false,
+      "english_only_baseline_pass": true
+    },
+    {
+      "id": "control_wrong_translation_misread",
+      "kind": "injected_fault",
+      "baseline": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "localized": {
+        "decision": "FAIL",
+        "stage": "perception"
+      },
+      "exact_rendered_equal": false,
+      "visual_proxy_missed_regression": true,
+      "english_only_baseline_pass": true
+    },
+    {
+      "id": "control_swapped_target",
+      "kind": "injected_fault",
+      "baseline": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "localized": {
+        "decision": "FAIL",
+        "stage": "target_selection"
+      },
+      "exact_rendered_equal": false,
+      "visual_proxy_missed_regression": true,
+      "english_only_baseline_pass": true
+    },
+    {
+      "id": "control_decimal_parse_mutation",
+      "kind": "injected_fault",
+      "baseline": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "localized": {
+        "decision": "FAIL",
+        "stage": "effect_verification"
+      },
+      "exact_rendered_equal": false,
+      "visual_proxy_missed_regression": true,
+      "english_only_baseline_pass": true
+    },
+    {
+      "id": "control_keyboard_layout_mismatch",
+      "kind": "injected_fault",
+      "baseline": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "localized": {
+        "decision": "FAIL",
+        "stage": "input_encoding"
+      },
+      "exact_rendered_equal": false,
+      "visual_proxy_missed_regression": true,
+      "english_only_baseline_pass": true
+    },
+    {
+      "id": "control_authority_weakened",
+      "kind": "injected_fault",
+      "baseline": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "localized": {
+        "decision": "FAIL",
+        "stage": "effect_verification"
+      },
+      "exact_rendered_equal": false,
+      "visual_proxy_missed_regression": true,
+      "english_only_baseline_pass": true
+    },
+    {
+      "id": "unknown_ambiguous_translation",
+      "kind": "ambiguous",
+      "baseline": {
+        "decision": "PASS",
+        "stage": "equivalent_effect"
+      },
+      "localized": {
+        "decision": "UNKNOWN",
+        "stage": "translation_equivalence"
+      },
+      "exact_rendered_equal": false,
+      "visual_proxy_missed_regression": false,
+      "english_only_baseline_pass": true
+    }
+  ],
+  "baselines": {
+    "exact_rendered_equal_count": 0,
+    "exact_rendered_unequal_count": 8,
+    "english_only_pass_count": 8,
+    "injected_faults_missed_by_visual_proxy": [
+      "control_wrong_translation_misread",
+      "control_swapped_target",
+      "control_decimal_parse_mutation",
+      "control_keyboard_layout_mismatch",
+      "control_authority_weakened"
+    ]
+  },
+  "corruption_probes": [
+    {
+      "id": "corrupt_benign_to_fail",
+      "case_id": "benign_theme_label_layout",
+      "source_decision": "PASS",
+      "corrupted_decision": "FAIL"
+    },
+    {
+      "id": "corrupt_target_fault_to_pass",
+      "case_id": "control_swapped_target",
+      "source_decision": "FAIL",
+      "corrupted_decision": "PASS"
+    },
+    {
+      "id": "corrupt_ambiguous_to_pass",
+      "case_id": "unknown_ambiguous_translation",
+      "source_decision": "UNKNOWN",
+      "corrupted_decision": "PASS"
+    }
+  ]
+}

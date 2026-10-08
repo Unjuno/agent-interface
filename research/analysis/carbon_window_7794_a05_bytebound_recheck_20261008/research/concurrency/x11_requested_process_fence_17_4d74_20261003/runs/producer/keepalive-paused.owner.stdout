@@ -1,0 +1,12 @@
+{"kind": "ready", "ns": 3378051330, "pid": 17, "identity": {"display": ":112", "window": 2097152, "allocation": "X11-REQUESTED-PROCESS-FENCE-7034-4D74-A01-20261003", "cell": "keepalive-paused", "keys": {"F8": 74, "F9": 75}}}
+{"kind": "dispatch_start", "ns": 3379902517, "pid": 17, "program": {"schema": "agent-interface/program-v1", "program_id": "owned-7034", "source": {"observation_seq": 1, "binding_revision": 1}, "authority": {"lease_id": "private-7034", "expires_at_ns": 7379899515}, "terminal": {"release_all_required": true}, "ops": [{"op": "focus", "target": "owned"}, {"op": "key_state", "key": "F8", "down": true}, {"op": "key_state", "key": "F9", "down": true}, {"op": "wait_update", "timeout_ms": 40}, {"op": "release_all"}]}}
+{"kind": "positive_check", "ns": 3382102382, "pid": 17, "key": "F8", "permitted": true}
+{"kind": "native_start", "ns": 3382119522, "pid": 17, "key": "F8"}
+{"kind": "native_end", "ns": 3382315084, "pid": 17, "key": "F8"}
+{"kind": "positive_check", "ns": 3383032312, "pid": 17, "key": "F9", "permitted": true}
+{"kind": "pause_entered", "ns": 3383045330, "pid": 17, "key": "F9"}
+{"kind": "resume_received", "ns": 3785385873, "pid": 17, "key": "F9"}
+{"kind": "native_start", "ns": 3785421198, "pid": 17, "key": "F9"}
+{"kind": "native_end", "ns": 3785591040, "pid": 17, "key": "F9"}
+{"kind": "dispatch_return", "ns": 3826159153, "pid": 17, "receipt": {"status": "completed", "admission": "accepted", "required_capabilities": ["clock.monotonic", "event.feedback", "input.keyboard", "input.release_all", "window.focus"], "execution": {"started_ns": 3381559329, "ended_ns": 3826141583, "emissions": 4, "program_emissions": 4, "observations": [], "releases": [{"keys_down": [], "buttons_down": [], "verified": true, "monotonic_ns": 3826139102}], "waits": [{"operation_index": 3, "requested_ms": 40, "started_ns": 3785605855, "completed": true, "kind": "fixed_delay", "update_observed": null, "ended_ns": 3825735367}], "activations": [], "completed_ops": [0, 1, 2, 3, 4]}, "recovery_required": false}}
+{"kind": "owner_done", "ns": 3826242891, "pid": 17}

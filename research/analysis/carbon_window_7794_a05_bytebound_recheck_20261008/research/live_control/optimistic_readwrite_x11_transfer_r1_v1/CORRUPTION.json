@@ -1,0 +1,53 @@
+{
+  "all_rejected": true,
+  "tests": [
+    {
+      "errors": [
+        "allocation",
+        "gates"
+      ],
+      "name": "invocation",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "gates",
+        "ind_effect"
+      ],
+      "name": "ind_effect",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "cand_effect",
+        "gates"
+      ],
+      "name": "candidate_stale",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "gates",
+        "surface_discriminator"
+      ],
+      "name": "erase_discriminator",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "gates",
+        "stale_effect"
+      ],
+      "name": "stale_effect_command",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "decision",
+        "gates"
+      ],
+      "name": "decision",
+      "rejected": true
+    }
+  ]
+}

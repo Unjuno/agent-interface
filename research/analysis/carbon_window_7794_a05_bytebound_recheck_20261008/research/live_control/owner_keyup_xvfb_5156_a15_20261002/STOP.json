@@ -1,0 +1,13 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-XVFB-20261002-15",
+  "candidate": {"status": "FAIL", "executions": 1, "exit_code": 1},
+  "independent_auditor": "NOT_RUN",
+  "retries": 0,
+  "error": "RuntimeError: input owner does not expose mutable worker records",
+  "raw_sha256": "d28687d7f3e608dcb82adfcf48e2fa8955910b95c4a3ddb57537df953c1c5874",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "a9b188d18d3b79a2b7233a9cc5f1ce42faa32d242dd5f8d96e5844fd98e0e352",
+  "stop_reason": "Candidate instrumentation runs inside the wrapped worker method, where self is already the worker and has no _inner. The construction test exercised wrapper-side selection but omitted this method-body integration.",
+  "evidence_boundary": "One W admission was observed. No explicit-up result. owner_cleanup failed; owner_thread_stopped and processes_clean are unknown. Auditor not run after nonzero candidate; allocation consumed.",
+  "next_step": "A successor must use worker-local self.records in instrumented methods and pass an actual wrapper/worker injected-call construction smoke before a formal run."
+}

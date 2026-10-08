@@ -1,0 +1,14 @@
+{
+  "schema": "map01-source-closure-runner-stop-v1",
+  "disposition": "STOP_RUNNER_REPO_ROOT",
+  "scientific_result": "NOT_EVALUATED",
+  "formal_candidate_invocations": 1,
+  "independent_auditor_invocations": 0,
+  "command": "python candidate.py --repo-root ..\\..\\..\\..\\..\\..\\_clean_main_20261001 --out candidate_output.json",
+  "working_directory": "research/analysis/map01_v13_source_provenance_audit_59_t0_20261001",
+  "failure_boundary": "git show failed before reading the preregistration or any expected source blobs",
+  "process_exit_code": 1,
+  "root_cause": "relative --repo-root path overshot the repository root",
+  "retry_performed": false,
+  "next": "fresh additive successor with repository root derived from the script location and a new frozen source commit"
+}

@@ -1,0 +1,13 @@
+{
+  "schema":"agent_interface_golden_v3_docker_persistent_real_v1",
+  "issue":2558,
+  "decision":"PASS_DOCKER_PERSISTENT_MODEL_TO_EFFECT_SCOPED",
+  "allocation":"task-1",
+  "container":{"context":"orbstack","image_digest":"sha256:1a16aa431254514de58c909e84e5094a8e894caac11bf4c9d937dde6ea6d6398","docker_server":"29.4.0","architecture":"aarch64"},
+  "persistent_transport":{"process":"codex app-server --stdio","thread_turns":2,"turn_statuses":["completed","completed"],"returned_plan":"[200,145]"},
+  "fixture":{"fresh_xvfb":true,"effect_saved":true,"saved_text":"docker2558-persistent"},
+  "gates":{"task_success":true,"visual_target_revalidation":true,"native_status":"completed","release_verified":true,"focus_change":"SCOPE_MISMATCH","focus_change_input_dispatched":false,"focus_change_emissions_delta":0,"continuation_input_dispatched":false},
+  "action_to_scored_effect_ms":146.73886,
+  "formal_six_task_claim":false,
+  "protocol_diagnostic":"local_image_rejected; corrected_to_localImage"
+}

@@ -1,0 +1,19 @@
+Return exactly one JSON object matching the supplied bounded point schema.
+
+The current task is to place exactly one north-facing Conveyor in the empty
+tile directly above the copper item source, then finish paused with no pending
+build plans. In this one generation, identify exactly two distinct points in
+the source screenshot, in this order:
+
+1. The center of the Conveyor item in the visible build palette.
+2. The center of the empty world tile directly above the small copper source.
+
+For a clear positive result, use `target_reference`,
+`source_observation_pixels`, `surface_origin_translation`,
+`visually_unambiguous`, and put exactly those two `{x,y}` points in `points`.
+Never substitute a nearby tile or infer a world coordinate from hidden state.
+If either point or the relation is ambiguous, absent, outside the screenshot,
+or unreadable, use `needs_decision`, an empty `points` array,
+`not_applicable` for point space and motion model, and `ambiguous`,
+`no_candidate`, or `unreadable` as the confidence basis. A safe stop is preferred
+to guessing. These points identify targets only; they grant no input authority.

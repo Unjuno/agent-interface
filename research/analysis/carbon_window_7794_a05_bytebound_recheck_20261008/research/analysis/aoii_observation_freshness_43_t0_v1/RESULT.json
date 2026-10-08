@@ -1,0 +1,44 @@
+{
+  "schema": "aoii-observation-freshness-t0-result-v1",
+  "allocation": "AOII-OBSERVATION-FRESHNESS-43-T0-20261001-02",
+  "classification": "STOP_AUDIT_SOURCE_DRIFT",
+  "source_main": "bd9c4c5ceca68f4dc09bb39d27b140a987b68656",
+  "host": "macOS arm64, CPython 3.14.5, standard library only",
+  "container": false,
+  "candidate_invocations": 2,
+  "candidate_audit_attempts": 2,
+  "supplemental_corrected_audit_invocations": 1,
+  "test_auditor_subprocess_invocations": 5,
+  "candidate_retry": false,
+  "candidate_outcomes": [
+    {"file": "raw.jsonl", "exit": 0, "sha256": "59a1fe335b7bfa409600eabbd04a0bbf9d75ba33bb556562a0b91ed1a8a9dcb6", "disposition": "STOP_AUDIT_MISMATCH; preserve unchanged"},
+    {"file": "raw-successor-02.jsonl", "exit": 0, "sha256": "3c0c494136e5191a9a43c912daa6f9db8f681f4b89b55ab46a0024bce44586e2", "disposition": "audited after separate freeze; no regeneration"}
+  ],
+  "independent_audit": {
+    "file": "raw-successor-02.jsonl",
+    "rows": 12,
+    "cases": 6,
+    "errors": 0,
+    "authority_grants": 0,
+    "old_unchanged": {"aoi": 5, "aoii_wrong_ticks": 0},
+    "recent_superseded": {"aoi": 1, "aoii_wrong_ticks": 2},
+    "rapid_reversal_same_tick_wrong_belief_count": 1,
+    "missing_truth": "UNKNOWN, never scored as zero error",
+    "result": "PASS_SUPPLEMENTAL_RAW_ONLY_AUDIT"
+  },
+  "formal_disposition": "STOP_AUDIT_SOURCE_DRIFT: the second candidate output was generated under allocation 02, but the auditor source was edited after candidate output 01 while diagnosing the first mismatch and before auditing raw-successor-02.jsonl. The corrected auditor was not the byte-frozen auditor declared in FREEZE.json. Do not promote its supplemental PASS to the allocation gate.",
+  "freeze_integrity": {
+    "frozen_auditor_sha256": "5aa87a9290a878c1a58a5d4b59ec870b20088473815b1659898bc41a4c298cb4",
+    "auditor_used_for_supplemental_replay_sha256": "c5a10d854de286481053a088d66aa7557d91ece6633b4f1178b6eab92e7657e3",
+    "frozen_preregistration_sha256": "e6d96bf4323928f9f9d2cd6bc80be449464f9b5f28ec6e818f03757ef9b93fe2",
+    "post_execution_preregistration_addendum_sha256": "a84051e55f6f067a295c7d8fcd736aa6ea0603e184f0f3bab0692b5375d95b3e"
+  },
+  "local_ci": {"unit_tests": "5/5 PASS", "py_compile": "PASS"},
+  "limitations": [
+    "hand-authored finite traces only",
+    "does not validate GUI semantic truth or actual planner belief elicitation",
+    "does not compare live queue policies or measure latency/tokens/task effects",
+    "AoII is offline diagnostic only, never an online authority signal",
+    "not a formal Docker/OrbStack result"
+  ]
+}

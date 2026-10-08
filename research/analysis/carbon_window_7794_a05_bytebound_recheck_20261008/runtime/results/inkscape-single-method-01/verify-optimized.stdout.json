@@ -1,0 +1,63 @@
+{
+  "status": "HOLD_FULL_METHOD_TRANSFER",
+  "normal_tasks_succeeded": 1,
+  "normal_tasks_attempted": 2,
+  "control_noSave_stops": 2,
+  "controls_not_completed_tasks": true,
+  "pending_cases": [],
+  "cases": [
+    {
+      "case": "normal-ordinary",
+      "task_success": true,
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "input_programs": 3,
+      "emissions": 37,
+      "captures": 13,
+      "commands": 5,
+      "primary_images": 2,
+      "persisted_x": 80,
+      "local_method_ms": 787.703136
+    },
+    {
+      "case": "normal-compiled",
+      "task_success": false,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "input_programs": 1,
+      "emissions": 3,
+      "captures": 7,
+      "commands": 5,
+      "primary_images": 2,
+      "persisted_x": 50,
+      "local_method_ms": 367.567614
+    },
+    {
+      "case": "short-compiled",
+      "task_success": false,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "input_programs": 2,
+      "emissions": 13,
+      "captures": 10,
+      "commands": 5,
+      "primary_images": 2,
+      "persisted_x": 50,
+      "local_method_ms": 515.243275
+    },
+    {
+      "case": "short-ordinary",
+      "task_success": false,
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "input_programs": 2,
+      "emissions": 13,
+      "captures": 10,
+      "commands": 5,
+      "primary_images": 2,
+      "persisted_x": 50,
+      "local_method_ms": 484.775456
+    }
+  ],
+  "scope": "normal compiled selection failure preserved; one ordinary success; no same-correctness efficiency or model-token/default gain"
+}

@@ -1,0 +1,29 @@
+"""Ordinary construction closure repair; retain original 190/192 first result."""
+import hashlib,json,os,pathlib,shutil,subprocess,sys
+from datetime import datetime,timezone
+root=pathlib.Path(__file__).resolve().parent;repo=root.parent/'agent-interface'
+base=json.loads((root/'SOURCE.json').read_text())['base']
+def git(*args):return subprocess.check_output(['git',*args],cwd=repo)
+names=git('ls-tree','-r','--name-only',base,'--','runtime/__init__.py','runtime/integration_checks/__init__.py','runtime/integration_checks/host_timing.py').decode().splitlines()
+assert 'runtime/integration_checks/host_timing.py' in names
+pins={}
+for path in names:
+    raw=git('show',base+':'+path);target=root/'combined'/path;target.parent.mkdir(parents=True,exist_ok=True)
+    with target.open('xb') as f:f.write(raw)
+    pins[path]=dict(blob=git('rev-parse',base+':'+path).decode().strip(),sha256=hashlib.sha256(raw).hexdigest())
+before=json.loads((root/'AFFECTED_SOURCE.json').read_text())
+record=dict(utc=datetime.now(timezone.utc).isoformat(),base=base,added_python_subprocess_closure=pins,
+  unchanged20_node_inputs=before['closure'],original='execution/affected:190/192, two missing runtime.integration_checks.host_timing failures, unchanged source/raw',
+  helper_python=subprocess.check_output(['python3','--version']).decode().strip(),settings='same inherited default python3 helper; no PYTHON override')
+with (root/'AFFECTED_REPAIR_FREEZE.json').open('x',encoding='utf-8',newline='\n') as f:json.dump(record,f,indent=2);f.write('\n')
+out=root/'execution/affected-v2';out.mkdir();scratch=root/'scratch/affected-v2';scratch.mkdir()
+env=os.environ.copy();env['TEMP']=str(scratch);env['TMP']=str(scratch)
+argv=[shutil.which('node'),'--test',*[str(root/'combined'/p) for p in before['selection']]]
+start=datetime.now(timezone.utc).isoformat();p=subprocess.run(argv,cwd=root/'combined',env=env,capture_output=True,timeout=35)
+logs={}
+for name,data in [('stdout',p.stdout),('stderr',p.stderr)]:
+    with (out/(name+'.txt')).open('xb') as f:f.write(data)
+    logs[name]=dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest())
+with (out/'receipt.json').open('x',encoding='utf-8',newline='\n') as f:json.dump(dict(argv=argv,start_utc=start,end_utc=datetime.now(timezone.utc).isoformat(),exit=p.returncode,logs=logs,scope='same explicit13 Node selection with missing actual Python helper source restored; original first result unchanged'),f,indent=2);f.write('\n')
+print(json.dumps(dict(exit=p.returncode,selected13=True,helper=record['helper_python'],added=len(pins))))
+sys.exit(p.returncode)

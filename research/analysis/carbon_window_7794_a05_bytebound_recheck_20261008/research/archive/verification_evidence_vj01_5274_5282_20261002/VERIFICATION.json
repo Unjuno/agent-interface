@@ -1,0 +1,46 @@
+{
+  "scope": "Static preservation and byte identity only; no source import or candidate/auditor/test execution.",
+  "original_blob_checks": 14,
+  "freeze_file_checks": 12,
+  "unique_git_blobs": 13,
+  "branch_history_commits_checked": 7,
+  "canonical_5274_archive": {
+    "observed_main": "9a327d0511f02c7b8ebd175e20f96a43028578ca",
+    "pr": 5283,
+    "merge_commit": "6cd858858f0909cab5357de054404792a0148910",
+    "path": "research/verification/evidence_reducer_5274_v1/",
+    "archive_bytes": 68036,
+    "archive_sha256": "7fb949e3fe109494377d1b108212876c4b4d5d703f13758bfb59d3a999b99016",
+    "members": 44,
+    "part_git_blobs": {
+      "evidence.tar.xz.part00": "74ea85e5761a7930781ec5ea476c40fbcb1ffa57",
+      "evidence.tar.xz.part01": "5a1190c0a6b1a8305546210281fe1fbfe480e54b",
+      "evidence.tar.xz.part02": "1aee00eb95250769e0738f73cc5da5bae1085165",
+      "evidence.tar.xz.part03": "960c084e4ecf6bb63c631de0334fb9a0440796fb",
+      "evidence.tar.xz.part04": "f53680ccb317df084cf97baac9de8fc455137e4c",
+      "evidence.tar.xz.part05": "aad1ad84b71881d537bd52da683793acc260d9fe"
+    },
+    "raw_members": [
+      {
+        "path": "formal-01/REQUESTS.jsonl",
+        "bytes": 882374,
+        "sha256": "1dba2f07b352f6909d2ab84c3400d6f4c32a3120f2071b8b91f320bb608da61b"
+      },
+      {
+        "path": "formal-01/RESPONSES.jsonl",
+        "bytes": 2958249,
+        "sha256": "026e4d169484bb2f300882249b7e6b53fec076099c2d363fc671a0cb0b78b7aa"
+      }
+    ]
+  },
+  "unrecovered_5282_raw": {
+    "bytes_reported": 47644,
+    "sha256_reported": "92ead437d67d30a8d75fbfe329fc6dd692741ac2ba11ee763d604b15e4086d15",
+    "source": "https://github.com/Unjuno/agent-interface/issues/5282#issuecomment-5891708365",
+    "available_in_source_branch": false,
+    "recreated": false
+  },
+  "rescue_candidate_invocations": 0,
+  "rescue_auditor_invocations": 0,
+  "rescue_tests_executed": 0
+}

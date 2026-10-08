@@ -1,0 +1,32 @@
+{
+  "schema": "owner-keyup-key-identity-freeze-v1",
+  "allocation": "MAP01-OWNER-KEYUP-KEY-IDENTITY-5156-20260930-01",
+  "base_main": "b452717dfd05179e1f59c09bc4de11b47dc1444b",
+  "upstream": {
+    "pr_5467_head": "1675b2e3b3deb4ffbd2651098ccfc819aa53d123",
+    "pr_5415_head": "2b01248ff319a70ca7ddb19131f2f6cc4d7a2360",
+    "baseline_auditor_blob": "c37b6372f4e5a7306b98049c834559fdd60cadee",
+    "expected_inventory_blob": "affa71e53457bb903353ce67b3477ef20b1d488c",
+    "raw_fixture_blob": "451247a5180348b8c29d09994dc0264f822585d1"
+  },
+  "runtime": {
+    "python": "3.14.5",
+    "execution": "host-only Python; no Docker/OrbStack/X11"
+  },
+  "frozen_sha256": {
+    "PLAN.md": "d44ccea3157482d40af798d3e734b78b7c802ae87c4be96004cb756d1513b701",
+    "audit_raw.py": "db4fa2aa2ccc30b54a3a114da36d1164e1aafa52fce266be6e1c1a2092063232",
+    "audit_v3.py": "9cc331d0fbce72267904341e1163a5c518f36fd2f47a651756e7f579427dc2d0",
+    "baseline_audit_v2.py": "191fdabdd289e49b03514d1dfc66ba475b885ab078b733a7ef7030daf9cfe906",
+    "expected_inventory.json": "9ef72a837ce4f5d802dcc7fdb72a843a0e768154dbe30897a00f270cfaabde2b",
+    "raw_input.json": "56842934b9f9b13fe0e52d515d31bd0c3d598cdb1cfa8b719dfb4c8ba463cbc2",
+    "test_audit_key_integrity.py": "72d06a37a076ecf03a69861086da7900ee33c35053dc3e140059bb23199b3ad0"
+  },
+  "prefreeze_exploratory": {
+    "checks": 9,
+    "passed": 9,
+    "formal_or_live_allocation": false
+  },
+  "frozen_suite_invocations": 0,
+  "frozen_raw_audit_invocations": 0
+}

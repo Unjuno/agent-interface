@@ -1,0 +1,306 @@
+{
+  "baseline-red": [
+    {
+      "argv": [
+        "python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.kernel.test_kernel",
+        "test_cancel_effect"
+      ],
+      "cwd": "baseline",
+      "started_utc": "2026-10-03T01:38:19.140784+00:00",
+      "ended_utc": "2026-10-03T01:38:19.370038+00:00",
+      "exit_code": 1,
+      "stdout": "baseline-red-tests.log",
+      "stderr": "baseline-red-tests.stderr.log",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "b7cb03318ef820733e25ebb4ef4a75f5996a18421cf3b66df79f663bd19f3797",
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    },
+    {
+      "argv": [
+        "python.exe",
+        "reproduce.py"
+      ],
+      "cwd": "baseline",
+      "started_utc": "2026-10-03T01:38:19.507269+00:00",
+      "ended_utc": "2026-10-03T01:38:19.681257+00:00",
+      "exit_code": 0,
+      "stdout": "baseline-red-raw.log",
+      "stderr": "baseline-red-raw.stderr.log",
+      "stdout_sha256": "58d9888f13f6f81fc75557bbc384a4071a9f4fcdb80ec3f53fb8e06e62a2a5fe",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    }
+  ],
+  "candidate-green": [
+    {
+      "argv": [
+        "python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.kernel.test_kernel",
+        "test_cancel_effect"
+      ],
+      "cwd": "candidate",
+      "started_utc": "2026-10-03T01:38:31.238634+00:00",
+      "ended_utc": "2026-10-03T01:38:31.446713+00:00",
+      "exit_code": 0,
+      "stdout": "candidate-green-tests.log",
+      "stderr": "candidate-green-tests.stderr.log",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "04a3c7e9870bc549598c4426d76e9ae0d15076afe3102fbbc6108a1759121d93",
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    },
+    {
+      "argv": [
+        "python.exe",
+        "reproduce.py"
+      ],
+      "cwd": "candidate",
+      "started_utc": "2026-10-03T01:38:31.528084+00:00",
+      "ended_utc": "2026-10-03T01:38:31.692659+00:00",
+      "exit_code": 0,
+      "stdout": "candidate-green-raw.log",
+      "stderr": "candidate-green-raw.stderr.log",
+      "stdout_sha256": "29ef64aab2209ff22b47f277156687f388b817109e3c42bc045c20b70aadc705",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    }
+  ],
+  "candidate-optimized": [
+    {
+      "argv": [
+        "python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.kernel.test_kernel",
+        "test_cancel_effect"
+      ],
+      "cwd": "candidate",
+      "started_utc": "2026-10-03T01:38:31.866805+00:00",
+      "ended_utc": "2026-10-03T01:38:32.048708+00:00",
+      "exit_code": 0,
+      "stdout": "candidate-optimized-tests.log",
+      "stderr": "candidate-optimized-tests.stderr.log",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "5c892c0ccc864c28ffd58861493d9b6ed1b839acb0213667a544ca372d670856",
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    },
+    {
+      "argv": [
+        "python.exe",
+        "-O",
+        "reproduce.py"
+      ],
+      "cwd": "candidate",
+      "started_utc": "2026-10-03T01:38:32.123235+00:00",
+      "ended_utc": "2026-10-03T01:38:32.291314+00:00",
+      "exit_code": 0,
+      "stdout": "candidate-optimized-raw.log",
+      "stderr": "candidate-optimized-raw.stderr.log",
+      "stdout_sha256": "29ef64aab2209ff22b47f277156687f388b817109e3c42bc045c20b70aadc705",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    }
+  ],
+  "current-main-red": [
+    {
+      "argv": [
+        "python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.kernel.test_kernel"
+      ],
+      "cwd": "repository",
+      "started_utc": "2026-10-03T01:42:10.586473+00:00",
+      "ended_utc": "2026-10-03T01:42:10.781751+00:00",
+      "exit_code": 1,
+      "stdout": "current-main-red-kernel-tests.stdout.log",
+      "stderr": "current-main-red-kernel-tests.stderr.log",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "389cd51385d05dc2eaf57ec6ac6d49833d6efb7b5a01ea4b517a295784c31002",
+      "source_pins": [
+        {
+          "path": "runtime/kernel/__init__.py",
+          "bytes": 888,
+          "sha256": "58efbeebecc33c3d7bcd204712ba788cba26c22acbe1757d1ec74837bb1a3fae"
+        },
+        {
+          "path": "runtime/kernel/backend.py",
+          "bytes": 2052,
+          "sha256": "0964f570109b5fae81ba266dbc1c5a95af0ec412d84a1ce5b568cbd22a3c6531"
+        },
+        {
+          "path": "runtime/kernel/contracts.py",
+          "bytes": 10274,
+          "sha256": "f3287cb43ac7f557db7d35b754109432a1dcc9952a389784978963d28260ef9c"
+        },
+        {
+          "path": "runtime/kernel/lifecycle.py",
+          "bytes": 7716,
+          "sha256": "a4f22e97225be977d55ead03282b2e8e431a632af1fdce696f5f12ce5539fcb9"
+        },
+        {
+          "path": "runtime/kernel/test_kernel.py",
+          "bytes": 11399,
+          "sha256": "19e4c92b4a5fc923e2745b2cdb78f23bcaf8f9226215de9d7409485cf73f0c30"
+        },
+        {
+          "path": "runtime/kernel/README.md",
+          "bytes": 1077,
+          "sha256": "4179c325a48d62aa500b9df9f27fc4fcfdc3b080c5fa89b0d75735b17ca3f6d8"
+        }
+      ],
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    }
+  ],
+  "current-main-green": [
+    {
+      "argv": [
+        "python.exe",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.kernel.test_kernel"
+      ],
+      "cwd": "repository",
+      "started_utc": "2026-10-03T01:42:11.121335+00:00",
+      "ended_utc": "2026-10-03T01:42:11.314725+00:00",
+      "exit_code": 0,
+      "stdout": "current-main-green-kernel-tests.stdout.log",
+      "stderr": "current-main-green-kernel-tests.stderr.log",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "528147ec0766a71a2447571bc41408e271db1e9a44494b54c597e85e202c2ed3",
+      "source_pins": [
+        {
+          "path": "runtime/kernel/__init__.py",
+          "bytes": 888,
+          "sha256": "58efbeebecc33c3d7bcd204712ba788cba26c22acbe1757d1ec74837bb1a3fae"
+        },
+        {
+          "path": "runtime/kernel/backend.py",
+          "bytes": 2052,
+          "sha256": "0964f570109b5fae81ba266dbc1c5a95af0ec412d84a1ce5b568cbd22a3c6531"
+        },
+        {
+          "path": "runtime/kernel/contracts.py",
+          "bytes": 10274,
+          "sha256": "f3287cb43ac7f557db7d35b754109432a1dcc9952a389784978963d28260ef9c"
+        },
+        {
+          "path": "runtime/kernel/lifecycle.py",
+          "bytes": 7755,
+          "sha256": "5a77395f2693d49d01ba877d7495c6df62b6b43c67c4e4be7af7bf56feec95a4"
+        },
+        {
+          "path": "runtime/kernel/test_kernel.py",
+          "bytes": 11399,
+          "sha256": "19e4c92b4a5fc923e2745b2cdb78f23bcaf8f9226215de9d7409485cf73f0c30"
+        },
+        {
+          "path": "runtime/kernel/README.md",
+          "bytes": 1077,
+          "sha256": "4179c325a48d62aa500b9df9f27fc4fcfdc3b080c5fa89b0d75735b17ca3f6d8"
+        }
+      ],
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    }
+  ],
+  "current-main-optimized": [
+    {
+      "argv": [
+        "python.exe",
+        "-O",
+        "-m",
+        "unittest",
+        "-v",
+        "runtime.kernel.test_kernel"
+      ],
+      "cwd": "repository",
+      "started_utc": "2026-10-03T01:42:11.571801+00:00",
+      "ended_utc": "2026-10-03T01:42:11.760710+00:00",
+      "exit_code": 0,
+      "stdout": "current-main-optimized-kernel-tests.stdout.log",
+      "stderr": "current-main-optimized-kernel-tests.stderr.log",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "50d34efefcde9a760376fa7d15c3d3fdcac07079edd274fb9fbd22f3725df2b2",
+      "source_pins": [
+        {
+          "path": "runtime/kernel/__init__.py",
+          "bytes": 888,
+          "sha256": "58efbeebecc33c3d7bcd204712ba788cba26c22acbe1757d1ec74837bb1a3fae"
+        },
+        {
+          "path": "runtime/kernel/backend.py",
+          "bytes": 2052,
+          "sha256": "0964f570109b5fae81ba266dbc1c5a95af0ec412d84a1ce5b568cbd22a3c6531"
+        },
+        {
+          "path": "runtime/kernel/contracts.py",
+          "bytes": 10274,
+          "sha256": "f3287cb43ac7f557db7d35b754109432a1dcc9952a389784978963d28260ef9c"
+        },
+        {
+          "path": "runtime/kernel/lifecycle.py",
+          "bytes": 7755,
+          "sha256": "5a77395f2693d49d01ba877d7495c6df62b6b43c67c4e4be7af7bf56feec95a4"
+        },
+        {
+          "path": "runtime/kernel/test_kernel.py",
+          "bytes": 11399,
+          "sha256": "19e4c92b4a5fc923e2745b2cdb78f23bcaf8f9226215de9d7409485cf73f0c30"
+        },
+        {
+          "path": "runtime/kernel/README.md",
+          "bytes": 1077,
+          "sha256": "4179c325a48d62aa500b9df9f27fc4fcfdc3b080c5fa89b0d75735b17ca3f6d8"
+        }
+      ],
+      "python": "3.12.10",
+      "os": "Windows-11-10.0.26200-SP0"
+    }
+  ],
+  "current_raw": [
+    {
+      "base": "cb13a10dce358649458f5aea00947b8aa43fc5b8",
+      "argv": [
+        "python.exe",
+        "reproduce.py"
+      ],
+      "cwd": "current-baseline",
+      "started_utc": "2026-10-03T01:43:37.101228+00:00",
+      "ended_utc": "2026-10-03T01:43:37.307147+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "58d9888f13f6f81fc75557bbc384a4071a9f4fcdb80ec3f53fb8e06e62a2a5fe",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "base": "cb13a10dce358649458f5aea00947b8aa43fc5b8",
+      "argv": [
+        "python.exe",
+        "reproduce.py"
+      ],
+      "cwd": "current-candidate",
+      "started_utc": "2026-10-03T01:43:37.316147+00:00",
+      "ended_utc": "2026-10-03T01:43:37.553190+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "29ef64aab2209ff22b47f277156687f388b817109e3c42bc045c20b70aadc705",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

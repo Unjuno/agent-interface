@@ -1,0 +1,53 @@
+{
+  "schema": "issue-6575-t0-freeze-v1",
+  "allocation": "OBS-INJECTION-TRANSFORM-6575-T0-20261002-01",
+  "base_main_sha": "7c788b3df33928d84b327bb8b4b0ac8690de13c3",
+  "branch": "research/observation-injection-transform-6575-t0-wslc-20261002",
+  "runtime": {
+    "cli": "C:\\Program Files\\WSL\\wslc.exe",
+    "version": "wslc 3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_requested": "1G",
+    "user": "65534:65534",
+    "gpu": false,
+    "docker": false,
+    "podman": false
+  },
+  "denominator": {
+    "cases": 6,
+    "arms": 4,
+    "rows": 24,
+    "image_items": 36,
+    "invalid_crop_checks": 12
+  },
+  "formal_invocations": {"construction": 0, "candidate": 0, "auditor": 0},
+  "files": {
+    "README.md": "bcc8b13d73778de8942b3acd420d1bce22e3be610065c371f4571d9c9004f0bd",
+    "scenes.py": "2211a2a5d2a18c68993453be7bd77c1e70a2998768da175fa23d605a5bb4d527",
+    "candidate.py": "b712bb5a1e53ead8997d5449c4d66da5571e59a3683bda387f93ebddbb20ec93",
+    "auditor.py": "7406636158abef0de6784da6814e23aa80963f2e958a9288afedc1fd4295cdbd",
+    "oracle.json": "79fbc549661515470a34ab4035c9b9ab2623f6d7e00e5454226a966344ce55a6",
+    "test_protocol.py": "67154eaa8278d8e6f577d20b0cdc8995639379815697f1c3c66c792a827c9ab8",
+    "formal_01_20261002/PREREGISTRATION.md": "d642569a502ac32849078b85b249771dedd5e6acc88f3ec4bf0fcdac9ed209d2",
+    "formal_01_20261002/runner.ps1": "0a078295caed68162bb1b5bee29ca11247dc77050df4ee01cd4b643bf1197c3a",
+    "formal_01_20261002/candidate_source/candidate.py": "b712bb5a1e53ead8997d5449c4d66da5571e59a3683bda387f93ebddbb20ec93",
+    "formal_01_20261002/candidate_source/scenes.py": "2211a2a5d2a18c68993453be7bd77c1e70a2998768da175fa23d605a5bb4d527",
+    "formal_01_20261002/audit_source/auditor.py": "7406636158abef0de6784da6814e23aa80963f2e958a9288afedc1fd4295cdbd",
+    "formal_01_20261002/audit_source/oracle.json": "79fbc549661515470a34ab4035c9b9ab2623f6d7e00e5454226a966344ce55a6"
+  },
+  "staged_sources": {
+    "candidate_source/candidate.py": "b712bb5a1e53ead8997d5449c4d66da5571e59a3683bda387f93ebddbb20ec93",
+    "candidate_source/scenes.py": "2211a2a5d2a18c68993453be7bd77c1e70a2998768da175fa23d605a5bb4d527",
+    "audit_source/auditor.py": "7406636158abef0de6784da6814e23aa80963f2e958a9288afedc1fd4295cdbd",
+    "audit_source/oracle.json": "79fbc549661515470a34ab4035c9b9ab2623f6d7e00e5454226a966344ce55a6"
+  },
+  "output_directories": [
+    "formal_01_20261002/construction",
+    "formal_01_20261002/candidate_output",
+    "formal_01_20261002/audit_input",
+    "formal_01_20261002/audit_output"
+  ]
+}

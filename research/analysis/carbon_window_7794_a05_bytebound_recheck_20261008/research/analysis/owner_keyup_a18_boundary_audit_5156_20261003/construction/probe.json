@@ -1,0 +1,72 @@
+[
+  {
+    "case": "retained_control",
+    "invalid": false,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "candidate_window_excludes_events",
+    "invalid": true,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "admission_after_explicit_release",
+    "invalid": true,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "two_key_temporal_order_reversed",
+    "invalid": true,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "teardown_foreign_owner",
+    "invalid": true,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "teardown_foreign_intent",
+    "invalid": true,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "cancel_release_before_admission_ack",
+    "invalid": true,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "external_counter_boolean",
+    "invalid": true,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "model_counter_float",
+    "invalid": true,
+    "accepted": true,
+    "errors": []
+  },
+  {
+    "case": "existing_keymap_negative",
+    "invalid": true,
+    "accepted": false,
+    "errors": [
+      "call_0_keymap"
+    ]
+  },
+  {
+    "case": "existing_bracket_negative",
+    "invalid": true,
+    "accepted": false,
+    "errors": [
+      "call_0_nested_bracket"
+    ]
+  }
+]

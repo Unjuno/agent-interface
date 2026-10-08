@@ -1,0 +1,26 @@
+{
+  "kind": "ordinary added diagnostic observation, not formal experiment/replay",
+  "created_utc": "2026-10-03T05:55:35.021852+00:00",
+  "reason": "First six results demonstrate configured whole-call overrun and literal blocked read, but do not save the actual internal post-write deadline. Record only that scalar and observation time from the existing blocked Python frame, to distinguish time outside the configured wait interval.",
+  "source_sha256": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+  "unchanged_first_helper_sha256": "b984a6b33b7a88c3dafeb8e00d5fa0d188d3fea28ef34d1c07c3f087ad95bd5a",
+  "supplement_helper_sha256": "d56d49436de208cb879d8879329d2a6f7c5c9a4868912707de5481154c28a8c6",
+  "cells": [
+    {
+      "id": "request-stderr_retained",
+      "api": "request",
+      "mode": "stderr_retained"
+    },
+    {
+      "id": "notification-stderr_retained",
+      "api": "notification",
+      "mode": "stderr_retained"
+    }
+  ],
+  "public_timeout_s": 0.05,
+  "checkpoint_s": 0.25,
+  "decision": "both actual finite float internal deadlines must be less than the observation clock while caller is still blocked at literal stderr.read; first6 and source/thresholds stay unchanged; preserve any failure",
+  "native_children": 2,
+  "first_native_children": 6,
+  "not_a_first_all_PASS_relabel": true
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "action-bound-residual-fixture-v1",
+  "width": 32,
+  "height": 24,
+  "alarm_budget_cells": 4,
+  "deadline_frames": 2,
+  "pan_dx": 2,
+  "cases": [
+    {"id":"heldout-bound-pan-flash","delivery":"exact","generation":1,"event":"flash","critical":false,"holdout":true},
+    {"id":"exact-pan-critical","delivery":"exact","generation":1,"event":"critical","critical":true},
+    {"id":"underpan-flash","delivery":"under","generation":1,"event":"flash","critical":false},
+    {"id":"overpan-object","delivery":"over","generation":1,"event":"object","critical":false},
+    {"id":"delayed-pan-scroll","delivery":"delayed","generation":1,"event":"external-scroll","critical":false},
+    {"id":"failed-pan-flash","delivery":"failed","generation":1,"event":"flash","critical":false},
+    {"id":"no-input-flash","delivery":"none","generation":1,"event":"flash","critical":false},
+    {"id":"pan-parallax-critical","delivery":"exact","generation":1,"event":"parallax-critical","critical":true},
+    {"id":"pan-nonrigid","delivery":"exact","generation":1,"event":"nonrigid","critical":false},
+    {"id":"pan-occluded-critical","delivery":"exact","generation":1,"event":"occluded-critical","critical":true},
+    {"id":"stale-generation","delivery":"exact","generation":2,"event":"flash","critical":false},
+    {"id":"empty-negative-pan","delivery":"exact","generation":1,"event":"none","critical":false}
+  ]
+}

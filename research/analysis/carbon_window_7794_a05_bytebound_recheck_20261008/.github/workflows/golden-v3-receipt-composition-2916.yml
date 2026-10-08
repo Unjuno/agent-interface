@@ -1,0 +1,18 @@
+name: golden-v3 receipt composition 2916
+
+on:
+  pull_request:
+    paths:
+      - "research/integration/golden_v3_receipt_composition_2916/**"
+      - ".github/workflows/golden-v3-receipt-composition-2916.yml"
+
+jobs:
+  decision-table:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run additive decision-table tests
+        run: python -m unittest -v research.integration.golden_v3_receipt_composition_2916.test_receipt_composition

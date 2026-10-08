@@ -1,0 +1,3 @@
+# Synthetic audit-design result
+
+Frozen test used one synthetic pixel and scalar weight. Adjacent float32 mutation changed value but probability delta was only 7.34e-9, below the current 1e-6 tolerance; therefore recomputation could accept it. A synthetic +2.0 finite perturbation changed probability by 0.34247, clearly exceeding tolerance. This confirms that mutation value-change assertions alone are insufficient and that test oracles must explicitly bind the intended weight bytes or demand a justified observable prediction divergence. These are synthetic mechanics only; no #4862 formal inputs or model outputs were read or modified. No training, model calls, or predictions occurred.

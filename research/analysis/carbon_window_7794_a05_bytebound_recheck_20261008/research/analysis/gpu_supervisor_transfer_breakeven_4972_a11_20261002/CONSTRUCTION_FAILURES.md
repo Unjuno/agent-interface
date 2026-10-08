@@ -1,0 +1,5 @@
+# Allocation-11 construction attempt 1 — retained failure
+
+The first CPU-only WSLc construction gate ran on 2026-10-02 against source package seed `49720261011`, pinned image `pytorch/pytorch@sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067`, WSLc 3.0.1.0, with network disabled. `test_contract` failed 1/3 because its stale seed assertion still expected allocation-10 seed `49720261010`. The unsafe-admission tests passed 3/3 and the independent-auditor control suite passed 6 result + 2 source mutations. No GPU, candidate or formal auditor was invoked. The exact combined log and exit tuple `1,0,0` are preserved in `research/outputs/gpu_supervisor_transfer_breakeven_4972_a11_20261002_construction/` (log SHA-256 `326985c0c3da9e32cc2ab59f466791806c2764e1341327f5697b59beab3342249`).
+
+Cause: the contract test fixture asserted the old frozen seed after the allocation ID and dataset had changed. Repair: update that one expected seed to `49720261011`; candidate and auditor semantics are unchanged. The corrected source is frozen with a new checksum before the separate construction attempt. The original FAIL remains intact and is not regraded.

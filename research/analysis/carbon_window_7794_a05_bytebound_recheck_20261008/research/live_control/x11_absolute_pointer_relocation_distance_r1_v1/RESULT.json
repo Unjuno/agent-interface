@@ -1,0 +1,49 @@
+{
+  "by_distance": {
+    "1": {
+      "max_ns": 105095,
+      "min_ns": 22704,
+      "n": 100,
+      "p50_ns": 23765.0,
+      "p95_ns": 33289
+    },
+    "256": {
+      "max_ns": 59859,
+      "min_ns": 22914,
+      "n": 100,
+      "p50_ns": 23720.0,
+      "p95_ns": 26790
+    },
+    "64": {
+      "max_ns": 57244,
+      "min_ns": 22723,
+      "n": 100,
+      "p50_ns": 23725.0,
+      "p95_ns": 37345
+    },
+    "8": {
+      "max_ns": 125335,
+      "min_ns": 22814,
+      "n": 100,
+      "p50_ns": 23875.0,
+      "p95_ns": 29734
+    }
+  },
+  "cleanup": "PASS",
+  "decision": "PASS_X11_ABSOLUTE_RELOCATION_DISTANCE_FLAT_SCOPED",
+  "display": ":90",
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "xvfb": "private"
+  },
+  "exact_rows": 400,
+  "formal_invocations": 1,
+  "median_spread_ns": 155.0,
+  "neutral_rows": 400,
+  "p95_spread_ns": 10555,
+  "pass": true,
+  "reruns": 0,
+  "rows": 400,
+  "task": "X11-ABSOLUTE-POINTER-RELOCATION-DISTANCE-R1-20260918-001"
+}

@@ -1,0 +1,86 @@
+{
+  "branches": 3,
+  "experiment": "issue-5446-anytime-validity-t5",
+  "horizon": 4,
+  "null": "time-independent shared/private Bernoulli(1/2), exact rational enumeration",
+  "rho_values": [
+    {
+      "false_commit_decimal": {
+        "fixed_A_anytime": 0.25,
+        "fixed_A_final_only": 0.0625,
+        "fixed_equal_mixture_anytime": 0.129150390625,
+        "posthoc_max_branch_anytime": 0.578125,
+        "predictable_adaptive_branch_anytime": 0.25
+      },
+      "false_commit_probability": {
+        "fixed_A_anytime": "1/4",
+        "fixed_A_final_only": "1/16",
+        "fixed_equal_mixture_anytime": "529/4096",
+        "posthoc_max_branch_anytime": "37/64",
+        "predictable_adaptive_branch_anytime": "1/4"
+      },
+      "path_count_positive_mass": 4096,
+      "rho": "0/1",
+      "total_probability": "1"
+    },
+    {
+      "false_commit_decimal": {
+        "fixed_A_anytime": 0.25,
+        "fixed_A_final_only": 0.0625,
+        "fixed_equal_mixture_anytime": 0.1711130142211914,
+        "posthoc_max_branch_anytime": 0.5048828125,
+        "predictable_adaptive_branch_anytime": 0.25
+      },
+      "false_commit_probability": {
+        "fixed_A_anytime": "1/4",
+        "fixed_A_final_only": "1/16",
+        "fixed_equal_mixture_anytime": "179425/1048576",
+        "posthoc_max_branch_anytime": "517/1024",
+        "predictable_adaptive_branch_anytime": "1/4"
+      },
+      "path_count_positive_mass": 4096,
+      "rho": "1/4",
+      "total_probability": "1"
+    },
+    {
+      "false_commit_decimal": {
+        "fixed_A_anytime": 0.25,
+        "fixed_A_final_only": 0.0625,
+        "fixed_equal_mixture_anytime": 0.2028961181640625,
+        "posthoc_max_branch_anytime": 0.42578125,
+        "predictable_adaptive_branch_anytime": 0.25
+      },
+      "false_commit_probability": {
+        "fixed_A_anytime": "1/4",
+        "fixed_A_final_only": "1/16",
+        "fixed_equal_mixture_anytime": "13297/65536",
+        "posthoc_max_branch_anytime": "109/256",
+        "predictable_adaptive_branch_anytime": "1/4"
+      },
+      "path_count_positive_mass": 4096,
+      "rho": "1/2",
+      "total_probability": "1"
+    },
+    {
+      "false_commit_decimal": {
+        "fixed_A_anytime": 0.25,
+        "fixed_A_final_only": 0.0625,
+        "fixed_equal_mixture_anytime": 0.25,
+        "posthoc_max_branch_anytime": 0.25,
+        "predictable_adaptive_branch_anytime": 0.25
+      },
+      "false_commit_probability": {
+        "fixed_A_anytime": "1/4",
+        "fixed_A_final_only": "1/16",
+        "fixed_equal_mixture_anytime": "1/4",
+        "posthoc_max_branch_anytime": "1/4",
+        "predictable_adaptive_branch_anytime": "1/4"
+      },
+      "path_count_positive_mass": 16,
+      "rho": "1/1",
+      "total_probability": "1"
+    }
+  ],
+  "scope": "synthetic null only; no real verifier or semantic action claim",
+  "threshold": "2"
+}

@@ -1,0 +1,33 @@
+{
+  "allocation": "ic-prefix-finite-model-5547-20261001-01",
+  "issue": 5547,
+  "issue_url": "https://github.com/Unjuno/agent-interface/issues/5547",
+  "issue_updated_at": "2026-09-30T15:04:51Z",
+  "source_main": "59ffec5d551b0adcf11057eee6da814237a748c8",
+  "branch": "research/invariant-confluence-prefix-5547-20261001",
+  "path": "research/analysis/invariant_confluence_prefix_5547_v1/",
+  "scope": "Host-only bounded synthetic finite-state experiment; no container, GUI, model, GPU, CUDA, or external effects.",
+  "runtime": "CPython 3.11.9, Windows host",
+  "limits": [
+    "This is an exhaustive check only over the preregistered finite command set and initial state.",
+    "It does not prove general I-confluence or justify coordination-free runtime execution.",
+    "Authority revocation is modeled as a tombstone-wins set; other revocation semantics are outside scope.",
+    "External effect dispatch is represented by an at-most-once semantic-ID invariant, not an actual backend."
+  ],
+  "invocation_budget": {
+    "tests": 1,
+    "runner": 1,
+    "independent_audit": 1,
+    "retries": 0,
+    "mutations": 5
+  },
+  "docker_gpu_invocations": 0,
+  "sha256": {
+    "PLAN.md": "051178efb733a6a8892cf9217d7145926a3dce929833ea3a35e54bf04f4c389f",
+    "expected.json": "276b0902c21f32d654747bd98daff850c72a8f441ab5e75460ef3b7fa24db916",
+    "experiment.py": "8299585edf3ed68642b91d27059e820a178505be7b1af3d6fe63fa3842f9be82",
+    "test_experiment.py": "79693f6a8f40895e49de11cc9fee6794299cbc2b2f2a17f3df684e1acadd0992",
+    "run_experiment.py": "b3829a044bb1974626582cb567b27725102150a239a2a7a970dc5560674f1f6d",
+    "audit_raw.py": "154691eda77488b0120b19a6fe9009bc9f64ef8b283444e3c9b9baff32ce3505"
+  }
+}

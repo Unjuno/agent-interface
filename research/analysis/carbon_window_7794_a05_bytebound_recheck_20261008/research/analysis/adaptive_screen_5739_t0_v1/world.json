@@ -1,0 +1,31 @@
+{
+  "schema": "issue-5739-finite-world-v1",
+  "sealed_variants": ["s0", "s1", "s2", "s3"],
+  "scenarios": {
+    "multiple_survivors": {
+      "baseline": {"success": [0, 1, 0, 1], "forbidden": []},
+      "route_a": {"success": [1, 1, 0, 1], "forbidden": []},
+      "route_b": {"success": [1, 1, 1, 1], "forbidden": []},
+      "family": ["route_a", "route_b"],
+      "screened_out": []
+    },
+    "screened_out_is_best": {
+      "baseline": {"success": [0, 1, 0, 1], "forbidden": []},
+      "route_a": {"success": [1, 1, 0, 1], "forbidden": []},
+      "route_c": {"success": [1, 1, 1, 1], "forbidden": []},
+      "family": ["route_a"],
+      "screened_out": ["route_c"]
+    },
+    "fast_but_unsafe": {
+      "baseline": {"success": [0, 1, 0, 1], "forbidden": []},
+      "route_fast": {"success": [1, 1, 1, 1], "forbidden": ["s1"]},
+      "family": ["route_fast"],
+      "screened_out": []
+    }
+  },
+  "predeclared_rules": {
+    "multiple_survivors_without_family_rule": "HOLD_MULTIPLE_COMPARISON_UNADJUSTED",
+    "screened_out_arm": "SURVIVOR_VS_BASELINE_ONLY_NO_GLOBAL_OPTIMALITY",
+    "any_forbidden_attempt": "HARD_SAFETY_STOP"
+  }
+}

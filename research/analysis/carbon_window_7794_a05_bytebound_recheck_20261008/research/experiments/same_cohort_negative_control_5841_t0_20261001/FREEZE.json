@@ -1,0 +1,82 @@
+{
+  "freeze_id": "ISSUE-5841-T0-HOST-20261001-01",
+  "repository": "Unjuno/agent-interface",
+  "issue": 5841,
+  "branch": "research/5841-same-cohort-negative-control-t0-20261001",
+  "path": "research/experiments/same_cohort_negative_control_5841_t0_20261001/",
+  "main_sha": "443bcb63333c4614d9a6fee5cb3ca3f9f6ea9710",
+  "allocation": "one host-CPU candidate invocation followed by one separate raw-only audit; no retries",
+  "environment": {
+    "os": "Windows host",
+    "python": "CPython 3.11.9",
+    "container": "NOT_USED: python:3.12.14-slim was not cached; C: free space fell from 316096512 bytes during preparation to 0 before formal launch; no shared Docker/OrbStack CPU allocation was granted to this experiment",
+    "gpu": "NOT_USED: deterministic finite method test has no GPU-dependent computation",
+    "network": "candidate and auditor make no network calls",
+    "external_effects": "none"
+  },
+  "H": "In a finite matched-route evaluation with planted route-correlated outcome loss or task-ID misjoin but no true route benefit, a predeclared same-cohort negative-control endpoint flags the spurious contrast before promotion; a null pipeline does not trigger. Its ability to detect real benchmark bias remains unknown.",
+  "T": {
+    "design": "Deterministic authored no-model assignment deck; compare primary-only analysis, a pre/post reference-standard deck, and same-cohort negative controls. An independent raw-only auditor replays every row and adjudicates against a separate truth file.",
+    "cases": [
+      "clean_null",
+      "true_primary_benefit",
+      "route_missingness",
+      "task_id_swap",
+      "joint_export_error",
+      "real_sentinel_collateral"
+    ],
+    "population": "6 cases x 4 assigned task IDs x 2 routes = 48 episode rows; 6 x 2 routes x 2 phases = 24 pre/post reference rows",
+    "faults": "route-specific missing hard outcomes; swapped observed task IDs; task-window joint primary/sentinel export error while pre/post reference samples remain correct; actual guarded-route sentinel mutation",
+    "controls": "clean null and true primary benefit with null sentinel",
+    "candidate_runs": 1,
+    "auditor_runs": 1,
+    "retry_policy": "none"
+  },
+  "D": {
+    "PASS_METHOD_SCOPED": "same-cohort control warns exactly on the four preregistered missingness/join/export/collateral deviations; clean-null and true-primary-benefit cases remain CLEAR; the independent oracle classifies the true sentinel mutation as COLLATERAL_FAIL rather than measurement bias; all six raw corruption controls are rejected.",
+    "FAIL_METHOD": "a required planted measurement/join/missingness deviation is missed, clean-null or true-primary-benefit is quarantined, a real sentinel mutation is classified as mere measurement bias, raw reconstruction differs, or any corruption control is accepted.",
+    "UNCERTAIN": "the authored independent truth/oracle or the declared route-null relation cannot distinguish export error from real collateral, or source/input identity cannot be established."
+  },
+  "C": "Ordinary all-attempt reconciliation, independent scoring, or a check-standard deck may catch the same errors more simply; a negative control can be weakly linked to the relevant bias path and create false reassurance.",
+  "U": "Synthetic data do not establish that a real route cannot affect a sentinel, that the sentinel shares a live bias path, or that the method detects endpoint-specific primary-only errors. The small deterministic deck gives no sensitivity, prevalence, causal, integrated #57, GUI, model, safety, or product estimate. The audit oracle is authored fixture truth, not an empirical independent assessor.",
+  "decision_gates": {
+    "same_cohort_warning_cases": [
+      "joint_export_error",
+      "real_sentinel_collateral",
+      "route_missingness",
+      "task_id_swap"
+    ],
+    "must_remain_clear": [
+      "clean_null",
+      "true_primary_benefit"
+    ],
+    "must_not_overinterpret": "a control warning means NEEDS_INDEPENDENT_AUDIT; the control alone does not label bias or prove the primary contrast invalid",
+    "reference_deck": "pre/post deck is measured as its own comparator; task-window-only injected export error intentionally leaves fixed bracketing checks green",
+    "threshold": "exact nonzero finite contrast for binary outcomes; no statistical significance test or empirical-rate inference"
+  },
+  "frozen_sha256": {
+    "candidate.py": "fd353db3abd05f38c6ababf2aa3f5f1e8dce1d82be54f85381d24cf66158980d",
+    "audit.py": "dffd2c331de2fa8f901a45ae68aa4d041a9a4524325e4b5bfcb1943bdbd1b6e6",
+    "build_fixtures.py": "c2e27a4eb68972d988ca7e68c35a6f2fbd05e840db4bb5d4d6fb82bf6eb4496c",
+    "reported_rows.json": "e502e2d5e8a924766c5e3f4bdd922f0bb8f6c6f782f9f62e15366b2313d62838",
+    "oracle.json": "379bbb7014a54dc962b3acbc0984db92fca1cb07549e1dd23db2f9cf18ab2535",
+    "reference_deck.json": "3868346ee8a92e830772989cb3878a57bdb36861998ee4e499befa74d32a2e0c"
+  },
+  "case_order": [
+    "clean_null",
+    "true_primary_benefit",
+    "route_missingness",
+    "task_id_swap",
+    "joint_export_error",
+    "real_sentinel_collateral"
+  ],
+  "line_ending_canonicalization": "The GitHub Contents connector preserves the original LF file bytes and appends one final CRLF. Frozen SHA-256 values identify the exact GitHub file bytes; the local copies are checked by appending that same final CRLF.",
+  "branch_base_sha": "0f141ee798325290f0eb46506169fe325d208d69",
+  "main_drift_check": {
+    "compare_base": "0f141ee798325290f0eb46506169fe325d208d69",
+    "compare_head": "443bcb63333c4614d9a6fee5cb3ca3f9f6ea9710",
+    "ahead_by": 14,
+    "behind_by": 0,
+    "scope": "GitHub compare found intervening changes only outside research/experiments/same_cohort_negative_control_5841_t0_20261001; candidate/auditor import no repository runtime code and use only Python standard library plus frozen files."
+  }
+}

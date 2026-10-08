@@ -1,0 +1,50 @@
+{
+  "audit_pass": true,
+  "audit_sha256": "87b57cedb376a1df9023be342e197b6f92e2694e35e65cd78eb4a7c72a7e9b00",
+  "case_count": 60,
+  "construction": false,
+  "decision": "PASS_SQLITE_READSET_CACHE_BOUNDARY_SCOPED",
+  "errors": [],
+  "formal_allocations": 1,
+  "formal_batch_invocations": 10,
+  "formal_replacements": 0,
+  "formal_reruns": 0,
+  "main_modified_by_this_work": false,
+  "postfreeze_tuning": 0,
+  "publication": "BLOCKED_THIS_CONNECTION_NO_WRITE_ACTION",
+  "remote_issue": null,
+  "remote_pr": null,
+  "scientific_gate_failures": [],
+  "semantic_controls_n": 8,
+  "semantic_controls_pass": true,
+  "source_freeze_sha256": "8c4797657e9d3e5c3cc1fe6e79c62958f793c19cbeef07375891aab8db384bb7",
+  "summary": {
+    "EVENT_ONLY": {
+      "cases": 20,
+      "commits": 14,
+      "false_refusals": 0,
+      "metadata_reuses": 0,
+      "missing_dependencies": 10,
+      "read_callback_events": 10,
+      "stale_commits": 2
+    },
+    "METADATA_REUSE": {
+      "cases": 20,
+      "commits": 12,
+      "false_refusals": 0,
+      "metadata_reuses": 10,
+      "missing_dependencies": 0,
+      "read_callback_events": 10,
+      "stale_commits": 0
+    },
+    "NO_STATEMENT_CACHE": {
+      "cases": 20,
+      "commits": 10,
+      "false_refusals": 2,
+      "metadata_reuses": 0,
+      "missing_dependencies": 0,
+      "read_callback_events": 24,
+      "stale_commits": 0
+    }
+  }
+}

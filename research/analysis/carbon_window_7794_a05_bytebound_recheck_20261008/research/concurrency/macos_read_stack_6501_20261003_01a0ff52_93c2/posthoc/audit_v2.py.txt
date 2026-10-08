@@ -1,0 +1,164 @@
+"""Independent retained-byte, thread-specific native-stack and actor reader."""
+import argparse
+import datetime
+import hashlib
+import json
+from pathlib import Path
+import re
+
+
+def need(value, label):
+    if not value:
+        raise ValueError(label)
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def native_block(text, pid, ppid, native_id, name):
+    lines = text.splitlines()
+    need(any(line.startswith('Process:') and line.rstrip().endswith('[' + str(pid) + ']') for line in lines), 'native process PID')
+    need(any(line.startswith('Parent Process:') and line.rstrip().endswith('[' + str(ppid) + ']') for line in lines), 'native parent PID')
+    start = lines.index('Call graph:')
+    finish = next(i for i in range(start + 1, len(lines)) if lines[i].startswith('Total number in stack'))
+    headers = [(i, line.split()) for i, line in enumerate(lines[start + 1:finish], start + 1)
+               if len(line) - len(line.lstrip()) == 4 and re.match(r'\d+ Thread_\d+', line.strip())]
+    selected = [(i, tokens) for i, tokens in headers if tokens[1].rstrip(':') == 'Thread_' + str(native_id)]
+    need(len(selected) == 1, 'one selected native read-worker')
+    index, tokens = selected[0]
+    need(lines[index].endswith(': ' + name), 'selected native read-worker name')
+    root = int(tokens[0])
+    end = next((i for i, _ in headers if i > index), finish)
+    python_counts, native_counts = [], []
+    for line in lines[index + 1:end]:
+        part = line.strip().lstrip('+ ').split(' (in ', 1)
+        if len(part) != 2:
+            continue
+        words = part[0].split()
+        if len(words) != 2 or not words[0].isdigit():
+            continue
+        count, symbol = int(words[0]), words[1]
+        if symbol == '_Py_read' and part[1].startswith('Python)'):
+            python_counts.append(count)
+        if symbol in ('read', '__read_nocancel') and part[1].startswith('libsystem_kernel.dylib)'):
+            native_counts.append(count)
+    need(root >= 20 and python_counts and native_counts, 'minimum native read attribution')
+    need(all(20 <= count <= root for count in python_counts + native_counts), 'bounded thread sample weights')
+    return {'root': root, 'python_counts': python_counts, 'native_counts': native_counts}
+
+
+def inspect(data, root):
+    roster = ['reader_close', 'normal_D', 'writer_EOF', 'wrapper_cancel']
+    need([row['case'] for row in data['cases']] == roster, 'complete ordered roster')
+    need(data['formal_producer_invocations'] == 1 and type(data['formal_producer_invocations']) is int and type(data['formal_retries']) is int and data['formal_retries'] == 0, 'one invocation/zero retries')
+    conclusions = []
+    stopped = False
+    for row in data['cases']:
+        if row['status'] == 'NOT_RUN_AFTER_FIRST_STOP':
+            need(stopped, 'not-run follows actual stop')
+            continue
+        if row['status'] == 'STOP_FIRST_CELL':
+            need(row['error'] is not None and row['pipes_closed'] is True and row['peer_exit'] is not None, 'retained terminal method stop')
+            stopped = True
+            conclusions.append({'case': row['case'], 'decision': 'STOP_RETAINED_NO_OS_CONCLUSION'})
+            continue
+        need(not stopped and row['status'] == 'COMPLETE_FIRST_CELL' and row['error'] is None, 'complete first cell')
+        case = row['case']
+        for key in ('peer_pid', 'driver_pid'):
+            need(type(row[key]) is int and row[key] > 0, 'strict PID')
+        ready = row['ready']
+        native_id = ready['reader']['native_id']
+        need(type(native_id) is int and native_id != ready['main_native_id'], 'read-worker distinct from main')
+        sample = row['sample']
+        need(sample['target_pid'] == row['peer_pid'] and type(sample['exit_code']) is int and sample['exit_code'] == 0, 'owned sampler target/typed exit')
+        report_raw = (root / (case + '.sample.txt')).read_bytes()
+        need(sha(report_raw) == sample['sha256'] and len(report_raw) == sample['bytes'], 'literal native report')
+        weights = native_block(report_raw.decode(), row['peer_pid'], row['driver_pid'], native_id, ready['reader']['name'])
+        need(sample['gate']['qualified'] is True and sample['gate']['kernel_trace'] is False, 'producer limited native gate')
+        for key in ('started_ns', 'ended_ns'):
+            need(type(sample[key]) is int, 'typed native sample time')
+        need(sample['started_ns'] < sample['ended_ns'] <= row['actor_send_ns'] <= row['primary']['actor_start_ns'], 'sample strictly before actor')
+        for state in (ready['before'], row['pre_actor']['before']):
+            need(state['future_done'] is False and state['future_running'] is True and state['future_cancelled'] is False, 'same native read pending before actor')
+            need(state['reader_probe']['state'] == 'OPEN' and state['writer_probe']['state'] == 'OPEN', 'silent live pipe before actor')
+        primary = row['primary']['primary']
+        final = row['final']['final']
+        for state in (primary, final):
+            for key in ('future_done', 'future_running', 'future_cancelled', 'task_done', 'task_cancelled', 'close_actor_alive'):
+                need(type(state[key]) is bool, 'typed snapshot boolean')
+            need(state['future_cancelled'] is False, 'no invented native Future cancellation')
+            need(type(state['executor_threads_alive']) is list and len(state['executor_threads_alive']) == 1 and
+                 all(type(alive) is bool for alive in state['executor_threads_alive']), 'typed single executor thread state')
+        need(primary['mono_ns'] - row['primary']['actor_start_ns'] >= 250_000_000, 'fixed post-actor checkpoint')
+        need(primary['executor_threads_alive'] == [True] and final['executor_threads_alive'] == [False], 'primary thread retention versus final join')
+        need(final['future_done'] is True and final['future_running'] is False and row['final']['loop_closed'] is True, 'final native terminal/loop close')
+        need(final['close_actor_alive'] is False, 'final owned closer joined')
+        for which in ('reader_probe', 'writer_probe'):
+            need(final[which]['state'] == 'EBADF' and type(final[which]['errno']) is int and final[which]['errno'] == 9, 'final exact FD EBADF')
+        events = row['final']['events']
+        need(all(type(e['ordinal']) is int for e in events) and [e['ordinal'] for e in events] == list(range(len(events))), 'event ordinals')
+        need(all(type(e['mono_ns']) is int and type(e['native_id']) is int and e['pid'] == row['peer_pid'] for e in events), 'event actor/time/PID typing')
+        need([e['mono_ns'] for e in events] == sorted(e['mono_ns'] for e in events), 'event monotonic order')
+        labels = [e['event'] for e in events]
+        for label in ('read_about_to_call', 'actor_requested', 'primary_snapshot', 'harness_cleanup_start', 'read_return', 'executor_joined_and_loop_closed'):
+            need(labels.count(label) == 1, 'one literal event: ' + label)
+        need(events[0]['native_id'] == native_id, 'native read-worker source entry')
+        actor_index, primary_index, cleanup_index = (labels.index(x) for x in ('actor_requested', 'primary_snapshot', 'harness_cleanup_start'))
+        need(actor_index < primary_index < cleanup_index, 'actor primary harness separation')
+        need(events[:primary_index + 1] == row['primary']['events'], 'literal completed primary prefix')
+        if 'harness_release_D' in labels:
+            need(labels.index('harness_release_D') > primary_index, 'harness data not cancellation')
+        value = primary['value']
+        if case == 'normal_D':
+            need(primary['future_done'] is True and value == {'kind': 'READ_DATA', 'hex': '44', 'errno': None}, 'normal data control')
+            need('actor_write_D' in labels and events[labels.index('actor_write_D')]['count'] == 1, 'actual actor byte')
+        elif case == 'writer_EOF':
+            need(primary['future_done'] is True and value == {'kind': 'READ_EOF', 'hex': '', 'errno': None}, 'writer EOF control')
+            need(primary['writer_probe']['state'] == 'EBADF' and labels.index('actor_writer_closed') < primary_index, 'actual writer close')
+        elif case == 'wrapper_cancel':
+            need(primary['task_done'] is True and primary['task_cancelled'] is True and primary['future_done'] is False and primary['future_running'] is True and value is None, 'wrapper versus pending native read')
+            need(primary['reader_probe']['state'] == 'OPEN' and primary['writer_probe']['state'] == 'OPEN', 'wrapper did not close native FDs')
+            need(labels.index('harness_release_D') > cleanup_index and row['final']['native_value'] == {'kind': 'READ_DATA', 'hex': '44', 'errno': None}, 'separate eventual harness data')
+        else:
+            need(primary['writer_probe']['state'] == 'OPEN', 'reader-close writer remains open')
+            need('reader_close_call_start' in labels and labels.index('reader_close_call_start') > actor_index, 'owned reader close starts after sampled native read')
+            if primary['close_result'] is not None:
+                need(primary['close_result'] == {'returned': True, 'errno': None}, 'reader close returned without error')
+                need(type(primary['close_result']['returned']) is bool, 'typed reader close returned flag')
+                need(primary['reader_probe']['state'] == 'EBADF', 'owned reader FD retired')
+            if value is not None:
+                need(labels.index('read_return') > labels.index('reader_close_call_start'), 'native return follows caller close start')
+        need(type(row['peer_exit']) is int and row['peer_exit'] == 0 and row['pipes_closed'] is True and row['sampler_terminal'] is True and row['owned_peer_terminated_on_stop'] is False, 'ordinary peer/sampler typed complete')
+        stdout_raw = (root / (case + '.peer.stdout.log')).read_bytes()
+        need(sha(stdout_raw) == row['peer_stdout_sha256'] and len(stdout_raw) == row['peer_stdout_bytes'], 'literal peer stream')
+        frames = [json.loads(line) for line in stdout_raw.splitlines()]
+        need(frames == [row['ready'], row['pre_actor'], row['primary'], row['final']], 'all four literal IPC frames')
+        need(all(f['pid'] == row['peer_pid'] and f['ppid'] == row['driver_pid'] and f['case'] == case for f in frames), 'complete IPC identity')
+        need((root / (case + '.peer.stderr.log')).read_bytes() == b'', 'peer stderr empty')
+        conclusions.append({'case': case, 'native_stack': weights, 'primary_read': value,
+                            'native_done': primary['future_done'], 'wrapper_cancelled': primary['task_cancelled'],
+                            'writer_at_primary': primary['writer_probe']['state'], 'kernel_trace': False})
+    return {'status': 'STOP_PRESERVED' if stopped else 'PASS_SCOPED_NATIVE_STACK_AND_ORDER', 'cases': conclusions}
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--output', required=True)
+    args = parser.parse_args()
+    root = Path(args.output).resolve()
+    raw = (root / 'result.json').read_bytes()
+    try:
+        result = inspect(json.loads(raw), root)
+    except Exception as exc:
+        result = {'status': 'FAIL_FIRST_AUDIT_RETAINED', 'error': {'type': type(exc).__name__, 'message': str(exc)}}
+    result.update(raw_sha256=sha(raw), raw_bytes=len(raw), auditor_source_sha256=sha(Path(__file__).read_bytes()),
+                  audited_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), producer_reexecution=False)
+    (root / 'audit.json').write_text(json.dumps(result, indent=2, sort_keys=True) + '\n')
+    print(json.dumps(result, sort_keys=True))
+    if result['status'] == 'FAIL_FIRST_AUDIT_RETAINED':
+        raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    main()

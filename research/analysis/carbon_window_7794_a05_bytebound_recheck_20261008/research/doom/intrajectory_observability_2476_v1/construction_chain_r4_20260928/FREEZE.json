@@ -1,0 +1,55 @@
+{
+  "allocation": "issue2476-track-cumulative-drift-evidence-construction-r4-20260928",
+  "successor_of": "issue2476-track-cumulative-drift-evidence-construction-r3-20260928",
+  "predecessor_disposition": "STOP_OPERATOR_INVOCATION_ERROR_NO_RETRY; preserved unchanged; this is a distinct successor allocation",
+  "issue": 2476,
+  "base_main": "f3dc0f18b0aaef241a6cd34124b68439c3434b05",
+  "branch": "research/doom/track-drift-2476-r4-20260928",
+  "path": "research/doom/intrajectory_observability_2476_v1/construction_chain_r4_20260928/",
+  "case_count": 10,
+  "policies": ["PER_HOP_ONLY", "PER_HOP_PLUS_GLOBAL_12PX"],
+  "scheduled_hops_per_policy": 3,
+  "formal_issue2476_invocations": 0,
+  "construction_invocations_planned": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "post_freeze_tuning": 0,
+  "docker": {
+    "image": "python:3.13.5-slim-bookworm",
+    "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "platform": "linux/amd64",
+    "engine": "Docker Engine 29.8.0 linux/amd64",
+    "network": "none",
+    "pull": "never",
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "cpus": 1,
+    "memory_bytes": 268435456,
+    "memory_swap_bytes": 268435456,
+    "pids": 32,
+    "capabilities": "all dropped",
+    "no_new_privileges": true,
+    "tmpfs": "/tmp rw,noexec,nosuid,size=16m",
+    "output_mounts": "separate dedicated runner and auditor directories; initially empty; stdout/stderr logs outside mounts"
+  },
+  "source_sha256": {
+    "PLAN.md": "96297473f49568f18e1677437018df0309c15d93c58efc90325fa01346ab1994",
+    "cases.json": "7a8de796075fe31b1134bc5bd44c0202d77adaaeaf147be39cdeb357567520d2",
+    "run.py": "e34b4a0809f68ed60e2d26e41f4f24eab3f570b196c7a7968db26cf598168ac8",
+    "audit.py": "bed497c4be729b30b67e1f256eb93d6d7c252c3cd8ec971f69c9cafb005aa907",
+    "test_audit.py": "d13656794d7eeb57466444902fde1431c300426d6a9630756ee01ddcc0ca44ab"
+  },
+  "commands": [
+    "docker run --rm --pull=never --platform linux/amd64 --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus=1 --memory=268435456 --memory-swap=268435456 --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges --mount type=bind,source=<r4-source>,target=/source,readonly --workdir=/source --entrypoint=python python:3.13.5-slim-bookworm -B -m unittest -v test_audit.py",
+    "docker run --rm --pull=never --platform linux/amd64 --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus=1 --memory=268435456 --memory-swap=268435456 --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges --mount type=bind,source=<r4-source>,target=/source,readonly --mount type=bind,source=<empty-run-output>,target=/out --workdir=/source --entrypoint=python python:3.13.5-slim-bookworm -B /source/run.py --source /source --out /out",
+    "docker run --rm --pull=never --platform linux/amd64 --network=none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cpus=1 --memory=268435456 --memory-swap=268435456 --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges --mount type=bind,source=<r4-source>,target=/source,readonly --mount type=bind,source=<read-only-run-output>,target=/runout,readonly --mount type=bind,source=<empty-audit-output>,target=/auditout --workdir=/source --entrypoint=python python:3.13.5-slim-bookworm -B /source/audit.py --source /source --raw /runout/raw.json --out /auditout"
+  ],
+  "gates": {
+    "scheduled_rows": 60,
+    "required_emission_receipt": "literal false on every reached and skipped row",
+    "corruption_controls": ["missing_suffix_emission_flag", "true_suffix_emission_flag", "missing_scheduled_row", "reordered_runs"],
+    "maximum_errors": 0,
+    "physical_input_emissions": 0
+  },
+  "scope": "synthetic construction evidence-completeness only; formal #2476 matcher/task trajectory remains unrun"
+}

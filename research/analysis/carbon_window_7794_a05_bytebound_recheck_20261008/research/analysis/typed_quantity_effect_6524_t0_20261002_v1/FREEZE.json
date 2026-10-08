@@ -1,0 +1,45 @@
+{
+  "allocation_id": "TYPED-QUANTITY-EFFECT-6524-T0-20261002-01",
+  "issue": "Unjuno/agent-interface#6524",
+  "owner": "Current Codex task; local Windows host; CPU-only WSLc",
+  "base_main_sha": "cf467e076b67f103e50fbbd47cc43007624a2ca8",
+  "branch": "research/typed-quantity-effect-6524-t0-20261002",
+  "additive_path": "research/analysis/typed_quantity_effect_6524_t0_20261002_v1/",
+  "result_path": "research/analysis/typed_quantity_effect_6524_t0_20261002_v1/results/allocation-01/",
+  "source_sha256": {
+    "candidate.py": "72c905742bcc44909f90767d8fbaf7dcd9ce3d5f9525a2e0e0cf439be7c1421d",
+    "auditor.py": "b4fe65cbb073fa95b834d226a26ffe08f1f469c1206f2af237f7e7c95048d390",
+    "fixture.json": "7e490255d0d993f07a5d9133b05c65537289937ac16714a7ca8216ebf46857db",
+    "run_once.py": "0620fddcc6d6944171f12d18aff4879920669d6c69a23ed5319464ddcbe95804",
+    "test_quantity.py": "074b3d1143e6813921198b968df5e618943fabd23d56e8fc801a186967fd668c",
+    "CONSTRUCTION.md": "d45800bae438c28c3242acf1063a7dc4061f0832d53839f32b1d7b2389ed18e9"
+  },
+  "runtime": {
+    "name": "WSLc",
+    "version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "network": "none",
+    "cpu_request": 0.25,
+    "source_mount": "read-only",
+    "output_mount": "separate writable directory",
+    "gpu_requested": false,
+    "memory_limit_claim": false
+  },
+  "formal_limits": {
+    "candidate_processes": 1,
+    "raw_auditor_processes": 1,
+    "formal_containers": 1,
+    "retries": 0,
+    "seed": null,
+    "case_order": "fixture.json list order; fixed"
+  },
+  "decision": {
+    "METHOD_PASS": "All 11 candidate rows exactly match the independent raw audit; correct in-tolerance quantities pass; wrong dimension/kind/magnitude/effect count and no effect do not pass; unknown conversion/rounding stay UNKNOWN; all nine effective copied-output mutations reject.",
+    "H_PASS_SCOPED": "At least one frozen bare-number false positive is rejected by typed adjudication and no typed false PASS occurs. This remains synthetic-fixture evidence only.",
+    "FAIL": "Any false typed PASS, wrong-scope/dimension/kind acceptance, missed no-effect/duplicate effect, or independent mismatch.",
+    "STOP": "Any source/image/output/inventory gate failure or inability to retain/audit the single candidate output."
+  }
+}

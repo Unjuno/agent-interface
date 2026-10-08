@@ -1,0 +1,35 @@
+{
+  "restored_files": 33,
+  "byte_identical_members": 33,
+  "audit_exit": 0,
+  "audit_byte_identical": true,
+  "unit_test_exit": 0,
+  "unit_tests": 10,
+  "negative_controls": [
+    {
+      "mutation": "part_byte",
+      "rejected": true
+    },
+    {
+      "mutation": "part_order",
+      "rejected": true
+    },
+    {
+      "mutation": "part_missing",
+      "rejected": true
+    },
+    {
+      "mutation": "member_hash",
+      "rejected": true
+    },
+    {
+      "mutation": "denominator",
+      "rejected": true
+    },
+    {
+      "mutation": "existing_destination",
+      "rejected": true
+    }
+  ],
+  "formal_reruns": 0
+}

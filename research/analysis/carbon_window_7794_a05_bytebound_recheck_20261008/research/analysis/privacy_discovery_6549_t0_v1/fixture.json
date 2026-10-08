@@ -1,0 +1,18 @@
+{
+  "allocation": "PRIVACY-DISCOVERY-SUPPORTED-CLASSES-6549-T0-20261002-01",
+  "epsilon": 1.0,
+  "delta": 0.0,
+  "minimum_support": 2,
+  "threshold": 2,
+  "client_cap": 1,
+  "cohorts": [
+    {"id":"common", "counts":{"COMMON":8,"RARE_A":2}},
+    {"id":"balanced", "counts":{"COMMON":6,"RARE_A":2,"RARE_B":2}},
+    {"id":"singleton", "counts":{"COMMON":7,"RARE_A":2,"UNIQUE_SEVERE":1}},
+    {"id":"merged", "counts":{"COMMON":6,"RARE_A":2,"RARE_B":2}, "taxonomy":{"RARE_A":"RARE","RARE_B":"RARE"}},
+    {"id":"split", "counts":{"COMMON":6,"RARE":4}, "taxonomy":{"RARE":"RARE_A|RARE_B"}},
+    {"id":"correlated", "counts":{"COMMON":6,"RARE_A":2,"RARE_B":2}, "independence":"unknown-correlated"},
+    {"id":"duplicate_client", "counts":{"COMMON":7,"RARE_A":2,"RARE_B":1}, "duplicate_report_count":1},
+    {"id":"no_failure", "counts":{}}
+  ]
+}

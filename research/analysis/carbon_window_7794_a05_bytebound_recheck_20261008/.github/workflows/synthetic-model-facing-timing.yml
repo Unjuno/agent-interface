@@ -1,0 +1,21 @@
+name: synthetic model-facing timing evidence successor
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/synthetic-model-facing-timing.yml
+      - research/analysis/model_facing_timing_successor_2101/**
+permissions:
+  contents: read
+jobs:
+  frozen-stub:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run isolated synthetic model-facing fixture
+        run: python research/analysis/model_facing_timing_successor_2101/experiment.py | tee RESULT.stdout
+      - name: Upload result
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-facing-timing-2101-${{ github.run_id }}
+          path: RESULT.stdout

@@ -1,0 +1,31 @@
+name: Matched recovery readiness gate v1 r2
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/matched_recovery_readiness_gate_1866_v1/**'
+  push:
+    branches: [research/matched-recovery-readiness-gate-1866-v1-r2]
+    paths:
+      - 'research/analysis/matched_recovery_readiness_gate_1866_v1/**'
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 1, persist-credentials: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.13'}
+      - name: Run one frozen construction with fail-closed shell
+        run: |
+          set -o pipefail
+          python -m py_compile research/analysis/matched_recovery_readiness_gate_1866_v1/experiment.py
+          python research/analysis/matched_recovery_readiness_gate_1866_v1/experiment.py | tee result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: matched-recovery-readiness-gate-v1-r2
+          path: result.json
+          if-no-files-found: error
+          retention-days: 30

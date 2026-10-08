@@ -1,0 +1,56 @@
+{
+  "allocation": "SOFT-EVENT-CONTEXT-6561-T0B-WSLC-20261002-01",
+  "base_main": "926144e0bbbc197e00aa3b4821f1d49afe831529",
+  "branch": "research/soft-event-context-6561-t0b-wslc-20261002",
+  "files": {
+    "README.md": "4fa4a15d95172edc00636d5769b43243412e5a084965e327ad7b9781c00212f1",
+    "cases.json": "3640756fa95a5472a40cb1199d75cfb23bdb79c1f74247451b9392cc3e029a09",
+    "candidate.py": "48be8fc443533677be5c9e3e66b852e26b03e2b295b3b6cac90e8e116cd1def6",
+    "auditor.py": "10231f588ebf87c584cb0f0fb9ba768dd78958dabb24c02ac1d0f18e78282187",
+    "test_protocol.py": "8c79fbf918e8209b65b2e3b38cdfe9bd62803f167e44b8dff8ba276302e97cd4"
+  },
+  "contract_sources": {
+    "research/live_control/observable_signal_guard_v2.py": {
+      "blob": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+      "sha256": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0"
+    },
+    "research/doom/results/map01-split-cover-validity-v30-live-01/audit.json": {
+      "blob": "980acfca962e3cc4ff8c32968692374ea0b60191",
+      "sha256": "fb82e0ad0e4812596c9b5f7325b6c7b1a6f714378d8e77e044b75cd56f7b5a2d"
+    }
+  },
+  "staged_sources": {
+    "construction_source/cases.json": "3640756fa95a5472a40cb1199d75cfb23bdb79c1f74247451b9392cc3e029a09",
+    "construction_source/candidate.py": "48be8fc443533677be5c9e3e66b852e26b03e2b295b3b6cac90e8e116cd1def6",
+    "construction_source/auditor.py": "10231f588ebf87c584cb0f0fb9ba768dd78958dabb24c02ac1d0f18e78282187",
+    "construction_source/test_protocol.py": "8c79fbf918e8209b65b2e3b38cdfe9bd62803f167e44b8dff8ba276302e97cd4",
+    "candidate_source/cases.json": "3640756fa95a5472a40cb1199d75cfb23bdb79c1f74247451b9392cc3e029a09",
+    "candidate_source/candidate.py": "48be8fc443533677be5c9e3e66b852e26b03e2b295b3b6cac90e8e116cd1def6",
+    "audit_source/cases.json": "3640756fa95a5472a40cb1199d75cfb23bdb79c1f74247451b9392cc3e029a09",
+    "audit_source/auditor.py": "10231f588ebf87c584cb0f0fb9ba768dd78958dabb24c02ac1d0f18e78282187"
+  },
+  "preregistration_sha256": "e8d378bb65b2dd1601e577c2e79f8ac3060ea3648697b00bddf299ccb9e5febd",
+  "runner_sha256": "c3b856d1fb0f9330808f5601ef9493bcb37e2b49366efaa919801734df4aa221",
+  "runtime": {
+    "cli": "wslc.exe",
+    "version": "wslc 3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "python": "3.12.14",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_requested": "512M",
+    "user": "65534:65534"
+  },
+  "formal_invocation_cap": {
+    "construction": 1,
+    "candidate": 1,
+    "auditor": 1,
+    "retry_policy": "none"
+  },
+  "formal_invocations_completed_at_freeze": {
+    "construction": 0,
+    "candidate": 0,
+    "auditor": 0
+  }
+}

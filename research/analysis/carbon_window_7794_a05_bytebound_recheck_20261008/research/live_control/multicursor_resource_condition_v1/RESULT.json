@@ -1,0 +1,15 @@
+{
+  "enumerated_cases": 1728,
+  "lower_bound_violations": 0,
+  "aliased_pointer_counterexamples": 0,
+  "strict_speedup_cases_vs_global_serial_baseline": 432,
+  "max_speedup_in_bounded_search": 2.0,
+  "max_speedup_witness": [[1,1,2],[0,0,0],[["P"],["P"],["K"]],4,2],
+  "examples": [
+    {"name":"two_logical_cursors_same_pointer","serial_baseline":6,"optimal":6,"speedup":1.0},
+    {"name":"two_independent_virtual_pointers","serial_baseline":6,"optimal":3,"speedup":2.0},
+    {"name":"pointer_plus_keyboard","serial_baseline":6,"optimal":3,"speedup":2.0},
+    {"name":"dependency_dominates","serial_baseline":6,"optimal":6,"speedup":1.0},
+    {"name":"atomic_two_contact_gesture","serial_baseline":4,"optimal":4,"speedup":1.0}
+  ]
+}

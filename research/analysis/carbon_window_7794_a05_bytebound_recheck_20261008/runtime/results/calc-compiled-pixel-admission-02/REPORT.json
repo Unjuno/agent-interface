@@ -1,0 +1,98 @@
+{
+  "disposition": "FAIL_BACKEND_CONSTRAINT_HOME_KEY",
+  "frozen_scaffold_revision": "9eddb8848",
+  "frozen_runtime_source": "f19a34e31cd66f7ae3f44ce0ee93bba55ab8272a",
+  "product_fix_revision": "7f99062d9",
+  "seed": 1002083,
+  "commands": 4,
+  "graph_invocations": 1,
+  "input_program_attempts": 1,
+  "program_emissions": 0,
+  "backend_emissions": 0,
+  "completed_graph_transitions": 0,
+  "graph_observations": 1,
+  "native_captures": 3,
+  "model_delivered_images": 2,
+  "distinct_delivered_image_hashes": 1,
+  "task_success": false,
+  "retry_or_reset": false,
+  "original_graph_outcome": "RUNTIME_FAILED",
+  "original_graph_reason": "execution_failed",
+  "raw_native_release": {
+    "verified": true,
+    "keys_down": [],
+    "buttons_down": []
+  },
+  "normalization_probe": {
+    "status": "PASS_RETAINED_RAW_NORMALIZATION",
+    "raw_path": "live/bridge/compiled-879b8d792b4f43289a4842dee59e965b-7-execution.json",
+    "raw_file_sha256": "2768c4c95b918cbed03befa43f413216432901b2c00bcef33b3fb788a5e64fb0",
+    "product_revision": "7f99062d9",
+    "outcome": "SAFE_YIELD",
+    "reason": "execution_failed",
+    "terminal": {
+      "status": "refused",
+      "action_id": "action-b229e0f6d7af480481a2765d0e2917f2",
+      "effect_ref": "compiled-cd07ddf54b3b40debe6c8a316043b0dd-7-execution",
+      "release": {
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": []
+      }
+    },
+    "actual_gui_rerun": false,
+    "probe_backend_inputs": [],
+    "scope": "inert normalization of actual retained refusal; original trial unchanged"
+  },
+  "independent_effect": {
+    "expected": {
+      "A1": 317,
+      "A2": 529
+    },
+    "actual_nonempty_cells": {},
+    "success": false,
+    "after_all_owned_processes_terminal": true,
+    "workbook_sha256": "5150f835290d8191ea89169ed7c304105ba4821d5118be459e0b6ec8b47ffc81"
+  },
+  "cleanup": {
+    "host_exit": 0,
+    "children": [
+      {
+        "name": "calc",
+        "pid": 819264,
+        "returncode": 255
+      },
+      {
+        "name": "openbox",
+        "pid": 819261,
+        "returncode": 0
+      },
+      {
+        "name": "xvfb",
+        "pid": 819257,
+        "returncode": 0
+      }
+    ],
+    "ended_ns": 59140955345269
+  },
+  "local_graph_elapsed_ns": 520266233,
+  "verification": {
+    "targeted_normal_tests": 56,
+    "targeted_optimized_tests": 56,
+    "native_ci": "PASS",
+    "native_protocol_tests": 383,
+    "native_harness_tests": 190
+  },
+  "usage": {
+    "input_tokens": 1335152,
+    "cached_input_tokens": 1325440,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2696,
+    "reasoning_output_tokens": 473,
+    "total_tokens": 1337848,
+    "uncached_input_tokens": 9712
+  },
+  "cost_usd": null,
+  "usage_scope": "authoring/build/launch/grounding/control through close/terminal; later diagnosis/fix/tests/publication excluded; earlier discovery excluded/unmeasured",
+  "remaining": "No real cell entry, conditional Save or saved workflow. Full six-phase A/B/C and economics incomplete."
+}

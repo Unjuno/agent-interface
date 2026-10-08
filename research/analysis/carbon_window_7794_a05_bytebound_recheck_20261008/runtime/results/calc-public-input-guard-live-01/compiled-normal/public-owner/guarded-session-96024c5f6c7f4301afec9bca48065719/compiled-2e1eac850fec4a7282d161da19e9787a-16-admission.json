@@ -1,0 +1,36 @@
+{
+  "request": {
+    "interface_id": "calc-entry-checked-save",
+    "session_scope": "native-x11:8172713151ca4682a9cb590124b6b9c0",
+    "action": "save",
+    "operation": "request_xlsx_save",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "save_context",
+      "identity_predicate": "context_ok",
+      "dependencies": [
+        "context_ok",
+        "cells_filled"
+      ]
+    },
+    "observation": {
+      "sequence": 11,
+      "captured_ns": 10320045984102,
+      "surface": "x11-window-6292092",
+      "predicates": {
+        "context_ok": true,
+        "blank": false,
+        "cells_filled": true
+      },
+      "evidence_ref": "observation-11",
+      "evidence_digest": "147bc5b4e1122136be1601246ba262a490043c4e30ecaed8baf3e0911bd5287b"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "cb756ec2ffc54145bc7e585d32f3f5b1",
+    "expected_sequence": 11,
+    "valid_until_ns": 10321545984102
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "golden-artifact-closure-check-v1",
+  "source_artifact": "offline-container-lab-9e6d5ecd",
+  "source_artifact_sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
+  "status": "FAIL_GOLDEN_ARTIFACT_CLOSURE",
+  "passed": false,
+  "experiment_note": "The original artifact lacks preregistration.json, so the checker would stop at FAIL_MISSING_PREREGISTRATION. For source-closure diagnosis only, the exact preregistered sources mapping was supplied without adding report/audit/responder files.",
+  "diagnostic_after_preregistration_mapping": {
+    "source_total": 29,
+    "source_matches": 26,
+    "source_hash_mismatches": [],
+    "missing_sources": [
+      "research/live_control/schema_preflight_responder_v1.txt",
+      "research/live_control/plain_form_points_responder_v1.txt",
+      "research/live_control/compiled_form_grounding_responder_v1.txt"
+    ],
+    "missing_direct_result_files": [
+      "research/live_control/results/integrated-efficiency-live-01/report.json",
+      "research/live_control/results/integrated-efficiency-live-01/audit.json"
+    ]
+  },
+  "original_artifact_additional_missing_file": "research/live_control/results/integrated-efficiency-live-01/preregistration.json",
+  "minimum_observed_omission_count": 6,
+  "claim_boundary": "This diagnoses the research artifact composition only. The next runtime-preview artifact must run this checker and golden_desktop_demo_v3.py audit-retained inside the extracted distribution."
+}

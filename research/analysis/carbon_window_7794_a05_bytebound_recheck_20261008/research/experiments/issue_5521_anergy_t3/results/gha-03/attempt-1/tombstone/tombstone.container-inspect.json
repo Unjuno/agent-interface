@@ -1,0 +1,234 @@
+[
+    {
+        "Id": "fcce7974b97d65cd6cd343295690b0ee7dd20983ad9334237ff22c37ca2568a8",
+        "Created": "2026-10-01T04:01:18.166163994Z",
+        "Path": "python",
+        "Args": [
+            "-B",
+            "/src/container_arm.py",
+            "tombstone"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2026-10-01T04:01:18.185741484Z",
+            "FinishedAt": "2026-10-01T04:01:18.707034747Z"
+        },
+        "Image": "sha256:8630ab77c5adf06e1f914483db4dd70e3fa59118160daab9b0ee75e685344221",
+        "ResolvConfPath": "/var/lib/docker/containers/fcce7974b97d65cd6cd343295690b0ee7dd20983ad9334237ff22c37ca2568a8/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/fcce7974b97d65cd6cd343295690b0ee7dd20983ad9334237ff22c37ca2568a8/hostname",
+        "HostsPath": "/var/lib/docker/containers/fcce7974b97d65cd6cd343295690b0ee7dd20983ad9334237ff22c37ca2568a8/hosts",
+        "LogPath": "/var/lib/docker/containers/fcce7974b97d65cd6cd343295690b0ee7dd20983ad9334237ff22c37ca2568a8/fcce7974b97d65cd6cd343295690b0ee7dd20983ad9334237ff22c37ca2568a8-json.log",
+        "Name": "/issue-5521-tombstone-36813058422-1",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges:true"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,nosuid,nodev,noexec,size=16m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 268435456,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 536870912,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 64,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/home/runner/work/agent-interface/agent-interface/research/experiments/issue_5521_anergy_t3",
+                    "Target": "/src",
+                    "ReadOnly": true
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "ID": "fcce7974b97d65cd6cd343295690b0ee7dd20983ad9334237ff22c37ca2568a8",
+                "LowerDir": "/var/lib/docker/overlay2/7542829cae2f1d41dfd92123d99bfdb666b04035dbd5951eb6cf3e328201f178-init/diff:/var/lib/docker/overlay2/94c3218a15d4a5e274b43fe68548153e141cfe0cf99c8b14e0910e5c0117e72c/diff:/var/lib/docker/overlay2/1d4a8f1630ea92ba96d27e2aeed5d6f2755fe0ad8539279120792a9efa8d57b7/diff:/var/lib/docker/overlay2/fda1d04cd232219f01df4555ce2742bfe1d2aeeb1a36d7b331a9815ebda01a93/diff:/var/lib/docker/overlay2/eb5177004b72d621c1637ffe7ebb8d716fa38c0f0b349659ffad1216658fc11c/diff",
+                "MergedDir": "/var/lib/docker/overlay2/7542829cae2f1d41dfd92123d99bfdb666b04035dbd5951eb6cf3e328201f178/merged",
+                "UpperDir": "/var/lib/docker/overlay2/7542829cae2f1d41dfd92123d99bfdb666b04035dbd5951eb6cf3e328201f178/diff",
+                "WorkDir": "/var/lib/docker/overlay2/7542829cae2f1d41dfd92123d99bfdb666b04035dbd5951eb6cf3e328201f178/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/home/runner/work/agent-interface/agent-interface/research/experiments/issue_5521_anergy_t3",
+                "Destination": "/src",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "fcce7974b97d",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "GPG_KEY=7169605F62C751356D054A26A821E680E5FA6305",
+                "PYTHON_VERSION=3.12.14",
+                "PYTHON_SHA256=5c8462af5790baf43a321a1559dbe0db06d1be4300fb85fb53c40060668e548a"
+            ],
+            "Cmd": [
+                "python",
+                "-B",
+                "/src/container_arm.py",
+                "tombstone"
+            ],
+            "Image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+            "Volumes": null,
+            "WorkingDir": "/src",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "MacAddress": "",
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "62cf25384adec6da9c45b24f948e1ed66b6b9bc5c8efc4d461f99717812be1b0",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        }
+    }
+]

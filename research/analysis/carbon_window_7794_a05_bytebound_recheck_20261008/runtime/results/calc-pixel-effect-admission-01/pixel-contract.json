@@ -1,0 +1,40 @@
+{
+  "source_image": "live-v2/exchange/image-1-1.png",
+  "source_image_sha256": "00081926cc11348d8f63848cd92b46f1425961974e62c5d88c580a190dada3bc",
+  "regions": {
+    "A1": [
+      39,
+      183,
+      118,
+      199
+    ],
+    "A2": [
+      39,
+      203,
+      118,
+      219
+    ],
+    "B1_blank_control": [
+      122,
+      183,
+      202,
+      199
+    ]
+  },
+  "selection": "primary grounded from actual column/row labels and grid in original displayed screenshot before entry",
+  "ocr": {
+    "engine": "tesseract5.3.4",
+    "language": "eng",
+    "psm": 7,
+    "scale": 4,
+    "whitelist": null,
+    "minimum_confidence": 90,
+    "timeout_seconds": 2
+  },
+  "intended_visible_values": {
+    "A1": "317",
+    "A2": "529"
+  },
+  "semantic_scope": "visible text at grounded cell regions; not persisted effect or input authority",
+  "unknown_rule": "no words, multiple words or confidence below90 = unknown"
+}

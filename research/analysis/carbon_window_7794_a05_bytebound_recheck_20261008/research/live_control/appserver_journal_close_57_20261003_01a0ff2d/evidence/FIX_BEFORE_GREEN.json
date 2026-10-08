@@ -1,0 +1,11 @@
+{
+  "created_before_green_utc": "2026-10-03T07:18:48.728214+00:00",
+  "original_source_sha256": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+  "repaired_source_sha256": "da2c00920e0d833d989c93dd9d5ac6c2a845eebdb9e794d775ee6d7c238c406a",
+  "test_sha256": "69e9a41fc7ad6d048449e47eaeef2eea1069ec6db8d4a2d3350f32b0cac79760",
+  "repaired_source_bytes": 6486,
+  "only_changed_method": "close",
+  "exact_old_block": "            with self._journal_lock:\n                self._journal.close()",
+  "exact_new_block": "            if not self._journal_lock.acquire(timeout=timeout):\n                raise TimeoutError(\"app-server journal close timed out\")\n            try:\n                self._journal.close()\n            finally:\n                self._journal_lock.release()",
+  "scope": "Bound journal mutex acquisition by existing per-stage timeout; typed incomplete cleanup; release only successfully acquired lock even on journal exception. No overall close/OS I/O/pipe closure guarantee."
+}

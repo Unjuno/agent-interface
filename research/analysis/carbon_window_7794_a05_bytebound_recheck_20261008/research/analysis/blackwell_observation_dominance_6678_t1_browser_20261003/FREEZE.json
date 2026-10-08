@@ -1,0 +1,48 @@
+{
+  "schema": "blackwell-observation-dominance-t1-freeze-v1",
+  "issue": 6678,
+  "allocation_id": "BLACKWELL-OBSERVATION-DOMINANCE-6678-T1-BROWSER-20261003-01",
+  "source_main": "80e0d41b2dd6f56b0a55cd004f0ad10a6275448e",
+  "branch": "research/blackwell-observation-dominance-6678-t1-browser-20261003",
+  "package": "research/analysis/blackwell_observation_dominance_6678_t1_browser_20261003",
+  "protocol": {
+    "states": 3,
+    "captures_per_state": 24,
+    "total_captures": 72,
+    "fixed_order": "schedule.json",
+    "channels": [
+      "full_png",
+      "left_roi_png",
+      "right_roi_png",
+      "accessibility_snapshot",
+      "mutation_delta"
+    ],
+    "pixel_label_oracle": "Frozen authored target-card rectangle and exact RGB state palette; independent auditor decodes original PNG pixels with its own standard-library PNG decoder. Right ROI is expected to yield a single constant uninformative output.",
+    "prior": "uniform_exact",
+    "garbling_tolerance": "0/1",
+    "smoothing": "none",
+    "formal_capture_retries": 0
+  },
+  "runtime": {
+    "provider": "local macOS host, isolated headless browser process; no existing Chrome tab",
+    "playwright_package": "1.62.1",
+    "browser_executable": "/Users/taka/Library/Caches/ms-playwright/chromium-1234/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "browser_sha256": "a596b1cfc6353e987fcec8d71a23a28cd6a9e7a6b4e20b908e4c4fcffe51158e",
+    "network": "page route deny-all; no remote navigation or requests",
+    "profile": "fresh ephemeral Playwright context per capture; no persisted user profile",
+    "note": "This GUI-specific empirical capture uses OrbStack only if an exclusive, non-shared lane and browser image are independently available; no shared research VM/container may be used."
+  },
+  "limits": {
+    "construction_max": 1,
+    "candidate_max": 1,
+    "auditor_max": 1,
+    "retries": 0
+  },
+  "decision_gate": {
+    "pass": "All frozen captures exist with source-state labels; pixel-only independent reconstruction agrees exactly with candidate kernels and all Bayes risks; semantic positive control distinguishes all states; mutation negative control is state-uninformative; every defined corruption is rejected.",
+    "fail": "Any false/missing capture, label mismatch, invalid kernel, incorrect relation/risk, or undetected defined mutation.",
+    "hold": "Raw screenshot/a11y evidence cannot be independently interpreted, capture evidence is incomplete, or a true independent audit cannot be completed.",
+    "stop": "Any source, branch, fixture, executable, schedule, or runtime mismatch before a formal invocation. No retry or replacement allocation."
+  },
+  "scope": "Authored static DOM fixture rendered by one local Playwright Chromium build only; not Agent Interface, real app, model, effect, safety, latency, or product evidence."
+}

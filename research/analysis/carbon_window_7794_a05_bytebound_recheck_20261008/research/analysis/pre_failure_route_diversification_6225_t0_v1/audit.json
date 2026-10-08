@@ -1,0 +1,44 @@
+{
+  "block_count": 2970,
+  "disposition": "METHOD_PASS_SCOPED",
+  "gates": {
+    "all_offered_tasks_retained": true,
+    "candidate_raw_exactly_reconstructed": true,
+    "conservative_default_respects_completion_floor": true,
+    "hard_safety_gate_never_bypassed": true,
+    "hidden_mixture_within_mean_cost_budget": true,
+    "hidden_shock_tail_reduced": true,
+    "idle_decay_never_claims_stale_b_ready": true,
+    "mutation_missing_assigned_task_rejected": true,
+    "mutation_regime_leak_rejected": true,
+    "mutation_silent_obligation_reset_rejected": true,
+    "mutation_stale_ready_rejected": true,
+    "no_eligible_b_never_called": true,
+    "observable_regime_context_policy_not_worse_than_mixture": true,
+    "route_induced_queue_carryover_retained": true,
+    "shared_failure_control_no_mixture_gain": true,
+    "stable_a_dominant_control_no_completion_gain": true
+  },
+  "metrics": {
+    "conservative_route_b_lower_bound": 0.8,
+    "declared_completion_floor": 0.9,
+    "hidden_best_reactive_mean_unresolved": 3.0,
+    "hidden_best_reactive_tail_fraction": 1.0,
+    "hidden_mixture_mean_direct_cost_per_task": 1.3616071428571428,
+    "hidden_mixture_mean_unresolved": 3.232142857142857,
+    "hidden_mixture_tail_fraction": 0.8571428571428571,
+    "observable_context_tail_fraction": 0.0,
+    "observable_mixture_tail_fraction": 0.8571428571428571,
+    "shared_failure_best_reactive_mean_unresolved": 5.5,
+    "shared_failure_mixture_mean_unresolved": 5.5,
+    "stable_best_reactive_mean_unresolved": 0.0,
+    "stable_mixture_mean_unresolved": 0.0
+  },
+  "mutations_tested": [
+    "regime_truth_leak",
+    "omit_offered_task",
+    "claim_stale_b_ready",
+    "silently_reset_unresolved_obligation"
+  ],
+  "unique_sessions": 2970
+}

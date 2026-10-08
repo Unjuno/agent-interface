@@ -1,0 +1,78 @@
+test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) ...
+  test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='candidate_window_excludes_events') ... FAIL
+  test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='admission_after_explicit_release') ... FAIL
+  test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='two_key_temporal_order_reversed') ... FAIL
+  test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='teardown_foreign_owner') ... FAIL
+  test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='teardown_foreign_intent') ... FAIL
+  test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='cancel_release_before_admission_ack') ... FAIL
+  test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='external_counter_boolean') ... FAIL
+  test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='model_counter_float') ... FAIL
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='candidate_window_excludes_events')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\test_boundary_audit.py", line 13, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='admission_after_explicit_release')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\test_boundary_audit.py", line 13, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='two_key_temporal_order_reversed')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\test_boundary_audit.py", line 13, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='teardown_foreign_owner')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\test_boundary_audit.py", line 13, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='teardown_foreign_intent')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\test_boundary_audit.py", line 13, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='cancel_release_before_admission_ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\test_boundary_audit.py", line 13, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='external_counter_boolean')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\test_boundary_audit.py", line 13, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+======================================================================
+FAIL: test_retained_control_and_corruption_matrix (test_boundary_audit.BoundaryTests.test_retained_control_and_corruption_matrix) (case='model_counter_float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<package>\test_boundary_audit.py", line 13, in test_retained_control_and_corruption_matrix
+    self.assertEqual(bool(audit(item)), invalid)
+AssertionError: False != True
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=8)

@@ -1,0 +1,609 @@
+{
+  "schema": "approval-sequence-assay-render-v1",
+  "sequence_id": "assay-6405-sequence-01",
+  "requests": [
+    {
+      "request_id": "r1",
+      "principal": "fixture-user-01",
+      "target": "document-7",
+      "recipient": "self",
+      "effect": "apply-label:reviewed",
+      "scope": "object:document-7",
+      "expiry": "2030-01-01T00:05:00Z",
+      "consequence": "nonconsequential",
+      "nonce": "n-01"
+    },
+    {
+      "request_id": "r2",
+      "principal": "fixture-user-01",
+      "target": "document-7",
+      "recipient": "self",
+      "effect": "apply-label:reviewed",
+      "scope": "object:document-7",
+      "expiry": "2030-01-01T00:05:00Z",
+      "consequence": "nonconsequential",
+      "nonce": "n-02"
+    },
+    {
+      "request_id": "r3",
+      "principal": "fixture-user-01",
+      "target": "document-7",
+      "recipient": "external:untrusted.example",
+      "effect": "send:document-7",
+      "scope": "object:document-7",
+      "expiry": "2030-01-01T00:05:00Z",
+      "consequence": "consequential",
+      "nonce": "n-03"
+    },
+    {
+      "request_id": "r4",
+      "principal": "fixture-user-01",
+      "target": "document-8",
+      "recipient": "self",
+      "effect": "save:document-8",
+      "scope": "object:document-8",
+      "expiry": "2030-01-01T00:05:00Z",
+      "consequence": "consequential",
+      "nonce": "n-04"
+    },
+    {
+      "request_id": "r5",
+      "principal": "fixture-user-01",
+      "target": "document-8",
+      "recipient": "self",
+      "effect": "save:document-8",
+      "scope": "folder:project-x",
+      "expiry": "2030-01-01T00:05:00Z",
+      "consequence": "consequential",
+      "nonce": "n-05"
+    }
+  ],
+  "arms": {
+    "static": {
+      "items": [
+        {
+          "request_id": "r1",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-7",
+            "recipient": "self",
+            "effect": "apply-label:reviewed",
+            "scope": "object:document-7",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "nonconsequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [],
+          "request_digest": "ab7b10fe91abe84890e416ead8e8bb10655fdd8a6a8fc699dc63db4acf8c081a",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "nonconsequential",
+          "scope": "object:document-7",
+          "expiry": "2030-01-01T00:05:00Z"
+        },
+        {
+          "request_id": "r2",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-7",
+            "recipient": "self",
+            "effect": "apply-label:reviewed",
+            "scope": "object:document-7",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "nonconsequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [],
+          "request_digest": "31ee57dae3699135c3fa0bd9662b6e90e79e28e65452502e1016c4887c62e291",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "nonconsequential",
+          "scope": "object:document-7",
+          "expiry": "2030-01-01T00:05:00Z"
+        },
+        {
+          "request_id": "r3",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-7",
+            "recipient": "external:untrusted.example",
+            "effect": "send:document-7",
+            "scope": "object:document-7",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "consequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [],
+          "request_digest": "5b9eac5ebaf8d4a8d11a34fb861d36e9ae819f633254e2fea4aa3ca76ff46a26",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "consequential",
+          "scope": "object:document-7",
+          "expiry": "2030-01-01T00:05:00Z"
+        },
+        {
+          "request_id": "r4",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-8",
+            "recipient": "self",
+            "effect": "save:document-8",
+            "scope": "object:document-8",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "consequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [],
+          "request_digest": "432935689c99b1d730c967615d849b027c377efe0cf96ca237f2abd5af17e027",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "consequential",
+          "scope": "object:document-8",
+          "expiry": "2030-01-01T00:05:00Z"
+        },
+        {
+          "request_id": "r5",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-8",
+            "recipient": "self",
+            "effect": "save:document-8",
+            "scope": "folder:project-x",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "consequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [],
+          "request_digest": "bb8c6d3e30b7c65a2cd04539b901112b8611e3a17e634f9c1cbd3aa4d9e969c9",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "consequential",
+          "scope": "folder:project-x",
+          "expiry": "2030-01-01T00:05:00Z"
+        }
+      ]
+    },
+    "changed_fields": {
+      "items": [
+        {
+          "request_id": "r1",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-7",
+            "recipient": "self",
+            "effect": "apply-label:reviewed",
+            "scope": "object:document-7",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "nonconsequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [],
+          "request_digest": "ab7b10fe91abe84890e416ead8e8bb10655fdd8a6a8fc699dc63db4acf8c081a",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "nonconsequential",
+          "scope": "object:document-7",
+          "expiry": "2030-01-01T00:05:00Z"
+        },
+        {
+          "request_id": "r2",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-7",
+            "recipient": "self",
+            "effect": "apply-label:reviewed",
+            "scope": "object:document-7",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "nonconsequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [],
+          "request_digest": "31ee57dae3699135c3fa0bd9662b6e90e79e28e65452502e1016c4887c62e291",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "nonconsequential",
+          "scope": "object:document-7",
+          "expiry": "2030-01-01T00:05:00Z"
+        },
+        {
+          "request_id": "r3",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-7",
+            "recipient": "external:untrusted.example",
+            "effect": "send:document-7",
+            "scope": "object:document-7",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "consequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [
+            "recipient",
+            "effect"
+          ],
+          "request_digest": "5b9eac5ebaf8d4a8d11a34fb861d36e9ae819f633254e2fea4aa3ca76ff46a26",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "consequential",
+          "scope": "object:document-7",
+          "expiry": "2030-01-01T00:05:00Z"
+        },
+        {
+          "request_id": "r4",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-8",
+            "recipient": "self",
+            "effect": "save:document-8",
+            "scope": "object:document-8",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "consequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [
+            "target",
+            "recipient",
+            "effect",
+            "scope"
+          ],
+          "request_digest": "432935689c99b1d730c967615d849b027c377efe0cf96ca237f2abd5af17e027",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "consequential",
+          "scope": "object:document-8",
+          "expiry": "2030-01-01T00:05:00Z"
+        },
+        {
+          "request_id": "r5",
+          "fields": {
+            "principal": "fixture-user-01",
+            "target": "document-8",
+            "recipient": "self",
+            "effect": "save:document-8",
+            "scope": "folder:project-x",
+            "expiry": "2030-01-01T00:05:00Z",
+            "consequence": "consequential"
+          },
+          "visible_fields": [
+            "principal",
+            "target",
+            "recipient",
+            "effect",
+            "scope",
+            "expiry",
+            "consequence"
+          ],
+          "highlighted_fields": [
+            "scope"
+          ],
+          "request_digest": "bb8c6d3e30b7c65a2cd04539b901112b8611e3a17e634f9c1cbd3aa4d9e969c9",
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ],
+          "consequence": "consequential",
+          "scope": "folder:project-x",
+          "expiry": "2030-01-01T00:05:00Z"
+        }
+      ]
+    },
+    "bounded_batch": {
+      "batches": [
+        {
+          "eligible": true,
+          "items": [
+            {
+              "request_id": "r1",
+              "fields": {
+                "principal": "fixture-user-01",
+                "target": "document-7",
+                "recipient": "self",
+                "effect": "apply-label:reviewed",
+                "scope": "object:document-7",
+                "expiry": "2030-01-01T00:05:00Z",
+                "consequence": "nonconsequential"
+              },
+              "visible_fields": [
+                "principal",
+                "target",
+                "recipient",
+                "effect",
+                "scope",
+                "expiry",
+                "consequence"
+              ],
+              "highlighted_fields": [],
+              "request_digest": "ab7b10fe91abe84890e416ead8e8bb10655fdd8a6a8fc699dc63db4acf8c081a",
+              "decision_controls": [
+                "approve",
+                "deny",
+                "cancel"
+              ],
+              "consequence": "nonconsequential",
+              "scope": "object:document-7",
+              "expiry": "2030-01-01T00:05:00Z"
+            },
+            {
+              "request_id": "r2",
+              "fields": {
+                "principal": "fixture-user-01",
+                "target": "document-7",
+                "recipient": "self",
+                "effect": "apply-label:reviewed",
+                "scope": "object:document-7",
+                "expiry": "2030-01-01T00:05:00Z",
+                "consequence": "nonconsequential"
+              },
+              "visible_fields": [
+                "principal",
+                "target",
+                "recipient",
+                "effect",
+                "scope",
+                "expiry",
+                "consequence"
+              ],
+              "highlighted_fields": [],
+              "request_digest": "31ee57dae3699135c3fa0bd9662b6e90e79e28e65452502e1016c4887c62e291",
+              "decision_controls": [
+                "approve",
+                "deny",
+                "cancel"
+              ],
+              "consequence": "nonconsequential",
+              "scope": "object:document-7",
+              "expiry": "2030-01-01T00:05:00Z"
+            }
+          ],
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ]
+        },
+        {
+          "eligible": false,
+          "items": [
+            {
+              "request_id": "r3",
+              "fields": {
+                "principal": "fixture-user-01",
+                "target": "document-7",
+                "recipient": "external:untrusted.example",
+                "effect": "send:document-7",
+                "scope": "object:document-7",
+                "expiry": "2030-01-01T00:05:00Z",
+                "consequence": "consequential"
+              },
+              "visible_fields": [
+                "principal",
+                "target",
+                "recipient",
+                "effect",
+                "scope",
+                "expiry",
+                "consequence"
+              ],
+              "highlighted_fields": [],
+              "request_digest": "5b9eac5ebaf8d4a8d11a34fb861d36e9ae819f633254e2fea4aa3ca76ff46a26",
+              "decision_controls": [
+                "approve",
+                "deny",
+                "cancel"
+              ],
+              "consequence": "consequential",
+              "scope": "object:document-7",
+              "expiry": "2030-01-01T00:05:00Z"
+            }
+          ],
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ]
+        },
+        {
+          "eligible": false,
+          "items": [
+            {
+              "request_id": "r4",
+              "fields": {
+                "principal": "fixture-user-01",
+                "target": "document-8",
+                "recipient": "self",
+                "effect": "save:document-8",
+                "scope": "object:document-8",
+                "expiry": "2030-01-01T00:05:00Z",
+                "consequence": "consequential"
+              },
+              "visible_fields": [
+                "principal",
+                "target",
+                "recipient",
+                "effect",
+                "scope",
+                "expiry",
+                "consequence"
+              ],
+              "highlighted_fields": [],
+              "request_digest": "432935689c99b1d730c967615d849b027c377efe0cf96ca237f2abd5af17e027",
+              "decision_controls": [
+                "approve",
+                "deny",
+                "cancel"
+              ],
+              "consequence": "consequential",
+              "scope": "object:document-8",
+              "expiry": "2030-01-01T00:05:00Z"
+            }
+          ],
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ]
+        },
+        {
+          "eligible": false,
+          "items": [
+            {
+              "request_id": "r5",
+              "fields": {
+                "principal": "fixture-user-01",
+                "target": "document-8",
+                "recipient": "self",
+                "effect": "save:document-8",
+                "scope": "folder:project-x",
+                "expiry": "2030-01-01T00:05:00Z",
+                "consequence": "consequential"
+              },
+              "visible_fields": [
+                "principal",
+                "target",
+                "recipient",
+                "effect",
+                "scope",
+                "expiry",
+                "consequence"
+              ],
+              "highlighted_fields": [],
+              "request_digest": "bb8c6d3e30b7c65a2cd04539b901112b8611e3a17e634f9c1cbd3aa4d9e969c9",
+              "decision_controls": [
+                "approve",
+                "deny",
+                "cancel"
+              ],
+              "consequence": "consequential",
+              "scope": "folder:project-x",
+              "expiry": "2030-01-01T00:05:00Z"
+            }
+          ],
+          "decision_controls": [
+            "approve",
+            "deny",
+            "cancel"
+          ]
+        }
+      ]
+    }
+  },
+  "authority_checks": [
+    {
+      "receipt_request_id": "r1",
+      "attempt_request_id": "r3",
+      "receipt_digest": "ab7b10fe91abe84890e416ead8e8bb10655fdd8a6a8fc699dc63db4acf8c081a",
+      "attempt_digest": "5b9eac5ebaf8d4a8d11a34fb861d36e9ae819f633254e2fea4aa3ca76ff46a26",
+      "decision": "REFUSE_DIGEST_MISMATCH"
+    }
+  ],
+  "responses": [
+    {
+      "request_id": "r3",
+      "choice": "deny"
+    },
+    {
+      "request_id": "r5",
+      "choice": "cancel"
+    }
+  ]
+}

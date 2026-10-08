@@ -1,0 +1,93 @@
+{
+  "schema": "relational-coordinate-bounds-6684-design-v1",
+  "coordinate_unit": "px",
+  "current_epoch": 7,
+  "source_frame_id": "viewport-A",
+  "source_scale_values": [1, 2],
+  "shift_variables": {
+    "shared": {"x": [-2, 2], "y": [-2, 2]},
+    "t_ind": {"x": [0, 0], "y": [0, 0]},
+    "a_ind": {"x": [0, 0], "y": [0, 0]},
+    "t_wide": {"x": [0, 0], "y": [0, 0]},
+    "a_wide": {"x": [0, 0], "y": [0, 0]},
+    "t_shift": {"x": [-1, 1], "y": [-1, 1]},
+    "a_shift": {"x": [-1, 1], "y": [-1, 1]},
+    "shared_edge": {"x": [-2, 2], "y": [-2, 2]},
+    "shared_collateral": {"x": [-2, 2], "y": [-2, 2]},
+    "shared_no_gain": {"x": [-2, 2], "y": [-2, 2]}
+  },
+  "cases": [
+    {
+      "case_id": "CM_SAFE_WIDE_TRANSLATION",
+      "family": "common_mode",
+      "scale_values": [1, 2],
+      "target": {"id": "target-A", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "base": [10, 10], "error": [[-1, 1], [-1, 1]], "half_size": [3, 3]},
+      "action": {"target_id": "target-A", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "offset": [0, 0], "error": [[-1, 1], [-1, 1]]},
+      "forbidden": {"id": "neighbor-A", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "offset_from_target": [10, 10], "error": [[-1, 1], [-1, 1]], "half_size": [1, 1]}
+    },
+    {
+      "case_id": "CM_SAFE_SMALL_HITBOX",
+      "family": "common_mode",
+      "scale_values": [1],
+      "target": {"id": "target-B", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "base": [20, 20], "error": [[0, 0], [0, 0]], "half_size": [1, 1]},
+      "action": {"target_id": "target-B", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "offset": [0, 0], "error": [[0, 0], [0, 0]]},
+      "forbidden": {"id": "neighbor-B", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "offset_from_target": [5, 5], "error": [[0, 0], [0, 0]], "half_size": [1, 1]}
+    },
+    {
+      "case_id": "CM_SAFE_SCALED_OFFSET",
+      "family": "common_mode",
+      "scale_values": [1, 2],
+      "target": {"id": "target-C", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "base": [5, 5], "error": [[-1, 0], [0, 0]], "half_size": [3, 2]},
+      "action": {"target_id": "target-C", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "offset": [1, 0], "error": [[0, 0], [0, 0]]},
+      "forbidden": {"id": "neighbor-C", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared", "offset_from_target": [8, 8], "error": [[0, 0], [0, 0]], "half_size": [1, 1]}
+    },
+    {
+      "case_id": "INDEPENDENT_SAFE_NO_GAIN",
+      "family": "independent_error",
+      "scale_values": [1],
+      "target": {"id": "target-D", "frame_id": "viewport-A", "epoch": 7, "shift_var": "t_ind", "base": [10, 10], "error": [[-1, 1], [-1, 1]], "half_size": [4, 4]},
+      "action": {"target_id": "target-D", "frame_id": "viewport-A", "epoch": 7, "shift_var": "a_ind", "offset": [0, 0], "error": [[-1, 1], [-1, 1]]},
+      "forbidden": {"id": "neighbor-D", "frame_id": "viewport-A", "epoch": 7, "shift_var": "a_ind", "offset_from_target": [10, 10], "error": [[-1, 1], [-1, 1]], "half_size": [1, 1]}
+    },
+    {
+      "case_id": "INDEPENDENT_UNSAFE_NO_GAIN",
+      "family": "independent_error",
+      "scale_values": [1],
+      "target": {"id": "target-E", "frame_id": "viewport-A", "epoch": 7, "shift_var": "t_wide", "base": [10, 10], "error": [[-1, 1], [-1, 1]], "half_size": [1, 1]},
+      "action": {"target_id": "target-E", "frame_id": "viewport-A", "epoch": 7, "shift_var": "a_wide", "offset": [0, 0], "error": [[-1, 1], [-1, 1]]},
+      "forbidden": {"id": "neighbor-E", "frame_id": "viewport-A", "epoch": 7, "shift_var": "a_wide", "offset_from_target": [10, 10], "error": [[-1, 1], [-1, 1]], "half_size": [1, 1]}
+    },
+    {
+      "case_id": "INDEPENDENT_FRAME_TRANSLATION_NO_GAIN",
+      "family": "independent_error",
+      "scale_values": [1],
+      "target": {"id": "target-I", "frame_id": "viewport-A", "epoch": 7, "shift_var": "t_shift", "base": [10, 10], "error": [[0, 0], [0, 0]], "half_size": [2, 2]},
+      "action": {"target_id": "target-I", "frame_id": "viewport-A", "epoch": 7, "shift_var": "a_shift", "offset": [0, 0], "error": [[0, 0], [0, 0]]},
+      "forbidden": {"id": "neighbor-I", "frame_id": "viewport-A", "epoch": 7, "shift_var": "a_shift", "offset_from_target": [10, 10], "error": [[0, 0], [0, 0]], "half_size": [1, 1]}
+    },
+    {
+      "case_id": "CM_UNSAFE_SCALE_BOUNDARY",
+      "family": "common_mode_control",
+      "scale_values": [1, 2],
+      "target": {"id": "target-F", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_edge", "base": [10, 10], "error": [[0, 0], [0, 0]], "half_size": [3, 3]},
+      "action": {"target_id": "target-F", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_edge", "offset": [2, 0], "error": [[0, 0], [0, 0]]},
+      "forbidden": {"id": "neighbor-F", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_edge", "offset_from_target": [10, 10], "error": [[0, 0], [0, 0]], "half_size": [1, 1]}
+    },
+    {
+      "case_id": "CM_UNSAFE_ADJACENT_COLLATERAL",
+      "family": "common_mode_control",
+      "scale_values": [1],
+      "target": {"id": "target-G", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_collateral", "base": [10, 10], "error": [[0, 0], [0, 0]], "half_size": [2, 2]},
+      "action": {"target_id": "target-G", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_collateral", "offset": [0, 0], "error": [[-1, 1], [-1, 1]]},
+      "forbidden": {"id": "neighbor-G", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_collateral", "offset_from_target": [2, 0], "error": [[0, 0], [0, 0]], "half_size": [1, 1]}
+    },
+    {
+      "case_id": "CM_UNSAFE_INDEPENDENT_MEASUREMENT_ERROR",
+      "family": "common_mode_control",
+      "scale_values": [1],
+      "target": {"id": "target-H", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_no_gain", "base": [10, 10], "error": [[-3, 3], [-3, 3]], "half_size": [2, 2]},
+      "action": {"target_id": "target-H", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_no_gain", "offset": [0, 0], "error": [[-3, 3], [-3, 3]]},
+      "forbidden": {"id": "neighbor-H", "frame_id": "viewport-A", "epoch": 7, "shift_var": "shared_no_gain", "offset_from_target": [10, 10], "error": [[0, 0], [0, 0]], "half_size": [1, 1]}
+    }
+  ]
+}

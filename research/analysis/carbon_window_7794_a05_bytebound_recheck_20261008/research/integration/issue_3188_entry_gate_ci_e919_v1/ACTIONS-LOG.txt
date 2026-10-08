@@ -1,0 +1,294 @@
+audit	Set up job	﻿2026-09-20T18:56:32.8206215Z Current runner version: '2.337.0'
+audit	Set up job	2026-09-20T18:56:32.8226641Z ##[group]Runner Image Provisioner
+audit	Set up job	2026-09-20T18:56:32.8227422Z Hosted Compute Agent
+audit	Set up job	2026-09-20T18:56:32.8227909Z Version: 20260828.587
+audit	Set up job	2026-09-20T18:56:32.8228458Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+audit	Set up job	2026-09-20T18:56:32.8229278Z Build Date: 2026-08-28T16:44:25Z
+audit	Set up job	2026-09-20T18:56:32.8229817Z Worker ID: {44384267-e34f-46b8-a3f1-f28c8517cf9f}
+audit	Set up job	2026-09-20T18:56:32.8230472Z Azure Region: westcentralus
+audit	Set up job	2026-09-20T18:56:32.8230966Z ##[endgroup]
+audit	Set up job	2026-09-20T18:56:32.8232439Z ##[group]Operating System
+audit	Set up job	2026-09-20T18:56:32.8232976Z Ubuntu
+audit	Set up job	2026-09-20T18:56:32.8233408Z 24.04.5
+audit	Set up job	2026-09-20T18:56:32.8233881Z LTS
+audit	Set up job	2026-09-20T18:56:32.8234308Z ##[endgroup]
+audit	Set up job	2026-09-20T18:56:32.8234775Z ##[group]Runner Image
+audit	Set up job	2026-09-20T18:56:32.8235351Z Image: ubuntu-24.04
+audit	Set up job	2026-09-20T18:56:32.8235820Z Version: 20260907.300.1
+audit	Set up job	2026-09-20T18:56:32.8236755Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+audit	Set up job	2026-09-20T18:56:32.8238190Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+audit	Set up job	2026-09-20T18:56:32.8239226Z ##[endgroup]
+audit	Set up job	2026-09-20T18:56:32.8240158Z ##[group]GITHUB_TOKEN Permissions
+audit	Set up job	2026-09-20T18:56:32.8241967Z Contents: read
+audit	Set up job	2026-09-20T18:56:32.8242527Z Metadata: read
+audit	Set up job	2026-09-20T18:56:32.8243055Z Packages: read
+audit	Set up job	2026-09-20T18:56:32.8243509Z ##[endgroup]
+audit	Set up job	2026-09-20T18:56:32.8245089Z Secret source: Actions
+audit	Set up job	2026-09-20T18:56:32.8245954Z Cache mode: write
+audit	Set up job	2026-09-20T18:56:32.8246518Z Prepare workflow directory
+audit	Set up job	2026-09-20T18:56:32.8516665Z Prepare all required actions
+audit	Set up job	2026-09-20T18:56:32.8570369Z Getting action download info
+audit	Set up job	2026-09-20T18:56:33.1114974Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+audit	Set up job	2026-09-20T18:56:33.2620377Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+audit	Set up job	2026-09-20T18:56:33.5007259Z Complete job name: audit
+audit	Run actions/checkout@v4	﻿2026-09-20T18:56:33.5602387Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5609554Z ##[group]Run actions/checkout@v4
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5610123Z with:
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5610486Z   repository: Unjuno/agent-interface
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5613521Z   token: ***
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5613871Z   ssh-strict: true
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5614222Z   ssh-user: git
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5614573Z   persist-credentials: true
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5614955Z   clean: true
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5615312Z   sparse-checkout-cone-mode: true
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5615717Z   fetch-depth: 1
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5616055Z   fetch-tags: false
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5616410Z   show-progress: true
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5616755Z   lfs: false
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5617083Z   submodules: false
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5617487Z   set-safe-directory: true
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5617882Z   allow-unsafe-pr-checkout: false
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.5618398Z ##[endgroup]
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6429737Z Syncing repository: Unjuno/agent-interface
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6431850Z ##[group]Getting Git version info
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6432804Z Working directory is '/home/runner/work/agent-interface/agent-interface'
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6434119Z [command]/usr/bin/git version
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6493666Z git version 2.55.0
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6508778Z ##[endgroup]
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6522041Z Temporarily overriding HOME='/home/runner/work/_temp/df57a9f2-15e8-4d76-b53f-6f061c670537' before making global git config changes
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6523841Z Adding repository directory to the temporary git global config as a safe directory
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6526009Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-interface/agent-interface
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6812552Z Deleting the contents of '/home/runner/work/agent-interface/agent-interface'
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6825656Z ##[group]Initializing the repository
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6827214Z [command]/usr/bin/git init /home/runner/work/agent-interface/agent-interface
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6946624Z hint: Using 'master' as the name for the initial branch. This default branch name
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6948084Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6949631Z hint: to use in all of your new repositories, which will suppress this warning,
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6950610Z hint: call:
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6951113Z hint:
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6951753Z hint: 	git config --global init.defaultBranch <name>
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6952513Z hint:
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6953256Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6954461Z hint: 'development'. The just-created branch can be renamed via this command:
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6955377Z hint:
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6955882Z hint: 	git branch -m <name>
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6956515Z hint:
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6957285Z hint: Disable this message with "git config set advice.defaultBranchName false"
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6958637Z Initialized empty Git repository in /home/runner/work/agent-interface/agent-interface/.git/
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.6960944Z [command]/usr/bin/git remote add origin https://github.com/Unjuno/agent-interface
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7008049Z ##[endgroup]
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7009115Z ##[group]Disabling automatic garbage collection
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7009935Z [command]/usr/bin/git config --local gc.auto 0
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7035777Z ##[endgroup]
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7036529Z ##[group]Setting up auth
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7042727Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7071591Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7378827Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7409277Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7597655Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7627944Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7815446Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7847722Z ##[endgroup]
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7848709Z ##[group]Fetching the repository
+audit	Run actions/checkout@v4	2026-09-20T18:56:33.7857025Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e9198a1c74ef4ca2759e92c4539b10dbe3a20ba8:refs/remotes/origin/research/issue3188-formal-ci-dispatch-e919-20260921
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8469447Z From https://github.com/Unjuno/agent-interface
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8470306Z  * [new ref]           e9198a1c74ef4ca2759e92c4539b10dbe3a20ba8 -> origin/research/issue3188-formal-ci-dispatch-e919-20260921
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8474001Z ##[endgroup]
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8474614Z ##[group]Determining the checkout info
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8476331Z ##[endgroup]
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8481411Z [command]/usr/bin/git sparse-checkout disable
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8519647Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8548078Z ##[group]Checking out the ref
+audit	Run actions/checkout@v4	2026-09-20T18:57:13.8552693Z [command]/usr/bin/git checkout --progress --force -B research/issue3188-formal-ci-dispatch-e919-20260921 refs/remotes/origin/research/issue3188-formal-ci-dispatch-e919-20260921
+audit	Run actions/checkout@v4	2026-09-20T18:57:14.9129833Z Updating files:   9% (7406/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:15.1765989Z Updating files:  10% (7426/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:15.3738853Z Updating files:  11% (8169/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:15.5729307Z Updating files:  12% (8911/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:15.7559388Z Updating files:  13% (9654/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:15.8580688Z Updating files:  14% (10396/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:15.9129590Z Updating files:  15% (11139/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:16.1508152Z Updating files:  15% (11460/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:16.4530661Z Updating files:  16% (11881/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:16.8221403Z Updating files:  17% (12624/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:16.9099940Z Updating files:  18% (13367/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:16.9123833Z Updating files:  19% (14109/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:16.9588571Z Updating files:  19% (14118/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:16.9880878Z Updating files:  20% (14852/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.0273570Z Updating files:  21% (15594/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.0590320Z Updating files:  22% (16337/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.0917723Z Updating files:  23% (17079/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.1219559Z Updating files:  24% (17822/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.1531234Z Updating files:  25% (18564/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.1850147Z Updating files:  26% (19307/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.2400624Z Updating files:  27% (20050/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.3003797Z Updating files:  28% (20792/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.3502234Z Updating files:  29% (21535/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.4076075Z Updating files:  30% (22277/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.4544165Z Updating files:  31% (23020/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.5015121Z Updating files:  32% (23762/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.5464006Z Updating files:  33% (24505/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.6060388Z Updating files:  34% (25248/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.6577355Z Updating files:  35% (25990/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.7023226Z Updating files:  36% (26733/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.7782539Z Updating files:  37% (27475/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.8937203Z Updating files:  38% (28218/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:17.9383855Z Updating files:  39% (28960/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:18.0507759Z Updating files:  39% (29093/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:18.1370235Z Updating files:  40% (29703/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:18.2612736Z Updating files:  41% (30445/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:18.3177117Z Updating files:  42% (31188/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:18.4560083Z Updating files:  43% (31931/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:18.5179158Z Updating files:  44% (32673/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:18.7811635Z Updating files:  45% (33416/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:18.9125505Z Updating files:  46% (34158/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:19.1132117Z Updating files:  46% (34589/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:19.5711877Z Updating files:  47% (34901/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:19.9128618Z Updating files:  48% (35643/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:19.9497893Z Updating files:  48% (36313/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:20.5244129Z Updating files:  49% (36386/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:20.8520802Z Updating files:  50% (37128/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:20.9044438Z Updating files:  51% (37871/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:20.9122006Z Updating files:  52% (38614/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.0129236Z Updating files:  52% (38672/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.0688571Z Updating files:  53% (39356/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.1296626Z Updating files:  54% (40099/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.2081014Z Updating files:  55% (40841/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.2661291Z Updating files:  56% (41584/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.3280964Z Updating files:  57% (42326/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.4187615Z Updating files:  58% (43069/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.4710284Z Updating files:  59% (43812/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.6708771Z Updating files:  60% (44554/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:21.9192149Z Updating files:  61% (45297/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:22.3649379Z Updating files:  61% (45540/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:22.9123506Z Updating files:  62% (46039/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:22.9146908Z Updating files:  62% (46744/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:23.7796539Z Updating files:  63% (46782/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:23.9183322Z Updating files:  64% (47524/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:24.6775938Z Updating files:  64% (47686/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:24.9126382Z Updating files:  65% (48267/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:25.7037008Z Updating files:  65% (48382/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:25.9234235Z Updating files:  66% (49009/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:26.7049173Z Updating files:  66% (49080/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:26.9127760Z Updating files:  67% (49752/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:27.4359932Z Updating files:  67% (50035/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:27.8501537Z Updating files:  68% (50495/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:27.8888230Z Updating files:  69% (51237/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:27.9122737Z Updating files:  70% (51980/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:27.9137682Z Updating files:  70% (52675/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:27.9395362Z Updating files:  71% (52722/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:27.9635482Z Updating files:  72% (53465/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:27.9895825Z Updating files:  73% (54207/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.0573961Z Updating files:  74% (54950/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.3094086Z Updating files:  75% (55692/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.3911633Z Updating files:  76% (56435/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.4706983Z Updating files:  77% (57178/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.5401286Z Updating files:  78% (57920/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.6141374Z Updating files:  79% (58663/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.7219053Z Updating files:  80% (59405/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.8116836Z Updating files:  81% (60148/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.9123088Z Updating files:  82% (60890/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:28.9409037Z Updating files:  82% (61464/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:29.0615093Z Updating files:  83% (61633/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:29.2296258Z Updating files:  84% (62376/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:29.4350994Z Updating files:  85% (63118/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:29.6233098Z Updating files:  86% (63861/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:29.9129559Z Updating files:  87% (64603/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:29.9328625Z Updating files:  87% (65259/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:29.9629783Z Updating files:  88% (65346/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.0174027Z Updating files:  89% (66088/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.0686164Z Updating files:  90% (66831/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.1966427Z Updating files:  91% (67573/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.4120591Z Updating files:  92% (68316/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.5183787Z Updating files:  93% (69059/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.5823599Z Updating files:  94% (69801/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.6595679Z Updating files:  95% (70544/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.7368611Z Updating files:  96% (71286/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.8119275Z Updating files:  97% (72029/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.9123429Z Updating files:  98% (72771/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:30.9321820Z Updating files:  98% (73361/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:31.0133152Z Updating files:  99% (73514/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:31.0135074Z Updating files: 100% (74256/74256)
+audit	Run actions/checkout@v4	2026-09-20T18:57:31.0135708Z Updating files: 100% (74256/74256), done.
+audit	Run actions/checkout@v4	2026-09-20T18:57:31.4010308Z Switched to a new branch 'research/issue3188-formal-ci-dispatch-e919-20260921'
+audit	Run actions/checkout@v4	2026-09-20T18:57:31.4011520Z branch 'research/issue3188-formal-ci-dispatch-e919-20260921' set up to track 'origin/research/issue3188-formal-ci-dispatch-e919-20260921'.
+audit	Run actions/checkout@v4	2026-09-20T18:57:31.4377328Z ##[endgroup]
+audit	Run actions/checkout@v4	2026-09-20T18:57:31.4417414Z [command]/usr/bin/git log -1 --format=%H
+audit	Run actions/checkout@v4	2026-09-20T18:57:31.4445382Z e9198a1c74ef4ca2759e92c4539b10dbe3a20ba8
+audit	Run mkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native	﻿2026-09-20T18:57:31.6203260Z ##[group]Run mkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native
+audit	Run mkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native	2026-09-20T18:57:31.6204408Z [36;1mmkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native[0m
+audit	Run mkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native	2026-09-20T18:57:31.6240585Z shell: /usr/bin/bash -e {0}
+audit	Run mkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native	2026-09-20T18:57:31.6240812Z ##[endgroup]
+audit	Run mkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native	2026-09-20T18:57:31.7916079Z RAW vectors=32 controls=5
+audit	Run mkdir -p out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/native && python3 research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/native	2026-09-20T18:57:31.8131136Z PASS_AUDIT rows=37 vectors=32 authorize=1 current=HOLD controls=5/5
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	﻿2026-09-20T18:57:31.9083755Z ##[group]Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:31.9085311Z [36;1mdocker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container[0m
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:31.9124346Z shell: /usr/bin/bash -e {0}
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:31.9124563Z ##[endgroup]
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:32.2546375Z Unable to find image 'python:3.12-slim' locally
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:33.7779477Z 3.12-slim: Pulling from library/python
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.4522697Z 6b37362b3da7: Pulling fs layer
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.4524165Z 3764a9a7d1e8: Pulling fs layer
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.4524599Z b0dc7f87bef1: Pulling fs layer
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.4524910Z 06ad939ed42b: Pulling fs layer
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.4525195Z 06ad939ed42b: Waiting
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.7556269Z 3764a9a7d1e8: Verifying Checksum
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.7558738Z 3764a9a7d1e8: Download complete
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.8618194Z b0dc7f87bef1: Verifying Checksum
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.8619708Z b0dc7f87bef1: Download complete
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.9052599Z 6b37362b3da7: Verifying Checksum
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.9053010Z 6b37362b3da7: Download complete
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.9517571Z 06ad939ed42b: Verifying Checksum
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:34.9517954Z 06ad939ed42b: Download complete
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:35.7944285Z 6b37362b3da7: Pull complete
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:46.8743092Z 3764a9a7d1e8: Pull complete
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:47.5706210Z b0dc7f87bef1: Pull complete
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:47.5794192Z 06ad939ed42b: Pull complete
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:47.5838592Z Digest: sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:47.5848759Z Status: Downloaded newer image for python:3.12-slim
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/run.py out/container	2026-09-20T18:57:47.7952843Z RAW vectors=32 controls=5
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/container	﻿2026-09-20T18:57:47.8381975Z ##[group]Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/container
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/container	2026-09-20T18:57:47.8383377Z [36;1mdocker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/container[0m
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/container	2026-09-20T18:57:47.8423876Z shell: /usr/bin/bash -e {0}
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/container	2026-09-20T18:57:47.8424099Z ##[endgroup]
+audit	Run docker run --rm --network none -v "$PWD:/repo" -w /repo python:3.12-slim python research/analysis/map01_matched_recovery_entry_gate_3008_v2/audit.py out/container	2026-09-20T18:57:48.0417488Z PASS_AUDIT rows=37 vectors=32 authorize=1 current=HOLD controls=5/5
+audit	Run actions/upload-artifact@v4	﻿2026-09-20T18:57:48.0958579Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0960487Z ##[group]Run actions/upload-artifact@v4
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0960711Z with:
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0960893Z   name: map01-recovery-entry-gate-3008-v2
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0961111Z   path: out/
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0961273Z   if-no-files-found: warn
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0961462Z   compression-level: 6
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0961640Z   overwrite: false
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0961835Z   include-hidden-files: false
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.0962039Z ##[endgroup]
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.2261315Z (node:2299) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.2262149Z (Use `node --trace-deprecation ...` to show where the warning was created)
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.2330261Z With the provided path, there will be 2 files uploaded
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.2330905Z Artifact name is valid!
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.2331198Z Root directory input is valid!
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.5351992Z Beginning upload of artifact content to blob storage
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.5504630Z (node:2299) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.7499465Z Uploaded bytes 1236
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.8059146Z Finished uploading artifact content to blob storage!
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.8060279Z SHA256 digest of uploaded artifact zip is 8d65153949bebb7d97a9b6274daa097e9a487e6579a25099453f1354c55d8758
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:48.8061248Z Finalizing artifact upload
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:49.0704912Z Artifact map01-recovery-entry-gate-3008-v2.zip successfully finalized. Artifact ID 10611375709
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:49.0706114Z Artifact map01-recovery-entry-gate-3008-v2 has been successfully uploaded! Final size is 1236 bytes. Artifact ID is 10611375709
+audit	Run actions/upload-artifact@v4	2026-09-20T18:57:49.0711314Z Artifact download URL: https://github.com/Unjuno/agent-interface/actions/runs/35529905690/artifacts/10611375709
+audit	Post Run actions/checkout@v4	﻿2026-09-20T18:57:49.0876253Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.0877220Z Post job cleanup.
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1556271Z [command]/usr/bin/git version
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1590235Z git version 2.55.0
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1617438Z Temporarily overriding HOME='/home/runner/work/_temp/49ab5c3a-3230-4522-a255-5df283695fbd' before making global git config changes
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1618490Z Adding repository directory to the temporary git global config as a safe directory
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1621668Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/agent-interface/agent-interface
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1653689Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1681890Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1939673Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1973155Z http.https://github.com/.extraheader
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.1983266Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.2011710Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.2276060Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+audit	Post Run actions/checkout@v4	2026-09-20T18:57:49.2311467Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+audit	Complete job	﻿2026-09-20T18:57:49.2692635Z Cleaning up orphan processes
+audit	Complete job	2026-09-20T18:57:49.2968730Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

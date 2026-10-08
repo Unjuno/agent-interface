@@ -1,0 +1,83 @@
+✔ one pending call survives interrupted waiting; no resend, exact content presentation (146.097ms)
+✔ refused IDs can remain unchanged while attempt records never overwrite (128.7053ms)
+✔ process loss makes delivery uncertain and blocks new sends (38.3284ms)
+✔ mismatched response retained but never presented as the pending result (127.7009ms)
+✔ existing evidence directory is refused before spawn (0.9602ms)
+✔ nonfinite or omitted values are refused before recording or sending (37.5963ms)
+✔ review attribution comes from explicit retained reply and cannot overwrite history (5.2623ms)
+✔ public and management captures have explicit identity without invented sequence (5.0892ms)
+✔ review refuses ambiguous, missing-image, uncertain and incomplete evidence (5.1871ms)
+✔ presentation preserves explicit MCP error status before unchanged content (0.3139ms)
+✔ presentation retains explicit error status for empty content and does not invent an absent flag (0.1098ms)
+✔ copied public host modules run outside the checkout using only Node built-ins (142.552ms)
+✖ wrong response identity still retains actual exit and original journal error (41.8301ms)
+✖ invalid reply JSON still retains actual exit without retrying the request (40.6283ms)
+✖ occupied original reply file still allows a new terminal receipt (39.776ms)
+✖ failed reply journal and occupied exit preserve both errors and original exit bytes (40.2256ms)
+✔ healthy reply journal preserves the existing occupied-exit error behavior (41.0362ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 13
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 891.2682
+
+✖ failing tests:
+
+test at work\relay-exit-journal-7772\source\test_relay_client.mjs:218:1
+✖ wrong response identity still retains actual exit and original journal error (41.8301ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\relay-exit-journal-7772\scratch\red-first\relay-exit-journal-2EhAp0\evidence\exit.json'
+      at async open (node:internal/fs/promises:637:25)
+      at async readFile (node:internal/fs/promises:1269:14)
+      at async TestContext.<anonymous> (file:///C:/Users/user/Documents/Codex/2026-10-03/new-chat-4/work/relay-exit-journal-7772/source/test_relay_client.mjs:220:25)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\relay-exit-journal-7772\\scratch\\red-first\\relay-exit-journal-2EhAp0\\evidence\\exit.json'
+  }
+
+test at work\relay-exit-journal-7772\source\test_relay_client.mjs:224:1
+✖ invalid reply JSON still retains actual exit without retrying the request (40.6283ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\relay-exit-journal-7772\scratch\red-first\relay-exit-journal-NvDn4G\evidence\exit.json'
+      at async open (node:internal/fs/promises:637:25)
+      at async readFile (node:internal/fs/promises:1269:14)
+      at async TestContext.<anonymous> (file:///C:/Users/user/Documents/Codex/2026-10-03/new-chat-4/work/relay-exit-journal-7772/source/test_relay_client.mjs:226:31)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\relay-exit-journal-7772\\scratch\\red-first\\relay-exit-journal-NvDn4G\\evidence\\exit.json'
+  }
+
+test at work\relay-exit-journal-7772\source\test_relay_client.mjs:230:1
+✖ occupied original reply file still allows a new terminal receipt (39.776ms)
+  Error: ENOENT: no such file or directory, open 'C:\Users\user\Documents\Codex\2026-10-03\new-chat-4\work\relay-exit-journal-7772\scratch\red-first\relay-exit-journal-lV5st5\evidence\exit.json'
+      at async open (node:internal/fs/promises:637:25)
+      at async readFile (node:internal/fs/promises:1269:14)
+      at async TestContext.<anonymous> (file:///C:/Users/user/Documents/Codex/2026-10-03/new-chat-4/work/relay-exit-journal-7772/source/test_relay_client.mjs:232:31)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: 'C:\\Users\\user\\Documents\\Codex\\2026-10-03\\new-chat-4\\work\\relay-exit-journal-7772\\scratch\\red-first\\relay-exit-journal-lV5st5\\evidence\\exit.json'
+  }
+
+test at work\relay-exit-journal-7772\source\test_relay_client.mjs:236:1
+✖ failed reply journal and occupied exit preserve both errors and original exit bytes (40.2256ms)
+  AssertionError [ERR_ASSERTION]: The "string" argument must be of type string. Received type undefined (undefined)
+      at TestContext.<anonymous> (file:///C:/Users/user/Documents/Codex/2026-10-03/new-chat-4/work/relay-exit-journal-7772/source/test_relay_client.mjs:239:10)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /EEXIST/,
+    operator: 'match',
+    diff: 'simple'
+  }

@@ -1,0 +1,710 @@
+{
+  "schema": "agent-interface-map01-failure-analysis-v1",
+  "passed": true,
+  "retained_run": "map01-astra-attempt-v1",
+  "source_sha256": {
+    "research/doom/results/map01-astra-attempt-v1/report.json": "586330c491798b5d9f63424ce151cd36a52e3abce75b73ba805d3748cc63f894",
+    "research/doom/results/map01-astra-attempt-v1/events.jsonl": "e4aea04390c32ddf7d584cf3d69e0fec781c1964815a0a1ecf19663122925564",
+    "research/live_control/policy_invalidation_guard_v1.py": "29cacb1bb71cb19b36b32ccc6d0cc657d6034121a4920a65bd1f4d6a224016fe"
+  },
+  "visual_transcription": {
+    "scope": "manual HUD transcription from the exact hash-checked decision frames; values are reviewable in the generated contact sheet",
+    "health": [
+      100,
+      100,
+      100,
+      100,
+      100,
+      84,
+      84,
+      53,
+      49,
+      22,
+      11,
+      4,
+      0
+    ],
+    "ammo": [
+      50,
+      50,
+      50,
+      50,
+      48,
+      37,
+      37,
+      37,
+      37,
+      37,
+      37,
+      37,
+      37
+    ],
+    "armor": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "health_box": [
+      440,
+      585,
+      535,
+      635
+    ],
+    "contact_sheet": "research/doom/results/map01-astra-attempt-v1/hud-numbers-contact-sheet-v1.png",
+    "contact_sheet_sha256": "f6edbc5f25a959063f8e1edcf4a704adf387346d053caf5a87af18d9a53da0c3"
+  },
+  "cover_gap": {
+    "total_uncovered_model_tail_ms": 9770.766719,
+    "maximum_uncovered_model_tail_ms": 3765.44121,
+    "intervals_with_uncovered_tail": 7
+  },
+  "damage_windows": {
+    "health_lost_total": 100,
+    "health_lost_in_windows_with_coast_inference_cover": 84,
+    "scope": "window-level association only; each window also contains the following primary program"
+  },
+  "one_way_visual_invalidation": {
+    "health_roi_true_invalidations": 7,
+    "health_roi_true_unchanged": 5,
+    "health_roi_false_invalidations": 0,
+    "health_roi_missed_changes": 0,
+    "face_animation_control_invalidations": 12,
+    "decision": "RETAIN_AS_ONE_WAY_INVALIDATION_CANDIDATE",
+    "why_revisit": "single-ROI change was unsafe as evidence that a task postcondition succeeded; here it can only remove an already admitted policy and request a decision"
+  },
+  "intervals": [
+    {
+      "from_iteration": 0,
+      "to_iteration": 1,
+      "source_frame_sha256": "d17b0cdb63c7a9b64513c512553cd7012890ee8d5588c8ce149f268329cfba71",
+      "next_frame_sha256": "e5370c4cc21b4cdc4ad2211bf13b7af268d04904a693991fbcc1368c64d9d1f1",
+      "health": [
+        100,
+        100
+      ],
+      "health_delta": 0,
+      "ammo": [
+        50,
+        50
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Starting area is clear; a passage and door are directly ahead.",
+      "commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "cover_id": "cover-0",
+      "cover_mode": "coast",
+      "cover_terminal_status": "completed",
+      "model_ms": 11490.51196,
+      "uncovered_model_tail_ms": 1595.878936,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-0",
+        "status": "UNCHANGED",
+        "reason": "below_change_threshold",
+        "keep_existing_policy": true,
+        "requires_new_decision": false,
+        "changed_pixels": 0,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 1,
+      "to_iteration": 2,
+      "source_frame_sha256": "e5370c4cc21b4cdc4ad2211bf13b7af268d04904a693991fbcc1368c64d9d1f1",
+      "next_frame_sha256": "ab866d22079953994ac4d2b2a96841f3d99beb1a4f79ddfcef8af42a54011f41",
+      "health": [
+        100,
+        100
+      ],
+      "health_delta": 0,
+      "ammo": [
+        50,
+        50
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Moved into the corridor; the closed door ahead is closer, with no visible threats.",
+      "commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "cover_id": "cover-1",
+      "cover_mode": "coast",
+      "cover_terminal_status": "cancelled",
+      "model_ms": 9151.760205,
+      "uncovered_model_tail_ms": 0.0,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-1",
+        "status": "UNCHANGED",
+        "reason": "below_change_threshold",
+        "keep_existing_policy": true,
+        "requires_new_decision": false,
+        "changed_pixels": 0,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 2,
+      "to_iteration": 3,
+      "source_frame_sha256": "ab866d22079953994ac4d2b2a96841f3d99beb1a4f79ddfcef8af42a54011f41",
+      "next_frame_sha256": "8829ca399a58012392ffc3f76066d43b31b09b7afcefe6be7693c5633e3f0ce4",
+      "health": [
+        100,
+        100
+      ],
+      "health_delta": 0,
+      "ammo": [
+        50,
+        50
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Now directly against the AGM door; it remains visibly closed.",
+      "commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "cover_id": "cover-2",
+      "cover_mode": "coast",
+      "cover_terminal_status": "completed",
+      "model_ms": 11105.968312,
+      "uncovered_model_tail_ms": 1190.883888,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-2",
+        "status": "UNCHANGED",
+        "reason": "below_change_threshold",
+        "keep_existing_policy": true,
+        "requires_new_decision": false,
+        "changed_pixels": 0,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 3,
+      "to_iteration": 4,
+      "source_frame_sha256": "8829ca399a58012392ffc3f76066d43b31b09b7afcefe6be7693c5633e3f0ce4",
+      "next_frame_sha256": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965",
+      "health": [
+        100,
+        100
+      ],
+      "health_delta": 0,
+      "ammo": [
+        50,
+        48
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Door opened into a larger room with visible enemies ahead across the lowered floor.",
+      "commands": [
+        {
+          "action": "advance_fire",
+          "extent": "short"
+        },
+        {
+          "action": "fire",
+          "extent": "medium"
+        }
+      ],
+      "cover_id": "cover-3",
+      "cover_mode": "coast",
+      "cover_terminal_status": "cancelled",
+      "model_ms": 7304.472284,
+      "uncovered_model_tail_ms": 0.0,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-3",
+        "status": "UNCHANGED",
+        "reason": "below_change_threshold",
+        "keep_existing_policy": true,
+        "requires_new_decision": false,
+        "changed_pixels": 0,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 4,
+      "to_iteration": 5,
+      "source_frame_sha256": "b57426ea7c3223b32d05368ac21ef3a3e0ee9d82822126f56c29d3ca30e88965",
+      "next_frame_sha256": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300",
+      "health": [
+        100,
+        84
+      ],
+      "health_delta": -16,
+      "ammo": [
+        48,
+        37
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Now close against a hazard-striped ledge, with the room mostly obscured. Back away and inspect the right side for a route.",
+      "commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_right",
+          "extent": "short"
+        }
+      ],
+      "cover_id": "cover-4",
+      "cover_mode": "active_evasion_or_fire",
+      "cover_terminal_status": "completed",
+      "model_ms": 11844.595127,
+      "uncovered_model_tail_ms": 883.46934,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-4",
+        "status": "INVALIDATED",
+        "reason": "region_changed",
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "changed_pixels": 869,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 5,
+      "to_iteration": 6,
+      "source_frame_sha256": "b0eab1f7ca718597aebe56341d4d8f0efb0e978d6099533cd12289794dc85300",
+      "next_frame_sha256": "5813b591566221a3753f9e6f1261907cd5289e0aaa987c4728987c959e331fc6",
+      "health": [
+        84,
+        84
+      ],
+      "health_delta": 0,
+      "ammo": [
+        37,
+        37
+      ],
+      "armor": [
+        0,
+        1
+      ],
+      "assessment": "In the lower channel and taking damage; a dark stairway is visible at the right end of the ledge.",
+      "commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "cover_id": "cover-5",
+      "cover_mode": "coast",
+      "cover_terminal_status": "completed",
+      "model_ms": 13732.657945,
+      "uncovered_model_tail_ms": 3765.44121,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-5",
+        "status": "UNCHANGED",
+        "reason": "below_change_threshold",
+        "keep_existing_policy": true,
+        "requires_new_decision": false,
+        "changed_pixels": 0,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 6,
+      "to_iteration": 7,
+      "source_frame_sha256": "5813b591566221a3753f9e6f1261907cd5289e0aaa987c4728987c959e331fc6",
+      "next_frame_sha256": "c56a2542b3dea4f863a87ff0387ae756d2922768cd43432f8bf0501365bed95a",
+      "health": [
+        84,
+        53
+      ],
+      "health_delta": -31,
+      "ammo": [
+        37,
+        37
+      ],
+      "armor": [
+        1,
+        0
+      ],
+      "assessment": "Reached a tight corner beside the ledge; the dark panel ahead may be a lift or door.",
+      "commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "cover_id": "cover-6",
+      "cover_mode": "coast",
+      "cover_terminal_status": "completed",
+      "model_ms": 10150.685827,
+      "uncovered_model_tail_ms": 221.894466,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-6",
+        "status": "INVALIDATED",
+        "reason": "region_changed",
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "changed_pixels": 838,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 7,
+      "to_iteration": 8,
+      "source_frame_sha256": "c56a2542b3dea4f863a87ff0387ae756d2922768cd43432f8bf0501365bed95a",
+      "next_frame_sha256": "76ee920671ef35600b631af08202dbffae09d5b7dd4487d90d418568c07e7866",
+      "health": [
+        53,
+        49
+      ],
+      "health_delta": -4,
+      "ammo": [
+        37,
+        37
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Still facing the corner and losing health rapidly. Pull away and turn toward the open channel.",
+      "commands": [
+        {
+          "action": "backward",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "cover_id": "cover-7",
+      "cover_mode": "coast",
+      "cover_terminal_status": "cancelled",
+      "model_ms": 9218.334532,
+      "uncovered_model_tail_ms": 0.0,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-7",
+        "status": "INVALIDATED",
+        "reason": "region_changed",
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "changed_pixels": 800,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 8,
+      "to_iteration": 9,
+      "source_frame_sha256": "76ee920671ef35600b631af08202dbffae09d5b7dd4487d90d418568c07e7866",
+      "next_frame_sha256": "762030fb454865797cfe6dbb526a6ab1297d36e05cb4ab413c2c7b0a2646cace",
+      "health": [
+        49,
+        22
+      ],
+      "health_delta": -27,
+      "ammo": [
+        37,
+        37
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Health is falling near the raised barrier; move away from the corner and look for a clear route left.",
+      "commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "cover_id": "cover-8",
+      "cover_mode": "coast",
+      "cover_terminal_status": "completed",
+      "model_ms": 11379.60032,
+      "uncovered_model_tail_ms": 1414.391583,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-8",
+        "status": "INVALIDATED",
+        "reason": "region_changed",
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "changed_pixels": 890,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 9,
+      "to_iteration": 10,
+      "source_frame_sha256": "762030fb454865797cfe6dbb526a6ab1297d36e05cb4ab413c2c7b0a2646cace",
+      "next_frame_sha256": "9f0c6ec5fd0be82ea60ec8790e4f83d34f6d4ddb183dbffef17f15b5714a83c0",
+      "health": [
+        22,
+        11
+      ],
+      "health_delta": -11,
+      "ammo": [
+        37,
+        37
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Stairs are visible on the left, while health has dropped to 22%. Turn toward them and climb out of the exposed lower area.",
+      "commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "cover_id": "cover-9",
+      "cover_mode": "coast",
+      "cover_terminal_status": "cancelled",
+      "model_ms": 9282.603055,
+      "uncovered_model_tail_ms": 0.0,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-9",
+        "status": "INVALIDATED",
+        "reason": "region_changed",
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "changed_pixels": 992,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 10,
+      "to_iteration": 11,
+      "source_frame_sha256": "9f0c6ec5fd0be82ea60ec8790e4f83d34f6d4ddb183dbffef17f15b5714a83c0",
+      "next_frame_sha256": "6df9a66e2d658b95003ff776f105082329a9dbbb704eeedf926adc0c33459a31",
+      "health": [
+        11,
+        4
+      ],
+      "health_delta": -7,
+      "ammo": [
+        37,
+        37
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Still alive at 11% health. The stair route continues left around the close hazard-striped wall.",
+      "commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "cover_id": "cover-10",
+      "cover_mode": "coast",
+      "cover_terminal_status": "cancelled",
+      "model_ms": 9682.71538,
+      "uncovered_model_tail_ms": 0.0,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-10",
+        "status": "INVALIDATED",
+        "reason": "region_changed",
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "changed_pixels": 922,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    },
+    {
+      "from_iteration": 11,
+      "to_iteration": 12,
+      "source_frame_sha256": "6df9a66e2d658b95003ff776f105082329a9dbbb704eeedf926adc0c33459a31",
+      "next_frame_sha256": "066db883b20bfd57270a87258eadd38cc816364d246c16db5ae586a01c14b366",
+      "health": [
+        4,
+        0
+      ],
+      "health_delta": -4,
+      "ammo": [
+        37,
+        37
+      ],
+      "armor": [
+        0,
+        0
+      ],
+      "assessment": "Alive at 4% health, facing a close wall. Back away and turn left to recover a view of the stairs.",
+      "commands": [
+        {
+          "action": "backward",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "cover_id": "cover-11",
+      "cover_mode": "coast",
+      "cover_terminal_status": "completed",
+      "model_ms": 10692.805184,
+      "uncovered_model_tail_ms": 698.807296,
+      "health_guard": {
+        "format": "policy-invalidation-outcome-v1",
+        "guard_id": "health-11",
+        "status": "INVALIDATED",
+        "reason": "region_changed",
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "changed_pixels": 416,
+        "minimum_changed_pixels": 100,
+        "source_age_ms": 1000.0,
+        "grants_input_authority": false,
+        "may_only_reduce_existing_authority": true,
+        "semantic_change_identified": false,
+        "task_success_verified": false
+      },
+      "attribution_limit": "decision-to-decision window includes inference cover and the following primary program"
+    }
+  ],
+  "conclusion": "cover expiry is real but insufficient as the sole diagnosis: 84 health points were lost across decision windows whose inference cover was coast; a narrowly scoped visual change guard perfectly separated changed and unchanged health decision frames in this retained trace",
+  "limits": "posthoc single-run calibration on decision frames; manual HUD values; no continuous-sample false-negative rate, semantic direction, causal survival benefit, live integration, or MAP01-clear claim",
+  "next_test": "preregister one bounded v23/schema-v3 threat exposure with exact HUD-region observations; region change may only cancel/switch to a separately admitted conservative policy or escalate"
+}

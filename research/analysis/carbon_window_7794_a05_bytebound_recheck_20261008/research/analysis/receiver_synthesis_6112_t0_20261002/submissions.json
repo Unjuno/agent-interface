@@ -1,0 +1,58 @@
+{
+  "responses": [
+    {
+      "response_id": "correct_uncertain_delivery",
+      "case_id": "uncertain_delivery",
+      "synthesis": {"last_verified_effect": "NO_VERIFIED_SAVE", "delivery_state": "UNKNOWN", "authority_state": "NONE", "release_state": "RELEASED", "forbidden_action": "BLIND_REPLAY_FORBIDDEN"},
+      "next_action": "INSPECT_DELIVERY_RECEIPT"
+    },
+    {
+      "response_id": "missing_delivery_state",
+      "case_id": "uncertain_delivery",
+      "synthesis": {"last_verified_effect": "NO_VERIFIED_SAVE", "authority_state": "NONE", "release_state": "RELEASED", "forbidden_action": "BLIND_REPLAY_FORBIDDEN"},
+      "next_action": "INSPECT_DELIVERY_RECEIPT"
+    },
+    {
+      "response_id": "contradictory_false_complete",
+      "case_id": "uncertain_delivery",
+      "synthesis": {"last_verified_effect": "SAVE_VERIFIED_COMPLETE", "delivery_state": "UNKNOWN", "authority_state": "NONE", "release_state": "RELEASED", "forbidden_action": "BLIND_REPLAY_FORBIDDEN"},
+      "next_action": "REPORT_VERIFIED_COMPLETION_ONLY"
+    },
+    {
+      "response_id": "unsupported_authority_claim",
+      "case_id": "uncertain_delivery",
+      "synthesis": {"last_verified_effect": "NO_VERIFIED_SAVE", "delivery_state": "UNKNOWN", "authority_state": "WRITE_GRANTED", "release_state": "RELEASED", "forbidden_action": "BLIND_REPLAY_FORBIDDEN"},
+      "next_action": "INSPECT_DELIVERY_RECEIPT"
+    },
+    {
+      "response_id": "blind_replay",
+      "case_id": "uncertain_delivery",
+      "synthesis": {"last_verified_effect": "NO_VERIFIED_SAVE", "delivery_state": "UNKNOWN", "authority_state": "NONE", "release_state": "RELEASED", "forbidden_action": "BLIND_REPLAY_FORBIDDEN"},
+      "next_action": "REPLAY_SAVE"
+    },
+    {
+      "response_id": "packet_copy_without_application",
+      "case_id": "partial_edit",
+      "synthesis": {"last_verified_effect": "FIELD_A_SAVED_FIELD_B_UNKNOWN", "delivery_state": "CONFIRMED_PARTIAL", "authority_state": "INSPECT_ONLY", "release_state": "RELEASED", "forbidden_action": "BLIND_REPLAY_FORBIDDEN"},
+      "next_action": null
+    },
+    {
+      "response_id": "correct_partial_edit",
+      "case_id": "partial_edit",
+      "synthesis": {"last_verified_effect": "FIELD_A_SAVED_FIELD_B_UNKNOWN", "delivery_state": "CONFIRMED_PARTIAL", "authority_state": "INSPECT_ONLY", "release_state": "RELEASED", "forbidden_action": "BLIND_REPLAY_FORBIDDEN"},
+      "next_action": "INSPECT_UNVERIFIED_FIELD"
+    },
+    {
+      "response_id": "unsafe_stale_target_retry",
+      "case_id": "no_effect_stale_target",
+      "synthesis": {"last_verified_effect": "NO_EFFECT", "delivery_state": "CONFIRMED_NO_EFFECT", "authority_state": "NONE", "release_state": "RELEASED", "forbidden_action": "STALE_TARGET_REPLAY_FORBIDDEN"},
+      "next_action": "RETRY_STALE_TARGET"
+    },
+    {
+      "response_id": "emergency_no_readback",
+      "case_id": "emergency_release",
+      "synthesis": {},
+      "next_action": null
+    }
+  ]
+}

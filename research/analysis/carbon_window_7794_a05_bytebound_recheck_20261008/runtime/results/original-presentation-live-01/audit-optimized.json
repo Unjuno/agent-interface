@@ -1,0 +1,39 @@
+{
+  "status": "PASS_FUNCTIONAL_WITH_PRIMARY_PRESENTATION_DISCREPANCY",
+  "source": "c066c88fb94c3fefa588d9c3519a154ad8cbbd86",
+  "archive_sha256": "dd949345f7d0910fe8440f15841f17a7f1ddc5e91b98b4d1b0a06ba9e99c7946",
+  "metrics": {
+    "public_requests": 5,
+    "delivered_primary_images": 4,
+    "primary_image_views": 5,
+    "native_captures": 7,
+    "input_programs": 1,
+    "save_effects": 1,
+    "app_acknowledgments": 1,
+    "app_ack_delay_ms": 3001.053892,
+    "re_presentation_after_ack_ms": 60473.277809,
+    "fresh_saved_capture_after_ack_ms": 150970.283423,
+    "re_presentation_local_duration_ms": 2.440163,
+    "host_first_send_to_close_ms": 248242.11398,
+    "original_png_sha256": "3f3535bb712285e350d6df1952c8ff48197ea160aa8d7acc84309b0aa47c1986",
+    "fresh_png_sha256": "e892dc0d117abdece8ae0ffd74398146cd8431527d986cd23e8b6b840b13822c"
+  },
+  "counterexamples": [
+    {
+      "name": "duplicate-save",
+      "rejected": true,
+      "reason": "exact single app Save/ack"
+    },
+    {
+      "name": "changed-represented-source",
+      "rejected": true,
+      "reason": "re-present entire original source metadata unchanged"
+    },
+    {
+      "name": "unverified-release",
+      "rejected": true,
+      "reason": "verified neutral input release"
+    }
+  ],
+  "scope": "Finite functional original-source/cleanup/effect audit, not independent model comprehension or performance benefit"
+}

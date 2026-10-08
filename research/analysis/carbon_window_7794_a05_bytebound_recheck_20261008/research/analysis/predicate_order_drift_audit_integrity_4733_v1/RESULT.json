@@ -1,0 +1,131 @@
+{
+  "allocation": "predicate-order-audit-integrity-4733-20260928-01",
+  "baseline": {
+    "PYTHONOPTIMIZE=1": {
+      "corruption_control_count": 5,
+      "corruption_controls_rejected": 5,
+      "distribution_count": 21,
+      "errors": [],
+      "row_count": 336,
+      "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+    },
+    "normal": {
+      "corruption_control_count": 5,
+      "corruption_controls_rejected": 5,
+      "distribution_count": 21,
+      "errors": [],
+      "row_count": 336,
+      "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+    },
+    "python_-O": {
+      "corruption_control_count": 5,
+      "corruption_controls_rejected": 5,
+      "distribution_count": 21,
+      "errors": [],
+      "row_count": 336,
+      "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+    }
+  },
+  "disposition": "PASS_AUDIT_GAP_REPRODUCED",
+  "environment": {
+    "executable": "/usr/local/bin/python",
+    "platform": "linux",
+    "python": "3.12.14",
+    "runtime_mode": "unspecified"
+  },
+  "identities": {
+    "decoded_zip_sha256": "81f347c99c7461a210edf98437bd7f8ed298dd6f95070d0da4b447913d11a5c0",
+    "raw_bytes": 186739,
+    "raw_sha256": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d",
+    "source_bytes": 6248,
+    "source_git_blob_expected": "1a6cc0e46b32d4cd6989aed118d003cce4cfe399",
+    "source_sha256": "28b207348b6279395670b282edcdc719ac1a653ff0e2dc09c987cf95526cf4d5",
+    "transport_bytes": 5326,
+    "transport_git_blob_expected": "c38dd2002f201d49b6fc261caff019550a4bf4bc",
+    "transport_sha256": "474b6381e8381ed8cae12141303e4638539d12cf6cf8b1c999c630efae80efe7"
+  },
+  "issue": 4953,
+  "mutations": {
+    "development_alpha_0_5": {
+      "PYTHONOPTIMIZE=1": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      },
+      "normal": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      },
+      "python_-O": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      }
+    },
+    "first_row_weight_json_nan": {
+      "PYTHONOPTIMIZE=1": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      },
+      "normal": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      },
+      "python_-O": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      }
+    },
+    "truth_state_count_99": {
+      "PYTHONOPTIMIZE=1": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      },
+      "normal": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      },
+      "python_-O": {
+        "corruption_control_count": 5,
+        "corruption_controls_rejected": 5,
+        "distribution_count": 21,
+        "errors": [],
+        "row_count": 336,
+        "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+      }
+    }
+  },
+  "original_raw_sha256_before_after_equal": true,
+  "schema": "predicate-order-audit-integrity-4733-probe-v1",
+  "source_sha256_before_after_equal": true
+}

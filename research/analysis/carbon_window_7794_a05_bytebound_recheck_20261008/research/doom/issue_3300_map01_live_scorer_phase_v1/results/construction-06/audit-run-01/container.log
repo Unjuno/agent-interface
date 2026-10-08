@@ -1,0 +1,494 @@
+{
+  "clock_rate_hz_by_stratum": {
+    "cpu_load": 33.96083907724325,
+    "delayed_read": 33.31917268494223,
+    "idle": 36.57650898582411
+  },
+  "container_image_id": "sha256:c9f5fdd7c63bff4d3e4cd4d4953f99bcd8d5ae83dc2ea94972e475453d9e7a43",
+  "decision": "HOLD_CONSTRUCTION_AUDIT",
+  "errors": [
+    "construction-idle:phase_target_execution_lateness_invalid",
+    "construction-cpu_load:phase_target_execution_lateness_invalid",
+    "construction-delayed_read:phase_target_execution_lateness_invalid"
+  ],
+  "formal_allocation": false,
+  "freedoom2_wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b",
+  "identified_inner_attempt_phases": 3,
+  "inner_attempt_span_ns": {
+    "count": 3,
+    "max": 385186,
+    "median": 259651,
+    "min": 83995
+  },
+  "inner_attempts_reconstructed": 3,
+  "inner_retry_gap_ns": {
+    "count": 0,
+    "max": null,
+    "median": null,
+    "min": null
+  },
+  "raw_sha256": "2d90899bc705a45823806ad1f0e1ec6fb95050e61bd6f1a1dc4faffd42e63c1c",
+  "reconstructed_rows": [
+    {
+      "case_id": "construction-idle",
+      "internal_attempts": [
+        {
+          "api_ok": true,
+          "coherent": true,
+          "complete": true,
+          "end_ns": 40588050540781,
+          "events": [
+            {
+              "args": [],
+              "end_ns": 40588050193760,
+              "name": "get_episode_time",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588050155595,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 11
+            },
+            {
+              "args": [],
+              "end_ns": 40588050280879,
+              "name": "is_episode_finished",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588050271880,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": false
+            },
+            {
+              "args": [],
+              "end_ns": 40588050306461,
+              "name": "is_player_dead",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588050301670,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": false
+            },
+            {
+              "args": [
+                "KILLCOUNT"
+              ],
+              "end_ns": 40588050346459,
+              "name": "get_game_variable",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588050337626,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 0.0
+            },
+            {
+              "args": [
+                "DEATHCOUNT"
+              ],
+              "end_ns": 40588050405872,
+              "name": "get_game_variable",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588050399997,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 0.0
+            },
+            {
+              "args": [],
+              "end_ns": 40588050493700,
+              "name": "get_ticrate",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588050488992,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 35
+            },
+            {
+              "args": [],
+              "end_ns": 40588050540781,
+              "name": "get_episode_time",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588050536448,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 11
+            }
+          ],
+          "getter_names": [
+            "get_episode_time",
+            "is_episode_finished",
+            "is_player_dead",
+            "get_game_variable",
+            "get_game_variable",
+            "get_ticrate",
+            "get_episode_time"
+          ],
+          "phase": {
+            "edge_after": {
+              "current_poll_end_ns": 40588060780128,
+              "current_poll_start_ns": 40588060764212,
+              "poll_tic_delta": 1,
+              "previous_poll_end_ns": 40588057087598,
+              "tic_after": 12,
+              "tic_before": 11,
+              "transition_lower_ns": 40588057072432,
+              "transition_upper_ns": 40588060780128
+            },
+            "edge_before": {
+              "current_poll_end_ns": 40588039461442,
+              "current_poll_start_ns": 40588039447818,
+              "poll_tic_delta": 1,
+              "previous_poll_end_ns": 40588036668609,
+              "tic_after": 11,
+              "tic_before": 10,
+              "transition_lower_ns": 40588036657901,
+              "transition_upper_ns": 40588039461442
+            },
+            "period_lower_ns_from_adjacent_edges": 17610990,
+            "period_ns_nominal": 28571429,
+            "period_upper_ns_from_adjacent_edges": 24122227,
+            "phase_lower_ns": 10694153,
+            "phase_mid_ns": 12095923,
+            "phase_upper_ns": 13497694,
+            "tic": 11,
+            "uncertainty_ns": 2803541
+          },
+          "span_ns": 385186,
+          "start_ns": 40588050155595,
+          "status_values": {
+            "get_game_variable": [
+              0.0,
+              0.0
+            ],
+            "get_ticrate": [
+              35
+            ],
+            "is_episode_finished": [
+              false
+            ],
+            "is_player_dead": [
+              false
+            ]
+          },
+          "tic_after": 11,
+          "tic_before": 11
+        }
+      ],
+      "scorer_status": "returned",
+      "stratum": "idle"
+    },
+    {
+      "case_id": "construction-cpu_load",
+      "internal_attempts": [
+        {
+          "api_ok": true,
+          "coherent": true,
+          "complete": true,
+          "end_ns": 40588625629749,
+          "events": [
+            {
+              "args": [],
+              "end_ns": 40588625556586,
+              "name": "get_episode_time",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588625545754,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 11
+            },
+            {
+              "args": [],
+              "end_ns": 40588625577668,
+              "name": "is_episode_finished",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588625576377,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": false
+            },
+            {
+              "args": [],
+              "end_ns": 40588625581335,
+              "name": "is_player_dead",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588625580585,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": false
+            },
+            {
+              "args": [
+                "KILLCOUNT"
+              ],
+              "end_ns": 40588625592918,
+              "name": "get_game_variable",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588625590459,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 0.0
+            },
+            {
+              "args": [
+                "DEATHCOUNT"
+              ],
+              "end_ns": 40588625606667,
+              "name": "get_game_variable",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588625605958,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 0.0
+            },
+            {
+              "args": [],
+              "end_ns": 40588625623541,
+              "name": "get_ticrate",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588625622666,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 35
+            },
+            {
+              "args": [],
+              "end_ns": 40588625629749,
+              "name": "get_episode_time",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40588625629332,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 11
+            }
+          ],
+          "getter_names": [
+            "get_episode_time",
+            "is_episode_finished",
+            "is_player_dead",
+            "get_game_variable",
+            "get_game_variable",
+            "get_ticrate",
+            "get_episode_time"
+          ],
+          "phase": {
+            "edge_after": {
+              "current_poll_end_ns": 40588641627377,
+              "current_poll_start_ns": 40588641624169,
+              "poll_tic_delta": 1,
+              "previous_poll_end_ns": 40588637776899,
+              "tic_after": 12,
+              "tic_before": 11,
+              "transition_lower_ns": 40588637764025,
+              "transition_upper_ns": 40588641627377
+            },
+            "edge_before": {
+              "current_poll_end_ns": 40588615339738,
+              "current_poll_start_ns": 40588615336321,
+              "poll_tic_delta": 1,
+              "previous_poll_end_ns": 40588606614550,
+              "tic_after": 11,
+              "tic_before": 10,
+              "transition_lower_ns": 40588606609259,
+              "transition_upper_ns": 40588615339738
+            },
+            "period_lower_ns_from_adjacent_edges": 22424287,
+            "period_ns_nominal": 28571429,
+            "period_upper_ns_from_adjacent_edges": 35018118,
+            "phase_lower_ns": 10206016,
+            "phase_mid_ns": 14571255,
+            "phase_upper_ns": 18936495,
+            "tic": 11,
+            "uncertainty_ns": 8730479
+          },
+          "span_ns": 83995,
+          "start_ns": 40588625545754,
+          "status_values": {
+            "get_game_variable": [
+              0.0,
+              0.0
+            ],
+            "get_ticrate": [
+              35
+            ],
+            "is_episode_finished": [
+              false
+            ],
+            "is_player_dead": [
+              false
+            ]
+          },
+          "tic_after": 11,
+          "tic_before": 11
+        }
+      ],
+      "scorer_status": "returned",
+      "stratum": "cpu_load"
+    },
+    {
+      "case_id": "construction-delayed_read",
+      "internal_attempts": [
+        {
+          "api_ok": true,
+          "coherent": true,
+          "complete": true,
+          "end_ns": 40589234920509,
+          "events": [
+            {
+              "args": [],
+              "end_ns": 40589234685315,
+              "name": "get_episode_time",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40589234660858,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 12
+            },
+            {
+              "args": [],
+              "end_ns": 40589234737770,
+              "name": "is_episode_finished",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40589234731437,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": false
+            },
+            {
+              "args": [],
+              "end_ns": 40589234754352,
+              "name": "is_player_dead",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40589234750852,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": false
+            },
+            {
+              "args": [
+                "KILLCOUNT"
+              ],
+              "end_ns": 40589234780101,
+              "name": "get_game_variable",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40589234772768,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 0.0
+            },
+            {
+              "args": [
+                "DEATHCOUNT"
+              ],
+              "end_ns": 40589234821890,
+              "name": "get_game_variable",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40589234817140,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 0.0
+            },
+            {
+              "args": [],
+              "end_ns": 40589234891136,
+              "name": "get_ticrate",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40589234887636,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 35
+            },
+            {
+              "args": [],
+              "end_ns": 40589234920509,
+              "name": "get_episode_time",
+              "role": "exact_scorer_predicate",
+              "start_ns": 40589234917509,
+              "status": "ok",
+              "thread_id": 281473271124000,
+              "value": 12
+            }
+          ],
+          "getter_names": [
+            "get_episode_time",
+            "is_episode_finished",
+            "is_player_dead",
+            "get_game_variable",
+            "get_game_variable",
+            "get_ticrate",
+            "get_episode_time"
+          ],
+          "phase": {
+            "edge_after": {
+              "current_poll_end_ns": 40589252362051,
+              "current_poll_start_ns": 40589252354343,
+              "poll_tic_delta": 1,
+              "previous_poll_end_ns": 40589249421727,
+              "tic_after": 13,
+              "tic_before": 12,
+              "transition_lower_ns": 40589249414352,
+              "transition_upper_ns": 40589252362051
+            },
+            "edge_before": {
+              "current_poll_end_ns": 40589222355717,
+              "current_poll_start_ns": 40589222342926,
+              "poll_tic_delta": 1,
+              "previous_poll_end_ns": 40589219402102,
+              "tic_after": 12,
+              "tic_before": 11,
+              "transition_lower_ns": 40589219395186,
+              "transition_upper_ns": 40589222355717
+            },
+            "period_lower_ns_from_adjacent_edges": 27058635,
+            "period_ns_nominal": 28571429,
+            "period_upper_ns_from_adjacent_edges": 32966865,
+            "phase_lower_ns": 12305141,
+            "phase_mid_ns": 13785406,
+            "phase_upper_ns": 15265672,
+            "tic": 12,
+            "uncertainty_ns": 2960531
+          },
+          "span_ns": 259651,
+          "start_ns": 40589234660858,
+          "status_values": {
+            "get_game_variable": [
+              0.0,
+              0.0
+            ],
+            "get_ticrate": [
+              35
+            ],
+            "is_episode_finished": [
+              false
+            ],
+            "is_player_dead": [
+              false
+            ]
+          },
+          "tic_after": 12,
+          "tic_before": 12
+        }
+      ],
+      "scorer_status": "returned",
+      "stratum": "delayed_read"
+    }
+  ],
+  "rows": 3,
+  "schema": "map01-live-scorer-phase-construction-audit-v1",
+  "scorer_invocation_span_ns": {
+    "count": 3,
+    "max": 587381,
+    "median": 384435,
+    "min": 129117
+  },
+  "scorer_invocations_reconstructed": 3,
+  "source_sha256": {
+    "audit.py": "7fb5e3f8eb58569216d43d0c05036a59f6b90641d9a9667319b3ecbda7d56328",
+    "independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "main_thread_scorer_polling_v1.py": "0a82819748603b77726d3d7053da7f6cba5cf0a0d5bcd9a79f4272554cf6af0a",
+    "map01_scorer_stdio_adapter_v1.py": "0ba57b240b37d04042915d243d149a1bb65ac689732dfc8e48fb60e880f0198a",
+    "runner.py": "bb995f8c3d8f7bb045d5b2100d6b4579a8d3a42b123c7912f7eaf7891b8d32fc",
+    "schedule.json": "1e53d81309460c54b1e89ba78fe484a944e1f88a67781d6c0fdd05b4fe9c6f96",
+    "session_map01_v13.py": "1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98"
+  },
+  "unidentified_inner_attempt_phases": 0,
+  "warnings": []
+}

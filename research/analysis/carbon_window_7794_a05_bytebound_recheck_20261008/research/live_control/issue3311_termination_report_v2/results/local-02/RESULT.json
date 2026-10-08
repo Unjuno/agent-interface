@@ -1,0 +1,44 @@
+{
+  "allocation_id": "ISSUE3311-TERMINATION-REPORT-20260928-02",
+  "base_main": "3007e03481d545eb9a92b8cec07c8c4201bd3728",
+  "disposition": "PASS_TERMINATION_HOLD_CONTRACT_SCOPED",
+  "elapsed_monotonic_ns": 1704000000,
+  "errors": 0,
+  "failures": 0,
+  "runtime": {
+    "container": "not_used_shared_slot_not_assigned",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "schema": "issue3311_termination_contract_test_result_v1",
+  "source_sha256": {
+    "base_runner": "cadb3e068dbe1474541371cb70d87a4681eed9d2d8639ce159962e179f648e83",
+    "candidate_supervisor": "0c5dc488c4b0888b62681c701b26eaf624d44ea1279e0155987991e43a550374",
+    "evaluator": "d5c2f8e44addace79b6bcc30fa6911cfd12d809273100e874dfc1db97f184307",
+    "independent_auditor": "c401a52479e09a8deeed706a812f8123abbf0d5b70916ef62918f5dd0e7c3441",
+    "package_init": "d301971051775fde6b63ce06de5553298c05772e9d2dc7dda42717ec50cbe270",
+    "plan": "e385be38bdb68643cef1af9b01bdb5a7bf52545c8ae2551e5a18115c445fa976",
+    "readme": "c9484fa787a4447bdc838b6e988a13811b28bdb4b48e1d53ae67291aa65b81f5",
+    "test_runner": "86c8d1511556e4195f074b349d4217ca44ec0adf17ebe44cbc5a15d6b43b6ff5",
+    "tests": "12b28142e61ee54410f7ac5a32a2d3ed8ed4072641ec9b5e6e4d6bdbadfad01a"
+  },
+  "stderr_path": "test.stderr.txt",
+  "stdout_path": "test.stdout.txt",
+  "stdout_sha256": "23dbd6f1b0a15186a64d5f43bb911ee962cd4ad17cde5054c653e793bcd1a5c1",
+  "test_count": 13,
+  "test_names": [
+    "test_supervisor.SupervisorTests.test_base_runner_evaluates_before_writing_final_report",
+    "test_supervisor.SupervisorTests.test_complete_synthetic_trace_control_is_retain",
+    "test_supervisor.SupervisorTests.test_disagreeing_audit_disposition_yields_hold",
+    "test_supervisor.SupervisorTests.test_existing_complete_output_is_preserved_and_not_reused",
+    "test_supervisor.SupervisorTests.test_existing_report_is_never_overwritten",
+    "test_supervisor.SupervisorTests.test_failure_text_never_promotes_runner_exit_to_reject",
+    "test_supervisor.SupervisorTests.test_missing_sixth_row_exception_is_retained_as_audited_hold",
+    "test_supervisor.SupervisorTests.test_raw_audit_rejects_artifact_mutation",
+    "test_supervisor.SupervisorTests.test_raw_audit_rejects_path_traversal",
+    "test_supervisor.SupervisorTests.test_source_pin_mismatch_is_stop_before_child",
+    "test_supervisor.SupervisorTests.test_unlaunchable_child_is_stop_not_task_failure",
+    "test_supervisor.SupervisorTests.test_valid_report_and_independent_audit_are_left_unmodified",
+    "test_supervisor.SupervisorTests.test_zero_exit_without_report_is_hold"
+  ]
+}

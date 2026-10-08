@@ -1,0 +1,83 @@
+"""Exclusive one-shot supervisor for the prospective native stack allocation."""
+import argparse
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parent
+
+
+def utc():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--output', required=True)
+    args = parser.parse_args()
+    output = Path(args.output).resolve()
+    supervisor = output.with_name(output.name + '-supervisor')
+    supervisor.mkdir(parents=False, exist_ok=False)
+    if output.exists():
+        raise ValueError('formal output already exists; no retry')
+    record = {'allocation': json.loads((ROOT / 'FREEZE.json').read_bytes())['allocation'],
+              'started_utc': utc(), 'supervisor_pid': os.getpid(), 'formal_producer_invocations': 0,
+              'formal_primary_auditor_invocations': 0, 'formal_retries': 0, 'commands': []}
+
+    def save():
+        (supervisor / 'RUN.json').write_text(json.dumps(record, indent=2) + '\n')
+
+    def run(label, argv, timeout):
+        row = {'label': label, 'argv': argv, 'started_utc': utc(), 'started_ns': time.monotonic_ns(),
+               'timeout_s': timeout, 'watchdog_fired': False}
+        record['commands'].append(row)
+        save()
+        process = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+        row['pid'] = process.pid
+        save()
+        try:
+            stdout, stderr = process.communicate(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            row['watchdog_fired'] = True
+            os.killpg(process.pid, signal.SIGKILL)  # only this newly owned process group
+            stdout, stderr = process.communicate(timeout=2)
+        for name, raw in (('stdout', stdout), ('stderr', stderr)):
+            (supervisor / (label + '.' + name + '.log')).write_bytes(raw)
+            row[name + '_sha256'], row[name + '_bytes'] = sha(raw), len(raw)
+        row.update(ended_utc=utc(), ended_ns=time.monotonic_ns(), exit_code=process.returncode)
+        for pipe in (process.stdout, process.stderr):
+            pipe.close()
+        row['supervisor_pipes_closed'] = process.stdout.closed and process.stderr.closed
+        save()
+        return row
+
+    record['formal_producer_invocations'] = 1
+    save()  # exact owned invocation intent before spawn
+    producer = run('producer', [sys.executable, '-B', str(ROOT / 'driver.py.txt'), '--output', str(output)], 90)
+    if (output / 'result.json').exists():
+        record['formal_primary_auditor_invocations'] = 1
+        save()
+        auditor = run('primary-audit', [sys.executable, '-B', str(ROOT / 'audit.py.txt'), '--output', str(output)], 10)
+        record['status'] = 'FIRST_RESULT_RETAINED' if auditor['exit_code'] == 0 else 'FIRST_AUDIT_FAIL_RETAINED'
+    else:
+        record['status'] = 'NO_RESULT_FIRST_INVOCATION_STOP'
+    record['ended_utc'] = utc()
+    save()
+    print(json.dumps({'status': record['status'], 'counts': [record['formal_producer_invocations'], record['formal_primary_auditor_invocations']],
+                      'producer_exit': producer['exit_code'], 'retries': 0}))
+    if producer['exit_code'] not in (0, 20) or record['status'] != 'FIRST_RESULT_RETAINED':
+        raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    main()

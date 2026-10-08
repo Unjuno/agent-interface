@@ -1,0 +1,37 @@
+{
+  "schema": "map01-owner-history-method-freeze-v1",
+  "state": "FROZEN_PRE_CANDIDATE",
+  "repository": "Unjuno/agent-interface",
+  "base_main_sha": "73235730af05375fddf3a9d102d30632e7d43af5",
+  "workflow_path": ".github/workflows/map01-measurement-integration-live-04.yml",
+  "workflow_blob_sha": "45279028918eff71332e627b1f783dfb11d27e49",
+  "owner_helper_path": "research/orchestration/o3-g7/global-owner/formal_allocation_global_owner_v1.py",
+  "owner_helper_blob_sha": "f07f928f67a7a6c670d399efb23d67246506c802",
+  "files_sha256": {
+    "PLAN.md": "d01a910bda91aab462fb48c37633fce7363ed741a8f29eae69da0beb855e3167",
+    "fixtures/full-history.json": "6a7b03d1792f23afc85c5b974d94171796efdbcf89c0ab4b534bcf25acfee629",
+    "history_candidate.py": "2d75edbf9439412247d50b56b8571d8d07b5c90a6eeaed859bf3041a4d7bce70",
+    "candidate.py": "cf90b10c80547ad463be4751a47a310fe1eb1c654630ea8aa3685e732caa16ba",
+    "audit.py": "32b3ee7105430c7158f653280be3bd53b959fb37a1cdabde68aa77112a7bb7cf",
+    "test_construction.py": "8efe834bfeefcc32b7687203acdb1a71bc19e9ce45e1130d3405f5a356d44092"
+  },
+  "fixture_contract": {
+    "events": ["push", "workflow_dispatch"],
+    "workflow_path_scoped_rows": 3,
+    "unrelated_path_rows": 1,
+    "page_size": 2,
+    "max_pages": 3,
+    "candidate_runs": 1,
+    "independent_audits": 1,
+    "retry_budget": 0,
+    "corruption_controls": 5
+  },
+  "prohibited_effects": [
+    "network/API request",
+    "GitHub Actions dispatch",
+    "Docker/WSL/container",
+    "game/model/GUI/input",
+    "CUDA/GPU"
+  ],
+  "scope": "offline synthetic source-method contract only; no live API/Actions concurrency or MAP01 efficacy claim"
+}

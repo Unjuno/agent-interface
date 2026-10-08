@@ -1,0 +1,38 @@
+{
+  "task": "TEMPORAL-SHEET-MATCHED-PREDICTION-R1-20260918-001",
+  "status": "READY_FOR_MODEL_ALLOCATION_AFTER_SOURCE_FREEZE",
+  "requested_model": "gpt-5.6-luna",
+  "requested_effort": "low",
+  "fresh_session_per_call": true,
+  "model_calls": 18,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "scenarios": [
+    "steady_right",
+    "steady_left",
+    "stationary",
+    "recent_reversal",
+    "history_then_stop",
+    "moving_target_static_decoy"
+  ],
+  "arms": ["CURRENT_ONLY", "SEPARATE_FRAMES_4", "PACKED_SHEET_4"],
+  "schedule": [
+    ["steady_right", "CURRENT_ONLY"], ["steady_right", "SEPARATE_FRAMES_4"], ["steady_right", "PACKED_SHEET_4"],
+    ["steady_left", "SEPARATE_FRAMES_4"], ["steady_left", "PACKED_SHEET_4"], ["steady_left", "CURRENT_ONLY"],
+    ["stationary", "PACKED_SHEET_4"], ["stationary", "CURRENT_ONLY"], ["stationary", "SEPARATE_FRAMES_4"],
+    ["recent_reversal", "CURRENT_ONLY"], ["recent_reversal", "SEPARATE_FRAMES_4"], ["recent_reversal", "PACKED_SHEET_4"],
+    ["history_then_stop", "SEPARATE_FRAMES_4"], ["history_then_stop", "PACKED_SHEET_4"], ["history_then_stop", "CURRENT_ONLY"],
+    ["moving_target_static_decoy", "PACKED_SHEET_4"], ["moving_target_static_decoy", "CURRENT_ONLY"], ["moving_target_static_decoy", "SEPARATE_FRAMES_4"]
+  ],
+  "output_schema": {
+    "motion_class": ["LEFT", "RIGHT", "STATIONARY", "REVERSAL", "STOPPED"],
+    "future_region": ["LEFT", "CENTER", "RIGHT"],
+    "confidence": ["LOW", "MEDIUM", "HIGH"]
+  },
+  "primary_packing_comparison": "SEPARATE_FRAMES_4_vs_PACKED_SHEET_4",
+  "history_context_comparison": "CURRENT_ONLY_vs_history_arms",
+  "static_reversal_controls": ["stationary", "recent_reversal", "history_then_stop"],
+  "accounting": ["input_tokens", "cached_input_tokens", "output_tokens", "reasoning_tokens", "model_wall_ns"],
+  "no_task_input": true
+}

@@ -1,0 +1,20 @@
+{
+  "operation": "local Git archive metadata/source export, not a runtime experiment",
+  "command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "0e2d6a741f1078eda232b56cee899bb86712ac9b",
+    "research/integration/core_boundary_composition_57_20261003_01a0ff58"
+  ],
+  "outcome": "stopped after own archive child unexpectedly requested 94369 unrelated promisor blobs",
+  "ownership": "Root exporter command line and descendant process chain checked before stopping only that tree",
+  "reported_exit_code": 1,
+  "reported_stderr": "fatal: early EOF",
+  "started_utc": null,
+  "start_receipt_limit": "First helper's start timestamp was held in memory and not retained after interruption",
+  "repair": "Separate explicit-OID fetch requested only 101 unique blobs; completed export binds all 136 files",
+  "unfinished_temp_pack_bytes": 275349503,
+  "temp_pack_disposition": "retained; no force-delete retry or alternate deletion path",
+  "producer_or_formal_run_executed": false
+}

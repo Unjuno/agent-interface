@@ -1,0 +1,9 @@
+{
+  "decision": "STOP_AUDITOR_OUTPUT_PATH",
+  "exit_code": 1,
+  "evidence_mutated": false,
+  "evidence_mount": "read-only",
+  "auditor_sha256": "b3361cf1e40556f775dd9634783b9098194d057675cc916bb097bf060f61648c",
+  "stderr": "Traceback (most recent call last):\n  File \"/study/auditor.py\", line 9, in <module>\n    audit_dir.mkdir(parents=True, exist_ok=False)\n  File \"/usr/local/lib/python3.12/pathlib.py\", line 1311, in mkdir\n    os.mkdir(self, mode)\nFileExistsError: [Errno 17] File exists: '/audit'\n",
+  "interpretation": "Auditor output path collided with the pre-mounted directory; no raw evidence validation occurred. A second read-only container used an absent child output path and the unchanged auditor source."
+}

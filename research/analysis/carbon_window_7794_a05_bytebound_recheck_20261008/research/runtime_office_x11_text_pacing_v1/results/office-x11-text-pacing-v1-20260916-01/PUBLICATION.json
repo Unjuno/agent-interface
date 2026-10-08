@@ -1,0 +1,14 @@
+{
+  "schema": "agent-interface/pacing-publication-v4",
+  "result_id": "office-x11-text-pacing-v1-20260916-01",
+  "source_freeze": "c5a83daf3eb97b0cf8afc23f19f346ed20af2d85",
+  "formal_arm_reruns": 0,
+  "github_surface": ["REPORT.md","aggregate.json","controls.json","source-check.json","PUBLICATION.json","outputs/00ms.xlsx.b64","outputs/01ms.xlsx.b64","outputs/12ms.xlsx.b64"],
+  "exact_boundary_outputs": "0ms failure, 1ms selected candidate, and 12ms retained prior policy are published byte-exact as base64; 2/4/8ms hashes remain in aggregate/controls",
+  "decode": "base64 -d < NNms.xlsx.b64 > NNms.xlsx",
+  "published_output_sha256": {
+    "00ms.xlsx": "cbd6d9cc8f3ddd3ee3353fe50ba7cec515b628df8197f57c0b0f2e635c584def",
+    "01ms.xlsx": "e9ea38479b5685056ec1283213dee5de8cb60883a08b93ea5956ffa3573cfc5b",
+    "12ms.xlsx": "957a3472a5b30d7f8689c669938969162df1ab3e6919744d56854cbb128d1f67"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "issue": 4067,
+  "original_file_count": 163,
+  "all_original_bytes_identical": true,
+  "original_files_unchanged": true,
+  "formal_reruns": 0,
+  "restoration_experiment_calls": 0,
+  "read_only_checks": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "verify_retention.py"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "679212da61187b9b7a78434f632bb4575408dd8d04c7a9be279a2c570a167573",
+      "audit_byte_identical": null
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "audit.py",
+        "formal-01",
+        "--formal",
+        "--mutations"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "c49b053ca2f2cecabb6e409825dae77f707778d9d1a528aa7d87314f8a48650d",
+      "audit_byte_identical": true
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "-m",
+        "unittest",
+        "-v",
+        "test_policy"
+      ],
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "audit_byte_identical": null
+    }
+  ],
+  "publication_controls": {
+    "corrupt_part": {
+      "rejected": true,
+      "reason": "byte identity mismatch"
+    },
+    "reorder_parts": {
+      "rejected": true,
+      "reason": "invalid part order/name"
+    },
+    "wrong_count": {
+      "rejected": true,
+      "reason": "wrong file count"
+    },
+    "oversized_expand": {
+      "rejected": true,
+      "reason": "invalid size"
+    },
+    "duplicate_member": {
+      "rejected": true,
+      "reason": "duplicate key"
+    },
+    "traversal_member": {
+      "rejected": true,
+      "reason": "invalid member path"
+    },
+    "existing_destination": {
+      "rejected": true,
+      "reason": "destination must be absent"
+    }
+  },
+  "source_audit_sha256": "c49b053ca2f2cecabb6e409825dae77f707778d9d1a528aa7d87314f8a48650d",
+  "original_zip_sha256": "35f7566d10665e9ffc940f8666d23698a2571947e147832b15097c82b25996a7",
+  "limitation": "Local revalidation, not external review or repository-wide CI. Seven restorer tests are publication controls, not new science."
+}

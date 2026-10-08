@@ -1,0 +1,60 @@
+{
+  "schema": "needle-f32-control-audit-freeze-v1",
+  "issue": 3906,
+  "allocation": "needle-3869-covariate-audit-f32-controls-03",
+  "branch": "research/issue-3906-f32-controls-audit-20260921",
+  "base_commit_sha": "96c8d4a70d65573f22ee0d92fd3583efa07578f5",
+  "input": {
+    "origin_merge_commit": "f7d5cc8535995db0c36dd85d4b71877503bd0db8",
+    "path": "research/system1/needle_distill_3458_pilot_06_isolated_shift_audit/formal/formal-01/FORMAL_RESULT.json",
+    "canonical_lf_sha256": "0878c39a68fe2abea218132b307ceff77df1e9a52291ba14186f2c8c423e37a7",
+    "working_copy_crlf_sha256": "3e4f3ff76a4f78c0f704f2d7c925974a6757491b238e8c513b01e2d76b5c075a",
+    "git_blob_sha1": "d6259323e86dba3ae12f76765aed62ab9d78dfa8",
+    "bytes": 3701596
+  },
+  "predecessor_auditor": {
+    "commit": "e978a33473d7d2536d43cf68ffcb16e344e4b6d8",
+    "path": "research/system1/needle_distill_3458_pilot_06_corrected_covariate_audit_02/audit.py",
+    "git_blob_sha1": "7d7565c559c2e7c887a50c8c92ed8a7b27a519ec",
+    "sha256_in_this_windows_checkout": "22f058b96ece30bc2094101a9f8d3d986f84ade5ddcfcb7a02d993b669f038ec"
+  },
+  "source_hashes_sha256": {
+    "audit.py": "639a7944dacb3ac606fbe51f152042ca6b90c9c167cc888bad859e3799b7fd6e",
+    "test_audit.py": "9606508eee3f824134d9130092a88ef60b4354d6cab8604742f04765b96fb879",
+    "PREREGISTRATION.md": "23dd0761604ae14cd610cb3677fee8648bcdb0f73b3aa87f9a7a15563a5ed76b",
+    "README.md": "26e78e1b07a5c3ce769b452ce931892ac0b3fc8f294f2b4d625ba350ce321b14",
+    "ENVIRONMENT.json": "61fe74564af21c717cf70fda452986f51d771a6e5535fdd65b1a95d4d88c357c",
+    "CONSTRUCTION.md": "29c59f74855012479bc9cfc88b257a2b759168f0f3b6e7449e916c65b613d9c6"
+  },
+  "formal_invocations_allowed": 1,
+  "formal_invocations_before_freeze": 0,
+  "model_runner_invocations": 0,
+  "training_or_inference": false,
+  "retries_allowed": 0,
+  "invalid_control_float_tolerance": 0.000001,
+  "nan_encoding": "exact string NaN at declared feature index",
+  "normalization": "deep-copy only, only after all local invalid-control checks; original raw bytes never changed",
+  "scientific_disposition_expected": "FAIL_NEAR_BOUNDARY_SHIFT",
+  "numeric_gates_expected": [false, false, false],
+  "container": {
+    "engine": "Docker Desktop 29.8.0",
+    "context": "desktop-linux",
+    "platform": "linux/amd64",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "python": "3.12.14",
+    "torch": "2.5.1+cpu",
+    "device": "CPU only",
+    "network": "none",
+    "rootfs": "read-only",
+    "repo_mount": "read-only",
+    "output_mount": "dedicated writable audit/formal-01",
+    "tmpfs": "64m",
+    "memory": "4g",
+    "cpus": 2,
+    "pids_limit": 64,
+    "wall_time_limit_seconds": 900
+  },
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=64m --pids-limit 64 --memory 4g --cpus 2 --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-3906-f32-audit,target=/repo,readonly --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-3906-f32-audit/research/system1/needle_distill_3458_pilot_06_f32_controls_audit_03/audit/formal-01,target=/out --workdir /repo/research/system1/needle_distill_3458_pilot_06_f32_controls_audit_03 needle-pilot05:local audit.py /repo/research/system1/needle_distill_3458_pilot_06_isolated_shift_audit/formal/formal-01/FORMAL_RESULT.json --output /out/AUDIT.json",
+  "construction": "5/5 unit tests; 15 float32 controls accepted; beyond-tolerance mutation rejected; NaN/type/identity checks exact"
+}

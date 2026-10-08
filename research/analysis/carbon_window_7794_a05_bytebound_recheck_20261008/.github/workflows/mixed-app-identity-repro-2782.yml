@@ -1,0 +1,35 @@
+name: mixed-app-identity-repro-2782
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "research/integration/mixed_app_identity_2666_live_v3/**"
+      - ".github/workflows/mixed-app-identity-repro-2782.yml"
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned repro image
+        run: docker build --pull=false -f research/integration/mixed_app_identity_2666_live_v3/Dockerfile -t mixed-app-identity-2782 .
+      - name: Record image digest
+        run: docker image inspect mixed-app-identity-2782 --format '{{json .RepoDigests}}' | tee image-digest.txt
+      - name: Run isolated discovery with network disabled
+        run: |
+          set +e
+          docker run --rm --network none --cap-add SYS_ADMIN mixed-app-identity-2782 > result.json
+          status=$?
+          cat result.json
+          echo "exit_code=$status" | tee -a result.json
+          test "$status" -eq 0
+      - name: Upload raw result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mixed-app-identity-2782-evidence
+          path: |
+            result.json
+            image-digest.txt

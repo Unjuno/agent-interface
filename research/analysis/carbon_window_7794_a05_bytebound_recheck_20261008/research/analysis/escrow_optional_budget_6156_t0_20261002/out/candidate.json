@@ -1,0 +1,106 @@
+{
+  "controls": {
+    "balanced": {
+      "allocation": {
+        "A": 2,
+        "B": 2
+      },
+      "budget": 4,
+      "central_optional_completed": 4,
+      "central_per_use_roundtrips": 4,
+      "demand": {
+        "A": 2,
+        "B": 2
+      },
+      "escrow_optional_completed": 4,
+      "escrow_setup_roundtrips": 2,
+      "mandatory_verifier_served": 1,
+      "stranded_rights": 0
+    },
+    "crash_stranded": {
+      "allocation": {
+        "A": 2,
+        "B": 2
+      },
+      "budget": 4,
+      "central_optional_completed": 4,
+      "central_per_use_roundtrips": 4,
+      "demand": {
+        "A": 4,
+        "B": 0
+      },
+      "escrow_optional_completed": 2,
+      "escrow_setup_roundtrips": 2,
+      "generation_after_restart": 1,
+      "old_generation_rights_reusable": false,
+      "stranded_rights": 2,
+      "worker": "B"
+    },
+    "fenced_transfer": {
+      "attempts": 2,
+      "delayed_old_ack_accepted": false,
+      "duplicate_ack_accepted": false,
+      "duplicate_ack_reason": "DUPLICATE_ACK_IDEMPOTENT",
+      "first_ack_accepted": true,
+      "initial_owner": "B",
+      "new_generation": 0,
+      "new_owner": "A",
+      "owner_after_old_ack": "B",
+      "right_identities": 4,
+      "second_transfer_ack": true,
+      "transfer_ids_distinct": true
+    },
+    "heartbeat_reclaim": {
+      "global_budget": 4,
+      "mutant_actual_consumes": 5,
+      "required": "FENCED_SURRENDER_REQUIRED"
+    },
+    "mandatory_after_optional_exhaustion": {
+      "consequential_action_allowed_before_verifier": false,
+      "mandatory_verifier_capacity": 1,
+      "mandatory_verifier_served": 1,
+      "optional_consumed": 4
+    },
+    "mandatory_unavailable": {
+      "consequential_action_allowed": false,
+      "disposition": "YIELD",
+      "mandatory_verifier_capacity": 0
+    },
+    "role_ambiguity": {
+      "ambiguous": "HOLD_ROLE_AMBIGUOUS",
+      "consequential_action_allowed": false,
+      "contract_mandatory": "MANDATORY_VERIFIER",
+      "routine_self_labeled_mandatory": "OPTIONAL_RECAPTURE",
+      "stale_self_labeled_optional": "MANDATORY_VERIFIER"
+    },
+    "skew": {
+      "allocation": {
+        "A": 2,
+        "B": 2
+      },
+      "budget": 4,
+      "central_optional_completed": 4,
+      "central_per_use_roundtrips": 4,
+      "demand": {
+        "A": 4,
+        "B": 0
+      },
+      "escrow_optional_completed": 2,
+      "escrow_setup_roundtrips": 2,
+      "stranded_rights": 2
+    },
+    "stale_restart": {
+      "current_generation": 1,
+      "old_ticket_accepted": false,
+      "reason": "STALE_OR_UNOWNED_RIGHT"
+    }
+  },
+  "enumeration": {
+    "edges_sha256": "57e0c5ff03a7d11ca2eb62a24ff0a52f5968da7c2e5a3cc2b51bf2d97165ca0a",
+    "max_depth": 6,
+    "reachable_states": 9988,
+    "states_sha256": "b0be810c40f2eefd0230ce7e42bcdfe141dc9771224cc5b2d109810b8b897670",
+    "transition_edges": 27748
+  },
+  "schema": "issue-6156-t0-finite-v1"
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "qwen5139-host-preflight-stop-v1",
+  "allocation": "qwen5139-support-balance-currentmain-eddcf7a4-20260930-02",
+  "timestamp_utc": "2026-09-30T08:35:00Z",
+  "execution_boundary": "Windows host Python only; no container, model load, CUDA, or fit",
+  "supplied_FROZEN_IMAGE_DIGEST": "sha256:63ce8205b5e0cf7d7addac087d6c1bd5489d51e3af345cf923af925026bdd600c",
+  "expected_frozen_digest": "sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c",
+  "disposition": "STOP_FROZEN_IMAGE_DIGEST",
+  "cause": "Invocation argument contained one extra '7' after 'cf7d'; this was an operator transcription error, not image evidence. A later fresh host-only preflight passed with the exact frozen digest; neither host attempt meets the pinned-container gate.",
+  "exit_code": 1,
+  "fit_invocations": 0,
+  "model_loaded": false,
+  "cuda_invoked": false
+}

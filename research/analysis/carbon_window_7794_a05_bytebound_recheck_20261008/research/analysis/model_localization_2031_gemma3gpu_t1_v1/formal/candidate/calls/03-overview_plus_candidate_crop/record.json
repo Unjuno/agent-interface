@@ -1,0 +1,104 @@
+{
+  "answer": {
+    "abstain": true
+  },
+  "arm": "OVERVIEW_PLUS_CANDIDATE_CROP",
+  "call_id": "03-overview_plus_candidate_crop",
+  "case_id": "target-absent",
+  "eval_count": 7,
+  "eval_duration_ns": 79748000,
+  "http_status": 200,
+  "images": [
+    {
+      "bytes": 24706,
+      "encoded_size": [
+        512,
+        320
+      ],
+      "role": "overview",
+      "sha256": "50517cd372537d2f330f573b4ac438b60aa59c06f4b1c06b5fbbb1bfbe6f46e1",
+      "source_box": [
+        0,
+        0,
+        512,
+        320
+      ]
+    },
+    {
+      "bytes": 11832,
+      "encoded_size": [
+        512,
+        320
+      ],
+      "role": "candidate_crop",
+      "sha256": "4b6dc92fdeb2a4ce8047b6e4285818290e50574bd119bbcd8cec3feb44016cf9",
+      "source_box": [
+        0,
+        0,
+        512,
+        320
+      ]
+    }
+  ],
+  "load_duration_ns": 2311612,
+  "prompt_eval_count": 716,
+  "prompt_eval_duration_ns": 1676082000,
+  "proposal": {
+    "all_scores": [
+      {
+        "box": [
+          0,
+          0,
+          512,
+          320
+        ],
+        "edge_mean": 4.362195883101625,
+        "tile": 0
+      },
+      {
+        "box": [
+          512,
+          0,
+          1024,
+          320
+        ],
+        "edge_mean": 2.908468156451929,
+        "tile": 1
+      },
+      {
+        "box": [
+          0,
+          320,
+          512,
+          640
+        ],
+        "edge_mean": 3.3862315204621107,
+        "tile": 2
+      },
+      {
+        "box": [
+          512,
+          320,
+          1024,
+          640
+        ],
+        "edge_mean": 3.4556827638535346,
+        "tile": 3
+      }
+    ],
+    "box": [
+      0,
+      0,
+      512,
+      320
+    ],
+    "edge_mean": 4.362195883101625,
+    "tile": 0
+  },
+  "request_bytes": 49420,
+  "request_sha256": "27a832905fbb21ca3d955aaf4103d50f7fd85e7c3d770f46ec5f87dba525eab1",
+  "response_bytes": 341,
+  "response_sha256": "4f837e23635259b28f8ebd54edd1890bfe698976f1b652e680a2e6585524c030",
+  "total_duration_ns": 1859349354,
+  "wall_elapsed_ns": 1860825433
+}

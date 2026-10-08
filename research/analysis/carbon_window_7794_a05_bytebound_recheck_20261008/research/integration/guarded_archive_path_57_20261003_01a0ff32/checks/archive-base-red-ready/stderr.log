@@ -1,0 +1,17 @@
+test_guarded_api_imports_from_archive_without_research_checkout (runtime.guarded_x11_v1.test_archive.GuardedArchiveTests.test_guarded_api_imports_from_archive_without_research_checkout) ... FAIL
+
+======================================================================
+FAIL: test_guarded_api_imports_from_archive_without_research_checkout (runtime.guarded_x11_v1.test_archive.GuardedArchiveTests.test_guarded_api_imports_from_archive_without_research_checkout)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<OWNED_WORKTREE>\runtime\guarded_x11_v1\test_archive.py", line 51, in test_guarded_api_imports_from_archive_without_research_checkout
+    self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "<string>", line 6, in <module>
+AssertionError
+
+
+----------------------------------------------------------------------
+Ran 1 test in 3.293s
+
+FAILED (failures=1)

@@ -1,0 +1,46 @@
+{
+  "schema": "issue-5521-t3-docker-gha-result-v1",
+  "allocation": "5521-ANERGY-EXPIRY-POLICY-GHA-20261001-03",
+  "classification": "PASS_FROZEN_T3_CONTAINER_GATE",
+  "run_id": 36813058422,
+  "run_url": "https://github.com/Unjuno/agent-interface/actions/runs/36813058422",
+  "run_attempt": 1,
+  "head_sha": "9c33a66923a83b6735471846cc773b521fc06820",
+  "freeze_sha256": "f5f9ffd424656f60fd989a06e15fafe9c388282aad4b36e2995d18430c088021",
+  "workflow_sha256": "c072afd506ab901728cc1887b3cff382107b349bdd0ab837f83ecc5c3d9bbc36",
+  "pinned_image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "candidate_jobs": {
+    "clear": {"job_id": 110212120706, "result": "success", "artifact_id": 11139987999, "artifact_digest": "sha256:a3e6c915d60d01c2fd417f53a05dd642591c6443f0f641acc7edd8efe2b00910", "jsonl_sha256": "343d6b9aa711fdb1d129df364c8f1a156c555a7f9ea1de9f80e3f56d7c0780dd"},
+    "tombstone": {"job_id": 110212120575, "result": "success", "artifact_id": 11140861535, "artifact_digest": "sha256:8e99bfb6a89f5a8808ea966d9a54494a4b6b496e9d31e666c6809cf70032bd18", "jsonl_sha256": "e1001ffb30d7f50a9ab12e1cb7ee2329b826ffc5b4f3ff24c2686ec561318b28"}
+  },
+  "independent_auditor": {"job_id": 110212461881, "result": "success", "artifact_id": 11140173116, "artifact_digest": "sha256:e6cf51e0054ef7736544a8fb32797855b0a6a8519437790bae3cc53c832f036e", "docker_run_exit_code": 0, "raw_jsonl_sha256": "aedfaf336e5516656e803301e66dc61bb08f3c566a0266a8ed76af25d8de20f6", "audit": "PASS_T3_CONTAINER_RAW_ONLY"},
+  "observed_d": {
+    "rows": 35,
+    "raw_audit_records": 35,
+    "schedule_sha256": "2904ac3889b5451af9fee658dd666f573a370e55a34507d36ca831032c30c48f",
+    "state_snapshots": 6,
+    "processes": {"clear": {"distinct_pids": [7, 8, 9], "exit_codes": [0, 0, 0]}, "tombstone": {"distinct_pids": [8, 9, 10], "exit_codes": [0, 0, 0]}},
+    "restart_state_and_hashes": "auditor PASS",
+    "arms_equal_except_preregistered_tick_9": "auditor PASS",
+    "generation_1_effects": 0,
+    "clear": {"verifier_checks": 6, "admitted_effects": 4},
+    "tombstone": {"verifier_checks": 5, "admitted_effects": 3},
+    "corruption_controls_rejected": {"expiry_disposition_swap": true, "expiry_generation_mutation": true}
+  },
+  "container_configuration_verified_from_inspect": {
+    "candidate_and_auditor": 3,
+    "platform": "linux/arm64",
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "nano_cpus": 1000000000,
+    "memory_bytes": 268435456,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "security_options": ["no-new-privileges:true"],
+    "tmpfs": {"/tmp": "rw,nosuid,nodev,noexec,size=16m"},
+    "all_exit_code_zero_and_not_oom_killed": true
+  },
+  "artifact_files_downloaded_and_preserved_under": "results/gha-03/attempt-1/",
+  "interpretation": "PASS only for the preregistered deterministic finite FSM, exact 10-event schedule, process restart/reload behavior, two Docker candidate arms and independent raw-only Docker auditor. It does not establish durable-storage/crash consistency, GUI behavior, semantic fingerprint quality, fairness/usefulness, product safety or production suitability.",
+  "no_retry": true
+}

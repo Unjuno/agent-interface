@@ -1,0 +1,43 @@
+{
+  "after": 4,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 5,
+  "request_id": "program:0aff79b4cee744729f4e3b9df8d4dc53",
+  "read_request_id": "program:0aff79b4cee744729f4e3b9df8d4dc53",
+  "command": {
+    "op": "submit",
+    "id": "calc-enter-991073",
+    "expected_sequence": 1,
+    "valid_until_ns": 76917542249,
+    "decision_evidence": {
+      "delivery_id": "delivery:2",
+      "observation_sequence": 1,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "text",
+        "text": "772"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "text",
+        "text": "709"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      }
+    ]
+  }
+}

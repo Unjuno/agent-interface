@@ -1,0 +1,14 @@
+{
+  "schema":"issue-6086-t0-candidate-raw-summary-v1",
+  "observed_from_first_auditor_stdout":true,
+  "rows":[
+    {"width":"1/2","distribution":"peaked","scores":{"uniform":"10/73","phase_diversified":"9/73","hazard":"16/73","oracle":"17/73"},"mean_delay":{"uniform":"0","phase_diversified":"0","hazard":"0"},"oracle_starts":["9/2","5","11/2"]},
+    {"width":"1/2","distribution":"flat","scores":{"uniform":"3/25","phase_diversified":"3/25","hazard":"3/25","oracle":"3/25"}},
+    {"width":"1/2","distribution":"inverted","scores":{"uniform":"19/185","phase_diversified":"21/185","hazard":"7/185","oracle":"1/37"}},
+    {"width":"1","distribution":"peaked","scores":{"uniform":"39/146","phase_diversified":"37/146","hazard":"63/146","oracle":"63/146"},"mean_delay":{"uniform":"19/78","phase_diversified":"19/74","hazard":"31/126"},"oracle_starts":["4","5","6"]},
+    {"width":"1","distribution":"flat","scores":{"uniform":"6/25","phase_diversified":"6/25","hazard":"6/25","oracle":"6/25"}},
+    {"width":"1","distribution":"inverted","scores":{"uniform":"39/185","phase_diversified":"41/185","hazard":"3/37","oracle":"3/37"}}
+  ],
+  "first_status":"FAIL_METHOD",
+  "scope":"finite synthetic onset and capture arithmetic only"
+}

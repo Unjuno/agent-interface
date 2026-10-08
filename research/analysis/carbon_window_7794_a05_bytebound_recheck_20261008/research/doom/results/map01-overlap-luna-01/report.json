@@ -1,0 +1,141 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 3,
+  "decisions": [
+    {
+      "iteration": 0,
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-luna-01/runtime/001.png",
+      "image_sha256": "d161a94c5dc7c558305da3aa68c6c2704a7944012458a6fd49d46398aa3706b8",
+      "action": {
+        "assessment": "Advance through the corridor while firing, then try to operate the apparent door or switch.",
+        "steps": [
+          {
+            "keys": [
+              "Up",
+              "a"
+            ],
+            "duration_ms": 2200
+          },
+          {
+            "keys": [
+              "Up",
+              "a",
+              "e"
+            ],
+            "duration_ms": 1200
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9158,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 148,
+        "reasoning_output_tokens": 84
+      },
+      "model_ns": 8558984917,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-luna-01/runtime/089.png",
+      "image_sha256": "e734d531a6476b2d5d1c8368de90c1f9545cd977639deceb0b5a33374d3a6ff5",
+      "action": {
+        "assessment": "Back away from the wall, turn right, then advance while firing.",
+        "steps": [
+          {
+            "keys": [
+              "Down",
+              "Right",
+              "Shift_L"
+            ],
+            "duration_ms": 900
+          },
+          {
+            "keys": [
+              "Up",
+              "space",
+              "Shift_L"
+            ],
+            "duration_ms": 2200
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9158,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 194,
+        "reasoning_output_tokens": 130
+      },
+      "model_ns": 8617022462,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 2,
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/results/map01-overlap-luna-01/runtime/173.png",
+      "image_sha256": "e59cf90336f623cab643d8ba944ae6553517c0997a5cf5898645baf8e3fb16c4",
+      "action": {
+        "assessment": "Turn away from the wall, advance while firing, then try operating the next door or switch.",
+        "steps": [
+          {
+            "keys": [
+              "Right",
+              "space"
+            ],
+            "duration_ms": 900
+          },
+          {
+            "keys": [
+              "Up",
+              "space"
+            ],
+            "duration_ms": 2200
+          },
+          {
+            "keys": [
+              "e"
+            ],
+            "duration_ms": 300
+          },
+          {
+            "keys": [
+              "Up",
+              "space"
+            ],
+            "duration_ms": 1800
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9158,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 214,
+        "reasoning_output_tokens": 128
+      },
+      "model_ns": 9588130008,
+      "cover_terminal_before_plan": true,
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 40903383949,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 2981932885775
+  },
+  "game_continued_during_model_calls": true,
+  "model_wall_seconds": 26.764137387
+}

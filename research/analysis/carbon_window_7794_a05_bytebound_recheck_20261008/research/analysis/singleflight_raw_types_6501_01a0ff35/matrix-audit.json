@@ -1,0 +1,57 @@
+{
+  "corruption_controls": [
+    {
+      "audit": {
+        "errors": [
+          "coverage"
+        ],
+        "rows": 149,
+        "status": "FAIL_MATRIX"
+      },
+      "name": "drop_row"
+    },
+    {
+      "audit": {
+        "errors": [
+          "denominator"
+        ],
+        "rows": 150,
+        "status": "FAIL_MATRIX"
+      },
+      "name": "duplicate_row"
+    },
+    {
+      "audit": {
+        "errors": [
+          "replacement_type_or_value"
+        ],
+        "rows": 150,
+        "status": "FAIL_MATRIX"
+      },
+      "name": "change_type"
+    },
+    {
+      "audit": {
+        "errors": [
+          "variant_hash"
+        ],
+        "rows": 150,
+        "status": "FAIL_MATRIX"
+      },
+      "name": "change_hash"
+    },
+    {
+      "audit": {
+        "errors": [
+          "strict_decision"
+        ],
+        "rows": 150,
+        "status": "FAIL_MATRIX"
+      },
+      "name": "false_pass"
+    }
+  ],
+  "errors": [],
+  "rows": 150,
+  "status": "PASS_FINITE_TYPE_MATRIX"
+}

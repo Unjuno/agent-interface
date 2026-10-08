@@ -1,0 +1,25 @@
+{
+  "schema": "oracle-bracket-5766-t0-v1",
+  "reference_timestamp": "before-candidate",
+  "scorer_sha256": "E4812BFE8384619D34601E68C7F6C3E0C0DBBEA1379C17A6F1C29753AE2DB3AA",
+  "check_deck": [
+    {"id":"positive_saved_target","expected":"PASS","record":{"status":"COMPLETE","target":"expected","durable":true,"collateral":false}},
+    {"id":"wrong_target","expected":"FAIL","record":{"status":"COMPLETE","target":"other","durable":true,"collateral":false}},
+    {"id":"collateral_mutation","expected":"FAIL","record":{"status":"COMPLETE","target":"expected","durable":true,"collateral":true}},
+    {"id":"unsaved","expected":"FAIL","record":{"status":"COMPLETE","target":"expected","durable":false,"collateral":false}},
+    {"id":"unknown_partial","expected":"UNKNOWN","record":{"status":"PARTIAL","target":"expected","durable":null,"collateral":null}}
+  ],
+  "scenarios": {
+    "nominal": {"meaning":"stable-v1","drift_case":null,"outside_deck":false,"scorer_version":"s1"},
+    "in_deck_semantic_drift": {"meaning":"wrong_target artifact is now reported as expected-target COMPLETE","drift_case":"wrong_target","post_record":{"status":"COMPLETE","target":"expected","durable":true,"collateral":false},"outside_deck":false,"scorer_version":"s1","candidate_truth_overrides":{"candidate_affected":"FAIL"}},
+    "equivalent_scorer_version": {"meaning":"stable-v1","drift_case":null,"post_record":null,"outside_deck":false,"scorer_version":"s2-equivalent","candidate_truth_overrides":{}},
+    "out_of_deck_drift": {"meaning":"hidden-nested-target-semantics-changed","drift_case":null,"post_record":null,"outside_deck":true,"scorer_version":"s1","candidate_truth_overrides":{"candidate_affected":"UNKNOWN"}}
+  },
+  "candidate_rows": [
+    {"id":"candidate_ok","record":{"status":"COMPLETE","target":"expected","durable":true,"collateral":false},"reference":"PASS"},
+    {"id":"candidate_wrong_target","record":{"status":"COMPLETE","target":"other","durable":true,"collateral":false},"reference":"FAIL"},
+    {"id":"candidate_partial","record":{"status":"PARTIAL","target":"expected","durable":null,"collateral":null},"reference":"UNKNOWN"},
+    {"id":"candidate_affected","record":{"status":"COMPLETE","target":"expected","durable":true,"collateral":false},"reference":"PASS"}
+  ],
+  "interval_rows": ["candidate_ok","candidate_wrong_target","candidate_partial"]
+}

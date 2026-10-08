@@ -1,0 +1,44 @@
+{
+  "exact_frames": 11,
+  "programs": 2,
+  "all_release_verified": true,
+  "clock_probe": {
+    "event": "clock_probe",
+    "before_tic": 32,
+    "after_tic": 103,
+    "wall_seconds": 2.0289600540000006,
+    "no_advance_calls_during_wait": true,
+    "refresh_calls_outside_wait": 2,
+    "emit_ns": 6511657815
+  },
+  "post_control_score": {
+    "event": "post_control_score",
+    "episode_finished": true,
+    "player_dead": false,
+    "episode_tic": 0,
+    "reward": 98.0,
+    "emit_ns": 55516830447
+  },
+  "scope": "assistant-operated integration development, no general game-skill benchmark",
+  "clock_probe_tics_per_wall_second": 34.9932961272583,
+  "clock_commands": 0,
+  "submits": [
+    {
+      "id": "aim",
+      "observation_age_at_receipt_ms": 12415.194782,
+      "remaining_validity_at_receipt_ms": 12584.805218
+    },
+    {
+      "id": "adjust-fire",
+      "observation_age_at_receipt_ms": 21958.233146,
+      "remaining_validity_at_receipt_ms": 3041.766854
+    }
+  ],
+  "initial_capture_to_first_accept_ms": 12429.15756,
+  "between_accepts_ms": 22347.483675,
+  "plan_sha256": "6bbbd57d57807b95b68fbb7afe68685e92ddfdbb10ea00471a12c3dbb1b35f39",
+  "boundary_check": "deterministic Lease clock; no late GUI input trial",
+  "actual_model_tokens": null,
+  "qualification": false,
+  "comparison": "different seed and learning; no causal speed estimate"
+}

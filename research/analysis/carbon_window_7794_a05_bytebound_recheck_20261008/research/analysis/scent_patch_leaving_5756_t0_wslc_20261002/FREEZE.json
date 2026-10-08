@@ -1,0 +1,38 @@
+{
+  "allocation": "SCENT-PATCH-LEAVING-5756-20261002-01",
+  "seed": 57562026100201,
+  "base_main": "1326813275f1b73349acafc7c7cbc221e687dbd1",
+  "runtime": {
+    "name": "Microsoft WSL Containers (wslc.exe)",
+    "version": "3.0.1.0",
+    "kernel": "6.18.40.1-1",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "os": "linux",
+    "architecture": "amd64",
+    "python": "3.12.14",
+    "network": "none",
+    "cpus": 1,
+    "memory": "1G",
+    "uid_gid": "65534:65534"
+  },
+  "source_sha256": {
+    "protocol.md": "5da541a99855cfa6980b1bb1a539eebb8290b0372e5473c67953ff33f6a81508",
+    "candidate.py": "67e0bd44e5bd0fbd8c20803e954adeacfebe1b2d75663577ba638a76e0a82c12",
+    "audit.py": "cc1b3f64b6255df52ffed15497d80cb81aa6a3b2bce0055512c082e269385fe0"
+  },
+  "input": {
+    "graphs": 120,
+    "depth": 5,
+    "strata": ["declining", "costly_reentry", "uniform", "absent", "unsafe"],
+    "train_per_stratum": 12,
+    "heldout_per_stratum": 12,
+    "policies": ["fixed_depth_2", "exhaust_branch", "patch_leave"],
+    "expected_rows": 360
+  },
+  "limits": {"candidate_invocations": 1, "auditor_invocations": 1, "retries": 0},
+  "commands": {
+    "candidate": "wslc.exe run --pull never --network none --cpus 1 --memory 1G --user 65534:65534 --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<fresh-candidate-output>,target=/out python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /src/candidate.py /out/raw.jsonl",
+    "auditor": "wslc.exe run --pull never --network none --cpus 1 --memory 1G --user 65534:65534 --mount type=bind,source=<package>,target=/src,readonly --mount type=bind,source=<candidate-output>,target=/in,readonly --mount type=bind,source=<fresh-audit-output>,target=/out python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /src/audit.py /in/raw.jsonl"
+  }
+}

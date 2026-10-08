@@ -1,0 +1,48 @@
+✔ one command preserves original text and bytes, with exclusive source-bound files (23.129645ms)
+✔ overlap refuses instead of queuing and snapshots the original arguments (4.297394ms)
+✔ request persistence failure invokes no operation and permits only explicit close (7.328945ms)
+✔ reply persistence failure retains one effect and blocks replay (4.729729ms)
+✔ invalid envelope is rejected before host or file publication: {"id":1,"method":"close","args":[]} (2.201897ms)
+✔ invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[],"extra":true} (2.313427ms)
+✔ invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]} (2.242292ms)
+✔ invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]} (2.378653ms)
+✔ unknown route refuses before allocating a directory (2.009897ms)
+✔ image write failure stops without a repeated native call or an implicit review (3.867749ms)
+✔ original presentation is explicit and adds no new host send or review (4.998222ms)
+✔ one pending call survives interrupted waiting; no resend, exact content presentation (138.198515ms)
+✔ refused IDs can remain unchanged while attempt records never overwrite (116.234537ms)
+✔ process loss makes delivery uncertain and blocks new sends (27.470901ms)
+✔ mismatched response retained but never presented as the pending result (111.530444ms)
+✔ existing evidence directory is refused before spawn (1.810842ms)
+✔ nonfinite or omitted values are refused before recording or sending (32.111728ms)
+✔ review attribution comes from explicit retained reply and cannot overwrite history (9.880812ms)
+✔ public and management captures have explicit identity without invented sequence (5.64217ms)
+✔ review refuses ambiguous, missing-image, uncertain and incomplete evidence (5.360273ms)
+✔ presentation preserves explicit MCP error status before unchanged content (0.495887ms)
+✔ presentation retains explicit error status for empty content and does not invent an absent flag (0.158953ms)
+✔ copied public host modules run outside the checkout using only Node built-ins (115.82567ms)
+✔ ordered same-clock events separate transport, presentation and caller review before next send (138.807481ms)
+✔ public capture review joins the same host timeline without a fabricated source sequence (74.364708ms)
+✔ failed instrumentation before send emits no request and transport remains closable (34.399983ms)
+✔ presentation failure is retained as a started-only boundary and blocks later action (79.115627ms)
+✔ invalid JSON does not consume an attempt and foreign review cannot gain an event (74.114845ms)
+✔ timeline loss after submission retains reply and blocks replay while allowing transport cleanup (287.469824ms)
+✔ opt-in image reuse requires explicit presented review and retains original base (445.01246ms)
+✔ unpresented review cannot acknowledge an image base (115.69528ms)
+✔ reference presentation failure blocks actions and cannot be treated as delivered (115.598963ms)
+✔ a changed PNG is forwarded and invalidates the previous acknowledged base (163.200877ms)
+✔ reviewed image reference preserves current MCP error status (115.089773ms)
+✔ returned local attempt selects retained reply even when relay IDs are reused (79.743454ms)
+✔ sendPresented delivers typed MCP refusal before resolving and never retries (73.0963ms)
+✔ sendPresented owns the whole send/display interval and wait returns the original promise (111.806755ms)
+✔ sendPresented checks delivery callbacks before dispatching input (25.757234ms)
+✔ sendPresented presentation failure preserves the reply and blocks subsequent input (68.801765ms)
+✔ sendPresented snapshots callbacks before its request can wait (68.307655ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2139.110299

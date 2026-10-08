@@ -1,0 +1,36 @@
+{
+  "task": "P0-LIVE-CAUSAL-EFFECT-X11-TEARDOWN-A2-20260918-002",
+  "issue": 1301,
+  "branch": "research/p0-live-causal-effect-x11-teardown-a2-1301",
+  "source_git_blob": {
+    "science_runner.py": "d8c509a55fe5363dc5211aebe510a720e964f7f3",
+    "case_child.py": "018886eb7df9b587ace8fd579e4a15f475a23811",
+    "supervisor.py": "0669945e5da9c271e6bb6b6ea5a8c730944dce5e",
+    "audit.py": "bab262dfe7f3de129646a3d5a8561eca299cee0c",
+    "schedule.json": "b46657cc7978cc04bdf5e766e6ea447d2c76bfaf",
+    "AUTHORIZATION.json": "185ae5be2f9ab9cb1ca756b43525d8af6f8db4e6"
+  },
+  "source_sha256": {
+    "science_runner.py": "130db1af32380b112a31a28f71aacf376c0d4592389342f7c924acebb404da7b",
+    "case_child.py": "5c58ddee88390366f6291af864a1c324c29268a42c078f088aa074bd066e48b7",
+    "supervisor.py": "8323636d8c8ca43e868a9a9eb4d99636111fb4eb270027f039eaca2985d31e70",
+    "audit.py": "ac1f0527e8ccea83cfe7ac58e46a326c2f6a310605e4353466f480fd1684c3ed",
+    "schedule.json": "4a020ad3068cb329a8ae2f37c5c1386cdcbc2d6856c467891b015eceb3b9fe3a",
+    "AUTHORIZATION.json": "f7e11f3fcd21a3ae1298dc0e5c32521c25d314f164fc6211529872612c6db3f6"
+  },
+  "scientific_changes": [],
+  "harness_changes": [
+    "external supervisor owns Xvfb",
+    "one session child exits before Xvfb termination",
+    "child intercepts only science runner Xvfb Popen with no-op handle"
+  ],
+  "same_process_scope": "InputOwner-v12 worker thread, Tk effect callback, and independent Xlib pixel scorer all execute inside the same per-session child PID",
+  "static_self_test": {
+    "pass": true,
+    "live_sessions": 0,
+    "exact_dependency_gate": true
+  },
+  "live_sessions": 0,
+  "formal_invocations": 0,
+  "reruns": 0
+}

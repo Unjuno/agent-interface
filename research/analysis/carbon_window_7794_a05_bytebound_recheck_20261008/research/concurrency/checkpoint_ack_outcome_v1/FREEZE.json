@@ -1,0 +1,68 @@
+{
+  "allocation": "checkpoint-ack-outcome-20260922-01",
+  "branch": "research/checkpoint-ack-outcome-3992-20260922",
+  "candidate_positive_scenarios": [
+    "NORMAL_COMMIT_ACK",
+    "COMMIT_KILL_BEFORE_ACK",
+    "DUPLICATE_IDENTICAL_RECEIPT"
+  ],
+  "construction": {
+    "excluded": true,
+    "formal_rows_in_construction": 0,
+    "process_cases": 6,
+    "process_status": "PASS",
+    "unit_status": "PASS",
+    "unit_tests": 8
+  },
+  "expected_decision_counts": {
+    "BYTES_ONLY/ADVANCE": 27,
+    "BYTES_ONLY/HOLD": 3,
+    "COMMIT_RECEIPT_BOUND/ADVANCE": 9,
+    "COMMIT_RECEIPT_BOUND/HOLD": 21,
+    "EXIT_OR_BYTES/ADVANCE": 21,
+    "EXIT_OR_BYTES/HOLD": 9
+  },
+  "expected_unsafe_advances": {
+    "BYTES_ONLY": 18,
+    "COMMIT_RECEIPT_BOUND": 0,
+    "EXIT_OR_BYTES": 15
+  },
+  "formal_case_count": 90,
+  "formal_cases_started": 0,
+  "formal_invocations": 0,
+  "issue": 4111,
+  "minimum_corruption_controls": 10,
+  "path": "research/concurrency/checkpoint_ack_outcome_v1",
+  "policies": [
+    "BYTES_ONLY",
+    "EXIT_OR_BYTES",
+    "COMMIT_RECEIPT_BOUND"
+  ],
+  "repetitions": 3,
+  "reruns_permitted": false,
+  "scenarios": [
+    "NORMAL_COMMIT_ACK",
+    "PUBLISH_KILL_BEFORE_COMMIT",
+    "COMMIT_KILL_BEFORE_ACK",
+    "PUBLISH_EXIT0_NO_COMMIT",
+    "STALE_OLD_RECEIPT",
+    "WRONG_DIGEST_RECEIPT",
+    "WRONG_UPDATE_ID_RECEIPT",
+    "BOOLEAN_VERSION_RECEIPT",
+    "VALID_RECEIPT_MISSING_CHECKPOINT",
+    "DUPLICATE_IDENTICAL_RECEIPT"
+  ],
+  "schema": "checkpoint-ack-freeze-v1",
+  "sha256": {
+    "ENVIRONMENT.json": "584ba29d7ed1e31e26e126fb72df7f04b265819d530e185f40a3f679443f2bc0",
+    "PLAN.md": "068f7bf7041573251793ccd27a6f9e60450171847b3a129c7aa9a8720cc109f7",
+    "audit.py": "8b019cf6d6fef8ca169f32a843ee47cae407717a7499a6e0e81b7ebbf9972c04",
+    "common.py": "4dccde206ddec7d72b7d7f8a35a87672292890589246b3eeb2d623cf58d836dc",
+    "controls.py": "e36f0d5b36e43a423beef35de64d7464a43a7c0b454fd8a59f4c9b870b6bcb89",
+    "recovery.py": "36cefa90ad170a17da5f88519bf9e7cdd26ffb85af29c4fe3208f2aca8b237ca",
+    "run.py": "d3b2d91929ac52127ad6dae4bd412a26ffce9c99676ecc002c6ba3d7388cd593",
+    "test_recovery.py": "d3265f542334e4e7cded5abfe0cd338f57b64e4464ff7d815f4194185d51ba3a",
+    "worker.py": "57fcd72d9a6ac8a38a0dc68032b6faaf09447455acae86290c629c95ed9f5ad3"
+  },
+  "source_main": "4b116a0c7e133dd89431da54a5e65d30e03a3659"
+}

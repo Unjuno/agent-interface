@@ -1,0 +1,27 @@
+{
+  "calc_xid": 4194336,
+  "decision": "STOP_OR_FAIL_EXACT",
+  "display": ":93",
+  "exception": "DisplayNameError('')",
+  "image_id": "sha256:44634c6599b9713b382da9937db38d409c9e66bcbce95aaf2bfeae7793c11385",
+  "inkscape_xid": 6291488,
+  "input_events": 0,
+  "model_calls": 0,
+  "network": "none",
+  "schema": "issue2907/active-xid-screen-contrast-v1",
+  "source_commit": "2dadbde96a3774614f0dff8b51f95dbef9d05716",
+  "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 33, in <module>\n  File \"<stdin>\", line 23, in stacking\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/display.py\", line 89, in __init__\n    self.display = _BaseDisplay(display)\n                   ^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/display.py\", line 71, in __init__\n    protocol_display.Display.__init__(self, *args, **keys)\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/protocol/display.py\", line 84, in __init__\n    name, protocol, host, displayno, screenno = connect.get_display(display)\n                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/support/connect.py\", line 73, in get_display\n    return mod.get_display(display)\n           ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/local/lib/python3.12/site-packages/Xlib/support/unix_connect.py\", line 59, in get_display\n    raise error.DisplayNameError(display)\nXlib.error.DisplayNameError: Bad display name \"\"\n",
+  "window_colors": {
+    "calc": [
+      216,
+      34,
+      34
+    ],
+    "inkscape": [
+      34,
+      200,
+      68
+    ]
+  },
+  "window_list": "0x00400020  0 0      152  140  500  400  d898d1d990cd calc-probe\n0x00600020  0 0      152  140  500  400  d898d1d990cd inkscape-probe"
+}

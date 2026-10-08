@@ -1,0 +1,44 @@
+{
+  "kind": "owned-native-silent-transport",
+  "child_pid": 24236,
+  "completed_at_checkpoint": true,
+  "checkpoint_ns": 22678984000000,
+  "caller_alive_at_checkpoint": false,
+  "child_exit_at_checkpoint": 1,
+  "reader_alive_at_checkpoint": false,
+  "journal_enabled": false,
+  "fixture_held_lock": true,
+  "journal_lock_still_locked": true,
+  "journal_closed_at_checkpoint": null,
+  "journal_bytes_equal_seed_at_checkpoint": null,
+  "client_pipes_closed_at_checkpoint": [
+    false,
+    false,
+    false
+  ],
+  "checkpoint_outcome": {
+    "start_ns": 22678984000000,
+    "return_value": null,
+    "end_ns": 22678984000000
+  },
+  "configured_wait_seconds": 0.05,
+  "fixed_checkpoint_seconds": 0.25,
+  "final_child_exit": 1,
+  "final_reader_alive": false,
+  "final_caller_alive": false,
+  "final_journal_closed": null,
+  "final_journal_bytes_equal_seed": null,
+  "journal_seed_base64": null,
+  "journal_final_base64": null,
+  "driver_closed_pipe_handles": [
+    true,
+    true,
+    true
+  ],
+  "cleanup_outcome": {
+    "start_ns": 22678984000000,
+    "return_value": null,
+    "end_ns": 22678984000000
+  },
+  "method": "test_no_journal_does_not_acquire_contended_lock"
+}

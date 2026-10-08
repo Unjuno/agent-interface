@@ -1,0 +1,9 @@
+Return exactly one JSON object matching the supplied schema. The image contains
+one runtime-verified click-free placement-preview receipt and its printed point.
+The requested target is the empty tile directly above the small copper item
+source. For target_reference, put exactly that printed point as the sole points
+element, use source_observation_pixels, surface_origin_translation,
+directly_above_copper_source and matched. If the exact relation is not visible,
+return needs_decision with an empty points array, not_applicable for point_space,
+motion_model and relation, and the narrowest negative reason. The image grants no
+input authority.

@@ -1,0 +1,55 @@
+[
+  {
+    "name": "audit-v2-retained",
+    "argv": [
+      "python",
+      "-B",
+      "audit_v2.py",
+      "results/boundary-01",
+      "results/audit-v2.json"
+    ],
+    "cwd": "<package>",
+    "started_utc": "2026-10-03T02:09:16.147969+00:00",
+    "ended_utc": "2026-10-03T02:09:16.201013+00:00",
+    "exit_code": 0,
+    "private_output_sha256": "f038e910ed54b27d0ad71d8252a4bb8ad57065179c0a36bcc7924c447aaa7fb4",
+    "public_output_sha256": "f038e910ed54b27d0ad71d8252a4bb8ad57065179c0a36bcc7924c447aaa7fb4"
+  },
+  {
+    "name": "audit-v2-normal",
+    "argv": [
+      "python",
+      "-B",
+      "-m",
+      "unittest",
+      "-v",
+      "test_recovery",
+      "test_audit_v2"
+    ],
+    "cwd": "<package>",
+    "started_utc": "2026-10-03T02:09:16.202015+00:00",
+    "ended_utc": "2026-10-03T02:09:16.310607+00:00",
+    "exit_code": 0,
+    "private_output_sha256": "f957164d6399faa70dec6e5a7f44435ec4843748a1f7b9df895cbd87a9e1ce27",
+    "public_output_sha256": "f957164d6399faa70dec6e5a7f44435ec4843748a1f7b9df895cbd87a9e1ce27"
+  },
+  {
+    "name": "audit-v2-optimized",
+    "argv": [
+      "python",
+      "-B",
+      "-O",
+      "-m",
+      "unittest",
+      "-v",
+      "test_recovery",
+      "test_audit_v2"
+    ],
+    "cwd": "<package>",
+    "started_utc": "2026-10-03T02:09:16.311607+00:00",
+    "ended_utc": "2026-10-03T02:09:16.487415+00:00",
+    "exit_code": 0,
+    "private_output_sha256": "a1844a3b9efdffc1a3b870fc4fcd7d909c093aa99eddd9a7512b0a51975770ce",
+    "public_output_sha256": "a1844a3b9efdffc1a3b870fc4fcd7d909c093aa99eddd9a7512b0a51975770ce"
+  }
+]

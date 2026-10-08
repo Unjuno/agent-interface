@@ -1,0 +1,29 @@
+{
+  "schema":"agent-interface.temporal-predictivity-6071.public.v1",
+  "arms":{"A":"constant-delay benchmark","B":"variable, type-independent balanced delay","C":"variable, deterministically type-predictive delay"},
+  "short_delay_ms":2000,
+  "long_delay_ms":8000,
+  "constant_delay_ms":5000,
+  "required":{"task_count":16,"response_type_counts":{"READY_TO_REVIEW":8,"NEEDS_HUMAN_DECISION":8},"B_C_delay_multiset_ms":{"2000":8,"8000":8},"B_type_delay_counts":{"READY_TO_REVIEW":{"2000":4,"8000":4},"NEEDS_HUMAN_DECISION":{"2000":4,"8000":4}},"C_mapping":{"READY_TO_REVIEW":2000,"NEEDS_HUMAN_DECISION":8000}},
+  "tasks":[
+    {"id":"t01","type":"READY_TO_REVIEW","content_ref":"result-01","effect_truth":"verified-save-01","A_ms":5000,"B_ms":8000,"C_ms":2000},
+    {"id":"t02","type":"NEEDS_HUMAN_DECISION","content_ref":"result-02","effect_truth":"partial-edit-02","A_ms":5000,"B_ms":2000,"C_ms":8000},
+    {"id":"t03","type":"READY_TO_REVIEW","content_ref":"result-03","effect_truth":"verified-save-03","A_ms":5000,"B_ms":2000,"C_ms":2000},
+    {"id":"t04","type":"NEEDS_HUMAN_DECISION","content_ref":"result-04","effect_truth":"ambiguous-submit-04","A_ms":5000,"B_ms":8000,"C_ms":8000},
+    {"id":"t05","type":"READY_TO_REVIEW","content_ref":"result-05","effect_truth":"verified-save-05","A_ms":5000,"B_ms":8000,"C_ms":2000},
+    {"id":"t06","type":"NEEDS_HUMAN_DECISION","content_ref":"result-06","effect_truth":"stale-target-06","A_ms":5000,"B_ms":8000,"C_ms":8000},
+    {"id":"t07","type":"READY_TO_REVIEW","content_ref":"result-07","effect_truth":"verified-save-07","A_ms":5000,"B_ms":2000,"C_ms":2000},
+    {"id":"t08","type":"NEEDS_HUMAN_DECISION","content_ref":"result-08","effect_truth":"uncertain-release-08","A_ms":5000,"B_ms":2000,"C_ms":8000},
+    {"id":"t09","type":"READY_TO_REVIEW","content_ref":"result-09","effect_truth":"verified-save-09","A_ms":5000,"B_ms":2000,"C_ms":2000},
+    {"id":"t10","type":"NEEDS_HUMAN_DECISION","content_ref":"result-10","effect_truth":"partial-edit-10","A_ms":5000,"B_ms":8000,"C_ms":8000},
+    {"id":"t11","type":"READY_TO_REVIEW","content_ref":"result-11","effect_truth":"verified-save-11","A_ms":5000,"B_ms":8000,"C_ms":2000},
+    {"id":"t12","type":"NEEDS_HUMAN_DECISION","content_ref":"result-12","effect_truth":"ambiguous-submit-12","A_ms":5000,"B_ms":2000,"C_ms":8000},
+    {"id":"t13","type":"READY_TO_REVIEW","content_ref":"result-13","effect_truth":"verified-save-13","A_ms":5000,"B_ms":2000,"C_ms":2000},
+    {"id":"t14","type":"NEEDS_HUMAN_DECISION","content_ref":"result-14","effect_truth":"stale-target-14","A_ms":5000,"B_ms":8000,"C_ms":8000},
+    {"id":"t15","type":"READY_TO_REVIEW","content_ref":"result-15","effect_truth":"verified-save-15","A_ms":5000,"B_ms":8000,"C_ms":2000},
+    {"id":"t16","type":"NEEDS_HUMAN_DECISION","content_ref":"result-16","effect_truth":"uncertain-release-16","A_ms":5000,"B_ms":2000,"C_ms":8000}
+  ],
+  "arm_order_counterbalance":[["A","B","C"],["B","C","A"],["C","A","B"]],
+  "task_order_counterbalance":[["t01","t02","t03","t04","t05","t06","t07","t08","t09","t10","t11","t12","t13","t14","t15","t16"],["t16","t15","t14","t13","t12","t11","t10","t09","t08","t07","t06","t05","t04","t03","t02","t01"]],
+  "safety_contract":{"deadline":"none in all arms","authority_change":false,"emergency_alert":false,"delay_encodes_correctness":false,"live_actions":false}
+}

@@ -1,0 +1,24 @@
+{
+  "surfaces": ["surface_a", "surface_b"],
+  "regions": {
+    "entry": [16, 16, 380, 36],
+    "status": [16, 80, 380, 32]
+  },
+  "cases": [
+    "complete_current",
+    "capture_end_string",
+    "capture_end_list",
+    "capture_end_missing",
+    "capture_start_string",
+    "arrival_string",
+    "end_before_start",
+    "end_future"
+  ],
+  "expected_rows": 32,
+  "expected_positive": 4,
+  "expected_fail_open": 28,
+  "max_receipt_age_ns": 1000000000,
+  "model_calls": 0,
+  "input_events": 0,
+  "action_emissions": 0
+}

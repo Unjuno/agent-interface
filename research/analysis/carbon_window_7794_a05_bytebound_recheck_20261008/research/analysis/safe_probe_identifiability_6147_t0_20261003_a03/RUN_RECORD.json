@@ -1,0 +1,25 @@
+{
+  "allocation_id": "AI-6147-T0-20261003-03",
+  "base_main": "b521912b9da1fa292f2e4fed1f1ae695c4a7658e",
+  "candidate": {
+    "command": "python3 -I candidate.py",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout": "{\"allocation_id\": \"AI-6147-T0-20261003-03\", \"bytes\": 13433, \"raw_path\": \"research/analysis/safe_probe_identifiability_6147_t0_20261003_a03/RAW.json\", \"raw_sha256\": \"97e7628f60999f36945829abe52357570e83716da5e8b92051baec4e02df3e82\"}",
+    "stderr": ""
+  },
+  "auditor": {
+    "command": "python3 -I auditor.py RAW.json",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout": "{\"allocation_id\": \"AI-6147-T0-20261003-03\", \"cases\": 3, \"depth_layers\": 9, \"disposition\": \"PASS_METHOD_SCOPED\", \"mutation_controls_rejected\": 5, \"raw_sha256\": \"97e7628f60999f36945829abe52357570e83716da5e8b92051baec4e02df3e82\"}",
+    "stderr": ""
+  },
+  "formal_invocation_counts": {"candidate": 1, "auditor": 1, "retries": 0, "tuning": 0},
+  "auditor_reported_disposition": "PASS_METHOD_SCOPED",
+  "qualified_disposition": "FAIL_AUDIT_CONTROL_COVERAGE",
+  "qualification": "Unsafe-probe injection was not tested as a rejection mutation; do not treat auditor's PASS or mutation count as satisfying frozen D. No retry or post-freeze source edit was made.",
+  "host": {"python": "CPython 3.14.5", "python_sha256": "2477b47fa3ae65b9574eb18a15edb364e96948eaa1875ad3f1c80d780efc9c12", "runtime": "host CPU; standard library only"},
+  "scope_exclusions": ["container", "OrbStack", "Docker", "model", "GPU", "GUI", "network", "physical input"],
+  "raw": {"bytes": 13433, "path": "RAW.json", "sha256": "97e7628f60999f36945829abe52357570e83716da5e8b92051baec4e02df3e82"}
+}

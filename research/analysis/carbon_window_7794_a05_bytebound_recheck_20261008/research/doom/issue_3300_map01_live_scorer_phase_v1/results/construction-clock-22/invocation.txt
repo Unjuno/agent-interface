@@ -1,0 +1,32 @@
+Construction-only headless passive-clock probe; not a formal allocation.
+
+Host runtime: OrbStack Docker, linux/arm64.
+Image: agent-interface-map01-clock-review-fixed:20260920
+Image ID: sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d
+Network: none. Container root: read-only. /tmp: 128 MiB tmpfs, rw,noexec,nosuid.
+Working directory: /tmp. DISPLAY unset. Probe mounted read-only at /probe.py.
+Output directory mounted at /results.
+
+Exact command (run from repository root):
+
+docker run --rm --platform linux/arm64 --network none --read-only --workdir /tmp --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/headless_passive_construction.py:/probe.py:ro" \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-22:/results" \
+  --entrypoint sh agent-interface-map01-clock-review-fixed:20260920 \
+  -lc 'unset DISPLAY; python -u /probe.py'
+
+Mounted probe SHA-256: 137274bc845cefd9efbd718f1ec18c5815b1a50de896578367d0338b95afbf72
+Raw JSON SHA-256: 92993b9ad9050b0872a5b6f5dc68444885b85d0c66d4226f6e84ecc3f4e0b909
+Container log SHA-256: d24e349beaf931a8de4fc961da0cd8b471abcc61bee58707f2c5f7c135bb55ad
+
+Audit reproduction used the same image with the experiment directory mounted
+read-only at /probe and the audit directory mounted at /audit; command:
+
+docker run --rm --platform linux/arm64 --network none --read-only --workdir /tmp --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1:/probe:ro" \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-22/audit:/audit" \
+  --entrypoint python agent-interface-map01-clock-review-fixed:20260920 \
+  /probe/audit_server_state_witness.py --root /probe --out /audit/container-audit.json
+
+Host and container audit JSON are byte-identical, SHA-256:
+0997107aea26b5fea68b24d9b50428891e8b1d670b5c7ef5c620c1c47facd64e

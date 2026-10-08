@@ -1,0 +1,98 @@
+{
+  "statuses": [
+    "verified",
+    "contradicted",
+    "unavailable"
+  ],
+  "effect_times_ns": [
+    0,
+    399,
+    400,
+    599,
+    600,
+    700,
+    799,
+    800,
+    1000,
+    2000
+  ],
+  "identities": [
+    "matching",
+    "wrong_command",
+    "wrong_manifest"
+  ],
+  "before": {
+    "stage": "executed",
+    "observation": {
+      "sequence": 7,
+      "captured_ns": 100,
+      "surface_id": "surface",
+      "payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "width": 10,
+      "height": 10,
+      "encoding": "rgb24"
+    },
+    "binding": {
+      "target_id": "target",
+      "observation_sequence": 7,
+      "surface_id": "surface",
+      "binding_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    "lease": {
+      "lease_id": "lease",
+      "observation_sequence": 7,
+      "surface_id": "surface",
+      "valid_until_ns": 1000,
+      "allowed_actions": [
+        "key"
+      ]
+    },
+    "request": {
+      "command_id": "command",
+      "invariant_manifest_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "binding": {
+        "target_id": "target",
+        "observation_sequence": 7,
+        "surface_id": "surface",
+        "binding_digest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "lease": {
+        "lease_id": "lease",
+        "observation_sequence": 7,
+        "surface_id": "surface",
+        "valid_until_ns": 1000,
+        "allowed_actions": [
+          "key"
+        ]
+      },
+      "actions": [
+        {
+          "action_id": "action",
+          "kind": "key",
+          "operation": "press-release"
+        }
+      ]
+    },
+    "execution": {
+      "command_id": "command",
+      "backend_receipt_id": "backend",
+      "invariant_manifest_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "lease_id": "lease",
+      "observation_sequence": 7,
+      "surface_id": "surface",
+      "started_ns": 600,
+      "ended_ns": 800,
+      "action_count": 1,
+      "effect_occurrence": "observed",
+      "release": {
+        "observed_ns": 900,
+        "verified": true,
+        "keys_down": [],
+        "buttons_down": []
+      }
+    },
+    "effect": null,
+    "stop_reason": null,
+    "execution_started_ns": 400
+  }
+}

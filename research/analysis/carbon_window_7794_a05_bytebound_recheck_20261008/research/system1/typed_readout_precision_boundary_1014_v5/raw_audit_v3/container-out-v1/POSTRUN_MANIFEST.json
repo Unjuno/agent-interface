@@ -1,0 +1,59 @@
+{
+  "issue": 4960,
+  "allocation": "raw-audit-integrity-v3-4960-20260928",
+  "formal_invocations": 1,
+  "retries": 0,
+  "container_exit_code": 1,
+  "status": "STOP_REPORT_SHA_NORMAL",
+  "environment": {
+    "image_id": "sha256:da047cb8f9d1d98e5c070f5300ba9f7274e33b8fc0e5be5ed88740aed1b95ba9",
+    "network": "none",
+    "rootfs": "read-only",
+    "cpu": "1",
+    "memory": "2g",
+    "pids_limit": 64,
+    "gpu_requested": false
+  },
+  "inputs": {
+    "result_sha256": "c1a2256d8b117d7dc0ec7d90c7333f3356378313d7f735fb7aa7700278183624",
+    "corpus_sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c",
+    "weights_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe"
+  },
+  "checks": {
+    "source_staging": "PASS: 4/4 exact bytes and hashes",
+    "unit_tests_normal": "PASS: 4/4",
+    "raw_audit_normal": "process exit 0; AUDIT_PASS_RAW_ONLY; 27 rows; errors=[]; 5 corruption controls rejected",
+    "report_gate": "STOP: generated LF report 1017 bytes / faa001d6a7e925390ed153717fa22ec559e75e54d5663b129dd316de53c56556 did not match pinned 1052-byte report / eb0c16487bd4635582df9f2e5337db38a1080105ae44558f6dc165ebaf3001d1",
+    "host_readonly_comparison": "JSON text matches baseline after line-ending normalization; length difference is 35 CRLF pairs versus LF",
+    "independent_verifier": "NOT_RUN",
+    "optimized_tests": "NOT_RUN",
+    "training": false,
+    "inference": false,
+    "model_loaded": false,
+    "optimizer_steps": 0,
+    "gpu_used": false
+  },
+  "artifacts": [
+    {
+      "path": "audit_normal.log",
+      "bytes": 1068,
+      "sha256": "bce0bde36db5e3379cd6e9233af91bd988459ecf4b2638a2ca7f09400d2bd6a7"
+    },
+    {
+      "path": "container_receipt.json",
+      "bytes": 2027,
+      "sha256": "72d300018c4d222ab12b3cfa7a9f936eb4e06864c0782afc5459c19f8857b43d"
+    },
+    {
+      "path": "report_normal.json",
+      "bytes": 1017,
+      "sha256": "faa001d6a7e925390ed153717fa22ec559e75e54d5663b129dd316de53c56556"
+    },
+    {
+      "path": "tests_normal.log",
+      "bytes": 735,
+      "sha256": "a0b83df9a1b9b27e0f3e7e947b3599e5f228508175178cb9ac0a1a14d4e4ef3d"
+    }
+  ],
+  "interpretation": "Harness/report-byte conformance STOP, not a new scientific PASS/FAIL. No retry under this allocation. Preserve outputs and investigate cross-platform newline normalization in a new successor."
+}

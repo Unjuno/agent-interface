@@ -1,0 +1,14 @@
+{
+  "allocation": "issue3827-obstac-json-probe-orbstack-01",
+  "issue": 3827,
+  "base_commit": "07c231463ebb45074444a957166956711103fadc",
+  "case_id": "aligned-green-task-A-epoch4",
+  "expected": {"answer": "READY"},
+  "model": "qwen2.5vl:7b",
+  "model_digest": "5ced39dfa4bac325dc183dd1e4febaa1c46b3ea28bce48896c8e69c1e79611cc",
+  "ollama_version": "0.34.2",
+  "options": {"temperature": 0, "seed": 3827, "num_predict": 32},
+  "request_format": "json",
+  "prompt": "The image is a large status badge: green means READY; red means BLOCKED. The coherent records describe task-A, epoch 4, capture time 100 ms. Return exactly one JSON object with one key answer and one of READY, BLOCKED, ABSTAIN. The image and records agree. {\"answer\":\"READY\"}",
+  "image": {"width": 448, "height": 280, "color": "green"}
+}

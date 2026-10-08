@@ -1,0 +1,43 @@
+{
+  "decision": "PASS_LIVE_TWO_TIER_APPLICABILITY_PARTIAL_SCOPED",
+  "source": {
+    "adaptive_semantic_repair_live_v2_blob": "365184d72a44d71c439e7f03fa7f59c773cffad8"
+  },
+  "cases": [
+    {
+      "mode": "local",
+      "report_blob": "f3a0957db807771eb4e3581367149da8efd35c09",
+      "route": "reuse",
+      "repair_path": "local",
+      "reuse_revalidate": "completed",
+      "final_revalidate": "completed",
+      "execute": "completed",
+      "outcome": "TASK_SUCCEEDED",
+      "final_observation_sequence": 13,
+      "final_observation_exact": true,
+      "final_focus_samples_match": true,
+      "final_binding_status": "CURRENT_EXACT",
+      "reusable_role_mentions": 0,
+      "persist_dependency_mentions": 0
+    },
+    {
+      "mode": "model",
+      "report_blob": "a3bc4f4dba613ff9617038d4dc4f948dab4b4c74",
+      "route": "reuse",
+      "repair_path": "model_reacquisition",
+      "reuse_revalidate": "completed",
+      "final_revalidate": "completed",
+      "execute": "completed",
+      "outcome": "TASK_SUCCEEDED",
+      "final_observation_sequence": 19,
+      "final_observation_exact": true,
+      "final_focus_samples_match": true,
+      "final_binding_status": "CURRENT_EXACT",
+      "reusable_role_mentions": 0,
+      "persist_dependency_mentions": 0
+    }
+  ],
+  "full_bridge_candidate": false,
+  "fresh_final_gate_evidence": true,
+  "persistent_reusable_role_evidence": false
+}

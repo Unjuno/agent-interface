@@ -1,0 +1,49 @@
+{
+  "study_id": "EDIT-49-X11-OFFSET-20261003-01",
+  "frozen_at": "2026-10-03T05:56:35.550130+00:00",
+  "source_commit": "af6dd720cb5a38b0b4c8d18fe5907e4b65d2aa24",
+  "base": "fb556b3d8bf5bae54a1f23b89fe2c2b5a2685df7",
+  "image_id": "sha256:65ae56ebdddc2742bc1441ee9eca0fcca7e232cb611a09ea8b177b36fc23c291",
+  "source_sha256": {
+    "Dockerfile": "3d6fca544e7c7823b1bc27aa3003769cf196764ddc3b3dcd373a76a2dea280b7",
+    "IMAGE_INSPECT.json": "74979a7858e77268694b472cc20aeccedbd9b3bb972d2d89af6367b4b6fd2aa3",
+    "IMAGE_PROVENANCE.json": "5165eaa4da02d46e34d85ba045ae1385dce74442213922671effbe34fed0a832",
+    "PREREGISTRATION.md": "5d267914115d723324d3f97d09fdbf0d3197ed0cae15b7d545e63f1b6b52dc85",
+    "VENDOR.json": "7fca14f523ce9c73384ae9dafec773c9885a64f9ae315cff1c55c06b8db6e7c2",
+    "app.py": "44e9361a3ec5209267977bd0b2d34ad164ac18a1edc7d107bd50ad04f585e2bd",
+    "audit.py": "2a70db9f8af9bbf08b85039b5265fc076e7e1d9e6cb7b3ce4a581e397697d5a5",
+    "cases.json": "5f7c35b129b27d7e459e791d98eddf4a6dc2345ccca319ee0d961d459c0d3d12",
+    "construction_cases.json": "0bf767c7c90ac4246b03c9a35dbb0d78fd0f42ea0b7570c118f8b7930e853930",
+    "launch.py": "98a7d7be45ea3da5bd61eccbac1c784b0b6f759467ffa0442eb83e89f4f22f55",
+    "policy.py": "a6f3fa3b5ce2350f6b4a98533ce24a883fd91d2d0f18f97059a26505fbdd63cf",
+    "run.py": "4cceff7cecabc7c491c1b36e97cd5975152d26233a7db0cf778d46635b9326a4",
+    "test_audit.py": "eb7d6dc336d68ea69258775438691e464101943f1433634d2dcf1ca8e89f42f5",
+    "test_policy.py": "309b91350a95cfaa38920da8e4afe9078d24311caea81835b996b3f38d08caf8",
+    "vendor/runtime/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vendor/runtime/backends/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vendor/runtime/backends/x11_v1/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vendor/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "vendor/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "vendor/runtime/core_v1/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "vendor/runtime/core_v1/contract.py": "88122eab96fe907dcdaac032e8d9c82555d5d1adfe7bf8a9741274f19347d8a9"
+  },
+  "formal_candidate": 1,
+  "formal_auditor": 1,
+  "retries": 0,
+  "cells": 32,
+  "decision": {
+    "typed_exact_edits": 12,
+    "typed_no_input_refusals": 4,
+    "baseline_wrong_saved": 8,
+    "semantic_controls": 13
+  },
+  "output_cap_bytes": 2097152,
+  "namespace": "edit49-01a0ff51-formal01",
+  "committee_epoch": "edit49-offset-content-v1",
+  "committee": [
+    "01a0ff52-e0cc-7e81-b3ed-36b1d84d7a9a",
+    "01a0ff53-0975-79e2-8d4e-d28683bc4f8e",
+    "01a0ff52-b64b-71d2-b2d6-19a57b40283f"
+  ],
+  "deadline": "common deadline unconfirmed; no extension"
+}

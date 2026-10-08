@@ -1,0 +1,75 @@
+{
+  "schema": "reachable-tube-observation-erasure-cases-v1",
+  "cases": [
+    {
+      "id": "zero_loss_recovers_base",
+      "initial_states": [0], "action": 1, "disturbances": [-1, 0, 1],
+      "boundary_by_step": [18,18,18,18,18,18,18,18,18,18,18],
+      "max_horizon": 5, "release_lag": 1, "observation_interval": 1,
+      "max_consecutive_misses": 0, "loss_bound_supported": true,
+      "source_generation": 5, "max_receipt_age": 0,
+      "checkpoint_events": [{"kind":"FRESH","generation":5,"age":0}],
+      "target_invalidated": false
+    },
+    {
+      "id": "one_miss_planted_unsafe_optimism",
+      "initial_states": [0], "action": 1, "disturbances": [-1, 0, 1],
+      "boundary_by_step": [14,14,14,14,14,14,14,14,14,14,14],
+      "max_horizon": 5, "release_lag": 1, "observation_interval": 1,
+      "max_consecutive_misses": 1, "loss_bound_supported": true,
+      "source_generation": 5, "max_receipt_age": 0,
+      "checkpoint_events": [{"kind":"MISSING"},{"kind":"FRESH","generation":5,"age":0}],
+      "target_invalidated": false
+    },
+    {
+      "id": "two_miss_bounded_burst",
+      "initial_states": [0], "action": 1, "disturbances": [-1, 0, 1],
+      "boundary_by_step": [16,16,16,16,16,16,16,16,16,16,16],
+      "max_horizon": 5, "release_lag": 1, "observation_interval": 1,
+      "max_consecutive_misses": 2, "loss_bound_supported": true,
+      "source_generation": 5, "max_receipt_age": 0,
+      "checkpoint_events": [{"kind":"MISSING"},{"kind":"MISSING"},{"kind":"FRESH","generation":5,"age":0}],
+      "target_invalidated": false
+    },
+    {
+      "id": "delayed_old_generation_is_erasure",
+      "initial_states": [0], "action": 1, "disturbances": [-1, 0, 1],
+      "boundary_by_step": [14,14,14,14,14,14,14,14,14,14,14],
+      "max_horizon": 5, "release_lag": 1, "observation_interval": 1,
+      "max_consecutive_misses": 1, "loss_bound_supported": true,
+      "source_generation": 5, "max_receipt_age": 0,
+      "checkpoint_events": [{"kind":"STALE_OLD_GENERATION","generation":4,"age":2},{"kind":"FRESH","generation":5,"age":0}],
+      "target_invalidated": false
+    },
+    {
+      "id": "target_invalidated_while_waiting",
+      "initial_states": [0], "action": 1, "disturbances": [-1, 0, 1],
+      "boundary_by_step": [18,18,18,18,18,18,18,18,18,18,18],
+      "max_horizon": 5, "release_lag": 1, "observation_interval": 1,
+      "max_consecutive_misses": 2, "loss_bound_supported": true,
+      "source_generation": 5, "max_receipt_age": 0,
+      "checkpoint_events": [{"kind":"MISSING"}],
+      "target_invalidated": true
+    },
+    {
+      "id": "loss_beyond_declared_bound_stress",
+      "initial_states": [0], "action": 1, "disturbances": [-1, 0, 1],
+      "boundary_by_step": [14,14,14,14,14,14,14,14,14,14,14],
+      "max_horizon": 5, "release_lag": 1, "observation_interval": 1,
+      "max_consecutive_misses": 1, "loss_bound_supported": true,
+      "source_generation": 5, "max_receipt_age": 0,
+      "checkpoint_events": [{"kind":"MISSING"},{"kind":"MISSING"}],
+      "target_invalidated": false
+    },
+    {
+      "id": "unsupported_loss_bound_yields",
+      "initial_states": [0], "action": 1, "disturbances": [-1, 0, 1],
+      "boundary_by_step": [18,18,18,18,18,18,18,18,18,18,18],
+      "max_horizon": 5, "release_lag": 1, "observation_interval": 1,
+      "max_consecutive_misses": null, "loss_bound_supported": false,
+      "source_generation": 5, "max_receipt_age": 0,
+      "checkpoint_events": [{"kind":"MISSING"}],
+      "target_invalidated": false
+    }
+  ]
+}

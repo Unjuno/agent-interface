@@ -1,0 +1,27 @@
+test_planner_epoch_scalar_types_are_not_python_numeric_equality (test_audit_v2.PlannerMetadataTypeTests.test_planner_epoch_scalar_types_are_not_python_numeric_equality) ... 
+  test_planner_epoch_scalar_types_are_not_python_numeric_equality (test_audit_v2.PlannerMetadataTypeTests.test_planner_epoch_scalar_types_are_not_python_numeric_equality) (value=True) ... FAIL
+  test_planner_epoch_scalar_types_are_not_python_numeric_equality (test_audit_v2.PlannerMetadataTypeTests.test_planner_epoch_scalar_types_are_not_python_numeric_equality) (value=1.0) ... FAIL
+test_unchanged_formal_saved_packet_still_reconciles (test_audit_v2.PlannerMetadataTypeTests.test_unchanged_formal_saved_packet_still_reconciles) ... ok
+
+======================================================================
+FAIL: test_planner_epoch_scalar_types_are_not_python_numeric_equality (test_audit_v2.PlannerMetadataTypeTests.test_planner_epoch_scalar_types_are_not_python_numeric_equality) (value=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-36/research/analysis/clipboard_formats_36_t0_01a0ff51/test_audit_v2.py", line 26, in test_planner_epoch_scalar_types_are_not_python_numeric_equality
+    self.assertIn('C01:planner_scalar_type', errors)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'C01:planner_scalar_type' not found in []
+
+======================================================================
+FAIL: test_planner_epoch_scalar_types_are_not_python_numeric_equality (test_audit_v2.PlannerMetadataTypeTests.test_planner_epoch_scalar_types_are_not_python_numeric_equality) (value=1.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/taka/Documents/Codex/2026-10-03/new-chat/work/agent-interface-36/research/analysis/clipboard_formats_36_t0_01a0ff51/test_audit_v2.py", line 26, in test_planner_epoch_scalar_types_are_not_python_numeric_equality
+    self.assertIn('C01:planner_scalar_type', errors)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'C01:planner_scalar_type' not found in []
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.008s
+
+FAILED (failures=2)

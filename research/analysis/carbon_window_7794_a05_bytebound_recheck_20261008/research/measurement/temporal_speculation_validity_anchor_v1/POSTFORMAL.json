@@ -1,0 +1,52 @@
+{
+  "audit_sha256": "035fb259ca294015572f1c643c44a20108e6cb457b1d1328b6b915e29244d2f7",
+  "controls_rejected": 6,
+  "corruption_controls": [
+    {
+      "errors": [
+        "parent_replay"
+      ],
+      "name": "parent_replay_error",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "changed_rows"
+      ],
+      "name": "extra_changed_row",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "preserved"
+      ],
+      "name": "drop_preserved",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "oracle"
+      ],
+      "name": "oracle_mismatch",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "stale_reanchor"
+      ],
+      "name": "stale_reanchor",
+      "rejected": true
+    },
+    {
+      "errors": [
+        "side_effect"
+      ],
+      "name": "authority",
+      "rejected": true
+    }
+  ],
+  "formal_reruns": 0,
+  "result_sha256": "731fbaad19592bdf08f9b650e854f0b327d679c634c4c006eb0df7a810086034",
+  "source_mismatches": [],
+  "source_rehash_exact": true
+}

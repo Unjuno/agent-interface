@@ -1,0 +1,40 @@
+{
+  "audit_sha256": "1f97a4b8a1abd7125737ced3957eadd62b870c596249fa536ba4d6b258a86415",
+  "batch_invocations": 4,
+  "corruption_sha256": "1e0322a77e3c3d90fbf90203abde135181c94b3db16cd97b791fc8adca2d56d9",
+  "decision": "PASS_CAPTURE_FAST_LANE_COMPOSITION_SCOPED",
+  "formal_invocations": 1,
+  "manifest": [
+    {"batch":0,"bytes":149473,"sha256":"e95ca72e935ed2b1af0985451655745deac5ca0e884f0389a0d87f4af5f1aabf"},
+    {"batch":1,"bytes":144277,"sha256":"f9451dbcaffa68473b4e0a36b362a9a7751ea757180e1c791c4ba2585a5b1e92"},
+    {"batch":2,"bytes":143754,"sha256":"cab10609bcbf599bfa7f615a3d4e59fef00d7628d604ac0a013a5f4e14dfc047"},
+    {"batch":3,"bytes":149083,"sha256":"1e6db29ebd3092253793e80a3e330385ef95ffb9d094859362a9665bfb37b3e2"}
+  ],
+  "pairs": 24,
+  "performance": {
+    "candidate_activate_p95_ns": 5513790,
+    "candidate_max_excess_ns": 1150092,
+    "candidate_yield_p95_ns": 4476611,
+    "capture_max_ring_frames": 4,
+    "capture_min_count": 4,
+    "capture_p95_ns": 1892923,
+    "control_noisy_sessions": 0,
+    "paired_median_activate_p95_increase_ns": 64482.5
+  },
+  "performance_pass": true,
+  "postformal_source_check_sha256": "1df594d71acba731208e1ef3386b56967272e8574594302518f84e42ab31c948",
+  "reruns": 0,
+  "result_sha256": "f0a338e4e55d4bd370090cc6549e82856da81ad33ec62e314ad686cc293dda02",
+  "safety": {
+    "effect_count_mismatch": 0,
+    "exceptions": 0,
+    "harm_effects": 0,
+    "pair_effect_mismatch": 0,
+    "post_handoff_effects": 0,
+    "post_handoff_sends": 0,
+    "release_fail": 0,
+    "watch_hard_effects": 0
+  },
+  "sessions": 48,
+  "task": "INFERENCE-GAP-X11-CAPTURE-FAST-LANE-COMPOSITION-20260918-001"
+}

@@ -1,0 +1,3 @@
+docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -e PYTHONDONTWRITEBYTECODE=1 -v "$PWD:/repo:ro" -v /tmp/issue2918-formal-v5.OA00wc:/in:ro -v /tmp/issue2918-audit-v5.LPFQhq:/report:rw -w /repo issue-3548-route-unit:20260920 python3 -B research/integration/issue_2918_live_certificate_v5/audit_live_allocation.py /in /report
+
+Exit code 0; `independent_audit.json` emitted and retained. No runner or audit retry occurred.

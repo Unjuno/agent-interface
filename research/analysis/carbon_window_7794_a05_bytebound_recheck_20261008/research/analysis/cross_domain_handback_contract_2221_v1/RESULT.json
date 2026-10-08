@@ -1,0 +1,65 @@
+{
+  "experiment_id": "cross_domain_handback_contract_2221_v1",
+  "issue": 2221,
+  "status": "HOLD_PRE_MODEL_HAND_BACK_TRANSFER",
+  "scope": "Docker-only read-only contract fixture; no model, GUI, input, network, live application, or task claim.",
+  "cases": [
+    {
+      "physical": "PHYSICAL_RELEASE_CONFIRMED",
+      "effect": "USEFUL_CURRENT_EFFECT_BOUND",
+      "decision": "DONE"
+    },
+    {
+      "physical": "PHYSICAL_RELEASE_CONFIRMED",
+      "effect": "HISTORICAL_EFFECT_ONLY",
+      "decision": "QUERY_EFFECT"
+    },
+    {
+      "physical": "PHYSICAL_RELEASE_CONFIRMED",
+      "effect": "NO_EFFECT",
+      "decision": "ABORT"
+    },
+    {
+      "physical": "PHYSICAL_RELEASE_CONFIRMED",
+      "effect": "EFFECT_UNRESOLVED_OR_CLOCK_UNKNOWN",
+      "decision": "QUERY_EFFECT"
+    },
+    {
+      "physical": "PHYSICAL_RELEASE_CONFIRMED",
+      "effect": "DOMAIN_SPECIFIC_EFFECT",
+      "decision": "DONE"
+    },
+    {
+      "physical": "PHYSICAL_RELEASE_CONFIRMED",
+      "effect": "CROSS_DOMAIN_SCHEMA_MISMATCH",
+      "decision": "ABORT"
+    },
+    {
+      "physical": "PHYSICAL_RELEASE_UNVERIFIED",
+      "effect": "USEFUL_CURRENT_EFFECT_BOUND",
+      "decision": "ABORT"
+    }
+  ],
+  "checks": {
+    "cases": 7,
+    "agreements": 7,
+    "violations": 0,
+    "authority_expansion": false,
+    "model_calls": 0,
+    "gui_calls": 0,
+    "input_calls": 0,
+    "network_calls": 0
+  },
+  "container": {
+    "image": "python:3.12-slim",
+    "image_digest": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "python": "3.12.14",
+    "result_sha256": "ba16d614636a59bf0520ce9e662235b49be95163f80983ccc3b6f7ca8e2b535d"
+  },
+  "H": "The typed handback can distinguish physical release, current useful effect, historical-only evidence, no effect, unresolved effect, domain-specific effect, and schema mismatch without expanding authority.",
+  "T": "Evaluate seven frozen handback states in one Docker run with independent decision expectations.",
+  "D": "Docker stdout was retained by the operator; exact normalized result SHA-256 is recorded above.",
+  "C": "Contract compatibility does not establish cross-domain live semantics, model recovery, task value, or independent effect scoring.",
+  "U": "Stop before live/model transfer; a successor must add MAP01/DOOM-like and ordinary desktop routes with independent domain scorers.",
+  "source_ref": "main@ce13fcc11d4a3a7fc5f44743fa2431c7272743f3"
+}

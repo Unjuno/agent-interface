@@ -1,0 +1,46 @@
+{
+  "disposition": "PASS_DRAFT2020_12_METASCHEMA_AND_TRACE_CONFORMANCE_SCOPED",
+  "identities": {
+    "cases_sha256": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f",
+    "schema_sha256": "3ca91926d9e362e02dd0272a03b67e2d65b46199bcfb1bb8f55c29cfe92f6d76"
+  },
+  "instance_mutations_rejected": [
+    "missing-required",
+    "extra-root-field",
+    "wrong-version",
+    "empty-trace-id",
+    "extra-event-field",
+    "bad-event-enum",
+    "bad-clock-unit"
+  ],
+  "limits": [
+    "JSON Schema conformance does not replace cross-event semantic/clock invariants",
+    "No cross-clock calibration, runtime, model, GUI, input, or formal allocation",
+    "Does not resolve external Worker returns or inherited leases"
+  ],
+  "schema": "o2-useful-control-trace-v2-jsonschema-draft2020-12-audit-v1",
+  "schema_mutations_rejected": [
+    "unknown-type",
+    "required-not-array",
+    "enum-not-array",
+    "minimum-not-number",
+    "invalid-items-shape",
+    "invalid-ref-type",
+    "invalid-type-union"
+  ],
+  "valid_trace_cases": [
+    "authorized-idle",
+    "unauthorized-input-after-expiry",
+    "coast-damage",
+    "release-before-terminal",
+    "overlapping-key-holds",
+    "missing-and-out-of-order-edge",
+    "no-input-unbound-task-effect",
+    "held-input-no-effect"
+  ],
+  "validator": {
+    "dialect": "https://json-schema.org/draft/2020-12/schema",
+    "package": "jsonschema",
+    "version": "4.25.1"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "read_start_ms": -1,
+  "controller_arrival_ms": 0,
+  "controller_service_ms": 1,
+  "controller_deadline_ms": 2,
+  "cases": [
+    {"case_id": "fast-read", "semantic_effect": "read(ui)", "resource": "shared-display-server", "declared_bound_ms": 1, "actual_service_ms": 1},
+    {"case_id": "slow-read", "semantic_effect": "read(ui)", "resource": "shared-display-server", "declared_bound_ms": 8, "actual_service_ms": 8},
+    {"case_id": "cache-hit", "semantic_effect": "read(ui)", "resource": "shared-display-server", "declared_bound_ms": 0.5, "actual_service_ms": 0.5},
+    {"case_id": "cache-miss", "semantic_effect": "read(ui)", "resource": "shared-display-server", "declared_bound_ms": 5, "actual_service_ms": 5},
+    {"case_id": "unknown-envelope", "semantic_effect": "read(ui)", "resource": "shared-display-server", "declared_bound_ms": null, "actual_service_ms": 4}
+  ]
+}

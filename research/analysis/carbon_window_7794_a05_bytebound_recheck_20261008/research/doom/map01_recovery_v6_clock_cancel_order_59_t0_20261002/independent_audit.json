@@ -1,0 +1,73 @@
+{
+  "audit_invocation_count": 1,
+  "base_commit": "14b81dd1f6853623a694266b98538f812847257a",
+  "candidate_decision": "STOP_HARNESS_CANCEL_NONCOOPERATIVE",
+  "errors": [],
+  "integrity_checks": [
+    {
+      "check": "source_identity:base_runner",
+      "ok": true
+    },
+    {
+      "check": "source_identity:executor",
+      "ok": true
+    },
+    {
+      "check": "source_identity:lease",
+      "ok": true
+    },
+    {
+      "check": "source_identity:v5_runner",
+      "ok": true
+    },
+    {
+      "check": "source_identity:v6_runner",
+      "ok": true
+    },
+    {
+      "check": "case:A-clock-before-cancel-within-lease",
+      "configuration_ok": true,
+      "elapsed_release_ms": 2000.0196,
+      "events": [
+        "accepted",
+        "step_started",
+        "cancel_requested",
+        "terminal"
+      ],
+      "lease_deadline_ms": 2000.0,
+      "release_verified": true,
+      "terminal_status": "expired"
+    },
+    {
+      "check": "case:B-clock-before-cancel-past-lease",
+      "configuration_ok": true,
+      "elapsed_release_ms": 1508.3103,
+      "events": [
+        "accepted",
+        "step_started",
+        "terminal",
+        "cancel_requested"
+      ],
+      "lease_deadline_ms": 1500.0,
+      "release_verified": true,
+      "terminal_status": "expired"
+    },
+    {
+      "check": "case:C-cancel-before-clock-within-lease",
+      "configuration_ok": true,
+      "elapsed_release_ms": 2000.0117,
+      "events": [
+        "accepted",
+        "step_started",
+        "cancel_requested",
+        "terminal"
+      ],
+      "lease_deadline_ms": 2000.0,
+      "release_verified": true,
+      "terminal_status": "expired"
+    }
+  ],
+  "interpretation": "The fake backend ignored Lease.wait() returning True, so the candidate invocation did not test executor cancellation effect. Raw timestamps document the invalid run only; no inference about v6 runtime cancellation latency is valid.",
+  "raw_sha256": "549805c1f109625d44a539520660708af9a6b341f64c3678293cf20b4fcae165",
+  "schema": "map01-v6-clock-cancel-order-t0-independent-audit-v1"
+}

@@ -1,0 +1,137 @@
+{
+  "schema": "issue59-composition-result-v1",
+  "allocation": "APPSERVER-JOURNAL-MUTEX-COMPOSITION-59-4D74-20261003-A02",
+  "source_freeze": "bf571f165fd9b96532e6a2acbe383d469d496120",
+  "predecessor": {
+    "allocation": "A01",
+    "pr": 6994,
+    "merge_sha": "10fba1d3c9aa0a6fbf39983cdcda099a10df497c",
+    "result": "STOP before scientific calls; not rewritten or pooled"
+  },
+  "result": "PASS_SCOPED_COUNTEREXAMPLE",
+  "counts": {
+    "construction": 1,
+    "producer": 1,
+    "formal_auditor": 1,
+    "corruption_controls": 5,
+    "corruptions_rejected": 5,
+    "retries": 0,
+    "scientific_calls": 6
+  },
+  "all_role_exit_codes": 0,
+  "cells": [
+    {
+      "cell_id": "main__healthy",
+      "elapsed_ns": 4013083,
+      "journal_rows": 2,
+      "method_errors": [],
+      "peer_received_bytes": 70
+    },
+    {
+      "cell_id": "main__held_journal",
+      "elapsed_ns": 404901613,
+      "journal_rows": 2,
+      "method_errors": [],
+      "peer_received_bytes": 70
+    },
+    {
+      "cell_id": "composed__healthy",
+      "elapsed_ns": 3891067,
+      "journal_rows": 2,
+      "method_errors": [],
+      "peer_received_bytes": 70
+    },
+    {
+      "cell_id": "composed__held_journal",
+      "elapsed_ns": 401287938,
+      "journal_rows": 1,
+      "method_errors": [],
+      "peer_received_bytes": 0
+    },
+    {
+      "cell_id": "bounded_journal__healthy",
+      "elapsed_ns": 4762381,
+      "journal_rows": 2,
+      "method_errors": [],
+      "peer_received_bytes": 70
+    },
+    {
+      "cell_id": "bounded_journal__held_journal",
+      "elapsed_ns": 50472099,
+      "journal_rows": 0,
+      "method_errors": [],
+      "peer_received_bytes": 0
+    }
+  ],
+  "engine_errors": [],
+  "method_errors": [],
+  "corruption_controls": {
+    "cleanup": {
+      "engine_errors": [
+        "composed__healthy:EvidenceError:thread alive at cleanup endpoint"
+      ],
+      "method_errors": [],
+      "rejected": true,
+      "result": "STOP"
+    },
+    "duplicate": {
+      "engine_errors": [
+        "EvidenceError:missing/duplicate/unexpected cell keys"
+      ],
+      "method_errors": [],
+      "rejected": true,
+      "result": "STOP"
+    },
+    "outcome": {
+      "engine_errors": [],
+      "method_errors": [
+        "main__healthy:exact_echo_outcome_missing"
+      ],
+      "rejected": true,
+      "result": "FAIL_METHOD"
+    },
+    "peer_byte": {
+      "engine_errors": [
+        "main__healthy:EvidenceError:peer chunk/wire reconstruction mismatch"
+      ],
+      "method_errors": [],
+      "rejected": true,
+      "result": "STOP"
+    },
+    "timestamp": {
+      "engine_errors": [
+        "main__held_journal:EvidenceError:holder ordering/release offset invalid"
+      ],
+      "method_errors": [],
+      "rejected": true,
+      "result": "STOP"
+    }
+  },
+  "source_custody": {
+    "bounded_journal_client.py": "0a62048f23c6870cfff345bd740abbcec6a1f972064a20da7ede5694bb0ad9d5",
+    "close_proposal.py": "464c770e357b664c35866e271740380307bfcd52dbaa8573e258d5600c006531",
+    "composed_client.py": "8386ceab0918e8caa17626e756969b901c2aa0f58cd2fb448710ac866654c1a2",
+    "echo_peer.py": "5d7152cce7d6154c8fb404a55774dfadae7f6c9254741ef3615dac9bc3e6b14d",
+    "main_client.py": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e",
+    "producer.py": "7ffeae182a8b0f56c778289dbc906da507dd95ca297e538b69a58f0a525c25c3",
+    "send_proposal.py": "a18cab38b5336c801da63ee8b91ea67067bda6e9b76a83ef184723a3cc69999d"
+  },
+  "sources_after": {
+    "bounded_journal_client.py": "0a62048f23c6870cfff345bd740abbcec6a1f972064a20da7ede5694bb0ad9d5",
+    "close_proposal.py": "464c770e357b664c35866e271740380307bfcd52dbaa8573e258d5600c006531",
+    "composed_client.py": "8386ceab0918e8caa17626e756969b901c2aa0f58cd2fb448710ac866654c1a2",
+    "echo_peer.py": "5d7152cce7d6154c8fb404a55774dfadae7f6c9254741ef3615dac9bc3e6b14d",
+    "main_client.py": "6032c0dd1d7441977afca790d08d1f1012e8f18171691249456fcfe90097617e",
+    "producer.py": "7ffeae182a8b0f56c778289dbc906da507dd95ca297e538b69a58f0a525c25c3",
+    "send_proposal.py": "a18cab38b5336c801da63ee8b91ea67067bda6e9b76a83ef184723a3cc69999d"
+  },
+  "scope": "Six saved Linux Popen echo-child cells only; empty peer bytes establish no child receipt. No OS-send syscall counter was collected; no-send is source-derived. Journal observed_ns is recorded before mutex acquisition and does not timestamp file-write completion.",
+  "hypothesis_conclusion": "Literal send+close composition preserves a request-side sent-journal mutex wait outside the50ms caller budget in this fixture; mutex-deadline comparison ends before250ms checkpoint while hold persists400ms",
+  "adoption": "EVIDENCE_ONLY; no public client changed",
+  "next": "Existing send owner can integrate scoped sent-journal deadline with current-main EOF/UTF8/reader owners; pending platform/adoption gates remain",
+  "source_version_boundary": {
+    "tested_close_v1": "31f10e660d2e7e13d8fe05c9a56d3f3c5e71f324",
+    "later_close_v2_observed": "dd322c2d",
+    "v2_tested": false
+  }
+}

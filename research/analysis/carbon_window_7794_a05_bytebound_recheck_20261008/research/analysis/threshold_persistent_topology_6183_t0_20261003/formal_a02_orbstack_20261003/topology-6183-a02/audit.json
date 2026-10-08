@@ -1,0 +1,34 @@
+{
+  "errors": [],
+  "metrics": {
+    "persistent": {
+      "confident": 6,
+      "correct": 6,
+      "wrong": 0
+    },
+    "pixel": {
+      "confident": 5,
+      "correct": 4,
+      "wrong": 3
+    },
+    "single": {
+      "confident": 6,
+      "correct": 6,
+      "wrong": 2
+    }
+  },
+  "persistent_strictly_fewer_false_confident_than_pixel_and_single": true,
+  "rows": 8,
+  "schema": "topology-6183-independent-audit-v1",
+  "thresholds": [
+    64,
+    128,
+    192,
+    240
+  ],
+  "visual_coverage_on_determinate": {
+    "persistent": 1.0,
+    "pixel": 0.8333333333333334,
+    "single": 1.0
+  }
+}

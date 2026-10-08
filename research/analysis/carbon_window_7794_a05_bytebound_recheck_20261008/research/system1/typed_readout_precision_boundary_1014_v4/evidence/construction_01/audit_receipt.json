@@ -1,0 +1,8 @@
+{
+  "image": "sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261",
+  "platform": "linux/amd64",
+  "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=384m --pids-limit=32 --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,source=<evidence>,target=/evidence,readonly --mount type=bind,source=<raw>,target=/raw,readonly --mount type=bind,source=<audit>,target=/audit --entrypoint python sha256:570ad778e44baf0bd094241515ed6cbbc7ce154321a7d76f295c42f2d5799261 -S -B /evidence/audit_stop.py --evidence /evidence --raw /raw --report /audit/STOP_AUDIT.json",
+  "exit_code": 0,
+  "result": "PASS_STOP_EVIDENCE_AUDIT",
+  "gpu_used": false
+}

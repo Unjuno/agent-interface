@@ -1,0 +1,54 @@
+{
+  "iid-baseline": [
+    ["target.current","TARGET.IDENTITY_CURRENT","window:save","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:save-v1","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]]
+  ],
+  "target-replacement": [
+    ["target.current","TARGET.IDENTITY_CURRENT","window:save-copy","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:save-v1","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["target.match","TARGET.TARGET_MATCH","window:save","MANDATORY","CURRENT_OBSERVATION","target_correspondence",["target.current"]]
+  ],
+  "intent-scope-change": [
+    ["target.current","TARGET.IDENTITY_CURRENT","document:7","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:replace-v2","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["intent.scope","SEMANTIC.SCOPE_MATCH","intent:replace-v2","MANDATORY","CURRENT_INTENT","scope_contract",["intent.match"]]
+  ],
+  "decision-deadline-expired": [
+    ["target.current","TARGET.IDENTITY_CURRENT","button:submit","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:submit-v1","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["authority.deadline","AUTHORITY.DECISION_DEADLINE","a-04","MANDATORY","CURRENT_CLOCK","monotonic_deadline",[]]
+  ],
+  "permission-revoked": [
+    ["target.current","TARGET.IDENTITY_CURRENT","window:save-dialog","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:save-as-v1","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["authority.permission","AUTHORITY.PERMISSION_CURRENT","window:save-dialog","MANDATORY","CURRENT_PERMISSION","permission_contract",["target.current"]]
+  ],
+  "effect-already-satisfied": [
+    ["target.current","TARGET.IDENTITY_CURRENT","document:7","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:replace-v2","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["effect.postcondition","EFFECT.POSTCONDITION","document:7","CONDITIONAL_MANDATORY","VERIFIED_EFFECT","independent_effect",["target.current"]]
+  ],
+  "ambiguous-distractor": [
+    ["target.current","TARGET.IDENTITY_CURRENT","button:save","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:save-v1","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["target.ambiguity","TARGET.AMBIGUITY","button:save","MANDATORY","CURRENT_OBSERVATION","ambiguity_detector",["target.current"]]
+  ],
+  "external-side-effect": [
+    ["target.current","TARGET.IDENTITY_CURRENT","payment:42","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:refund-v1","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["effect.reversibility","EFFECT.REVERSIBILITY","a-08","MANDATORY","CURRENT_ACTION_CONTRACT","effect_policy",[]],
+    ["effect.postcondition","EFFECT.POSTCONDITION","payment:42","MANDATORY","VERIFIED_EFFECT","independent_effect",["target.current"]]
+  ],
+  "unknown-evidence": [
+    ["target.current","TARGET.IDENTITY_CURRENT","document:9","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:delete-v1","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["effect.reversibility","EFFECT.REVERSIBILITY","a-09","MANDATORY","CURRENT_ACTION_CONTRACT","effect_policy",[]],
+    ["effect.postcondition","EFFECT.POSTCONDITION","document:9","MANDATORY","VERIFIED_EFFECT","independent_effect",["target.current"]],
+    ["meta.unknown","META.UNKNOWN_REQUIRED","a-09","MANDATORY","UNKNOWN_REQUIREMENT","ontology_gap",[]]
+  ],
+  "optional-diagnostic": [
+    ["target.current","TARGET.IDENTITY_CURRENT","window:preferences","MANDATORY","CURRENT_OBSERVATION","fresh_target_observer",[]],
+    ["intent.match","SEMANTIC.INTENT_MATCH","intent:inspect-v1","MANDATORY","CURRENT_INTENT","intent_contract",["target.current"]],
+    ["meta.coverage","META.COVERAGE","a-10","OPTIONAL","COVERAGE_REPORT","coverage_report",[]]
+  ]
+}

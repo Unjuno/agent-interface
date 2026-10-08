@@ -1,0 +1,187 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "expected_sequence": 1,
+        "id": "move-save",
+        "op": "submit",
+        "steps": [
+          {
+            "op": "pointer_click",
+            "x": 618,
+            "y": 391
+          },
+          {
+            "duration_ms": 80,
+            "keys": [
+              "Right"
+            ],
+            "op": "hold"
+          },
+          {
+            "key": "s",
+            "modifier": "Control_L",
+            "op": "chord"
+          },
+          {
+            "op": "settle",
+            "quiet_ms": 80,
+            "timeout_ms": 500
+          }
+        ],
+        "transport_request_id": "program-337bed35dc45430d8c718449e53a8508",
+        "valid_until_ns": 57077377792
+      },
+      "received_ns": 27122082064,
+      "emit_started_ns": 27122087124
+    },
+    {
+      "event": "accepted",
+      "id": "move-save",
+      "steps": 4,
+      "valid_until_ns": 57077377792,
+      "accepted_ns": 27131822056,
+      "emit_started_ns": 27131823785
+    },
+    {
+      "event": "step_started",
+      "id": "move-save",
+      "step": 0,
+      "operation": "pointer_click",
+      "issued_ns": 27143179870,
+      "emit_started_ns": 27143186956
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 618,
+        "y": 391
+      },
+      "admitted_ns": 27153020433,
+      "input_ack_ns": 27153258339,
+      "valid_until_ns": 57077377792,
+      "surface": 6291463,
+      "id": "move-save",
+      "step": 0,
+      "emit_started_ns": 27153340761
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 27163863669,
+      "input_ack_ns": 27164148065,
+      "valid_until_ns": 57077377792,
+      "surface": 6291463,
+      "id": "move-save",
+      "step": 0,
+      "emit_started_ns": 27164292662
+    },
+    {
+      "event": "observation",
+      "id": "move-save",
+      "step": 0,
+      "sequence": 2,
+      "capture_ns": 27229463708,
+      "context_ns": 27235196275,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/compact-live-01/runtime/002.png",
+      "image_reused": false,
+      "image_prepare_ns": 31314181,
+      "image_ready_ns": 27284765793,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 11.495336,
+      "wire_bytes": 6111,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "emit_started_ns": 27301074345
+    },
+    {
+      "event": "step_completed",
+      "id": "move-save",
+      "step": 0,
+      "completed_ns": 27311002863,
+      "emit_started_ns": 27311005490
+    },
+    {
+      "event": "step_started",
+      "id": "move-save",
+      "step": 1,
+      "operation": "hold",
+      "issued_ns": 27322764797,
+      "emit_started_ns": 27322772270
+    },
+    {
+      "event": "terminal",
+      "id": "move-save",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 1,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 27335975061,
+        "valid_until_ns": null
+      },
+      "terminal_ns": 27336028461,
+      "semantic_completion": "program status only; task scoring is separate",
+      "emit_started_ns": 27336031093
+    }
+  ],
+  "cursor": 13,
+  "returned_ns": 27348169327,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "program-337bed35dc45430d8c718449e53a8508",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

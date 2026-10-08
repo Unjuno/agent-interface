@@ -1,0 +1,1586 @@
+{
+  "all_effective": true,
+  "implementation_controls": [
+    {
+      "control": "manifest-os",
+      "detected": true,
+      "errors": [],
+      "first_witness": {
+        "arm": "combined",
+        "case": {
+          "binding": "match",
+          "case_id": "c0384",
+          "compiled_sequence": "match",
+          "manifest": "os-list",
+          "now": "zero",
+          "observation": "match"
+        },
+        "core_admission": null,
+        "exception": {
+          "message": "unhashable type: 'list'",
+          "type": "TypeError"
+        },
+        "input_after": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": []
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_after_sha256": "8677116ab3fa96169b302ec6c0cf26fe798972a8dc26d3f887969c58e42aae93",
+        "input_before": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": []
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_before_sha256": "8677116ab3fa96169b302ec6c0cf26fe798972a8dc26d3f887969c58e42aae93",
+        "journal": [
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e1",
+            "sequence": 1,
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "event": "branch_selected",
+            "evidence_ref": "e1",
+            "matched_conditions": {
+              "phase": 0
+            },
+            "outcome": "action",
+            "state": "ready"
+          }
+        ],
+        "terminal": null,
+        "trace": [
+          {
+            "call": "observe",
+            "sequence": 1
+          },
+          {
+            "call": "admit"
+          },
+          {
+            "call": "core_exception",
+            "type": "TypeError"
+          }
+        ]
+      },
+      "mismatch_count": 384,
+      "raw_sha256": "4f12c4f89fb32596ef60b7e8c8565dc3cb27ba2356f534675798f8351852bba6",
+      "returncode": 0,
+      "rows": 3072,
+      "source_sha256": "23feb3092191b5d5b99601f0c6080cda57a7086848904b8589662d53c8b35624"
+    },
+    {
+      "control": "manifest-state",
+      "detected": true,
+      "errors": [],
+      "first_witness": {
+        "arm": "combined",
+        "case": {
+          "binding": "match",
+          "case_id": "c0768",
+          "compiled_sequence": "match",
+          "manifest": "state-dict",
+          "now": "zero",
+          "observation": "match"
+        },
+        "core_admission": null,
+        "exception": {
+          "message": "unhashable type: 'dict'",
+          "type": "TypeError"
+        },
+        "input_after": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": {}
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_after_sha256": "68a5e24da6e67fd0bad148df2da3b50953bb5f8c56d6aab53f02201aab6f6f3c",
+        "input_before": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": {}
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_before_sha256": "68a5e24da6e67fd0bad148df2da3b50953bb5f8c56d6aab53f02201aab6f6f3c",
+        "journal": [
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e1",
+            "sequence": 1,
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "event": "branch_selected",
+            "evidence_ref": "e1",
+            "matched_conditions": {
+              "phase": 0
+            },
+            "outcome": "action",
+            "state": "ready"
+          }
+        ],
+        "terminal": null,
+        "trace": [
+          {
+            "call": "observe",
+            "sequence": 1
+          },
+          {
+            "call": "admit"
+          },
+          {
+            "call": "core_exception",
+            "type": "TypeError"
+          }
+        ]
+      },
+      "mismatch_count": 384,
+      "raw_sha256": "918541ac4776cc1bed20726540722a3f16395758666bec13bcde5bd1bfb5692c",
+      "returncode": 0,
+      "rows": 3072,
+      "source_sha256": "69159161dcb94469dd26612e0f7c685afa4d2f6fffefd4afb270b9adabe19c39"
+    },
+    {
+      "control": "manifest-frame",
+      "detected": true,
+      "errors": [],
+      "first_witness": {
+        "arm": "combined",
+        "case": {
+          "binding": "match",
+          "case_id": "c1152",
+          "compiled_sequence": "match",
+          "manifest": "frame-list",
+          "now": "zero",
+          "observation": "match"
+        },
+        "core_admission": null,
+        "exception": {
+          "message": "unhashable type: 'list'",
+          "type": "TypeError"
+        },
+        "input_after": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              []
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_after_sha256": "cbf59b19304af9d5f9bfb8a571b855f87222bcb31082bbe1498d558b9789b7cb",
+        "input_before": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              []
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_before_sha256": "cbf59b19304af9d5f9bfb8a571b855f87222bcb31082bbe1498d558b9789b7cb",
+        "journal": [
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e1",
+            "sequence": 1,
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "event": "branch_selected",
+            "evidence_ref": "e1",
+            "matched_conditions": {
+              "phase": 0
+            },
+            "outcome": "action",
+            "state": "ready"
+          }
+        ],
+        "terminal": null,
+        "trace": [
+          {
+            "call": "observe",
+            "sequence": 1
+          },
+          {
+            "call": "admit"
+          },
+          {
+            "call": "core_exception",
+            "type": "TypeError"
+          }
+        ]
+      },
+      "mismatch_count": 384,
+      "raw_sha256": "49fbad4e0acb88ba0e83438667ea9c10ddd9e85facd46c7428ee8c7042b43cd6",
+      "returncode": 0,
+      "rows": 3072,
+      "source_sha256": "48bc35120d04ed41e077b0937782e27c980ba9b2fe7855360d2477ffc4b6b49b"
+    },
+    {
+      "control": "current-now",
+      "detected": true,
+      "errors": [],
+      "first_witness": {
+        "arm": "combined",
+        "case": {
+          "binding": "match",
+          "case_id": "c0192",
+          "compiled_sequence": "match",
+          "manifest": "valid",
+          "now": "nan",
+          "observation": "match"
+        },
+        "core_admission": {
+          "accepted": true,
+          "error": null,
+          "required_capabilities": [
+            "input.release_all"
+          ]
+        },
+        "exception": null,
+        "input_after": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "repr": "nan",
+              "type": "float"
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_after_sha256": "79fd872761d2b3b123a0aeee84e45d2c330e315ae05d1f287c244bfc7cb2248d",
+        "input_before": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "repr": "nan",
+              "type": "float"
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_before_sha256": "79fd872761d2b3b123a0aeee84e45d2c330e315ae05d1f287c244bfc7cb2248d",
+        "journal": [
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e1",
+            "sequence": 1,
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "event": "branch_selected",
+            "evidence_ref": "e1",
+            "matched_conditions": {
+              "phase": 0
+            },
+            "outcome": "action",
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "action_id": "inert-action",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e2",
+            "sequence": 2,
+            "state": "done"
+          },
+          {
+            "action": "once",
+            "event": "effect_checked",
+            "evidence_ref": "e2",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "e2",
+            "matched_conditions": {
+              "phase": 1
+            },
+            "outcome": "complete",
+            "state": "done"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "terminal": {
+          "completed_transitions": 1,
+          "frontier_model_resumptions": 0,
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "reason": "method_complete"
+        },
+        "trace": [
+          {
+            "call": "observe",
+            "sequence": 1
+          },
+          {
+            "call": "admit"
+          },
+          {
+            "accepted": true,
+            "call": "core_result",
+            "error": null,
+            "required_capabilities": [
+              "input.release_all"
+            ]
+          },
+          {
+            "call": "execute",
+            "expected_sequence": {
+              "type": "int",
+              "value": 1
+            }
+          },
+          {
+            "call": "observe",
+            "sequence": 2
+          },
+          {
+            "call": "verify_effect",
+            "sequence": 2
+          }
+        ]
+      },
+      "mismatch_count": 144,
+      "raw_sha256": "899c239e9157e10ef0adee6b73ae46f5e24f20d29a2e41ccc09066c93732bcd3",
+      "returncode": 0,
+      "rows": 3072,
+      "source_sha256": "a9ab25eb86845cd1c7ef2e25e6b10e2be45227f4c182c363d218bb87405c538d"
+    },
+    {
+      "control": "current-observation",
+      "detected": true,
+      "errors": [],
+      "first_witness": {
+        "arm": "combined",
+        "case": {
+          "binding": "match",
+          "case_id": "c0032",
+          "compiled_sequence": "match",
+          "manifest": "valid",
+          "now": "zero",
+          "observation": "bool"
+        },
+        "core_admission": {
+          "accepted": true,
+          "error": null,
+          "required_capabilities": [
+            "input.release_all"
+          ]
+        },
+        "exception": null,
+        "input_after": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "bool",
+              "value": true
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_after_sha256": "8818b5e16a12915ce6360790b5391bbbae8fb574f1c0c884d70823594d5320e7",
+        "input_before": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "bool",
+              "value": true
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_before_sha256": "8818b5e16a12915ce6360790b5391bbbae8fb574f1c0c884d70823594d5320e7",
+        "journal": [
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e1",
+            "sequence": 1,
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "event": "branch_selected",
+            "evidence_ref": "e1",
+            "matched_conditions": {
+              "phase": 0
+            },
+            "outcome": "action",
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "action_id": "inert-action",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e2",
+            "sequence": 2,
+            "state": "done"
+          },
+          {
+            "action": "once",
+            "event": "effect_checked",
+            "evidence_ref": "e2",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "e2",
+            "matched_conditions": {
+              "phase": 1
+            },
+            "outcome": "complete",
+            "state": "done"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "terminal": {
+          "completed_transitions": 1,
+          "frontier_model_resumptions": 0,
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "reason": "method_complete"
+        },
+        "trace": [
+          {
+            "call": "observe",
+            "sequence": 1
+          },
+          {
+            "call": "admit"
+          },
+          {
+            "accepted": true,
+            "call": "core_result",
+            "error": null,
+            "required_capabilities": [
+              "input.release_all"
+            ]
+          },
+          {
+            "call": "execute",
+            "expected_sequence": {
+              "type": "int",
+              "value": 1
+            }
+          },
+          {
+            "call": "observe",
+            "sequence": 2
+          },
+          {
+            "call": "verify_effect",
+            "sequence": 2
+          }
+        ]
+      },
+      "mismatch_count": 144,
+      "raw_sha256": "b75c07d379b8912514c52b55ae5ef26c39db80323d608a565e33f2fbbc58ad34",
+      "returncode": 0,
+      "rows": 3072,
+      "source_sha256": "020def69831d4cd6220bfa99c6859c5c1765e6ea9284eddbe4feaf29fa6e62f9"
+    },
+    {
+      "control": "current-binding",
+      "detected": true,
+      "errors": [],
+      "first_witness": {
+        "arm": "combined",
+        "case": {
+          "binding": "bool",
+          "case_id": "c0008",
+          "compiled_sequence": "match",
+          "manifest": "valid",
+          "now": "zero",
+          "observation": "match"
+        },
+        "core_admission": {
+          "accepted": true,
+          "error": null,
+          "required_capabilities": [
+            "input.release_all"
+          ]
+        },
+        "exception": null,
+        "input_after": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "bool",
+              "value": true
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_after_sha256": "2214014738de937b5664ade87cb5d5b6fb943738651532888dd02010e9d8c0f1",
+        "input_before": {
+          "compiled_sequence": {
+            "type": "int",
+            "value": 1
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "bool",
+              "value": true
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_before_sha256": "2214014738de937b5664ade87cb5d5b6fb943738651532888dd02010e9d8c0f1",
+        "journal": [
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e1",
+            "sequence": 1,
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "event": "branch_selected",
+            "evidence_ref": "e1",
+            "matched_conditions": {
+              "phase": 0
+            },
+            "outcome": "action",
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "action_id": "inert-action",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e2",
+            "sequence": 2,
+            "state": "done"
+          },
+          {
+            "action": "once",
+            "event": "effect_checked",
+            "evidence_ref": "e2",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "e2",
+            "matched_conditions": {
+              "phase": 1
+            },
+            "outcome": "complete",
+            "state": "done"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "terminal": {
+          "completed_transitions": 1,
+          "frontier_model_resumptions": 0,
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "reason": "method_complete"
+        },
+        "trace": [
+          {
+            "call": "observe",
+            "sequence": 1
+          },
+          {
+            "call": "admit"
+          },
+          {
+            "accepted": true,
+            "call": "core_result",
+            "error": null,
+            "required_capabilities": [
+              "input.release_all"
+            ]
+          },
+          {
+            "call": "execute",
+            "expected_sequence": {
+              "type": "int",
+              "value": 1
+            }
+          },
+          {
+            "call": "observe",
+            "sequence": 2
+          },
+          {
+            "call": "verify_effect",
+            "sequence": 2
+          }
+        ]
+      },
+      "mismatch_count": 144,
+      "raw_sha256": "ce74abce2220e384b2c26a724b70110775c12a6b1b6a823dd597543317f280fb",
+      "returncode": 0,
+      "rows": 3072,
+      "source_sha256": "f3f7c3821c7f8ece9e1a03d4e0f17f7735f4273fe4c91924e560998a15a6c1e3"
+    },
+    {
+      "control": "compiled-sequence",
+      "detected": true,
+      "errors": [],
+      "first_witness": {
+        "arm": "combined",
+        "case": {
+          "binding": "match",
+          "case_id": "c0002",
+          "compiled_sequence": "bool",
+          "manifest": "valid",
+          "now": "zero",
+          "observation": "match"
+        },
+        "core_admission": {
+          "accepted": true,
+          "error": null,
+          "required_capabilities": [
+            "input.release_all"
+          ]
+        },
+        "exception": null,
+        "input_after": {
+          "compiled_sequence": {
+            "type": "bool",
+            "value": true
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_after_sha256": "a0bf02b4a80f5a501e802ff26c92ab53ff0e48f760c68e812164ef1c82fc5476",
+        "input_before": {
+          "compiled_sequence": {
+            "type": "bool",
+            "value": true
+          },
+          "context": {
+            "current_binding_revision": {
+              "type": "int",
+              "value": 1
+            },
+            "current_observation_seq": {
+              "type": "int",
+              "value": 1
+            },
+            "now_ns": {
+              "type": "int",
+              "value": 0
+            }
+          },
+          "manifest": {
+            "backend_id": "inert",
+            "capabilities": {
+              "input.release_all": {
+                "state": "supported"
+              }
+            },
+            "clock": {
+              "monotonic": true,
+              "unit": "ns"
+            },
+            "coordinate_frames": [
+              "screen_physical_px"
+            ],
+            "permissions": [],
+            "platform": {
+              "backend": "metadata-only",
+              "os": "linux"
+            },
+            "schema": "agent-interface/backend-v1"
+          },
+          "program": {
+            "authority": {
+              "expires_at_ns": 100,
+              "lease_id": "inert"
+            },
+            "ops": [
+              {
+                "op": "release_all"
+              }
+            ],
+            "program_id": "inert-one",
+            "schema": "agent-interface/program-v1",
+            "source": {
+              "binding_revision": 1,
+              "observation_seq": 1
+            },
+            "terminal": {
+              "release_all_required": true
+            }
+          }
+        },
+        "input_before_sha256": "a0bf02b4a80f5a501e802ff26c92ab53ff0e48f760c68e812164ef1c82fc5476",
+        "journal": [
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e1",
+            "sequence": 1,
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "event": "branch_selected",
+            "evidence_ref": "e1",
+            "matched_conditions": {
+              "phase": 0
+            },
+            "outcome": "action",
+            "state": "ready"
+          },
+          {
+            "action": "once",
+            "action_id": "inert-action",
+            "event": "action_terminal",
+            "release_verified": true,
+            "status": "completed"
+          },
+          {
+            "event": "observation_recorded",
+            "evidence_ref": "e2",
+            "sequence": 2,
+            "state": "done"
+          },
+          {
+            "action": "once",
+            "event": "effect_checked",
+            "evidence_ref": "e2",
+            "status": "succeeded"
+          },
+          {
+            "action": null,
+            "event": "branch_selected",
+            "evidence_ref": "e2",
+            "matched_conditions": {
+              "phase": 1
+            },
+            "outcome": "complete",
+            "state": "done"
+          },
+          {
+            "completed_transitions": 1,
+            "event": "runtime_finished",
+            "outcome": "TASK_SUCCEEDED",
+            "reason": "method_complete"
+          }
+        ],
+        "terminal": {
+          "completed_transitions": 1,
+          "frontier_model_resumptions": 0,
+          "outcome": "TASK_SUCCEEDED",
+          "pending_effect": null,
+          "reason": "method_complete"
+        },
+        "trace": [
+          {
+            "call": "observe",
+            "sequence": 1
+          },
+          {
+            "call": "admit"
+          },
+          {
+            "accepted": true,
+            "call": "core_result",
+            "error": null,
+            "required_capabilities": [
+              "input.release_all"
+            ]
+          },
+          {
+            "call": "execute",
+            "expected_sequence": {
+              "type": "bool",
+              "value": true
+            }
+          },
+          {
+            "call": "observe",
+            "sequence": 2
+          },
+          {
+            "call": "verify_effect",
+            "sequence": 2
+          }
+        ]
+      },
+      "mismatch_count": 4,
+      "raw_sha256": "818cd74a0b64c0e19c42aeed0de07e3e3a4cd56b9c3045fa6dafd8e2f3d8983f",
+      "returncode": 0,
+      "rows": 3072,
+      "source_sha256": "ef39633303ea228ef15a7c137794b7edf83e0d1c41450d3eb6b8eae46b1aefe9"
+    }
+  ],
+  "raw_controls": [
+    {
+      "control": "missing-row",
+      "errors": [
+        "complete denominator missing"
+      ],
+      "mismatch_count": 0,
+      "rejected": true
+    },
+    {
+      "control": "duplicate-row",
+      "errors": [
+        "c0000: duplicate",
+        "c0000: frozen case/order mismatch"
+      ],
+      "mismatch_count": 0,
+      "rejected": true
+    },
+    {
+      "control": "deleted-execute",
+      "errors": [
+        "c0000: inert release journal"
+      ],
+      "mismatch_count": 1,
+      "rejected": true
+    },
+    {
+      "control": "missing-refusal",
+      "errors": [],
+      "mismatch_count": 1,
+      "rejected": true
+    },
+    {
+      "control": "bool-to-int",
+      "errors": [],
+      "mismatch_count": 1,
+      "rejected": true
+    },
+    {
+      "control": "internally-rehashed-input",
+      "errors": [
+        "c0000: mutated or unbound input"
+      ],
+      "mismatch_count": 0,
+      "rejected": true
+    },
+    {
+      "control": "release-type",
+      "errors": [
+        "c0000: inert release journal"
+      ],
+      "mismatch_count": 0,
+      "rejected": true
+    }
+  ]
+}

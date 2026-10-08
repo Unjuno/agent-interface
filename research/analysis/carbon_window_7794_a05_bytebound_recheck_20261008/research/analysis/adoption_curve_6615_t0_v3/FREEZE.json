@@ -1,0 +1,16 @@
+{
+  "allocation": "ADOPTION-INCLUSIVE-CURVE-6615-T0C-20261002-01",
+  "base_commit": "afea9a530cafd7af529df4c9e59f36b816bca24f",
+  "predecessors": ["research/analysis/adoption_curve_6615_t0_v1/FORMAL_FAILURE.md", "research/analysis/adoption_curve_6615_t0_v2/FORMAL_FAILURE.md"],
+  "environment": "host-local CPython 3.14.5 on macOS; WSLc unavailable; shared OrbStack daemon read-only probe unresponsive",
+  "formal_invocations": {"candidate": 1, "auditor": 1, "retries": 0},
+  "construction_tests": {"command": "python3 -m unittest -v test_curve.py", "passed": 6, "failed": 0},
+  "sha256": {
+    "candidate.py": "4949edd46665bc6e91f245acd8167391e03cb0882b4b70eb67a3e8cde626d465",
+    "auditor.py": "7c806f6833697e8fd7b0dcba3ba502ac953fd5e23949d46d553b5b71e3f8a47f",
+    "fixture.json": "c450de93ab5ebb8e99c1772b6455aac54aa00034a3635c3e918b9845c7d238d9",
+    "test_curve.py": "b46ca51af90d4ec3ee26e0afd697794b33a77abbac7f9c5b86d0274bcae83a61",
+    "preregistration.md": "27f97d5fc9c62264764e72b1184da68b667fe4c6f40184a96c6bcd7ba4896d18"
+  },
+  "outputs_absent_at_freeze": ["raw.json", "candidate.stdout", "candidate.stderr", "audit.json", "auditor.stdout", "auditor.stderr", "REPORT.md", "FORMAL_FAILURE.md"]
+}

@@ -1,0 +1,131 @@
+"""One explicitly invoked, finite native-pipe allocation; no automatic import."""
+import errno
+import json
+import os
+import pathlib
+import selectors
+import sys
+import time
+
+
+def row(spec, events):
+    def log(tag, **fields):
+        events.append(dict(seq=len(events), t=time.monotonic_ns(), tag=tag, **fields))
+    dr, dw = os.pipe()
+    cr, cw = os.pipe()
+    fds = dict(DR=dr, DW=dw, CR=cr, CW=cw)
+    for fd in fds.values():
+        os.set_blocking(fd, False)
+    sel = selectors.DefaultSelector()
+    sf = sel.fileno()
+    log('open', fds={name:dict(fd=fd, inode=os.fstat(fd).st_ino) for name, fd in fds.items()}, selector_fd=sf)
+    sel.register(dr, selectors.EVENT_READ, 'D')
+    sel.register(cr, selectors.EVENT_READ, 'C')
+    count = 0
+    cycle = 0
+    status = None
+    def write(role, data, cause):
+        wrote = os.write(dw if role == 'D' else cw, data)
+        log('write', role=role, data=data.hex(), wrote=wrote, cause_read=cause)
+        if wrote != len(data):
+            raise RuntimeError('short native write')
+    try:
+        write('D', b'DDDD' if spec['profile'] in ('cold_late', 'data_only') else b'D', 0)
+        if spec['profile'] == 'co_ready':
+            write('C', b'C', 0)
+        while cycle < 32:
+            cycle += 1
+            ready = sel.select(0)
+            keys = [dict(role=key.data, fd=key.fd, mask=mask, inode=os.fstat(key.fd).st_ino) for key, mask in ready]
+            log('poll', cycle=cycle, ready=keys)
+            if any(key.data == 'C' for key, _ in ready):
+                data = os.read(cr, 1)
+                log('read', role='C', data=data.hex(), cycle=cycle, count=count)
+                if data != b'C':
+                    raise RuntimeError('unexpected control byte')
+                status = 'CANCEL_ACK'
+                break
+            if not any(key.data == 'D' for key, _ in ready):
+                status = 'EMPTY'
+                break
+            batch = 0
+            while True:
+                try:
+                    data = os.read(dr, 1)
+                except BlockingIOError:
+                    log('batch_end', cycle=cycle, reads=batch, reason='eagain')
+                    break
+                if data != b'D':
+                    raise RuntimeError('unexpected data byte')
+                count += 1
+                batch += 1
+                log('read', role='D', data=data.hex(), cycle=cycle, count=count)
+                if spec['cancel_after'] == count:
+                    write('C', b'C', count)
+                if spec['profile'].startswith('hot'):
+                    write('D', b'D', count)
+                if count == 16:
+                    log('batch_end', cycle=cycle, reads=batch, reason='cutoff')
+                    status = 'CUTOFF'
+                    break
+                if spec['budget'] and batch == spec['budget']:
+                    log('batch_end', cycle=cycle, reads=batch, reason='budget')
+                    break
+            if status:
+                break
+        if status is None:
+            raise RuntimeError('poll diagnostic bound reached')
+        log('terminal', kind=status, read_count=count, cycles=cycle)
+    except Exception as exc:
+        log('error', kind=type(exc).__name__, detail=str(exc))
+    finally:
+        for role, fd in [('C', cr), ('D', dr)]:
+            while True:
+                try:
+                    data = os.read(fd, 32)
+                    log('cleanup_read', role=role, data=data.hex())
+                    if not data:
+                        raise RuntimeError('writer unexpectedly closed before cleanup')
+                except BlockingIOError:
+                    log('cleanup_empty', role=role)
+                    break
+        sel.unregister(dr)
+        sel.unregister(cr)
+        sel.close()
+        try:
+            os.fstat(sf)
+        except OSError as exc:
+            log('closed', role='SELECTOR', fd=sf, err=exc.errno)
+        else:
+            raise RuntimeError('selector fd retained')
+        for name, fd in fds.items():
+            os.close(fd)
+            try:
+                os.fstat(fd)
+            except OSError as exc:
+                log('closed', role=name, fd=fd, err=exc.errno)
+                if exc.errno != errno.EBADF:
+                    raise RuntimeError('unexpected close witness')
+            else:
+                raise RuntimeError('pipe fd retained')
+    return dict(spec=spec, events=events)
+
+
+if __name__ == '__main__':
+    source = pathlib.Path('/source')
+    output = pathlib.Path('/out')
+    specs = json.loads((source / 'input.json').read_text())
+    with (output / 'raw.jsonl').open('x') as handle:
+        for spec in specs:
+            events = []
+            try:
+                result = row(spec, events)
+            except Exception:
+                handle.write(json.dumps(dict(spec=spec, events=events, incomplete=True), sort_keys=True) + '\n')
+                handle.flush()
+                raise
+            handle.write(json.dumps(result, sort_keys=True) + '\n')
+            handle.flush()
+            if any(event['tag'] == 'error' for event in result['events']):
+                raise RuntimeError('first row failure retained; no subsequent cells')
+    print(json.dumps({'rows':len(specs), 'completed':True}))

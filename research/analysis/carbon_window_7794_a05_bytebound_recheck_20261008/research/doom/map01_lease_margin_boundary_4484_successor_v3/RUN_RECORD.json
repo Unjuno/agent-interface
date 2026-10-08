@@ -1,0 +1,60 @@
+{
+  "schema": "issue-5062-run-record-v1",
+  "issue": 5062,
+  "successor_of": 5054,
+  "preregistration_main_commit": "defb4b5b27d6e2faf39c7d8a4a08dfa279ca0bd6",
+  "environment": {
+    "host": "Ubuntu 24.04.4 LTS Noble on WSL2, kernel 6.6.87.2-microsoft-standard-WSL2",
+    "host_python": "3.12.3",
+    "docker_desktop_engine": "28.5.1",
+    "docker_context_in_wsl": "default",
+    "platform": "linux/amd64",
+    "image": "python:3.12-slim",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "container_limits": {"cpus": 1, "memory": "512m", "pids": 32},
+    "container_rootfs": "read-only",
+    "container_id": "ce8101004faf6700cd01c2d678dca6bc8b3abfda0571fc7358ac45d3f229c9d0",
+    "container_exit": "Exited (0); server acknowledged shutdown"
+  },
+  "frozen_source_git_blobs": {
+    "effective_controller.py": "096adf9b60eaf6a31fe92c836f57d1a4d26b177e",
+    "unix_json_deadline.py": "267b5ccce24ca43b8a6e9b36219d50342888aa27",
+    "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1",
+    "container_server.py": "7f1230258d52e567c2a05ea9b9852138cfbfd206"
+  },
+  "execution": {
+    "formal_container_allocations": 1,
+    "audit_container_allocations": "one successful plus one preserved setup STOP",
+    "cases": 5,
+    "clock_exchanges": 15,
+    "lease_submissions": 4,
+    "game_or_model": 0,
+    "physical_input": 0,
+    "network_requests": 0,
+    "disposition": "FAIL_PREREGISTERED_PREDICTION",
+    "observed": {
+      "5.000s": "HOLD before submit; measured remaining fell below 5s",
+      "5.249s": "submitted and production Lease accepted; measured remaining remained above 5s",
+      "5.250s": "submitted and production Lease accepted",
+      "6.000s": "submitted and production Lease accepted",
+      "31.000s": "submitted and production Lease rejected deadline beyond its 30s horizon"
+    },
+    "independent_audit": "one preregistered prediction mismatch: 5.249s was accepted; no timestamp, translation, horizon, or authority-bound violation"
+  },
+  "preserved_pre_case_construction_stops": [
+    "Initial PowerShell/WSL command interpolated unset shell variables; no case started.",
+    "A subsequent WSL orchestration command had the same quoting/interpolation fault; no case started.",
+    "The exact source fetched into this work path received trailing blank-line normalization from patch application. The executed frozen controller was instead the pre-existing byte-verified #5054 artifact (SHA256 edd4cea89c541d42457e8c48992d3efe1bcb0ab7610489b47e8efa60660aab3a). Production sources differed only in terminal whitespace; code was unchanged.",
+    "The first audit-container invocation mounted the output directory read-only and stopped on write; rerun with only /out writable. It did not access the socket or repeat any cases."
+  ],
+  "raw": "out/raw.json",
+  "audit": "out/audit.json",
+  "scope_limits": [
+    "one host/container session, not a distributional timing study",
+    "the 5.249s expectation is refuted for this session because measured probe elapsed time was shorter than 249ms",
+    "no MAP01, model, GUI, input, stale-state, recovery, or end-to-end claim",
+    "does not repeat #3886's 120-sample study"
+  ]
+}
+

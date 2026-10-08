@@ -1,0 +1,57 @@
+{
+  "status": "PASS_ALTGR_PREFLIGHT_CONTRACT_SCOPED",
+  "issue": 2171,
+  "rows": 6,
+  "direct_type_rows": 1,
+  "unsafe_direct_rows": 0,
+  "independent_audit": "PASS",
+  "model_calls": 0,
+  "physical_keyboard_calls": 0,
+  "receiver_calls": 0,
+  "claims_excluded": [
+    "model policy quality",
+    "multilingual task correctness",
+    "clipboard/application success",
+    "platform generality",
+    "latency/token savings",
+    "production safety"
+  ],
+  "rows_detail": [
+    {
+      "state": "DIRECT_LEVEL0_3",
+      "decision": "DIRECT_TYPE",
+      "direct_key_emission": true,
+      "fail_closed": false
+    },
+    {
+      "state": "DEAD_OR_COMPOSE_REQUIRED",
+      "decision": "ABORT",
+      "direct_key_emission": false,
+      "fail_closed": true
+    },
+    {
+      "state": "MAP_STALE_OR_CHANGED",
+      "decision": "ABORT",
+      "direct_key_emission": false,
+      "fail_closed": true
+    },
+    {
+      "state": "MODIFIER_STATE_UNKNOWN",
+      "decision": "ABORT",
+      "direct_key_emission": false,
+      "fail_closed": true
+    },
+    {
+      "state": "ALTERNATE_TEXT_PATH",
+      "decision": "ALTERNATE_PATH",
+      "direct_key_emission": false,
+      "fail_closed": true
+    },
+    {
+      "state": "PARTIAL_DELIVERY_OR_UNKNOWN_EFFECT",
+      "decision": "ABORT",
+      "direct_key_emission": false,
+      "fail_closed": true
+    }
+  ]
+}

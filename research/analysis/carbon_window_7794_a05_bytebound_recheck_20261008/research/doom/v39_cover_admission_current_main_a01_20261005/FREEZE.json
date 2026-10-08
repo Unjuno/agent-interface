@@ -1,0 +1,52 @@
+{
+  "schema": "v39-cover-admission-current-main-a01-freeze-v1",
+  "question": "Does current-main V39 initial cover admission surface a hard-health invalidation that arrives before the matching accepted event, compared with the existing #7589 helper?",
+  "protocol": "one inert FIFO sequence, run through exact current-main nested wait without a monitor and through source-extracted #7589 wait_for_cover_acceptance with a monitor; source-shape audit; one candidate invocation followed by one separate raw-only auditor invocation",
+  "decision_gate": "PASS_MAIN_ADMISSION_GAP_REPRODUCED iff current main returns accepted without monitor observation and drains the FIFO, while the #7589 helper returns policy_invalidation and leaves the accepted event queued; otherwise preserve the exact outcome without runtime extrapolation",
+  "sources": {
+    "main_commit": "6f34c5c0c5bc3116d8e7c25f29aa1b92cc4a01b1",
+    "main_controller_git_blob_sha1": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+    "main_controller_sha256": "4548ca30b5a962946c7f81a58784a5b8e672a10635f4737c36b38f596b2c27ca",
+    "main_wait_test_git_blob_sha1": "66fbecb5dd80b64c0ca9a229b91e0ab0efa85a44",
+    "main_wait_test_sha256": "efe87ade28fea5130fe53dc3bd8d5416b92a1fbd74f52ba7d9063a07d15be618",
+    "pr_number": 7589,
+    "pr_head": "763ff69a531eb47a6a3f033f56171dffc80afa23",
+    "pr_base_at_replay": "63980603e4bb6e4b128ed07af3bf7023bc2d4734",
+    "pr_controller_git_blob_sha1": "dd1f7ab589f25108e2ea1c7518cdd4444791a6d0",
+    "pr_controller_sha256": "c056725908c683bef8f4f95ea7cb46aefedbe48ae3deb3cf801372d9be4818a4",
+    "pr_wait_test_git_blob_sha1": "857abe134e9ee2d19620c5df747db1dd1815f418",
+    "pr_wait_test_sha256": "e16fed84ec9caa00409e4664b68891ee0361990c5ec542d30ccf3fb773a25506"
+  },
+  "post_run_main_readback": {
+    "main_commit": "e7c916989da30741b00c234efd264067d0899851",
+    "main_controller_git_blob_sha1": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+    "main_wait_test_git_blob_sha1": "66fbecb5dd80b64c0ca9a229b91e0ab0efa85a44",
+    "finding": "both measured file blobs remain identical on current main after the experiment"
+  },
+  "environment": {
+    "runtime": "WSLc 3.0.1.0",
+    "image": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "python": "3.12 slim",
+    "pull": "never",
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested": "512m",
+    "host_warning": "Kernel reported swap limit capabilities/cgroup unavailable; memory limit enforcement not independently verified"
+  },
+  "event_sequence": [
+    {"event": "observation", "sequence": 17, "health": 70},
+    {"event": "accepted", "id": "cover-0", "accepted_ns": 123}
+  ],
+  "executed_candidate_sha256": "95946883e288d36c7d567a74d617a7fe44fc1796eb7bb472ba8753d2b03b2048",
+  "executed_auditor_sha256": "46b73505f00c64838c63da4777306036b09f8f0c71fefbfd263dd4b8dc92b6da",
+  "replay_candidate_sha256": "40e7f3f8c10b659d8883ac3af137fa4da9e2621ff1ce944021d2945265a9f109",
+  "replay_auditor_sha256": "95f2a5d2bebdca7e4ba79c7e081e6b44f16d1e2fb486ca1803019194dc1e4222",
+  "execution_snapshots": ["candidate_executed.py", "audit_executed.py"],
+  "source_snapshots_are_not_executed_as_modules": true,
+  "live_game": false,
+  "real_x_server": false,
+  "gui": false,
+  "model_calls": 0,
+  "os_input": false,
+  "allocation": false
+}

@@ -1,0 +1,52 @@
+{
+  "allocation": "needle-publication-orbstack-boundary-20260930-01",
+  "issue": 5134,
+  "class": "CONSTRUCTION_BOUNDARY_PILOT",
+  "formal_allocation": "needle-publication-orbstack-bind-5066-20260928-03",
+  "formal_allocation_consumed": false,
+  "base_main_sha": "c20f55df3f3a5ca8eb2694455dc5f8ca689a878d",
+  "path": "research/system1/needle_orbstack_publication_boundary_5134_20260930_01/",
+  "output_path": "/tmp/unjuno-5134-orbstack-boundary-20260930-01",
+  "context": "orbstack",
+  "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "platform": "linux/arm64",
+  "construction_flag": "OBSTAC_CONSTRUCTION=1",
+  "container_limits": {
+    "network": "none",
+    "rootfs_read_only": true,
+    "cpu": "0.25",
+    "memory": "512m",
+    "pids": 32,
+    "shm": "32m",
+    "cap_drop": "ALL",
+    "no_new_privileges": true,
+    "source_mount_read_only": true,
+    "output_mount_read_write": true
+  },
+  "seed": {
+    "path": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json",
+    "git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
+    "sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "bytes": 15279,
+    "old_generation": 3788,
+    "new_generation": 3789
+  },
+  "schedule": {
+    "atomic_transitions": 1,
+    "reader_processes_per_arm": 4,
+    "atomic_rows": 4,
+    "post_replace_path_rows": 4,
+    "unsafe_strict_prefix_rows": 4,
+    "unsafe_complete_rows": 4,
+    "formal_denominators_met": false,
+    "formal_invocation": false
+  },
+  "source_sha256": {
+    "PLAN.md": "9a1db3edbecb57b95fb82a1fcd3a95c7d5254add779d318210e67428e16f76b3",
+    "run.py": "9659a5579ceebd96570400dbc60d22e23145a6096446d57dbe1cd97b517e72cf",
+    "audit.py": "5ef206c56e0e6d34fdcb61b0974b9f4ebb7ac0706f6873cb1b8a0b531734866f",
+    "launch.py": "7fa8d8541e0726f079fc2c3f5c55a5efd16ca96f8ddfc944034891c9769e20ac",
+    "test_pilot.py": "acd4509d2ed8fc35b61cc01aea113cfd771ec3ceaa3a632299df1fc59bd35b36"
+  },
+  "retry_policy": "Once output is created or a runner is invoked, retain every result and do not retry this pilot allocation."
+}

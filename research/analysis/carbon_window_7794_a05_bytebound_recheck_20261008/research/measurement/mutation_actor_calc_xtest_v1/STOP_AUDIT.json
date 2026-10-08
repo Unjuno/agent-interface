@@ -1,0 +1,14 @@
+{
+  "audit": "STOPPED_NO_FORMAL_ROWS",
+  "checks": {
+    "candidate_hash_exact": true,
+    "cleanup_residual_zero": true,
+    "formal_result_absent": true,
+    "primary_invoked_once": true,
+    "reruns_zero": true,
+    "source_rehash_exact": true
+  },
+  "errors": [],
+  "note": "Frozen independent row auditor cannot be run because the outer stop occurred before ROWS.jsonl was written. This is not converted into a scientific PASS/FAIL.",
+  "scientific_gate_evaluable": false
+}

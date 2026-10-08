@@ -1,0 +1,90 @@
+{
+  "audited_utc": "2026-10-03T08:49:52.399017+00:00",
+  "auditor_source_sha256": "97b60c5ec69752b08c591ab360d0131769e2298a287a22d53f925f297f307de0",
+  "cases": [
+    {
+      "case": "reader_close",
+      "kernel_trace": false,
+      "native_done": true,
+      "native_stack": {
+        "native_counts": [
+          92
+        ],
+        "python_counts": [
+          92
+        ],
+        "root": 92
+      },
+      "primary_read": {
+        "errno": null,
+        "hex": "",
+        "kind": "READ_EOF"
+      },
+      "wrapper_cancelled": false,
+      "writer_at_primary": "OPEN"
+    },
+    {
+      "case": "normal_D",
+      "kernel_trace": false,
+      "native_done": true,
+      "native_stack": {
+        "native_counts": [
+          92
+        ],
+        "python_counts": [
+          92
+        ],
+        "root": 92
+      },
+      "primary_read": {
+        "errno": null,
+        "hex": "44",
+        "kind": "READ_DATA"
+      },
+      "wrapper_cancelled": false,
+      "writer_at_primary": "OPEN"
+    },
+    {
+      "case": "writer_EOF",
+      "kernel_trace": false,
+      "native_done": true,
+      "native_stack": {
+        "native_counts": [
+          92
+        ],
+        "python_counts": [
+          92
+        ],
+        "root": 92
+      },
+      "primary_read": {
+        "errno": null,
+        "hex": "",
+        "kind": "READ_EOF"
+      },
+      "wrapper_cancelled": false,
+      "writer_at_primary": "EBADF"
+    },
+    {
+      "case": "wrapper_cancel",
+      "kernel_trace": false,
+      "native_done": false,
+      "native_stack": {
+        "native_counts": [
+          92
+        ],
+        "python_counts": [
+          92
+        ],
+        "root": 92
+      },
+      "primary_read": null,
+      "wrapper_cancelled": true,
+      "writer_at_primary": "OPEN"
+    }
+  ],
+  "producer_reexecution": false,
+  "raw_bytes": 45381,
+  "raw_sha256": "39fe40ae06852687742b16daae59f49ed8d4d395c8be822e4c88a83dcd4279eb",
+  "status": "PASS_SCOPED_NATIVE_STACK_AND_ORDER"
+}

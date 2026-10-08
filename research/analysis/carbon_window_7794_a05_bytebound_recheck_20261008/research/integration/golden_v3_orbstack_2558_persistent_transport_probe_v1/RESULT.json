@@ -1,0 +1,18 @@
+{
+  "schema": "agent_interface_2558_persistent_transport_probe_v1",
+  "issue": 2558,
+  "decision": "PASS_PERSISTENT_APP_SERVER_TWO_TURN_TRANSPORT_SCOPED",
+  "process": "codex app-server --stdio",
+  "thread_ephemeral": true,
+  "turns": 2,
+  "turn_statuses": ["completed","completed"],
+  "turn_duration_ms": [6426,3449],
+  "gui_fixture_connected": false,
+  "formal_golden_claim": false,
+  "warnings": [
+    "models cache missing field base_instructions",
+    "Cloudflare MCP auth worker failure",
+    "plugin and skill loader warnings"
+  ],
+  "next": "connect persistent transport to OrbStack keyboard-contract fixture and run preregistered six-task route"
+}

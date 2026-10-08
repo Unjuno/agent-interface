@@ -1,0 +1,46 @@
+{
+  "schema": "map01_first_useful_feedback_posthoc_v1_summary",
+  "decision": "SCHEMA_INSUFFICIENT_FIRST_USEFUL_FEEDBACK",
+  "state_feedback_all_admitted_plans": false,
+  "stronger_task_effect_all_admitted_plans": false,
+  "plans": [
+    {
+      "run": "map01-v38-integrated-threat-live-01",
+      "id": "plan-0-primary-0-0",
+      "baseline_sequence": 27,
+      "baseline": {"health": 97, "ammo": 48},
+      "observations_in_program_envelope": 2,
+      "earliest_state_feedback": null,
+      "stronger_task_effect_feedback": null
+    },
+    {
+      "run": "map01-v39-coast-liveness-live-01",
+      "id": "plan-0-primary-0-1",
+      "baseline_sequence": 28,
+      "baseline": {"health": 97, "ammo": 48},
+      "observations_in_program_envelope": 8,
+      "earliest_state_feedback": {"sequence": 30, "accepted_to_feedback_ms": 233.888977, "changed": ["ammo"], "from": {"health": 97, "ammo": 48}, "to": {"health": 97, "ammo": 47}},
+      "stronger_task_effect_feedback": null
+    },
+    {
+      "run": "map01-v39-coast-liveness-live-01",
+      "id": "plan-3-primary-0-1",
+      "baseline_sequence": 113,
+      "baseline": {"health": 68, "ammo": 44},
+      "observations_in_program_envelope": 2,
+      "earliest_state_feedback": {"sequence": 115, "accepted_to_feedback_ms": 214.439344, "changed": ["health", "ammo"], "from": {"health": 68, "ammo": 44}, "to": {"health": 65, "ammo": 43}},
+      "stronger_task_effect_feedback": null
+    },
+    {
+      "run": "map01-v39-coast-liveness-live-01",
+      "id": "plan-4-primary-0-1",
+      "baseline_sequence": 159,
+      "baseline": {"health": 61, "ammo": 41},
+      "observations_in_program_envelope": 7,
+      "earliest_state_feedback": {"sequence": 161, "accepted_to_feedback_ms": 191.977156, "changed": ["ammo"], "from": {"health": 61, "ammo": 41}, "to": {"health": 61, "ammo": 40}},
+      "stronger_task_effect_feedback": null
+    }
+  ],
+  "scope": "Independent PNG/WAD HUD state reconstruction inside each admitted primary program envelope. Health/ammo transitions are decision-relevant observations, not necessarily beneficial and not causally attributed to the admitted action.",
+  "stronger_effect_limit": "The retained runs expose only one run-level post_control_score; no plan-bound kill/death/map-exit/progress timestamp is available."
+}

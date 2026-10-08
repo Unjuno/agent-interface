@@ -1,0 +1,37 @@
+{
+  "cleanup_observation_sequence": 3,
+  "disposition": "CONTROL_CAPTURED",
+  "final_status": {
+    "allocation": {
+      "app": "inkscape",
+      "authority": "none",
+      "cleanup_verified": false,
+      "max_stages": 3,
+      "pid": 9,
+      "restart_allowed": false,
+      "returncode": 0,
+      "run_directory": "/evidence/stale_source_v3/allocation/run",
+      "seed": 991123,
+      "status": "terminal",
+      "task_success": null,
+      "text_gap_ms": 0
+    },
+    "authority": "none"
+  },
+  "finish_is_error": false,
+  "finish_status": "finished",
+  "observe_status": "boundary",
+  "source1_sequence": 1,
+  "source2_sequence": 2,
+  "stale_is_error": true,
+  "stale_meta": {
+    "status": "mcp_error",
+    "text": [
+      "{\"status\": \"client_error\", \"error\": \"decision must name the presented source\", \"authority\": \"none\", \"program_attempted\": null, \"recovery\": \"Inspect the selected stage request/reply. An error does not prove no input; do not replay.\"}"
+    ]
+  },
+  "status_polls": [
+    "ready",
+    "terminal"
+  ]
+}

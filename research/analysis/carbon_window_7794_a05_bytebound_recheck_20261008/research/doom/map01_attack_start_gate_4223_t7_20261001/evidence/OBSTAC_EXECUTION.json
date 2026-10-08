@@ -1,0 +1,37 @@
+{
+  "allocation": "MAP01-ATTACK-ONSET-STARTGATE-4223-T7-20261001-01",
+  "auditor_exit_code": null,
+  "auditor_mount_probe_invocations": 0,
+  "auditor_retry_budget": 0,
+  "candidate_exit_code": null,
+  "candidate_mount_probe_invocations": 0,
+  "candidate_retry_budget": 0,
+  "failure": "RuntimeError: image build failed with exit 1",
+  "formal_candidate_invocations": 0,
+  "formal_status": "STOP_SETUP",
+  "image_build_argv": [
+    "docker",
+    "--context",
+    "orbstack",
+    "build",
+    "--platform",
+    "linux/amd64",
+    "--tag",
+    "map01-attack-start-gate-4223-t7:20261001",
+    "/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/map01-t7-r5lvpygs/docker-context"
+  ],
+  "image_tag": "map01-attack-start-gate-4223-t7:20261001",
+  "independent_auditor_invocations": 0,
+  "network_candidate_and_auditor": "none",
+  "runtime_artifact": {
+    "artifact_id": 10398313098,
+    "artifact_sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
+    "manifest_source_files": 2592,
+    "runtime_source_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+    "source_tar_sha256": "94f16166c9588b97566bb5a4b32fb8d3a8358a835a9f5a15ac7ff88012703a0e",
+    "verified_source_files": 2592,
+    "verified_wheels": 12
+  },
+  "schema": "obstac-map01-start-gate-execution-v1",
+  "source_commit": "e0edeec3063079d0cb2ba67e9ba42592c7b98b75"
+}

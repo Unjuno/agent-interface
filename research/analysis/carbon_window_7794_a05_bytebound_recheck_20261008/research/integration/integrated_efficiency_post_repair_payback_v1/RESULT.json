@@ -1,0 +1,127 @@
+{
+  "checks": {
+    "local_units_separate": true,
+    "model_side_lower": true,
+    "repeat_B_zero_model": true,
+    "wall_lower": true
+  },
+  "context_only": {
+    "repair_vs_matched_cold_input_delta": -3,
+    "repair_vs_matched_cold_wall_delta_ms": "-215.175808",
+    "source": "#947 retained result; not used to construct horizon sums"
+  },
+  "decision": "PASS_POST_REPAIR_REUSE_PAYBACK_RECONSTRUCTED_SCOPED",
+  "ephemeral": {
+    "cached_input_tokens": 0,
+    "durable_calls": 48,
+    "elapsed_ms": "37921.563313",
+    "input_tokens": 27906,
+    "local_observations": 65,
+    "model_visible_images": 3,
+    "output_tokens": 567,
+    "planner_generations": 3,
+    "reasoning_output_tokens": 222
+  },
+  "formal_invocation": 1,
+  "horizon_phases": [
+    "layout_change",
+    "repeat_B"
+  ],
+  "interpretation": [
+    "same retained task4-task6 schedule only; no synthetic future horizon",
+    "different-arm descriptive accounting, not a same-arm causal ablation",
+    "model-side, local-work, and wall units remain separate",
+    "cached input is subset-only and not added to input tokens"
+  ],
+  "persistent": {
+    "cached_input_tokens": 0,
+    "durable_calls": 58,
+    "elapsed_ms": "24874.512215",
+    "input_tokens": 9299,
+    "local_observations": 68,
+    "model_visible_images": 1,
+    "output_tokens": 161,
+    "planner_generations": 1,
+    "reasoning_output_tokens": 46
+  },
+  "persistent_minus_ephemeral": {
+    "cached_input_tokens": 0,
+    "durable_calls": 10,
+    "elapsed_ms": "-13047.051098",
+    "input_tokens": -18607,
+    "local_observations": 3,
+    "model_visible_images": -2,
+    "output_tokens": -406,
+    "planner_generations": -2,
+    "reasoning_output_tokens": -176
+  },
+  "persistent_over_ephemeral": {
+    "cached_input_tokens": null,
+    "durable_calls": {
+      "decimal": "1.208333333333333",
+      "denominator": 24,
+      "numerator": 29
+    },
+    "elapsed_ms": {
+      "decimal": "0.655946380946608",
+      "denominator": 37921563313,
+      "numerator": 24874512215
+    },
+    "input_tokens": {
+      "decimal": "0.333225829570702",
+      "denominator": 27906,
+      "numerator": 9299
+    },
+    "local_observations": {
+      "decimal": "1.046153846153846",
+      "denominator": 65,
+      "numerator": 68
+    },
+    "model_visible_images": {
+      "decimal": "0.333333333333333",
+      "denominator": 3,
+      "numerator": 1
+    },
+    "output_tokens": {
+      "decimal": "0.283950617283951",
+      "denominator": 81,
+      "numerator": 23
+    },
+    "planner_generations": {
+      "decimal": "0.333333333333333",
+      "denominator": 3,
+      "numerator": 1
+    },
+    "reasoning_output_tokens": {
+      "decimal": "0.207207207207207",
+      "denominator": 111,
+      "numerator": 23
+    }
+  },
+  "repeat_B_ephemeral": {
+    "cached_input_tokens": 0,
+    "durable_calls": 32,
+    "elapsed_ms": "25364.922348",
+    "input_tokens": 18604,
+    "local_observations": 44,
+    "model_visible_images": 2,
+    "output_tokens": 381,
+    "planner_generations": 2,
+    "reasoning_output_tokens": 151
+  },
+  "repeat_B_persistent": {
+    "cached_input_tokens": 0,
+    "durable_calls": 40,
+    "elapsed_ms": "12533.047058",
+    "input_tokens": 0,
+    "local_observations": 46,
+    "model_visible_images": 0,
+    "output_tokens": 0,
+    "planner_generations": 0,
+    "reasoning_output_tokens": 0
+  },
+  "reruns": 0,
+  "schema": "integrated_efficiency_post_repair_payback_result_v1",
+  "source_git_blob": "7db368b2d492b5b95f5f038fb7cb5dd6b78a27a7",
+  "task": "INTEGRATED-EFFICIENCY-POST-REPAIR-PAYBACK-20260917-001"
+}

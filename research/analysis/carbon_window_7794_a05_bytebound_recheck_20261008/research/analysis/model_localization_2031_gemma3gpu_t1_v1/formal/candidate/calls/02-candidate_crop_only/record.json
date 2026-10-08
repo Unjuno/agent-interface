@@ -1,0 +1,91 @@
+{
+  "answer": {
+    "label": "Shore",
+    "x": 160,
+    "y": 160
+  },
+  "arm": "CANDIDATE_CROP_ONLY",
+  "call_id": "02-candidate_crop_only",
+  "case_id": "small-text-discriminator",
+  "eval_count": 23,
+  "eval_duration_ns": 277566000,
+  "http_status": 200,
+  "images": [
+    {
+      "bytes": 12014,
+      "encoded_size": [
+        512,
+        320
+      ],
+      "role": "candidate_crop",
+      "sha256": "450823d46f43af589665414056bd30934a1065ce3f55ff5887dcd6409a8488f1",
+      "source_box": [
+        0,
+        0,
+        512,
+        320
+      ]
+    }
+  ],
+  "load_duration_ns": 1489357,
+  "prompt_eval_count": 407,
+  "prompt_eval_duration_ns": 893160000,
+  "proposal": {
+    "all_scores": [
+      {
+        "box": [
+          0,
+          0,
+          512,
+          320
+        ],
+        "edge_mean": 4.254188491286469,
+        "tile": 0
+      },
+      {
+        "box": [
+          512,
+          0,
+          1024,
+          320
+        ],
+        "edge_mean": 2.801133860387703,
+        "tile": 1
+      },
+      {
+        "box": [
+          0,
+          320,
+          512,
+          640
+        ],
+        "edge_mean": 3.268972121597807,
+        "tile": 2
+      },
+      {
+        "box": [
+          512,
+          320,
+          1024,
+          640
+        ],
+        "edge_mean": 3.3400938662619932,
+        "tile": 3
+      }
+    ],
+    "box": [
+      0,
+      0,
+      512,
+      320
+    ],
+    "edge_mean": 4.254188491286469,
+    "tile": 0
+  },
+  "request_bytes": 16630,
+  "request_sha256": "6e8bef08ded76a106c08e1ff52e22156620477e901c7887a0c029198d7b2d299",
+  "response_bytes": 370,
+  "response_sha256": "93f468ff27434a53315f80d61d4a34aeece9a2fdcd070a600945fc7028abd4e6",
+  "total_duration_ns": 1283442298,
+  "wall_elapsed_ns": 1285280229
+}

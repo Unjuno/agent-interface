@@ -1,0 +1,91 @@
+{
+  "after_state": {
+    "count": 0,
+    "status": "unavailable"
+  },
+  "arm": "hybrid",
+  "case": "unavailable",
+  "current_state": {
+    "count": 0,
+    "status": "unavailable"
+  },
+  "decision": "YIELD_TARGET_UNAVAILABLE",
+  "emissions": 0,
+  "error": null,
+  "fixture_events": [
+    {
+      "count": 0,
+      "kind": "ready",
+      "pid": 181,
+      "version": 1
+    }
+  ],
+  "fixture_events_sha256": "81cf63f49c3057f274e7bbcf4146e31da635e0cf6d8e81af9428b4c75129c834",
+  "initial_state": {
+    "counter": 0,
+    "frame_bytes": 153600,
+    "frame_path": "rows/hybrid__unavailable/before.raw",
+    "frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "height": 120,
+    "pid": 181,
+    "start_ticks": "5869266",
+    "status": "ok",
+    "title": "proxy-fixture:0:1",
+    "version": 1,
+    "width": 320,
+    "xid": 4194307
+  },
+  "input_ack": false,
+  "presentation": {
+    "arm": "hybrid",
+    "live_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "proxy_image": "rows/hybrid__unavailable/proxy.ppm",
+    "proxy_sha256": "e47c1de1e98a5279596ab7797bd1dc973cae7101cb839198347efc245edc58d3",
+    "structured_state": {
+      "counter": 0,
+      "target": "gtk-counter",
+      "version": 1
+    }
+  },
+  "process_exit_codes": {
+    "fixture_current": -15,
+    "xvfb": 0
+  },
+  "processes": [
+    {
+      "pid": 178,
+      "role": "xvfb",
+      "start_ticks": "5869263"
+    },
+    {
+      "pid": 181,
+      "role": "fixture",
+      "start_ticks": "5869266"
+    }
+  ],
+  "release_verified": false,
+  "reply": {
+    "after_state": {
+      "count": 0,
+      "status": "unavailable"
+    },
+    "decision": "YIELD_TARGET_UNAVAILABLE",
+    "emissions": 0,
+    "input_ack": false
+  },
+  "request": {
+    "operation": "increment",
+    "representation_arm": "hybrid",
+    "source_frame_sha256": "10885a778e86b353c21e88ffbf47e87631cbfbc04fc804b5dff5ab5970f4a669",
+    "source_token": {
+      "counter": 0,
+      "pid": 181,
+      "start_ticks": "5869266",
+      "title": "proxy-fixture:0:1",
+      "version": 1,
+      "xid": 4194307
+    }
+  },
+  "row_id": "hybrid__unavailable",
+  "socket_disappeared": true
+}

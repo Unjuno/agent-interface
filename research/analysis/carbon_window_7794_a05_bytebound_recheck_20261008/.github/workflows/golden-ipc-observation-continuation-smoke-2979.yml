@@ -1,0 +1,89 @@
+name: Golden IPC observation continuation smoke v1
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/golden-ipc-observation-continuation-smoke-2979.yml'
+      - 'research/live_control/session_v4.py'
+      - 'research/observation_tiles/**'
+      - 'research/observation_gating/**'
+
+permissions:
+  contents: read
+
+jobs:
+  observation-continuation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install X11 fixture dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb openbox xterm wmctrl
+          python -m pip install --disable-pip-version-check numpy pillow openpyxl python-xlib
+      - name: Require ready plus one read-only observation
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DISPLAY=:99
+          Xvfb "$DISPLAY" -screen 0 1280x800x24 -nolisten tcp >/tmp/xvfb.log 2>&1 &
+          xvfb_pid=$!
+          openbox >/tmp/openbox.log 2>&1 &
+          wm_pid=$!
+          cleanup() { kill "$wm_pid" "$xvfb_pid" 2>/dev/null || true; }
+          trap cleanup EXIT
+          mkdir -p out
+          python - <<'PY'
+          import json, subprocess, sys, time
+          command=[sys.executable, 'research/live_control/session_v4.py', '--app', 'xterm', '--seed', '2979', '--out', 'out/observation-continuation']
+          p=subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+          rows=[]
+          ready=None
+          observation=None
+          deadline=time.time()+30
+          for line in iter(p.stdout.readline, ''):
+              if line.strip():
+                  row=json.loads(line)
+                  rows.append(row)
+                  if row.get('event') == 'ready':
+                      ready=row
+                  if row.get('event') == 'observation' and observation is None:
+                      observation=row
+                      break
+              if time.time()>deadline:
+                  break
+          if ready is None:
+              print(p.stderr.read(), file=sys.stderr)
+              raise SystemExit('STOP_OBSERVATION_READY_NOT_REACHED')
+          if observation is None:
+              print(p.stderr.read(), file=sys.stderr)
+              raise SystemExit('STOP_READ_ONLY_OBSERVATION_NOT_REACHED')
+          if not isinstance(observation.get('sequence'), int) or observation['sequence'] < 1:
+              raise SystemExit('STOP_OBSERVATION_SEQUENCE_INVALID')
+          if observation.get('exact') is not True:
+              raise SystemExit('STOP_OBSERVATION_NOT_EXACT')
+          if not isinstance(observation.get('image'), str) or not observation['image']:
+              raise SystemExit('STOP_OBSERVATION_IMAGE_ARTIFACT_MISSING')
+          if not isinstance(observation.get('context'), (dict, list, tuple)) or not observation.get('context'):
+              raise SystemExit('STOP_OBSERVATION_SOURCE_CONTEXT_MISSING')
+          p.stdin.write(json.dumps({'op':'finish'})+'\\n'); p.stdin.flush()
+          stdout, stderr=p.communicate(timeout=15)
+          terminal=[json.loads(line) for line in stdout.splitlines() if line.strip()]
+          input_events=[r for r in rows+terminal if r.get('event') in {'input_admission','keys_held'}]
+          model_events=[r for r in rows+terminal if r.get('event') in {'model_call','model_request'}]
+          print(json.dumps({
+              'status':'PASS_OBSERVATION_CONTINUATION_SMOKE',
+              'ready':True,
+              'observation_sequence':observation['sequence'],
+              'observation_exact':True,
+              'image_artifact_present':True,
+              'source_context_present':True,
+              'authority_granted':False,
+              'model_events':len(model_events),
+              'input_events':len(input_events),
+              'task_effect':0,
+              'returncode':p.returncode
+          }, indent=2))
+          if input_events or model_events or p.returncode != 0:
+              raise SystemExit('STOP_OBSERVATION_SIDE_EFFECT_GUARD')
+          PY

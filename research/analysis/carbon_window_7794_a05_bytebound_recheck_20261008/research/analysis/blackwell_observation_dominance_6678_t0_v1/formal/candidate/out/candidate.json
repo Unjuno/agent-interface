@@ -1,0 +1,286 @@
+{
+  "observations": [
+    [
+      "o0",
+      "o1",
+      "o2"
+    ],
+    [
+      "hit",
+      "other"
+    ],
+    [
+      "other",
+      "hit"
+    ],
+    [
+      "same"
+    ]
+  ],
+  "relations": {
+    "fine>=fine": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    "fine>=partition_s0": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    "fine>=partition_s2": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    "fine>=uninformative": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    "partition_s0>=fine": {
+      "feasible": false,
+      "garbling": null
+    },
+    "partition_s0>=partition_s0": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    "partition_s0>=partition_s2": {
+      "feasible": false,
+      "garbling": null
+    },
+    "partition_s0>=uninformative": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    "partition_s2>=fine": {
+      "feasible": false,
+      "garbling": null
+    },
+    "partition_s2>=partition_s0": {
+      "feasible": false,
+      "garbling": null
+    },
+    "partition_s2>=partition_s2": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    "partition_s2>=uninformative": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    },
+    "uninformative>=fine": {
+      "feasible": false,
+      "garbling": null
+    },
+    "uninformative>=partition_s0": {
+      "feasible": false,
+      "garbling": null
+    },
+    "uninformative>=partition_s2": {
+      "feasible": false,
+      "garbling": null
+    },
+    "uninformative>=uninformative": {
+      "feasible": true,
+      "garbling": [
+        [
+          [
+            1,
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  "schema": "blackwell-candidate-v1"
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "agent-interface/6222-crossed-verdict-t1-eligibility-freeze-v1",
+  "audit_id": "CROSS-VERDICT-6222-T1-ELIGIBILITY-READONLY-20261002-01",
+  "issue": 6222,
+  "source_main": "fe37b6913f75706fc6bd536ae3afd6ed6a72b674",
+  "branch": "research/6222-t1-eligibility-hold-20261002-a01",
+  "observed_at_utc": "2026-10-01T20:35:21Z",
+  "mode": "read-only GitHub tree and retained-record eligibility audit; no candidate/scorer/model/application invocation",
+  "exclusions": [
+    "synthetic #6222 T0 fixture",
+    "synthetic #5766 standards deck",
+    "any new/live MAP01 episode"
+  ],
+  "input_records": [
+    {
+      "id": "v38",
+      "root": "research/doom/results/map01-v38-integrated-threat-live-01/",
+      "manifest_git_blob": "83eeaea9a703d92621fc906fd41b6cbd0a10ed2f",
+      "manifest_bytes": 40700,
+      "manifest_entries": 265,
+      "all_manifest_paths_present": true,
+      "all_manifest_sizes_match_git_tree": true,
+      "runtime_ait": 119,
+      "runtime_png": 120,
+      "report_git_blob": "d96b9032c7f55645dde20a1f95d916c943713914",
+      "report_bytes": 171428,
+      "audit_git_blob": "a06ed7be5ea9bbbb98049d8afa96b48e467e8465",
+      "audit_bytes": 1615,
+      "score": {
+        "map_exit": false,
+        "episode_finished": false,
+        "player_dead": false,
+        "death_count": 0,
+        "kill_count": 0,
+        "reward": 0
+      }
+    },
+    {
+      "id": "v39",
+      "root": "research/doom/results/map01-v39-coast-liveness-live-01/",
+      "manifest_git_blob": "35bc3e12ff438576b1f22ef1c2ce5d0a30162f6b",
+      "manifest_bytes": 70912,
+      "manifest_entries": 464,
+      "all_manifest_paths_present": true,
+      "all_manifest_sizes_match_git_tree": true,
+      "runtime_ait": 218,
+      "runtime_png": 218,
+      "report_git_blob": "bff2459036dcdcc44ed100b0c0bc657e1bb8e69a",
+      "report_bytes": 344806,
+      "audit_v2_git_blob": "a46d707c2c71450af2f7f8f2ab16bd4ddac6771b",
+      "audit_v2_bytes": 2025,
+      "audit_v1_git_blob": "44d09a1ed9c5f0786e84a6527bc32a081f98f2b1",
+      "score": {
+        "map_exit": false,
+        "episode_finished": false,
+        "player_dead": false,
+        "death_count": 0,
+        "kill_count": 1,
+        "reward": 0
+      },
+      "audit_v2_observations": 218,
+      "audit_v2_png": 217,
+      "audit_v2_ait": 218,
+      "unchanged_png_reuse": 1
+    }
+  ],
+  "integrity_limit": "Compared every retention-manifest path and declared byte count with the Git tree. Did not download/re-hash every binary artifact; Git object IDs bind repository versions but this pass is not a fresh SHA-256 verification.",
+  "decision": "HOLD_T1_NO_CROSSABLE_PANEL"
+}

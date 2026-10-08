@@ -1,0 +1,1150 @@
+TAP version 13
+# Subtest: one pending call survives interrupted waiting; no resend, exact content presentation
+ok 1 - one pending call survives interrupted waiting; no resend, exact content presentation
+  ---
+  duration_ms: 165.1422
+  type: 'test'
+  ...
+# Subtest: refused IDs can remain unchanged while attempt records never overwrite
+ok 2 - refused IDs can remain unchanged while attempt records never overwrite
+  ---
+  duration_ms: 140.9164
+  type: 'test'
+  ...
+# Subtest: process loss makes delivery uncertain and blocks new sends
+ok 3 - process loss makes delivery uncertain and blocks new sends
+  ---
+  duration_ms: 44.9658
+  type: 'test'
+  ...
+# Subtest: mismatched response retained but never presented as the pending result
+ok 4 - mismatched response retained but never presented as the pending result
+  ---
+  duration_ms: 143.6289
+  type: 'test'
+  ...
+# Subtest: existing evidence directory is refused before spawn
+ok 5 - existing evidence directory is refused before spawn
+  ---
+  duration_ms: 0.6887
+  type: 'test'
+  ...
+# Subtest: nonfinite or omitted values are refused before recording or sending
+ok 6 - nonfinite or omitted values are refused before recording or sending
+  ---
+  duration_ms: 42.2023
+  type: 'test'
+  ...
+# Subtest: review attribution comes from explicit retained reply and cannot overwrite history
+ok 7 - review attribution comes from explicit retained reply and cannot overwrite history
+  ---
+  duration_ms: 13.6567
+  type: 'test'
+  ...
+# Subtest: public and management captures have explicit identity without invented sequence
+ok 8 - public and management captures have explicit identity without invented sequence
+  ---
+  duration_ms: 29.6333
+  type: 'test'
+  ...
+# Subtest: review refuses ambiguous, missing-image, uncertain and incomplete evidence
+ok 9 - review refuses ambiguous, missing-image, uncertain and incomplete evidence
+  ---
+  duration_ms: 21.7365
+  type: 'test'
+  ...
+# Subtest: presentation preserves explicit MCP error status before unchanged content
+ok 10 - presentation preserves explicit MCP error status before unchanged content
+  ---
+  duration_ms: 0.6445
+  type: 'test'
+  ...
+# Subtest: presentation retains explicit error status for empty content and does not invent an absent flag
+ok 11 - presentation retains explicit error status for empty content and does not invent an absent flag
+  ---
+  duration_ms: 0.189
+  type: 'test'
+  ...
+# Subtest: ordered same-clock events separate transport, presentation and caller review before next send
+ok 12 - ordered same-clock events separate transport, presentation and caller review before next send
+  ---
+  duration_ms: 204.2429
+  type: 'test'
+  ...
+# Subtest: public capture review joins the same host timeline without a fabricated source sequence
+ok 13 - public capture review joins the same host timeline without a fabricated source sequence
+  ---
+  duration_ms: 109.0406
+  type: 'test'
+  ...
+# Subtest: failed instrumentation before send emits no request and transport remains closable
+ok 14 - failed instrumentation before send emits no request and transport remains closable
+  ---
+  duration_ms: 43.3331
+  type: 'test'
+  ...
+# Subtest: presentation failure is retained as a started-only boundary and blocks later action
+ok 15 - presentation failure is retained as a started-only boundary and blocks later action
+  ---
+  duration_ms: 109.1034
+  type: 'test'
+  ...
+# Subtest: invalid JSON does not consume an attempt and foreign review cannot gain an event
+ok 16 - invalid JSON does not consume an attempt and foreign review cannot gain an event
+  ---
+  duration_ms: 103.7159
+  type: 'test'
+  ...
+# Subtest: timeline loss after submission retains reply and blocks replay while allowing transport cleanup
+ok 17 - timeline loss after submission retains reply and blocks replay while allowing transport cleanup
+  ---
+  duration_ms: 318.7047
+  type: 'test'
+  ...
+# Subtest: opt-in image reuse requires explicit presented review and retains original base
+ok 18 - opt-in image reuse requires explicit presented review and retains original base
+  ---
+  duration_ms: 632.9227
+  type: 'test'
+  ...
+# Subtest: unpresented review cannot acknowledge an image base
+ok 19 - unpresented review cannot acknowledge an image base
+  ---
+  duration_ms: 158.8619
+  type: 'test'
+  ...
+# Subtest: reference presentation failure blocks actions and cannot be treated as delivered
+ok 20 - reference presentation failure blocks actions and cannot be treated as delivered
+  ---
+  duration_ms: 170.4517
+  type: 'test'
+  ...
+# Subtest: a changed PNG is forwarded and invalidates the previous acknowledged base
+ok 21 - a changed PNG is forwarded and invalidates the previous acknowledged base
+  ---
+  duration_ms: 222.9959
+  type: 'test'
+  ...
+# Subtest: reviewed image reference preserves current MCP error status
+ok 22 - reviewed image reference preserves current MCP error status
+  ---
+  duration_ms: 179.7946
+  type: 'test'
+  ...
+# Subtest: returned local attempt selects retained reply even when relay IDs are reused
+ok 23 - returned local attempt selects retained reply even when relay IDs are reused
+  ---
+  duration_ms: 115.23
+  type: 'test'
+  ...
+# Subtest: relay refuses insufficient evidence headroom before child startup
+ok 24 - relay refuses insufficient evidence headroom before child startup
+  ---
+  duration_ms: 4.9286
+  type: 'test'
+  ...
+# Subtest: instrumented refuses insufficient evidence headroom before child startup
+ok 25 - instrumented refuses insufficient evidence headroom before child startup
+  ---
+  duration_ms: 1.2509
+  type: 'test'
+  ...
+# Subtest: successful preflight is retained separately from transport calls
+ok 26 - successful preflight is retained separately from transport calls
+  ---
+  duration_ms: 101.7125
+  type: 'test'
+  ...
+# Subtest: invalid capacity floors reject before directory creation or child startup
+ok 27 - invalid capacity floors reject before directory creation or child startup
+  ---
+  duration_ms: 1.9535
+  type: 'test'
+  ...
+# Subtest: default capacity floor is recorded as a bounded startup check
+ok 28 - default capacity floor is recorded as a bounded startup check
+  ---
+  duration_ms: 49.8658
+  type: 'test'
+  ...
+# Subtest: malformed delivered envelope prevents a second effectful host call
+ok 29 - malformed delivered envelope prevents a second effectful host call
+  ---
+  duration_ms: 3.4281
+  type: 'test'
+  ...
+# Subtest: ordinary free-text MCP error returns original evidence and stops later input
+ok 30 - ordinary free-text MCP error returns original evidence and stops later input
+  ---
+  duration_ms: 0.4146
+  type: 'test'
+  ...
+# Subtest: missing text stops before the primary can send another call
+ok 31 - missing text stops before the primary can send another call
+  ---
+  duration_ms: 0.2717
+  type: 'test'
+  ...
+# Subtest: non-JSON text stops before the primary can send another call
+ok 32 - non-JSON text stops before the primary can send another call
+  ---
+  duration_ms: 0.3031
+  type: 'test'
+  ...
+# Subtest: null JSON stops before the primary can send another call
+ok 33 - null JSON stops before the primary can send another call
+  ---
+  duration_ms: 0.2472
+  type: 'test'
+  ...
+# Subtest: array JSON stops before the primary can send another call
+ok 34 - array JSON stops before the primary can send another call
+  ---
+  duration_ms: 0.2256
+  type: 'test'
+  ...
+# Subtest: extraction preserves the original exception and latches before propagation
+ok 35 - extraction preserves the original exception and latches before propagation
+  ---
+  duration_ms: 0.3488
+  type: 'test'
+  ...
+# Subtest: transport rejection preserves its exception and blocks later dispatch
+ok 36 - transport rejection preserves its exception and blocks later dispatch
+  ---
+  duration_ms: 0.3286
+  type: 'test'
+  ...
+# Subtest: fresh guarded observation uses the same no-target call as initial observation
+ok 37 - fresh guarded observation uses the same no-target call as initial observation
+  ---
+  duration_ms: 2.5755
+  type: 'test'
+  ...
+# Subtest: fresh observation rejects accidental per-call arguments before host dispatch
+ok 38 - fresh observation rejects accidental per-call arguments before host dispatch
+  ---
+  duration_ms: 0.6404
+  type: 'test'
+  ...
+# Subtest: direct observation preserves the explicit snapshotted observation configuration
+ok 39 - direct observation preserves the explicit snapshotted observation configuration
+  ---
+  duration_ms: 0.5834
+  type: 'test'
+  ...
+# Subtest: a completed neutral direct result returns unchanged and permits the next call
+ok 40 - a completed neutral direct result returns unchanged and permits the next call
+  ---
+  duration_ms: 0.3851
+  type: 'test'
+  ...
+# Subtest: an exception during neutral-release validation blocks later input
+ok 41 - an exception during neutral-release validation blocks later input
+  ---
+  duration_ms: 0.4764
+  type: 'test'
+  ...
+# Subtest: real host text-only declared refusal is presented and acknowledged without stopping
+ok 42 - real host text-only declared refusal is presented and acknowledged without stopping
+  ---
+  duration_ms: 92.7156
+  type: 'test'
+  ...
+# Subtest: explicit input feedback matched retains evidence and enforces STOP
+ok 43 - explicit input feedback matched retains evidence and enforces STOP
+  ---
+  duration_ms: 0.2896
+  type: 'test'
+  ...
+# Subtest: explicit input feedback pending retains evidence and enforces STOP
+ok 44 - explicit input feedback pending retains evidence and enforces STOP
+  ---
+  duration_ms: 0.1523
+  type: 'test'
+  ...
+# Subtest: explicit input feedback rejected retains evidence and enforces STOP
+ok 45 - explicit input feedback rejected retains evidence and enforces STOP
+  ---
+  duration_ms: 0.1288
+  type: 'test'
+  ...
+# Subtest: explicit input feedback needs_review retains evidence and enforces STOP
+ok 46 - explicit input feedback needs_review retains evidence and enforces STOP
+  ---
+  duration_ms: 0.068
+  type: 'test'
+  ...
+# Subtest: original presentation resends only retained bytes even after primary STOP
+ok 47 - original presentation resends only retained bytes even after primary STOP
+  ---
+  duration_ms: 67.8281
+  type: 'test'
+  ...
+# Subtest: original presentation snapshots sinks and preserves the host exception
+ok 48 - original presentation snapshots sinks and preserves the host exception
+  ---
+  duration_ms: 0.2538
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: []
+ok 49 - original presentation rejects invalid arguments before host: []
+  ---
+  duration_ms: 0.0875
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: [0]
+ok 50 - original presentation rejects invalid arguments before host: [0]
+  ---
+  duration_ms: 0.0407
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: [1.5]
+ok 51 - original presentation rejects invalid arguments before host: [1.5]
+  ---
+  duration_ms: 0.0344
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: ["1"]
+ok 52 - original presentation rejects invalid arguments before host: ["1"]
+  ---
+  duration_ms: 0.0313
+  type: 'test'
+  ...
+# Subtest: original presentation rejects invalid arguments before host: [1,{"forceImage":false}]
+ok 53 - original presentation rejects invalid arguments before host: [1,{"forceImage":false}]
+  ---
+  duration_ms: 0.0431
+  type: 'test'
+  ...
+# Subtest: missing original presentation sinks refuse before the host
+ok 54 - missing original presentation sinks refuse before the host
+  ---
+  duration_ms: 0.1319
+  type: 'test'
+  ...
+# Subtest: original presentation fails closed on unknown-attempt without another relay request
+ok 55 - original presentation fails closed on unknown-attempt without another relay request
+  ---
+  duration_ms: 57.2989
+  type: 'test'
+  ...
+# Subtest: original presentation fails closed on changed-reply without another relay request
+ok 56 - original presentation fails closed on changed-reply without another relay request
+  ---
+  duration_ms: 66.265
+  type: 'test'
+  ...
+# Subtest: original presentation sink getter failure stops before dispatch and preserves its exception
+ok 57 - original presentation sink getter failure stops before dispatch and preserves its exception
+  ---
+  duration_ms: 0.29
+  type: 'test'
+  ...
+# Subtest: direct primary forwards one explicit interface_inspect_target without following its result
+ok 58 - direct primary forwards one explicit interface_inspect_target without following its result
+  ---
+  duration_ms: 0.1359
+  type: 'test'
+  ...
+# Subtest: direct primary forwards one explicit interface_review_target without following its result
+ok 59 - direct primary forwards one explicit interface_review_target without following its result
+  ---
+  duration_ms: 0.0372
+  type: 'test'
+  ...
+# Subtest: direct primary returns failed target selection once and blocks inspection/review retry
+ok 60 - direct primary returns failed target selection once and blocks inspection/review retry
+  ---
+  duration_ms: 0.1202
+  type: 'test'
+  ...
+# Subtest: guarded primary rejects persistent target tools locally
+ok 61 - guarded primary rejects persistent target tools locally
+  ---
+  duration_ms: 0.0737
+  type: 'test'
+  ...
+# Subtest: one command preserves original text and bytes, with exclusive source-bound files
+ok 62 - one command preserves original text and bytes, with exclusive source-bound files
+  ---
+  duration_ms: 19.2952
+  type: 'test'
+  ...
+# Subtest: overlap refuses instead of queuing and snapshots the original arguments
+ok 63 - overlap refuses instead of queuing and snapshots the original arguments
+  ---
+  duration_ms: 3.8647
+  type: 'test'
+  ...
+# Subtest: request persistence failure invokes no operation and permits only explicit close
+ok 64 - request persistence failure invokes no operation and permits only explicit close
+  ---
+  duration_ms: 9.4418
+  type: 'test'
+  ...
+# Subtest: reply persistence failure retains one effect and blocks replay
+ok 65 - reply persistence failure retains one effect and blocks replay
+  ---
+  duration_ms: 3.2454
+  type: 'test'
+  ...
+# Subtest: invalid envelope is rejected before host or file publication: {"id":1,"method":"close","args":[]}
+ok 66 - invalid envelope is rejected before host or file publication: {"id":1,"method":"close","args":[]}
+  ---
+  duration_ms: 1.3334
+  type: 'test'
+  ...
+# Subtest: invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[],"extra":true}
+ok 67 - invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[],"extra":true}
+  ---
+  duration_ms: 1.6353
+  type: 'test'
+  ...
+# Subtest: invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]}
+ok 68 - invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]}
+  ---
+  duration_ms: 1.3742
+  type: 'test'
+  ...
+# Subtest: invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]}
+ok 69 - invalid envelope is rejected before host or file publication: {"id":1,"method":"observe","args":[null]}
+  ---
+  duration_ms: 1.0554
+  type: 'test'
+  ...
+# Subtest: unknown route refuses before allocating a directory
+ok 70 - unknown route refuses before allocating a directory
+  ---
+  duration_ms: 1.0281
+  type: 'test'
+  ...
+# Subtest: image write failure stops without a repeated native call or an implicit review
+ok 71 - image write failure stops without a repeated native call or an implicit review
+  ---
+  duration_ms: 3.6744
+  type: 'test'
+  ...
+# Subtest: original presentation is explicit and adds no new host send or review
+ok 72 - original presentation is explicit and adds no new host send or review
+  ---
+  duration_ms: 9.2766
+  type: 'test'
+  ...
+# Subtest: explicit positional input preserves offset, tail, and original response
+ok 73 - explicit positional input preserves offset, tail, and original response
+  ---
+  duration_ms: 2.735
+  type: 'test'
+  ...
+# Subtest: missing offset fails before dispatch and prevents corrected replay
+ok 74 - missing offset fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.8468
+  type: 'test'
+  ...
+# Subtest: object instead of positional arguments fails before dispatch and prevents corrected replay
+ok 75 - object instead of positional arguments fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.2544
+  type: 'test'
+  ...
+# Subtest: fractional offset fails before dispatch and prevents corrected replay
+ok 76 - fractional offset fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.2025
+  type: 'test'
+  ...
+# Subtest: missing tail fails before dispatch and prevents corrected replay
+ok 77 - missing tail fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.378
+  type: 'test'
+  ...
+# Subtest: invalid interaction fails before dispatch and prevents corrected replay
+ok 78 - invalid interaction fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.2997
+  type: 'test'
+  ...
+# Subtest: extra argument fails before dispatch and prevents corrected replay
+ok 79 - extra argument fails before dispatch and prevents corrected replay
+  ---
+  duration_ms: 0.2793
+  type: 'test'
+  ...
+# Subtest: direct caller cannot dispatch guarded positional input
+ok 80 - direct caller cannot dispatch guarded positional input
+  ---
+  duration_ms: 0.1779
+  type: 'test'
+  ...
+# Subtest: uncloneable tail stops before dispatch and cannot be retried
+ok 81 - uncloneable tail stops before dispatch and cannot be retried
+  ---
+  duration_ms: 1.5873
+  type: 'test'
+  ...
+# Subtest: explicit inputWithFeedback snapshots the policy and retains original reply
+ok 82 - explicit inputWithFeedback snapshots the policy and retains original reply
+  ---
+  duration_ms: 1.3883
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback null stops before host dispatch
+ok 83 - invalid explicit feedback null stops before host dispatch
+  ---
+  duration_ms: 0.3901
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {} stops before host dispatch
+ok 84 - invalid explicit feedback {} stops before host dispatch
+  ---
+  duration_ms: 0.159
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":""} stops before host dispatch
+ok 85 - invalid explicit feedback {"expected_title":""} stops before host dispatch
+  ---
+  duration_ms: 0.1364
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","timeout_ms":10001} stops before host dispatch
+ok 86 - invalid explicit feedback {"expected_title":"saved","timeout_ms":10001} stops before host dispatch
+  ---
+  duration_ms: 0.13
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","timeout_ms":1.5} stops before host dispatch
+ok 87 - invalid explicit feedback {"expected_title":"saved","timeout_ms":1.5} stops before host dispatch
+  ---
+  duration_ms: 0.2598
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","rejected_titles":["saved"]} stops before host dispatch
+ok 88 - invalid explicit feedback {"expected_title":"saved","rejected_titles":["saved"]} stops before host dispatch
+  ---
+  duration_ms: 0.2003
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","rejected_titles":[null]} stops before host dispatch
+ok 89 - invalid explicit feedback {"expected_title":"saved","rejected_titles":[null]} stops before host dispatch
+  ---
+  duration_ms: 0.2672
+  type: 'test'
+  ...
+# Subtest: invalid explicit feedback {"expected_title":"saved","extra":true} stops before host dispatch
+ok 90 - invalid explicit feedback {"expected_title":"saved","extra":true} stops before host dispatch
+  ---
+  duration_ms: 0.2463
+  type: 'test'
+  ...
+# Subtest: missing requested cue cannot pass through a completed input reply
+ok 91 - missing requested cue cannot pass through a completed input reply
+  ---
+  duration_ms: 0.4146
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue title preserves reply and stops next input
+ok 92 - inconsistent requested cue title preserves reply and stops next input
+  ---
+  duration_ms: 0.7186
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue after_title preserves reply and stops next input
+ok 93 - inconsistent requested cue after_title preserves reply and stops next input
+  ---
+  duration_ms: 0.2012
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue expected_title preserves reply and stops next input
+ok 94 - inconsistent requested cue expected_title preserves reply and stops next input
+  ---
+  duration_ms: 0.2354
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue rejected_titles preserves reply and stops next input
+ok 95 - inconsistent requested cue rejected_titles preserves reply and stops next input
+  ---
+  duration_ms: 0.1761
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue authority_granted preserves reply and stops next input
+ok 96 - inconsistent requested cue authority_granted preserves reply and stops next input
+  ---
+  duration_ms: 0.1617
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue input_dispatched preserves reply and stops next input
+ok 97 - inconsistent requested cue input_dispatched preserves reply and stops next input
+  ---
+  duration_ms: 0.1609
+  type: 'test'
+  ...
+# Subtest: inconsistent requested cue task_success preserves reply and stops next input
+ok 98 - inconsistent requested cue task_success preserves reply and stops next input
+  ---
+  duration_ms: 0.1623
+  type: 'test'
+  ...
+# Subtest: uncloneable feedback policy stops before dispatch
+ok 99 - uncloneable feedback policy stops before dispatch
+  ---
+  duration_ms: 0.2299
+  type: 'test'
+  ...
+# Subtest: positional mint sends exactly the public schema and preserves original result
+ok 100 - positional mint sends exactly the public schema and preserves original result
+  ---
+  duration_ms: 4.06
+  type: 'test'
+  ...
+# Subtest: missing size stops before any host request
+ok 101 - missing size stops before any host request
+  ---
+  duration_ms: 0.5839
+  type: 'test'
+  ...
+# Subtest: extra argument stops before any host request
+ok 102 - extra argument stops before any host request
+  ---
+  duration_ms: 0.1307
+  type: 'test'
+  ...
+# Subtest: wrong object shape stops before any host request
+ok 103 - wrong object shape stops before any host request
+  ---
+  duration_ms: 0.1319
+  type: 'test'
+  ...
+# Subtest: fractional source stops before any host request
+ok 104 - fractional source stops before any host request
+  ---
+  duration_ms: 0.2967
+  type: 'test'
+  ...
+# Subtest: invalid point stops before any host request
+ok 105 - invalid point stops before any host request
+  ---
+  duration_ms: 0.3103
+  type: 'test'
+  ...
+# Subtest: empty region stops before any host request
+ok 106 - empty region stops before any host request
+  ---
+  duration_ms: 0.1324
+  type: 'test'
+  ...
+# Subtest: too small region stops before any host request
+ok 107 - too small region stops before any host request
+  ---
+  duration_ms: 0.1224
+  type: 'test'
+  ...
+# Subtest: too large region stops before any host request
+ok 108 - too large region stops before any host request
+  ---
+  duration_ms: 0.4544
+  type: 'test'
+  ...
+# Subtest: empty alias stops before any host request
+ok 109 - empty alias stops before any host request
+  ---
+  duration_ms: 0.4539
+  type: 'test'
+  ...
+# Subtest: direct route cannot mint a guarded alias
+ok 110 - direct route cannot mint a guarded alias
+  ---
+  duration_ms: 0.2861
+  type: 'test'
+  ...
+# Subtest: mint after STOP does not renew a reference or dispatch
+ok 111 - mint after STOP does not renew a reference or dispatch
+  ---
+  duration_ms: 0.2448
+  type: 'test'
+  ...
+# Subtest: mintMany sends one public request with a copied explicit same-source batch
+ok 112 - mintMany sends one public request with a copied explicit same-source batch
+  ---
+  duration_ms: 2.8496
+  type: 'test'
+  ...
+# Subtest: duplicate alias stops before registration and subsequent input
+ok 113 - duplicate alias stops before registration and subsequent input
+  ---
+  duration_ms: 0.8779
+  type: 'test'
+  ...
+# Subtest: extra argument stops before registration and subsequent input
+ok 114 - extra argument stops before registration and subsequent input
+  ---
+  duration_ms: 0.2473
+  type: 'test'
+  ...
+# Subtest: empty batch stops before registration and subsequent input
+ok 115 - empty batch stops before registration and subsequent input
+  ---
+  duration_ms: 0.3165
+  type: 'test'
+  ...
+# Subtest: over capacity stops before registration and subsequent input
+ok 116 - over capacity stops before registration and subsequent input
+  ---
+  duration_ms: 0.386
+  type: 'test'
+  ...
+# Subtest: bad alias stops before registration and subsequent input
+ok 117 - bad alias stops before registration and subsequent input
+  ---
+  duration_ms: 0.3495
+  type: 'test'
+  ...
+# Subtest: unknown property stops before registration and subsequent input
+ok 118 - unknown property stops before registration and subsequent input
+  ---
+  duration_ms: 0.2231
+  type: 'test'
+  ...
+# Subtest: fractional source stops before registration and subsequent input
+ok 119 - fractional source stops before registration and subsequent input
+  ---
+  duration_ms: 0.2249
+  type: 'test'
+  ...
+# Subtest: fractional point stops before registration and subsequent input
+ok 120 - fractional point stops before registration and subsequent input
+  ---
+  duration_ms: 0.5604
+  type: 'test'
+  ...
+# Subtest: hole in point stops before registration and subsequent input
+ok 121 - hole in point stops before registration and subsequent input
+  ---
+  duration_ms: 1.1516
+  type: 'test'
+  ...
+# Subtest: hole in batch stops before registration and subsequent input
+ok 122 - hole in batch stops before registration and subsequent input
+  ---
+  duration_ms: 0.2346
+  type: 'test'
+  ...
+# Subtest: out of range size stops before registration and subsequent input
+ok 123 - out of range size stops before registration and subsequent input
+  ---
+  duration_ms: 0.1713
+  type: 'test'
+  ...
+# Subtest: partial registration returns original evidence and latches STOP without replay
+ok 124 - partial registration returns original evidence and latches STOP without replay
+  ---
+  duration_ms: 0.3226
+  type: 'test'
+  ...
+# Subtest: missing reference returns original evidence and latches STOP without replay
+ok 125 - missing reference returns original evidence and latches STOP without replay
+  ---
+  duration_ms: 0.1983
+  type: 'test'
+  ...
+# Subtest: wrong source returns original evidence and latches STOP without replay
+ok 126 - wrong source returns original evidence and latches STOP without replay
+  ---
+  duration_ms: 0.1585
+  type: 'test'
+  ...
+# Subtest: wrong order returns original evidence and latches STOP without replay
+ok 127 - wrong order returns original evidence and latches STOP without replay
+  ---
+  duration_ms: 0.2059
+  type: 'test'
+  ...
+# Subtest: direct route cannot register guarded references
+ok 128 - direct route cannot register guarded references
+  ---
+  duration_ms: 0.1967
+  type: 'test'
+  ...
+# Subtest: raw batch call also refuses to continue after uncertain partial registration
+ok 129 - raw batch call also refuses to continue after uncertain partial registration
+  ---
+  duration_ms: 0.1847
+  type: 'test'
+  ...
+# Subtest: numbered commands return exact file/text descriptors with no image encoding
+ok 130 - numbered commands return exact file/text descriptors with no image encoding
+  ---
+  duration_ms: 5.5194
+  type: 'test'
+  ...
+# Subtest: commands arriving while outstanding are rejected rather than queued
+ok 131 - commands arriving while outstanding are rejected rather than queued
+  ---
+  duration_ms: 2.2648
+  type: 'test'
+  ...
+# Subtest: EOF waits for the already committed command without replaying it
+ok 132 - EOF waits for the already committed command without replaying it
+  ---
+  duration_ms: 0.7151
+  type: 'test'
+  ...
+# Subtest: malformed JSON is refused without invoking exchange or consuming a command
+ok 133 - malformed JSON is refused without invoking exchange or consuming a command
+  ---
+  duration_ms: 1.3431
+  type: 'test'
+  ...
+# Subtest: command error reports uncertainty and state without retry
+ok 134 - command error reports uncertainty and state without retry
+  ---
+  duration_ms: 0.8862
+  type: 'test'
+  ...
+# Subtest: output failure rejects the stream owner after one completed command
+ok 135 - output failure rejects the stream owner after one completed command
+  ---
+  duration_ms: 1.8201
+  type: 'test'
+  ...
+# Subtest: config refuses unknown routes and fields before starting a host
+ok 136 - config refuses unknown routes and fields before starting a host
+  ---
+  duration_ms: 0.5235
+  type: 'test'
+  ...
+# Subtest: terminal output refuses before starting a relay or allocating its evidence
+ok 137 - terminal output refuses before starting a relay or allocating its evidence
+  ---
+  duration_ms: 0.3514
+  type: 'test'
+  ...
+# Subtest: startup output failure keeps original exception, closes one relay and never writes again
+ok 138 - startup output failure keeps original exception, closes one relay and never writes again
+  ---
+  duration_ms: 57.5352
+  type: 'test'
+  ...
+# Subtest: failed review is correlated to its consumed command without a host call or replay
+ok 139 - failed review is correlated to its consumed command without a host call or replay
+  ---
+  duration_ms: 4.0566
+  type: 'test'
+  ...
+# Subtest: pre-admission envelope error keeps requested id distinct from unconsumed next id
+ok 140 - pre-admission envelope error keeps requested id distinct from unconsumed next id
+  ---
+  duration_ms: 1.5463
+  type: 'test'
+  ...
+# Subtest: malformed command identity stays bounded and does not become a valid correlation
+ok 141 - malformed command identity stays bounded and does not become a valid correlation
+  ---
+  duration_ms: 0.7601
+  type: 'test'
+  ...
+# Subtest: blocked busy output bounds response work for a batch of rejected commands
+ok 142 - blocked busy output bounds response work for a batch of rejected commands
+  ---
+  duration_ms: 4.725
+  type: 'test'
+  ...
+# Subtest: overload preserves the committed result before rejecting the stream owner
+ok 143 - overload preserves the committed result before rejecting the stream owner
+  ---
+  duration_ms: 1.5187
+  type: 'test'
+  ...
+# Subtest: separately observed busy replies remain available during one committed command
+ok 144 - separately observed busy replies remain available during one committed command
+  ---
+  duration_ms: 0.9732
+  type: 'test'
+  ...
+# Subtest: configured reviewWindow uses actual snapshotted target and unchanged result
+ok 145 - configured reviewWindow uses actual snapshotted target and unchanged result
+  ---
+  duration_ms: 2.8705
+  type: 'test'
+  ...
+# Subtest: invalid configured target undefined stops locally
+ok 146 - invalid configured target undefined stops locally
+  ---
+  duration_ms: 0.9004
+  type: 'test'
+  ...
+# Subtest: invalid configured target null stops locally
+ok 147 - invalid configured target null stops locally
+  ---
+  duration_ms: 0.1454
+  type: 'test'
+  ...
+# Subtest: invalid configured target 0 stops locally
+ok 148 - invalid configured target 0 stops locally
+  ---
+  duration_ms: 0.2214
+  type: 'test'
+  ...
+# Subtest: invalid configured target -1 stops locally
+ok 149 - invalid configured target -1 stops locally
+  ---
+  duration_ms: 0.1704
+  type: 'test'
+  ...
+# Subtest: invalid configured target 1.5 stops locally
+ok 150 - invalid configured target 1.5 stops locally
+  ---
+  duration_ms: 0.2405
+  type: 'test'
+  ...
+# Subtest: invalid configured target 8388611 stops locally
+ok 151 - invalid configured target 8388611 stops locally
+  ---
+  duration_ms: 0.1406
+  type: 'test'
+  ...
+# Subtest: invalid configured target NaN stops locally
+ok 152 - invalid configured target NaN stops locally
+  ---
+  duration_ms: 0.1468
+  type: 'test'
+  ...
+# Subtest: invalid configured target Infinity stops locally
+ok 153 - invalid configured target Infinity stops locally
+  ---
+  duration_ms: 0.2943
+  type: 'test'
+  ...
+# Subtest: per-call arguments cannot change target and STOP still allows close
+ok 154 - per-call arguments cannot change target and STOP still allows close
+  ---
+  duration_ms: 0.4069
+  type: 'test'
+  ...
+# Subtest: direct mode cannot review a guarded window
+ok 155 - direct mode cannot review a guarded window
+  ---
+  duration_ms: 0.1705
+  type: 'test'
+  ...
+# Subtest: one pending call survives interrupted waiting; no resend, exact content presentation
+ok 156 - one pending call survives interrupted waiting; no resend, exact content presentation
+  ---
+  duration_ms: 155.0271
+  type: 'test'
+  ...
+# Subtest: refused IDs can remain unchanged while attempt records never overwrite
+ok 157 - refused IDs can remain unchanged while attempt records never overwrite
+  ---
+  duration_ms: 139.6703
+  type: 'test'
+  ...
+# Subtest: process loss makes delivery uncertain and blocks new sends
+ok 158 - process loss makes delivery uncertain and blocks new sends
+  ---
+  duration_ms: 44.9212
+  type: 'test'
+  ...
+# Subtest: mismatched response retained but never presented as the pending result
+ok 159 - mismatched response retained but never presented as the pending result
+  ---
+  duration_ms: 139.2015
+  type: 'test'
+  ...
+# Subtest: existing evidence directory is refused before spawn
+ok 160 - existing evidence directory is refused before spawn
+  ---
+  duration_ms: 0.8197
+  type: 'test'
+  ...
+# Subtest: nonfinite or omitted values are refused before recording or sending
+ok 161 - nonfinite or omitted values are refused before recording or sending
+  ---
+  duration_ms: 44.8092
+  type: 'test'
+  ...
+# Subtest: review attribution comes from explicit retained reply and cannot overwrite history
+ok 162 - review attribution comes from explicit retained reply and cannot overwrite history
+  ---
+  duration_ms: 11.7137
+  type: 'test'
+  ...
+# Subtest: public and management captures have explicit identity without invented sequence
+ok 163 - public and management captures have explicit identity without invented sequence
+  ---
+  duration_ms: 7.7743
+  type: 'test'
+  ...
+# Subtest: review refuses ambiguous, missing-image, uncertain and incomplete evidence
+ok 164 - review refuses ambiguous, missing-image, uncertain and incomplete evidence
+  ---
+  duration_ms: 5.5234
+  type: 'test'
+  ...
+# Subtest: presentation preserves explicit MCP error status before unchanged content
+ok 165 - presentation preserves explicit MCP error status before unchanged content
+  ---
+  duration_ms: 0.5501
+  type: 'test'
+  ...
+# Subtest: presentation retains explicit error status for empty content and does not invent an absent flag
+ok 166 - presentation retains explicit error status for empty content and does not invent an absent flag
+  ---
+  duration_ms: 0.1798
+  type: 'test'
+  ...
+# Subtest: copied public host modules run outside the checkout using only Node built-ins
+ok 167 - copied public host modules run outside the checkout using only Node built-ins
+  ---
+  duration_ms: 156.1116
+  type: 'test'
+  ...
+# Subtest: ordered same-clock events separate transport, presentation and caller review before next send
+ok 168 - ordered same-clock events separate transport, presentation and caller review before next send
+  ---
+  duration_ms: 181.6195
+  type: 'test'
+  ...
+# Subtest: public capture review joins the same host timeline without a fabricated source sequence
+ok 169 - public capture review joins the same host timeline without a fabricated source sequence
+  ---
+  duration_ms: 113.8839
+  type: 'test'
+  ...
+# Subtest: failed instrumentation before send emits no request and transport remains closable
+ok 170 - failed instrumentation before send emits no request and transport remains closable
+  ---
+  duration_ms: 46.2784
+  type: 'test'
+  ...
+# Subtest: presentation failure is retained as a started-only boundary and blocks later action
+ok 171 - presentation failure is retained as a started-only boundary and blocks later action
+  ---
+  duration_ms: 102.0185
+  type: 'test'
+  ...
+# Subtest: invalid JSON does not consume an attempt and foreign review cannot gain an event
+ok 172 - invalid JSON does not consume an attempt and foreign review cannot gain an event
+  ---
+  duration_ms: 94.3893
+  type: 'test'
+  ...
+# Subtest: timeline loss after submission retains reply and blocks replay while allowing transport cleanup
+ok 173 - timeline loss after submission retains reply and blocks replay while allowing transport cleanup
+  ---
+  duration_ms: 311.6566
+  type: 'test'
+  ...
+# Subtest: opt-in image reuse requires explicit presented review and retains original base
+ok 174 - opt-in image reuse requires explicit presented review and retains original base
+  ---
+  duration_ms: 592.2799
+  type: 'test'
+  ...
+# Subtest: unpresented review cannot acknowledge an image base
+ok 175 - unpresented review cannot acknowledge an image base
+  ---
+  duration_ms: 158.7041
+  type: 'test'
+  ...
+# Subtest: reference presentation failure blocks actions and cannot be treated as delivered
+ok 176 - reference presentation failure blocks actions and cannot be treated as delivered
+  ---
+  duration_ms: 169.3664
+  type: 'test'
+  ...
+# Subtest: a changed PNG is forwarded and invalidates the previous acknowledged base
+ok 177 - a changed PNG is forwarded and invalidates the previous acknowledged base
+  ---
+  duration_ms: 224.2256
+  type: 'test'
+  ...
+# Subtest: reviewed image reference preserves current MCP error status
+ok 178 - reviewed image reference preserves current MCP error status
+  ---
+  duration_ms: 173.0798
+  type: 'test'
+  ...
+# Subtest: returned local attempt selects retained reply even when relay IDs are reused
+ok 179 - returned local attempt selects retained reply even when relay IDs are reused
+  ---
+  duration_ms: 107.6832
+  type: 'test'
+  ...
+# Subtest: sendPresented delivers typed MCP refusal before resolving and never retries
+ok 180 - sendPresented delivers typed MCP refusal before resolving and never retries
+  ---
+  duration_ms: 107.078
+  type: 'test'
+  ...
+# Subtest: sendPresented owns the whole send/display interval and wait returns the original promise
+ok 181 - sendPresented owns the whole send/display interval and wait returns the original promise
+  ---
+  duration_ms: 159.182
+  type: 'test'
+  ...
+# Subtest: sendPresented checks delivery callbacks before dispatching input
+ok 182 - sendPresented checks delivery callbacks before dispatching input
+  ---
+  duration_ms: 44.8427
+  type: 'test'
+  ...
+# Subtest: sendPresented presentation failure preserves the reply and blocks subsequent input
+ok 183 - sendPresented presentation failure preserves the reply and blocks subsequent input
+  ---
+  duration_ms: 95.6737
+  type: 'test'
+  ...
+# Subtest: sendPresented snapshots callbacks before its request can wait
+ok 184 - sendPresented snapshots callbacks before its request can wait
+  ---
+  duration_ms: 90.3039
+  type: 'test'
+  ...
+# Subtest: text acknowledgment retains original error and digest, without an image review or another request
+ok 185 - text acknowledgment retains original error and digest, without an image review or another request
+  ---
+  duration_ms: 76.4539
+  type: 'test'
+  ...
+# Subtest: text acknowledgment rejects unpresented without a receipt
+ok 186 - text acknowledgment rejects unpresented without a receipt
+  ---
+  duration_ms: 48.9213
+  type: 'test'
+  ...
+# Subtest: text acknowledgment rejects changed-reply without a receipt
+ok 187 - text acknowledgment rejects changed-reply without a receipt
+  ---
+  duration_ms: 49.827
+  type: 'test'
+  ...
+# Subtest: text acknowledgment rejects image without a receipt
+ok 188 - text acknowledgment rejects image without a receipt
+  ---
+  duration_ms: 53.5167
+  type: 'test'
+  ...
+# Subtest: text acknowledgment cannot replace strict image review
+ok 189 - text acknowledgment cannot replace strict image review
+  ---
+  duration_ms: 50.2521
+  type: 'test'
+  ...
+# Subtest: changed retained reply cannot be presented as the original delivered response
+ok 190 - changed retained reply cannot be presented as the original delivered response
+  ---
+  duration_ms: 57.7869
+  type: 'test'
+  ...
+1..190
+# tests 190
+# suites 0
+# pass 190
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2920.962

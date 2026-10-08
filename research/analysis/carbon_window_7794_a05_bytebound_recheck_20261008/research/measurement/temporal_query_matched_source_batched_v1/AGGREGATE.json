@@ -1,0 +1,30 @@
+{
+  "aggregate_digest": "c1557812a98d62cb2a3ca620184f1206697bd606babaaebfa6ebafd73ea31285",
+  "batch_digests": ["4e839ef001ef53ee9a8de012e6accc3177da3e045f8a1efa3a8bae78b760a5d2","853419c10d80b1a5f4e978aa0b8b1d11e6687dbfcd7fd51a00cbc4c60a9dde1f","5e000c45bb122514a3574a8f501f7cc0583421459e27b12df1a4691d0bc5fc5e","205bc048ec752d6282ed6428dcedfa60da241eaa996952e210fb209648bcbb26","526638e4b69048fb3208cd60276cf8318c00c2c5d575c16116279c708f628a5a","625789efb02a7e03f9884c72e91d682cd1ef038feafed904eda90744f1b82c23","6ce6b733ac62388e5443e773ea3cd8917b6ebbf4363ffff8f20a5d49143ef52d","16906a4ed2aa404577ad36a367ee0c0bbb83d9e5a96e7456f238e75e4b3beb32","d8b6e05aaed2169abdd92b6e80618ec6d6dee768c79be95c51a064c9dcaf83c2","7335a5a830ead77a4f82c859fe21b85cf822198b75bba11ffda61697e4f30ceb","c01e7332ae44bfcf2d8239eab6d94b223606e2b3f021f5a54a718bb37019f4be","39e7252ba6fbf88c2c1327fe15049fab368138a22f70270446185683a1e8c222","d2c9035d0e10642f887e67d197ba6ea9a389acf7ebde44253fbbbffe627ad54b","ff1d39e032009b3206b04f9ddb695446533215df2460bd7b18e90e3ef926edc3","aefb00db262c239a0e5d72d284b0895dcdf6a1504fd83ff30e0351faeaad270a","3a4c509150f8cfeace1b980be29d89cb8a23927096ece52a8c3a1b3b92cbfe6c","73d1d5b8fa1257530f27e972d4ce009eb9b743c4ffbe5e07b62570592ad87118","646836803ca2ba648d754ce120e8fd7772ab5314aacdd8a21ff5c0af3ded44c6","95e4715c1c367d880073e1328b103649d521efb68560a2a0f776e911b06111b6","1d755ea119b1bf2e53947ddf6e1e358adaeaa4537c6ac1865acdf403dcd884ba"],
+  "batch_processes": 20,
+  "batch_size": 11000,
+  "candidate_oracle_mismatches": 0,
+  "classes": {
+    "EVENT_CENTERED": {"advantage_pp": 99.98,"fixed_rate": 0.0,"n": 55000,"query_rate": 0.9998},
+    "LONG_BASELINE": {"advantage_pp": 0.0,"fixed_rate": 1.0,"n": 55000,"query_rate": 1.0},
+    "RECENT_DENSE": {"advantage_pp": 65.55090909090909,"fixed_rate": 0.0,"n": 55000,"query_rate": 0.6555090909090909},
+    "REVERSAL_BRACKET": {"advantage_pp": 95.90363636363637,"fixed_rate": 0.04096363636363636,"n": 55000,"query_rate": 1.0}
+  },
+  "counts": {
+    "EVENT_CENTERED": {"fixed": 0,"n": 55000,"query": 54989},
+    "LONG_BASELINE": {"fixed": 55000,"n": 55000,"query": 55000},
+    "RECENT_DENSE": {"fixed": 0,"n": 55000,"query": 36053},
+    "REVERSAL_BRACKET": {"fixed": 2253,"n": 55000,"query": 55000}
+  },
+  "decision": "PASS_MATCHED_SOURCE_TEMPORAL_QUERY_BATCHED_SCOPED",
+  "fixed_coverage_rate": 0.2602409090909091,
+  "formal_batches": 20,
+  "formal_invocations": 1,
+  "grants_input_authority": false,
+  "histories": 220000,
+  "leaks": {"authority": 0,"budget": 0,"cross_scope": 0,"future": 0,"unknown_source": 0},
+  "overall_advantage_pp": 65.35863636363636,
+  "query_coverage_rate": 0.9138272727272727,
+  "query_worse_classes": [],
+  "reruns": 0
+}

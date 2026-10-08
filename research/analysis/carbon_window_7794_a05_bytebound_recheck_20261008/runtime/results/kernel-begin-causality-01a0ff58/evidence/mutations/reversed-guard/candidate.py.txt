@@ -1,0 +1,17 @@
+"""Isolated engineering candidate. It is not imported by the runtime."""
+from frozen_kernel import ContractError, RequestLifecycle
+
+
+class BeginBoundLifecycle(RequestLifecycle):
+    def __init__(self):
+        super().__init__()
+        self.accepted_begin_ns = None
+
+    def begin_execution(self, request, *, now_ns):
+        super().begin_execution(request, now_ns=now_ns)
+        self.accepted_begin_ns = now_ns
+
+    def record_execution(self, receipt):
+        if self.accepted_begin_ns is not None and receipt.started_ns > self.accepted_begin_ns:
+            raise ContractError('execution receipt starts before accepted begin')
+        super().record_execution(receipt)

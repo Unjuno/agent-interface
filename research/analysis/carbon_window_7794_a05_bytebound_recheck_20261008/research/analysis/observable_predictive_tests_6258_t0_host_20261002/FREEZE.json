@@ -1,0 +1,42 @@
+{
+  "allocation": "OBSERVABLE-PREDICTIVE-TESTS-6258-T0-HOST-20261002-01",
+  "base_commit": "4cf0a3dfde1219671b671bf0a9079a11dcb2e159",
+  "branch": "research/6258-predictive-tests-t0-host-20261002",
+  "candidate_formal_invocations_before_freeze": 0,
+  "auditor_formal_invocations_before_freeze": 0,
+  "retries": 0,
+  "environment": {
+    "os": "Windows 11 x64 build 26200",
+    "python": "CPython 3.12.10",
+    "dependencies": "Python standard library only",
+    "docker_used": false,
+    "docker_disposition": "ENGINE_TIMEOUT_SERVICE_STOPPED_SHARED_SLOT_UNASSIGNED",
+    "network": false,
+    "model_or_gui": false,
+    "user_or_external_effect": false
+  },
+  "source_hashes_sha256": {
+    "candidate.py": "E59CC0DEBDB078C2356120618799452059959467B38048CBCAAD8264768ACCFD",
+    "audit.py": "36FF64E5FEE7297E89CF716A786EF7340480167C9CDBE3C4174160C0FB898C2F",
+    "test_t0.py": "24F891DA567BC2091455741AB23E71B05BF61180D1222F2078675509ED90E278",
+    "PLAN.md": "52668108F6A0CCC48135AADA905B4F0D595F7716239119C038BA8D9D1D0395B5"
+  },
+  "construction": {
+    "command": "python -B -m unittest discover -s research/analysis/observable_predictive_tests_6258_t0_host_20261002 -p 'test_*.py' -v",
+    "result": "PASS 16/16",
+    "syntax_check": "python -B -m py_compile research/analysis/observable_predictive_tests_6258_t0_host_20261002/candidate.py research/analysis/observable_predictive_tests_6258_t0_host_20261002/audit.py",
+    "candidate_formal_outputs_absent": true,
+    "output_paths": [
+      "research/analysis/observable_predictive_tests_6258_t0_host_20261002/candidate.raw.json",
+      "research/analysis/observable_predictive_tests_6258_t0_host_20261002/audit.raw.json"
+    ]
+  },
+  "formal_commands": {
+    "candidate": "python -B research/analysis/observable_predictive_tests_6258_t0_host_20261002/candidate.py --output research/analysis/observable_predictive_tests_6258_t0_host_20261002/candidate.raw.json",
+    "auditor": "python -B research/analysis/observable_predictive_tests_6258_t0_host_20261002/audit.py research/analysis/observable_predictive_tests_6258_t0_host_20261002/candidate.raw.json --output research/analysis/observable_predictive_tests_6258_t0_host_20261002/audit.raw.json"
+  },
+  "decision_gate": "PLAN.md",
+  "candidate_formal_invocations_after_freeze": 1,
+  "auditor_formal_invocations_after_freeze": 1,
+  "retry_budget": 0
+}

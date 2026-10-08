@@ -1,0 +1,15 @@
+{
+  "task":"SVG-SCOPED-EDIT-20260916-A2",
+  "case_count":45,
+  "predecessor":{"allocation":"A","completed":22,"partial_ids":["A-r2-whole_file_guard-target_move"],"unstarted":22,"reason":"180-second container execution ceiling","same_id_reruns":0,"formal_pass":false},
+  "change":"Only synchronous five-case execution batching and fresh allocation/case IDs; same experiment, audit, policy, geometry, order and gates. Original A remains incomplete and is never pooled with A2.",
+  "plan_sha256":"168e4b8b90741746696463eb809ba954a462c8ab14e8d0bef97661eb61015940",
+  "sources":{
+    "ENVIRONMENT.json":"331473907a96066afa13631bbc9fe4706c96280879cbe3602784dba2b77a3fcd",
+    "audit.py":"ff55ea4643b8c14b3485aae9da5298f88141d3f4b0f4854d5ec3df520b0c13c2",
+    "experiment.py":"8a3922e2da536c46dfac251aa8e9ad04709fab512f12c7a3aa9f4655f32a640c",
+    "test_contract.py":"6c346c670cfb25f17f7d4d02d732e79b883d9a72cea20db6454283e77ebb5e0d",
+    "run_block.py":"e21a4ce8bfeec8a43a2b854bff4093f529ef388e1072c8d2e1cbe28594cb9ae7"
+  },
+  "decision":"Same A gates: scoped_current15/15 full-state and raster correct, stale-document non-write loss and whole-file false refusal exposed; all integrity gates. Stop unexpected error, no consumed ID rerun."
+}

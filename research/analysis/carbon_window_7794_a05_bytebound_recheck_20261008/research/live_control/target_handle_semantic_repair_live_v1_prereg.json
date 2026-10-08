@@ -1,0 +1,96 @@
+{
+  "schema": "target-handle-semantic-repair-prereg-v1",
+  "allocation_id": "target-handle-semantic-repair-live-01",
+  "output": "research/live_control/results/target-handle-semantic-repair-live-01",
+  "allocations": 1,
+  "retry_limit": 0,
+  "model_calls": 0,
+  "seed": 212,
+  "chromium": "/home/taka/.cache/ms-playwright/chromium-1208/chrome-linux64/chrome",
+  "expected_source_geometry": [
+    10,
+    10,
+    1050,
+    780
+  ],
+  "resize_width_delta": -120,
+  "handle_box": [
+    250,
+    234,
+    42,
+    18
+  ],
+  "handle_offset": [
+    20,
+    9
+  ],
+  "relation": {
+    "schema": "target-semantic-region-relation-v1",
+    "anchor": "target_box_origin",
+    "offset": [
+      -235,
+      -64
+    ],
+    "size": [
+      315,
+      45
+    ]
+  },
+  "expected_crop_sha256": "879ad35b666f63b1c9a401c359bd563c52170146b3e4ca5c7314448fdfb5784c",
+  "max_positive_exchanges": 8,
+  "thresholds_ms": {
+    "handle_resolution_lte": 50,
+    "contract_repair_lte": 5,
+    "first_feedback_lte": 300,
+    "useful_feedback_lte": 650,
+    "probe_compute_lte": 5
+  },
+  "execution": [
+    "navigate and fill a fresh private Chromium form",
+    "mint and resolve an exact no-authority Save-button target handle",
+    "derive the completion semantic region only from the verified handle box plus the frozen local relation",
+    "resize the same surface width by -120 and take one passive coherent observation",
+    "require the old semantic contract to refuse surface_size_changed before crop hashing",
+    "revalidate the same exact target handle on current pixels; if eligible, locally repair the contract for current geometry with zero model calls",
+    "use the resolved handle point for ordinary Executor admission, submit, consume pre-artifact semantics, and independently verify saved token and release"
+  ],
+  "decision": {
+    "pass": "Retain one live local semantic-contract repair after resize using a verified target handle.",
+    "fail": "Retain the first outcome without retry and diagnose the failed boundary.",
+    "forbidden_claims": [
+      "general resize repair",
+      "unknown layout understanding",
+      "model or token savings",
+      "causal speed advantage",
+      "cross-platform support",
+      "human-tempo control",
+      "research freeze"
+    ]
+  },
+  "scope": "One zero-model/no-retry Linux/X11 Chromium fixture and fresh seed. It measures exact target-handle resolution, semantic-contract derivation and local resize repair, client feedback, independent output and release. The target relation is calibrated and frozen, not discovered. No rate, token saving, unknown-layout, model, portability or human-tempo claim.",
+  "source_sha256": {
+    "research/live_control/target_handle_semantic_repair_live_v1.py": "3db2615dfb89c159a6d6cb4ed6597d784c128cc88410ad08bdbac6e943fb01ec",
+    "research/live_control/audit_target_handle_semantic_repair_live_v1.py": "ab7394cfe39f7b87188663f1ec9bdd8cc382ff2cd275d7044b5beaaafdf219d5",
+    "research/live_control/target_handle_semantic_binding_v1.py": "e3699401beb092d4bc6cf0ebab9f4ddf7a41e6339473d062863a7844dd79a8b7",
+    "research/live_control/test_target_handle_semantic_binding_v1.py": "fb37bc64df4b7e1d09d4ee34d203e754e52ef357bb7884d502a9b06b6200cf70",
+    "research/live_control/target_relative_crop_semantic_probe_v1.py": "4445ec20fd4c0a3cf75dbb81d6eb87a3dc5bb011114baad43681ddfbf9cd893b",
+    "research/live_control/semantic_probe_runtime_v3.py": "f7c967cd548e1285eecc8fe67959a08f3eed8f5325759ff8b8d1036a7d8586b5",
+    "research/live_control/semantic_probe_backend_v3.py": "c8df75570919521573fd78c94645baa449c13d99b443685c106ed9e06751475c",
+    "research/live_control/scoped_target_handle_v1.py": "550d377f145abbb16f8466dc91b5bb84ca25fccadf71e4d24b2f426550f5a19f",
+    "research/live_control/coordinate_frame_transform_v1.py": "cb6aefeaa4e9a41b4f4b9ca532e24106025247e39e7c7ee026ddc242a7cbb05b",
+    "research/live_control/inkscape_selection_frame_probe_v1.py": "b7d21eb76741b84120730334f21ef0692c13f10b2a49064ca7386ae4d877ab42",
+    "research/live_control/release_event_socket_v3.py": "f3aba577f924a6bf7ea605b9c954d2ee61d4732ae047d6999c7824b89c184746",
+    "research/live_control/release_event_socket_v2.py": "dd57b486f177661a5ea76e97a17932818b034275eb19562e6e266877b89e9731",
+    "research/live_control/release_event_cursor_v2.py": "4e58de4e42ac352771e3df750e21d0c90acf5d4df754cb9524be61967890bdd5",
+    "research/live_control/release_event_scope_v2.py": "5ecfa36d4df389ec534a4af342174611360f5d97786309c223d796b1f84008db",
+    "research/live_control/executor_v13.py": "2e45aeae89038d42b4f8082ef930e50ce2f1d2cd64a0ea5c184ea3daba44c327",
+    "research/live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "research/live_control/release_recovery_backend_v1.py": "f6fb71dd07df4aa6daf2a3280364de1ddce6f9a8cd7a8fe8a751acbc17ffc7d2",
+    "research/live_control/cause_session_v1.py": "7a4377c568c9755f3d980575a6a936b3ccae074bf916db3867b7cf634ef9399b",
+    "research/live_control/session_v8.py": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943",
+    "research/live_control/session_v4.py": "04f06d7b787baa77cae20d0c51b563ccc4985dc19b47308d7c24318c5a9e7fee",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "research/observation_tiles/tile_transport.py": "f74caf4f2bea59fe3a73b3f04975384d8520bb06c296765566c4dd2542ef12b0",
+    "research/observation_tiles/image_artifact.py": "7bf6b71d811aaefa75e87f5d9d20fd9275fc928104e910deaca9e3f00c55363e"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "allocation_id": "CEX-GUARD-REFINEMENT-6645-T0-20261002-01",
+  "base_main_sha": "4a577c1bbb57c055bb489e57f513f8672126fe27",
+  "candidate_formal_invocations": 0,
+  "candidate_host_construction_invocations": 1,
+  "formal_status": "HOLD_RESOURCE",
+  "host": "macOS 25.6.0 arm64; CPython 3.14.5",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f (linux/amd64; assigned-host cache/platform not verified)",
+  "auditor_formal_invocations": 0,
+  "auditor_host_construction_invocations": 1,
+  "retry_count": 0,
+  "unit_mutation_tests": "13/13 PASS (host construction only)",
+  "host_candidate_sha256": "fd5a802a69cf12e0e8f26591a6cf8743c25ae3b1a77f39624ec3c3859a0bde4a",
+  "host_audit_sha256": "90d0c85358cd715bcc69d3fe9027a276aa3489f5bb4cc57fcbf13d5574d9ba7c",
+  "host_audit_status": "PASS_METHOD_SCOPED (construction only)",
+  "candidate_stdout": "{\"allocation_id\": \"CEX-GUARD-REFINEMENT-6645-T0-20261002-01\", \"counterexample_events\": 6, \"decisions\": 11}",
+  "auditor_stdout": "{\"allocation_id\": \"CEX-GUARD-REFINEMENT-6645-T0-20261002-01\", \"ambiguous_state_count\": 5, \"arm_comparison\": {\"CANDIDATE_REFINEMENT\": {\"harmful_admitted\": 0, \"harmful_deopt\": 1, \"harmful_unknown\": 4, \"valid_admitted\": 2, \"valid_deopt\": 0, \"valid_unknown\": 3}, \"EXACT_STATE_BLACKLIST\": {\"harmful_admitted\": 1, \"harmful_deopt\": 4, \"harmful_unknown\": 0, \"valid_admitted\": 4, \"valid_deopt\": 1, \"valid_unknown\": 0}, \"INVALIDATE_ALL_FALLBACK\": {\"harmful_admitted\": 0, \"harmful_deopt\": 4, \"harmful_unknown\": 1, \"valid_admitted\": 0, \"valid_deopt\": 4, \"valid_unknown\": 1}, \"ORACLE_MINIMAL_DIAGNOSTIC\": {\"harmful_admitted\": 0, \"harmful_deopt\": 5, \"harmful_unknown\": 0, \"valid_admitted\": 5, \"valid_deopt\": 0, \"valid_unknown\": 0}, \"UNCHANGED_GUARD\": {\"harmful_admitted\": 4, \"harmful_deopt\": 1, \"harmful_unknown\": 0, \"valid_admitted\": 4, \"valid_deopt\": 1, \"valid_unknown\": 0}}, \"audit_status\": \"PASS_METHOD_SCOPED\", \"counterexample_count\": 6, \"errors\": [], \"invalidated_sibling_caches\": [\"cache_skill_a_shape1\", \"cache_skill_b_shape2\"], \"raw_counterexample_events\": 6, \"refinement_alternative_count\": 2, \"schema\": \"cex-guard-refinement-audit-v1\", \"scope\": \"deterministic finite fixture only; no live GUI, runtime safety, task-effect or production claim\", \"state_count\": 11}"
+}

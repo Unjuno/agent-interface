@@ -1,0 +1,36 @@
+{
+  "audit_sha256": "f3e18c72c4f18c714777eff47553c76a07e7f23272d8ec0cef52b7d92c443a4e",
+  "formal_argv": [
+    "python3",
+    "-B",
+    "/study/container_runner.py",
+    "--mode",
+    "formal",
+    "--candidate-out",
+    "/private/tmp/unjuno-crash-atomic-suppression-5795/research/experiments/crash_atomic_suppression_5789_t0_successor_5846/results/5846-01/candidate",
+    "--audit-out",
+    "/private/tmp/unjuno-crash-atomic-suppression-5795/research/experiments/crash_atomic_suppression_5789_t0_successor_5846/results/5846-01/audit",
+    "--audit-raw",
+    "/private/tmp/unjuno-crash-atomic-suppression-5795/research/experiments/crash_atomic_suppression_5789_t0_successor_5846/results/5846-01/candidate/raw.jsonl",
+    "--docker",
+    "docker"
+  ],
+  "image_ref": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "launcher_sha256": "0152b790e358a994ef8acf799ba80318a6f9ae7d3be1206a5e2343e5e9c0b381",
+  "runtime": {
+    "docker_context": "crash-atomic-5846-local",
+    "docker_host": "unix:///var/run/docker.sock",
+    "host_source_root": "/private/tmp/unjuno-crash-atomic-suppression-5795/research/experiments/crash_atomic_suppression_5789_t0_successor_5846",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/arm64",
+    "run_kind": "formal",
+    "source_commit": "e96d9aabd4f64547f4f67a50b27596d9523b6fa5"
+  },
+  "schedule_sha256": "f22db45f8c7bb7ea4f46bd0bc881b1402adb9afc552677a2d05cf5d9577726c7",
+  "source_sha256": {
+    "audit.py": "f3e18c72c4f18c714777eff47553c76a07e7f23272d8ec0cef52b7d92c443a4e",
+    "protocol.py": "6661615c37ed8f3b58272d20cf69b8d4c1669260e49772df7edd109e044b61c5",
+    "runner.py": "00aa5bd0b1b6637a807f424ee405d9c569acb35adc7cfbe4d308f9d30fada35c",
+    "worker.py": "208b0fb23b26a32eed1576e6a464cf56987d24b3217da54e710128bf257a73dd"
+  }
+}

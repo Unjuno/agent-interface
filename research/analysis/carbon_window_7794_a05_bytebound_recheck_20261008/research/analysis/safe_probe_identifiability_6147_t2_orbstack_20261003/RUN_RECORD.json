@@ -1,0 +1,37 @@
+{
+  "allocation_id": "AI-6147-T2-ORB-X11-20261003-02",
+  "status": "H_PASS_SCOPED",
+  "base_main_sha": "511ff52b05ed852e9ebd03e20ee1f2b766ab0e04",
+  "preregistration": "https://github.com/Unjuno/agent-interface/issues/6147#issuecomment-5958643371",
+  "predecessor_t1_stop": "https://github.com/Unjuno/agent-interface/issues/6147#issuecomment-5958518337",
+  "formal_invocations": {"candidate": 3, "auditor": 1, "retries": 0},
+  "arms": {
+    "adaptive": {"rows": 10, "effects": 6, "effects_by_family": {"separable": 2, "action_equivalent": 2, "impossible": 0, "stale": 0, "convergent": 2}, "safe_probes": 16, "unsafe_probes": 0, "candidate_exit": 0, "fixture_exit": 0},
+    "no_probe": {"rows": 10, "effects": 2, "effects_by_family": {"separable": 0, "action_equivalent": 2, "impossible": 0, "stale": 0, "convergent": 0}, "safe_probes": 0, "unsafe_probes": 0, "candidate_exit": 0, "fixture_exit": 0},
+    "one_step": {"rows": 10, "effects": 2, "effects_by_family": {"separable": 0, "action_equivalent": 2, "impossible": 0, "stale": 0, "convergent": 0}, "safe_probes": 10, "unsafe_probes": 0, "candidate_exit": 0, "fixture_exit": 0}
+  },
+  "auditor": {"exit": 0, "result": "PASS_RAW_REPLAY", "errors": [], "mutation_controls_rejected": {"drop_candidate_row": true, "forge_candidate_hidden_state": true, "swap_distinguishing_branch": true, "inject_unsafe_probe": true, "act_after_expiry": true}},
+  "runtime": {
+    "engine": "OrbStack Docker Engine 29.4.0 linux/aarch64",
+    "image": "issue4466-gtk-pixel-stability@sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27 linux/arm64",
+    "all_containers_oom_killed": false,
+    "container_limits": "1 CPU, 536870912 memory bytes, 64 PIDs, network none, read-only root, all capabilities dropped, no-new-privileges",
+    "docker_memory_swap_bytes": 1073741824,
+    "observed_cgroup_memory_swap_max_bytes": 536870912,
+    "swap_disabled": false
+  },
+  "raw": {"path": "raw/formal_02", "manifest": "raw/formal_02/SHA256SUMS.txt", "manifest_sha256": "ebbe8e716ea87ea024167a551710593479b2a2e6fcf72b98d84255a0bab98808"},
+  "frozen_source_manifest": {"path": "SHA256SUMS.txt", "sha256": "6fef0b20bff92d5a6fd1b7868dda32af8ca2ace2801563cfc51b9e8dc491f765", "post_run_note": "README.md was updated after formal launch to link the result and therefore no longer matches its frozen documentation entry; all execution-bearing source and input entries verify. See POST_RUN_PROVENANCE.md. The preregistered manifest has not been rewritten."},
+  "local_ci": {
+    "analysis_index": "PASS, 554 retained result/failure directories indexed at allocation base 511ff52; PASS, 557 after rebase onto c2dc6e4; PASS, 558 on latest integration base 87959b5",
+    "analysis_index_unit_tests": "PASS, 17/17",
+    "official_analysis_workflow_equivalent": "PASS, 109 tests across all 18 workflow test suites; the pinned-provenance geometry-feasibility suite ran with its exact historical workflow source and the current workflow was restored byte-identically (SHA-256 9e5679150f2ca30b32b112cade99a0cc7703820b47a3eb8b8aa4a5667f407f8f)",
+    "workspace_index_tests": "PASS, 21/21",
+    "workspace_index": "PASS, 156 reachable top-level research directories",
+    "public_navigation": "PASS at allocation base 511ff52 (26 docs / 1565 links), rebase c2dc6e4 (26 docs / 1571 links), and latest integration base 87959b5 (26 docs / 1577 links)",
+    "issue_specific": "T1 PASS 13/13; T2 PASS 16/16 host and 16/16 pinned OrbStack; #6505 PASS 7/7",
+    "additional_integration_scripts": "PASS retained-result provenance gate; PASS ledger contract 5 cases",
+    "non_ci_recursive_discovery_note": "A broad unittest discover -s research invocation is not supported because two integration files are executable assertion scripts with cwd-relative imports; invoking the scripts from their package directories passed. This exploratory discovery command is not a configured CI job."
+  },
+  "scope": "authored deterministic Xvfb fixture only; no real GUI, application, model, GPU, user data, external effect, production authority, or general claim"
+}

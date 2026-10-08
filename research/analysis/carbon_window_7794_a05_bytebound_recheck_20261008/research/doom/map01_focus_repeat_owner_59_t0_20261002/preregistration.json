@@ -1,0 +1,87 @@
+{
+  "schema": "issue59-focus-repeat-owner-prereg-v1",
+  "allocation_id": "ISSUE59-FOCUS-REPEAT-OWNER-T0-20261002-01",
+  "issue": 59,
+  "base_main_at_branch_creation": "89f27caf1e9fcf3bc2c2c3c2db7d62ee6d19e4ae",
+  "base_main_at_prior_review_refreeze": "645bc89c71f28a88d8ff37f995d56057cb4cf734",
+  "base_main_at_prior_main_sync": "a4caf65a773d37db516774b797e1244dc9e956e5",
+  "base_main_at_previous_refreeze": "1326813275f1b73349acafc7c7cbc221e687dbd1",
+  "base_main_at_refreeze": "a5756d9b31231a4d64268610236622ac44c36f1f",
+  "status": "REFROZEN_READY_FOR_ONE_FORMAL_CANDIDATE",
+  "question": "Does the byte-identical current InputOwner v10 verify release of an admitted held key after an observed A-to-B X11 focus transfer, before B receives another matching KeyPress?",
+  "hypothesis": "With autorepeat established independently, the owner detects the focus change on its bounded queue wait, emits KeyRelease, and verifies the key is absent from the X server keymap before B receives an additional matching KeyPress.",
+  "fixture": "One private Xvfb 800x600x24 server in a pinned WSLc image containing Python 3.12, python-xlib, Xvfb and xset; two bare InputOutput X windows; repeat 100ms/20ms on the private server; actual current input_owner_v10.py; no WM, model, app, or game.",
+  "source_paths": [
+    "research/live_control/input_owner_v10.py",
+    "research/live_control/executor_v3.py",
+    "research/live_control/lease.py"
+  ],
+  "source_sha256": {
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "executor_v3.py": "ea3fa8c9751a6a41b4814ad6e0d03bec85166765b0a41d2488a51750d17b3a4a",
+    "lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+  },
+  "source_git_blobs": {
+    "input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "executor_v3.py": "2b072454fd81c41bf9e025217afc78020c7059de",
+    "lease.py": "b9dac6bb4063928354733d79bf371909a288a3d1"
+  },
+  "design": {
+    "invocations": {
+      "candidate": 1,
+      "independent_auditor": 1,
+      "retries": 0
+    },
+    "retries": 0,
+    "arms": 1,
+    "control": "Set and read back autorepeat on private Xvfb with xset r rate 100 20; XTEST key-down on A held 240ms, collect matching KeyPress events, send KeyRelease, verify query_keymap reports key up",
+    "trial": "Owner admits one key-down on A; B reader selects KeyPress/KeyRelease on the exact connection it drains and confirms this before the external focus B request; owner release is recorded; after a 100ms settling interval the reader performs XSync and a final drain; a pump exception, absent subscription, incomplete fence, or post-release dequeue of a matching press is HOLD.",
+    "positive_control_minimum_repeat_keypresses": 2,
+    "output": "candidate process writes raw.json only; a separate auditor process reads only that raw file and writes classification.json; retain both processes' exits/stdout/stderr",
+    "forbidden": [
+      "rerun",
+      "shared display",
+      "kill or alter another process",
+      "real desktop input",
+      "application",
+      "game",
+      "model",
+      "claim MAP01 result"
+    ]
+  },
+  "primary_decision": {
+    "scoped_pass": "Positive control succeeds; A-to-B focus transfer is read back; owner logs verified focus_changed release; server keymap is empty; the B reader subscribed before transfer, completes an exception-free XSync fence and final drain; no matching B KeyPress is observed from focus request through verified release, and no ambiguous matching press is dequeued after release.",
+    "counterexample": "one or more matching B KeyPress events are received after the focus-change request begins and before owner release verification, including while requester awaits XSync",
+    "hold": "Release verification, source identity, event ordering, same-connection subscription, exception-free fence/final drain, or timing certainty is missing or inconsistent.",
+    "stop": "positive repeat control does not show at least two presses and a verified release"
+  },
+  "H": "Observed focus loss leads the current owner to verified release before the new focus receives autorepeat; any ambiguous late event cannot be reported as a pass.",
+  "T": "One bounded CPU/Xvfb candidate, one independent auditor, zero retries; one A-to-B focus transfer; same-connection B event selection before transfer; XSync final queue drain after 100ms settling; any matching press dequeued after release is HOLD.",
+  "D": "Classify raw.json independently; require verified=true exactly, same-reader subscription before transfer, no pump exception, completed XSync fence and final drain; use monotonic receipt order and HOLD on matching presses dequeued after release.",
+  "C": "Private WSLc Xvfb; Python Xlib; byte-identical current InputOwner v10; two bare X11 windows; separate reader connection both selects B events and drains them; delegating proxy timestamps owner focus queries and may perturb scheduling.",
+  "U": "One scheduler-sensitive Linux/WSL Xvfb trial. Receipt time is a host monotonic dequeue time; if a matching B press is dequeued after release its server arrival side of the boundary is ambiguous and result is HOLD. No real desktop, application, gameplay or GPU claim.",
+  "shared_resource_rule": "One bounded CPU/Xvfb lane for this one-shot allocation was explicitly authorized by the user request to run the experiment in a WSL container. At 2026-10-02T09:59:18Z, WSLc showed zero running containers and the Arch WSL2 process snapshot showed only the resident Ollama server; no native_mcp_v1, Xvfb, LibreOffice, browser, or game worker was present. This is not GPU assignment and authorizes no other workload.",
+  "image_gate": "Satisfied for this allocation: local WSLc image focus-repeat-59-t0:20261002, immutable image ID sha256:865bfbcc86992769ec9b8311a2344b67c664639d96d7cf0d5c407df9c2c500ed; built from python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016. Python 3.12.15, python-xlib 0.33, Xvfb 2:21.1.16-1.3+deb13u4, x11-utils 7.7+7, x11-xserver-utils 7.7+11. Runtime is pull=never, network=none. The build package and full log are retained alongside this preregistration.",
+  "claim_boundary": "No gameplay, MAP01, real desktop, product reliability or general autorepeat safety claim.",
+  "runtime": {
+    "engine": "Microsoft WSL Containers (wslc.exe) 3.0.1.0",
+    "host_distribution": "Arch Linux, WSL2, kernel 6.18.40.1-microsoft-standard-WSL2",
+    "container_os": "Debian trixie linux/amd64",
+    "base_image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_tag": "focus-repeat-59-t0:20261002",
+    "image_id": "sha256:865bfbcc86992769ec9b8311a2344b67c664639d96d7cf0d5c407df9c2c500ed",
+    "python": "3.12.15",
+    "python_xlib": "0.33",
+    "packages": {
+      "xvfb": "2:21.1.16-1.3+deb13u4",
+      "x11-utils": "7.7+7",
+      "x11-xserver-utils": "7.7+11"
+    },
+    "network": "none during candidate/audit",
+    "pull": "never",
+    "cpus_requested": 1,
+    "memory_requested": "512M",
+    "memory_limit_enforced": false,
+    "gpu": "not used; isolated Xvfb event-order workload is not GPU-compute-bound"
+  }
+}

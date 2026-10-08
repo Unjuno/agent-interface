@@ -1,0 +1,93 @@
+{
+  "allocation": "cache-epoch-monitor-execution-2928-v1-20260928",
+  "candidate_fields": {
+    "CacheEntry": [
+      "allowed_action",
+      "cache_id",
+      "generation",
+      "intent_id",
+      "macro_id",
+      "max_age",
+      "max_updates",
+      "provenance",
+      "strategy_id"
+    ],
+    "Evidence": [
+      "age",
+      "generation",
+      "intent_id",
+      "provenance",
+      "regime",
+      "strategy_id",
+      "update_index"
+    ]
+  },
+  "candidate_keep": 6,
+  "decision": "FAIL_REPLAY_SAFETY_BOUNDARY_SCOPED",
+  "docker_reason": "Shared Docker slot remains assigned to Issue #5074; no release observed.",
+  "docker_used": false,
+  "missing_required_fields": [
+    "dependency_completeness",
+    "request_epoch"
+  ],
+  "oracle_allowed": 1,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10",
+  "row_count": 6,
+  "rows": [
+    {
+      "candidate_disposition": "KEEP",
+      "candidate_reason": "valid_continuation",
+      "dependencies_complete": true,
+      "oracle_replay_allowed": true,
+      "request_epoch": "same",
+      "unsafe_keep": false
+    },
+    {
+      "candidate_disposition": "KEEP",
+      "candidate_reason": "valid_continuation",
+      "dependencies_complete": false,
+      "oracle_replay_allowed": false,
+      "request_epoch": "same",
+      "unsafe_keep": true
+    },
+    {
+      "candidate_disposition": "KEEP",
+      "candidate_reason": "valid_continuation",
+      "dependencies_complete": true,
+      "oracle_replay_allowed": false,
+      "request_epoch": "changed",
+      "unsafe_keep": true
+    },
+    {
+      "candidate_disposition": "KEEP",
+      "candidate_reason": "valid_continuation",
+      "dependencies_complete": false,
+      "oracle_replay_allowed": false,
+      "request_epoch": "changed",
+      "unsafe_keep": true
+    },
+    {
+      "candidate_disposition": "KEEP",
+      "candidate_reason": "valid_continuation",
+      "dependencies_complete": true,
+      "oracle_replay_allowed": false,
+      "request_epoch": "missing",
+      "unsafe_keep": true
+    },
+    {
+      "candidate_disposition": "KEEP",
+      "candidate_reason": "valid_continuation",
+      "dependencies_complete": false,
+      "oracle_replay_allowed": false,
+      "request_epoch": "missing",
+      "unsafe_keep": true
+    }
+  ],
+  "schema": "cache_epoch_monitor_execution_2928_v1",
+  "scope": "Historical synthetic monitor only; not production cache/runtime behavior.",
+  "source_commit": "c7140ca0095554f8af8c8296c8f4de8e8ce26ba5",
+  "subject_path": "research/measurement/decision_policy_cache_rung0_v1/cache.py",
+  "subject_sha256": "dfa3ec92ce0f98913cabb5c85e29d4e70cc1d4914d5c62efdd9b84f73d763505",
+  "unsafe_keep": 5
+}

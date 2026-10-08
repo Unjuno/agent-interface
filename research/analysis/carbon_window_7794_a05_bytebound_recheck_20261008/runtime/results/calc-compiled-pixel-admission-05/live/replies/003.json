@@ -1,0 +1,159 @@
+{
+  "request": {
+    "op": "run",
+    "regions": {
+      "A1": [
+        39,
+        183,
+        118,
+        199
+      ],
+      "A2": [
+        39,
+        203,
+        118,
+        219
+      ]
+    }
+  },
+  "started_ns": 1838456366881,
+  "ended_ns": 1840057609418,
+  "reply": {
+    "receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-pixel-admission",
+      "method": "enter-read-save-yield",
+      "method_version": "1",
+      "session_scope": "native-x11:e0798026f3164cdeaf74ba7e6a5c4a0e",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 2,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 2,
+          "captured_ns": 1838467946987,
+          "evidence_ref": "observation-2",
+          "evidence_digest": "28b1d33dc05a0e2df25b369b11021d274ba809c6b705a36f47add5a376328d72",
+          "predicates": {
+            "present": true,
+            "main_focus": true,
+            "handoff": false
+          }
+        },
+        {
+          "sequence": 5,
+          "captured_ns": 1839545784725,
+          "evidence_ref": "observation-5",
+          "evidence_digest": "9ef23f5c5a6326fdf9693576064a8ca76987e6909f63c066e74cea69f0d97c1b",
+          "predicates": {
+            "present": true,
+            "main_focus": true,
+            "handoff": false,
+            "cells_match": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "start",
+          "to_state": "filled",
+          "action": "enter",
+          "matched_conditions": {
+            "present": true,
+            "main_focus": true
+          },
+          "observation_sequence": 2,
+          "evidence_ref": "observation-2",
+          "action_id": "action-60a7c32113a34ae289c3c315cc2c00d1",
+          "effect_ref": "compiled-f86cce52b32d4bd28b293998da510538-7-execution",
+          "release_verified": true
+        },
+        {
+          "from_state": "filled",
+          "to_state": "handoff",
+          "action": "save",
+          "matched_conditions": {
+            "cells_match": true,
+            "present": true,
+            "main_focus": true
+          },
+          "observation_sequence": 5,
+          "evidence_ref": "observation-5",
+          "action_id": "action-5f2b78183fa84368a0c9ca925f028e7b",
+          "effect_ref": "compiled-f86cce52b32d4bd28b293998da510538-17-execution",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "start",
+          "outcome": "action",
+          "action": "enter",
+          "matched_conditions": {
+            "present": true,
+            "main_focus": true
+          },
+          "evidence_ref": "observation-2"
+        },
+        {
+          "event": "action_terminal",
+          "action": "enter",
+          "status": "completed",
+          "action_id": "action-60a7c32113a34ae289c3c315cc2c00d1",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "enter",
+          "status": "succeeded",
+          "evidence_ref": "observation-5"
+        },
+        {
+          "event": "branch_selected",
+          "state": "filled",
+          "outcome": "action",
+          "action": "save",
+          "matched_conditions": {
+            "cells_match": true,
+            "present": true,
+            "main_focus": true
+          },
+          "evidence_ref": "observation-5"
+        },
+        {
+          "event": "action_terminal",
+          "action": "save",
+          "status": "completed",
+          "action_id": "action-5f2b78183fa84368a0c9ca925f028e7b",
+          "release_verified": true
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "association_changed",
+          "completed_transitions": 2
+        }
+      ],
+      "latest_evidence_ref": "observation-5",
+      "pending_effect": {
+        "action": "save",
+        "expected_effect": {
+          "handoff": true
+        },
+        "effect_ref": "compiled-f86cce52b32d4bd28b293998da510538-17-execution"
+      },
+      "started_ns": 1838466884266,
+      "ended_ns": 1840055580639,
+      "elapsed_ns": 1588696373,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "image_path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-05/live/bridge/images/9d3e32e1a4de42138d8b43742bafca3d.png",
+    "image_sha256": "2b40afd2da3e35ae6207a74498143bd55d3f92d9e592b09d66166781e0e3a5d1",
+    "focused_candidate": 8390723,
+    "task_success": null,
+    "scope": "graph mechanics; independent saved task still unscored"
+  }
+}

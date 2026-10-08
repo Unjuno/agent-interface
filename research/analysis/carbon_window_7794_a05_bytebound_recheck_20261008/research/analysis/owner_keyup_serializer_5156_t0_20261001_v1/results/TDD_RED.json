@@ -1,0 +1,10 @@
+{
+  "command": "python -m unittest -v test_serializer.py",
+  "exit_code": 1,
+  "failing_test": "test_nested_event_is_preserved_as_owner_event_and_joined_event_is_emitted",
+  "exception": "TypeError: dict() got multiple values for keyword argument 'event'",
+  "expected_failure": true,
+  "control_test": "test_non_release_owner_records_are_refused — PASS after the red fixture's input guard was aligned to the required ValueError contract",
+  "candidate_cli_invocations": 0,
+  "formal_x11_invocations": 0
+}

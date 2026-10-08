@@ -1,0 +1,40 @@
+{
+  "schema": "fresh-docker-host-action-v1",
+  "status": "PASS_TASK_AND_GUARD",
+  "allocation": "runtime/results-local/native-docker-host-loop-2558-v1",
+  "model_boundary": {
+    "boundary": "docker-image-to-host-codex-exe",
+    "model": "gpt-5.6-luna",
+    "call_id": "01a0ba91-3926-71f3-8391-91c8b72fc8d7",
+    "image_sha256": "839b1c4a62eca7b4b774b7f1d7bf50635a7b8bc5a31b5567b30e715b16d5afc8",
+    "field_point": [210, 145],
+    "submit_point": [130, 191],
+    "usage": {"input_tokens": 14225, "cached_input_tokens": 13056, "output_tokens": 208, "reasoning_output_tokens": 93},
+    "runner_elapsed_ms": 13210.0538,
+    "authority_granted": 0
+  },
+  "independent_geometry_gate": {
+    "field_submit_collision": false,
+    "field_in_window_client_frame": true,
+    "request_source": "host_codex_bridge",
+    "request_point": [210, 145],
+    "request_text": "docker2558"
+  },
+  "independent_effect": {
+    "task_success": true,
+    "actual": {"saved": true, "text": "docker2558"},
+    "expected_text": "docker2558",
+    "visual_target_revalidation": true,
+    "action_to_scored_effect_ms": 209.534009,
+    "emissions": 27,
+    "release_verified": true
+  },
+  "focus_invalidation_guard": {
+    "status": "SCOPE_MISMATCH",
+    "input_dispatched": false,
+    "emissions_delta": 0,
+    "reused_after_focus_change": false
+  },
+  "authority_granted": 0,
+  "scope": "One fresh Docker X11 task with host-local model grounding, independent effect score, and post-task focus invalidation probe. This is one-task evidence, not a six-task rate or generality claim."
+}

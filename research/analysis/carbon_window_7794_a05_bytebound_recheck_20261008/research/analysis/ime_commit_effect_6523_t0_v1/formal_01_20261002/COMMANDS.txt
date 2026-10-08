@@ -1,0 +1,10 @@
+Construction (completed before source freeze; five tests passed):
+wslc.exe run --pull never --rm --network none --cpus 1 --memory 512M --mount type=bind,source=<experiment-dir>,target=/input,readonly python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B -m unittest discover -s /input -p test_method.py -v
+
+Frozen candidate invocation (exactly once):
+wslc.exe run --pull never --rm --network none --cpus 1 --memory 512M --mount type=bind,source=<experiment-dir>,target=/input,readonly --mount type=bind,source=<formal-dir>/output,target=/output python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /input/candidate.py /input/cases.json /output/raw.json
+
+Frozen independent auditor invocation (only after candidate exit 0; exactly once):
+wslc.exe run --pull never --rm --network none --cpus 1 --memory 512M --mount type=bind,source=<experiment-dir>,target=/input,readonly --mount type=bind,source=<formal-dir>/output,target=/output,readonly --mount type=bind,source=<formal-dir>/output,target=/audit python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016 python -B /input/audit.py /input/cases.json /output/raw.json /audit/audit.json
+
+NOTE: output directory is host-mounted to two container targets in the auditor invocation. Auditor uses /output read-only; its result goes to /audit, which is the same host directory. No retries. WSLc memory/swap limitation caveat appears in FREEZE.json.

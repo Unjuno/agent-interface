@@ -1,0 +1,11 @@
+{
+  "task": "Place exactly one north-facing Conveyor in the empty tile directly above the copper item source, then finish paused with no pending build plans.",
+  "source": [137, 51],
+  "target": [137, 52],
+  "required": {"block": "conveyor", "team": 1, "rotation": 1},
+  "expected_copper_cost": 1,
+  "guard": {"x_min": 136, "x_max": 149, "y_min": 48, "y_max": 55},
+  "success": "the one declared target is the required conveyor; every other guard tile is unchanged; source/core/copper accounting and paused idle completion hold",
+  "independence": "the GUI controller receives no tile oracle; Python scores engine snapshots only after finish",
+  "scope": "one changed-geometry Mindustry placement; no delivery or route-completion claim"
+}

@@ -1,0 +1,30 @@
+{
+  "status": "preregistered_before_one_fresh_mindustry_live_allocation",
+  "study": "mindustry-anchor-first-select-live-01",
+  "model": "gpt-5.6-luna",
+  "reasoning_effort": "low",
+  "task": "Select Conveyor in the visible Mindustry build palette without placing any block.",
+  "policy": "ask the model for a coarse palette point; normalize it to the fresh screen-derived 4x4 palette; acquire one click-free pixel-quiet persistent hover receipt; require the same model to bind Conveyor to that receipt before one ordinary click",
+  "positive_gate": "one verified receipt is accepted; hover-only visual oracle remains false; only the final selection emits button_down; release and the independent fixed-fixture title-plus-selection-border RGB oracle pass",
+  "failure_policy": "retain the first runtime allocation; if the anchor requests expansion, stop without target click; no model, runtime or task retry",
+  "reference_image": "results/mindustry-bend-v2-self-use-01/004.png",
+  "reference_sha256": "9e0850be0d53b7c3ce3d3e0f7ec737418c4151b92eb6d123d8f0dd4fc97e4fc6",
+  "sources": {
+    "preregister_mindustry_anchor_first_select_live_v1.py": "2e99d1eb10751fcb4895651499f19517855f719628c95b2923a7eff2c0e323cf",
+    "run_mindustry_anchor_first_select_live_v1.py": "bda70ca5930485615d132e09fff6aa61abcbf5893bfc7a709a748530e2a9949f",
+    "mindustry_palette_slots_v1.py": "a2faeea8473078505ddcf3d3722fcdcb633b67aaa6694013a92ec009f3b62486",
+    "mindustry_palette_hover_receipt_v1.py": "f33af65393142db97de19a207c6bcaa3c4486cd333c5201cfa57375d91407f04",
+    "mindustry_conveyor_selection_oracle_v1.py": "ba4e23f43e3e9908508162c7e4d0ae02f425254fa5bc3ed5c39ea1ceb1eef0f7",
+    "mindustry_palette_target_responder_v1.txt": "48c160009efd8e471f6281b51aac13c3d19c51e7d8c608821812e134a038010d",
+    "mindustry_socket_v2.py": "09e122e7582b0f02a4d626995865aee0fce17948135e35d22b7509d085e5f6b2",
+    "mindustry_bend_interactive_v2.py": "0991e08659efde59777986d6bd00932415de316a553f20faad80287b10b0c9cd",
+    "live_control/anchor_evidence_contract_schema_v1.json": "56c01ff17461f1f219a219589c822607c6513f4a13fe1ea4743b2abf9c2c6510",
+    "live_control/anchor_evidence_contract_v1.py": "2d4614fcb97d595858f05b4192bd71c1401a34d1c3ed34bf61e321b648b18858",
+    "live_control/anchor_evidence_responder_v1.txt": "29262c0f93aa81c0543849bd7d1a4f12e4158e62d4d69e1c1fac11858fadeb45",
+    "live_control/uncertain_target_contract_schema_v1.json": "bb15feae29097028e33429c53995d088b8dd642fc2fc800ea82b75586a391f0b",
+    "live_control/uncertain_target_contract_v1.py": "df5d9440b231baf36ac6a638b08dcdcf51cc0730bbd8c73c2f270d1680b0bc2c",
+    "live_control/target_handle_model_runner_v2.py": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+    "live_control/openttd_compact_hover_sheet_v1.py": "9d37a719ff05546a342673d353e3ebb83630077bb57859ad6f38ea72c4261c0a"
+  },
+  "scope": "one fixed-layout paused Mindustry palette selection task using requested Luna-low and no subagents; tests cross-domain active semantic evidence and selection only, not placement, expansion recovery, window translation, broad GUI reliability, causal speed or human-tempo operation"
+}

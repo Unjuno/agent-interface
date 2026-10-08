@@ -1,0 +1,19 @@
+Construction-only failure before formal freeze
+
+Command:
+  python3 -m py_compile annotator_a.py annotator_b.py candidate.py auditor.py test_method.py
+  python3 -m json.tool cases.json
+  python3 -m json.tool key.json
+  python3 test_method.py
+
+Observed:
+  exit status: 1
+  candidate subprocess completed; independent validation assertion failed.
+  Traceback (most recent call last):
+    File "test_method.py", line 13, in <module>
+      assert validate(cases, key, raw) == []
+  AssertionError
+
+Root cause found by reconstructing the JSON boundary: coder annotations held `operators` as Python tuples in candidate memory, while JSON serializes them as arrays and the auditor reads them back as lists. The strict raw reconstruction therefore reported every row as mismatched. This was a construction/audit defect, not a scientific FAIL. The auditor was corrected to compare JSON-normalized lists, a row-level independent audit was retained, and the frozen 11-assertion construction suite plus the single formal candidate/auditor pair passed.
+
+Preservation limitation: the failing pre-freeze `candidate.json` was overwritten during construction before its full bytes were snapshotted. The observed failure/traceback and root cause are retained here; the superseded raw candidate is not claimed as preserved. No formal allocation was consumed or retried.

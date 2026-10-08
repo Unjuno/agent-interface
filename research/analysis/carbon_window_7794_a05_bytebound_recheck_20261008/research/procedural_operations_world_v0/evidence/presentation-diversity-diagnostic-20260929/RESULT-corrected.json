@@ -1,0 +1,50 @@
+{
+  "schema": "opsworld-presentation-full-frame-audit-corrected-v1",
+  "disposition": "PASS_PRESENTATION_DIVERSITY_DIAGNOSTIC_ONLY",
+  "supersedes": "The original stride97 0/190 comparison is invalid and withdrawn; see CORRECTION-20260929.md",
+  "source_commit": "1314d8d0113fcef1b72694e6ca0431b5420f74c5",
+  "compiler": "WSL2 Arch Linux GCC 16.1.1",
+  "docker": {
+    "image": "debian:bookworm-slim@sha256:3783cc01769c7b2b1b83a5c5ad96c815348e28ed7da68e2e3687004faa906251",
+    "platform": "linux/amd64",
+    "network": "none",
+    "read_only_root": true,
+    "read_only_bind_mount": true,
+    "source_mounted": false,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 32,
+    "capabilities_dropped": true,
+    "no_new_privileges": true,
+    "auto_removed": true,
+    "exit_code": 0
+  },
+  "validity_tests": {"passed": 20, "total": 20},
+  "diagnostic": {
+    "seeds": 256,
+    "requested_keys_per_seed": 20,
+    "combinations": 5120,
+    "actual_family_mask": "0xfff",
+    "cue_mode_mask": "0xf",
+    "distinct_actual_family_full_frame_collisions": 0,
+    "same_family_key_aliases": 1,
+    "alias": {"seed": 57, "requested_keys": [2, 11], "actual_family": 2},
+    "sample_seed": 234,
+    "distinct_full_frame_hashes": 20,
+    "duplicate_full_frame_pairs": 0,
+    "stride97_distinct_actual_family_pairs": 177,
+    "stride97_colliding_distinct_actual_family_pairs": 0,
+    "requested_pairs_excluded_as_same_actual_family": 13
+  },
+  "binary_sha256": {
+    "test_ops_world": "0498d214d71dfb7a79598a4db0d901dbd981b45321c6966630c45e3957f45d6f",
+    "variation_audit_corrected": "1d889396a551df8c1b26f698332e47770043e8fc87eea2b4e497eda9fd0514b9"
+  },
+  "scope": {
+    "formal_benchmark_promotion": false,
+    "agent_performance_result": false,
+    "benchmark_defect_established": false,
+    "gpu_or_model_used": false,
+    "gui_or_input_used": false
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "allocation": "issue5504-cegar-t0-01",
+  "status": "STOP_RUNNER_FREEZE_SCHEMA_KEY_ERROR",
+  "phase": "formal_candidate_container",
+  "command_exit_code": 1,
+  "candidate_invocations": 1,
+  "auditor_invocations": 0,
+  "formal_retry": false,
+  "candidate_computation": "build_result returned in memory before runner accessed missing top-level freeze.image_digest",
+  "output_created": false,
+  "error": "KeyError: 'image_digest' at run_candidate.py line 37; freeze stores it at container.image_digest",
+  "scientific_decision": "NONE",
+  "classification": "harness/evidence STOP, not scientific FAIL or PASS",
+  "next_allocation": "T0-02 may use a separately frozen runner correction and a new empty output directory; do not rerun T0-01"
+}

@@ -1,0 +1,37 @@
+{
+  "allocation": "REAL-OPTION-WAIT-COST-MONOTONICITY-5428-T0-20261003-01",
+  "candidate": {
+    "command": "python -B research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/candidate.py research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/design.json research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/candidate.raw.json",
+    "exit_code": 0,
+    "invocations": 1,
+    "output_sha256": "092dcade068e3e69c1044078ecc3dfb8b6123abee18fa47caa8b512fe4f52440"
+  },
+  "auditor": {
+    "command": "python -B research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/audit.py research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/design.json research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/candidate.raw.json research/analysis/real_option_wait_cost_monotonicity_5428_t0_20261003/audit.json",
+    "exit_code": 0,
+    "invocations": 1,
+    "output_sha256": "7f4f5cc8794889c75f8455e2ca3eecb11ebe2f42cd83c8fec753f66e8a2afc94"
+  },
+  "retries": 0,
+  "execution": {
+    "host": "Windows CPU",
+    "python": "3.11.9",
+    "dependencies": "Python standard library only",
+    "container": "not used; no container-dependent claim was under test",
+    "gpu": "not used",
+    "network_or_external_action": false
+  },
+  "audit_summary": {
+    "status": "PASS_METHOD_SCOPED",
+    "grid_rows": 225,
+    "corner_rows": 10,
+    "total_rows": 235,
+    "commit": 135,
+    "wait": 95,
+    "hold": 5,
+    "wait_cost_monotonicity_violations": 0,
+    "lost_flexibility_monotonicity_violations": 0,
+    "errors": []
+  },
+  "source_freeze": "FREEZE.json"
+}

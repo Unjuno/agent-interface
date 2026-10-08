@@ -1,0 +1,44 @@
+{
+  "schema": "agent-interface-gpu-allocation-stop-v1",
+  "issue": 5752,
+  "allocation_id": "GPU-HUD-CUDA-5752-20261001-01",
+  "owner": "Unjuno / this Codex task",
+  "branch": "research/gpu-hud-cuda-5752-20261001-01",
+  "additive_path": "research/doom/map01_hud_cuda_5752_20261001/",
+  "window_utc": {
+    "start": "2026-10-01T03:55:00Z",
+    "scheduled_end": "2026-10-01T04:20:00Z",
+    "stopped_at": "2026-10-01T03:58:44.6356637Z"
+  },
+  "intake_main_sha": "bf0edd75ff5f12a8c5cddb0e0d74d9abcd9957a8",
+  "main_at_stop_sha": "8827fad422b225bddd9b1c6d34bfa68ca19265c5",
+  "main_advance": {
+    "ahead_by": 3,
+    "changed_paths_reviewed": "3 commits; added artifacts unrelated to this allocation's reader/data; no candidate source/data provenance was re-established after intake"
+  },
+  "gate_observation": {
+    "command": "nvidia-smi --query-gpu=name,utilization.gpu,memory.used,memory.total --format=csv,noheader; nvidia-smi --query-compute-apps=pid,process_name,used_memory --format=csv,noheader; nvidia-smi",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "utilization_percent": 0,
+    "memory_used_mib": 9,
+    "memory_total_mib": 16384,
+    "visible_gpu_process": {
+      "pid": 11508,
+      "name": "C:\\Users\\junny\\AppData\\Local\\Programs\\LM Studio\\LM Studio.exe",
+      "type": "C+G",
+      "compute_query_row": true
+    }
+  },
+  "secondary_gate": "Expected local _vizdoom/vizdoom/freedoom2.wad absent; no freedoom2.wad found under this task workspace. No download or substitution attempted.",
+  "disposition": "STOP_VISIBLE_GPU_PROCESS_AND_REQUIRED_WAD_UNAVAILABLE",
+  "scientific_result": "NOT_EVALUATED",
+  "candidate_invocations": 0,
+  "raw_candidate_sha256": null,
+  "auditor_invocations": 0,
+  "cuda_workload_invocations": 0,
+  "docker_orbstack_invocations": 0,
+  "model_gui_game_or_input_effects": 0,
+  "retries": 0,
+  "resource_release": "GPU slot released at stopped_at; no process was killed and no model was started or changed",
+  "continuation": "This allocation is terminal STOP. Any later attempt needs a fresh issue/allocation/window and new provenance; do not reuse this allocation."
+}

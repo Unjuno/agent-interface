@@ -1,0 +1,27 @@
+{
+  "task": "COORD-TRANSITION-INTENT-READBACK-20260916-020",
+  "publication_base": "55dc440894acbe4116d853d356080ec3363e0207",
+  "pre_measurement_head": "508e957506ebf12dd6d97a7c443712b3fa2da001",
+  "measured_writes_before_freeze": 0,
+  "blobs": {
+    "policy.py": "3c7bb1f00f310e445830c35272afd2f9261c7d71",
+    "plan.json": "6ae35f7c0e22601fbc1d2fafc90f67652a6c1979",
+    "requested_intent.json": "20f27b014ef1bdfc7ce3d2721634880abae1bcd2",
+    "canonical_exact.json": "c7d18a99e55fd86d0002472178a0285415b9be0a",
+    "canonical_intent.json": "9df744ea7af10257692d3b2ccb52e89e2e6edb44",
+    "canonical_conflict.json": "d221cc127b8366297f9c1937c5af427af63deccb",
+    "payload_exact_g2.json": "3f96efa1d16948d693be958d645cbd00708065dc",
+    "payload_exact_note1.json": "1edf8fc3bbb66a122a88838d21b29b92da616d54",
+    "payload_intent_g2.json": "9a76142d9c32cc08166ff365c56f46047db394bb",
+    "payload_intent_note1.json": "1903f570084537bf31969ad314cfe52e63f8c5f7",
+    "payload_conflict_g3.json": "79c76fde0be5ba92be46ebe0dde84377a085d74f"
+  },
+  "measured_order": [
+    "exact_bytes_metadata_changed",
+    "intent_bound_metadata_changed",
+    "intent_content_conflict"
+  ],
+  "recovery_write_budget": 0,
+  "classifier_gets_per_case": 1,
+  "retries": 0
+}

@@ -1,0 +1,34 @@
+{
+  "started_utc": "2026-10-02T02:23:48.206218806Z",
+  "finished_utc": "2026-10-02T02:24:18.249721728Z",
+  "construction": {
+    "container_id": "e5239952225c77fe5e4ca19a1393ed6055df5e1dbbe330d0f445c97dc6ffcad3",
+    "exit_code": 0,
+    "stdout": "test_auditor_rejects_forged_receipt_and_policy_schedule ... ok; test_auditor_rejects_tampered_equation_and_budget ... ok; test_malformed_importance_falls_back_without_changing_closure ... ok; test_optional_fields_never_implied_by_limited_status ... ok; test_preregistered_grid_and_audit ... ok; test_priority_retransmit_schedules_mandatory_before_optional ... ok; test_unequal_repair_recovers_scattered_mandatory_pair ... ok; Ran 7 tests; OK",
+    "stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap."
+  },
+  "candidate": {
+    "container_id": "73af17a9f549fbd84e356a31192d84a8e953fa88fdc159518b54b751f55f13",
+    "exit_code": 0,
+    "stdout": "{\"allocation\": \"FEC-IMPORTANCE-5459-T2-WSLC-20261002-01\", \"fault_runs\": 28, \"raw_sha256\": \"2e46fa28a4b0b0a134bb8be330f1e236881622bcb6d45a5c43fe0693c83d8894\", \"trace_runs\": 4096}",
+    "stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap."
+  },
+  "independent_audit": {
+    "container_id": "74383a142a10ff1684bd2e97e759708abfdf0f4487d9a59013665a764448d247",
+    "exit_code": 1,
+    "audit": "FAIL_METHOD",
+    "errors": 8224,
+    "stderr": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap."
+  },
+  "runtime": "Microsoft WSL Containers (WSLc) 3.0.1.0, kernel 6.18.40.1-1; python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f; network=none; cpus=1; memory=1G; user=65534:65534",
+  "evidence_sha256": {
+    "raw.json": "2e46fa28a4b0b0a134bb8be330f1e236881622bcb6d45a5c43fe0693c83d8894",
+    "audit.json": "63f31f4f76c4bbedff8c7e0fb6c731a73da94ec936cfd4f2fc874f9600c2f083"
+  },
+  "kernel_warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+  "commands": [
+    "wslc run --pull never --network none --cpus 1 --memory 1G --user 65534:65534 --mount type=bind,source=SOURCE,target=/src,readonly python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /src/build_check.py",
+    "wslc run --pull never --network none --cpus 1 --memory 1G --user 65534:65534 --mount type=bind,source=SOURCE,target=/src,readonly --mount type=bind,source=CANDIDATE_OUTPUT,target=/out python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /src/candidate.py /out/raw.json",
+    "wslc run --pull never --network none --cpus 1 --memory 1G --user 65534:65534 --mount type=bind,source=SOURCE,target=/src,readonly --mount type=bind,source=CANDIDATE_INPUT,target=/in,readonly --mount type=bind,source=AUDIT_OUTPUT,target=/out python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /src/auditor.py /in/raw.json /out/audit.json"
+  ]
+}

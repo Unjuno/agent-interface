@@ -1,0 +1,23 @@
+{
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-02",
+  "schema": "issue3311_intermediate_feedback_x11_resource_stop_v1",
+  "disposition": "STOP_PID_LIMIT_PREVENTED_GUI_FIXTURE_START",
+  "docker_exit_code": 1,
+  "runner_started": true,
+  "model_calls": 0,
+  "save_clicks": 0,
+  "confirm_clicks": 0,
+  "network": "none",
+  "image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+  "resource_limits": {"pids": 64, "cpus": 1, "memory_bytes": 536870912},
+  "observed_failures": [
+    "ThreadingHTTPServer handler creation: RuntimeError: can't start new thread",
+    "subprocess.Popen(xdotool search): BlockingIOError: [Errno 11] Resource temporarily unavailable",
+    "exception-path oracle request: RemoteDisconnected: Remote end closed connection without response"
+  ],
+  "result_file_written": false,
+  "cause": "Chromium/X11 startup exhausted the frozen 64-PID cgroup; the runner failed before any target action. Its error reporter also depended on allocating another HTTP handler thread, so it could not save RUNNER_RESULT.json.",
+  "no_retry": true,
+  "runner_sha256": "f1338ac0701146e583e45a1bdc52bf3e48489ba5eb0c932da50113e4c744ecd2",
+  "auditor_sha256": "0d056fde4ddc1b7fecfe96c2f32efa5db7a93141392ae416f02188e9702a2ad4"
+}

@@ -1,0 +1,55 @@
+{
+  "audit_gate_errors": [
+    "decision",
+    "hits"
+  ],
+  "audit_pass": false,
+  "decision": "HOLD_NO_LIVE_LATENCY_DISCRIMINATOR",
+  "formal_invocations": 1,
+  "parent_partial_rows_pooled": 0,
+  "reruns": 0,
+  "summary": {
+    "arm_counts": {
+      "current": 12,
+      "temporal": 12,
+      "wait": 12
+    },
+    "current_minus_temporal_mean_ms": 13.057721083333334,
+    "exceptions": 0,
+    "future_to_effect_ms": {
+      "current": {
+        "mean": 17.594827416666668,
+        "median": 18.696566,
+        "p95": 30.76639395
+      },
+      "temporal": {
+        "mean": 4.537106333333333,
+        "median": 4.1765465,
+        "p95": 7.126929299999999
+      },
+      "wait": {
+        "mean": 29.1456005,
+        "median": 29.589820500000002,
+        "p95": 30.195102500000004
+      }
+    },
+    "local_hits": {
+      "current": 6,
+      "temporal": 11,
+      "wait": 0
+    },
+    "rows": 36,
+    "valid_rows": 36,
+    "wait_minus_temporal_mean_ms": 24.608494166666667
+  },
+  "task": "TEMPORAL-SPECULATION-X11-PLANNER-GAP-R1-20260918-002",
+  "witness": {
+    "admission_reason": "EXPIRED",
+    "case_id": "f11_temporal",
+    "current_to_current_capture_end_ms": 155.351883,
+    "direction": -1,
+    "future_to_effect_ms": 7.997246,
+    "magnitude": 2,
+    "path": "planner_wait"
+  }
+}

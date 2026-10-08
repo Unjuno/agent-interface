@@ -1,0 +1,18 @@
+{
+  "schema":"v39-v15-selected-path-prepost-a02-result-v1",
+  "issue":59,
+  "prereg_comment":5987111555,
+  "freeze_correction_comment":5987160510,
+  "base_commit":"81a59aed13492ba1d52ea80e03d48c3d8de7b2c5",
+  "candidate_exit":0,
+  "candidate_invocations":1,
+  "auditor_exit":1,
+  "auditor_invocations":1,
+  "retries":0,
+  "candidate_status":"TWO_CASE_SYNTHETIC_OBSERVATION",
+  "auditor_status":"FAIL",
+  "observed_order":{"normal":{"up_attempt_trace_positions":[15,19],"keymap_query_positions":[12,27,34],"pre_sample":[65,74],"post_sample":[],"telemetry_first_position":30},"lost_space_keyrelease":{"up_attempt_trace_positions":[15,19],"keymap_query_positions":[12,27,34],"pre_sample":[65,74],"post_sample":[65],"telemetry_first_position":30,"final_server_keys":[65],"close_error":"owner release not verified: [65]"}},
+  "audit_failure":"The frozen raw auditor expected each case rows array to contain only two release transitions, but the candidate retained the complete emitted projection (two admissions followed by two release rows). This caused row-key, receipt-binding, and sample-classification assertions to fail. It also required route.authority_claims flags that the candidate did not emit, although top-level real-input, real-X11, physical-keyboard, application, and full-controller claims were all false. The audit result remains FAIL; no rerun or post-run edits were made.",
+  "decision":"Preserve as synthetic instrumentation-placement evidence with a failed independent audit; do not promote to qualification or physical-input evidence.",
+  "limits":["fake X server state only","no real X11 or physical keyboard state","XSync means server synchronization only","no application effect or full V39 game loop","no threat response, useful feedback, latency, bounded recovery, or gameplay","private live-game lane remains unassigned"]
+}

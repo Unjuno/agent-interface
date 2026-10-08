@@ -1,0 +1,73 @@
+{
+  "schema": "unjuno.raw-only-audit-freeze.v1",
+  "issue": 6410,
+  "allocation": "NEEDLE-ROLE-SKILL-LIFECYCLE-WSLC-6410-AUDIT-20261002-03",
+  "base_commit": "926144e0bbbc197e00aa3b4821f1d49afe831529",
+  "branch": "research/needle-role-skill-lifecycle-6410-audit-a03-20261002",
+  "path": "research/analysis/needle_role_skill_lifecycle_6410_audit_a03_20261002/",
+  "question": "Independently reconstruct and adjudicate the unchanged candidate raw retained by Issue #6410 without invoking candidate, model, optimizer, or timing workloads.",
+  "prior_allocation": "NEEDLE-ROLE-SKILL-LIFECYCLE-WSLC-6410-AUDIT-20261002-02",
+  "prior_allocation_disposition": "STOP_AUDIT_ENVIRONMENT_PATH; candidate=0, auditor=1, retries=0; no raw reconstruction or audit report. This allocation changes only the allocation identity/output namespace and adds an in-container path preflight; it does not retry allocation 02.",
+  "inputs": {
+    "candidate_raw_sha256": "bef4b5fbd98f5743ca597406b83414bb695657aa611d2898063dc370f793cbcf",
+    "candidate_raw_path": "research/analysis/needle_role_skill_lifecycle_wslc_5084_t0_20261002/formal-output/raw.json",
+    "original_freeze_sha256": "e0338a6c72afe8797e911653069d318373269cd5b642d2fab3cbce9cd9529ef9",
+    "candidate_sha256": "3d5b18a2ff3b493f78440ac10c77ae2583f1ea05048fc37b35d76674f88e037f",
+    "failed_auditor_sha256": "30e12c5de4f28926fc9cdc6c77cbcd25381daebf11078ea58894b39cca7ecc09",
+    "construction_test_sha256": "b955786caef447266f3b2bd55a71d3afecf7a1b4829fadfe9c0bbf36a11375a9",
+    "scorer_sha256": "d8a7292430968f388159bb3dd1fb3f4523381d95691b07d99087f49553d4f8e3",
+    "validator_sha256": "e45a6b1ec6ad4995533c59d3ae560b9a91e2d31b2d7186c1cae5705f90602b80",
+    "skill_sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "expected_sha256": "5baca462abbcdd561dba4c790775a589f91a0fa15453e2f3e6c3bc74fb1b6f61",
+    "candidate_log_sha256": "39758515bb129e937327aaaf7004161d326ac17950528cd59cd7dcdbc9c4b8bf0",
+    "failed_auditor_log_sha256": "0cb7ed396d6955548585b565a035b1070010fee9ba182d31a52684c56dfb95b6"
+  },
+  "audit_source_sha256": "193132436cc3389d9d49883112c0d4b91dc3afdcd00559ca020d9f72c502d2d1",
+  "test_source_sha256": "4aad2d445da496b74564a795e782b0df2ca85ebb661aeda4bfe6d3d19c79ad28",
+  "protocol": {
+    "candidate_invocations": 0,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "rows_reconstructed": 30000,
+    "blocks": 15,
+    "requests_per_arm_per_block": 1000,
+    "request_schedule": "role i mod 3; per-role row (37*i+11) mod 4096",
+    "mutation_controls": [
+      "prediction",
+      "truncate",
+      "block",
+      "allocation",
+      "source",
+      "schedule",
+      "duration"
+    ],
+    "independence": "scalar float32 reconstruction from raw tensors and frozen input; no import of candidate.py, failed audit.py, or candidate prediction outputs as oracle",
+    "output_path": "results/audit-03/audit.json",
+    "container_entry_preflight": "Use /bin/sh -ec to test -f on every frozen container-relative input path before exec python; any missing path terminates this sole invocation and is retained as STOP, no retry."
+  },
+  "runtime": {
+    "implementation": "Microsoft WSL Containers native CLI (wslc.exe)",
+    "wsl_version": "3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "platform": "linux/amd64",
+    "python": "3.12.14",
+    "pull": "never",
+    "network": "none",
+    "cpus": 0.25,
+    "memory_requested": "512m",
+    "user": "65534:65534",
+    "gpu": false,
+    "source_and_evidence_mounts": "read-only",
+    "output_mount": "new empty writable bind",
+    "rootfs": "writable; wslc has no rootfs-readonly option",
+    "memory_and_swap_enforcement": "do not assume; retain any WSLc/cgroup warning"
+  },
+  "decision": {
+    "pass": "all identities match; all 30,000 predictions independently reconstruct; all 15 blocks are structurally valid; seven mutations reject; reuse wins >=12/15, median lifetime cost ratio <=0.90, median first break-even <=1000 (non-crossers censored at 1001)",
+    "hold": "identity and reconstruction clean but preregistered amortization gates not met",
+    "fail": "any retained candidate prediction differs from the independent reconstruction or frozen expected fixture",
+    "stop": "input/source/runtime identity mismatch, malformed/incomplete raw, auditor exception, or any mutation accepted; no retry and no candidate rerun"
+  },
+  "scope": "One raw-only audit of the retained synthetic seed-3788 WSLc run. No candidate rerun, new timing, training, GPU, cross-runtime comparison, online adaptation, GUI outcome, or product claim. Formal invocation is not authorized until an exact bounded CPU/WSLc assignment and owner-release gate are recorded."
+}

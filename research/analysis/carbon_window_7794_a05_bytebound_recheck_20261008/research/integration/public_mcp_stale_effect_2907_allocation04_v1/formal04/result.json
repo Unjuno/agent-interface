@@ -1,0 +1,121 @@
+{
+  "action": {
+    "binding_revision": 1,
+    "error": null,
+    "input_dispatched": null,
+    "program_emissions": 154,
+    "releases": [
+      {
+        "buttons_down": [],
+        "keys_down": [],
+        "monotonic_ns": 18664083199658,
+        "verified": true
+      }
+    ],
+    "source_sequence": 2,
+    "status": "completed"
+  },
+  "authority_granted": false,
+  "cleanup": [
+    {
+      "owned_pids": [
+        18,
+        51,
+        52,
+        71,
+        76,
+        91,
+        131,
+        138,
+        140,
+        190
+      ],
+      "pid": 18,
+      "still_running_pids": [],
+      "zombie_pids": [
+        18,
+        51,
+        52,
+        71,
+        76,
+        91,
+        131,
+        138,
+        140,
+        190
+      ]
+    },
+    {
+      "owned_pids": [
+        12
+      ],
+      "pid": 12,
+      "still_running_pids": [],
+      "zombie_pids": [
+        12
+      ]
+    },
+    {
+      "owned_pids": [
+        11
+      ],
+      "pid": 11,
+      "still_running_pids": [],
+      "zombie_pids": [
+        11
+      ]
+    }
+  ],
+  "close": {
+    "authority_granted": false,
+    "call_directory": "/evidence/formal04/server-receipts/71b7af2f15144024911a772b1c12316b",
+    "call_id": "71b7af2f15144024911a772b1c12316b",
+    "connection_close_attempted": true,
+    "release": {
+      "buttons_down": [],
+      "keys_down": [],
+      "monotonic_ns": 18664430404084,
+      "verified": true
+    },
+    "release_attempted": true,
+    "restart_allowed": false,
+    "session": {
+      "authority_granted": false,
+      "binding_revision": 1,
+      "error": null,
+      "mode": "persistent-x11",
+      "recovery_required": false,
+      "restart_allowed": false,
+      "session_id": "f863b70b81b74608a2e663f2cdfd703d",
+      "state": "closed",
+      "targets": {
+        "chromium": 6291459
+      }
+    },
+    "session_id": "f863b70b81b74608a2e663f2cdfd703d",
+    "status": "closed"
+  },
+  "decision": "PASS_PUBLIC_MCP_STALE_EFFECT_RELEASE_SCOPED",
+  "effect_receipt": {
+    "marker": "agent-mcp-effect-2907-20260927-04",
+    "matched": true,
+    "window_id": 6291459,
+    "wm_name": "WM_NAME(UTF8_STRING) = \"agent-mcp-effect-2907-20260927-04 - Chromium\""
+  },
+  "input_operations": 154,
+  "model_calls": 0,
+  "network_calls": 0,
+  "server_processes_after_shutdown": [],
+  "session_id": "f863b70b81b74608a2e663f2cdfd703d",
+  "stale_gate": {
+    "backend_emissions": 0,
+    "caller_current_sequence": 2,
+    "error": "STALE_OBSERVATION",
+    "input_dispatched": null,
+    "program_source_sequence": 1,
+    "reported_status": "refused"
+  },
+  "trace_file": "trace.json",
+  "x_socket_absent": true
+}
+

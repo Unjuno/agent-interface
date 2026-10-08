@@ -1,0 +1,27 @@
+{
+  "allocation": "Issue 2918 live MANIPULATE_TO certificate transfer allocation 03",
+  "predecessors": ["allocation 01 STOP (PR #3746)", "allocation 02 HOLD (PR #3748)"],
+  "base_commit": "8332de26ac6cf4fd3a470ee5c6e5fa75e362d8b2",
+  "container_image": "issue-3548-route-unit:20260920",
+  "container_image_id": "sha256:0e35cdb51a82e59d359ec09b85ce835d9217a1eab65b68ce1871c9b0a85014c9",
+  "platform": "linux/arm64",
+  "network": "none",
+  "root_filesystem": "read-only",
+  "source_mount": "/repo:ro",
+  "source_import_root": "/repo via PYTHONPATH",
+  "runner_output_mount": "/out:rw, fresh and allocation-specific",
+  "raw_audit_input_mount": "/in:ro",
+  "audit_report_mount": "/report:rw, separate from raw evidence",
+  "xvfb": "Xvfb :99 -screen 0 1280x800x24 -nolisten tcp",
+  "formal_command": "docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m -e PYTHONDONTWRITEBYTECODE=1 -e PYTHONPATH=/repo -e OUT=/out -v <source>:/repo:ro -v <fresh-run-output>:/out:rw -w /repo --entrypoint /bin/sh issue-3548-route-unit:20260920 -lc '<start Xvfb :99; wait for xdpyinfo; python3 -B research/integration/issue_2918_live_certificate_v3/run_live_allocation.py>'",
+  "audit_command": "docker --context orbstack run --rm --network none --read-only --tmpfs /tmp:rw,noexec,nosuid,size=64m -e PYTHONDONTWRITEBYTECODE=1 -v <source>:/repo:ro -v <formal-output>:/in:ro -v <separate-audit-output>:/report:rw -w /repo issue-3548-route-unit:20260920 python3 -B research/integration/issue_2918_live_certificate_v3/audit_live_allocation.py /in /report",
+  "sha256": {
+    "research/analysis/observation_manipulate_dynamic_certificate_v1/model.py": "a6247953fa3a25051866c97d37d6eb053dd63f76b5573e05e494cab03c065eb2",
+    "research/analysis/observation_manipulate_dynamic_certificate_v1/live_candidate.py": "8cd92785f15a388c07b44f3f98001950d1fd616d42c191395963fa0a75599ef5",
+    "research/integration/issue_2918_live_certificate_v3/run_live_allocation.py": "bb3df987134b8e83eb42dd9dee8c4d40b0638965d3557dd1e6ce6fa251328bdd",
+    "research/integration/issue_2918_live_certificate_v3/audit_live_allocation.py": "21b85a03c9eb9149a828c797c36e431d4a140b291bc42674dbad3266d2c12e04"
+  },
+  "formal_cases": 12,
+  "retry_policy": "one runner invocation, then one auditor invocation; neither is rerun",
+  "authority": {"input_dispatched": false, "side_effect_authority": false}
+}

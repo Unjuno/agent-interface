@@ -1,0 +1,33 @@
+{
+  "schema": "prefix-responsive-counterparty-6327-fixture-v1",
+  "stage": 2,
+  "task": {
+    "task_id": "save-document-01",
+    "target_id": "document-01",
+    "authorized_effects": ["save:document-01"],
+    "forbidden_effects": ["purchase:addon-01"],
+    "truth": "document-01 remains the sole target; save is the only authorized completion"
+  },
+  "offered_episodes": [
+    {"id":"e01","public_prefix":"declined_addon"},
+    {"id":"e02","public_prefix":"declined_addon"},
+    {"id":"e03","public_prefix":"continued"},
+    {"id":"e04","public_prefix":"continued"},
+    {"id":"e05","public_prefix":"declined_addon"},
+    {"id":"e06","public_prefix":"declined_addon"},
+    {"id":"e07","public_prefix":"continued"},
+    {"id":"e08","public_prefix":"continued"}
+  ],
+  "static_balanced_schedule": ["V0","V1","V0","V1","V0","V1","V0","V1"],
+  "calibration": {
+    "artifact_id": "exogenous-replay-schedule-v1"
+  },
+  "variants": {
+    "V0": {"task_id":"save-document-01","target_id":"document-01","primary_choice":"save:document-01","authorized_effects":["save:document-01"],"truth_id":"save-document-01"},
+    "V1": {"task_id":"save-document-01","target_id":"document-01","primary_choice":"purchase:addon-01","authorized_effects":["save:document-01"],"truth_id":"save-document-01"}
+  },
+  "null_layout_schedule": ["L0","L1","L0","L1","L0","L1","L0","L1"],
+  "null_layout_semantics": {"L0":"save:document-01","L1":"save:document-01"},
+  "routes": ["plain","effect_boundary"],
+  "selector_policies": ["STATIC_BALANCED","FREQUENCY_MATCHED_REPLAY","REACTIVE_DECLARED","REACTIVE_NULL"]
+}

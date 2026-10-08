@@ -1,0 +1,493 @@
+{
+  "allocation": "belief-risk-budget-5368-t0-20260930-01",
+  "cases": 7,
+  "policies": [
+    "MAP",
+    "WORST_CASE",
+    "RISK_BUDGET",
+    "EXPECTED_UTILITY"
+  ],
+  "rows": [
+    {
+      "actual": "0/1",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "1/1",
+        "unsafe": "0/1"
+      },
+      "case_id": "certain_safe",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "10/1",
+      "policy": "MAP",
+      "reported": "0/1",
+      "reported_unsafe_mass": "0/1"
+    },
+    {
+      "actual": "0/1",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "1/1",
+        "unsafe": "0/1"
+      },
+      "case_id": "certain_safe",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "10/1",
+      "policy": "WORST_CASE",
+      "reported": "0/1",
+      "reported_unsafe_mass": "0/1"
+    },
+    {
+      "actual": "0/1",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "1/1",
+        "unsafe": "0/1"
+      },
+      "case_id": "certain_safe",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "10/1",
+      "policy": "RISK_BUDGET",
+      "reported": "0/1",
+      "reported_unsafe_mass": "0/1"
+    },
+    {
+      "actual": "0/1",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "1/1",
+        "unsafe": "0/1"
+      },
+      "case_id": "certain_safe",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "10/1",
+      "policy": "EXPECTED_UTILITY",
+      "reported": "0/1",
+      "reported_unsafe_mass": "0/1"
+    },
+    {
+      "actual": "1/100",
+      "actual_unsafe_mass_if_admitted": "1/100",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "99/100",
+        "unsafe": "1/100"
+      },
+      "case_id": "rare_hazard",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "97/10",
+      "policy": "MAP",
+      "reported": "1/100",
+      "reported_unsafe_mass": "1/100"
+    },
+    {
+      "actual": "1/100",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "99/100",
+        "unsafe": "1/100"
+      },
+      "case_id": "rare_hazard",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "WORST_CASE",
+      "reported": "1/100",
+      "reported_unsafe_mass": "1/100"
+    },
+    {
+      "actual": "1/100",
+      "actual_unsafe_mass_if_admitted": "1/100",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "99/100",
+        "unsafe": "1/100"
+      },
+      "case_id": "rare_hazard",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "97/10",
+      "policy": "RISK_BUDGET",
+      "reported": "1/100",
+      "reported_unsafe_mass": "1/100"
+    },
+    {
+      "actual": "1/100",
+      "actual_unsafe_mass_if_admitted": "1/100",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "99/100",
+        "unsafe": "1/100"
+      },
+      "case_id": "rare_hazard",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "97/10",
+      "policy": "EXPECTED_UTILITY",
+      "reported": "1/100",
+      "reported_unsafe_mass": "1/100"
+    },
+    {
+      "actual": "1/25",
+      "actual_unsafe_mass_if_admitted": "1/25",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "24/25",
+        "unsafe": "1/25"
+      },
+      "case_id": "near_budget",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "44/5",
+      "policy": "MAP",
+      "reported": "1/25",
+      "reported_unsafe_mass": "1/25"
+    },
+    {
+      "actual": "1/25",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "24/25",
+        "unsafe": "1/25"
+      },
+      "case_id": "near_budget",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "WORST_CASE",
+      "reported": "1/25",
+      "reported_unsafe_mass": "1/25"
+    },
+    {
+      "actual": "1/25",
+      "actual_unsafe_mass_if_admitted": "1/25",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "24/25",
+        "unsafe": "1/25"
+      },
+      "case_id": "near_budget",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "44/5",
+      "policy": "RISK_BUDGET",
+      "reported": "1/25",
+      "reported_unsafe_mass": "1/25"
+    },
+    {
+      "actual": "1/25",
+      "actual_unsafe_mass_if_admitted": "1/25",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "24/25",
+        "unsafe": "1/25"
+      },
+      "case_id": "near_budget",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "44/5",
+      "policy": "EXPECTED_UTILITY",
+      "reported": "1/25",
+      "reported_unsafe_mass": "1/25"
+    },
+    {
+      "actual": "1/10",
+      "actual_unsafe_mass_if_admitted": "1/10",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "9/10",
+        "unsafe": "1/10"
+      },
+      "case_id": "dangerous_minority",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "7/1",
+      "policy": "MAP",
+      "reported": "1/10",
+      "reported_unsafe_mass": "1/10"
+    },
+    {
+      "actual": "1/10",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "9/10",
+        "unsafe": "1/10"
+      },
+      "case_id": "dangerous_minority",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "WORST_CASE",
+      "reported": "1/10",
+      "reported_unsafe_mass": "1/10"
+    },
+    {
+      "actual": "1/10",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "9/10",
+        "unsafe": "1/10"
+      },
+      "case_id": "dangerous_minority",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "RISK_BUDGET",
+      "reported": "1/10",
+      "reported_unsafe_mass": "1/10"
+    },
+    {
+      "actual": "1/10",
+      "actual_unsafe_mass_if_admitted": "1/10",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "9/10",
+        "unsafe": "1/10"
+      },
+      "case_id": "dangerous_minority",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "7/1",
+      "policy": "EXPECTED_UTILITY",
+      "reported": "1/10",
+      "reported_unsafe_mass": "1/10"
+    },
+    {
+      "actual": "3/10",
+      "actual_unsafe_mass_if_admitted": "3/10",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "7/10",
+        "unsafe": "3/10"
+      },
+      "case_id": "ambiguous",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "1/1",
+      "policy": "MAP",
+      "reported": "3/10",
+      "reported_unsafe_mass": "3/10"
+    },
+    {
+      "actual": "3/10",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "7/10",
+        "unsafe": "3/10"
+      },
+      "case_id": "ambiguous",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "WORST_CASE",
+      "reported": "3/10",
+      "reported_unsafe_mass": "3/10"
+    },
+    {
+      "actual": "3/10",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "7/10",
+        "unsafe": "3/10"
+      },
+      "case_id": "ambiguous",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "RISK_BUDGET",
+      "reported": "3/10",
+      "reported_unsafe_mass": "3/10"
+    },
+    {
+      "actual": "3/10",
+      "actual_unsafe_mass_if_admitted": "3/10",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "7/10",
+        "unsafe": "3/10"
+      },
+      "case_id": "ambiguous",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "1/1",
+      "policy": "EXPECTED_UTILITY",
+      "reported": "3/10",
+      "reported_unsafe_mass": "3/10"
+    },
+    {
+      "actual": "4/5",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "1/5",
+        "unsafe": "4/5"
+      },
+      "case_id": "mostly_unsafe",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "MAP",
+      "reported": "4/5",
+      "reported_unsafe_mass": "4/5"
+    },
+    {
+      "actual": "4/5",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "1/5",
+        "unsafe": "4/5"
+      },
+      "case_id": "mostly_unsafe",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "WORST_CASE",
+      "reported": "4/5",
+      "reported_unsafe_mass": "4/5"
+    },
+    {
+      "actual": "4/5",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "1/5",
+        "unsafe": "4/5"
+      },
+      "case_id": "mostly_unsafe",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "RISK_BUDGET",
+      "reported": "4/5",
+      "reported_unsafe_mass": "4/5"
+    },
+    {
+      "actual": "4/5",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "1/5",
+        "unsafe": "4/5"
+      },
+      "case_id": "mostly_unsafe",
+      "effect": false,
+      "misspecification_exposed": false,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "EXPECTED_UTILITY",
+      "reported": "4/5",
+      "reported_unsafe_mass": "4/5"
+    },
+    {
+      "actual": "1/5",
+      "actual_unsafe_mass_if_admitted": "1/5",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "4/5",
+        "unsafe": "1/5"
+      },
+      "case_id": "misspecified_hazard",
+      "effect": false,
+      "misspecification_exposed": true,
+      "model_expected_utility_if_admitted": "44/5",
+      "policy": "MAP",
+      "reported": "1/25",
+      "reported_unsafe_mass": "1/25"
+    },
+    {
+      "actual": "1/5",
+      "actual_unsafe_mass_if_admitted": "0/1",
+      "admitted": false,
+      "authority": false,
+      "branches": {
+        "safe": "4/5",
+        "unsafe": "1/5"
+      },
+      "case_id": "misspecified_hazard",
+      "effect": false,
+      "misspecification_exposed": true,
+      "model_expected_utility_if_admitted": "0/1",
+      "policy": "WORST_CASE",
+      "reported": "1/25",
+      "reported_unsafe_mass": "1/25"
+    },
+    {
+      "actual": "1/5",
+      "actual_unsafe_mass_if_admitted": "1/5",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "4/5",
+        "unsafe": "1/5"
+      },
+      "case_id": "misspecified_hazard",
+      "effect": false,
+      "misspecification_exposed": true,
+      "model_expected_utility_if_admitted": "44/5",
+      "policy": "RISK_BUDGET",
+      "reported": "1/25",
+      "reported_unsafe_mass": "1/25"
+    },
+    {
+      "actual": "1/5",
+      "actual_unsafe_mass_if_admitted": "1/5",
+      "admitted": true,
+      "authority": false,
+      "branches": {
+        "safe": "4/5",
+        "unsafe": "1/5"
+      },
+      "case_id": "misspecified_hazard",
+      "effect": false,
+      "misspecification_exposed": true,
+      "model_expected_utility_if_admitted": "44/5",
+      "policy": "EXPECTED_UTILITY",
+      "reported": "1/25",
+      "reported_unsafe_mass": "1/25"
+    }
+  ],
+  "runtime": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "source_main": "4439161abd6f8ccf276babc1c39c43428394e773"
+}

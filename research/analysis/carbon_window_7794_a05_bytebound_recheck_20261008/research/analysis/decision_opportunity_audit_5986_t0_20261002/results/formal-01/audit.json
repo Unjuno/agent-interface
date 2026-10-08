@@ -1,0 +1,17 @@
+{
+  "cases": 6,
+  "errors": [],
+  "labels": {
+    "captured_early_but_undelivered": "EARLY_BUT_NOT_DELIVERED",
+    "delivered_after_last_decision": "DELIVERED_BUT_NO_DECISION_WINDOW",
+    "delivered_redundant_noop": "NOOP_OR_REDUNDANT",
+    "early_delivered_choice_changes": "DECISION_RELEVANT_CANDIDATE",
+    "mandatory_safety_cue_never_withheld": "MANDATORY_SAFETY_CUE_INELIGIBLE_FOR_WITHHOLDING",
+    "stale_generation_must_yield": "STALE_OR_MISLEADING_YIELD"
+  },
+  "mutation_count": 6,
+  "mutations_rejected": 6,
+  "reconstructed": 6,
+  "schema": "decision-opportunity-independent-audit-v1",
+  "scope": "independent audit-only reproduction of frozen synthetic raw; no new candidate allocation or empirical value claim"
+}

@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "all_rows_unique_and_complete": true,
+    "ambiguous_effect_holds_and_preserves_obligation": true,
+    "capability_mismatch_resets_transfer": true,
+    "changed_precondition_resets_transfer": true,
+    "exact_raw_reconstruction": true,
+    "private_history_not_exposed": true,
+    "same_streak_regime_discriminator": true,
+    "six_mutations_rejected": true,
+    "unknown_dependency_holds": true,
+    "weak_history_remains_below_threshold": true
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "expected_rows": 8,
+  "mutation_controls": {
+    "clear_ambiguous_effect": true,
+    "drop_open_obligation": true,
+    "leak_private_history": true,
+    "stale_current_observation": true,
+    "transfer_across_independent_regime": true,
+    "transfer_after_precondition_change": true
+  },
+  "reconstructed_rows": 8
+}

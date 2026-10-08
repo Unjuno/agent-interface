@@ -1,0 +1,19 @@
+{
+  "schema": "unjuno-execution-record-v1",
+  "allocation": "effect-coalescing-5265-main-70b69b47-20260930-01",
+  "formal": {
+    "command": "python3 -B run_formal.py --out results/formal-01/RAW.json --base-sha 70b69b47845b35afde59c2a5f0b56c6f906c6904 --allocation effect-coalescing-5265-main-70b69b47-20260930-01",
+    "started_at_utc": "2026-09-30T09:00:52Z",
+    "ended_at_utc": "2026-09-30T09:00:53Z",
+    "exit_code": 0,
+    "captured_output": "{\"bytes\": 29332, \"cases\": 10, \"raw_sha256\": \"a1fe2d136d9dadaee3ea9672b5156e6a3aac4eedb2df09a13586a7fb402296f9\", \"status\": \"RAW_WRITTEN\"}",
+    "stdout_stderr_capture": "The command runner exposed a combined output field; streams were not separately captured."
+  },
+  "independent_audit": {
+    "command": "python3 -B audit.py --raw results/formal-01/RAW.json --out results/formal-01/AUDIT.json",
+    "order": "separate process, after formal exit 0 and raw hash capture",
+    "exit_code": 0,
+    "captured_output": "{\"case_count\": 10, \"corruption_controls\": [{\"name\": \"effect_count\", \"rejected\": true}, {\"name\": \"case_order\", \"rejected\": true}, {\"name\": \"target_incarnation\", \"rejected\": true}, {\"name\": \"expected_decision\", \"rejected\": true}, {\"name\": \"authority_claim\", \"rejected\": true}, {\"name\": \"duplicate_case\", \"rejected\": true}, {\"name\": \"workload_hash\", \"rejected\": true}], \"corruption_controls_rejected\": 7, \"equivalent_duplicate_effects_coalesced\": 1, \"equivalent_duplicate_effects_control\": 2, \"errors\": [], \"raw_bytes\": 29332, \"raw_sha256\": \"a1fe2d136d9dadaee3ea9672b5156e6a3aac4eedb2df09a13586a7fb402296f9\", \"source_errors\": [], \"status\": \"PASS_CROSS_PRODUCER_EFFECT_COALESCING_SCOPED\"}",
+    "stdout_stderr_capture": "The command runner exposed a combined output field; streams were not separately captured."
+  }
+}

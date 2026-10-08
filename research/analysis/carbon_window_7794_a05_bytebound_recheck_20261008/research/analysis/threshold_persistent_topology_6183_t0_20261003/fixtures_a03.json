@@ -1,0 +1,18 @@
+{
+  "schema": "topology-6183-a03-fixtures-v1",
+  "palette": {".": 0, "g": 140, "#": 220},
+  "scales": [1, 2],
+  "thresholds": [64, 128, 192, 240],
+  "cases": [
+    {"id":"route_connected","predicate":"route","reference":"route_connected","endpoints":[[0,4],[8,4]],"rows":[".........",".........",".........",".........","#########",".........",".........",".........","........."]},
+    {"id":"route_gap","predicate":"route","reference":"route_connected","endpoints":[[0,4],[8,4]],"rows":[".........",".........",".........",".........","####.####",".........",".........",".........","........."]},
+    {"id":"route_near_touch","predicate":"route","reference":"route_connected","endpoints":[[0,4],[8,4]],"rows":[".........",".........",".........",".........","####g####",".........",".........",".........","........."]},
+    {"id":"route_occluded","predicate":"route","reference":"route_connected","endpoints":[[0,4],[8,4]],"rows":[".........",".........",".........",".........","####g####",".........",".........",".........","........."]},
+    {"id":"route_crossing","predicate":"route","reference":"route_connected","endpoints":[[0,4],[8,4]],"rows":[".........",".........",".........",".........","####.....","....#....","....#....","....#....","....#...."]},
+    {"id":"hidden_twin_visible","predicate":"route","reference":"route_connected","endpoints":[[0,4],[8,4]],"rows":[".........",".........",".........",".........","#########",".........",".........",".........","........."]},
+    {"id":"hidden_twin_overpass","predicate":"route","reference":"route_connected","endpoints":[[0,4],[8,4]],"rows":[".........",".........",".........",".........","#########",".........",".........",".........","........."]},
+    {"id":"outline_closed","predicate":"outline","reference":"outline_closed","endpoints":[],"rows":[".........",".........","..#####..","..#...#..","..#...#..","..#...#..","..#####..",".........","........."]},
+    {"id":"outline_gap","predicate":"outline","reference":"outline_closed","endpoints":[],"rows":[".........",".........","..##.##..","..#...#..","..#...#..","..#...#..","..#####..",".........","........."]},
+    {"id":"outline_gray_gap","predicate":"outline","reference":"outline_closed","endpoints":[],"rows":[".........",".........","..##g##..","..#...#..","..#...#..","..#...#..","..#####..",".........","........."]}
+  ]
+}

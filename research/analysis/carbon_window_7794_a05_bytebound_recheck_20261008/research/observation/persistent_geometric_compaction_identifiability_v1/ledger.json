@@ -1,0 +1,92 @@
+{
+  "schema": "pgws-compaction-identifiability-ledger-v1",
+  "task": "PERSISTENT-GEOMETRIC-COMPACTION-BENEFIT-IDENTIFIABILITY-20260918-001",
+  "gates": ["task_decision", "model_effort", "current_evidence", "history_pre_compaction", "compaction_boundary", "prompt_capability", "session_cache_policy", "independent_oracle"],
+  "rows": [
+    {
+      "id": "recovery_pair3_A_vs_B",
+      "family": "OpenTTD recovery pair3",
+      "sources": [
+        {"path":"research/live_control/RECOVERY_PAIR3.md","git_blob":"1fba23a5070885cc6e933d982f0dcc12a9170498"},
+        {"path":"research/live_control/results/recovery-pair3-01/pair-audit.json","git_blob":"3c00c8643d7669a4c3b826d2a5383a9b15e66dcc"}
+      ],
+      "gates": {
+        "task_decision":"UNKNOWN",
+        "model_effort":"UNKNOWN",
+        "current_evidence":"FAIL",
+        "history_pre_compaction":"UNKNOWN",
+        "compaction_boundary":"FAIL",
+        "prompt_capability":"FAIL",
+        "session_cache_policy":"FAIL",
+        "independent_oracle":"PASS"
+      },
+      "factor":"recovery/presentation helper and resulting presentation behavior; no external PGWS arm",
+      "evidence":"Initial PNG/runtime manifests match, but later image bytes diverge as simulation advances. A has no visible truncation; B undergoes context compaction and separate artifact inspection. Exact model configuration unavailable."
+    },
+    {
+      "id": "persistent_planner_continuity_no_counterfactual",
+      "family": "persistent planner continuity",
+      "sources": [
+        {"path":"research/live_control/PERSISTENT_PLANNER_CONTINUITY_LIVE_V1.md","git_blob":"64fd6e7c0ade15ee078b41484a0e573cba5e67ff"},
+        {"path":"research/live_control/results/persistent-planner-continuity-live-01/result.json","git_blob":"374a30dd76b0d6757696a87fcb4521489706c41f"},
+        {"path":"research/live_control/results/persistent-planner-continuity-live-01/audit.json","git_blob":"1054c126f6081d620d5c6f57185250b4fbc2b59b"}
+      ],
+      "gates": {
+        "task_decision":"FAIL",
+        "model_effort":"PASS",
+        "current_evidence":"FAIL",
+        "history_pre_compaction":"FAIL",
+        "compaction_boundary":"FAIL",
+        "prompt_capability":"FAIL",
+        "session_cache_policy":"FAIL",
+        "independent_oracle":"PASS"
+      },
+      "factor":"same-thread conversational continuity only; no context-compaction event and no external PGWS counterfactual",
+      "evidence":"Two-turn nonce recall proves thread continuity. Turn1 and turn2 intentionally differ in prompt/image content; no external-state arm exists."
+    },
+    {
+      "id": "integrated_efficiency_persistent_vs_ephemeral",
+      "family": "integrated persistent interface",
+      "sources": [
+        {"path":"research/integration/integrated_efficiency_post_repair_payback_v1/RESULT.md","git_blob":"f809f30c72a0d7cec5906dce508bae18757daea3"},
+        {"path":"research/live_control/INTEGRATED_EFFICIENCY_PLAN_V1.md","git_blob":"ff0de7c4a0d6cc57d145d460f019f72d6967ffec"}
+      ],
+      "gates": {
+        "task_decision":"PASS",
+        "model_effort":"PASS",
+        "current_evidence":"FAIL",
+        "history_pre_compaction":"FAIL",
+        "compaction_boundary":"FAIL",
+        "prompt_capability":"FAIL",
+        "session_cache_policy":"FAIL",
+        "independent_oracle":"PASS"
+      },
+      "factor":"persistent compiled interface/method reuse versus ephemeral grounding; no model-context compaction and not geometric-state-only",
+      "evidence":"Same six-task schedule and independent exact-token oracle, but persistence changes grounding/model-call behavior and scoped-reference reuse; result itself states different-arm descriptive accounting and no same-arm causal ablation."
+    },
+    {
+      "id": "persistent_effect_receipt_ABBA",
+      "family": "OpenTTD persistent effect receipt fixed-context A/B/B/A",
+      "sources": [
+        {"path":"research/live_control/OPENTTD_EFFECT_MEMORY_GEOMETRY_V3.md","git_blob":"8666a46550619df43db0ac4216984a53a0cb6aae"},
+        {"path":"research/live_control/results/persistent-effect-decisions-01/preregistration.json","git_blob":"7745b593332a7711cae01001aa391f54dfea301e"}
+      ],
+      "gates": {
+        "task_decision":"PASS",
+        "model_effort":"PASS",
+        "current_evidence":"PASS",
+        "history_pre_compaction":"PASS",
+        "compaction_boundary":"FAIL",
+        "prompt_capability":"FAIL",
+        "session_cache_policy":"PASS",
+        "independent_oracle":"FAIL"
+      },
+      "factor":"compact nonsemantic visual receipt appended to prompt, not external PGWS across context compaction",
+      "evidence":"Frozen same image/context and Astra-medium A/B/B/A calls isolate a receipt representation, but no context compaction occurs; primary endpoint is model checkpoint status rather than independent task effect, and prompt differs by receipt."
+    }
+  ],
+  "excluded_prerequisites": [
+    {"issue":1560,"reason":"synthetic storage/typing safety prerequisite; no model/context-compaction efficacy arm"},
+    {"issue":1562,"reason":"synthetic provenance/currentness prerequisite under compaction; deliberately weak baseline and no model benefit test"}
+  ]
+}

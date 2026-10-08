@@ -1,0 +1,20 @@
+--- #1722 experiment.py
++++ #1777 A2 experiment.py
+@@
+-TASK='GUARD-POLICY-RECOVERABLE-X11-CALIBRATION-R2-20260918-001'
++TASK='GUARD-POLICY-RECOVERABLE-X11-CALIBRATION-A2-20260918-002'
+@@
+ NO_EFFECT_WAIT_NS=3_000_000
++SUCCESS_WAIT_NS=120_000_000
+@@
+-SEED=172220260918001
++SEED=177720260918002
+@@
+-def wait_success(w,timeout_ns=20_000_000):
++def wait_success(w,timeout_ns=SUCCESS_WAIT_NS):
+@@
+-FAIL_RECOVERABILITY_CONTRACT / FAIL_SELECTOR_TRANSFER / HOLD_NO_RESOLVED_POLICY_TIER / PASS...R2...
++same semantic decisions with A2 task-local labels
+@@
+-result.config includes unchanged no_effect_wait_ns
++result.config additionally records success_wait_ns

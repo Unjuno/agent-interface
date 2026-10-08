@@ -1,0 +1,26 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  16.38kB
+Step 1/6 : FROM sha256:9e9b1a232f08b8c437834f8a40a5b39ca4be9c66b953833170930c70fdc66d89
+ ---> 9e9b1a232f08
+Step 2/6 : RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends xvfb xdotool xclip && apt-get clean
+ ---> Using cache
+ ---> 5084b76037b9
+Step 3/6 : ENV QT_QPA_PLATFORM=xcb QT_XCB_GL_INTEGRATION=none
+ ---> Using cache
+ ---> 80da69a52959
+Step 4/6 : WORKDIR /src
+ ---> Using cache
+ ---> 2b2227efdf73
+Step 5/6 : ENTRYPOINT []
+ ---> Running in d3d464f21a0d
+ ---> Removed intermediate container d3d464f21a0d
+ ---> 25ba26b7aae0
+Step 6/6 : CMD []
+ ---> Running in 9c1bf6a10689
+ ---> Removed intermediate container 9c1bf6a10689
+ ---> 18835dcb3335
+Successfully built 18835dcb3335
+Successfully tagged clipboard36-x11-01a0ff51:v2

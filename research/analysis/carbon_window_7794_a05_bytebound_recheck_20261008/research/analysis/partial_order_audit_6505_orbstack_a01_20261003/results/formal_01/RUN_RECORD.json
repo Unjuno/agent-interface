@@ -1,0 +1,21 @@
+{
+  "allocation": "PARTIAL-ORDER-4889-AUDIT-6505-ORB-A01-20261003",
+  "freeze_commit": "01d5e0714fb6aa9c3e629096beade338f331287a",
+  "container_name": "issue6505-audit-orbstack-a01-20261003",
+  "container_id": "f5a288d3a8af28ca5d4b81d80ce27e70e5164df5c709c865535ff9b7b14fc920",
+  "command": "python /allocation/auditor.py",
+  "status": "STOP_OUTPUT_NOT_EMPTY_OR_MISSING",
+  "exit_code": 1,
+  "oom_killed": false,
+  "started_at": "2026-10-02T17:47:07.198675704Z",
+  "finished_at": "2026-10-02T17:47:07.198675704Z",
+  "successor_auditor_invocations": 1,
+  "predecessor_candidate_invocations": 0,
+  "predecessor_auditor_invocations": 0,
+  "archive_reconstructed": false,
+  "formal_rows_parsed": 0,
+  "retries": 0,
+  "reason": "Operator setup error: container_config.json was mistakenly placed inside the mounted output directory, violating the auditor's required-empty-output precondition. The guard stopped before reading frozen inputs.",
+  "scientific_failure": false,
+  "source_or_input_modified": false
+}

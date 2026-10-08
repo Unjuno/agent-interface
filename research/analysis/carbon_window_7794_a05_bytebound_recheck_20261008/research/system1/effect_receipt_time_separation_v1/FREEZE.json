@@ -1,0 +1,50 @@
+{
+  "allocation": "effect-receipt-time-separation-4231-20260923-01",
+  "audit_command": "python -B audit.py formal --reps 3 --out AUDIT.json && python -B controls.py",
+  "construction": {
+    "construction-01": "STOP/HOLD timing-origin includes process startup",
+    "construction-02": "excluded PASS 12/12"
+  },
+  "deadline_ms": 120,
+  "formal_command": "python -B run.py --out formal --mode formal --reps 3",
+  "formal_repetitions": 3,
+  "formal_rows_before_freeze": 0,
+  "no_retry": true,
+  "policies": [
+    "RECEIPT_ARRIVAL_DEADLINE",
+    "OWNER_COMMIT_DEADLINE",
+    "COMMIT_FIELD_UNVERIFIED"
+  ],
+  "post_freeze_tuning": false,
+  "replacements": 0,
+  "schedules": {
+    "LATE_COMMIT_FAST_RECEIPT": [
+      150,
+      170,
+      true
+    ],
+    "NO_COMMIT": [
+      20,
+      80,
+      false
+    ],
+    "ON_TIME_FAST_RECEIPT": [
+      60,
+      80,
+      true
+    ],
+    "ON_TIME_LATE_RECEIPT": [
+      60,
+      170,
+      true
+    ]
+  },
+  "source_sha256": {
+    "ENVIRONMENT.json": "77330d05a278ac8d1eadfb74df2d86c3a925c57fdd4ad2b7206009aaae24a7e9",
+    "PLAN.md": "08df0f5f9bbf85bb72de86d649e68cbf559e6d2d251401a427ce163f9effb88d",
+    "audit.py": "7800533430ebd85da62352e6f01d5a3e1f35b73b22446ba6570aabddf3c0a137",
+    "controls.py": "72027f886b1b0a9e9d04a13f678fc78171ac4b161dca77006f23439ad6f57529",
+    "owner.py": "d13244bcf10d27f45c70a434bbf945cbd07510da609d3c1b3b357803b657f9f9",
+    "run.py": "caa293adb4a3d9d748d9006594bb4b04ca0a4a68ca2d21551d62b38724efdeaf"
+  }
+}

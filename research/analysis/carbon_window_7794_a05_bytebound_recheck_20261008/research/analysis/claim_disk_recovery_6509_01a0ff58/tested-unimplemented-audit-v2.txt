@@ -1,0 +1,5 @@
+"""Pre-repair control: delegate to the unchanged v1 gate."""
+from audit import audit as audit_v1
+
+def audit(raw, folder):
+    return audit_v1(raw, folder)

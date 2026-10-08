@@ -1,0 +1,29 @@
+# Issue #6358 — adoption-conditioned recovery advice T0
+
+Allocation: `ADOPTION-CONDITIONED-RECOURSE-6358-T0-HOST-20261002-01`  
+Formal base: `93f0ee168051d4b4afcf381ea8e88245d89448f5`  
+Branch: `research/adoption-conditioned-recourse-6358-t0-20261002`
+
+## H / T / D / C / U
+
+- **H:** For at least one frozen, finite high-adoption schedule with a declared shared bottleneck, a source-bound route among individually authorized and deadline-feasible resources can produce more verified completions than public capacity-warning/stagger advice. A wording-only placebo must not change route or outcome. This is a deterministic counterexample/hypothesis probe, **not an estimate of a policy effect**.
+- **T:** One isolated synthetic cohort per predeclared case; exactly one policy assigned to each cohort. Enumerate the same frozen offer/adoption schedule under seven policies: generic retry, individual witness advice, public warning + bounded stagger, recipient-specific routing, wording-only placebo, no-advice typed stop, and visible abandonment/censoring control. Eight cases cover high/low adoption, disjoint-resource null, no feasible fallback, forbidden recipient-specific alternative, slower-than-deadline alternative, expired advice, and uncertain delivery. Each successful two-step recovery requires a verified nonapplication receipt then independently verified application under one idempotency key. Per-offer ledger retains all offered/no-start/no-adoption/stale/unknown/suppressed rows; summarize deadline misses, resource occupancy, unsafe/forbidden advice and class disparities.
+- **D:** `PASS_METHOD_SCOPED` only if the independent raw auditor verifies every offer and capacity interval; the frozen high-adoption schedule yields 2/4 for generic, witness, public stagger and wording placebo, versus 4/4 for authorized recipient-specific routing; placebo routes/outcomes match generic; flexible and shared-only classes both resolve 2/2; low-adoption and disjoint null controls match expectations; forbidden/slow resources are never selected improperly; no-route, stale, unknown and censoring outcomes remain explicit; all corruption tests are rejected. Passing demonstrates only that this particular finite event schedule has the specified arithmetic and that the package/auditor agree on it.
+- **C:** One schedule per case does not identify an average causal effect across cohorts or humans. The routing policy is constructed with access to allowed-resource and capacity information; adoption can be lower or correlated with urgency; queue/reset/carryover, private information, privacy, unequal fallback quality, resource costs or adversarial demand can erase or reverse the pattern. Public stagger might itself lower contention in other schedules. A real policy claim requires multiple isolated cohort windows per assigned arm, randomized/balanced policy allocation, frozen reset/cooldown and independent carryover audit; inability to establish these means `HOLD_INTERFERENCE`.
+- **U:** Host-only deterministic synthetic method evidence. No human/agent adoption behavior, real endpoint, model, GUI, action authority, operational safety, throughput, deployment, causal population effect or GPU claim. No external effects, network or container.
+
+## Protocol and identification boundary
+
+The assignment and analysis unit is the entire offered-stop cohort sharing a declared recovery-resource graph and time window. Each case is one isolated deterministic cohort assigned one policy, never mixed policies over one unpartitioned service. Each offer freezes recipient class, authorization set, adoption, adoption tick, expiry, effect certainty, idempotency, deadline and placebo wording before scheduling. Each non-no-advice arm issues exactly one advice per frozen offer; no-advice issues zero. Both per-offer issuance and the cohort total are audited so a low-issuance arm cannot win through a smaller advice budget. Policy-specific output uses that same case record. Service capacity is non-preemptive; resources are FIFO by frozen `(adoption_tick, stop_id)` order with stable capacity-slot ties. The public-warning arm adds only the predeclared bounded stagger; the placebo changes only a balanced wording token. Recipient-specific routing chooses the earliest deadline-feasible authorized resource. No advice creates authority or permits retry after uncertain effect.
+
+The candidate writes one complete event ledger per case/policy. The auditor independently reconstructs receipts, route authorization, capacity overlap, deadlines, every-offer outcomes, class metrics and expected contrasts without importing candidate code. Passing cannot estimate causal effect: these are counterfactual deterministic replays of one exact schedule. A follow-on cohort study must predeclare multiple disjoint/reset windows per arm, policy allocation order, adoption exposure, washout, carryover tests and analysis before any such claim.
+
+This T0 uses Windows host CPython because it tests deterministic accounting, not container behavior. The #5927 WSLc lane remains on HOLD and is neither reused nor rebooked. No Docker, Podman, WSL, model, GUI, human, network or GPU execution is part of this allocation.
+
+## Preservation
+
+This is a successor experiment idea for open Issue #6358 only. It does not modify results for #5372, #5862 or any previous STOP. Pre-freeze construction smoke outputs are retained in `results/construction-smoke-01/`, explicitly superseded v1 outputs; they are not v2 or formal evidence.
+
+## Formal disposition
+
+The sole formal candidate launch attempt stopped before the Python program started: PowerShell could not open the stdout redirection path because `results/formal-01/` did not yet exist. This is retained as `STOP_RUNNER_REDIRECTION_DIRECTORY_MISSING` in `results/formal-01/STOP.json`; candidate program runs=0, auditor runs=0, and no retry is permitted by this allocation. No scientific result is claimed.

@@ -1,0 +1,32 @@
+{
+  "actor_exits_zero": 66,
+  "allocation": "referenced-image-gc-concurrency-20260922-01",
+  "audit_errors": [],
+  "corruption_controls_rejected": 10,
+  "decision": "PASS_REFERENCED_IMAGE_GC_CONCURRENCY_SCOPED",
+  "formal_cases": 24,
+  "formal_reruns": 0,
+  "issue": 4144,
+  "limits": [
+    "private SQLite fixture",
+    "serialized local writers",
+    "no crash/power-loss",
+    "no distributed GC",
+    "no model viewing",
+    "no production promotion"
+  ],
+  "policies": {
+    "STALE_SCAN_DELETE": {
+      "between_unresolved": 3,
+      "cases": 12,
+      "unresolved_unacked_refs": 3
+    },
+    "TXN_REVALIDATE_DELETE": {
+      "between_unresolved": 0,
+      "cases": 12,
+      "unresolved_unacked_refs": 0
+    }
+  },
+  "schema": "agent-interface/referenced-image-gc-concurrency-result-v1",
+  "worker_exits_zero": 24
+}

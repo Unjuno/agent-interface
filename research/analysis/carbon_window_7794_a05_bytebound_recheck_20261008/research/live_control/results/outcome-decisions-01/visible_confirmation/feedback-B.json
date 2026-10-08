@@ -1,0 +1,145 @@
+{
+  "proposal": {
+    "kind": "act",
+    "steps": [
+      {
+        "op": "pointer_click",
+        "x": 78,
+        "y": 190,
+        "duration_ms": 80
+      },
+      {
+        "op": "text",
+        "text": "480"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "text",
+        "text": "192"
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      }
+    ],
+    "rationale": "Clicked the visibly selected A1 cell, entered 480, moved to A2 and entered 192, then saved the existing workbook."
+  },
+  "phase_status": "program_interrupted",
+  "reason": "tail_unresolved_or_interrupted",
+  "target_check": {
+    "eligible": true,
+    "reason": "sampled_patch_and_binding_match",
+    "contract": "calc-first-click",
+    "point": [
+      78,
+      190
+    ],
+    "expected_sequence": 2,
+    "valid_until_ns": 17624157563,
+    "patch_sha256": "1777ae1c118b70c4edd704b255843816d2cba2f89dc64e7b5fde2af61a84ecbc",
+    "authority": "none; caller must submit once through existing owner admission",
+    "scope": "sampled pixels only; no semantic identity, hidden-state or atomic input proof"
+  },
+  "resolution": {
+    "authority": "none",
+    "request_id": "c77e5ad1b07f4c78883eefad7059e7bf",
+    "terminal": {
+      "decision_reason": "focus_changed",
+      "emit_started_ns": 18151534572,
+      "error": null,
+      "event": "terminal",
+      "id": "durable-c36bac6a2b6f402883c2f14a95fc1856",
+      "interruption": {
+        "intent_token": "59afd262e1c94fd9803e8128fa984150",
+        "record": {
+          "buttons_down": [],
+          "event": "owner_release",
+          "keys_down": [],
+          "reason": "focus_changed",
+          "valid_until_ns": 19302481976,
+          "verified": true,
+          "verified_ns": 17821510259
+        }
+      },
+      "post_release_observation": {
+        "authority": "none; no input or lease renewal",
+        "captures": 2,
+        "elapsed_ms": 258.779622,
+        "equal_sample_pair": true,
+        "error": null,
+        "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+        "sequences": [
+          10,
+          11
+        ],
+        "stopped": false
+      },
+      "release": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "reason": "release",
+        "valid_until_ns": null,
+        "verified": true,
+        "verified_ns": 17881696161
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "needs_decision",
+      "steps_completed": 3,
+      "terminal_ns": 18151532069
+    }
+  },
+  "decision_samples": {
+    "status": "received_pair_equal",
+    "additional_captures": 1,
+    "scope": "bounded passive full-frame/context samples; semantic readiness and effects unknown",
+    "authority": "none"
+  },
+  "execution_outcome": {
+    "format": "phased-outcome-v2",
+    "authority": "none",
+    "disposition": "program_interrupted",
+    "original_reason": "tail_unresolved_or_interrupted",
+    "programs": [
+      {
+        "action_id": "durable-0e6f7e27014e4dc2bd023a4972eff972",
+        "admission": "confirmed",
+        "started_steps": [
+          0,
+          1
+        ],
+        "input_ack_events": 2,
+        "terminal_status": "completed",
+        "steps_completed": 2,
+        "release_verified_empty": true,
+        "effect": "unknown"
+      },
+      {
+        "action_id": "durable-c36bac6a2b6f402883c2f14a95fc1856",
+        "admission": "confirmed",
+        "started_steps": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "input_ack_events": 0,
+        "terminal_status": "needs_decision",
+        "steps_completed": 3,
+        "release_verified_empty": true,
+        "effect": "unknown"
+      }
+    ],
+    "pending_protocol": false,
+    "channel_closed": false,
+    "tail_submitted": true,
+    "application_effect": "unknown; not inferred from program status, input ACK or image equality",
+    "new_input": "requires_new_decision_and_fresh_admission",
+    "automatic_retry": "not_authorized_by_this_view",
+    "scope": "delivery/program evidence only; no semantic task score"
+  }
+}

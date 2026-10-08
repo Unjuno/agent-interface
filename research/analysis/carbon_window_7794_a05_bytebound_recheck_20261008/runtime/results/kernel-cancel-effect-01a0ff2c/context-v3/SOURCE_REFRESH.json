@@ -1,0 +1,122 @@
+{
+  "base": "a96283aceb2d4e72aabd592a9b94fd60397d5622",
+  "common_base": "cb13a10dce358649458f5aea00947b8aa43fc5b8",
+  "created_utc": "2026-10-03T03:59:26.149617+00:00",
+  "expected_after_normal": 40,
+  "expected_after_optimized": 40,
+  "expected_before_failures": 2,
+  "expected_before_methods": 40,
+  "first_preflight_conflicts": [
+    "runtime/kernel/README.md"
+  ],
+  "first_preflight_exit": 1,
+  "main_apply_certificate": false,
+  "new_regression": "stale cancel refuses without mutation then genuine fresh cleanup preserves possibility",
+  "old_head": "fa276a1c5b85c45251f2ffd175e65fb18836d664",
+  "original_package_blobs_unchanged": 25,
+  "pins": {
+    "after": [
+      {
+        "bytes": 858,
+        "git_blob": "a8b5bdde62e451b75a9cbf4bf13511aa909cfc6c",
+        "path": "runtime/kernel/__init__.py",
+        "sha256": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813"
+      },
+      {
+        "bytes": 2208,
+        "git_blob": "e9369475a70c6ad9503155f9831f625303e6721f",
+        "path": "runtime/kernel/backend.py",
+        "sha256": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b"
+      },
+      {
+        "bytes": 10140,
+        "git_blob": "c0761747fc1d9936b795ec65d318ec0ef6e67087",
+        "path": "runtime/kernel/contracts.py",
+        "sha256": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969"
+      },
+      {
+        "bytes": 7878,
+        "git_blob": "81fe480f341936cd757d38e30ee693f8083b0dc3",
+        "path": "runtime/kernel/lifecycle.py",
+        "sha256": "b6082ee47788baf0ce2ce42d5b90793dd9e74c79d99a9ea39f29b88d7a4391ed"
+      },
+      {
+        "bytes": 2571,
+        "git_blob": "ae5c4140adaef9585f98f23966c87613ddeaef66",
+        "path": "runtime/kernel/test_backend_contract.py",
+        "sha256": "9cad9eed0f698253484ba532ffe60754a41eb58ed687607b5fca80116e334fad"
+      },
+      {
+        "bytes": 3397,
+        "git_blob": "31a97c0b208243c09be41417bb6db23620ca5860",
+        "path": "runtime/kernel/test_cancel_release_epoch.py",
+        "sha256": "4abd13dc39d9e9eaf0a3ae3d6acbac85ec9b4121fb5e262349d74a313c30cc21"
+      },
+      {
+        "bytes": 11981,
+        "git_blob": "15e5abc70c87095bc1a56e1a06bf4e66dc7fc5a4",
+        "path": "runtime/kernel/test_kernel.py",
+        "sha256": "2fcad6acef21e50f845953ab35682c8b1a19caf535d716f126a6c44f0588ff56"
+      },
+      {
+        "bytes": 2164,
+        "git_blob": "139d9fb4ceae8036d64a6e9451b76369e45a4fe0",
+        "path": "runtime/kernel/test_release_epoch.py",
+        "sha256": "2fc5025733afbf030d388b8f271f3e3bfb5baa6725e0de2e7afa18c130906bf6"
+      }
+    ],
+    "before": [
+      {
+        "bytes": 858,
+        "git_blob": "a8b5bdde62e451b75a9cbf4bf13511aa909cfc6c",
+        "path": "runtime/kernel/__init__.py",
+        "sha256": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813"
+      },
+      {
+        "bytes": 2208,
+        "git_blob": "e9369475a70c6ad9503155f9831f625303e6721f",
+        "path": "runtime/kernel/backend.py",
+        "sha256": "50fbc6fe5700cdda809054b4dc744e90ec35b4892978a9990d47ecfd7d9eb08b"
+      },
+      {
+        "bytes": 10140,
+        "git_blob": "c0761747fc1d9936b795ec65d318ec0ef6e67087",
+        "path": "runtime/kernel/contracts.py",
+        "sha256": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969"
+      },
+      {
+        "bytes": 7835,
+        "git_blob": "57090fcbbe6b4a1273f140a9bf72853659046438",
+        "path": "runtime/kernel/lifecycle.py",
+        "sha256": "4d8d5eb36b235c31d47339f29ec7e53d55dcec180268568f6565871adac71346"
+      },
+      {
+        "bytes": 2571,
+        "git_blob": "ae5c4140adaef9585f98f23966c87613ddeaef66",
+        "path": "runtime/kernel/test_backend_contract.py",
+        "sha256": "9cad9eed0f698253484ba532ffe60754a41eb58ed687607b5fca80116e334fad"
+      },
+      {
+        "bytes": 3397,
+        "git_blob": "31a97c0b208243c09be41417bb6db23620ca5860",
+        "path": "runtime/kernel/test_cancel_release_epoch.py",
+        "sha256": "4abd13dc39d9e9eaf0a3ae3d6acbac85ec9b4121fb5e262349d74a313c30cc21"
+      },
+      {
+        "bytes": 11981,
+        "git_blob": "15e5abc70c87095bc1a56e1a06bf4e66dc7fc5a4",
+        "path": "runtime/kernel/test_kernel.py",
+        "sha256": "2fcad6acef21e50f845953ab35682c8b1a19caf535d716f126a6c44f0588ff56"
+      },
+      {
+        "bytes": 2164,
+        "git_blob": "139d9fb4ceae8036d64a6e9451b76369e45a4fe0",
+        "path": "runtime/kernel/test_release_epoch.py",
+        "sha256": "2fc5025733afbf030d388b8f271f3e3bfb5baa6725e0de2e7afa18c130906bf6"
+      }
+    ]
+  },
+  "resolution": "keep current release documentation; append exact uncertainty paragraph; use already adopted kernel discovery command",
+  "runtime_delta": "original U outcome only; adopted cancellation state/guard and all other code byte-identical",
+  "source_refresh_tree": "6303721280132bfeab03d4756fe270931c9703b3"
+}

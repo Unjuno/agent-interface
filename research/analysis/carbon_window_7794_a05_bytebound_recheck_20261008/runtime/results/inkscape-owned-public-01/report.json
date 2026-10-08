@@ -1,0 +1,57 @@
+{
+  "scope": "Single current-source primary Inkscape admission, no matched comparison",
+  "commands": [
+    {
+      "command": 1,
+      "op": "observe",
+      "owner_accepted_to_reply_ready_ms": 52.536841,
+      "helper_publish_to_reply_read_ms": 81.793955,
+      "reply_read_to_primary_review_declaration_ms": 23823.912582
+    },
+    {
+      "command": 2,
+      "op": "dispatch",
+      "owner_accepted_to_reply_ready_ms": 240.477066,
+      "helper_publish_to_reply_read_ms": 246.663295,
+      "reply_read_to_primary_review_declaration_ms": 17681.805714
+    },
+    {
+      "command": 3,
+      "op": "dispatch",
+      "owner_accepted_to_reply_ready_ms": 132.59264,
+      "helper_publish_to_reply_read_ms": 143.038935,
+      "reply_read_to_primary_review_declaration_ms": 16019.816893
+    },
+    {
+      "command": 4,
+      "op": "close",
+      "owner_accepted_to_reply_ready_ms": 0.807561,
+      "helper_publish_to_reply_read_ms": 20.390685
+    }
+  ],
+  "input_programs": 2,
+  "input_emissions": 14,
+  "primary_images": 3,
+  "repairs": 0,
+  "replays": 0,
+  "saved_task_success": true,
+  "usage_windows_overlap_do_not_sum": true,
+  "joint_remainder_outside_owner_window": {
+    "input_tokens": 642033,
+    "cached_input_tokens": 629376,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 2250,
+    "reasoning_output_tokens": 1149,
+    "total_tokens": 644283,
+    "uncached_input_tokens": 12657
+  },
+  "model_contexts": [
+    {
+      "model": "gpt-6.1-sol",
+      "effort": "medium"
+    }
+  ],
+  "provider_exact_build": null,
+  "billing_usd": null,
+  "timing_limits": "Host readiness/read and explicit later review declaration; not model ingestion or independent semantic completion; preparation and projection-serialization failure are included in accounting windows."
+}

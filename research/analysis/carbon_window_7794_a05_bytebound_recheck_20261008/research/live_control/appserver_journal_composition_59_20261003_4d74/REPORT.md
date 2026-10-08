@@ -1,0 +1,11 @@
+# A01 first-result report: STOP before scientific calls
+
+Frozen source305c032829b880c4fd8018e712a98b2176a336b0; PR6994; allocation APPSERVER-JOURNAL-MUTEX-COMPOSITION-59-4D74-20261003-A01. See RESULT.json for counts and execution/ for immutable actual output. README.md and SOURCE_SHA256SUMS intentionally retain the pre-execution freeze state; this REPORT is authoritative for final disposition.
+
+Construction ran once in pinned WSLc and returned PASS_CONSTRUCTION. The producer ran once09:47:06.879–09:47:18.614UTC, WSLc process exit2 (the outer PowerShell session reported1). Six worker/peer cells were attempted once; all6 exceeded350ms independent file readiness. No request caller or holder started, so H is UNTESTED. Formal auditor/corruption controls0 by the exit0 prerequisite; retries0. No PASS/FAIL of the deadline hypothesis is claimed.
+
+The independent saved-data review found three ready events405–478ms after construction; the other three have no ready record. All6 workers terminal, threepeers exit0 andthree-15, allthreads retired andpipe/journal endpoints closed. Driver-owned cleanup must not be attributed to client.close alone. Retention verifies43 actual artifact hashes and14 frozen source/doc hashes; no missing artifact was synthesized or rerun.
+
+The WSLc swap-limit/cgroup warning is preserved. CPU quota and host mount IO causes were not instrumented, so the readiness STOP identifies an inadequate setup gate for this allocation, not a demonstrated WSLc engine defect. The first host metadata-write attempt was rejected by the64000-byte code-size limit; reduced metadata write succeeded. Construction had already executed once, and its first receipt is preserved without rerun. This host staging incident did not start a candidate or change frozen source.
+
+Prospective A02 claim5967943399 retains exactthreeclient variants and50ms request/250ms checkpoint/400ms hold; setup readiness2s/rendezvous1s/watchdog6s are declared separately. A01 output stays immutable, counters are not pooled, and A02 will retain its own first result. No public runtime edit/adoption, whole-call deadline, Windows qualification, live model/GUI/game/input/release/usefulfeedback/token-efficiency or roadmap closure follows.

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "status", "x", "y", "reason", "memory_use"],
+  "properties": {
+    "format": {"type": "string", "const": "visual-memory-target-decision-v1"},
+    "status": {"type": "string", "enum": ["target_reference", "needs_decision"]},
+    "x": {"type": "integer"},
+    "y": {"type": "integer"},
+    "reason": {"type": "string", "enum": ["matched", "ambiguous", "missing"]},
+    "memory_use": {"type": "string", "enum": ["none", "supporting", "rejected_as_stale_or_misleading"]}
+  }
+}

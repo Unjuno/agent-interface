@@ -1,0 +1,40 @@
+{
+  "schema": "surrogate-selection-feedback-t2-v1",
+  "strata": ["easy", "normal", "hard", "critical"],
+  "replicates": [0, 1],
+  "policies": ["balanced", "cautious", "lucky", "metric_drop", "reckless", "slow"],
+  "worlds": {
+    "stable": {
+      "expected_disposition": "SCOPED_SELECTION_CONCORDANCE",
+      "policies": {
+        "balanced": {"selection_ms": 80, "sealed_ms": 82, "utility": 9, "missing_strata": [], "safety_strata": []},
+        "cautious": {"selection_ms": 100, "sealed_ms": 102, "utility": 8, "missing_strata": [], "safety_strata": []},
+        "slow": {"selection_ms": 120, "sealed_ms": 122, "utility": 6, "missing_strata": [], "safety_strata": []}
+      }
+    },
+    "selection_overfit": {
+      "expected_disposition": "HOLD_METRIC_SELECTION_EFFECT_NOT_REPLICATED",
+      "policies": {
+        "balanced": {"selection_ms": 115, "sealed_ms": 100, "utility": 8, "missing_strata": [], "safety_strata": []},
+        "cautious": {"selection_ms": 90, "sealed_ms": 95, "utility": 8, "missing_strata": [], "safety_strata": []},
+        "lucky": {"selection_ms": 70, "sealed_ms": 120, "utility": 8, "missing_strata": [], "safety_strata": []}
+      }
+    },
+    "observation_shift": {
+      "expected_disposition": "REJECT_SELECTION_COVERAGE_OR_ENDPOINT_REGRESSION",
+      "policies": {
+        "balanced": {"selection_ms": 100, "sealed_ms": 102, "utility": 8, "missing_strata": [], "safety_strata": []},
+        "cautious": {"selection_ms": 120, "sealed_ms": 122, "utility": 7, "missing_strata": [], "safety_strata": []},
+        "metric_drop": {"selection_ms": 50, "sealed_ms": 55, "utility": 9, "missing_strata": ["normal", "hard", "critical"], "safety_strata": []}
+      }
+    },
+    "safety_regression": {
+      "expected_disposition": "REJECT_NONCOMPENSABLE_SAFETY_REGRESSION",
+      "policies": {
+        "balanced": {"selection_ms": 100, "sealed_ms": 102, "utility": 8, "missing_strata": [], "safety_strata": []},
+        "cautious": {"selection_ms": 120, "sealed_ms": 122, "utility": 7, "missing_strata": [], "safety_strata": []},
+        "reckless": {"selection_ms": 45, "sealed_ms": 48, "utility": 10, "missing_strata": [], "safety_strata": ["hard", "critical"]}
+      }
+    }
+  }
+}

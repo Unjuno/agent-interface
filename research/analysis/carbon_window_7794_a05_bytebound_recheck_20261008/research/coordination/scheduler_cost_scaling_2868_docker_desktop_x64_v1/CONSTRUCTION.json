@@ -1,0 +1,22 @@
+{
+  "schema": "scheduler-cost-scaling-construction-v1",
+  "issue": 5025,
+  "allocation": "scheduler-cost-scaling-2868-docker-desktop-x64-20260928-01",
+  "excluded_from_formal": true,
+  "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "platform": "linux/amd64",
+  "docker_engine": "28.5.1",
+  "python": "3.12.14",
+  "schedule_sha256": "f778860219a8a9ffe8014eb00eeb41456dac1bf58a2687ee64045a2b9e1df733",
+  "checks": {
+    "unit_tests_passed": 2,
+    "python_ast_parse": "PASS",
+    "formal_entry_sh_syntax": "PASS",
+    "audit_entry_sh_syntax": "PASS",
+    "schedule_hash_and_dimensions": "PASS",
+    "formal_output_was_empty_before_formal": true,
+    "audit_output_was_empty_before_audit": true
+  },
+  "formal_invocation_count_at_freeze": 0,
+  "no_model_network_gui_input_or_gpu": true
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "verifier_registry_5273_t0_v6.freeze.v1",
+  "issue": 5273,
+  "base_main": "1f858cf0d2da2821b5767077e1c9556764507dbb",
+  "source_path": "research/verification/verifier_registry_5273_t0_v6/",
+  "corpus_sha256": "82388580fcaff7e4d6ebe55a8ea40d21fbe28cc51c422f1064c2bcabd81ccfaf",
+  "raw_host_sha256": "b293715ee83c18962f49fe4c5278e84e86a956e470d7a1124d7a9835acb19eee",
+  "source_sha256": {
+    "candidate.py": "53278458abcf85529c278e979ae44fc0635c9a386bd563aeeee6cd8a449f60a5",
+    "corpus.py": "21871eb6f3f69f4b3bc136b08ac4a7b1ffe391ad09d6aaff8f6cc4cdfc8bd5ad",
+    "oracle.py": "0343d9f6169d01af404f6b8db9340aa4f3075dec6f443a2c0f41d595cd0c1bb0",
+    "run_host.py": "01379427db4b9efaf752b0044b55154a89ef67ae343e23d12584fb4f45e7beb5",
+    "audit.py": "85db67b96a3005e31cb9bb953df80e7e4d5584f59a47ceaf68f4ccfee6aebd52",
+    "test_registry.py": "680aa35741ead9f7de4362f5684b2311239cc246bed477add2736a00b82e7037",
+    "test_audit.py": "b7fe4e755725b290758fd1e70d80b8529e4b5be41985081de93bd8ca10a24c8e"
+  },
+  "host_construction": {
+    "python": "3.14.5",
+    "tests": "21 passed",
+    "cases": 8,
+    "oracle_match": "8/8",
+    "dispatch_count": 0,
+    "invocation": "HOST_OFFLINE_CONSTRUCTION_ONLY"
+  },
+  "formal_container": {
+    "status": "STOP_NO_EXACT_RESOURCE_LEASE",
+    "invocations": 0,
+    "docker_or_orbstack_commands": 0
+  },
+  "costs": "Synthetic declared estimates only; not measured facts.",
+  "authority": "NONE",
+  "frozen_at_utc": "2026-09-30T11:00:29Z"
+}

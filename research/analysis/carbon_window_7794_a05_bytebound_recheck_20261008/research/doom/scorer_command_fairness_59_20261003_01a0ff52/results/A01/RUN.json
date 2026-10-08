@@ -1,0 +1,42 @@
+{
+  "freeze_commit": "b9217982d0649331fe1017136cde9d0af0619d3a",
+  "operations": [
+    {
+      "label": "candidate",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "candidate.py",
+        "--out",
+        "results/A01"
+      ],
+      "cwd": "PACKAGE",
+      "started_utc": "2026-10-03T01:52:19.103038+00:00",
+      "finished_utc": "2026-10-03T01:52:19.255057+00:00",
+      "exit_code": 0,
+      "stdout_sha256": "2042d1628e25923cf016f4319f39760090127fd97ee8f3b78432fcbee176b173",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "audit",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-B",
+        "audit.py",
+        "--raw",
+        "results/A01/raw.jsonl",
+        "--out",
+        "results/A01/audit.json"
+      ],
+      "cwd": "PACKAGE",
+      "started_utc": "2026-10-03T01:52:19.255699+00:00",
+      "finished_utc": "2026-10-03T01:52:19.319900+00:00",
+      "exit_code": 1,
+      "stdout_sha256": "f036545d00203fb6121262bddc7fa434ecbef9e6eb71be89ea7a88076e1ece5f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retry": 0
+}

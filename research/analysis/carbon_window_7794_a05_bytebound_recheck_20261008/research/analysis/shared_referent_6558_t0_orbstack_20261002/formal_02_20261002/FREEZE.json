@@ -1,0 +1,19 @@
+{
+  "allocation": "SHARED-REFERENT-6558-T0-ORBSTACK-20261002-02",
+  "base_main": "b538fe9f83a7b3f739887fe500959fd72523c69d",
+  "formal_candidate": 0,
+  "formal_auditor": 0,
+  "retries": 0,
+  "candidate_image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "source_sha256": {
+    "candidate.py": "d7be7a1a89b55c227f8bcec16add5e239672e1ef9cb53f6adf0dc016a3450b0b",
+    "auditor.py": "b6fc8500ca67a2615589aba09ad9a32140ffa6c7ee5b29192e177d44c9509029",
+    "fixtures.json": "d0ee3a67e049805af49e9cb5ead29e0f1652ca2e90829f5d8a1ba63eb693e2f4",
+    "oracle.json": "06c240d94b40536e730e8219537534efc55c7a64ccc8c86016b900df493c6226",
+    "test_protocol.py": "27a4aacb6e449b3b9c326b27d4a3df58c7648bcdcac695be2462d4b127a522a6"
+  },
+  "candidate_mount_contract": "Only candidate.py and public fixtures.json are mounted; oracle.json is not mounted or passed to the candidate container.",
+  "auditor_mount_contract": "Auditor source, fixture, and hidden oracle are read-only; candidate raw is a separate read-only mount; only audit output is writable.",
+  "launch_correction": "Writable output bind mount omits the unsupported bare rw flag; this allocation has distinct output paths/container names and is not a retry of allocation 01.",
+  "stop_rule": "One candidate call; auditor once only on candidate exit 0. Any error preserves first outcome and terminates allocation."
+}

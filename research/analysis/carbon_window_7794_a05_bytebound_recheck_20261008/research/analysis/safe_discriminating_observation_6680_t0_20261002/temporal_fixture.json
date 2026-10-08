@@ -1,0 +1,184 @@
+{
+  "alarm_threshold": 1,
+  "cases": [
+    {
+      "id": "c01",
+      "lease": {
+        "acquired_tick": 0,
+        "held_input": "right",
+        "id": "l01",
+        "release_receipt": {
+          "lease_id": "l01",
+          "tick": 3
+        },
+        "release_requested_tick": 3
+      },
+      "pre_probe_observation": {
+        "position": 2,
+        "received_tick": 3,
+        "source_tick": 2
+      },
+      "probe_observation": {
+        "admissible": true,
+        "position": 3,
+        "received_tick": 4,
+        "source_tick": 3
+      }
+    },
+    {
+      "id": "c02",
+      "lease": {
+        "acquired_tick": 0,
+        "held_input": "right",
+        "id": "l02",
+        "release_receipt": {
+          "lease_id": "l02",
+          "tick": 3
+        },
+        "release_requested_tick": 3
+      },
+      "pre_probe_observation": {
+        "position": 2,
+        "received_tick": 3,
+        "source_tick": 2
+      },
+      "probe_observation": {
+        "admissible": true,
+        "position": 3,
+        "received_tick": 4,
+        "source_tick": 4
+      }
+    },
+    {
+      "id": "c03",
+      "lease": {
+        "acquired_tick": 0,
+        "held_input": "right",
+        "id": "l03",
+        "release_receipt": {
+          "lease_id": "l03",
+          "tick": 3
+        },
+        "release_requested_tick": 3
+      },
+      "pre_probe_observation": {
+        "position": 1,
+        "received_tick": 3,
+        "source_tick": 2
+      },
+      "probe_observation": {
+        "admissible": true,
+        "position": 2,
+        "received_tick": 4,
+        "source_tick": 3
+      }
+    },
+    {
+      "id": "c04",
+      "lease": {
+        "acquired_tick": 0,
+        "held_input": "right",
+        "id": "l04",
+        "release_receipt": {
+          "lease_id": "l04",
+          "tick": 3
+        },
+        "release_requested_tick": 3
+      },
+      "pre_probe_observation": {
+        "position": 2,
+        "received_tick": 3,
+        "source_tick": 2
+      },
+      "probe_observation": {
+        "admissible": false,
+        "position": 3,
+        "received_tick": 4,
+        "source_tick": 3
+      }
+    },
+    {
+      "id": "c05",
+      "lease": {
+        "acquired_tick": 0,
+        "held_input": "right",
+        "id": "l05",
+        "release_receipt": {
+          "lease_id": "l05",
+          "tick": 3
+        },
+        "release_requested_tick": 3
+      },
+      "pre_probe_observation": {
+        "position": 2,
+        "received_tick": 3,
+        "source_tick": 2
+      },
+      "probe_observation": {
+        "admissible": true,
+        "position": 3,
+        "received_tick": 4,
+        "source_tick": 4,
+        "supported": false
+      }
+    }
+  ],
+  "diagnostic_alarm_signatures": [
+    {
+      "residual": 1,
+      "source_age": 1
+    }
+  ],
+  "max_probe_observations": 1,
+  "policies": [
+    "always_reobserve",
+    "always_reset",
+    "immediate_yield",
+    "bounded_diagnose"
+  ],
+  "predictor": {
+    "intercept": 0,
+    "velocity": 1
+  },
+  "probe": {
+    "admissible": true,
+    "effectful": false,
+    "extends_lease": false,
+    "tick": 4
+  },
+  "schema": "safe-discriminating-observation-6680-temporal-fixture-v1",
+  "signature_recoveries": [
+    {
+      "recovery": "reobserve",
+      "residual": 1,
+      "source_age": 1
+    },
+    {
+      "recovery": "reset",
+      "residual": 1,
+      "source_age": 0
+    }
+  ],
+  "target_trajectory": [
+    {
+      "position": 0,
+      "tick": 0
+    },
+    {
+      "position": 1,
+      "tick": 1
+    },
+    {
+      "position": 2,
+      "tick": 2
+    },
+    {
+      "position": 3,
+      "tick": 3
+    },
+    {
+      "position": 4,
+      "tick": 4
+    }
+  ]
+}

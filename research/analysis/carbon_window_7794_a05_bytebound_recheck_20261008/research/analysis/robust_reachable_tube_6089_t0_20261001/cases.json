@@ -1,0 +1,21 @@
+{
+  "allocation_id": "ROBUST-TUBE-6089-T0-20261001-01",
+  "schema": "robust-tube-finite-grid-v1",
+  "safe_cells": [-5, 5],
+  "max_horizon": 4,
+  "action": 1,
+  "release_lag": 1,
+  "disturbances": [-1, 0, 1],
+  "cases": [
+    {"id":"safe_corridor_wide", "initial":[0,0], "safe":[-10,10], "model_valid":true, "target_valid":true, "release_lag":1},
+    {"id":"near_upper_boundary", "initial":[3,3], "safe":[-5,5], "model_valid":true, "target_valid":true, "release_lag":1},
+    {"id":"wide_uncertainty_corridor", "initial":[-2,2], "safe":[-5,5], "model_valid":true, "target_valid":true, "release_lag":1},
+    {"id":"zero_slack_release", "initial":[4,4], "safe":[-5,5], "model_valid":true, "target_valid":true, "release_lag":1},
+    {"id":"moving_forbidden_boundary", "initial":[0,0], "safe":[-5,5], "safe_by_tick":{"2":[-5,3],"3":[-5,2],"4":[-5,1],"5":[-5,0]}, "model_valid":true, "target_valid":true, "release_lag":1},
+    {"id":"invalid_model", "initial":[0,0], "safe":[-5,5], "model_valid":false, "target_valid":true, "release_lag":1},
+    {"id":"invalid_target", "initial":[0,0], "safe":[-5,5], "model_valid":true, "target_valid":false, "release_lag":1},
+    {"id":"release_lag_two", "initial":[1,1], "safe":[-5,5], "model_valid":true, "target_valid":true, "release_lag":2},
+    {"id":"release_in_flight_boundary", "initial":[28,28], "safe":[-100,30], "action":0, "disturbances":[-1,0,1], "release_lag":1, "model_valid":true, "target_valid":true}
+  ],
+  "stress": {"id":"out_of_bound_disturbance", "initial":[0,0], "safe":[-5,5], "disturbance":3, "model_valid":true, "target_valid":true, "release_lag":1}
+}

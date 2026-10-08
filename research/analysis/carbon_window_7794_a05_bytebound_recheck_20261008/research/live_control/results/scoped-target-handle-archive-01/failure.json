@@ -1,0 +1,17 @@
+{
+  "passed": false,
+  "stage": "screen_chrome_negative_control",
+  "expected_status": "MISSING",
+  "observed_status": "VALID",
+  "window_content_status": "REVALIDATED",
+  "window_content_resolved_point": [568, 14],
+  "diagnosis": "The chosen 16x16 archived OpenTTD region is low-information and appears exactly at both the translated and untranslated positions. A single exact patch without a mint-time information check cannot reject the wrong coordinate frame.",
+  "preservation": "First execution stopped on the assertion after creating this directory. No GUI input or model call occurred. The candidate and probe hashes below identify the failed source state.",
+  "scope": "offline observations from separate processes with normalized clocks and sequence; not valid handle-lifetime evidence",
+  "sha256": {
+    "scoped_target_handle_v1.py": "550d377f145abbb16f8466dc91b5bb84ca25fccadf71e4d24b2f426550f5a19f",
+    "probe_scoped_target_handle_archive_v1.py": "23a792fae4a82656f2e8718c328c7d8b98e34bde9c31672bb2adee8e9eed5216",
+    "source_001.png": "afdaf2184134025da88a78597cc3d95c45ce5ae86232e13cfb39c6b313e4b88a",
+    "target_001.png": "13cc8f46eed3be6d51325db085d6e0308e2682043ca25c2b6eab35c0ef74ddfb"
+  }
+}

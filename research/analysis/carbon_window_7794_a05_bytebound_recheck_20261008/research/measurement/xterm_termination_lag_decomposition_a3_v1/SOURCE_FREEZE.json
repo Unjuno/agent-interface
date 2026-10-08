@@ -1,0 +1,51 @@
+{
+  "task": "TIMING-XTERM-TERMINATION-LAG-DECOMPOSITION-A3-INTERPRETER-20260918-003",
+  "issue": 1584,
+  "base": "a8f2cba04a274a27f6187309b8bb6753f0beaea7",
+  "branch": "research/xterm-termination-tail-a3-1584",
+  "parent_task": "TIMING-XTERM-TERMINATION-LAG-DECOMPOSITION-A2-20260918-002",
+  "parent_source_gzip_sha256": "87d56230057cde50b8a6bee9741ca7ed042d1a0c6e1bb084170d600c58521329",
+  "seed": 156320260918003,
+  "interpreter": {
+    "path": "/opt/pyvenv/bin/python3",
+    "version": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "xlib_import": true,
+    "xlib_path": "/opt/pyvenv/lib/python3.13/site-packages/Xlib/__init__.py"
+  },
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "tar_bytes": 30720,
+  "tar_sha256": "080520bb5a8616d76c34842e21b4c98c3ea074af61123050bbf70f8193fb034a",
+  "gzip_bytes": 6933,
+  "gzip_sha256": "d20ced5e76e2df68b946d5fb5a408ae638b23d085c416d1c49b4faab44e17779",
+  "chunks": 3,
+  "members": {
+    "PLAN.md": "bfafea1456832fdc5df2341479f6812617c7d2eff931d49c23fad1140b67cfb4",
+    "audit.py": "57ef0370a45b17f111b77dc98723dd7015fc322f41cf695cd88397818aeaf899",
+    "contract.py": "aa512d96f0c66b5052ea404e1e287510c391abcbcb60ff528bca9311406279b5",
+    "corruption.py": "fdde2c123b2ffffbfa70b521ddbcbbd6c6d7fc8a0fbdf28b4344420997507276",
+    "decompose.py": "0b2895666341f1665711d1f6727a03b3fee02a57bd262f4990c416a3fef269fb",
+    "fixture.py": "a512becd66e6c2f974d0ae85d3736c6c58e24f6b211a1a1d9d972b035f0d073b",
+    "harness.py": "41a2718b456138998bdb4a54a12168945df005c17b3187693f9a351f6c0a8f47",
+    "planner_child.py": "4c5692e1f1722373f87bf49a27fefb5897eb66fa3aecfb164b414337b23ce751"
+  },
+  "remote_git_blobs": {
+    "source.part00.b64": "684faed9efdc190564c164fb09d874afa48db0e4",
+    "source.part01.b64": "b05086391101117dad469a8cba19f83f9404fb75",
+    "source.part02.b64": "fe70dd5c835b5f61dbbfeff29f8034703962ac7f",
+    "reconstruct_source.py": "90fc72ff1b1617d4acb684bf9f3b5eb72380fb8e",
+    "construction_gate.py": "2d0185d4c547dbee7ae17003b51bc04fbb9079ac",
+    "CONSTRUCTION_SUMMARY.json": "047ffc14cf9edcc0290ce2cd17c63bfbd0460792"
+  },
+  "construction": {
+    "sessions": 4,
+    "eligible": true,
+    "rows_sha256": "ae88ac8de9fb68ef3989abfa9bd059ae2f3010ec1dc98d9547f7a5be17e21a0f",
+    "effect_to_child_ready_p95_ns": 20982622,
+    "child_ready_to_proc_exit_p50_ns": 164001616.5,
+    "formal_spread_gate_applied": false
+  },
+  "status": "SOURCE_FROZEN_CONSTRUCTION_ELIGIBLE_FORMAL0"
+}

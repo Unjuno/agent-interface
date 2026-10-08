@@ -1,0 +1,11 @@
+{
+  "schema": "qwen-sequence-ranking-attempt-record-v1",
+  "attempt": 1,
+  "status": "STOP_AFTER_COMPUTE_BEFORE_RAW_PERSISTENCE",
+  "reason": "The full frozen 32-row CPU run reached final serialization, then failed because /study/input was mounted read-only; no raw result was persisted.",
+  "model_scoring_computed": true,
+  "raw_persisted": false,
+  "exit_code": 1,
+  "environment": "same frozen offline CPU Docker image; output target accidentally read-only",
+  "recovery": "Separate attempt_02 output directory will be writable; fixed input, model, adapter, seed, arms, and scoring stay unchanged. Attempt 01 will not count as formal result."
+}

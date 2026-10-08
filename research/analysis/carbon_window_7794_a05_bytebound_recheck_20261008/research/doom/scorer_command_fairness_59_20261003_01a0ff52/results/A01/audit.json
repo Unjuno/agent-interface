@@ -1,0 +1,1738 @@
+{
+  "all_negative_controls_rejected": true,
+  "errors": [
+    [
+      [
+        "fair",
+        "stdin",
+        "period_sample"
+      ],
+      "incomplete sample/sink evidence"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "period_sample"
+      ],
+      "wrong count/clock"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "period_sample"
+      ],
+      "command service did not follow the first completed sample/sink"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "double_sample"
+      ],
+      "incomplete sample/sink evidence"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "double_sample"
+      ],
+      "wrong count/clock"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "double_sample"
+      ],
+      "command service did not follow the first completed sample/sink"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "ten_sample"
+      ],
+      "incomplete sample/sink evidence"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "ten_sample"
+      ],
+      "wrong count/clock"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "ten_sample"
+      ],
+      "command service did not follow the first completed sample/sink"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "period_sink"
+      ],
+      "incomplete sample/sink evidence"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "period_sink"
+      ],
+      "wrong count/clock"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "period_sink"
+      ],
+      "command service did not follow the first completed sample/sink"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "double_sink"
+      ],
+      "incomplete sample/sink evidence"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "double_sink"
+      ],
+      "wrong count/clock"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "double_sink"
+      ],
+      "command service did not follow the first completed sample/sink"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "ten_sink"
+      ],
+      "incomplete sample/sink evidence"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "ten_sink"
+      ],
+      "wrong count/clock"
+    ],
+    [
+      [
+        "fair",
+        "stdin",
+        "ten_sink"
+      ],
+      "command service did not follow the first completed sample/sink"
+    ]
+  ],
+  "negative_controls": {
+    "clock_reverse": {
+      "errors": [
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "clock reversed"
+        ],
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ]
+      ],
+      "passed": false,
+      "rows": 36
+    },
+    "drop_fair_service": {
+      "errors": [
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "finish not served exactly once"
+        ],
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "terminal inconsistent"
+        ],
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ]
+      ],
+      "passed": false,
+      "rows": 36
+    },
+    "duplicate_case": {
+      "errors": [
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "unknown or duplicate case"
+        ]
+      ],
+      "passed": false,
+      "rows": 37
+    },
+    "duplicate_finish": {
+      "errors": [
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "finish not served exactly once"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ]
+      ],
+      "passed": false,
+      "rows": 36
+    },
+    "fake_retained_service": {
+      "errors": [
+        [
+          [
+            "retained",
+            "loop",
+            "period_sample"
+          ],
+          "invented command service"
+        ],
+        [
+          [
+            "retained",
+            "loop",
+            "period_sample"
+          ],
+          "starvation mislabeled"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ]
+      ],
+      "passed": false,
+      "rows": 36
+    },
+    "missing_case": {
+      "errors": [
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          "matrix",
+          "case coverage mismatch"
+        ]
+      ],
+      "passed": false,
+      "rows": 35
+    },
+    "missing_sample_exit": {
+      "errors": [
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ]
+      ],
+      "passed": false,
+      "rows": 36
+    },
+    "owner_thread_changed": {
+      "errors": [
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "owner-thread mismatch"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ]
+      ],
+      "passed": false,
+      "rows": 36
+    },
+    "receipt_time_changed": {
+      "errors": [
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "receipt/callback bracket mismatch"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ]
+      ],
+      "passed": false,
+      "rows": 36
+    },
+    "scorer_leak": {
+      "errors": [
+        [
+          [
+            "fair",
+            "loop",
+            "period_sample"
+          ],
+          "finish not served exactly once"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sample"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "period_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "double_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "incomplete sample/sink evidence"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "wrong count/clock"
+        ],
+        [
+          [
+            "fair",
+            "stdin",
+            "ten_sink"
+          ],
+          "command service did not follow the first completed sample/sink"
+        ]
+      ],
+      "passed": false,
+      "rows": 36
+    }
+  },
+  "passed": false,
+  "raw_sha256": "956d1a909388e25b4a2aa3f170939e667d8bd0c78554a2c727536158c3803734",
+  "rows": 36
+}

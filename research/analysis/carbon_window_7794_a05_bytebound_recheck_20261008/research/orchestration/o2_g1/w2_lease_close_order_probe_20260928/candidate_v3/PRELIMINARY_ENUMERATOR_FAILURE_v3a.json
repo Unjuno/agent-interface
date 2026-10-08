@@ -1,0 +1,19 @@
+{
+  "schema": "w2-lease-authority-enumerator-first-outcome-v1",
+  "disposition": "FAIL_EXPECTED_RULE_HARNESS_KEYING_ERROR",
+  "candidate_oracle_disagreement": false,
+  "combinations_checked_before_stop": 169,
+  "failing_case": {
+    "edge_interval": [0, 0],
+    "close_interval": [0, 0],
+    "close_lineage": {"lease_id": "OTHER", "actuation_id": "A"},
+    "terminal": "absent",
+    "candidate": "AUTHORIZED_MATCH",
+    "raw_oracle": "AUTHORIZED_MATCH",
+    "harness_expected": "HOLD_CLOSE_LINEAGE_UNRESOLVED"
+  },
+  "cause": "The independent expected-rule helper applied same-lease close-lineage policy before checking that the close lease ID matched the input lease ID. A close for lease OTHER must not bind or revoke lease L.",
+  "repair": "Key close applicability by exact lease ID first; then apply matching/missing/foreign actuation-lineage policy only for closes of that same lease.",
+  "preservation": "This first failure is retained unchanged. It is a harness expectation bug, not a candidate/oracle mismatch or a W2 runtime finding.",
+  "corrected_successor": "EXHAUSTIVE_AUDIT_lease_authority_v3: 48,384 combinations; candidate/oracle mismatches=0; contract-rule mismatches=0."
+}

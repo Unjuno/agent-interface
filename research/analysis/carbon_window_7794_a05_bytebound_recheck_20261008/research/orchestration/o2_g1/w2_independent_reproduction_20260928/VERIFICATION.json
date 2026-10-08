@@ -1,0 +1,114 @@
+{
+  "case_count": 8,
+  "cases": [
+    {
+      "case_id": "authorized-idle",
+      "disposition": "AUTHORIZED_IDLE",
+      "guaranteed_any_input_ns": 0,
+      "ordered": true,
+      "possible_any_input_ns": 0,
+      "program_envelope_ns": null,
+      "task_effect": "UNRESOLVED",
+      "terminal_does_not_extend_input": null,
+      "unauthorized": false,
+      "unmatched_down": false
+    },
+    {
+      "case_id": "unauthorized-input-after-expiry",
+      "disposition": "UNAUTHORIZED_INPUT",
+      "guaranteed_any_input_ns": 16,
+      "ordered": true,
+      "possible_any_input_ns": 20,
+      "program_envelope_ns": null,
+      "task_effect": "UNRESOLVED",
+      "terminal_does_not_extend_input": null,
+      "unauthorized": true,
+      "unmatched_down": false
+    },
+    {
+      "case_id": "coast-damage",
+      "disposition": "INPUT_FREE_RESOURCE_LOSS_UNATTRIBUTED",
+      "guaranteed_any_input_ns": 0,
+      "ordered": true,
+      "possible_any_input_ns": 0,
+      "program_envelope_ns": null,
+      "task_effect": "UNRESOLVED",
+      "terminal_does_not_extend_input": null,
+      "unauthorized": false,
+      "unmatched_down": false
+    },
+    {
+      "case_id": "release-before-terminal",
+      "disposition": "COMPLETED_RELEASE_BEFORE_TERMINAL",
+      "guaranteed_any_input_ns": 298,
+      "ordered": true,
+      "possible_any_input_ns": 302,
+      "program_envelope_ns": 500,
+      "task_effect": "UNRESOLVED",
+      "terminal_does_not_extend_input": true,
+      "unauthorized": false,
+      "unmatched_down": false
+    },
+    {
+      "case_id": "overlapping-key-holds",
+      "disposition": "VALID_OVERLAPPING_HOLDS",
+      "guaranteed_any_input_ns": 58,
+      "ordered": true,
+      "possible_any_input_ns": 62,
+      "program_envelope_ns": null,
+      "task_effect": "UNRESOLVED",
+      "terminal_does_not_extend_input": null,
+      "unauthorized": false,
+      "unmatched_down": false
+    },
+    {
+      "case_id": "missing-and-out-of-order-edge",
+      "disposition": "HOLD_OUT_OF_ORDER_AND_RIGHT_CENSORED",
+      "guaranteed_any_input_ns": null,
+      "ordered": false,
+      "possible_any_input_ns": null,
+      "program_envelope_ns": null,
+      "task_effect": "UNRESOLVED",
+      "terminal_does_not_extend_input": null,
+      "unauthorized": false,
+      "unmatched_down": true
+    },
+    {
+      "case_id": "no-input-unbound-task-effect",
+      "disposition": "NO_INPUT_EFFECT_UNBOUND",
+      "guaranteed_any_input_ns": 0,
+      "ordered": true,
+      "possible_any_input_ns": 0,
+      "program_envelope_ns": null,
+      "task_effect": "OBSERVED_UNBOUND",
+      "terminal_does_not_extend_input": null,
+      "unauthorized": false,
+      "unmatched_down": false
+    },
+    {
+      "case_id": "held-input-no-effect",
+      "disposition": "HELD_INPUT_NO_USEFUL_EFFECT",
+      "guaranteed_any_input_ns": 98,
+      "ordered": true,
+      "possible_any_input_ns": 102,
+      "program_envelope_ns": null,
+      "task_effect": "NEGATIVE_FOR_DECLARED_WINDOW",
+      "terminal_does_not_extend_input": null,
+      "unauthorized": false,
+      "unmatched_down": false
+    }
+  ],
+  "disposition": "PASS_MEASUREMENT_CONTRACT_CONSTRUCTION_SCOPED",
+  "inputs_sha256": {
+    "event-schema.json": "3ca91926d9e362e02dd0272a03b67e2d65b46199bcfb1bb8f55c29cfe92f6d76",
+    "trace-cases.json": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f"
+  },
+  "limits": [
+    "schema checks only fields and refs used by this runner; no external JSON Schema meta-validator was available",
+    "shape/trace contract only",
+    "no live/game/model/input effect",
+    "no recovery efficacy"
+  ],
+  "schema": "o2-g1-w2-verification-v2"
+}
+

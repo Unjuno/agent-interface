@@ -1,0 +1,34 @@
+{
+  "first_probe": {
+    "chunk_id": "86be97",
+    "wall_time_seconds": 4.7402001,
+    "exit_code": 1,
+    "original_token_count": 59,
+    "output": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\r\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\nModuleNotFoundError: No module named 'PIL'\n"
+  },
+  "second_probe": {
+    "chunk_id": "217190",
+    "wall_time_seconds": 1.0055551,
+    "exit_code": 0,
+    "original_token_count": 59,
+    "output": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.\r\n{\"python\": \"3.12.14 (main, Sep 19 2026, 01:04:57) [GCC 14.2.0]\", \"Xvfb\": \"/usr/bin/Xvfb\", \"Xlib\": true, \"PIL\": false}\n"
+  },
+  "wheel_metadata": {
+    "chunk_id": "e405a7",
+    "wall_time_seconds": 0.8683911,
+    "exit_code": 0,
+    "original_token_count": 98,
+    "output": "{\"version\":\"12.3.0\",\"filename\":\"pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl\",\"url\":\"https://files.pythonhosted.org/packages/84/21/a35af28dcc61f37ed850a2d64c65c701321dfbf25085e469d5559360cbbf/pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl\",\"sha256\":\"78cb2c6865a35ab8ff8b75fd122f6033b92a62c82801110e48ddd6c936a45d91\",\"bytes\":6940830}\r\n"
+  },
+  "wheel_download": {
+    "chunk_id": "4a5fad",
+    "wall_time_seconds": 1.0498619,
+    "exit_code": 0,
+    "original_token_count": 72,
+    "output": "{\"path\":\"C:\\\\Users\\\\junny\\\\Documents\\\\Codex\\\\2026-09-19\\\\new-chat\\\\work\\\\x11-cancel-continuation-4d74\\\\setup\\\\image\\\\pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl\",\"bytes\":6940830,\"sha256\":\"78cb2c6865a35ab8ff8b75fd122f6033b92a62c82801110e48ddd6c936a45d91\"}\r\n"
+  },
+  "overlap_issue": 7010,
+  "formal_invocations": 0,
+  "builds": 0,
+  "note": "Withdrawn overlapping PNG proposal; dependency probes/download only. Wheel not used in this no-PNG experiment."
+}

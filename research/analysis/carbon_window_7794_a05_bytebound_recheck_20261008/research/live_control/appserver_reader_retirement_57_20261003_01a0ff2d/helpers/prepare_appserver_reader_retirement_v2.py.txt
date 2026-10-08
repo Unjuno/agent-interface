@@ -1,0 +1,46 @@
+import ast, hashlib, json, platform, sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+root = Path(__file__).resolve().parent.parent
+previous = root / 'work/repairs/appserver-journal-close-01'
+private = root / 'work/repairs/appserver-journal-close-02'
+out = root / 'outputs/appserver-journal-close-02'
+private.mkdir(exist_ok=False)
+out.mkdir(exist_ok=False)
+source = (previous / 'codex_app_server_client_v2.py').read_bytes()
+tests = (previous / 'test_appserver_journal_close_01a0ff2d.py').read_bytes()
+if hashlib.sha256(source).hexdigest() != '464c770e357b664c35866e271740380307bfcd52dbaa8573e258d5600c006531':
+    raise ValueError('V1 source identity changed')
+old = b'class RetiredReader:\n    def join(self, timeout):\n        self.timeout = timeout\n'
+new = old + b'\n    def is_alive(self):\n        return False\n'
+if tests.count(old) != 1:
+    raise ValueError('retired reader fixture identity changed')
+adapted = tests.replace(old, new, 1)
+def methods(data):
+    return {n.name: ast.dump(n, include_attributes=False) for n in ast.walk(ast.parse(data)) if isinstance(n, ast.FunctionDef)}
+before_methods, after_methods = methods(tests), methods(adapted)
+if any(after_methods[k] != v for k, v in before_methods.items()) or set(after_methods) - set(before_methods) != {'is_alive'}:
+    raise ValueError('existing tests changed beyond Thread interface adaptation')
+new_tests = (root / 'work/test_appserver_reader_retirement_01a0ff2d.py').read_bytes()
+for name, data in [('codex_app_server_client_v2.py', source), ('v1-client.py.txt', source),
+                   ('test_appserver_journal_close_01a0ff2d.py', adapted), ('v1-test.py.txt', tests),
+                   ('test_appserver_reader_retirement_01a0ff2d.py', new_tests)]:
+    (private / name).write_bytes(data)
+record = {'worker': '01a0ff2d-be6f-78d3-ad7c-497514c9079f', 'claim_comment': 5967918690,
+          'kind': 'new ordinary test-first reader-retirement repair', 'prior_head': '31f10e660d2e7e13d8fe05c9a56d3f3c5e71f324',
+          'source_sha256_before': hashlib.sha256(source).hexdigest(),
+          'old_test_sha256': hashlib.sha256(tests).hexdigest(),
+          'adapted_test_sha256': hashlib.sha256(adapted).hexdigest(),
+          'new_test_sha256': hashlib.sha256(new_tests).hexdigest(),
+          'old_assertions_methods_unchanged': True,
+          'freeze_utc': datetime.now(timezone.utc).isoformat(),
+          'environment': {'python': sys.version, 'executable': sys.executable, 'platform': platform.platform(),
+                          'monotonic': vars(time_info := __import__('time').get_clock_info('monotonic'))},
+          'new_methods': 3, 'retained_methods': 7, 'max_simultaneous_owned_transport_processes': 2,
+          'red_selected': 'three new OS-pipe methods, five owned harmless process invocations',
+          'green_selected': 'seven retained plus three new methods; eight owned process invocations per normal/-O command',
+          'decision': 'healthy EOF returns None with reader/journal retired; finite close with live reader raises TimeoutError before journal acquisition/close, journal remains open when present; after exactly one writer release actual late frame survives in cache/journal, then close completes and all own callers/readers/processes/driver pipes retire',
+          'limitations': 'separately owned writer/sibling OS-pipe fixture, not arbitrary descendant kill or peer replay; observation checkpoints and configured stage timeouts are not hard total deadlines; no Codex/model/physical input/formal/task-efficiency measurement'}
+(out / 'FREEZE_BEFORE_RED.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+print(json.dumps(record, indent=2))

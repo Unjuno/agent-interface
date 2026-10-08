@@ -1,0 +1,26 @@
+{
+  "issue": 2606,
+  "allocation": "gtk_formal_allocation_2606_v2",
+  "image": "agent-interface-gtk-formal-v3:2796",
+  "network": "none",
+  "cases": 8,
+  "event_count": 15,
+  "input_operations": 3,
+  "model_calls": 0,
+  "network_calls": 0,
+  "scorer_matches": true,
+  "formal_receipt_order_ok": true,
+  "independent_gate": {
+    "useful": "USEFUL",
+    "unavailable": "UNAVAILABLE",
+    "guarded": "REFUSED",
+    "no_effect": "NO_EFFECT",
+    "partial": "PARTIAL",
+    "stale_repair": "REPAIRED",
+    "ambiguous": "UNKNOWN_NO_REPLAY",
+    "cleanup_failure": "CLEANUP_FAILURE"
+  },
+  "decision": "PASS_RECEIPT_EMISSION_PREFLIGHT_ONLY",
+  "formal_2606_acceptance": false,
+  "scope": "bounded live GTK/X11 receipt-emission preflight; no formal acceptance claim"
+}

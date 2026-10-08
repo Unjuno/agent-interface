@@ -1,0 +1,60 @@
+{
+  "schema": "competence-location-map-3446-freeze-v1",
+  "allocation": "competence-location-map-3446-20261001-01",
+  "issue": 3446,
+  "main_sha": "07c5a1bbff1ba82e0ffdcd0f521fe2102a59ad51",
+  "branch": "research/competence-location-map-3446-20261001",
+  "path": "research/analysis/competence_location_map_3446_v1/",
+  "hypothesis": "A competence-location map backed by independently scored, version-current, unexpired evidence will improve exact specialist location and reduce needless YIELD versus static overlapping declarations and success-only selection, without increasing unsafe admissions or losing required YIELD.",
+  "design": {
+    "cases": 56,
+    "strata": 7,
+    "replicates_per_stratum": 8,
+    "policies": [
+      "STATIC_SCOPE",
+      "RECENT_SUCCESS_ONLY",
+      "VALIDATED_COMPETENCE_MAP"
+    ],
+    "rows": 168,
+    "known_cases": 48,
+    "required_yield_cases": 8,
+    "support_n_per_evidence_record": 20,
+    "minimum_support_n": 2,
+    "evidence_ttl": 30,
+    "decision_time": 100,
+    "action_authority": false
+  },
+  "decision_gates": {
+    "map_exact_known_min": 39,
+    "minimum_exact_known_margin_over_each_control": 10,
+    "map_required_yield_recall": "8/8",
+    "novel_false_routes_all_policies": 0,
+    "authority_grants_all_policies": 0,
+    "input_emissions_all_policies": 0,
+    "auditor_mutation_controls": "4/4 rejected",
+    "candidate_invocations": 1,
+    "candidate_retries": 0,
+    "post_result_tuning": 0
+  },
+  "environment": {
+    "engine_context": "desktop-linux",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/amd64",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "cpu_limit": 1,
+    "memory_mib": 256,
+    "pids_limit": 32,
+    "tmpfs_mib": 16
+  },
+  "source_sha256": {
+    "runner.py": "36e85c94a5a41eb58c6aa4faad6656bf460762ced3bb47eab58cf5b79dd54992",
+    "audit.py": "41309c9ee3d518f2f3e4e12950d7b9ebfd2629fde02bf6a5d89693cc94dbf9e9",
+    "test_construction.py": "b2754f52688600c6937443b9f0c41e03aa21d775a056ec4d66c21ee26770c106"
+  },
+  "commands": {
+    "construction": "python -B -m unittest -v test_construction.py",
+    "candidate": "python -B runner.py /out/FORMAL_RAW.json",
+    "independent_audit": "python -B audit.py /raw/FORMAL_RAW.json /out/AUDIT.json"
+  }
+}

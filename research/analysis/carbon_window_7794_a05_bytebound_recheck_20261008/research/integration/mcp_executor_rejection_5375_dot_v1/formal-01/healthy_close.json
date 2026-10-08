@@ -1,0 +1,55 @@
+{
+  "arguments": {},
+  "inventory": {
+    "947399ac4e9a49e0a57d38797b91f2ca/report.json": {
+      "bytes": 445,
+      "sha256": "a161b72eeecfa9fd7f435f2a890c60b0bf7eefe29300d5ec5b782b2d6e1604e9"
+    },
+    "947399ac4e9a49e0a57d38797b91f2ca/request.json": {
+      "bytes": 356,
+      "sha256": "11ccaf3a0cbf4eb60701cfe08034b150033b77e55043487150738aa845c9984a"
+    },
+    "session-b8af48f83c4a42e8b5b6bffce12bc041-close.json": {
+      "bytes": 189,
+      "sha256": "43aa0a3479e84347abeec0b28233e8b4459853bab3df8d0bbde52a31a374489d"
+    }
+  },
+  "invoke_entries": 1,
+  "label": "healthy_close",
+  "ledger": {
+    "class": "mcp.types.CallToolResult",
+    "kind": "return",
+    "value": {
+      "content": [
+        {
+          "annotations": null,
+          "meta": null,
+          "text": "{\"status\": \"call_list\", \"scope\": \"current_server\", \"total_calls\": 1, \"calls\": [{\"call_id\": \"947399ac4e9a49e0a57d38797b91f2ca\", \"operation\": \"close\", \"state\": \"finished\"}], \"next_before_call_id\": null, \"operation_invoked\": false}",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "meta": null,
+      "structuredContent": null
+    }
+  },
+  "result": {
+    "class": "mcp.types.CallToolResult",
+    "kind": "return",
+    "value": {
+      "content": [
+        {
+          "annotations": null,
+          "meta": null,
+          "text": "{\"status\": \"closed\", \"session_id\": \"b8af48f83c4a42e8b5b6bffce12bc041\", \"authority_granted\": false, \"restart_allowed\": false, \"release_attempted\": false, \"connection_close_attempted\": false, \"session\": {\"session_id\": \"b8af48f83c4a42e8b5b6bffce12bc041\", \"mode\": \"persistent-x11\", \"state\": \"closed\", \"binding_revision\": 1, \"targets\": {\"fixture\": 123}, \"recovery_required\": null, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false}, \"call_directory\": \"/workspace/scratch/ac864d2e1baf/runtime-issue-astra/mcp-preworker-5375-v1/formal-01/healthy/947399ac4e9a49e0a57d38797b91f2ca\", \"call_id\": \"947399ac4e9a49e0a57d38797b91f2ca\"}",
+          "type": "text"
+        }
+      ],
+      "isError": false,
+      "meta": null,
+      "structuredContent": null
+    }
+  },
+  "server_directory": "healthy",
+  "tool": "interface_close"
+}

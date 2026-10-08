@@ -1,0 +1,131 @@
+{
+  "decisions": {
+    "hidden_in_deck_between": "HOLD_BEHAVIOR_SHIFT_BEFORE_B",
+    "hidden_in_deck_mid_B": "HOLD_BLOCK_SPANS_BEHAVIOR_SHIFT",
+    "hidden_outside_deck_between": "NO_SHIFT_DETECTED_IN_DECK; MODEL_IDENTITY_UNVERIFIED",
+    "prompt_context_drift": "HOLD_PROMPT_CONTEXT_DRIFT",
+    "schema_only": "HOLD_SCHEMA_CHANGE",
+    "stationary": "NO_SHIFT_DETECTED_IN_DECK; MODEL_IDENTITY_UNVERIFIED",
+    "visible_snapshot_change": "HOLD_SNAPSHOT_CHANGED"
+  },
+  "errors": [],
+  "gates": {
+    "all_route_attempts_retained": true,
+    "in_deck_between_shift_caught_before_B": true,
+    "in_deck_mid_B_shift_holds_whole_block": true,
+    "no_policy_proves_identity_from_alias_or_clean_deck": true,
+    "out_of_deck_not_mislabeled_stable": true,
+    "schema_context_snapshot_controls_typed_separately": true,
+    "stationary_not_flagged_and_scope_limited": true
+  },
+  "n_groups": 21,
+  "n_trials_per_group": 200,
+  "summary": {
+    "hidden_in_deck_between/alias_only": {
+      "decision": "ALIAS_MATCH_ONLY; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "hidden_in_deck_between/bracketed_canary": {
+      "decision": "HOLD_BEHAVIOR_SHIFT_BEFORE_B",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "hidden_in_deck_between/metadata_only": {
+      "decision": "NO_METADATA_CHANGE; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "hidden_in_deck_mid_B/alias_only": {
+      "decision": "ALIAS_MATCH_ONLY; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "hidden_in_deck_mid_B/bracketed_canary": {
+      "decision": "HOLD_BLOCK_SPANS_BEHAVIOR_SHIFT",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "hidden_in_deck_mid_B/metadata_only": {
+      "decision": "NO_METADATA_CHANGE; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "hidden_outside_deck_between/alias_only": {
+      "decision": "ALIAS_MATCH_ONLY; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "hidden_outside_deck_between/bracketed_canary": {
+      "decision": "NO_SHIFT_DETECTED_IN_DECK; MODEL_IDENTITY_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "hidden_outside_deck_between/metadata_only": {
+      "decision": "NO_METADATA_CHANGE; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "prompt_context_drift/alias_only": {
+      "decision": "ALIAS_MATCH_ONLY; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "prompt_context_drift/bracketed_canary": {
+      "decision": "HOLD_PROMPT_CONTEXT_DRIFT",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "prompt_context_drift/metadata_only": {
+      "decision": "HOLD_PROMPT_CONTEXT_DRIFT",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "schema_only/alias_only": {
+      "decision": "ALIAS_MATCH_ONLY; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "schema_only/bracketed_canary": {
+      "decision": "HOLD_SCHEMA_CHANGE",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "schema_only/metadata_only": {
+      "decision": "HOLD_SCHEMA_CHANGE",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "stationary/alias_only": {
+      "decision": "ALIAS_MATCH_ONLY; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "stationary/bracketed_canary": {
+      "decision": "NO_SHIFT_DETECTED_IN_DECK; MODEL_IDENTITY_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "stationary/metadata_only": {
+      "decision": "NO_METADATA_CHANGE; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "visible_snapshot_change/alias_only": {
+      "decision": "ALIAS_MATCH_ONLY; MODEL_BEHAVIOR_UNVERIFIED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "visible_snapshot_change/bracketed_canary": {
+      "decision": "HOLD_SNAPSHOT_CHANGED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    },
+    "visible_snapshot_change/metadata_only": {
+      "decision": "HOLD_SNAPSHOT_CHANGED",
+      "route_A_n": 200,
+      "route_B_n": 200
+    }
+  },
+  "verdict": "PASS_METHOD_SCOPED"
+}

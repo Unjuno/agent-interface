@@ -1,0 +1,1 @@
+Source 72aa7b1d0. One WSL Inkscape allocation, seed991123 max2 gap0. View source, explicitly choose flat rectangle interior to reproduce prior typed refusal, then inspect returned fresh image and author a different textured-edge target with move/save/finish_after. No restart/replay. Preserve full responses and failures. Compare recovery behavior only, not latency or tokens.

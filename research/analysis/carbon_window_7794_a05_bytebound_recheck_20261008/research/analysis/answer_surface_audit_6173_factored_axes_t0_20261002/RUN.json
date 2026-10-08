@@ -1,0 +1,33 @@
+{
+  "allocation_id": "6173-T0-FACTORED-ACCESS-AXES-03",
+  "source_main_sha": "69a1bf509eb432e5e3c0c294d05ad7671d86adb6",
+  "candidate": {
+    "command": "python3 -B run_candidate.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "CANDIDATE_COMPLETE",
+    "retries": 0,
+    "sha256": "8d6dc28436043b7ef6ba380ff6e0fedb9a79a05fb30b87ab38f87f93fbf58102"
+  },
+  "auditor": {
+    "command": "python3 -B run_audit.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "PASS_METHOD_FACTORED_AXES",
+    "errors": 0,
+    "retries": 0,
+    "sha256": "b442e131a7b5a7595a161d28938829f4613f7f18f054814c242f79d1f2af6569"
+  },
+  "case_count": 17,
+  "construction_tests": {
+    "command": "python3 -B -m unittest -v test_axes test_audit_axes",
+    "result": "PASS",
+    "passed": 12,
+    "failed": 0
+  },
+  "py_compile": {
+    "command": "python3 -B -m py_compile axes_candidate.py audit_axes.py run_candidate.py run_audit.py test_axes.py test_audit_axes.py",
+    "result": "PASS"
+  },
+  "resource_scope": "Host CPython stdlib. One unrelated OrbStack container remained active and untouched; no container was created/entered/stopped/modified, and no model, user data, network, GitHub/web retrieval, GUI, app, or input was used."
+}

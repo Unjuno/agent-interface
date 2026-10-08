@@ -1,0 +1,63 @@
+{
+  "issue": 5409,
+  "parentIssue": 5397,
+  "branch": "research/issue5409-gpu-streaming-20260930-01",
+  "baseMainSha": "de12176584bf7192d206a12a44b4f2877faf3ab2",
+  "status": "FROZEN_BEFORE_ALLOCATION",
+  "allocationConsumed": false,
+  "supersedes": [
+    "GPU_PILOT_FREEZE_V3.json",
+    "GPU_PILOT_FREEZE_V3_1.json"
+  ],
+  "supersessionRecords": [
+    "research/experiments/strategic_reporting_5322_gpu_v3/GPU_PILOT_SUPERSESSION_V3.json",
+    "research/experiments/strategic_reporting_5322_gpu_v3/GPU_PILOT_SUPERSESSION_V3_1.json"
+  ],
+  "files": [
+    {
+      "path": "research/experiments/strategic_reporting_5322_gpu_v3/GPU_MODEL_PILOT_V3_PREREG.md",
+      "sha256": "97b791537b283970d8d4410f013a78dc7c64d71801a4cdde54cd5e211bd4fbea"
+    },
+    {
+      "path": "research/experiments/strategic_reporting_5322_gpu_v3/gpu_model_pilot_v3.py",
+      "sha256": "0531d312c88b5e4669f8ff4209eb80061f16a67d3d43ebaa7f56ed5623fa5144"
+    },
+    {
+      "path": "research/experiments/strategic_reporting_5322_gpu_v3/audit_gpu_model_pilot_v3.py",
+      "sha256": "10471df1b01de80f31ca2948882fb2bd33ca26fa0d03049e47093d5ab4fc639c"
+    },
+    {
+      "path": "research/experiments/strategic_reporting_5322_gpu_v3/capture_gpu_pilot_stream_v3_2.py",
+      "sha256": "7a602ba307093aecba7e4e4a87f7dc2310fb3b9e4e63ca69f728b55bba6d5a0d"
+    }
+  ],
+  "runtime": {
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9",
+    "ollama": "0.34.4",
+    "torch": "2.5.1+cu121",
+    "cudaAvailable": true,
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU"
+  },
+  "models": {
+    "qwen2.5:3b": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+    "qwen3:4b": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+  },
+  "seeds": {
+    "hiddenTruth": 748219964,
+    "generation": 20261001,
+    "temperature": 0
+  },
+  "allocation": {
+    "modelCalls": 6,
+    "caseRows": 96,
+    "arms": [
+      "metadata_only",
+      "outcome_scoring",
+      "proper_score_random_audit"
+    ],
+    "retries": 0
+  },
+  "constructionCheck": "Syntax, model/case/prompt and hidden truth sequence parity passed. Both superseded runner versions were rejected before any inference.",
+  "barrier": "For each model call, runner emits CALL_EVENT containing the full request/response, call-level runtime evidence, parsed rows and exact raw_lines, then waits for exact ACK n on stdin. Orchestrator commits and reads back call-n.json before sending ACK n. A missing ACK stops before the next request."
+}

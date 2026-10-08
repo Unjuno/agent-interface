@@ -1,0 +1,49 @@
+{
+  "schema": "needle-publication-host-boundary-freeze-v1",
+  "allocation": "needle-publication-host-boundary-5134-20260928-01",
+  "issue": 5134,
+  "branch": "research/needle-publication-host-boundary-5134-20260928",
+  "path": "research/system1/needle_publication_host_boundary_5134_20260928_01/",
+  "base_main_sha": "16421aefa2ec357b79e3fd3dc307b32955bc6fab",
+  "base_main_tree": "addf13a48e55ea55d86b83daae2709ba3fd82903",
+  "H": "On this macOS host filesystem, seven same-directory os.replace transitions preserve each pre-opened descriptor's exact previous package while a fresh path open returns the exact next package. In a matched in-place truncate/write arm, independent readers released during a writer-held partial-prefix interval observe that exact incomplete prefix through both the pre-opened descriptor and a fresh path open.",
+  "T": {
+    "host": "macOS; local /tmp filesystem; no container",
+    "allocation": "needle-publication-host-boundary-5134-20260928-01",
+    "input": {
+      "path": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json",
+      "git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
+      "sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+      "bytes": 15279,
+      "generation": 3788
+    },
+    "candidates": "generations 3789 through 3795; exact seed-derived package, allocation-bound provenance, payload digest recomputed",
+    "schedule": {
+      "phases": 7,
+      "readers_per_phase_per_arm": 4,
+      "atomic_rows": 28,
+      "unsafe_rows": 28,
+      "atomic_observations_per_row": ["pre-opened descriptor after replace", "fresh path open after replace"],
+      "unsafe_observations_per_row": ["pre-opened descriptor during exact partial prefix", "fresh path open during exact partial prefix"],
+      "unsafe_writer_barrier": "truncate to zero; write strict prefix; hold writer; release all readers; collect their bytes; then complete the exact candidate package",
+      "process_start_method": "spawn"
+    },
+    "formal_invocations": 1,
+    "container_invocations": 0
+  },
+  "D": {
+    "PASS_HOST_BOUNDARY_SCOPED": "Independent raw-only audit reconstructs all 28 atomic and 28 unsafe rows, child identities/exits, monotonic timestamp order, exact previous/next package bytes, exact strict-prefix reads, and exact completed unsafe packages; mutation controls reject.",
+    "FAIL_HOST_BOUNDARY_CONTRARY_OBSERVATION": "A complete, provenance-valid audit reconstructs any atomic held/fresh byte contrary to the frozen expectation, or does not reconstruct an exact strict-prefix read and exact final package in the unsafe arm.",
+    "STOP_SOURCE_ENVIRONMENT_PROCESS_OR_AUDIT": "Any source/input/host/output/denominator/process/audit gate fails. Retain the evidence; do not retry this allocation."
+  },
+  "C": "Both arms use identical seven seed-derived generations, four independently spawned readers per phase, host interpreter and path family; only os.replace versus in-place truncate/partial-write/completion differs. Unsafe readers are deliberately barrier-released during the partial interval; this tests possibility of exposure, not its natural frequency.",
+  "U": "One macOS host, one local filesystem path family, one Python build, synthetic package and fixed schedule. Does not establish container-to-host bind semantics, OrbStack behavior, cross-platform or other-filesystem equivalence, crash durability, production safety, model/task quality, GUI effects or performance/general reliability.",
+  "retry_policy": "This is a distinct host-only allocation from consumed OrbStack allocation -02. Invoke the host runner once. Any launch or output consumes this host allocation; no retry or relabeling.",
+  "source_sha256": {
+    "PLAN.md": "97b0315bd7d976d77adde9235c29d29a8c08db37baf6c0bc0230bab796772c30",
+    "host_boundary.py": "ed7232506c225f5b88b17fccfb9d78c22f40c8d509f1992f0aa53edb5348f78c",
+    "audit.py": "a1df591d0437f118214023c458596301c8ed7b73623a907819021535f476db76",
+    "test_host_boundary.py": "e54d83da3166ca2358685625033146a650b4522ecd2cd46bdabaed9130fec6f7"
+  },
+  "freeze_self_hash": "omitted; Git blob/commit and source inventory are authoritative"
+}

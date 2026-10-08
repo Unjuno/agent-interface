@@ -1,0 +1,32 @@
+{
+  "schema": "broker-path-durable-fixture-4937-result-v1",
+  "allocation": "broker-path-durable-fixture-4937-20260928-01",
+  "disposition": "PASS_DURABLE_FIXTURE_SERVE_REJECTION_SCOPED",
+  "formal_runner_invocations": 1,
+  "retries": 0,
+  "postfreeze_tuning": 0,
+  "rows": {
+    "total": 23,
+    "accepted": 5,
+    "rejected": 18,
+    "errors": []
+  },
+  "independent_audit": {
+    "decision": "PASS_DURABLE_FIXTURE_SERVE_REJECTION_SCOPED",
+    "corruption_controls": 7,
+    "rejected": 7,
+    "errors": []
+  },
+  "hashes": {
+    "raw_sha256": "661dd8ef8f08257ad641b0973b8cb5ea12db020f68c817b0bc28424aa442a953",
+    "fixture_manifest_sha256": "8c1698c53d17e7f542e9150ffc144c7954fca7a9f8d01faaaf5ae0e177bd3e3d",
+    "audit_sha256": "370ce3db51f273a6194db9570ee372102d3abadc56e880a16480c63f8c07b413"
+  },
+  "limits": [
+    "candidate-only; production broker unchanged",
+    "Linux/amd64 Docker only",
+    "mock subprocess only; no host CLI/model/provider",
+    "no Windows path parity or #3152 live task/model claim",
+    "no GPU used"
+  ]
+}

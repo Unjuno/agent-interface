@@ -1,0 +1,32 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "native-source",
+  "source": {
+    "observation_seq": 1,
+    "binding_revision": 1
+  },
+  "authority": {
+    "lease_id": "private-source",
+    "expires_at_ns": 57327909037
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "fixture"
+    },
+    {
+      "op": "observe",
+      "frame": "window_client",
+      "x": 0,
+      "y": 0,
+      "w": 400,
+      "h": 180
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

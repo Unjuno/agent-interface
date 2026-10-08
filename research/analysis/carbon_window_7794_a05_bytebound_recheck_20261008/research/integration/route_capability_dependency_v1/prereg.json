@@ -1,0 +1,16 @@
+{
+  "task": "ROUTE-CAPABILITY-DEPENDENCY-BINDING-20260917-003",
+  "issue": 842,
+  "base": "f52f847c0fa5adf2af84c3689c8d58aa7f44f9f0",
+  "formal_invocation_budget": 1,
+  "changed_factor": "exact current session/surface/geometry dependency matching after unchanged semantic dimension matching",
+  "retained_center_evidence_git_blob": "28bc4a8c07958db58efe98eb73881cbced46c481",
+  "expected": {
+    "exact_candidate": "SELECTED",
+    "changed_dependency_candidate": "STALE_CAPABILITY",
+    "missing_dependency_candidate": "CURRENT_CONTEXT_INCOMPLETE",
+    "malformed_provenance": "UNSUPPORTED_PROVENANCE",
+    "changed_dependency_baseline": "SELECTED"
+  },
+  "decision": "PASS_ROUTE_CAPABILITY_DEPENDENCY_BINDING_SCOPED iff exact candidate selects ctrl_wheel with authority none, all four dependency-change cases return STALE_CAPABILITY with no route while baseline selects, missing current dependency is CURRENT_CONTEXT_INCOMPLETE, malformed evidence is UNSUPPORTED_PROVENANCE, no selected candidate weakens scale+center semantics, frozen audit and independent verifier pass, six structured corruption controls reject, source/evidence integrity passes, formal invocations=1 and reruns=0."
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "broker_path_windows_junction_4882_freeze_v1",
+  "allocation": "broker-path-windows-junction-4882-20260928-02",
+  "frozen_before_run": true,
+  "source_main": "020db8709de3321332ef22ea3aa60bd4dacdca77",
+  "upstream_candidate": {
+    "path": "research/integration/broker_path_confinement_4876_v3/path_policy.py",
+    "git_blob": "cdd0e3d57e08a316fc9df6b55abca8c740db070d",
+    "sha256": "885e7b2a1b4edf0bee91745a2d6b25d6fdeDB5f2be311a8f26d04595a8ade9ba",
+    "resolver_function_ast_identical": true
+  },
+  "files": {
+    "path_policy.py": "86579145eb9ef03d3ea61ba3a1e17da787677196dcba1d85f019a4ecd0e891ce",
+    "runner.py": "9cef9fde99dd1767046d164b5b8f952bbbd1e3d5a18068414f9b5a94da0306f0",
+    "audit.py": "112c715cf0b3563a35bf67f674f07935dd4f81532494e233081d075b09c9aa42"
+  },
+  "environment": {
+    "python": "CPython 3.12.10",
+    "windows": "Windows 11 Home 10.0.26200",
+    "platform": "win32",
+    "filesystem": "NTFS",
+    "windows_volume": "C:"
+  },
+  "cases": [
+    {"id": "repo_root", "input": "/repo", "expected": "accept-root"},
+    {"id": "workspace_root", "input": "/workspace", "expected": "accept-root"},
+    {"id": "regular_file", "input": "/repo/input.txt", "expected": "accept-file"},
+    {"id": "in_root_junction", "input": "/workspace/in-junction/data.txt", "expected": "accept-file"},
+    {"id": "external_junction", "input": "/repo/external-junction/secret.txt", "expected": "reject-value-error"},
+    {"id": "lexical_traversal", "input": "/repo/../outside/secret.txt", "expected": "reject-value-error"},
+    {"id": "encoded_traversal", "input": "/repo/%2e%2e/outside/secret.txt", "expected": "reject-value-error"},
+    {"id": "absolute_host_path", "input": "absolute path to outside/secret.txt", "expected": "reject-value-error"},
+    {"id": "missing_path", "input": "/repo/missing.txt", "expected": "reject-file-not-found"}
+  ],
+  "decision": {
+    "pass": "PASS_WINDOWS_JUNCTION_CONFINEMENT_SCOPED",
+    "one_runner_invocation": true,
+    "runner_retries": 0,
+    "post_freeze_tuning": 0,
+    "broker_subprocess_invocations": 0,
+    "docker_invocations": 0,
+    "audit_invocations": 1,
+    "cleanup_after_audit": true
+  },
+  "outputs": [
+    "results/allocation-02/RAW.json",
+    "results/allocation-02/AUDIT.json",
+    "results/allocation-02/CLEANUP.json"
+  ],
+  "limitations": [
+    "Single native Windows/NTFS fixture; candidate only.",
+    "No production broker, host-model CLI, provider, model, GUI, or input.",
+    "No symlink race or live filesystem adversary claim.",
+    "Allocation 01 symbolic-link WinError 1314 STOP remains unchanged."
+  ]
+}

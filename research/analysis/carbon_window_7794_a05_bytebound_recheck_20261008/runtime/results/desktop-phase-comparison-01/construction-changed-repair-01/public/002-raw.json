@@ -1,0 +1,90 @@
+{
+  "compiled_result": {
+    "receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-pixel-admission",
+      "method": "enter-read-save-yield",
+      "method_version": "1",
+      "session_scope": "native-x11:b3f6ea39b84e4f7188551f899efe7469",
+      "outcome": "SAFE_YIELD",
+      "reason": "unknown_state",
+      "completed_transitions": 0,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 2,
+          "captured_ns": 8676962596094,
+          "evidence_ref": "observation-2",
+          "evidence_digest": "54ce5a3ab2f5d3e61990a6afb0deaeed20e48988418a1e1e8c4225318ef889f4",
+          "predicates": {
+            "present": false,
+            "main_focus": true,
+            "handoff": false
+          }
+        }
+      ],
+      "transitions": [],
+      "critical_events": [
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "unknown_state",
+          "completed_transitions": 0
+        }
+      ],
+      "latest_evidence_ref": "observation-2",
+      "pending_effect": null,
+      "started_ns": 8676960793895,
+      "ended_ns": 8677896597313,
+      "elapsed_ns": 935803418,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "image_path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-01/construction-changed-repair-01/bridge/images/b1c88ed30d744af5be93c96cf6b5d6e8.png",
+    "image_sha256": "54ce5a3ab2f5d3e61990a6afb0deaeed20e48988418a1e1e8c4225318ef889f4",
+    "focused_candidate": 6292092,
+    "task_success": null,
+    "scope": "graph mechanics; independent saved task still unscored"
+  },
+  "outcome": "SAFE_YIELD",
+  "reason": "unknown_state",
+  "confirmed_completed_inputs": [],
+  "changed_dependency_refused": true,
+  "task_success": null,
+  "replay_allowed": false,
+  "started_ns": 8676958408968,
+  "ended_ns": 8677899212127,
+  "final_capture": {
+    "bytes": 4096000,
+    "sha256": "ecaf2ff43ad321e530dbbf2887c4c61e212b6f885fa085cf103ecde51d304e24",
+    "width": 1280,
+    "height": 800,
+    "target": "app",
+    "native_window_id": 6292092,
+    "frame": "screen_physical_px",
+    "region": [
+      0,
+      0,
+      1280,
+      800
+    ],
+    "capture_started_ns": 8676962596094,
+    "capture_ended_ns": 8677295397308,
+    "artifact": {
+      "mime_type": "image/png",
+      "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-01/construction-changed-repair-01/bridge/images/b1c88ed30d744af5be93c96cf6b5d6e8.png",
+      "sha256": "54ce5a3ab2f5d3e61990a6afb0deaeed20e48988418a1e1e8c4225318ef889f4",
+      "bytes": 56457,
+      "width": 1280,
+      "height": 800,
+      "source_raw_sha256": "ecaf2ff43ad321e530dbbf2887c4c61e212b6f885fa085cf103ecde51d304e24",
+      "timing_ns": {
+        "started": 8677298018134,
+        "converted": 8677298886565,
+        "encoded": 8677324142111,
+        "written": 8677325900110,
+        "hashed": 8677328497110
+      }
+    }
+  }
+}

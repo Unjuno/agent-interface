@@ -1,0 +1,175 @@
+{
+  "id": "P02",
+  "case": {
+    "id": "P02",
+    "target": "plain",
+    "plain": "Willow",
+    "html": "<p>Willow</p>",
+    "owner_state": "stopped",
+    "policy": "read_before_input"
+  },
+  "display": ":100",
+  "commands": [
+    {
+      "argv": [
+        "xdotool",
+        "windowfocus",
+        "--sync",
+        "6291462"
+      ],
+      "pid": 17,
+      "timeout_s": 3,
+      "timeout": false,
+      "exit": 0,
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "start_ns": 12756063798731,
+      "end_ns": 12756067439528
+    },
+    {
+      "argv": [
+        "xclip",
+        "-selection",
+        "clipboard",
+        "-target",
+        "text/plain",
+        "-out"
+      ],
+      "pid": 18,
+      "timeout_s": 0.5,
+      "timeout": true,
+      "exit": -9,
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "start_ns": 12756078204919,
+      "end_ns": 12756592562816
+    }
+  ],
+  "signals": [
+    {
+      "signal": 19,
+      "pid": 11,
+      "at_ns": 12756072138160
+    },
+    {
+      "signal": 18,
+      "pid": 11,
+      "at_ns": 12756593074025
+    }
+  ],
+  "exits": {
+    "consumer": 0,
+    "owner": 0,
+    "xvfb": 0
+  },
+  "owner_ready": {
+    "role": "owner",
+    "platform": "xcb"
+  },
+  "consumer_ready": {
+    "role": "consumer",
+    "platform": "xcb",
+    "window": 6291462
+  },
+  "pids": {
+    "xvfb": 8,
+    "owner": 11,
+    "consumer": 13
+  },
+  "baseline_dump": {
+    "op": "dump",
+    "text": ""
+  },
+  "baseline": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 12756071746951
+  },
+  "stopped_state": "State:\tT (stopped)",
+  "admission": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 12756078202628
+  },
+  "preflight": {
+    "argv": [
+      "xclip",
+      "-selection",
+      "clipboard",
+      "-target",
+      "text/plain",
+      "-out"
+    ],
+    "pid": 18,
+    "timeout_s": 0.5,
+    "timeout": true,
+    "exit": -9,
+    "stdout_hex": "",
+    "stderr_hex": "",
+    "start_ns": 12756078204919,
+    "end_ns": 12756592562816
+  },
+  "admitted": false,
+  "before_input": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 12756592741233
+  },
+  "deadline_outcome": "REFUSED_BEFORE_INPUT",
+  "deadline_ns": 12756592744692,
+  "deadline_events": [
+    {
+      "kind": "ipc_command",
+      "phase": "setup",
+      "monotonic_ns": 12756067516903,
+      "op": "dump"
+    },
+    {
+      "kind": "ipc_command",
+      "phase": "setup",
+      "monotonic_ns": 12756071819535,
+      "op": "phase"
+    }
+  ],
+  "deadline_server": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 12756593044400
+  },
+  "final_dump": {
+    "op": "dump",
+    "text": ""
+  },
+  "probe": {
+    "op": "probe",
+    "key_releases": []
+  },
+  "effect_server": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 12756602203914
+  },
+  "status": "RECORDED",
+  "cleanup_server": {
+    "owner": 0,
+    "focus": 543,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 12756670341558
+  },
+  "artifact_sha256": {
+    "case.json": "46d61ffefc4109f3df0af4fe98a64151e1deead4794621103a27ca08c541999a",
+    "consumer.events.jsonl": "9ca2f32e80da49b8bcca177b5e7b36516e75630e3ec038860a436de722bd5049",
+    "consumer.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+    "document.html": "d27b58a92cd0a242cfd54f58c577a5e915785235c5553d198fee1559113af05c",
+    "owner.events.jsonl": "03cc61003132e04bd0b26c65715d19bedbe382ce4352aa4aed26ef95f60c89f2",
+    "owner.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+    "text.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "window.png": "7be1e44ff90ab54aea6dc0fa872207dcb94112f6b45327d8d91a12dfba26354f",
+    "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55"
+  }
+}

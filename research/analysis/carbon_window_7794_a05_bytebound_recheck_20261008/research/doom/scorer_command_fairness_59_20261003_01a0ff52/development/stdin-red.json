@@ -1,0 +1,281 @@
+{
+  "variant": "retained",
+  "component": "stdin",
+  "scenario": "period_sample",
+  "period_ns": 100000000,
+  "sample_cost_ns": 100000000,
+  "sink_cost_ns": 0,
+  "budget": 8,
+  "outcome": "diagnostic_budget_exhausted",
+  "samples": 8,
+  "commands": [],
+  "pending_bytes": 1,
+  "owner_thread": 8383774592,
+  "final_clock_ns": 800000000,
+  "receipts": [
+    {
+      "scheduled_ns": 0,
+      "sample_started_ns": 0,
+      "sample_finished_ns": 100000000,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "private_scorer_marker": 1
+      }
+    },
+    {
+      "scheduled_ns": 100000000,
+      "sample_started_ns": 100000000,
+      "sample_finished_ns": 200000000,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "private_scorer_marker": 2
+      }
+    },
+    {
+      "scheduled_ns": 200000000,
+      "sample_started_ns": 200000000,
+      "sample_finished_ns": 300000000,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "private_scorer_marker": 3
+      }
+    },
+    {
+      "scheduled_ns": 300000000,
+      "sample_started_ns": 300000000,
+      "sample_finished_ns": 400000000,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "private_scorer_marker": 4
+      }
+    },
+    {
+      "scheduled_ns": 400000000,
+      "sample_started_ns": 400000000,
+      "sample_finished_ns": 500000000,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "private_scorer_marker": 5
+      }
+    },
+    {
+      "scheduled_ns": 500000000,
+      "sample_started_ns": 500000000,
+      "sample_finished_ns": 600000000,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "private_scorer_marker": 6
+      }
+    },
+    {
+      "scheduled_ns": 600000000,
+      "sample_started_ns": 600000000,
+      "sample_finished_ns": 700000000,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "private_scorer_marker": 7
+      }
+    },
+    {
+      "scheduled_ns": 700000000,
+      "sample_started_ns": 700000000,
+      "sample_finished_ns": 800000000,
+      "start_lateness_ns": 0,
+      "missed_periods_before": 0,
+      "payload": {
+        "private_scorer_marker": 8
+      }
+    }
+  ],
+  "events": [
+    {
+      "kind": "sample_enter",
+      "clock_ns": 0,
+      "thread_id": 8383774592,
+      "ordinal": 1
+    },
+    {
+      "kind": "sample_exit",
+      "clock_ns": 100000000,
+      "thread_id": 8383774592,
+      "ordinal": 1
+    },
+    {
+      "kind": "sink_enter",
+      "clock_ns": 100000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sink_exit",
+      "clock_ns": 100000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sample_enter",
+      "clock_ns": 100000000,
+      "thread_id": 8383774592,
+      "ordinal": 2
+    },
+    {
+      "kind": "sample_exit",
+      "clock_ns": 200000000,
+      "thread_id": 8383774592,
+      "ordinal": 2
+    },
+    {
+      "kind": "sink_enter",
+      "clock_ns": 200000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sink_exit",
+      "clock_ns": 200000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sample_enter",
+      "clock_ns": 200000000,
+      "thread_id": 8383774592,
+      "ordinal": 3
+    },
+    {
+      "kind": "sample_exit",
+      "clock_ns": 300000000,
+      "thread_id": 8383774592,
+      "ordinal": 3
+    },
+    {
+      "kind": "sink_enter",
+      "clock_ns": 300000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sink_exit",
+      "clock_ns": 300000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sample_enter",
+      "clock_ns": 300000000,
+      "thread_id": 8383774592,
+      "ordinal": 4
+    },
+    {
+      "kind": "sample_exit",
+      "clock_ns": 400000000,
+      "thread_id": 8383774592,
+      "ordinal": 4
+    },
+    {
+      "kind": "sink_enter",
+      "clock_ns": 400000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sink_exit",
+      "clock_ns": 400000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sample_enter",
+      "clock_ns": 400000000,
+      "thread_id": 8383774592,
+      "ordinal": 5
+    },
+    {
+      "kind": "sample_exit",
+      "clock_ns": 500000000,
+      "thread_id": 8383774592,
+      "ordinal": 5
+    },
+    {
+      "kind": "sink_enter",
+      "clock_ns": 500000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sink_exit",
+      "clock_ns": 500000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sample_enter",
+      "clock_ns": 500000000,
+      "thread_id": 8383774592,
+      "ordinal": 6
+    },
+    {
+      "kind": "sample_exit",
+      "clock_ns": 600000000,
+      "thread_id": 8383774592,
+      "ordinal": 6
+    },
+    {
+      "kind": "sink_enter",
+      "clock_ns": 600000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sink_exit",
+      "clock_ns": 600000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sample_enter",
+      "clock_ns": 600000000,
+      "thread_id": 8383774592,
+      "ordinal": 7
+    },
+    {
+      "kind": "sample_exit",
+      "clock_ns": 700000000,
+      "thread_id": 8383774592,
+      "ordinal": 7
+    },
+    {
+      "kind": "sink_enter",
+      "clock_ns": 700000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sink_exit",
+      "clock_ns": 700000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sample_enter",
+      "clock_ns": 700000000,
+      "thread_id": 8383774592,
+      "ordinal": 8
+    },
+    {
+      "kind": "sample_exit",
+      "clock_ns": 800000000,
+      "thread_id": 8383774592,
+      "ordinal": 8
+    },
+    {
+      "kind": "sink_enter",
+      "clock_ns": 800000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "sink_exit",
+      "clock_ns": 800000000,
+      "thread_id": 8383774592
+    },
+    {
+      "kind": "diagnostic_budget_exhausted",
+      "clock_ns": 800000000,
+      "thread_id": 8383774592,
+      "completed_samples": 8
+    }
+  ]
+}

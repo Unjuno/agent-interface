@@ -1,0 +1,87 @@
+{
+  "schema": "predictive-safety-filter-5317-t3-freeze-v1",
+  "issue": 5317,
+  "allocation": "5317-T3-HELDOUT-COMPOSITION-20260930-01",
+  "base_main": "1ddbe03f93556d6db3eb61a72fa1148bd031a596",
+  "final_source_commit": "dd154119b00a88535194a24392b45390a3fb014f",
+  "branch": "research/safety-filter-5317-t3-20260930",
+  "path": "research/analysis/predictive_safety_filter_5317_t3_v1",
+  "files": {
+    "study.js": {
+      "git_blob": "18d8393995cd4f43c417100e594ec63ec005d1c6",
+      "sha256": "e98d7135d30640396d7f0a918ea0c759a147d296220c8381ff54e3522a0970ea",
+      "bytes_utf8": 6236
+    },
+    "audit.js": {
+      "git_blob": "dad22820a356dd782eb06e2aaf5aa725dda90169",
+      "sha256": "5813d24d8c6532039448f0863ae51421fdce69c0c5ad1732b46093601aab0ba8",
+      "bytes_utf8": 5359
+    },
+    "README.md": {
+      "git_blob": "ebbdde3ecd6bf10c67ee31626b1df5ca45ca9520",
+      "sha256": "7d2f9ddf026cc4b6e0727f8e36ca60d62da68a96593d1016a4c9cfad04d4bc8e",
+      "bytes_utf8": 1013
+    }
+  },
+  "environment": {
+    "runtime": "Codex functions.exec V8 isolate",
+    "dependencies": "ECMAScript standard built-ins only",
+    "disk_writes": false,
+    "containers": false
+  },
+  "design": {
+    "actions": [
+      "SIGN",
+      "PUBLISH",
+      "INDEX",
+      "HASH",
+      "REVOKE",
+      "ACTIVATE",
+      "ARCHIVE",
+      "NOTIFY"
+    ],
+    "risk_budget": 10,
+    "sequence_length": 4,
+    "sequences_per_contract": 4096,
+    "contracts": [
+      [
+        "order",
+        "requires"
+      ],
+      [
+        "order",
+        "mutex"
+      ],
+      [
+        "requires",
+        "mutex"
+      ],
+      [
+        "order",
+        "requires",
+        "mutex"
+      ]
+    ],
+    "total_cases": 16384,
+    "order": [
+      "SIGN",
+      "PUBLISH"
+    ],
+    "requires": [
+      "INDEX",
+      "HASH"
+    ],
+    "mutex": [
+      "REVOKE",
+      "ACTIVATE"
+    ],
+    "no_random_seed": true
+  },
+  "prefreeze": {
+    "syntax_check": "study and final audit exact readbacks compile without invoking them",
+    "prior_unfrozen_audit_compile_error": "preserved in commit history; corrected before freeze; no study enumeration was executed"
+  },
+  "formal_invocations": 0,
+  "disposition": "FROZEN_NOT_RUN",
+  "no_retry": "After the one enumeration, preserve PASS/FAIL/UNCERTAIN/STOP; no tuning or rerun."
+}

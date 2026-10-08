@@ -1,0 +1,100 @@
+{
+  "identifiable_case_ids": [
+    "c01",
+    "c02"
+  ],
+  "required_release_before_probe": true,
+  "schema": "safe-discriminating-observation-6680-temporal-oracle-v1",
+  "worlds": {
+    "c01": {
+      "correct_recovery": "reobserve",
+      "effects": {
+        "reobserve": {
+          "post_recovery_residual": 0,
+          "useful": true
+        },
+        "reset": {
+          "post_recovery_residual": 2,
+          "useful": false
+        },
+        "yield": {
+          "post_recovery_residual": null,
+          "useful": false
+        }
+      },
+      "world": "observation_path"
+    },
+    "c02": {
+      "correct_recovery": "reset",
+      "effects": {
+        "reobserve": {
+          "post_recovery_residual": 2,
+          "useful": false
+        },
+        "reset": {
+          "post_recovery_residual": 0,
+          "useful": true
+        },
+        "yield": {
+          "post_recovery_residual": null,
+          "useful": false
+        }
+      },
+      "world": "dynamics"
+    },
+    "c03": {
+      "correct_recovery": null,
+      "effects": {
+        "reobserve": {
+          "post_recovery_residual": 2,
+          "useful": false
+        },
+        "reset": {
+          "post_recovery_residual": 2,
+          "useful": false
+        },
+        "yield": {
+          "post_recovery_residual": null,
+          "useful": false
+        }
+      },
+      "world": "mixed_unknown"
+    },
+    "c04": {
+      "correct_recovery": "reobserve",
+      "effects": {
+        "reobserve": {
+          "post_recovery_residual": 0,
+          "useful": true
+        },
+        "reset": {
+          "post_recovery_residual": 2,
+          "useful": false
+        },
+        "yield": {
+          "post_recovery_residual": null,
+          "useful": false
+        }
+      },
+      "world": "observation_path"
+    },
+    "c05": {
+      "correct_recovery": null,
+      "effects": {
+        "reobserve": {
+          "post_recovery_residual": 2,
+          "useful": false
+        },
+        "reset": {
+          "post_recovery_residual": 2,
+          "useful": false
+        },
+        "yield": {
+          "post_recovery_residual": null,
+          "useful": false
+        }
+      },
+      "world": "unknown"
+    }
+  }
+}

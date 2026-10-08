@@ -1,0 +1,18 @@
+{
+  "allocation": "x11-region-frame-move-4439-localdocker-v1-20260927",
+  "attempt": "construction-03-excluded",
+  "status": "HOLD_TARGET_PATTERN_NOT_DRAWN",
+  "runner_sha256": "ec9a7826c8a199fba0f964eb4f918232eeb7aefef3380b1778e138df824cb475",
+  "auditor_sha256": "eb4c393c0ec8072ca612cee0de3b165daab3ff3def25808b68903c8f3fa42ff7",
+  "image_id": "sha256:1c334ebd65f4b1bfe81cc84c90780ea01e6f70c0f7b18cd89c09e03406460238",
+  "rows": 9,
+  "raw_bytes": 15868,
+  "raw_sha256": "eebc094cbb7ebaf942fe05f624aae74d56687c697ca50a47036df9e814d74fdb",
+  "audit_bytes": 1217,
+  "audit_sha256": "4304c713bdc008285d134fbf925045e3c6acd0eb4e8d58ef476f971b1628b4b3",
+  "formal_rows": 0,
+  "observation": "All 9 candidate captures matched the oracle. Candidate, initial target, background and exposed-root hashes were all 5c9b37300155c1f3338bc88f17d69c51fb248b0de0155630962ca6504d789bba, the SHA-256 of 38,400 zero bytes. The target draw calls were issued while its X window remained unmapped, so the X server discarded them; the move/repaint fixture itself was functioning.",
+  "amendment": "Map and synchronize the X window before drawing its frozen row pattern. The raw-only auditor now requires target image bytes to differ from the pre-map background and includes a targeted target-pattern-collapse corruption control. No formal case was consumed.",
+  "scientific_disposition": "none; excluded fixture construction only",
+  "formal_invocations": 0
+}

@@ -1,0 +1,92 @@
+{
+  "schema": "exogenous-opportunity-onset-consumption-a05-freeze-v1",
+  "issue": 6967,
+  "predecessor_issue": 6803,
+  "predecessor_pr": 6805,
+  "main_at_issue_creation": "6d7ce9693caae8c123fda532da64888f6006dcb9",
+  "source_base_commit": "38518811f537a5dc3dea3b231036b9006b25d8aa",
+  "source_base_reason": "After issue creation, main advanced linearly by five commits. GitHub compare showed only runtime/results archival files and the independent #17 hot-drain package; no A05 path overlap.",
+  "branch": "research/exogenous-phase-input-5694-a05-20261003",
+  "evidence_path": "research/analysis/exogenous_opportunity_5694_onset_consumption_a05_20261003/",
+  "allocation": {
+    "id": "EXOGENOUS-OPPORTUNITY-5694-A05-INPUT-CONSUMPTION-20261003-01",
+    "owner": "current Codex autonomous-research task",
+    "window_utc": {
+      "start": "2026-10-03T08:50:15Z",
+      "end": "2026-10-03T09:10:15Z"
+    },
+    "candidate_invocations_max": 1,
+    "auditor_invocations_max": 1,
+    "retries": 0,
+    "gpu": false,
+    "status_before_run": "FROZEN_PENDING_DRAFT_PR_AND_FINAL_PREFLIGHT"
+  },
+  "runtime": {
+    "engine": "Microsoft WSL Containers / wslc.exe",
+    "wslc_version": "3.0.1.0",
+    "kernel": "6.18.40.1-1",
+    "image_id": "sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4",
+    "image_repo_digest": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "python": "3.12.14",
+    "platform": "linux/amd64",
+    "pull": "never",
+    "network": "none",
+    "cpus_requested": 0.25,
+    "memory_requested": "512m",
+    "user": "65534:65534",
+    "source_mount": "read-only at /src",
+    "candidate_output_mount": "fresh writable mount at /out",
+    "auditor_input_mount": "candidate output read-only at /results",
+    "auditor_output_mount": "fresh writable mount at /out",
+    "gpu": false,
+    "limits_caveat": "A prior WSLc invocation emitted a no-swap-limit/cgroup-not-mounted warning. Preserve it if repeated; do not infer effective limits from requested settings."
+  },
+  "protocol": {
+    "hypothesis": "With the same capture schedule [10,50] ms, expiry 20 ms, horizon 60 ms and every other candidate-visible field held fixed, changing only cue onset from 9 to 11 ms changes the first capture inside the interval from 10 ms to none.",
+    "candidate_inputs": [
+      "synthetic cue onset/expiry timestamps",
+      "capture timestamps",
+      "observation horizon",
+      "delivery/decision/effect receipts",
+      "clock synchronization flag"
+    ],
+    "candidate_excludes": [
+      "oracle.json",
+      "precomputed opportunity-membership IDs",
+      "precomputed phase/boundary labels"
+    ],
+    "case_count": 9,
+    "phase_pair": {
+      "case_ids": ["c01", "c02"],
+      "capture_times_ms": [10, 50],
+      "expiry_ms": 20,
+      "horizon_ms": 60,
+      "onset_ms": [9, 11],
+      "all_other_case_fields_equal": true
+    },
+    "expected_phase_output": {
+      "c01": {"first_acquisition_capture_ms": 10, "boundary": "acquired_not_delivered"},
+      "c02": {"first_acquisition_capture_ms": null, "boundary": "not_acquired"}
+    },
+    "candidate_command": "python -B /src/candidate.py --fixture /src/fixture.json --out /out/candidate.raw.json",
+    "auditor_command": "python -B /src/auditor.py --fixture /src/fixture.json --oracle /src/oracle.json --raw /results/candidate.raw.json --out /out/audit.json",
+    "construction_command": "python -B -m unittest discover -s /src -p test_*.py -v",
+    "success": "PASS_METHOD_SCOPED only when candidate demonstrates the onset contrast, all 9 rows match the separate oracle, independent audit has no errors and rejects 5/5 corruptions, and all construction tests pass.",
+    "failure": "FAIL_METHOD for semantic mismatch; STOP for failed construction/preflight/provenance/runtime gate. No retry."
+  },
+  "outputs": {
+    "candidate": "execution/formal-01/candidate.raw.json",
+    "auditor": "execution/formal-01/audit.json",
+    "both_absent_at_preflight": true
+  },
+  "source_sha256": {
+    "candidate.py": "66bab0ecdf6353b4e594eb2b2ff5d1a804f2b77b3ddda97665d4310c7bd9f807a",
+    "auditor.py": "bfb1f746ab3659615f33c36676cc20424b8f6cdd6bc64cca8ad1fa3dd94f9a47",
+    "fixture.json": "ef861f683d0fe3fe2ef580e8ce165c177eb20dae77ecb9e31dcf072c097c9235",
+    "oracle.json": "fde55cd2cd7a24b324599697ede3be3f70f3720e0574d1e52dcbfed7c8582dac",
+    "test_protocol.py": "c00d343e109aa37dc0410f190f150b527dee9a1f57b50c6e344127bead8f7760",
+    "PREREGISTRATION.md": "644a2ddc3d002b05d18a94f7316bcc74ee8b511960d0daa1fddf90197542d7fb",
+    "README.md": "2dde59abe953328a5606c979eed196a7fa9ce655684b4e1afd2d87fba24c46b4",
+    "RUN_COMMANDS.md": "68a5496b113c088d819b0293291b2301075a8ee1f3e874ccb8da630ce0d7e120"
+  }
+}

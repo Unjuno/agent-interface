@@ -1,0 +1,213 @@
+FF.FFFFFFFFF..
+======================================================================
+FAIL: test_action_deadline_cannot_extend_method_budget (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_action_deadline_cannot_extend_method_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 58, in test_action_deadline_cannot_extend_method_budget
+    d=Driver();r=d.run();self.assertEqual(r['outcome'],'TASK_SUCCEEDED');self.assertEqual([c['valid_until_ns'] for c in d.calls['execute']],[10_000_000,10_000_000])
+                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [100000000, 100000000] != [10000000, 10000000]
+
+First differing element 0:
+100000000
+10000000
+
+- [100000000, 100000000]
+?          -          -
+
++ [10000000, 10000000]
+
+======================================================================
+FAIL: test_branch_journal_consuming_budget_never_admits (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_branch_journal_consuming_budget_never_admits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 52, in test_branch_journal_consuming_budget_never_admits
+    d=Driver('journal',2);self.stopped(d,0,0);self.assertEqual(d.calls['admit'],[])
+                          ^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_admission_never_dispatches (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_admission_never_dispatches)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 43, in test_late_admission_never_dispatches
+    def test_late_admission_never_dispatches(self):self.stopped(Driver('admit'),0,0)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_execution_retains_effect_and_does_not_observe_again (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_execution_retains_effect_and_does_not_observe_again)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 49, in test_late_execution_retains_effect_and_does_not_observe_again
+    d=Driver('execute');r=self.stopped(d,1,1);self.assertEqual(r['pending_effect']['action'],'enter');self.assertEqual(len(d.calls['observe']),1)
+                          ^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_final_execution_preserves_both_actions (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_final_execution_preserves_both_actions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 50, in test_late_final_execution_preserves_both_actions
+    def test_late_final_execution_preserves_both_actions(self):self.stopped(Driver('execute',2),2,2)
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_final_observation_never_claims_completion (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_final_observation_never_claims_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 42, in test_late_final_observation_never_claims_completion
+    d=Driver('observe',3);r=self.stopped(d,2,2);self.assertEqual(r['pending_effect']['action'],'save')
+                            ^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_final_verifier_never_claims_completion (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_final_verifier_never_claims_completion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 47, in test_late_final_verifier_never_claims_completion
+    def test_late_final_verifier_never_claims_completion(self):self.stopped(Driver('verify_effect',2),2,2)
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_initial_observation_never_admits (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_initial_observation_never_admits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 38, in test_late_initial_observation_never_admits
+    d=Driver('observe');r=self.stopped(d,0,0);self.assertEqual(d.calls['admit'],[]);self.assertEqual(len(r['observations']),1)
+                          ^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_intermediate_observation_preserves_prefix_pending_effect (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_intermediate_observation_preserves_prefix_pending_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 40, in test_late_intermediate_observation_preserves_prefix_pending_effect
+    d=Driver('observe',2);r=self.stopped(d,1,1);self.assertEqual(r['pending_effect']['action'],'enter');self.assertEqual(d.calls['verify_effect'],[])
+                            ^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_second_admission_preserves_prefix (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_second_admission_preserves_prefix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 44, in test_late_second_admission_preserves_prefix
+    def test_late_second_admission_preserves_prefix(self):self.stopped(Driver('admit',2),1,1)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+======================================================================
+FAIL: test_late_verifier_never_dispatches_second_action (runtime.core_v1.test_compiled_gui.CompiledBoundaryTests.test_late_verifier_never_dispatches_second_action)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 46, in test_late_verifier_never_dispatches_second_action
+    d=Driver('verify_effect');r=self.stopped(d,1,1);self.assertIsNone(r['pending_effect'])
+                                ^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/test_compiled_gui.py", line 36, in stopped
+    r=d.run();self.assertEqual((r['outcome'],r['reason']),('SAFE_YIELD','budget_exhausted'));self.assertEqual(r['completed_transitions'],transitions);self.assertEqual(len(d.calls['execute']),executions);return r
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('TASK_SUCCEEDED', 'method_complete') != ('SAFE_YIELD', 'budget_exhausted')
+
+First differing element 0:
+'TASK_SUCCEEDED'
+'SAFE_YIELD'
+
+- ('TASK_SUCCEEDED', 'method_complete')
++ ('SAFE_YIELD', 'budget_exhausted')
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.005s
+
+FAILED (failures=11)

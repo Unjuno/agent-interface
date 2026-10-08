@@ -1,0 +1,41 @@
+{
+  "schema": "issue6243-t0-cases-v1",
+  "agreement_threshold": 0.9,
+  "scenarios": [
+    {
+      "id": "shortcut_asymmetry",
+      "acquisition_ms": {"H": 35000, "A": 0},
+      "horizon": 4,
+      "rows": [
+        {"row_id":"s1-h-shortcut","blind_code":"X1","goal":"save","method":"shortcut","operators":["semantic-save"],"events":["start","complete"],"duration_ms":4000,"outcome":"correct","acquisition_ms":0},
+        {"row_id":"s1-h-ordinary","blind_code":"X1","goal":"save","method":"ordinary","operators":["observe","locate","click","verify"],"events":["start","complete"],"duration_ms":10000,"outcome":"correct","acquisition_ms":0},
+        {"row_id":"s1-a-shortcut","blind_code":"Y1","goal":"save","method":"shortcut","operators":["semantic-save"],"events":["start","complete"],"duration_ms":9000,"outcome":"correct","acquisition_ms":0},
+        {"row_id":"s1-a-ordinary","blind_code":"Y1","goal":"save","method":"ordinary","operators":["observe","locate","click","verify"],"events":["start","complete"],"duration_ms":10000,"outcome":"correct","acquisition_ms":0}
+      ],
+      "natural_method": {"H":"shortcut","A":"ordinary"}
+    },
+    {
+      "id": "switch_and_failure",
+      "acquisition_ms": {"H":0,"A":0},
+      "horizon": 1,
+      "rows": [
+        {"row_id":"s2-h-fail","blind_code":"X2","goal":"save","method":"ordinary","operators":["observe","click"],"events":["start","error","switch"],"duration_ms":7000,"outcome":"failed","acquisition_ms":0},
+        {"row_id":"s2-h-recover","blind_code":"X2","goal":"save","method":"shortcut","operators":["semantic-save"],"events":["complete"],"duration_ms":5000,"outcome":"correct","acquisition_ms":0},
+        {"row_id":"s2-a-success","blind_code":"Y2","goal":"save","method":"ordinary","operators":["observe","locate","click","verify"],"events":["start","complete"],"duration_ms":10000,"outcome":"correct","acquisition_ms":0}
+      ],
+      "natural_method": {"H":"mixed","A":"ordinary"}
+    },
+    {
+      "id": "equal_method_null",
+      "acquisition_ms": {"H":0,"A":0},
+      "horizon": 1,
+      "rows": [
+        {"row_id":"s3-h1","blind_code":"X3","goal":"save","method":"ordinary","operators":["observe","locate","click","verify"],"events":["start","complete"],"duration_ms":10000,"outcome":"correct","acquisition_ms":0},
+        {"row_id":"s3-h2","blind_code":"X3","goal":"save","method":"ordinary","operators":["observe","locate","click","verify"],"events":["start","complete"],"duration_ms":12000,"outcome":"correct","acquisition_ms":0},
+        {"row_id":"s3-a1","blind_code":"Y3","goal":"save","method":"ordinary","operators":["observe","locate","click","verify"],"events":["start","complete"],"duration_ms":11000,"outcome":"correct","acquisition_ms":0},
+        {"row_id":"s3-a2","blind_code":"Y3","goal":"save","method":"ordinary","operators":["observe","locate","click","verify"],"events":["start","complete"],"duration_ms":11000,"outcome":"correct","acquisition_ms":0}
+      ],
+      "natural_method": {"H":"ordinary","A":"ordinary"}
+    }
+  ]
+}

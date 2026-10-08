@@ -1,0 +1,34 @@
+{
+  "schema": "looming-contrast-run-v1",
+  "allocation": "LOOMING-VISUAL-ASSUMPTION-GATE-5905-S06-ORBSTACK-CONTRAST-20261003-01",
+  "status": "PASS_METHOD_SCOPED",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "raw_path": "formal/candidate_output/candidate.json",
+    "raw_sha256": "d95526163151e0e814c6923d8c449f33d5d8209987e3cf307cd25d16e6a78d99",
+    "host_mtime_local": "2026-10-03T06:29:56+0900"
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "result_path": "formal/auditor_output/audit.json",
+    "result_sha256": "5c7dfaf45e68151a845b97aacdc9291d13cd9898318942688470dbf4639c9f65",
+    "host_mtime_local": "2026-10-03T06:30:25+0900"
+  },
+  "retries": 0,
+  "formal_counts": {"candidate": 1, "auditor": 1, "docker_containers": 2},
+  "audit_summary": {
+    "rows_reconstructed": 36,
+    "eligible_pass": 9,
+    "visible_controls_no_cue": 21,
+    "visible_controls_rejected": 15,
+    "unknown_controls": 12,
+    "pair_equivalent_unknown_variants": 3,
+    "photometric_invariance_families": 12,
+    "false_safe": 0,
+    "mutation_rejections": 5,
+    "audit_errors": 0
+  },
+  "scope": "finite synthetic threshold-mask-preserving photometric encodings only"
+}

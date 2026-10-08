@@ -1,0 +1,5 @@
+# Measurement completeness note
+
+The frozen runner records pretraining time and the four adapter update durations, but it does **not** isolate adapter construction/setup time. This is a preregistration measurement omission; no setup-time value is claimed and the formal allocation is not repeated. Each rank-2 output adapter has 16×2 + 2×4 = 40 trainable parameters (global control, B, and C each), directly from the frozen tensor shapes.
+
+The reported accuracy, invalid-route, base-immutability, and adapter-trainable-tensor checks met their measured numeric/structural thresholds. They do **not** establish the full preregistered PASS: the pre-allocation clarification required tensor comparisons for every full module `state_dict` tensor, valid-route scoring bypassed the dispatcher, and no per-row predictions were retained for metric recomputation. The formal disposition remains `HOLD_PROTOCOL_DEVIATION`. Setup timing is also missing; it must be measured in a separately preregistered successor if that comparison matters. No claim of scoped PASS remains.

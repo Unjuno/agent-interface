@@ -1,0 +1,15 @@
+{
+  "schema": "yield-capture-endpoint-fixture-v1",
+  "allocation": "YIELD-CAPTURE-ENDPOINT-59-T1-20261002-01",
+  "source_main": "fd7ebee2174fc0c1c4fabac898a6999466373c9b",
+  "source_sequence": 70,
+  "source_health": 85,
+  "capture_interval_ns": [100, 200],
+  "events": [
+    {"id": "before_start", "clock_domain": "runtime-monotonic", "capture_interval_ns": [100, 200], "available_at_ns": 99, "observation_sequence": 71, "health": {"status": "observed", "value": 85}, "expected": "YIELD_CAPTURE_NOT_AVAILABLE"},
+    {"id": "at_start", "clock_domain": "runtime-monotonic", "capture_interval_ns": [100, 200], "available_at_ns": 100, "observation_sequence": 71, "health": {"status": "observed", "value": 85}, "expected": "YIELD_CAPTURE_ORDER_UNKNOWN"},
+    {"id": "before_end", "clock_domain": "runtime-monotonic", "capture_interval_ns": [100, 200], "available_at_ns": 199, "observation_sequence": 71, "health": {"status": "observed", "value": 85}, "expected": "YIELD_CAPTURE_ORDER_UNKNOWN"},
+    {"id": "at_end", "clock_domain": "runtime-monotonic", "capture_interval_ns": [100, 200], "available_at_ns": 200, "observation_sequence": 71, "health": {"status": "observed", "value": 85}, "expected": "YIELD_CAPTURE_ORDER_UNKNOWN"},
+    {"id": "after_end", "clock_domain": "runtime-monotonic", "capture_interval_ns": [100, 200], "available_at_ns": 201, "observation_sequence": 71, "health": {"status": "observed", "value": 85}, "expected": "CONTINUE"}
+  ]
+}

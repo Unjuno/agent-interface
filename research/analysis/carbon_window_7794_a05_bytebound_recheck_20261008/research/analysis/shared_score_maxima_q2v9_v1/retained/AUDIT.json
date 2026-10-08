@@ -1,0 +1,355 @@
+{
+  "checks": 9326,
+  "decision": "PASS_SHARED_SCORE_MAXIMA_CONTRACT",
+  "directed": {
+    "common_offset": {
+      "action_authority": false,
+      "box": [
+        0,
+        1,
+        2
+      ],
+      "intervals": [
+        [
+          "-1",
+          "1"
+        ],
+        null,
+        null
+      ],
+      "joint": [
+        0
+      ],
+      "pairwise": [
+        0
+      ],
+      "task_success": null
+    },
+    "exact_tie": {
+      "action_authority": false,
+      "box": [
+        0,
+        1,
+        2
+      ],
+      "intervals": [
+        [
+          "-2",
+          "2"
+        ],
+        [
+          "-2",
+          "2"
+        ],
+        null
+      ],
+      "joint": [
+        0,
+        1
+      ],
+      "pairwise": [
+        0,
+        1
+      ],
+      "task_success": null
+    },
+    "heterogeneous_residual": {
+      "action_authority": false,
+      "box": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "intervals": [
+        [
+          "-2",
+          "1/2"
+        ],
+        [
+          "1/3",
+          "1"
+        ],
+        [
+          "1/5",
+          "1"
+        ],
+        [
+          "1/2",
+          "1"
+        ]
+      ],
+      "joint": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "pairwise": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "task_success": null
+    },
+    "incompatible_pairs": {
+      "action_authority": false,
+      "box": [
+        0,
+        1,
+        2
+      ],
+      "intervals": [
+        null,
+        [
+          "0",
+          "1"
+        ],
+        [
+          "-1",
+          "0"
+        ]
+      ],
+      "joint": [
+        1,
+        2
+      ],
+      "pairwise": [
+        0,
+        1,
+        2
+      ],
+      "task_success": null
+    },
+    "independent_residual": {
+      "action_authority": false,
+      "box": [
+        0,
+        1,
+        2
+      ],
+      "intervals": [
+        [
+          "-1",
+          "1"
+        ],
+        [
+          "-1",
+          "1"
+        ],
+        [
+          "-1",
+          "1"
+        ]
+      ],
+      "joint": [
+        0,
+        1,
+        2
+      ],
+      "pairwise": [
+        0,
+        1,
+        2
+      ],
+      "task_success": null
+    },
+    "interior_singleton": {
+      "action_authority": false,
+      "box": [
+        0,
+        1,
+        2
+      ],
+      "intervals": [
+        [
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1"
+        ],
+        [
+          "-1",
+          "0"
+        ]
+      ],
+      "joint": [
+        0,
+        1,
+        2
+      ],
+      "pairwise": [
+        0,
+        1,
+        2
+      ],
+      "task_success": null
+    },
+    "large_integer": {
+      "action_authority": false,
+      "box": [
+        0,
+        1,
+        2
+      ],
+      "intervals": [
+        null,
+        [
+          "-1",
+          "1"
+        ],
+        null
+      ],
+      "joint": [
+        1
+      ],
+      "pairwise": [
+        1
+      ],
+      "task_success": null
+    },
+    "left_endpoint": {
+      "action_authority": false,
+      "box": [
+        0,
+        1
+      ],
+      "intervals": [
+        [
+          "-1",
+          "-1"
+        ],
+        [
+          "-1",
+          "1"
+        ]
+      ],
+      "joint": [
+        0,
+        1
+      ],
+      "pairwise": [
+        0,
+        1
+      ],
+      "task_success": null
+    },
+    "point_domain": {
+      "action_authority": false,
+      "box": [
+        0,
+        1,
+        2
+      ],
+      "intervals": [
+        [
+          "1/2",
+          "1/2"
+        ],
+        [
+          "1/2",
+          "1/2"
+        ],
+        [
+          "1/2",
+          "1/2"
+        ]
+      ],
+      "joint": [
+        0,
+        1,
+        2
+      ],
+      "pairwise": [
+        0,
+        1,
+        2
+      ],
+      "task_success": null
+    },
+    "rational_crossing": {
+      "action_authority": false,
+      "box": [
+        0,
+        1
+      ],
+      "intervals": [
+        [
+          "1/3",
+          "5/4"
+        ],
+        [
+          "-1/2",
+          "1/3"
+        ],
+        null
+      ],
+      "joint": [
+        0,
+        1
+      ],
+      "pairwise": [
+        0,
+        1
+      ],
+      "task_success": null
+    },
+    "right_endpoint": {
+      "action_authority": false,
+      "box": [
+        0,
+        1
+      ],
+      "intervals": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "-1",
+          "1"
+        ]
+      ],
+      "joint": [
+        0,
+        1
+      ],
+      "pairwise": [
+        0,
+        1
+      ],
+      "task_success": null
+    },
+    "single_candidate": {
+      "action_authority": false,
+      "box": [
+        0
+      ],
+      "intervals": [
+        [
+          "-2",
+          "3"
+        ]
+      ],
+      "joint": [
+        0
+      ],
+      "pairwise": [
+        0
+      ],
+      "task_success": null
+    }
+  },
+  "errors": [],
+  "memberships": {
+    "box": 3932,
+    "joint": 3432,
+    "pairwise": 3491
+  },
+  "narrowed_vs_box": 458,
+  "narrowed_vs_pairwise": 59,
+  "records": 1470
+}

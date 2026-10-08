@@ -1,0 +1,269 @@
+{
+  "canonical_program": {
+    "authority": {
+      "expires_at_ns": 38215174398,
+      "lease_id": "owned-fixture"
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "owned"
+      },
+      {
+        "frame": "screen_physical_px",
+        "op": "pointer_move",
+        "x": 460,
+        "y": 185
+      },
+      {
+        "button": "left",
+        "down": true,
+        "op": "pointer_button"
+      },
+      {
+        "button": "left",
+        "down": false,
+        "op": "pointer_button"
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 50
+      },
+      {
+        "op": "release_all"
+      }
+    ],
+    "program_id": "schema-native-click",
+    "schema": "agent-interface/program-v1",
+    "source": {
+      "binding_revision": 1,
+      "observation_seq": 1
+    },
+    "terminal": {
+      "release_all_required": true
+    }
+  },
+  "cgroups": {
+    "cpu.max": "100000 100000",
+    "memory.max": "536870912",
+    "pids.max": "max"
+  },
+  "cleanup_release": {
+    "buttons_down": [],
+    "keys_down": [],
+    "monotonic_ns": 33379251980,
+    "verified": true
+  },
+  "dispatch_end_ns": 33267338528,
+  "dispatch_start_ns": 33215181064,
+  "effect": {
+    "history": [
+      {
+        "button": 1,
+        "label": "BLUE",
+        "matching_press": true,
+        "time": 33216,
+        "x": 460,
+        "y": 185
+      }
+    ],
+    "press": null
+  },
+  "ended_ns": 33397208248,
+  "errors": [],
+  "final": {
+    "artifact": {
+      "bytes": 2127,
+      "height": 360,
+      "mime_type": "image/png",
+      "path": "/out/images/7fe844e002694018aabc92a09324af64.png",
+      "sha256": "91db90589c485b873e64ee4bef0b68cf8d754d9bc13c86e5cf0262e9a26b90f0",
+      "source_raw_sha256": "273307a4c03101ebc28682ce1cab0d448d67f4678ebec151d470ab9bd2961a36",
+      "timing_ns": {
+        "converted": 33372490670,
+        "encoded": 33375090608,
+        "hashed": 33378535143,
+        "started": 33371944322,
+        "written": 33378030495
+      },
+      "width": 640
+    },
+    "bytes": 921600,
+    "capture_ended_ns": 33371469920,
+    "capture_started_ns": 33370325459,
+    "frame": "screen_physical_px",
+    "height": 360,
+    "native_window_id": 4194304,
+    "region": [
+      0,
+      0,
+      640,
+      360
+    ],
+    "sha256": "273307a4c03101ebc28682ce1cab0d448d67f4678ebec151d470ab9bd2961a36",
+    "target": "owned",
+    "width": 640
+  },
+  "initial": {
+    "artifact": {
+      "bytes": 2127,
+      "height": 360,
+      "mime_type": "image/png",
+      "path": "/out/images/1094e2768dbb4228901e69ec53c58519.png",
+      "sha256": "91db90589c485b873e64ee4bef0b68cf8d754d9bc13c86e5cf0262e9a26b90f0",
+      "source_raw_sha256": "273307a4c03101ebc28682ce1cab0d448d67f4678ebec151d470ab9bd2961a36",
+      "timing_ns": {
+        "converted": 27842811258,
+        "encoded": 27850632091,
+        "hashed": 27854481267,
+        "started": 27842158151,
+        "written": 27853998772
+      },
+      "width": 640
+    },
+    "bytes": 921600,
+    "capture_ended_ns": 27841611176,
+    "capture_started_ns": 27840078959,
+    "frame": "screen_physical_px",
+    "height": 360,
+    "native_window_id": 4194304,
+    "region": [
+      0,
+      0,
+      640,
+      360
+    ],
+    "sha256": "273307a4c03101ebc28682ce1cab0d448d67f4678ebec151d470ab9bd2961a36",
+    "target": "owned",
+    "width": 640
+  },
+  "initial_effect": {
+    "history": [],
+    "press": null
+  },
+  "physical_button_mask": 0,
+  "physical_keys": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "proposal": {
+    "action": "click",
+    "x": 460,
+    "y": 185
+  },
+  "receipt": {
+    "admission": "accepted",
+    "execution": {
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "emissions": 3,
+      "ended_ns": 33267327022,
+      "observations": [],
+      "program_emissions": 3,
+      "releases": [
+        {
+          "buttons_down": [],
+          "keys_down": [],
+          "monotonic_ns": 33267324586,
+          "verified": true
+        }
+      ],
+      "started_ns": 33215700933,
+      "waits": [
+        {
+          "completed": true,
+          "ended_ns": 33266927225,
+          "kind": "fixed_delay",
+          "operation_index": 4,
+          "requested_ms": 50,
+          "started_ns": 33216619921,
+          "update_observed": null
+        }
+      ]
+    },
+    "recovery_required": false,
+    "required_capabilities": [
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.pointer",
+      "input.release_all",
+      "window.focus"
+    ],
+    "status": "completed"
+  },
+  "source_hashes": {
+    "auditor.py": "505493e5956c512cd1eeeca170db7753ce615e6953e74ead2ace726ea37790a7",
+    "equivalence.py": "e8a0d0a0334c55b8faa467744e2146c0a61786564b13954cbbfb0d174b700f12",
+    "fixture.py": "c23bc61620ff07270746fdaf06a676e187f09b48e6d0673fffe09fc4e510c2b2",
+    "host_once.py": "6cf4622e66f8be3a9bfa78647ade7180089b55fcb1266edb8b9a26fa2c308b6e",
+    "instructions.txt": "62c0e346f1e78f20b32d6277e41189ece12be63365c6c2c835ad4e20ad281ff8",
+    "producer.py": "23f0c8d2ec9d0e8a436ec5fb002625445fe47582ddaf4ec2244cfeb49d530933",
+    "schemaA.json": "8c32afefa539a0d40d9d0f8d67c2ee4e0609aa772da86d259b11e0c21d658f8c",
+    "schemaB.json": "aaf8a002d59d7c995a6b1e46124a95dcaf3bace87068b42afb6432435a309ef6",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+    "sources/runtime/core_v1/contract.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "sources/runtime/host_model_ipc_broker_v1.py": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
+    "surface.py": "5753d6258bfd284987585f77f9dbc95ce8ab834fa7f11d19d2dfd81af26b717d"
+  },
+  "spec": {
+    "index": 3,
+    "target": "BLUE",
+    "variant": "A"
+  },
+  "started_ns": 27283466071,
+  "terminal": [
+    {
+      "exit_code": -15,
+      "name": "fixture",
+      "pid": 12
+    },
+    {
+      "exit_code": 0,
+      "name": "Xvfb",
+      "pid": 8
+    }
+  ]
+}

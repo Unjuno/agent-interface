@@ -1,0 +1,10 @@
+{
+  "schema": "prefix-stability-s03-v1",
+  "cases": [
+    {"id":"fail_then_seal_incomplete","events":["mandatory_fail","generation_sealed"],"mandatory":["m1","m2"],"observed":{"m1":"fail"},"optional_open":true,"expect":"pending"},
+    {"id":"complete_negative","events":["mandatory_fail","mandatory_pass","generation_sealed"],"mandatory":["m1","m2"],"observed":{"m1":"fail","m2":"pass"},"optional_open":true,"expect":"final_negative"},
+    {"id":"positive_open_generation","events":["mandatory_pass","mandatory_pass"],"mandatory":["m1","m2"],"observed":{"m1":"pass","m2":"pass"},"optional_open":true,"expect":"pending"},
+    {"id":"complete_positive_sealed","events":["mandatory_pass","mandatory_pass","generation_sealed"],"mandatory":["m1","m2"],"observed":{"m1":"pass","m2":"pass"},"optional_open":true,"expect":"final_positive"},
+    {"id":"complete_fail_optional_open","events":["mandatory_pass","mandatory_fail","generation_sealed"],"mandatory":["m1","m2"],"observed":{"m1":"pass","m2":"fail"},"optional_open":true,"expect":"final_negative"}
+  ]
+}

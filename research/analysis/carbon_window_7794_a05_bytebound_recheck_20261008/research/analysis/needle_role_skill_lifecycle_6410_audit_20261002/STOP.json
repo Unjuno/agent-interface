@@ -1,0 +1,14 @@
+{
+  "issue": 6410,
+  "allocation": "NEEDLE-ROLE-SKILL-LIFECYCLE-WSLC-6410-AUDIT-20261002-02",
+  "status": "STOP_AUDIT_ENVIRONMENT_PATH",
+  "candidate_invocations": 0,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "audit_report_written": false,
+  "failure": "FileNotFoundError opening /evidence/research/analysis/needle_role_skill_lifecycle_wslc_5084_t0_20261002/FREEZE.json",
+  "cause": "The host bound the repository's research directory to /evidence, while the command supplied a path prefixed with research/; the intended file was therefore addressed one directory too deep.",
+  "runtime_warning": "WSL kernel does not support swap limit capabilities or cgroup is not mounted; memory limited without swap.",
+  "disposition": "No retry per preregistered allocation. No candidate, model, optimizer, timing, GPU, or training workload was run by this audit allocation. A corrected invocation requires a separate successor allocation and review.",
+  "scientific_claim": "none"
+}

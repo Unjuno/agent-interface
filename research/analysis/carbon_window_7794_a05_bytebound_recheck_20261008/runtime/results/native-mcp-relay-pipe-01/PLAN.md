@@ -1,0 +1,2 @@
+# Pipe-preserved relay trial before allocation
+Primary sequential JSON requests on one persistent connection, Inkscape seed 991121 max stages2. Redirect stdout directly in Linux to a fresh response JSONL file with noclobber. Read complete lines only; forward exact image/text content. Choose action after viewing source. No per-decision file, no PTY JSON parsing. Keep response artifact and plan, no performance inference. On unknown result reconcile same request; finish explicitly and check owner before EOF.

@@ -1,0 +1,147 @@
+{
+  "cancel_observed_ns": 109441565064600,
+  "case": "construction-full-v6-run-arm",
+  "clock_delay_ms": 0,
+  "clock_return_ns": 109441564972600,
+  "events": [
+    {
+      "accepted_ns": 109441502838800,
+      "event": "accepted",
+      "id": "pair0-bounded_recovery-prelude",
+      "program_sha256": "66ecccf2ef176de5dd84df941f63595d609de387974bbe1c0cede2dfe3795bbc",
+      "steps": 2,
+      "valid_until_ns": 109443502738000
+    },
+    {
+      "event": "step_started",
+      "id": "pair0-bounded_recovery-prelude",
+      "issued_ns": 109441503372100,
+      "operation": "hold",
+      "step": 0
+    },
+    {
+      "completed_ns": 109441503381000,
+      "event": "step_completed",
+      "id": "pair0-bounded_recovery-prelude",
+      "step": 0
+    },
+    {
+      "event": "step_started",
+      "id": "pair0-bounded_recovery-prelude",
+      "issued_ns": 109441503384800,
+      "operation": "observe",
+      "step": 1
+    },
+    {
+      "completed_ns": 109441503387300,
+      "event": "step_completed",
+      "id": "pair0-bounded_recovery-prelude",
+      "step": 1
+    },
+    {
+      "event": "input_released",
+      "id": "pair0-bounded_recovery-prelude",
+      "release_ns": 109441503389900,
+      "verified": true
+    },
+    {
+      "error": null,
+      "event": "terminal",
+      "id": "pair0-bounded_recovery-prelude",
+      "release": {
+        "verified": true
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "completed",
+      "steps_completed": 2,
+      "terminal_ns": 109441503423400
+    },
+    {
+      "accepted_ns": 109441503880300,
+      "event": "accepted",
+      "id": "pair0-bounded_recovery-fallback",
+      "program_sha256": "e3b223f89098399b2766ed6b4ccdb2fa31a96122054783e566cccb45ec6381e8",
+      "steps": 1,
+      "valid_until_ns": 109441753508900
+    },
+    {
+      "event": "step_started",
+      "id": "pair0-bounded_recovery-fallback",
+      "issued_ns": 109441503957800,
+      "operation": "hold",
+      "step": 0
+    },
+    {
+      "event": "cancel_requested",
+      "id": "pair0-bounded_recovery-fallback",
+      "matched": true,
+      "requested_ns": 109441565012600
+    },
+    {
+      "completed_ns": 109441565066400,
+      "event": "step_completed",
+      "id": "pair0-bounded_recovery-fallback",
+      "step": 0
+    },
+    {
+      "event": "input_released",
+      "id": "pair0-bounded_recovery-fallback",
+      "release_ns": 109441565080300,
+      "verified": true
+    },
+    {
+      "error": null,
+      "event": "terminal",
+      "id": "pair0-bounded_recovery-fallback",
+      "release": {
+        "verified": true
+      },
+      "semantic_completion": "program status only; task scoring is separate",
+      "status": "completed",
+      "steps_completed": 1,
+      "terminal_ns": 109441565082500
+    }
+  ],
+  "fallback_terminal_status": "completed",
+  "lease_ms_from_planner_start": 250,
+  "planner_end_ns": 109441564975100,
+  "planner_start_ns": 109441503508700,
+  "planner_wait_ms": 30,
+  "release_ns": 109441565080300,
+  "runner_arm_summary": {
+    "arm": "BOUNDED_RECOVERY",
+    "fallback_id": "pair0-bounded_recovery-fallback",
+    "fallback_terminal_status": "completed",
+    "guard_cancel_reason": null,
+    "input_bounds": {
+      "event_count": 13,
+      "window_duration_ns": 61466200
+    },
+    "pair_index": 0,
+    "planner_window": {
+      "duration_ns": 61466200,
+      "end_boundary_phase": "immediately_after_delay_before_fallback_cleanup",
+      "end_ns": 109441564975100,
+      "start_ns": 109441503508900
+    },
+    "score": {
+      "mock": true,
+      "path": "score.json"
+    },
+    "scorer_events": [],
+    "scorer_summary": {
+      "mock": true,
+      "path": "scorer-summary.json"
+    },
+    "source_capture_ns": 109441497693000,
+    "source_health": {
+      "health": 100
+    },
+    "source_sequence": 8,
+    "source_typed_frame_sha256": "synthetic-frame",
+    "terminal_release_verified": true
+  },
+  "terminal_release_verified": true,
+  "timer_expired_ns": 109441549396700,
+  "timer_started_ns": 109441503700300
+}

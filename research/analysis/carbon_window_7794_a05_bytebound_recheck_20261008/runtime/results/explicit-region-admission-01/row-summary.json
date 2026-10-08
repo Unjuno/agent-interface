@@ -1,0 +1,158 @@
+{
+  "commands": 7,
+  "consequential_programs": 3,
+  "additional_readonly_observations": 1,
+  "input_checks": [
+    {
+      "command": 2,
+      "completed": true,
+      "neutral": true,
+      "capture_wait": {
+        "requested_ms": 100,
+        "started_ns": 17393608646244,
+        "completed": true,
+        "update_observed": null,
+        "ended_ns": 17393708798481
+      }
+    },
+    {
+      "command": 3,
+      "completed": true,
+      "neutral": true,
+      "capture_wait": {
+        "requested_ms": 100,
+        "started_ns": 17405479072830,
+        "completed": true,
+        "update_observed": null,
+        "ended_ns": 17405579290762
+      }
+    },
+    {
+      "command": 5,
+      "completed": true,
+      "neutral": true,
+      "capture_wait": {
+        "requested_ms": 100,
+        "started_ns": 17458663222599,
+        "completed": true,
+        "update_observed": null,
+        "ended_ns": 17458763448868
+      }
+    }
+  ],
+  "score": {
+    "expected": {
+      "A1": 149,
+      "A2": 857
+    },
+    "actual_nonempty_cells": {
+      "A1": 149,
+      "A2": 857
+    },
+    "success": true,
+    "after_all_owned_processes_terminal": true,
+    "workbook_sha256": "458cc63a05ae527b30a0d2c551bb78d50407bb39b86f5d91cd1cf7e0b5766d1c"
+  },
+  "cleanup": {
+    "host_exit": 0,
+    "children": [
+      {
+        "name": "calc",
+        "pid": 226781,
+        "returncode": 255
+      },
+      {
+        "name": "openbox",
+        "pid": 226778,
+        "returncode": 0
+      },
+      {
+        "name": "xvfb",
+        "pid": 226774,
+        "returncode": 0
+      }
+    ],
+    "ended_ns": 17493106671009
+  },
+  "frozen_hashes_unchanged": true,
+  "images": [
+    {
+      "command": 1,
+      "sha256": "4e901013fa1de2e791e085630f55ceaeddc05f26ccdcffc9f581a147d5d5d06e",
+      "region": [
+        0,
+        165,
+        290,
+        116
+      ],
+      "width": 290,
+      "height": 116
+    },
+    {
+      "command": 2,
+      "sha256": "7f71c8708792127942467b194d75e05c86a45d7c58defcf04c9aac3dcbbecdfc",
+      "region": [
+        0,
+        165,
+        290,
+        116
+      ],
+      "width": 290,
+      "height": 116
+    },
+    {
+      "command": 3,
+      "sha256": "81324ed6bb49c5465257130b030f126912a0e5c0f7f89bc005f82fe665e0fa24",
+      "region": [
+        350,
+        290,
+        590,
+        250
+      ],
+      "width": 590,
+      "height": 250
+    },
+    {
+      "command": 4,
+      "sha256": "81324ed6bb49c5465257130b030f126912a0e5c0f7f89bc005f82fe665e0fa24",
+      "region": [
+        350,
+        290,
+        590,
+        250
+      ],
+      "width": 590,
+      "height": 250
+    },
+    {
+      "command": 5,
+      "sha256": "57b5f8e767cba37e373bacab96b0221bad08392ce2cfc4a30a60e79c47275a5f",
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "command": 6,
+      "sha256": "54d749b1cd3158f4d96a626872f2094e79d510a9c4b17b10b8f6a35c26d3a77b",
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "width": 1280,
+      "height": 800
+    }
+  ],
+  "task_success": true,
+  "disposition": "SCOPED_CALLER_REGION_USABILITY_ONLY",
+  "provider_billing": null,
+  "model_ingestion_ms": null,
+  "usage_accounting": "pending actual primary source selection",
+  "scope": "One development-known positive, includes identical same-owner repeated-modal image review. Not generic reliability, speed, token benefit or redraw guarantee."
+}

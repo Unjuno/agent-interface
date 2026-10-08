@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "<worker-work>\review-6882-7772\check_default_path.py", line 107, in <module>
+    run()
+  File "<worker-work>\review-6882-7772\check_default_path.py", line 98, in run
+    raise ValueError({"case": label, "actual": actual, "expected": expected, "counts": counts, "wanted_counts": expected_counts})
+ValueError: {'case': 'valid', 'actual': {'status': 'delegated', 'error': None, 'terminal_status': 'refused', 'terminal_error': 'INVALID_PROGRAM'}, 'expected': {'status': 'delegated', 'error': None, 'terminal_status': 'completed', 'terminal_error': None}, 'counts': {'open': 1, 'preflight': 0, 'execute': 0, 'close': 1}, 'wanted_counts': {'open': 1, 'preflight': 1, 'execute': 1, 'close': 1}}

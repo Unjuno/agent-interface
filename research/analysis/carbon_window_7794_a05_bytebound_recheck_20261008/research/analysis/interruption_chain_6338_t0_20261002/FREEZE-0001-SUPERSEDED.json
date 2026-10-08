@@ -1,0 +1,33 @@
+{
+  "schema": "unjuno-research-freeze-v1",
+  "issue": 6338,
+  "allocation_id": "t0-formal-01",
+  "owner": "Codex autonomous research task 01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "base_main_sha": "851fc0888bf654a61276a56aa6ae00f5cd1b5729",
+  "window_utc": {"start": "2026-10-02T01:22:00Z", "end": "2026-10-02T01:37:00Z"},
+  "host": {"os": "Windows 10.0.26200.9457", "python": "3.11.9", "execution": "native PowerShell; standard library only"},
+  "resource_policy": {"cpu_only": true, "gpu": false, "wsl": false, "docker": false, "network": false, "human_contact": false, "max_candidate_invocations": 1, "max_independent_auditor_invocations": 1, "retry": false},
+  "fixture": {"sha256": "F9DF7E2B95ACBF55B2C2CF56F7EDF7029FC9784ECBB490C3498E21402D9708AA", "horizon": 100, "case_count": 8, "policies": ["emit_each", "duplicate_batch", "source_linked", "opaque_consolidation"]},
+  "source_hashes": {
+    "candidate.py": "9C07DEA116989993C1803880B8A1A69A0C04AD2198B4F73EBB3859BE2F96553A",
+    "auditor.py": "F7964152C7F4829A62A1AB6139C64EB82126582417C30EF6140F8B2122DA4A91",
+    "cases.py": "047968F5361C2AB4CA90F5434878CF71DD3850B6A8D873F2364C74FE2FA61934",
+    "test_candidate.py": "A51D57EF766366722642A003EAAC0039DC8915755A3007E828482FE47A028682",
+    "test_auditor.py": "9AEA59352410964506F3F1847CD7FC36696689909C6714565A56333CCA4C7641"
+  },
+  "decision": {
+    "required": "METHOD_PASS_SCOPED",
+    "source_linked_chain": {"emit_each_notice_count": 3, "source_linked_notice_count": 2, "emit_each_max_chain": 3, "source_linked_max_chain": 2, "task_effect_truth_equal": true},
+    "exogenous_burst_parent_edges": 0,
+    "mandatory_hard_alert_suppression_allowed": false,
+    "unauthorized_cross_principal_notice_allowed": false,
+    "stale_target_approval_allowed": false,
+    "opaque_control_disposition": "CHAIN_REDUCTION_WITH_BURDEN_UNKNOWN_OR_WORSE",
+    "corruptions_must_fail": ["missing-parent", "stale-cross-card-approval", "suppressed-hard-alert", "cross-principal-card-merge", "opaque-control-mislabeled-benefit"]
+  },
+  "formal_commands": [
+    "python -B candidate.py cases.json results/formal-01/candidate.json",
+    "python -B auditor.py cases.json results/formal-01/candidate.json results/formal-01/audit.json"
+  ],
+  "stop_rule": "Any candidate nonzero exit, missing output, malformed raw, auditor error, hash/source drift, host/window/resource overlap, or failed gate is terminal STOP/FAIL as applicable; never rerun this allocation or replace its seed/policy. Candidate must exit zero before auditor starts."
+}

@@ -1,0 +1,54 @@
+{
+  "allocation": "issue5504-cegar-t0-01",
+  "frozen_at_utc": "2026-09-30T14:39:20Z",
+  "base_main_commit": "571c87775c631b4500d6da659a238762dc3fb665",
+  "container": {
+    "image": "python:3.12.10-slim",
+    "image_digest": "sha256:fd95fa221297a88e1cf49c55ec1828edd7c5a428187e67b5d1805692d11588db",
+    "architecture": "linux/amd64",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "dedicated writable directory"
+  },
+  "corpus": "cases.json",
+  "candidate_entrypoint": "run_candidate.py",
+  "independent_auditor_entrypoint": "run_audit.py",
+  "source_sha256": {
+    "auditor.py": "65e252dda00f72bb78b968a84b58ac92277ff7d48e6b65264302fcf19fd4d393",
+    "cases.json": "4de66efaf2352dc95ed6a006da098ee2d78f3cbf5f956f0e0421bd628feaca19",
+    "Dockerfile": "9b9028d781b9074d9334604a6acbebb89c089ce165fc400e6ccdf4bf818b8894",
+    "experiment.py": "2cf342e3c8ee34f0342e54d204e7453fc312c1fd402065029ffa2ab6643a32cb",
+    "harness.py": "843bea5bdcf58d2e22d1f9ace19ae936a790db1276ba6d10e01a426905af1350",
+    "oracle.py": "6441f6adbe86050041f656be92f2bab4c8866157e5362c63eb7fe07e0a65637b",
+    "PLAN.md": "8df6f1de60982db6b951e676b866b1f75f6f50a687a9d3188bad1c304392266d",
+    "README.md": "47a7a6fa5f6772cdcf92b8ba89150606f9ce42388e168f94b31ab4fc0108fdc8",
+    "results/preflight/docker-mount-stop.json": "8b686126cf0d9260343d0bf887b6660e5dd286b690eb11d7177e94aa5f3cce04",
+    "run_audit.py": "4d113e2c19dff4b2194e36687b56b523aad4c2cce1d2829f2031c5381f832dba",
+    "run_candidate.py": "7d8c9569c12f52b2331bfadf252c64575f47b62543a8ba1948f1110a3d68e4a9",
+    "test_experiment.py": "0919ce5a8f17e3ecca5bf0a912b9217b9cf6940b5853f9b6ff4e17af5db1be26",
+    "test_harness.py": "fa78f1b2db0a34bc545626b3567a5bb2e73be91b19fcce306e62de1a2b819546"
+  },
+  "formal_invocations": {
+    "candidate": 1,
+    "auditor": 1,
+    "retries": 0,
+    "tuning_after_formal": 0
+  },
+  "gates": [
+    "CEGAR held-out false admissions are zero and lower than coarse baseline",
+    "CEGAR held-out false rejections are zero",
+    "both held-out UNKNOWN cases remain UNKNOWN",
+    "authority_grants are zero in every arm",
+    "each refinement is independently replayed and linked to a training case",
+    "CEGAR learns fewer checks than the eight-check over-specific static arm",
+    "five-check full ontology agrees with the independent oracle on every case",
+    "independent raw-only audit decision PASS with errors empty"
+  ],
+  "outputs": [
+    "results/t0/candidate.json",
+    "results/t0/audit.json",
+    "results/t0/RUN.json",
+    "SHA256SUMS.txt"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "command": [
+    "${PYTHON311}",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "runtime/core_v1",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "started_utc": "2026-10-03T00:50:22.686641+00:00",
+  "ended_utc": "2026-10-03T00:50:22.810803+00:00",
+  "exit_code": 0,
+  "logs": {
+    "stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "redacted": false
+    },
+    "stderr": {
+      "sha256": "3cc41fac8d875478e148186a6b35d333e2ebef026e90cf3f166272193124a358",
+      "bytes": 9820,
+      "original_sha256": "3cc41fac8d875478e148186a6b35d333e2ebef026e90cf3f166272193124a358",
+      "original_bytes": 9820,
+      "redacted": false
+    }
+  },
+  "source_receipt_sha256": "7f194e3614071f983f728b68d1cf70ea0d06074e7f63f5259c491c3ceebbd7fd",
+  "publication": "derived public receipt; original absolute host paths withheld"
+}

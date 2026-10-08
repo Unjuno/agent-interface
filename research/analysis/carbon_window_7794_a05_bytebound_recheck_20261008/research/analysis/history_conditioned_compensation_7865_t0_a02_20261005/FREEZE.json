@@ -1,0 +1,17 @@
+{
+  "allocation": "7865-t0-a01-20261005",
+  "base_main_sha": null,
+  "base_main_sha_status": "Not captured before A01 execution; A01 was authored as a standalone local experiment rather than from a repository checkout.",
+  "container_image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "container_platform": "linux/arm64",
+  "decision": "PASS_METHOD_SCOPED only when all 28 candidate outputs exactly match the independent oracle and the explicit blind-loss, selective-acceptance, conflict, mutation, and claim-scope tests pass",
+  "source_sha256": {
+    "PROTOCOL.md": "98aa3551d80fb380e8168d6c3946cba209017ac17216abb06395de7cf2d1f990",
+    "model.py": "a2b53efc2f7acde544a3dc94752e30c5a544da60308465960561b8daa2e6abae",
+    "oracle.py": "3cbf7d16bc64d7b3fa67b79615af7ae076ec1354f5431ceb0fda8b63feb594d7",
+    "test_model.py": "31ac0dc71cd11f989e3558ad0a38c24ad3dc00f96530528c833fa9a27eba19d1"
+  },
+  "status": "FROZEN_BEFORE_FORMAL_RUN",
+  "test_command": "python -B -m unittest -v test_model",
+  "test_scope": "deterministic two-field finite artifact; no GUI, model, network, user data, or external effect"
+}

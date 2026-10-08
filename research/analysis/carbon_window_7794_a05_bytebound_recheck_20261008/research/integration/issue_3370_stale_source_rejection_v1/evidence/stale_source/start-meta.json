@@ -1,0 +1,120 @@
+{
+  "allocation": {
+    "app": "inkscape",
+    "authority": "none",
+    "max_stages": 3,
+    "pid": 9,
+    "run_directory": "/evidence/stale_source/allocation/run",
+    "seed": 991123,
+    "source_stage": 1,
+    "status": "ready",
+    "text_gap_ms": 0
+  },
+  "authority": "none",
+  "image_reference": {
+    "authority": "none",
+    "capture_ns": 56894843245491,
+    "freshness": "historical referenced capture; no new observation",
+    "path": "/evidence/stale_source/allocation/run/bridge/images/075ae56668e646419c3ead9d7e74b05f.png",
+    "relative_path": "bridge/images/075ae56668e646419c3ead9d7e74b05f.png",
+    "sequence": 1,
+    "sha256": "505c17b695d2c4a71b8ae5b0e52a1c90261d25764ca4d3ae9b19b2933e1abec9",
+    "status": "image"
+  },
+  "image_status": "image",
+  "outcome_summary": {
+    "action_status": null,
+    "cleanup_status": null,
+    "evaluation_success": null,
+    "feedback_status": null,
+    "reported_status": null
+  },
+  "receipt": {
+    "native_result": {
+      "binding_revision": 0,
+      "capture_ns": 56894843245491,
+      "native": {
+        "artifact": {
+          "bytes": 55257,
+          "height": 800,
+          "mime_type": "image/png",
+          "path": "/evidence/stale_source/allocation/run/bridge/images/075ae56668e646419c3ead9d7e74b05f.png",
+          "sha256": "505c17b695d2c4a71b8ae5b0e52a1c90261d25764ca4d3ae9b19b2933e1abec9",
+          "source_raw_sha256": "19289111f91dcebcdd92e32f4c748f0ef0ed34fd953f7ae3fea9d6bcea95bd0a",
+          "width": 1280
+        },
+        "bytes": 4096000,
+        "capture_ended_ns": 56894846225515,
+        "capture_started_ns": 56894843245491,
+        "frame": "screen_physical_px",
+        "height": 800,
+        "native_window_id": 6291463,
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "sha256": "19289111f91dcebcdd92e32f4c748f0ef0ed34fd953f7ae3fea9d6bcea95bd0a",
+        "target": "app",
+        "width": 1280
+      },
+      "pointer_binding": {
+        "focus": 6291464,
+        "geometry": [
+          0,
+          17,
+          1280,
+          783
+        ],
+        "surface": 6291463
+      },
+      "sequence": 1
+    },
+    "source": {
+      "path": "/evidence/stale_source/allocation/run/source-1.json",
+      "sha256": "9bb5104c0291d6fd76638bed80f97f9cc406a47aaf593a259140c98b619b4a39"
+    }
+  },
+  "schema": "agent-interface/review-v1",
+  "session_context": {
+    "authority": "none",
+    "exchange_contract": {
+      "source": {
+        "path": "/evidence/stale_source/allocation/run/exchange-contract.json",
+        "sha256": "e3ac7ad487dea7f54236f7f17326cf484a09b1f4084dd5720400f9e59d5734ae"
+      },
+      "status": "recorded",
+      "value": {
+        "max_stages": 3,
+        "schema": "agent-interface/native-exchange-contract-v1"
+      }
+    },
+    "goal": {
+      "source": {
+        "path": "/evidence/stale_source/allocation/run/goal.json",
+        "sha256": "b16869d48171d5b5723d96beb8f8401adde7425e53becf83aa3604d8f00904f9"
+      },
+      "status": "recorded",
+      "value": {
+        "a": 409,
+        "b": 459,
+        "dx": 24,
+        "setup_readiness_captures": 2,
+        "task": {
+          "coordinate_frame": "svg_user_units",
+          "dx_meaning": "nominal_drag_screen_px_not_exact_keyboard_displacement",
+          "geometry_tolerance_exclusive": 0.1,
+          "height": 30,
+          "kind": "move_right_preserve_geometry",
+          "save_format": "svg",
+          "transform": null,
+          "width": 40,
+          "x_greater_than": 50.5,
+          "y": 50
+        },
+        "token": "t991123"
+      }
+    }
+  }
+}

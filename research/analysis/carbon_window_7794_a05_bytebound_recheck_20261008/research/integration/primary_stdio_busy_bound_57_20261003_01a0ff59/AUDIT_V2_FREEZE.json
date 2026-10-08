@@ -1,0 +1,163 @@
+{
+  "auditor_v2_sha256": "af8863ca7f1b34bac898ed1bb3be4df8f75d8fac8c330e05e40705f316969dca",
+  "controls_sha256": "0d2239a557bc77de6bf2f3907213ab9fdb2ee8c41db9ed78ca32088a2a62bc41",
+  "created_utc": "2026-10-03T02:14:02.325176+00:00",
+  "definition": "one read-only v2 re-audit of original raw and same five fixed negative controls; no primary/relay or candidate replay",
+  "original_raw": [
+    {
+      "bytes": 1178,
+      "path": "pipe/baseline/config.json",
+      "sha256": "d21291b2132e6937619b637339a75b150a59185cd69fb18f68cf55301e50884a"
+    },
+    {
+      "bytes": 166,
+      "path": "pipe/baseline/exchange/original-reply-1.json",
+      "sha256": "e8bd4a52d029013fff6a9a598c2e42d59f59495155bcea623c7c755f69f9eb3d"
+    },
+    {
+      "bytes": 438,
+      "path": "pipe/baseline/exchange/presentation-1.json",
+      "sha256": "10bdbb93077cb5d7745f9c7a0e4b57948834d747683bbf1f58dafb7e493b9ecf"
+    },
+    {
+      "bytes": 55,
+      "path": "pipe/baseline/exchange/request-1.json",
+      "sha256": "5e9c277c9cb3bc93a28b551bd4359601c6148ea292fdaae5a55194327c8269eb"
+    },
+    {
+      "bytes": 34,
+      "path": "pipe/baseline/host/exit.json",
+      "sha256": "6380f7ebf1263a94abaaef4f5a1323cf0f4fbc88e37d8f1792ae68f163e18807"
+    },
+    {
+      "bytes": 981,
+      "path": "pipe/baseline/host/host-events.jsonl",
+      "sha256": "b669cc4464e53006664bf2d4e69d0514277b26a7865dfc50216f29dd5bb203b9"
+    },
+    {
+      "bytes": 154,
+      "path": "pipe/baseline/host/reply-1.json",
+      "sha256": "a11baef965f7adb1ffe4eb46f037f96c19fc7a46d217a9705e69564d17273c87"
+    },
+    {
+      "bytes": 62,
+      "path": "pipe/baseline/host/request-1.json",
+      "sha256": "857a09b791d6306d612ca7551ee110773d68395ca5d7d14de698440d48f43d1a"
+    },
+    {
+      "bytes": 637,
+      "path": "pipe/baseline/host/storage-preflight.json",
+      "sha256": "61ab9fe0c3199b13a9ffb8a712c5bf3adf1b3e0257ac4d06df9d053c77164385"
+    },
+    {
+      "bytes": 186,
+      "path": "pipe/baseline/process.json",
+      "sha256": "eb0d4ab208c5acc9e8fb1b209b4316797f0fd2d95051de11b10a7d9a02ec9610"
+    },
+    {
+      "bytes": 49,
+      "path": "pipe/baseline/relay-received.jsonl",
+      "sha256": "034d8f22294bec2042f9cef2374f502aa4643f251f603a1b5ffd40fc69c55dee"
+    },
+    {
+      "bytes": 0,
+      "path": "pipe/baseline/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 165,
+      "path": "pipe/baseline/stdin.jsonl",
+      "sha256": "9c98fe9ff6e5c44262353c1245a524a4f54dacf6a5d7c3eba688bf2522b34d4b"
+    },
+    {
+      "bytes": 1068,
+      "path": "pipe/baseline/stdout.jsonl",
+      "sha256": "8245d250e258eef9b3f53115bf1daf382cc6f89f8981597605f06aa915091e2b"
+    },
+    {
+      "bytes": 1181,
+      "path": "pipe/candidate/config.json",
+      "sha256": "101c45306cfee7a0d2a20999905e93f07bc29a430ba733228baef387c6a2b157"
+    },
+    {
+      "bytes": 166,
+      "path": "pipe/candidate/exchange/original-reply-1.json",
+      "sha256": "e8bd4a52d029013fff6a9a598c2e42d59f59495155bcea623c7c755f69f9eb3d"
+    },
+    {
+      "bytes": 439,
+      "path": "pipe/candidate/exchange/presentation-1.json",
+      "sha256": "7ac6d095ff8bcd6f7b7ccf5578438a2256034e8c90f191743e8d7866bbcfea0f"
+    },
+    {
+      "bytes": 55,
+      "path": "pipe/candidate/exchange/request-1.json",
+      "sha256": "5e9c277c9cb3bc93a28b551bd4359601c6148ea292fdaae5a55194327c8269eb"
+    },
+    {
+      "bytes": 34,
+      "path": "pipe/candidate/host/exit.json",
+      "sha256": "6380f7ebf1263a94abaaef4f5a1323cf0f4fbc88e37d8f1792ae68f163e18807"
+    },
+    {
+      "bytes": 980,
+      "path": "pipe/candidate/host/host-events.jsonl",
+      "sha256": "cbb33ece3099a1f5777de615345d492a4f799f009d7352a5b43d0304318bb83f"
+    },
+    {
+      "bytes": 154,
+      "path": "pipe/candidate/host/reply-1.json",
+      "sha256": "a11baef965f7adb1ffe4eb46f037f96c19fc7a46d217a9705e69564d17273c87"
+    },
+    {
+      "bytes": 62,
+      "path": "pipe/candidate/host/request-1.json",
+      "sha256": "857a09b791d6306d612ca7551ee110773d68395ca5d7d14de698440d48f43d1a"
+    },
+    {
+      "bytes": 638,
+      "path": "pipe/candidate/host/storage-preflight.json",
+      "sha256": "7cf1189d54e442c9c1d437720db2e03f1bac59b504933315cafb9e9ef532eaa7"
+    },
+    {
+      "bytes": 186,
+      "path": "pipe/candidate/process.json",
+      "sha256": "84e2a448831e978679c95917a66af84a93eff8b98bba1623e40816a5f1f8753e"
+    },
+    {
+      "bytes": 49,
+      "path": "pipe/candidate/relay-received.jsonl",
+      "sha256": "034d8f22294bec2042f9cef2374f502aa4643f251f603a1b5ffd40fc69c55dee"
+    },
+    {
+      "bytes": 37,
+      "path": "pipe/candidate/stderr.txt",
+      "sha256": "5178ab679fa03429eb91e1b10f551ba8028cd988158d2b3be260e8cc7fc64d78"
+    },
+    {
+      "bytes": 165,
+      "path": "pipe/candidate/stdin.jsonl",
+      "sha256": "9c98fe9ff6e5c44262353c1245a524a4f54dacf6a5d7c3eba688bf2522b34d4b"
+    },
+    {
+      "bytes": 774,
+      "path": "pipe/candidate/stdout.jsonl",
+      "sha256": "4a53e4a3457248d4ea8a17b8a3a11e01f8e9a5a2e695d0d198f6d1c194531a7f"
+    }
+  ],
+  "retained_v1_limitation": "Original v1 passes the unmodified pipe records and rejects four controls, but accepts boolean attempt=true for integer1. Original source/audit/control outcome unchanged.",
+  "v2_changes": [
+    [
+      "original.pop('attempt')==1",
+      "same(original.pop('attempt'),1)"
+    ],
+    [
+      "[row['sequence'] for row in events]==[1,2,3,4,5]",
+      "same([row['sequence'] for row in events],[1,2,3,4,5])"
+    ],
+    [
+      "rows[-1]['exit']=={'code':0,'signal':None}",
+      "same(rows[-1]['exit'],{'code':0,'signal':None})"
+    ]
+  ]
+}

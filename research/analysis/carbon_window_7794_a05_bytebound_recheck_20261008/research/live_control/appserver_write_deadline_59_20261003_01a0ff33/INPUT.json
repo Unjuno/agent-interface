@@ -1,0 +1,32 @@
+{
+  "execution_id": "appserver-write-before-deadline-59-df63-a01-20261003",
+  "source_base": "9c0692dabbfc7fc2fa5bd111b6de4baee578800d",
+  "request_timeout_s": 0.05,
+  "checkpoint_s": 0.25,
+  "setup_timeout_s": 1.0,
+  "cell_budget_s": 3.0,
+  "method": "fixture/request",
+  "cells": [
+    {
+      "name": "healthy_large",
+      "read_stdin": true,
+      "payload_characters": 262144,
+      "payload_pattern": "X"
+    },
+    {
+      "name": "unread_small",
+      "read_stdin": false,
+      "payload_characters": 5,
+      "payload_pattern": "probe"
+    },
+    {
+      "name": "unread_large",
+      "read_stdin": false,
+      "payload_characters": 262144,
+      "payload_pattern": "X"
+    }
+  ],
+  "maximum_live_children": 1,
+  "evidence_cap_bytes": 4194304,
+  "formal_allocation": false
+}

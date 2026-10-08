@@ -1,0 +1,42 @@
+{
+  "allocation": "change-cue-contrast-4436-v2",
+  "base_main": "3666992ab2b5e1b41b159b361d1c690d8e720fdf",
+  "branch": "research/change-cue-contrast-4436-20260926",
+  "issue": 4436,
+  "scientific_question_changed_from_v1": false,
+  "v1_disposition": "STOP_FORMAL_ENVIRONMENT_API_MISMATCH",
+  "v2_runner_delta": "remove unsupported mtime=0 keyword from gzip.open only",
+  "formal_invocations_allowed": 1,
+  "reruns_allowed": 0,
+  "replacements_allowed": 0,
+  "post_freeze_tuning_allowed": 0,
+  "construction": {
+    "mechanics": "PASS_CONSTRUCTION",
+    "gzip_api": "PASS_CONSTRUCTION_V2_GZIP_API"
+  },
+  "source_blobs": {
+    "PLAN.md": "ba7c8f2f6b0ab403a40e9365942ff1d26affeade",
+    "run_v2.py": "b47556ee72bfed5208468e1713da255d2dd38b8c",
+    "audit.py": "a68a1770acfbb084aa351be509e829f08053a050",
+    "STOP_V1.json": "720dec92e72ec84575486f067eb4a3fb8cb0b776",
+    "construction_v2/CONSTRUCTION.json": "f9586b8e7ffd7405e19f72dc27f5d301e6407226",
+    "construction_v2/GZIP_API.json": "ba105bcea2a4acd857d512ed142c01fda65a91d4"
+  },
+  "formal_constants": {
+    "canvas": [64, 64],
+    "pad": 2,
+    "fixed_green": [0, 255, 0],
+    "contrast_bound": "sqrt(21)",
+    "grayscale_all_256": true,
+    "rgb_lattice": [0, 32, 64, 96, 128, 160, 192, 224, 255],
+    "sizes": [[1,1],[2,2],[4,4],[8,4]],
+    "positions": ["center","left","top","top_left","bottom_right"],
+    "arms": [
+      "FIXED_GREEN_OUTLINE",
+      "ADAPTIVE_BW_OUTLINE",
+      "DUAL_BW_OUTLINE",
+      "PADDED_DUAL_BW_OUTLINE"
+    ]
+  },
+  "scope": "presentation contrast/source preservation only; no model/task/token/latency claim"
+}

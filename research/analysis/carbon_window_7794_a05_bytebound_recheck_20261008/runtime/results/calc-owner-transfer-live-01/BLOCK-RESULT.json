@@ -1,0 +1,117 @@
+{
+  "status": "FINITE_MECHANICS_BLOCK_COMPLETE",
+  "cases": [
+    {
+      "case": "ordinary-normal",
+      "route": "ordinary",
+      "input_A2": "864",
+      "raw_method_outcome": "SAFE_YIELD",
+      "raw_method_reason": "effect_unavailable",
+      "completed_transitions": 2,
+      "independent_values": {
+        "A1": 731,
+        "A2": 864
+      },
+      "normal_task_verified": true,
+      "wrong_control_refusal_verified": false,
+      "save_requests": 1,
+      "input_programs": 4,
+      "program_emissions": 27,
+      "accepted_physical_captures": 20,
+      "owner_commands": 16,
+      "primary_original_image_presentations": 6,
+      "local_method_reply_elapsed_ns": 1489449569,
+      "original_exec_session_id": 88772,
+      "original_exec_terminal_exit_code": 0,
+      "remaining_owned_pids": []
+    },
+    {
+      "case": "compiled-normal",
+      "route": "compiled",
+      "input_A2": "864",
+      "raw_method_outcome": "SAFE_YIELD",
+      "raw_method_reason": "effect_unavailable",
+      "completed_transitions": 2,
+      "independent_values": {
+        "A1": 731,
+        "A2": 864
+      },
+      "normal_task_verified": true,
+      "wrong_control_refusal_verified": false,
+      "save_requests": 1,
+      "input_programs": 4,
+      "program_emissions": 27,
+      "accepted_physical_captures": 20,
+      "owner_commands": 16,
+      "primary_original_image_presentations": 6,
+      "local_method_reply_elapsed_ns": 1622326071,
+      "original_exec_session_id": 36106,
+      "original_exec_terminal_exit_code": 0,
+      "remaining_owned_pids": []
+    },
+    {
+      "case": "compiled-wrong",
+      "route": "compiled",
+      "input_A2": "863",
+      "raw_method_outcome": "SAFE_YIELD",
+      "raw_method_reason": "effect_failed",
+      "completed_transitions": 1,
+      "independent_values": {
+        "A1": null,
+        "A2": null
+      },
+      "normal_task_verified": false,
+      "wrong_control_refusal_verified": true,
+      "save_requests": 0,
+      "input_programs": 2,
+      "program_emissions": 21,
+      "accepted_physical_captures": 11,
+      "owner_commands": 11,
+      "primary_original_image_presentations": 4,
+      "local_method_reply_elapsed_ns": 1001488818,
+      "original_exec_session_id": 69763,
+      "original_exec_terminal_exit_code": 0,
+      "remaining_owned_pids": []
+    },
+    {
+      "case": "ordinary-wrong",
+      "route": "ordinary",
+      "input_A2": "863",
+      "raw_method_outcome": "SAFE_YIELD",
+      "raw_method_reason": "effect_failed",
+      "completed_transitions": 1,
+      "independent_values": {
+        "A1": null,
+        "A2": null
+      },
+      "normal_task_verified": false,
+      "wrong_control_refusal_verified": true,
+      "save_requests": 0,
+      "input_programs": 2,
+      "program_emissions": 21,
+      "accepted_physical_captures": 11,
+      "owner_commands": 11,
+      "primary_original_image_presentations": 4,
+      "local_method_reply_elapsed_ns": 1118035956,
+      "original_exec_session_id": 41582,
+      "original_exec_terminal_exit_code": 0,
+      "remaining_owned_pids": []
+    }
+  ],
+  "totals": {
+    "save_requests": 2,
+    "input_programs": 12,
+    "program_emissions": 96,
+    "accepted_physical_captures": 62,
+    "owner_commands": 54,
+    "primary_original_image_presentations": 20
+  },
+  "mechanics": "both normals persisted exact values, both wrong controls stopped before Save",
+  "adoption": "HOLD_GENERAL_READINESS",
+  "efficiency": "HOLD_NO_DEMONSTRATED_GAIN",
+  "actual_provider_usage": "pending; preparation and failed preflight not free",
+  "human_tempo": "unmeasured",
+  "source": "a2f157397adcfdf490d010707a6a413c9a8c0562",
+  "source_unchanged": true,
+  "scope": "4 fixed existing-domain trials, not success-rate or latency distribution"
+}

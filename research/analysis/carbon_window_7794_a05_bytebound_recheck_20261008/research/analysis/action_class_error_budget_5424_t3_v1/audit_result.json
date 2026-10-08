@@ -1,0 +1,233 @@
+{
+  "expected_row_count": 160,
+  "fixture_sha256": "8a4d7be4f392f8c859c3259f0c484e538020816fb4e24e6a0c92a12eb0f12f43",
+  "mismatches": [],
+  "mutation_controls_rejected": 4,
+  "mutation_controls_total": 4,
+  "row_count": 160,
+  "schema": "action-class-error-budget-selective-labels-audit-v1",
+  "scope": "synthetic deterministic method test only; no deployed safety or rate inference",
+  "status": "PASS_METHOD_SCOPED",
+  "summary": {
+    "common_cause_primary_fallback|AUTHENTIC_CURRENT_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 6,
+      "completed": 2,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 6,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "common_cause_primary_fallback|FIXED_COOLDOWN": {
+      "censored_primary": 7,
+      "combined_severe": 7,
+      "completed": 2,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 1,
+      "severe_fallback": 6,
+      "severe_primary": 1,
+      "unsupported_unfreezes": 1
+    },
+    "common_cause_primary_fallback|HOLD_NO_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 6,
+      "completed": 2,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 6,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "common_cause_primary_fallback|QUIET_WINDOW": {
+      "censored_primary": 6,
+      "combined_severe": 7,
+      "completed": 2,
+      "frozen_at_end": false,
+      "offered": 8,
+      "primary_executions": 2,
+      "severe_fallback": 6,
+      "severe_primary": 1,
+      "unsupported_unfreezes": 1
+    },
+    "repaired_current_signal|AUTHENTIC_CURRENT_PROBE": {
+      "censored_primary": 5,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": false,
+      "offered": 8,
+      "primary_executions": 3,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "repaired_current_signal|FIXED_COOLDOWN": {
+      "censored_primary": 4,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": false,
+      "offered": 8,
+      "primary_executions": 4,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "repaired_current_signal|HOLD_NO_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "repaired_current_signal|QUIET_WINDOW": {
+      "censored_primary": 6,
+      "combined_severe": 1,
+      "completed": 8,
+      "frozen_at_end": false,
+      "offered": 8,
+      "primary_executions": 2,
+      "severe_fallback": 0,
+      "severe_primary": 1,
+      "unsupported_unfreezes": 1
+    },
+    "repaired_missed_signal|AUTHENTIC_CURRENT_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "repaired_missed_signal|FIXED_COOLDOWN": {
+      "censored_primary": 4,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": false,
+      "offered": 8,
+      "primary_executions": 4,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "repaired_missed_signal|HOLD_NO_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "repaired_missed_signal|QUIET_WINDOW": {
+      "censored_primary": 3,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": false,
+      "offered": 8,
+      "primary_executions": 5,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "unrepaired_no_exposure|AUTHENTIC_CURRENT_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "unrepaired_no_exposure|FIXED_COOLDOWN": {
+      "censored_primary": 7,
+      "combined_severe": 1,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 1,
+      "severe_fallback": 0,
+      "severe_primary": 1,
+      "unsupported_unfreezes": 1
+    },
+    "unrepaired_no_exposure|HOLD_NO_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "unrepaired_no_exposure|QUIET_WINDOW": {
+      "censored_primary": 6,
+      "combined_severe": 2,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 2,
+      "severe_fallback": 0,
+      "severe_primary": 2,
+      "unsupported_unfreezes": 2
+    },
+    "unrepaired_stale_signal|AUTHENTIC_CURRENT_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "unrepaired_stale_signal|FIXED_COOLDOWN": {
+      "censored_primary": 7,
+      "combined_severe": 1,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 1,
+      "severe_fallback": 0,
+      "severe_primary": 1,
+      "unsupported_unfreezes": 1
+    },
+    "unrepaired_stale_signal|HOLD_NO_PROBE": {
+      "censored_primary": 8,
+      "combined_severe": 0,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 0,
+      "severe_fallback": 0,
+      "severe_primary": 0,
+      "unsupported_unfreezes": 0
+    },
+    "unrepaired_stale_signal|QUIET_WINDOW": {
+      "censored_primary": 6,
+      "combined_severe": 2,
+      "completed": 8,
+      "frozen_at_end": true,
+      "offered": 8,
+      "primary_executions": 2,
+      "severe_fallback": 0,
+      "severe_primary": 2,
+      "unsupported_unfreezes": 2
+    }
+  }
+}

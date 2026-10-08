@@ -1,0 +1,68 @@
+{
+  "task": "OBSERVATION-GATING-O4-X11-PIXEL-VERIFY-R1-20260919-001",
+  "issue": 1847,
+  "base": "d6dc6cbc3eee51af2fd1bbc9930a327fc25ee4fe",
+  "branch": "research/observation-o4-x11-pixel-verify-1847",
+  "formal_invocations_before_freeze": 0,
+  "source_bundle": {
+    "git_blob": "2805bfc9ddeff284c9b329e721c655182a2debff",
+    "sha256": "e1f9d6a6e1e4d1496a65d65f6b5196d37d8fac32097b415d82be2a400af2a6cc",
+    "restore_git_blob": "a0c821d7302de8b4a64f89db33775dbd336c09d5",
+    "restore_sha256": "0ab843b893feaea055913611b8e3afac87924f6f02d96c00c71683bdc749d0f3"
+  },
+  "source_sha256": {
+    "fixture.py": "db674dfd0502b3b61011338d43e3583c98489e808187039d16a9514a0aa208ce",
+    "runner.py": "b785cab730f8daa37191de43fe2a19eeb217efe06932732b153f32f927228b28",
+    "audit.py": "06c2f5c76e1e0d887a565b3126559b3d3dbe2184b70e1e97d447291fe8c59e66",
+    "PLAN.md": "4daeb41eb532ae6ce1ce156d468fd89b9f02665c9e1fdac77a969ffcb883ceeb",
+    "SCHEDULE.json": "0b3a793258bfeccb9c5f6fef1ec4f3565a0ad21ee7938c4b1bfbf5c2f5c5d357"
+  },
+  "source_git_blobs": {
+    "fixture.py": "3cffa1c904819faace9368c3130ce36d7a1ddf84",
+    "runner.py": "5718dfba1d0f6881dcdace108ebfa5a0d5341eea",
+    "audit.py": "a056afe8096aea24a287f5190e57a49db6c1f05e",
+    "PLAN.md": "b3e331359bff794bbed71ae18caf24e22cf7728b",
+    "SCHEDULE.json": "67f0664ad14072de5330827cd5d6f756b758cfdb"
+  },
+  "manifest": {
+    "git_blob": "0d5ebbe8e8ac3f8470ab81e92d76ada9155a0487",
+    "sha256": "e9822801c065684b39a6be24d066c6dcd0a189dc5d3ddc1dbd35f8b291dcb1f1"
+  },
+  "construction": {
+    "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+    "rows": 7,
+    "raw_archive_git_blob": "17baa835dbcfd016dde2727bd2a897d0efb3d605",
+    "raw_archive_sha256": "736d0ed4a465297303da96683314e0110107910e71b7118bccb1f9f66f813b7b",
+    "raw_json_sha256": "2efda5c3ac668dde7800206db4c11c0e0d9ac3093531211384089bfe74d44da9",
+    "summary_git_blob": "88f711947966c415be9650bcfde37a700e186446",
+    "summary_sha256": "3839b864208d53c3ba4445987ce0878aae800633323f46e59453eb7b90e500d5",
+    "audit_git_blob": "9556b3e542e6f98a330e67724a6c4ae664a9b272",
+    "audit_sha256": "33f2da56c3b9187d720b3faf2b511b3d942d69ef89c7f1956233767eee26f378",
+    "candidate_oracle_mismatch": 0,
+    "local_resolutions": 2,
+    "escalations": 5,
+    "unsafe_naive_resolutions": 3,
+    "pixel_state_agreement": 7,
+    "verifier_signature_agreement": 6,
+    "stale_final_red_confirmations": 1,
+    "cleanup_ok": 7
+  },
+  "preconstruction_stop": {
+    "status": "STOP_CONSTRUCTION_XAUTHORITY_MISSING",
+    "formal_consumed": 0,
+    "scientific_rows": 0,
+    "repair": "private Xvfb -ac -nolisten tcp plus fresh explicit empty XAUTHORITY per session",
+    "scientific_contract_changed": false
+  },
+  "formal": {
+    "seed": 165020260919001,
+    "rows": 56,
+    "categories": 7,
+    "repetitions_per_category": 8,
+    "invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning": 0,
+    "status": "NOT_RUN"
+  }
+}

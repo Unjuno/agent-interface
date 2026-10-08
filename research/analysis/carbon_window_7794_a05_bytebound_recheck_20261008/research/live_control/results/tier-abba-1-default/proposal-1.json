@@ -1,0 +1,32 @@
+{
+  "steps": [
+    {
+      "op": "pointer_click",
+      "x": 77,
+      "y": 190,
+      "duration_ms": 80
+    },
+    {
+      "op": "text",
+      "text": "480"
+    },
+    {
+      "op": "key",
+      "key": "Return"
+    },
+    {
+      "op": "text",
+      "text": "192"
+    },
+    {
+      "op": "key",
+      "key": "Return"
+    },
+    {
+      "op": "chord",
+      "modifier": "Control_L",
+      "key": "s"
+    }
+  ],
+  "rationale": "Enter the requested values in A1 and A2, then save the existing workbook; stop after Save in case an Excel-format confirmation dialog appears."
+}

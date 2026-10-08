@@ -1,0 +1,51 @@
+{
+  "schema": "predicate-order-audit-hardening-result-manifest-v1",
+  "issue": 4994,
+  "predecessor": 4959,
+  "allocation": "predicate-order-audit-hardening-successor-4959-20260928-01",
+  "status": "PASS_AUDIT_HARDENING_SCOPED",
+  "branch": "research/predicate-order-audit-hardening-4959-successor-20260928",
+  "frozen_source_commit": "0f22f384b28de28d61ffc61b66a9e34e5c4c54e6",
+  "execution": {
+    "invocations": 1,
+    "host": "local Docker Desktop",
+    "container_image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "network": "none",
+    "read_only_root": true,
+    "cpu_limit": 0.25,
+    "memory_limit": "512m",
+    "pids_limit": 32,
+    "gpu": false,
+    "tests_exit": 0,
+    "runner_exit": 0,
+    "independent_audit_exit": 0
+  },
+  "inputs": {
+    "legacy_git_blob": "1a6cc0e46b32d4cd6989aed118d003cce4cfe399",
+    "archive_git_blob": "c38dd2002f201d49b6fc261caff019550a4bf4bc",
+    "raw_sha256_before": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d",
+    "raw_sha256_after": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d",
+    "local_materialization": "one trailing CR byte is restored in memory; exact upstream Git blob IDs are asserted by runner and independent auditor"
+  },
+  "outcome": {
+    "unit_tests": "4/4 PASS",
+    "rows": 336,
+    "distributions": 21,
+    "first_cost_crossover_alpha": 0.7,
+    "predecessor_audit": "PASS_DRIFT_BOUNDARY_MAPPED",
+    "predecessor_corruption_controls": "5/5 rejected",
+    "mutation_controls": "3/3 rejected",
+    "json_nonfinite_controls": "3/3 rejected",
+    "weight_controls": "6/6 rejected",
+    "independent_raw_audit": "PASS_INDEPENDENT_RAW_REPLAY",
+    "errors": []
+  },
+  "source_sha256": {},
+  "output_sha256": {},
+  "limits": [
+    "One synthetic 336-row retained corpus and one host/image.",
+    "No revised scientific predicate-order claim, real timing, GUI/task effect, production authority, or broad audit/security certification."
+  ]
+}
+

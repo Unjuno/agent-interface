@@ -1,0 +1,10 @@
+{
+  "allocation_id": "BACKWARD-OBSERVABLE-GUARDS-6256-T4-FALSE-STOP-AUDIT-20261002-01",
+  "disposition": "STOP_CANDIDATE_ROW_SCHEMA_MISMATCH",
+  "exit_code": 1,
+  "phase": "audit execution after input loading, before output classification completed",
+  "cause": "auditor expected outcome_id at the row top level; frozen candidate schema stores the identifier at outcome.id",
+  "retry_or_repair": "none; allocation preserved without retry",
+  "capture_kind": "structured transcription of tool output, not byte-exact stdout",
+  "scope": "model inputs were read; the independent reconciliation did not complete"
+}

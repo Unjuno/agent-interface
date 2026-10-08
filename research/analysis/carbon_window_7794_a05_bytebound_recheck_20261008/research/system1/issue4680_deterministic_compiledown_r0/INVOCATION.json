@@ -1,0 +1,29 @@
+{
+  "schema": "issue4680-deterministic-compiledown-host-receipt-r0",
+  "intake_main": "89ca30f756704c9e378fc2cdde90a03c6a569c03",
+  "freeze_commit": "222d614d390c8f444b452bdaaa1e61410e84f5d6",
+  "study": {
+    "argv": ["python", "-B", "/study/study.py", "--freeze", "/study/FREEZE.json", "--output", "/out/RESULT.json"],
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "docker_engine": "28.5.1",
+    "image_platform": "linux/amd64",
+    "network": "none",
+    "rootfs_read_only": true,
+    "source_mount_read_only": true,
+    "cpus": 1,
+    "memory": "512m",
+    "pids_limit": 32,
+    "formal_invocations": 1,
+    "exit_code": 0
+  },
+  "audit_v1": {
+    "argv": ["python", "-B", "/study/audit.py", "--result", "/results/RESULT.json", "--freeze", "/study/FREEZE.json", "--output", "/out/AUDIT.json"],
+    "formal_invocations": 1,
+    "exit_code": 0,
+    "program_reported_decision": "PASS_INDEPENDENT_AUDIT",
+    "postrun_review_disposition": "HOLD_INDEPENDENT_AUDIT_AND_ACTIVATION_RECEIPT_INCOMPLETE"
+  },
+  "retry_count": 0,
+  "replacement_count": 0,
+  "post_result_tuning_count": 0
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "issue3691-manifest-root-reproduction-v1",
+  "decision": "PASS_REPRODUCTION_MANIFEST_TRUST_ROOT_GAP",
+  "environment": {
+    "python": "3.12",
+    "execution": "native local temporary directory",
+    "network": "not used",
+    "docker": "not run"
+  },
+  "canonical": {
+    "exit_code": 0,
+    "status": "PASS_OFFLINE_STRUCTURAL_AUDIT",
+    "errors": [],
+    "controls_rejected": 11
+  },
+  "coordinated_replacement": {
+    "exit_code": 0,
+    "status": "PASS_OFFLINE_STRUCTURAL_AUDIT",
+    "errors": [],
+    "controls_rejected": 11
+  },
+  "frozen_input_sha256": {
+    "audit.py": "0956b13a9e98c504c870096507b9428acae0510a27903d0eccb0f730af35c579",
+    "test_integrity.py": "15dbc3167b3d39dc622944bdf770c2c3d12036d23d9079c8cb80fbb628a98105",
+    "raw.json": "ccb9a75eefb7df73cb13dbc9191d33334fb672c2fd58fcc5fa32be998e182807",
+    "predecessor_FREEZE.json": "f40494b1be99fb1e68d7b09c498297df35a72c043740b5f09d3faec7e059acfe"
+  },
+  "replacement_sha256": {
+    "raw": "32eea2e057b34ee0df624dbf5a07e76f3f57807ed55f0d957766a67693dc1377",
+    "freeze": "529dbd8f6fbf1181606bb0eed7e1da3dcfe4267dcc8afb6eb023ec593fd9d640",
+    "study_manifest": "c14c0fe1d573a94d2973a7228abd0c9ea6f00ff2de56b2a1a7645589331c76f2"
+  },
+  "scope": "Static audit trust-root reproduction only; no Docker validation, X11, GUI/input/model execution, or formal allocation."
+}

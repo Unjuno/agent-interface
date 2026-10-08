@@ -1,0 +1,434 @@
+{
+  "allocation": "quiescent-epoch-binding-5361-t1-20260930-01",
+  "rows": [
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "inflight_old_completion",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-A",
+        "action_epoch": 1,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": true,
+        "started_before_revoke": true
+      },
+      "policy": "REVOKE_ONLY",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": false,
+      "authority_minted": false,
+      "case_id": "inflight_old_completion",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-A",
+        "action_epoch": 1,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": true,
+        "started_before_revoke": true
+      },
+      "policy": "EPOCH_BOUND",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "fresh_new_epoch",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1",
+          "r2"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1",
+          "r2"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "REVOKE_ONLY",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "fresh_new_epoch",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1",
+          "r2"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1",
+          "r2"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "EPOCH_BOUND",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": false,
+      "authority_minted": false,
+      "case_id": "stale_replay",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-A",
+        "action_epoch": 1,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": true,
+        "started_before_revoke": false
+      },
+      "policy": "REVOKE_ONLY",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": false,
+      "authority_minted": false,
+      "case_id": "stale_replay",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-A",
+        "action_epoch": 1,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": true,
+        "started_before_revoke": false
+      },
+      "policy": "EPOCH_BOUND",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "wrong_authority_same_epoch",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-X",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "REVOKE_ONLY",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": false,
+      "authority_minted": false,
+      "case_id": "wrong_authority_same_epoch",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-X",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "EPOCH_BOUND",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "expired_lease",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": false,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "REVOKE_ONLY",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": false,
+      "authority_minted": false,
+      "case_id": "expired_lease",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": false,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "EPOCH_BOUND",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "crashed_reader_unreported",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1",
+          "r2"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "REVOKE_ONLY",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "crashed_reader_unreported",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1",
+          "r2"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "EPOCH_BOUND",
+      "reclaim_allowed": false
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "wrong_retired_authority_receipt",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-X",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "REVOKE_ONLY",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "wrong_retired_authority_receipt",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1"
+        ],
+        "receipt_authority": "cap-X",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 7,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "EPOCH_BOUND",
+      "reclaim_allowed": false
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "reader_registered_after_snapshot",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1",
+          "r2"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 8,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "REVOKE_ONLY",
+      "reclaim_allowed": true
+    },
+    {
+      "action_admitted": true,
+      "authority_minted": false,
+      "case_id": "reader_registered_after_snapshot",
+      "external_effect": false,
+      "inputs": {
+        "action_authority": "cap-B",
+        "action_epoch": 2,
+        "current_authority": "cap-B",
+        "current_epoch": 2,
+        "lease": true,
+        "readers": [
+          "r1",
+          "r2"
+        ],
+        "receipt_authority": "cap-A",
+        "receipt_readers": [
+          "r1"
+        ],
+        "receipt_registry": 7,
+        "registry": 8,
+        "revoked": false,
+        "started_before_revoke": false
+      },
+      "policy": "EPOCH_BOUND",
+      "reclaim_allowed": false
+    }
+  ],
+  "runtime": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5"
+  },
+  "source_main": "bbeee4da02285281e960334f8babefc2d7070358"
+}

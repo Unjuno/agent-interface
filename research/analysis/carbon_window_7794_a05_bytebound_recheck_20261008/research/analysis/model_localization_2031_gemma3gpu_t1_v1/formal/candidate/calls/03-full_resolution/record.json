@@ -1,0 +1,89 @@
+{
+  "answer": {
+    "abstain": true
+  },
+  "arm": "FULL_RESOLUTION",
+  "call_id": "03-full_resolution",
+  "case_id": "target-absent",
+  "eval_count": 7,
+  "eval_duration_ns": 78672000,
+  "http_status": 200,
+  "images": [
+    {
+      "bytes": 24948,
+      "encoded_size": [
+        1024,
+        640
+      ],
+      "role": "full",
+      "sha256": "9cc0c033e5a1847ca68ddc01953320d2167273372b382d28b20f6fc0ba10ceba",
+      "source_box": [
+        0,
+        0,
+        1024,
+        640
+      ]
+    }
+  ],
+  "load_duration_ns": 1878113,
+  "prompt_eval_count": 411,
+  "prompt_eval_duration_ns": 891582000,
+  "proposal": {
+    "all_scores": [
+      {
+        "box": [
+          0,
+          0,
+          512,
+          320
+        ],
+        "edge_mean": 4.362195883101625,
+        "tile": 0
+      },
+      {
+        "box": [
+          512,
+          0,
+          1024,
+          320
+        ],
+        "edge_mean": 2.908468156451929,
+        "tile": 1
+      },
+      {
+        "box": [
+          0,
+          320,
+          512,
+          640
+        ],
+        "edge_mean": 3.3862315204621107,
+        "tile": 2
+      },
+      {
+        "box": [
+          512,
+          320,
+          1024,
+          640
+        ],
+        "edge_mean": 3.4556827638535346,
+        "tile": 3
+      }
+    ],
+    "box": [
+      0,
+      0,
+      512,
+      320
+    ],
+    "edge_mean": 4.362195883101625,
+    "tile": 0
+  },
+  "request_bytes": 33881,
+  "request_sha256": "2b0b5e25f8bd1a7ab7205037c44484add6b7a3af6e43b0d8a5dd47763616f7e3",
+  "response_bytes": 340,
+  "response_sha256": "1d6d9db5be7f6481687d5aebf665351f96981921c333fb4814eabce1ad20bf5e",
+  "total_duration_ns": 1040100552,
+  "wall_elapsed_ns": 1041386721
+}

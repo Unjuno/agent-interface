@@ -1,0 +1,57 @@
+{
+  "allocation": "MAP01-R133-TYPED-MARGIN-5707-T0-20261001-01",
+  "corruption_controls": [
+    {
+      "name": "drop_opportunity",
+      "rejected": true
+    },
+    {
+      "name": "duplicate_opportunity",
+      "rejected": true
+    },
+    {
+      "name": "unit_swap",
+      "rejected": true
+    },
+    {
+      "name": "cross_kind_pool",
+      "rejected": true
+    },
+    {
+      "name": "safe_stop_positive_margin",
+      "rejected": true
+    },
+    {
+      "name": "proposal_actuation_conflation",
+      "rejected": true
+    },
+    {
+      "name": "unknown_to_zero",
+      "rejected": true
+    },
+    {
+      "name": "contract_version_pooling",
+      "rejected": true
+    },
+    {
+      "name": "reversed_interval",
+      "rejected": true
+    },
+    {
+      "name": "zero_as_crossing",
+      "rejected": true
+    }
+  ],
+  "corruption_controls_rejected": 10,
+  "errors": [],
+  "execution_sha256": "c7eca04e3ff9408a921a75c3224dd073dedba0f5284ea1fff0a3ff170ee14b4c",
+  "forbidden_effect_count": 0,
+  "no_actuation_margin_count": 2,
+  "opportunity_count": 8,
+  "plan_sha256": "ce1adfb5d75d05d810cdd62d5fb952faa2ff4f9264afa437ea4d12d54521e844",
+  "raw_sha256": "3455ef59650bb7841c22b2941c572655a83f220c07aa84c2d8d9dc9c631d89f4",
+  "record_count": 12,
+  "status": "PASS_TYPED_MARGIN_CONTRACT_SCOPED",
+  "typed_group_count": 4,
+  "unknown_margin_count": 1
+}

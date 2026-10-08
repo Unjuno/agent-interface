@@ -1,0 +1,119 @@
+{
+  "passed": true,
+  "met": {
+    "executed": [
+      "pointer_drag",
+      "pointer_click"
+    ],
+    "terminal": {
+      "event": "terminal",
+      "id": "program",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 3,
+      "release": {
+        "verified": true,
+        "keys_down": []
+      },
+      "terminal_ns": 27371817163751,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "outcome": {
+      "event": "local_visual_barrier",
+      "id": "program",
+      "step": 1,
+      "format": "local-visual-barrier-outcome-v1",
+      "barrier_id": "effect",
+      "reason": "met",
+      "continue_program": true,
+      "needs_decision": false,
+      "persistent_changed_pixels": 1676,
+      "minimum_changed_pixels": 1000,
+      "sample_span_ms": 20.444163,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "condition for already admitted later steps only"
+    }
+  },
+  "unmet": {
+    "executed": [
+      "pointer_drag"
+    ],
+    "terminal": {
+      "event": "terminal",
+      "id": "program",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 1,
+      "release": {
+        "verified": true,
+        "keys_down": []
+      },
+      "terminal_ns": 27371843725278,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "outcome": {
+      "event": "local_visual_barrier",
+      "id": "program",
+      "step": 1,
+      "format": "local-visual-barrier-outcome-v1",
+      "barrier_id": "effect",
+      "reason": "unmet",
+      "continue_program": false,
+      "needs_decision": true,
+      "persistent_changed_pixels": 0,
+      "minimum_changed_pixels": 1000,
+      "sample_span_ms": 20.230785,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "condition for already admitted later steps only"
+    }
+  },
+  "binding_changed": {
+    "executed": [
+      "pointer_drag"
+    ],
+    "terminal": {
+      "event": "terminal",
+      "id": "program",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 1,
+      "release": {
+        "verified": true,
+        "keys_down": []
+      },
+      "terminal_ns": 27371864428898,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    "outcome": {
+      "event": "local_visual_barrier",
+      "id": "program",
+      "step": 1,
+      "format": "local-visual-barrier-outcome-v1",
+      "barrier_id": "effect",
+      "reason": "binding_changed",
+      "continue_program": false,
+      "needs_decision": true,
+      "persistent_changed_pixels": 0,
+      "minimum_changed_pixels": 1000,
+      "sample_span_ms": null,
+      "semantic_effect_verified": false,
+      "task_success_verified": false,
+      "grants_input_authority": false,
+      "scope": "condition for already admitted later steps only"
+    }
+  },
+  "pre_input_controls": {
+    "barrier_first": true,
+    "barrier_last": true,
+    "no_preceding_mutation": true,
+    "no_later_mutation": true,
+    "duplicate_id": true,
+    "combined_timeout": true
+  },
+  "decision": "ADVANCE_TO_X11_BACKEND_INTEGRATION;_NO_LIVE_BENCHMARK_USE",
+  "scope": "existing Executor with a fake backend over archived selected OpenTTD frames; no X11 capture, semantic correctness, speed, token or generalization claim"
+}

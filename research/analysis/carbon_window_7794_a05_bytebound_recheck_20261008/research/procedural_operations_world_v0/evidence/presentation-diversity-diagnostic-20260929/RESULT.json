@@ -1,0 +1,64 @@
+{
+  "schema": "opsworld-presentation-diversity-diagnostic-v1",
+  "disposition": "PASS_PRESENTATION_DIVERSITY_DIAGNOSTIC_ONLY",
+  "main_source_commit": "1314d8d0113fcef1b72694e6ca0431b5420f74c5",
+  "host": {
+    "os": "WSL2 Arch Linux",
+    "compiler": "GCC 16.1.1",
+    "build_warnings": 0,
+    "validity_tests_passed": 20,
+    "validity_tests_total": 20
+  },
+  "docker": {
+    "context": "desktop-linux",
+    "image": "debian:bookworm-slim@sha256:3783cc01769c7b2b1b83a5c5ad96c815348e28ed7da68e2e3687004faa906251",
+    "platform": "linux/amd64",
+    "network": "none",
+    "root_filesystem_read_only": true,
+    "bind_mount_read_only": true,
+    "source_mounted": false,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 32,
+    "no_new_privileges": true,
+    "all_capabilities_dropped": true,
+    "container_auto_removed": true,
+    "exit_code": 0
+  },
+  "diagnostic": {
+    "seed_count": 256,
+    "requested_family_keys_per_seed": 20,
+    "combinations": 5120,
+    "actual_presentation_family_mask_hex": "0xfff",
+    "cue_mode_mask_hex": "0xf",
+    "distinct_actual_family_frame_hash_collisions": 0,
+    "same_family_requested_key_aliases": 1,
+    "first_alias": {
+      "seed": 57,
+      "requested_keys": [2, 11],
+      "actual_presentation_family": 2
+    },
+    "sample_seed": 234,
+    "sample_seed_distinct_full_frame_hashes": 20,
+    "sample_seed_stride97_colliding_pairs": 0,
+    "sample_seed_stride97_total_pairs": 190
+  },
+  "headless_smoke": {
+    "seed": 20260929,
+    "family_key": 88001,
+    "frames": 120,
+    "simulation_seconds": 2.0,
+    "done": false,
+    "success": false,
+    "failure": "none",
+    "actions": 0,
+    "classification": "renderer_smoke_only"
+  },
+  "scope": {
+    "benchmark_defect_established": false,
+    "agent_performance_result": false,
+    "formal_benchmark_promotion": false,
+    "gpu_or_model_used": false,
+    "gui_or_input_used": false
+  }
+}

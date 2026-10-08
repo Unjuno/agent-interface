@@ -1,0 +1,14 @@
+{
+  "audit_allocation_id": "issue3572-xserver-lifetime-audit-01",
+  "issue": 3579,
+  "formal_experiment_reruns": 0,
+  "audit_invocations": 1,
+  "input_raw_sha256": "9ae2ae5535783dfcd0258da0fd6ac2d42c7bf38962f4e65edeb5d0a33c6755e5",
+  "audit_manifest_sha256": "8aa4c3c2c1aecd5c84c57e5da6fac7917b964544a369ded562d53453f1ed1795",
+  "image_id": "sha256:fa36aca92a682831d72b7e49bf05a9c6e31e68eadb06f3d2728360ceb1e9f6cb",
+  "platform": "linux/arm64",
+  "network": "none",
+  "mounts": ["/candidate:ro", "/input:ro", "/audit_freeze.json:ro", "/audit_manifest.json:ro", "/evidence:rw"],
+  "runner": "python -B /candidate/audit_v2.py",
+  "scope": "Independent audit of retained experiment raw only. No Xvfb process or task input is started."
+}

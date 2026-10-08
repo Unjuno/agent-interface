@@ -1,0 +1,42 @@
+{
+  "allocation": "enum-types-e9q4-20260925-01",
+  "base_commit": "4a1f3957e91b412a64769199f78f2c4b0102d28b",
+  "cases": 140,
+  "cli_ids": [
+    0,
+    11,
+    44,
+    55,
+    88,
+    99,
+    138,
+    139
+  ],
+  "corpus_sha256": "a278e0841a396be9b6b30f5a97a0f33e921a3ebdc405ddde982ca25f192a6a9f",
+  "regression_sha256": "7e60629d1f20c645e82cd8c3014fd3b77d3ef2f33268e59558def5f21c179bec",
+  "runtime_sha256": {
+    "baseline": {
+      "runtime/cli_v1/validate_program.py": "97cd5d013f8deb1979617bb23e1d6a57ffe67b30b6b13fb9df17772efced88f0",
+      "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+      "runtime/core_v1/contract.py": "f053f73ccdeb67175068bf4d663bd484d886beb83305ed679510292809afd536",
+      "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+      "runtime/core_v1/sequence.py": "20fd121ec7d54c0c0318fa1415bff49ff18808808b35cd902cd4435fb671b391"
+    },
+    "candidate": {
+      "runtime/cli_v1/validate_program.py": "97cd5d013f8deb1979617bb23e1d6a57ffe67b30b6b13fb9df17772efced88f0",
+      "runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0",
+      "runtime/core_v1/contract.py": "f63707196f52c72fa1ce6b9dc2c92c7ee92d061dcc2ed4a7177689734cd7d642",
+      "runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+      "runtime/core_v1/sequence.py": "20fd121ec7d54c0c0318fa1415bff49ff18808808b35cd902cd4435fb671b391"
+    }
+  },
+  "schema": "program-enum-types-freeze-e9q4-v1",
+  "study_sha256": {
+    "ENVIRONMENT.json": "816fabb5ea2b58a9ea3b90318a1e243e09e2c24f69d13a3cebca3e6c3f8a227f",
+    "PLAN.md": "88036aedd4faee1b6f8ffb07dd9df8bf034e32e937ce5cdb9b0ac418e451adb8",
+    "audit.py": "b9028c9dec717af445c4a4c242e7cb971cb588aefd549fb6869b0c02d817bbd7",
+    "cases.py": "2c777c8fce8a6663e6bdea437fc58793b528bdaee655da979b541f7136c60ddc",
+    "run.py": "cb772cc527ee15de88390a3a3f3fa434eb3ff02c62583c69c2ed9c9b4e40a270",
+    "worker.py": "583afcab900334ae74413e85ad41fb638410337d135d63987de40247c1f2d9be"
+  }
+}

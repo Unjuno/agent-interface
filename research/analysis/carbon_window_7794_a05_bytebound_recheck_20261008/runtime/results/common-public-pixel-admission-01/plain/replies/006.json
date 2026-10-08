@@ -1,0 +1,351 @@
+{
+  "request": {
+    "op": "dispatch",
+    "program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "plain-confirm-1002087",
+      "source": {
+        "observation_seq": 4,
+        "binding_revision": 2
+      },
+      "authority": {
+        "lease_id": "plain-primary-confirm",
+        "expires_at_ns": 2942698680615
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "app"
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "ENTER"
+          ]
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    }
+  },
+  "started_ns": 2940926561805,
+  "ended_ns": 2941400206492,
+  "sequence": 5,
+  "binding_revision": 2,
+  "raw_report": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/common-public-pixel-admission-01/plain/public/006-raw.json",
+  "reply": {
+    "schema": "agent-interface/review-v1",
+    "receipt": {
+      "schema": "agent-interface/receipt-view-v1",
+      "authority": "none",
+      "source": {
+        "path": null,
+        "sha256": "24129e70be3c20b744da823f6ebeecf73d9221cfe2ea95e22c3673e34a25dc13",
+        "bytes": 2674,
+        "kind": "received_bytes",
+        "raw_report": {
+          "schema": "agent-interface/runtime-dispatch-result-v1",
+          "status": "returned",
+          "result": {
+            "status": "completed",
+            "admission": "accepted",
+            "required_capabilities": [
+              "input.keyboard",
+              "input.release_all",
+              "window.focus"
+            ],
+            "execution": {
+              "started_ns": 2940948530536,
+              "ended_ns": 2940955238231,
+              "emissions": 26,
+              "program_emissions": 2,
+              "observations": [],
+              "releases": [
+                {
+                  "keys_down": [],
+                  "buttons_down": [],
+                  "verified": true,
+                  "monotonic_ns": 2940955233229
+                }
+              ],
+              "waits": [],
+              "activations": [],
+              "completed_ops": [
+                0,
+                1,
+                2
+              ]
+            },
+            "recovery_required": false
+          },
+          "post_dispatch_inspection": {
+            "status": "needs_review",
+            "error": "TARGET_CHANGED_DURING_CAPTURE",
+            "evidence": {
+              "window_id": 6293690,
+              "focus_path": [
+                6293690
+              ],
+              "transient_chain": [
+                6293690,
+                6292092
+              ],
+              "family_root": 6292092,
+              "title": "Confirm File Format",
+              "wm_class": [
+                "libreoffice",
+                "libreoffice-calc"
+              ],
+              "geometry": [
+                386,
+                322,
+                507,
+                174
+              ]
+            },
+            "recheck_evidence": {
+              "window_id": 6292092,
+              "focus_path": [
+                6292092
+              ],
+              "transient_chain": [
+                6292092
+              ],
+              "family_root": 6292092,
+              "title": "sheet-1002087.xlsx \u2014 LibreOffice Calc",
+              "wm_class": [
+                "libreoffice",
+                "libreoffice-calc"
+              ],
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "observation_report": {
+              "schema": "agent-interface/runtime-observation-v1",
+              "observation_id": "61e84208bf264b54b34f9eab2f02e6f0",
+              "side_effect_authority": false,
+              "input_dispatched": false,
+              "status": "returned",
+              "observation": {
+                "bytes": 4096000,
+                "sha256": "46f53009375182bfe0568696383578fe562ce90414255e6c3ef34251b358216a",
+                "width": 1280,
+                "height": 800,
+                "target": "app",
+                "native_window_id": 6293690,
+                "frame": "screen_physical_px",
+                "region": [
+                  0,
+                  0,
+                  1280,
+                  800
+                ],
+                "capture_started_ns": 2941061950331,
+                "capture_ended_ns": 2941253984467,
+                "artifact": {
+                  "mime_type": "image/png",
+                  "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/common-public-pixel-admission-01/plain/public/images/31a167cc387048548cbd2e1c3b699c0a.png",
+                  "sha256": "348514878300ee0cb1067b36f0d4242eb21983e5423c9e8304fcf7e346fc2509",
+                  "bytes": 78068,
+                  "width": 1280,
+                  "height": 800,
+                  "source_raw_sha256": "46f53009375182bfe0568696383578fe562ce90414255e6c3ef34251b358216a",
+                  "timing_ns": {
+                    "started": 2941257280873,
+                    "converted": 2941261769941,
+                    "encoded": 2941352365318,
+                    "written": 2941353265474,
+                    "hashed": 2941356439251
+                  }
+                }
+              }
+            },
+            "input_dispatched": false,
+            "authority_granted": false,
+            "capture_wait": {
+              "requested_ms": 100,
+              "started_ns": 2940955444164,
+              "completed": true,
+              "update_observed": null,
+              "ended_ns": 2941055658599
+            },
+            "started_ns": 2940955436732,
+            "ended_ns": 2941398751106,
+            "scope": "Metadata sampled after dispatch. Not atomically bound to its image; no redraw or task completion acknowledgement. Review explicitly; retained lookup does not renew the review ID."
+          }
+        }
+      },
+      "report": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "input.keyboard",
+            "input.release_all",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 2940948530536,
+            "ended_ns": 2940955238231,
+            "emissions": 26,
+            "program_emissions": 2,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 2940955233229
+              }
+            ],
+            "waits": [],
+            "activations": [],
+            "completed_ops": [
+              0,
+              1,
+              2
+            ]
+          },
+          "recovery_required": false
+        },
+        "post_dispatch_inspection": {
+          "status": "needs_review",
+          "error": "TARGET_CHANGED_DURING_CAPTURE",
+          "evidence": {
+            "window_id": 6293690,
+            "focus_path": [
+              6293690
+            ],
+            "transient_chain": [
+              6293690,
+              6292092
+            ],
+            "family_root": 6292092,
+            "title": "Confirm File Format",
+            "wm_class": [
+              "libreoffice",
+              "libreoffice-calc"
+            ],
+            "geometry": [
+              386,
+              322,
+              507,
+              174
+            ]
+          },
+          "recheck_evidence": {
+            "window_id": 6292092,
+            "focus_path": [
+              6292092
+            ],
+            "transient_chain": [
+              6292092
+            ],
+            "family_root": 6292092,
+            "title": "sheet-1002087.xlsx \u2014 LibreOffice Calc",
+            "wm_class": [
+              "libreoffice",
+              "libreoffice-calc"
+            ],
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "observation_report": {
+            "schema": "agent-interface/runtime-observation-v1",
+            "observation_id": "61e84208bf264b54b34f9eab2f02e6f0",
+            "side_effect_authority": false,
+            "input_dispatched": false,
+            "status": "returned",
+            "observation": {
+              "bytes": 4096000,
+              "sha256": "46f53009375182bfe0568696383578fe562ce90414255e6c3ef34251b358216a",
+              "width": 1280,
+              "height": 800,
+              "target": "app",
+              "native_window_id": 6293690,
+              "frame": "screen_physical_px",
+              "region": [
+                0,
+                0,
+                1280,
+                800
+              ],
+              "capture_started_ns": 2941061950331,
+              "capture_ended_ns": 2941253984467,
+              "artifact": {
+                "mime_type": "image/png",
+                "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/common-public-pixel-admission-01/plain/public/images/31a167cc387048548cbd2e1c3b699c0a.png",
+                "sha256": "348514878300ee0cb1067b36f0d4242eb21983e5423c9e8304fcf7e346fc2509",
+                "bytes": 78068,
+                "width": 1280,
+                "height": 800,
+                "source_raw_sha256": "46f53009375182bfe0568696383578fe562ce90414255e6c3ef34251b358216a",
+                "timing_ns": {
+                  "started": 2941257280873,
+                  "converted": 2941261769941,
+                  "encoded": 2941352365318,
+                  "written": 2941353265474,
+                  "hashed": 2941356439251
+                }
+              }
+            }
+          },
+          "input_dispatched": false,
+          "authority_granted": false,
+          "capture_wait": {
+            "requested_ms": 100,
+            "started_ns": 2940955444164,
+            "completed": true,
+            "update_observed": null,
+            "ended_ns": 2941055658599
+          },
+          "started_ns": 2940955436732,
+          "ended_ns": 2941398751106,
+          "scope": "Metadata sampled after dispatch. Not atomically bound to its image; no redraw or task completion acknowledgement. Review explicitly; retained lookup does not renew the review ID."
+        }
+      },
+      "latest_observations": [],
+      "events": [],
+      "record_counts": {},
+      "omitted_from_view": 0,
+      "scope": "Received historical receipt. Full history retained in source.raw_report. No input or freshness granted.",
+      "motor_state_validation": {
+        "present": false,
+        "accepted": false,
+        "reason": "missing"
+      }
+    },
+    "image": null,
+    "authority": "none",
+    "outcome_summary": {
+      "reported_status": "returned",
+      "error": null,
+      "failure_phase": null,
+      "cleanup_error": null,
+      "input_release_verified": true,
+      "failure_detail": null,
+      "validation_operation_index": null,
+      "failed_operation_index": null,
+      "failed_operation_effect": null,
+      "execution_status": "completed",
+      "execution_error": null,
+      "execution_detail": null,
+      "recovery_required": false
+    },
+    "image_status": "no_observation"
+  }
+}

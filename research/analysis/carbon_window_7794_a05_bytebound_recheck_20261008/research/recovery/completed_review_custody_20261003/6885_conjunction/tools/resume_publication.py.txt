@@ -1,0 +1,61 @@
+"""Repair path ordering in the local review publisher; original helper retained."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+
+root = Path(__file__).resolve().parent
+workspace = root.parent.parent
+repo = workspace / "work/agent-interface"
+public = workspace / "outputs/review-6885"
+head = "0e2d6a741f1078eda232b56cee899bb86712ac9b"
+ref = "refs/heads/research/review-conjunction-6885-45e9-20261003"
+prefix = "research/reviews/core_conjunction_6885_45e9"
+index = root / "publication.index"
+env = dict(os.environ, GIT_INDEX_FILE=str(index))
+primary = (repo / ".git/index").read_bytes()
+
+
+def git(*args, data=None):
+    return subprocess.check_output(["git", *args], cwd=repo, env=env, input=data)
+
+
+failure = {"operation": "local review packet publication helper", "reported_exit_code": 1,
+           "first_error": "AssertionError at ordered changed-path comparison",
+           "cause": "Windows Path ordering is case-insensitive; Git name ordering is byte lexical. All 30 staged paths were correct additions.",
+           "repair": "Compare the actual complete set/count of paths and addition status, then verify every public artifact hash before commit",
+           "first_helper_source_preserved": True, "producer_or_audit_replayed": False,
+           "remote_ref_or_main_updated_before_failure": False, "started_utc": None,
+           "limit": "First helper did not retain a separate UTC/exit receipt; actual tool exit is preserved here"}
+(public / "LOCAL_PUBLICATION_FIRST_FAILURE.json").write_text(json.dumps(failure, indent=2) + "\n", encoding="utf-8", newline="\n")
+data = Path(__file__).read_bytes()
+(public / "tools/resume_publication.py.txt").write_bytes(data)
+readme = public / "README.md"
+readme.write_text(readme.read_text(encoding="utf-8") + "\nLocal publisher's first path-order assertion failed because Windows Path ordering\ndiffers from Git byte order; all staged paths were additions. The original helper\nand first error are preserved; the separate repair checks complete path identity\nand public hashes before creating a commit. No producer/audit result was rerun.\n", encoding="utf-8", newline="\n")
+entries = [hashlib.sha256(p.read_bytes()).hexdigest() + "  " + p.relative_to(public).as_posix()
+           for p in sorted(public.rglob("*")) if p.is_file() and p.name != "SHA256SUMS"]
+(public / "SHA256SUMS").write_text("\n".join(entries) + "\n", encoding="utf-8", newline="\n")
+expected = set()
+for source in public.rglob("*"):
+    if source.is_file():
+        path = prefix + "/" + source.relative_to(public).as_posix()
+        data = source.read_bytes()
+        oid = git("hash-object", "-w", "--stdin", data=data).decode().strip()
+        assert git("cat-file", "blob", oid) == data
+        git("update-index", "--add", "--cacheinfo", "100644", oid, path)
+        expected.add(path)
+actual = git("diff", "--cached", "--name-status", head).decode().splitlines()
+assert all(line.startswith("A\t") for line in actual)
+assert len(actual) == len(expected) and {line.split("\t", 1)[1] for line in actual} == expected
+git("diff", "--cached", "--check", "--", prefix + "/README.md")
+tree = git("write-tree", "--missing-ok").decode().strip()
+commit = git("commit-tree", tree, "-p", head,
+             data=b"review(#6885): retain independent raw reconstruction [skip ci]\n").decode().strip()
+git("update-ref", ref, commit, "0" * 40)
+assert (repo / ".git/index").read_bytes() == primary
+result = {"review_branch": ref, "commit_sha": commit, "tree_sha": tree, "parent_reviewed_head": head,
+          "packet": prefix, "files": len(expected), "bytes": sum(p.stat().st_size for p in public.rglob("*") if p.is_file()),
+          "primary_index_unchanged": True, "status": "local commit; push not yet attempted"}
+(workspace / "outputs/review-6885-publication.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
+print(json.dumps(result))

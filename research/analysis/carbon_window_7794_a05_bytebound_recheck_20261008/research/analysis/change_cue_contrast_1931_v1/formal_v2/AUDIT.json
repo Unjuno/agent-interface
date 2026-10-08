@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "adaptive_bad": 0,
+    "clipped_rows": 46848,
+    "dual_bad": 0,
+    "fixed_lt3": 11280,
+    "fixed_zero": 20,
+    "mapping_bad": 0,
+    "padded_bad": 0,
+    "roi_bad": 0,
+    "seen": 78080
+  },
+  "corruption_controls": [
+    {"name":"rows_sha","rejected":true},
+    {"name":"case_count","rejected":true},
+    {"name":"row_count","rejected":true},
+    {"name":"roi_fail","rejected":true},
+    {"name":"map_fail","rejected":true},
+    {"name":"adaptive_fail","rejected":true},
+    {"name":"dual_fail","rejected":true},
+    {"name":"padded_fail","rejected":true},
+    {"name":"zero_removed","rejected":true},
+    {"name":"clipped_removed","rejected":true},
+    {"name":"disposition","rejected":true}
+  ],
+  "errors": [],
+  "formal_disposition": "PASS_SOURCE_PRESERVING_CONTRAST_CUE_SCOPED",
+  "sqrt21": 4.58257569495584,
+  "status": "PASS_AUDIT"
+}

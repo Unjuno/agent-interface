@@ -1,0 +1,44 @@
+{
+  "schema": "spatial-block-position-6590-t0-fixture-v1",
+  "allocation": "spatial-block-position-6590-t0-20261002-01",
+  "grid": {
+    "width": 8,
+    "height": 8,
+    "block_width": 4,
+    "block_height": 4,
+    "blocks": ["b00", "b01", "b10", "b11"],
+    "block_id_rule": "b{y//block_height}{x//block_width}",
+    "adjacency": "orthogonal-4-neighbor"
+  },
+  "rows_per_center_and_label": 50,
+  "random_holdout_rows_per_center_and_label": 10,
+  "fixed_renderer_variant": "renderer-v1-fixed",
+  "hash_seeds": {
+    "outcome": "6590-t0-outcome-v1",
+    "random_split": "6590-t0-random-split-v1"
+  },
+  "fields": [
+    {
+      "field_id": "uniform_positive_control",
+      "planted_hotspot_block": null,
+      "positive_accepts_per_center": 40,
+      "negative_false_accepts_per_center": 0
+    },
+    {
+      "field_id": "planted_local_failure_control",
+      "planted_hotspot_block": "b11",
+      "positive_accepts_per_center": 40,
+      "hotspot_positive_accepts_per_center": 10,
+      "negative_false_accepts_per_center": 0
+    }
+  ],
+  "decision_gate": {
+    "minimum_random_minus_worst_block_positive_accept_rate": 0.2,
+    "uniform_max_minus_min_block_rate_tolerance": 0.0,
+    "minimum_independent_centers_per_block": 8,
+    "minimum_positive_rows_per_block": 100,
+    "empty_support_decision": "INSUFFICIENT",
+    "method_pass": "METHOD_PASS",
+    "method_fail": "FAIL_METHOD"
+  }
+}

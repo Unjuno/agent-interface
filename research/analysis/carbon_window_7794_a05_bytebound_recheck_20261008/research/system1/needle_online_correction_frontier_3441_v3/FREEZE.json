@@ -1,0 +1,42 @@
+{
+  "schema": "needle-online-correction-frontier-freeze-v3",
+  "issue": 4829,
+  "parent_construction_issue": 4826,
+  "allocation": "needle-online-correction-frontier-3441-v3",
+  "intake_main_sha": "ca38c41b06d20785ffb0a6163a6a22034511c004",
+  "branch": "research/needle-online-correction-frontier-3441-v3-20260927",
+  "path": "research/system1/needle_online_correction_frontier_3441_v3/",
+  "seeds": [
+    66117,
+    66229,
+    66341
+  ],
+  "source_sha256": {
+    "needle_frontier_study.py": "e4b108a4630332af815a7c992e6259e7cc5cafdea396e5b0d6b31854d84a2877",
+    "needle_frontier_audit.py": "ac8977c41840e5f71c12619633c17d86fd3b228b7e92ec6a843442d24967ed19",
+    "test_needle_frontier.py": "4470886f1aa3347a0c8268fe1b1a43df075585c20561af6e33cbc0c83a8e4cc6"
+  },
+  "construction_source_same_as_formal": true,
+  "docker": {
+    "client_server": "29.8.0/29.8.0",
+    "image": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "platform": "linux/amd64",
+    "torch": "2.5.1+cpu",
+    "network": "none",
+    "read_only_root_source": true,
+    "threads": 1,
+    "cpus": 1,
+    "memory_bytes": 2147483648,
+    "pids_limit": 64,
+    "no_new_privileges": true,
+    "unique_volume": "unjuno-needle-online-correction-frontier-3441-v3-formal"
+  },
+  "invocation_policy": {
+    "formal_trainer_runs": 1,
+    "formal_auditor_runs": 1,
+    "retries": 0,
+    "tuning": false,
+    "host_fallback": false
+  }
+}

@@ -1,0 +1,671 @@
+[
+  {
+    "artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": null,
+      "kind": "literal_cells",
+      "styles": {},
+      "total": 5
+    },
+    "case_id": "sheet_no_followup",
+    "final_visible": [
+      2,
+      3,
+      5
+    ],
+    "initial_artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": null,
+      "kind": "literal_cells",
+      "styles": {},
+      "total": 5
+    },
+    "initial_visible": [
+      2,
+      3,
+      5
+    ],
+    "operations": [
+      "write_visible_literals"
+    ],
+    "route": "flat"
+  },
+  {
+    "artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": "SUM(A,B)",
+      "kind": "formula_cells",
+      "styles": {},
+      "total": 5
+    },
+    "case_id": "sheet_no_followup",
+    "final_visible": [
+      2,
+      3,
+      5
+    ],
+    "initial_artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": "SUM(A,B)",
+      "kind": "formula_cells",
+      "styles": {},
+      "total": 5
+    },
+    "initial_visible": [
+      2,
+      3,
+      5
+    ],
+    "operations": [
+      "create_formula_sheet"
+    ],
+    "route": "structured"
+  },
+  {
+    "artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": null,
+      "kind": "literal_cells",
+      "styles": {
+        "A": "emphasis"
+      },
+      "total": 5
+    },
+    "case_id": "sheet_pixel_style",
+    "final_visible": [
+      2,
+      3,
+      5
+    ],
+    "initial_artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": null,
+      "kind": "literal_cells",
+      "styles": {},
+      "total": 5
+    },
+    "initial_visible": [
+      2,
+      3,
+      5
+    ],
+    "operations": [
+      "write_visible_literals",
+      "style_visible_cell"
+    ],
+    "route": "flat"
+  },
+  {
+    "artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": "SUM(A,B)",
+      "kind": "formula_cells",
+      "styles": {
+        "A": "emphasis"
+      },
+      "total": 5
+    },
+    "case_id": "sheet_pixel_style",
+    "final_visible": [
+      2,
+      3,
+      5
+    ],
+    "initial_artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": "SUM(A,B)",
+      "kind": "formula_cells",
+      "styles": {},
+      "total": 5
+    },
+    "initial_visible": [
+      2,
+      3,
+      5
+    ],
+    "operations": [
+      "create_formula_sheet",
+      "style_visible_cell"
+    ],
+    "route": "structured"
+  },
+  {
+    "artifact": {
+      "A": 4,
+      "B": 4,
+      "formula": "SUM(A,B)",
+      "kind": "formula_cells",
+      "styles": {},
+      "total": 8
+    },
+    "case_id": "sheet_formula_rebuild",
+    "final_visible": [
+      4,
+      4,
+      8
+    ],
+    "initial_artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": null,
+      "kind": "literal_cells",
+      "styles": {},
+      "total": 5
+    },
+    "initial_visible": [
+      2,
+      3,
+      5
+    ],
+    "operations": [
+      "write_visible_literals",
+      "install_formula_from_new_request",
+      "edit_A",
+      "edit_B"
+    ],
+    "route": "flat"
+  },
+  {
+    "artifact": {
+      "A": 4,
+      "B": 4,
+      "formula": "SUM(A,B)",
+      "kind": "formula_cells",
+      "styles": {},
+      "total": 8
+    },
+    "case_id": "sheet_formula_rebuild",
+    "final_visible": [
+      4,
+      4,
+      8
+    ],
+    "initial_artifact": {
+      "A": 2,
+      "B": 3,
+      "formula": "SUM(A,B)",
+      "kind": "formula_cells",
+      "styles": {},
+      "total": 5
+    },
+    "initial_visible": [
+      2,
+      3,
+      5
+    ],
+    "operations": [
+      "create_formula_sheet",
+      "install_formula_from_new_request",
+      "edit_A",
+      "edit_B"
+    ],
+    "route": "structured"
+  },
+  {
+    "artifact": {
+      "kind": "raster",
+      "pixels": [
+        [
+          "white",
+          "blue",
+          "red",
+          "green"
+        ]
+      ]
+    },
+    "case_id": "drawing_no_followup",
+    "final_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "green"
+      ]
+    ],
+    "initial_artifact": {
+      "kind": "raster",
+      "pixels": [
+        [
+          "white",
+          "blue",
+          "red",
+          "green"
+        ]
+      ]
+    },
+    "initial_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "green"
+      ]
+    ],
+    "operations": [
+      "render_flat_raster"
+    ],
+    "outcome": "COMPLETED",
+    "route": "raster"
+  },
+  {
+    "artifact": {
+      "kind": "native_objects",
+      "objects": [
+        {
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "color": "red",
+          "id": "red_underlay",
+          "z": 0
+        },
+        {
+          "cells": [
+            [
+              1,
+              0
+            ]
+          ],
+          "color": "blue",
+          "id": "blue_front",
+          "z": 1
+        },
+        {
+          "cells": [
+            [
+              3,
+              0
+            ]
+          ],
+          "color": "green",
+          "id": "green_marker",
+          "z": 2
+        }
+      ]
+    },
+    "case_id": "drawing_no_followup",
+    "final_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "green"
+      ]
+    ],
+    "initial_artifact": {
+      "kind": "native_objects",
+      "objects": [
+        {
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "color": "red",
+          "id": "red_underlay",
+          "z": 0
+        },
+        {
+          "cells": [
+            [
+              1,
+              0
+            ]
+          ],
+          "color": "blue",
+          "id": "blue_front",
+          "z": 1
+        },
+        {
+          "cells": [
+            [
+              3,
+              0
+            ]
+          ],
+          "color": "green",
+          "id": "green_marker",
+          "z": 2
+        }
+      ]
+    },
+    "initial_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "green"
+      ]
+    ],
+    "operations": [
+      "create_native_objects"
+    ],
+    "outcome": "COMPLETED",
+    "route": "native"
+  },
+  {
+    "artifact": {
+      "kind": "raster",
+      "pixels": [
+        [
+          "white",
+          "blue",
+          "red",
+          "yellow"
+        ]
+      ]
+    },
+    "case_id": "drawing_pixel_edit",
+    "final_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "yellow"
+      ]
+    ],
+    "initial_artifact": {
+      "kind": "raster",
+      "pixels": [
+        [
+          "white",
+          "blue",
+          "red",
+          "green"
+        ]
+      ]
+    },
+    "initial_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "green"
+      ]
+    ],
+    "operations": [
+      "render_flat_raster",
+      "edit_raster_pixel"
+    ],
+    "outcome": "COMPLETED",
+    "route": "raster"
+  },
+  {
+    "artifact": {
+      "kind": "native_objects",
+      "objects": [
+        {
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "color": "red",
+          "id": "red_underlay",
+          "z": 0
+        },
+        {
+          "cells": [
+            [
+              1,
+              0
+            ]
+          ],
+          "color": "blue",
+          "id": "blue_front",
+          "z": 1
+        },
+        {
+          "cells": [
+            [
+              3,
+              0
+            ]
+          ],
+          "color": "yellow",
+          "id": "green_marker",
+          "z": 2
+        }
+      ]
+    },
+    "case_id": "drawing_pixel_edit",
+    "final_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "yellow"
+      ]
+    ],
+    "initial_artifact": {
+      "kind": "native_objects",
+      "objects": [
+        {
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "color": "red",
+          "id": "red_underlay",
+          "z": 0
+        },
+        {
+          "cells": [
+            [
+              1,
+              0
+            ]
+          ],
+          "color": "blue",
+          "id": "blue_front",
+          "z": 1
+        },
+        {
+          "cells": [
+            [
+              3,
+              0
+            ]
+          ],
+          "color": "green",
+          "id": "green_marker",
+          "z": 2
+        }
+      ]
+    },
+    "initial_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "green"
+      ]
+    ],
+    "operations": [
+      "create_native_objects",
+      "edit_marker_object"
+    ],
+    "outcome": "COMPLETED",
+    "route": "native"
+  },
+  {
+    "artifact": {
+      "kind": "raster",
+      "pixels": [
+        [
+          "white",
+          "blue",
+          "red",
+          "green"
+        ]
+      ]
+    },
+    "case_id": "drawing_move_preserve_underlay",
+    "final_visible": null,
+    "initial_artifact": {
+      "kind": "raster",
+      "pixels": [
+        [
+          "white",
+          "blue",
+          "red",
+          "green"
+        ]
+      ]
+    },
+    "initial_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "green"
+      ]
+    ],
+    "operations": [
+      "render_flat_raster",
+      "yield_missing_underlay"
+    ],
+    "outcome": "UNKNOWN_UNDERLAY_NOT_RETAINED",
+    "route": "raster"
+  },
+  {
+    "artifact": {
+      "kind": "native_objects",
+      "objects": [
+        {
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "color": "red",
+          "id": "red_underlay",
+          "z": 0
+        },
+        {
+          "cells": [
+            [
+              2,
+              0
+            ]
+          ],
+          "color": "blue",
+          "id": "blue_front",
+          "z": 1
+        },
+        {
+          "cells": [
+            [
+              3,
+              0
+            ]
+          ],
+          "color": "green",
+          "id": "green_marker",
+          "z": 2
+        }
+      ]
+    },
+    "case_id": "drawing_move_preserve_underlay",
+    "final_visible": [
+      [
+        "white",
+        "red",
+        "blue",
+        "green"
+      ]
+    ],
+    "initial_artifact": {
+      "kind": "native_objects",
+      "objects": [
+        {
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ]
+          ],
+          "color": "red",
+          "id": "red_underlay",
+          "z": 0
+        },
+        {
+          "cells": [
+            [
+              1,
+              0
+            ]
+          ],
+          "color": "blue",
+          "id": "blue_front",
+          "z": 1
+        },
+        {
+          "cells": [
+            [
+              3,
+              0
+            ]
+          ],
+          "color": "green",
+          "id": "green_marker",
+          "z": 2
+        }
+      ]
+    },
+    "initial_visible": [
+      [
+        "white",
+        "blue",
+        "red",
+        "green"
+      ]
+    ],
+    "operations": [
+      "create_native_objects",
+      "move_target_object_preserve_other_layers"
+    ],
+    "outcome": "COMPLETED",
+    "route": "native"
+  }
+]

@@ -1,0 +1,26 @@
+import json
+import subprocess
+from pathlib import Path
+
+root = Path(__file__).resolve().parent
+repo = root / 'agent-interface'
+target = root / 'v12-cleanup-checkout'
+base = '9c26e204c0475bee30919e3d0e6681f393078ef1'
+branch = 'fix/v12-owner-record-cleanup-01a0ff58-20261003'
+if target.exists():
+    raise SystemExit('exclusive checkout already exists')
+if subprocess.check_output(['git', '-C', str(repo), 'status', '--porcelain']):
+    raise SystemExit('primary not clean')
+subprocess.run(['git', '-C', str(repo), 'worktree', 'add', '--no-checkout', '-b', branch,
+                str(target), base], check=True)
+paths = list(json.loads((root / 'v12-owner-record-cleanup/SOURCE-EXPORT.json').read_text())['files'])
+paths.extend(['research/doom/test_session_map01_v12_cleanup.py', '.gitattributes', '.gitignore'])
+subprocess.run(['git', '-C', str(target), 'sparse-checkout', 'set', '--no-cone', '--stdin'],
+               input=''.join('/' + p + '\n' for p in paths).encode(), check=True)
+if not (target / '.git').is_file() or target.parent.resolve() != root.resolve():
+    raise SystemExit('new worktree scope mismatch')
+subprocess.run(['git', '-C', str(target), 'read-tree', '-mu', 'HEAD'], check=True)
+status = subprocess.check_output(['git', '-C', str(target), 'status', '--porcelain'])
+if status:
+    raise SystemExit('initialized checkout not clean')
+print(json.dumps({'branch': branch, 'base': base, 'path': str(target), 'clean': True}))

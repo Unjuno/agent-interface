@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/in/auditor.py", line 69, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/in/auditor.py", line 51, in main
+    errors.append(f"{rrow['case_id']} state {index} scale mismatch R={rfit[0]} Python={pfit[0]}")
+                     ~~~~^^^^^^^^^^^
+KeyError: 'case_id'

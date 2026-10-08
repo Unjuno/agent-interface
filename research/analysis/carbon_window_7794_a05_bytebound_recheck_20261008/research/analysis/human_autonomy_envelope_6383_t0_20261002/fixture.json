@@ -1,0 +1,125 @@
+{
+  "schema": "autonomy-envelope-fixture-v1",
+  "checkpoints": [
+    {
+      "id": "model-wait-valid-cover",
+      "now_ms": 1000,
+      "phase": "model_deciding",
+      "authority": {"status": "active", "generation": 4, "expires_at_ms": 9000, "allowed_action_classes": ["OBSERVE"], "targets": ["window:mail"], "revocation_trigger": "lease_expiry_or_focus_change"},
+      "evidence": {"current": true, "generation": 4, "actor_known": true, "footprint_known": true, "effect_status": "not_attempted"},
+      "input_active": false,
+      "cancel_requested": false,
+      "release_verified": true,
+      "release_receipt_id": "release-01",
+      "obligations_complete": false
+    },
+    {
+      "id": "local-action-active",
+      "now_ms": 1500,
+      "phase": "local_action_active",
+      "authority": {"status": "active", "generation": 8, "expires_at_ms": 5000, "allowed_action_classes": ["TYPE"], "targets": ["document:42/body"], "revocation_trigger": "focus_change_or_cancel"},
+      "evidence": {"current": true, "generation": 8, "actor_known": true, "footprint_known": true, "effect_status": "not_attempted"},
+      "input_active": true,
+      "cancel_requested": false,
+      "release_verified": false,
+      "release_receipt_id": null,
+      "obligations_complete": false
+    },
+    {
+      "id": "late-evidence-old-generation",
+      "now_ms": 2200,
+      "phase": "waiting_for_evidence",
+      "authority": {"status": "active", "generation": 10, "expires_at_ms": 7000, "allowed_action_classes": ["CLICK"], "targets": ["window:mail/button:send"], "revocation_trigger": "evidence_generation_change"},
+      "evidence": {"current": false, "generation": 9, "actor_known": true, "footprint_known": true, "effect_status": "unknown"},
+      "input_active": false,
+      "cancel_requested": false,
+      "release_verified": false,
+      "release_receipt_id": null,
+      "obligations_complete": false
+    },
+    {
+      "id": "focus-revoked-release-pending",
+      "now_ms": 3000,
+      "phase": "local_action_active",
+      "authority": {"status": "revoked", "generation": 11, "expires_at_ms": 8000, "allowed_action_classes": ["TYPE"], "targets": ["window:A/input:query"], "revocation_trigger": "focus_changed"},
+      "evidence": {"current": true, "generation": 11, "actor_known": true, "footprint_known": true, "effect_status": "not_attempted"},
+      "input_active": true,
+      "cancel_requested": false,
+      "release_verified": false,
+      "release_receipt_id": null,
+      "obligations_complete": false
+    },
+    {
+      "id": "lease-expired-release-verified",
+      "now_ms": 4000,
+      "phase": "local_action_active",
+      "authority": {"status": "active", "generation": 12, "expires_at_ms": 4000, "allowed_action_classes": ["CLICK"], "targets": ["window:A/button:save"], "revocation_trigger": "lease_expiry"},
+      "evidence": {"current": true, "generation": 12, "actor_known": true, "footprint_known": true, "effect_status": "not_attempted"},
+      "input_active": false,
+      "cancel_requested": false,
+      "release_verified": true,
+      "release_receipt_id": "release-05",
+      "obligations_complete": false
+    },
+    {
+      "id": "cancel-before-release-receipt",
+      "now_ms": 5100,
+      "phase": "local_action_active",
+      "authority": {"status": "active", "generation": 13, "expires_at_ms": 9000, "allowed_action_classes": ["DRAG"], "targets": ["window:B/item:7"], "revocation_trigger": "cancel_or_focus_change"},
+      "evidence": {"current": true, "generation": 13, "actor_known": true, "footprint_known": true, "effect_status": "not_attempted"},
+      "input_active": true,
+      "cancel_requested": true,
+      "release_verified": false,
+      "release_receipt_id": null,
+      "obligations_complete": false
+    },
+    {
+      "id": "harmless-reobservation",
+      "now_ms": 6100,
+      "phase": "local_action_active",
+      "authority": {"status": "active", "generation": 14, "expires_at_ms": 10000, "allowed_action_classes": ["OBSERVE"], "targets": ["window:C"], "revocation_trigger": "focus_change_or_expiry"},
+      "evidence": {"current": true, "generation": 14, "actor_known": true, "footprint_known": true, "effect_status": "not_attempted"},
+      "input_active": false,
+      "cancel_requested": false,
+      "release_verified": true,
+      "release_receipt_id": "release-07",
+      "obligations_complete": false
+    },
+    {
+      "id": "unknown-actor-and-footprint",
+      "now_ms": 7100,
+      "phase": "waiting_for_evidence",
+      "authority": {"status": "active", "generation": 15, "expires_at_ms": 11000, "allowed_action_classes": ["CLICK"], "targets": ["window:unknown/button:unknown"], "revocation_trigger": "unknown"},
+      "evidence": {"current": true, "generation": 15, "actor_known": false, "footprint_known": false, "effect_status": "unknown"},
+      "input_active": false,
+      "cancel_requested": false,
+      "release_verified": false,
+      "release_receipt_id": null,
+      "obligations_complete": false
+    },
+    {
+      "id": "terminal-all-obligations-verified",
+      "now_ms": 8100,
+      "phase": "terminal",
+      "authority": {"status": "closed", "generation": 16, "expires_at_ms": 8000, "allowed_action_classes": [], "targets": ["document:42/body"], "revocation_trigger": "task_terminal"},
+      "evidence": {"current": true, "generation": 16, "actor_known": true, "footprint_known": true, "effect_status": "verified"},
+      "input_active": false,
+      "cancel_requested": false,
+      "release_verified": true,
+      "release_receipt_id": "release-09",
+      "obligations_complete": true
+    },
+    {
+      "id": "terminal-incomplete-obligations",
+      "now_ms": 9100,
+      "phase": "terminal",
+      "authority": {"status": "closed", "generation": 17, "expires_at_ms": 9000, "allowed_action_classes": [], "targets": ["document:77/body"], "revocation_trigger": "task_terminal"},
+      "evidence": {"current": true, "generation": 17, "actor_known": true, "footprint_known": true, "effect_status": "verified"},
+      "input_active": false,
+      "cancel_requested": false,
+      "release_verified": true,
+      "release_receipt_id": "release-10",
+      "obligations_complete": false
+    }
+  ]
+}

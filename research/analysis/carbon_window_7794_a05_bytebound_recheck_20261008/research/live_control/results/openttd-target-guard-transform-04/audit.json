@@ -1,0 +1,49 @@
+{
+  "audit_passed": true,
+  "predicted_and_observed_pointer_geometry": [
+    65,
+    40,
+    1152,
+    720
+  ],
+  "replication_cases": {
+    "target": {
+      "reason": "met",
+      "independent_success": true,
+      "continuation_started": true,
+      "target_changed_totals": [
+        168,
+        168
+      ],
+      "guard_changed_totals": [
+        1,
+        1
+      ],
+      "drag_issued_to_condition_ms": 2456.944851,
+      "exact_frames": 33
+    },
+    "repeat": {
+      "reason": "target_not_reached",
+      "independent_success": false,
+      "continuation_started": false,
+      "target_changed_totals": [
+        0,
+        0
+      ],
+      "guard_changed_totals": [
+        1,
+        1
+      ],
+      "drag_issued_to_condition_ms": 2468.245348,
+      "exact_frames": 35
+    }
+  },
+  "replication_exact_frames": 68,
+  "corrected_two_resolution_classifications": 4,
+  "corrected_two_resolution_exact_frames": 135,
+  "release_verified": true,
+  "all_owned_processes_exited": true,
+  "save_unchanged": true,
+  "decision": "RETAIN_FRAME-SPECIFIC_RESOLUTION_TRANSFER_4_OF_4;_NEXT_REQUIRE_NEW_SAVE_OR_LIVE_BINDING-DERIVED_API",
+  "scope": "two preregistered corrected positive/repeat pairs across 1280x720 and1152x720 on seed991004; no model, new save, human, token or general transform claim"
+}

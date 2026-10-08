@@ -1,0 +1,191 @@
+{
+  "status": "PASS_SAVED_RESULT_CONTROLS",
+  "utc": "2026-10-03T08:53:44.646359+00:00",
+  "auditor_source_sha256": "a2d45cb3f69cdc48e52844d3ea542a1421ff523e2f2eee6de589c6a4d4b6baf3",
+  "raw_sha256": "39fe40ae06852687742b16daae59f49ed8d4d395c8be822e4c88a83dcd4279eb",
+  "positive": {
+    "status": "PASS_SCOPED_NATIVE_STACK_AND_ORDER",
+    "cases": [
+      {
+        "case": "reader_close",
+        "native_stack": {
+          "root": 92,
+          "python_counts": [
+            92
+          ],
+          "native_counts": [
+            92
+          ]
+        },
+        "primary_read": {
+          "errno": null,
+          "hex": "",
+          "kind": "READ_EOF"
+        },
+        "native_done": true,
+        "wrapper_cancelled": false,
+        "writer_at_primary": "OPEN",
+        "kernel_trace": false
+      },
+      {
+        "case": "normal_D",
+        "native_stack": {
+          "root": 92,
+          "python_counts": [
+            92
+          ],
+          "native_counts": [
+            92
+          ]
+        },
+        "primary_read": {
+          "errno": null,
+          "hex": "44",
+          "kind": "READ_DATA"
+        },
+        "native_done": true,
+        "wrapper_cancelled": false,
+        "writer_at_primary": "OPEN",
+        "kernel_trace": false
+      },
+      {
+        "case": "writer_EOF",
+        "native_stack": {
+          "root": 92,
+          "python_counts": [
+            92
+          ],
+          "native_counts": [
+            92
+          ]
+        },
+        "primary_read": {
+          "errno": null,
+          "hex": "",
+          "kind": "READ_EOF"
+        },
+        "native_done": true,
+        "wrapper_cancelled": false,
+        "writer_at_primary": "EBADF",
+        "kernel_trace": false
+      },
+      {
+        "case": "wrapper_cancel",
+        "native_stack": {
+          "root": 92,
+          "python_counts": [
+            92
+          ],
+          "native_counts": [
+            92
+          ]
+        },
+        "primary_read": null,
+        "native_done": false,
+        "wrapper_cancelled": true,
+        "writer_at_primary": "OPEN",
+        "kernel_trace": false
+      }
+    ]
+  },
+  "controls": [
+    {
+      "label": "wrong-sample-PID",
+      "rejected": true,
+      "reason": "native process PID",
+      "copy_sha256": "83ff58c46e89b381fd92abd6beb4e74ed5db0ae3a18b85521d48039f0673b984",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/wrong-sample-PID",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "wrong-native-name",
+      "rejected": true,
+      "reason": "selected native read-worker name",
+      "copy_sha256": "6b4dc03008645145f4e31b960dd8450927a5d619ad5605aec1eb2e713329aea8",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/wrong-native-name",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "worker-native-stub-missing",
+      "rejected": true,
+      "reason": "minimum native read attribution",
+      "copy_sha256": "a001f5b9448957f72f78bff9d693682ed185263914d5740b5230ade0bd06f9a7",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/worker-native-stub-missing",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "sample-after-actor",
+      "rejected": true,
+      "reason": "sample strictly before actor",
+      "copy_sha256": "aee2ebc8b2980e912d07fc9f5ad75a5edff3ea189beca9c19a32da792ace8da3",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/sample-after-actor",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "wrapper-native-done",
+      "rejected": true,
+      "reason": "wrapper versus pending native read",
+      "copy_sha256": "b3cdbfdc3a5ca68e0e8b4ed2e176b6a67469b2a5713de5366793dd5061f5c882",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/wrapper-native-done",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "harness-before-primary",
+      "rejected": true,
+      "reason": "actor primary harness separation",
+      "copy_sha256": "f3d26774e3c2909a8ad34cf50e3dc3e762689e591f5c6c84bbe3d4feeda98690",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/harness-before-primary",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "final-FD-open",
+      "rejected": true,
+      "reason": "final exact FD EBADF",
+      "copy_sha256": "8701147ec449c9263aadc4746014653ae50c9aaef2dc6b7c5bf81fca673e0815",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/final-FD-open",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "lost-roster-row",
+      "rejected": true,
+      "reason": "complete ordered roster",
+      "copy_sha256": "0e1aa564c224011d5c0c0ac038b718f84d8f6ccaf08633392a117f561e1ae005",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/lost-roster-row",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "bool-ordinal",
+      "rejected": true,
+      "reason": "event ordinals",
+      "copy_sha256": "2d9bc534ce401e95c4e6643f33f4a5007c544763b5024c90af16334c0985a8b1",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/bool-ordinal",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "integer-primary-pool-state",
+      "rejected": true,
+      "reason": "typed single executor thread state",
+      "copy_sha256": "7f75836603ae9d1416104efc63aeb60c2412345ed6dc1b2ac7606a9dd13944df",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/integer-primary-pool-state",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "integer-final-pool-state",
+      "rejected": true,
+      "reason": "typed single executor thread state",
+      "copy_sha256": "e01d488d7ebe302f1584ccdb1fe1e4fdc906c9050e165943ab9b5278d32fbdca",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/integer-final-pool-state",
+      "IPC_and_receipt_copies_synchronised": true
+    },
+    {
+      "label": "bool-sampler-exit",
+      "rejected": true,
+      "reason": "owned sampler target/typed exit",
+      "copy_sha256": "39571ce26c7474cdcdeb27835fdbdc09291cf264d467ea3835eacd8343bb68d7",
+      "copy_directory": "@WORKSPACE@/work/macos-read-stack-93c2/result-controls-v2/bool-sampler-exit",
+      "IPC_and_receipt_copies_synchronised": true
+    }
+  ],
+  "formal_producer_reexecution": false,
+  "formal_primary_auditor_reexecution": false
+}

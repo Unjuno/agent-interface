@@ -1,0 +1,92 @@
+{
+  "schema": "route-selector-explicit-5911-t0-v1",
+  "selector": "minimum_total_cost",
+  "tie_policy": "argmin route-id set; set equality defines unchanged selected route set",
+  "cases": [
+    {
+      "id": "legacy_plus80",
+      "routes": [
+        {
+          "id": "model_path",
+          "cost": 130
+        },
+        {
+          "id": "alternate",
+          "cost": 260
+        }
+      ],
+      "delta": {
+        "model_path": 80,
+        "alternate": 0
+      }
+    },
+    {
+      "id": "legacy_half_model",
+      "routes": [
+        {
+          "id": "model_path",
+          "cost": 130
+        },
+        {
+          "id": "alternate",
+          "cost": 260
+        }
+      ],
+      "delta": {
+        "model_path": -50,
+        "alternate": 0
+      }
+    },
+    {
+      "id": "true_route_change",
+      "routes": [
+        {
+          "id": "model_path",
+          "cost": 100
+        },
+        {
+          "id": "alternate",
+          "cost": 150
+        }
+      ],
+      "delta": {
+        "model_path": 100,
+        "alternate": 0
+      }
+    },
+    {
+      "id": "tie_preserved",
+      "routes": [
+        {
+          "id": "route_a",
+          "cost": 100
+        },
+        {
+          "id": "route_b",
+          "cost": 100
+        }
+      ],
+      "delta": {
+        "route_a": 20,
+        "route_b": 20
+      }
+    },
+    {
+      "id": "tie_broken",
+      "routes": [
+        {
+          "id": "route_a",
+          "cost": 100
+        },
+        {
+          "id": "route_b",
+          "cost": 100
+        }
+      ],
+      "delta": {
+        "route_a": 20,
+        "route_b": 0
+      }
+    }
+  ]
+}

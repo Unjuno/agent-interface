@@ -1,0 +1,13 @@
+{
+  "freeze_sha256": {
+    "runner.py": "bf6b17a6db85e67b8dd5a95ac82b8239413260cb525734d1e1392272fe49deaf",
+    "audit.py": "b1a6490bcb4643aa50d291de33f94245fdb14ed0dd1060bec25398f740b9da9c",
+    "test_runner.py": "06cc9ee07fe64e4dc092168bec984f858ce481638a71f0ed4e0b523d622325d8"
+  },
+  "pre_freeze_construction": {"initial_generator_test": "FAIL_UNPACK_ARITY_BEFORE_FREEZE", "repaired_suite": "4/4 PASS", "py_compile": "PASS"},
+  "post_freeze_hash_verification": "3/3 source hashes match",
+  "candidate": {"command": "python runner.py", "invocations": 1, "exit": 0, "raw_sha256": "24977104b75792bbaf977f80188eb86ab137c10d05ba063874d1688581190866"},
+  "independent_auditor": {"command": "python audit.py raw-candidate.json", "invocations": 1, "exit": 0, "raw_row_errors": [], "controls_rejected": {"drop_row": true, "reorder": true, "forge_independence": false, "change_raw_vote": true, "duplicate_id": true}, "disposition": "HOLD_AUDITOR_NEGATIVE_CONTROL_NOOP", "output_sha256": "85d813d183b5533d1e74a2f667f3ddd3baaa7787f4cdd88406aae21584dff3d6"},
+  "resource_scope": "host CPU, Windows standard-library Python; no container/GPU/model/GUI/network/input",
+  "no_retry": true
+}

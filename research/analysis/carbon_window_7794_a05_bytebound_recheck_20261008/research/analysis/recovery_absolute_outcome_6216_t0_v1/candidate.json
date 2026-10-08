@@ -1,0 +1,401 @@
+{
+  "checkpoint_binding": {
+    "base": {
+      "checkpoints": 2,
+      "correct": 2,
+      "marginal_successes": {
+        "A": 1,
+        "B": 1
+      }
+    },
+    "permuted": {
+      "checkpoints": 2,
+      "correct": 0,
+      "marginal_successes": {
+        "A": 1,
+        "B": 1
+      }
+    }
+  },
+  "controls": {
+    "forbidden_effect_refused": true,
+    "selective_labels": {
+      "M_plus_R": 2,
+      "N": 4,
+      "Y": 1,
+      "lower": {
+        "denominator": 4,
+        "numerator": 1
+      },
+      "rejected_outcomes_imputed": false,
+      "upper": {
+        "denominator": 4,
+        "numerator": 3
+      }
+    },
+    "stable_high": {
+      "pass": true,
+      "successes": 7,
+      "trials": 8
+    },
+    "yield_correct": true
+  },
+  "regimes": {
+    "high_success": [
+      {
+        "agreement_probability": {
+          "denominator": 10000,
+          "numerator": 5864
+        },
+        "all_zero": {
+          "denominator": 100,
+          "numerator": 2
+        },
+        "expected_held_out_success": {
+          "denominator": 2000,
+          "numerator": 1710
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 17
+        },
+        "sample_size": 1,
+        "winner_set_counts": {
+          "A": 18,
+          "B": 8,
+          "TIE_AB": 74
+        },
+        "winner_set_denominator": 100
+      },
+      {
+        "agreement_probability": {
+          "denominator": 100000000,
+          "numerator": 43709344
+        },
+        "all_zero": {
+          "denominator": 10000,
+          "numerator": 4
+        },
+        "expected_held_out_success": {
+          "denominator": 200000,
+          "numerator": 171740
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 17
+        },
+        "sample_size": 2,
+        "winner_set_counts": {
+          "A": 2988,
+          "B": 1248,
+          "TIE_AB": 5764
+        },
+        "winner_set_denominator": 10000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 1000000000000,
+          "numerator": 387835203200
+        },
+        "all_zero": {
+          "denominator": 1000000,
+          "numerator": 8
+        },
+        "expected_held_out_success": {
+          "denominator": 20000000,
+          "numerator": 17231640
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 17
+        },
+        "sample_size": 3,
+        "winner_set_counts": {
+          "A": 381240,
+          "B": 149600,
+          "TIE_AB": 469160
+        },
+        "winner_set_denominator": 1000000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 100000000000000000000,
+          "numerator": 38408280942323001344
+        },
+        "all_zero": {
+          "denominator": 10000000000,
+          "numerator": 32
+        },
+        "expected_held_out_success": {
+          "denominator": 200000000000,
+          "numerator": 173181295200
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 17
+        },
+        "sample_size": 5,
+        "winner_set_counts": {
+          "A": 4874604768,
+          "B": 1693309568,
+          "TIE_AB": 3432085664
+        },
+        "winner_set_denominator": 10000000000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 10000000000000000000000000000000000000000,
+          "numerator": 4601545316022770209689031826305139605504
+        },
+        "all_zero": {
+          "denominator": 100000000000000000000,
+          "numerator": 1024
+        },
+        "expected_held_out_success": {
+          "denominator": 2000000000000000000000,
+          "numerator": 1745809386332156902400
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 17
+        },
+        "sample_size": 10,
+        "winner_set_counts": {
+          "A": 62279025928659606528,
+          "B": 16469639596502704128,
+          "TIE_AB": 21251334474837689344
+        },
+        "winner_set_denominator": 100000000000000000000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 100000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "numerator": 59414463205156885382777170280050544892072095141606088252552697338422418315673600
+        },
+        "all_zero": {
+          "denominator": 10000000000000000000000000000000000000000,
+          "numerator": 1048576
+        },
+        "expected_held_out_success": {
+          "denominator": 200000000000000000000000000000000000000000,
+          "numerator": 176218996009361419729259021685157658624000
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 17
+        },
+        "sample_size": 20,
+        "winner_set_counts": {
+          "A": 7502955087834232834223769519744315555840,
+          "B": 1283959078472813104964747834586656931840,
+          "TIE_AB": 1213085833692954060811482645669027512320
+        },
+        "winner_set_denominator": 10000000000000000000000000000000000000000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "numerator": 81510257370088601441673288219919074104819116959512631760239614144381477153911803412332896700266624331124660808806627808046080230386557684211221904179814771614774738989146419583390745846622342090850304
+        },
+        "all_zero": {
+          "denominator": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "numerator": 1125899906842624
+        },
+        "expected_held_out_success": {
+          "denominator": 200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "numerator": 178415934250318034757797616993028758099837901739638248108366054417896592801335368435811129514524672000
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 17
+        },
+        "sample_size": 50,
+        "winner_set_counts": {
+          "A": 8999778511345002614136791975956527863503699060181445584812606991936975028755114178418130886881968128,
+          "B": 583844261026967856339174982927769763665797320543197476446552574040382227419745742607001372357296128,
+          "TIE_AB": 416377227628029529524033041115702372830503619275356938740840434022642743825140078974867740760735744
+        },
+        "winner_set_denominator": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      }
+    ],
+    "low_success": [
+      {
+        "agreement_probability": {
+          "denominator": 10000,
+          "numerator": 5864
+        },
+        "all_zero": {
+          "denominator": 100,
+          "numerator": 72
+        },
+        "expected_held_out_success": {
+          "denominator": 2000,
+          "numerator": 310
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 3
+        },
+        "sample_size": 1,
+        "winner_set_counts": {
+          "A": 18,
+          "B": 8,
+          "TIE_AB": 74
+        },
+        "winner_set_denominator": 100
+      },
+      {
+        "agreement_probability": {
+          "denominator": 100000000,
+          "numerator": 43709344
+        },
+        "all_zero": {
+          "denominator": 10000,
+          "numerator": 5184
+        },
+        "expected_held_out_success": {
+          "denominator": 200000,
+          "numerator": 31740
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 3
+        },
+        "sample_size": 2,
+        "winner_set_counts": {
+          "A": 2988,
+          "B": 1248,
+          "TIE_AB": 5764
+        },
+        "winner_set_denominator": 10000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 1000000000000,
+          "numerator": 387835203200
+        },
+        "all_zero": {
+          "denominator": 1000000,
+          "numerator": 373248
+        },
+        "expected_held_out_success": {
+          "denominator": 20000000,
+          "numerator": 3231640
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 3
+        },
+        "sample_size": 3,
+        "winner_set_counts": {
+          "A": 381240,
+          "B": 149600,
+          "TIE_AB": 469160
+        },
+        "winner_set_denominator": 1000000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 100000000000000000000,
+          "numerator": 38408280942323001344
+        },
+        "all_zero": {
+          "denominator": 10000000000,
+          "numerator": 1934917632
+        },
+        "expected_held_out_success": {
+          "denominator": 200000000000,
+          "numerator": 33181295200
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 3
+        },
+        "sample_size": 5,
+        "winner_set_counts": {
+          "A": 4874604768,
+          "B": 1693309568,
+          "TIE_AB": 3432085664
+        },
+        "winner_set_denominator": 10000000000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 10000000000000000000000000000000000000000,
+          "numerator": 4601545316022770209689031826305139605504
+        },
+        "all_zero": {
+          "denominator": 100000000000000000000,
+          "numerator": 3743906242624487424
+        },
+        "expected_held_out_success": {
+          "denominator": 2000000000000000000000,
+          "numerator": 345809386332156902400
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 3
+        },
+        "sample_size": 10,
+        "winner_set_counts": {
+          "A": 62279025928659606528,
+          "B": 16469639596502704128,
+          "TIE_AB": 21251334474837689344
+        },
+        "winner_set_denominator": 100000000000000000000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 100000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "numerator": 59414463205156885382777170280050544892072095141606088252552697338422418315673600
+        },
+        "all_zero": {
+          "denominator": 10000000000000000000000000000000000000000,
+          "numerator": 14016833953562607293918185758734155776
+        },
+        "expected_held_out_success": {
+          "denominator": 200000000000000000000000000000000000000000,
+          "numerator": 36218996009361419729259021685157658624000
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 3
+        },
+        "sample_size": 20,
+        "winner_set_counts": {
+          "A": 7502955087834232834223769519744315555840,
+          "B": 1283959078472813104964747834586656931840,
+          "TIE_AB": 1213085833692954060811482645669027512320
+        },
+        "winner_set_denominator": 10000000000000000000000000000000000000000
+      },
+      {
+        "agreement_probability": {
+          "denominator": 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "numerator": 81510257370088601441673288219919074104819116959512631760239614144381477153911803412332896700266624331124660808806627808046080230386557684211221904179814771614774738989146419583390745846622342090850304
+        },
+        "all_zero": {
+          "denominator": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "numerator": 735571377337281175975722145883189726959126286102281287306149927565761465446777498866888474624
+        },
+        "expected_held_out_success": {
+          "denominator": 200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000,
+          "numerator": 38415934250318034757797616993028758099837901739638248108366054417896592801335368435811129514524672000
+        },
+        "pooled_success": {
+          "denominator": 20,
+          "numerator": 3
+        },
+        "sample_size": 50,
+        "winner_set_counts": {
+          "A": 8999778511345002614136791975956527863503699060181445584812606991936975028755114178418130886881968128,
+          "B": 583844261026967856339174982927769763665797320543197476446552574040382227419745742607001372357296128,
+          "TIE_AB": 416377227628029529524033041115702372830503619275356938740840434022642743825140078974867740760735744
+        },
+        "winner_set_denominator": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      }
+    ]
+  },
+  "schema": "recovery-absolute-outcome-candidate-v1",
+  "scope": "exact synthetic method fixture only; no live recovery or product claim"
+}

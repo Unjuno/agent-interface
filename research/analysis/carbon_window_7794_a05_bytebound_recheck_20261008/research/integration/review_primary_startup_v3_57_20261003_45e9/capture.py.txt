@@ -1,0 +1,31 @@
+"""Capture actual new ordinary jobs once, preserving first complete streams before execution."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,subprocess,sys
+import psutil
+root=Path(__file__).resolve().parent
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(p,x):p.write_text(json.dumps(x,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+label=sys.argv[1]
+if label=='checks':
+ freeze=json.loads((root/'FREEZE.json').read_bytes());jobs=freeze['jobs']
+ for r in freeze['source']:assert sha((root/r['variant']/r['path']).read_bytes())==r['sha256']
+ for r in freeze['helpers']:assert sha((root/r['path']).read_bytes())==r['sha256']
+ put(root/'READER_RUNNER_FREEZE.json',{'frozen_utc':datetime.now(timezone.utc).isoformat(),'runner_sha256':sha(Path(__file__).read_bytes()),'reader_sha256':sha((root/'audit.py').read_bytes())})
+else:
+ assert label=='audit'
+ jobs=[{'name':'own-raw-audit','argv':[sys.executable,'-X','utf8','-B',str(root/'audit.py')],'cwd':str(root)}]
+for job in jobs:
+ out=root/'check-first'/job['name'];out.mkdir(parents=True,exist_ok=False);start=datetime.now(timezone.utc).isoformat()
+ with (out/'stdout.txt').open('wb') as stdout,(out/'stderr.txt').open('wb') as stderr:
+  p=subprocess.Popen(job['argv'],cwd=job['cwd'],stdout=stdout,stderr=stderr)
+  put(out/'START.json',{'argv':job['argv'],'cwd':job['cwd'],'pid':p.pid,'started_utc':start})
+  code=p.wait(timeout=40)
+ absent=not psutil.pid_exists(p.pid)
+ receipt={'argv':job['argv'],'cwd':job['cwd'],'pid':p.pid,'started_utc':start,'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':code,'pid_absent':absent,
+  'stdout_sha256':sha((out/'stdout.txt').read_bytes()),'stderr_sha256':sha((out/'stderr.txt').read_bytes()),
+  'stdout_bytes':(out/'stdout.txt').stat().st_size,'stderr_bytes':(out/'stderr.txt').stat().st_size}
+ put(out/'RECEIPT.json',receipt)
+ print(json.dumps(receipt));print((out/'stdout.txt').read_text(encoding='utf-8')[-700:]);print((out/'stderr.txt').read_text(encoding='utf-8')[-700:])
+ assert code==0,(job['name'],code)
+

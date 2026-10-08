@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import {PassThrough} from 'node:stream';
+import {mkdtemp} from 'node:fs/promises';
+import {join} from 'node:path';
+import {tmpdir} from 'node:os';
+const bundle=process.argv[2];
+const {servePrimaryLines}=await import(pathToFileURL(join(bundle,'primary_stdio.mjs')));
+const {createPrimaryExchange}=await import(pathToFileURL(join(bundle,'primary_exchange.mjs')));
+let calls=0;const host={review:async()=>{calls++;}};
+const exchange=await createPrimaryExchange({host,directory:join(await mkdtemp(join(tmpdir(),'packaged-error-')),'exchange'),route:'guarded-local'});
+const input=new PassThrough(),output=new PassThrough();let text='';output.on('data',b=>{text+=b;});
+const pending=servePrimaryLines({exchange,input,output});
+input.end(JSON.stringify({id:1,method:'review',args:[1,{image:{index:1}}]})+'\n');await pending;
+const row=JSON.parse(text.trim());
+assert.equal(row.status,'command_error');assert.equal(row.command_id,1);assert.equal(row.command_method,'review');
+assert.equal(row.state.next_id,2);assert.equal(row.replay_allowed,false);assert.ok(row.state.stopped);assert.equal(calls,0);
+console.log(JSON.stringify({status:'PASS_PACKAGED_ERROR_BOUNDARY',record:row,host_calls:calls,scope:'no app/model/input; actual packaged stdio/exchange'}));

@@ -1,0 +1,26 @@
+{
+  "schema": "issue-5764-audit-v2-freeze-v1",
+  "issue": 5764,
+  "allocation": "DANGER-CONTEXT-TRIAGE-5764-T0-20261001-01-AUDIT-V2",
+  "parent_freeze_sha256": "89fab046fed47e810caa5ae3fc6861b30e0e69e8d171ffc46363f2827d33389d",
+  "candidate_invocations": 0,
+  "audit_v1_invocations": 1,
+  "candidate_raw_sha256": "abd43afc3bc77a0275e1e58d78f95c5b1c3123d6dc0956f262848daf8b46f91a",
+  "audit_v1_disposition": "STOP_AUDITOR_FREEZE_SCHEMA_ADAPTER",
+  "scope": "read-only replay/scoring of the unchanged candidate raw; fixes only the nested FREEZE.json-to-audit-v1 input mapping; does not import run.py or runner.py",
+  "command": "python3 -B audit_v2.py --raw results/raw.json --output results/audit_v2.json",
+  "output_absent_at_freeze": true,
+  "audit_v2_invocations_at_freeze": 0,
+  "sha256": {
+    "audit_v2.py": "4841f2dbe59c17166113e9ca1e25c0f81fb5cb973ba1ebc4e851e652ba96bd7b",
+    "audit.py": "772644d92d6b302f4cfa4ad224615dac2a3536d27d79bcdfbe7964aa697218c9",
+    "run.py": "5592d73e3462da3fcde5f87c2c696f7f5a37aa4588e9b53c1069c3ca1b6f374b",
+    "runner.py": "d7bec322b3687b7660b1a7fa0c0eb55390a78987f391f2a2eb8508e79c7f9009",
+    "preaudit_stream.json": "3124d2eefcb04aa54bde669d859d822814bf5e08549a055e40ea3d353ba39abe",
+    "sealed_outcomes.json": "b296f9337fd3f40d965efbc4b5a5a006727a0ddf158fe2958ddf7bc593998c81",
+    "FREEZE.json": "89fab046fed47e810caa5ae3fc6861b30e0e69e8d171ffc46363f2827d33389d",
+    "results/raw.json": "abd43afc3bc77a0275e1e58d78f95c5b1c3123d6dc0956f262848daf8b46f91a",
+    "test_audit_v2.py": "d1e10460dc6f66d414ca91212df100d8595678cd68d9c5dbf8171ec98c25d480"
+  },
+  "environment": "WSL2 Ubuntu x86_64, CPython 3.12.3; host-only, no Docker/container/model/network/GUI/GPU/input"
+}

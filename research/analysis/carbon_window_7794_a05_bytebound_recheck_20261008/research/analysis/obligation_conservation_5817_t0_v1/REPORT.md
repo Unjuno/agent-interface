@@ -1,0 +1,27 @@
+# Issue #5817 — cross-task obligation conservation T0
+
+**Disposition: `PASS_METHOD_SCOPED` for the frozen synthetic finite histories only.** No runtime implementation, GUI effect, crash durability, real ownership, or user-benefit claim follows.
+
+## H / T / D / C / U
+
+- **H:** In these fixture histories, per-task terminal-status accounting admits overlapping follow-on work while an effect/release obligation remains unresolved; global wait blocks unrelated work; the ledger plus resource-dependency gate retains the obligation and blocks only overlapping/unknown work.
+- **T:** Replayed 11 authored histories, 25 events and 14 unique obligation IDs across timeout/escalation, accepted/unaccepted transfer, owner crash, effect readback, parent/release child, compensation side effect, duplicate compensation, resource alias and unknown footprint. Candidate and separately implemented oracle compare every event prefix and next-task policy decision.
+- **D:** Require every ID at every prefix to remain represented as verified terminal or unresolved with a live owner / explicit `NO_OWNER_STOP`; only independent bound readback can discharge. Require overlapping and unknown-footprint HOLD, disjoint read-only progress, transfer/timeout/escalation/parent closure not to discharge, and all five corruption controls to fail audit.
+- **C:** Strict global wait may be simpler; existing per-action receipts may already conserve obligations; conservative resource footprints can reduce concurrency without improving safety.
+- **U:** The fixture stipulates complete resource identities, event history and evidence validity. It does not establish real GUI effects, complete external side effects, crash-resistant persistence, safety, or human benefit. `PARTIAL_KNOWN` is an allowed typed terminal disposition in the general contract but is not exercised as an automatic discharge here.
+
+## Frozen inputs and execution
+
+- Allocation 01 (`36821423289`, attempt 1) stopped before candidate execution because a depth-1 Actions checkout did not contain the frozen base commit for a local `git merge-base` gate. Candidate/auditor invocation counts are 0/0. Its original `RUN.json` is retained unchanged at `results/5817-OBLIGATION-CONSERVATION-T0-20261001-01/`; this is an infrastructure/gate STOP, not a scientific outcome.
+- Allocation 02 (`36821987463`, attempt 1; run number 2) used the same frozen candidate, fixture and independent auditor after replacing the local ancestry check with GitHub's compare API. Candidate and auditor each ran once in separate Docker containers. Both exited 0; no retry occurred.
+- Candidate SHA-256: `41a3d96ef3a0e2a3a18f9582e0e4d8083b10fb4b2d4f555ebea8597aefa19e3e`; fixture: `739c7f737e55d2aac6927b39ab54c6c79bc80e6ae8f18e8db4c8bc87b743a29f`; independent auditor: `388a5933202eb1d760682705e5fcddaaaccba0c826c50d42b4e1d7b616f453c9`. Full freeze and run-source commit are in `FREEZE.json` and allocation-02 `RUN.json`.
+- Pinned image `python:3.12.14-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f`, linux/amd64. Inspected image ID `sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4`; Docker Engine 28.0.4, linux/amd64. Both container inspections record network `none`, read-only root, dropped `ALL` capabilities, `no-new-privileges`, 32 PIDs, 128 MiB and 1 CPU; OOM was false. Candidate/auditor stderr are empty.
+- Allocation-02 raw output SHA-256 `a8dcf1a1803e522ad86c2890da4e9d8bacec85bb5a4d8c4800a552510680abe2`; its `SHA256SUMS`, Docker/image/server identity, both container inspections, raw output, audit and start-gate record are retained under `results/5817-OBLIGATION-CONSERVATION-T0-20261001-02/`.
+- The local construction suite is separately recorded in `CONSTRUCTION_TESTS.md` (Python 3.12.10, five tests); its mutation controls were not extra formal Docker invocations.
+- The Actions retention step initially placed allocation-02 files in the allocation-01 directory due a frozen literal output path. The original allocation-01 STOP is recoverable in the pre-run commit; a corrective publication commit separates the two directories without changing raw bytes and corrects the checksum manifest path. The formal run's exact frozen workflow remains identifiable by allocation-02 `RUN.json`'s event SHA.
+
+## Result
+
+The independent Docker replay reports `PASS_METHOD_SCOPED`: 11 cases, 14 obligations, 0 errors. The separately recorded local construction suite rejects five mutations (drop an obligation, turn timeout into resolution, decrease count on transfer, miss a resource alias, and omit a compensation-created child). The task-status-only comparator admits the dependent case; global wait rejects the disjoint read-only case; the ledger rejects overlap/unknown footprint and admits the disjoint read-only case. Accepted transfer changes owner but not outstanding count; unaccepted transfer leaves the source owner; owner crash uses fallback or explicit no-owner STOP; parent close cannot discharge an unresolved release child; compensation emission creates a distinct child obligation. The one fixture-backed readback discharges its obligation.
+
+The result demonstrates only the declared transition/accounting rules on this finite synthetic fixture. It does not show that a real application exposes complete effect footprints, that a process crash preserves a ledger, or that any proposed scheduling policy improves actual task success or safety.

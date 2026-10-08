@@ -1,0 +1,20 @@
+{
+  "schema": "map01-attack-onset-allocation-03-unit-test-result-v1",
+  "decision": "PASS_V12_UNIT_TESTS_SCOPED",
+  "image_id": "sha256:16040e82ede488505b36f5c07235b3948e4aa48df27e6ad775b62214cbd57524",
+  "command": "python -m unittest discover -s /tmp/v12-test -p test_input_owner_v12.py -v",
+  "test_source": "dependencies/v12/test_input_owner_v12.py",
+  "test_source_sha256": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9",
+  "comparison_fixture_source_map": "test-support/SOURCE_MAP.json",
+  "tests_run": 10,
+  "tests_passed": 10,
+  "tests_failed": 0,
+  "tests_errored": 0,
+  "raw_log": "results/UNIT_TESTS.log",
+  "raw_log_sha256": "e782b4c7b7e5681cd85a574732185faf1b153408eb4759c9b9c174d078a9b68b",
+  "formal_invocations": 0,
+  "scientific_sessions": 0,
+  "physical_inputs": 0,
+  "scope": "Synthetic/mock X11 contract tests of the v12 InputOwner; not gameplay, TASK_EFFECT, or a formal experiment result.",
+  "setup_history": "results/UNIT_TEST_SETUP_STOP.md"
+}

@@ -1,0 +1,54 @@
+test_boolean_source_epoch_cannot_impersonate_integer_identity (test_supplemental.RetainedRawRegressionTests.test_boolean_source_epoch_cannot_impersonate_integer_identity) ... FAIL
+test_declared_zero_budget_cannot_certify_three_events (test_supplemental.RetainedRawRegressionTests.test_declared_zero_budget_cannot_certify_three_events) ... FAIL
+test_duplicate_pair_cannot_replace_missing_pair (test_supplemental.RetainedRawRegressionTests.test_duplicate_pair_cannot_replace_missing_pair) ... ok
+test_float_budget_cannot_impersonate_integer_budget (test_supplemental.RetainedRawRegressionTests.test_float_budget_cannot_impersonate_integer_budget) ... FAIL
+test_missing_pair_cannot_pass_coverage (test_supplemental.RetainedRawRegressionTests.test_missing_pair_cannot_pass_coverage) ... ok
+test_original_raw_and_all_baseline_counts_remain_valid (test_supplemental.RetainedRawRegressionTests.test_original_raw_and_all_baseline_counts_remain_valid) ... ok
+test_stateless_cannot_refuse_before_observing_eligible_safe_edge (test_supplemental.RetainedRawRegressionTests.test_stateless_cannot_refuse_before_observing_eligible_safe_edge) ... FAIL
+test_target_cannot_be_followed_by_tail_input (test_supplemental.RetainedRawRegressionTests.test_target_cannot_be_followed_by_tail_input) ... ok
+test_unknown_row_field_is_not_silently_discarded (test_supplemental.RetainedRawRegressionTests.test_unknown_row_field_is_not_silently_discarded) ... ok
+
+======================================================================
+FAIL: test_boolean_source_epoch_cannot_impersonate_integer_identity (test_supplemental.RetainedRawRegressionTests.test_boolean_source_epoch_cannot_impersonate_integer_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<supplemental-package>\test_supplemental.py", line 61, in test_boolean_source_epoch_cannot_impersonate_integer_identity
+    self.reject(rows)
+  File "<supplemental-package>\test_supplemental.py", line 32, in reject
+    self.assertNotEqual(result['decision'], 'PASS_METHOD_SCOPED')
+AssertionError: 'PASS_METHOD_SCOPED' == 'PASS_METHOD_SCOPED'
+
+======================================================================
+FAIL: test_declared_zero_budget_cannot_certify_three_events (test_supplemental.RetainedRawRegressionTests.test_declared_zero_budget_cannot_certify_three_events)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<supplemental-package>\test_supplemental.py", line 50, in test_declared_zero_budget_cannot_certify_three_events
+    self.reject(rows)
+  File "<supplemental-package>\test_supplemental.py", line 32, in reject
+    self.assertNotEqual(result['decision'], 'PASS_METHOD_SCOPED')
+AssertionError: 'PASS_METHOD_SCOPED' == 'PASS_METHOD_SCOPED'
+
+======================================================================
+FAIL: test_float_budget_cannot_impersonate_integer_budget (test_supplemental.RetainedRawRegressionTests.test_float_budget_cannot_impersonate_integer_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<supplemental-package>\test_supplemental.py", line 66, in test_float_budget_cannot_impersonate_integer_budget
+    self.reject(rows)
+  File "<supplemental-package>\test_supplemental.py", line 32, in reject
+    self.assertNotEqual(result['decision'], 'PASS_METHOD_SCOPED')
+AssertionError: 'PASS_METHOD_SCOPED' == 'PASS_METHOD_SCOPED'
+
+======================================================================
+FAIL: test_stateless_cannot_refuse_before_observing_eligible_safe_edge (test_supplemental.RetainedRawRegressionTests.test_stateless_cannot_refuse_before_observing_eligible_safe_edge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<supplemental-package>\test_supplemental.py", line 56, in test_stateless_cannot_refuse_before_observing_eligible_safe_edge
+    self.reject(rows)
+  File "<supplemental-package>\test_supplemental.py", line 32, in reject
+    self.assertNotEqual(result['decision'], 'PASS_METHOD_SCOPED')
+AssertionError: 'PASS_METHOD_SCOPED' == 'PASS_METHOD_SCOPED'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.038s
+
+FAILED (failures=4)

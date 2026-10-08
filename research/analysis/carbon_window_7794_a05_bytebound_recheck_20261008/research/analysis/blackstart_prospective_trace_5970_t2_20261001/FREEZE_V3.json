@@ -1,0 +1,70 @@
+{
+  "schema": "blackstart-prospective-trace-freeze-v3",
+  "issue": 5970,
+  "supersedes": "T2b source-log path STOP; no XTest event dispatched",
+  "experiment_branch_base": "98bc3eb7051bfb18292f6526e2e33f1e2e96e762",
+  "source_commit": "7625a3fc99f1da2099dc6e20e67383ee88c7f337",
+  "archive_path": "research/integration/x11_reconnect_key_state_2107_v1",
+  "archive_sha256": "5f153824d677503275f268e2aef9c9971d5f0a3f369c573feaa1a5d10604ad8d",
+  "archive_bytes": 36032,
+  "tar_member_count": 425,
+  "expanded_file_count": 324,
+  "archive_parts": {
+    "EVIDENCE.part00.b64": "ef622835ae283be9a9762c12a395a046d7dabdd8f502bbf0c75a9332587a1685",
+    "EVIDENCE.part01.b64": "3eb0840f2ec31f7992d9cee43a048abb48da506b96d4d37f7835df2aa7b5ebbf",
+    "EVIDENCE.part02.b64": "c37774e4421965fe09f83fcf07b33b935f452144b9b567c390536d5331924c70",
+    "EVIDENCE.part03.b64": "4cb89741030f1206b1402d1ea68d83f34d665bae49b4dffbc203ef3fbf5c37c8",
+    "EVIDENCE.part04.b64": "b4e4a0be28aca213a180bb8b85fb13affd92ced8c459f42a7f29d079ba9566d8"
+  },
+  "upstream_sources_sha256": {
+    "app.py": "a186f8e89a897e97ca08f7a31f3fe726629c13a28274c1458a51b502251b5204",
+    "observer.py": "73d64839373c7af29354e7c38601304b90a0a9eadde5546afa7623e0c7aa9162"
+  },
+  "locked_test": {
+    "events": ["KeyPress", "KeyRelease"],
+    "keysym": "Shift_L",
+    "max_in_flight": 1,
+    "precondition": "both instrumented sources logged arm_ack for the event ID",
+    "causal_link": "causal_parent_ids=[act:<actuation_id>] in both source records",
+    "match_fields": ["kind", "keycode", "X server time"],
+    "terminal_state": "Shift not down",
+    "candidate_v1_and_v2_stops_preserved": true,
+    "candidate_v3_runs": 1,
+    "independent_audit_v3_runs": 1,
+    "formal_4135_allocation_rerun": false
+  },
+  "analysis_sources_sha256": {
+    "PLAN.md": "478d4f765373d0ba8a44befa22d1e0cbfc17f54ebc0e279da738480321666357",
+    "PLAN_T2B.md": "5f4f17c4156dd6a0cb4f6fa4a8308bb9be107772292bbb60d6d0358d2228d8ea",
+    "PLAN_T2C.md": "cc86ce4056d3267d458d0d810ab6cd08049248f743384ba3d88b5b5e348f0855",
+    "README.md": "aac0140420cf3f6dc2f6948f8d8db26d7628d8f69938f890a900048e5ce8183b",
+    "FREEZE.json": "5316d0364d88ca2b1dd2d4c65661a717c855889b6b6448c99afa17ba38e6b9e9",
+    "FREEZE_V2.json": "ae321d4856dbe0d4ac8199530fdb54af1dd6238dbe69a00b48323ddd3b4eacad",
+    "candidate.preflight_stop.raw.json": "449d05f19a2a4240816c7c451ca845ff73c20c1f84c5bbc0e99b161e81654fd9",
+    "candidate.py": "8fc778d8b62e2581d332554b1efa5c184a0f5d80798f97d4399c4a3c37d1656a",
+    "candidate_v2.py": "8f825188efa6cdaaf8b32a661b69ed54e2987f9cbbc2b590ecd22705e5a62b3e",
+    "independent_audit.py": "dfc4e0ba294dd17ef86cd782aeabfe6e582d2f04d7ff4a5be28afbeb16f92616",
+    "independent_audit_v2.py": "df2c598e89365e39256f92ed60f1932ee6452f3f00d865d445a0a6088a90abc6",
+    "candidate_v3.py": "33daa6f6cb8b989f0a46214dc470fe9a2ef7e59930c89735f8d438ffe1962214",
+    "independent_audit_v3.py": "1a07edf54589ea579c4fced0b946bc285a8fcc037eaf08b339dec46357cb173c",
+    "runner.py": "f91dfbfc1066f89b32b62c8172aea35ae3980a69e13440be6d62c6621b20aa7a",
+    "runner_v3.py": "f0dadd9eb2f693c618940ba195a4ec2bb1130b199c549add284afc110f9b8845",
+    "instrumented_app.py": "b665580a2f9e676b758316488c3602888cb1a62afa436ab913d3270d5f1e203c",
+    "instrumented_observer.py": "cd0983217a65937e1b7f15fa8b4d569152ad9ca7b99f5620f66b36cd2a90f93f",
+    "test_audit.py": "0cbb83288b5b4432c7edf6e701b7879e6e5b58b0b0490ddc21d47d5e3e1d41fc",
+    "test_t2c_construction.py": "2e04fc10fc85f83d0146766ace2308ca4fa2fca5a7a5c85cf0222a34e6078ab1"
+  },
+  "prior_artifacts_sha256": {
+    "candidate.v2.raw.json": "7485d08d028c62f75be0dda4c6a4102cb276d6a7a31531f80eb4b162d41fb30d",
+    "run_v2/trace/run.raw.json": "eccdf8c15e536f5fc2198a1a3d035541054ad31b6b2a187de049f291541aa325",
+    "run_v2/trace/actions.jsonl": "ed145bac93247e51a5376d5351a9af6ad3707c5671f18c14609dc840996ee7c9",
+    "run_v2/trace/tk/app_events.jsonl": "672d09281f70f86bad407371379c56dd86ea8feda35c98e81044113eaa41f155",
+    "run_v2/trace/tk/state.json": "7169bb628173768f8eebca1a7742f7f278d3b9c3a02b5fb476227f085cf3d223",
+    "run_v2/trace/observer_events.jsonl": "2e2842c9ea6beaaea39d1ddcf30ac2a0d92421df62cb41559a0fc075dcdd3cd9"
+  },
+  "environment": {
+    "docker_desktop_service": "stopped/manual; Linux engine unreachable",
+    "isolated_fallback": "WSL2 Ubuntu 24.04.4, Xvfb 21.1.12, Python 3.12.3, Tk 8.6, python-xlib with XTEST",
+    "display": "xvfb-run -a; user desktop is not accessed"
+  }
+}

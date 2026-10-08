@@ -1,0 +1,111 @@
+{
+  "scope": "directed native byte/read-budget boundary only",
+  "rows": [
+    {
+      "id": 0,
+      "profile": "hot1",
+      "budget": 0,
+      "reads": 16,
+      "terminal": "CUTOFF"
+    },
+    {
+      "id": 1,
+      "profile": "hot1",
+      "budget": 1,
+      "reads": 1,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 2,
+      "profile": "hot1",
+      "budget": 4,
+      "reads": 4,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 3,
+      "profile": "hot5",
+      "budget": 0,
+      "reads": 16,
+      "terminal": "CUTOFF"
+    },
+    {
+      "id": 4,
+      "profile": "hot5",
+      "budget": 1,
+      "reads": 5,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 5,
+      "profile": "hot5",
+      "budget": 4,
+      "reads": 8,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 6,
+      "profile": "co_ready",
+      "budget": 0,
+      "reads": 0,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 7,
+      "profile": "co_ready",
+      "budget": 1,
+      "reads": 0,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 8,
+      "profile": "co_ready",
+      "budget": 4,
+      "reads": 0,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 9,
+      "profile": "cold_late",
+      "budget": 0,
+      "reads": 4,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 10,
+      "profile": "cold_late",
+      "budget": 1,
+      "reads": 1,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 11,
+      "profile": "cold_late",
+      "budget": 4,
+      "reads": 4,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "id": 12,
+      "profile": "data_only",
+      "budget": 0,
+      "reads": 4,
+      "terminal": "EMPTY"
+    },
+    {
+      "id": 13,
+      "profile": "data_only",
+      "budget": 1,
+      "reads": 4,
+      "terminal": "EMPTY"
+    },
+    {
+      "id": 14,
+      "profile": "data_only",
+      "budget": 4,
+      "reads": 4,
+      "terminal": "EMPTY"
+    }
+  ],
+  "raw_sha256": "242439e8d7a96f2c938668955c5469e40e1ccaeb97a754d1f1295e07f156efa0"
+}

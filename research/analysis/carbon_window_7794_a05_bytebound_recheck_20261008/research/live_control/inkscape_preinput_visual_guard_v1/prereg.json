@@ -1,0 +1,23 @@
+{
+  "schema": "inkscape-preinput-visual-guard-prereg-v2",
+  "task_id": "INKSCAPE-PREINPUT-VISUAL-GUARD-20260916-015",
+  "publication_base": "871ece721f5aed021428d50668f24f055acf748d",
+  "predecessor": "014 STOPPED after 7 complete cases + case-07 setup/revalidation failure; no pooling or resumption",
+  "setup_only_change": "After F1/Escape and one Tab, wait up to 10 x 50ms setup-only full screenshots until actual A black selection handles are visible; then take unchanged final revalidation and enter the same race. No additional Tab retry.",
+  "candidate": "At frozen 120ms post-revalidation boundary capture fixed A top/right/bottom handle ROI. Require dark counts top>=30,right>=80,bottom>=30; otherwise DEPENDENCY_UNAVAILABLE. If pass, send Right x5 and save.",
+  "construction": [
+    "stable: final A handles visible, guard pass top64/right176/bottom64, A+10/B0",
+    "switch: final A handles visible, then Tab B; guard still reported top64/right176/bottom64 at boundary and falsely admitted B+10"
+  ],
+  "gates": {
+    "stable": "10/10 ADMIT and A+>0.5/B~0",
+    "switch": "promotion requires 10/10 DEPENDENCY_UNAVAILABLE/no effect; any false ADMIT+B effect rejects",
+    "revalidation": "20/20 final A black handles visible before phase",
+    "release": "20/20 relevant keys/buttons empty"
+  },
+  "decision_rule": "PASS_VISUAL_SELECTION_GUARD_SCOPED only if all switch cases stop. REJECT_VISUAL_SELECTION_GUARD if any switch false-admits and moves B while stable/revalidation/release remain valid. HOLD_OR_INVALID otherwise.",
+  "no_tuning": "No threshold/ROI/120ms/action/case-count changes after first measured 015 outcome.",
+  "model_calls": 0,
+  "game_calls": 0,
+  "timing_claim": false
+}

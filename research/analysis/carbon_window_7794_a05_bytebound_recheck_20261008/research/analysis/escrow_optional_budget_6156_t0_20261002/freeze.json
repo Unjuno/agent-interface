@@ -1,0 +1,27 @@
+{
+  "schema": "issue-6156-t0-freeze-v1",
+  "issue": 6156,
+  "source_main_sha": "9ab5da4d1e862fdb2cf55c0cb46c64b20e6684cb",
+  "allocation": "issue6156-escrow-optional-budget-t0-20261002",
+  "disposition": "FROZEN_NOT_YET_RUN",
+  "protocol": "PROTOCOL.md",
+  "candidate": "candidate.py",
+  "auditor": "audit.py",
+  "construction_tests": "test_t0.py",
+  "source_sha256": {
+    "candidate.py": "dac07440a8f731386f72d3485c2a6187463c703f802a9581c6d8d394247e0f2a",
+    "audit.py": "d0829b10c3232d3b6ec834bab553030e236cb6c0197fee4c205aa102d1943370",
+    "test_t0.py": "b963076ecc4d4a8ca1c50f71bd9df5a897ccd09b2d0d9406fecb476b60387a70",
+    "PROTOCOL.md": "b47560aca0dba3238e9a853fac03e6fe5f4f841a41395e882626ba4acfec166f"
+  },
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform": "linux/arm64",
+  "docker_engine": "29.4.0",
+  "candidate_command": "python3 -B /src/candidate.py /out/candidate.json",
+  "auditor_command": "python3 -B /src/audit.py /out/candidate.json /out/audit.json",
+  "construction_command": "python3 -B -m unittest -v test_t0.py",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "container_flags": "--network none --read-only --cap-drop ALL --security-opt no-new-privileges --cpus=1 --memory=512m --pids-limit=64; source bind read-only and only /out writable",
+  "scope": "finite synthetic method experiment; no model, GUI, external effects, or elapsed-time claim"
+}

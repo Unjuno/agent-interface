@@ -1,0 +1,34 @@
+{
+  "schema": "effect-outcome-contract-v3-construction-v1",
+  "task": "EFFECT-OUTCOME-CONTRACT-V3-BINDING-20260916-001",
+  "issue": 490,
+  "construction_base": "f8d59b45afee0790c7713f5d5b7fab253d505de2",
+  "decision": "PASS_CONSTRUCTION_CANDIDATE_V3",
+  "formal_experiment": false,
+  "shared_runtime_modified": false,
+  "tests": {
+    "initial_py_compile": true,
+    "initial_unittest_pass": 33,
+    "initial_unittest_total": 33,
+    "clean_copy_py_compile": true,
+    "clean_copy_unittest_pass": 33,
+    "clean_copy_unittest_total": 33,
+    "source_changed_between_runs": false
+  },
+  "files": {
+    "outcome.py": {
+      "bytes": 15466,
+      "sha256": "4fd5a6001407b9e91ab3265aeca491643e035641f7926316ebf8835ba7b79449",
+      "git_blob": "680b104b28ba37633ec1031eac41c1945eb3aed9",
+      "github_readback_matches": true
+    },
+    "test_outcome.py": {
+      "bytes": 16139,
+      "sha256": "bd405d1ce6f07cbc0d08e00730f1bc24314f126dd38a224cc61c8effbae4fbf0",
+      "git_blob": "08a94d825976fcb534b9fde157c8f340cdc004c6",
+      "github_readback_matches": true
+    }
+  },
+  "key_gate": "executed command manifest id must equal current manifest id and verification receipt manifest id",
+  "post_effect_requirement_shrink_rejected": true
+}

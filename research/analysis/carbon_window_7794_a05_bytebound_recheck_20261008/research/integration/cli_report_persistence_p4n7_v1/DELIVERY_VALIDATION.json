@@ -1,0 +1,68 @@
+{
+  "classification": "PASS_LOCAL_CLI_REPORT_PERSISTENCE_BOUNDARY",
+  "scientific_audit": {
+    "checks": 1157,
+    "errors": [],
+    "totals": {
+      "cases": 16,
+      "correct_text_effect": 6,
+      "dispatch_processes": 16,
+      "native_completed": 12,
+      "native_key_presses": 12,
+      "native_key_releases": 12,
+      "read_only_processes": 48,
+      "report_files": 4,
+      "report_persistence_failures": 8,
+      "request_refusals": 4,
+      "temporary_complete_reports": 4
+    },
+    "audit_sha256": "a0c0073808b1b6f4f29217313a16e2bc03b2eaae3e22c89a7693b3c8a2fcf870"
+  },
+  "controls": {
+    "baseline_checks": 1157,
+    "count": 10,
+    "gui_replays": 0,
+    "passed": true,
+    "same_author": true,
+    "note": "The complete per-control records are retained inside the lossless evidence capsule."
+  },
+  "source_freeze": {
+    "members": 14,
+    "sha256": "da26e2c4e7da044ea965249de6f1f0a94324395c481d8d506f25392f0dec4923",
+    "unchanged": true,
+    "public_preregistration": false
+  },
+  "archive": {
+    "file_count": 625,
+    "member_bytes": 1153156,
+    "zip_bytes": 522175,
+    "zip_sha256": "9f9ef47584e2d6de6a264f1482b9ce91bf90e29427d8c7b289afc2d535c1eed4",
+    "all_restored_bytes_match": true,
+    "frozen_science_changed": false
+  },
+  "read_only_validation": {
+    "scientific_reruns": 0,
+    "source_and_evidence_unchanged": true,
+    "five_saved_audit_outputs_byte_identical": true,
+    "audit_decisions_identical": true
+  },
+  "original_local_patch": {
+    "patch_bytes": 1284234,
+    "patch_sha256": "720b6c73090d3f2181699d5fe916b43923e9e64ef57bdbc41cd33d4c8d62b7a5",
+    "git_diff_check_exit": 2,
+    "git_diff_check_note": "One inherited terminal blank line was preserved.",
+    "git_apply_check_exit": 0,
+    "git_apply_exit": 0,
+    "all_applied_bytes_match": true,
+    "repository_wide_ci_run": false
+  },
+  "historical_publication_state": {
+    "main_at_experiment": "4c701cc51b06296268ad8d9ae3eff1dd6f2d379d",
+    "github_write_operations": 0,
+    "publication_state": "HOLD_NO_EXPOSED_WRITE_ROUTE",
+    "source_visibility": "local_only",
+    "note": "This object intentionally records the earlier session. The current retrospective publication does not rewrite that chronology."
+  },
+  "independent_human_review": false,
+  "global_roadmap_complete": false
+}

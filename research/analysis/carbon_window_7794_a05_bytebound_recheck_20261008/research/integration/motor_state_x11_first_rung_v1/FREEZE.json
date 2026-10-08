@@ -1,0 +1,31 @@
+{
+  "schema": "agent-interface/motor-state-x11-first-rung-freeze-v1",
+  "allocation": "motor-state-x11-first-rung-27-20260923-01",
+  "issue": 27,
+  "base_main": "665339328f808c63e3ca3bc83169264038d399c6",
+  "branch": "research/motor-state-x11-first-rung-27-20260923",
+  "preformal_head_before_freeze": "0c86fb0a3ca60da34279c247c58ed8f95fefd2b6",
+  "source_git_blobs": {
+    "runner.py": "b6f7df40ff2f7b343b90b651d189017454c7cea5",
+    "audit.py": "de716546fdffcd84efbbff7c87fc017bf0001d99",
+    "test_audit.py": "ef4c8cfb6ad63215d9f553dc70992b5eb7e7d3bf",
+    "PLAN.md": "6f95481fa9504313948bb38309cccacf6e82d7eb",
+    "ENVIRONMENT.json": "f796846937e78dded821bec5e88a136311fdecad"
+  },
+  "construction": {
+    "historical_stop": "STOP_CONSTRUCTION_TIMEOUT_AND_FOCUS_SETUP",
+    "final_local_smoke": "Inkscape 3/3 and Calc 3/3 passed after setup-only fixes; GitHub-readback smoke still required before formal"
+  },
+  "formal_batches": [
+    "python -B runner.py --app inkscape --rep 0 --out formal-i0 --display-base 400",
+    "python -B runner.py --app calc --rep 0 --out formal-c0 --display-base 410",
+    "python -B runner.py --app inkscape --rep 1 --out formal-i1 --display-base 420",
+    "python -B runner.py --app calc --rep 1 --out formal-c1 --display-base 430",
+    "python -B runner.py --app inkscape --rep 2 --out formal-i2 --display-base 440",
+    "python -B runner.py --app calc --rep 2 --out formal-c2 --display-base 450"
+  ],
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0
+}

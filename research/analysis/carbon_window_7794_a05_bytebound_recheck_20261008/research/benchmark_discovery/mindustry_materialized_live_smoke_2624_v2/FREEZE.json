@@ -1,0 +1,59 @@
+{
+  "allocation": "mindustry-materialized-live-smoke-2624-20260926-02",
+  "decision_labels": [
+    "PASS_MINDUSTRY_MATERIALIZED_LIVE_SMOKE_SCOPED",
+    "FAIL_LIVE_FIXTURE_STARTUP",
+    "FAIL_ORACLE_MISMATCH",
+    "STOP_OR_HOLD_EVIDENCE"
+  ],
+  "display": ":176",
+  "expected_oracle": {
+    "copper": 200,
+    "core_present": true,
+    "height": 300,
+    "paused": true,
+    "row_widths": [
+      250
+    ],
+    "tile_rows": 300,
+    "width": 250
+  },
+  "fixture": {
+    "Mindustry.jar": {
+      "sha256": "7f210295dfffb4c17b582b27bab41f4dde83f557f00f0877572fdac943f40539",
+      "size": 87022576
+    },
+    "canonical.msav": {
+      "git_blob": "7663b25633d853a257fbb407723fe85579120111",
+      "sha256": "8fff67b0c130ee59a3838c92754b73225a506902bd4838dcc3f1fb5be286cbed",
+      "size": 23335
+    },
+    "mod/mod.json": {
+      "git_blob": "137ae8036b7864af744565bbc1c2af566290ea92",
+      "sha256": "4b8e413ab0c4561c82edd8e422c517b631f1baee79a0b008adb42e9624965e05"
+    },
+    "mod/scripts/main.js": {
+      "git_blob": "84e9a0c291d5b7f454d6092f2c100728a9a16da2",
+      "sha256": "7b5bd06bc34db9655e3946a9c202948cdaa0a4b233e0eec1fe063aa8358c220f"
+    }
+  },
+  "formal_sessions_before_freeze": 0,
+  "formal_sessions_planned": 1,
+  "historical_oracle_git_blob": "fb7cd0e88e730401b32c2954b58c8c02ec83fcc6",
+  "historical_oracle_path": "research/benchmark_discovery/results/mindustry-reset-01/reload-1/oracle.json",
+  "no_postfreeze_tuning": true,
+  "no_replacement": true,
+  "no_retry": true,
+  "schema": "mindustry-2624-freeze-v2",
+  "source_sha256": {
+    "ENVIRONMENT.json": "b5f06752c406f4ba035fa110ea165b6185f73037685d91027ae3d171d5b9dfcb",
+    "PLAN.md": "b4b46f3b08bc975f356b54b84ebd10e3a587e8f6152c65c14adcdb7ed0f91767",
+    "PREDECESSOR_V1.json": "f91c0eeabd27175a6db41af35b127b9f72b2c16678a17183bbd0dd0d31ac4d49",
+    "REACQUISITION.json": "a91b23dd538ea842055e86921385b929bee67376dc1fd73e67621f2304244b5c",
+    "README.md": "21d052d2323931aee68bd390c46798f1d9219090e20fa146f3a27b8a437972a9",
+    "audit.py": "d74ad829df76a9adc82b12780a964496027790e11907ef48077ad3c9aa9604f9",
+    "run.py": "65fdbad6f46e03d2e95fc29d78f3c1cb86e19211acf705b9780d61dadce4a9ca",
+    "test_audit.py": "865a803539c807d19859fed095455932b3c04030f979e68bf1431afd9827ad27"
+  },
+  "timeout_s": 60
+}

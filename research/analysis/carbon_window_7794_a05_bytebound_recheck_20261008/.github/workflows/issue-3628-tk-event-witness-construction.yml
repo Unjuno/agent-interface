@@ -1,0 +1,53 @@
+name: Issue 3628 passive Tk event witness construction
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tk-construction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github/workflows/issue-3628-tk-event-witness-construction.yml
+            research/integration/issue_3628_tk_event_witness_v1
+          sparse-checkout-cone-mode: true
+      - name: Install isolated display dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes python3-tk python3-xlib xvfb
+      - name: Compile construction sources
+        run: python3 -m compileall -q research/integration/issue_3628_tk_event_witness_v1
+      - name: Run witness and adversarial audit tests
+        run: xvfb-run -a python3 -m unittest discover -s research/integration/issue_3628_tk_event_witness_v1 -v
+      - name: Run one-shot XTest construction probe
+        run: xvfb-run -a python3 research/integration/issue_3628_tk_event_witness_v1/probe_xtest.py research/integration/issue_3628_tk_event_witness_v1/evidence/ci-xtest-${{ github.run_id }}
+      - name: Verify construction evidence manifests
+        run: |
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import pathlib
+          import sys
+
+          root = pathlib.Path("research/integration/issue_3628_tk_event_witness_v1/evidence")
+          manifests = sorted(root.glob("construction-xtest-*/manifest.json"))
+          failures = []
+          for manifest in manifests:
+              for row in json.loads(manifest.read_text(encoding="utf-8"))["files"]:
+                  path = manifest.parent / row["path"]
+                  if not path.is_file():
+                      failures.append(f"{manifest}: missing {row['path']}")
+                      continue
+                  data = path.read_bytes()
+                  if len(data) != row["bytes"] or hashlib.sha256(data).hexdigest() != row["sha256"]:
+                      failures.append(f"{manifest}: mismatch {row['path']}")
+          if len(manifests) != 4:
+              failures.append(f"expected 4 retained construction manifests, found {len(manifests)}")
+          print(f"verified {len(manifests)} retained construction manifests")
+          print("\n".join(failures))
+          sys.exit(bool(failures))

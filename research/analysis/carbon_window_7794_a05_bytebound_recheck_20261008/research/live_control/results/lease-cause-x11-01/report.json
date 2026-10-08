@@ -1,0 +1,147 @@
+{
+  "sources": {
+    "probe_lease_cause_x11_v1.py": "04752a746fc4b063e4f5f824d90f359c46aeca360b7420bb04a72e254547db56",
+    "input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "executor_v4.py": "8a3c30d460049676e1ce37a49a39b5d0a1983ecf21d8d2518f0e8a2c65536f6d",
+    "lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918"
+  },
+  "scope": "One scripted private X11 focus transfer and subsequent same-deadline intent. No full app task, model use, or speed qualification.",
+  "success": true,
+  "checks": {
+    "physical_key_down_before_transfer": true,
+    "physical_key_released_after_transfer": true,
+    "cause_visible_before_shutdown": true,
+    "same_deadline_new_intent_has_no_old_cause": true,
+    "physical_key_up_after_second_terminal": true
+  },
+  "events": [
+    {
+      "event": "accepted",
+      "id": "focus-transfer",
+      "steps": 1,
+      "valid_until_ns": 12865596231,
+      "accepted_ns": 2865645792
+    },
+    {
+      "event": "step_started",
+      "id": "focus-transfer",
+      "step": 0,
+      "operation": "transfer",
+      "issued_ns": 2865792801
+    },
+    {
+      "event": "terminal",
+      "id": "focus-transfer",
+      "status": "needs_decision",
+      "error": null,
+      "steps_completed": 0,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 2870507677,
+        "valid_until_ns": null
+      },
+      "interruption": {
+        "intent_token": "7f166fc7468c442483592e6b823eaa7b",
+        "record": {
+          "event": "owner_release",
+          "reason": "focus_changed",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 2869386393,
+          "valid_until_ns": 12865596231
+        }
+      },
+      "decision_reason": null,
+      "terminal_ns": 2870606986,
+      "semantic_completion": "program status only; task scoring is separate"
+    },
+    {
+      "event": "accepted",
+      "id": "fresh-normal",
+      "steps": 1,
+      "valid_until_ns": 12865596231,
+      "accepted_ns": 2870815866
+    },
+    {
+      "event": "step_started",
+      "id": "fresh-normal",
+      "step": 0,
+      "operation": "normal",
+      "issued_ns": 2871113392
+    },
+    {
+      "event": "step_completed",
+      "id": "fresh-normal",
+      "step": 0,
+      "completed_ns": 2872029139
+    },
+    {
+      "event": "terminal",
+      "id": "fresh-normal",
+      "status": "completed",
+      "error": null,
+      "steps_completed": 1,
+      "release": {
+        "event": "owner_release",
+        "reason": "release",
+        "verified": true,
+        "buttons_down": [],
+        "keys_down": [],
+        "verified_ns": 2872478189,
+        "valid_until_ns": 12865596231
+      },
+      "interruption": null,
+      "decision_reason": null,
+      "terminal_ns": 2872545751,
+      "semantic_completion": "program status only; task scoring is separate"
+    }
+  ],
+  "owner_records": [
+    {
+      "event": "owner_release",
+      "reason": "focus_changed",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 2869386393,
+      "valid_until_ns": 12865596231
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 2870507677,
+      "valid_until_ns": null
+    },
+    {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 2872478189,
+      "valid_until_ns": 12865596231
+    },
+    {
+      "event": "owner_release",
+      "reason": "close",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 2873323998,
+      "valid_until_ns": null
+    }
+  ],
+  "cleanup": {
+    "executor": "close returned",
+    "owner": "close returned",
+    "session": "close returned"
+  }
+}

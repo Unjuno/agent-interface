@@ -1,0 +1,30 @@
+{
+  "allocation": "broker-path-windows-junction-4882-20260928-02",
+  "candidate_git_blob": "cdd0e3d57e08a316fc9df6b55abca8c740db070d",
+  "candidate_sha256": "86579145eb9ef03d3ea61ba3a1e17da787677196dcba1d85f019a4ecd0e891ce",
+  "environment": {
+    "os_name": "nt",
+    "platform": "win32",
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+  },
+  "fixture": {
+    "broker_subprocess_invocations": 0,
+    "setup": [
+      {
+        "command": "cmd.exe /d /c mklink /J <link> <target>",
+        "returncode": 1,
+        "setup_ok": false
+      },
+      {
+        "command": "cmd.exe /d /c mklink /J <link> <target>",
+        "returncode": 1,
+        "setup_ok": false
+      }
+    ]
+  },
+  "rows": [],
+  "runner_sha256": "9cef9fde99dd1767046d164b5b8f952bbbd1e3d5a18068414f9b5a94da0306f0",
+  "schema": "broker_path_windows_junction_4882_raw_v1",
+  "source_main": "020db8709de3321332ef22ea3aa60bd4dacdca77",
+  "status": "STOP_SETUP_JUNCTION_UNAVAILABLE"
+}

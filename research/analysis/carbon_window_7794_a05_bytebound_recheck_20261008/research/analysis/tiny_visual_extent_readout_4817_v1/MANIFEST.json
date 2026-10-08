@@ -1,0 +1,29 @@
+{
+  "schema": "tiny-visual-extent-readout-manifest-v1",
+  "issue": 4828,
+  "allocation": "tiny-visual-extent-readout-4817-20260927-01",
+  "branch": "research/tiny-visual-extent-readout-4817-20260927",
+  "main_at_branch_creation": "ca38c41b06d20785ffb0a6163a6a22034511c004",
+  "scientific_result": "NONE_STOP_BEFORE_FIT",
+  "formal_fits": 0,
+  "construction_fits": 0,
+  "retries": 0,
+  "image_substitutions": 0,
+  "docker_preflight_exit": 1,
+  "independent_stop_audit": "PASS_STOP_EVIDENCE_INTEGRITY",
+  "independent_stop_audit_errors": [],
+  "files_sha256": {
+    "FREEZE.json": "8b4ac250d48532a2861fd9017906a3296f303f2e6a8cd70c2ae8a251df81c740",
+    "prepare.py": "8bb24c96ff85310b2402d19b8f5d095154f36942dfc2d6178f14571f2529e424",
+    "models.py": "9128cba7e04877be0f42837459adeb14efa7e0ca9bc8fada086330e0c88853fb",
+    "run.py": "dc8373acf304991c24c99a20c10da43c4949438564c1f9b88b9cdcb7c11b472a",
+    "audit.py": "673b2fd1c24e61e15c253d19e4cd067476a676fd03d2d35b2600837643b4dc51",
+    "controls.py": "141587ad718eb67f01bcd11350b22367c996e8a3d9354589ea4933282af02b43",
+    "test_construction.py": "122d9c0d8adc143f2492c64474d398bee5ff2f8dac1ecd4669a0240680966426",
+    "STOP.json": "d09b5d881bda8c04e2cb32ac9a0e833af6b4c8cb6d98440577e2fd4c31e22462",
+    "audit_stop.py": "37de72254a4dee85b993d0c269f173d0c10437ab088af11527eb9ac5c15914c8",
+    "REPORT.md": "ff1cdabe58842be3d01154b6f25c2097755f8706e3933c363e8cac89ac2ddb1c",
+    "STOP_AUDIT.json": "850eef0dd832ff403a3c8c433e9f281fc2681e5a1456bc96bc7f2993ec3f1a13"
+  },
+  "execution_note": "The exact pinned image ID was present but did not contain its frozen NumPy/Python versions. No package install, image pull, replacement, GPU, model fit, inference, or output directory creation followed the STOP."
+}

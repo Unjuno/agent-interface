@@ -1,0 +1,115 @@
+{
+  "scope": "oracle calibration only; no assistant gameplay or runtime promotion",
+  "results": [
+    {
+      "seed": 991001,
+      "contract": {
+        "target": [
+          678,
+          679,
+          680
+        ],
+        "forbidden": [
+          742,
+          743,
+          744
+        ],
+        "owner": 0
+      },
+      "engine_stages": {
+        "empty": {
+          "success": false,
+          "checks": {
+            "target_owned_roads": false,
+            "bidirectional_connections": false,
+            "forbidden_row_clear": true
+          }
+        },
+        "partial": {
+          "success": false,
+          "checks": {
+            "target_owned_roads": false,
+            "bidirectional_connections": false,
+            "forbidden_row_clear": true
+          }
+        },
+        "complete": {
+          "success": true,
+          "checks": {
+            "target_owned_roads": true,
+            "bidirectional_connections": true,
+            "forbidden_row_clear": true
+          }
+        },
+        "extra": {
+          "success": false,
+          "checks": {
+            "target_owned_roads": true,
+            "bidirectional_connections": true,
+            "forbidden_row_clear": false
+          }
+        }
+      },
+      "counterfactual_controls": {
+        "wrong_required_owner": true,
+        "disconnected_observation": true,
+        "missing_tile_rejected": true
+      }
+    },
+    {
+      "seed": 991002,
+      "contract": {
+        "target": [
+          465,
+          466,
+          467
+        ],
+        "forbidden": [
+          529,
+          530,
+          531
+        ],
+        "owner": 0
+      },
+      "engine_stages": {
+        "empty": {
+          "success": false,
+          "checks": {
+            "target_owned_roads": false,
+            "bidirectional_connections": false,
+            "forbidden_row_clear": true
+          }
+        },
+        "partial": {
+          "success": false,
+          "checks": {
+            "target_owned_roads": false,
+            "bidirectional_connections": false,
+            "forbidden_row_clear": true
+          }
+        },
+        "complete": {
+          "success": true,
+          "checks": {
+            "target_owned_roads": true,
+            "bidirectional_connections": true,
+            "forbidden_row_clear": true
+          }
+        },
+        "extra": {
+          "success": false,
+          "checks": {
+            "target_owned_roads": true,
+            "bidirectional_connections": true,
+            "forbidden_row_clear": false
+          }
+        }
+      },
+      "counterfactual_controls": {
+        "wrong_required_owner": true,
+        "disconnected_observation": true,
+        "missing_tile_rejected": true
+      }
+    }
+  ]
+}

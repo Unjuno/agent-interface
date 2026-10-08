@@ -1,0 +1,53 @@
+{
+  "allocation": "constrained-interaction-5330-t0-20260930-01",
+  "issue": 5330,
+  "main_sha": "57b56de2831204885c55375737580e5d82d3ab98",
+  "branch": "research/constrained-interaction-5330-t0-20260930-01",
+  "additive_path": "research/analysis/constrained_interaction_testing_5330_t0_v1/",
+  "container": {
+    "image": "python:3.12-slim",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "capabilities": "all dropped",
+    "security": "no-new-privileges",
+    "mounts": "source read-only; output dedicated writable bind mount",
+    "python": "Python 3.12.14",
+    "dependencies": "standard library only"
+  },
+  "source_sha256": {
+    "README.md": "bb2e851667dd19fa79563caa419d8914cd94e874642766888a66dc9b0b65ea28",
+    "design.py": "23341c871b2ade675dbbc4e0749682902c6e8fc1405c58855ddf12574fd6b16e",
+    "run.py": "b772f8cee07350861d461faa99e9b91bda369945d582abd5bfd443802ad3aaa2",
+    "audit.py": "ca4688b1189e4d287601b89b7c2bf24d33904695fba60b5946e2a0735a3f55bf",
+    "test_design.py": "fc8b032e7d64dad4f773c6338564d5f132561926190e1263955c0431276e7b66"
+  },
+  "matrix": {
+    "factors": ["freshness", "lease", "responsibility", "delivery"],
+    "levels_per_factor": 2,
+    "full_assignments": 16,
+    "designs": ["OFAT", "PAIRWISE", "THREE_WAY", "EXHAUSTIVE"],
+    "greedy_tie_break": "first lexicographic row",
+    "synthetic_pair_oracle": "freshness=1 AND lease=1",
+    "synthetic_triple_oracle": "freshness=1 AND responsibility=1 AND delivery=1"
+  },
+  "commands": {
+    "construction": "python -B -m unittest -v research.analysis.constrained_interaction_testing_5330_t0_v1.test_design",
+    "formal_once": "python -B -m research.analysis.constrained_interaction_testing_5330_t0_v1.run /out/formal-01",
+    "independent_audit_once": "python -B -m research.analysis.constrained_interaction_testing_5330_t0_v1.audit /out/formal-01/raw.json",
+    "output_must_be_absent_before_formal": true
+  },
+  "decision": {
+    "pass": "PASS_DESIGN_SENSITIVITY_ONLY",
+    "fail": "FAIL_DESIGN_SENSITIVITY",
+    "audit_stop": "STOP_AUDIT_MISMATCH",
+    "required_pair_coverage": 24,
+    "required_triple_coverage": 32,
+    "required_ofat_pair_detection": false,
+    "required_pairwise_pair_detection": true,
+    "required_three_way_triple_detection": true,
+    "pairwise_and_three_way_each_strictly_under_exhaustive": true
+  },
+  "scope": "Synthetic finite-design sensitivity only. No Agent Interface runtime safety, prevalence, realistic factor independence, or hazard-detection efficacy claim."
+}

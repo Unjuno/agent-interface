@@ -1,0 +1,142 @@
+{
+  "formal_deterministic_invocations": 1,
+  "grid_step_ns": 1000,
+  "period_ns": 28571429,
+  "rejected_spans": [
+    0,
+    -1
+  ],
+  "reruns": 0,
+  "rows": [
+    {
+      "attempts": 3,
+      "failure_fraction": 0.0,
+      "failure_measure_ns": 0,
+      "first_grid_failure_phase_ns": null,
+      "grid_failure_count": 0,
+      "grid_failure_exists": false,
+      "grid_points": 28572,
+      "interval_failure_exists": false,
+      "intervals": [],
+      "span_ns": 10000000
+    },
+    {
+      "attempts": 3,
+      "failure_fraction": 0.0,
+      "failure_measure_ns": 0,
+      "first_grid_failure_phase_ns": null,
+      "grid_failure_count": 0,
+      "grid_failure_exists": false,
+      "grid_points": 28572,
+      "interval_failure_exists": false,
+      "intervals": [],
+      "span_ns": 18000000
+    },
+    {
+      "attempts": 3,
+      "failure_fraction": 0.0,
+      "failure_measure_ns": 0,
+      "first_grid_failure_phase_ns": null,
+      "grid_failure_count": 0,
+      "grid_failure_exists": false,
+      "grid_points": 28572,
+      "interval_failure_exists": false,
+      "intervals": [],
+      "span_ns": 19047619
+    },
+    {
+      "attempts": 3,
+      "failure_fraction": 0.00010506999842395002,
+      "failure_measure_ns": 3002,
+      "first_grid_failure_phase_ns": 28569000,
+      "grid_failure_count": 3,
+      "grid_failure_exists": true,
+      "grid_points": 28572,
+      "interval_failure_exists": true,
+      "intervals": [[28568427, 28571429]],
+      "span_ns": 19048620
+    },
+    {
+      "attempts": 3,
+      "failure_fraction": 0.09999996850000047,
+      "failure_measure_ns": 2857142,
+      "first_grid_failure_phase_ns": 25715000,
+      "grid_failure_count": 2857,
+      "grid_failure_exists": true,
+      "grid_points": 28572,
+      "interval_failure_exists": true,
+      "intervals": [[25714287, 28571429]],
+      "span_ns": 20000000
+    },
+    {
+      "attempts": 3,
+      "failure_fraction": 0.6249999606250006,
+      "failure_measure_ns": 17857142,
+      "first_grid_failure_phase_ns": 10715000,
+      "grid_failure_count": 17857,
+      "grid_failure_exists": true,
+      "grid_points": 28572,
+      "interval_failure_exists": true,
+      "intervals": [[10714287, 28571429]],
+      "span_ns": 25000000
+    },
+    {
+      "attempts": 3,
+      "failure_fraction": 1.0,
+      "failure_measure_ns": 28571429,
+      "first_grid_failure_phase_ns": 0,
+      "grid_failure_count": 28572,
+      "grid_failure_exists": true,
+      "grid_points": 28572,
+      "interval_failure_exists": true,
+      "intervals": [[0, 28571429]],
+      "span_ns": 28571429
+    }
+  ],
+  "sample_hz": 35.0,
+  "source_sha256": {
+    "geometry.py": "06823aa1ecd41c16ed1fb5b6cdf5feb56a8f1049d6c9e0cb76e576f061a4cfe6",
+    "run.py": "f67ee9c1041101d9ec97b95a9b10fc5dd7348e7660b391cb8376fc3831a20808"
+  },
+  "task": "MAP01-SCORER-COHERENCE-RETRY-GEOMETRY-20260917-001",
+  "three_attempt_bound_floor_ns": 19047619,
+  "two_attempt_bound_floor_ns": 14285714,
+  "two_attempt_controls": [
+    {
+      "attempts": 2,
+      "failure_fraction": 0.0,
+      "failure_measure_ns": 0,
+      "first_grid_failure_phase_ns": null,
+      "grid_failure_count": 0,
+      "grid_failure_exists": false,
+      "grid_points": 28572,
+      "interval_failure_exists": false,
+      "intervals": [],
+      "span_ns": 14285714
+    },
+    {
+      "attempts": 2,
+      "failure_fraction": 3.499999947500001e-08,
+      "failure_measure_ns": 1,
+      "first_grid_failure_phase_ns": null,
+      "grid_failure_count": 0,
+      "grid_failure_exists": false,
+      "grid_points": 28572,
+      "interval_failure_exists": true,
+      "intervals": [[28571428, 28571429]],
+      "span_ns": 14285715
+    },
+    {
+      "attempts": 2,
+      "failure_fraction": 1.0,
+      "failure_measure_ns": 28571429,
+      "first_grid_failure_phase_ns": 0,
+      "grid_failure_count": 28572,
+      "grid_failure_exists": true,
+      "grid_points": 28572,
+      "interval_failure_exists": true,
+      "intervals": [[0, 28571429]],
+      "span_ns": 28571429
+    }
+  ]
+}

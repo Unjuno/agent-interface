@@ -1,0 +1,56 @@
+{
+  "actual_frozen_utc": "2026-10-03T05:46:16.957272+00:00",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "specs": [
+    [
+      "baseline-one",
+      "baseline",
+      false,
+      [
+        "LiteralBoundaryTests.test_matching_multi_predicate_literal"
+      ],
+      1,
+      1
+    ],
+    [
+      "candidate-eight",
+      "candidate",
+      false,
+      [
+        "LiteralBoundaryTests"
+      ],
+      0,
+      8
+    ],
+    [
+      "candidate-eight-optimized",
+      "candidate",
+      true,
+      [
+        "LiteralBoundaryTests"
+      ],
+      0,
+      8
+    ],
+    [
+      "composed-nine",
+      "composed",
+      false,
+      [
+        "LiteralBoundaryTests",
+        "ComposedReferenceTests"
+      ],
+      0,
+      9
+    ]
+  ],
+  "test_hashes": {
+    "composed-compiled_gui.py": "84b00d1f5ba4243301502e3fb2a65b0284fe543b6a0826a251e664b674ddd99c",
+    "independent_boundaries.py": "617a8f9ddf76fb618c98ba852195f0d3da209d3c5aebd24fd0aa4060912ec597",
+    "projection\\runtime\\core_v1\\compiled_gui.py": "de9af115808aef5bbafc1576e0930e3394ea0d426317cd79fd78f0c7558b48cf",
+    "projection\\runtime\\results\\compiled-literal-unknown-01a0ff35\\source\\baseline-compiled_gui.py.txt": "ccaff4ce59cfbe7af76bfe80655c968eed7855acdb7514df64730790766cf7f7",
+    "run_independent.py": "9b630a907f11b2a85f794942acd076c822e5ecb846fff2f046fd46d93dc65eb0"
+  },
+  "type": "ordinary independent source review, not author suite/producer/formal replay"
+}

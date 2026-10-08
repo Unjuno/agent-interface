@@ -1,0 +1,13 @@
+# Construction-stage record — Issue #3814
+
+These are setup/test-discovery attempts only. None invoked `runner.py`, created a formal attempt directory, dispatched a task, or called a model/provider.
+
+1. `python -B -m unittest discover -v -s /src/research/issue_3814_jsonl_framing_v1 -p test_runner.py` returned 5 with `Ran 0 tests`; the test file had been placed at the worktree root by a patch-path error. A direct invocation then returned 1 because the expected path did not exist. The stray file was removed and the test was placed under the unique experiment path.
+2. The next combined test run executed the existing CLI attempt suite successfully (15 tests), but importing the construction module by short name failed with `ModuleNotFoundError: No module named 'runner'`. The construction test import was changed to the fully qualified namespace package; experimental code and production CLI were unchanged.
+3. Corrected construction test: pinned local Python 3.12 image, `linux/amd64`, `--network none`, read-only checkout; 2/2 tests passed.
+4. Existing `runtime.cli_v1.test_attempt`: same pinned container/network/source controls; 15/15 tests passed, including a real closed-stdout-pipe CLI test and retained-report read-only recovery controls.
+5. Construction suite after fast-forwarding to `de9eb00fb05dc98d71607742eb0c90a4f2c041a1`: first run found one fixture defect (the new Docker-server preflight field was omitted from the temp freeze); 40/41 passed, one errored before any formal allocation. The fixture was corrected, then all 41/41 tests passed in the pinned network-none container (3 experiment construction/preflight tests, 15 attempt tests, 23 CLI tests).
+6. Three `--check-only` source preflight stops occurred before the runner was imported: missing `docker_server` in the committed-to-be freeze schema, one incorrectly transcribed API hash (subsequently corrected to the actual file SHA-256), and the corresponding second validation before the hash transcription was fixed. Final check-only returned `PASS_SOURCE_FREEZE` with all 14 source hashes and image/platform/runtime identity matching.
+7. Formal allocation `issue-3814-jsonl-framing-formal-01` was then invoked exactly once and exited 0. Formal results and the separate auditor's `HOLD_EVIDENCE_INCOMPLETE` are documented in `REPORT.md`; no rerun was made.
+
+All construction and preflight failures above are retained as harness/setup issues, not as the substantive framing result. The formal run count was zero at preregistration and is one now. The original experiment freeze and raw output remain unchanged; the sole auditor discrepancy is retained without post-hoc correction.

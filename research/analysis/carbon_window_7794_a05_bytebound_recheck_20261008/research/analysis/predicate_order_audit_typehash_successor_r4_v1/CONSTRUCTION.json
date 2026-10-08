@@ -1,0 +1,35 @@
+{
+  "schema": "predicate-order-typehash-construction-v1",
+  "formal_allocation_invoked": false,
+  "baseline_probe": {
+    "source": "src/probe_baseline.py",
+    "runner_exit": 0,
+    "baseline": {
+      "status": "PASS_AUDIT_HARDENING_SCOPED",
+      "errors": [],
+      "rows": 336,
+      "distributions": 21,
+      "first_cost_crossover_alpha": 0.7
+    },
+    "canaries": [
+      {"id": "cost.A", "retained_auditor": "ACCEPT"},
+      {"id": "drift_grid[0]", "retained_auditor": "ACCEPT"},
+      {"id": "final alpha", "retained_auditor": "ACCEPT"},
+      {"id": "row state_id=1", "retained_auditor": "ACCEPT"},
+      {"id": "truth bool-to-int", "retained_auditor": "ACCEPT"},
+      {"id": "replay cost", "retained_auditor": "REJECT", "reason": "replay:0:0:NAIVE"},
+      {"id": "replay evaluations", "retained_auditor": "ACCEPT"},
+      {"id": "semantic_mismatches", "retained_auditor": "ACCEPT"}
+    ],
+    "interpretation": "Excluded diagnostic only; not pooled. Seven preregistered acceptance canaries remain fixed for formal."
+  },
+  "unit_construction": {
+    "container_image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "platform": "linux/amd64",
+    "tests_passed": 4,
+    "tests_total": 4,
+    "python_ast": "PASS",
+    "shell_syntax_checks": "3/3 PASS",
+    "network": "none"
+  }
+}

@@ -1,0 +1,115 @@
+[
+  {
+    "case": "save",
+    "frames": 12,
+    "effect": "VERIFIED",
+    "confirmed_output": true
+  },
+  {
+    "case": "unsaved",
+    "frames": 2,
+    "effect": "CONTRADICTED",
+    "confirmed_output": true
+  },
+  {
+    "callback_fault": "none",
+    "result": {
+      "final_program": "test",
+      "started_ns": 39231029266,
+      "admission_closed": true,
+      "evaluation": {
+        "success": false
+      },
+      "output_flushed": true,
+      "effect": {
+        "status": "UNKNOWN",
+        "reason": "evidence_unavailable"
+      },
+      "effect_output_flushed": true,
+      "effect_publish_started_ns": 39231056250,
+      "effect_publish_finished_ns": 39231061653,
+      "status": "finished",
+      "finished_ns": 39231070330
+    }
+  },
+  {
+    "callback_fault": "evaluate",
+    "result": {
+      "final_program": "test",
+      "started_ns": 39231076549,
+      "admission_closed": true,
+      "evaluation": null,
+      "output_flushed": false,
+      "effect": {
+        "status": "UNKNOWN",
+        "reason": "evidence_unavailable"
+      },
+      "effect_output_flushed": true,
+      "effect_publish_started_ns": 39231080830,
+      "effect_publish_finished_ns": 39231083402,
+      "status": "finalization_error",
+      "failure_stage": "evaluate",
+      "error": {
+        "type": "OSError",
+        "message": "injected scorer failure"
+      },
+      "finished_ns": 39231093694
+    }
+  },
+  {
+    "callback_fault": "publish",
+    "result": {
+      "final_program": "test",
+      "started_ns": 39231095873,
+      "admission_closed": true,
+      "evaluation": {
+        "success": false
+      },
+      "output_flushed": false,
+      "effect": {
+        "status": "UNKNOWN",
+        "reason": "evidence_unavailable"
+      },
+      "effect_output_flushed": false,
+      "effect_publish_started_ns": 39231099081,
+      "effect_publication_error": {
+        "type": "OSError",
+        "message": "effect output not confirmed flushed"
+      },
+      "effect_publish_finished_ns": 39231102041,
+      "status": "finalization_error",
+      "failure_stage": "publish",
+      "error": {
+        "type": "OSError",
+        "message": "evaluation output not confirmed flushed"
+      },
+      "finished_ns": 39231109062
+    }
+  },
+  {
+    "callback_fault": "early_only",
+    "result": {
+      "final_program": "test",
+      "started_ns": 39231110606,
+      "admission_closed": true,
+      "evaluation": {
+        "success": false
+      },
+      "output_flushed": true,
+      "effect": {
+        "status": "UNKNOWN",
+        "reason": "evidence_unavailable"
+      },
+      "effect_output_flushed": false,
+      "effect_publish_started_ns": 39231112853,
+      "effect_publication_error": {
+        "type": "OSError",
+        "message": "effect output not confirmed flushed"
+      },
+      "effect_publish_finished_ns": 39231115499,
+      "status": "finalization_error",
+      "failure_stage": "publish_effect",
+      "finished_ns": 39231119830
+    }
+  }
+]

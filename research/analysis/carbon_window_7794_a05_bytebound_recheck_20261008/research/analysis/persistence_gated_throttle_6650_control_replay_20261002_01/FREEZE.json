@@ -1,0 +1,33 @@
+{
+  "allocation": "PERSISTENCE-GATED-OPTIONAL-THROTTLE-6650-CONTROL-REPLAY-20261002-01",
+  "base_main": "a28fd4456ebfd0c181e14e5f018627d7e57b856a",
+  "parent_allocation": "PERSISTENCE-GATED-OPTIONAL-THROTTLE-6650-T0-20261002-01",
+  "formal_budget": {"candidate_runs": 0, "independent_auditor_runs": 1, "retries": 0},
+  "scope": "independent raw-only replay of immutable finite synthetic predecessor output",
+  "inputs": {
+    "fixture_sha256": "4d190dff60ae3aac92c1dc9e348f39b0e6f321d2fdf5cca022479c4ff8037087",
+    "raw_sha256": "8022a834d4e5e32e9af01438dbc3ea57312addb06ed714126e28eee77e3faca6"
+  },
+  "auditor_sources": {
+    "replay_sha256": "0f3e22412aa1ebca5607ac3d002a5a68a5148fa48a42e5b4d2dd0071055aa3cb",
+    "auditor_sha256": "5db052391b0aa8c7afdda0da7303ec43575f0807c6444dac7cee84534995db25",
+    "test_replay_sha256": "873784bbff690491e35d3e35d0ca175ae4ce0d73be83b18578caa22c48d50a50",
+    "preregistration_sha256": "965210e355a035b141fb021ca9f8533869c1b351a0436cd155a13363aa31feba"
+  },
+  "container": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "image": "python@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0",
+    "platform": "linux/arm64",
+    "network": "none",
+    "source_mount": "read-only",
+    "root_filesystem": "read-only",
+    "configured_cpus": 0.5,
+    "configured_memory_bytes": 536870912
+  },
+  "construction": {
+    "host_python": "3.14.5",
+    "focused_tests": "3 passed",
+    "full_replay_match": "9 traces x 4 policies; structural differences=0",
+    "formal_invocations": "none before this freeze"
+  }
+}

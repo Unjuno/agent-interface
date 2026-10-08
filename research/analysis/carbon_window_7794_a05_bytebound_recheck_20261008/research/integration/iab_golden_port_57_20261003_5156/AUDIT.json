@@ -1,0 +1,59 @@
+{
+  "decision": "PORT_PASS_SCOPED",
+  "actual_effects": 6,
+  "layouts": {
+    "A": 3,
+    "B": 3
+  },
+  "healthy_ui_seconds": 2.613,
+  "whole_ui_seconds": 3.678,
+  "missing_click_observed_seconds": 0.851,
+  "requested_missing_seconds": 0.8,
+  "model_tokens": "unavailable",
+  "physical_input_release": "not observed",
+  "controls": [
+    {
+      "name": "extra_duplicate_effect",
+      "refused": true,
+      "reason": "literal final/raw census"
+    },
+    {
+      "name": "wrong_submitted_value_despite_true_flag",
+      "refused": true,
+      "reason": "literal final/raw census"
+    },
+    {
+      "name": "wrong_task",
+      "refused": true,
+      "reason": "literal final/raw census"
+    },
+    {
+      "name": "boolean_server_clock",
+      "refused": true,
+      "reason": "literal final/raw census"
+    },
+    {
+      "name": "false_ui_heading",
+      "refused": true,
+      "reason": "actual post-effect observation"
+    },
+    {
+      "name": "missing_click_claimed_success",
+      "refused": true,
+      "reason": "actual missing-control return"
+    },
+    {
+      "name": "open_final_socket",
+      "refused": true,
+      "reason": "actual owned server cleanup"
+    },
+    {
+      "name": "source_byte_changed",
+      "refused": true,
+      "reason": "pinned byte size"
+    }
+  ],
+  "source_arm_replays": 0,
+  "original_child_replays": 0,
+  "checker_recorded_utc": "2026-10-03T07:55:59.096166+00:00"
+}

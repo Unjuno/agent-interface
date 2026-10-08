@@ -1,0 +1,86 @@
+{
+  "record_id": "O2-G1-W2-MEASUREMENT-02",
+  "status": "PASS_MEASUREMENT_CONTRACT_CONSTRUCTION_SCOPED",
+  "base_commit": "086233b30090d56b117a648226367a529dd553ad",
+  "branch": "research/o2-g1-useful-control-measurement-v2-20260927",
+  "final_commit_at_freeze": "0d8abd3f21d8494378fc66ea123ae03031272a10",
+  "container": {
+    "image": "python:3.12-slim-bookworm",
+    "image_digest": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "network": "none",
+    "filesystem": "source read-only; output mount writable; container root filesystem read-only",
+    "limits": {
+      "cpus": 1,
+      "memory": "512m",
+      "pids": 32
+    },
+    "command": "sh /src/run_validation.sh",
+    "gpu": "not used; synthetic schema/trace validation is CPU-bound"
+  },
+  "source_blobs": {
+    "event-schema.json": {
+      "git_blob": "ebc424d2df631aa74c6d9aee4699c595a27ed589",
+      "sha256": "3ca91926d9e362e02dd0272a03b67e2d65b46199bcfb1bb8f55c29cfe92f6d76"
+    },
+    "trace-cases.json": {
+      "git_blob": "0a49a00567c25766495cd332be50f6c2946781f7",
+      "sha256": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f"
+    },
+    "verify_contract.py": {
+      "git_blob": "d8f4221811b160e5714d2d6e4154c82af94d633e",
+      "sha256": "6bf7c2c2fc4b221a51ddd8a615777ddf11617c4ece4a03465e3bbbbf3b724c35"
+    },
+    "audit_contract.py": {
+      "git_blob": "1942546e60ad7e6cb56b9a383830033db14d0397",
+      "sha256": "f00677e91ceb3a67bddff0d941e076649c8da759f422c3a193725b2e897eacb7"
+    },
+    "run_validation.sh": {
+      "git_blob": "45c306afb5b8c3f5e92a5e13351a2d172315611b",
+      "sha256": "1555551996d041ae067f356717b06b9eb5b961fe4f5802f7a04f76101465142a"
+    }
+  },
+  "outcome": {
+    "trace_classes": 8,
+    "independent_numeric_reconstructions": 5,
+    "mutation_controls_rejected": 7,
+    "overlap_union_ns": 58,
+    "naive_overlapping_sum_ns": 76,
+    "case_result_mismatches": 0,
+    "verification_disposition": "PASS_MEASUREMENT_CONTRACT_CONSTRUCTION_SCOPED",
+    "audit_disposition": "PASS_RAW_TRACE_AUDIT_SCOPED",
+    "verification_sha256": "e38e1c028cab44eb691f574c803155c998336bf4d164d362a9775658c4188e18",
+    "audit_sha256": "f3e5bbc9a934212a42dc7c933a2b66067e69c0708f56fdb3f3c242539f8a44be"
+  },
+  "failed_attempts": [
+    {
+      "stage": "first container invocation",
+      "cause": "Docker Desktop bind-mount CLI rejected quoting of a Windows source path",
+      "classification": "launcher invocation failure; no test code executed"
+    },
+    {
+      "stage": "first transferred source run",
+      "cause": "PowerShell here-string quoting doubled embedded Python quotes and created a SyntaxError",
+      "classification": "transfer failure; no valid source verification"
+    },
+    {
+      "stage": "verification run",
+      "cause": "Expected-case comparator treated metadata fields as unsupported",
+      "classification": "pre-freeze verifier defect; corrected before final frozen run"
+    },
+    {
+      "stage": "verification run",
+      "cause": "Censored terminal assertion was tested as a release observation",
+      "classification": "pre-freeze verifier defect; corrected before final frozen run"
+    },
+    {
+      "stage": "audit run",
+      "cause": "Mutation test showed terminal-derived release event could evade weak raw invariants",
+      "classification": "pre-freeze auditor defect; corrected before final frozen run"
+    }
+  ],
+  "H": "Source-level measurement contract can prevent common duration/authority/effect conflation in representative synthetic cases.",
+  "T": "W2 frozen schema and 8 synthetic traces; no live app, game, model, input, external lease, or GPU workload.",
+  "D": "Verifier PASS 8/8; independent audit PASS; 5 recomputations; 7/7 mutation rejection controls.",
+  "C": "A typed, interval-aware source contract makes no-input, unauthorized input, release timing, overlapping holds, censoring, unbound effects, and complete negative score windows distinguishable without promoting program duration to occupancy/effect.",
+  "U": "No full external JSON Schema meta-validator was available; clock conversion across domains, real X11/server receipts, task-plan-bound scoring, delivered useful feedback, causal effect, MAP01 utility, and recovery efficacy remain unverified."
+}

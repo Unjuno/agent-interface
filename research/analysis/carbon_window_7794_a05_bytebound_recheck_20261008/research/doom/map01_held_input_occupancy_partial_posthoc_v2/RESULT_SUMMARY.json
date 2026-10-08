@@ -1,0 +1,57 @@
+{
+  "schema": "map01-held-input-occupancy-partial-posthoc-summary-v2",
+  "task": "MAP01-HELD-OCCUPANCY-PARTIAL-POSTHOC-20260916-002",
+  "issue": 443,
+  "freeze_head": "b95e678d182349bda4168698db5882de0b9ff0cb",
+  "compute_head": "e1ec11fc68e416b0ab391e4625b0de7da79f33aa",
+  "workflow_run": 35098833590,
+  "workflow_job": 104802821158,
+  "decision": "SCHEMA_CENSORING_TOO_WIDE",
+  "independent_audit": "PASS_PARTIAL_OCCUPANCY_AUDIT",
+  "result_sha256": "e6b99058f7d0424f51451cb7ebb0e418572c5f72a5c307e2fb6a0496b819c702",
+  "summary_sha256": "c830015b2d48b5beaa90f041b7f4d807b5feb1ed3775f0ce83c7ca2ac5f29d98",
+  "audit_sha256": "88e2286f409d6ec79e97f5b392fc259cb8a0280d8eba0d4cfb79f9328bbfb22e",
+  "artifact_zip_sha256": "1391709838769fe65da09c795470233fe27431f799141b165606669b76962cf5",
+  "artifact_id": 10447755603,
+  "runs": {
+    "map01-v38-integrated-threat-live-01": {
+      "hold_steps": 11,
+      "class_counts": {"ordinary_completed_bounded": 11},
+      "total_model_wait_ms": 27488.831,
+      "physical_any_key_occupancy_lower_ms": 3048.89,
+      "physical_any_key_occupancy_upper_ms": 4039.878,
+      "occupancy_interval_width_ms": 990.987,
+      "width_to_model_wait": 0.036050532669068394,
+      "width_to_occupancy_upper": 0.24530121949227177,
+      "informative_enough_for_next_matched_metric": true
+    },
+    "map01-v39-coast-liveness-live-01": {
+      "hold_steps": 29,
+      "class_counts": {
+        "ordinary_completed_bounded": 27,
+        "keys_held_interrupted": 1,
+        "partial_admission_interrupted": 1
+      },
+      "total_model_wait_ms": 43317.917,
+      "physical_any_key_occupancy_lower_ms": 6301.2,
+      "physical_any_key_occupancy_upper_ms": 8452.733,
+      "occupancy_interval_width_ms": 2151.534,
+      "width_to_model_wait": 0.04966845474125637,
+      "width_to_occupancy_upper": 0.25453708285828974,
+      "informative_enough_for_next_matched_metric": false,
+      "excess_width_over_25pct_upper_gate_ms": 38.35075
+    }
+  },
+  "retained_partial_edge": {
+    "id": "cover-4",
+    "step": 10,
+    "classification": "partial_admission_interrupted",
+    "requested_keys": ["Down", "space"],
+    "admitted_keys": ["Down"],
+    "lower_ms": 0.0,
+    "upper_ms": 13.209,
+    "full_keyset_established": false,
+    "fraction_of_v39_total_interval_width": 0.0061393405821149
+  },
+  "interpretation": "Partial-admission semantics repaired complete-log reconstructability, but ordinary normal-hold key-up censoring dominates the remaining uncertainty. Do not tune the 0.25 gate; instrument key-up timestamps in a separately allocated successor."
+}

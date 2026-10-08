@@ -1,0 +1,42 @@
+{
+  "allocation": "x11-timestamp-order-20260923-02",
+  "batch_budget_s": 60,
+  "case_timeout_s": 8,
+  "construction_v2_01": {
+    "case_duration_s_range": [
+      1.994,
+      2.291
+    ],
+    "cases": 6,
+    "status": "COMPLETE"
+  },
+  "decision": "PASS_X11_TIMESTAMP_ORDER_BOUNDARY_SCOPED only under the unchanged gates in Issue #4220 / predecessor PLAN; complete no-contrast => HOLD_NO_TIMESTAMP_TIE_DISCRIMINATOR; candidate mismatch => FAIL; source/process/raw/cleanup/audit ambiguity => STOP/HOLD_EVIDENCE_INCOMPLETE",
+  "delta_ms": 80,
+  "formal_reruns_of_this_allocation": 0,
+  "heartbeat_requested_delay_ms": 120,
+  "outer_timeout_s": 90,
+  "planned_cases": 24,
+  "policy_timeout_s": 2,
+  "predecessor_allocation": "x11-timestamp-order-20260922-01",
+  "question_issue": 4220,
+  "repetitions": 4,
+  "scenarios": [
+    "AB_BURST",
+    "BA_BURST",
+    "BAB_BURST",
+    "AB_SPACED",
+    "BA_SPACED",
+    "A_ONLY"
+  ],
+  "scientific_delta": "none; execution envelope only",
+  "sources": {
+    "actor.py": "65a018e97362009fef25cb4a52a3330fdb81172fce78fb3fa0113ef875609d16",
+    "audit.py": "80a27c364527bcdcf4cc951eabfc17abfbf50461fa93469a856f7364727b7173",
+    "case.py": "e6077c2d0259791e9b0111dcb2cf9265b60793c934bb3da70b729dca4fc013ed",
+    "execute_v2.py": "85ebd8f1a89b8b603c79ed73576fe7d8662946efc88864ae65ea8d40eee16035",
+    "policies.py": "8ebfcd0ba3bb10eef3fea52dac5b0785bf01cd02a1e8d53aa795a5715e2db848",
+    "run_v2.py": "a866dfaca246eabaf9ba41c18af853b9a856b7e210f9081ff8cc4ef64a37f79a",
+    "test_policies.py": "8ffe20fe2b9a61bc3ea7807dd00822a5486ff84d08a8d79c9e16585a2b3bdc3f",
+    "upstream_monitor.py": "a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb"
+  }
+}

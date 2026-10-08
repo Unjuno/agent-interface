@@ -1,0 +1,27 @@
+{
+  "schema": "w2-lease-actuation-cli-construction-freeze-v3",
+  "successor_to": "FREEZE.json and FREEZE_v2.json; earlier results remain immutable",
+  "issue": 5116,
+  "source_main": "2ac5a00b9879c48f0ecf304c1d3ff01fe4c18ad8",
+  "source_blobs": {
+    "measurement_contract": "21d750311c643643823b0f7ea129050738a21791",
+    "event_schema": "ebc424d2df631aa74c6d9aee4699c595a27ed589",
+    "trace_fixture": "0a49a00567c25766495cd332be50f6c2946781f7",
+    "frozen_verifier": "d8f4221811b160e5714d2d6e4154c82af94d633e",
+    "frozen_auditor": "1942546e60ad7e6cb56b9a383830033db14d0397"
+  },
+  "fixture_sha256": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f",
+  "candidate_sha256": "a3590b3a1637fb2ed2d3c74019d06535e919e5f52c5491f22cdc3de0845b40e3",
+  "raw_oracle_sha256": "94421e50cf3d90e5c8b13858563357a7b954cb39820441fe30a7394e21ee9160",
+  "candidate_cli_sha256": "5f2a7a0c44e7ac953c3c190d5e275a90341ce20b9134550adef9181f8ec2def5",
+  "raw_auditor_cli_sha256": "48ea042685f4d4dd696ecad1c4e537be24ff42caebf22609321d31ff3f35c0f3",
+  "test_cli_sha256": "83714a849419a59f071be26a7d9af27da40ad1c0a23211773c48db5ab57f5b66",
+  "protocol": {
+    "original_fixture_mutated": false,
+    "candidate_writes_effective_trace_and_report": true,
+    "auditor_reconstructs_raw_rows_without_candidate_import": true,
+    "runs": ["baseline", "four matched bindings", "one foreign binding", "one missing binding"],
+    "output_paths_must_be_fresh": true,
+    "container_or_formal_invocation": false
+  }
+}

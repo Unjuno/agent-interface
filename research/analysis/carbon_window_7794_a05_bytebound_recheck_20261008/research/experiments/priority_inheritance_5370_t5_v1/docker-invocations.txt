@@ -1,0 +1,10 @@
+Image digest:
+python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9
+
+Candidate: exactly one invocation, captured stdout into raw.json:
+docker run --rm --pull=never --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --mount type=bind,src=<scratch>,dst=/work,readonly python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python /work/candidate.py
+
+Auditor: exactly one invocation in a separate container, captured stdout into independent-audit.json:
+docker run --rm --pull=never --network=none --cpus=1 --memory=128m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=8m --mount type=bind,src=<scratch>,dst=/work,readonly python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 python /work/audit.py /work/raw.json
+
+Candidate exit status: 0. Auditor exit status: 0. No retry. Source mount and root filesystem were read-only; container network was disabled.

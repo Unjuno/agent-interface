@@ -1,0 +1,153 @@
+"""Ordinary copied-data comparison; author verify() only, never its main()."""
+import datetime
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import sys
+import time
+
+from independent_oracle import PACKAGE, ROOT, WORK, Invalid, verify as independent_verify
+
+# This separate comparator attributes the author function's behavior explicitly.
+# The independent oracle itself never imports this module or any author code.
+sys.path.insert(0, str(PACKAGE))
+import auditor_v2
+
+def event(row, kind):
+    return next(e for e in row['events'] if e['kind'] == kind)
+
+def move_before(row, kind, before):
+    events = row['events']
+    moved = event(row, kind)
+    events.remove(moved)
+    position = next(i for i, e in enumerate(events) if e['kind'] == before)
+    moved['ns'] = events[position - 1]['ns']
+    events.insert(position, moved)
+
+def effect_early(row, root):
+    move_before(row, 'effect_saved', 'command')
+
+def command_early(row, root):
+    move_before(row, 'command', 'read')
+
+def sink_reversed(row, root):
+    events = row['events']
+    begin = event(row, 'sink_begin')
+    end = event(row, 'sink_end')
+    end['ns'] = begin['ns']
+    events.remove(end)
+    events.insert(events.index(begin), end)
+
+def future_finish_clock(row, root):
+    value = next(e['ns'] for e in reversed(row['events']) if e['kind'] == 'clock')
+    event(row, 'sink_begin')['receipt']['sample_finished_ns'] = value
+    path = root / row['case']['id'] / 'scorer/scorer-samples.jsonl'
+    samples = [json.loads(line) for line in path.read_text().splitlines()]
+    samples[0]['sample_finished_ns'] = value
+    path.write_text(''.join(json.dumps(item, sort_keys=True) + '\n' for item in samples))
+
+def read_without_ready(row, root):
+    event(row, 'wait_end')['ready'] = False
+
+def wrong_clock_site(row, root):
+    event(row, 'clock')['line'] = 999
+
+def close_early(row, root):
+    move_before(row, 'closed', 'clock')
+
+def wrong_read_request(row, root):
+    event(row, 'read')['requested'] = 65537
+
+def effect_bool_alias(row, root):
+    path = root / row['case']['id'] / 'effect.json'
+    data = json.loads(path.read_text())
+    data['finished'] = 1
+    path.write_text(json.dumps(data, sort_keys=True) + '\n')
+
+def zero_count_bool_alias(row, root):
+    path = root / row['case']['id'] / 'scorer/scorer-samples.jsonl'
+    samples = [json.loads(line) for line in path.read_text().splitlines()]
+    samples[0]['payload']['kill_count'] = False
+    path.write_text(''.join(json.dumps(item, sort_keys=True) + '\n' for item in samples))
+
+def limit_bool_alias(row, root):
+    event(row, 'read')['limit'] = True
+
+def exit_bool_alias(row, root):
+    row['process_receipt']['exit_code'] = False
+
+def pin(path):
+    data = path.read_bytes()
+    return {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+
+def rejoin(row, root):
+    cell = root / row['case']['id']
+    saved = {key: value for key, value in row.items() if key not in ('artifacts', 'process_receipt')}
+    (cell / 'row.json').write_text(json.dumps(saved, ensure_ascii=False, sort_keys=True, indent=2) + '\n')
+    row['artifacts'] = {path.relative_to(root).as_posix(): pin(path)
+                        for path in sorted(cell.rglob('*')) if path.is_file()}
+
+raw_bytes = (ROOT / 'RAW.json').read_bytes()
+original_pin = hashlib.sha256(raw_bytes).hexdigest()
+raw = json.loads(raw_bytes)
+deck = json.loads((PACKAGE / 'deck.json').read_text())
+start = datetime.datetime.now(datetime.timezone.utc).isoformat()
+tick = time.monotonic_ns()
+original_independent = independent_verify(raw)
+original_author = auditor_v2.verify(raw, deck, ROOT)
+if original_author:
+    raise SystemExit('original V2 functions returned errors')
+out = WORK / 'copied-controls'
+out.mkdir(exist_ok=False)
+conditions = [
+    ('effect-marker-before-command', 0, effect_early),
+    ('command-before-native-read', 0, command_early),
+    ('sink-end-before-sink-begin', 0, sink_reversed),
+    ('sample-finish-bound-to-future-clock', 0, future_finish_clock),
+    ('read-after-false-readiness', 0, read_without_ready),
+    ('clock-line-outside-frozen-source', 0, wrong_clock_site),
+    ('cleanup-before-native-operations', 0, close_early),
+    ('wrong-integer-read-request', 0, wrong_read_request),
+    ('effect-finished-int-bool-alias', 0, effect_bool_alias),
+    ('scorer-zero-bool-alias', 0, zero_count_bool_alias),
+    ('one-byte-limit-bool-alias', 3, limit_bool_alias),
+    ('zero-exit-bool-alias', 0, exit_bool_alias),
+]
+controls = []
+for name, index, mutate in conditions:
+    root = out / name
+    shutil.copytree(ROOT, root)
+    changed = json.loads(raw_bytes)
+    row = changed['rows'][index]
+    mutate(row, root)
+    rejoin(row, root)
+    (root / 'RAW.json').write_text(json.dumps(changed, ensure_ascii=False, sort_keys=True, indent=2) + '\n')
+    author_errors = auditor_v2.verify(changed, deck, root)
+    try:
+        independent_verify(changed, root)
+    except Invalid as error:
+        reason = str(error)
+    else:
+        raise SystemExit('ineffective independent control: ' + name)
+    controls.append({'name': name, 'cell': row['case']['id'], 'author_v2_errors': author_errors,
+                     'author_v2_accepts': not author_errors, 'independent_rejection': reason,
+                     'honestly_rejoined_artifacts': row['artifacts'], 'mutated_raw': pin(root / 'RAW.json')})
+total_bytes = sum(path.stat().st_size for path in out.rglob('*') if path.is_file())
+if total_bytes > 64 * 1024 * 1024:
+    raise SystemExit('private copied-data envelope exceeded')
+if hashlib.sha256((ROOT / 'RAW.json').read_bytes()).hexdigest() != original_pin:
+    raise SystemExit('original unexpectedly changed')
+report = {'kind': 'ordinary_private_copied_data_comparison',
+          'head': '5516baf54c92a120d651c08f4163707549678b04',
+          'original_raw_sha256': original_pin, 'started_utc': start,
+          'ended_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'elapsed_ns': time.monotonic_ns() - tick, 'original_rows_pass': len(original_independent),
+          'original_author_v2_errors': original_author, 'controls': controls,
+          'author_v2_accepted_count': sum(row['author_v2_accepts'] for row in controls),
+          'independent_rejected_count': len(controls), 'private_copied_bytes': total_bytes,
+          'original_unchanged': True, 'author_function_called': 'auditor_v2.verify only (imports v1.verify)',
+          'author_formal_main_or_native_invocations': 0,
+          'independent_oracle_author_code_imports': 0}
+(WORK / 'copied-control-comparison.json').write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps({key: value for key, value in report.items() if key != 'controls'}, indent=2))

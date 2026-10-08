@@ -1,0 +1,44 @@
+{
+  "schema": "gpu-lora-local-preflight-v1",
+  "issue": 4471,
+  "allocation": "needle-lora-3441-pilot-04d-corrected-base-20260926-01",
+  "timestampUtc": "2026-09-26 14:07:31 UTC",
+  "branch": "research/needle-lora-3441-pilot-04d-20260926",
+  "sourceFreeze": "FREEZE.json",
+  "baseCommit": "c83ddb057c680a126144d000bf7ef7ba2274652a",
+  "formalInvocationsBeforePreflight": 0,
+  "execution": {
+    "host": "local Windows PC",
+    "container": false,
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "gpuFreeBytesPyTorch": 15991832576,
+    "gpuFreeMiBNvidiaSmi": 16167,
+    "gpuTotalMiBNvidiaSmi": 16384,
+    "gpuUtilizationPercent": 0,
+    "systemDiskFreeBytes": 323757817856,
+    "python": "3.11.9",
+    "pytorch": "2.5.1+cu121",
+    "torchCuda": "12.1",
+    "cublasWorkspaceConfig": ":4096:8",
+    "pythonHashSeed": "3927",
+    "deterministicAlgorithms": true,
+    "cudnnDeterministic": true,
+    "cudnnBenchmark": false,
+    "tf32": false
+  },
+  "checks": {
+    "sourceAndFreezeReadbackExact": true,
+    "sourceGitBlobPinsMatched": true,
+    "pyCompile": "PASS",
+    "constructionAndIndependentAuditorTests": {
+      "passed": 15,
+      "failed": 0
+    },
+    "deterministicStartup": "PASS",
+    "torchCudaMemGetInfo": "PASS",
+    "knownWddmPeakMemoryStatsProbe": "STOPPED_BEFORE_TRAINING",
+    "peakAllocatedBytesStatus": "UNAVAILABLE_WDDM"
+  },
+  "status": "FORMAL_READY",
+  "formalTrainingStepsExecuted": 0
+}

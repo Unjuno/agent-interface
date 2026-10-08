@@ -1,0 +1,70 @@
+{
+  "valid_verify": true,
+  "refused_controls": 8,
+  "cases": [
+    {
+      "kind": "verify",
+      "visible_A1": "480",
+      "visible_A2": 192,
+      "confirmation_dialog_visible": false,
+      "rationale": "Visible; request independent check."
+    },
+    {
+      "kind": "verify",
+      "visible_A1": true,
+      "visible_A2": 192,
+      "confirmation_dialog_visible": false,
+      "rationale": "Visible; request independent check."
+    },
+    {
+      "kind": "verify",
+      "visible_A1": 480,
+      "visible_A2": 192,
+      "confirmation_dialog_visible": 0,
+      "rationale": "Visible; request independent check."
+    },
+    {
+      "kind": "verify",
+      "visible_A1": 480,
+      "visible_A2": 192,
+      "confirmation_dialog_visible": false,
+      "rationale": "Visible; request independent check.",
+      "extra": 1
+    },
+    {
+      "kind": "act",
+      "rationale": "x",
+      "steps": [
+        {
+          "op": "pointer_click",
+          "x": true,
+          "y": 0,
+          "duration_ms": 80
+        }
+      ]
+    },
+    {
+      "kind": "act",
+      "rationale": "x",
+      "steps": [
+        {
+          "op": "text",
+          "text": "abc"
+        }
+      ]
+    },
+    {
+      "kind": "act",
+      "rationale": "x",
+      "steps": [
+        {
+          "op": "chord",
+          "modifier": "Control_L",
+          "key": "q"
+        }
+      ]
+    }
+  ],
+  "duplicate_key_refused": true,
+  "scope": "offline schema validation, not semantic target proof"
+}

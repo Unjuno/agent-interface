@@ -1,0 +1,63 @@
+{
+  "schema": "issue-5054-boundary-run-record-v1",
+  "issue": 5054,
+  "successor_of": 5052,
+  "source_main_commit_at_freeze": "04564ff4d1df59f01a91de7338c44adab9ae74ab",
+  "source_git_blob": "096adf9b60eaf6a31fe92c836f57d1a4d26b177e",
+  "source_sha256": "edd4cea89c541d42457e8c48992d3efe1bcb0ab7610489b47e8efa60660aab3a",
+  "environment": {
+    "docker_desktop": true,
+    "context": "desktop-linux",
+    "engine": "28.5.1",
+    "platform": "linux/amd64",
+    "image": "python:3.12-slim",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "writable only at /out",
+    "limits": {"cpus": 1, "memory": "512m", "pids": 32},
+    "command": "sh /src/run.sh"
+  },
+  "invocations": {
+    "corrected_docker_construction": 1,
+    "attempt_01_source_extraction_stop": 1,
+    "live_map01": 0,
+    "model": 0,
+    "os_input": 0,
+    "network_requests": 0
+  },
+  "outcome": {
+    "disposition": "PASS_BOUNDARY_CONSTRUCTION_SCOPED",
+    "cases": 5,
+    "deadline_5s": "HOLD; post-probe remaining 4750000000 ns; no submit",
+    "deadline_5s249ms": "HOLD; post-probe remaining 4999000000 ns; no submit",
+    "deadline_5s250ms": "SEND; post-probe remaining exactly 5000000000 ns; one submit",
+    "deadline_6s": "SEND; post-probe remaining 5750000000 ns; one submit",
+    "uncertainty_over_1s": "HOLD_UNCERTAINTY; width 1283333333 ns; no submit",
+    "independent_audit_errors": 0,
+    "authority_extension": false
+  },
+  "attempt_01": {
+    "disposition": "STOP_EXACT_SENDER_CLASS_MISSING",
+    "cases_run": 0,
+    "preserved_at": "attempt-01/STOP.json",
+    "cause": "Initial AST lookup searched only top-level nodes; class was nested."
+  },
+  "sha256": {
+    "README.md": "521c5bf06b7d4f5a26aa5ffd78fcb1fe4999992933b067c8240c86bee4895987",
+    "runner.py": "2c867ffa5fc8b9ff2b0882c0bf3339b3b7d58b03a4ba5f3654f313570cdaf019",
+    "audit.py": "7c096c6e5584173afad0bca810db9f5e97f680a216d54775c9fc999a474ffe45",
+    "run.sh": "ab6e2ceb7e6b51c0ba072b6373f048171533389b4cc08093fd9159ab355c20da",
+    "frozen-effective-controller.py": "edd4cea89c541d42457e8c48992d3efe1bcb0ab7610489b47e8efa60660aab3a",
+    "attempt-01/STOP.json": "1a747343ede8a7bbc8b2d33362c627f5e84d4231afcbd5a8b3606b8402fc3b2e",
+    "out/raw.json": "da4ef210d0469fc3e93a839b4f61c0335ca8d7174990e04d6b1885afe9d2ef12",
+    "out/audit.json": "57b379370011853fcaea77abd6dc87a3f3cdcccf358861bbca8fb0e917468d17"
+  },
+  "limits": [
+    "deterministic fake clocks, not physical transport measurements",
+    "does not establish action freshness, real release behavior, or MAP01 utility",
+    "250ms reserve was selected and tested synthetically; real timing sufficiency remains unknown",
+    "not authority for a live MAP01 allocation"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "adjudications": [
+    {
+      "boundary": "COMPUTATION_TRUE_PREDICATE_ONLY",
+      "case_id": "case01",
+      "computation_statement_true": true,
+      "task_effect_claim": "NOT_ESTABLISHED_BY_T0"
+    },
+    {
+      "boundary": "COMPUTATION_FALSE_WRONG_TARGET",
+      "case_id": "case02",
+      "computation_statement_true": false,
+      "task_effect_claim": "NOT_ESTABLISHED_BY_T0"
+    },
+    {
+      "boundary": "COVERAGE_UNPROVEN",
+      "case_id": "case03",
+      "computation_statement_true": true,
+      "task_effect_claim": "NOT_ESTABLISHED_BY_T0"
+    },
+    {
+      "boundary": "PREOUTCOME_COMMITMENT_UNPROVEN",
+      "case_id": "case04",
+      "computation_statement_true": true,
+      "task_effect_claim": "NOT_ESTABLISHED_BY_T0"
+    },
+    {
+      "boundary": "FRESHNESS_UNPROVEN",
+      "case_id": "case05",
+      "computation_statement_true": true,
+      "task_effect_claim": "NOT_ESTABLISHED_BY_T0"
+    },
+    {
+      "boundary": "SCORER_BINDING_FAILURE",
+      "case_id": "case06",
+      "computation_statement_true": true,
+      "task_effect_claim": "NOT_ESTABLISHED_BY_T0"
+    },
+    {
+      "boundary": "ORIGIN_UNPROVEN",
+      "case_id": "case07",
+      "computation_statement_true": true,
+      "task_effect_claim": "NOT_ESTABLISHED_BY_T0"
+    },
+    {
+      "boundary": "PREDICATE_INSUFFICIENT",
+      "case_id": "case08",
+      "computation_statement_true": true,
+      "task_effect_claim": "NOT_ESTABLISHED_BY_T0"
+    }
+  ],
+  "corruptions_rejected": {
+    "coverage_expanded_without_witness": true,
+    "evidence_digest_substituted": true,
+    "origin_attestation_forged": true,
+    "post_outcome_time_rewritten": true,
+    "predicate_score_flipped": true,
+    "predicate_upgraded": true,
+    "scorer_version_swapped": true,
+    "stale_capture_age_erased": true,
+    "whole_task_success_overclaim": true
+  },
+  "errors": [],
+  "proof_claim": false,
+  "rows": 8,
+  "scope": "finite synthetic computation/predicate boundary only; no cryptographic proof, capture provenance, GUI effect, or security claim",
+  "sha256": {
+    "fixture": "56e6ba6c7014f1ad73ef8d62a93a04759907f7735bfd075302ca5da06b0421f9",
+    "oracle": "11d21a4ef1771fc094a05cd6300f4db2df52f9184ceb65f5f07110117a30b208",
+    "raw": "fab07a6a53e3f1b45dbde2cae8b72838fad8e4f7a1f43b7a2a949beffbc7f4f1"
+  },
+  "status": "METHOD_PASS_SCOPED"
+}

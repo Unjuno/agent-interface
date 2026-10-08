@@ -1,0 +1,57 @@
+{
+  "schema": "agent-interface/primary-functional-pair-v1",
+  "source_commit": "708dec9bcd2bfb3ef597acf7bc1c8a02bcb96b01",
+  "seed": 991357,
+  "order": [
+    "B0-full",
+    "C1-reviewed-reference"
+  ],
+  "conditions": {
+    "application": "LibreOffice Calc",
+    "task": "enter assigned A1/A2 values and save XLSX",
+    "display": [
+      1280,
+      800
+    ],
+    "gap_ms": 20,
+    "wait_ms": 100,
+    "compact": true,
+    "report_refs": true,
+    "runtime_archive": "results-local/target-review-request-build-01/runtime.pyz",
+    "model": "same active primary conversation; exact provider model/version and per-call usage unavailable",
+    "isolation": "fresh private Xvfb/Openbox/LibreOffice profile for each arm; sequential same host, not frozen exogenous timing"
+  },
+  "flow": [
+    "observe",
+    "enter-two-cells-and-observe",
+    "save-and-observe",
+    "inspect-modal",
+    "explicit-review-target-with-capture",
+    "confirm-format-once",
+    "inspect-saved",
+    "close"
+  ],
+  "deviations": "At most two extra observations per unreadable transition, logged and counted. Stop on failed/unknown input or fixture failure. Never replay uncertain input. Do not regenerate failed allocation. Preserve ordinary argument errors. No duplicate-only observations.",
+  "review": "Actual primary image/reference review required before next input; not an automated policy or helper model.",
+  "measures": [
+    "independent saved values",
+    "request/dispatch/observation count",
+    "full image/reference count",
+    "host timing boundaries and caller review declarations"
+  ],
+  "unmeasured": [
+    "model tokens/cost/cache",
+    "exact first useful visual feedback instant",
+    "human baseline",
+    "causal speedup"
+  ],
+  "scope": "one engineering functional pair, fixed B0 then C1 order; not blind/independent formal benchmark or statistics",
+  "source_sha256": {
+    "research/live_control/relay_host_timeline_v1.mjs": "a33410664d1f0b8e833317a8d28b11c2ef0024e903478c4b02e06ea15e0d4e95",
+    "research/live_control/native_relay_client_v1.mjs": "446984d2a88f54abf0097c417aaea9b8925c9125c6f6d371772f01b542ce373e",
+    "runtime/integration_checks/host_timing.py": "a183101d03df5dff92cd1062164104205f89ca578717a47f8675734813bad472",
+    "research/live_control/run_native_six_task_self_use_v1.py": "4218e5880b6d8cf4af6c2a02ef677e7a7dc50f03270c69519e1f38e407b06b71",
+    "research/observation_gating/gui_suite.py": "953a078a06d55b9278bd7b31e176404912340a4f13407e1db343b7776645e97f",
+    "results-local/target-review-request-build-01/runtime.pyz": "078568c3aa4528f316f01597a67d8daf7fe10282f1e6435a8ebff8adf6d7810f"
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "decision": "PASS_MUTATION_CONTROLS",
+  "expected": {
+    "cleanup_survivor_mutation": "FAIL_AUDIT_INTEGRITY",
+    "extra_event_resealed": "FAIL_AUDIT_INTEGRITY",
+    "input_count_bool": "FAIL_AUDIT_INTEGRITY",
+    "input_count_high": "FAIL_AUDIT_INTEGRITY",
+    "input_count_low": "FAIL_AUDIT_INTEGRITY",
+    "reordered_events_resealed": "FAIL_AUDIT_INTEGRITY",
+    "role_identity_mutation": "FAIL_AUDIT_INTEGRITY",
+    "runner_booleans_false": "HOLD_AUDIT_EVIDENCE_INCOMPLETE",
+    "stale_identity_accepted": "FAIL_AUDIT_INTEGRITY",
+    "untouched": "HOLD_AUDIT_EVIDENCE_INCOMPLETE"
+  },
+  "failures": [],
+  "mutant_sha256": {
+    "cleanup_survivor_mutation": "d2942d2f9bcb9a43440d637af6f900c6958a43a0028fd5eda10eda9e6d11f263",
+    "extra_event_resealed": "4ca5cc77f0c5f2e3eabf1bdc36b1e76ff3b7b4f8391cd841e5813dc3be2b74af",
+    "input_count_bool": "ad57c2e23d2c453e80aeb4da184b60576762bfe83cc6e50324a964112b9eaf8a",
+    "input_count_high": "47473f79fed7910690822036b6a50a8b747f23dcc3f73a96c89fe76ee2a2042b",
+    "input_count_low": "625026e8447d11e83c2c26bd439e73834e8ca37e7656a59a1872029482d9ac82",
+    "reordered_events_resealed": "194be119444c3c790c215e9725c4250fa1b9677b73ba9c7b1be4b4cd3163462b",
+    "role_identity_mutation": "25163b04a6f5b0d9ebc88fe7d958741b97a0e0c1717b021fa749c3533dbda5c5",
+    "runner_booleans_false": "c1de08c80a7c9a761800619893f3fbac45d819cc2ad50be3028b4a2bad66a3dc",
+    "stale_identity_accepted": "39f7c99ff7101c10eea0f97bc16e727fb98f6ef377038704e091abc8a7acf3f7",
+    "untouched": "f0df0248ff5e754a91e93271d9784f08d06ae1e8ff349b5f82f0fd015eb42883"
+  },
+  "predecessor_audit_replay": {
+    "cleanup_survivor_mutation": {
+      "decision": "HOLD_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [
+        "process group survivors"
+      ],
+      "exit_code": 1
+    },
+    "extra_event_resealed": {
+      "decision": "PASS_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [],
+      "exit_code": 0
+    },
+    "input_count_bool": {
+      "decision": "PASS_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [],
+      "exit_code": 0
+    },
+    "input_count_high": {
+      "decision": "PASS_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [],
+      "exit_code": 0
+    },
+    "input_count_low": {
+      "decision": "PASS_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [],
+      "exit_code": 0
+    },
+    "reordered_events_resealed": {
+      "decision": "PASS_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [],
+      "exit_code": 0
+    },
+    "role_identity_mutation": {
+      "decision": "HOLD_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [
+        "chromium: resolved window mismatch",
+        "initial XIDs not distinct"
+      ],
+      "exit_code": 1
+    },
+    "runner_booleans_false": {
+      "decision": "HOLD_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [
+        "runner check vector differs from recomputation"
+      ],
+      "exit_code": 1
+    },
+    "stale_identity_accepted": {
+      "decision": "HOLD_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [
+        "recomputed check failed:chromium_replacement_generation_stale_refusal",
+        "runner check vector differs from recomputation"
+      ],
+      "exit_code": 1
+    },
+    "untouched": {
+      "decision": "PASS_POSTHOC_EVENT_RECOMPUTATION",
+      "errors": [],
+      "exit_code": 0
+    }
+  },
+  "results": {
+    "cleanup_survivor_mutation": {
+      "decision": "FAIL_AUDIT_INTEGRITY",
+      "errors": [
+        "cleanup_receipts_invalid"
+      ],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "extra_event_resealed": {
+      "decision": "FAIL_AUDIT_INTEGRITY",
+      "errors": [
+        "event_protocol_order_or_cardinality_mismatch"
+      ],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "input_count_bool": {
+      "decision": "FAIL_AUDIT_INTEGRITY",
+      "errors": [
+        "input_operation_count_mismatch"
+      ],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "input_count_high": {
+      "decision": "FAIL_AUDIT_INTEGRITY",
+      "errors": [
+        "input_operation_count_mismatch"
+      ],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "input_count_low": {
+      "decision": "FAIL_AUDIT_INTEGRITY",
+      "errors": [
+        "input_operation_count_mismatch"
+      ],
+      "gaps": [
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "reordered_events_resealed": {
+      "decision": "FAIL_AUDIT_INTEGRITY",
+      "errors": [
+        "event_protocol_order_or_cardinality_mismatch"
+      ],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "role_identity_mutation": {
+      "decision": "FAIL_AUDIT_INTEGRITY",
+      "errors": [
+        "role_window_identity_mismatch:chromium"
+      ],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "runner_booleans_false": {
+      "decision": "HOLD_AUDIT_EVIDENCE_INCOMPLETE",
+      "errors": [],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "stale_identity_accepted": {
+      "decision": "FAIL_AUDIT_INTEGRITY",
+      "errors": [
+        "stale_window_receipt_invalid"
+      ],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    },
+    "untouched": {
+      "decision": "HOLD_AUDIT_EVIDENCE_INCOMPLETE",
+      "errors": [],
+      "gaps": [
+        "event_level_input_operation_receipt_count_mismatch",
+        "modal_owner_and_disappearance_not_independently_recorded",
+        "chromium_stale_generation_admission_not_exercised_or_receipted",
+        "calc_return_active_window_and_fresh_role_resolution_not_recorded"
+      ]
+    }
+  }
+}

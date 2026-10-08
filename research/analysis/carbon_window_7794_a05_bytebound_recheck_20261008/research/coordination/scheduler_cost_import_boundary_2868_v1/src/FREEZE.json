@@ -1,0 +1,82 @@
+{
+  "schema": "scheduler-cost-import-boundary-freeze-v1",
+  "issue": 5044,
+  "parent_issue": 2868,
+  "predecessor_issues": [5021, 5025],
+  "allocation": "scheduler-cost-import-boundary-2868-20260928-01",
+  "branch": "research/scheduler-cost-import-boundary-2868-20260928",
+  "path": "research/coordination/scheduler_cost_import_boundary_2868_v1/",
+  "base_main_sha": "8ea0f7cff893625652024ef9a48b8df2c5c69bec",
+  "predecessor_5021_runner_blob": "4eecd1d58c50c315d95905bac704492e82c00a3c",
+  "predecessor_5021_schedule_blob": "9554c3177a7ddc6638ad379f79909e2b437cea3a",
+  "predecessor_5021_raw_sha256": "0b7479954f0515849ad7c2f285675740229a20fdb2114d4e37fa4ee8576449d9",
+  "predecessor_5021_audit_sha256": "0c91aa7d78f0953a6f188ce1b3ac052f75324ac8e18c3d51860cd9e7006b673f",
+  "predecessor_5021_schedule_sha256": "296d7f6252b3d4576db0284633fc635e66fa88c7ec21e2b8964088c311122a00",
+  "source_sha256": {
+    "runner.py": "4c9ccf253f76bc5a92511460381637543dca012ce719d06dabf132b8d4351d80",
+    "audit.py": "aaa5d0e8265b715ac21176c1ea2f4394a369b15af88982f19134771dc28936a3",
+    "test_protocol.py": "9a711e5c048ffcb6ca10d7be3f0289477ad20ae8bc41a6401dfef9aee83e7369"
+  },
+  "schedule_sha256": "296d7f6252b3d4576db0284633fc635e66fa88c7ec21e2b8964088c311122a00",
+  "design": {
+    "python_image": "python:3.12-slim-bookworm",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/arm64",
+    "python": "3.12.14",
+    "sizes": [8, 32, 128, 512, 2048],
+    "blocks_per_size": 15,
+    "policies": ["STABLE_LIST_SCAN", "STABLE_SORTED_LIST", "ELIGIBLE_HEAP"],
+    "workers_expected": 225,
+    "timing_primary": "process_time_ns around queue construction and full drain only",
+    "heapq_loaded_before_timer_required": true,
+    "warmup_calls": 0,
+    "threshold_heap_over_scan_and_sorted_list": 0.8,
+    "threshold_sizes": [512, 2048],
+    "worker_timeout_seconds": 30
+  },
+  "formal_command": [
+    "docker", "run", "--rm", "--pull=never", "--platform=linux/arm64", "--network=none",
+    "--read-only", "--cpus=0.25", "--memory=512m", "--pids-limit=64",
+    "--cap-drop=ALL", "--security-opt=no-new-privileges",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/src,destination=/src,readonly",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/input,destination=/input,readonly",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/results/formal01,destination=/out",
+    "--tmpfs", "/tmp:rw,nosuid,nodev,size=16m",
+    "python:3.12-slim-bookworm", "python", "-B", "/src/runner.py",
+    "--input", "/input/scenarios.json", "--formal", "/out"
+  ],
+  "construction_command": [
+    "docker", "run", "--rm", "--pull=never", "--platform=linux/arm64", "--network=none",
+    "--read-only", "--cpus=0.25", "--memory=512m", "--pids-limit=64",
+    "--cap-drop=ALL", "--security-opt=no-new-privileges",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/src,destination=/src,readonly",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/input,destination=/input,readonly",
+    "--tmpfs", "/tmp:rw,nosuid,nodev,size=16m",
+    "python:3.12-slim-bookworm", "python", "-B", "-c",
+    "import platform,sys,unittest; print(sys.version); print(platform.machine()); suite=unittest.TestLoader().discover('/src', pattern='test_*.py'); result=unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())"
+  ],
+  "worker_smoke_command": [
+    "docker", "run", "--rm", "--pull=never", "--platform=linux/arm64", "--network=none",
+    "--read-only", "--cpus=0.25", "--memory=512m", "--pids-limit=64",
+    "--cap-drop=ALL", "--security-opt=no-new-privileges",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/src,destination=/src,readonly",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/input,destination=/input,readonly",
+    "--tmpfs", "/tmp:rw,nosuid,nodev,size=16m",
+    "python:3.12-slim-bookworm", "python", "-B", "/src/runner.py",
+    "--input", "/input/scenarios.json", "--worker", "8", "0", "ELIGIBLE_HEAP"
+  ],
+  "audit_command": [
+    "docker", "run", "--rm", "--pull=never", "--platform=linux/arm64", "--network=none",
+    "--read-only", "--cpus=0.25", "--memory=512m", "--pids-limit=64",
+    "--cap-drop=ALL", "--security-opt=no-new-privileges",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1,destination=/package,readonly",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/results/formal01,destination=/raw,readonly",
+    "--mount", "type=bind,source=/tmp/unjuno-scheduler-import-boundary-5044-20260928/research/coordination/scheduler_cost_import_boundary_2868_v1/results/audit01,destination=/audit-out",
+    "--tmpfs", "/tmp:rw,nosuid,nodev,size=16m",
+    "python:3.12-slim-bookworm", "python", "-B", "/package/src/audit.py",
+    "--root", "/package", "--raw", "/raw/raw.json", "--out", "/audit-out/audit.json"
+  ],
+  "formal_invocations": 0,
+  "audit_invocations": 0,
+  "retry_policy": "none"
+}

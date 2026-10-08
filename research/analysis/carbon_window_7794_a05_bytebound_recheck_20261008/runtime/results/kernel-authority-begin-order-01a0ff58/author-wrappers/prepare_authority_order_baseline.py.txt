@@ -1,0 +1,34 @@
+import hashlib
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+import platform
+import subprocess
+import sys
+
+root = Path(__file__).resolve().parent
+repo = root / 'agent-interface'
+package = repo / 'runtime/results/kernel-authority-begin-order-01a0ff58'
+base = '2c0c1183b861519fde7c71462a589fb904c3451e'
+private = root / 'authority-begin-order-private'
+private.mkdir()
+def git(*args):
+    return subprocess.check_output(['git', *args], cwd=repo, timeout=30)
+names = git('ls-tree', '-r', '--name-only', base, 'runtime/kernel').decode().splitlines()
+source = {}
+for name in names:
+    if not name.endswith('.py'):
+        continue
+    raw = git('show', base + ':' + name)
+    destination = package / 'source' / (Path(name).name + '.txt')
+    destination.parent.mkdir(exist_ok=True)
+    destination.write_bytes(raw)
+    assert destination.read_bytes() == raw
+    source[name] = {'blob': git('rev-parse', base + ':' + name).decode().strip(), 'sha256': hashlib.sha256(raw).hexdigest()}
+assert len(source) == 9
+tested = json.loads((root / 'receipt-main-context-v3' / 'FREEZE.json').read_text())
+print('prior freeze keys:', sorted(tested))
+record = {'recorded_utc': datetime.now(timezone.utc).isoformat(), 'worker_id': '01a0ff58-480b-7d50-9eee-0bce12250476', 'policy': 'FINAL-v5', 'source_base': base, 'source': source, 'new_helper_sha256': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in package.iterdir() if p.is_file()}, 'python': platform.python_version(), 'platform': platform.platform(), 'formal_allocation': False, 'input_backend_gui_model_container_used': False, 'run_scope': 'test-first baseline only; no matrix or candidate source yet'}
+(package / 'BEFORE_BASELINE.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+(private / 'BEFORE_BASELINE.json').write_bytes((package / 'BEFORE_BASELINE.json').read_bytes())
+print(json.dumps({'source_files': len(source), 'recorded_utc': record['recorded_utc'], 'python': record['python'], 'platform': record['platform']}))

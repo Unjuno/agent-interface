@@ -1,0 +1,24 @@
+{
+  "allocation": "SAFE-RESTART-CONVERGENCE-5704-T0-ORB-20261001-01",
+  "base_main_sha": "2669f307ee2176df963fad3409193da465ffe546",
+  "source_freeze_utc": "2026-10-01T04:23:00Z",
+  "host": "macOS arm64",
+  "execution_target": "new isolated OrbStack Ubuntu 24.04 guest; no host mounts or Docker integration; dedicated guest Docker daemon only",
+  "guest_name": "selfstab-t0-5704-20261001",
+  "guest_limits": {"cpus": 1, "memory": "2GiB", "disk": "16GiB", "network": "isolated"},
+  "container_limits": {"cpus": 1, "memory": "512MiB", "pids": 64, "network": "none", "rootfs": "read-only", "source_mount": "read-only"},
+  "image": "docker.io/library/python:3.12-slim-bookworm@sha256:eb5be8e5b4d0a159c237946bbdd06356dda5d19c30fc4f7843e8046d3a590333",
+  "image_platform": "linux/arm64/v8",
+  "image_index_digest": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "files_sha256": {
+    "research/analysis/self_stabilizing_restart_5704_t0_20261001/README.md": "7f387144a481872fbd02035d2484827d2610add91843f5f2c19e32cae2d60834",
+    "research/analysis/self_stabilizing_restart_5704_t0_20261001/PREREGISTRATION.md": "21396c2db15df8d4beac3666148894f966c319757f9a275fd548eaaa45bdcc55",
+    "research/analysis/self_stabilizing_restart_5704_t0_20261001/LOCAL_CI.md": "9e66117ad84865859138b4b418cb50bb1be2bddb0b0251684b89afbd7d29493a",
+    "research/analysis/self_stabilizing_restart_5704_t0_20261001/model.py": "f2818e758fb682bd130b0b36b0f7f0ba86547b350f0eb32e99c4437d16716e59",
+    "research/analysis/self_stabilizing_restart_5704_t0_20261001/audit.py": "f506291ed815856d4ff0511b3fc35587ac7033286fec4f04fd98c60b884c218c",
+    "research/analysis/self_stabilizing_restart_5704_t0_20261001/test_model.py": "efd6b690f8b439b004662743a8229f50d937236cf0fadb528c45a2e718ed7edb"
+  },
+  "one_shot": {"candidate": 1, "independent_audit": 1, "retries": 0},
+  "source_gate": "Before candidate: require current Issue #5085 allocation authority, verify this exact source manifest, verify isolated guest/server and exact image digest/platform, and verify unique empty result directory. If any gate fails, STOP without candidate; do not retry this allocation.",
+  "self_hash_excluded": true
+}

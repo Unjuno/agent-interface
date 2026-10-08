@@ -1,0 +1,28 @@
+import hashlib
+import json
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+root=Path(__file__).parent/'temporal-goal-C02'
+old=root/'audit.py'; new=root/'audit-v2.py'
+text=old.read_text(encoding='utf-8')
+needle="count=sum(e['mono_ns']<req['mono_ns'] for e in events)"
+replacement="count=max((r['event_id'] for r in requests if r['event_id'] is not None and r['request_id']<=req['request_id']),default=0)"
+if text.count(needle)!=1: raise ValueError('exact diagnosed site changed')
+text=text.replace(needle,replacement)
+text=text.replace("need(type(r['status']) is int and r['status']==200 and type(r['event_id']) is int,'prepared HTTP acceptance type')",
+    "need(type(r['status']) is int and r['status']==200 and type(r['event_id']) is int,'prepared HTTP acceptance type')")
+with new.open('x',encoding='utf-8',newline='\n') as handle: handle.write(text)
+argv=[sys.executable,'-B',str(new),'--run',str(root/'primary-C02'),'--cases',str(root/'cases.json'),'--output',str(root/'audit-02')]
+intent=dict(utc=datetime.now(timezone.utc).isoformat(),argv=argv,producer_replays=0,
+    original_sha256=hashlib.sha256(old.read_bytes()).hexdigest(),revised_sha256=hashlib.sha256(new.read_bytes()).hexdigest(),
+    delta='Replace strict clock comparison by committed event-to-request identity/order in serialized single-handler app; same predicate/budget/cases/raw.')
+(root/'AUDIT_V2_INTENT.json').write_text(json.dumps(intent,indent=2),encoding='utf-8')
+result=subprocess.run(argv,capture_output=True)
+(root/'audit-02'/'stdout.txt').write_bytes(result.stdout); (root/'audit-02'/'stderr.txt').write_bytes(result.stderr)
+(root/'audit-02'/'COMMAND.json').write_text(json.dumps(dict(started_utc=intent['utc'],ended_utc=datetime.now(timezone.utc).isoformat(),
+    argv=argv,returncode=result.returncode,producer_replays=0),indent=2),encoding='utf-8')
+print(result.stdout.decode(),end=''); print(result.stderr.decode(),end='',file=sys.stderr)
+sys.exit(result.returncode)

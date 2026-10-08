@@ -1,0 +1,25 @@
+from datetime import datetime, timezone
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+root = Path(__file__).resolve().parent
+label, *command = sys.argv[1:]
+out = root / "checks" / label
+out.mkdir(parents=True, exist_ok=False)
+start = datetime.now(timezone.utc).isoformat()
+(out / "intent.json").write_text(json.dumps({"command": command, "started_utc": start, "kind": "ordinary raw-only nonauthor review; no producer replay"}, indent=2) + "\n", encoding="utf-8")
+result = subprocess.run(command, cwd=root, env=dict(os.environ, PYTHONDONTWRITEBYTECODE="1", PYTHONUTF8="1"), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+end = datetime.now(timezone.utc).isoformat()
+(out / "stdout.txt").write_bytes(result.stdout)
+(out / "stderr.txt").write_bytes(result.stderr)
+receipt = {"command": command, "started_utc": start, "ended_utc": end, "exit_code": result.returncode,
+           "stdout_sha256": hashlib.sha256(result.stdout).hexdigest(), "stderr_sha256": hashlib.sha256(result.stderr).hexdigest()}
+(out / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+print(json.dumps(receipt))
+print(result.stdout.decode(errors="replace")[-1200:])
+print(result.stderr.decode(errors="replace")[-1200:])
+sys.exit(result.returncode)

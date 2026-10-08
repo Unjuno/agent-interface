@@ -1,0 +1,26 @@
+{
+  "created_utc": "2026-10-03T04:38:22.506910+00:00",
+  "classification": "two additional ordinary actual-owner pending-reply checks, not old consumed allocation",
+  "source_commit": "c870def76734444925b9ca244bdbbcd48a2d84a8",
+  "source_sha256": {
+    "primary_exchange.mjs": "e3bbaa6cb79beede5882f47c42d46ae4c405b5392575b8a62a48de3177353420",
+    "primary_stdio.mjs": "d994ad0cd0686cecef68b38c22e1028645000e3516178858f5c25a7ad221f6ae",
+    "primary_caller.mjs": "dcc12e72a43b5ec04b320db7eba026aab8a39b78b98bb7a0f8ae0e6b26f4971e",
+    "relay_host.mjs": "7c83f07126f90761a1d74abf92681a6d1441b0f9320025956c7b025fdbca3984",
+    "relay_client.mjs": "34201c4655f8d0db0e463f840772af27333949d19e117293759271e71856d3e8"
+  },
+  "helpers": {
+    "pending_fixture.mjs": "ee89115ade7d589929e21263a830f3358c6674f3c1b3230711297a4342beebef",
+    "pending_probe.mjs": "6948d358e8fd9bd31ebfb3ac7e0f09b3112c3996aa25ae9130c8a54b27136f27",
+    "collect_pending.py": "8b76baa3b077f65ff57d9ef334546d22a633c68a6dc99798421d288166c85c70"
+  },
+  "scenarios": [
+    "pending_success",
+    "pending_persistence_failure"
+  ],
+  "parent_timeout_seconds": 5,
+  "owned_fixture_observation_seconds": 3,
+  "expected_native_requests_each": 1,
+  "expected_tool": "interface_clock",
+  "no_actual_backend_or_input": true
+}

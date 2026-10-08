@@ -1,0 +1,205 @@
+{
+  "allocation": "MAP01-V6-CLOCK-CANCEL-ORDER-59-T1-20261002-01",
+  "base_commit": "673763554192ae26636e07d5a48f03b3cd7fb044",
+  "candidate_invocations": 1,
+  "cases": [
+    {
+      "cancel_call_return_ns": 108132150999100,
+      "cancel_matched": true,
+      "cancel_observed_ns": 108132151024600,
+      "cancel_requested_ns": 108132150992500,
+      "case": "A-clock-before-cancel-within-lease",
+      "clock_delay_ms": 400,
+      "clock_return_ns": 108132150957000,
+      "events": [
+        {
+          "accepted_ns": 108131149396700,
+          "event": "accepted",
+          "id": "fallback-A-clock-before-cancel-within-lease",
+          "program_sha256": "9b03876859bd7a373d90deec30ddabd709ae0785ab626fa170828f0ee0ee5af6",
+          "steps": 1,
+          "valid_until_ns": 108133149306200
+        },
+        {
+          "event": "step_started",
+          "id": "fallback-A-clock-before-cancel-within-lease",
+          "issued_ns": 108131150460500,
+          "operation": "hold",
+          "step": 0
+        },
+        {
+          "event": "cancel_requested",
+          "id": "fallback-A-clock-before-cancel-within-lease",
+          "matched": true,
+          "requested_ns": 108132150992500
+        },
+        {
+          "completed_ns": 108132151026900,
+          "event": "step_completed",
+          "id": "fallback-A-clock-before-cancel-within-lease",
+          "step": 0
+        },
+        {
+          "error": null,
+          "event": "terminal",
+          "id": "fallback-A-clock-before-cancel-within-lease",
+          "release": {
+            "verified": true
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "completed",
+          "steps_completed": 1,
+          "terminal_ns": 108132151032900
+        }
+      ],
+      "lease_ms_from_start": 2000,
+      "ordering": "clock-before-cancel",
+      "release_ns": 108132151031400,
+      "release_verified": true,
+      "started_ns": 108131149306200,
+      "terminal_ns": 108132151032900,
+      "terminal_status": "completed",
+      "timer_expired_ns": 108131750833800,
+      "timer_ms": 600
+    },
+    {
+      "cancel_call_return_ns": 108134352525800,
+      "cancel_matched": false,
+      "cancel_observed_ns": null,
+      "cancel_requested_ns": 108134352504400,
+      "case": "B-clock-before-cancel-past-lease",
+      "clock_delay_ms": 1600,
+      "clock_return_ns": 108134352495500,
+      "events": [
+        {
+          "accepted_ns": 108132151255000,
+          "event": "accepted",
+          "id": "fallback-B-clock-before-cancel-past-lease",
+          "program_sha256": "9b03876859bd7a373d90deec30ddabd709ae0785ab626fa170828f0ee0ee5af6",
+          "steps": 1,
+          "valid_until_ns": 108133651168700
+        },
+        {
+          "event": "step_started",
+          "id": "fallback-B-clock-before-cancel-past-lease",
+          "issued_ns": 108132151444800,
+          "operation": "hold",
+          "step": 0
+        },
+        {
+          "error": null,
+          "event": "terminal",
+          "id": "fallback-B-clock-before-cancel-past-lease",
+          "release": {
+            "verified": true
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "expired",
+          "steps_completed": 0,
+          "terminal_ns": 108133658827500
+        },
+        {
+          "event": "cancel_requested",
+          "id": "fallback-B-clock-before-cancel-past-lease",
+          "matched": false,
+          "requested_ns": 108134352504400
+        }
+      ],
+      "lease_ms_from_start": 1500,
+      "ordering": "clock-before-cancel",
+      "release_ns": 108133658821100,
+      "release_verified": true,
+      "started_ns": 108132151168700,
+      "terminal_ns": 108133658827500,
+      "terminal_status": "expired",
+      "timer_expired_ns": 108132751977600,
+      "timer_ms": 600
+    },
+    {
+      "cancel_call_return_ns": 108134953448100,
+      "cancel_matched": true,
+      "cancel_observed_ns": 108134953477600,
+      "cancel_requested_ns": 108134953443200,
+      "case": "C-cancel-before-clock-within-lease",
+      "clock_delay_ms": 400,
+      "clock_return_ns": 108135353908700,
+      "events": [
+        {
+          "accepted_ns": 108134352633900,
+          "event": "accepted",
+          "id": "fallback-C-cancel-before-clock-within-lease",
+          "program_sha256": "9b03876859bd7a373d90deec30ddabd709ae0785ab626fa170828f0ee0ee5af6",
+          "steps": 1,
+          "valid_until_ns": 108136352570500
+        },
+        {
+          "event": "step_started",
+          "id": "fallback-C-cancel-before-clock-within-lease",
+          "issued_ns": 108134352800800,
+          "operation": "hold",
+          "step": 0
+        },
+        {
+          "event": "cancel_requested",
+          "id": "fallback-C-cancel-before-clock-within-lease",
+          "matched": true,
+          "requested_ns": 108134953443200
+        },
+        {
+          "completed_ns": 108134953479400,
+          "event": "step_completed",
+          "id": "fallback-C-cancel-before-clock-within-lease",
+          "step": 0
+        },
+        {
+          "error": null,
+          "event": "terminal",
+          "id": "fallback-C-cancel-before-clock-within-lease",
+          "release": {
+            "verified": true
+          },
+          "semantic_completion": "program status only; task scoring is separate",
+          "status": "completed",
+          "steps_completed": 1,
+          "terminal_ns": 108134953483300
+        }
+      ],
+      "lease_ms_from_start": 2000,
+      "ordering": "cancel-before-clock",
+      "release_ns": 108134953482200,
+      "release_verified": true,
+      "started_ns": 108134352570500,
+      "terminal_ns": 108134953483300,
+      "terminal_status": "completed",
+      "timer_expired_ns": 108134953426000,
+      "timer_ms": 600
+    }
+  ],
+  "docker_used": false,
+  "host": "win32",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "retries": 0,
+  "schema": "map01-v6-clock-cancel-order-t1-v1",
+  "scope": "actual executor_v10 and Lease Git objects; cooperative fake backend; no external effects",
+  "sources": {
+    "executor": {
+      "bytes": 4202,
+      "git_blob": "e0a31884307eeac405094a624e3a63222acc656f",
+      "path": "research/live_control/executor_v10.py",
+      "sha256": "e55f82e6f15c39914a4213873d39386205a792c98b54d0cf54be0812c69ecb2e"
+    },
+    "lease": {
+      "bytes": 899,
+      "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "path": "research/live_control/lease.py",
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    "v6_runner": {
+      "bytes": 6464,
+      "git_blob": "10344582ffa2ce339bc48dd8d680512a71f4eddc",
+      "path": "research/doom/map01_recovery_cover_mechanism_v6_runner.py",
+      "sha256": "9790becf98104b3a956c73bee945266a8517e41c2396c1a8b29c924e14d26012"
+    }
+  },
+  "v6_clock_before_cancel_source_order": true
+}

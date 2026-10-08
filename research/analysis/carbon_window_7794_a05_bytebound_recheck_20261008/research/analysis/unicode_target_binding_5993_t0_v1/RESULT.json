@@ -1,0 +1,67 @@
+{
+  "schema": "unjuno/agent-interface/unicode-target-binding-t0-result-v1",
+  "result_id": "unicode-target-binding-5993-t0-20261001-01",
+  "issue": 5993,
+  "disposition": "PASS_METHOD_SCOPED",
+  "scope": "synthetic identifier/resolver semantics only; no GUI/font/app effect",
+  "source_freeze_commit": "00e54b54c7b14a8aa688d284ac6d45d6dcdd58e0",
+  "base_main_sha": "e12e4e2939890d735cb1b11df3a8d8b6a1cf4b9a",
+  "pre_result_publication_main_sha": "3db4fb08b3298733b79ef57cd1bc141f9b07cc43",
+  "branch": "research/unicode-target-binding-5993-t0-20261001-task-01a0b97b",
+  "artifact_path": "research/analysis/unicode_target_binding_5993_t0_v1/",
+  "execution": {
+    "result_recorded_utc": "2026-10-01 11:46:56 UTC",
+    "host_only_cpu": true,
+    "container_used": false,
+    "python": "CPython 3.12.14",
+    "python_ucd": "15.0.0",
+    "unicode_input_version": "18.0.0",
+    "candidate_invocations": 1,
+    "candidate_exit": 0,
+    "candidate_wall_seconds": 0.387,
+    "auditor_invocations": 1,
+    "auditor_exit": 0,
+    "auditor_wall_seconds": 0.403,
+    "formal_retries": 0,
+    "gui_model_provider_network_calls": 0,
+    "candidate_stdout": "{\"cases\": 15, \"output\": \"candidate.jsonl\", \"python_ucd\": \"15.0.0\", \"rows\": 45, \"unicode_data\": \"18.0.0\"}",
+    "auditor_stdout_sha256": "8EC57AA22BF40A650E586D5EEA93F5FEA2F129691939ED4A0D486348F7048FFC"
+  },
+  "audit": {
+    "rows": 45,
+    "expected_rows": 45,
+    "errors": 0,
+    "declared_label_aliases": 6,
+    "skeleton_colliding_aliases": 5,
+    "warning_only_warning_rows": 5,
+    "string_only_wrong_target_effects": 6,
+    "warning_only_wrong_target_effects": 6,
+    "exact_fresh_binding_wrong_target_effects": 0,
+    "benign_exact_accepted": 7,
+    "formal_retries": 0
+  },
+  "candidate_raw": {
+    "file": "candidate.jsonl",
+    "bytes": 38221,
+    "sha256": "18D1808B25FD4A68A268D529BB1293E2DABEB52FE7C28E1606A1711CD1E4E612"
+  },
+  "auditor_raw": {
+    "file": "AUDITOR_STDOUT.txt",
+    "bytes": 607,
+    "sha256": "8EC57AA22BF40A650E586D5EEA93F5FEA2F129691939ED4A0D486348F7048FFC"
+  },
+  "docker_preflight": {
+    "desktop_engine_ui": "running",
+    "containers_running": 0,
+    "containers_visible_total": 39,
+    "desktop_cpu_percent": 67.06,
+    "cli_docker_ps_timeout_seconds": 10,
+    "cli_docker_info_timeout_seconds": 10,
+    "existing_containers_touched": false
+  },
+  "limitations": [
+    "Authored synthetic labels/resolver aliases; no rendered glyph evidence.",
+    "No GUI, actual application resolution, production safety, prevalence, exploitability, or product claim.",
+    "Python UCD 15.0.0 normalization with pinned Unicode 18.0.0 mapping/property files."
+  ]
+}

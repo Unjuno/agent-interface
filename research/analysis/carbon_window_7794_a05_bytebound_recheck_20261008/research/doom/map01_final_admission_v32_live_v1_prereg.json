@@ -1,0 +1,234 @@
+{
+  "status": "PREREGISTERED_BEFORE_FIRST_V32_MODEL_CALL",
+  "allocation_id": "map01-final-admission-v32-live-01",
+  "objective": "test whether typed controller final-admission receipts reconcile planner terminal, policy outcome and actual Executor plan acceptance under real-time MAP01 control, including the completed-planner/hard-event race if naturally exposed",
+  "issue": 59,
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations_max": 6,
+  "session_span": 6,
+  "seed": 990619,
+  "map": "MAP01",
+  "skill": 1,
+  "mode": "ASYNC_SPECTATOR",
+  "episode_timeout_seconds": 600,
+  "output": "results-local/doom/map01-final-admission-v32-live-01",
+  "fixture": {
+    "id": "map01-threat-contact-v2",
+    "manifest": "research/doom/fixtures/map01-threat-contact-v2/fixture.json",
+    "episode_tic": 1366,
+    "visible_enemy_count_lower_bound": 1,
+    "saved_health": 100,
+    "fresh_load_observed_health": 97,
+    "initial_ammo": 48,
+    "authority": "setup state only; grants no runtime input",
+    "runtime_gate": "session receipt must show successful hash, ViZDoom, IWAD, MAP01 and skill validation before load; measured control starts after load"
+  },
+  "typed_validity": {
+    "signal_id": "health",
+    "extraction": "hash-bound Freedoom PLAYPAL/STTNUM glyph foreground match at binding-relative frozen HUD geometry",
+    "model_authored_fields": [
+      "critical_health_minimum",
+      "maximum_health_loss",
+      "max_source_age_ms"
+    ],
+    "critical_health_minimum_schema": [
+      1,
+      200
+    ],
+    "maximum_health_loss_schema": [
+      0,
+      20
+    ],
+    "max_source_age_ms_schema": [
+      100,
+      30000
+    ],
+    "effective_hard_minimum": "max(critical_health_minimum, fresh_source_health - maximum_health_loss)",
+    "initial_no_prior_cover_rule": "critical and effective minimum equal fresh source health; maximum loss is zero; health increase is soft and any loss is hard",
+    "rejection_rule": "if fresh source health is below authored critical_health_minimum, admit none of the prior cover commands and use input-free coast",
+    "soft_rule": "a distinct exact health value at or above effective_hard_minimum preserves only already admitted cover and is coalesced for planner evidence",
+    "hard_rule": "below-effective-floor, unknown, expired, nonadvancing or binding-mismatched evidence cancels matching cover, interrupts matching planner turn and discards its action and next_cover",
+    "authority": "may preserve or reduce already admitted authority; never grants new input or proves success"
+  },
+  "monitor_clocks": {
+    "required": [
+      "observation capture_ns",
+      "monitor_received_ns",
+      "signal_extracted_ns",
+      "outcome_evaluated_ns",
+      "interrupt sent observed_ns",
+      "interrupt ack observed_ns",
+      "turn completion observed_ns",
+      "cover release verified_ns",
+      "cover terminal_ns"
+    ],
+    "ordering": "capture <= monitor_received <= signal_extracted <= outcome_evaluated; hard outcome evaluation precedes interrupt send and verified release",
+    "report": "capture-to-receive, extraction, evaluation, evaluation-to-send, send-to-ack/completion, evaluation-to-release/terminal separately"
+  },
+  "environment": {
+    "PYTHONPATH": "_vizdoom:research/doom:research/live_control",
+    "python": "/usr/bin/python3",
+    "vizdoom": "1.3.0",
+    "app_server": "Codex Desktop Windows via WSL stdio"
+  },
+  "command": [
+    "env",
+    "PYTHONPATH=_vizdoom:research/doom:research/live_control",
+    "python3",
+    "research/doom/map01_overlap_controller_v32.py",
+    "--out",
+    "results-local/doom/map01-final-admission-v32-live-01",
+    "--iterations",
+    "6",
+    "--seed",
+    "990619",
+    "--session-span",
+    "6",
+    "--model",
+    "gpt-5.6-luna",
+    "--effort",
+    "low",
+    "--load-fixture-manifest",
+    "research/doom/fixtures/map01-threat-contact-v2/fixture.json"
+  ],
+  "stop_rule": "retain the first run at 6 decisions, death, model terminal state, runtime failure or independent episode end; do not retry this allocation",
+  "threat_exposure_rule": "classify as threat-exposed only if retained exact initial/source/temporal evidence is independently inspected and visibly contains an enemy",
+  "soft_exposure_rule": "count soft exposure only when a prior eligible completed turn authored both validity quantities, the cover and envelope were admitted later, and an exact advancing health change stayed at or above the derived effective floor during the matching planner interval",
+  "hard_exposure_rule": "count hard exposure only from typed exact below-effective-floor or fail-closed unknown/expiry/binding/sequence outcome while the matching cover/planner dependency is active",
+  "acceptance": [
+    "every active schema-valid answer has exactly one split next_cover_validity and every terminal answer has none",
+    "effective floor is derived locally exactly and source-below-critical admits zero prior cover commands",
+    "soft change sends no interrupt, adds no input authority, preserves only the admitted cover and retains newest distinct evidence",
+    "hard outcome sends at most one matching interrupt, cancels cover to verified empty release, makes answer ineligible and admits none of its action or next_cover",
+    "monitor-stage clocks obey the frozen ordering and all admitted programs reach verified empty release",
+    "started planner turns reconcile to matching terminal status; usage missingness or repeated cumulative receipts remain explicit",
+    "when the immediately preceding decision has no soft event, prior_soft_event_summary is null",
+    "when transfer is exposed, source event, bounded summary, saved next prompt and next decision record reconcile exactly",
+    "every summary explicitly grants_input_authority false and creates no separate planner turn or image",
+    "every retained decision has exactly one final_action_admission receipt",
+    "planner terminal time and policy evaluation time are not later than controller decision time",
+    "REJECTED_POLICY_INVALIDATED wins for a completed/eligible planner answer when hard evidence precedes controller admission",
+    "rejected and no-input receipts reconcile to zero accepted plan program IDs for that decision",
+    "INPUT_ADMITTED reconciles to exactly one matching first accepted primary plan ID and timestamp",
+    "aggregate final_action_admission_statuses equals the decision receipt status counts"
+  ],
+  "comparison": {
+    "v28": {
+      "allocation": "map01-fixed-threat-v28-live-01",
+      "completed_eligible_decisions": 1,
+      "interrupted_decisions": 5,
+      "soft_transitions": "not represented"
+    },
+    "v29": {
+      "allocation": "map01-typed-cover-validity-v29-live-01",
+      "completed_eligible_decisions": 2,
+      "interrupted_decisions": 4,
+      "soft_transitions": 0,
+      "validity_admission_rejections": 1
+    },
+    "report_separately": [
+      "authored critical floors and maximum losses",
+      "effective floors",
+      "completed eligible decisions",
+      "interrupted decisions",
+      "soft transitions",
+      "hard invalidations",
+      "validity admission rejections",
+      "health trajectory",
+      "program authority and release",
+      "kills",
+      "deaths",
+      "exit",
+      "control/model time",
+      "attributable token usage",
+      "nonnull typed soft summaries delivered",
+      "full-event versus summary UTF-8 bytes",
+      "summary-to-next-turn delay",
+      "next-turn action and authored validity after transferred evidence",
+      "final receipt status counts",
+      "planner-terminal versus policy-evaluation ordering",
+      "receipt-to-accepted-plan cardinality",
+      "completed-terminal hard-race exposure"
+    ],
+    "interpretation": "same model and fixture as v31 but sequential nondeterministic allocations; receipt correctness is independently auditable, while completion, timing, token and gameplay differences remain descriptive",
+    "v30": {
+      "allocation": "map01-split-cover-validity-v30-live-01",
+      "fixture": "map01-threat-contact-v1",
+      "decisions": 6,
+      "completed_eligible_decisions": 3,
+      "interrupted_decisions": 3,
+      "soft_transitions": 3,
+      "nonempty_cover_soft_transitions": 1,
+      "typed_soft_summary_to_next_turn": "not implemented"
+    },
+    "v31_final_admission_gap": {
+      "allocation": "map01-soft-context-v31-live-01",
+      "decision": 0,
+      "planner_status": "completed",
+      "planner_answer_eligible": true,
+      "interrupt": "already_terminal",
+      "controller_action_discarded": true,
+      "accepted_plan_programs": 0,
+      "typed_final_receipt": "not implemented"
+    }
+  },
+  "no_soft_exposure_disposition": "retain as distinct-fixture v31 live but soft-context-unexposed; do not retry this ID",
+  "no_hard_exposure_disposition": "retain hard path as live-unexposed; rely only on model-free and prior live hard-path evidence",
+  "failure_disposition": "retain the exact failure and diagnose; do not retry this ID or remove receipt enforcement for a favorable result",
+  "source_sha256": {
+    "research/doom/map01_overlap_controller_v32.py": "7002eb7a0a573ae127a95153a15b04dbd3280d2441e13c01a09992008d9ca776",
+    "research/live_control/final_action_admission_v1.py": "7a6ee78d241a79aabd803cb92e0f57e20ec784df1be877012b3efc187012746d",
+    "research/doom/session_map01_v7.py": "5b56129c551dff8fb8e068daa21748dc51b9d0b327306aeb1f381e0e3cc9c1f6",
+    "research/doom/fixtures/map01-threat-contact-v2/fixture.json": "e57e21fd6d85d4b0720b3b3d5a52ad538fde45c50c58651ff754638f93f182e4",
+    "research/doom/fixtures/map01-threat-contact-v2/save.png": "cc5302aa9cda3960248733caa96da1b53adcc4b6a1a2dcfb80675650c9350401",
+    "research/doom/doom_hud_signal_v1.py": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+    "research/live_control/observable_signal_guard_v2.py": "7be055c4bd68a1528f4b2b02b543435bd64465ea42d4452f5597d6dce08442a0",
+    "research/live_control/persistent_planner_adapter_v2.py": "e00ca6b8f20ee1081dc57a0ccd754115fe81f9bf5fa36553ed7c98add873fc0e",
+    "research/live_control/codex_app_server_client_v2.py": "8ed4e3496ef8154d3c4573fb1386efe6e036292a3809e43aa37fc22aecc5b42b",
+    "research/doom/map01_motor_responder_v9.txt": "aa3e6ff853c8ad5c3d7254a83181c108c3cf983c59d92766d39fe1e8f8741d06",
+    "research/doom/map01_cover_policy_schema_v5.json": "453a1d1d47a2becb4fa916c86224b55566adec44cdc1d919cff8a4edfac6fd5e",
+    "research/doom/map01_stagnation_v1.py": "669d61eb473c486e693a478b1941a7b40102d2049e0a437e5982143544d60a54"
+  },
+  "parent_commit": "59c33c552ddaef840ecdefdc57e22d1c0dd3bed6",
+  "scope": "one bounded Linux/X11 same-fixture receipt-cardinality allocation; no reliability, generality, human-speed, token-efficiency, Product Hunt completion or MAP01-clear claim",
+  "soft_context_transfer": {
+    "source": "immediately preceding completed decision only",
+    "validation": "SOFT_CHANGED health; consistent signal/value/sequence/iterations; keep_existing_policy true; requires_new_decision false; grants_input_authority false",
+    "fields": [
+      "signal_id",
+      "source_value",
+      "current_value",
+      "hard_minimum",
+      "soft_event_count",
+      "sequence",
+      "observed_during_iteration",
+      "cover_policy_source_iteration",
+      "effect",
+      "grants_input_authority"
+    ],
+    "missing": "JSON null",
+    "malformed": "raise and stop before presenting misleading history",
+    "boundary_cost": "same already-required next planner turn and temporal image; zero additional capture, image, model call, resumption or mid-turn boundary",
+    "authority": "descriptive context only; never grants input"
+  },
+  "soft_context_exposure_rule": "count transfer exposure only when decision N retains a validated latest soft event and completed answer, decision N+1 stores the exact bounded summary and its saved prompt contains the exact compact JSON, with no extra image or model turn",
+  "final_action_admission": {
+    "resolution_point": "after planner result is controller-observed and active cover monitoring/release resolves; before any plan submit",
+    "statuses": [
+      "REJECTED_POLICY_INVALIDATED",
+      "REJECTED_PLANNER_INELIGIBLE",
+      "REJECTED_CONTROLLER_VALIDATION",
+      "NO_INPUT_TERMINAL_STATE",
+      "INPUT_ADMITTED"
+    ],
+    "precedence": "any authority-reducing policy event observed before controller decision rejects even when planner already reports completed/eligible",
+    "ready_rule": "completed/eligible/current output is READY only and grants no input",
+    "admission_rule": "only first actual accepted primary plan binds INPUT_ADMITTED",
+    "cardinality": "every no-input/rejected receipt has zero plan accepted events for its decision; every INPUT_ADMITTED receipt has exactly one matching first acceptance",
+    "revocation": "later hard events preserve historical acceptance and set current authority false",
+    "authority": "receipt code observes and records; it does not issue input"
+  },
+  "race_exposure_rule": "count completed-terminal/hard-event race only when planner status is completed and answer_eligible true, policy invalidation exists before controller admission, final status is REJECTED_POLICY_INVALIDATED, interrupt is already_terminal, and zero plan program is accepted",
+  "no_race_exposure_disposition": "retain live receipt/program cardinality result and classify the specific completed-terminal race unexposed; do not retry this ID"
+}

@@ -1,0 +1,17 @@
+{
+  "recorded_utc": "2026-10-03T01:38:08.905110+00:00",
+  "policy": "FINAL-v5",
+  "source_paths": "one additive evidence directory only; no runtime/kernel or workflow edits",
+  "byte_preservation": "Original mixed LF/CRLF evidence bytes were staged with git hash-object --no-filters and explicit cacheinfo. Every index blob was read back and compared with local bytes; 49/49 exact before this publication record. A separate fresh-clone check confirmed an intentionally CRLF Git blob remains exact with eol=lf.",
+  "checkout_attributes": "repository metadata remains * text eol=lf; worker-local .git/info/attributes overrides text for this path, avoiding future staging normalization. Re-stage with byte preservation if editing evidence.",
+  "current_main": "f1416985d4ff9ce5bbf9f0f4be1be3d0ee669549",
+  "frozen_kernel_dependency_blobs_unchanged": true,
+  "branch_rules_observed": {
+    "protection_api": "404 Branch not protected",
+    "repository_rulesets": [],
+    "rules_for_main": []
+  },
+  "ci": "local scoped checks retained; optional push/pull_request workflows will be skipped with [skip ci]. This does not skip pull_request_target or waive later rules.",
+  "ci_reference": "https://docs.github.com/en/actions/how-tos/manage-workflow-runs/skip-workflow-runs",
+  "main_application": "not attempted; nonauthor consensus and exact-tree conditional application pending"
+}

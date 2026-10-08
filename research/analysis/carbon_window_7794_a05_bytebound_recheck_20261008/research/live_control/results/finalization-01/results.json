@@ -1,0 +1,166 @@
+[
+  {
+    "case": "success",
+    "calls": [
+      "close",
+      "score",
+      "publish"
+    ],
+    "result": {
+      "final_program": "final",
+      "started_ns": 1392917709,
+      "admission_closed": true,
+      "evaluation": {
+        "success": true,
+        "actual": [
+          532,
+          590
+        ]
+      },
+      "output_flushed": true,
+      "status": "finished",
+      "finished_ns": 1392944187
+    }
+  },
+  {
+    "case": "task_failure",
+    "calls": [
+      "close",
+      "score",
+      "publish"
+    ],
+    "result": {
+      "final_program": "final",
+      "started_ns": 1392949160,
+      "admission_closed": true,
+      "evaluation": {
+        "success": false,
+        "actual": [
+          532,
+          590
+        ]
+      },
+      "output_flushed": true,
+      "status": "finished",
+      "finished_ns": 1392961451
+    }
+  },
+  {
+    "case": "close_error",
+    "calls": [
+      "close"
+    ],
+    "result": {
+      "final_program": "final",
+      "started_ns": 1392963864,
+      "admission_closed": false,
+      "evaluation": null,
+      "output_flushed": false,
+      "status": "finalization_error",
+      "failure_stage": "close_admission",
+      "error": {
+        "type": "OSError",
+        "message": "injected close failure"
+      },
+      "finished_ns": 1392970720
+    }
+  },
+  {
+    "case": "score_error",
+    "calls": [
+      "close",
+      "score"
+    ],
+    "result": {
+      "final_program": "final",
+      "started_ns": 1392973341,
+      "admission_closed": true,
+      "evaluation": null,
+      "output_flushed": false,
+      "status": "finalization_error",
+      "failure_stage": "evaluate",
+      "error": {
+        "type": "OSError",
+        "message": "injected scorer failure"
+      },
+      "finished_ns": 1392975652
+    }
+  },
+  {
+    "case": "invalid_score",
+    "calls": [
+      "close",
+      "score"
+    ],
+    "result": {
+      "final_program": "final",
+      "started_ns": 1392977196,
+      "admission_closed": true,
+      "evaluation": null,
+      "output_flushed": false,
+      "status": "finalization_error",
+      "failure_stage": "evaluate",
+      "error": {
+        "type": "ValueError",
+        "message": "evaluation must contain boolean success"
+      },
+      "finished_ns": 1392979418
+    }
+  },
+  {
+    "case": "publish_error",
+    "calls": [
+      "close",
+      "score",
+      "publish"
+    ],
+    "result": {
+      "final_program": "final",
+      "started_ns": 1392980944,
+      "admission_closed": true,
+      "evaluation": {
+        "success": true,
+        "actual": [
+          532,
+          590
+        ]
+      },
+      "output_flushed": false,
+      "status": "finalization_error",
+      "failure_stage": "publish",
+      "error": {
+        "type": "BrokenPipeError",
+        "message": "injected output failure"
+      },
+      "finished_ns": 1392987617
+    }
+  },
+  {
+    "case": "unconfirmed_output",
+    "calls": [
+      "close",
+      "score",
+      "publish"
+    ],
+    "result": {
+      "final_program": "final",
+      "started_ns": 1392988854,
+      "admission_closed": true,
+      "evaluation": {
+        "success": true,
+        "actual": [
+          532,
+          590
+        ]
+      },
+      "output_flushed": false,
+      "status": "finalization_error",
+      "failure_stage": "publish",
+      "error": {
+        "type": "OSError",
+        "message": "evaluation output not confirmed flushed"
+      },
+      "finished_ns": 1392993353
+    }
+  }
+]

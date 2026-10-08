@@ -1,0 +1,146 @@
+[
+  {
+    "index": 1,
+    "condition": "full",
+    "proposal": {
+      "status": "READABLE",
+      "value": "t000250",
+      "rationale": "The Value input visibly contains the text \"t000250\"."
+    },
+    "expected": true,
+    "runner_s": 5.708356825,
+    "usage": {
+      "input_tokens": 9302,
+      "cached_input_tokens": 6912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 81,
+      "reasoning_output_tokens": 46
+    }
+  },
+  {
+    "index": 2,
+    "condition": "redacted",
+    "proposal": {
+      "status": "UNKNOWN",
+      "reason": "REDACTED_BY_POLICY",
+      "rationale": "The Value input content is within a redacted region, so its exact text is unavailable."
+    },
+    "expected": true,
+    "runner_s": 4.677321252,
+    "usage": {
+      "input_tokens": 9414,
+      "cached_input_tokens": 6912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 40,
+      "reasoning_output_tokens": 0
+    }
+  },
+  {
+    "index": 3,
+    "condition": "redacted",
+    "proposal": {
+      "status": "UNKNOWN",
+      "reason": "REDACTED_BY_POLICY",
+      "rationale": "The Value input content is within a redacted region, so its text is unavailable."
+    },
+    "expected": true,
+    "runner_s": 4.535099656,
+    "usage": {
+      "input_tokens": 9414,
+      "cached_input_tokens": 6912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 39,
+      "reasoning_output_tokens": 0
+    }
+  },
+  {
+    "index": 4,
+    "condition": "full",
+    "proposal": {
+      "status": "READABLE",
+      "value": "t000250",
+      "rationale": "The Value input text is clearly visible in the supplied image."
+    },
+    "expected": true,
+    "runner_s": 6.127204876,
+    "usage": {
+      "input_tokens": 9302,
+      "cached_input_tokens": 1792,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 131,
+      "reasoning_output_tokens": 97
+    }
+  },
+  {
+    "index": 5,
+    "condition": "full",
+    "proposal": {
+      "status": "READABLE",
+      "value": "t000250",
+      "rationale": "The current browser Value input visibly contains the text t000250."
+    },
+    "expected": true,
+    "runner_s": 5.178275815,
+    "usage": {
+      "input_tokens": 9302,
+      "cached_input_tokens": 9216,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 73,
+      "reasoning_output_tokens": 38
+    }
+  },
+  {
+    "index": 6,
+    "condition": "redacted",
+    "proposal": {
+      "status": "UNKNOWN",
+      "reason": "REDACTED_BY_POLICY",
+      "rationale": "The Value input content is within a redacted region, so its text is unknown."
+    },
+    "expected": true,
+    "runner_s": 5.078649039,
+    "usage": {
+      "input_tokens": 9414,
+      "cached_input_tokens": 6912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 39,
+      "reasoning_output_tokens": 0
+    }
+  },
+  {
+    "index": 7,
+    "condition": "redacted",
+    "proposal": {
+      "status": "UNKNOWN",
+      "reason": "REDACTED_BY_POLICY",
+      "rationale": "The Value input content is within a region explicitly redacted by policy."
+    },
+    "expected": true,
+    "runner_s": 4.465459095,
+    "usage": {
+      "input_tokens": 9414,
+      "cached_input_tokens": 1792,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 36,
+      "reasoning_output_tokens": 0
+    }
+  },
+  {
+    "index": 8,
+    "condition": "full",
+    "proposal": {
+      "status": "READABLE",
+      "value": "t000250",
+      "rationale": "The current browser Value input visibly reads \u201ct000250\u201d."
+    },
+    "expected": true,
+    "runner_s": 5.003104981,
+    "usage": {
+      "input_tokens": 9302,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 68,
+      "reasoning_output_tokens": 33
+    }
+  }
+]

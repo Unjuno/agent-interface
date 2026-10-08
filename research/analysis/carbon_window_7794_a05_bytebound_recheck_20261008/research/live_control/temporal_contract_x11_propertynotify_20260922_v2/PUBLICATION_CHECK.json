@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-09-22 JST",
+  "scope": "postformal publication/readback only; no scientific rerun",
+  "branch": "research/issue-1786-propertynotify-live-20260922-v2",
+  "base_main": "74d0ebb63c880fc5818bc4bbe6bb0c6b08579d39",
+  "additive_path": "research/live_control/temporal_contract_x11_propertynotify_20260922_v2/**",
+  "evidence_parts": [
+    {
+      "name": "EVIDENCE.part-00.b64",
+      "git_blob": "6c5fe8bde09fb4c63434cfc74f54390830f93b99",
+      "bytes": 7000,
+      "ends_newline": false,
+      "expected_sha256": "df56dfa91b003bff6158a9e9c11002483fbbacafc770cbd1cc94f7a369aab0ff"
+    },
+    {
+      "name": "EVIDENCE.part-01.b64",
+      "git_blob": "ca2e64233049ad6bedda47c96cf9ae4464cefcfe",
+      "bytes": 7000,
+      "ends_newline": false,
+      "expected_sha256": "a0add79bef5a26edac2ba4f095588f81a3569b8a0bf0fe3e31bdf02aade22f7e"
+    },
+    {
+      "name": "EVIDENCE.part-02.b64",
+      "git_blob": "49d8bf594d6433a01960cb6e013f18970628efbd",
+      "bytes": 5040,
+      "ends_newline": false,
+      "expected_sha256": "c2ae81d4b9d54766d8d6fbb70566e5ee97bafdce07d463b5cfbadea5a9ee4371"
+    }
+  ],
+  "pack_git_blob": "c7bc99796fdd66245830e0af05e61c47b97beca1",
+  "restore_git_blob": "f6e2019fc3331053af8725a5b774f21ec434ae14",
+  "report_git_blob": "b6a00856ad9672c313285a23e550ddbaf70a8473",
+  "formal_summary_git_blob": "db6d2798c98ce33d7e0a3cc19ced536b2f2c807e",
+  "postformal_audit_git_blob": "8022d5456faa6459bc321151b0bbb5136d11eee1",
+  "capsule_sha256": "d95d8249fc5dde6cdebc4e759ffe8d0e67f20dd825bba84a5f340281724bdeff",
+  "expanded_files": 65,
+  "publication_incident": {
+    "first_upload": "part-00 and part-01 had one trailing LF byte each from text transfer",
+    "detection": "remote readback lengths were 7001/7001 versus frozen 7000/7000",
+    "repair": "removed only the two publication-only trailing LF bytes before PR creation",
+    "scientific_data_changed": false,
+    "formal_rerun": false
+  },
+  "compare_after_repair": {
+    "status": "ahead",
+    "behind_by": 0,
+    "changed_paths": 15,
+    "all_under_additive_path": true
+  }
+}

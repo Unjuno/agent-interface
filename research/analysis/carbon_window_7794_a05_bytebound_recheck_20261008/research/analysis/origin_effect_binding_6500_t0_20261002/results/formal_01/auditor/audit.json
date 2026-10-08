@@ -1,0 +1,32 @@
+{
+  "candidate_sha256": "25b1ce94671842e32a4a305492885b49732f2bff8c07504e6c5ec432ba597b0e",
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "expected_rows": 24,
+  "false_allows": {
+    "origin_bound": 0,
+    "similarity_alarm": 6,
+    "visual_only": 6
+  },
+  "gates": {
+    "all_mutations_rejected": true,
+    "origin_accepts_all_legitimate": true,
+    "origin_no_false_allows": true,
+    "similarity_alarm_false_allows_lookalikes": true,
+    "unknown_provenance_stays_unknown": true,
+    "visual_only_false_allows_lookalikes": true
+  },
+  "legitimate_origin_allows": 2,
+  "mutations_rejected": {
+    "omit_embedded_origin": true,
+    "origin_swap": true,
+    "recipient_misbinding": true,
+    "similarity_score_inversion": true,
+    "stale_generation": true,
+    "target_identity_change": true
+  },
+  "received_rows": 24,
+  "schema": "origin-effect-binding-6500-audit-v1",
+  "scope": "authored finite metadata table only; no real origin authenticity or GUI safety claim",
+  "unique_rows": 24
+}

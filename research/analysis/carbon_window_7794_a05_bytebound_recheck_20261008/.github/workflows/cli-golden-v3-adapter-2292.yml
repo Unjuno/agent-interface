@@ -1,0 +1,30 @@
+name: cli golden-v3 adapter 2292
+on:
+  pull_request:
+    paths:
+      - "runtime/cli_v1/golden_v3.py"
+      - "runtime/cli_v1/test_golden_v3.py"
+      - "runtime/cli_v1/README.md"
+      - ".github/workflows/cli-golden-v3-adapter-2292.yml"
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    steps:
+      - name: Fetch immutable PR source bytes
+        env:
+          SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -eu
+          mkdir -p runtime/cli_v1 runtime/selector_v1
+          python - "${SHA}" <<'PY'
+          import pathlib,sys,urllib.request
+          sha=sys.argv[1]
+          files=("runtime/cli_v1/api.py","runtime/cli_v1/golden_v3.py","runtime/cli_v1/test_golden_v3.py","runtime/selector_v1/__init__.py","runtime/selector_v1/selector.py")
+          for name in files:
+              url=f"https://raw.githubusercontent.com/Unjuno/agent-interface/{sha}/{name}"
+              out=pathlib.Path(name); out.parent.mkdir(parents=True,exist_ok=True)
+              with urllib.request.urlopen(url,timeout=30) as r: out.write_bytes(r.read())
+          PY
+      - run: python -m py_compile runtime/cli_v1/api.py runtime/cli_v1/golden_v3.py runtime/cli_v1/test_golden_v3.py runtime/selector_v1/*.py
+      - run: python -m unittest -v runtime.cli_v1.test_golden_v3

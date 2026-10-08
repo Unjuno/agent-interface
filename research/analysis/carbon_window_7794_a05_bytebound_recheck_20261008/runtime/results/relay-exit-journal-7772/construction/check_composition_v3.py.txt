@@ -1,0 +1,45 @@
+"""Ordinary scoped integration with fixed pending stdio and busy-response heads."""
+import hashlib,json,os,pathlib,posixpath,re,shutil,subprocess,sys
+from datetime import datetime,timezone
+root=pathlib.Path(__file__).resolve().parent;repo=root.parent/'agent-interface'
+env_git=os.environ.copy();env_git['GIT_NO_LAZY_FETCH']='1'
+def git(*args,data=None):
+    # Explicit named source reads may fetch that required promised blob only.
+    return subprocess.check_output(['git',*args],cwd=repo,env=os.environ.copy() if args[0]=='show' else env_git,input=data)
+base=json.loads((root/'SOURCE.json').read_text())['base']
+stdio='83e92bbd2bec853b01c2559113436dc8bca6e0c0';busy='12e15aa7a3dc71a95f31ac7b600212c742dd9bff'
+pair=git('merge-tree','--write-tree',stdio,busy).decode().strip()
+preview=git('commit-tree',pair,'-p',stdio,'-p',busy,data=b'private composition preview only\n').decode().strip()
+tree=git('merge-tree','--write-tree',base,preview).decode().strip()
+workflow=git('show',tree+':.github/workflows/native-mcp-v1.yml')
+selection=re.search(rb'run: node --test ([^\r\n]+)',workflow).group(1).decode().split();assert len(selection)==14
+dest=root/'composed-v3';dest.mkdir();queue=list(selection)+['runtime/integration_checks/host_timing.py'];pins={}
+overrides={'runtime/host_v1/'+n:root/'source'/n for n in ['relay_client.mjs','test_relay_client.mjs']}
+while queue:
+    path=queue.pop(0)
+    if path in pins:continue
+    original=git('show',tree+':'+path);raw=overrides[path].read_bytes() if path in overrides else original
+    if path in overrides:assert hashlib.sha256(original).hexdigest()==json.loads((root/'SOURCE.json').read_text())['pins'][path]['sha256']
+    target=dest/path;target.parent.mkdir(parents=True,exist_ok=True)
+    with target.open('xb') as f:f.write(raw)
+    pins[path]=dict(combined_blob=git('rev-parse',tree+':'+path).decode().strip(),original_sha256=hashlib.sha256(original).hexdigest(),tested_sha256=hashlib.sha256(raw).hexdigest(),own_overlay=path in overrides)
+    for dependency in re.findall(rb"(?:from\s*|import\s*\()\s*['\"](\.[^'\"]+\.mjs)['\"]",raw):
+        literal=dependency.decode()
+        # The inspected stdio test's inline --eval import uses the repo-root cwd.
+        resolved=literal[2:] if literal.startswith('./runtime/') else posixpath.normpath(posixpath.join(posixpath.dirname(path),literal))
+        assert not resolved.startswith('../');queue.append(resolved)
+record=dict(utc=datetime.now(timezone.utc).isoformat(),base=base,stdio_head=stdio,busy_head=busy,pair_tree=pair,private_pair_preview=preview,current_base_composed_tree_before_own_overlay=tree,
+  own_client_sha256=hashlib.sha256((root/'source/relay_client.mjs').read_bytes()).hexdigest(),workflow_sha256=hashlib.sha256(workflow).hexdigest(),selection=selection,pins=pins,
+  limits='author integration only; no nonauthor approval/main adoption or original formal producer/auditor invocation; sequential Node file execution')
+with (root/'COMPOSITION_FREEZE_V3.json').open('x',encoding='utf-8',newline='\n') as f:json.dump(record,f,indent=2);f.write('\n')
+out=root/'execution/composed-v3';out.mkdir();scratch=root/'scratch/composed-v3';scratch.mkdir()
+env=os.environ.copy();env['TEMP']=str(scratch);env['TMP']=str(scratch)
+argv=[shutil.which('node'),'--test','--test-concurrency=1',*[str(dest/p) for p in selection]]
+start=datetime.now(timezone.utc).isoformat();p=subprocess.run(argv,cwd=dest,env=env,capture_output=True,timeout=35)
+logs={}
+for name,data in [('stdout',p.stdout),('stderr',p.stderr)]:
+    with (out/(name+'.txt')).open('xb') as f:f.write(data)
+    logs[name]=dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest())
+with (out/'receipt.json').open('x',encoding='utf-8',newline='\n') as f:json.dump(dict(argv=argv,start_utc=start,end_utc=datetime.now(timezone.utc).isoformat(),exit=p.returncode,logs=logs),f,indent=2);f.write('\n')
+print(json.dumps(dict(exit=p.returncode,selection=len(selection),closure=len(pins),before_own_overlay_tree=tree)))
+sys.exit(p.returncode)

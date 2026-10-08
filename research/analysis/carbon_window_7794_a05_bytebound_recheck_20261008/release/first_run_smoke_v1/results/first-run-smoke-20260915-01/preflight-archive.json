@@ -1,0 +1,78 @@
+{
+  "schema": "agent_interface_first_run_preflight_v1",
+  "status": "PASS_LAUNCHER_BOUNDARY",
+  "passed": true,
+  "root": "/mnt/data/agent-interface-first-run",
+  "revision": null,
+  "mode_source": "archive_filesystem_only",
+  "checks": [
+    {
+      "name": "archive_mode",
+      "passed": true,
+      "detail": "No .git: only extracted files are checked; no committed-mode claim."
+    },
+    {
+      "name": "posix_execution",
+      "passed": true,
+      "detail": "Native Windows execution is outside this check."
+    },
+    {
+      "name": "bash_available",
+      "passed": true,
+      "detail": "Required by the existing launchers."
+    },
+    {
+      "name": "runtime/setup-golden-demo-v3.sh:readable",
+      "passed": true,
+      "detail": "sha256:cf2bd2b0b033fa7dcc6c7f641873f902d9301adb5e6b758784eceedba34cdb6e"
+    },
+    {
+      "name": "runtime/setup-golden-demo-v3.sh:filesystem_executable",
+      "passed": true,
+      "detail": "Direct ./ invocation must be executable in this checkout."
+    },
+    {
+      "name": "runtime/setup-golden-demo-v3.sh:bash_lf",
+      "passed": true,
+      "detail": "Expected LF bash shebang and no CR bytes."
+    },
+    {
+      "name": "runtime/golden-demo-v3.sh:readable",
+      "passed": true,
+      "detail": "sha256:75e9dd318853b60e27f49c3d3c0f8da4bd8ad4d30b0c18350f82f951b7d92003"
+    },
+    {
+      "name": "runtime/golden-demo-v3.sh:filesystem_executable",
+      "passed": true,
+      "detail": "Direct ./ invocation must be executable in this checkout."
+    },
+    {
+      "name": "runtime/golden-demo-v3.sh:bash_lf",
+      "passed": true,
+      "detail": "Expected LF bash shebang and no CR bytes."
+    },
+    {
+      "name": "runtime/golden_desktop_demo_v3.py:readable",
+      "passed": true,
+      "detail": "sha256:e921432d0f98695bb2586c1b66a1a88c3f2bca81dc8241a57a1830c2d72a39a8"
+    },
+    {
+      "name": "runtime/golden_desktop_demo_v3.py:syntax",
+      "passed": true,
+      "detail": "Parsed only, never imported."
+    },
+    {
+      "name": "runtime/requirements-golden.txt:readable",
+      "passed": true,
+      "detail": "sha256:1065afbce7e148dfb1a736cba251b81620898adc274761e411262ca4742341d3"
+    },
+    {
+      "name": "runtime/requirements-golden.txt:exact_pins",
+      "passed": true,
+      "detail": "Nonempty, unique exact version pins; wheel availability and transitive closure are not checked."
+    }
+  ],
+  "limitations": [
+    "Launcher boundary only: not dependency installation, doctor, GUI, model, or full source-closure validation."
+  ]
+}

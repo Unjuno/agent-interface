@@ -1,0 +1,29 @@
+{
+  "disposition": "PASS_REQUEST_SEQUENCE_PARITY_AUDIT_V2",
+  "mutation_controls": {
+    "boolean_event_code": [
+      "request_sequence_type_invalid",
+      "equivalence_flag_mismatch"
+    ],
+    "both_arrays_same_wrong_sequence": [
+      "request_sequence_mismatch",
+      "request_sequence_mismatch"
+    ],
+    "equivalence_flag_flipped": [
+      "equivalence_flag_mismatch"
+    ],
+    "self_reported_expected_sequence_changed": [
+      "expected_sequence_mismatch"
+    ],
+    "v11_array_changed_flag_true": [
+      "request_sequence_mismatch",
+      "equivalence_flag_mismatch"
+    ]
+  },
+  "mutation_controls_rejected": 5,
+  "mutation_controls_total": 5,
+  "pristine_errors": [],
+  "raw_sha256": "019fb0fb2a01c3064ea8e88e8ad176b059f75cb67b201f444aeee08518dfe592",
+  "schema": "owner-keyup-request-parity-audit-v2",
+  "scope": "retained synthetic fake-Xlib output only; no fixture or formal rerun"
+}

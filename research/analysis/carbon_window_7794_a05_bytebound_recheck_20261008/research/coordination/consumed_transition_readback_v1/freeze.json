@@ -1,0 +1,23 @@
+{
+  "schema": "consumed_transition_readback_freeze_v1",
+  "task": "COORD-CONSUMED-TRANSITION-READBACK-20260916-019",
+  "publication_base": "8f08418c71a0a8919dd70b0b762cbae99a239bed",
+  "pre_measurement_head": "8a2fdd535315d45a2dd0fa8e3370d8af573db512",
+  "blobs": {
+    "policy.py": "444edb7e955f6aeb01850c9710975513c63e64bf",
+    "plan.json": "0585f74a19caf44d571d1abefec2492326c49212",
+    "canonical_naive.json": "60f71c4dadefa1bb9440eaf9fdc73accdff3865f",
+    "canonical_exact.json": "e0b65925fda47a12be70fe676868840da97d80e9",
+    "canonical_unavailable.json": "5fb4ba825f67fd4700f73a17e0b335d6afc7a34b",
+    "payload_naive_g2_consumed_rev1.json": "e5ab0c3140768bf081a25669355326168ee5bc36",
+    "payload_exact_g2_consumed_rev1.json": "222f671fcd55cc1fbe4a5ced1b877297fe39dd34",
+    "payload_unavailable_g2_consumed_rev1.json": "c1e0d9dd11df3933c7ccc95a0ae8353a03f20775",
+    "payload_naive_install_rev2.json": "8abd9bb42444998bcb370eb15c7283c6a78a5e61",
+    "payload_naive_replay_g3_consumed_rev2.json": "b3d3c0cbed3b2e796ce0ad3fb7b00be1bfc82789"
+  },
+  "measurement_order": ["naive_reissue", "exact_readback", "readback_unavailable"],
+  "formal_measurement_writes_before_freeze": 0,
+  "candidate_refresh_writes_after_recovery": 0,
+  "candidate_replay_writes_after_recovery": 0,
+  "fresh_sha_retry": 0
+}

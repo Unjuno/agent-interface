@@ -1,0 +1,41 @@
+{
+  "schema": "revision-timed-cutover-freeze-v1",
+  "allocation_id": "ISSUE-6617-T0-WSLC-20261002-01",
+  "issue": 6617,
+  "base_commit": "3246a9b6cb7a19209c4056d01472cb660390c4f4",
+  "branch": "research/revision-timed-cutover-6617-t0-wslc-20261002",
+  "package": "research/analysis/revision_timed_cutover_6617_t0_v1",
+  "frozen_sources_sha256": {
+    "candidate.py": "2f71a6e5b6edc5d12070e39df7713b40be8a4b8df737b2f61f225677af070b92",
+    "cases.json": "5373505a78be021052c6f20d6b17f403a255411443c20674a56c6f445053880d",
+    "audit.py": "c696ca31873b6ee0e0c4abc1bec38af120101583a3e39ece4dd499862afdbb3e",
+    "test_method.py": "afa8a56614da4aabd3a66b4b31579b66ec6667864e26791d80c8083c492c525f",
+    "PREREGISTRATION.md": "7348f8880630510eab0fc0e98ad14dfd9164e9c8aeeeb09fb7df4c3f09204164"
+  },
+  "runtime": {
+    "engine": "Microsoft WSL Containers (wslc.exe)",
+    "wslc_version": "3.0.1.0",
+    "wsl_kernel": "6.18.40.1-1",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_config_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "architecture": "linux/amd64",
+    "python": "3.12.15",
+    "pull": "never",
+    "network": "none",
+    "source_mount": "read-only",
+    "output_mount": "read-write, separate path",
+    "requested_cpus": 1,
+    "requested_memory": "512M",
+    "resource_enforcement_claim": "none",
+    "gpu": "not requested; finite logical-event simulation is CPU-only",
+    "docker_or_podman": "not used"
+  },
+  "formal_invocations_before_start": {
+    "candidate": 0,
+    "auditor": 0,
+    "retries": 0
+  },
+  "formal_commands": "formal_01_20261002/COMMANDS.txt",
+  "source_gate": "all five SHA-256 values must match before invocation",
+  "decision_gate": "candidate exactly once; auditor exactly once only after candidate exit 0; preserve first outcome; no retry"
+}

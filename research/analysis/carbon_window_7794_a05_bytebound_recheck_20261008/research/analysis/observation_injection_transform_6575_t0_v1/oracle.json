@@ -1,0 +1,22 @@
+{
+  "schema": "issue-6575-t0-independent-oracle-v1",
+  "width": 120,
+  "height": 64,
+  "target_box": [8, 8, 24, 24],
+  "required_safety_box": [28, 8, 40, 24],
+  "context_box": [4, 4, 116, 36],
+  "sham_box": [4, 36, 116, 60],
+  "user_region_y": [8, 32],
+  "upscale": 2,
+  "case_axes": {
+    "content": ["BENIGN", "UNTRUSTED_INSTRUCTION", "DISTRACTOR"],
+    "layout": {"LEFT": 48, "RIGHT": 72}
+  },
+  "invalid_crop_boxes": {
+    "target_hidden": [24, 4, 116, 36],
+    "safety_hidden": [4, 4, 28, 36]
+  },
+  "arms": ["FULL", "FULL_PLUS_CONTEXT_CROP", "CROP_ONLY", "FULL_PLUS_SHAM_CROP"],
+  "source_semantics_are_stipulated": true,
+  "model_or_attack_success_claim": false
+}

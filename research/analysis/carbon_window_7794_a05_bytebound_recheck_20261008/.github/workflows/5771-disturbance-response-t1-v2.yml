@@ -1,0 +1,122 @@
+name: Issue 5771 disturbance-response finite T1 allocation 02
+on:
+  workflow_dispatch:
+    inputs:
+      allocation:
+        description: Frozen allocation ID, exact match required.
+        required: true
+        type: string
+jobs:
+  finite-t1:
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.ref == 'refs/heads/research/disturbance-response-feasibility-5771-t1-v2-20261001'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout exact preregistered successor commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+      - name: Validate one-shot allocation and immutable v1 source blobs
+        id: gate
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALLOCATION_INPUT: ${{ inputs.allocation }}
+        run: |
+          set -euo pipefail
+          freeze=research/analysis/disturbance_response_5771_t1_v2/FREEZE.json
+          source=$(jq -r .sourcePackage "$freeze")
+          mkdir -p "$RUNNER_TEMP/evidence"
+          test "$GITHUB_EVENT_NAME" = workflow_dispatch
+          test "$ALLOCATION_INPUT" = "$(jq -r .allocation "$freeze")"
+          test "$GITHUB_REF_NAME" = "$(jq -r .branch "$freeze")"
+          test "$GITHUB_SHA" = "$(git rev-parse HEAD)"
+          test "$GITHUB_REPOSITORY" = Unjuno/agent-interface
+          test "$GITHUB_RUN_NUMBER" = 1
+          test "$GITHUB_RUN_ATTEMPT" = 1
+          test "$(jq -r .schema "$freeze")" = 5771-disturbance-response-freeze-v2
+          test "$(sha256sum "$source/candidate.py" | cut -d' ' -f1)" = "$(jq -r '.sourceSha256["candidate.py"]' "$freeze")"
+          test "$(sha256sum "$source/fixture.json" | cut -d' ' -f1)" = "$(jq -r '.sourceSha256["fixture.json"]' "$freeze")"
+          test "$(sha256sum "$source/audit.py" | cut -d' ' -f1)" = "$(jq -r '.sourceSha256["audit.py"]' "$freeze")"
+          test "$(sha256sum .github/workflows/5771-disturbance-response-t1-v2.yml | cut -d' ' -f1)" = "$(jq -r .sourceSha256.workflow "$freeze")"
+          main_sha=$(curl -fsSL -H "Authorization: Bearer $GITHUB_TOKEN" -H 'Accept: application/vnd.github+json' https://api.github.com/repos/Unjuno/agent-interface/commits/main | jq -r .sha)
+          jq -n --arg allocation "$(jq -r .allocation "$freeze")" --arg event_sha "$GITHUB_SHA" --arg main_sha "$main_sha" '{"allocation":$allocation,"event_sha":$event_sha,"live_main_sha_at_gate":$main_sha,"candidate_invocations":0,"auditor_invocations":0,"status":"START_GATE_PASS"}' > "$RUNNER_TEMP/evidence/start-gate.json"
+          echo ok=1 >> "$GITHUB_OUTPUT"
+      - name: Pull and record pinned image
+        id: image
+        if: success() && steps.gate.outputs.ok == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          f=research/analysis/disturbance_response_5771_t1_v2/FREEZE.json
+          image=$(jq -r .image "$f"); platform=$(jq -r .platform "$f")
+          docker version --format '{{json .Server}}' > "$RUNNER_TEMP/evidence/docker-server.json"
+          docker pull --platform "$platform" "$image"
+          docker image inspect "$image" --format '{"Id":"{{.Id}}","Os":"{{.Os}}","Architecture":"{{.Architecture}}","RepoDigests":{{json .RepoDigests}}}' > "$RUNNER_TEMP/evidence/image.json"
+          echo ok=1 >> "$GITHUB_OUTPUT"
+      - name: Invoke frozen candidate exactly once
+        id: candidate
+        if: success() && steps.image.outputs.ok == '1'
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/analysis/disturbance_response_5771_t1_v1
+          f=research/analysis/disturbance_response_5771_t1_v2/FREEZE.json
+          image=$(jq -r .image "$f"); platform=$(jq -r .platform "$f"); e="$RUNNER_TEMP/evidence"
+          set +e
+          docker run --interactive --pull=never --platform "$platform" --network none --read-only \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=8m --cap-drop=ALL --security-opt=no-new-privileges \
+            --pids-limit=32 --memory=128m --cpus=1 --cidfile "$e/candidate.cid" \
+            --mount "type=bind,source=$GITHUB_WORKSPACE/$src/candidate.py,target=/candidate.py,readonly" \
+            --mount "type=bind,source=$GITHUB_WORKSPACE/$src/fixture.json,target=/fixture.json,readonly" \
+            "$image" python -B /candidate.py < "$GITHUB_WORKSPACE/$src/fixture.json" > "$e/raw.json" 2> "$e/candidate.stderr"
+          rc=$?; set -e; echo exit_code=$rc >> "$GITHUB_OUTPUT"
+          if [ -s "$e/candidate.cid" ]; then cid=$(cat "$e/candidate.cid"); docker inspect "$cid" > "$e/candidate-container.json"; docker rm "$cid" >/dev/null; fi
+          if [ "$rc" -ne 0 ]; then exit "$rc"; fi
+          test "$(wc -c < "$e/raw.json" | tr -d ' ')" = "$(jq -r .expectedRawBytes "$f")"
+          test "$(sha256sum "$e/raw.json" | cut -d' ' -f1)" = "$(jq -r .expectedRawSha256 "$f")"
+      - name: Audit raw output exactly once in separate container
+        id: auditor
+        if: success() && steps.candidate.outputs.exit_code == '0'
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=research/analysis/disturbance_response_5771_t1_v1
+          f=research/analysis/disturbance_response_5771_t1_v2/FREEZE.json
+          image=$(jq -r .image "$f"); platform=$(jq -r .platform "$f"); e="$RUNNER_TEMP/evidence"
+          set +e
+          docker run --interactive --pull=never --platform "$platform" --network none --read-only \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=8m --cap-drop=ALL --security-opt=no-new-privileges \
+            --pids-limit=32 --memory=128m --cpus=1 --cidfile "$e/auditor.cid" \
+            --mount "type=bind,source=$GITHUB_WORKSPACE/$src/audit.py,target=/audit.py,readonly" \
+            --mount "type=bind,source=$GITHUB_WORKSPACE/$src/fixture.json,target=/fixture.json,readonly" \
+            --mount "type=bind,source=$e/raw.json,target=/raw.json,readonly" \
+            "$image" python -B /audit.py /fixture.json < "$e/raw.json" > "$e/audit.json" 2> "$e/auditor.stderr"
+          rc=$?; set -e; echo exit_code=$rc >> "$GITHUB_OUTPUT"
+          if [ -s "$e/auditor.cid" ]; then cid=$(cat "$e/auditor.cid"); docker inspect "$cid" > "$e/auditor-container.json"; docker rm "$cid" >/dev/null; fi
+          if [ "$rc" -ne 0 ]; then exit "$rc"; fi
+      - name: Retain the sole successor outcome
+        if: always()
+        shell: bash
+        env:
+          GATE_OK: ${{ steps.gate.outputs.ok || '0' }}
+          IMAGE_OK: ${{ steps.image.outputs.ok || '0' }}
+          CANDIDATE_RC: ${{ steps.candidate.outputs.exit_code || 'NOT_RUN' }}
+          AUDITOR_RC: ${{ steps.auditor.outputs.exit_code || 'NOT_RUN' }}
+        run: |
+          set -euo pipefail
+          root=research/analysis/disturbance_response_5771_t1_v2; e="$RUNNER_TEMP/evidence"; out="$root/results/allocation-02"
+          mkdir -p "$out"; if [ -d "$e" ]; then cp -a "$e/." "$out/"; fi
+          if [ "$GATE_OK" = 1 ] && [ "$IMAGE_OK" = 1 ] && [ "$CANDIDATE_RC" = 0 ] && [ "$AUDITOR_RC" = 0 ]; then disposition=PASS_METHOD_SCOPED; elif [ "$GATE_OK" != 1 ]; then disposition=STOP_BEFORE_CANDIDATE; else disposition=STOP_OPERATIONAL_OR_AUDIT; fi
+          jq -n --arg allocation "$(jq -r .allocation "$root/FREEZE.json")" --arg event_sha "$GITHUB_SHA" --arg run_id "$GITHUB_RUN_ID" --arg attempt "$GITHUB_RUN_ATTEMPT" --arg candidate_rc "$CANDIDATE_RC" --arg auditor_rc "$AUDITOR_RC" --arg disposition "$disposition" '{"allocation":$allocation,"event_sha":$event_sha,"workflow_run_id":$run_id,"run_attempt":$attempt,"candidate_invocations":(if $candidate_rc=="NOT_RUN" then 0 else 1 end),"candidate_exit_code":$candidate_rc,"auditor_invocations":(if $auditor_rc=="NOT_RUN" then 0 else 1 end),"auditor_exit_code":$auditor_rc,"disposition":$disposition}' > "$out/RUN.json"
+          if [ -f "$out/raw.json" ]; then sha256sum "$out/raw.json" > "$out/SHA256SUMS"; fi
+          git config user.name 'github-actions[bot]'; git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$out"; git commit -m 'research(#5771): retain allocation-02 first outcome'; git push origin "HEAD:$GITHUB_REF"

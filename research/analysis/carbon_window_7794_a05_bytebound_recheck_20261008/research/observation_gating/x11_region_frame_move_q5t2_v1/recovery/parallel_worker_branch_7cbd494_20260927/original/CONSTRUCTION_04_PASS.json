@@ -1,0 +1,21 @@
+{
+  "allocation": "x11-region-frame-move-4439-localdocker-v1-20260927",
+  "attempt": "construction-04-excluded",
+  "status": "PASS_CONSTRUCTION_DISCRIMINATOR",
+  "runner_sha256": "6c7d86c6ffc3c3bbcce45086fe52572d36267b5cc5b0647711a3db43c3f2d17c",
+  "auditor_sha256": "05be3dd06751ad73656db95891eb0560eecaedfccdeba2d7e9a47db2c21eab97",
+  "image_id": "sha256:1c334ebd65f4b1bfe81cc84c90780ea01e6f70c0f7b18cd89c09e03406460238",
+  "rows": 9,
+  "raw_bytes": 23611,
+  "raw_sha256": "52129783a95034bccec710954385fd0427510289f1c28de31dd2d8d89b57a7c9",
+  "audit_bytes": 1130,
+  "audit_sha256": "84722ec233872dd9a4b3dd0421bd48fff20e1269e2fbf7f604d5377f3e392ebe",
+  "audit_errors": [],
+  "matches": {
+    "STABLE": {"PINNED_SCREEN": "1/1", "REFRESH_SCREEN": "1/1", "WINDOW_CLIENT": "1/1"},
+    "MOVE_BEFORE": {"PINNED_SCREEN": "0/1", "REFRESH_SCREEN": "1/1", "WINDOW_CLIENT": "1/1"},
+    "MOVE_BETWEEN": {"PINNED_SCREEN": "0/1", "REFRESH_SCREEN": "0/1", "WINDOW_CLIENT": "1/1"}
+  },
+  "formal_rows": 0,
+  "note": "Construction only; this is a fixture discriminator and not a formal result or estimate. All target images differed from background, both moved schedules retained exact black repaint bytes, and all 9 Xvfb servers exited 0."
+}

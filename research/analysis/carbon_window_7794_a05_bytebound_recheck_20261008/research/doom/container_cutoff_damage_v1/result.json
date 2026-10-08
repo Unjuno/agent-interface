@@ -1,0 +1,65 @@
+{
+  "schema": "real-map01-cutoff-cancel-motor-comparison-v1",
+  "runtime_source_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "fixture": "map01-threat-contact-v2",
+  "model_calls": 0,
+  "conditions": {
+    "damage_exposure": {
+      "seeds": [992500, 992501, 992502],
+      "prelude": {"keys": ["Up", "space"], "duration_ms": 1000},
+      "comparison_key": "Shift_L",
+      "owner_deadline": {
+        "n": 3,
+        "target_to_verified_empty_ms": [0.507636, 0.465796, 0.436042],
+        "median_target_to_verified_empty_ms": 0.465796,
+        "median_ack_to_verified_empty_ms": 600.300287,
+        "final_health": [100, 93, 93],
+        "kill_count": [0,0,0], "death_count": [0,0,0], "map_exit": [false,false,false]
+      },
+      "explicit_cancel": {
+        "n": 3,
+        "target_to_verified_empty_ms": [4.209792, 2.863895, 1.629256],
+        "median_target_to_verified_empty_ms": 2.863895,
+        "median_ack_to_verified_empty_ms": 602.863895,
+        "final_health": [93,93,93],
+        "kill_count": [0,0,0], "death_count": [0,0,0], "map_exit": [false,false,false]
+      },
+      "no_capture_motor": {
+        "n": 3,
+        "target_to_verified_empty_ms": [0.803817, 0.648251, 0.854527],
+        "median_target_to_verified_empty_ms": 0.803817,
+        "median_ack_to_verified_empty_ms": 600.803817,
+        "final_health": [93,93,93],
+        "kill_count": [0,0,0], "death_count": [0,0,0], "map_exit": [false,false,false]
+      }
+    },
+    "attack_useful": {
+      "seed": 992600,
+      "comparison_key": "space",
+      "owner_deadline": {"target_to_verified_empty_ms": 0.447348, "ack_to_verified_empty_ms": 600.375087, "health": 100, "kill_count": 1, "death_count": 0, "map_exit": false},
+      "explicit_cancel": {"target_to_verified_empty_ms": 1.534517, "ack_to_verified_empty_ms": 601.534517, "health": 100, "kill_count": 1, "death_count": 0, "map_exit": false},
+      "no_capture_motor": {"target_to_verified_empty_ms": 0.609746, "ack_to_verified_empty_ms": 600.609746, "health": 100, "kill_count": 1, "death_count": 0, "map_exit": false},
+      "independent_event": "KILL_COUNT_INCREASE"
+    }
+  },
+  "hard_gates": {
+    "terminal_score_agreement": "PASS_12_OF_12",
+    "verified_empty_release": "PASS_12_OF_12",
+    "deaths": 0,
+    "controller_visible_scorer_leaks": 0
+  },
+  "retained_harness_failure": {
+    "stage": "motor_smoke",
+    "condition": "timeout_seconds=20 with loaded fixture episode_tic=1366",
+    "finding": "historical wall-time map_exit heuristic disagreed with independent timeout-aware scorer",
+    "disposition": "EXCLUDED; pooled runs use timeout_seconds=60 and strict terminal scorer agreement"
+  },
+  "decision": {
+    "owner_deadline": "PROMOTE_AS_SCHEDULED_AUTHORITY_CUTOFF_CANDIDATE",
+    "explicit_cancel": "KEEP_FOR_REACTIVE_INVALIDATION",
+    "no_capture_motor": "MECHANICALLY_VALID_NOT_PROMOTED_SOLELY_FOR_CUTOFF",
+    "gameplay_efficacy": "NOT_ESTABLISHED",
+    "next_architecture_gate": "DUAL_LIFETIME_CONTROL_CONTRACT"
+  },
+  "claim_scope": "real ViZDoom/X11 mechanism comparison; no model calls; no hard-real-time or general gameplay claim"
+}

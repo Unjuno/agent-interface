@@ -1,0 +1,17 @@
+F..
+======================================================================
+FAIL: test_completed_graph_opens_actual_inspection_session_before_feedback (__main__.CompiledFeedbackTests.test_completed_graph_opens_actual_inspection_session_before_feedback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-01/test_compiled_feedback.py", line 50, in test_completed_graph_opens_actual_inspection_session_before_feedback
+    self.assertEqual(owner.state,'open');self.assertEqual(shown['image_status'],'image');self.assertEqual(native,selected['native'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'new' != 'open'
+- new
++ open
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.275s
+
+FAILED (failures=1)

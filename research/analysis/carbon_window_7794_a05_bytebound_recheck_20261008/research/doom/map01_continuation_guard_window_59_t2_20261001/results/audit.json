@@ -1,0 +1,31 @@
+{
+  "audit": "PASS_FROZEN_GATE_AND_RAW_RECOMPUTE",
+  "event_lines": 634,
+  "gate_mismatches": {},
+  "mismatches": {},
+  "recomputed": {
+    "disposition": "PASS_RETAINED_WINDOW_DIAGNOSTIC",
+    "elapsed_after_capture_ns": 1489961751,
+    "elapsed_after_emit_ns": 1503225914,
+    "elapsed_after_typed_ready_ns": 1500507442,
+    "model_end_ns": 55524633283877,
+    "model_start_ns": 55518326410055,
+    "model_wait_ns": 6306873822,
+    "remaining_after_capture_ns": 4816912071,
+    "remaining_after_emit_ns": 4803647908,
+    "remaining_after_typed_ready_ns": 4806366380,
+    "source_health_floor": 85,
+    "source_sequence": 70,
+    "trigger": {
+      "capture_ns": 55519816371806,
+      "emit_ns": 55519829635969,
+      "health_status": "observed",
+      "health_value": 82,
+      "reason": "health_below_source",
+      "sequence": 76,
+      "typed_ready_ns": 55519826917497
+    },
+    "typed_observations_in_model_window": 20
+  },
+  "within_invocation_retries": 0
+}

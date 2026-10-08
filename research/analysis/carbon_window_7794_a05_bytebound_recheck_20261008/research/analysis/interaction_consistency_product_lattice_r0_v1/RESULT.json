@@ -1,0 +1,112 @@
+{
+  "decision": "PASS_CONSISTENCY_PRODUCT_NOT_SCALAR_SCOPED",
+  "full_parallel_independent_actuator_count": 2,
+  "phase_overlap_shared_actuator_count": 2,
+  "policy_counts": {
+    "ACTUATOR_ONLY": {
+      "decision_counts": {
+        "FULL_PARALLEL": 32,
+        "PHASE_OVERLAP": 64,
+        "SERIAL": 32
+      },
+      "false_serial": 0,
+      "missed_full": 0,
+      "unsafe": 90
+    },
+    "PRODUCT": {
+      "decision_counts": {
+        "FULL_PARALLEL": 2,
+        "PHASE_OVERLAP": 4,
+        "SERIAL": 122
+      },
+      "false_serial": 0,
+      "missed_full": 0,
+      "unsafe": 0
+    },
+    "READSET_ONLY": {
+      "decision_counts": {
+        "FULL_PARALLEL": 16,
+        "PHASE_OVERLAP": 16,
+        "SERIAL": 96
+      },
+      "false_serial": 0,
+      "missed_full": 0,
+      "unsafe": 26
+    },
+    "SAFE_SERIAL": {
+      "decision_counts": {
+        "FULL_PARALLEL": 0,
+        "PHASE_OVERLAP": 0,
+        "SERIAL": 128
+      },
+      "false_serial": 6,
+      "missed_full": 2,
+      "unsafe": 0
+    },
+    "STRICT_FULL_ONLY": {
+      "decision_counts": {
+        "FULL_PARALLEL": 2,
+        "PHASE_OVERLAP": 0,
+        "SERIAL": 126
+      },
+      "false_serial": 4,
+      "missed_full": 0,
+      "unsafe": 0
+    },
+    "SURFACE_ONLY": {
+      "decision_counts": {
+        "FULL_PARALLEL": 32,
+        "PHASE_OVERLAP": 32,
+        "SERIAL": 64
+      },
+      "false_serial": 3,
+      "missed_full": 1,
+      "unsafe": 61
+    }
+  },
+  "product_oracle_mismatch": 0,
+  "readset_not_surface_count": 16,
+  "readset_not_surface_witness": {
+    "actuator_independent": false,
+    "decisions": {
+      "ACTUATOR_ONLY": "PHASE_OVERLAP",
+      "PRODUCT": "SERIAL",
+      "READSET_ONLY": "PHASE_OVERLAP",
+      "SAFE_SERIAL": "SERIAL",
+      "STRICT_FULL_ONLY": "SERIAL",
+      "SURFACE_ONLY": "SERIAL"
+    },
+    "effects_commute": false,
+    "global_conflict_free": false,
+    "index": 48,
+    "oracle": "SERIAL",
+    "readset_complete": true,
+    "readset_current": true,
+    "simultaneous_input_requested": false,
+    "surface_disjoint": false
+  },
+  "rows_sha256": "2be665d63ad6607e450e013a36e2224c0f27b672060614d05418224207cec8a3",
+  "state_count": 128,
+  "summary_core_sha256": "ec92f6e198510b91654fb8c1497deab55e889068481d4a7bdecb4b4d3470babd",
+  "surface_not_readset_count": 48,
+  "surface_not_readset_witness": {
+    "actuator_independent": false,
+    "decisions": {
+      "ACTUATOR_ONLY": "PHASE_OVERLAP",
+      "PRODUCT": "SERIAL",
+      "READSET_ONLY": "SERIAL",
+      "SAFE_SERIAL": "SERIAL",
+      "STRICT_FULL_ONLY": "SERIAL",
+      "SURFACE_ONLY": "PHASE_OVERLAP"
+    },
+    "effects_commute": false,
+    "global_conflict_free": false,
+    "index": 64,
+    "oracle": "SERIAL",
+    "readset_complete": false,
+    "readset_current": false,
+    "simultaneous_input_requested": false,
+    "surface_disjoint": true
+  },
+  "task": "INTERACTION-CONSISTENCY-PRODUCT-LATTICE-R0-20260919-001"
+}

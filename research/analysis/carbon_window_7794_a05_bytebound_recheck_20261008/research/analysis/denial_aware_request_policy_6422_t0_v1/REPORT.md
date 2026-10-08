@@ -1,0 +1,11 @@
+# Issue #6422 T0 result — method-scoped pass with a boundedness gap
+
+**Result: `PASS_METHOD_SCOPED` on the preregistered 20-case fixture; no claim about deployed agents or human outcomes.** The frozen candidate emitted 60 rows and the independent auditor accepted all 60 with zero errors. The four construction-time corruption controls (erased denial, forged reopening, changed required-principal mapping, changed effect digest) were all rejected by the independent auditor tests.
+
+The ledger produced: 6 `YIELD_DENIED_EFFECT`, 1 wrong approval recipient hold, 1 altered principal-map hold, 3 fresh requests for different effects, 1 authenticated reopened fresh request, 1 replayed reopen-token yield, 1 bounded neutral follow-up for no response, 1 unknown-equivalence hold, 1 emergency safety release, 1 condition-satisfied fresh request, and 3 unverified-condition yields. No row granted approval authority. The ID-only baseline labeled all 20 attempts `ALLOW_REASK_UNSAFE`; the generic two-prompt cap allowed 13 prompts and held 7 at cap, including legitimate changes/reopening once capped.
+
+Important design gap: the fixture contains one satisfied-deferral request and one reopen-token replay, but not a replay of a satisfied condition. Code inspection after the one-shot run shows that the current candidate does not consume a one-use condition token; repeated qualifying condition evidence would again yield `ALLOW_CONDITION_SATISFIED_FRESH_REQUEST`. Therefore this experiment does **not** establish the issue's intended single-use deferral reopening guarantee. Preserve this result unchanged and require a separately frozen successor case/policy before making that claim. The current PASS is strictly the frozen matrix's oracle and implementation agreement.
+
+The experiment used no person, model, live authorization, external action, GUI, or production runtime. It cannot establish coercion resistance, user comprehension, operational effectiveness, or safety. T1 model testing and human/live validation remain unperformed.
+
+See [`FREEZE.json`](FREEZE.json), [`RUN.json`](RUN.json), and the raw/audit files under [`results/formal-01/`](results/formal-01/). OrbStack and command-level evidence, hashes, and local CI outcomes are retained in the run record and `SHA256SUMS`.

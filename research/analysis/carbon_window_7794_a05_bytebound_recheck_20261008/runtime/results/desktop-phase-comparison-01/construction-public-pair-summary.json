@@ -1,0 +1,52 @@
+{
+  "status": "scoped-correctness-controls-pass",
+  "rows": [
+    {
+      "route": "plain",
+      "seed": 1002204,
+      "case": "construction-public-repair-01",
+      "saved_task_success": true,
+      "stale_input_programs": 0,
+      "reason": "dependency_changed",
+      "commands": 7,
+      "input_programs": 3,
+      "incremental_emissions": 26,
+      "primary_selected_images": 6,
+      "native_capture_artifacts": 8,
+      "local_old_method_ms": 68.731363,
+      "local_repair_method_ms": 1197.236678,
+      "primary_grounding": "Fresh capture exact bytes match immediately reviewed moved PNG; recorded before input",
+      "limits": [
+        "one control per route, not reliability/efficiency",
+        "repeat image presentation can appear black",
+        "post-confirmation pixels not save oracle",
+        "actual model usage/cost extraction pending, not zero"
+      ]
+    },
+    {
+      "route": "compact",
+      "seed": 1002205,
+      "case": "construction-compact-repair-01",
+      "saved_task_success": true,
+      "stale_input_programs": 0,
+      "reason": "dependency_changed",
+      "commands": 7,
+      "input_programs": 3,
+      "incremental_emissions": 26,
+      "primary_selected_images": 6,
+      "native_capture_artifacts": 8,
+      "local_old_method_ms": 57.009166,
+      "local_repair_method_ms": 1046.918692,
+      "primary_grounding": "Fresh capture exact bytes match immediately reviewed moved PNG; recorded before input",
+      "limits": [
+        "one control per route, not reliability/efficiency",
+        "repeat image presentation can appear black",
+        "post-confirmation pixels not save oracle",
+        "actual model usage/cost extraction pending, not zero"
+      ]
+    }
+  ],
+  "retry_budget": 0,
+  "frozen_caller": "fa59117ed",
+  "performance_disposition": "HOLD"
+}

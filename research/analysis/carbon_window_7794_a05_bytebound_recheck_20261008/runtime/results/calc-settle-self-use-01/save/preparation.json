@@ -1,0 +1,38 @@
+{
+  "command": {
+    "op": "submit",
+    "id": "settle-save-991075",
+    "expected_sequence": 11,
+    "valid_until_ns": 66487252161,
+    "decision_evidence": {
+      "delivery_id": "delivery:16",
+      "observation_sequence": 11,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "settle",
+        "quiet_ms": 200,
+        "timeout_ms": 1200
+      }
+    ],
+    "finish_after": true
+  },
+  "image": {
+    "status": "image",
+    "sequence": 11,
+    "capture_ns": 42759427059,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/results-local/agent-settle-991075/007.png",
+    "relative_path": "007.png",
+    "sha256": "adea900a2c3ac3952933bcf5cfafabb53962e3340dd928519c9feda8d8ef78d3",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "source_clock_ns": 61487252161,
+  "lease_ms": 5000,
+  "authority": "none; historical deadline, viewing and runtime admission remain required"
+}

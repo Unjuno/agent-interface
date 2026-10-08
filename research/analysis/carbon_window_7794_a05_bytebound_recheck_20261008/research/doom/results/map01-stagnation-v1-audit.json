@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "source_run": "map01-motor-reflex-live-01",
+  "source_outcome": "unfinished after 30 decisions",
+  "calibration_scope": "one retained failure; threshold is a candidate, not general validation",
+  "viewport": [
+    320,
+    162,
+    962,
+    610
+  ],
+  "descriptor_size": [
+    64,
+    45
+  ],
+  "threshold_normalized_mae_lte": 0.065,
+  "excluded_adjacent_frames": true,
+  "history_decisions": 8,
+  "expected_and_observed_iterations": [
+    5,
+    6,
+    7,
+    9,
+    10,
+    11,
+    15,
+    17,
+    23,
+    24,
+    29
+  ],
+  "detections": [
+    {
+      "iteration": 5,
+      "prior_iteration": 1,
+      "lag": 4,
+      "normalized_mae": 0.05725354030501089,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 6,
+      "prior_iteration": 3,
+      "lag": 3,
+      "normalized_mae": 0.028812636165577343,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 7,
+      "prior_iteration": 5,
+      "lag": 2,
+      "normalized_mae": 0.043274782135076253,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 9,
+      "prior_iteration": 7,
+      "lag": 2,
+      "normalized_mae": 0.03725354030501089,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 10,
+      "prior_iteration": 5,
+      "lag": 5,
+      "normalized_mae": 0.038553921568627456,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 11,
+      "prior_iteration": 9,
+      "lag": 2,
+      "normalized_mae": 0.0022372004357298476,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 15,
+      "prior_iteration": 13,
+      "lag": 2,
+      "normalized_mae": 0.03313044662309368,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 17,
+      "prior_iteration": 13,
+      "lag": 4,
+      "normalized_mae": 0.03125272331154684,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 23,
+      "prior_iteration": 20,
+      "lag": 3,
+      "normalized_mae": 0.057008442265795205,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 24,
+      "prior_iteration": 19,
+      "lag": 5,
+      "normalized_mae": 0.054131263616557734,
+      "threshold": 0.065
+    },
+    {
+      "iteration": 29,
+      "prior_iteration": 27,
+      "lag": 2,
+      "normalized_mae": 0.06291394335511982,
+      "threshold": 0.065
+    }
+  ]
+}

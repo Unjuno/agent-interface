@@ -1,0 +1,71 @@
+{
+  "inputs_sha256": "cdc4ef16c30ec667c0cd043d1d69e2625b36fba4d14a3c50e27245c2e9330e8b",
+  "regimes": {
+    "common_cause": {
+      "a_non_ok": 740,
+      "a_severe": 455,
+      "b_ok": 3798,
+      "b_ok_given_a_non_ok": 405,
+      "b_ok_given_a_severe": 174,
+      "b_severe_given_a_non_ok": 282,
+      "incident_a_non_ok": 461,
+      "incident_b_ok_given_a_non_ok": 153,
+      "incident_b_severe_given_a_non_ok": 278,
+      "incident_rows": 720,
+      "n": 4608,
+      "p_b_ok_given_a_non_ok": 0.5472972972972973,
+      "p_b_ok_given_a_non_ok_and_incident": 0.3318872017353579,
+      "p_b_ok_given_a_severe": 0.3824175824175824,
+      "p_b_ok_marginal": 0.82421875,
+      "p_b_severe_given_a_non_ok": 0.3810810810810811,
+      "p_b_severe_given_a_non_ok_and_incident": 0.6030368763557483
+    },
+    "rare_catastrophe": {
+      "a_non_ok": 617,
+      "a_severe": 292,
+      "b_ok": 4274,
+      "b_ok_given_a_non_ok": 568,
+      "b_ok_given_a_severe": 274,
+      "b_severe_given_a_non_ok": 3,
+      "n": 4608,
+      "p_b_ok_given_a_non_ok": 0.9205834683954619,
+      "p_b_ok_given_a_non_ok_and_incident": null,
+      "p_b_ok_given_a_severe": 0.9383561643835616,
+      "p_b_ok_marginal": 0.9275173611111112,
+      "p_b_severe_given_a_non_ok": 0.004862236628849271,
+      "p_b_severe_given_a_non_ok_and_incident": null
+    },
+    "route_drift": {
+      "a_non_ok": 985,
+      "a_severe": 625,
+      "b_ok": 4249,
+      "b_ok_given_a_non_ok": 912,
+      "b_ok_given_a_severe": 581,
+      "b_severe_given_a_non_ok": 11,
+      "n": 4608,
+      "p_b_ok_given_a_non_ok": 0.9258883248730965,
+      "p_b_ok_given_a_non_ok_and_incident": null,
+      "p_b_ok_given_a_severe": 0.9296,
+      "p_b_ok_marginal": 0.9220920138888888,
+      "p_b_severe_given_a_non_ok": 0.01116751269035533,
+      "p_b_severe_given_a_non_ok_and_incident": null
+    },
+    "stationary": {
+      "a_non_ok": 364,
+      "a_severe": 35,
+      "b_ok": 4245,
+      "b_ok_given_a_non_ok": 342,
+      "b_ok_given_a_severe": 33,
+      "b_severe_given_a_non_ok": 3,
+      "n": 4608,
+      "p_b_ok_given_a_non_ok": 0.9395604395604396,
+      "p_b_ok_given_a_non_ok_and_incident": null,
+      "p_b_ok_given_a_severe": 0.9428571428571428,
+      "p_b_ok_marginal": 0.9212239583333334,
+      "p_b_severe_given_a_non_ok": 0.008241758241758242,
+      "p_b_severe_given_a_non_ok_and_incident": null
+    }
+  },
+  "rows": 18432
+}
+

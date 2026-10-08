@@ -1,0 +1,109 @@
+{
+  "decision": "PASS_REPAIR_REACQUISITION_ACCOUNTING_SCOPED",
+  "formal_invocation": 1,
+  "formal_reruns": 0,
+  "interpretation": [
+    "unit-specific ratios only; no synthetic scalar",
+    "primary denominator is matched ephemeral task4/layout-B cold reacquisition",
+    "different arms prevent causal same-arm repair-cost attribution",
+    "repeat_B zero-model fields show restored future reuse but do not make repair itself free"
+  ],
+  "persistent_repeat_B": {
+    "cached_input_tokens": 0,
+    "durable_calls": 40,
+    "elapsed_ms": "12533.047058",
+    "input_tokens": 0,
+    "local_observations": 46,
+    "model_visible_images": 0,
+    "output_tokens": 0,
+    "planner_generations": 0,
+    "reasoning_output_tokens": 0
+  },
+  "primary_comparator": {
+    "denominator_id": "ephemeral.task4.layout_B.cold_reacquisition",
+    "numerator_id": "persistent.task4.layout_B.repair"
+  },
+  "ratios": {
+    "durable_calls": {
+      "denominator": 16,
+      "difference": 2,
+      "numerator": 18,
+      "ratio_decimal": "1.125000000000000",
+      "ratio_fraction": "9/8"
+    },
+    "input_tokens": {
+      "denominator": 9302,
+      "difference": -3,
+      "numerator": 9299,
+      "ratio_decimal": "0.999677488712105",
+      "ratio_fraction": "9299/9302"
+    },
+    "local_observations": {
+      "denominator": 21,
+      "difference": 1,
+      "numerator": 22,
+      "ratio_decimal": "1.047619047619048",
+      "ratio_fraction": "22/21"
+    },
+    "model_visible_images": {
+      "denominator": 1,
+      "difference": 0,
+      "numerator": 1,
+      "ratio_decimal": "1.000000000000000",
+      "ratio_fraction": "1/1"
+    },
+    "output_tokens": {
+      "denominator": 186,
+      "difference": -25,
+      "numerator": 161,
+      "ratio_decimal": "0.865591397849462",
+      "ratio_fraction": "161/186"
+    },
+    "planner_generations": {
+      "denominator": 1,
+      "difference": 0,
+      "numerator": 1,
+      "ratio_decimal": "1.000000000000000",
+      "ratio_fraction": "1/1"
+    },
+    "reasoning_output_tokens": {
+      "denominator": 71,
+      "difference": -25,
+      "numerator": 46,
+      "ratio_decimal": "0.647887323943662",
+      "ratio_fraction": "46/71"
+    },
+    "wall_ns": {
+      "denominator": 12556640965,
+      "difference": -215175808,
+      "numerator": 12341465157,
+      "ratio_decimal": "0.982863585205647",
+      "ratio_fraction": "12341465157/12556640965"
+    }
+  },
+  "schema": "integrated_efficiency_repair_reacquisition_result_v1",
+  "secondary_context": {
+    "persistent_task1_cold": {
+      "durable_calls": 16,
+      "elapsed_ms": "11024.952714",
+      "input_tokens": 9299,
+      "local_observations": 21,
+      "model_visible_images": 1,
+      "output_tokens": 168,
+      "planner_generations": 1,
+      "reasoning_output_tokens": 53
+    },
+    "plain_task4_cold": {
+      "durable_calls": 6,
+      "elapsed_ms": "9127.145957",
+      "input_tokens": 9210,
+      "local_observations": 17,
+      "model_visible_images": 1,
+      "output_tokens": 106,
+      "planner_generations": 1,
+      "reasoning_output_tokens": 42
+    }
+  },
+  "source_git_blob": "7db368b2d492b5b95f5f038fb7cb5dd6b78a27a7",
+  "task": "INTEGRATED-EFFICIENCY-REPAIR-REACQUISITION-20260917-001"
+}

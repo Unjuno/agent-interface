@@ -1,0 +1,37 @@
+{
+  "schema": "agent-interface/map01-os-rolling-action-effect-history-plan-v2",
+  "task": "MAP01-OS-ROLLING-HISTORY-20260916-002",
+  "predecessor": "MAP01-OS-ACTION-EFFECT-HISTORY-20260916-001",
+  "formal_seeds": [996200,996201,996202,996203],
+  "current_alias_rmse_threshold": 0.001,
+  "observation_max_age_ns": 500000000,
+  "rolling_period_s": 0.035,
+  "cases": [
+    {"case":0,"seed":996200,"state":"opening","mode":"current"},
+    {"case":1,"seed":996200,"state":"opening","mode":"history"},
+    {"case":2,"seed":996200,"state":"closing","mode":"history"},
+    {"case":3,"seed":996200,"state":"closing","mode":"current"},
+    {"case":4,"seed":996201,"state":"opening","mode":"history"},
+    {"case":5,"seed":996201,"state":"opening","mode":"current"},
+    {"case":6,"seed":996201,"state":"closing","mode":"current"},
+    {"case":7,"seed":996201,"state":"closing","mode":"history"},
+    {"case":8,"seed":996202,"state":"opening","mode":"current"},
+    {"case":9,"seed":996202,"state":"opening","mode":"history"},
+    {"case":10,"seed":996202,"state":"closing","mode":"history"},
+    {"case":11,"seed":996202,"state":"closing","mode":"current"},
+    {"case":12,"seed":996203,"state":"opening","mode":"history"},
+    {"case":13,"seed":996203,"state":"opening","mode":"current"},
+    {"case":14,"seed":996203,"state":"closing","mode":"current"},
+    {"case":15,"seed":996203,"state":"closing","mode":"history"}
+  ],
+  "programs": {"opening":"wait 15/35 seconds then W 0.5s x2, no USE","closing":"E 0.03s then W 0.5s x2"},
+  "hard_gates": {"all_cases_complete":true,"history_semantic_correct_min":8,"history_transit_success_min":8,"release_failures":0,"stale_observations":0,"aliased_state_pairs_min":6},
+  "decision": {
+    "PASS_ROLLING_HISTORY_TRANSFER":"hard gates pass and history semantic-correct exceeds current by >=2",
+    "HOLD_NO_INCREMENTAL_EFFECT":"hard gates pass, history >= current, improvement <2",
+    "FAIL_ROLLING_HISTORY_TRANSFER":"history < current or candidate release/transit/freshness hard gate fails",
+    "UNCERTAIN_EXPOSURE":"fewer than 6 current-view aliased matched state pairs"
+  },
+  "single_change_from_predecessor":"history is continuously retained before the decision instead of synchronously acquired on demand",
+  "forbidden_claims":["MAP01 clear","general navigation improvement","model efficacy","human-level reaction","general GUI improvement"]
+}

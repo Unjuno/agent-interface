@@ -1,0 +1,22 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 674,
+      "y": 240
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 1000
+    }
+  ],
+  "rationale": "Inspect the middle tile of the attempted A-to-B segment before committing the second direction; tree cover still prevents confident confirmation.",
+  "intent": "inspect",
+  "expected_effect": "The road tool highlights the middle A-to-B tile, allowing its road surface and alignment to be inspected.",
+  "checkpoint": {
+    "prior_turn": 5,
+    "status": "uncertain",
+    "evidence": "The cost popup has cleared, but trees and the B label still obscure the attempted segment; a continuous three-tile road from A to B is not clearly visible."
+  }
+}

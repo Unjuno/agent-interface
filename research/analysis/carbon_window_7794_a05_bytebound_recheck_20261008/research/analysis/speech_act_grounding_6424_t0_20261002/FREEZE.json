@@ -1,0 +1,30 @@
+{
+  "allocation": "SPEECH-ACT-GROUNDING-6424-T0-20261002-01",
+  "issue": 6424,
+  "frozen_at_utc": "2026-10-02T02:25:00Z",
+  "base_commit": "4da4257ad481e9a4ea79133bdaf93c962e686fe7",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "formal_retries": 0,
+  "decision": "one candidate invocation exit 0; one independent auditor invocation exit 1; FAIL_METHOD because the turn-author-swap mutation was asserted without actually transforming source input and was therefore not tested; preserve first outcome, no retry",
+  "scope": "authored finite no-model/no-human/no-GUI transition contract only",
+  "environment": "macOS 26.6.2 arm64, CPython 3.14.5; wslc.exe and wslc unavailable; do not invoke shared OrbStack/Docker daemon",
+  "files_sha256": {
+    "README.md": "ece31719511cdb19be57dbf02397f7f57fb83e02af6cf5965988596d4ede9a88",
+    "RUN.md": "65bb7cc147e137cf747f8ac3bf2067ea372e36ed65e685e690b71fcf3f33c555",
+    "cases.json": "03deac2819fa11b66be7a24f64ba36e88e68f827385e03504fe1dd5d88a758f6",
+    "candidate.py": "806c5003197045ea3bbe14f04f6e13993634e9f856266627d3a85c4ac1723874",
+    "audit.py": "670e8cdadd1da7d3f622bce9cfc041c1c504bffa50609d551d1330b96e565be3",
+    "test_contract.py": "04b929256acc8edf9e5d61ed21a03a321f89aa76936d5c13fb85f9949ef86441",
+    "candidate.raw.json": "e570afb1a6d6586a9669493a7d78c1e453acabf800d2b20e6b2f15d898e6027d",
+    "candidate.stdout.json": "58d8b7323ec221ff7693abcb99a63da313b19281fbbb824dd1880dcd369caecb",
+    "candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "candidate.exit.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "audit.raw.json": "bf045f192858aecef0d0dac7e388ceac5ed598099c3bb42d22695e1aa716f051",
+    "audit.stdout.json": "6513464dd1f53da0bb843ba2a67a93854657c1c1305628875bb0367c0958fec2",
+    "audit.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "audit.exit.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "diagnose_audit_mutations.py": "d8572111d777236f5f59fd633c659226f8374f9247e623455f13e7d270af0552",
+    "diagnostic_mutations.raw.json": "b8c1e6e72ec0e4b362adb896eb84b72ff84fcbc2b46ad39d4e9f5bedb85ae36c"
+  }
+}

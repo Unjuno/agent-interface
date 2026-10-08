@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "issue": 6442,
+  "predecessor_issue": 5756,
+  "allocation": "SOFT-REVISIT-BIAS-5756-T0-20261002-01",
+  "planned_branch": "research/soft-revisit-bias-5756-t0-wslc-20261002",
+  "planned_path": "research/analysis/soft_revisit_bias_5756_t0_wslc_20261002/",
+  "intake_main_sha": "eacb1346866f660d9d34eb36cd9691fd8184e5ff",
+  "observed_at_utc": "2026-10-02T02:28:38Z",
+  "disposition": "STOP_PARALLEL_HOST_ALLOCATION_ACTIVE",
+  "stage": "pre-run start gate",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "construction_container_invocations": 0,
+  "scientific_result": "none",
+  "reason": "Eight live native_mcp_v1.py workers from the separate native-host-integration-03 allocation were observed in Ubuntu/WSL2. Although the WSLc listing showed no running container and sampled PSI averages were zero, the active same-host allocation and unverified release/ownership boundary fail the parallel-owner start gate. No process or container was inspected beyond read-only inventory, stopped, or modified.",
+  "resume_gate": "Require a fresh exact-main/source/image/output check and an explicit clear parallel-owner/resource boundary; preserve this pre-run STOP unchanged. No retry or scientific inference is authorized by this record."
+}

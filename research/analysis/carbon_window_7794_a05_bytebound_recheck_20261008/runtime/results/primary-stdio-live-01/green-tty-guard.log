@@ -1,0 +1,17 @@
+✔ numbered commands return exact file/text descriptors with no image encoding (4.996361ms)
+✔ commands arriving while outstanding are rejected rather than queued (5.696592ms)
+✔ EOF waits for the already committed command without replaying it (0.908323ms)
+✔ malformed JSON is refused without invoking exchange or consuming a command (1.306075ms)
+✔ command error reports uncertainty and state without retry (0.636361ms)
+✔ output failure rejects the stream owner after one completed command (1.221298ms)
+✔ config refuses unknown routes and fields before starting a host (0.428104ms)
+✔ terminal output refuses before starting a relay or allocating its evidence (0.281838ms)
+✔ startup output failure keeps original exception, closes one relay and never writes again (30.297199ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110.158522

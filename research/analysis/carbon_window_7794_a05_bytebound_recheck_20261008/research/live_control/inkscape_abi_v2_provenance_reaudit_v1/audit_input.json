@@ -1,0 +1,56 @@
+{
+  "schema": "inkscape-abi-v2-provenance-reaudit-v1-input",
+  "captured_from_main": "227ba648f1c0b83e9a5b69f4e0c7d39839d3578f",
+  "current_sources": {
+    "authority_ended_bridge_v2.py": {
+      "sha256": "37e544086fe70087c0a2e6c03ce8c42c1c5dd71989f7fe541eb9055b3551eb52",
+      "git_blob": "63639f44eba47a2842e57e3761730e6f6224e815"
+    },
+    "post_authority_normalize_v2.py": {
+      "sha256": "dc664652c7c29b002005feb7b69122d29619a449c6ad781a65ac5abfaa186d41",
+      "git_blob": "a6eb2b8a8964b34ac22dd4f1cbeaaff879f7e5b1"
+    }
+  },
+  "manifest": {
+    "git_blob": "fc4b121620daabf011ff0948ef890473d65a33a1",
+    "claim": "Frozen before formal seed 994600",
+    "claimed_formal_sha256": {
+      "authority_ended_bridge_v2.py": "37e6551baedaddad50ca8ef64677e3c387f742875ad3e28fa6ea630e58ad7d51",
+      "post_authority_normalize_v2.py": "dc98340c5434160684802a92f04d96f47420bf908198f8861b2148cbd12bdc72"
+    }
+  },
+  "build_candidate": {
+    "git_blob": "6c26d47a702f3af061658928fcfafa4bef4da4d1",
+    "expected_candidate_sha256": {
+      "authority_ended_bridge_v2.py": "37e6551baedaddad50ca8ef64677e3c387f742875ad3e28fa6ea630e58ad7d51",
+      "post_authority_normalize_v2.py": "dc98340c5434160684802a92f04d96f47420bf908198f8861b2148cbd12bdc72"
+    }
+  },
+  "formal_commit_observation": {
+    "formal_evidence_commit": "38f40605e6131d9695e1b3b3b789512819affb29",
+    "bridge_path_at_formal_commit": "404_not_found",
+    "normalizer_path_at_formal_commit": "404_not_found"
+  },
+  "original_commit_chain": [
+    {
+      "sha": "38f40605e6131d9695e1b3b3b789512819affb29",
+      "message": "Retain Inkscape authority-ended ABI formal evidence",
+      "parent": "9840e332361f14fb4e4b27ae2d86d29a4e4e2da5"
+    },
+    {
+      "sha": "9ca8fbbb8117290037d0a50f277ee189adc1cb0a",
+      "message": "Add cross-domain authority-ended bridge v2",
+      "parent": "38f40605e6131d9695e1b3b3b789512819affb29"
+    },
+    {
+      "sha": "08e176fb187b7075695be7d51a470fd9fca750ed",
+      "message": "Add truthful multi-capture normalization",
+      "parent": "9ca8fbbb8117290037d0a50f277ee189adc1cb0a"
+    }
+  ],
+  "observation_notes": [
+    "current source Git blobs and current manifest/build Git blobs were read from GitHub at captured_from_main",
+    "both source paths returned GitHub 404 when read at the formal-evidence commit",
+    "original PR #168 commit chain places formal evidence before both retained source-add commits"
+  ]
+}

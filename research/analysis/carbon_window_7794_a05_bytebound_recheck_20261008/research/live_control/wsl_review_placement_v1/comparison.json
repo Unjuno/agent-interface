@@ -1,0 +1,92 @@
+{
+  "source_sha256": "6f678af17e47d3949ffb2c94ee36776af0ac3a1fe6276f6e3beb706f2e1a86f3",
+  "image_sha256": "d6cf6a91cda94d7991279b6216db70654a93030432d433ced1ec70c96906b9fd",
+  "linux_copy": "/tmp/agent-interface-review-89l5oq2p",
+  "rows": [
+    {
+      "round": 0,
+      "location": "windows_mount",
+      "review_ms": 100.011974
+    },
+    {
+      "round": 0,
+      "location": "linux_tmp",
+      "review_ms": 2.588538
+    },
+    {
+      "round": 1,
+      "location": "linux_tmp",
+      "review_ms": 1.851643
+    },
+    {
+      "round": 1,
+      "location": "windows_mount",
+      "review_ms": 92.168796
+    },
+    {
+      "round": 2,
+      "location": "windows_mount",
+      "review_ms": 130.256006
+    },
+    {
+      "round": 2,
+      "location": "linux_tmp",
+      "review_ms": 1.942088
+    },
+    {
+      "round": 3,
+      "location": "linux_tmp",
+      "review_ms": 1.508981
+    },
+    {
+      "round": 3,
+      "location": "windows_mount",
+      "review_ms": 81.301987
+    },
+    {
+      "round": 4,
+      "location": "windows_mount",
+      "review_ms": 84.177838
+    },
+    {
+      "round": 4,
+      "location": "linux_tmp",
+      "review_ms": 2.329207
+    },
+    {
+      "round": 5,
+      "location": "linux_tmp",
+      "review_ms": 1.644381
+    },
+    {
+      "round": 5,
+      "location": "windows_mount",
+      "review_ms": 111.287972
+    },
+    {
+      "round": 6,
+      "location": "windows_mount",
+      "review_ms": 71.063557
+    },
+    {
+      "round": 6,
+      "location": "linux_tmp",
+      "review_ms": 1.69409
+    },
+    {
+      "round": 7,
+      "location": "linux_tmp",
+      "review_ms": 1.486105
+    },
+    {
+      "round": 7,
+      "location": "windows_mount",
+      "review_ms": 69.952247
+    }
+  ],
+  "medians_ms": {
+    "windows_mount": 88.173317,
+    "linux_tmp": 1.7728665000000001
+  },
+  "scope": "alternating historical reads with explicit archive mapping at both locations; current machine and path lengths differ; no model or live-action latency claim"
+}

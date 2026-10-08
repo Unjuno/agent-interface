@@ -1,0 +1,664 @@
+{
+  "schema": "route-switching-6009-candidate-v1",
+  "allocation": "ROUTE-SWITCHING-6009-T0-20261001-01",
+  "scenario_sha256": "e85292a0c1a7d45e3e78158d8859921a583e232cdf703c414df4bb1fa844daae",
+  "runs": [
+    {
+      "scenario_id": "alternating_five",
+      "policy": "greedy",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 2,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "alt-p1"
+        },
+        {
+          "task_id": "q1",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 4,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "alt-q1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 8,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "alt-p2"
+        },
+        {
+          "task_id": "q2",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 4,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "alt-q2"
+        },
+        {
+          "task_id": "p3",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 8,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "alt-p3"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 9,
+      "total_cost": 45,
+      "complete": true,
+      "deadline_met": false,
+      "effects": [
+        "alt-p1",
+        "alt-q1",
+        "alt-p2",
+        "alt-q2",
+        "alt-p3"
+      ]
+    },
+    {
+      "scenario_id": "alternating_five",
+      "policy": "sticky",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "alt-p1"
+        },
+        {
+          "task_id": "q1",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "alt-q1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "alt-p2"
+        },
+        {
+          "task_id": "q2",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "alt-q2"
+        },
+        {
+          "task_id": "p3",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "alt-p3"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 0,
+      "total_cost": 22,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "alt-p1",
+        "alt-q1",
+        "alt-p2",
+        "alt-q2",
+        "alt-p3"
+      ]
+    },
+    {
+      "scenario_id": "alternating_five",
+      "policy": "switch_aware",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 2,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "alt-p1"
+        },
+        {
+          "task_id": "q1",
+          "status": "COMPLETED",
+          "route": "C",
+          "transition_cost": 2,
+          "service_cost": 2,
+          "decision_cost": 1,
+          "effect": "alt-q1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "C",
+          "transition_cost": 0,
+          "service_cost": 2,
+          "decision_cost": 1,
+          "effect": "alt-p2"
+        },
+        {
+          "task_id": "q2",
+          "status": "COMPLETED",
+          "route": "C",
+          "transition_cost": 0,
+          "service_cost": 2,
+          "decision_cost": 1,
+          "effect": "alt-q2"
+        },
+        {
+          "task_id": "p3",
+          "status": "COMPLETED",
+          "route": "C",
+          "transition_cost": 0,
+          "service_cost": 2,
+          "decision_cost": 1,
+          "effect": "alt-p3"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 9,
+      "total_cost": 27,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "alt-p1",
+        "alt-q1",
+        "alt-p2",
+        "alt-q2",
+        "alt-p3"
+      ]
+    },
+    {
+      "scenario_id": "persistent_p_family",
+      "policy": "greedy",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 2,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "persist-p1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "persist-p2"
+        },
+        {
+          "task_id": "p3",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "persist-p3"
+        },
+        {
+          "task_id": "p4",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "persist-p4"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 9,
+      "total_cost": 19,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "persist-p1",
+        "persist-p2",
+        "persist-p3",
+        "persist-p4"
+      ]
+    },
+    {
+      "scenario_id": "persistent_p_family",
+      "policy": "sticky",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "persist-p1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "persist-p2"
+        },
+        {
+          "task_id": "p3",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "persist-p3"
+        },
+        {
+          "task_id": "p4",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "persist-p4"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 0,
+      "total_cost": 24,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "persist-p1",
+        "persist-p2",
+        "persist-p3",
+        "persist-p4"
+      ]
+    },
+    {
+      "scenario_id": "persistent_p_family",
+      "policy": "switch_aware",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 2,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "persist-p1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "persist-p2"
+        },
+        {
+          "task_id": "p3",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "persist-p3"
+        },
+        {
+          "task_id": "p4",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "persist-p4"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 9,
+      "total_cost": 19,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "persist-p1",
+        "persist-p2",
+        "persist-p3",
+        "persist-p4"
+      ]
+    },
+    {
+      "scenario_id": "binding_expiry",
+      "policy": "greedy",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 2,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "expiry-p1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "expiry-p2"
+        },
+        {
+          "task_id": "r1",
+          "status": "COMPLETED",
+          "route": "C",
+          "transition_cost": 2,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "expiry-r1"
+        },
+        {
+          "task_id": "r2",
+          "status": "COMPLETED",
+          "route": "C",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "expiry-r2"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 9,
+      "total_cost": 21,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "expiry-p1",
+        "expiry-p2",
+        "expiry-r1",
+        "expiry-r2"
+      ]
+    },
+    {
+      "scenario_id": "binding_expiry",
+      "policy": "sticky",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "expiry-p1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 5,
+          "decision_cost": 1,
+          "effect": "expiry-p2"
+        },
+        {
+          "task_id": "r1",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 10,
+          "decision_cost": 1,
+          "effect": "expiry-r1"
+        },
+        {
+          "task_id": "r2",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 10,
+          "decision_cost": 1,
+          "effect": "expiry-r2"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 0,
+      "total_cost": 34,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "expiry-p1",
+        "expiry-p2",
+        "expiry-r1",
+        "expiry-r2"
+      ]
+    },
+    {
+      "scenario_id": "binding_expiry",
+      "policy": "switch_aware",
+      "decisions": [
+        {
+          "task_id": "p1",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 2,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "expiry-p1"
+        },
+        {
+          "task_id": "p2",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "expiry-p2"
+        },
+        {
+          "task_id": "r1",
+          "status": "COMPLETED",
+          "route": "C",
+          "transition_cost": 2,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "expiry-r1"
+        },
+        {
+          "task_id": "r2",
+          "status": "COMPLETED",
+          "route": "C",
+          "transition_cost": 0,
+          "service_cost": 1,
+          "decision_cost": 1,
+          "effect": "expiry-r2"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 9,
+      "total_cost": 21,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "expiry-p1",
+        "expiry-p2",
+        "expiry-r1",
+        "expiry-r2"
+      ]
+    },
+    {
+      "scenario_id": "unknown_effect_proof",
+      "policy": "greedy",
+      "decisions": [
+        {
+          "task_id": "proof1",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 2,
+          "service_cost": 3,
+          "decision_cost": 1,
+          "effect": "proof-required"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 9,
+      "total_cost": 15,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "proof-required"
+      ]
+    },
+    {
+      "scenario_id": "unknown_effect_proof",
+      "policy": "sticky",
+      "decisions": [
+        {
+          "task_id": "proof1",
+          "status": "COMPLETED",
+          "route": "A",
+          "transition_cost": 0,
+          "service_cost": 6,
+          "decision_cost": 1,
+          "effect": "proof-required"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 0,
+      "total_cost": 7,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "proof-required"
+      ]
+    },
+    {
+      "scenario_id": "unknown_effect_proof",
+      "policy": "switch_aware",
+      "decisions": [
+        {
+          "task_id": "proof1",
+          "status": "COMPLETED",
+          "route": "B",
+          "transition_cost": 2,
+          "service_cost": 3,
+          "decision_cost": 1,
+          "effect": "proof-required"
+        }
+      ],
+      "stopped": null,
+      "terminal_cost": 9,
+      "total_cost": 15,
+      "complete": true,
+      "deadline_met": true,
+      "effects": [
+        "proof-required"
+      ]
+    },
+    {
+      "scenario_id": "deadline_no_safe_completion",
+      "policy": "greedy",
+      "decisions": [
+        {
+          "task_id": "deadline1",
+          "status": "REFUSED",
+          "route": null,
+          "proposed_route": "B",
+          "transition_cost": 0,
+          "service_cost": 0,
+          "proposed_transition_cost": 2,
+          "proposed_service_cost": 1,
+          "decision_cost": 1,
+          "effect": null,
+          "reason": "DEADLINE_BEFORE_EFFECT"
+        }
+      ],
+      "stopped": "DEADLINE_BEFORE_EFFECT",
+      "terminal_cost": 0,
+      "total_cost": 1,
+      "complete": false,
+      "deadline_met": true,
+      "effects": [
+        null
+      ]
+    },
+    {
+      "scenario_id": "deadline_no_safe_completion",
+      "policy": "sticky",
+      "decisions": [
+        {
+          "task_id": "deadline1",
+          "status": "REFUSED",
+          "route": null,
+          "proposed_route": "A",
+          "transition_cost": 0,
+          "service_cost": 0,
+          "proposed_transition_cost": 0,
+          "proposed_service_cost": 5,
+          "decision_cost": 1,
+          "effect": null,
+          "reason": "DEADLINE_BEFORE_EFFECT"
+        }
+      ],
+      "stopped": "DEADLINE_BEFORE_EFFECT",
+      "terminal_cost": 0,
+      "total_cost": 1,
+      "complete": false,
+      "deadline_met": true,
+      "effects": [
+        null
+      ]
+    },
+    {
+      "scenario_id": "deadline_no_safe_completion",
+      "policy": "switch_aware",
+      "decisions": [
+        {
+          "task_id": "deadline1",
+          "status": "REFUSED",
+          "route": null,
+          "proposed_route": "B",
+          "transition_cost": 0,
+          "service_cost": 0,
+          "proposed_transition_cost": 2,
+          "proposed_service_cost": 1,
+          "decision_cost": 1,
+          "effect": null,
+          "reason": "DEADLINE_BEFORE_EFFECT"
+        }
+      ],
+      "stopped": "DEADLINE_BEFORE_EFFECT",
+      "terminal_cost": 0,
+      "total_cost": 1,
+      "complete": false,
+      "deadline_met": true,
+      "effects": [
+        null
+      ]
+    }
+  ]
+}

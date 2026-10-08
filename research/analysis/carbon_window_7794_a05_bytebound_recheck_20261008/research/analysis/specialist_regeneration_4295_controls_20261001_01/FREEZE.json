@@ -1,0 +1,23 @@
+{
+  "allocation": "specialist-regeneration-4295-controls-20261001-01",
+  "base_main": "f346b787a5a31381f51c0b7bd19740c3c7380db7",
+  "branch": "research/specialist-regeneration-4295-formal-20261001",
+  "source_controls_path": "research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/controls.py",
+  "source_controls_sha256": "e23d7af971a4f25acdbce379cf7161db4c4ebbe969f0a9aaa6efaf9202e545f0",
+  "source_auditor_path": "research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/audit.py",
+  "source_auditor_sha256": "d4d70a22b26e9c32f474417d7fc6c4e34ad776e7e34c65ab176e680bf8f51055",
+  "candidate_raw_path": "research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/FORMAL_RAW.json",
+  "candidate_raw_sha256": "8fe7767b456cc5ca70285b426c492675952c3247f55400d71233aa9780412d3e",
+  "clean_audit_sha256": "0dd886dd70f6e86622ba74a6aa98b4d3faf94b2e394816c6a41eb51316869b34",
+  "frozen_control_output_path": "research/analysis/specialist_regeneration_4295_controls_20261001_01/CONTROL_RESULTS.json",
+  "command": "python3 -B research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/controls.py research/analysis/specialist_regeneration_4295_formal_20261001_01/results/formal/FORMAL_RAW.json research/analysis/specialist_regeneration_4284_preformal_preserved_4295_v1/source/audit.py research/analysis/specialist_regeneration_4295_controls_20261001_01/CONTROL_RESULTS.json",
+  "candidate_invocations": 0,
+  "control_harness_invocations_before_run": 0,
+  "control_harness_invocations_allowed": 1,
+  "mutations_expected": 12,
+  "rejected_minimum": 10,
+  "retry_allowed": false,
+  "output_replacement_allowed": false,
+  "network_calls_by_subjects": 0,
+  "model_provider_gui_or_os_input": false
+}

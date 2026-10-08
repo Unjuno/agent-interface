@@ -1,0 +1,16 @@
+{
+  "route_source": {
+    "path": "runtime/golden_desktop_demo.py",
+    "commit": "01349d7bc76e5635f5568c53ffeec4d9ff49abb1",
+    "sha256": "9b3fd4e88498394b36128d42a716ed12646734ea0090bf2472d51239656dcd44"
+  },
+  "dependencies": [
+    {"path": "research/live_control/integrated_efficiency_model_v1.py", "current_main": true, "sha256": "1205821d6117683e3de9d3168a18b82a33d673ce"},
+    {"path": "research/live_control/schema_preflight_v1.py", "current_main": true, "sha256": "1c96ee55188ecb3a180472d54891a068ec396e05"},
+    {"path": "research/live_control/run_integrated_efficiency_live_v1.py", "current_main": true, "sha256": "9569527de381a8920f50982a77224915453fb666"},
+    {"path": "research/live_control/golden_desktop_demo.py", "current_main": false, "source": "historical route commit only"},
+    {"path": "runtime/run_full_golden_ipc_v1.py", "current_main": true, "sha256": "0b7ac69ca3fcceae4c774b6af29850760a86092b"}
+  ],
+  "decision": "HOLD_TRANSITIVE_ROUTE_DEPENDENCIES",
+  "scope": "provenance and source-integrity gate; no model/gui/task allocation"
+}

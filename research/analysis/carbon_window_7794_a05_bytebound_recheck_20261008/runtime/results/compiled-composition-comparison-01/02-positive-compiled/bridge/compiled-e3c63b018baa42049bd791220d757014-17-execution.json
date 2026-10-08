@@ -1,0 +1,192 @@
+{
+  "request": {
+    "action": "save",
+    "operation": "activate_save",
+    "authorization": "829600a12dc24699b1ed127072134da7",
+    "expected_sequence": 7,
+    "valid_until_ns": 22932875575635
+  },
+  "action_id": "action-fdd5bedcb6084d929125cf48395cc938",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.pointer",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 22931401516106,
+      "ended_ns": 22931542313577,
+      "emissions": 44,
+      "program_emissions": 3,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 22931542310059
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 4,
+          "requested_ms": 100,
+          "started_ns": 22931441168635,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 22931541357564
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "recovery_required": false,
+    "guard_checks": [
+      {
+        "stage": "before_admission",
+        "observation_sequence": 8,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "save",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "save",
+        "point": [
+          360,
+          178
+        ],
+        "observed_box": [
+          348,
+          166,
+          24,
+          24
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 8,
+        "valid_until_ns": 22932889010918,
+        "patch_sha256": "e482260f493cde194ef76480606c0ec0cbe9043aca4f739e5e20ed6b820dc707",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_focus",
+        "observation_sequence": 9,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "save",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "save",
+        "point": [
+          360,
+          178
+        ],
+        "observed_box": [
+          348,
+          166,
+          24,
+          24
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 9,
+        "valid_until_ns": 22932902073057,
+        "patch_sha256": "e482260f493cde194ef76480606c0ec0cbe9043aca4f739e5e20ed6b820dc707",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_move",
+        "observation_sequence": 10,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "save",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "save",
+        "point": [
+          360,
+          178
+        ],
+        "observed_box": [
+          348,
+          166,
+          24,
+          24
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 10,
+        "valid_until_ns": 22932915794040,
+        "patch_sha256": "e482260f493cde194ef76480606c0ec0cbe9043aca4f739e5e20ed6b820dc707",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      },
+      {
+        "stage": "before_press",
+        "observation_sequence": 11,
+        "eligible": true,
+        "status": "VALID",
+        "handle": "save",
+        "authority": "resolution only; ordinary admission remains required",
+        "reason": "exact_region_match",
+        "name": "save",
+        "point": [
+          360,
+          178
+        ],
+        "observed_box": [
+          348,
+          166,
+          24,
+          24
+        ],
+        "binding_translation": [
+          0,
+          0
+        ],
+        "local_translation": [
+          0,
+          0
+        ],
+        "sequence": 11,
+        "valid_until_ns": 22932927411786,
+        "patch_sha256": "e482260f493cde194ef76480606c0ec0cbe9043aca4f739e5e20ed6b820dc707",
+        "reference_kind": "session_alias",
+        "private_registry_id_exposed": false
+      }
+    ]
+  }
+}

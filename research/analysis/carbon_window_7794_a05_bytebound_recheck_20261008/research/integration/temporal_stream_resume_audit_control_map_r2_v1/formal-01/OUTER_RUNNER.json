@@ -1,0 +1,20 @@
+{
+  "allocation": "temporal-resume-control-map-cleanup-20260928-01",
+  "kind": "copied_evidence_runner",
+  "invocations": 1,
+  "exit_code": 0,
+  "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+  "platform": "linux/amd64",
+  "engine": "OrbStack Docker Engine 29.4.0, host linux/aarch64",
+  "pull": "never",
+  "network": "none",
+  "read_only_mounts": ["source capsule", "formal evidence", "frozen verifier", "frozen mutation helper", "frozen study sources"],
+  "writable_mounts": ["formal-01 output"],
+  "resource_limits": {"cpus": 1, "memory": "1g", "pids": 64, "tmpfs_tmp": "128m"},
+  "command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus=1 --memory=1g --pids-limit=64 --cap-drop=ALL --security-opt=no-new-privileges --tmpfs /tmp:rw,nosuid,nodev,noexec,size=128m -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_r1_v1:/capsule:ro -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_r1_v1/formal-01:/evidence:ro -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_audit_r1_v1:/verifier:ro -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_audit_control_map_r1_v1:/helper:ro -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_audit_control_map_r2_v1:/study:ro -v /Users/taka/Documents/Codex/2026-09-28/agent-interface-main-20260928/research/integration/temporal_stream_resume_audit_control_map_r2_v1/formal-01:/out:rw --entrypoint /bin/sh sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419 -c 'python -B -S /capsule/restore_source.py /tmp/source && python -B -S /study/run_cleanup_audit.py --helper /helper/run_control_map.py --verifier /verifier/verify_receipts.py --source /tmp/source --evidence /evidence --output /out --manifest-sha256 1584edb3a45202b3e816d2a9735708265dae279fd4e18d8680fded7756cc3855'",
+  "combined_output": "/capsule/restore_source.py:18: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.\n  t.extractall(out)\nPASS_SOURCE_RESTORE 19\n",
+  "stream_capture": "exec tool returned combined stdout/stderr; per-stream separation unavailable",
+  "formal_runner_invocation_count": 1,
+  "formal_verifier_invocation_count": 13,
+  "temporal_scientific_case_invocations": 0
+}

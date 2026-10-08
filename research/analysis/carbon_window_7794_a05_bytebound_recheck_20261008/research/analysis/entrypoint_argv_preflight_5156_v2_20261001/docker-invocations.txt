@@ -1,0 +1,18 @@
+Pinned local image: python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9 (linux/amd64).
+Common isolation: --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m
+
+T0 v1 pre-freeze construction tests (4/4 PASS):
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -v <v1-scratch>:/work:ro -w /work <image> python3 -B -m unittest -v test_boundary.py
+
+T0 v1 frozen candidate attempt (one container invocation; STOP before Python startup):
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m -e EXPERIMENT_BASE_SHA=5a22b42f0d851d0d4549d197d37680d550b709df -e EXPERIMENT_IMAGE=<image> -e EXPERIMENT_PLATFORM=linux/amd64 -v <v1-scratch>:/work:ro -v <v1-output>:/out:rw -w /work <image> /work/candidate.py --smoke-only --output /out/raw.json
+Observed: exec /work/candidate.py: exec format error; no Python process, raw, or audit.
+
+T0 v2 pre-freeze construction tests (5/5 PASS):
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --entrypoint python3 -v <v2-scratch>:/work:ro -w /work <image> -B -m unittest -v test_boundary.py
+
+T0 v2 candidate (one invocation, exit 0):
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --entrypoint python3 -e EXPERIMENT_BASE_SHA=241a0cac915df615f7f79b4ce2042b946ea7fbd7 -e EXPERIMENT_IMAGE=<image> -e EXPERIMENT_PLATFORM=linux/amd64 -v <v2-scratch>:/work:ro -v <v2-output>:/out:rw -w /work <image> /work/candidate.py --smoke-only --output /out/raw.json
+
+T0 v2 separate raw-only audit (one invocation, exit 0):
+docker run --rm --network=none --cpus=1 --memory=256m --read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --entrypoint python3 -v <v2-scratch>:/work:ro -v <v2-output>:/out:rw -w /work <image> /work/auditor.py /out/raw.json /out/audit.json

@@ -1,0 +1,23 @@
+{
+  "schema": "research-pre-candidate-stop-v1",
+  "issue": 6225,
+  "allocation": "ROUTE-DIVERSIFICATION-6225-T0-20261002-01",
+  "disposition": "STOP_NOT_EVALUATED",
+  "observed_utc": "2026-10-01T20:08:26Z",
+  "base_main": "14b81dd1f6853623a694266b98538f812847257a",
+  "subsequent_main_recheck": "2240189b46c5f393bb7b1d5080e8eace748b0251",
+  "branch": "research/6225-route-diversification-t0-20261002-01",
+  "docker_context": "orbstack",
+  "docker_inventory": [{"id": "af2a0db6c5aa", "name": "unjuno-native-ci-6092", "status": "Up 6 hours"}],
+  "resource_grant": false,
+  "explicit_owner_release_found": false,
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "containers_created_or_modified": 0,
+  "scientific_disposition": "NOT_EVALUATED",
+  "reason": "An unrelated container remains running and the latest fetched coordination record has no owner release or exact slot grant for this allocation. No experiment container was launched; the running container was not inspected or modified.",
+  "allocation_disposition": "Terminal pre-candidate STOP; do not run this stopped allocation. A future granted formal attempt requires a new allocation ID, branch/path and current-main refreeze.",
+  "construction_status": "PASS_9_OF_9_HOST_TESTS",
+  "prior_construction_failures": "Retained and disclosed in CONSTRUCTION.md; drafts were corrected before source freeze and no formal candidate/auditor invocation occurred."
+}

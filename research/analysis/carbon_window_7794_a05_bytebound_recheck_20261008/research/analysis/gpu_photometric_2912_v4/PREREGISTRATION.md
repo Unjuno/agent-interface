@@ -1,0 +1,21 @@
+# Deterministic GPU photometric grounding — successor #4482
+
+## H / T / D / C / U
+
+**H.** The CNN used by #4470 emits `[N,16,25,40]`, not `[N,16,40,25]`. A separable fixed-matrix average pool built for the actual `(25,40)` spatial convention will match `adaptive_avg_pool2d(...,(8,10))` within `1e-6`, preserve the classifier's `[N,2]` output, and complete repeated full-CNN forward/backward under deterministic CUDA. This resolves a construction failure only; it says nothing about the brightness-augmentation effect.
+
+**T.** New intake is current main `21dd6a26dbd9f5cb4a6e11b1060902799a76a733`. All results are additive under `research/analysis/gpu_photometric_2912_v4/`. Preserve #4470 v3 and its STOP unchanged. The only experimental implementation change from v3 is the pooling matrix orientation to `(25,40)`; the CNN, initialization, schedule, optimizer, transforms, coordinates, validator, training split, held-out split and decision gate remain unchanged. Verify the manifest and all six PNG byte hashes before formal execution. Training tasks: task-1, task-2, task-4, task-5. Held-out tasks: task-3 and task-6.
+
+**Construction gate, no training.** (1) On CPU, execute the actual pre-pool CNN stages using a `[16,1,100,160]` input and assert the intermediate feature map is exactly `[16,16,25,40]`. (2) On those exact activations, compare fixed pooling to CPU adaptive-average-pooling, output shape `[16,16,8,10]`, maximum absolute error <=1e-6; run the complete CNN and assert logits `[16,2]`. (3) Run the same full CNN on local CUDA under deterministic algorithms with `CUBLAS_WORKSPACE_CONFIG=:4096:8`, twice from cloned inputs; require bit-identical logits and input gradients. (4) Run source/image, compiled-candidate, raw auditor, aggregate-vs-per-case regression, accepted-false-coordinate and >=10 effective mutation controls. Any failed gate is preserved and no formal training follows.
+
+**Formal allocation.** One local host-GPU invocation after public source/hash freeze, with no retry or in-place repair. Fixed order: no augmentation, then training-only brightness augmentation. Same CPU-created initialization (seed 3926), 4 source images, balanced batch-size-16 order, Adam 0.001 and exactly 300 optimizer steps per arm. Brightness multipliers are sampled uniformly from `[0.70,1.30]` for the augmented arm. Evaluate original, 0.85x and 1.15x brightness for each of two held-out images: six rows per arm. Persist raw logits/routes/candidates, validator outputs, exact coordinate comparisons, environment, steps, wall time, peak VRAM and process exit; run the frozen raw auditor once.
+
+**D.** `PASS_PHOTOMETRIC_AUGMENTATION_SCOPED` only if all source/integrity gates pass, all 12 candidates pass schema/bounds validation, neither arm accepts a wrong coordinate, augmentation is no worse on each of the four perturbed `(task,transform)` cases and strictly improves at least one. Otherwise an integrity-valid no-benefit outcome is `HOLD_NO_SAFE_BENEFIT`; accepted wrong coordinates are `FAIL_ACCEPTED_FALSE_GROUNDING`. Any source/determinism/result/audit/process ambiguity is STOP/HOLD. No runtime or product promotion follows.
+
+**C.** This PC's local RTX 3080 Laptop GPU and already-installed Python 3.11 / PyTorch 2.5.1+cu121 / CUDA 12.1 stack. No remote workflow, provider, GUI input, task submission, external service, or large CUDA image download/build. Bound the scientific compute to 600 optimizer steps total, batch 16, 12 held-out evaluations. Require >=1 GiB free disk and >=2 GiB free VRAM at launch. Construction uses the same local machine and includes an end-to-end CPU path so no GPU allocation is spent on an avoidable tensor-shape error.
+
+**U.** Two held-out source images, one per known layout; brightness variants are repeated conditions, not independent source samples. No unseen-layout generalization, calibration, GUI robustness, useful-control, latency/token benefit or product claim.
+
+## Integration handoff
+
+The reviewed contract and prior raw STOP are in #4470; this successor is #4482. A STOP is a successful evidence outcome for the construction defect but not a scientific result. Keep code, freeze, logs, audit and limits reviewable under this additive path. Merge only through a PR after exact-hash readback and applicable checks.

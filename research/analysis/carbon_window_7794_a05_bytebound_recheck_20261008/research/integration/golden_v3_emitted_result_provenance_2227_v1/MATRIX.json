@@ -1,0 +1,28 @@
+{
+  "issue": 2227,
+  "decision": "HOLD_FIELD_PROVENANCE_INCOMPLETE",
+  "source_hashes": {
+    "runtime/golden-demo-v3.sh": "ef489bbd68e3f80fac060b179fe90da2cce8d209",
+    "runtime/golden_desktop_demo_v3.py": "26db03b8400b03fbe5272bd4ae5ad9c3a82d31a2",
+    "runtime/golden_desktop_demo_v2.py": "cf777186879fc3d550194aa9cbc8a7239ca991ff"
+  },
+  "field_provenance": {
+    "schema": "emitted_v2_report",
+    "passed": "emitted_v2_report",
+    "usage": "emitted_v2_report",
+    "routes": "emitted_v2_report",
+    "task_rows": "emitted_v2_report",
+    "release_checks": "emitted_v2_report",
+    "independent_evaluation": "emitted_v2_report",
+    "program_completed": "absent_from_frozen_v2_source",
+    "task_success": "absent_from_frozen_v2_source",
+    "partial_effects": "absent_from_frozen_v2_source",
+    "status": "absent_from_frozen_v2_source",
+    "cleanup_error": "absent_from_frozen_v2_source",
+    "lifecycle": "derived_or_absent",
+    "authority_granted": "not_a_v3_field; adapter_guard_only"
+  },
+  "proposed_cli_mapping": "HOLD",
+  "model_gui_network_input": 0,
+  "docker": "not_required_for_source_audit"
+}

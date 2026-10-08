@@ -1,0 +1,13 @@
+# Interrupted primary use of guarded MCP brief responses
+
+Implementation: d3ad158ae641f426f665930fecb84c9ce75db06f. The user-authorized WSL restart interrupted the original six-task allocation (seed 991331). Preserve this allocation as incomplete; do not resume or relabel it as successful.
+
+There are 28 retained MCP requests/replies: one observe, five mints, and 22 inputs. Twenty-one normal input responses used the optional brief presentation. The deliberate stale-reference input at attempt 17 refused before dispatch and retained full detail. Attempts 6, 10, 14, 21, and 25 have caller-declared saved-image review receipts. Attempt 28 entered the sixth value; its Save was never issued in this allocation. Independent fixture evaluation, copied submission history, explicit MCP close, and GUI cleanup receipts are absent. The transport exit is 1. Five review declarations are not independent proof of five successful tasks.
+
+`python3 -O verify.py` checks all 479 archived files against the manifest, original report equality outside the declared guard projection, guard summary identity, exact delivered image bytes against retained PNGs, refusal preservation, and incomplete termination. The full response comparator is reconstructed from each actual response by restoring raw guard details and removing the brief presentation annotation. It is a same-report representation comparison, not a second live baseline run.
+
+For the 22 input responses, JSON metadata encoded with Python json.dumps defaults (UTF-8, excluding images and transport envelope) totals 119,950 bytes full versus 100,600 bytes actually returned: 16.13% less. The host also selected text fields for presentation. Actual model input tokens, cost, useful-feedback latency, semantic completion latency, and human-comparable performance were not measured.
+
+Retained contract checks passed: 246 protocol and 106 harness tests. These do not replace a completed primary GUI trial. Default full behavior remains unchanged; production adoption and a remote update await a fresh completed trial, retained full-result retrieval, and explicit close verification.
+
+Audit development: the first verifier run failed its handwritten expected normal-input count of 20. Enumeration shows 28 total calls minus one observe and five mints equals 22 inputs, comprising 21 normal and one refused input. The count was corrected to 21; no trial data was changed or discarded.

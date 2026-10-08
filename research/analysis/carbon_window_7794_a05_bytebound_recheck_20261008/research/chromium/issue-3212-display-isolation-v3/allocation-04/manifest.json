@@ -1,0 +1,34 @@
+{
+  "allocation": "OBSTAC_3430_ALLOCATION_04",
+  "issue": 3430,
+  "decision": "FAIL_STALE_XID_RETARGETED_CURRENT_WINDOW",
+  "container": {
+    "image": "issue3419-multiwindow:20260920",
+    "id": "sha256:6274b31351429a9cd2385f76c75c2df9f817c3dca6d285f4cd8ccceb88d8d1ad",
+    "network": "none",
+    "display": ":158",
+    "exit": 0
+  },
+  "auditor": {
+    "image": "python:3.12-slim",
+    "id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "exit": 0,
+    "sha256": "42f57db6cc11f2534a0698a41c2c92918f033a348389bddd6b3559a8f2571fd6"
+  },
+  "raw": {
+    "path": "raw.jsonl",
+    "bytes": 1493,
+    "rows": 5,
+    "sha256": "fe01c4be59e4b6dd686ad6c8d7e1b3588f6165e10ffc927a16c99b10b1cb321f"
+  },
+  "runner_sha256": "cbf70306e2a86f1f1f227948ed240bd8a74cfe540fe5e7dddaf557396f2f27e",
+  "audit_gates": {
+    "byte": true,
+    "exact_readiness": true,
+    "old_xid_reused_by_p2": true,
+    "old_xid_caused_p2_effect": true,
+    "decoy_control": true,
+    "p2_fresh_control": true,
+    "cleanup": true
+  }
+}

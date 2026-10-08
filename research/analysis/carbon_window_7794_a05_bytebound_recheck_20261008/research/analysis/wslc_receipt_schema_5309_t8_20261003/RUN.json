@@ -1,0 +1,54 @@
+{
+  "allocation_id": "WSLC-RECEIPT-5309-T8-20261003-01",
+  "disposition": "PASS_RETAINED_RECEIPT_SCHEMA_AUDIT",
+  "successor_issue": 6990,
+  "parent_issue": 6975,
+  "source_issue": 5309,
+  "source_pr": 6983,
+  "source_pr_head": "684831240f9848e850736781edb98322949e8d8a",
+  "preregistration_commit": "101bee219d926dcbe8da04a06696a15210261b48",
+  "input": {
+    "git_blob_sha1": "588d1816282ab17790faa3a94a939f9fce8d8bc3",
+    "bytes": 306,
+    "sha256": "604fc18e94e80f6aa941623b8854ffad88043e16e5058db89aa45449ba97489f"
+  },
+  "validation": {
+    "command": "python -B validate_receipt.py input/audit.stdout.json formal_validation.json",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_receipt": {
+      "allocation_id": "WSLC-RECEIPT-5309-T8-20261003-01",
+      "disposition": "PASS_RETAINED_RECEIPT_SCHEMA_AUDIT",
+      "input_bytes": 306,
+      "input_sha256": "604fc18e94e80f6aa941623b8854ffad88043e16e5058db89aa45449ba97489f",
+      "rows": 432,
+      "unique_cases": 432,
+      "independent_row_matches": 432,
+      "semantic_sha256": "a7bd0adc9485df7161b7ce85c27b1dc58fad71ee2fee9cfe081cc61337b0e193",
+      "failed_probe_task_fallback_wrong_target": 27,
+      "failed_probe_yield_wrong_target": 0,
+      "authority_grants": 0,
+      "errors": [],
+      "t7_disposition": "STOP_HOST_RECEIPT_SCHEMA_MISMATCH"
+    },
+    "stderr": "",
+    "formal_output": {
+      "path": "formal_validation.json",
+      "bytes": 879,
+      "sha256": "640f622fa5dd962098173c0680c76664c7ae4bfc34350259d245ab57d1fe980f"
+    }
+  },
+  "construction_tests": {
+    "command": "python -B -m unittest -v test_validate_receipt.py",
+    "passed": 7,
+    "failed": 0
+  },
+  "invocations": {
+    "candidate": 0,
+    "wslc": 0,
+    "docker": 0,
+    "retries": 0
+  },
+  "timing_or_memory_measurement": false,
+  "t7_stop_revised": false
+}

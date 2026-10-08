@@ -1,0 +1,33 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-20260930-02",
+  "status": "STOP_IMAGE_MISSING_PYTHON_XLIB",
+  "timestamp_utc": "2026-09-30T15:03:24Z",
+  "exit_code": 1,
+  "container_context": "orbstack",
+  "image_digest": "sha256:253e23fe66fc4ea0cdbfd1124a9495fc8b0c8a4acc9a523cd35a9808ed63f67a",
+  "platform": "linux/arm64",
+  "preflight": {
+    "python": "Python 3.11.16",
+    "xvfb": "/usr/bin/Xvfb",
+    "xvfb_run": "/usr/bin/xvfb-run",
+    "network": "none",
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 64
+  },
+  "failure": "ModuleNotFoundError: No module named 'Xlib' while importing run_formal_x11.py, before main() or any fixture/input operation.",
+  "formal_input_operations": 0,
+  "raw_experiment_file_created": false,
+  "independent_raw_audit_run": false,
+  "retry": false,
+  "classification": "execution environment STOP; not a scientific FAIL or PASS",
+  "captured_output": [
+    "Python 3.11.16",
+    "/usr/bin/Xvfb",
+    "/usr/bin/xvfb-run",
+    "Traceback (most recent call last):",
+    "  File \"/src/research/live_control/owner_keyup_formal_x11_5156_20260930_02/run_formal_x11.py\", line 10, in <module>",
+    "    from Xlib import X, XK, display",
+    "ModuleNotFoundError: No module named 'Xlib'"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "base_main": "3666992ab2b5e1b41b159b361d1c690d8e720fdf",
+  "branch": "research/change-cue-contrast-4436-20260926",
+  "construction_status": "PASS_CONSTRUCTION",
+  "formal_constants": {
+    "arms": [
+      "FIXED_GREEN_OUTLINE",
+      "ADAPTIVE_BW_OUTLINE",
+      "DUAL_BW_OUTLINE",
+      "PADDED_DUAL_BW_OUTLINE"
+    ],
+    "canvas": [
+      64,
+      64
+    ],
+    "contrast_bound": "sqrt(21)",
+    "fixed_green": [
+      0,
+      255,
+      0
+    ],
+    "grayscale_all_256": true,
+    "pad": 2,
+    "positions": [
+      "center",
+      "left",
+      "top",
+      "top_left",
+      "bottom_right"
+    ],
+    "rgb_lattice": [
+      0,
+      32,
+      64,
+      96,
+      128,
+      160,
+      192,
+      224,
+      255
+    ],
+    "sizes": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        8,
+        4
+      ]
+    ]
+  },
+  "formal_invocations_allowed": 1,
+  "issue": 4436,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "post_freeze_tuning_allowed": 0,
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "replacements_allowed": 0,
+  "reruns_allowed": 0,
+  "source_sha256": {
+    "PLAN.md": "58425c3576fe00c81e0555f2b465f77b6c8c4b7d2e50d2dc63c92ed7a408e4d8",
+    "audit.py": "743bf3f66e1b294c95c1fd1171d50b62251f39ed986d028b967503911bd49a9c",
+    "construction/CONSTRUCTION.json": "b11a632d79da54499db4cce8b2ffda7f3c365b99956f4c6b5e8011c48712b0e1",
+    "run.py": "c89949ae6714a1d2d67c439a1fede46709f20bdae3d032f79186585f7b1abcf3"
+  }
+}

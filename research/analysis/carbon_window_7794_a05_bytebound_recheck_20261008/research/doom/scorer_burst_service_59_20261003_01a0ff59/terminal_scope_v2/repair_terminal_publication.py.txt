@@ -1,0 +1,55 @@
+"""Repair only pre-manifest preservation count after the retained first stop."""
+import datetime as dt
+import hashlib
+import json
+import pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+OUT = ROOT / 'work/agent-interface/research/doom/scorer_burst_service_59_20261003_01a0ff59'
+QUAL = OUT / 'terminal_scope_v2'
+f = json.loads((QUAL/'FREEZE_V2.json').read_bytes())
+r = json.loads((QUAL/'retained-grid.json').read_bytes())
+changed = [name for name,pin in f['original_archive_sha256'].items() if hashlib.sha256((OUT/name).read_bytes()).hexdigest()!=pin]
+if changed != ['README.md']:
+    raise ValueError('exact single modified original before manifest '+str(changed))
+for name, copy in [('README.md','PRIOR_README.md'),('SHA256SUMS','PRIOR_SHA256SUMS')]:
+    if hashlib.sha256((QUAL/copy).read_bytes()).hexdigest()!=f['original_archive_sha256'][name]:
+        raise ValueError('exact original copy '+name)
+if not (OUT/'README.md').read_bytes().startswith((QUAL/'PRIOR_README.md').read_bytes()):
+    raise ValueError('exact original README prefix')
+stop = {'kind':'ordinary publication-only preservation-count STOP, not a scientific result',
+    'first_helper':'finish_terminal_scope_v2.py.txt','first_exit_code':1,
+    'first_error':'ValueError: 46 originals and two exact prior images retained',
+    'first_helper_standalone_utc_receipt':None,
+    'cause':'the pre-replacement original SHA256SUMS was still unchanged, so47 originals were unchanged at that check;46 is correct after replacing manifest',
+    'repair':'separate helper qualifies47 before replacement, preserves first helper/error and emits final46 unchanged originals after new manifest',
+    'original_source_or_auditor_or_new_grid_reader_replays':0,
+    'repair_recorded_utc':dt.datetime.now(dt.timezone.utc).isoformat()}
+with (QUAL/'PUBLICATION_REPAIR.json').open('x',encoding='utf-8',newline='\n') as stream:
+    stream.write(json.dumps(stop,indent=2,sort_keys=True)+'\n')
+(QUAL/'repair_terminal_publication.py.txt').write_bytes(pathlib.Path(__file__).read_bytes())
+record = {'schema':'scorer-burst-terminal-scope-preservation-v2','original_head':f['original_head'],
+    'original_files_unchanged_in_place_after_manifest_replacement':46,
+    'prior_readme_exact_prefix_and_copy':True,'prior_manifest_exact_copy':True,
+    'raw_sha256':f['original_archive_sha256']['raw.json'],'original_frozen_inputs_unchanged':True,
+    'retained_grid_sha256':hashlib.sha256((QUAL/'retained-grid.json').read_bytes()).hexdigest(),
+    'original_age_endpoints_revalidated':r['original_age_endpoints_revalidated'],
+    'original_source_auditor_formal_or_regression_replays':0,
+    'six_literals_and_three_negatives_effective':True,'reader_snapshot_sha256':f['reader_sha256'],
+    'publication_first_stop_preserved':'PUBLICATION_REPAIR.json'}
+with (QUAL/'PRESERVATION.json').open('x',encoding='utf-8',newline='\n') as stream:
+    stream.write(json.dumps(record,indent=2,sort_keys=True)+'\n')
+files = sorted(path for path in OUT.rglob('*') if path.is_file() and path != OUT/'SHA256SUMS')
+lines = [hashlib.sha256(path.read_bytes()).hexdigest()+'  '+path.relative_to(OUT).as_posix() for path in files]
+(OUT/'SHA256SUMS').write_text('\n'.join(lines)+'\n',encoding='utf-8',newline='\n')
+for line in lines:
+    pin,name=line.split('  ',1)
+    if hashlib.sha256((OUT/name).read_bytes()).hexdigest()!=pin:
+        raise ValueError('complete repaired manifest '+name)
+unchanged = sum(hashlib.sha256((OUT/name).read_bytes()).hexdigest()==pin for name,pin in f['original_archive_sha256'].items())
+if unchanged!=46:
+    raise ValueError('46 unchanged original images after manifest')
+print(json.dumps({'original_files_unchanged':unchanged,'manifest_entries':len(lines),
+    'manifest_sha256':hashlib.sha256((OUT/'SHA256SUMS').read_bytes()).hexdigest(),
+    'new_v2_files':sum(x.is_file() for x in QUAL.rglob('*')),'retained_grid_sha256':record['retained_grid_sha256'],
+    'producer_reader_and_formal_replays':0}))

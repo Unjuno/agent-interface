@@ -1,0 +1,20 @@
+import datetime, hashlib, json, subprocess, sys
+from pathlib import Path
+
+root=Path(__file__).resolve().parent/'repo'
+out=root/'research/integration/primary_stdio_busy_bound_57_20261003_01a0ff59'/'checks'/sys.argv[1]
+out.mkdir(parents=True, exist_ok=False)
+argv=sys.argv[2:]
+utc=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+start=utc()
+result=subprocess.run(argv,cwd=root,capture_output=True,timeout=90)
+end=utc()
+pins=[]
+for path in sorted((root/'runtime/host_v1').glob('*.mjs')):
+    raw=path.read_bytes();pins.append({'path':path.relative_to(root).as_posix(),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()})
+for name,data in [('stdout.txt',result.stdout),('stderr.txt',result.stderr)]:
+    (out/name).write_bytes(data)
+receipt={'argv':argv,'cwd_relative':'.','started_utc':start,'ended_utc':end,'exit_code':result.returncode,'stdout_sha256':hashlib.sha256(result.stdout).hexdigest(),'stderr_sha256':hashlib.sha256(result.stderr).hexdigest(),'executed_host_sources':pins}
+(out/'receipt.json').write_text(json.dumps(receipt,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+print(json.dumps({'check':sys.argv[1],'exit':result.returncode,'stdout_tail':result.stdout.decode(errors='replace')[-2400:],'stderr_tail':result.stderr.decode(errors='replace')[-1000:]}))
+sys.exit(result.returncode)

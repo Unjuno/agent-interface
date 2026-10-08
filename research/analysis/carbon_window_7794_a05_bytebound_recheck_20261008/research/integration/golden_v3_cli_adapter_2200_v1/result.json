@@ -1,0 +1,25 @@
+{
+  "decision": "PASS_GOLDEN_V3_CLI_ADAPTER_CONTRACT_SCOPED",
+  "scope": "pure research-path contract validation; no runtime/model/GUI/network/input execution",
+  "accepted_fixtures": 5,
+  "rejected_fixtures": 6,
+  "lifecycle_states": 9,
+  "authority_grants": 0,
+  "model": 0,
+  "gui": 0,
+  "network": 0,
+  "input": 0,
+  "source_validator": "3b8958c1eb89eecd167e727f7bba7ca6e36e019f",
+  "independent_container_check": {
+    "image": "python:3.12-slim",
+    "accepted": 2,
+    "rejected": 1,
+    "authority_grants": 0,
+    "model": 0,
+    "gui": 0,
+    "network": 0,
+    "input": 0,
+    "validator": "PASS"
+  },
+  "boundary": "No production adapter, desktop correctness, model utility, latency, or readiness claim."
+}

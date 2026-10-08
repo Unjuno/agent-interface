@@ -1,0 +1,22 @@
+{
+  "allocation":"erasure-separated-parity-5350-t1-20260930-01",
+  "issue":5350,
+  "source_main":"e81cbac968752791678d22a4de3f2d276497d614",
+  "branch":"research/erasure-separated-parity-5350-t1-20260930",
+  "runtime":{"python":"3.14.5","platform":"Darwin arm64","dependencies":"stdlib only"},
+  "commands":["python3 -B runner.py formal_raw.json","python3 -B audit.py formal_raw.json audit.json"],
+  "runner_invocations":1,
+  "auditor_invocations":1,
+  "retry_policy":"No rerun or tuning; preserve first result.",
+  "container":"Not invoked; coordinator assignment required under #5085.",
+  "expected_rows":9,
+  "outputs_absent_before_run":["formal_raw.json","audit.json"],
+  "source_sha256":{
+    "model.py":"f7713fdcdcdf5eac090cf5cbea37e28bf15dff3b7a3fd8f037038f0dde3d52dd",
+    "oracle.py":"5f097669df7b31deabf190e6acf1c3bf30c11f0ce409557c350543bd1ceeb058",
+    "runner.py":"04d33820901048b021da263eb9cc03edca99bea2d8bda28222144d8ce8d98ff5",
+    "audit.py":"5b20f567f8f32019c8279d85deab5d5da4754dacd0733baec717ddd2a3db5294",
+    "test_model.py":"cd8679246062aea92a4a836fde9278beb058e41b349014036af9e8f3b549076d"
+  },
+  "scope_limit":"Synthetic XOR/presentation only; no real transport or safety claim."
+}

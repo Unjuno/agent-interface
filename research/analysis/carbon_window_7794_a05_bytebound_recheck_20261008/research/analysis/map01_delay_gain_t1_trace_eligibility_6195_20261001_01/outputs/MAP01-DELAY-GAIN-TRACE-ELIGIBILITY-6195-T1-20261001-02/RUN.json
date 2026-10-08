@@ -1,0 +1,25 @@
+{
+  "allocation_id_expected": "MAP01-DELAY-GAIN-TRACE-ELIGIBILITY-6195-T1-20261001-02",
+  "allocation_id_emitted": "MAP01-DELAY-GAIN-TRACE-ELIGIBILITY-6195-T1-20261001-01",
+  "candidate": {
+    "command": "python candidate.py --v38 inputs/v38.jsonl --v39 inputs/v39.jsonl --output outputs/MAP01-DELAY-GAIN-TRACE-ELIGIBILITY-6195-T1-20261001-02/candidate.json",
+    "start_utc": "2026-10-01T19:35:22Z",
+    "end_utc": "2026-10-01T19:35:24Z",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout": "{\"status\": \"HOLD_NO_CLOSED_LOOP_TRACE\", \"traces\": 2, \"eligible\": 0}\n",
+    "raw_sha256": "b0f39d27d1ef44dd14007286f5e09caf8c0a5e00bc3be25514a0bdf8d8699060"
+  },
+  "independent_auditor": {
+    "command": "python auditor.py --v38 inputs/v38.jsonl --v39 inputs/v39.jsonl --input outputs/MAP01-DELAY-GAIN-TRACE-ELIGIBILITY-6195-T1-20261001-02/candidate.json --output outputs/MAP01-DELAY-GAIN-TRACE-ELIGIBILITY-6195-T1-20261001-02/audit.json",
+    "start_utc": "2026-10-01T19:36:02Z",
+    "end_utc": "2026-10-01T19:36:04Z",
+    "exit_code": 0,
+    "invocations": 1,
+    "stdout": "{\"disposition\": \"PASS_AUDIT_RECONSTRUCTION\", \"traces\": 2, \"mutations_rejected\": 5, \"errors\": []}\n",
+    "raw_sha256": "688eb115c146544e85dd08e20ee0706f352669f0c37bc6684c79c2abdc8f8988"
+  },
+  "final_disposition": "FAIL_ALLOCATION_BINDING_AUDIT_GAP; DATA_HOLD_NO_CLOSED_LOOP_TRACE",
+  "retries": 0,
+  "scope": "Read-only retained v38/v39 log inventory on Windows host CPU with CPython 3.11.9. No GPU/CUDA, Docker/WSL, model, network during execution, GUI/game, application, input, or task effect."
+}

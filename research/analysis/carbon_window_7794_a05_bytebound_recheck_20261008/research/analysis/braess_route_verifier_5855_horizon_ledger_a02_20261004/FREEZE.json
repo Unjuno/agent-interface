@@ -1,0 +1,30 @@
+{
+  "allocation_id": "BRAESS-QUEUE-HORIZON-LEDGER-5855-A02-20261004",
+  "frozen_at_utc": "2026-10-04T12:25:11Z",
+  "main_commit": "bb3138d019118bf050fe1136a9ba3619146bb46e",
+  "runtime": {
+    "kind": "host_cpu_fallback_no_container",
+    "os": "macOS 27.0.1 arm64",
+    "python": "CPython 3.14.5",
+    "python_executable_sha256": "2477b47fa3ae65b9574eb18a15edb364e96948eaa1875ad3f1c80d780efc9c12",
+    "docker_server": "29.4.0",
+    "docker_stop": "image metadata enumeration fails: missing containerd content blob; operation not supported; no container started"
+  },
+  "source": {
+    "path": "research/analysis/braess_route_verifier_5855_t0_v1/candidate-output/candidate-result.json",
+    "sha256": "ba5ee3c03bcf1105fd6bbbd0278b710fffb014cdd865f988f2d5649cb0bb4361",
+    "predecessor_freeze_path": "research/analysis/braess_route_verifier_5855_t0_v1/FREEZE.json",
+    "predecessor_freeze_sha256": "c2435408c1e7117a909fb95d9151bfaadfa231db30d9a3d83d6d6f5ba3b73828"
+  },
+  "frozen_files": {
+    "PREREGISTRATION.md": "586a4517779d704c4124158bc636132cf8ba7b64068147158d2084d3e4210636",
+    "candidate.py": "73a9b70f832b9ec357049d61e87f545331890d68da53883fd523a5591b1282e6",
+    "audit.py": "e1bef3cc4206c1a6516aa8f281ffd7588d20ca9cd5681aa50abac2a6cd8b2c14",
+    "test_audit.py": "4dd116d6b41edf561fb08c91b4c471f2ea83b87c073b2c116a578f068e3ac07d"
+  },
+  "commands": [
+    "python3 -B candidate.py",
+    "python3 -B audit.py"
+  ],
+  "run_policy": "one candidate invocation, then one independent raw-only auditor invocation; no retries"
+}

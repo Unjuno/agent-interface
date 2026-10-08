@@ -1,0 +1,114 @@
+{
+  "baseline": {
+    "distributions": 21,
+    "errors": [],
+    "first_cost_crossover_alpha": 0.7,
+    "rows": 336,
+    "status": "PASS_AUDIT_HARDENING_SCOPED"
+  },
+  "canaries": [
+    {
+      "baseline_accepts": true,
+      "canary": "cost.A",
+      "candidate_accepts": false,
+      "candidate_reason": "TypeShapeReject:type:$.cost.A",
+      "mutation_sha256": "8ae8825659c0fa7c83b640943795ec4db8be999a6323349ef8624db5288f4c0c",
+      "path": [
+        "cost",
+        "A"
+      ],
+      "replacement_type": "bool"
+    },
+    {
+      "baseline_accepts": true,
+      "canary": "drift_grid[0]",
+      "candidate_accepts": false,
+      "candidate_reason": "TypeShapeReject:type:$.drift_grid[0]",
+      "mutation_sha256": "d318f02078f83cb1f66261b8aed91aed38d61b10e29da06fd6ef79103b98bfa7",
+      "path": [
+        "drift_grid",
+        0
+      ],
+      "replacement_type": "bool"
+    },
+    {
+      "baseline_accepts": true,
+      "canary": "distributions[-1].alpha",
+      "candidate_accepts": false,
+      "candidate_reason": "TypeShapeReject:type:$.distributions[20].alpha",
+      "mutation_sha256": "c94ccc2eec0a5672af6e6063eb91ba2fbaea2fa7df8783b6c5d181407e391f58",
+      "path": [
+        "distributions",
+        -1,
+        "alpha"
+      ],
+      "replacement_type": "bool"
+    },
+    {
+      "baseline_accepts": true,
+      "canary": "rows[1].state_id",
+      "candidate_accepts": false,
+      "candidate_reason": "TypeShapeReject:type:$.distributions[0].rows[1].state_id",
+      "mutation_sha256": "4a2f06ef190c13cb5134785aa60a682626c2a80e0f1ee9843b2eb4599cd77110",
+      "path": [
+        "distributions",
+        0,
+        "rows",
+        1,
+        "state_id"
+      ],
+      "replacement_type": "bool"
+    },
+    {
+      "baseline_accepts": true,
+      "canary": "rows[0].truth.A",
+      "candidate_accepts": false,
+      "candidate_reason": "TypeShapeReject:type:$.distributions[0].rows[0].truth.A",
+      "mutation_sha256": "af7658a5e4171728287efecf59290a9a0f0aee48945ffdbaafb9341cefc6c79b",
+      "path": [
+        "distributions",
+        0,
+        "rows",
+        0,
+        "truth",
+        "A"
+      ],
+      "replacement_type": "int"
+    },
+    {
+      "baseline_accepts": true,
+      "canary": "rows[0].NAIVE.evaluations",
+      "candidate_accepts": false,
+      "candidate_reason": "TypeShapeReject:type:$.distributions[0].rows[0].NAIVE.evaluations",
+      "mutation_sha256": "d67b92f559c7d0f4f6190ebcfea03755bae86f7693af5cd550f46b0ae81b1969",
+      "path": [
+        "distributions",
+        0,
+        "rows",
+        0,
+        "NAIVE",
+        "evaluations"
+      ],
+      "replacement_type": "bool"
+    },
+    {
+      "baseline_accepts": true,
+      "canary": "rows[0].NAIVE.semantic_mismatches",
+      "candidate_accepts": false,
+      "candidate_reason": "TypeShapeReject:type:$.distributions[0].summaries.NAIVE.semantic_mismatches",
+      "mutation_sha256": "96e1d9646cecd086d3123f0f296cb0817da38e31cc5c3b1526e89ba455f74570",
+      "path": [
+        "distributions",
+        0,
+        "summaries",
+        "NAIVE",
+        "semantic_mismatches"
+      ],
+      "replacement_type": "bool"
+    }
+  ],
+  "decision": "PASS_AUDIT_BOUNDARY_REPAIRED_SCOPED",
+  "raw_bytes": 186739,
+  "raw_sha256": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d",
+  "schema": "predicate-order-audit-typehash-formal-v1"
+}

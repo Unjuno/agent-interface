@@ -1,0 +1,87 @@
+{
+  "allocation_id": "issue3551-xid-reuse-formal-01",
+  "audit": "PASS_INDEPENDENT_RAW_RECONSTRUCTION",
+  "candidate_disposition": "FAIL_STALE_HANDLE_RETARGETED_REPLACEMENT",
+  "cleanup": {
+    "bridge_closed": true,
+    "p1": {
+      "ended_ns": 50526259980228,
+      "exit_code": 0,
+      "exit_observed": true
+    },
+    "p2": {
+      "ended_ns": 50526501381328,
+      "exit_code": 0,
+      "exit_observed": true
+    }
+  },
+  "corruption_controls": [
+    {
+      "detected": true,
+      "disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "xid-mismatch"
+    },
+    {
+      "detected": true,
+      "disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "same-process"
+    },
+    {
+      "detected": true,
+      "disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "zero-emission"
+    },
+    {
+      "detected": true,
+      "disposition": "HOLD_OR_STOP_UNCLASSIFIED",
+      "name": "missing-effect"
+    },
+    {
+      "detected": true,
+      "disposition": "FAIL_ALLOCATION_COUNT",
+      "name": "duplicate-allocation"
+    }
+  ],
+  "emission_delta_old": 3,
+  "freeze_sha256": "dbd9109ec496af938a974d95fd541f90cb71a3f98c6e9017667a0a46514c572f",
+  "image_audit": {
+    "canonical_rgb_sha256": "39346370bc04412246c7d8a23a5c651509a5a14f1b61c4307bc1ddd0e60197cb",
+    "images": [
+      {
+        "artifact_source_raw_sha256": "4995fe848bd0a5f63f011c0361a0897821210936dff57aa48424b0ceaf8bd1b5",
+        "bytes": 2009,
+        "path": "bridge/images/52accd0c1fb148d69c5316a29943fdb9.png",
+        "sha256": "189a9e34def3227c5526cffb84c5ae4b854da868ad36a68b67a07891fc256701"
+      },
+      {
+        "artifact_source_raw_sha256": "4995fe848bd0a5f63f011c0361a0897821210936dff57aa48424b0ceaf8bd1b5",
+        "bytes": 2009,
+        "path": "bridge/images/0d25fabdfb5843f6ac03d8c3db78f6c3.png",
+        "sha256": "189a9e34def3227c5526cffb84c5ae4b854da868ad36a68b67a07891fc256701"
+      }
+    ],
+    "pixel_identical": true,
+    "pixel_size": [
+      800,
+      600
+    ]
+  },
+  "independent_effect_old": [
+    1,
+    109,
+    118
+  ],
+  "old_attempts": 1,
+  "positive_control_attempts": 1,
+  "preconditions": {
+    "distinct_pid": true,
+    "distinct_start_identity": true,
+    "p1_exit_observed": true,
+    "p2_alive": true,
+    "pixel_identical": true,
+    "same_geometry": true,
+    "same_xid": true
+  },
+  "raw_sha256": "3e678ebc161b2fa52e7dfa80f23a10eb556cc71e0c0d78ecb1532b11eda0e400",
+  "source_manifest_sha256": "718e2ca7622535bd4a2a4f1ce9b860c4637b6ecf48bfc6dbc5fa7d9724ace024"
+}

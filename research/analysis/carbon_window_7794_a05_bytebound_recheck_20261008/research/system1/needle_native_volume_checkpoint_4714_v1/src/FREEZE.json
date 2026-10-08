@@ -1,0 +1,73 @@
+{
+  "schema": "needle-native-volume-freeze-v1",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/4714",
+  "allocation": "needle-native-volume-checkpoint-6842731-6842733-6842737-v1",
+  "branch": "research/needle-native-volume-checkpoint-4714-v1-20260927",
+  "evidence_path": "research/system1/needle_native_volume_checkpoint_4714_v1/",
+  "branch_base_sha": "38359097c58035b04daf418551cbe331574f7535",
+  "main_sha_observed_at_freeze": "396a287588f8467d26a6b5cd75c75f6ef1468839",
+  "formal_seeds": [6842731, 6842733, 6842737],
+  "construction_seed_only": 6842703,
+  "source_sha256": {
+    "study.py": "14d403f5f394fc4ac228609c5c137f09c153b777a45cedfe4abd895ff72ebf74",
+    "audit.py": "0f90add30d7457e639f39221f653d8684c325277406f075a49e93c9afd22cc7b",
+    "test_study.py": "9af23252339047e83a55d4213230bbbf072ec699e0f68b953822cd7367132988",
+    "PREREGISTRATION.md": "7c5f234f194c6f6386e29b7a9219e34383d8e04a7220abefe536e4198179ebb5",
+    "CONSTRUCTION_HISTORY.md": "d27a7b43a90f572d9e208d92415a3266ab5c4f747901087f8fd9ec4770063166"
+  },
+  "container": {
+    "image_tag": "needle-pilot05:local",
+    "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+    "platform": "linux/amd64",
+    "docker_client_server": "29.8.0/29.8.0",
+    "python": "3.12.14",
+    "pytorch": "2.5.1+cpu",
+    "network": "none",
+    "pull": "never",
+    "read_only_root_and_source": true,
+    "cpus": 1,
+    "memory": "2g",
+    "pids_limit": 64,
+    "security_opt": "no-new-privileges",
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=128m"
+  },
+  "formal_volume": {
+    "name": "unjuno-needle-native-volume-4714-v1",
+    "driver": "local",
+    "observed_absent_before_freeze": true,
+    "checkpoint_mount": "/volume",
+    "host_bind_mount": "/out/checkpoints"
+  },
+  "formal_commands": {
+    "create_volume": "docker volume create --driver local --label codex.issue=4714 unjuno-needle-native-volume-4714-v1",
+    "trainer": "docker run --rm --network none --pull=never --read-only --cpus=1 --memory=2g --pids-limit=64 --security-opt=no-new-privileges --workdir /src --tmpfs /tmp:rw,noexec,nosuid,size=128m --mount type=bind,source=<SOURCE>,destination=/src,readonly --mount type=bind,source=<FORMAL_TRAINING>,destination=/out --mount type=volume,source=unjuno-needle-native-volume-4714-v1,target=/volume --entrypoint /usr/local/bin/python needle-pilot05:local -B study.py --formal --out /out --volume-root /volume",
+    "auditor": "docker run --rm --network none --pull=never --read-only --cpus=1 --memory=2g --pids-limit=64 --security-opt=no-new-privileges --workdir /src --tmpfs /tmp:rw,noexec,nosuid,size=128m --mount type=bind,source=<SOURCE>,destination=/src,readonly --mount type=bind,source=<FORMAL_TRAINING>,destination=/raw,readonly --mount type=bind,source=<FORMAL_AUDIT>,destination=/out --mount type=volume,source=unjuno-needle-native-volume-4714-v1,target=/volume,readonly --entrypoint /usr/local/bin/python needle-pilot05:local -B audit.py --raw /raw --out /out --volume-root /volume"
+  },
+  "decision_gates": {
+    "volume_request_ack_p95_ms_max_per_seed": 60,
+    "volume_to_bind_p95_ratio_max_per_seed": 0.5,
+    "exact_snapshots_and_predictions": 72,
+    "audit_errors": 0,
+    "corruption_controls_rejected": 5
+  },
+  "construction_only": {
+    "runner_mode": "--construction-full",
+    "seed": 6842703,
+    "arrivals_per_arm": 12,
+    "audited_snapshots": 24,
+    "audit_errors": 0,
+    "decision": "CONSTRUCTION_ONLY_AUDIT_PASS",
+    "volume_request_ack_p95_ms": 181.309929,
+    "bind_request_ack_p95_ms": 148.592599,
+    "volume_commit_p50_p95_ms": [15.5779, 18.787745],
+    "bind_commit_p50_p95_ms": [33.601645, 105.505646],
+    "interpretation": "one construction seed only; no formal inference"
+  },
+  "formal_execution_at_freeze": {
+    "trainer_runs": 0,
+    "formal_optimizer_updates": 0,
+    "auditor_runs": 0,
+    "freeze_rule": "publish source and FREEZE.json; verify GitHub readback equals local text and SHA256; then execute once"
+  },
+  "scope": "fsync+atomic-replace+reread acknowledgement on one Docker Desktop local driver; not physical power-loss testing or production durability"
+}

@@ -1,0 +1,58 @@
+{
+  "controls": {
+    "changed_unsafe_count": {
+      "audit": {
+        "audit": "FAIL",
+        "errors": [
+          "threshold=0 REVERSIBLE_COMPENSATION_FILTER aggregate mismatch",
+          "preregistered threshold/unsafe-commit Pareto discriminator mismatch"
+        ],
+        "independent_exact_rational_reconstruction": true,
+        "scenario_rows_audited": 320,
+        "thresholds_audited": 5
+      },
+      "rejected": true
+    },
+    "changed_vote_profile": {
+      "audit": {
+        "audit": "FAIL",
+        "errors": [
+          "generated scenario rows mismatch independent rational construction"
+        ],
+        "independent_exact_rational_reconstruction": true,
+        "scenario_rows_audited": 320,
+        "thresholds_audited": 5
+      },
+      "rejected": true
+    },
+    "missing_scenario": {
+      "audit": {
+        "audit": "FAIL",
+        "errors": [
+          "generated scenario rows mismatch independent rational construction",
+          "scenario coverage count mismatch",
+          "scenario IDs are not unique"
+        ],
+        "independent_exact_rational_reconstruction": true,
+        "scenario_rows_audited": 319,
+        "thresholds_audited": 5
+      },
+      "rejected": true
+    },
+    "missing_threshold": {
+      "audit": {
+        "audit": "FAIL",
+        "errors": [
+          "threshold sweep coverage mismatch",
+          "preregistered threshold/unsafe-commit Pareto discriminator mismatch"
+        ],
+        "independent_exact_rational_reconstruction": true,
+        "scenario_rows_audited": 320,
+        "thresholds_audited": 4
+      },
+      "rejected": true
+    }
+  },
+  "passed": 4,
+  "total": 4
+}

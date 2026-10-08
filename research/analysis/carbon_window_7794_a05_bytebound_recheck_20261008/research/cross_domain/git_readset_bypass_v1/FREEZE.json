@@ -1,0 +1,15 @@
+{
+  "schema": "git-readset-bypass-freeze-v1",
+  "task": "O3-GIT-READSET-BYPASS-20260916-006",
+  "publication_base": "ba407ec2cabe0650962f8b7a87e671491336479e",
+  "case_count": 30,
+  "repetitions_per_cell": 5,
+  "plan_commit": "8743496fd697a77ac7c53f1ab0a15dd61e30c376",
+  "source_sha256": {
+    "experiment.py": "56bf895206736f261fb35ebf92b5b06bb9130de32cc0cc351298bc60ab4f353c",
+    "audit.py": "ef292db2f825d7e9488a2db5aafde01b25e61f05718c6763adf93f5eaa3b96fd",
+    "test_bypass.py": "18a85a0c51fc6c2d25b52b3bd87f16325483774516a774dceb749a0a97b7346a"
+  },
+  "prefreeze_tests": {"passed": 5, "failed": 0},
+  "rule": "Each measured ID runs once; all_traced failure/integrity failure stops allocation; hidden_bypass hidden-change stale writes are retained negative outcomes."
+}

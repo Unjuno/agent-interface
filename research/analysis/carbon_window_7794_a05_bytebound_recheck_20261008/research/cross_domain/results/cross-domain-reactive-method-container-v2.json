@@ -1,0 +1,55 @@
+{
+  "claims_excluded": [
+    "DOOM MAP01 clear",
+    "frontier-model efficacy",
+    "general desktop reliability",
+    "human-level reaction time",
+    "production readiness"
+  ],
+  "environment": {
+    "cpu": "AMD EPYC 9V74",
+    "cpus_exposed": 5,
+    "display": "Xvfb 800x600x24 + openbox",
+    "kernel": "Linux 6.18.44 x86_64",
+    "python": "CPython 3.13.5",
+    "xterm": "398"
+  },
+  "executions": 5,
+  "executions_passed": 5,
+  "runner_bytes": 16724,
+  "runner_sha256": "70ba728cb95d0de7e6323ddba487b2bed0d75061683a10563e13aba686932f54",
+  "schema": "cross-domain-reactive-method-container-v2-result",
+  "terminal_changed": {
+    "actions": [1, 1, 1, 1, 1],
+    "score_rows": [0, 0, 0, 0, 0],
+    "status": ["INVALIDATED", "INVALIDATED", "INVALIDATED", "INVALIDATED", "INVALIDATED"],
+    "transitions": [2, 2, 2, 2, 2]
+  },
+  "terminal_positive": {
+    "actions": [2, 2, 2, 2, 2],
+    "score_rows": [1, 1, 1, 1, 1],
+    "score_success": [true, true, true, true, true],
+    "status": ["COMPLETED", "COMPLETED", "COMPLETED", "COMPLETED", "COMPLETED"],
+    "transitions": [3, 3, 3, 3, 3]
+  },
+  "tracker_positive": {
+    "actions": [14, 15, 15, 15, 14],
+    "final_x": [435.95200000000114, 438.83200000000124, 434.83200000000124, 443.40800000000127, 434.2560000000012],
+    "release_balanced": [true, true, true, true, true],
+    "status": ["COMPLETED", "COMPLETED", "COMPLETED", "COMPLETED", "COMPLETED"],
+    "transitions": [15, 16, 16, 16, 15]
+  },
+  "tracker_vanish": {
+    "actions": [2, 1, 2, 1, 1],
+    "release_balanced": [true, true, true, true, true],
+    "status": ["INVALIDATED", "INVALIDATED", "INVALIDATED", "INVALIDATED", "INVALIDATED"],
+    "transitions": [3, 2, 3, 2, 2]
+  },
+  "v1_retained_failure": {
+    "failure": "tracker positive exhausted max_transitions=18 before completion in 1/3",
+    "passes": 2,
+    "runner_sha256": "ea63c7dfbee714060f98002653b192e33f0b95545b8149b5ac37fd591d92c075",
+    "runs": 3,
+    "v2_change_only": "tracker max_transitions 18->24; expiry and actions unchanged"
+  }
+}

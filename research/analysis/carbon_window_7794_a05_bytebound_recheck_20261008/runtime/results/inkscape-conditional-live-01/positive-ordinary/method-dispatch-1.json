@@ -1,0 +1,168 @@
+{
+  "action": "draw",
+  "program": {
+    "schema": "agent-interface/program-v1",
+    "program_id": "draw",
+    "source": {
+      "observation_seq": 2,
+      "binding_revision": 1
+    },
+    "authority": {
+      "lease_id": "draw-1",
+      "expires_at_ns": 23110014060984
+    },
+    "terminal": {
+      "release_all_required": true
+    },
+    "ops": [
+      {
+        "op": "focus",
+        "target": "app"
+      },
+      {
+        "op": "key_chord",
+        "keys": [
+          "r"
+        ]
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 50
+      },
+      {
+        "op": "pointer_move",
+        "frame": "screen_physical_px",
+        "x": 320,
+        "y": 280
+      },
+      {
+        "op": "pointer_button",
+        "button": "left",
+        "down": true
+      },
+      {
+        "op": "pointer_move",
+        "frame": "screen_physical_px",
+        "x": 430,
+        "y": 340
+      },
+      {
+        "op": "pointer_button",
+        "button": "left",
+        "down": false
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 50
+      },
+      {
+        "op": "pointer_move",
+        "frame": "screen_physical_px",
+        "x": 490,
+        "y": 370
+      },
+      {
+        "op": "pointer_button",
+        "button": "left",
+        "down": true
+      },
+      {
+        "op": "pointer_move",
+        "frame": "screen_physical_px",
+        "x": 620,
+        "y": 440
+      },
+      {
+        "op": "pointer_button",
+        "button": "left",
+        "down": false
+      },
+      {
+        "op": "wait_update",
+        "timeout_ms": 100
+      },
+      {
+        "op": "release_all"
+      }
+    ]
+  },
+  "raw": {
+    "schema": "agent-interface/runtime-dispatch-result-v1",
+    "status": "returned",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 23108096259289,
+        "ended_ns": 23108301512486,
+        "emissions": 10,
+        "program_emissions": 10,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 23108301509431
+          }
+        ],
+        "waits": [
+          {
+            "operation_index": 2,
+            "requested_ms": 50,
+            "started_ns": 23108096958730,
+            "completed": true,
+            "kind": "fixed_delay",
+            "update_observed": null,
+            "ended_ns": 23108147233296
+          },
+          {
+            "operation_index": 7,
+            "requested_ms": 50,
+            "started_ns": 23108148791686,
+            "completed": true,
+            "kind": "fixed_delay",
+            "update_observed": null,
+            "ended_ns": 23108198979242
+          },
+          {
+            "operation_index": 12,
+            "requested_ms": 100,
+            "started_ns": 23108200663292,
+            "completed": true,
+            "kind": "fixed_delay",
+            "update_observed": null,
+            "ended_ns": 23108300802924
+          }
+        ],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      },
+      "recovery_required": false
+    }
+  }
+}

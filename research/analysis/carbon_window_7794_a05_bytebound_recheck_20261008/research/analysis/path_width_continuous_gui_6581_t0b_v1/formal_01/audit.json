@@ -1,0 +1,64 @@
+{
+  "allocation_id": "PATH-WIDTH-CONTINUOUS-GUI-6581-T0B-20261002-01",
+  "controls": {
+    "corner": true,
+    "endpoint_after_exit": true,
+    "no_corridor_not_applicable": true,
+    "primary_event_inputs_byte_identical": true,
+    "primary_width_effect_divergence": true,
+    "variable_width": true
+  },
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "expected_spec_sha256": "8c04370dac08aecf39d79188f1e90fca104054c1546c2f50ebca492755a62a90",
+  "rows_reconstructed": 6,
+  "scenario_receipts": {
+    "corner_control": {
+      "endpoint_hit": true,
+      "first_exit": null,
+      "path_validity": "VALID",
+      "saved_effect": true
+    },
+    "endpoint_after_exit": {
+      "endpoint_hit": true,
+      "first_exit": {
+        "seq": 2,
+        "t": 0.25000000000625
+      },
+      "path_validity": "INVALID",
+      "saved_effect": false
+    },
+    "ordinary_drag_no_corridor": {
+      "endpoint_hit": true,
+      "first_exit": null,
+      "path_validity": "NOT_APPLICABLE",
+      "saved_effect": true
+    },
+    "primary_narrow": {
+      "endpoint_hit": true,
+      "first_exit": {
+        "seq": 1,
+        "t": 0.5714285714428572
+      },
+      "path_validity": "INVALID",
+      "saved_effect": false
+    },
+    "primary_wide": {
+      "endpoint_hit": true,
+      "first_exit": null,
+      "path_validity": "VALID",
+      "saved_effect": true
+    },
+    "variable_width": {
+      "endpoint_hit": true,
+      "first_exit": {
+        "seq": 2,
+        "t": 2.777777777777778e-11
+      },
+      "path_validity": "INVALID",
+      "saved_effect": false
+    }
+  },
+  "schema": "path-width-independent-audit-v1",
+  "scope": "synthetic browser fixture and authored pointer events only; no human, agent, live application, timing, or safety claim"
+}

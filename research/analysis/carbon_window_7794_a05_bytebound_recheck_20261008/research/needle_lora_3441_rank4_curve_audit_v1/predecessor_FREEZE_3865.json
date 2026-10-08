@@ -1,0 +1,21 @@
+{
+  "issue": 3865,
+  "allocation": "needle-lora-3441-rank4-curve-audit-cpu-v1",
+  "predecessor_issue": 3851,
+  "mode": "CPU-only offline curve audit; one invocation; no training/CUDA",
+  "inputs": {
+    "predecessor_raw_stdout.txt": "F185E4DEAB4B19BA4B146C723CB03C1078DB53307DCBF1C2D856D9C5728C320E",
+    "canonical_payload_sha256": "7b2547439420aa991668cbffe29eb296a9fc4e921663e3d51053441522ce443b",
+    "predecessor_runner.py": "1FE0A27E045085508478FCCEA1DAAF3096BA0F2775A6A9F8C1A693536579554F",
+    "predecessor_audit.py": "82AD70186A9FAEB59350B8CA1C9E951101D40C1C99DBA6EBB6BE4519187F800F",
+    "predecessor_audit_stdout.txt": "012AE716296C96D33C4D8A570748E46ED12EC54263F18C27CC30AF439E096708"
+  },
+  "source_sha256": {
+    "audit_curves.py": "45DAE55B690768EEA3CF330A8A3011641DD2B6ABA15E0B994412B220D5546523",
+    "test_contract.py": "E1F57E6F2BAC55B0C1B16382EAA4CFFAE2B26D9AF5928089DE8CDABF8BD7C712",
+    "report.md": "24C9D332AA3032C0DBA5ED1D61DE4574421761CEAA10A6107DD08AA41A9C17FA"
+  },
+  "construction_checks": "4/4 PASS; test suite does not invoke the full predecessor audit",
+  "formal_audit_invocations": 0,
+  "retries": 0
+}

@@ -1,0 +1,47 @@
+{
+  "allocation_id": "issue3691-orbstack-docker-validation-01",
+  "status": "PASS_ISSUE3691_CONTAINER_VALIDATION_SCOPED",
+  "candidate": {
+    "pr": 3697,
+    "commit": "f823cbc77e87d2f9ff3456ddf49f2f819bbc340a",
+    "audit_sha256": "2852a352117c95dcca56dead2830b868ceeabd70cad72ee852f78d02a9cb852e",
+    "test_sha256": "df18654ec0ce5fe138fc13aee394057cb745d81a4205e9f80911f705c322109e"
+  },
+  "environment": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "image": "python:3.12.10-slim-bookworm@sha256:fd95fa221297a88e1cf49c55ec1828edd7c5a428187e67b5d1805692d11588db",
+    "network": "none",
+    "rootfs": "read-only",
+    "candidate_source_mount": "read-only",
+    "tmpfs": "/tmp rw,nosuid,nodev,size=64m"
+  },
+  "unit_tests": {
+    "invocations": 1,
+    "exit_code": 0,
+    "tests_run": 8,
+    "passed": 8,
+    "transcript_sha256": "4fdafde3a3a87069472e5a5aa400fcf46260571ba63be7c8f16394678c0f8eb6"
+  },
+  "fresh_container_cli": {
+    "invocations": 1,
+    "exit_code": 0,
+    "status": "PASS_OFFLINE_STRUCTURAL_AUDIT",
+    "errors": [],
+    "current_source_control_count": 12,
+    "current_source_all_controls_rejected": true,
+    "stdout_matches_output": true,
+    "cli_json_sha256": "cbc8060908aa9af371031b197febf90d7851e12223de9d5a43444f9bfa3579cc"
+  },
+  "historical_receipt_discrepancy": {
+    "retained_control_count": 11,
+    "retained_native_audit_sha256": "36e1e9c64c83be35eef3447d76d78d2f62adff257612184beef4162c5e1fb32a",
+    "current_source_control_count": 12,
+    "note": "Historical output preserved unchanged; current source adds replacement_study_manifest."
+  },
+  "container_cleanup": {
+    "both_runs_used_rm": true,
+    "post_run_image_filtered_container_census_empty": true
+  },
+  "scope": "finite offline audit integrity validation only; no X11, GUI, input, model or XRes formal allocation"
+}

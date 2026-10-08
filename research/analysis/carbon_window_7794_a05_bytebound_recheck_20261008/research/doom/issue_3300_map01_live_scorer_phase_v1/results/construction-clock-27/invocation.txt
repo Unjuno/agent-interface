@@ -1,0 +1,30 @@
+Construction-only paired test of one empty set_action assignment versus none.
+It does not call advance_action or make_action during setup/observation. Not a
+formal allocation.
+
+OrbStack Docker; linux/arm64; ViZDoom 1.3.0 image ID
+sha256:4320dd483b24ea91c1481f12fd5799c903d9daa99a517b994f607037098ea41d.
+Network disabled; read-only root; 128 MiB /tmp tmpfs; DISPLAY unset; hidden
+ASYNC_SPECTATOR at 35 Hz; official Freedoom 0.13.0 packaged WAD SHA-256
+a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b.
+Six fresh sessions, 3 per condition, alternating order within pairs. Each
+session calls new_episode(), treatment sessions then call set_action([0]*9)
+once, followed by a 2 s passive observation and one unchanged scorer call.
+
+Exact runner command (from repository root):
+
+docker run --rm --platform linux/arm64 --network none --read-only --workdir /tmp --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/empty_action_assignment_construction.py:/probe.py:ro" \
+  -v "$PWD/research/doom/issue_3300_map01_live_scorer_phase_v1/results/construction-clock-27:/results" \
+  --entrypoint sh agent-interface-map01-clock-review-fixed:20260920 \
+  -lc 'unset DISPLAY; python -u /probe.py'
+
+Probe source SHA-256: fb91ac2a4637bafc1495d0487838b3fb1618351a605ceceebb78f2820c1c95cb
+Raw SHA-256: a15eefca951e014ca6e3b6b56f0cab2f3d2e85e76f724437e18b9e884f1bf5f9
+Container log SHA-256: 3e818e02963c2834f531c474b587dcf2fc6983e897412842e5c8fb5ef7f9c59c
+Auditor source SHA-256: b2200cd134a0704554af8ba4fccb61139bc0e6b8504e809da4a58c16702aeeb1
+Host/container audit SHA-256: 3c527da4d3a70484fcc685188fdb0f5ff2f283b873af4efb26008120248b1d02 (byte-identical)
+
+Decision: HOLD_EMPTY_SET_ACTION_DID_NOT_UNLOCK_PASSIVE_TIC; 6/6 sessions
+remained at tic tuple (1,1,1) for at least 2 s; no advancement API calls;
+cleanup and scorer traces were complete. Construction-only.

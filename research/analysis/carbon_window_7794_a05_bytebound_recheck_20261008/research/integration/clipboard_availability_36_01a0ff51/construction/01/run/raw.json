@@ -1,0 +1,211 @@
+{
+  "schema": "clipboard36-availability-v1",
+  "construction": true,
+  "status": "RECORDED",
+  "rows": [
+    {
+      "id": "P01",
+      "case": {
+        "id": "P01",
+        "target": "plain",
+        "plain": "Spruce",
+        "html": "<p>Spruce</p>",
+        "owner_state": "stopped",
+        "policy": "direct"
+      },
+      "display": ":100",
+      "commands": [
+        {
+          "argv": [
+            "xdotool",
+            "windowfocus",
+            "--sync",
+            "6291462"
+          ],
+          "pid": 17,
+          "timeout_s": 3,
+          "timeout": false,
+          "exit": 0,
+          "stdout_hex": "",
+          "stderr_hex": "",
+          "start_ns": 12616406251709,
+          "end_ns": 12616409389337
+        },
+        {
+          "argv": [
+            "xdotool",
+            "key",
+            "--clearmodifiers",
+            "ctrl+v"
+          ],
+          "pid": 18,
+          "timeout_s": 3,
+          "timeout": false,
+          "exit": 0,
+          "stdout_hex": "",
+          "stderr_hex": "",
+          "start_ns": 12616421545641,
+          "end_ns": 12616455902968
+        }
+      ],
+      "signals": [
+        {
+          "signal": 19,
+          "pid": 11,
+          "at_ns": 12616414269300
+        },
+        {
+          "signal": 18,
+          "pid": 11,
+          "at_ns": 12616958829193
+        }
+      ],
+      "exits": {
+        "consumer": 0,
+        "owner": 0,
+        "xvfb": 0
+      },
+      "owner_ready": {
+        "role": "owner",
+        "platform": "xcb"
+      },
+      "consumer_ready": {
+        "role": "consumer",
+        "platform": "xcb",
+        "window": 6291462
+      },
+      "pids": {
+        "xvfb": 8,
+        "owner": 11,
+        "consumer": 14
+      },
+      "baseline_dump": {
+        "op": "dump",
+        "text": ""
+      },
+      "baseline": {
+        "owner": 4194308,
+        "focus": 6291462,
+        "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "at_ns": 12616413907216
+      },
+      "stopped_state": "State:\tT (stopped)",
+      "admission": {
+        "owner": 4194308,
+        "focus": 6291462,
+        "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "at_ns": 12616421522183
+      },
+      "admitted": true,
+      "before_input": {
+        "owner": 4194308,
+        "focus": 6291462,
+        "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "at_ns": 12616421544433
+      },
+      "paste": {
+        "argv": [
+          "xdotool",
+          "key",
+          "--clearmodifiers",
+          "ctrl+v"
+        ],
+        "pid": 18,
+        "timeout_s": 3,
+        "timeout": false,
+        "exit": 0,
+        "stdout_hex": "",
+        "stderr_hex": "",
+        "start_ns": 12616421545641,
+        "end_ns": 12616455902968
+      },
+      "reply_start_ns": 12616455931760,
+      "deadline_outcome": "UNKNOWN_PENDING_EFFECT",
+      "deadline_ns": 12616957433483,
+      "deadline_events": [
+        {
+          "kind": "ipc_command",
+          "phase": "setup",
+          "monotonic_ns": 12616409468712,
+          "op": "dump"
+        },
+        {
+          "kind": "ipc_command",
+          "phase": "setup",
+          "monotonic_ns": 12616413968758,
+          "op": "phase"
+        },
+        {
+          "kind": "key_press",
+          "phase": "paste",
+          "monotonic_ns": 12616425275020,
+          "key": 16777249,
+          "modifiers": 67108864
+        },
+        {
+          "kind": "key_press",
+          "phase": "paste",
+          "monotonic_ns": 12616430495567,
+          "key": 86,
+          "modifiers": 67108864
+        }
+      ],
+      "deadline_server": {
+        "owner": 4194308,
+        "focus": 6291462,
+        "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "at_ns": 12616958738359
+      },
+      "late_dump": {
+        "op": "dump",
+        "text": "Spruce"
+      },
+      "late_reply_ns": 12616982112092,
+      "final_dump": {
+        "op": "dump",
+        "text": "Spruce"
+      },
+      "probe": {
+        "op": "probe",
+        "key_releases": [
+          16777249,
+          86
+        ]
+      },
+      "effect_server": {
+        "owner": 4194308,
+        "focus": 6291462,
+        "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "at_ns": 12616989379641
+      },
+      "status": "RECORDED",
+      "cleanup_server": {
+        "owner": 0,
+        "focus": 543,
+        "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+        "at_ns": 12617058822295
+      },
+      "artifact_sha256": {
+        "case.json": "210cd0c9905d51942467fb0dfd972276a1669c7efe2e5276f96a56c38d60eb00",
+        "consumer.events.jsonl": "de550fcd58f0feb0ad8c5d862090bb92cfe1e422201b537b5970eb3319d6c814",
+        "consumer.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "document.html": "65b21c08407058f301c7cf262f4e2d6ace939fac6bdb03be95a8abe85a0bac97",
+        "owner.events.jsonl": "0007cf7ba068da21ba6d79390f688e56ed167c6376fb072d2c572246ee07474b",
+        "owner.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "text.txt": "62ddd140369c3c0e4c42c1973d720e7c9a2eaedd9667c2024ca844fba0fcfcb5",
+        "window.png": "87aa5c62bb4e94652e1cbe4ce58e58fa3a098a6b0ad862c0a0e6a8eff3fda741",
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55"
+      }
+    }
+  ],
+  "environment": {
+    "python": "3.12.3",
+    "machine": "aarch64",
+    "kernel": "7.0.5-orbstack-00330-ge3df4e19b0a0-dirty",
+    "cgroup": {
+      "cpu.max": "50000 100000",
+      "memory.max": "536870912",
+      "pids.max": "128"
+    }
+  }
+}

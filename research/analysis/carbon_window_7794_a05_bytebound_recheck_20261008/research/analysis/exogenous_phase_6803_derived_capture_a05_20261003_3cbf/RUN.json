@@ -1,0 +1,78 @@
+{
+  "allocation": "PHASE-6803-A05-ORBSTACK-20261003-3CBF-02",
+  "authority_events": 0,
+  "formal_invocations": {
+    "auditor": 1,
+    "candidate": 1,
+    "legacy": 1
+  },
+  "intake_main": "6d7ce9693caae8c123fda532da64888f6006dcb9",
+  "issue": 6969,
+  "live_effect_events": 0,
+  "metrics": {
+    "boundary_counts": {
+      "NOT_APPLICABLE": 1,
+      "UNKNOWN": 3,
+      "acquired_not_delivered": 2,
+      "decision_no_effect": 2,
+      "delivered_no_decision": 41,
+      "eligible_effect_in_model": 76,
+      "not_acquired": 22
+    },
+    "controls": 13,
+    "grid_cells": 134,
+    "legacy_onset_only_pairs_insensitive": 2,
+    "legacy_probe_inputs": 4,
+    "matched_contrasts": {
+      "fixed_duration": [
+        "eligible_effect_in_model",
+        "not_acquired"
+      ],
+      "onset_only": [
+        "eligible_effect_in_model",
+        "not_acquired"
+      ]
+    },
+    "rows_checked": 147
+  },
+  "mutation_controls_rejected": 10,
+  "predecessor": 6803,
+  "retries": 0,
+  "runtime": {
+    "auditor": {
+      "container_id": "d74163d76a6a73b847ab3ef291f30c01e2f3c1d7887d58489eb0b844f99bad7d",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-03T09:06:23.182588165Z",
+      "observed_cgroup": {
+        "cpu.max": "100000 100000",
+        "memory.max": "536870912"
+      },
+      "oom_killed": false,
+      "started_at_utc": "2026-10-03T09:06:22.970261265Z"
+    },
+    "candidate": {
+      "container_id": "08ac236a991893e4b441657b20656c841a3d5381c76fc7b1a78520847206b190",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-03T09:06:22.008051119Z",
+      "observed_cgroup": {
+        "cpu.max": "100000 100000",
+        "memory.max": "536870912"
+      },
+      "oom_killed": false,
+      "started_at_utc": "2026-10-03T09:06:21.806891731Z"
+    },
+    "legacy": {
+      "container_id": "586c9da9edb00ebfed4299c47357e7564c4573812084b83897a84c8abbce7d36",
+      "exit_code": 0,
+      "finished_at_utc": "2026-10-03T09:06:22.502320381Z",
+      "observed_cgroup": {
+        "cpu.max": "100000 100000",
+        "memory.max": "536870912"
+      },
+      "oom_killed": false,
+      "started_at_utc": "2026-10-03T09:06:22.34442316Z"
+    }
+  },
+  "source_freeze_commit": "4b3da15ca4dbb4720e173475174c3a6c77169176",
+  "status": "PASS_METHOD_SCOPED; HOLD_LIVE_TRANSFER"
+}

@@ -1,0 +1,16 @@
+"""Retained pre-implementation regression: deliberately fails on the old rule."""
+import unittest
+
+from research.x11_midprogram_keymap_5236_formal06_20261001.audit import audit
+from .fixtures import PROVENANCE_CASES, WRONG_EFFECT, evidence, mutate
+
+
+class PrecedenceRegression(unittest.TestCase):
+    def test_provenance_faults_take_precedence_over_wrong_effect(self):
+        raw, wrapper = evidence()
+        raw["rows"][1]["saved_effect_hex"] = WRONG_EFFECT
+        for name, reason in PROVENANCE_CASES:
+            with self.subTest(mutation=name):
+                result = audit(mutate(raw, name), wrapper)
+                self.assertIn(reason, result["reasons"])
+                self.assertEqual(result["decision"], "STOP_PROVENANCE_OR_RUNNER")

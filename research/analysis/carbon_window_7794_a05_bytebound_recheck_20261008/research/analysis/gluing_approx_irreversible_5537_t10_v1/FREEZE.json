@@ -1,0 +1,25 @@
+{
+  "schema": "issue-5537-t10-freeze-v1",
+  "issue": 5537,
+  "allocation": "gluing-approx-irreversible-5537-t10-20261001-01",
+  "freeze_base": "bbb3676bf7c05b9e16f3bf98a9a2ff8f63df0693",
+  "branch_head_before_formal": "bbb3676bf7c05b9e16f3bf98a9a2ff8f63df0693",
+  "runtime": "CPython 3.14.5/macOS arm64",
+  "execution": "host-local; no exact container lease",
+  "formal_invocations": 1,
+  "audit_invocations": 1,
+  "retries": 0,
+  "construction": {
+    "command": "python3 -B -m unittest -v test_candidate.py",
+    "result": "PASS 6/6"
+  },
+  "source_sha256": {
+    "candidate.py": "2ff34c41561664f877cd8ef0d65891f87cd4f4cc73cd1379bb387522bbe43b81",
+    "run_experiment.py": "234298dadda620b415b8bf3ad2de4850f883599b34df660b2849da22b7958365",
+    "audit_raw.py": "f68b409991df3402e45deff8c7a77792669d3e6dc0f86484a8cccbcee305e740",
+    "test_candidate.py": "c60a80fdbb7048e6e445d513ca5aa48ecf61d977bf6dcd597339fcc00ab7a753",
+    "PLAN.md": "8f6e01fb0d178d122ef6371ddd50702cded4e9285b05269cb40c5de1f739dff7"
+  },
+  "commands": ["python3 -B run_experiment.py", "python3 -B audit_raw.py"],
+  "decision_gate": "PLAN.md"
+}

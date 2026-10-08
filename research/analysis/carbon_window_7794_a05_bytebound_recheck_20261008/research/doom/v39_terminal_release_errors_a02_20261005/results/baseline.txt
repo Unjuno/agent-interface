@@ -1,0 +1,14 @@
+test_keyrelease_send_failure_retains_receipt_and_retries (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_keyrelease_send_failure_retains_receipt_and_retries) ... FAIL
+
+======================================================================
+FAIL: test_keyrelease_send_failure_retains_receipt_and_retries (test_input_owner_v12_explicit_up_cancel.ExplicitKeyUpCancellationTests.test_keyrelease_send_failure_retains_receipt_and_retries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/v39-release-errors-a02-baseline-iqowewxo/research/live_control/test_input_owner_v12_explicit_up_cancel.py", line 131, in test_keyrelease_send_failure_retains_receipt_and_retries
+    self.assertIsInstance(receipt, dict)
+AssertionError: None is not an instance of <class 'dict'>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.018s
+
+FAILED (failures=1)

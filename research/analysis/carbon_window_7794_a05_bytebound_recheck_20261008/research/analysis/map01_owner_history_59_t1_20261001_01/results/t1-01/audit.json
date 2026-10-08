@@ -1,0 +1,40 @@
+{
+  "candidate_errors": [],
+  "corruption_controls": {
+    "duplicate_run_id": {
+      "errors": [
+        "visible rows differ from raw fixture (event omissions/order/duplicates)"
+      ],
+      "rejected": true
+    },
+    "event_filtered_prior_owner": {
+      "errors": [
+        "visible rows differ from raw fixture (event omissions/order/duplicates)"
+      ],
+      "rejected": true
+    },
+    "false_total_count": {
+      "errors": [
+        "total_count differs from raw fixture row count"
+      ],
+      "rejected": true
+    },
+    "forged_admission": {
+      "errors": [
+        "owner decision did not deny later cross-event run"
+      ],
+      "rejected": true
+    },
+    "truncated_history": {
+      "errors": [
+        "visible rows differ from raw fixture (event omissions/order/duplicates)"
+      ],
+      "rejected": true
+    }
+  },
+  "corruption_rejected": 5,
+  "corruption_total": 5,
+  "result_class": "PASS_METHOD_SCOPED",
+  "schema": "map01-owner-history-independent-audit-v1",
+  "scope": "offline synthetic source/method test only; no live API or Actions claim"
+}

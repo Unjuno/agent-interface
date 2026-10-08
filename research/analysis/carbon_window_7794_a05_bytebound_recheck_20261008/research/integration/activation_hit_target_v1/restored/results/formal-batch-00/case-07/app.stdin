@@ -1,0 +1,8 @@
+{"id": 1, "op": "snapshot"}
+{"id": 2, "op": "snapshot"}
+{"id": 3, "op": "cover", "mode": "target"}
+{"id": 4, "op": "snapshot"}
+{"id": 5, "op": "wait", "counts": {"4": 1}}
+{"id": 6, "op": "wait", "counts": {"5": 1}}
+{"id": 7, "op": "snapshot"}
+{"id": 8, "op": "close"}

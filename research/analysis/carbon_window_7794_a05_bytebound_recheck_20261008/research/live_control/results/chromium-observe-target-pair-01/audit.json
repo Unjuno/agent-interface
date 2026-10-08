@@ -1,0 +1,25 @@
+{
+  "audit_passed": true,
+  "fresh_independent_success": "2/2",
+  "fresh_identity_exact": true,
+  "durable_calls": {
+    "combined": 12,
+    "separate": 14
+  },
+  "observe_check_submit_to_return_ms": {
+    "combined": 202.583333,
+    "separate": 365.440842,
+    "interpretation": "descriptive single-pair values; no causal latency claim"
+  },
+  "exact_frames": {
+    "combined": 14,
+    "separate": 15
+  },
+  "total_exact_frames": 29,
+  "retained_probe_failures": [
+    "initial Windows import stopped before probe because Xlib was unavailable",
+    "first extracted probe revision retained obsolete Backend name",
+    "second extracted probe revision omitted fixture observation method"
+  ],
+  "scope": "two fresh scripted Chromium X11 sessions on one new seed; matched operation-level integration; no model call, causal latency, token, human-speed, cross-domain or default-promotion claim"
+}

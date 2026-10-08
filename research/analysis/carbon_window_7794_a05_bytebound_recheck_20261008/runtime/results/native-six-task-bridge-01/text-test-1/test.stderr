@@ -1,0 +1,25 @@
+test_backend_specific_invalid_text_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_backend_specific_invalid_text_emits_zero_input) ... ok
+test_expired_lease_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_expired_lease_emits_zero_input) ... ok
+test_failure_after_real_button_press_retains_prefix_and_releases (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_failure_after_real_button_press_retains_prefix_and_releases) ... ok
+test_manifest_is_ready_with_narrow_text_detail (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_manifest_is_ready_with_narrow_text_detail) ... ok
+test_stale_binding_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_stale_binding_emits_zero_input) ... ok
+test_stale_observation_emits_zero_input (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_stale_observation_emits_zero_input) ... ok
+test_supported_punctuation_has_exact_independent_effect (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_supported_punctuation_has_exact_independent_effect) ... ok
+test_valid_program_has_independent_effect_and_verified_release (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_valid_program_has_independent_effect_and_verified_release) ... FAIL
+
+======================================================================
+FAIL: test_valid_program_has_independent_effect_and_verified_release (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_valid_program_has_independent_effect_and_verified_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit/runtime/backends/x11_v1/test_integration.py", line 103, in test_valid_program_has_independent_effect_and_verified_release
+    self.assertEqual(effect, {"saved": True, "text": "office"})
+AssertionError: {'saved': True, 'text': 'officea-._ A'} != {'saved': True, 'text': 'office'}
+- {'saved': True, 'text': 'officea-._ A'}
+?                                ------
+
++ {'saved': True, 'text': 'office'}
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.597s
+
+FAILED (failures=1)

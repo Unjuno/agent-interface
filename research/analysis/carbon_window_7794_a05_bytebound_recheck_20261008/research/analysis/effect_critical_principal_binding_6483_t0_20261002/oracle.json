@@ -1,0 +1,16 @@
+{
+  "schema":"principal-binding-independent-oracle-v1",
+  "scenarios_canonical_sha256":"9d4247b017517a8339841add1fa88cbfd789dd1910112e97a783fa49a08c8ebb",
+  "truth":{
+    "clean-single":{"principals":{"a1":"A"},"gate_disposition":"ACTIONABLE"},
+    "overlap-negation":{"principals":{"a2":"A","b2":"B"},"gate_disposition":"YIELD_MIXED_PRINCIPAL_CONTEXT"},
+    "wrong-principal-command":{"principals":{"b3":"B"},"gate_disposition":"WRONG_PRINCIPAL"},
+    "quoted-command":{"principals":{"a4":"A"},"gate_disposition":"NON_ACTIONABLE_QUOTED"},
+    "stale-replay":{"principals":{"a5":"A"},"gate_disposition":"SOURCE_UNKNOWN"},
+    "cluster-switch":{"principals":{"a6":"A"},"gate_disposition":"ACTIONABLE"},
+    "cluster-without-auth":{"principals":{"u7":"UNKNOWN"},"gate_disposition":"SOURCE_UNKNOWN"},
+    "joint-without-grant":{"principals":{"a8":"A","b8":"B"},"gate_disposition":"YIELD_JOINT_AUTHORITY"},
+    "joint-authorized":{"principals":{"a9":"A","b9":"B"},"gate_disposition":"ACTIONABLE_JOINT"}
+  },
+  "mutations":["owner_swap","negation_splice","stale_generation_refresh","cluster_score_as_identity_grant"]
+}

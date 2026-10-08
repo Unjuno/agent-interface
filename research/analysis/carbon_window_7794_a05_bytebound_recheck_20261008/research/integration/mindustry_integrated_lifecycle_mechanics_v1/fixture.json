@@ -1,0 +1,50 @@
+{
+  "schema": "mindustry_integrated_lifecycle_mechanics_fixture_v1",
+  "task": "MINDUSTRY-INTEGRATED-LIFECYCLE-MECHANICS-20260917-001",
+  "initial": {
+    "palette": {"binding_id": "palette:conveyor", "generation": "P1", "dependency": "palette-A"},
+    "world": {"binding_id": "world:relative-tile", "generation": "W1", "dependency": "world-A"},
+    "method": {"method_id": "M1", "contract": "select-conveyor+place-one", "version": "1"}
+  },
+  "cold_receipt": {
+    "receipt_id": "cold-1",
+    "palette_generation": "P1",
+    "palette_dependency": "palette-A",
+    "world_generation": "W1",
+    "world_dependency": "world-A",
+    "method_id": "M1",
+    "method_version": "1"
+  },
+  "repair_receipt": {
+    "receipt_id": "repair-B-1",
+    "from_world_generation": "W1",
+    "to_world_generation": "W2",
+    "new_world_dependency": "world-B",
+    "preserve_palette_generation": "P1",
+    "preserve_method_id": "M1",
+    "preserve_method_version": "1"
+  },
+  "evidence": {
+    "A1": {"fresh": true, "palette_dependency": "palette-A", "world_dependency": "world-A"},
+    "A2": {"fresh": true, "palette_dependency": "palette-A", "world_dependency": "world-A"},
+    "B_invalid": {"fresh": true, "palette_dependency": "palette-A", "world_dependency": "world-B"},
+    "B_repair": {"fresh": true, "palette_dependency": "palette-A", "world_dependency": "world-B"},
+    "B1": {"fresh": true, "palette_dependency": "palette-A", "world_dependency": "world-B"},
+    "B2": {"fresh": true, "palette_dependency": "palette-A", "world_dependency": "world-B"},
+    "missing": {"fresh": false, "palette_dependency": null, "world_dependency": null},
+    "stale_A": {"fresh": false, "palette_dependency": "palette-A", "world_dependency": "world-A"}
+  },
+  "tasks": {
+    "A1": "task-A1",
+    "A2": "task-A2",
+    "B1": "task-B1",
+    "B2": "task-B2"
+  },
+  "controls": [
+    "stale_W1_after_repair",
+    "repair_without_fresh_evidence",
+    "overbroad_repair",
+    "duplicate_effect_replay",
+    "missing_binding_evidence"
+  ]
+}

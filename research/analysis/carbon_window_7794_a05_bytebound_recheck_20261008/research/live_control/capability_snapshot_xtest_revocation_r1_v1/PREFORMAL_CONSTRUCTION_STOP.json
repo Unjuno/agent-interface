@@ -1,0 +1,9 @@
+{
+  "phase": "preformal_construction_v1",
+  "formal_invocations": 0,
+  "disposition": "EXECUTION_STOP_XIO_TK_PARENT_CONNECTION",
+  "result_file_written": false,
+  "cause": "parent Python owned Tk display connection across E->D Xvfb restart; server termination surfaced as fatal Tk/Xlib XIO",
+  "repair": "Tk A/B moved to dedicated child process; main closes Xlib connections and terminates/waits Tk child before terminating Xvfb and verifying socket disappearance",
+  "science_changed": false
+}

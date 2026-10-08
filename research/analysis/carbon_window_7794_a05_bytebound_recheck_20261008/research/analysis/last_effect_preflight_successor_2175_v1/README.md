@@ -1,0 +1,1 @@
+# Last-effect receipt preflight (#2175)\n\nContainer preflight for allocation/epoch-bound last-effect receipts. Matching receipts are known; stale, cross-allocation, contradictory, missing, and malformed receipts yield UNKNOWN. Held-out model evaluation is explicitly stopped.\n

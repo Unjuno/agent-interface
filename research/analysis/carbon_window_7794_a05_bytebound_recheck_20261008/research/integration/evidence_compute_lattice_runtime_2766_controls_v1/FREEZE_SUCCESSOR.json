@@ -1,0 +1,48 @@
+{
+  "schema": "issue-2766-control-target-successor-freeze-v1",
+  "issue": 2766,
+  "parent_allocation": "evidence-compute-lattice-runtime-2766-20260922-01",
+  "parent_disposition_preserved": "HOLD_RUNTIME_INPUTS_INCOMPLETE",
+  "intake_main": "2207354ba293d87b4723c6e62a4d12a0fc2ec16f",
+  "base_tree": "af43c506f8a85c29ea837c82de5fd5785637f318",
+  "parent_path": "research/integration/evidence_compute_lattice_runtime_2766_v1/",
+  "parent_source_sha256": {
+    "controls.py": "677c1bcddedeecfbd4f57b40668482adc0182619db8279e8cdde00fd029c5d04",
+    "audit.py": "82c6388d32b7855c85146139aa532d432fbd8c895fc85a830af41af81f235111",
+    "source_archive_sha256": "b0f9f1a7e8e13f7f282c764cfe2cb442a7bac18de7aadb1672e6de3aba7369b8",
+    "formal_capsule_xz_sha256": "d7821c8d35acc2276b6fdd90597993bdb469348805b41d8614af0404296afdb0"
+  },
+  "capsule_reconstruction": {
+    "method": "split parent EVIDENCE.part-05 after byte 7000; retain first 7000 as part-05 and remainder 1292 as part-06",
+    "parent_part_05_blob": "c73bd8be86fa2c7dc9e24e7c529886df82128911",
+    "expected_parts_sha256": {
+      "EVIDENCE.part-00": "e1e9602d4772eb8418dfbbfec03a37dae81a3054bbd1cc0c0b1d236ea83af272",
+      "EVIDENCE.part-01": "c0c0d11000cec9489f6dcededbc57c1e7f6d11325989a81742971d31cabda6e6",
+      "EVIDENCE.part-02": "d9fd6137860c656556aefc1f006b52d0a8b315e5866ccf548cf3136130a755e5",
+      "EVIDENCE.part-03": "655495ef33bf199d742f7f580ef8362b40788f3cdc8dc03e3149cc6500192c0b",
+      "EVIDENCE.part-04": "4c470b1995e5ddc3c0e6790492902d09ef9a5a18f916ae7b9cebc25a82b20c05",
+      "EVIDENCE.part-05": "26206bf72b92954ba243305529d894d50bcf31c232ddbc69800fac36fc42d829",
+      "EVIDENCE.part-06": "8c5dccea692063180e78c9f3f8c4011b2f069a716aa7e72dc4a5838bc049e7db"
+    },
+    "restored_members": 110
+  },
+  "successor_test": {
+    "source_sha256": "6532eed94932117e36286ab389ac9b24a38391588c253976eabd1d4341e93724",
+    "formal_rows_reexecuted": 0,
+    "mutations": [
+      "wrong_g: active_run_low_p.g_ns=0; copied disposition stays RUN; expected WAIT",
+      "publish_after_cancel: active_compute_invalidation.published_reusable=true"
+    ]
+  },
+  "container": {
+    "image": "python:3.13-slim",
+    "image_id": "sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b",
+    "platform": "linux/amd64",
+    "network": "none",
+    "read_only_root": true,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 64,
+    "scratch": "tmpfs /tmp, 64 MiB"
+  }
+}

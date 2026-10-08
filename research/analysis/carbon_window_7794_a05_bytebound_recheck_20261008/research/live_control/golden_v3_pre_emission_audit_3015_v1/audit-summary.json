@@ -1,0 +1,36 @@
+{
+  "allocation": "golden-v3-identity-20260920-a3",
+  "decision": "PRE_EMISSION_FAIL_CLOSED",
+  "rows": {
+    "source-mismatch": {
+      "adapter_status": "refused",
+      "backend_emissions": null,
+      "diagnostic": "STALE_BINDING",
+      "ledger_count": 0,
+      "native_status": "refused",
+      "raw_failed_op_effect": null,
+      "release_verified": false
+    },
+    "target-replacement": {
+      "adapter_status": "partial",
+      "backend_emissions": 0,
+      "diagnostic": "BACKEND_EXECUTION_FAILED",
+      "ledger_count": 0,
+      "native_status": "execution_failed",
+      "raw_failed_op_effect": "unknown; may have emitted partial input",
+      "release_verified": true,
+      "typed_outcome": "PRE_EMISSION_FAIL_CLOSED"
+    },
+    "useful-control": {
+      "adapter_status": "partial",
+      "backend_emissions": 35,
+      "diagnostic": null,
+      "ledger_count": 35,
+      "native_status": "completed",
+      "raw_failed_op_effect": null,
+      "release_verified": true
+    }
+  },
+  "schema": "golden_v3_pre_emission_audit_v1",
+  "scope": "research-only audit boundary; promoted runtime raw result preserved"
+}

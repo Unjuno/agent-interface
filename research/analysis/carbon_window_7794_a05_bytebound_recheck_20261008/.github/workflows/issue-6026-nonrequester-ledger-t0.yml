@@ -1,0 +1,41 @@
+name: Issue 6026 non-requester ledger T0
+
+on:
+  pull_request:
+    paths:
+      - 'research/analysis/nonrequester_externalities_6026_t0_v1/**'
+      - '.github/workflows/issue-6026-nonrequester-ledger-t0.yml'
+  push:
+    paths:
+      - 'research/analysis/nonrequester_externalities_6026_t0_v1/**'
+      - '.github/workflows/issue-6026-nonrequester-ledger-t0.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  method-t0:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run construction and mutation tests
+        working-directory: research/analysis/nonrequester_externalities_6026_t0_v1
+        run: python -B -m unittest -v test_method.py
+      - name: Run candidate and independent raw-fixture audit
+        working-directory: research/analysis/nonrequester_externalities_6026_t0_v1
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -B candidate.py fixture.json > "$RUNNER_TEMP/6026-result.json"
+          python -B audit.py fixture.json "$RUNNER_TEMP/6026-result.json"
+      - name: Compile and check patch whitespace
+        working-directory: research/analysis/nonrequester_externalities_6026_t0_v1
+        run: |
+          python -B -m py_compile candidate.py audit.py test_method.py
+          git -C "$GITHUB_WORKSPACE" diff --check HEAD^ HEAD

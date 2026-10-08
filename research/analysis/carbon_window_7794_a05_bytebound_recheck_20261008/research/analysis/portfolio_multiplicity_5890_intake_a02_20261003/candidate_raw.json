@@ -1,0 +1,120 @@
+{
+  "counts": {
+    "all_rows": 25,
+    "deterministic_rows": 4,
+    "screened_out_not_tested": 16,
+    "started_negative_abandoned": 1,
+    "started_test_opportunities": 5,
+    "statistical_family_size": 4
+  },
+  "deterministic": [
+    {
+      "hard_safety": false,
+      "id": "method-pass-a",
+      "outcome": "DETERMINISTIC_PASS"
+    },
+    {
+      "hard_safety": false,
+      "id": "method-pass-b",
+      "outcome": "DETERMINISTIC_PASS"
+    },
+    {
+      "hard_safety": false,
+      "id": "method-fail",
+      "outcome": "DETERMINISTIC_FAIL"
+    },
+    {
+      "hard_safety": true,
+      "id": "safety-fail",
+      "outcome": "HARD_SAFETY_FAIL"
+    }
+  ],
+  "fixture_id": "5890-intake-a02-fresh-25-row-stream",
+  "input_sha256": "f8063007a064962d906bea872bded630c9a74e873b551c7c74b6d433ef5425b7",
+  "intake": {
+    "count": 16,
+    "ids": [
+      "idea-101",
+      "idea-102",
+      "idea-103",
+      "idea-104",
+      "idea-105",
+      "idea-106",
+      "idea-107",
+      "idea-108",
+      "idea-109",
+      "idea-110",
+      "idea-111",
+      "idea-112",
+      "idea-113",
+      "idea-114",
+      "idea-115",
+      "idea-116"
+    ],
+    "screen_counts": {
+      "NOT_TESTED_DUPLICATE": 6,
+      "NOT_TESTED_INFEASIBLE": 5,
+      "NOT_TESTED_LOW_VALUE": 5
+    }
+  },
+  "schema": "portfolio-intake-ledger-v1",
+  "started_opportunities": [
+    {
+      "abandoned_after_interim": true,
+      "claim_id": "C-NEG-A",
+      "id": "claim-neg-abandoned",
+      "outcome": "TEST_STARTED_FAIL",
+      "statistical_eligible": true
+    },
+    {
+      "abandoned_after_interim": false,
+      "claim_id": "C-POS",
+      "id": "claim-pos",
+      "outcome": "TEST_STARTED_PASS",
+      "statistical_eligible": true
+    },
+    {
+      "abandoned_after_interim": false,
+      "claim_id": "C-HOLD",
+      "id": "claim-hold",
+      "outcome": "TEST_STARTED_HOLD",
+      "statistical_eligible": true
+    },
+    {
+      "abandoned_after_interim": false,
+      "claim_id": "C-STOP",
+      "id": "claim-stop",
+      "outcome": "TEST_STARTED_STOP",
+      "statistical_eligible": false
+    },
+    {
+      "abandoned_after_interim": false,
+      "claim_id": "C-NEG-B",
+      "id": "claim-neg-retained",
+      "outcome": "TEST_STARTED_FAIL",
+      "statistical_eligible": true
+    }
+  ],
+  "statistical_family": [
+    {
+      "claim_id": "C-NEG-A",
+      "id": "claim-neg-abandoned",
+      "p_value": 0.23
+    },
+    {
+      "claim_id": "C-POS",
+      "id": "claim-pos",
+      "p_value": 0.01
+    },
+    {
+      "claim_id": "C-HOLD",
+      "id": "claim-hold",
+      "p_value": 0.08
+    },
+    {
+      "claim_id": "C-NEG-B",
+      "id": "claim-neg-retained",
+      "p_value": 0.31
+    }
+  ]
+}

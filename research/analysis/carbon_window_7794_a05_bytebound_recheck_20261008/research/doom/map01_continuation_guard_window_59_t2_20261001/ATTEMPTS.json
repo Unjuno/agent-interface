@@ -1,0 +1,51 @@
+{
+  "schema": "map01-continuation-guard-window-attempts-v1",
+  "allocation": "MAP01-CONTINUATION-GUARD-WINDOW-59-T2-20261001-01",
+  "attempts": [
+    {
+      "attempt": 1,
+      "command": "python analyze.py --out results/raw.json",
+      "outcome": "STOP_HARNESS_PATH_RESOLUTION",
+      "detail": "FileNotFoundError resolving the pinned report because the repository root was selected one directory too high",
+      "sources_read": 0,
+      "raw_output_written": false,
+      "external_actions": 0
+    },
+    {
+      "attempt": 2,
+      "command": "python analyze.py --out results/raw.json",
+      "outcome": "PASS_RETAINED_WINDOW_DIAGNOSTIC",
+      "detail": "Successful posthoc candidate invocation after correcting only the repository-root path",
+      "sources_read": 3,
+      "raw_output_written": true,
+      "external_actions": 0
+    },
+    {
+      "attempt": 3,
+      "command": "python audit.py --raw results/raw.json",
+      "outcome": "PASS_RAW_RECOMPUTE",
+      "detail": "Initial auditor implementation recomputed candidate output but did not enforce frozen target constants; retained output, auditor corrected before publication",
+      "sources_read": 3,
+      "external_actions": 0
+    },
+    {
+      "attempt": 4,
+      "command": "python audit.py --raw results/raw.json",
+      "outcome": "PASS_FROZEN_GATE_AND_RAW_RECOMPUTE",
+      "detail": "Corrected raw-only auditor invocation added exact frozen decision-gate assertions; its output retry_count is scoped to retries within that invocation",
+      "sources_read": 3,
+      "external_actions": 0
+    },
+    {
+      "attempt": 5,
+      "command": "python audit.py --raw results/raw.json",
+      "outcome": "PASS_FROZEN_GATE_AND_RAW_RECOMPUTE",
+      "detail": "Final auditor invocation clarified retry field as within_invocation_retries=0 to avoid conflict with the attempt ledger",
+      "sources_read": 3,
+      "external_actions": 0
+    }
+  ],
+  "candidate_retry_count": 1,
+  "auditor_rerun_count": 2,
+  "protocol_deviation": true
+}

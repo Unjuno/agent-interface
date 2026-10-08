@@ -1,0 +1,18 @@
+{
+  "schema": "issue4485_posthoc_raw_audit_stop_r8n2",
+  "allocation": "issue4485-posthoc-raw-audit-r8n2-20260926-01",
+  "decision": "STOP_POSTHOC_PROVENANCE",
+  "container_exit_code": 1,
+  "failure_class": "AUDITOR_INPUT_PATH_MISMATCH",
+  "detail": "The study mount is the issue_3924_broker_exit_contract_v2 directory at /study, but audit.py prepended the repository-relative source path again and attempted to read /study/research/integration/issue_3924_broker_exit_contract_v2/FREEZE.json.",
+  "stdout_bytes": 0,
+  "stderr_file": "AUDIT_STDERR.txt",
+  "auditor_report_created": false,
+  "raw_inputs_modified": false,
+  "broker_invocations": 0,
+  "fake_invocations": 0,
+  "model_calls": 0,
+  "network": "none",
+  "same_freeze_retry_authorized": false,
+  "original_issue_4485_decision_unchanged": "STOP_AUDIT_IMPLEMENTATION_MISMATCH"
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "agent_interface_golden_v3_orbstack_experiment_v1",
+  "issue": 2558,
+  "main_sha": "14ca670c49d8b2144c4e0104d92526e394f0d02a",
+  "decision": "STOP_DEPENDENCY_AND_MODEL_BOUNDARY",
+  "container": {"context":"orbstack","docker_server":"29.4.0","architecture":"aarch64","orbstack":"2.2.3","image":"python:3.12-slim-bookworm"},
+  "checks": {"linux":true,"display":true,"wslpath":false,"windows_python":false,"windows_cli":false,"codex_cli":false,"allocation_started":false,"model_call":false,"gui_task":false},
+  "claims": [],
+  "next": "verified_model_boundary_adapter_or_supported_host_cli"
+}

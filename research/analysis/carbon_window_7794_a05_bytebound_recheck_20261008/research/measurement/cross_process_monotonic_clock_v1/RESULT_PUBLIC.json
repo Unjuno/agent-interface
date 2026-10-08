@@ -1,0 +1,55 @@
+{
+  "audit_errors": [],
+  "audit_sha256": "d5d1f3012a55fac98f2cebc4833b005387c111e1e1d5f4e40e1cffd347157786",
+  "base": "159dd3684ffcd0ee78b9ff5939e0173cd77c7b4f",
+  "child_normalized_clock_meta": {
+    "clock_monotonic_available": true,
+    "mono": {
+      "adjustable": false,
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "resolution": 1e-09
+    },
+    "perf": {
+      "adjustable": false,
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "resolution": 1e-09
+    },
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]"
+  },
+  "child_normalized_clock_meta_unique_count": 1,
+  "child_process_count": 32,
+  "child_processing_ns": {"max": 285406, "p50": 220, "p95": 351, "p99": 540},
+  "containment_failures": {"clock_gettime_monotonic": 0, "monotonic_ns": 0, "perf_counter_ns": 0},
+  "corruption_controls_rejected": {"child_reversal": true, "duplicate": true, "nonce": true, "parent_reversal": true, "synthetic_offset": true},
+  "decision": "PASS_SAME_HOST_MONOTONIC_CLOCK_COMPARABILITY_SCOPED",
+  "duplicate_rows": 0,
+  "elapsed_ns": 28028145866,
+  "exchanges_per_process": 4096,
+  "expected_rows": 131072,
+  "formal_live_allocation": false,
+  "local_full_result_sha256": "27c1af25b5b78bbe019bbd0a51317621faea90eae2eec3c6f1ebe24b693516d1",
+  "missing_rows": 0,
+  "mono_minus_clock_ns": {"max": -60, "min": -214239, "p50": -80},
+  "outer_tool_timeout_note": "The enclosing ChatGPT container call reached its 45s limit after run.py had already exited 0 and persisted the complete first outcome; audit.py was then run read-only against that retained output. No scientific runner rerun occurred.",
+  "parent_clock_meta": {
+    "clock_monotonic_available": true,
+    "mono": {"adjustable": false, "implementation": "clock_gettime(CLOCK_MONOTONIC)", "monotonic": true, "resolution": 1e-09},
+    "perf": {"adjustable": false, "implementation": "clock_gettime(CLOCK_MONOTONIC)", "monotonic": true, "resolution": 1e-09}
+  },
+  "perf_minus_clock_ns": {"max": -110, "min": -230974, "p50": -150},
+  "processes": 32,
+  "raw_gzip_bytes": 10603284,
+  "raw_gzip_sha256": "fbd2d0bac930a5a5c4fa9517f50fd27248c14765dd981bd2506836fd630c9820",
+  "raw_uncompressed_sha256": "59f591738a9ea3f82f12fe63d72f4d2d55a4bd12a698b892a90bd393e4de3b1f",
+  "rows": 131072,
+  "rtt_ns": {"max": 13378733, "p50": 32159, "p95": 61071, "p99": 111105},
+  "runner_invocations": 1,
+  "scientific_reruns": 0,
+  "task": "CROSS-PROCESS-MONOTONIC-CLOCK-COMPARABILITY-20260917-001",
+  "task_input_actions": 0,
+  "unique_rows": 131072,
+  "x11_actions": 0
+}

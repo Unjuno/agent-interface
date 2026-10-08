@@ -1,0 +1,173 @@
+{
+  "allocation_id": "R133-CROSSDOMAIN-TIME-COVERAGE-59-T0-20261002-02",
+  "candidate_invocations": 1,
+  "cross_domain_time_coverage_identified": false,
+  "domains": [
+    {
+      "admitted_actuations": 11,
+      "domain": "doom_v38",
+      "effect_clock_join_identified": false,
+      "event_counts": {
+        "accepted": 7,
+        "cancel_requested": 6,
+        "clock_probe": 1,
+        "coast_result": 5,
+        "command": 14,
+        "input_admission": 11,
+        "keys_held": 11,
+        "observation": 119,
+        "post_control_score": 1,
+        "ready": 1,
+        "step_completed": 16,
+        "step_started": 22,
+        "terminal": 7,
+        "typed_observation": 119
+      },
+      "first_useful_feedback_verified": false,
+      "identified_occupancy_ns": null,
+      "independent_effect_observed": false,
+      "input_released_program_records": 0,
+      "map_exit": false,
+      "model_wait_ms": 27488.831,
+      "motor_capable_program_envelope_ms": 11418.36,
+      "motor_envelope_fraction_of_model_wait": 0.4153817963375744,
+      "observer_records": 0,
+      "observer_sequence_only": false,
+      "per_actuation_occupancy_identified": false,
+      "post_control_scores": [
+        {
+          "death_count": 0,
+          "emit_ns": 54903076373217,
+          "episode_finished": false,
+          "episode_timeout_seconds": 600,
+          "event": "post_control_score",
+          "kill_count": 0,
+          "map": "MAP01",
+          "map_exit": false,
+          "one_life_map_exit": false,
+          "player_dead": false,
+          "reward": 0.0,
+          "scorer_refresh_calls_after_control": 1,
+          "skill": 1,
+          "wall_control_ns": 31730575972
+        }
+      ],
+      "source_scope": "program-envelope data and key admission brackets; not per-key physical occupancy",
+      "status": "HOLD_TIME_COVERAGE_UNIDENTIFIED",
+      "time_coverage_identified": false
+    },
+    {
+      "admitted_actuations": 39,
+      "domain": "doom_v39",
+      "effect_clock_join_identified": false,
+      "event_counts": {
+        "accepted": 9,
+        "cancel_requested": 7,
+        "clock_probe": 1,
+        "coast_result": 8,
+        "command": 17,
+        "input_admission": 39,
+        "input_released": 1,
+        "keys_held": 28,
+        "observation": 218,
+        "post_control_score": 1,
+        "ready": 1,
+        "step_completed": 35,
+        "step_started": 42,
+        "terminal": 9,
+        "typed_observation": 218
+      },
+      "first_useful_feedback_verified": false,
+      "identified_occupancy_ns": null,
+      "independent_effect_observed": false,
+      "input_released_program_records": 1,
+      "map_exit": false,
+      "model_wait_ms": 43317.917,
+      "motor_capable_program_envelope_ms": 21820.749,
+      "motor_envelope_fraction_of_model_wait": 0.5037349556766545,
+      "observer_records": 0,
+      "observer_sequence_only": false,
+      "per_actuation_occupancy_identified": false,
+      "post_control_scores": [
+        {
+          "death_count": 0,
+          "emit_ns": 55552248511367,
+          "episode_finished": false,
+          "episode_timeout_seconds": 600,
+          "event": "post_control_score",
+          "kill_count": 1,
+          "map": "MAP01",
+          "map_exit": false,
+          "one_life_map_exit": false,
+          "player_dead": false,
+          "reward": 0.0,
+          "scorer_refresh_calls_after_control": 1,
+          "skill": 1,
+          "wall_control_ns": 50371217955
+        }
+      ],
+      "source_scope": "program-envelope data and key admission brackets; not per-key physical occupancy",
+      "status": "HOLD_TIME_COVERAGE_UNIDENTIFIED",
+      "time_coverage_identified": false
+    },
+    {
+      "admitted_actuations": 9,
+      "domain": "openttd",
+      "effect_clock_join_identified": false,
+      "event_counts": {
+        "accepted": 25,
+        "clock": 25,
+        "command": 50,
+        "input_admission": 2,
+        "observation": 52,
+        "pointer_admission": 29,
+        "ready": 1,
+        "step_completed": 51,
+        "step_started": 51,
+        "terminal": 25
+      },
+      "identified_occupancy_ns": null,
+      "independent_effect_observed": true,
+      "observer_record_count": 263,
+      "observer_records": 263,
+      "observer_sequence_only": true,
+      "observer_top_level_clock_or_action_identity_fields": [],
+      "observer_transition_indices": [
+        91
+      ],
+      "observer_transition_witness_count": 1,
+      "observer_unique_states": 2,
+      "per_actuation_occupancy_identified": false,
+      "per_button_up_admissions": 0,
+      "pointer_button_down_admissions": 7,
+      "same_program_verified_neutral_terminal_joins": 7,
+      "source_scope": "same-program neutral terminals and discrete observer transition; no observer host-time/action join",
+      "status": "HOLD_TIME_COVERAGE_UNIDENTIFIED",
+      "time_coverage_identified": false
+    }
+  ],
+  "interpretation": "Program envelopes, physical occupancy, terminal neutral receipts, and useful-effect timing are separate evidence classes. A common time-weighted coverage value is withheld unless per-actuation down/up edges, clock-bound independent effects, and a shared denominator are identified in every domain.",
+  "openttd_task_outcome": {
+    "formal_finish_outcome": "unavailable",
+    "hard_success": false,
+    "records": 263,
+    "status": "partial_A_to_B_only",
+    "transition_indices": [
+      91
+    ],
+    "unique_states": 2
+  },
+  "retries": 0,
+  "schema": "map01-crossdomain-time-coverage-candidate-v1",
+  "shared_time_denominator_identified": false,
+  "source_main_sha": "f9633921c93530054b0d7320b1665df114050d52",
+  "source_sha256": {
+    "doom-analysis.json": "7b7541174c39fac708ba6c28f371f40fb68bf71743e66c9fbcb517d45e78bf71",
+    "doom-v38-events.jsonl": "80b964c9ab7d86fbd0b2bc56957157e018e9dbb90457f286995a2e6036192bc3",
+    "doom-v39-events.jsonl": "2c917658e8bba0a94e5a34f0ee3d968553cd56950105196871012f2e3eedb381",
+    "openttd-audit.json": "8377e663d6f3b88eb41b73d85212f903f21b4879010835f9e2d1f100de4bee5c",
+    "openttd-events.jsonl": "b9e707b006a918b232f6d8915adc6a95e4d7e4ee789fec7ef4e1fba7e2df61ae",
+    "openttd-observer.txt": "4bcfb5b2632e9b2dc76f5e3f67a73f30cbd6b142578b495f0b204a2ec9696ca4"
+  },
+  "status": "HOLD_CROSSDOMAIN_TIME_COVERAGE_UNIDENTIFIED"
+}

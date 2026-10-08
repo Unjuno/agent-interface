@@ -1,0 +1,2373 @@
+[
+  {
+    "task_id": "task-1",
+    "navigation": {
+      "elapsed_ms": 603.582766,
+      "input_events": 68,
+      "path": "runtime.cli_v1.api.dispatch",
+      "result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 556952752471,
+            "ended_ns": 557174265242,
+            "emissions": 68,
+            "program_emissions": 68,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 557174262564
+              }
+            ],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      }
+    },
+    "entered": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 578967397030,
+        "ended_ns": 579259341762,
+        "emissions": 25,
+        "program_emissions": 25,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 579259338983
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 580393434249,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 4,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 580467811158,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 5,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 580525149416,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 6,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 6,
+          "valid_until_ns": 580582857145,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "saved": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 579342236538,
+        "ended_ns": 579652766863,
+        "emissions": 28,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 579652764677
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 7,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 7,
+          "valid_until_ns": 580771393750,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 8,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 8,
+          "valid_until_ns": 580842878056,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 9,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 9,
+          "valid_until_ns": 580904512764,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 10,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 10,
+          "valid_until_ns": 580973209705,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "local_elapsed_ms": 767.176301
+  },
+  {
+    "task_id": "task-2",
+    "navigation": {
+      "elapsed_ms": 563.970996,
+      "input_events": 68,
+      "path": "runtime.cli_v1.api.dispatch",
+      "result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 579759871815,
+            "ended_ns": 579982225550,
+            "emissions": 68,
+            "program_emissions": 68,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 579982222311
+              }
+            ],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      }
+    },
+    "entered": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 580312429046,
+        "ended_ns": 580635529793,
+        "emissions": 53,
+        "program_emissions": 25,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 580635527128
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 12,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 12,
+          "valid_until_ns": 581738650957,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 13,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 13,
+          "valid_until_ns": 581813259671,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 14,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 14,
+          "valid_until_ns": 581888738801,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 15,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 15,
+          "valid_until_ns": 581960826397,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "saved": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 580728857503,
+        "ended_ns": 581066931806,
+        "emissions": 56,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 581066928233
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 16,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 16,
+          "valid_until_ns": 582150510164,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 17,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 17,
+          "valid_until_ns": 582229815102,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 18,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 18,
+          "valid_until_ns": 582306896787,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 19,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 19,
+          "valid_until_ns": 582386098227,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "local_elapsed_ms": 836.497845
+  },
+  {
+    "task_id": "task-3",
+    "navigation": {
+      "elapsed_ms": 566.07626,
+      "input_events": 68,
+      "path": "runtime.cli_v1.api.dispatch",
+      "result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 581184361860,
+            "ended_ns": 581403786300,
+            "emissions": 68,
+            "program_emissions": 68,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 581403783046
+              }
+            ],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      }
+    },
+    "entered": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 581736627200,
+        "ended_ns": 582082575804,
+        "emissions": 81,
+        "program_emissions": 25,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 582082557804
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 21,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 21,
+          "valid_until_ns": 583156479137,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 22,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 22,
+          "valid_until_ns": 583237432195,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 23,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 23,
+          "valid_until_ns": 583321311782,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 24,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_field",
+          "point": [
+            300,
+            401
+          ],
+          "observed_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 24,
+          "valid_until_ns": 583399643798,
+          "patch_sha256": "3f7a43243cf0e49695326d4fd04447eb6db4a4655f127938efd06dc0ce47904d",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "saved": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 582184924569,
+        "ended_ns": 582516412974,
+        "emissions": 84,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 582516410615
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 25,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 25,
+          "valid_until_ns": 583598390433,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 26,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 26,
+          "valid_until_ns": 583685869310,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 27,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 27,
+          "valid_until_ns": 583771038310,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 28,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "cold_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "cold_submit",
+          "point": [
+            377,
+            401
+          ],
+          "observed_box": [
+            365,
+            394,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 28,
+          "valid_until_ns": 583843331126,
+          "patch_sha256": "efd6728a0d32195dc9c698357fb4f2a302543c1135b890a10e74e2d2203f0eca",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "local_elapsed_ms": 866.218783
+  },
+  {
+    "task_id": "task-4",
+    "navigation": {
+      "elapsed_ms": 545.141782,
+      "input_events": 68,
+      "path": "runtime.cli_v1.api.dispatch",
+      "result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 582610466021,
+            "ended_ns": 582831455474,
+            "emissions": 68,
+            "program_emissions": 68,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 582831453060
+              }
+            ],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      }
+    },
+    "entered": {
+      "status": "refused",
+      "error": "X11BackendError('native target guard refused: MISSING')",
+      "input_dispatched": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 30,
+          "eligible": false,
+          "status": "MISSING",
+          "handle": "cold_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "region_pixels_missing",
+          "predicted_box": [
+            288,
+            382,
+            24,
+            38
+          ],
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "refusal_emissions": 0,
+    "repaired_enter": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 596523409179,
+        "ended_ns": 596829842972,
+        "emissions": 109,
+        "program_emissions": 25,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 596829838736
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 32,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 32,
+          "valid_until_ns": 597940628331,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 33,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 33,
+          "valid_until_ns": 598023929082,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 34,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 34,
+          "valid_until_ns": 598086571857,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 35,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 35,
+          "valid_until_ns": 598155001675,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "saved": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 596912605056,
+        "ended_ns": 597220816277,
+        "emissions": 112,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 597220814171
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 36,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 36,
+          "valid_until_ns": 598343668242,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 37,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 37,
+          "valid_until_ns": 598413494025,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 38,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 38,
+          "valid_until_ns": 598477060078,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 39,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 39,
+          "valid_until_ns": 598545354103,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "local_elapsed_ms": 14148.129489
+  },
+  {
+    "task_id": "task-5",
+    "navigation": {
+      "elapsed_ms": 534.868168,
+      "input_events": 68,
+      "path": "runtime.cli_v1.api.dispatch",
+      "result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 597307013410,
+            "ended_ns": 597522692962,
+            "emissions": 68,
+            "program_emissions": 68,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 597522686937
+              }
+            ],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      }
+    },
+    "entered": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 597839798258,
+        "ended_ns": 598137381420,
+        "emissions": 137,
+        "program_emissions": 25,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 598137377223
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 41,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 41,
+          "valid_until_ns": 599274715230,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 42,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 42,
+          "valid_until_ns": 599340305074,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 43,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 43,
+          "valid_until_ns": 599405318335,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 44,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 44,
+          "valid_until_ns": 599465536086,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "saved": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 598244081712,
+        "ended_ns": 598559406501,
+        "emissions": 140,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 598559404197
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 45,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 45,
+          "valid_until_ns": 599654163239,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 46,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 46,
+          "valid_until_ns": 599745037015,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 47,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 47,
+          "valid_until_ns": 599814326349,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 48,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 48,
+          "valid_until_ns": 599887720735,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "local_elapsed_ms": 791.337859
+  },
+  {
+    "task_id": "task-6",
+    "navigation": {
+      "elapsed_ms": 590.065944,
+      "input_events": 68,
+      "path": "runtime.cli_v1.api.dispatch",
+      "result": {
+        "schema": "agent-interface/runtime-dispatch-result-v1",
+        "status": "returned",
+        "result": {
+          "status": "completed",
+          "admission": "accepted",
+          "required_capabilities": [
+            "clock.monotonic",
+            "event.feedback",
+            "input.keyboard",
+            "input.release_all",
+            "input.text",
+            "window.focus"
+          ],
+          "execution": {
+            "started_ns": 598677871445,
+            "ended_ns": 598900840188,
+            "emissions": 68,
+            "program_emissions": 68,
+            "observations": [],
+            "releases": [
+              {
+                "keys_down": [],
+                "buttons_down": [],
+                "verified": true,
+                "monotonic_ns": 598900836781
+              }
+            ],
+            "completed_ops": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      }
+    },
+    "entered": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "input.text",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 599244335568,
+        "ended_ns": 599541709560,
+        "emissions": 165,
+        "program_emissions": 25,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 599541706922
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 50,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 50,
+          "valid_until_ns": 600670885343,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 51,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 51,
+          "valid_until_ns": 600744956123,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 52,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 52,
+          "valid_until_ns": 600808615355,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 53,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_field",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_field",
+          "point": [
+            760,
+            558
+          ],
+          "observed_box": [
+            748,
+            539,
+            24,
+            38
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 53,
+          "valid_until_ns": 600870287481,
+          "patch_sha256": "4612606da4fbc7ca040ba2f1a5b8696518a5f0b79a89f094c41a75c858222804",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "saved": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 599627520134,
+        "ended_ns": 599904628533,
+        "emissions": 168,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 599904625640
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 54,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 54,
+          "valid_until_ns": 601055960090,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 55,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 55,
+          "valid_until_ns": 601128148200,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 56,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 56,
+          "valid_until_ns": 601185487549,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 57,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "repair_submit",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "repair_submit",
+          "point": [
+            689,
+            634
+          ],
+          "observed_box": [
+            677,
+            627,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 57,
+          "valid_until_ns": 601248483893,
+          "patch_sha256": "ce343d45a5698eaf9a7fce379f9712d4f6bbba897803194ed9bcb64db6854160",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "local_elapsed_ms": 740.833096
+  }
+]

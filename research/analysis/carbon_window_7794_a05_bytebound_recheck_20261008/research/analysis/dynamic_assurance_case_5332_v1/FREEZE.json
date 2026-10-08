@@ -1,0 +1,39 @@
+{
+  "allocation": "dynamic-assurance-case-5332-t0-20260930-01",
+  "issue": 5332,
+  "branch": "research/dynamic-assurance-case-5332-t0-20260930",
+  "source_main": "bdd093f24c626c7ffadaa7ba2a6c8e408814675c",
+  "runtime": {
+    "python": "3.14.5",
+    "platform": "Darwin arm64",
+    "dependencies": "Python standard library only"
+  },
+  "commands": [
+    "python3 -B runner.py formal_raw.json",
+    "python3 -B audit.py formal_raw.json audit.json"
+  ],
+  "formal_raw_invocations": 1,
+  "auditor_invocations": 1,
+  "retry_policy": "No retry, tuning, or replacement allocation; preserve first outcome.",
+  "container": "Not invoked; host-only T0 because shared Docker/OrbStack slot has no named grant.",
+  "source_sha256": {
+    "PLAN.md": "a0bfdad837d665bb265248df371ade12176cd8b7e4a61a93cfe31a57e2d4e690",
+    "candidate.py": "6c3e73702e3629efabec8edcc5ff31d4d1bc70ddd5550ff5d7caf98be750c0b8",
+    "oracle.py": "9ed51f9d4b1b1eb97a10244c31f03f6227b57d162640a48c36c58ac5243e4ef0",
+    "runner.py": "182015dbd0063bb7bbabd6eec850740f5a640d79090c6a21fefbcac4d1084b45",
+    "audit.py": "1b3cc1c68e0c472b8d77aeee116305635468631e946ed31c135c98a7383bf521",
+    "test_dynamic_assurance_case.py": "1cc3c3f3a7e5aafd39b59729ae70812e1d0e5b7e2fd85fe207bbf95d2a535cba"
+  },
+  "outputs_must_be_absent_before_run": ["formal_raw.json", "audit.json"],
+  "gates": {
+    "expected_rows": 36,
+    "policies": 6,
+    "scenarios": 6,
+    "corruption_controls": 6,
+    "required_authority_or_effect": false,
+    "composite_rejects_every_seeded_fault": true,
+    "historical_revision_unchanged": true,
+    "all_rows_match_independent_oracle": true
+  },
+  "scope_limit": "Synthetic assurance-graph logic only; no real-world effect truth, causal identification, arbitrary argument-link correctness, production safety, or cross-domain transfer claim."
+}

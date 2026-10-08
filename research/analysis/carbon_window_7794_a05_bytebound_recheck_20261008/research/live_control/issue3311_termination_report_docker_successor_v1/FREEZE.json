@@ -1,0 +1,69 @@
+{
+  "schema": "issue3311-termination-report-docker-successor-freeze-v1",
+  "allocation_id": "ISSUE3311-TERMINATION-REPORT-20260928-03",
+  "successor_of": "ISSUE3311-TERMINATION-REPORT-20260928-02",
+  "base_main": "faf30993f987b2a4ea1e6f85d322ab6c91ab1b7c",
+  "candidate_source_commit": "32f5eadab9210c18a8307f0b09776d556638c8e3",
+  "hypothesis": "The retained termination-report supervisor preserves RETAIN/HOLD/STOP distinctions and immutable evidence across child-process and audit failures when run as an offline containerized contract suite.",
+  "expected_disposition": "PASS_TERMINATION_HOLD_CONTRACT_DOCKER_SCOPED",
+  "environment": {
+    "docker_desktop_version": "28.5.1",
+    "context": "desktop-linux",
+    "platform": "linux/amd64",
+    "image": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "python": "3.12.14",
+    "network": "none",
+    "source_mount": "read-only at /repo",
+    "output_mount": "writable-only at /out",
+    "root_filesystem": "read-only",
+    "tmpfs": "/tmp:rw,noexec,nosuid,size=32m",
+    "cpus": 0.50,
+    "memory": "256m",
+    "pids": 32
+  },
+  "command": [
+    "python", "-B", "/repo/research/live_control/issue3311_termination_report_docker_successor_v1/run_once.py",
+    "/repo", "/out"
+  ],
+  "output_path": "research/live_control/issue3311_termination_report_docker_successor_v1/results/docker-03",
+  "docker_invocation": {
+    "flags": ["--rm", "--pull=never", "--platform=linux/amd64", "--network=none", "--cpus=0.50", "--memory=256m", "--pids-limit=32", "--read-only", "--tmpfs=/tmp:rw,noexec,nosuid,size=32m"],
+    "mounts": ["workspace:/repo:ro", "output_path:/out:rw"],
+    "entrypoint": "python"
+  },
+  "sources": {
+    "prior_freeze": {"path": "research/live_control/issue3311_termination_report_v2/FREEZE.json", "sha256": "76b68cb68764951541ceffce55cb5b89fe553249920e34242528c22f557963c8"},
+    "prior_plan": {"path": "research/live_control/issue3311_termination_report_v2/PLAN.md", "sha256": "e385be38bdb68643cef1af9b01bdb5a7bf52545c8ae2551e5a18115c445fa976"},
+    "prior_readme": {"path": "research/live_control/issue3311_termination_report_v2/README.md", "sha256": "c9484fa787a4447bdc838b6e988a13811b28bdb4b48e1d53ae67291aa65b81f5"},
+    "supervisor": {"path": "research/live_control/issue3311_termination_report_v2/supervisor.py", "sha256": "0c5dc488c4b0888b62681c701b26eaf624d44ea1279e0155987991e43a550374"},
+    "independent_contract_auditor": {"path": "research/live_control/issue3311_termination_report_v2/audit_termination_report.py", "sha256": "c401a52479e09a8deeed706a812f8123abbf0d5b70916ef62918f5dd0e7c3441"},
+    "test_suite": {"path": "research/live_control/issue3311_termination_report_v2/test_supervisor.py", "sha256": "12b28142e61ee54410f7ac5a32a2d3ed8ed4072641ec9b5e6e4d6bdbadfad01a"},
+    "prior_runner": {"path": "research/live_control/issue3311_termination_report_v2/run_tests.py", "sha256": "86c8d1511556e4195f074b349d4217ca44ec0adf17ebe44cbc5a15d6b43b6ff5"},
+    "package_init": {"path": "research/live_control/issue3311_termination_report_v2/__init__.py", "sha256": "d301971051775fde6b63ce06de5553298c05772e9d2dc7dda42717ec50cbe270"},
+    "evaluator": {"path": "research/live_control/integrated_efficiency_protocol_v1.py", "sha256": "d5c2f8e44addace79b6bcc30fa6911cfd12d809273100e874dfc1db97f184307", "git_blob": "e8e5ee9e3abb66cb7673ac90ec9074820a16cac9"},
+    "base_runner": {"path": "research/live_control/run_integrated_efficiency_live_v1.py", "sha256": "cadb3e068dbe1474541371cb70d87a4681eed9d2d8639ce159962e179f648e83", "git_blob": "7551eaf8112a48a893b204db9fae9105c1c10899"},
+    "plan": {"path": "research/live_control/issue3311_termination_report_docker_successor_v1/PLAN.md", "sha256": "43b7089138cb0e352b5d87bf35555565f38c9e0287ec8cc92c7daff722872527"},
+    "runner": {"path": "research/live_control/issue3311_termination_report_docker_successor_v1/run_once.py", "sha256": "19fca1f00984907b02ff9a90983c2733f02d372c159be9e338a0879436c8b55f"},
+    "raw_auditor": {"path": "research/live_control/issue3311_termination_report_docker_successor_v1/audit_result.py", "sha256": "8555e3989e5f05c8c0dfba4496d185882f9bc6a06bf4911699efba3d4c4a4188"}
+  },
+  "expected_tests": [
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_base_runner_evaluates_before_writing_final_report",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_complete_synthetic_trace_control_is_retain",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_disagreeing_audit_disposition_yields_hold",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_existing_complete_output_is_preserved_and_not_reused",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_existing_report_is_never_overwritten",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_failure_text_never_promotes_runner_exit_to_reject",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_missing_sixth_row_exception_is_retained_as_audited_hold",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_raw_audit_rejects_artifact_mutation",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_raw_audit_rejects_path_traversal",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_source_pin_mismatch_is_stop_before_child",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_unlaunchable_child_is_stop_not_task_failure",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_valid_report_and_independent_audit_are_left_unmodified",
+    "issue3311_termination_report_v2.test_supervisor.SupervisorTests.test_zero_exit_without_report_is_hold"
+  ],
+  "invocations": 1,
+  "retries": 0,
+  "formal_model_calls": 0,
+  "gui_actions": 0,
+  "test_network_calls": 0
+}

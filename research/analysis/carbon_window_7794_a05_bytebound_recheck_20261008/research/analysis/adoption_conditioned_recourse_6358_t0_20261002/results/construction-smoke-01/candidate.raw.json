@@ -1,0 +1,2075 @@
+{
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-HOST-20261002-01",
+  "cases": [
+    {
+      "case_id": "shared-high-adoption",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 2,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_ELIGIBLE_SUPPRESSED": 2
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "attempts": [],
+              "id": "s2",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "attempts": [],
+              "id": "s3",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "adoption_conditioned": {
+          "metrics": {
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "disjoint"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "s2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "disjoint"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "s3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            }
+          ],
+          "policy": "adoption_conditioned"
+        },
+        "generic_retry": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 4,
+            "deadline_misses": 2,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "DEADLINE_MISS": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 5,
+                  "idempotency_key": "idem:s2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 4
+                },
+                {
+                  "end_tick": 6,
+                  "idempotency_key": "idem:s2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 5
+                }
+              ],
+              "id": "s2",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 7,
+                  "idempotency_key": "idem:s3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 6
+                },
+                {
+                  "end_tick": 8,
+                  "idempotency_key": "idem:s3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 7
+                }
+              ],
+              "id": "s3",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "s0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "s1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "s2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "s3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "witness_only": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 4,
+            "deadline_misses": 2,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "DEADLINE_MISS": 2,
+              "RESOLVED_VERIFIED": 2
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:s0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:s0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "s0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:s1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:s1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "s1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 5,
+                  "idempotency_key": "idem:s2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 4
+                },
+                {
+                  "end_tick": 6,
+                  "idempotency_key": "idem:s2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 5
+                }
+              ],
+              "id": "s2",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 7,
+                  "idempotency_key": "idem:s3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 6
+                },
+                {
+                  "end_tick": 8,
+                  "idempotency_key": "idem:s3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 7
+                }
+              ],
+              "id": "s3",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            }
+          ],
+          "policy": "witness_only"
+        }
+      }
+    },
+    {
+      "case_id": "shared-low-adoption",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:l1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:l1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "l1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "NOT_ADOPTED",
+              "attempts": [],
+              "id": "l2",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NOT_ADOPTED",
+              "attempts": [],
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "adoption_conditioned": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "disjoint"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "l1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "NOT_ADOPTED",
+              "attempts": [],
+              "id": "l2",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NOT_ADOPTED",
+              "attempts": [],
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "adoption_conditioned"
+        },
+        "generic_retry": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:l1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:l1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "l1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "NOT_ADOPTED",
+              "attempts": [],
+              "id": "l2",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NOT_ADOPTED",
+              "attempts": [],
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "l0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "l1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "l2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "l3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "witness_only": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_NOT_ADOPTED": 2
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 2
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:l0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:l0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "l0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:l1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:l1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "l1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "NOT_ADOPTED",
+              "attempts": [],
+              "id": "l2",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NOT_ADOPTED",
+              "attempts": [],
+              "id": "l3",
+              "outcome": "UNRESOLVED_NOT_ADOPTED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        }
+      }
+    },
+    {
+      "case_id": "disjoint-resource-null",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.5,
+            "attempted_offers": 2,
+            "deadline_misses": 0,
+            "eligible_suppressed": 2,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 2,
+              "UNRESOLVED_ELIGIBLE_SUPPRESSED": 2
+            },
+            "resolved_verified": 2,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-a"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-a"
+            },
+            {
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "attempts": [],
+              "id": "d2",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "attempts": [],
+              "id": "d3",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "adoption_conditioned": {
+          "metrics": {
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-a"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-a"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-b"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-b"
+            }
+          ],
+          "policy": "adoption_conditioned"
+        },
+        "generic_retry": {
+          "metrics": {
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-a"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-a"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-b"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-b"
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "d0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "d1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "d2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "d3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "witness_only": {
+          "metrics": {
+            "all_offer_resolution_rate": 1.0,
+            "attempted_offers": 4,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "RESOLVED_VERIFIED": 4
+            },
+            "resolved_verified": 4,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "d0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-a"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:d1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:d1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "d1",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-a"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:d2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:d2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "d2",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-b"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:d3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:d3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "d3",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "private-b"
+            }
+          ],
+          "policy": "witness_only"
+        }
+      }
+    },
+    {
+      "case_id": "no-feasible-fallback",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 2,
+            "deadline_misses": 1,
+            "eligible_suppressed": 2,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "DEADLINE_MISS": 1,
+              "RESOLVED_VERIFIED": 1,
+              "UNRESOLVED_ELIGIBLE_SUPPRESSED": 2
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:n1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:n1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "n1",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "attempts": [],
+              "id": "n2",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "SUPPRESSED_BY_ABANDONMENT_CONTROL",
+              "attempts": [],
+              "id": "n3",
+              "outcome": "UNRESOLVED_ELIGIBLE_SUPPRESSED",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "adoption_conditioned": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 1,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 3,
+            "offered": 4,
+            "outcomes": {
+              "NO_FEASIBLE_RECOURSE": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "attempts": [],
+              "id": "n1",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "attempts": [],
+              "id": "n2",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_FEASIBLE_ROUTE",
+              "attempts": [],
+              "id": "n3",
+              "outcome": "NO_FEASIBLE_RECOURSE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "adoption_conditioned"
+        },
+        "generic_retry": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 4,
+            "deadline_misses": 3,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "DEADLINE_MISS": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:n1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:n1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "n1",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 5,
+                  "idempotency_key": "idem:n2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 4
+                },
+                {
+                  "end_tick": 6,
+                  "idempotency_key": "idem:n2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 5
+                }
+              ],
+              "id": "n2",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 7,
+                  "idempotency_key": "idem:n3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 6
+                },
+                {
+                  "end_tick": 8,
+                  "idempotency_key": "idem:n3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 7
+                }
+              ],
+              "id": "n3",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 4
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "n0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "n1",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "n2",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            },
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "n3",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "witness_only": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.25,
+            "attempted_offers": 4,
+            "deadline_misses": 3,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 4,
+            "outcomes": {
+              "DEADLINE_MISS": 3,
+              "RESOLVED_VERIFIED": 1
+            },
+            "resolved_verified": 1,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 1,
+                  "idempotency_key": "idem:n0",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 0
+                },
+                {
+                  "end_tick": 2,
+                  "idempotency_key": "idem:n0",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 1
+                }
+              ],
+              "id": "n0",
+              "outcome": "RESOLVED_VERIFIED",
+              "resolved": true,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 3,
+                  "idempotency_key": "idem:n1",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 2
+                },
+                {
+                  "end_tick": 4,
+                  "idempotency_key": "idem:n1",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 3
+                }
+              ],
+              "id": "n1",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 5,
+                  "idempotency_key": "idem:n2",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 4
+                },
+                {
+                  "end_tick": 6,
+                  "idempotency_key": "idem:n2",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 5
+                }
+              ],
+              "id": "n2",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            },
+            {
+              "advice_status": "ADOPTED_VALID",
+              "attempts": [
+                {
+                  "end_tick": 7,
+                  "idempotency_key": "idem:n3",
+                  "number": 1,
+                  "receipt": "NOT_APPLIED_VERIFIED",
+                  "start_tick": 6
+                },
+                {
+                  "end_tick": 8,
+                  "idempotency_key": "idem:n3",
+                  "number": 2,
+                  "receipt": "APPLIED_VERIFIED",
+                  "start_tick": 7
+                }
+              ],
+              "id": "n3",
+              "outcome": "DEADLINE_MISS",
+              "resolved": false,
+              "resource": "shared"
+            }
+          ],
+          "policy": "witness_only"
+        }
+      }
+    },
+    {
+      "case_id": "expired-advice",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "EXPIRED",
+              "attempts": [],
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "adoption_conditioned": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "EXPIRED",
+              "attempts": [],
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "adoption_conditioned"
+        },
+        "generic_retry": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "EXPIRED",
+              "attempts": [],
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "e0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "witness_only": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "STALE_ADVICE": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 1,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "EXPIRED",
+              "attempts": [],
+              "id": "e0",
+              "outcome": "STALE_ADVICE",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        }
+      }
+    },
+    {
+      "case_id": "uncertain-delivery",
+      "policies": {
+        "abandon_eligible_control": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "attempts": [],
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "abandon_eligible_control"
+        },
+        "adoption_conditioned": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "attempts": [],
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "adoption_conditioned"
+        },
+        "generic_retry": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "attempts": [],
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "generic_retry"
+        },
+        "no_advice": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "CONSERVATIVE_TYPED_STOP": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 0,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "NO_ADVICE",
+              "attempts": [],
+              "id": "u0",
+              "outcome": "CONSERVATIVE_TYPED_STOP",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "no_advice"
+        },
+        "witness_only": {
+          "metrics": {
+            "all_offer_resolution_rate": 0.0,
+            "attempted_offers": 0,
+            "deadline_misses": 0,
+            "eligible_suppressed": 0,
+            "no_feasible_recourse": 0,
+            "offered": 1,
+            "outcomes": {
+              "UNKNOWN_NO_RETRY": 1
+            },
+            "resolved_verified": 0,
+            "stale_advice": 0,
+            "unknown_no_retry": 1,
+            "unresolved_not_adopted": 0
+          },
+          "offers": [
+            {
+              "advice_status": "BLOCKED_UNCERTAIN_EFFECT",
+              "attempts": [],
+              "id": "u0",
+              "outcome": "UNKNOWN_NO_RETRY",
+              "resolved": false,
+              "resource": null
+            }
+          ],
+          "policy": "witness_only"
+        }
+      }
+    }
+  ],
+  "cases_sha256": "d230c196849e5faed5ecdc4df0c4114f1aa5085f41fd56b58f5e76d8e1b3a535",
+  "schema": "adoption-conditioned-recourse-raw-v1"
+}

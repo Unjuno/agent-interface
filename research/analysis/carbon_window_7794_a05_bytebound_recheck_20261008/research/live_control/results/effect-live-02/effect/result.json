@@ -1,0 +1,57 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "op": "effect",
+        "save_id": "save",
+        "transport_request_id": "25b3c8b5f2c54711ac6252906164b07c"
+      },
+      "received_ns": 158043629963,
+      "emit_started_ns": 158043633346
+    },
+    {
+      "event": "saved_effect",
+      "save_id": "save",
+      "save_terminal_ns": 147617373124,
+      "svg_sha256": "5ab0706179b7216dcedf53784a3c00e70204e26fd49118f86e69488727cf9789",
+      "artifact": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/effect-live-02/runtime/effect-5ab0706179b7216dcedf53784a3c00e70204e26fd49118f86e69488727cf9789.svg",
+      "score": {
+        "success": false,
+        "actual": {
+          "x": 50.0,
+          "y": 50.0,
+          "width": 40.0,
+          "height": 30.0
+        },
+        "checks": {
+          "x": false,
+          "y": true,
+          "width": true,
+          "height": true
+        },
+        "expected": {
+          "x": 66.95,
+          "y": 50,
+          "width": 40,
+          "height": 30
+        },
+        "scope": "saved untransformed fixture rectangle geometry only; not full SVG equivalence"
+      },
+      "sampled_ns": 158095033832,
+      "authority": "none; independent benchmark evaluator only",
+      "scope": "saved bytes after completed GUI save/settle; not proof all unsaved GUI state is persisted",
+      "emit_started_ns": 158095050670
+    }
+  ],
+  "cursor": 35,
+  "returned_ns": 158105788226,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "25b3c8b5f2c54711ac6252906164b07c",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

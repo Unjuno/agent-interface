@@ -1,0 +1,32 @@
+{
+  "schema": "mindustry_integrated_lifecycle_mechanics_freeze_v1",
+  "task": "MINDUSTRY-INTEGRATED-LIFECYCLE-MECHANICS-20260917-001",
+  "issue": 851,
+  "base": "488ecc39b6ede63d6f357ee52ed96be3df58552f",
+  "formal_invocations_before_freeze": 0,
+  "formal_output_present_before_freeze": false,
+  "source_git_blobs": {
+    "PLAN.md": "b8559c14c1667d0daaf6b5e5e1179130ad10404a",
+    "prereg.json": "1de8876cab421a5a2b61f67bb53dc822eedaff00",
+    "fixture.json": "ef419ad7677e59496781f0a744eef865610222fd",
+    "lifecycle.py": "f1267622cf5103c9fe3807a3348c27cf72cda2f1",
+    "run_formal.py": "1ec4d51880f353b077c3d0147b7af78ea88a8a32",
+    "audit.py": "5c2d0e46c24cc931dc8a9dc04320363433f24386",
+    "test_mechanics.py": "85b0fa2ed70617bfc8e4657a9355ea25bf430554",
+    "corruption_controls.py": "76f951c0fe089f0b87e049c4f9a3f8c6b4eea95a"
+  },
+  "predecessor": {
+    "issue": 846,
+    "merge_commit": "488ecc39b6ede63d6f357ee52ed96be3df58552f",
+    "result_git_blob": "4255b25a57408ad36ab23c8df4f8600e4a12a6d3",
+    "decision": "HOLD_MINDUSTRY_COMPOSED_LIFECYCLE_MISSING",
+    "missing_cells": [9, 11, 12, 13]
+  },
+  "construction": {
+    "py_compile": "PASS",
+    "mechanics": "PASS",
+    "formal_output": "ABSENT",
+    "provider_calls": 0,
+    "live_authority": "none"
+  }
+}

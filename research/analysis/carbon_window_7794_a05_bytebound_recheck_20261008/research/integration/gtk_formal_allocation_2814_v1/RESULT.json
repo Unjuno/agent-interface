@@ -1,0 +1,27 @@
+{
+  "issue": 2814,
+  "status": "PASS_MATRIX_RECEIPT_PREFLIGHT",
+  "formal_2606_acceptance": false,
+  "allocation": {
+    "attempts": 1,
+    "cases": 8,
+    "docker_server": "29.8.0",
+    "image": "agent-interface-gtk-source-bundle-2804:local",
+    "image_digest": "sha256:6f9a27860fde6c243a492c2d4e6d1c98efba61c49340fff7ddaa792a40e00096",
+    "network": "none",
+    "resource_limits": {"cpus": 2, "memory": "2g"},
+    "python_path": "/workspace:/usr/lib/python3/dist-packages"
+  },
+  "gates": {
+    "formal_receipt_order_ok": true,
+    "scorer_matches": true,
+    "ready_cases": ["USEFUL_EFFECT", "UNAVAILABLE_BEFORE_INPUT", "GUARDED_REFUSAL", "ACCEPTED_NO_EFFECT", "PARTIAL_COLLATERAL", "STALE_REPAIR"],
+    "non_ready_by_design": {"AMBIGUOUS_DELIVERY": "ambiguous_no_replay", "TERMINAL_CLEANUP_FAILURE": "cleanup"}
+  },
+  "independent_effects": {
+    "useful": true,
+    "partial": true,
+    "stale_repair": true
+  },
+  "raw_artifacts": "retained locally at runtime/results-local/gtk-formal-2814-v1/docker.log"
+}

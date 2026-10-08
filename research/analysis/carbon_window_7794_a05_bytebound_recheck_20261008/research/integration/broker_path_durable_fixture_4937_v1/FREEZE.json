@@ -1,0 +1,58 @@
+{
+  "schema": "broker-path-durable-fixture-4937-freeze-v1",
+  "allocation": "broker-path-durable-fixture-4937-20260928-01",
+  "issue": 4937,
+  "base_main_commit": "22f14899aba9a942c2de1ce6624e8d785e36553e",
+  "production_broker_path": "runtime/host_model_ipc_broker_v1.py",
+  "production_broker_git_blob": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+  "source_git_blobs": {
+    "upstream_broker_py": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+    "broker_under_test_py": "30f8535dd082108b8c27ba277786a6c00bbcd052",
+    "path_policy_py": "ec95d4deec0ec65d798d34523be0a7b85bc2da3b",
+    "runner_py": "b3f697a34faa1bea2e064f4e3f8699019fac1e94",
+    "audit_raw_py": "9f7f54fde96d56050eed7390f63f368ecad2d54c"
+  },
+  "source_sha256": {
+    "upstream_broker_py": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
+    "broker_under_test_py": "3069db5a0f57dece8d29e420c4911e0a72cf35be584701aa99c0e783a0e312da",
+    "path_policy_py": "ce4ae0240f5930d1021da1cc73eddce431e789627845d76bc2205a9b10055930",
+    "runner_py": "022cf20100bb4a5578069420b5d4d1e93c53db37161778c345a800d2b12c7002",
+    "audit_raw_py": "d3b391e2b68fa3d2738561b4ab60c50770c415b2ea69c53001814015dc0715a8"
+  },
+  "image": "python:3.13-slim@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0",
+  "platform": "linux/amd64",
+  "docker": {
+    "network": "none",
+    "source_readonly": true,
+    "evidence_write_mount": "/out",
+    "audit_evidence_mount": "/out:ro",
+    "source_mount": "/src:ro",
+    "read_only_root": true,
+    "tmpfs": "/tmp:rw,nosuid,nodev,noexec,size=16777216",
+    "cpus": 1,
+    "memory": "256m",
+    "pids": 32
+  },
+  "schedule": {
+    "accept": 5,
+    "reject": 18,
+    "total": 23,
+    "fields": [
+      "schema",
+      "image",
+      "working"
+    ],
+    "reject_classes": [
+      "traversal",
+      "encoded_traversal",
+      "absolute",
+      "missing",
+      "external_symlink",
+      "ambiguous_separator"
+    ]
+  },
+  "formal_runner_invocations": 0,
+  "retries": 0,
+  "postfreeze_tuning": 0,
+  "freeze_gate": "Source Git blobs/readbacks and SHA-256 checks pass; no formal row has run. One runner invocation then one separate read-only raw+fixture audit. No retries."
+}

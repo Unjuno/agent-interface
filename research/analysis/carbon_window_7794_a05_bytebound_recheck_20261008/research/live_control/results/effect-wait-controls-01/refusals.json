@@ -1,0 +1,153 @@
+[
+  {
+    "layer": "service",
+    "options": {
+      "wait_ms": -1,
+      "poll_ms": 20
+    },
+    "error": "wait_ms must be integer 0..10000"
+  },
+  {
+    "layer": "service",
+    "options": {
+      "wait_ms": 10001,
+      "poll_ms": 20
+    },
+    "error": "wait_ms must be integer 0..10000"
+  },
+  {
+    "layer": "service",
+    "options": {
+      "wait_ms": 100,
+      "poll_ms": 9
+    },
+    "error": "poll_ms must be integer 10..500"
+  },
+  {
+    "layer": "service",
+    "options": {
+      "wait_ms": 100,
+      "poll_ms": 501
+    },
+    "error": "poll_ms must be integer 10..500"
+  },
+  {
+    "layer": "service",
+    "options": {
+      "wait_ms": 10,
+      "poll_ms": 20
+    },
+    "error": "poll_ms cannot exceed positive wait_ms"
+  },
+  {
+    "layer": "service",
+    "options": {
+      "wait_ms": 1.0,
+      "poll_ms": 20
+    },
+    "error": "wait_ms must be integer 0..10000"
+  },
+  {
+    "layer": "journal",
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_form_value",
+        "expected": "bounded"
+      },
+      "wait_ms": 100
+    },
+    "error": "checkpoint wait requires both wait_ms and poll_ms"
+  },
+  {
+    "layer": "journal",
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_form_value",
+        "expected": "bounded"
+      },
+      "poll_ms": 20
+    },
+    "error": "checkpoint wait requires both wait_ms and poll_ms"
+  },
+  {
+    "layer": "journal",
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_form_value",
+        "expected": "bounded"
+      },
+      "wait_ms": -1,
+      "poll_ms": 20
+    },
+    "error": "wait_ms must be integer 0..10000"
+  },
+  {
+    "layer": "journal",
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_form_value",
+        "expected": "bounded"
+      },
+      "wait_ms": 10001,
+      "poll_ms": 20
+    },
+    "error": "wait_ms must be integer 0..10000"
+  },
+  {
+    "layer": "journal",
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_form_value",
+        "expected": "bounded"
+      },
+      "wait_ms": 100,
+      "poll_ms": 9
+    },
+    "error": "poll_ms must be integer 10..500"
+  },
+  {
+    "layer": "journal",
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_form_value",
+        "expected": "bounded"
+      },
+      "wait_ms": 100,
+      "poll_ms": 501
+    },
+    "error": "poll_ms must be integer 10..500"
+  },
+  {
+    "layer": "journal",
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_form_value",
+        "expected": "bounded"
+      },
+      "wait_ms": 10,
+      "poll_ms": 20
+    },
+    "error": "poll_ms cannot exceed positive wait_ms"
+  },
+  {
+    "layer": "journal",
+    "command": {
+      "op": "effect_checkpoint",
+      "contract": {
+        "kind": "saved_form_value",
+        "expected": "bounded"
+      },
+      "wait_ms": 100,
+      "poll_ms": 20,
+      "extra": true
+    },
+    "error": "unexpected checkpoint fields"
+  }
+]

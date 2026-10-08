@@ -1,0 +1,38 @@
+{
+  "allocation": "intent-generation-fencing-3442-t0-20261001-02",
+  "issue": 3442,
+  "base_main": "5865c5e74842b5bba6a6291e141afae75ca4a147",
+  "branch": "research/intent-generation-fencing-3442-t0-v2-20261001",
+  "freeze_blob_sha1": "2d76657864bc9f7f3dd0916e03a12cc7dfff162c",
+  "candidate_blob_sha1": "ecd2b823cf8031e85876a3fb076fbacd90bc704e",
+  "auditor_blob_sha1": "b73d5a36f87f0b5a2d1bb7fb2b2ded36ed652932",
+  "python": "3.11.9",
+  "runner_invocations": 1,
+  "runner_exit": 0,
+  "auditor_invocations": 1,
+  "auditor_exit": 0,
+  "raw_rows": 33,
+  "raw_sha256": "ac463423fbc353e04fe570caa139f5bbb8050f86e23f6a092524acdb6a2300bb",
+  "audit_sha256": "0ae689b20b8afb4bb99f4d4ab5b6747468e7fee4fa134cde5bd9b3ee1caf32d0",
+  "independent_audit": {
+    "corruption_controls_rejected": 4,
+    "corruption_controls_total": 4,
+    "errors": [],
+    "method_pass": true,
+    "rows": 33
+  },
+  "invocation": "PowerShell in-memory candidate source piped to python -B -; captured all stdout lines in memory; then joined raw JSONL piped to separate python -B -c <auditor source> process. No local files written.",
+  "environment": {
+    "docker_desktop": "open; docker info timed out at 5s",
+    "c_free_bytes": 0,
+    "gpu_used_mib": 0,
+    "gpu_utilization_percent": 0,
+    "container": false,
+    "model": false,
+    "gui": false,
+    "os_input": false,
+    "task_effect": false
+  },
+  "stderr_capture": "No separate stderr file; both processes exited zero and wrapper returned valid result envelope.",
+  "predecessor_allocation_stop": "research/system1/intent_generation_fencing_3442_t0_v2/predecessor/allocation-01/STOP.json"
+}

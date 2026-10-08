@@ -1,0 +1,5328 @@
+{
+  "experiment": "issue-5444-breakdown-t7-generated-family",
+  "scenario_count": 320,
+  "scenario_generation": {
+    "commit_score_threshold": 0.3,
+    "dimensions": {
+      "action_class": [
+        "reversible",
+        "irreversible"
+      ],
+      "authority_receipt": "UNKNOWN in every generated scenario",
+      "compensation_cost": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "four_low_receipt_votes": "full Cartesian binary profile",
+      "oracle_truth": [
+        "safe",
+        "unsafe"
+      ]
+    },
+    "low_receipt_weight": 0.075,
+    "uncertainty_note": "constructed exhaustive stress grid; fractions are coverage counts, not probabilities or confidence intervals"
+  },
+  "scenarios": [
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c0-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c1-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c2-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c3-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "reversible-safe-c4-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c0-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c1-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c2-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c3-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "reversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "reversible-unsafe-c4-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c0-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c1-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c2-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c3-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "safe",
+      "scenario_id": "irreversible-safe-c4-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 0,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c0-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 1,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c1-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 2,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c2-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 3,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c3-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.3,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v0000",
+      "vote_flips_to_unanimous_support": 4,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v0001",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v0010",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v0011",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v0100",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v0101",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v0110",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v0111",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": -0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v1000",
+      "vote_flips_to_unanimous_support": 3,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v1001",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v1010",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v1011",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.0,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v1100",
+      "vote_flips_to_unanimous_support": 2,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v1101",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.15,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v1110",
+      "vote_flips_to_unanimous_support": 1,
+      "weighted_breakdown_flips_if_commit": null
+    },
+    {
+      "action_class": "irreversible",
+      "authority_receipt": "UNKNOWN",
+      "compensation_cost": 4,
+      "low_verifier_score": 0.3,
+      "low_verifier_votes": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "oracle_truth": "unsafe",
+      "scenario_id": "irreversible-unsafe-c4-v1111",
+      "vote_flips_to_unanimous_support": 0,
+      "weighted_breakdown_flips_if_commit": 1
+    }
+  ],
+  "scope": "finite hand-authored evidence model; no real-source or calibrated-safety claim",
+  "sweep": [
+    {
+      "compensation_threshold": 0,
+      "policies": {
+        "REVERSIBLE_COMPENSATION_FILTER": {
+          "commit_fraction_of_grid": 0.00625,
+          "commits": 2,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 0.99375,
+          "safe_abstentions": 159,
+          "scenario_coverage": 320,
+          "unsafe_commits": 1,
+          "unsafe_fraction_of_grid": 0.003125
+        },
+        "UNKNOWN_AS_ZERO": {
+          "commit_fraction_of_grid": 0.0625,
+          "commits": 20,
+          "irreversible_unknown_commits": 10,
+          "safe_abstention_fraction": 0.9375,
+          "safe_abstentions": 150,
+          "scenario_coverage": 320,
+          "unsafe_commits": 10,
+          "unsafe_fraction_of_grid": 0.03125
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "commit_fraction_of_grid": 0.0,
+          "commits": 0,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 1.0,
+          "safe_abstentions": 160,
+          "scenario_coverage": 320,
+          "unsafe_commits": 0,
+          "unsafe_fraction_of_grid": 0.0
+        }
+      }
+    },
+    {
+      "compensation_threshold": 1,
+      "policies": {
+        "REVERSIBLE_COMPENSATION_FILTER": {
+          "commit_fraction_of_grid": 0.0125,
+          "commits": 4,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 0.9875,
+          "safe_abstentions": 158,
+          "scenario_coverage": 320,
+          "unsafe_commits": 2,
+          "unsafe_fraction_of_grid": 0.00625
+        },
+        "UNKNOWN_AS_ZERO": {
+          "commit_fraction_of_grid": 0.0625,
+          "commits": 20,
+          "irreversible_unknown_commits": 10,
+          "safe_abstention_fraction": 0.9375,
+          "safe_abstentions": 150,
+          "scenario_coverage": 320,
+          "unsafe_commits": 10,
+          "unsafe_fraction_of_grid": 0.03125
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "commit_fraction_of_grid": 0.0,
+          "commits": 0,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 1.0,
+          "safe_abstentions": 160,
+          "scenario_coverage": 320,
+          "unsafe_commits": 0,
+          "unsafe_fraction_of_grid": 0.0
+        }
+      }
+    },
+    {
+      "compensation_threshold": 2,
+      "policies": {
+        "REVERSIBLE_COMPENSATION_FILTER": {
+          "commit_fraction_of_grid": 0.01875,
+          "commits": 6,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 0.98125,
+          "safe_abstentions": 157,
+          "scenario_coverage": 320,
+          "unsafe_commits": 3,
+          "unsafe_fraction_of_grid": 0.009375
+        },
+        "UNKNOWN_AS_ZERO": {
+          "commit_fraction_of_grid": 0.0625,
+          "commits": 20,
+          "irreversible_unknown_commits": 10,
+          "safe_abstention_fraction": 0.9375,
+          "safe_abstentions": 150,
+          "scenario_coverage": 320,
+          "unsafe_commits": 10,
+          "unsafe_fraction_of_grid": 0.03125
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "commit_fraction_of_grid": 0.0,
+          "commits": 0,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 1.0,
+          "safe_abstentions": 160,
+          "scenario_coverage": 320,
+          "unsafe_commits": 0,
+          "unsafe_fraction_of_grid": 0.0
+        }
+      }
+    },
+    {
+      "compensation_threshold": 3,
+      "policies": {
+        "REVERSIBLE_COMPENSATION_FILTER": {
+          "commit_fraction_of_grid": 0.025,
+          "commits": 8,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 0.975,
+          "safe_abstentions": 156,
+          "scenario_coverage": 320,
+          "unsafe_commits": 4,
+          "unsafe_fraction_of_grid": 0.0125
+        },
+        "UNKNOWN_AS_ZERO": {
+          "commit_fraction_of_grid": 0.0625,
+          "commits": 20,
+          "irreversible_unknown_commits": 10,
+          "safe_abstention_fraction": 0.9375,
+          "safe_abstentions": 150,
+          "scenario_coverage": 320,
+          "unsafe_commits": 10,
+          "unsafe_fraction_of_grid": 0.03125
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "commit_fraction_of_grid": 0.0,
+          "commits": 0,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 1.0,
+          "safe_abstentions": 160,
+          "scenario_coverage": 320,
+          "unsafe_commits": 0,
+          "unsafe_fraction_of_grid": 0.0
+        }
+      }
+    },
+    {
+      "compensation_threshold": 4,
+      "policies": {
+        "REVERSIBLE_COMPENSATION_FILTER": {
+          "commit_fraction_of_grid": 0.03125,
+          "commits": 10,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 0.96875,
+          "safe_abstentions": 155,
+          "scenario_coverage": 320,
+          "unsafe_commits": 5,
+          "unsafe_fraction_of_grid": 0.015625
+        },
+        "UNKNOWN_AS_ZERO": {
+          "commit_fraction_of_grid": 0.0625,
+          "commits": 20,
+          "irreversible_unknown_commits": 10,
+          "safe_abstention_fraction": 0.9375,
+          "safe_abstentions": 150,
+          "scenario_coverage": 320,
+          "unsafe_commits": 10,
+          "unsafe_fraction_of_grid": 0.03125
+        },
+        "UNKNOWN_FAIL_CLOSED": {
+          "commit_fraction_of_grid": 0.0,
+          "commits": 0,
+          "irreversible_unknown_commits": 0,
+          "safe_abstention_fraction": 1.0,
+          "safe_abstentions": 160,
+          "scenario_coverage": 320,
+          "unsafe_commits": 0,
+          "unsafe_fraction_of_grid": 0.0
+        }
+      }
+    }
+  ]
+}

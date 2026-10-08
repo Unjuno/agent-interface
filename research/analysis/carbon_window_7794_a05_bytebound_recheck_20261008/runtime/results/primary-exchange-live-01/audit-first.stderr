@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/primary-exchange-live-01/verify.py", line 59, in <module>
+    data=load();metrics=audit(data);controls=[]
+                        ^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/primary-exchange-live-01/verify.py", line 50, in audit
+    require(data['values'][4]==json.loads((ROOT/'case'/'host'/'text-ack-2.json').read_text()),'explicit original mint acknowledgment')
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/var/tmp/agent-interface-evidence-storage-main/runtime/results/primary-exchange-live-01/case/host/text-ack-2.json'

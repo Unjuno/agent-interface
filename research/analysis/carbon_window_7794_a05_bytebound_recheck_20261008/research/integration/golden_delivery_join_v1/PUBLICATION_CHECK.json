@@ -1,0 +1,34 @@
+{
+  "audit_byte_identical": true,
+  "byte_identical_files": 44,
+  "formal_reruns": 0,
+  "member_bytes": 1243413,
+  "original_files": 44,
+  "packaging_methods": 6,
+  "packaging_negative_controls": 5,
+  "processes": {
+    "packaging_tests": {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "/mnt/data/golden_delivery_publication/test_unpack.py"
+      ],
+      "returncode": 0,
+      "stderr_sha256": "484819fc6115ded4f95980c301dc1cb3bd42b75d97061c070633332d47142c79",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "verify": {
+      "command": [
+        "/opt/pyvenv/bin/python",
+        "-S",
+        "-B",
+        "/mnt/data/golden_delivery_publication/verify.py"
+      ],
+      "returncode": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "1d47d3c50ed75425b90328b68aaa1a7480bea492e735ccbf96e7c1c41871b67a"
+    }
+  },
+  "regression_methods": 22
+}

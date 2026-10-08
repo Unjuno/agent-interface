@@ -1,0 +1,27 @@
+--- a/runtime/kernel/lifecycle.py
++++ b/isolated/authorization_floor/lifecycle.py
+@@ -50,6 +50,7 @@
+         self.effect: EffectReceipt | None = None
+         self.stop_reason: str | None = None
+         self.execution_started_ns: int | None = None
++        self.authorized_ns: int | None = None
+ 
+     def record_observation(self, observation: Observation) -> None:
+         if self.stage is not Stage.NEW:
+@@ -81,6 +82,7 @@
+         if now_ns >= lease.valid_until_ns:
+             raise ContractError("lease is already expired")
+         self.lease = lease
++        self.authorized_ns = now_ns
+         self.stage = Stage.AUTHORIZED
+ 
+     def begin_execution(self, request: ExecutionRequest, *, now_ns: int) -> None:
+@@ -90,6 +92,8 @@
+             raise ContractError("execution has already begun")
+         if type(now_ns) is not int or now_ns < 0:
+             raise ContractError("now_ns must be nonnegative integer")
++        if self.authorized_ns is None or now_ns < self.authorized_ns:
++            raise ContractError("execution precedes accepted authorization")
+         if now_ns >= self.lease.valid_until_ns:
+             raise ContractError("authority expired before execution")
+         if request.binding != self.binding or request.lease != self.lease:

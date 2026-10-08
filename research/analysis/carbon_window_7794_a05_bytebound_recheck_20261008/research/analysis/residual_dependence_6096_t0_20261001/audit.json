@@ -1,0 +1,60 @@
+{
+  "calibrated_danger_stop_sample": 8,
+  "calibrated_false_yield_cases": [],
+  "calibrated_threshold_expected": 4,
+  "criteria": {
+    "audit_reconstruction_pass": true,
+    "baseline_pointwise_misses_danger": true,
+    "baseline_running_mean_misses_danger": true,
+    "calibrated_dependence_stops_before_wrong_continuation": false,
+    "false_yield_zero_limit_pass": true,
+    "matched_harmless_prefix_indistinguishable": true,
+    "mean_shift_positive_control_detected": true,
+    "missing_evidence_fail_closed": true,
+    "source_invalidation_fail_closed": true
+  },
+  "disposition": "FAIL_METHOD_NO_ZERO_FALSE_YIELD_DETECTION_FRONTIER",
+  "errors": [],
+  "expected_rows": 35,
+  "observed_rows": 35,
+  "raw_line_count": 1,
+  "schema": "agent-interface.residual-dependence-6096.audit.v1",
+  "scope": "finite synthetic residual sequences only; no calibrated serial-correlation p-value, GUI, actuator, or safety claim",
+  "threshold_frontier": [
+    {
+      "danger_detected": true,
+      "false_yield_cases": [
+        "heldout-valid-periodic",
+        "heldout-camera-jitter"
+      ],
+      "threshold": 1
+    },
+    {
+      "danger_detected": true,
+      "false_yield_cases": [
+        "heldout-valid-periodic",
+        "heldout-camera-jitter"
+      ],
+      "threshold": 2
+    },
+    {
+      "danger_detected": true,
+      "false_yield_cases": [
+        "heldout-valid-periodic",
+        "heldout-camera-jitter"
+      ],
+      "threshold": 3
+    },
+    {
+      "danger_detected": false,
+      "false_yield_cases": [],
+      "threshold": 4
+    },
+    {
+      "danger_detected": false,
+      "false_yield_cases": [],
+      "threshold": 5
+    }
+  ],
+  "wrong_continuation_after_sample": 6
+}

@@ -1,0 +1,132 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 15720644475236,
+      "ended_ns": 15720646285745,
+      "emissions": 24,
+      "program_emissions": 4,
+      "observations": [],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 15720646282588
+        }
+      ],
+      "waits": [],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2
+      ]
+    },
+    "recovery_required": false
+  },
+  "post_dispatch_inspection": {
+    "review_id": "28dd1dd4350a429e8392d95abc9e19bd",
+    "target": "app",
+    "binding_revision": 1,
+    "evidence": {
+      "window_id": 8390761,
+      "focus_path": [
+        8390761
+      ],
+      "transient_chain": [
+        8390761,
+        8389124
+      ],
+      "family_root": 8389124,
+      "title": "Confirm File Format",
+      "wm_class": [
+        "libreoffice",
+        "libreoffice-calc"
+      ],
+      "geometry": [
+        386,
+        322,
+        507,
+        174
+      ]
+    },
+    "expires_at_ns": 15750944639418,
+    "status": "needs_review",
+    "input_dispatched": false,
+    "authority_granted": false,
+    "review_request": {
+      "tool": "interface_review_target",
+      "arguments": {
+        "target": "app",
+        "window_id": 8390761,
+        "review_id": "28dd1dd4350a429e8392d95abc9e19bd",
+        "screen_region": [
+          0,
+          0,
+          1280,
+          800
+        ]
+      }
+    },
+    "review_request_scope": "Candidate call after your explicit review of this evidence; not executed. The one-use ID expires at expires_at_ns and target evidence is rechecked. Retained results do not renew it. No input authority or replay permission.",
+    "observation_report": {
+      "schema": "agent-interface/runtime-observation-v1",
+      "observation_id": "88c16b7618d048279f565be23cada9b1",
+      "side_effect_authority": false,
+      "input_dispatched": false,
+      "status": "returned",
+      "observation": {
+        "bytes": 4096000,
+        "sha256": "5695451b69988368f74e2d17b411a9c0d7fa7865529f6d5760ecaf6eda56b331",
+        "width": 1280,
+        "height": 800,
+        "target": "app",
+        "native_window_id": 8389124,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          1280,
+          800
+        ],
+        "capture_started_ns": 15720898015758,
+        "capture_ended_ns": 15720910975577,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/wsl-feedback-successor-01/row-02-wait-250/public/images/3b305bec3a054ed183d23b763bf25b0c.png",
+          "sha256": "ce019394115ddea4139ff7e82ca10bc32ef9bfde88b82dc90b04b31b093f2d40",
+          "bytes": 77810,
+          "width": 1280,
+          "height": 800,
+          "source_raw_sha256": "5695451b69988368f74e2d17b411a9c0d7fa7865529f6d5760ecaf6eda56b331",
+          "timing_ns": {
+            "started": 15720913365920,
+            "converted": 15720915959068,
+            "encoded": 15720938699399,
+            "written": 15720938954950,
+            "hashed": 15720941368673
+          }
+        }
+      }
+    },
+    "capture_wait": {
+      "requested_ms": 250,
+      "started_ns": 15720646401999,
+      "completed": true,
+      "update_observed": null,
+      "ended_ns": 15720896538026
+    },
+    "started_ns": 15720646394756,
+    "ended_ns": 15720944669565,
+    "scope": "Metadata sampled after dispatch. Not atomically bound to its image; no redraw or task completion acknowledgement. Review explicitly; retained lookup does not renew the review ID."
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "allocation_id": "EFFECT-OVERLAP-6278-T0-20261002-01",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6278",
+  "created_utc": "2026-10-01T22:06:37Z",
+  "source_main_sha": "1e16d213e93aaefb4420c1a41f7253220aa553bc",
+  "package": "research/analysis/effect_overlap_6278_t0_v1",
+  "formal_invocations_allowed": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0
+  },
+  "container": {
+    "image": "python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "dedicated writable evidence directory"
+  },
+  "frozen_sha256": {
+    "README.md": "87966013b5b2c2a02ee6da465b5b7c5e80d4999dac25009f1b698648ad698ae2",
+    "fixture.json": "571293b3552e1f867e66f5c8417a19e43d4857838a2abdd4e238db2cd184f7d3",
+    "candidate.py": "8f2d3b246624d7efb28126934deba7a951813e7a2ba2565bd012eab2c6db3962",
+    "audit.py": "75f04b7f7efd9b549bf233a05e05a3e673ecdd2659da5b64f28c92f38f7835c1",
+    "test_model.py": "aea2ccdc654558070b31dbd6077daf7812f988fb4cea876f2f10b64826b2ea34"
+  },
+  "formal_commands": [
+    "docker run --rm --network none --read-only --mount type=bind,src=<PACKAGE>,dst=/work,readonly --mount type=bind,src=<FORMAL_OUT>,dst=/out -w /work python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b python candidate.py --out /out/raw.json",
+    "docker run --rm --network none --read-only --mount type=bind,src=<PACKAGE>,dst=/work,readonly --mount type=bind,src=<FORMAL_OUT>,dst=/out -w /work python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b python audit.py /out/raw.json --out /out/audit.json"
+  ],
+  "claims_excluded": [
+    "exhaustive optimizer or fair portfolio topology comparison",
+    "empirical H_PASS/H_FAIL or GUI effect",
+    "real-time resilience, population reliability, human tempo, or product benefit"
+  ]
+}

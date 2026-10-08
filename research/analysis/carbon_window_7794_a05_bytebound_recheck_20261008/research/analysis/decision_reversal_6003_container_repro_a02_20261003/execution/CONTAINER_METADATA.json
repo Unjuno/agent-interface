@@ -1,0 +1,44 @@
+{
+  "allocation_id": "6003-container-repro-a02-20261003",
+  "issue": 6744,
+  "current_main_at_candidate_start": "e52c4a65915cf48641c63cc95950be15f1b77cbf",
+  "integration_main_after_candidate_and_audit": "162963a9aed79e7a9ca233e9218c02c1608b0ab7",
+  "predecessor_fixture_main_sha": "5759a6e65b8b5e7487fb2ad61f53bb531aeaf512",
+  "runtime": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "host_platform": "linux/aarch64",
+    "image_ref": "python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "image_id": "sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b"
+  },
+  "container_policy": {
+    "network_mode": "none",
+    "read_only_rootfs": true,
+    "memory_bytes": 268435456,
+    "nano_cpus": 1000000000,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "security_options": ["no-new-privileges"],
+    "user": "1000:1000",
+    "working_directory": "/",
+    "tmpfs": {"/tmp": "rw,noexec,nosuid,size=16m"},
+    "pull": "never"
+  },
+  "candidate": {
+    "name": "issue6744-candidate-a02",
+    "container_id": "af25460eafd1a53285ff908c828d7b2de990d8ac644c464284c85e61fb8e9334",
+    "exit_code": 0,
+    "read_only_mounts": ["/input"]
+  },
+  "independent_auditor": {
+    "name": "issue6744-auditor-a02",
+    "container_id": "f0fb3b5d9964d6033eb20e484a4dd7240a9a9bf0647d0d59966c17953aba9944",
+    "exit_code": 0,
+    "read_only_mounts": ["/input", "/evidence"]
+  },
+  "notes": [
+    "A01 and A02 were distinct allocations; A01's failed launch was not rerun.",
+    "The raw candidate's allocation_id and main_sha refer to the byte-identical predecessor freeze, not to A02.",
+    "Both container stdout streams were retained and SHA-256 matched against docker logs before cleanup.",
+    "Only the two named stopped A02 containers were removed after evidence capture and hash verification."
+  ]
+}

@@ -1,0 +1,352 @@
+{
+  "schema": "agent_interface_golden_desktop_live_v2",
+  "passed": true,
+  "seed": 991030,
+  "tasks_exact": 6,
+  "routes": [
+    "cold",
+    "reuse",
+    "reuse",
+    "repair",
+    "reuse",
+    "reuse"
+  ],
+  "planner_generations_including_preflight": 3,
+  "model_visible_images": 2,
+  "usage": {
+    "input_tokens": 27892,
+    "cached_input_tokens": 7936,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 477,
+    "reasoning_output_tokens": 132
+  },
+  "grounding_transport": "one capability-minimized Codex app-server process/thread",
+  "grounding_thread_id": "01a0a190-8b99-7210-bbf7-8ce6c6a762fd",
+  "grounding_turns": 2,
+  "grounding_call_ids": [
+    "01a0a190-a8d7-7993-890f-a903da735043",
+    "01a0a190-ec36-7b72-86e9-9692a0dba244"
+  ],
+  "old_target_pointer_admissions": 0,
+  "all_releases_verified": true,
+  "input_feedback_median_ms": 99.56206900000001,
+  "six_task_elapsed_ms": 37714.869731,
+  "whole_command_elapsed_ms": 52180.750442,
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "schema": "integrated_efficiency_oracle_v1",
+    "known_ns": 22492245825257,
+    "success": true,
+    "record_count": 6,
+    "exact_counts": {
+      "task-1": 1,
+      "task-2": 1,
+      "task-3": 1,
+      "task-4": 1,
+      "task-5": 1,
+      "task-6": 1
+    },
+    "unexpected": [],
+    "duplicates": {},
+    "missing": [],
+    "emit_started_ns": 22492245832393
+  },
+  "tasks": [
+    {
+      "arm": "persistent",
+      "task_id": "task-1",
+      "layout": "A",
+      "route": "cold",
+      "model_calls": [
+        {
+          "call_id": "01a0a190-a8d7-7993-890f-a903da735043",
+          "stage": "anchor_model",
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "usage": {
+            "input_tokens": 9243,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 171,
+            "reasoning_output_tokens": 56
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 21,
+      "durable_calls": 16,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 8123275966,
+      "source_to_completion_ns": 6557624339,
+      "input_feedback_ns": [
+        101094605,
+        100548275
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-2",
+      "layout": "A",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 24,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 4036981839,
+      "source_to_completion_ns": 2405805191,
+      "input_feedback_ns": [
+        98703206,
+        99657505
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-3",
+      "layout": "A",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 23,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 4709861048,
+      "source_to_completion_ns": 2845821297,
+      "input_feedback_ns": [
+        98885981,
+        99466633
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-4",
+      "layout": "B",
+      "route": "repair",
+      "model_calls": [
+        {
+          "call_id": "01a0a190-ec36-7b72-86e9-9692a0dba244",
+          "stage": "expanded_model",
+          "requested_model": "gpt-5.6-luna",
+          "requested_effort": "low",
+          "usage": {
+            "input_tokens": 10684,
+            "cached_input_tokens": 7936,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 145,
+            "reasoning_output_tokens": 30
+          }
+        }
+      ],
+      "planner_generations": 1,
+      "model_visible_images": 1,
+      "local_observations": 22,
+      "durable_calls": 18,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 8442350670,
+      "source_to_completion_ns": 6802569221,
+      "input_feedback_ns": [
+        102884083,
+        101710318
+      ],
+      "repair": {
+        "required": true,
+        "old_reference_status": "missing",
+        "old_reference_pointer_admissions": 0,
+        "attempted": true,
+        "succeeded": true
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-5",
+      "layout": "B",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 24,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 5751793262,
+      "source_to_completion_ns": 3882245850,
+      "input_feedback_ns": [
+        96988404,
+        99127884
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    },
+    {
+      "arm": "persistent",
+      "task_id": "task-6",
+      "layout": "B",
+      "route": "reuse",
+      "model_calls": [],
+      "planner_generations": 0,
+      "model_visible_images": 0,
+      "local_observations": 23,
+      "durable_calls": 20,
+      "pointer_admissions": 2,
+      "old_target_pointer_admissions": 0,
+      "releases_verified": true,
+      "submission_count": 1,
+      "exact_submission": true,
+      "typed_outcome": "completed",
+      "elapsed_ns": 6650606946,
+      "source_to_completion_ns": 4646292091,
+      "input_feedback_ns": [
+        100765857,
+        99129023
+      ],
+      "repair": {
+        "required": false,
+        "old_reference_status": null,
+        "old_reference_pointer_admissions": 0,
+        "attempted": false,
+        "succeeded": false
+      }
+    }
+  ],
+  "environment": {
+    "schema": "agent_interface_golden_doctor_v2",
+    "passed": true,
+    "checks": [
+      {
+        "name": "linux",
+        "passed": true,
+        "detail": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+      },
+      {
+        "name": "wslpath",
+        "passed": true,
+        "detail": "/usr/bin/wslpath"
+      },
+      {
+        "name": "display",
+        "passed": true,
+        "detail": ":0"
+      },
+      {
+        "name": "python:PIL",
+        "passed": true,
+        "detail": "PIL"
+      },
+      {
+        "name": "python:numpy",
+        "passed": true,
+        "detail": "numpy"
+      },
+      {
+        "name": "python:Xlib",
+        "passed": true,
+        "detail": "Xlib"
+      },
+      {
+        "name": "python:jsonschema",
+        "passed": true,
+        "detail": "jsonschema"
+      },
+      {
+        "name": "windows_python",
+        "passed": true,
+        "detail": "/mnt/c/Users/junny/AppData/Local/Programs/Python/Python312/python.exe"
+      },
+      {
+        "name": "windows_node",
+        "passed": true,
+        "detail": "/mnt/c/Program Files/nodejs/node.exe"
+      },
+      {
+        "name": "windows_cli",
+        "passed": true,
+        "detail": "/mnt/c/Users/junny/AppData/Roaming/npm/node_modules/@openai/codex/bin/codex.js"
+      },
+      {
+        "name": "chromium",
+        "passed": true,
+        "detail": "/usr/bin/google-chrome"
+      },
+      {
+        "name": "x11_connection",
+        "passed": true,
+        "detail": "connected"
+      },
+      {
+        "name": "codex_cli",
+        "passed": true,
+        "detail": "codex-cli 0.153.4"
+      },
+      {
+        "name": "python:openpyxl",
+        "passed": true,
+        "detail": "3.1.2"
+      },
+      {
+        "name": "python:et_xmlfile",
+        "passed": true,
+        "detail": "1.1.0"
+      }
+    ],
+    "configuration": {
+      "windows_python": "/mnt/c/Users/junny/AppData/Local/Programs/Python/Python312/python.exe",
+      "windows_node": "/mnt/c/Program Files/nodejs/node.exe",
+      "windows_cli": "/mnt/c/Users/junny/AppData/Roaming/npm/node_modules/@openai/codex/bin/codex.js",
+      "chromium": "/usr/bin/google-chrome"
+    }
+  },
+  "scope": "one fresh persistent typed-grounding demonstration; no baseline, rate, generality, token-efficiency or human-speed claim"
+}

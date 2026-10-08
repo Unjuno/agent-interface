@@ -1,0 +1,18 @@
+{
+  "corruption_control_count": 8,
+  "corruption_controls_rejected": {
+    "drop-retained-read": true,
+    "persisted-effect-mutation": true,
+    "retained-call-id-mismatch": true,
+    "session-split": true,
+    "split-retained-transport": true,
+    "stale-error": true,
+    "unverified-release": true,
+    "wrong-effect": true
+  },
+  "decision": "PASS_RAW_AUDIT",
+  "errors": [],
+  "formal_decision": "PASS_PUBLIC_MCP_STALE_EFFECT_RELEASE_SCOPED",
+  "scope": "independent offline raw audit; retained reads bound by call ID and one stdio transport"
+}
+

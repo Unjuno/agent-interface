@@ -1,0 +1,3 @@
+# Runtime adapter pre-execution note
+
+The available Codex analysis V8 runner rejects dynamic `import` before module evaluation. No candidate function/output was produced by that loader attempt. To execute the frozen pure function without editing it, the one candidate launch will evaluate its exact source text via `new Function("fixture", source.replace(/^export /, "") + "\\nreturn evaluate(fixture);")`, then call the returned function once with the frozen fixture. The only transformation removes the ES-module export keyword required for module binding; function body remains byte-identical. This is an interpreter binding adaptation, not a source edit or experiment retry.

@@ -1,0 +1,17 @@
+{
+  "schema": "5817-obligation-conservation-finite-fixture-v1",
+  "terminal": ["RESOLVED_VERIFIED", "COMPENSATED_VERIFIED", "PARTIAL_KNOWN"],
+  "cases": [
+    {"id":"timeout_dependency","events":[{"op":"create","id":"o1","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"timeout","id":"o1"},{"op":"escalate","id":"o1"}],"next":[{"id":"dependent","footprint":["doc"],"access":"write"},{"id":"independent_read","footprint":["metrics"],"access":"read"}]},
+    {"id":"accepted_transfer","events":[{"op":"create","id":"o1","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"transfer","id":"o1","to":"B","accepted":true}],"next":[{"id":"dependent","footprint":["doc"],"access":"write"}]},
+    {"id":"unaccepted_transfer","events":[{"op":"create","id":"o1","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"transfer","id":"o1","to":"B","accepted":false}],"next":[]},
+    {"id":"crash_with_fallback","events":[{"op":"create","id":"o1","owner":"A","fallback":"C","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"transfer","id":"o1","to":"B","accepted":true},{"op":"crash","id":"o1"}],"next":[]},
+    {"id":"crash_without_fallback","events":[{"op":"create","id":"o1","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"transfer","id":"o1","to":"B","accepted":true},{"op":"crash","id":"o1"}],"next":[]},
+    {"id":"verified_resolution","events":[{"op":"create","id":"o1","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"resolve","id":"o1","evidence":"effect_readback","verified":true}],"next":[]},
+    {"id":"parent_release_child","events":[{"op":"create","id":"parent","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"create_child","parent":"parent","id":"release","owner":"A","resource":"input","status":"UNKNOWN_PENDING"},{"op":"close_parent","id":"parent"}],"next":[]},
+    {"id":"compensation_emits_child","events":[{"op":"create","id":"original","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"compensate","id":"original","child":"comp-effect","owner":"A","resource":"doc"}],"next":[]},
+    {"id":"duplicate_compensation","events":[{"op":"create","id":"original","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"},{"op":"compensate","id":"original","child":"comp-effect","owner":"A","resource":"doc"},{"op":"compensate","id":"original","child":"comp-effect","owner":"A","resource":"doc"}],"next":[]},
+    {"id":"resource_alias","aliases":{"doc-alias":"doc"},"events":[{"op":"create","id":"o1","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"}],"next":[{"id":"alias_write","footprint":["doc-alias"],"access":"write"}]},
+    {"id":"unknown_footprint","events":[{"op":"create","id":"o1","owner":"A","resource":"doc","status":"UNKNOWN_PENDING"}],"next":[{"id":"unknown_task","footprint":null,"access":"write"}]}
+  ]
+}

@@ -1,0 +1,149 @@
+[
+  {
+    "name": "focused",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_native_reference_pointer",
+      "runtime.cli_v1.test_event_reference_marker",
+      "runtime.cli_v1.test_receipt_pointer_escapes"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "source_commit": "9a15b1306e82024b8261d252a9786302f3f4bc07",
+    "runtime_source_sha256": "abd85c406ec2ea28cdd268586a36bb1e90ee558dab22a58a1e03f0eb1d7f9caa",
+    "started_utc_ns": 1790994649271279000,
+    "ended_utc_ns": 1790994649325842000,
+    "exit_code": 0,
+    "log_sha256": "1d8170c6d126f7d82088a647b4863a8c5c09c279d6d63f82f2fda0ad3a747c0d",
+    "git_path_prepend": "/run/current-system/sw/bin"
+  },
+  {
+    "name": "affected-cli",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_attempt",
+      "runtime.cli_v1.test_cli",
+      "runtime.cli_v1.test_review",
+      "runtime.cli_v1.test_observe",
+      "runtime.cli_v1.test_golden_v3",
+      "runtime.cli_v1.test_receipt",
+      "runtime.cli_v1.test_receipt_motor_state",
+      "runtime.selector_v1.test_selector",
+      "runtime.motor_state_v1.test_adapter",
+      "runtime.cli_v1.test_native_reference_pointer",
+      "runtime.cli_v1.test_public_presentation",
+      "runtime.cli_v1.test_public_summary",
+      "runtime.cli_v1.test_event_reference_marker",
+      "runtime.cli_v1.test_receipt_pointer_escapes"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "source_commit": "9a15b1306e82024b8261d252a9786302f3f4bc07",
+    "runtime_source_sha256": "abd85c406ec2ea28cdd268586a36bb1e90ee558dab22a58a1e03f0eb1d7f9caa",
+    "started_utc_ns": 1790994649326556000,
+    "ended_utc_ns": 1790994651358630000,
+    "exit_code": 0,
+    "log_sha256": "06fbb6c4c713f93f8475be609e129ae739927f7bc2c9c9a0fe8df0a9e35c0d1d",
+    "git_path_prepend": "/run/current-system/sw/bin"
+  },
+  {
+    "name": "optimized-focused",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-O",
+      "-m",
+      "unittest",
+      "runtime.cli_v1.test_native_reference_pointer",
+      "runtime.cli_v1.test_receipt",
+      "runtime.cli_v1.test_review",
+      "runtime.cli_v1.test_event_reference_marker",
+      "runtime.cli_v1.test_receipt_pointer_escapes"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "source_commit": "9a15b1306e82024b8261d252a9786302f3f4bc07",
+    "runtime_source_sha256": "abd85c406ec2ea28cdd268586a36bb1e90ee558dab22a58a1e03f0eb1d7f9caa",
+    "started_utc_ns": 1790994651359382000,
+    "ended_utc_ns": 1790994652479669000,
+    "exit_code": 0,
+    "log_sha256": "073f1387c2fb9c16b39de7fc4834eae7f1d59a3aacae9c0b42e34cb971480a65",
+    "git_path_prepend": "/run/current-system/sw/bin"
+  },
+  {
+    "name": "distribution",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-m",
+      "unittest",
+      "runtime.distribution_v2.test_distribution"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "source_commit": "9a15b1306e82024b8261d252a9786302f3f4bc07",
+    "runtime_source_sha256": "abd85c406ec2ea28cdd268586a36bb1e90ee558dab22a58a1e03f0eb1d7f9caa",
+    "started_utc_ns": 1790994652480491000,
+    "ended_utc_ns": 1790994660303190000,
+    "exit_code": 0,
+    "log_sha256": "92f81b95e3bcad3448fe055212d0a393e4ef0152e051fc81be1b424157957981",
+    "git_path_prepend": "/run/current-system/sw/bin"
+  },
+  {
+    "name": "archive-build",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "runtime/distribution_v2/build.py",
+      "--root",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+      "--out",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/archive-marker-escape-v3/runtime.pyz",
+      "--manifest",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/archive-marker-escape-v3/manifest.json",
+      "--sums",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/archive-marker-escape-v3/SHA256SUMS"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "source_commit": "9a15b1306e82024b8261d252a9786302f3f4bc07",
+    "runtime_source_sha256": "abd85c406ec2ea28cdd268586a36bb1e90ee558dab22a58a1e03f0eb1d7f9caa",
+    "started_utc_ns": 1790994660303993000,
+    "ended_utc_ns": 1790994660987239000,
+    "exit_code": 0,
+    "log_sha256": "107b144b0a53f42bf0b02903acd4e66af1f3326fa182c37d1d3dd5c643287b79",
+    "git_path_prepend": "/run/current-system/sw/bin"
+  },
+  {
+    "name": "archive-isolated",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-I",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/archive-marker-escape-v3/verify.py",
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/archive-marker-escape-v3"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/archive-marker-escape-v3",
+    "source_commit": "9a15b1306e82024b8261d252a9786302f3f4bc07",
+    "runtime_source_sha256": "abd85c406ec2ea28cdd268586a36bb1e90ee558dab22a58a1e03f0eb1d7f9caa",
+    "started_utc_ns": 1790994660988525000,
+    "ended_utc_ns": 1790994661050185000,
+    "exit_code": 0,
+    "log_sha256": "1f6d47f5e17686285036b8e3171e91a7d54d3a60bd686dc0febb292b7f61206e",
+    "git_path_prepend": "/run/current-system/sw/bin"
+  },
+  {
+    "name": "compile",
+    "command": [
+      "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/validation-venv/bin/python",
+      "-m",
+      "compileall",
+      "-q",
+      "runtime/cli_v1/receipt_references.py",
+      "runtime/cli_v1/test_receipt_pointer_escapes.py"
+    ],
+    "cwd": "/Users/taka/Documents/Codex/2026-10-03/new-chat-2/work/agent-interface",
+    "source_commit": "9a15b1306e82024b8261d252a9786302f3f4bc07",
+    "runtime_source_sha256": "abd85c406ec2ea28cdd268586a36bb1e90ee558dab22a58a1e03f0eb1d7f9caa",
+    "started_utc_ns": 1790994661051015000,
+    "ended_utc_ns": 1790994661083357000,
+    "exit_code": 0,
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "git_path_prepend": "/run/current-system/sw/bin"
+  }
+]

@@ -1,0 +1,25 @@
+# T4 preregistered plan — Issue #5441 epistemic commit levels under delay/loss
+
+## H/T/D/C/U
+
+- **H:** An action-class policy mapping reversible/compensable/one-shot actions to K1/K2/K3, with current-actuator, certificate-expiry, and revocation guards, eliminates unqualified one-shot commits seen under quorum-only and still completes every explicitly clean, bounded-delay scenario within the protocol deadline.
+- **T:** One deterministic exhaustive run over 20,736 scenarios and 103,680 policy traces. Factorial dimensions: vote delivery mode (on-time, bounded-delay 1/2, bounded-delay 2/1, verifier v1 lost, verifier v2 lost, both lost); final-ACK delivery mode (same six states); ACK epoch pattern (current, stale-only, stale then current); duplicate ACK delivery (off/on); verifier evidence versions (shared v1 or split v0/v1); actuator version (v1/v0); exact coordinator recipient record (complete/incomplete); certificate expiry tick (2/7); revocation tick (none/2); action class (reversible, compensable, one-shot). The fixed protocol deadline is tick 7; bounded message delays are 1/2 ticks, and ACKs occur no earlier than one tick after the coordinator's final intent. Loss and delay orientation are balanced across verifier identities. No RNG, external data, model/GPU, retries, or tuning.
+- **D:** PASS for this model only if `ACTION_CLASS_LEVEL` has zero unqualified one-shot commits, reduces such commits by at least 90% versus quorum-only, and commits 100% of the preregistered clean population by tick 7. Clean means both channels deliver on-time or bounded-delay messages, ACK epoch is current or stale-then-current (with the current ACK delivered), versions are shared v1, actuator is v1, recipient record is complete, expiry is tick 7, and revocation is absent. Any unqualified one-shot commit or missed clean-case liveness gate is FAIL. Loss/stale-only-ACK cases may safely return HOLD/UNKNOWN; they are not counted as clean liveness cases.
+- **C:** Quorum-only or K2 may suffice when the actuator is the single authoritative version owner; stronger K3 can unnecessarily reduce completion when ACKs are delayed or unavailable. The real boundary may be fresh actuator admission/lease semantics, not literal shared knowledge.
+- **U:** This is a deterministic protocol model, not a proof of common knowledge or production consensus. Message delays/loss, signer honesty, exact-recipient records, clock ticks, expiry, and revocation are authored; no Byzantine behavior, clock skew, real network, or runtime actuator is measured. The result is conditional on this protocol and finite schedule grid.
+
+## Frozen policy semantics
+
+- **QUORUM_ONLY:** commit after both PASS votes arrive by tick 7; ignore version split, recipient record, final ACK, actuator version, expiry, and revocation.
+- **K1_SHARED_EVIDENCE:** require both votes on current shared v1 evidence; no coordinator recipient-set record or final ACK.
+- **K2_RECIPIENT_RECORD:** K1 plus the exact `{v1,v2}` recipient record; no final ACK or physical freshness check.
+- **K3_FINAL_ACK:** K2 plus a current-attempt ACK bound to the final digest from both verifiers, current actuator v1, unexpired certificate, and no prior/equal-tick revocation.
+- **ACTION_CLASS_LEVEL:** require K1 for reversible, K2 for compensable, K3 for one-shot, plus current actuator v1, unexpired certificate, and no prior/equal-tick revocation for every class.
+
+One formal candidate invocation after preregistration. A smoke check uses only three hand-authored cases. Retain the full JSONL trace, an independent replay audit, and mutation controls; never tune/replay the formal grid.
+
+## T4 lineage / exploratory disclosure
+
+The repository already has T0–T3 records, including T3 transcript-hash binding (Issue comment `5911930067`). This T4 is additive and does not amend those results. During implementation, an earlier 9,216-case asymmetric draft grid was enumerated and its aggregate was inspected (quorum-only unsafe one-shot 1,536; adaptive policy 0; clean liveness 24/24); that draft is exploratory only and is excluded from the T4 confirmatory decision. The final grid symmetrizes both delay order and one-verifier loss direction. Before preregistration, candidate and independently coded per-case policy rows were compared across the final 20,736 scenario descriptors; no formal JSONL, gate aggregate, audit result, or mutation-control result was retained from that comparison. The one formal run below is the only T4 result used for D.
+
+The earlier 9,216-case diagnostic was produced before the repository's T3 transcript-binding comment was visible to this run; after refreshing GitHub, the current work was reclassified as T4. In T4, each ACK carries the SHA-256 of the exact modeled vote transcript and recipient set; stale-attempt ACKs carry a different prior-transcript digest, and K3 accepts only the current digest. This is a model-level hash binding, not a signature/authenticity or cryptographic protocol test, and does not amend T3's exact construction.

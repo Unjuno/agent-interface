@@ -1,0 +1,24 @@
+{
+  "allocation": "5850-ASSAY-SENSITIVITY-T0-20261001-01",
+  "meaningful_delta": 10,
+  "cases": [
+    {"id":"sensitive_null","control_delta":12,"resolution":4,"pipeline_shared":true,"missing":false,"target_events":8,"primary_defect":false,"observed_effect":0},
+    {"id":"sensitive_benefit","control_delta":12,"resolution":4,"pipeline_shared":true,"missing":false,"target_events":8,"primary_defect":false,"observed_effect":12},
+    {"id":"subresolution","control_delta":6,"resolution":12,"pipeline_shared":true,"missing":false,"target_events":8,"primary_defect":false,"observed_effect":0},
+    {"id":"broken_common_pipeline","control_delta":15,"resolution":4,"pipeline_shared":false,"missing":false,"target_events":8,"primary_defect":false,"observed_effect":0},
+    {"id":"primary_only_defect","control_delta":12,"resolution":4,"pipeline_shared":true,"missing":false,"target_events":8,"primary_defect":true,"observed_effect":0},
+    {"id":"missing_terminal","control_delta":12,"resolution":4,"pipeline_shared":true,"missing":true,"target_events":8,"primary_defect":false,"observed_effect":0},
+    {"id":"no_target_events","control_delta":12,"resolution":4,"pipeline_shared":true,"missing":false,"target_events":0,"primary_defect":false,"observed_effect":0},
+    {"id":"gross_only","control_delta":100,"resolution":20,"pipeline_shared":true,"missing":false,"target_events":8,"primary_defect":false,"observed_effect":0}
+  ],
+  "expected": {
+    "sensitive_null":"NULL_INTERPRETABLE_NOT_EQUIVALENCE",
+    "sensitive_benefit":"DETECTED_CONTROL_AND_EFFECT",
+    "subresolution":"HOLD_CONTROL_BELOW_DELTA",
+    "broken_common_pipeline":"HOLD_COMMON_PIPELINE_FAILURE",
+    "primary_only_defect":"OUT_OF_SCOPE_UNDETECTED",
+    "missing_terminal":"HOLD_MISSING_OUTCOME",
+    "no_target_events":"HOLD_NO_TARGET_EVENTS",
+    "gross_only":"HOLD_INADEQUATE_RESOLUTION"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "audit_source_sha256": "6673088b2727095fc55aa484ba3eaf8cb78d742adbdaeb2bb754d64269a7e8b1",
+  "corruption_controls": {
+    "commit_from_tentative_detected": true,
+    "erase_history_detected": true,
+    "ignore_contradiction_detected": true,
+    "sticky_action_safe_detected": true
+  },
+  "decision": "PASS_AUDIT",
+  "expected_trace_count": 6725601,
+  "gates": {
+    "candidate_oracle_digest_equal": true,
+    "candidate_oracle_mismatch_zero": true,
+    "comparator_discriminator_positive": true,
+    "corruption_controls": true,
+    "formal_once": true,
+    "fresh_recommit_exists": true,
+    "independent_digest_matches": true,
+    "independent_metric_subset_matches": true,
+    "no_contradicted_action_authority": true,
+    "no_stale_action_authority": true,
+    "no_unvalidated_commit": true,
+    "provenance_retained": true,
+    "result_decision_pass": true,
+    "source_integrity": true,
+    "trace_count_exact": true
+  },
+  "independent_digest": "56f1f3ac759f9715b9934a587f1094017222796e5b1dc1835c4bc482e26b7387",
+  "independent_metrics": {
+    "commit_from_unvalidated_admissions": 0,
+    "committed_only_unsafe_stale_or_contradicted": 10826,
+    "contradicted_action_safe_admissions": 0,
+    "fresh_recommit_action_safe": 4,
+    "provenance_retained_across_generation_change": 26598,
+    "stale_generation_action_safe_admissions": 0,
+    "trace_count_including_empty": 6725601,
+    "transition_count": 6725600
+  },
+  "source_checks": {
+    "audit_sha256": true,
+    "formal_sha256": true,
+    "plan_sha256": true
+  },
+  "task": "TRANSACTIONAL-BELIEF-ACTION-SAFE-A2-20260919-002"
+}

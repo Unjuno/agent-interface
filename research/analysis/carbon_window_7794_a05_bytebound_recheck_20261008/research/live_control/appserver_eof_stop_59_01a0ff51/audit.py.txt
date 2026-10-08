@@ -1,0 +1,184 @@
+"""Saved-only reducer: no imports or execution of producer/client/peer."""
+import copy
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+
+def require(condition, message):
+    if not condition:
+        raise ValueError(message)
+
+
+def integer(value, label):
+    require(type(value) is int, label + ': exact integer required')
+    return value
+
+
+def check(raw, plan):
+    arm = raw['arm']
+    require(arm in ('baseline', 'candidate'), 'arm')
+    require(raw['source_sha256'] == plan['source_sha256'][arm], 'source binding')
+    require(raw['preferred_encoding'].upper() == 'UTF-8', 'native stderr decoding context')
+    expected = [(api, scenario) for api in ('request', 'notification')
+                for scenario in ('healthy', 'empty', 'held', 'invalid')]
+    require([(row['api'], row['scenario']) for row in raw['rows']] == expected, 'complete fixed rows/order')
+    pids = set()
+    observations = []
+    for row in raw['rows']:
+        api, scenario = row['api'], row['scenario']
+        require(row['identity'] == api + '-' + scenario, 'case identity')
+        pid = integer(row['pid'], 'native pid')
+        require(pid > 0 and pid not in pids, 'fresh native child')
+        pids.add(pid)
+        for part in ('ready', 'wire', 'finished'):
+            require(type(row[part]['pid']) is int and row[part]['pid'] == pid, 'native peer identity')
+        for part in ('ready', 'wire'):
+            require(row[part]['api'] == api and row[part]['scenario'] == scenario, 'peer case binding')
+        require(integer(row['native_exit'], 'native exit') == 0 and not row.get('forced_kill'), 'native EOF exit')
+        require(row['final'] == {'caller_alive': False, 'reader_alive': False,
+                'journal_closed': True, 'pipes_closed': {'stdin': True, 'stdout': True, 'stderr': True}},
+                'final owned endpoints')
+        require(row['caller_alive_final'] is False, 'caller joined')
+        require(row['client_close_pipes'] == {'stdin': False, 'stdout': False, 'stderr': False},
+                'driver-only pipe closure ownership')
+        events = row['events']
+        kinds = [event['kind'] for event in events]
+        require(len(kinds) == len(set(kinds)), 'duplicate events')
+        times = {event['kind']: integer(event['ns'], 'event clock') for event in events}
+        require(all(events[i]['ns'] <= events[i+1]['ns'] for i in range(len(events)-1)), 'recorded event order')
+        require(times['child_ready'] <= times['call_started'] <= times['call_ended'], 'call order')
+        require(times['stdout_eof_observed'] <= times['checkpoint'] <= times['child_reaped'] <=
+                times['client_close_returned'] <= times['driver_pipes_closed'], 'recovery order')
+        require(times['checkpoint'] - times['stdout_eof_observed'] >=
+                int(plan['checkpoint_after_eof_s'] * 1e9), 'fixed checkpoint interval')
+        diagnostic = {'healthy': b'healthy diagnostic\n', 'empty': b'',
+                      'held': b'held diagnostic remains owned\n',
+                      'invalid': b'invalid diagnostic: \xff\xfe\n'}[scenario]
+        require(row['wire']['stderr_hex'] == diagnostic.hex() and
+                integer(row['wire']['stderr_write_count'], 'stderr count') == len(diagnostic), 'actual diagnostic write')
+        journal = row['journal']
+        if api == 'request':
+            wire_request = json.loads(row['wire']['request_line'])
+            require(type(wire_request['id']) is int and wire_request ==
+                    {'method': 'fixture/request', 'id': 1, 'params': {'owned': True}}, 'one original request')
+            require(journal and journal[0]['direction'] == 'sent' and
+                    type(journal[0]['message']['id']) is int and journal[0]['message'] == wire_request, 'sent journal identity')
+            received = journal[1:]
+        else:
+            require(row['wire']['request_line'] is None, 'notification does not send request')
+            received = journal
+        for entry in journal:
+            require(integer(entry['observed_ns'], 'journal clock') > 0, 'journal clock positive')
+        returned = row['returned']
+        cp = row['checkpoint']
+        require(cp['reader_alive'] is False and cp['stdout_closed'] is True, 'actual stdout EOF')
+        if scenario == 'healthy':
+            message = ({'id': 1, 'result': {'usable': True}} if api == 'request'
+                       else {'method': 'fixture/ready', 'params': {'usable': True}})
+            if api == 'request':
+                value = {'usable': True}
+            else:
+                value = message
+            require(returned == {'type': 'result', 'value': value} and cp['returned'] == returned,
+                    'healthy protocol result')
+            wire_stdout = bytes.fromhex(row['wire']['stdout_hex'])
+            actual_message = json.loads(wire_stdout)
+            require(actual_message == message and (api != 'request' or type(actual_message['id']) is int),
+                    'healthy wire identity')
+            require(integer(row['wire']['stdout_write_count'], 'stdout count') == len(wire_stdout), 'stdout actual count')
+            require(len(received) == 1 and received[0]['direction'] == 'received' and
+                    received[0]['message'] == message, 'received journal')
+        else:
+            require(received == [] and row['wire']['stdout_hex'] == '' and
+                    integer(row['wire']['stdout_write_count'], 'stdout count') == 0, 'EOF with no matching response')
+            expected_type = 'UnicodeDecodeError' if arm == 'baseline' and scenario == 'invalid' else 'AppServerError'
+            require(returned['type'] == expected_type, 'typed EOF result')
+            if arm == 'candidate':
+                require(returned['message'] == ('app-server closed during fixture/request: stderr not drained'
+                        if api == 'request' else 'app-server closed while waiting: stderr not drained'), 'honest undrained diagnostic')
+                require(row['stderr_remaining_hex'] == diagnostic.hex(), 'candidate preserves raw diagnostic for owner')
+        held_baseline = scenario == 'held' and arm == 'baseline'
+        require(cp['caller_alive'] is held_baseline, 'checkpoint caller state')
+        if held_baseline:
+            require(cp['process_exit'] is None and cp['returned'] is None, 'held original pending, not completed')
+            require(times['checkpoint'] <= times['owned_release_sent'] <= times['call_ended'], 'original only completes after owned release')
+            frames = [frame for frame in cp['frames'] if frame['function'] ==
+                      ('request' if api == 'request' else 'wait_notification')]
+            require(len(frames) == 1 and frames[0]['file'] == 'baseline_client.py.txt', 'literal blocked source frame')
+            require(frames[0]['line'] == (75 if api == 'request' else 101), 'original diagnostic-read line')
+            require(type(frames[0]['deadline']) is float and type(frames[0]['snapshot_monotonic']) is float and
+                    frames[0]['snapshot_monotonic'] > frames[0]['deadline'], 'actual internal deadline overdue')
+        else:
+            require(times['call_ended'] <= times['checkpoint'] and cp['returned'] == returned, 'completed before checkpoint')
+        if scenario == 'held':
+            require(cp['process_exit'] is None and row['finished']['owned_release_received'] is True,
+                    'stderr writer was live until separate release')
+        else:
+            require(integer(cp['process_exit'], 'checkpoint exit') == 0 and
+                    row['finished']['owned_release_received'] is False, 'native natural exit')
+        observations.append({'identity': row['identity'], 'checkpoint_pending': cp['caller_alive'],
+                             'return_type': returned['type'], 'call_ns': times['call_ended'] - times['call_started']})
+    return observations
+
+
+def mutations(raw, plan):
+    cases = []
+    def add(name, path, value):
+        candidate = copy.deepcopy(raw)
+        target = candidate
+        for key in path[:-1]:
+            target = target[key]
+        target[path[-1]] = value
+        require(json.dumps(candidate, sort_keys=True) != json.dumps(raw, sort_keys=True), 'mutation effective: ' + name)
+        try:
+            check(candidate, plan)
+        except (ValueError, KeyError, TypeError):
+            cases.append({'name': name, 'rejected': True})
+        else:
+            raise ValueError('mutation accepted: ' + name)
+    add('boolean-native-pid', ['rows', 0, 'pid'], True)
+    add('boolean-native-exit', ['rows', 0, 'native_exit'], False)
+    add('wrong-healthy-effect', ['rows', 0, 'returned', 'value'], {'usable': False})
+    add('wrong-peer-identity', ['rows', 0, 'finished', 'pid'], raw['rows'][0]['pid'] + 10000)
+    add('unclosed-owned-pipe', ['rows', 0, 'final', 'pipes_closed', 'stderr'], False)
+    add('wrong-diagnostic-bytes', ['rows', 2, 'wire', 'stderr_hex'], '')
+    add('false-stdout-EOF', ['rows', 2, 'checkpoint', 'stdout_closed'], False)
+    add('missing-observed-journal', ['rows', 0, 'journal'], [])
+    add('boolean-request-identity', ['rows', 1, 'journal', 0, 'message', 'id'], True)
+    add('checkpoint-pending-inversion', ['rows', 2, 'checkpoint', 'caller_alive'], not raw['rows'][2]['checkpoint']['caller_alive'])
+    add('source-binding-change', ['source_sha256'], '0' * 64)
+    add('false-natural-exit', ['rows', 3, 'native_exit'], -15)
+    add('false-clock-order', ['rows', 0, 'events', 0, 'ns'], raw['rows'][0]['events'][-1]['ns'] + 1)
+    return cases
+
+
+def main():
+    root = Path(sys.argv[1])
+    destination = Path(sys.argv[2])
+    plan = json.loads((root / 'PLAN.json').read_text())
+    result = {'scope': 'saved native EOF recovery rows; no producer/import/replay', 'arms': {}}
+    for arm in ('baseline', 'candidate'):
+        raw_path = root / ('native-' + arm) / 'raw.json'
+        raw = json.loads(raw_path.read_text())
+        require(raw['plan_sha256'] == hashlib.sha256((root / 'PLAN.json').read_bytes()).hexdigest(), 'plan pin')
+        require(raw['source_sha256'] == hashlib.sha256((root / (arm + '_client.py.txt')).read_bytes()).hexdigest(), 'source bytes')
+        for row in raw['rows']:
+            case = raw_path.parent / row['identity']
+            require(json.loads((case / 'row.json').read_text()) == row, 'raw row join')
+            for name in ('ready', 'wire', 'finished'):
+                require(json.loads((case / (name + '.json')).read_text()) == row[name], 'peer file join')
+            journal = case / 'journal.jsonl'
+            require(hashlib.sha256(journal.read_bytes()).hexdigest() == row['journal_sha256'] and
+                    [json.loads(line) for line in journal.read_text().splitlines()] == row['journal'], 'actual journal join')
+        result['arms'][arm] = {'rows': check(raw, plan), 'controls': mutations(raw, plan),
+                               'raw_sha256': hashlib.sha256(raw_path.read_bytes()).hexdigest()}
+    result['status'] = 'PASS_EOF_STOP_SCOPED'
+    with destination.open('x') as handle:
+        handle.write(json.dumps(result, indent=2, sort_keys=True) + '\n')
+    print(json.dumps({'status': result['status'], 'native_rows': 16, 'corruptions_rejected': 26}))
+
+
+if __name__ == '__main__':
+    main()

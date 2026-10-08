@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/src/run_formal.py", line 141, in <module>
+    main()
+  File "/src/run_formal.py", line 49, in main
+    if sha256(data) != freeze["formal_input_sha256"]:
+                       ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'formal_input_sha256'
+exit=1
+

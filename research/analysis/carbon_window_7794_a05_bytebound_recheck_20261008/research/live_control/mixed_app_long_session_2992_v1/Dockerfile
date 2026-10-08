@@ -1,0 +1,5 @@
+FROM debian:bookworm-slim
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -qq && apt-get install -y -qq python3 xvfb xdotool x11-utils inkscape libreoffice chromium && rm -rf /var/lib/apt/lists/*
+WORKDIR /workspace
+ENTRYPOINT ["python3", "/workspace/research/integration/mixed_app_long_session_2499/formal_session.py"]

@@ -1,0 +1,28 @@
+{
+  "allocation": "DENIAL-AWARE-REQUEST-POLICY-6422-T0-20261002-01",
+  "issue": 6422,
+  "base_main": "18b2cd5ad5f6950ae6474e46eb1a53758f06832b",
+  "construction_commit": "a08f6bfc8a1d08a2d034cd94cb2dddc9d7d9461f",
+  "H": "A typed denial-aware ledger will prevent same-effect approval nagging and principal/effect laundering while allowing only a bounded neutral follow-up after NO_RESPONSE, a fresh approval request after authenticated user reopening or verified source-stated deferral, and emergency release.",
+  "T": "One finite 20-case synthetic fixture, 3 policy arms (ID-only retry, generic prompt cap, denial-aware ledger), 60 rows; candidate once and independent auditor once.",
+  "D": "No person, model, live authorization, external action, GUI, or production runtime. T0 method-only inference.",
+  "C": "Construction tests must validate fixture/oracle alignment and auditor rejection of four frozen corruptions: erased denial, forged reopening, altered required-principal mapping, and changed effect digest. Candidate and auditor execution each have one attempt and zero retries.",
+  "U": "A method-scoped PASS supports only this deterministic fixture and implementation. It does not establish deployed behavior, coercion resistance, comprehension, utility, or safety; T1 model and human/live validation remain separate.",
+  "frozen_sha256": {
+    "fixture.json": "62122fc44efbee3fe4fb740268aa501c77f83d8b8c85b6735bfdbf140017f9f6",
+    "oracle.json": "a40a6b5059fd6d2842abaab77105afa759df2f070712eed2a1a21379882df3b0",
+    "candidate.py": "b24423a0ce615b02d431757a9ef2796392440718ee3b16a9e0a56ffb1e6bca93",
+    "auditor.py": "aadcc7f2ceec7acc1f9c45ac60212d0ea65fb8e01f05146b0658e1b2d3f6392d",
+    "test_t0.py": "b454b296688d962138dfd9e5d4391977a4122ec1f8123f7d186b947fe39f6390"
+  },
+  "container": {
+    "engine": "OrbStack 2.2.3",
+    "image": "map01-attack-start-gate-4223-t8:20261001",
+    "image_id": "sha256:d8c51b45569cc4fdf0f5d82ae285c3fbb20fae8525d6fab0cebadca171b3bebe",
+    "platform": "linux/amd64 on macOS arm64 emulation",
+    "network": "none",
+    "source_mount": "read-only",
+    "results_mount": "writable output directory only"
+  },
+  "attempt_budget": {"candidate": 1, "auditor": 1, "retries": 0}
+}

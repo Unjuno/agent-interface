@@ -1,0 +1,15 @@
+{
+  "schema":"agent-interface.freeze.v1",
+  "issue":6113,
+  "source_base":"abd0ce6425e24934731b763ece83421d309535b5",
+  "case_count":8,
+  "candidate":"candidate.py",
+  "independent_auditor":"audit.py",
+  "truth":"truth.json",
+  "confidence":0.95,
+  "binary_interval":"four one-sided Clopper-Pearson bounds with alpha=(1-confidence)/4, union-bound coverage >= confidence",
+  "continuous_interval":"exact distribution-free paired-median order-statistic interval; independent representative paired units assumed",
+  "construction":"PASS; 8 case dispositions and hard/missing mutation controls",
+  "outputs_must_be_absent":["candidate.raw.json","audit.raw.json"],
+  "boundary":"finite authored tables only; host CPython; no container or population claim"
+}

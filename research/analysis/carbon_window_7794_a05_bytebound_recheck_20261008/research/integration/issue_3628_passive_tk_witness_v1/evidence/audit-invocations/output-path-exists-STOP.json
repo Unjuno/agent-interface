@@ -1,0 +1,9 @@
+{
+  "schema": "issue-3628/audit-invocation-stop-v1",
+  "outcome": "STOP_BEFORE_EVIDENCE_READ",
+  "reason": "The intended output directory /parent/independent-audit-successor already existed, while the frozen audit requires a nonexistent output path.",
+  "evidence_read": false,
+  "formal_allocations_changed": false,
+  "recovery": "Used the new path /parent/independent-audit-successor-final for the single corrected raw-only audit.",
+  "preserved_original_audit": "evidence/audit-invocations/original-122-check-HOLD_OR_FAIL.json"
+}

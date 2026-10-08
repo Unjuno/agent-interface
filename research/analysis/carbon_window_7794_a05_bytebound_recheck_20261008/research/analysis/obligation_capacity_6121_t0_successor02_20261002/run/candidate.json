@@ -1,0 +1,1228 @@
+{
+  "cases": {
+    "above_capacity_burst": {
+      "CLASS_AWARE": {
+        "admitted": [
+          "X1",
+          "REL2"
+        ],
+        "backlog_area": 0,
+        "deferred": [
+          "X2",
+          "X3",
+          "X4"
+        ],
+        "ledger": {
+          "ob-REL2": {
+            "created": 0,
+            "kind": "mandatory_release",
+            "resolved_at": 0,
+            "resource": "RELEASE",
+            "status": "VERIFIED_RELEASE",
+            "task": "REL2"
+          },
+          "ob-X1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "X1"
+          }
+        },
+        "mandatory_releases": [
+          {
+            "id": "REL2",
+            "tick": 0
+          }
+        ],
+        "max_age": 1,
+        "max_system_backlog": 2,
+        "readonly_completed": [],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 0,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "X1"
+        ]
+      },
+      "FIXED_CAP2": {
+        "admitted": [
+          "X1",
+          "X2",
+          "REL2"
+        ],
+        "backlog_area": 1,
+        "deferred": [
+          "X3",
+          "X4"
+        ],
+        "ledger": {
+          "ob-REL2": {
+            "created": 0,
+            "kind": "mandatory_release",
+            "resolved_at": 0,
+            "resource": "RELEASE",
+            "status": "VERIFIED_RELEASE",
+            "task": "REL2"
+          },
+          "ob-X1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "X1"
+          },
+          "ob-X2": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "X2"
+          }
+        },
+        "mandatory_releases": [
+          {
+            "id": "REL2",
+            "tick": 0
+          }
+        ],
+        "max_age": 2,
+        "max_system_backlog": 3,
+        "readonly_completed": [],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "X1",
+          "X2"
+        ]
+      },
+      "GLOBAL_WAIT": {
+        "admitted": [
+          "X1",
+          "REL2"
+        ],
+        "backlog_area": 0,
+        "deferred": [
+          "X2",
+          "X3",
+          "X4"
+        ],
+        "ledger": {
+          "ob-REL2": {
+            "created": 0,
+            "kind": "mandatory_release",
+            "resolved_at": 0,
+            "resource": "RELEASE",
+            "status": "VERIFIED_RELEASE",
+            "task": "REL2"
+          },
+          "ob-X1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "X1"
+          }
+        },
+        "mandatory_releases": [
+          {
+            "id": "REL2",
+            "tick": 0
+          }
+        ],
+        "max_age": 1,
+        "max_system_backlog": 2,
+        "readonly_completed": [],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 0,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "X1"
+        ]
+      },
+      "LEDGER_ONLY": {
+        "admitted": [
+          "X1",
+          "X2",
+          "X3",
+          "X4",
+          "REL2"
+        ],
+        "backlog_area": 5,
+        "deferred": [],
+        "ledger": {
+          "ob-REL2": {
+            "created": 0,
+            "kind": "mandatory_release",
+            "resolved_at": 0,
+            "resource": "RELEASE",
+            "status": "VERIFIED_RELEASE",
+            "task": "REL2"
+          },
+          "ob-X1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "X1"
+          },
+          "ob-X2": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "X2"
+          },
+          "ob-X3": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "X3"
+          },
+          "ob-X4": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "X4"
+          }
+        },
+        "mandatory_releases": [
+          {
+            "id": "REL2",
+            "tick": 0
+          }
+        ],
+        "max_age": 2,
+        "max_system_backlog": 5,
+        "readonly_completed": [],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 3,
+            "tick": 0
+          },
+          {
+            "system_pending": 2,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-X3",
+          "ob-X4"
+        ],
+        "verified_effects": [
+          "X1",
+          "X2"
+        ]
+      }
+    },
+    "below_capacity_control": {
+      "CLASS_AWARE": {
+        "admitted": [
+          "L1",
+          "LRO",
+          "L2",
+          "L3"
+        ],
+        "backlog_area": 0,
+        "deferred": [],
+        "ledger": {
+          "ob-L1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L1"
+          },
+          "ob-L2": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L2"
+          },
+          "ob-L3": {
+            "created": 2,
+            "kind": "effect",
+            "resolved_at": 2,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L3"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 1,
+        "max_system_backlog": 1,
+        "readonly_completed": [
+          "LRO"
+        ],
+        "status": "FEASIBLE_SERVICE_REGION",
+        "timeline": [
+          {
+            "system_pending": 0,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          },
+          {
+            "system_pending": 0,
+            "tick": 2
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "L1",
+          "L2",
+          "L3"
+        ]
+      },
+      "FIXED_CAP2": {
+        "admitted": [
+          "L1",
+          "LRO",
+          "L2",
+          "L3"
+        ],
+        "backlog_area": 0,
+        "deferred": [],
+        "ledger": {
+          "ob-L1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L1"
+          },
+          "ob-L2": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L2"
+          },
+          "ob-L3": {
+            "created": 2,
+            "kind": "effect",
+            "resolved_at": 2,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L3"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 1,
+        "max_system_backlog": 1,
+        "readonly_completed": [
+          "LRO"
+        ],
+        "status": "FEASIBLE_SERVICE_REGION",
+        "timeline": [
+          {
+            "system_pending": 0,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          },
+          {
+            "system_pending": 0,
+            "tick": 2
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "L1",
+          "L2",
+          "L3"
+        ]
+      },
+      "GLOBAL_WAIT": {
+        "admitted": [
+          "L1",
+          "L2",
+          "L3"
+        ],
+        "backlog_area": 0,
+        "deferred": [
+          "LRO"
+        ],
+        "ledger": {
+          "ob-L1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L1"
+          },
+          "ob-L2": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L2"
+          },
+          "ob-L3": {
+            "created": 2,
+            "kind": "effect",
+            "resolved_at": 2,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L3"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 1,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 0,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          },
+          {
+            "system_pending": 0,
+            "tick": 2
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "L1",
+          "L2",
+          "L3"
+        ]
+      },
+      "LEDGER_ONLY": {
+        "admitted": [
+          "L1",
+          "LRO",
+          "L2",
+          "L3"
+        ],
+        "backlog_area": 0,
+        "deferred": [],
+        "ledger": {
+          "ob-L1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L1"
+          },
+          "ob-L2": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L2"
+          },
+          "ob-L3": {
+            "created": 2,
+            "kind": "effect",
+            "resolved_at": 2,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "L3"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 1,
+        "max_system_backlog": 1,
+        "readonly_completed": [
+          "LRO"
+        ],
+        "status": "FEASIBLE_SERVICE_REGION",
+        "timeline": [
+          {
+            "system_pending": 0,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          },
+          {
+            "system_pending": 0,
+            "tick": 2
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "L1",
+          "L2",
+          "L3"
+        ]
+      }
+    },
+    "missing_effect_oracle": {
+      "CLASS_AWARE": {
+        "admitted": [
+          "M1"
+        ],
+        "backlog_area": 2,
+        "deferred": [],
+        "ledger": {
+          "ob-M1": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "M1"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 2,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "UNRESOLVABLE_ORACLE_GAP",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-M1"
+        ],
+        "verified_effects": []
+      },
+      "FIXED_CAP2": {
+        "admitted": [
+          "M1"
+        ],
+        "backlog_area": 2,
+        "deferred": [],
+        "ledger": {
+          "ob-M1": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "M1"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 2,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "UNRESOLVABLE_ORACLE_GAP",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-M1"
+        ],
+        "verified_effects": []
+      },
+      "GLOBAL_WAIT": {
+        "admitted": [
+          "M1"
+        ],
+        "backlog_area": 2,
+        "deferred": [],
+        "ledger": {
+          "ob-M1": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "M1"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 2,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "UNRESOLVABLE_ORACLE_GAP",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-M1"
+        ],
+        "verified_effects": []
+      },
+      "LEDGER_ONLY": {
+        "admitted": [
+          "M1"
+        ],
+        "backlog_area": 2,
+        "deferred": [],
+        "ledger": {
+          "ob-M1": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "M1"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 2,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "UNRESOLVABLE_ORACLE_GAP",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-M1"
+        ],
+        "verified_effects": []
+      }
+    },
+    "near_saturated_burst_drain": {
+      "CLASS_AWARE": {
+        "admitted": [
+          "A1",
+          "B1",
+          "RO1",
+          "REL1",
+          "A3",
+          "B2",
+          "RO2",
+          "A4",
+          "RO3"
+        ],
+        "backlog_area": 0,
+        "deferred": [
+          "A2"
+        ],
+        "ledger": {
+          "ob-A1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A1"
+          },
+          "ob-A3": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A3"
+          },
+          "ob-A4": {
+            "created": 2,
+            "kind": "effect",
+            "resolved_at": 2,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A4"
+          },
+          "ob-B1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R2",
+            "status": "VERIFIED_EFFECT",
+            "task": "B1"
+          },
+          "ob-B2": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R2",
+            "status": "VERIFIED_EFFECT",
+            "task": "B2"
+          },
+          "ob-REL1": {
+            "created": 0,
+            "kind": "mandatory_release",
+            "resolved_at": 0,
+            "resource": "RELEASE",
+            "status": "VERIFIED_RELEASE",
+            "task": "REL1"
+          }
+        },
+        "mandatory_releases": [
+          {
+            "id": "REL1",
+            "tick": 0
+          }
+        ],
+        "max_age": 1,
+        "max_system_backlog": 3,
+        "readonly_completed": [
+          "RO1",
+          "RO2",
+          "RO3"
+        ],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 0,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          },
+          {
+            "system_pending": 0,
+            "tick": 2
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "A1",
+          "B1",
+          "A3",
+          "B2",
+          "A4"
+        ]
+      },
+      "FIXED_CAP2": {
+        "admitted": [
+          "A1",
+          "A2",
+          "RO1",
+          "REL1",
+          "A3",
+          "RO2",
+          "A4",
+          "RO3"
+        ],
+        "backlog_area": 3,
+        "deferred": [
+          "B1",
+          "B2"
+        ],
+        "ledger": {
+          "ob-A1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A1"
+          },
+          "ob-A2": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A2"
+          },
+          "ob-A3": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 2,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A3"
+          },
+          "ob-A4": {
+            "created": 2,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "A4"
+          },
+          "ob-REL1": {
+            "created": 0,
+            "kind": "mandatory_release",
+            "resolved_at": 0,
+            "resource": "RELEASE",
+            "status": "VERIFIED_RELEASE",
+            "task": "REL1"
+          }
+        },
+        "mandatory_releases": [
+          {
+            "id": "REL1",
+            "tick": 0
+          }
+        ],
+        "max_age": 2,
+        "max_system_backlog": 3,
+        "readonly_completed": [
+          "RO1",
+          "RO2",
+          "RO3"
+        ],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          },
+          {
+            "system_pending": 1,
+            "tick": 2
+          }
+        ],
+        "unresolved_ids": [
+          "ob-A4"
+        ],
+        "verified_effects": [
+          "A1",
+          "A2",
+          "A3"
+        ]
+      },
+      "GLOBAL_WAIT": {
+        "admitted": [
+          "A1",
+          "REL1",
+          "A3",
+          "A4"
+        ],
+        "backlog_area": 0,
+        "deferred": [
+          "A2",
+          "B1",
+          "RO1",
+          "B2",
+          "RO2",
+          "RO3"
+        ],
+        "ledger": {
+          "ob-A1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A1"
+          },
+          "ob-A3": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A3"
+          },
+          "ob-A4": {
+            "created": 2,
+            "kind": "effect",
+            "resolved_at": 2,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A4"
+          },
+          "ob-REL1": {
+            "created": 0,
+            "kind": "mandatory_release",
+            "resolved_at": 0,
+            "resource": "RELEASE",
+            "status": "VERIFIED_RELEASE",
+            "task": "REL1"
+          }
+        },
+        "mandatory_releases": [
+          {
+            "id": "REL1",
+            "tick": 0
+          }
+        ],
+        "max_age": 1,
+        "max_system_backlog": 2,
+        "readonly_completed": [],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 0,
+            "tick": 0
+          },
+          {
+            "system_pending": 0,
+            "tick": 1
+          },
+          {
+            "system_pending": 0,
+            "tick": 2
+          }
+        ],
+        "unresolved_ids": [],
+        "verified_effects": [
+          "A1",
+          "A3",
+          "A4"
+        ]
+      },
+      "LEDGER_ONLY": {
+        "admitted": [
+          "A1",
+          "A2",
+          "B1",
+          "RO1",
+          "REL1",
+          "A3",
+          "B2",
+          "RO2",
+          "A4",
+          "RO3"
+        ],
+        "backlog_area": 3,
+        "deferred": [],
+        "ledger": {
+          "ob-A1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A1"
+          },
+          "ob-A2": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A2"
+          },
+          "ob-A3": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 2,
+            "resource": "R1",
+            "status": "VERIFIED_EFFECT",
+            "task": "A3"
+          },
+          "ob-A4": {
+            "created": 2,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "A4"
+          },
+          "ob-B1": {
+            "created": 0,
+            "kind": "effect",
+            "resolved_at": 0,
+            "resource": "R2",
+            "status": "VERIFIED_EFFECT",
+            "task": "B1"
+          },
+          "ob-B2": {
+            "created": 1,
+            "kind": "effect",
+            "resolved_at": 1,
+            "resource": "R2",
+            "status": "VERIFIED_EFFECT",
+            "task": "B2"
+          },
+          "ob-REL1": {
+            "created": 0,
+            "kind": "mandatory_release",
+            "resolved_at": 0,
+            "resource": "RELEASE",
+            "status": "VERIFIED_RELEASE",
+            "task": "REL1"
+          }
+        },
+        "mandatory_releases": [
+          {
+            "id": "REL1",
+            "tick": 0
+          }
+        ],
+        "max_age": 2,
+        "max_system_backlog": 4,
+        "readonly_completed": [
+          "RO1",
+          "RO2",
+          "RO3"
+        ],
+        "status": "SATURATED_BUT_CONTAINED",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          },
+          {
+            "system_pending": 1,
+            "tick": 2
+          }
+        ],
+        "unresolved_ids": [
+          "ob-A4"
+        ],
+        "verified_effects": [
+          "A1",
+          "A2",
+          "B1",
+          "A3",
+          "B2"
+        ]
+      }
+    },
+    "unknown_capacity": {
+      "CLASS_AWARE": {
+        "admitted": [
+          "U1"
+        ],
+        "backlog_area": 2,
+        "deferred": [],
+        "ledger": {
+          "ob-U1": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "U1"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 2,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "UNKNOWN_CAPACITY",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-U1"
+        ],
+        "verified_effects": []
+      },
+      "FIXED_CAP2": {
+        "admitted": [
+          "U1"
+        ],
+        "backlog_area": 2,
+        "deferred": [],
+        "ledger": {
+          "ob-U1": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "U1"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 2,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "UNKNOWN_CAPACITY",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-U1"
+        ],
+        "verified_effects": []
+      },
+      "GLOBAL_WAIT": {
+        "admitted": [
+          "U1"
+        ],
+        "backlog_area": 2,
+        "deferred": [],
+        "ledger": {
+          "ob-U1": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "U1"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 2,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "UNKNOWN_CAPACITY",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-U1"
+        ],
+        "verified_effects": []
+      },
+      "LEDGER_ONLY": {
+        "admitted": [
+          "U1"
+        ],
+        "backlog_area": 2,
+        "deferred": [],
+        "ledger": {
+          "ob-U1": {
+            "created": 0,
+            "kind": "effect",
+            "resource": "R1",
+            "status": "PENDING",
+            "task": "U1"
+          }
+        },
+        "mandatory_releases": [],
+        "max_age": 2,
+        "max_system_backlog": 1,
+        "readonly_completed": [],
+        "status": "UNKNOWN_CAPACITY",
+        "timeline": [
+          {
+            "system_pending": 1,
+            "tick": 0
+          },
+          {
+            "system_pending": 1,
+            "tick": 1
+          }
+        ],
+        "unresolved_ids": [
+          "ob-U1"
+        ],
+        "verified_effects": []
+      }
+    }
+  },
+  "ledger_replay": {
+    "records": {
+      "C": {
+        "owner": "worker-B",
+        "owner_crashed": false,
+        "parent": "P",
+        "status": "PENDING"
+      },
+      "P": {
+        "owner": "worker-B",
+        "owner_crashed": true,
+        "parent": null,
+        "status": "VERIFIED_TERMINAL"
+      }
+    },
+    "snapshots": [
+      {
+        "after": "CREATE",
+        "system_pending": 1
+      },
+      {
+        "after": "OWNER_CRASH",
+        "system_pending": 1
+      },
+      {
+        "after": "ACCEPTED_HANDOFF",
+        "system_pending": 1
+      },
+      {
+        "after": "TIMEOUT",
+        "system_pending": 1
+      },
+      {
+        "after": "COMPENSATION_FAILED",
+        "system_pending": 2
+      },
+      {
+        "after": "VERIFIED_TERMINAL",
+        "system_pending": 1
+      }
+    ],
+    "system_pending": 1
+  },
+  "schema": "obligation-capacity-t002-result-v1"
+}

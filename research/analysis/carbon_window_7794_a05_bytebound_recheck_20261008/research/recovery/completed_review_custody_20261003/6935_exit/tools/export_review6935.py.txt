@@ -1,0 +1,58 @@
+"""Exact reviewed Git export; bounded source/data only, no runner/child execution."""
+from datetime import datetime,timezone
+import hashlib,json,os,subprocess
+from pathlib import Path
+ws=Path(__file__).resolve().parent.parent;repo=ws/'work/agent-interface';root=ws/'work/review6935'
+root.mkdir(exist_ok=False)
+p=json.loads((ws/'work/proposal6935.json').read_bytes());head=p['head_sha'];base=p['review_base_sha']
+env=dict(os.environ,GIT_NO_LAZY_FETCH='1');primary=(repo/'.git/index').read_bytes()
+started=datetime.now(timezone.utc).isoformat()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def canon(x):return json.dumps(x,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode()
+original_digest=p['proposal_digest'];descriptor={k:v for k,v in p.items() if k!='proposal_digest'}
+assert sha(canon(descriptor))==original_digest
+(root/'PROPOSAL.json').write_bytes((ws/'work/proposal6935.json').read_bytes())
+def put(name,x):(root/name).write_text(json.dumps(x,indent=2,sort_keys=True)+'\n',encoding='utf-8')
+put('INTENT.json',{'started_utc':started,'head':head,'base':base,'proposal_digest':original_digest,
+    'scope':'exact changed81 images + existing host source closure +3 before production images; no producer/formal/native/child execution'})
+def git(*a,data=None):return subprocess.check_output(['git',*a],cwd=repo,env=env,input=data)
+changed=git('diff','--name-only','--no-renames',base,head).decode().splitlines()
+assert len(changed)==81
+assert all(path in p['production_paths'] or path.startswith(p['evidence_path']) for path in changed)
+def entries(ref,paths):
+    result={}
+    for row in git('ls-tree','-r',ref,'--',*paths).decode().splitlines():
+        metadata,path=row.split('\t');mode,kind,oid=metadata.split();assert kind=='blob'
+        result[path]={'mode':mode,'blob':oid}
+    return result
+source=entries(head,[*changed,'runtime/host_v1'])
+before=entries(base,p['production_paths'])
+oids=sorted({r['blob'] for r in source.values()}|{r['blob'] for r in before.values()})
+began=datetime.now(timezone.utc).isoformat()
+command=['git','-c','fetch.negotiationAlgorithm=noop','fetch','origin','--no-tags','--no-write-fetch-head','--recurse-submodules=no','--filter=blob:none','--stdin']
+proc=subprocess.run(command,cwd=repo,input=('\n'.join(oids)+'\n').encode(),capture_output=True,timeout=30)
+(root/'fetch.stdout.txt').write_bytes(proc.stdout);(root/'fetch.stderr.txt').write_bytes(proc.stderr)
+put('FETCH_RECEIPT.json',{'command':command,'requested_unique_oids':len(oids),'started_utc':began,
+    'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':proc.returncode,
+    'stdout_sha256':sha(proc.stdout),'stderr_sha256':sha(proc.stderr)})
+assert proc.returncode==0,proc.stderr
+records=[]
+for side,rows in (('source',source),('before',before)):
+    for path,item in sorted(rows.items()):
+        data=git('cat-file','blob',item['blob'])
+        assert hashlib.sha1(('blob %d\0'%len(data)).encode()+data).hexdigest()==item['blob']
+        dest=root/side/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(data)
+        records.append({'side':side,'path':path,**item,'bytes':len(data),'sha256':sha(data)})
+image_map=[{k:v for k,v in r.items() if k!='side'} for r in records if r['side']=='source' and r['path'] in changed]
+assert len(image_map)==81 and sha(canon(image_map))==p['changed_blobs_digest']
+packet=root/'source'/p['evidence_path']
+manifest=(packet/'SHA256SUMS').read_bytes();assert sha(manifest)==p['manifest_sha256']
+assert len(manifest.decode().splitlines())==77
+for line in manifest.decode().splitlines():
+    expected,path=line.split('  ',1);assert sha((packet/path).read_bytes())==expected,path
+put('EXPORT.json',{'head':head,'base':base,'proposal_digest':original_digest,'started_utc':started,
+    'ended_utc':datetime.now(timezone.utc).isoformat(),'changed_paths':changed,'blobs':records,
+    'exact81_changed_blob_map':True,'all77_manifest_entries_match':True,'primary_index_unchanged':primary==(repo/'.git/index').read_bytes()})
+assert primary==(repo/'.git/index').read_bytes()
+print(json.dumps({'changed_images':len(image_map),'exported_images':len(records),'unique_oids':len(oids),
+    'manifest_entries':77,'bytes':sum(r['bytes'] for r in records),'primary_index_unchanged':True}))

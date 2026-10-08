@@ -1,0 +1,7 @@
+# Issue #6112 T0 result
+
+**Disposition: `PASS_METHOD_SCOPED`.** One frozen deterministic run evaluated nine synthetic receiver responses across four non-sensitive vignettes; an independent oracle audit matched all nine decisions and correction requests. Six planted incomplete, contradictory, unsupported-authority, blind-replay, copy-without-scenario-application, or stale-target-retry controls were held. Two correct summaries advanced only to a separate activation review. An emergency release request bypassed readback and returned immediate safe-stop/release handling even with no synthesis.
+
+Correction responses identify only which field(s) to revisit; they do not reveal an answer or grant authority. A correctly copied response with a valid scenario answer cannot be distinguished from genuine comprehension by this protocol, so no cognitive claim is made. The “packet copy without application” control is held only because its required held-out scenario answer is missing, not because it is verbatim. The prompt/answer-key separation check passed, and the runner did not open the oracle file.
+
+This validates a finite synthetic protocol contract only. It does not show improved human understanding, takeover accuracy, safety, tempo, or GUI task effects. No participants, user data, live GUI, model, or consequential action was involved. T1 remains gated by separate consent/privacy review and is not authorized by this result.

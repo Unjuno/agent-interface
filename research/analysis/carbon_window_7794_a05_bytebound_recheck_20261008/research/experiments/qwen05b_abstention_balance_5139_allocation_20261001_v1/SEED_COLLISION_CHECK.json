@@ -1,0 +1,16 @@
+{
+  "allocation": "QWEN-SUPPORT-BALANCE-5139-20261001-01",
+  "seeds": {
+    "formal_seed": 898659560,
+    "support_seed": 582882955,
+    "heldout_seed": 292197310
+  },
+  "distinct_within_allocation": true,
+  "checks": [
+    {"surface": "all fetched comments on Issue #5139 and queue Issue #5085", "query": "exact decimal string per seed", "matches": 0},
+    {"surface": "GitHub default-branch code search", "query": "exact decimal string per seed", "matches": 0},
+    {"surface": "known predecessor formal/support/held-out seeds and test-only sentinels", "matches": 0}
+  ],
+  "known_excluded_values": [1, 73194109, 324463753, 588007343, 705482479, 900000001],
+  "scope_limit": "GitHub code search indexes the default branch; this record is not a claim that every unindexed/private historical object was exhaustively searched."
+}

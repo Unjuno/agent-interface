@@ -1,0 +1,88 @@
+{
+  "controls": [
+    {
+      "decision": "FAIL_POSTFORMAL_VERIFY",
+      "errors": [
+        [
+          "cdp_semantics",
+          "n01-cdp-r0"
+        ]
+      ],
+      "name": "cdp_touch_id_corrupt",
+      "returncode": 1
+    },
+    {
+      "decision": "FAIL_POSTFORMAL_VERIFY",
+      "errors": [
+        [
+          "mouse_semantics",
+          "n02-mouse-r0"
+        ]
+      ],
+      "name": "mouse_semantic_launder",
+      "returncode": 1
+    },
+    {
+      "decision": "FAIL_POSTFORMAL_VERIFY",
+      "errors": [
+        [
+          "png_receipt_mismatch",
+          "n01-cdp-r0"
+        ],
+        [
+          "cdp_semantics",
+          "n01-cdp-r0"
+        ]
+      ],
+      "name": "cdp_after_png_swap",
+      "returncode": 1
+    },
+    {
+      "decision": "FAIL_POSTFORMAL_VERIFY",
+      "errors": [
+        [
+          "source_hash",
+          "intent.json",
+          "1f95b13f8d30a48485aa2c993c288d710f11173e88239d88773a7384b34d9402",
+          "cbaaebb8026aa1cc749f2d4024c1bc96564677e2c903c010aba800c2ceff593f"
+        ],
+        [
+          "identity",
+          "n01-cdp-r0"
+        ],
+        [
+          "identity",
+          "n02-mouse-r0"
+        ],
+        [
+          "identity",
+          "n03-mouse-r1"
+        ],
+        [
+          "identity",
+          "n04-cdp-r1"
+        ],
+        [
+          "identity",
+          "n05-cdp-r2"
+        ],
+        [
+          "identity",
+          "n06-mouse-r2"
+        ],
+        [
+          "identity",
+          "n07-cdp-r3"
+        ],
+        [
+          "identity",
+          "n08-mouse-r3"
+        ]
+      ],
+      "name": "intent_source_mutation",
+      "returncode": 1
+    }
+  ],
+  "rejected": 4,
+  "total": 4
+}

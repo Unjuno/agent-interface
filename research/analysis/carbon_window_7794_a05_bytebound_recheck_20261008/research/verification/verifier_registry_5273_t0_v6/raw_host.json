@@ -1,0 +1,1172 @@
+{
+  "corpus_sha256": "82388580fcaff7e4d6ebe55a8ea40d21fbe28cc51c422f1064c2bcabd81ccfaf",
+  "dispatch_count": 0,
+  "invocation": "HOST_OFFLINE_CONSTRUCTION_ONLY",
+  "rows": [
+    {
+      "case_id": "warm_feasible",
+      "decision": {
+        "aggregate_status": "COMPATIBLE",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "authority": "NONE",
+            "budget_class": "bounded",
+            "category": "deterministic",
+            "check_fallback": "YIELD_NO_INPUT",
+            "check_id": "c1",
+            "cold_cost_estimate": 4,
+            "cost_provenance": "DECLARED_ESTIMATE_NOT_MEASUREMENT",
+            "cost_unit": "fixture_unit",
+            "criticality": "MANDATORY",
+            "deadline": 5,
+            "declared_cost_provenance": "declared_fixture_estimate",
+            "descriptor_snapshot": {
+              "accepted_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "authority": "none",
+              "category": "deterministic",
+              "cold_cost": 4,
+              "concurrency": 1,
+              "cost_provenance": "declared_fixture_estimate",
+              "cost_unit": "fixture_unit",
+              "deadline_behavior": "reject_infeasible",
+              "failure_modes": [
+                "input_unknown"
+              ],
+              "fallback": "YIELD_NO_INPUT",
+              "latency_envelope": {
+                "bound": 2,
+                "unit": "fixture_tick"
+              },
+              "output_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "resource_class": "cpu",
+              "side_effect_class": "none",
+              "supported_primitives": [
+                "TARGET.IDENTITY_CURRENT"
+              ],
+              "verifier_id": "rule",
+              "version": "1.0",
+              "warm_cost": 1
+            },
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "input_role": "CURRENT_OBSERVATION",
+            "latency_bound": 2,
+            "latency_unit": "fixture_tick",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reason": "compatible",
+            "requested_version": "1.0",
+            "resource_class": "cpu",
+            "selected_cost_estimate": 1,
+            "side_effect_class": "none",
+            "status": "COMPATIBLE",
+            "subject_ref": "window:1",
+            "verifier_id": "rule",
+            "warm_cost_estimate": 1
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "input": {
+        "assignments": [
+          {
+            "check_id": "c1",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "requested_version": "1.0",
+            "side_effect_permitted": false,
+            "verifier_id": "rule"
+          }
+        ],
+        "ir": {
+          "checks": [
+            {
+              "budget_class": "bounded",
+              "check_id": "c1",
+              "criticality": "MANDATORY",
+              "deadline": 5,
+              "dependencies": [],
+              "fallback": "YIELD_NO_INPUT",
+              "primitive": "TARGET.IDENTITY_CURRENT",
+              "required_evidence_role": "CURRENT_OBSERVATION",
+              "subject_ref": "window:1",
+              "verifier_class": "deterministic"
+            }
+          ],
+          "schema": "verification_ir.v0.1",
+          "unknown_check_required": false
+        },
+        "registry": [
+          {
+            "accepted_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "authority": "none",
+            "category": "deterministic",
+            "cold_cost": 4,
+            "concurrency": 1,
+            "cost_provenance": "declared_fixture_estimate",
+            "cost_unit": "fixture_unit",
+            "deadline_behavior": "reject_infeasible",
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "latency_envelope": {
+              "bound": 2,
+              "unit": "fixture_tick"
+            },
+            "output_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "resource_class": "cpu",
+            "side_effect_class": "none",
+            "supported_primitives": [
+              "TARGET.IDENTITY_CURRENT"
+            ],
+            "verifier_id": "rule",
+            "version": "1.0",
+            "warm_cost": 1
+          }
+        ],
+        "resources": {
+          "available_classes": [
+            "cpu"
+          ],
+          "cold_cost_budget": 10,
+          "forbidden_side_effect_classes": [
+            "external_write"
+          ],
+          "warm_cost_budget": 10
+        }
+      }
+    },
+    {
+      "case_id": "unsupported_primitive",
+      "decision": {
+        "aggregate_status": "REJECTED",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "authority": "NONE",
+            "budget_class": "bounded",
+            "category": "local_cpu",
+            "check_fallback": "YIELD_NO_INPUT",
+            "check_id": "c1",
+            "cold_cost_estimate": 4,
+            "cost_provenance": "DECLARED_ESTIMATE_NOT_MEASUREMENT",
+            "cost_unit": "fixture_unit",
+            "criticality": "MANDATORY",
+            "deadline": 5,
+            "declared_cost_provenance": "declared_fixture_estimate",
+            "descriptor_snapshot": {
+              "accepted_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "authority": "none",
+              "category": "local_cpu",
+              "cold_cost": 4,
+              "concurrency": 1,
+              "cost_provenance": "declared_fixture_estimate",
+              "cost_unit": "fixture_unit",
+              "deadline_behavior": "reject_infeasible",
+              "failure_modes": [
+                "input_unknown"
+              ],
+              "fallback": "YIELD_NO_INPUT",
+              "latency_envelope": {
+                "bound": 2,
+                "unit": "fixture_tick"
+              },
+              "output_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "resource_class": "cpu",
+              "side_effect_class": "none",
+              "supported_primitives": [
+                "TARGET.IDENTITY_CURRENT"
+              ],
+              "verifier_id": "rule",
+              "version": "1.0",
+              "warm_cost": 1
+            },
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "input_role": "CURRENT_OBSERVATION",
+            "latency_bound": 2,
+            "latency_unit": "fixture_tick",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "EFFECT.POSTCONDITION",
+            "reason": "unsupported_primitive",
+            "requested_version": "1.0",
+            "resource_class": "cpu",
+            "selected_cost_estimate": 1,
+            "side_effect_class": "none",
+            "status": "REJECTED",
+            "subject_ref": "window:1",
+            "verifier_id": "rule",
+            "warm_cost_estimate": 1
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "input": {
+        "assignments": [
+          {
+            "check_id": "c1",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "requested_version": "1.0",
+            "side_effect_permitted": false,
+            "verifier_id": "rule"
+          }
+        ],
+        "ir": {
+          "checks": [
+            {
+              "budget_class": "bounded",
+              "check_id": "c1",
+              "criticality": "MANDATORY",
+              "deadline": 5,
+              "dependencies": [],
+              "fallback": "YIELD_NO_INPUT",
+              "primitive": "EFFECT.POSTCONDITION",
+              "required_evidence_role": "CURRENT_OBSERVATION",
+              "subject_ref": "window:1",
+              "verifier_class": "deterministic"
+            }
+          ],
+          "schema": "verification_ir.v0.1",
+          "unknown_check_required": false
+        },
+        "registry": [
+          {
+            "accepted_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "authority": "none",
+            "category": "local_cpu",
+            "cold_cost": 4,
+            "concurrency": 1,
+            "cost_provenance": "declared_fixture_estimate",
+            "cost_unit": "fixture_unit",
+            "deadline_behavior": "reject_infeasible",
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "latency_envelope": {
+              "bound": 2,
+              "unit": "fixture_tick"
+            },
+            "output_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "resource_class": "cpu",
+            "side_effect_class": "none",
+            "supported_primitives": [
+              "TARGET.IDENTITY_CURRENT"
+            ],
+            "verifier_id": "rule",
+            "version": "1.0",
+            "warm_cost": 1
+          }
+        ],
+        "resources": {
+          "available_classes": [
+            "cpu"
+          ],
+          "cold_cost_budget": 10,
+          "forbidden_side_effect_classes": [
+            "external_write"
+          ],
+          "warm_cost_budget": 10
+        }
+      }
+    },
+    {
+      "case_id": "wrong_input_role",
+      "decision": {
+        "aggregate_status": "REJECTED",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "authority": "NONE",
+            "budget_class": "bounded",
+            "category": "local_multimodal",
+            "check_fallback": "YIELD_NO_INPUT",
+            "check_id": "c1",
+            "cold_cost_estimate": 4,
+            "cost_provenance": "DECLARED_ESTIMATE_NOT_MEASUREMENT",
+            "cost_unit": "fixture_unit",
+            "criticality": "MANDATORY",
+            "deadline": 5,
+            "declared_cost_provenance": "declared_fixture_estimate",
+            "descriptor_snapshot": {
+              "accepted_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "authority": "none",
+              "category": "local_multimodal",
+              "cold_cost": 4,
+              "concurrency": 1,
+              "cost_provenance": "declared_fixture_estimate",
+              "cost_unit": "fixture_unit",
+              "deadline_behavior": "reject_infeasible",
+              "failure_modes": [
+                "input_unknown"
+              ],
+              "fallback": "YIELD_NO_INPUT",
+              "latency_envelope": {
+                "bound": 2,
+                "unit": "fixture_tick"
+              },
+              "output_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "resource_class": "cpu",
+              "side_effect_class": "none",
+              "supported_primitives": [
+                "TARGET.IDENTITY_CURRENT"
+              ],
+              "verifier_id": "rule",
+              "version": "1.0",
+              "warm_cost": 1
+            },
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "input_role": "CURRENT_INTENT",
+            "latency_bound": 2,
+            "latency_unit": "fixture_tick",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reason": "wrong_input_role",
+            "requested_version": "1.0",
+            "resource_class": "cpu",
+            "selected_cost_estimate": 1,
+            "side_effect_class": "none",
+            "status": "REJECTED",
+            "subject_ref": "window:1",
+            "verifier_id": "rule",
+            "warm_cost_estimate": 1
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "input": {
+        "assignments": [
+          {
+            "check_id": "c1",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "requested_version": "1.0",
+            "side_effect_permitted": false,
+            "verifier_id": "rule"
+          }
+        ],
+        "ir": {
+          "checks": [
+            {
+              "budget_class": "bounded",
+              "check_id": "c1",
+              "criticality": "MANDATORY",
+              "deadline": 5,
+              "dependencies": [],
+              "fallback": "YIELD_NO_INPUT",
+              "primitive": "TARGET.IDENTITY_CURRENT",
+              "required_evidence_role": "CURRENT_INTENT",
+              "subject_ref": "window:1",
+              "verifier_class": "deterministic"
+            }
+          ],
+          "schema": "verification_ir.v0.1",
+          "unknown_check_required": false
+        },
+        "registry": [
+          {
+            "accepted_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "authority": "none",
+            "category": "local_multimodal",
+            "cold_cost": 4,
+            "concurrency": 1,
+            "cost_provenance": "declared_fixture_estimate",
+            "cost_unit": "fixture_unit",
+            "deadline_behavior": "reject_infeasible",
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "latency_envelope": {
+              "bound": 2,
+              "unit": "fixture_tick"
+            },
+            "output_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "resource_class": "cpu",
+            "side_effect_class": "none",
+            "supported_primitives": [
+              "TARGET.IDENTITY_CURRENT"
+            ],
+            "verifier_id": "rule",
+            "version": "1.0",
+            "warm_cost": 1
+          }
+        ],
+        "resources": {
+          "available_classes": [
+            "cpu"
+          ],
+          "cold_cost_budget": 10,
+          "forbidden_side_effect_classes": [
+            "external_write"
+          ],
+          "warm_cost_budget": 10
+        }
+      }
+    },
+    {
+      "case_id": "stale_version",
+      "decision": {
+        "aggregate_status": "REJECTED",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "authority": "NONE",
+            "budget_class": "bounded",
+            "category": "rich_model",
+            "check_fallback": "YIELD_NO_INPUT",
+            "check_id": "c1",
+            "cold_cost_estimate": 4,
+            "cost_provenance": "DECLARED_ESTIMATE_NOT_MEASUREMENT",
+            "cost_unit": "fixture_unit",
+            "criticality": "MANDATORY",
+            "deadline": 5,
+            "declared_cost_provenance": "declared_fixture_estimate",
+            "descriptor_snapshot": {
+              "accepted_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "authority": "none",
+              "category": "rich_model",
+              "cold_cost": 4,
+              "concurrency": 1,
+              "cost_provenance": "declared_fixture_estimate",
+              "cost_unit": "fixture_unit",
+              "deadline_behavior": "reject_infeasible",
+              "failure_modes": [
+                "input_unknown"
+              ],
+              "fallback": "YIELD_NO_INPUT",
+              "latency_envelope": {
+                "bound": 2,
+                "unit": "fixture_tick"
+              },
+              "output_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "resource_class": "cpu",
+              "side_effect_class": "none",
+              "supported_primitives": [
+                "TARGET.IDENTITY_CURRENT"
+              ],
+              "verifier_id": "rule",
+              "version": "1.0",
+              "warm_cost": 1
+            },
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "input_role": "CURRENT_OBSERVATION",
+            "latency_bound": 2,
+            "latency_unit": "fixture_tick",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reason": "stale_verifier_version",
+            "requested_version": "0.9",
+            "resource_class": "cpu",
+            "selected_cost_estimate": 1,
+            "side_effect_class": "none",
+            "status": "REJECTED",
+            "subject_ref": "window:1",
+            "verifier_id": "rule",
+            "warm_cost_estimate": 1
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "input": {
+        "assignments": [
+          {
+            "check_id": "c1",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "requested_version": "0.9",
+            "side_effect_permitted": false,
+            "verifier_id": "rule"
+          }
+        ],
+        "ir": {
+          "checks": [
+            {
+              "budget_class": "bounded",
+              "check_id": "c1",
+              "criticality": "MANDATORY",
+              "deadline": 5,
+              "dependencies": [],
+              "fallback": "YIELD_NO_INPUT",
+              "primitive": "TARGET.IDENTITY_CURRENT",
+              "required_evidence_role": "CURRENT_OBSERVATION",
+              "subject_ref": "window:1",
+              "verifier_class": "deterministic"
+            }
+          ],
+          "schema": "verification_ir.v0.1",
+          "unknown_check_required": false
+        },
+        "registry": [
+          {
+            "accepted_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "authority": "none",
+            "category": "rich_model",
+            "cold_cost": 4,
+            "concurrency": 1,
+            "cost_provenance": "declared_fixture_estimate",
+            "cost_unit": "fixture_unit",
+            "deadline_behavior": "reject_infeasible",
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "latency_envelope": {
+              "bound": 2,
+              "unit": "fixture_tick"
+            },
+            "output_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "resource_class": "cpu",
+            "side_effect_class": "none",
+            "supported_primitives": [
+              "TARGET.IDENTITY_CURRENT"
+            ],
+            "verifier_id": "rule",
+            "version": "1.0",
+            "warm_cost": 1
+          }
+        ],
+        "resources": {
+          "available_classes": [
+            "cpu"
+          ],
+          "cold_cost_budget": 10,
+          "forbidden_side_effect_classes": [
+            "external_write"
+          ],
+          "warm_cost_budget": 10
+        }
+      }
+    },
+    {
+      "case_id": "resource_unavailable",
+      "decision": {
+        "aggregate_status": "UNAVAILABLE",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "authority": "NONE",
+            "budget_class": "bounded",
+            "category": "external_tool",
+            "check_fallback": "YIELD_NO_INPUT",
+            "check_id": "c1",
+            "cold_cost_estimate": 4,
+            "cost_provenance": "DECLARED_ESTIMATE_NOT_MEASUREMENT",
+            "cost_unit": "fixture_unit",
+            "criticality": "MANDATORY",
+            "deadline": 5,
+            "declared_cost_provenance": "declared_fixture_estimate",
+            "descriptor_snapshot": {
+              "accepted_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "authority": "none",
+              "category": "external_tool",
+              "cold_cost": 4,
+              "concurrency": 1,
+              "cost_provenance": "declared_fixture_estimate",
+              "cost_unit": "fixture_unit",
+              "deadline_behavior": "reject_infeasible",
+              "failure_modes": [
+                "input_unknown"
+              ],
+              "fallback": "YIELD_NO_INPUT",
+              "latency_envelope": {
+                "bound": 2,
+                "unit": "fixture_tick"
+              },
+              "output_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "resource_class": "cpu",
+              "side_effect_class": "none",
+              "supported_primitives": [
+                "TARGET.IDENTITY_CURRENT"
+              ],
+              "verifier_id": "rule",
+              "version": "1.0",
+              "warm_cost": 1
+            },
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "input_role": "CURRENT_OBSERVATION",
+            "latency_bound": 2,
+            "latency_unit": "fixture_tick",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reason": "resources_unavailable",
+            "requested_version": "1.0",
+            "resource_class": "cpu",
+            "selected_cost_estimate": 1,
+            "side_effect_class": "none",
+            "status": "UNAVAILABLE",
+            "subject_ref": "window:1",
+            "verifier_id": "rule",
+            "warm_cost_estimate": 1
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "input": {
+        "assignments": [
+          {
+            "check_id": "c1",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "requested_version": "1.0",
+            "side_effect_permitted": false,
+            "verifier_id": "rule"
+          }
+        ],
+        "ir": {
+          "checks": [
+            {
+              "budget_class": "bounded",
+              "check_id": "c1",
+              "criticality": "MANDATORY",
+              "deadline": 5,
+              "dependencies": [],
+              "fallback": "YIELD_NO_INPUT",
+              "primitive": "TARGET.IDENTITY_CURRENT",
+              "required_evidence_role": "CURRENT_OBSERVATION",
+              "subject_ref": "window:1",
+              "verifier_class": "deterministic"
+            }
+          ],
+          "schema": "verification_ir.v0.1",
+          "unknown_check_required": false
+        },
+        "registry": [
+          {
+            "accepted_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "authority": "none",
+            "category": "external_tool",
+            "cold_cost": 4,
+            "concurrency": 1,
+            "cost_provenance": "declared_fixture_estimate",
+            "cost_unit": "fixture_unit",
+            "deadline_behavior": "reject_infeasible",
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "latency_envelope": {
+              "bound": 2,
+              "unit": "fixture_tick"
+            },
+            "output_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "resource_class": "cpu",
+            "side_effect_class": "none",
+            "supported_primitives": [
+              "TARGET.IDENTITY_CURRENT"
+            ],
+            "verifier_id": "rule",
+            "version": "1.0",
+            "warm_cost": 1
+          }
+        ],
+        "resources": {
+          "available_classes": [],
+          "cold_cost_budget": 10,
+          "forbidden_side_effect_classes": [
+            "external_write"
+          ],
+          "warm_cost_budget": 10
+        }
+      }
+    },
+    {
+      "case_id": "cold_budget_exceeded",
+      "decision": {
+        "aggregate_status": "REJECTED",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "authority": "NONE",
+            "budget_class": "bounded",
+            "category": "deterministic",
+            "check_fallback": "YIELD_NO_INPUT",
+            "check_id": "c1",
+            "cold_cost_estimate": 4,
+            "cost_provenance": "DECLARED_ESTIMATE_NOT_MEASUREMENT",
+            "cost_unit": "fixture_unit",
+            "criticality": "MANDATORY",
+            "deadline": 5,
+            "declared_cost_provenance": "declared_fixture_estimate",
+            "descriptor_snapshot": {
+              "accepted_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "authority": "none",
+              "category": "deterministic",
+              "cold_cost": 4,
+              "concurrency": 1,
+              "cost_provenance": "declared_fixture_estimate",
+              "cost_unit": "fixture_unit",
+              "deadline_behavior": "reject_infeasible",
+              "failure_modes": [
+                "input_unknown"
+              ],
+              "fallback": "YIELD_NO_INPUT",
+              "latency_envelope": {
+                "bound": 2,
+                "unit": "fixture_tick"
+              },
+              "output_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "resource_class": "cpu",
+              "side_effect_class": "none",
+              "supported_primitives": [
+                "TARGET.IDENTITY_CURRENT"
+              ],
+              "verifier_id": "rule",
+              "version": "1.0",
+              "warm_cost": 1
+            },
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "input_role": "CURRENT_OBSERVATION",
+            "latency_bound": 2,
+            "latency_unit": "fixture_tick",
+            "mode": "cold",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reason": "cold_budget_exceeded",
+            "requested_version": "1.0",
+            "resource_class": "cpu",
+            "selected_cost_estimate": 4,
+            "side_effect_class": "none",
+            "status": "REJECTED",
+            "subject_ref": "window:1",
+            "verifier_id": "rule",
+            "warm_cost_estimate": 1
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "input": {
+        "assignments": [
+          {
+            "check_id": "c1",
+            "mode": "cold",
+            "output_role": "CURRENT_OBSERVATION",
+            "requested_version": "1.0",
+            "side_effect_permitted": false,
+            "verifier_id": "rule"
+          }
+        ],
+        "ir": {
+          "checks": [
+            {
+              "budget_class": "bounded",
+              "check_id": "c1",
+              "criticality": "MANDATORY",
+              "deadline": 5,
+              "dependencies": [],
+              "fallback": "YIELD_NO_INPUT",
+              "primitive": "TARGET.IDENTITY_CURRENT",
+              "required_evidence_role": "CURRENT_OBSERVATION",
+              "subject_ref": "window:1",
+              "verifier_class": "deterministic"
+            }
+          ],
+          "schema": "verification_ir.v0.1",
+          "unknown_check_required": false
+        },
+        "registry": [
+          {
+            "accepted_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "authority": "none",
+            "category": "deterministic",
+            "cold_cost": 4,
+            "concurrency": 1,
+            "cost_provenance": "declared_fixture_estimate",
+            "cost_unit": "fixture_unit",
+            "deadline_behavior": "reject_infeasible",
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "latency_envelope": {
+              "bound": 2,
+              "unit": "fixture_tick"
+            },
+            "output_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "resource_class": "cpu",
+            "side_effect_class": "none",
+            "supported_primitives": [
+              "TARGET.IDENTITY_CURRENT"
+            ],
+            "verifier_id": "rule",
+            "version": "1.0",
+            "warm_cost": 1
+          }
+        ],
+        "resources": {
+          "available_classes": [
+            "cpu"
+          ],
+          "cold_cost_budget": 3,
+          "forbidden_side_effect_classes": [
+            "external_write"
+          ],
+          "warm_cost_budget": 10
+        }
+      }
+    },
+    {
+      "case_id": "side_effect_prohibited",
+      "decision": {
+        "aggregate_status": "REJECTED",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "authority": "NONE",
+            "budget_class": "bounded",
+            "category": "local_cpu",
+            "check_fallback": "YIELD_NO_INPUT",
+            "check_id": "c1",
+            "cold_cost_estimate": 4,
+            "cost_provenance": "DECLARED_ESTIMATE_NOT_MEASUREMENT",
+            "cost_unit": "fixture_unit",
+            "criticality": "MANDATORY",
+            "deadline": 5,
+            "declared_cost_provenance": "declared_fixture_estimate",
+            "descriptor_snapshot": {
+              "accepted_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "authority": "none",
+              "category": "local_cpu",
+              "cold_cost": 4,
+              "concurrency": 1,
+              "cost_provenance": "declared_fixture_estimate",
+              "cost_unit": "fixture_unit",
+              "deadline_behavior": "reject_infeasible",
+              "failure_modes": [
+                "input_unknown"
+              ],
+              "fallback": "YIELD_NO_INPUT",
+              "latency_envelope": {
+                "bound": 2,
+                "unit": "fixture_tick"
+              },
+              "output_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "resource_class": "cpu",
+              "side_effect_class": "external_write",
+              "supported_primitives": [
+                "TARGET.IDENTITY_CURRENT"
+              ],
+              "verifier_id": "rule",
+              "version": "1.0",
+              "warm_cost": 1
+            },
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "input_role": "CURRENT_OBSERVATION",
+            "latency_bound": 2,
+            "latency_unit": "fixture_tick",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reason": "side_effect_prohibited",
+            "requested_version": "1.0",
+            "resource_class": "cpu",
+            "selected_cost_estimate": 1,
+            "side_effect_class": "external_write",
+            "status": "REJECTED",
+            "subject_ref": "window:1",
+            "verifier_id": "rule",
+            "warm_cost_estimate": 1
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "input": {
+        "assignments": [
+          {
+            "check_id": "c1",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "requested_version": "1.0",
+            "side_effect_permitted": true,
+            "verifier_id": "rule"
+          }
+        ],
+        "ir": {
+          "checks": [
+            {
+              "budget_class": "bounded",
+              "check_id": "c1",
+              "criticality": "MANDATORY",
+              "deadline": 5,
+              "dependencies": [],
+              "fallback": "YIELD_NO_INPUT",
+              "primitive": "TARGET.IDENTITY_CURRENT",
+              "required_evidence_role": "CURRENT_OBSERVATION",
+              "subject_ref": "window:1",
+              "verifier_class": "deterministic"
+            }
+          ],
+          "schema": "verification_ir.v0.1",
+          "unknown_check_required": false
+        },
+        "registry": [
+          {
+            "accepted_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "authority": "none",
+            "category": "local_cpu",
+            "cold_cost": 4,
+            "concurrency": 1,
+            "cost_provenance": "declared_fixture_estimate",
+            "cost_unit": "fixture_unit",
+            "deadline_behavior": "reject_infeasible",
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "latency_envelope": {
+              "bound": 2,
+              "unit": "fixture_tick"
+            },
+            "output_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "resource_class": "cpu",
+            "side_effect_class": "external_write",
+            "supported_primitives": [
+              "TARGET.IDENTITY_CURRENT"
+            ],
+            "verifier_id": "rule",
+            "version": "1.0",
+            "warm_cost": 1
+          }
+        ],
+        "resources": {
+          "available_classes": [
+            "cpu"
+          ],
+          "cold_cost_budget": 10,
+          "forbidden_side_effect_classes": [
+            "external_write"
+          ],
+          "warm_cost_budget": 10
+        }
+      }
+    },
+    {
+      "case_id": "deadline_infeasible_precedes_unavailable",
+      "decision": {
+        "aggregate_status": "REJECTED",
+        "authority": "NONE",
+        "decisions": [
+          {
+            "authority": "NONE",
+            "budget_class": "bounded",
+            "category": "local_multimodal",
+            "check_fallback": "YIELD_NO_INPUT",
+            "check_id": "c1",
+            "cold_cost_estimate": 4,
+            "cost_provenance": "DECLARED_ESTIMATE_NOT_MEASUREMENT",
+            "cost_unit": "fixture_unit",
+            "criticality": "MANDATORY",
+            "deadline": 1,
+            "declared_cost_provenance": "declared_fixture_estimate",
+            "descriptor_snapshot": {
+              "accepted_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "authority": "none",
+              "category": "local_multimodal",
+              "cold_cost": 4,
+              "concurrency": 1,
+              "cost_provenance": "declared_fixture_estimate",
+              "cost_unit": "fixture_unit",
+              "deadline_behavior": "reject_infeasible",
+              "failure_modes": [
+                "input_unknown"
+              ],
+              "fallback": "YIELD_NO_INPUT",
+              "latency_envelope": {
+                "bound": 10,
+                "unit": "fixture_tick"
+              },
+              "output_evidence_roles": [
+                "CURRENT_OBSERVATION"
+              ],
+              "resource_class": "cpu",
+              "side_effect_class": "none",
+              "supported_primitives": [
+                "TARGET.IDENTITY_CURRENT"
+              ],
+              "verifier_id": "rule",
+              "version": "1.0",
+              "warm_cost": 1
+            },
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "input_role": "CURRENT_OBSERVATION",
+            "latency_bound": 10,
+            "latency_unit": "fixture_tick",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "primitive": "TARGET.IDENTITY_CURRENT",
+            "reason": "deadline_infeasible",
+            "requested_version": "1.0",
+            "resource_class": "cpu",
+            "selected_cost_estimate": 1,
+            "side_effect_class": "none",
+            "status": "REJECTED",
+            "subject_ref": "window:1",
+            "verifier_id": "rule",
+            "warm_cost_estimate": 1
+          }
+        ],
+        "dispatch_count": 0
+      },
+      "input": {
+        "assignments": [
+          {
+            "check_id": "c1",
+            "mode": "warm",
+            "output_role": "CURRENT_OBSERVATION",
+            "requested_version": "1.0",
+            "side_effect_permitted": false,
+            "verifier_id": "rule"
+          }
+        ],
+        "ir": {
+          "checks": [
+            {
+              "budget_class": "bounded",
+              "check_id": "c1",
+              "criticality": "MANDATORY",
+              "deadline": 1,
+              "dependencies": [],
+              "fallback": "YIELD_NO_INPUT",
+              "primitive": "TARGET.IDENTITY_CURRENT",
+              "required_evidence_role": "CURRENT_OBSERVATION",
+              "subject_ref": "window:1",
+              "verifier_class": "deterministic"
+            }
+          ],
+          "schema": "verification_ir.v0.1",
+          "unknown_check_required": false
+        },
+        "registry": [
+          {
+            "accepted_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "authority": "none",
+            "category": "local_multimodal",
+            "cold_cost": 4,
+            "concurrency": 1,
+            "cost_provenance": "declared_fixture_estimate",
+            "cost_unit": "fixture_unit",
+            "deadline_behavior": "reject_infeasible",
+            "failure_modes": [
+              "input_unknown"
+            ],
+            "fallback": "YIELD_NO_INPUT",
+            "latency_envelope": {
+              "bound": 10,
+              "unit": "fixture_tick"
+            },
+            "output_evidence_roles": [
+              "CURRENT_OBSERVATION"
+            ],
+            "resource_class": "cpu",
+            "side_effect_class": "none",
+            "supported_primitives": [
+              "TARGET.IDENTITY_CURRENT"
+            ],
+            "verifier_id": "rule",
+            "version": "1.0",
+            "warm_cost": 1
+          }
+        ],
+        "resources": {
+          "available_classes": [],
+          "cold_cost_budget": 10,
+          "forbidden_side_effect_classes": [
+            "external_write"
+          ],
+          "warm_cost_budget": 10
+        }
+      }
+    }
+  ],
+  "schema": "verifier_registry_5273_t0_v6.raw.v1"
+}

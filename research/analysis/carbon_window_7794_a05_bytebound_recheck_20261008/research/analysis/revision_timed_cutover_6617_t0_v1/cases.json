@@ -1,0 +1,18 @@
+{
+  "schema": "revision-timed-cutover-cases-v1",
+  "time_unit": "integer logical ticks; not wall-clock or human latency",
+  "preparation_ticks": 3,
+  "stale_preparation_ticks": 12,
+  "cases": [
+    {"id":"C01","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"send:alice","speech_act":"request"},"final":{"turn":"T1","version":2,"principal":"P1","intent":"send:alice","speech_act":"request","authenticated":true,"committed":true,"time":10}},
+    {"id":"C02","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"send:alice","speech_act":"request"},"revision":{"time":4,"epoch":2,"intent":"cancel"},"final":{"turn":"T1","version":3,"principal":"P1","intent":"cancel","speech_act":"cancel","authenticated":true,"committed":true,"time":10}},
+    {"id":"C03","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"send:alice","speech_act":"request"},"revision":{"time":4,"epoch":2,"intent":"send:bob"},"final":{"turn":"T1","version":3,"principal":"P1","intent":"send:bob","speech_act":"request","authenticated":true,"committed":true,"time":10}},
+    {"id":"C04","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"delete:folder","speech_act":"request"},"final":{"turn":"T1","version":2,"principal":"P1","intent":"delete:folder","speech_act":"quotation","authenticated":true,"committed":true,"time":10}},
+    {"id":"C05","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"send:alice","speech_act":"request"},"revision":{"time":4,"epoch":2,"intent":"send:alice"},"final":{"turn":"T2","version":1,"principal":"P2","intent":"archive:bob","speech_act":"request","authenticated":true,"committed":true,"time":10}},
+    {"id":"C06","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"send:alice","speech_act":"request"},"revision":{"time":4,"epoch":2,"intent":"archive:bob"},"final":{"turn":"T1","version":3,"principal":"P1","intent":"archive:bob","speech_act":"request","authenticated":true,"committed":true,"time":10},"partial_preparation_ticks":12},
+    {"id":"C07","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"send:alice","speech_act":"request"},"final":{"turn":"T1","version":2,"principal":"P1","intent":"send:alice","speech_act":"request","authenticated":true,"committed":true,"time":10},"stop":"before_input"},
+    {"id":"C08","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"send:alice","speech_act":"request"},"final":{"turn":"T1","version":2,"principal":"P1","intent":"send:alice","speech_act":"request","authenticated":true,"committed":true,"time":10},"stop":"after_input_effect_unknown"},
+    {"id":"C09","partial":{"turn":"T1","epoch":1,"principal":"P1","intent":"send:alice","speech_act":"request"},"final":{"turn":"T1","version":2,"principal":"P1","intent":"send:alice","speech_act":"request","authenticated":true,"committed":true,"time":10},"stop":"after_verified_irreversible_effect"},
+    {"id":"C10","urgent_release":{"held_key":"KEY_A","interrupt_time":2,"planner_completion_time":20}}
+  ]
+}

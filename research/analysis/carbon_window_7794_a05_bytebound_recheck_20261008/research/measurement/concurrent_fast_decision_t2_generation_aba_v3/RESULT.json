@@ -1,0 +1,31 @@
+{
+  "allocation": "issue1460-generation-aba-v3-20260922-01",
+  "decision": "PASS_T2_GENERATION_ABA_GUARD_SCOPED",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "traces": 200000,
+  "seed": 145920260918012,
+  "class_counts": {
+    "ABA_BOUNCE": 20000,
+    "ABA_CLEAR": 20000,
+    "AUTH_FALSE": 20000,
+    "CROSS_SCOPE": 20000,
+    "DUP_RETURN": 20000,
+    "FORGED_GEN": 20000,
+    "FRESH_G2": 20000,
+    "HARD": 20000,
+    "REPLAY": 20000,
+    "WATCH": 20000
+  },
+  "mismatches": 0,
+  "aba_stale_attempts": 40000,
+  "candidate_stale_effects": 0,
+  "comparator_stale_effects": 40000,
+  "fresh_g2_effects": 20000,
+  "watch_hard_authfalse_effects": 0,
+  "formal_sha256": "c584f465965c021f46e51b6ce0737e2518c6e8184e6a796105fd0fc93465aaba",
+  "audit_sha256": "0888ad7cc6996978a0829009a7d3092b9469fabf14c74f7d46ab66a1a726b05a",
+  "controls_sha256": "0a00a7a5f9203a398f55c40c3b9b2be75dccbe86ca34a7ef7f4335560dc04b78"
+}

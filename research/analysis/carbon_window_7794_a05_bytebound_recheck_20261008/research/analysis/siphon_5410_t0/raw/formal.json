@@ -1,0 +1,3882 @@
+{
+  "capacity_per_resource": 1,
+  "experiment": "issue-5410-siphon-t0-bounded-resource-simulator",
+  "policies": [
+    "NAIVE",
+    "GLOBAL_EXCLUSIVE",
+    "SCC_GUARD",
+    "SAFE_REACHABILITY"
+  ],
+  "resources": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "runs": [
+    {
+      "completed_workflows": 2,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 4,
+      "policy": "NAIVE",
+      "scenario": "opposed_order_deadlock",
+      "terminal_statuses": {
+        "alpha": "deadlocked",
+        "beta": "deadlocked",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 3,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": true
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 8,
+      "policy": "GLOBAL_EXCLUSIVE",
+      "scenario": "opposed_order_deadlock",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 4,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 4,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 5,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 6,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 6,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 7,
+          "workflow": "delta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 1,
+        "guard_replans": 1,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 6,
+      "policy": "SCC_GUARD",
+      "scenario": "opposed_order_deadlock",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "scc_guard_rollback_replan",
+          "released": [
+            "B"
+          ],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 3,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 4,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 5,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 1,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 5,
+      "policy": "SAFE_REACHABILITY",
+      "scenario": "opposed_order_deadlock",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "oracle_hold_unsafe",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 4,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 13,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 40,
+      "policy": "NAIVE",
+      "scenario": "lease_expiry_recovery",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "deadlocked",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 3,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 4,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 5,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 6,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 7,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 8,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 9,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 10,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 11,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 12,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 13,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 14,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 15,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 16,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 17,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 18,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 19,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 20,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 21,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 22,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 23,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 24,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 25,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 26,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 27,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 28,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 29,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 30,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 31,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 32,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 33,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 34,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 35,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 36,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 37,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 38,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 39,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": true
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 11,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 40,
+      "policy": "GLOBAL_EXCLUSIVE",
+      "scenario": "lease_expiry_recovery",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "deadlocked",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 4,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 4,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 5,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 6,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 6,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 7,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 8,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 9,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 10,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 11,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 12,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 13,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 14,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 15,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 16,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 17,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 18,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 19,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 20,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 21,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 22,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 23,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 24,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 25,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 26,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 27,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 28,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 29,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 30,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 31,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 32,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 33,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 34,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 35,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 36,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 37,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 38,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 39,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": true
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 1,
+        "guard_replans": 1,
+        "lease_expiries": 12,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 40,
+      "policy": "SCC_GUARD",
+      "scenario": "lease_expiry_recovery",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "deadlocked",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "scc_guard_rollback_replan",
+          "released": [
+            "B"
+          ],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 3,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 4,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 5,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 6,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 7,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 8,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 9,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 10,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 11,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 12,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 13,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 14,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 15,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 16,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 17,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 18,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 19,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 20,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 21,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 22,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 23,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 24,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 25,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 26,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 27,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 28,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 29,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 30,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 31,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 32,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 33,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 34,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 35,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 36,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 37,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 38,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 39,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": true
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 12,
+        "oracle_denials": 1,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 40,
+      "policy": "SAFE_REACHABILITY",
+      "scenario": "lease_expiry_recovery",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "deadlocked",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "oracle_hold_unsafe",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 4,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 5,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 6,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 7,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 8,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 9,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 10,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 11,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 12,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 13,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 14,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 15,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 16,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 17,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 18,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 19,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 20,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 21,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 22,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 23,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 24,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 25,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 26,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 27,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 28,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 29,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 30,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 31,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 32,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 33,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 34,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 35,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 36,
+          "workflow": "beta"
+        },
+        {
+          "event": "lease_expire",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 37,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 38,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 39,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": true
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 1,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 3,
+      "policy": "NAIVE",
+      "scenario": "cancellation_release",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "cancelled",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "cancel",
+          "released": [
+            "B"
+          ],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 1,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 6,
+      "policy": "GLOBAL_EXCLUSIVE",
+      "scenario": "cancellation_release",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "cancelled",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "cancel",
+          "released": [],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 3,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 4,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 4,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 5,
+          "workflow": "delta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 1,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 3,
+      "policy": "SCC_GUARD",
+      "scenario": "cancellation_release",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "cancelled",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "cancel",
+          "released": [
+            "B"
+          ],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 1,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 1,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 3,
+      "policy": "SAFE_REACHABILITY",
+      "scenario": "cancellation_release",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "cancelled",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "oracle_hold_unsafe",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "cancel",
+          "released": [],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 1,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 3,
+      "policy": "NAIVE",
+      "scenario": "authority_revocation_release",
+      "terminal_statuses": {
+        "alpha": "revoked",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "revoke",
+          "released": [
+            "A"
+          ],
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 1,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 7,
+      "policy": "GLOBAL_EXCLUSIVE",
+      "scenario": "authority_revocation_release",
+      "terminal_statuses": {
+        "alpha": "revoked",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "revoke",
+          "released": [
+            "A"
+          ],
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 3,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 4,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 5,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 5,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 6,
+          "workflow": "delta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 1,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 3,
+      "policy": "SCC_GUARD",
+      "scenario": "authority_revocation_release",
+      "terminal_statuses": {
+        "alpha": "revoked",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "revoke",
+          "released": [
+            "A"
+          ],
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 1,
+        "revoked": 1,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 4,
+      "policy": "SAFE_REACHABILITY",
+      "scenario": "authority_revocation_release",
+      "terminal_statuses": {
+        "alpha": "revoked",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "oracle_hold_unsafe",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "revoke",
+          "released": [
+            "A"
+          ],
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 3,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 2,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 4,
+      "policy": "NAIVE",
+      "scenario": "hidden_dependency",
+      "terminal_statuses": {
+        "alpha": "deadlocked",
+        "beta": "deadlocked",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 3,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": true
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 1
+      },
+      "false_rejected_workflows": 1,
+      "makespan_ticks": 6,
+      "policy": "GLOBAL_EXCLUSIVE",
+      "scenario": "hidden_dependency",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "unknown",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "unknown_incomplete_dependency",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 3,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 4,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 4,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 5,
+          "workflow": "delta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 3,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 1
+      },
+      "false_rejected_workflows": 1,
+      "makespan_ticks": 3,
+      "policy": "SCC_GUARD",
+      "scenario": "hidden_dependency",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "unknown",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "unknown_incomplete_dependency",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 1,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 5,
+      "policy": "SAFE_REACHABILITY",
+      "scenario": "hidden_dependency",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "oracle_hold_unsafe",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 4,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 2,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 4,
+      "policy": "NAIVE",
+      "scenario": "retry_backoff",
+      "terminal_statuses": {
+        "alpha": "deadlocked",
+        "beta": "deadlocked",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 3,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": true
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 8,
+      "policy": "GLOBAL_EXCLUSIVE",
+      "scenario": "retry_backoff",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 4,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 4,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 5,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 6,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 6,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 7,
+          "workflow": "delta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 1,
+        "guard_replans": 1,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 6,
+      "policy": "SCC_GUARD",
+      "scenario": "retry_backoff",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "wait",
+          "holder": "beta",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "A",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "scc_guard_rollback_replan",
+          "released": [
+            "B"
+          ],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 3,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 4,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 5,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 1,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 5,
+      "policy": "SAFE_REACHABILITY",
+      "scenario": "retry_backoff",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "oracle_hold_unsafe",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "wait",
+          "holder": "alpha",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A",
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 3,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B",
+            "A"
+          ],
+          "tick": 4,
+          "workflow": "beta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 3,
+      "policy": "NAIVE",
+      "scenario": "independent_workflows",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A"
+          ],
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B"
+          ],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 6,
+      "policy": "GLOBAL_EXCLUSIVE",
+      "scenario": "independent_workflows",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A"
+          ],
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B"
+          ],
+          "tick": 2,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 2,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 3,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 4,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 4,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 5,
+          "workflow": "delta"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 3,
+      "policy": "SCC_GUARD",
+      "scenario": "independent_workflows",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A"
+          ],
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B"
+          ],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    },
+    {
+      "completed_workflows": 4,
+      "counters": {
+        "cancelled": 0,
+        "guard_cycles": 0,
+        "guard_replans": 0,
+        "lease_expiries": 0,
+        "oracle_denials": 0,
+        "revoked": 0,
+        "unknown_rejections": 0
+      },
+      "false_rejected_workflows": 0,
+      "makespan_ticks": 3,
+      "policy": "SAFE_REACHABILITY",
+      "scenario": "independent_workflows",
+      "terminal_statuses": {
+        "alpha": "done",
+        "beta": "done",
+        "delta": "done",
+        "gamma": "done"
+      },
+      "trace": [
+        {
+          "event": "acquire",
+          "resource": "A",
+          "tick": 0,
+          "workflow": "alpha"
+        },
+        {
+          "event": "acquire",
+          "resource": "B",
+          "tick": 0,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "C",
+          "tick": 0,
+          "workflow": "gamma"
+        },
+        {
+          "event": "acquire",
+          "resource": "E",
+          "tick": 0,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "A"
+          ],
+          "tick": 1,
+          "workflow": "alpha"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "B"
+          ],
+          "tick": 1,
+          "workflow": "beta"
+        },
+        {
+          "event": "acquire",
+          "resource": "D",
+          "tick": 1,
+          "workflow": "gamma"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "E"
+          ],
+          "tick": 1,
+          "workflow": "delta"
+        },
+        {
+          "event": "complete",
+          "released": [
+            "C",
+            "D"
+          ],
+          "tick": 2,
+          "workflow": "gamma"
+        }
+      ],
+      "unrecovered_deadlock": false
+    }
+  ],
+  "scenario_count": 7,
+  "scope": "deterministic symbolic model; traces do not model real GUI/tool side effects"
+}

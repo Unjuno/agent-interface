@@ -1,0 +1,376 @@
+{
+  "baseline_rows": [
+    {
+      "budget": 0,
+      "id": 0,
+      "profile": "hot1",
+      "reads": 16,
+      "terminal": "CUTOFF"
+    },
+    {
+      "budget": 1,
+      "id": 1,
+      "profile": "hot1",
+      "reads": 1,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 4,
+      "id": 2,
+      "profile": "hot1",
+      "reads": 4,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 0,
+      "id": 3,
+      "profile": "hot5",
+      "reads": 16,
+      "terminal": "CUTOFF"
+    },
+    {
+      "budget": 1,
+      "id": 4,
+      "profile": "hot5",
+      "reads": 5,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 4,
+      "id": 5,
+      "profile": "hot5",
+      "reads": 8,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 0,
+      "id": 6,
+      "profile": "co_ready",
+      "reads": 0,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 1,
+      "id": 7,
+      "profile": "co_ready",
+      "reads": 0,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 4,
+      "id": 8,
+      "profile": "co_ready",
+      "reads": 0,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 0,
+      "id": 9,
+      "profile": "cold_late",
+      "reads": 4,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 1,
+      "id": 10,
+      "profile": "cold_late",
+      "reads": 1,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 4,
+      "id": 11,
+      "profile": "cold_late",
+      "reads": 4,
+      "terminal": "CANCEL_ACK"
+    },
+    {
+      "budget": 0,
+      "id": 12,
+      "profile": "data_only",
+      "reads": 4,
+      "terminal": "EMPTY"
+    },
+    {
+      "budget": 1,
+      "id": 13,
+      "profile": "data_only",
+      "reads": 4,
+      "terminal": "EMPTY"
+    },
+    {
+      "budget": 4,
+      "id": 14,
+      "profile": "data_only",
+      "reads": 4,
+      "terminal": "EMPTY"
+    }
+  ],
+  "controls": [
+    {
+      "accepted": true,
+      "expected": "reject impossible Linux FD identity",
+      "name": "negative_control_read_fd",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/negative_control_read_fd.json",
+      "result": {
+        "budget": 0,
+        "id": 6,
+        "profile": "co_ready",
+        "reads": 0,
+        "terminal": "CANCEL_ACK"
+      },
+      "row_id": 6,
+      "sha256": "969262526d449ce6aa54afa89aa2d90dae75d71558b4be3da4b535d04cb0ef50"
+    },
+    {
+      "accepted": true,
+      "expected": "reject impossible Linux FD identity",
+      "name": "negative_selector_fd",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/negative_selector_fd.json",
+      "result": {
+        "budget": 0,
+        "id": 6,
+        "profile": "co_ready",
+        "reads": 0,
+        "terminal": "CANCEL_ACK"
+      },
+      "row_id": 6,
+      "sha256": "9bd1a6fdadefb3ca6696c226646a592e8d05d5c4e63af787937b914e9c2d3aa1"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject typed identity alias",
+      "name": "float_control_read_fd",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/float_control_read_fd.json",
+      "reason": "integer:fd",
+      "row_id": 6,
+      "sha256": "d8887bb87d35dfc6a248ef306678dbb3052a83594f68dd54da00da66065eaaa2"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject typed identity alias",
+      "name": "boolean_selector_fd",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/boolean_selector_fd.json",
+      "reason": "integer:selector_fd",
+      "row_id": 6,
+      "sha256": "54c632996c3e644a425ba4c93292c365f7168565d6bfaa56a4c1475a6330c748"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject wrong command byte",
+      "name": "wrong_control_write_byte",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/wrong_control_write_byte.json",
+      "reason": "write byte/size",
+      "row_id": 6,
+      "sha256": "c580ea4c6bb815059c954124b3ebd012097f30de892e19e5a79bf095ab5491f3"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject wrong command byte",
+      "name": "wrong_control_read_byte",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/wrong_control_read_byte.json",
+      "reason": "read conservation",
+      "row_id": 6,
+      "sha256": "bd46e2131998905bbc15a0e0fd94b025910cc8b5d603aeac16ed61c2d885ea97"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject cleanup mistaken for ACK",
+      "name": "false_ack_at_cutoff",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/false_ack_at_cutoff.json",
+      "reason": "ACK custody",
+      "row_id": 0,
+      "sha256": "4121cdf75f5af84485f323978c071c6a61b65cbb70fd121538dd54b697de094a"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject primary/cleanup phase crossing",
+      "name": "cleanup_before_terminal",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/cleanup_before_terminal.json",
+      "reason": "cleanup phase",
+      "row_id": 0,
+      "sha256": "9860a2a7b64b5d5997a9f8950769c552360b8fb793c7c87deea770ffe021a643"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject missing pending command byte",
+      "name": "omit_pending_control_cleanup",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/omit_pending_control_cleanup.json",
+      "reason": "cleanup empty",
+      "row_id": 0,
+      "sha256": "8cb8ebc39c3eb4d765e8292615a8824794788435bdc3b91b9d031be17f1ebaf3"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject pending-control accounting mismatch",
+      "name": "pending_control_hidden_from_poll",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/pending_control_hidden_from_poll.json",
+      "reason": "actual readiness byte ledger",
+      "row_id": 1,
+      "sha256": "856ab8cae008101254864f6b5cf08ea92e4aa66539b3fa04dd4093adde3ac5ca"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject wrong primary diagnostic cutoff",
+      "name": "cutoff_at15",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/cutoff_at15.json",
+      "reason": "fixed diagnostic cutoff",
+      "row_id": 0,
+      "sha256": "8023966a3bc5dd72d02d28851839b06857af92825313bed4bbb69cb2fe8a9ad1"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject per-poll service above fixed k",
+      "name": "budget4_service8_same_poll",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/budget4_service8_same_poll.json",
+      "reason": "per-poll budget",
+      "row_id": 5,
+      "sha256": "e9abeb96fdaea4dc82188043e289a775c3f402ff5d94f60ffc00f6eba2a80296"
+    },
+    {
+      "accepted": false,
+      "exception": "ValueError",
+      "expected": "reject primary after terminal",
+      "name": "primary_control_read_after_cutoff",
+      "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/primary_control_read_after_cutoff.json",
+      "reason": "primary after terminal",
+      "row_id": 0,
+      "sha256": "542f0b2db2d0483ce824f18826b94175fd0078385038d099f33a5bd174de67c2"
+    }
+  ],
+  "denominator_preserving_counterexample": {
+    "changed_fields": [
+      "row6.events[0].fds.CR.fd: 6 -> -1",
+      "row6.events[3].ready[1].fd: 6 -> -1",
+      "row6.events[12].fd: 6 -> -1"
+    ],
+    "path": "<OWNED_WORKSPACE>/work/hot-drain-helper-0903/negative_control_read_fd_full15.jsonl",
+    "rows": [
+      {
+        "budget": 0,
+        "id": 0,
+        "profile": "hot1",
+        "reads": 16,
+        "terminal": "CUTOFF"
+      },
+      {
+        "budget": 1,
+        "id": 1,
+        "profile": "hot1",
+        "reads": 1,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 4,
+        "id": 2,
+        "profile": "hot1",
+        "reads": 4,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 0,
+        "id": 3,
+        "profile": "hot5",
+        "reads": 16,
+        "terminal": "CUTOFF"
+      },
+      {
+        "budget": 1,
+        "id": 4,
+        "profile": "hot5",
+        "reads": 5,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 4,
+        "id": 5,
+        "profile": "hot5",
+        "reads": 8,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 0,
+        "id": 6,
+        "profile": "co_ready",
+        "reads": 0,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 1,
+        "id": 7,
+        "profile": "co_ready",
+        "reads": 0,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 4,
+        "id": 8,
+        "profile": "co_ready",
+        "reads": 0,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 0,
+        "id": 9,
+        "profile": "cold_late",
+        "reads": 4,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 1,
+        "id": 10,
+        "profile": "cold_late",
+        "reads": 1,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 4,
+        "id": 11,
+        "profile": "cold_late",
+        "reads": 4,
+        "terminal": "CANCEL_ACK"
+      },
+      {
+        "budget": 0,
+        "id": 12,
+        "profile": "data_only",
+        "reads": 4,
+        "terminal": "EMPTY"
+      },
+      {
+        "budget": 1,
+        "id": 13,
+        "profile": "data_only",
+        "reads": 4,
+        "terminal": "EMPTY"
+      },
+      {
+        "budget": 4,
+        "id": 14,
+        "profile": "data_only",
+        "reads": 4,
+        "terminal": "EMPTY"
+      }
+    ],
+    "sha256": "6b18561cfb3194b7869ba96ada494c1ea80288a74e4f7beddcdf518a6aef34b0"
+  },
+  "helper_source_sha256": "4dbd486e5392a622931fd3d9d295a81d523380aedb1a2c30a86fc676039e831e",
+  "scope": "bounded internal copied-JSON controls; no formal run or eligible approval",
+  "source_hashes": {
+    "FREEZE.json": "aecccd3e1f772535807a902ec76e53ef6de1b86632b5d1b2a0bd6e9a3ca14555",
+    "PLAN.md": "562e7810cbdb7efe1b9e9ec915e4af6d4f1e4134519fbfa14aaded5f87cabae4",
+    "audit.py.txt": "003a7ca7f370494b70ad94cb5335deb01303cedd349fc5d3286246e3f46b3539",
+    "input.json": "3d155e45f16b885afc1a3cce9094050bcc341875d775be19058e2db66be9fb56",
+    "results/raw.jsonl": "242439e8d7a96f2c938668955c5469e40e1ccaeb97a754d1f1295e07f156efa0"
+  }
+}

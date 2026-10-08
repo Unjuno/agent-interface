@@ -1,0 +1,22 @@
+{
+  "binary_hashes": {
+    "Xvfb": "4efd5850f0d98c587195ef77be92916dd1578fb725ddd1b2d95d232042813c5e",
+    "libX11": "b03e563b316b8b53c7988f0ee91d6656cc425538e00947a8b14482d179e80099",
+    "python": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1"
+  },
+  "build_command": "gcc -O2 -Wall -Wextra -Werror -shared -fPIC native.c -lX11 -o native.so",
+  "cpu_max": "400000 100000",
+  "eligible_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "intake_main": "e2be13b9af699cfe9de8cc6d0ce2c32846cb6530",
+  "memory_max": "4294967296",
+  "native_upstream_git_blob": "92b2ca11117f6bcb80f45dbac62e16d62bb4f6fd",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "switch_s": 0.005
+}

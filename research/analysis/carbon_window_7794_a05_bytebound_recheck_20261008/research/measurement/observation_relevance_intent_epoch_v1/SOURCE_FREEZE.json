@@ -1,0 +1,62 @@
+{
+  "task": "OBSERVATION-GATING-O3-INTENT-EPOCH-BINDING-20260918-001",
+  "issue": 1645,
+  "base": "d6125ac3055d3059b649a492569d947725226b48",
+  "branch": "research/observation-relevance-intent-epoch-1645",
+  "formal_invocations_before_freeze": 0,
+  "analytic_witness": {
+    "assumption": "intent switch can precede relevance publication",
+    "relevance_only_inputs_identical": true,
+    "required_decisions_differ": true,
+    "old_required": "SUPPRESS",
+    "new_required": "FORWARD"
+  },
+  "source_bundle": {
+    "git_blob": "a0a42223ae7c5b602fa5e83507a2f70a0a83911e",
+    "sha256": "0d226e66001f3dede5c7fbcc40530e852bcca8adca60cd944d669e66b3a6ea20",
+    "reconstruct_blob": "6c91c34ef34d9a93c2f7f534a14068b9375299b7",
+    "reconstruct_sha256": "a579194641b322d7f08c2099f355aa9a91375d86e00cf1c805b89f7c3c1e86a1",
+    "member_sha256": {
+      "PLAN.md": "1120b1e8ea1fd908fc4e5ab320c47dd29b9a5dbac0098cd199c4f8ab472b0f43",
+      "audit.py": "22df7c1081f07a83ed20be895d81f78dc04c3bc16692b9c35a64a8c0c7efe3b0",
+      "candidate.py": "13a84b897acea3a43924a829cf61ed16ae2c5ff6db640d3c45d91a0de101d4ed",
+      "oracle.py": "02f9911c2215ce12c8fb6f4e779e8cf9150aaf7226b0052510aa5ad2712b031f",
+      "runner.py": "7c6e78db6419f0fb5c3425644de432576e72b015b812266ef5868dcf57c45ad0"
+    }
+  },
+  "manifest": {
+    "git_blob": "3c9cd6c796ed5a88902773980d1d040572c28df3",
+    "sha256": "d0ec7b0be5619e9e8b1faa4088f7fcc35ec64116e9b15d3c12bd4b6e1e7add28"
+  },
+  "construction": {
+    "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+    "raw_sha256": "f6908b1ff0d1960b75929fb9bf379926b8e6a297b9377e612ad231003b089752",
+    "retained_archive_blob": "7074586a291792a94aaaf969bfe66e025c857134",
+    "retained_archive_sha256": "ab7575b927f3f0867421f0d1319046304927d3307e49112405280d564cba38f3",
+    "summary_blob": "28ab075291c3914b425f175c2f77c2f4609ad18c",
+    "summary_sha256": "5f16ef82768089f6ef2bad2b016b75cf53cb45a89a62b370ec4c70abfe593e50",
+    "audit_blob": "62ea9551a90a120a4f288c42b646a6a95a90fbfa",
+    "audit_sha256": "0b392f6512764b707f6446cfda82a5a49dfd5bbdab5d85bf18110a75fe4142b6",
+    "retention_repair": "one base64 transcription character corrected before formal; scientific source unchanged"
+  },
+  "formal": {
+    "seed": 164220260918001,
+    "histories": 220000,
+    "counts": {
+      "CURRENT_IRRELEVANT": 30000,
+      "CURRENT_RELEVANT": 30000,
+      "INTENT_SWITCH_GAP_HIDDEN": 40000,
+      "SAME_ROI_SWITCH_GAP": 25000,
+      "FRESH_POST_SWITCH_IRRELEVANT": 30000,
+      "FRESH_SAME_ROI_RECOVERY": 25000,
+      "CRITICAL_OUTSIDE": 20000,
+      "MISSING_OR_WRONG_INTENT_RECEIPT": 10000,
+      "FORGED_INTENT_EPOCH": 10000
+    },
+    "invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning": 0,
+    "status": "NOT_RUN"
+  }
+}

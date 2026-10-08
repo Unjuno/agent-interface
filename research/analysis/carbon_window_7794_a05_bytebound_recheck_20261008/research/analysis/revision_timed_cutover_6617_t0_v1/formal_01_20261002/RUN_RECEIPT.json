@@ -1,0 +1,47 @@
+{
+  "schema": "revision-timed-cutover-run-receipt-v1",
+  "allocation_id": "ISSUE-6617-T0-WSLC-20261002-01",
+  "started_after_freeze": true,
+  "formal_invocations": {"candidate": 1, "independent_auditor": 1, "retries": 0},
+  "candidate": {"exit_code": 0, "stdout": "{\"rows\": 30, \"arms\": 3, \"scenarios\": 10}"},
+  "auditor": {"exit_code": 0, "disposition": "PASS_METHOD_SCOPED", "errors": 0, "mutations_rejected": 4},
+  "runtime": {
+    "engine": "Microsoft WSL Containers (wslc.exe)",
+    "wslc_version": "3.0.1.0",
+    "kernel": "6.18.40.1-1",
+    "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "image_config_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+    "architecture": "linux/amd64",
+    "python": "3.12.15",
+    "network": "none",
+    "pull": "never",
+    "source_mount": "read-only",
+    "output_mount": "separate read-write mount",
+    "requested_cpus": 1,
+    "requested_memory": "512M",
+    "resource_warning": "wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.",
+    "resource_enforcement_claim": "none",
+    "gpu": "not requested; deterministic event simulation has no GPU-dependent work"
+  },
+  "outputs": {
+    "raw_path": "raw.json",
+    "raw_bytes": 41113,
+    "raw_sha256": "0edd1c334494d35b70e76ef54cb34afdbe08884c30bab4442a518151c9b044cd",
+    "audit_path": "audit.json",
+    "audit_bytes": 1161,
+    "audit_sha256": "206a6f82c5c2b5572bf5aa0a0d6374e8a8136b48e1d672222507046d0770698e"
+  },
+  "metrics": {
+    "rows": 30,
+    "scenarios": 10,
+    "arms": 3,
+    "stable_case_final_only_logical_ticks": 6,
+    "stable_case_version_bound_logical_ticks": 3,
+    "stable_case_saving_logical_ticks": 3,
+    "safe_arm_unsafe_inputs": 0,
+    "naive_arm_unsafe_provisional_inputs": 9,
+    "mutation_controls_rejected": ["old_epoch", "partial_as_final", "speaker_merge", "cancel_as_undo"]
+  },
+  "construction_checks": {"python": "3.11.9", "unittest": "7/7 passed", "py_compile": "passed", "git_diff_check": "passed"},
+  "scope": "Deterministic scripted logical-time method result only. No speech/audio, human intent, ASR, actual authentication, GUI, model, physical input, actual effect, wall-clock latency, product safety, or deployment evidence. The measured latency difference is one stipulated schedule, not a population estimate."
+}

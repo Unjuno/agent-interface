@@ -1,0 +1,30 @@
+{
+  "allocation": "MAP01-HELD-INPUT-PRIOR-TABLE-RECONCILIATION-59-T1-20261002-01",
+  "issue": 6198,
+  "parent_pr": 6203,
+  "parent_pr_head": "0032dfd4ab08343b81816a4e21192de345cca226",
+  "method": "audit-only cross-document reconciliation; no candidate replay and no original auditor invocation",
+  "inputs": {
+    "candidate_v38_sha256": "55771151887660b4a264d9e788410e12e2e6e45ca4f4c9d96db1a5f93e85e5f1",
+    "candidate_v39_sha256": "49a47182f6d6f3fdb944224882be5716a0452b2cc88beee51b482ef915be5fc0",
+    "prior_table_sha256": "2aab450e687cce4b912a83d548b9ab76165ed1826110e7506468efe2891ef7df",
+    "prior_table_git_blob_sha1": "b84cddc6d884e10e8a5e9baf202210923c558c57",
+    "comparator_sha256": "f523d2f103e4f326919b6e6fbcf407f88b6771bfb624dbdde16cf51c361c8109",
+    "tests_sha256": "c01d655b18daeccb0da7593481314b6fccb26f47312ebe3df1bb53eac6af8e91"
+  },
+  "contract": {
+    "completed_rows": {"v38": 11, "v39": 27},
+    "display_rounding_ms": 0.001,
+    "exact_aggregate_tolerance_ms": 1e-9,
+    "candidate_invocations": 0,
+    "original_auditor_invocations": 0,
+    "supplemental_comparator_invocations": 1,
+    "retries": 0,
+    "substitutions": 0,
+    "container_used": false,
+    "network_model_gui_game_or_task_effect": false
+  },
+  "decision_gate": "PASS_PRIOR_TABLE_RECONCILED only when input identities match, 38/38 completed row identities/values reconcile, 18/18 exact aggregates and derived fractions pass, and exact v39 interruption receipt matches; otherwise preserve FAIL/STOP and do not retry",
+  "formal_output": "RECONCILIATION.json",
+  "frozen_before_formal_invocation": true
+}

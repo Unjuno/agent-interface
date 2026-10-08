@@ -1,0 +1,15 @@
+{
+  "schema": "topology-6183-a03-auditor-labels-v1",
+  "labels": [
+    {"id":"route_connected","visual_truth":"PRESENT","hidden_graph":"connected"},
+    {"id":"route_gap","visual_truth":"ABSENT","hidden_graph":"disconnected"},
+    {"id":"route_near_touch","visual_truth":"UNKNOWN","hidden_graph":"disconnected"},
+    {"id":"route_occluded","visual_truth":"UNKNOWN","hidden_graph":"unknown_under_occlusion"},
+    {"id":"route_crossing","visual_truth":"ABSENT","hidden_graph":"disconnected_crossing"},
+    {"id":"hidden_twin_visible","visual_truth":"PRESENT","hidden_graph":"connected"},
+    {"id":"hidden_twin_overpass","visual_truth":"PRESENT","hidden_graph":"disconnected_overpass"},
+    {"id":"outline_closed","visual_truth":"PRESENT","hidden_graph":"closed"},
+    {"id":"outline_gap","visual_truth":"ABSENT","hidden_graph":"open"},
+    {"id":"outline_gray_gap","visual_truth":"UNKNOWN","hidden_graph":"open"}
+  ]
+}

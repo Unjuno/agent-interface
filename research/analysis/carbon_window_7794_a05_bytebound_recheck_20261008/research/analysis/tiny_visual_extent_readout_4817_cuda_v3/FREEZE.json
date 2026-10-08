@@ -1,0 +1,31 @@
+{
+  "schema": "tiny-visual-extent-readout-cuda-freeze-v1",
+  "issue": 4850,
+  "allocation": "tiny-visual-extent-readout-4817-cuda-20260927-03",
+  "base_main": "a6329d5b211f0990b0bda29736b6d24f1063de28",
+  "source_path": "research/analysis/tiny_visual_extent_readout_4817_v2/",
+  "source_blob_ids": {
+    "prepare_py": "d96e1d795259134264eea6a055a5b39776687203",
+    "models_py": "aa89afe49ff9523f9e342ced99e7ed9894ec5230",
+    "run_py": "0c27a90e16d196d2d673cad93253ab2ac5e3380d",
+    "audit_numpy2_py": "f1454936bf9ac975a71f7a11a14b57a54cc0d029",
+    "controls_numpy2_py": "52c2a6b2cab24e6195a30fec54d2a7271a725419"
+  },
+  "corrected_runner_blob": "ac2deba1b8e4f99a252e375a911d9603a55c3d29",
+  "cpu_auditor_blob": "0bdf8561f1a37c6c1e0f4c78323f4048e3274716",
+  "image_id": "sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+  "env": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8"
+  },
+  "data_seed": 89100471,
+  "init_seed": 89100472,
+  "finite_difference_seed": 89100473,
+  "finite_difference_eps": 0.00001,
+  "finite_difference_count": 49,
+  "finite_difference_max_symmetric_relative_error": 0.0001,
+  "steps": 1000,
+  "lr": 0.2,
+  "threshold": 0.75,
+  "formal_fits": 0,
+  "construction_fits": 2
+}

@@ -1,0 +1,29 @@
+{
+  "scope": "Windows SDK receives retained WSL image; not direct model-host tool use",
+  "source_commit": "36bdf3404",
+  "tool": "native_observe",
+  "stage": 7,
+  "image_bytes": 58496,
+  "image_sha256": "32e86db4cdd2b6c26e064a9cdc07fe9fcc1ae07fe59342cbf41a3c02e128919a",
+  "image_sequence": 22,
+  "mime_type": "image/png",
+  "files_unchanged": 105,
+  "command": "wsl.exe",
+  "arguments": [
+    "-d",
+    "Ubuntu",
+    "--cd",
+    "/mnt/c/Users/junny/Documents/New project/agent-interface-admission-audit",
+    "--exec",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONPATH=.:research/live_control",
+    "/tmp/agent-interface-mcp-venv/bin/python",
+    "research/live_control/native_mcp_v1.py",
+    "--run-directory",
+    "results-local/native-multiapp-integration-01/run"
+  ],
+  "model_callable_tools_present": false,
+  "gui_started": false,
+  "input_submitted": false
+}

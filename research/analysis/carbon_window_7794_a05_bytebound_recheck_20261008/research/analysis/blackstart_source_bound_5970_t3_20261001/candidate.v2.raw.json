@@ -1,0 +1,117 @@
+{
+  "derived_sources": {
+    "app.py": {
+      "derived_sha256": "fe24b580beaf048921352cc49ec380ba6f3122240c9197a1b62fc766d72afa63",
+      "diff_sha256": "40ce9b0501f0201569371d0c70a3225332d4d17fe65bb9e6e8fd998a9828d025",
+      "source_sha256": "a186f8e89a897e97ca08f7a31f3fe726629c13a28274c1458a51b502251b5204"
+    },
+    "observer.py": {
+      "derived_sha256": "a3e46223019f67bf98bb2a202aa24196628d2c975255bec034bd7855bf812d4d",
+      "diff_sha256": "77ea95ea002ed27db9d1736deebabf9a8deddf52a98958d460e02bdcaea31b84",
+      "source_sha256": "73d64839373c7af29354e7c38601304b90a0a9eadde5546afa7623e0c7aa9162"
+    }
+  },
+  "prior_preflight_stop_verified": true,
+  "run": {
+    "app_returncode": -15,
+    "app_rows": [
+      {
+        "actuation_id": "t3-d15a03961131427db4b071be9c9a66ff:keypress",
+        "causal_parent_ids": [
+          "act:t3-d15a03961131427db4b071be9c9a66ff:keypress"
+        ],
+        "event_id": "app:1",
+        "keycode": 50,
+        "keysym": "Shift_L",
+        "kind": "KeyPress",
+        "mono_ns": 25358589486767,
+        "source": "app",
+        "source_seq": 1,
+        "state": 0,
+        "time": 25358586,
+        "value": ""
+      },
+      {
+        "actuation_id": "t3-d15a03961131427db4b071be9c9a66ff:keyrelease",
+        "causal_parent_ids": [
+          "act:t3-d15a03961131427db4b071be9c9a66ff:keyrelease"
+        ],
+        "event_id": "app:2",
+        "keycode": 50,
+        "keysym": "Shift_L",
+        "kind": "KeyRelease",
+        "mono_ns": 25361611705327,
+        "source": "app",
+        "source_seq": 2,
+        "state": 1,
+        "time": 25361607,
+        "value": ""
+      }
+    ],
+    "driver_rows": [
+      {
+        "actuation_id": "t3-d15a03961131427db4b071be9c9a66ff:keypress",
+        "keycode": 50,
+        "mono_ns": 25358584833633,
+        "phase": "press_dispatch"
+      },
+      {
+        "error": {
+          "message": "bounded fixture wait expired",
+          "type": "TimeoutError"
+        },
+        "mono_ns": 25361599934280,
+        "phase": "candidate_error"
+      },
+      {
+        "actuation_id": "t3-d15a03961131427db4b071be9c9a66ff:keyrelease",
+        "keycode": 50,
+        "mono_ns": 25361606534402,
+        "phase": "release_dispatch_cleanup"
+      },
+      {
+        "error": "TimeoutError",
+        "mono_ns": 25363621079592,
+        "phase": "release_pair_missing"
+      },
+      {
+        "mono_ns": 25363630961433,
+        "phase": "terminal_keymap",
+        "shift_down": false
+      }
+    ],
+    "epoch": "t3-d15a03961131427db4b071be9c9a66ff",
+    "error": {
+      "message": "bounded fixture wait expired",
+      "type": "TimeoutError"
+    },
+    "keycode": 50,
+    "observer_returncode": 0,
+    "observer_rows": [],
+    "release_attempted": true,
+    "schema": "blackstart-source-bound-t3-run-v1",
+    "terminal_neutral": true
+  },
+  "runner_exit_code": 2,
+  "runner_stderr": "",
+  "runner_stdout": "",
+  "schema": "blackstart-source-bound-t3-candidate-v2",
+  "source_reconstruction": {
+    "archive_bytes": 36032,
+    "archive_sha256": "5f153824d677503275f268e2aef9c9971d5f0a3f369c573feaa1a5d10604ad8d",
+    "expanded_file_count": 324,
+    "formal_case_count": 24,
+    "sources": {
+      "app.py": {
+        "archive_member": "research/integration/x11_reconnect_key_state_2107_v1/source/app.py",
+        "bytes": 1450,
+        "sha256": "a186f8e89a897e97ca08f7a31f3fe726629c13a28274c1458a51b502251b5204"
+      },
+      "observer.py": {
+        "archive_member": "research/integration/x11_reconnect_key_state_2107_v1/source/observer.py",
+        "bytes": 1736,
+        "sha256": "73d64839373c7af29354e7c38601304b90a0a9eadde5546afa7623e0c7aa9162"
+      }
+    }
+  }
+}

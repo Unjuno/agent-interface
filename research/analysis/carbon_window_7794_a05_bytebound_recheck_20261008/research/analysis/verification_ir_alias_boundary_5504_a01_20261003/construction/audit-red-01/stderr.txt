@@ -1,0 +1,905 @@
+test_accepts_independent_fixture_with_exact_schema_metrics (test_audit.AuditContractTests.test_accepts_independent_fixture_with_exact_schema_metrics) ... FAIL
+test_accepts_json_whitespace_and_object_key_order (test_audit.AuditContractTests.test_accepts_json_whitespace_and_object_key_order) ... FAIL
+test_cli_fixture_fail_is_json_and_exit_one (test_audit.AuditContractTests.test_cli_fixture_fail_is_json_and_exit_one) ... FAIL
+test_cli_fixture_pass_is_json_and_exit_zero (test_audit.AuditContractTests.test_cli_fixture_pass_is_json_and_exit_zero) ... FAIL
+test_cli_read_error_is_json_and_exit_one (test_audit.AuditContractTests.test_cli_read_error_is_json_and_exit_one) ... FAIL
+test_corruption_case_id_padding (test_audit.AuditContractTests.test_corruption_case_id_padding) ... FAIL
+test_corruption_case_id_type (test_audit.AuditContractTests.test_corruption_case_id_type) ... FAIL
+test_corruption_complete_decision_hidden_id (test_audit.AuditContractTests.test_corruption_complete_decision_hidden_id) ... FAIL
+test_corruption_complete_decision_missing_key (test_audit.AuditContractTests.test_corruption_complete_decision_missing_key) ... FAIL
+test_corruption_complete_duplicate_decision (test_audit.AuditContractTests.test_corruption_complete_duplicate_decision) ... FAIL
+test_corruption_complete_extra_decision (test_audit.AuditContractTests.test_corruption_complete_extra_decision) ... FAIL
+test_corruption_complete_extra_key (test_audit.AuditContractTests.test_corruption_complete_extra_key) ... FAIL
+test_corruption_complete_float_count (test_audit.AuditContractTests.test_corruption_complete_float_count) ... FAIL
+test_corruption_complete_forged_conflict (test_audit.AuditContractTests.test_corruption_complete_forged_conflict) ... FAIL
+test_corruption_complete_hidden_id (test_audit.AuditContractTests.test_corruption_complete_hidden_id) ... FAIL
+test_corruption_complete_missing_decision (test_audit.AuditContractTests.test_corruption_complete_missing_decision) ... FAIL
+test_corruption_complete_missing_key (test_audit.AuditContractTests.test_corruption_complete_missing_key) ... FAIL
+test_corruption_complete_missing_predicate (test_audit.AuditContractTests.test_corruption_complete_missing_predicate) ... FAIL
+test_corruption_complete_null_decisions (test_audit.AuditContractTests.test_corruption_complete_null_decisions) ... FAIL
+test_corruption_complete_reordered_decisions (test_audit.AuditContractTests.test_corruption_complete_reordered_decisions) ... FAIL
+test_corruption_complete_visible_bool_int (test_audit.AuditContractTests.test_corruption_complete_visible_bool_int) ... FAIL
+test_corruption_complete_vocabulary_order (test_audit.AuditContractTests.test_corruption_complete_vocabulary_order) ... FAIL
+test_corruption_complete_wrong_count (test_audit.AuditContractTests.test_corruption_complete_wrong_count) ... FAIL
+test_corruption_complete_wrong_fail_label (test_audit.AuditContractTests.test_corruption_complete_wrong_fail_label) ... FAIL
+test_corruption_complete_wrong_pass_label (test_audit.AuditContractTests.test_corruption_complete_wrong_pass_label) ... FAIL
+test_corruption_complete_wrong_status (test_audit.AuditContractTests.test_corruption_complete_wrong_status) ... FAIL
+test_corruption_complete_wrong_visible (test_audit.AuditContractTests.test_corruption_complete_wrong_visible) ... FAIL
+test_corruption_concrete_bool_float (test_audit.AuditContractTests.test_corruption_concrete_bool_float) ... FAIL
+test_corruption_concrete_bool_int_false (test_audit.AuditContractTests.test_corruption_concrete_bool_int_false) ... FAIL
+test_corruption_concrete_bool_int_true (test_audit.AuditContractTests.test_corruption_concrete_bool_int_true) ... FAIL
+test_corruption_concrete_bool_string (test_audit.AuditContractTests.test_corruption_concrete_bool_string) ... FAIL
+test_corruption_duplicate_conflict (test_audit.AuditContractTests.test_corruption_duplicate_conflict) ... FAIL
+test_corruption_duplicate_conflict_key (test_audit.AuditContractTests.test_corruption_duplicate_conflict_key) ... FAIL
+test_corruption_duplicate_control_key (test_audit.AuditContractTests.test_corruption_duplicate_control_key) ... FAIL
+test_corruption_duplicate_decision_key (test_audit.AuditContractTests.test_corruption_duplicate_decision_key) ... FAIL
+test_corruption_duplicate_row_key (test_audit.AuditContractTests.test_corruption_duplicate_row_key) ... FAIL
+test_corruption_duplicate_top_key (test_audit.AuditContractTests.test_corruption_duplicate_top_key) ... FAIL
+test_corruption_duplicate_witness_label (test_audit.AuditContractTests.test_corruption_duplicate_witness_label) ... FAIL
+test_corruption_duplicate_witness_member (test_audit.AuditContractTests.test_corruption_duplicate_witness_member) ... FAIL
+test_corruption_duplicate_world (test_audit.AuditContractTests.test_corruption_duplicate_world) ... FAIL
+test_corruption_empty_bytes (test_audit.AuditContractTests.test_corruption_empty_bytes) ... FAIL
+test_corruption_escaped_duplicate_key (test_audit.AuditContractTests.test_corruption_escaped_duplicate_key) ... FAIL
+test_corruption_excessive_nesting (test_audit.AuditContractTests.test_corruption_excessive_nesting) ... FAIL
+test_corruption_extra_conflict_key (test_audit.AuditContractTests.test_corruption_extra_conflict_key) ... FAIL
+test_corruption_extra_row_key (test_audit.AuditContractTests.test_corruption_extra_row_key) ... FAIL
+test_corruption_extra_top_key (test_audit.AuditContractTests.test_corruption_extra_top_key) ... FAIL
+test_corruption_extra_world (test_audit.AuditContractTests.test_corruption_extra_world) ... FAIL
+test_corruption_float_overflow (test_audit.AuditContractTests.test_corruption_float_overflow) ... FAIL
+test_corruption_hidden_id_predicate (test_audit.AuditContractTests.test_corruption_hidden_id_predicate) ... FAIL
+test_corruption_invalid_utf8 (test_audit.AuditContractTests.test_corruption_invalid_utf8) ... FAIL
+test_corruption_long_concrete (test_audit.AuditContractTests.test_corruption_long_concrete) ... FAIL
+test_corruption_lost_conflict (test_audit.AuditContractTests.test_corruption_lost_conflict) ... FAIL
+test_corruption_lost_fail_witness_label (test_audit.AuditContractTests.test_corruption_lost_fail_witness_label) ... FAIL
+test_corruption_lost_pass_witness_label (test_audit.AuditContractTests.test_corruption_lost_pass_witness_label) ... FAIL
+test_corruption_lost_witness_label (test_audit.AuditContractTests.test_corruption_lost_witness_label) ... FAIL
+test_corruption_lost_witness_member (test_audit.AuditContractTests.test_corruption_lost_witness_member) ... FAIL
+test_corruption_lowercase_label (test_audit.AuditContractTests.test_corruption_lowercase_label) ... FAIL
+test_corruption_missing_conflict_key (test_audit.AuditContractTests.test_corruption_missing_conflict_key) ... FAIL
+test_corruption_missing_predicate (test_audit.AuditContractTests.test_corruption_missing_predicate) ... FAIL
+test_corruption_missing_row_key (test_audit.AuditContractTests.test_corruption_missing_row_key) ... FAIL
+test_corruption_missing_top_key (test_audit.AuditContractTests.test_corruption_missing_top_key) ... FAIL
+test_corruption_missing_world (test_audit.AuditContractTests.test_corruption_missing_world) ... FAIL
+test_corruption_nan_constant (test_audit.AuditContractTests.test_corruption_nan_constant) ... FAIL
+test_corruption_negative_infinity (test_audit.AuditContractTests.test_corruption_negative_infinity) ... FAIL
+test_corruption_oracle_label (test_audit.AuditContractTests.test_corruption_oracle_label) ... FAIL
+test_corruption_positive_infinity (test_audit.AuditContractTests.test_corruption_positive_infinity) ... FAIL
+test_corruption_predicate_order (test_audit.AuditContractTests.test_corruption_predicate_order) ... FAIL
+test_corruption_reordered_worlds (test_audit.AuditContractTests.test_corruption_reordered_worlds) ... FAIL
+test_corruption_restricted_bool_count (test_audit.AuditContractTests.test_corruption_restricted_bool_count) ... FAIL
+test_corruption_restricted_empty_decisions (test_audit.AuditContractTests.test_corruption_restricted_empty_decisions) ... FAIL
+test_corruption_restricted_extra_key (test_audit.AuditContractTests.test_corruption_restricted_extra_key) ... FAIL
+test_corruption_restricted_false_convergence (test_audit.AuditContractTests.test_corruption_restricted_false_convergence) ... FAIL
+test_corruption_restricted_float_count (test_audit.AuditContractTests.test_corruption_restricted_float_count) ... FAIL
+test_corruption_restricted_forged_decisions (test_audit.AuditContractTests.test_corruption_restricted_forged_decisions) ... FAIL
+test_corruption_restricted_hidden_id (test_audit.AuditContractTests.test_corruption_restricted_hidden_id) ... FAIL
+test_corruption_restricted_missing_key (test_audit.AuditContractTests.test_corruption_restricted_missing_key) ... FAIL
+test_corruption_restricted_missing_vocabulary (test_audit.AuditContractTests.test_corruption_restricted_missing_vocabulary) ... FAIL
+test_corruption_restricted_reversible (test_audit.AuditContractTests.test_corruption_restricted_reversible) ... FAIL
+test_corruption_restricted_unknown_status (test_audit.AuditContractTests.test_corruption_restricted_unknown_status) ... FAIL
+test_corruption_restricted_vocabulary_order (test_audit.AuditContractTests.test_corruption_restricted_vocabulary_order) ... FAIL
+test_corruption_restricted_wrong_count (test_audit.AuditContractTests.test_corruption_restricted_wrong_count) ... FAIL
+test_corruption_root_array (test_audit.AuditContractTests.test_corruption_root_array) ... FAIL
+test_corruption_root_null (test_audit.AuditContractTests.test_corruption_root_null) ... FAIL
+test_corruption_rows_object (test_audit.AuditContractTests.test_corruption_rows_object) ... FAIL
+test_corruption_schema_label (test_audit.AuditContractTests.test_corruption_schema_label) ... FAIL
+test_corruption_schema_type (test_audit.AuditContractTests.test_corruption_schema_type) ... FAIL
+test_corruption_short_concrete (test_audit.AuditContractTests.test_corruption_short_concrete) ... FAIL
+test_corruption_short_visible_witness (test_audit.AuditContractTests.test_corruption_short_visible_witness) ... FAIL
+test_corruption_trailing_document (test_audit.AuditContractTests.test_corruption_trailing_document) ... FAIL
+test_corruption_truncated_document (test_audit.AuditContractTests.test_corruption_truncated_document) ... FAIL
+test_corruption_unexpected_pass_world (test_audit.AuditContractTests.test_corruption_unexpected_pass_world) ... FAIL
+test_corruption_unrelated_witness_member (test_audit.AuditContractTests.test_corruption_unrelated_witness_member) ... FAIL
+test_corruption_visible_bool_int (test_audit.AuditContractTests.test_corruption_visible_bool_int) ... FAIL
+test_corruption_witness_label_order (test_audit.AuditContractTests.test_corruption_witness_label_order) ... FAIL
+test_corruption_witness_member_order (test_audit.AuditContractTests.test_corruption_witness_member_order) ... FAIL
+test_corruption_wrong_concrete_bit (test_audit.AuditContractTests.test_corruption_wrong_concrete_bit) ... FAIL
+test_corruption_wrong_visible_witness (test_audit.AuditContractTests.test_corruption_wrong_visible_witness) ... FAIL
+test_independent_calls_do_not_reuse_invalid_state (test_audit.AuditContractTests.test_independent_calls_do_not_reuse_invalid_state) ... FAIL
+test_invalid_input_has_no_verified_model_counts (test_audit.AuditContractTests.test_invalid_input_has_no_verified_model_counts) ... FAIL
+test_real_cli_reads_source_as_invalid_json_without_modification (test_audit.AuditContractTests.test_real_cli_reads_source_as_invalid_json_without_modification) ... FAIL
+
+======================================================================
+FAIL: test_accepts_independent_fixture_with_exact_schema_metrics (test_audit.AuditContractTests.test_accepts_independent_fixture_with_exact_schema_metrics)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_accepts_json_whitespace_and_object_key_order (test_audit.AuditContractTests.test_accepts_json_whitespace_and_object_key_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_cli_fixture_fail_is_json_and_exit_one (test_audit.AuditContractTests.test_cli_fixture_fail_is_json_and_exit_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_cli_fixture_pass_is_json_and_exit_zero (test_audit.AuditContractTests.test_cli_fixture_pass_is_json_and_exit_zero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_cli_read_error_is_json_and_exit_one (test_audit.AuditContractTests.test_cli_read_error_is_json_and_exit_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_case_id_padding (test_audit.AuditContractTests.test_corruption_case_id_padding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_case_id_type (test_audit.AuditContractTests.test_corruption_case_id_type)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_decision_hidden_id (test_audit.AuditContractTests.test_corruption_complete_decision_hidden_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_decision_missing_key (test_audit.AuditContractTests.test_corruption_complete_decision_missing_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_duplicate_decision (test_audit.AuditContractTests.test_corruption_complete_duplicate_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_extra_decision (test_audit.AuditContractTests.test_corruption_complete_extra_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_extra_key (test_audit.AuditContractTests.test_corruption_complete_extra_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_float_count (test_audit.AuditContractTests.test_corruption_complete_float_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_forged_conflict (test_audit.AuditContractTests.test_corruption_complete_forged_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_hidden_id (test_audit.AuditContractTests.test_corruption_complete_hidden_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_missing_decision (test_audit.AuditContractTests.test_corruption_complete_missing_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_missing_key (test_audit.AuditContractTests.test_corruption_complete_missing_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_missing_predicate (test_audit.AuditContractTests.test_corruption_complete_missing_predicate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_null_decisions (test_audit.AuditContractTests.test_corruption_complete_null_decisions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_reordered_decisions (test_audit.AuditContractTests.test_corruption_complete_reordered_decisions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_visible_bool_int (test_audit.AuditContractTests.test_corruption_complete_visible_bool_int)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_vocabulary_order (test_audit.AuditContractTests.test_corruption_complete_vocabulary_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_wrong_count (test_audit.AuditContractTests.test_corruption_complete_wrong_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_wrong_fail_label (test_audit.AuditContractTests.test_corruption_complete_wrong_fail_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_wrong_pass_label (test_audit.AuditContractTests.test_corruption_complete_wrong_pass_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_wrong_status (test_audit.AuditContractTests.test_corruption_complete_wrong_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_complete_wrong_visible (test_audit.AuditContractTests.test_corruption_complete_wrong_visible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_concrete_bool_float (test_audit.AuditContractTests.test_corruption_concrete_bool_float)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_concrete_bool_int_false (test_audit.AuditContractTests.test_corruption_concrete_bool_int_false)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_concrete_bool_int_true (test_audit.AuditContractTests.test_corruption_concrete_bool_int_true)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_concrete_bool_string (test_audit.AuditContractTests.test_corruption_concrete_bool_string)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_conflict (test_audit.AuditContractTests.test_corruption_duplicate_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_conflict_key (test_audit.AuditContractTests.test_corruption_duplicate_conflict_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_control_key (test_audit.AuditContractTests.test_corruption_duplicate_control_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_decision_key (test_audit.AuditContractTests.test_corruption_duplicate_decision_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_row_key (test_audit.AuditContractTests.test_corruption_duplicate_row_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_top_key (test_audit.AuditContractTests.test_corruption_duplicate_top_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_witness_label (test_audit.AuditContractTests.test_corruption_duplicate_witness_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_witness_member (test_audit.AuditContractTests.test_corruption_duplicate_witness_member)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_duplicate_world (test_audit.AuditContractTests.test_corruption_duplicate_world)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_empty_bytes (test_audit.AuditContractTests.test_corruption_empty_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_escaped_duplicate_key (test_audit.AuditContractTests.test_corruption_escaped_duplicate_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_excessive_nesting (test_audit.AuditContractTests.test_corruption_excessive_nesting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_extra_conflict_key (test_audit.AuditContractTests.test_corruption_extra_conflict_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_extra_row_key (test_audit.AuditContractTests.test_corruption_extra_row_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_extra_top_key (test_audit.AuditContractTests.test_corruption_extra_top_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_extra_world (test_audit.AuditContractTests.test_corruption_extra_world)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_float_overflow (test_audit.AuditContractTests.test_corruption_float_overflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_hidden_id_predicate (test_audit.AuditContractTests.test_corruption_hidden_id_predicate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_invalid_utf8 (test_audit.AuditContractTests.test_corruption_invalid_utf8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_long_concrete (test_audit.AuditContractTests.test_corruption_long_concrete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_lost_conflict (test_audit.AuditContractTests.test_corruption_lost_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_lost_fail_witness_label (test_audit.AuditContractTests.test_corruption_lost_fail_witness_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_lost_pass_witness_label (test_audit.AuditContractTests.test_corruption_lost_pass_witness_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_lost_witness_label (test_audit.AuditContractTests.test_corruption_lost_witness_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_lost_witness_member (test_audit.AuditContractTests.test_corruption_lost_witness_member)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_lowercase_label (test_audit.AuditContractTests.test_corruption_lowercase_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_missing_conflict_key (test_audit.AuditContractTests.test_corruption_missing_conflict_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_missing_predicate (test_audit.AuditContractTests.test_corruption_missing_predicate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_missing_row_key (test_audit.AuditContractTests.test_corruption_missing_row_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_missing_top_key (test_audit.AuditContractTests.test_corruption_missing_top_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_missing_world (test_audit.AuditContractTests.test_corruption_missing_world)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_nan_constant (test_audit.AuditContractTests.test_corruption_nan_constant)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_negative_infinity (test_audit.AuditContractTests.test_corruption_negative_infinity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_oracle_label (test_audit.AuditContractTests.test_corruption_oracle_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_positive_infinity (test_audit.AuditContractTests.test_corruption_positive_infinity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_predicate_order (test_audit.AuditContractTests.test_corruption_predicate_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_reordered_worlds (test_audit.AuditContractTests.test_corruption_reordered_worlds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_bool_count (test_audit.AuditContractTests.test_corruption_restricted_bool_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_empty_decisions (test_audit.AuditContractTests.test_corruption_restricted_empty_decisions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_extra_key (test_audit.AuditContractTests.test_corruption_restricted_extra_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_false_convergence (test_audit.AuditContractTests.test_corruption_restricted_false_convergence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_float_count (test_audit.AuditContractTests.test_corruption_restricted_float_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_forged_decisions (test_audit.AuditContractTests.test_corruption_restricted_forged_decisions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_hidden_id (test_audit.AuditContractTests.test_corruption_restricted_hidden_id)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_missing_key (test_audit.AuditContractTests.test_corruption_restricted_missing_key)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_missing_vocabulary (test_audit.AuditContractTests.test_corruption_restricted_missing_vocabulary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_reversible (test_audit.AuditContractTests.test_corruption_restricted_reversible)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_unknown_status (test_audit.AuditContractTests.test_corruption_restricted_unknown_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_vocabulary_order (test_audit.AuditContractTests.test_corruption_restricted_vocabulary_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_restricted_wrong_count (test_audit.AuditContractTests.test_corruption_restricted_wrong_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_root_array (test_audit.AuditContractTests.test_corruption_root_array)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_root_null (test_audit.AuditContractTests.test_corruption_root_null)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_rows_object (test_audit.AuditContractTests.test_corruption_rows_object)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_schema_label (test_audit.AuditContractTests.test_corruption_schema_label)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_schema_type (test_audit.AuditContractTests.test_corruption_schema_type)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_short_concrete (test_audit.AuditContractTests.test_corruption_short_concrete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_short_visible_witness (test_audit.AuditContractTests.test_corruption_short_visible_witness)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_trailing_document (test_audit.AuditContractTests.test_corruption_trailing_document)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_truncated_document (test_audit.AuditContractTests.test_corruption_truncated_document)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_unexpected_pass_world (test_audit.AuditContractTests.test_corruption_unexpected_pass_world)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_unrelated_witness_member (test_audit.AuditContractTests.test_corruption_unrelated_witness_member)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_visible_bool_int (test_audit.AuditContractTests.test_corruption_visible_bool_int)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_witness_label_order (test_audit.AuditContractTests.test_corruption_witness_label_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_witness_member_order (test_audit.AuditContractTests.test_corruption_witness_member_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_wrong_concrete_bit (test_audit.AuditContractTests.test_corruption_wrong_concrete_bit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_corruption_wrong_visible_witness (test_audit.AuditContractTests.test_corruption_wrong_visible_witness)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_independent_calls_do_not_reuse_invalid_state (test_audit.AuditContractTests.test_independent_calls_do_not_reuse_invalid_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_invalid_input_has_no_verified_model_counts (test_audit.AuditContractTests.test_invalid_input_has_no_verified_model_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+======================================================================
+FAIL: test_real_cli_reads_source_as_invalid_json_without_modification (test_audit.AuditContractTests.test_real_cli_reads_source_as_invalid_json_without_modification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_audit.py", line 249, in setUp
+    self.assertIsNotNone(AUDITOR, "audit.py / audit_bytes is not implemented")
+AssertionError: unexpectedly None : audit.py / audit_bytes is not implemented
+
+----------------------------------------------------------------------
+Ran 100 tests in 0.023s
+
+FAILED (failures=100)

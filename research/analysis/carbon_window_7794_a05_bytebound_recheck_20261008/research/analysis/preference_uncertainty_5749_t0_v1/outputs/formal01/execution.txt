@@ -1,0 +1,19 @@
+allocation=5749-preference-gate-t0-20261001-01
+issue=Unjuno/agent-interface#5749
+freeze_comment=5924422910
+base_main=8827fad422b225bddd9b1c6d34bfa68ca19265c5
+branch=research/5749-preference-gate-t0-20261001
+image=python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f
+engine=Docker Desktop 29.8.0; linux/amd64; active containers before run=0
+limits=network:none; cpus=1; memory=256m; pids_limit=64
+preflight=python /work/test_preflight.py ; pre-freeze construction pass; exit=0
+runner=docker run --rm --network none --cpus=1 --memory=256m --pids-limit=64 --mount type=bind,source=<scratch>,target=/work,readonly --mount type=bind,source=<scratch>/outputs,target=/out python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /work/runner.py
+runner_exit=0; invocations=1; retries=0
+runner_stdout={"allocation":"5749-preference-gate-t0-20261001-01","raw_sha256":"c67e922b556a26ad650e71caf05317ee4d3b1816ce95f33fa161e7c33f641d2f","rows":10}
+auditor=docker run --rm --network none --cpus=1 --memory=256m --pids-limit=64 --mount type=bind,source=<scratch>,target=/work,readonly --mount type=bind,source=<scratch>/outputs/formal01,target=/input,readonly python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /work/audit.py /input/raw.json
+auditor_exit=0; invocations=1; retries=0
+audit_stdout={"corruptions":[{"name":"force_forbidden","rejected":true},{"name":"silence_as_consent","rejected":true},{"name":"accept_stale","rejected":true},{"name":"force_framing_choice","rejected":true},{"name":"ask_explicit","rejected":true},{"name":"break_robust_regret","rejected":true},{"name":"drop_case","rejected":true}],"disposition":"PASS_METHOD_SCOPED","errors":[],"forbidden_effects":0,"query_count":2,"raw_sha256":"c67e922b556a26ad650e71caf05317ee4d3b1816ce95f33fa161e7c33f641d2f","rows":10}
+raw_sha256=c67e922b556a26ad650e71caf05317ee4d3b1816ce95f33fa161e7c33f641d2f
+construction_only_first_assertion_failure=initial prototype selected minimum instead of maximum utility; corrected before freeze; not formal data
+formal_disposition=PASS_METHOD_SCOPED
+scope=no human participants, preference labels, GUI/runtime effects, authorization, interruption measure, or product claim; H-level human benefit remains untested

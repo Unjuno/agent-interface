@@ -1,0 +1,28 @@
+{
+  "task": "DECISION-POLICY-CACHE-XTERM-PARENT-ENV-A2-20260918-002",
+  "issue": 1359,
+  "base": "403da7a65bdb11bb95f45786ef88f2e7b37bdac1",
+  "parent_issue": 1349,
+  "parent_pr": 1357,
+  "parent_active_git_blobs": {
+    "runner.py": "89185ee357ec64aa6b404f49a05b989b5c05c662",
+    "fixture.py": "b6f679d171ed0b3200b7f54f90560fd73393e8bd",
+    "audit.py": "8423fde22558b46dd69a421bc92e3368673dc062",
+    "schedule.json": "aa16f3ff3dd4fa701166d877699ca3ccca65d01b"
+  },
+  "successor_runner": {
+    "git_blob_expected": "ed1c43b20da6d82edb8879f564960e04e54a3635",
+    "sha256": "ece381e75321fbac6141caecbead0ae8feeb125a45367038c8d25aab5bf19a6f"
+  },
+  "unchanged_science": ["fixture.py","audit.py"],
+  "harness_changes": [
+    "task/title metadata retarget",
+    "save parent DISPLAY/XAUTHORITY before each case",
+    "scope parent DISPLAY/XAUTHORITY to fresh private-Xvfb env before parent Xlib Display()",
+    "restore exact prior parent DISPLAY/XAUTHORITY after case cleanup"
+  ],
+  "scientific_threshold_changes": 0,
+  "live_sessions": 0,
+  "formal_invocations": 0,
+  "reruns": 0
+}

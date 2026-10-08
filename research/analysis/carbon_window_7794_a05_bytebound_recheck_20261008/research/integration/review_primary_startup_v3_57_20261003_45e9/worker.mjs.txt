@@ -1,0 +1,46 @@
+import fs from 'node:fs';
+import fsp from 'node:fs/promises';
+import {syncBuiltinESMExports} from 'node:module';
+import {PassThrough} from 'node:stream';
+import {resolve,join} from 'node:path';
+import {pathToFileURL} from 'node:url';
+const [variant,cell,directory,nonce]=process.argv.slice(2);
+const plan=JSON.parse(fs.readFileSync(new URL('./MATRIX_PLAN.json',import.meta.url)));
+const spec=plan.cells.find(x=>x.name===cell);
+const source=plan.variants.find(x=>x.name===variant);
+if(!spec||!source)throw Error('unknown frozen source/cell');
+const module=await import(pathToFileURL(resolve(source.module_path)));
+const fault=Error('own original '+variant+' '+cell+' fault');
+const input=new PassThrough(),output=new PassThrough(),chunks=[],foreign=[];
+const inputForeign=e=>foreign.push({stream:'input',same_fault:e===fault});
+const outputForeign=e=>foreign.push({stream:'output',same_fault:e===fault});
+input.on('error',inputForeign);output.on('error',outputForeign);output.on('data',b=>chunks.push(b));
+const originalMkdir=fsp.mkdir;let hooks=0,errorIdentity=false,errorString=null;
+fsp.mkdir=async(...args)=>{
+ const result=await originalMkdir(...args);const path=resolve(args[0]);
+ if(path===join(directory,spec.boundary)){
+  hooks++;
+  if(spec.stream==='input')input.emit('error',fault);
+  else if(spec.stream==='output')output.emit('error',fault);
+ }
+ if(path===join(directory,'exchange')&&spec.stream===null)input.end();
+ return result;
+};
+syncBuiltinESMExports();
+if((await import('node:fs/promises')).mkdir!==fsp.mkdir)throw Error('named builtin not bound');
+const config=JSON.parse(fs.readFileSync(join(directory,'config.json')));
+try {await module.runPrimaryStdio(config,{input,output});}
+catch(e){errorIdentity=e===fault;errorString=String(e);}
+finally {fsp.mkdir=originalMkdir;syncBuiltinESMExports();}
+const read=name=>JSON.parse(fs.readFileSync(join(directory,name)));
+const start=read('fixture-start.json'),exit=read('fixture-exit.json'),host=read('host/exit.json');
+let absent=false;try{process.kill(start.pid,0);}catch(e){if(e.code==='ESRCH')absent=true;else throw e;}
+const wire=Buffer.concat(chunks);const rows=wire.toString('utf8').split('\n').filter(Boolean).map(x=>JSON.parse(x));
+const requests=fs.readdirSync(join(directory,'host')).filter(x=>/^request-/.test(x));
+console.log(JSON.stringify({variant,cell,pid:process.pid,ppid:process.ppid,nonce,hooks,error_identity:errorIdentity,error_string:errorString,
+ rows,wire_hex:wire.toString('hex'),foreign_observations:foreign,
+ remaining_foreign:{input:input.listeners('error').includes(inputForeign),output:output.listeners('error').includes(outputForeign)},
+ error_listener_counts:{input:input.listenerCount('error'),output:output.listenerCount('error')},
+ original_fixture_start:start,original_fixture_exit:exit,host_exit:host,
+ fixture_pid_absent:absent,request_files:requests,ended_utc:new Date().toISOString()}));
+

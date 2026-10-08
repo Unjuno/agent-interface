@@ -1,0 +1,16 @@
+{
+  "schema": "ui-redress-5692-a02-stop-v1",
+  "allocation": "ui-redress-5692-x11-a02-20261001-01",
+  "freeze_sha256": "0ef56bd6f7ed2f441057b7017e119b88d722f640cef69d516c7612b9e75fa830",
+  "candidate_command": "xvfb-run -a python3 -B candidate.py --out raw.json",
+  "candidate_invocations": 1,
+  "candidate_exit": 1,
+  "auditor_invocations": 0,
+  "raw_json_written": false,
+  "failure": "subprocess.TimeoutExpired waiting for race-row overlay child at overlay.wait(timeout=2); temporary trial directory cleanup removed per-process trial logs",
+  "formal_log_sha256": "50a08f7982c171241149cbe4ac1ae4e6741de8019c9005b55af0b5b479a974b9",
+  "docker_invocations": 0,
+  "retry": false,
+  "formal_disposition": "STOP_CANDIDATE_SUBPROCESS_TIMEOUT",
+  "scientific_result": "NOT_EVALUATED"
+}

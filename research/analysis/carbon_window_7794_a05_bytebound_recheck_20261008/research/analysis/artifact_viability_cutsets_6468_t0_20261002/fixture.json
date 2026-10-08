@@ -1,0 +1,81 @@
+{
+  "schema": "artifact-viability-fixture-v1",
+  "contracts": {
+    "document": {
+      "checks": {
+        "source_fidelity": {"required": true, "weight": 2},
+        "claim_citation_binding": {"required": true, "weight": 3},
+        "structure": {"required": true, "weight": 1},
+        "render_readable": {"required": true, "weight": 1},
+        "accessible_text_export": {"required": true, "weight": 1},
+        "export_exists": {"required": true, "weight": 1},
+        "cosmetic_layout": {"required": false, "weight": 3}
+      },
+      "must_pass": ["source_fidelity", "claim_citation_binding", "structure", "export_exists"],
+      "alternatives": [["render_readable", "accessible_text_export"]]
+    },
+    "spreadsheet": {
+      "checks": {
+        "source_values": {"required": true, "weight": 2},
+        "formula_correct": {"required": true, "weight": 3},
+        "formula_range_correct": {"required": true, "weight": 1},
+        "chart_visible": {"required": true, "weight": 1},
+        "accessible_summary": {"required": true, "weight": 1},
+        "export_exists": {"required": true, "weight": 1},
+        "cosmetic_format": {"required": false, "weight": 3}
+      },
+      "must_pass": ["source_values", "formula_correct", "formula_range_correct", "export_exists"],
+      "alternatives": [["chart_visible", "accessible_summary"]]
+    }
+  },
+  "cases": [
+    {
+      "case_id": "document_equal_partial_citation_inversion",
+      "contract": "document",
+      "routes": {
+        "A": {"observations": {"source_fidelity": "PASS", "claim_citation_binding": "PASS", "structure": "PASS", "render_readable": "PASS", "accessible_text_export": "FAIL", "export_exists": "PASS", "cosmetic_layout": "FAIL"}, "evidence": {"claim_source_id": "study-1", "citation_target_id": "study-1"}},
+        "B": {"observations": {"source_fidelity": "PASS", "claim_citation_binding": "FAIL", "structure": "PASS", "render_readable": "PASS", "accessible_text_export": "FAIL", "export_exists": "PASS", "cosmetic_layout": "PASS"}, "evidence": {"claim_source_id": "study-1", "citation_target_id": "study-2"}}
+      }
+    },
+    {
+      "case_id": "spreadsheet_equal_partial_formula_inversion",
+      "contract": "spreadsheet",
+      "routes": {
+        "A": {"observations": {"source_values": "PASS", "formula_correct": "PASS", "formula_range_correct": "PASS", "chart_visible": "PASS", "accessible_summary": "FAIL", "export_exists": "PASS", "cosmetic_format": "FAIL"}, "evidence": {"expected_formula": "=SUM(B2:B6)", "observed_formula": "=SUM(B2:B6)"}},
+        "B": {"observations": {"source_values": "PASS", "formula_correct": "FAIL", "formula_range_correct": "FAIL", "chart_visible": "PASS", "accessible_summary": "FAIL", "export_exists": "PASS", "cosmetic_format": "PASS"}, "evidence": {"expected_formula": "=SUM(B2:B6)", "observed_formula": "=SUM(B2:B5)"}}
+      }
+    },
+    {
+      "case_id": "cosmetic_failure_not_unusable",
+      "contract": "spreadsheet",
+      "routes": {
+        "A": {"observations": {"source_values": "PASS", "formula_correct": "PASS", "formula_range_correct": "PASS", "chart_visible": "PASS", "accessible_summary": "FAIL", "export_exists": "PASS", "cosmetic_format": "PASS"}},
+        "B": {"observations": {"source_values": "PASS", "formula_correct": "PASS", "formula_range_correct": "PASS", "chart_visible": "PASS", "accessible_summary": "FAIL", "export_exists": "PASS", "cosmetic_format": "FAIL"}}
+      }
+    },
+    {
+      "case_id": "missing_export_is_unusable",
+      "contract": "spreadsheet",
+      "routes": {
+        "A": {"observations": {"source_values": "PASS", "formula_correct": "PASS", "formula_range_correct": "PASS", "chart_visible": "PASS", "accessible_summary": "FAIL", "export_exists": "PASS", "cosmetic_format": "PASS"}},
+        "B": {"observations": {"source_values": "PASS", "formula_correct": "PASS", "formula_range_correct": "PASS", "chart_visible": "PASS", "accessible_summary": "FAIL", "export_exists": "FAIL", "cosmetic_format": "PASS"}}
+      }
+    },
+    {
+      "case_id": "render_unknown_preserved",
+      "contract": "document",
+      "routes": {
+        "A": {"observations": {"source_fidelity": "PASS", "claim_citation_binding": "PASS", "structure": "PASS", "render_readable": "PASS", "accessible_text_export": "FAIL", "export_exists": "PASS", "cosmetic_layout": "PASS"}},
+        "B": {"observations": {"source_fidelity": "PASS", "claim_citation_binding": "PASS", "structure": "PASS", "render_readable": "UNKNOWN", "accessible_text_export": "FAIL", "export_exists": "PASS", "cosmetic_layout": "PASS"}, "evidence": {"render_capture": null}}
+      }
+    },
+    {
+      "case_id": "no_inversion_control",
+      "contract": "document",
+      "routes": {
+        "A": {"observations": {"source_fidelity": "PASS", "claim_citation_binding": "PASS", "structure": "PASS", "render_readable": "PASS", "accessible_text_export": "FAIL", "export_exists": "PASS", "cosmetic_layout": "FAIL"}},
+        "B": {"observations": {"source_fidelity": "PASS", "claim_citation_binding": "PASS", "structure": "PASS", "render_readable": "PASS", "accessible_text_export": "FAIL", "export_exists": "PASS", "cosmetic_layout": "PASS"}}
+      }
+    }
+  ]
+}

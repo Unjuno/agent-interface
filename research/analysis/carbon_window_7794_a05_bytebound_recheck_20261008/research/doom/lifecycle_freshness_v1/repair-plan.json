@@ -1,0 +1,26 @@
+{
+  "case": {
+    "condition": "delay_fresh",
+    "cutoff_ms": 3075,
+    "delay_ms": 500,
+    "expected": {
+      "late_admitted": false,
+      "late_reason_contains": "provider epoch ended",
+      "primary_status": "cancelled",
+      "terminal_delivery": "terminal_delayed"
+    },
+    "fault": "delay_terminal",
+    "freshness_ms": 300,
+    "id": "repair-r4-delay_fresh",
+    "rep": 4,
+    "seed": 998714,
+    "timeout_seconds": 40
+  },
+  "decision": "replication completes integrity, delayed terminal cancellation, late rejection and finalization under a new identity; it supplements but does not relabel the original 12-case allocation as formally complete",
+  "reason": "original r2-delay_fresh was killed by outer 240s multi-case harness timeout after primary cancellation/release but before late-submit/finalization; same ID remains retained and is never rerun",
+  "schema": "lifecycle-freshness-repair-plan-v1",
+  "source_changes": false,
+  "source_freeze_head": "9f6b13f60ca8950aff9b239fc9f984d340c0d7d5",
+  "task": "O3-LIFECYCLE-FRESHNESS-20260916-001-REPAIR1",
+  "threshold_changes": false
+}

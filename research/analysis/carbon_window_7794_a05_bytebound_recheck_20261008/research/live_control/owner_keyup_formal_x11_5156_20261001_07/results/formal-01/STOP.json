@@ -1,0 +1,15 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-ORB-20261001-07",
+  "status": "STOP_RESOURCE_COORDINATION_BEFORE_CANDIDATE",
+  "observed_at_utc": "2026-10-01T02:02:44Z/2026-10-01T02:05:04Z",
+  "source_main": "72f2acdbdd5da3c490873e5efda213f3a55ff210",
+  "local_freeze_commit": "40def15817fae16e6bdcae462a4e2aecfa7795ac",
+  "failed_gate": "OrbStack read-only inventory contained four nonterminal Created containers without owner/release evidence in the shared queue or relevant task/Issue records.",
+  "decision": "Do not inspect, stop, remove, or otherwise alter unrelated containers. Do not run candidate, Xvfb, X11 input, or independent auditor. Preserve inventory summary and source artifacts; this allocation is consumed and must not be retried or reused.",
+  "candidate_invocations": 0,
+  "independent_auditor_invocations": 0,
+  "container_starts": 0,
+  "image_inspections": 0,
+  "scientific_result": "NOT_EVALUATED",
+  "scope_note": "Resource/provenance STOP only; neither PASS nor FAIL of the owner-thread KeyRelease/XSync hypothesis. Host construction tests are not formal X11 evidence."
+}

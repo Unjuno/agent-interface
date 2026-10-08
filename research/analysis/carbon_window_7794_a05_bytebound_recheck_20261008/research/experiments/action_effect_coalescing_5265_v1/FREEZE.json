@@ -1,0 +1,48 @@
+{
+  "schema": "unjuno-experiment-freeze-v1",
+  "issue": 5265,
+  "allocation": "effect-coalescing-5265-main-70b69b47-20260930-01",
+  "base_ref": "main",
+  "base_sha": "70b69b47845b35afde59c2a5f0b56c6f906c6904",
+  "branch": "research/effect-coalescing-5265-70b69b47-20260930-01",
+  "path": "research/experiments/action_effect_coalescing_5265_v1",
+  "formal_invocations_at_freeze": 0,
+  "workload_sha256": "1be09133c1facc7c599cffc0329db3e1a77e86e05c00de9f76e73f29de305664",
+  "source_sha256": {
+    "experiment.py": "381c7be300acc00b8f0642d8f7dec2cdc1b00168cc309f45006fe414885bd0ef",
+    "oracle.py": "b4f8e44066767e0762fd6dc622f8524858374daed035e72f76e2e56eb5044861",
+    "audit.py": "c9e4fc7e0fbf9a4b21c6f8966ca1186f4775a8886ec2562d8fcbd9d93962909d",
+    "run_formal.py": "f68d46b8dd5bba0ae8893c14d9b2d838b1e2b51573592eb05bda37b4b89fdc5b",
+    "test_coalescing.py": "59b783b5bc66aec611784961075781e17bbcd354259090c45f1ae9574b3bcc09",
+    "test_audit.py": "93a267c7fae259321335a0b85a26447446787a6f162a610a52a4b747e42d3d64",
+    "workload.json": "1be09133c1facc7c599cffc0329db3e1a77e86e05c00de9f76e73f29de305664",
+    "README.md": "00b88c98e2f410500ab8c1123b7f9fa7d1ab5f9993b9a9f53268066d9d70d7d2",
+    "PLAN.md": "022535842427ff8739c4077387d63b5687d156ac51c6f0ab2ddb73bf6cbf2621",
+    "CONSTRUCTION.md": "a3496acf38e2719ecce16deef6559e1bdf935755b458ae9568ce81478082886a"
+  },
+  "runtime": {
+    "host": "Ubuntu 24.04 WSL2",
+    "python": "CPython 3.12.3",
+    "dependencies": "Python standard library only",
+    "container": "not used: no exact shared Docker-slot assignment for this lane",
+    "network_accessed_by_experiment": false,
+    "model_or_gui": false
+  },
+  "commands": {
+    "construction": "python3 -B -m unittest -v test_coalescing test_audit",
+    "formal": "python3 -B run_formal.py --out results/formal-01/RAW.json --base-sha 70b69b47845b35afde59c2a5f0b56c6f906c6904 --allocation effect-coalescing-5265-main-70b69b47-20260930-01",
+    "independent_audit": "python3 -B audit.py --raw results/formal-01/RAW.json --out results/formal-01/AUDIT.json"
+  },
+  "outputs": {
+    "formal_raw": "results/formal-01/RAW.json",
+    "audit_report": "results/formal-01/AUDIT.json",
+    "formal_output_absent_before_run": true,
+    "audit_output_absent_before_run": true
+  },
+  "decision": {
+    "pass": "PASS_CROSS_PRODUCER_EFFECT_COALESCING_SCOPED",
+    "minimum_corruption_controls": 7,
+    "no_retry_or_case_substitution": true,
+    "runtime_change": false
+  }
+}

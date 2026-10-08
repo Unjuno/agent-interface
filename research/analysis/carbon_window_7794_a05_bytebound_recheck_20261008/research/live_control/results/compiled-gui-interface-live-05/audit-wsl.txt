@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "formal_mechanics_passed": true,
+  "positive": {
+    "independent_success": true,
+    "local_transitions": 2,
+    "frontier_model_resumptions": 0,
+    "action_to_feedback_ms": [
+      773.005149,
+      568.48764
+    ],
+    "first_action_to_semantic_completion_ms": 1855.49275,
+    "local_runtime_ms": 2280.368416,
+    "grounding_wait_ms": 15489.4735
+  },
+  "changed": {
+    "independent_success": false,
+    "local_transitions": 1,
+    "submit_target_actions": 0,
+    "typed_runtime_reason": "unknown_state",
+    "outer_adaptive_reason": "unknown_state",
+    "outer_completed_actions": 1,
+    "outer_delivery": "confirmed_partial"
+  },
+  "fresh_model_calls": 2,
+  "fresh_model_usage_totals": {
+    "input_tokens": 18792,
+    "cached_input_tokens": 6912,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 351,
+    "reasoning_output_tokens": 121
+  },
+  "preflight_model_calls_this_run": 0,
+  "known_limit": "single fresh pair gives no rate; frozen v5 runner retains stale opaque session_scope label seed991024 while study seed is 991025; processes and registries are separate and no reuse occurs",
+  "decision": "ADVANCE_TO_MATCHED_EFFICIENCY_COMPARISON",
+  "scope": "one fresh same-seed positive/changed pair; no baseline, rate, token saving, portability, break-even or human-tempo claim"
+}

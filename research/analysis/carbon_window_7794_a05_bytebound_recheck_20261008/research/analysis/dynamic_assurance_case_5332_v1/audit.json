@@ -1,0 +1,87 @@
+{
+  "corruption_controls": [
+    {
+      "control": "REMOVE_POLICY_ROW",
+      "rejected": true
+    },
+    {
+      "control": "ALTER_DECISION",
+      "rejected": true
+    },
+    {
+      "control": "CHANGE_SOURCE_REVISION",
+      "rejected": true
+    },
+    {
+      "control": "MINT_AUTHORITY",
+      "rejected": true
+    },
+    {
+      "control": "EMIT_EXTERNAL_EFFECT",
+      "rejected": true
+    },
+    {
+      "control": "REWRITE_HISTORY_DIGEST",
+      "rejected": true
+    }
+  ],
+  "errors": [],
+  "failed_corruption_controls": [],
+  "historical_revision_preserved": true,
+  "rows": 36,
+  "status": "PASS_READONLY",
+  "unsound_supported_cases": [
+    {
+      "case_id": "CORRELATED_DUPLICATE",
+      "policy": "FLAT_RECEIPTS"
+    },
+    {
+      "case_id": "CORRELATED_DUPLICATE",
+      "policy": "STATIC_CASE"
+    },
+    {
+      "case_id": "CORRELATED_DUPLICATE",
+      "policy": "DYNAMIC_CASE"
+    },
+    {
+      "case_id": "CORRELATED_DUPLICATE",
+      "policy": "DEFEATER_AWARE"
+    },
+    {
+      "case_id": "DEPENDENCY_CHANGED",
+      "policy": "FLAT_RECEIPTS"
+    },
+    {
+      "case_id": "DEPENDENCY_CHANGED",
+      "policy": "STATIC_CASE"
+    },
+    {
+      "case_id": "DIRECT_DEFEATER",
+      "policy": "FLAT_RECEIPTS"
+    },
+    {
+      "case_id": "DIRECT_DEFEATER",
+      "policy": "STATIC_CASE"
+    },
+    {
+      "case_id": "DIRECT_DEFEATER",
+      "policy": "DYNAMIC_CASE"
+    },
+    {
+      "case_id": "DIRECT_DEFEATER",
+      "policy": "INDEPENDENCE_AWARE"
+    },
+    {
+      "case_id": "MISSING_CAUSALITY",
+      "policy": "FLAT_RECEIPTS"
+    },
+    {
+      "case_id": "NEGATIVE_SUCCESSOR",
+      "policy": "FLAT_RECEIPTS"
+    },
+    {
+      "case_id": "NEGATIVE_SUCCESSOR",
+      "policy": "STATIC_CASE"
+    }
+  ]
+}

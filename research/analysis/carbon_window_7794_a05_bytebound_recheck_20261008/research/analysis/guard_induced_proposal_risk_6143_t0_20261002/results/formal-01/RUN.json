@@ -1,0 +1,34 @@
+{
+  "allocation": "6143-guard-proposal-risk-t0-20261002-01",
+  "source_base": "e3a57eeef93153483d2ce40d2ef8050c89945fcc",
+  "candidate_command": "python -B candidate.py fixture.json",
+  "candidate_exit": 0,
+  "candidate_invocations": 1,
+  "auditor_command": "python -B audit.py fixture.json results/formal-01/candidate.stdout",
+  "auditor_exit": 0,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "candidate_sha256": "2a4e6300b6f3070ac442fa6a605e25fed760caa56306449fe6e4efb9e5f42483",
+  "audit_sha256": "78eb3b2703cd5b06c6d1c5f08338c6cdc4013f14d6115b375dd851ebe7854b23",
+  "docker": "not run; Engine API probe unresponsive",
+  "runtime": "CPython 3.12 host",
+  "result": {
+    "arm_rows": 6,
+    "disposition": "PASS_METHOD_SCOPED",
+    "errors": [],
+    "gate": {
+      "compensation_harm_per_1000": [
+        50,
+        60
+      ],
+      "null_harm_per_1000": [
+        50,
+        5
+      ],
+      "protective_guard_harm_per_1000": 2,
+      "safe_false_rejection_rate": 0.0,
+      "unsafe_rejection_sensitivity": 0.9
+    },
+    "world_count": 3
+  }
+}

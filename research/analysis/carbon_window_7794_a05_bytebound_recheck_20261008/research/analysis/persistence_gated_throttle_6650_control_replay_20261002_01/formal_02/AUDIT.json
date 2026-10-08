@@ -1,0 +1,60 @@
+{
+  "allocation": "PERSISTENCE-GATED-OPTIONAL-THROTTLE-6650-CONTROL-REPLAY-20261002-02",
+  "auditor_runs": 1,
+  "candidate_runs": 0,
+  "fixture_sha256": "4d190dff60ae3aac92c1dc9e348f39b0e6f321d2fdf5cca022479c4ff8037087",
+  "mismatch_count": 0,
+  "mismatches": [],
+  "mutation_controls": {
+    "cross_session_contamination": {
+      "difference_count": 1,
+      "first_difference": "/traces/session_isolation/persistence/states/0/session",
+      "rejected": true
+    },
+    "freshness_terminal": {
+      "difference_count": 1,
+      "first_difference": "/traces/sustained_overload/fixed/services/7/outcome",
+      "rejected": true
+    },
+    "generation_at_start": {
+      "difference_count": 1,
+      "first_difference": "/traces/semantic_invalidation/persistence/services/0/generation_at_start",
+      "rejected": true
+    },
+    "mandatory_suppression": {
+      "difference_count": 1,
+      "first_difference": "/traces/mandatory_flood/persistence/requests/0/status",
+      "rejected": true
+    },
+    "service_order": {
+      "difference_count": 8,
+      "first_difference": "/traces/sustained_overload/queue_length/services/0/completed_at",
+      "rejected": true
+    },
+    "signal_value": {
+      "difference_count": 1,
+      "first_difference": "/traces/sustained_overload/persistence/states/0/signal",
+      "rejected": true
+    },
+    "suppression_decision": {
+      "difference_count": 1,
+      "first_difference": "/traces/sustained_overload/persistence/requests/0/status",
+      "rejected": true
+    },
+    "tier_at_offer": {
+      "difference_count": 1,
+      "first_difference": "/traces/sustained_overload/persistence/requests/0/tier_at_offer",
+      "rejected": true
+    },
+    "transition_timestamp": {
+      "difference_count": 1,
+      "first_difference": "/traces/sustained_overload/persistence/transitions/0/at",
+      "rejected": true
+    }
+  },
+  "policy_replays": 36,
+  "raw_sha256": "8022a834d4e5e32e9af01438dbc3ea57312addb06ed714126e28eee77e3faca6",
+  "result": "PASS_AUDIT_REPLAY_SCOPED",
+  "retries": 0,
+  "trace_count": 9
+}

@@ -1,0 +1,28 @@
+{
+  "allocation": "ic-history-closure-5547-20261001-02",
+  "source_main": "2b2166da7e1e3b4e60e435b6c7857484797a23ec",
+  "commands": [
+    ["AUTHORIZE", "effect-a"],
+    ["AUTHORIZE", "effect-b"],
+    ["COMMIT", "dispatch-0", "effect-a"],
+    ["COMMIT", "dispatch-1", "effect-a"]
+  ],
+  "reachable_state_count": 5,
+  "pair_row_count": 42,
+  "counterexample_count": 2,
+  "root_only_commit_classification": "NOT_PROVEN_PRECONDITION_FALSE",
+  "expected_counterexample": {
+    "history": [["AUTHORIZE", "effect-a"]],
+    "left": ["COMMIT", "dispatch-0", "effect-a"],
+    "right": ["COMMIT", "dispatch-1", "effect-a"],
+    "violation": "duplicate_semantic_effect"
+  },
+  "serializable_second_commit": "REJECTED",
+  "mutation_controls": [
+    "drop_counterexample",
+    "erase_merged_commit",
+    "hide_join_violation",
+    "certify_root_commit_safe",
+    "flip_serializable_summary"
+  ]
+}

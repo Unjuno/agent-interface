@@ -1,0 +1,22 @@
+const fs = require('node:fs');
+const readline = require('node:readline');
+const [mode, recordPath] = process.argv.slice(2);
+let requests = 0, reason = 'stdin-eof', exitCode = mode === 'line' ? 29 : 31;
+const guard = setTimeout(() => { reason = 'guard'; process.exit(73); }, 3000);
+process.on('exit', code => fs.writeFileSync(recordPath, JSON.stringify({
+  mode, pid: process.pid, requests, reason, code, utc: new Date().toISOString()
+}) + '\n', {flag: 'wx'}));
+const input = readline.createInterface({input: process.stdin, crlfDelay: Infinity});
+input.on('line', line => {
+  const request = JSON.parse(line);
+  requests++;
+  const response = {id: request.id, tool: request.tool, status: 'returned',
+    next_id: request.id + 1, result: {content: [{type: 'text', text: '保全された正常返答'}]}};
+  process.stdout.write(JSON.stringify(response) + '\n' +
+    (mode === 'line' ? '{"unsolicited":true}\n' : '{"unfinished":'));
+});
+input.on('close', () => {
+  clearTimeout(guard);
+  process.stderr.write('late-stderr-owned\n');
+  process.exitCode = exitCode;
+});

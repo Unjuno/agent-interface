@@ -1,0 +1,4 @@
+First read-only auditor run failed with KeyError: attempt at the explicit image
+review check. The actual primary-review-receipt-v2-public-capture uses relay_id
+and image hashes, not attempt. Corrected the auditor to check those actual fields;
+no source/review/GUI event was altered and no live allocation was rerun.

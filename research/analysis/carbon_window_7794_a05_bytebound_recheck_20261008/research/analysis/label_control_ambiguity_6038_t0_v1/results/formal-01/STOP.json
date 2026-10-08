@@ -1,0 +1,15 @@
+{
+  "allocation_id": "LABEL-CONTROL-AMBIGUITY-6038-T0-20261002-01",
+  "disposition": "STOP_CANDIDATE_CONTAINER_ENTRYPOINT",
+  "container_command_attempts": 1,
+  "candidate_program_invocations": 0,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "docker_exit": 126,
+  "reason": "The image operand python:3.12-alpine was omitted. Docker interpreted python as the image name and attempted to exec /src/candidate.py directly; container init returned permission denied before Python or candidate code started.",
+  "candidate_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "candidate_stderr_sha256": "6674dedc7d05493ddefafc36b8e982ca7519ca1d4cd10755d0284b0388a88315",
+  "candidate_exit_file_sha256": "703d2c10fa601276a4dd96193faed68902a642a44eb5b01b40d6fc8499e12822",
+  "interpretation": "Infrastructure/launcher STOP only; no method result and no evidence about the hypothesis.",
+  "recovery": "No retry within this allocation. A new allocation with explicit image operand and additive formal-02 output is separately frozen."
+}

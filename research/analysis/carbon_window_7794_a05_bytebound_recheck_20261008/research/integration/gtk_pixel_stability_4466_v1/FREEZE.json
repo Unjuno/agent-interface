@@ -1,0 +1,62 @@
+{
+  "schema": "issue4466_gtk_visibility_freeze_v1",
+  "allocation": "issue4466-visibility-formal01",
+  "source_main_commit": "c83ddb057c680a126144d000bf7ef7ba2274652a",
+  "branch": "research/issue-4466-gtk-pixel-stability-20260926",
+  "image": {
+    "id": "sha256:eb3ce9f5bd0cf358664b9d1ff9bce4cf2ce9f82f72ec700222046fb8fe8b96ba",
+    "platform": "linux/amd64",
+    "base": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "packages": {
+      "python3": "3.13.5-1",
+      "python3-gi": "3.50.0-4+b1",
+      "gir1.2-gtk-3.0": "3.24.49-3",
+      "python3-xlib": "0.33-3",
+      "xvfb": "2:21.1.16-1.3+deb13u4",
+      "xauth": "1:1.1.2-1.1",
+      "x11-utils": "7.7+7",
+      "x11-apps": "7.7+11+b1"
+    }
+  },
+  "runtime": {
+    "network": "none",
+    "source_mount": "read-only",
+    "output_mount": "fresh writable directory",
+    "sessions": 1,
+    "formal_invocations": 1,
+    "retries": 0,
+    "model_calls": 0,
+    "provider_calls": 0,
+    "input_events": 0,
+    "application_effects": 0
+  },
+  "schedule": [
+    {"stage": "target_only", "role": "target", "indices": [1, 2, 3]},
+    {"stage": "decoy_overlapping", "role_order": ["target", "decoy"], "indices": [1, 2, 3], "geometry": "both 400x180 at (0,0)"},
+    {"stage": "decoy_moved", "role_order": ["target", "decoy"], "indices": [1, 2, 3], "geometry": "target (0,0), decoy (400,0) on 800x400 root"}
+  ],
+  "capture": {
+    "method": "xwd -silent -id <xid>",
+    "interval_ms": 250,
+    "rgb_masks": ["0xff0000", "0xff00", "0xff"],
+    "ignored_bits": "unused high bits in the 32bpp storage word are excluded from RGB stability decisions"
+  },
+  "construction_excluded_from_formal": [
+    "construction01: STOP before captures; Xlib display name omitted",
+    "construction02: exploratory; decoy at x=420 clipped by the 800px root",
+    "construction03: exploratory; no cross-stage RGB audit",
+    "construction04: exploratory; RGB-mask and cross-stage analysis added",
+    "construction05: final construction gate; 15 captures, RGB baseline stable, overlap all-black, target restored after move"
+  ],
+  "source_sha256": {
+    "research/integration/gtk_pixel_stability_4466_v1/CONSTRUCTION_PLAN.md": "C14EC6B7971298980E794270790A4E19DA6BB499FCE6B84305971B362202C055",
+    "research/integration/gtk_pixel_stability_4466_v1/PREREG.md": "BD139CA81F33810DA322C95FA4B9BF66548CC25AE026545A136001BF8CDA8827",
+    "research/integration/gtk_pixel_stability_4466_v1/README.md": "3E64DA56A530565B7125714E4ADEBE531C01E50C132FFA0A7223E82C2B517F36",
+    "research/integration/gtk_pixel_stability_4466_v1/construct_visibility.py": "CD5EEAEE84D7001C0082046D3761EE38A2733A19F633D743BA44E6828941C5E7",
+    "research/integration/gtk_pixel_stability_4466_v1/audit_visibility.py": "490989C3E25D7EA4FAB61731805EB251A0C4EB1BA828628A04327D121EC5D6E5",
+    "research/integration/golden_v3_second_domain_2246_v1/gtk_fixture_app.py": "2F8ED8C604AFBCF5DD43363D2EDE4950E70AA9F7EAE70A4B795DECF4FEB4BB3B",
+    "research/integration/gtk_effect_control_3240_v1/fixture_render_decoy.py": "D6E8BF1AC0D4551EFCA372B30360EE0964FAF6F7629DCB6AD8FB1AA70E9B19EC",
+    "research/integration/gtk_effect_control_3240_v1/Dockerfile": "C25A47317BD606666675D20AD3899D94F77055BA5A3C206198AC085A7C881412"
+  },
+  "decision_rule": "See PREREG.md; no XWD RGB pixels may be treated as application effect in the overlapping/invalid capture state. Formal pass calibrates only this fixture's capture-validity gate."
+}

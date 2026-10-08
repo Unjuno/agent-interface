@@ -1,0 +1,31 @@
+{
+  "schema": "map01_threat_fixture_continuation_v2",
+  "seed": 990619,
+  "parent_manifest": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/doom/fixtures/map01-threat-contact-v1/fixture.json",
+  "parent_manifest_sha256": "e86632589f5195a1ef40de4e7024e80c2b801f00d2869f595e3d62366b6bea88",
+  "basis": "one frozen model-free continuation outside the exact v1 fixture state",
+  "input_path": "session v8 X11 Executor only",
+  "steps": [
+    {
+      "kind": "commands",
+      "commands": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_right",
+          "extent": "short"
+        }
+      ]
+    },
+    {
+      "kind": "coast",
+      "duration_ms": 750
+    }
+  ]
+}

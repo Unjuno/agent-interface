@@ -1,0 +1,122 @@
+"""One four-cell allocation. Preserves raw evidence; no outcome scorer."""
+import hashlib,json,os,pathlib,platform,selectors,signal,subprocess,sys,time,traceback
+from Xlib import X,XK,display
+from Xlib.ext import xtest
+ROOT=pathlib.Path(__file__).resolve().parents[1]
+PLAN=json.loads((ROOT/'PLAN.json').read_text())
+OUT=pathlib.Path(sys.argv[1]);OUT.mkdir(exist_ok=True)
+def now(): return time.monotonic_ns()
+def dump(p,v):p.write_text(json.dumps(v,sort_keys=True,indent=2)+'\n')
+def snapshot(d):
+    start=now();bits=d.query_keymap()
+    return dict(start_ns=start,end_ns=now(),keys=[k for k in range(256) if bits[k//8]&(1<<(k%8))],buttons=int(d.screen().root.query_pointer().mask)&(X.Button1Mask|X.Button2Mask|X.Button3Mask))
+def cell(spec,i):
+    row=dict(spec,errors=[],samples=[],events=[],owner_rows=[],cleanup=[],emergency=[])
+    xvfb=child=d=None;log=(OUT/(spec['id']+'.xvfb.log')).open('wb')
+    rawbuf=bytearray();selector=selectors.DefaultSelector();eof=False
+    def pump():
+        nonlocal eof
+        if d:
+            row['samples'].append(snapshot(d))
+            while d.pending_events():
+                e=d.next_event()
+                if e.type in (X.KeyPress,X.KeyRelease):row['events'].append(dict(kind='press' if e.type==X.KeyPress else 'release',keycode=int(e.detail),received_ns=now(),server_ms=int(e.time)))
+        for key,_ in selector.select(0):
+            b=os.read(key.fd,4096)
+            if not b: eof=True;selector.unregister(key.fd);row['pipe_eof_ns']=now()
+            else:
+                rawbuf.extend(b)
+                if len(rawbuf)>65536:raise RuntimeError('bounded owner trace exceeded')
+        row['owner_rows']=[json.loads(s) for s in bytes(rawbuf).split(b'\n')[:-1]]
+    def until(predicate,timeout=2):
+        deadline=now()+int(timeout*1e9)
+        while True:
+            pump()
+            if predicate():return
+            if now()>deadline:raise RuntimeError('bounded rendezvous failed')
+            time.sleep(.002)
+    def sleep_to(t):until(lambda:now()>=t, max(1,(t-now())/1e9+1))
+    def release(records):
+        pre=snapshot(d)
+        for key in ('F8','F9'):
+            code=row['keycodes'][key]
+            if code in pre['keys']:
+                start=now();xtest.fake_input(d,X.KeyRelease,code);d.sync()
+                records.append(dict(key=key,keycode=code,start_ns=start,end_ns=now(),kind='release'))
+        return snapshot(d)
+    try:
+        dn=':'+str(111+i)
+        xvfb=subprocess.Popen(['Xvfb',dn,'-screen','0','320x240x24','-nolisten','tcp','-ac'],stdout=log,stderr=subprocess.STDOUT)
+        row['xvfb_pid']=xvfb.pid
+        deadline=now()+2_000_000_000
+        while d is None:
+            try:d=display.Display(dn)
+            except Exception:
+                if xvfb.poll() is not None or now()>deadline:raise
+                time.sleep(.01)
+        screen=d.screen();w=screen.root.create_window(10,10,120,80,0,screen.root_depth,X.InputOutput,X.CopyFromParent,background_pixel=screen.white_pixel,event_mask=X.KeyPressMask|X.KeyReleaseMask)
+        w.map();d.change_keyboard_control(auto_repeat_mode=X.AutoRepeatModeOff);d.sync()
+        row['keycodes']={k:int(d.keysym_to_keycode(XK.string_to_keysym(k))) for k in ('F8','F9')}
+        row['initial']=snapshot(d)
+        identity=dict(display=dn,window=w.id,allocation=PLAN['allocation'],cell=spec['id'],keys=row['keycodes'])
+        row['prearmed']=dict(identity=identity,at_ns=now())
+        config=dict(display=dn,window=w.id,identity=identity,paused=spec['paused'],program=PLAN['program'])
+        err=(OUT/(spec['id']+'.owner.stderr')).open('wb')
+        child=subprocess.Popen([sys.executable,'-B',str(ROOT/'method/owner.py'),json.dumps(config)],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=err)
+        row['owner_pid']=child.pid;row['owner_argv']=child.args
+        os.set_blocking(child.stdout.fileno(),False);selector.register(child.stdout,selectors.EVENT_READ)
+        until(lambda:any(r['kind']=='ready' for r in row['owner_rows']))
+        child.stdin.write(b'G');child.stdin.flush();row['start_sent_ns']=now()
+        if spec['paused']:
+            until(lambda:any(r['kind']=='pause_entered' for r in row['owner_rows']))
+            row['exposure']=snapshot(d)
+            if row['exposure']['keys']!=[row['keycodes']['F8']]:raise RuntimeError('F8-only pause exposure missing')
+            row['request_ns']=now()
+            if spec['arm']=='terminate_before_accept':
+                row['kill_sent_ns']=now();child.kill()
+                row['owner_exit']=child.wait(timeout=1);row['reaped_ns']=now()
+                until(lambda:eof)
+                if row['owner_exit']!=-signal.SIGKILL:raise RuntimeError('unexpected owner death status')
+            row['accepted_ns']=now()
+            row['release_query']=release(row['cleanup'])
+            sleep_to(row['request_ns']+PLAN['checkpoint_ns'])
+            row['checkpoint']=dict(query=snapshot(d),owner_alive=child.poll() is None,at_ns=now())
+            sleep_to(row['request_ns']+PLAN['resume_ns'])
+            if spec['arm']=='keepalive':
+                row['resume_sent_ns']=now();child.stdin.write(b'R');child.stdin.flush()
+        until(lambda:child.poll() is not None)
+        row['owner_exit']=child.wait(timeout=1);row['retired_ns']=now();until(lambda:eof)
+        sleep_to(now()+50_000_000)
+        row['before_emergency']=snapshot(d)
+        row['final_query']=release(row['emergency'])
+        pump();row['completed_ns']=now()
+        err.close()
+    except Exception:row['errors'].append(traceback.format_exc())
+    finally:
+        if child and child.poll() is None:
+            row['abort_kill_ns']=now();child.kill();row['owner_exit']=child.wait(timeout=2)
+        if child:
+            child.stdin.close();child.stdout.close()
+        selector.close()
+        if d:
+            try:
+                if 'keycodes' in row:row['final_query']=release(row['emergency'])
+                d.close()
+            except Exception:row['errors'].append(traceback.format_exc())
+        if xvfb:
+            xvfb.terminate()
+            try:row['xvfb_exit']=xvfb.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                xvfb.kill();row['xvfb_exit']=xvfb.wait(timeout=2);row['errors'].append('Xvfb required kill')
+        log.close()
+        (OUT/(spec['id']+'.owner.stdout')).write_bytes(rawbuf)
+        row['stdout_sha256']=hashlib.sha256(rawbuf).hexdigest()
+        row['completed_ns']=now()
+    return row
+raw=dict(schema='requested-process-fence/raw-v1',allocation=PLAN['allocation'],started_ns=now(),python=sys.version,platform=platform.platform(),source_hashes={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in PLAN['source_hashes']},cgroups={p:pathlib.Path('/sys/fs/cgroup/'+p).read_text().strip() if pathlib.Path('/sys/fs/cgroup/'+p).exists() else 'unavailable' for p in ('cpu.max','memory.max','pids.max')},cells=[])
+for i,spec in enumerate(PLAN['cells']):
+    raw['cells'].append(cell(spec,i));dump(OUT/'raw.json',raw)
+    if raw['cells'][-1]['errors']:break
+raw['ended_ns']=now();dump(OUT/'raw.json',raw)
+print(json.dumps(dict(cells=len(raw['cells']),errors=[r['errors'] for r in raw['cells']])))
+sys.exit(2 if len(raw['cells'])!=4 or any(r['errors'] for r in raw['cells']) else 0)

@@ -1,0 +1,15 @@
+import datetime, hashlib, json
+from pathlib import Path
+p=Path(__file__).resolve().parent
+root=p/'repo'
+artifact=root/'research/integration/primary_stdio_busy_bound_57_20261003_01a0ff59'
+source=root/'runtime/host_v1/test_primary_stdio_backpressure.mjs'
+raw=source.read_bytes()
+dest=artifact/'baseline/runtime/host_v1'/source.name
+dest.write_bytes(raw)
+frozen={'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'classification':'ordinary engineering regressions; no formal allocation','node':'v24.19.0','platform':'Windows x64','baseline':json.loads((artifact/'BASELINE.json').read_text()),'regression_path':source.relative_to(root).as_posix(),'regression_sha256':hashlib.sha256(raw).hexdigest(),'stopping_rule':'one baseline RED execution of three regressions; preserve failures; bounded burst 256 lines; no outcome retry','wanted':'RED first two methods; existing legal observed-busy control passes','limits':['not a native/backend task result','no timing or efficiency claim','no general output deadline or readline size claim']}
+(artifact/'RED_FREEZE.json').write_text(json.dumps(frozen,indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+(artifact/'construction').mkdir()
+for name in ['bootstrap.py','run_check.py','freeze_red.py']:
+    (artifact/'construction'/f'{name}.txt').write_bytes((p/name).read_bytes())
+print(json.dumps({'freeze':'RED_FREEZE.json','regression_sha256':frozen['regression_sha256']}))

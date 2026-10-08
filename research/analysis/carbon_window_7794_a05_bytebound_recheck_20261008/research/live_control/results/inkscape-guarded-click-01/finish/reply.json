@@ -1,0 +1,37 @@
+{
+  "status": "boundary",
+  "records": [
+    {
+      "event": "command",
+      "command": {
+        "gui_judgment": "Viewed1,3,4,7,12: final X92 Y50 W40 H30, document saved status; predict SVG rectangle92,50,40,30 no transform. First patch mismatch and expired observation retained.",
+        "op": "finish",
+        "transport_request_id": "finish"
+      },
+      "received_ns": 223533087881,
+      "emit_started_ns": 223533104932
+    },
+    {
+      "event": "independent_evaluation",
+      "success": true,
+      "actual": {
+        "x": "92",
+        "y": "50",
+        "width": "40",
+        "height": "30",
+        "transform": null
+      },
+      "known_ns": 223542298675,
+      "emit_started_ns": 223542304075
+    }
+  ],
+  "cursor": 79,
+  "returned_ns": 223552752901,
+  "authority": "none",
+  "acknowledgement": "not implied",
+  "command_receipt": {
+    "request_id": "finish",
+    "replayed": false,
+    "state": "stdin_flushed"
+  }
+}

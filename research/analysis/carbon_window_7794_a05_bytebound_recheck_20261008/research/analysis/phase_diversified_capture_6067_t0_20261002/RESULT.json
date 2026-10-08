@@ -1,0 +1,37 @@
+{
+  "allocation_id": "PHASE-DIVERSIFIED-6067-T0-20261002-01",
+  "decision": "PASS_METHOD_SCOPED",
+  "claim_boundary": "finite idealized periodic cue and integer-slot schedule model only",
+  "period_slots": 12,
+  "repetitions": 4,
+  "cyclic_max_gap_slots": 18,
+  "admissible_schedule_count": 12546,
+  "observed_gap_min_slots": 1,
+  "observed_gap_max_slots": 18,
+  "selection": "uniform over admitted deterministic offset cycles; each selected cycle is fixed after selection",
+  "candidate_and_independent_audit_agree": true,
+  "duration_results": {
+    "1": {
+      "miss_numerator_by_phase": [10001, 9559, 9121, 8687, 8257, 7831, 7831, 8257, 8687, 9121, 9559, 10001],
+      "denominator": 12546,
+      "worst_phase_probability_four_misses": "10001/12546",
+      "periodic_worst_phase_probability_four_misses": "1",
+      "periodic_all_four_miss_phase_count_out_of_12": 11
+    },
+    "2": {
+      "miss_numerator_by_phase": [7672, 6928, 6200, 5488, 4792, 4450, 4792, 5488, 6200, 6928, 7672, 7672],
+      "denominator": 12546,
+      "worst_phase_probability_four_misses": "7672/12546",
+      "periodic_worst_phase_probability_four_misses": "1",
+      "periodic_all_four_miss_phase_count_out_of_12": 10
+    },
+    "3": {
+      "miss_numerator_by_phase": [5607, 4689, 3807, 2961, 2417, 2417, 2961, 3807, 4689, 5607, 5607, 5607],
+      "denominator": 12546,
+      "worst_phase_probability_four_misses": "5607/12546",
+      "periodic_worst_phase_probability_four_misses": "1",
+      "periodic_all_four_miss_phase_count_out_of_12": 9
+    }
+  },
+  "tests": "test_audit.py: 3/3 PASS"
+}

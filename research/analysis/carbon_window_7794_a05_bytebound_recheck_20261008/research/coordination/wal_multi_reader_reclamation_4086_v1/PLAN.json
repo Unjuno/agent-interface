@@ -1,0 +1,30 @@
+{
+  "allocation": "wal-multi-reader-reclamation-4086-20260922-01",
+  "base": "74d0ebb63c880fc5818bc4bbe6bb0c6b08579d39",
+  "batches": [
+    [
+      {"case":"f-r0-NO_READERS","current_reader":"NONE","old_at_start":false,"release32":[],"rep":0,"schedule":"NO_READERS","young_after16":false},
+      {"case":"f-r0-OLD_ONLY","current_reader":"A","old_at_start":true,"release32":[],"rep":0,"schedule":"OLD_ONLY","young_after16":false},
+      {"case":"f-r0-YOUNG_ONLY","current_reader":"B","old_at_start":false,"release32":[],"rep":0,"schedule":"YOUNG_ONLY","young_after16":true},
+      {"case":"f-r0-RELEASE_YOUNG_KEEP_OLD","current_reader":"B","old_at_start":true,"release32":["B"],"rep":0,"schedule":"RELEASE_YOUNG_KEEP_OLD","young_after16":true},
+      {"case":"f-r0-RELEASE_OLD_KEEP_YOUNG","current_reader":"A","old_at_start":true,"release32":["A"],"rep":0,"schedule":"RELEASE_OLD_KEEP_YOUNG","young_after16":true},
+      {"case":"f-r0-RELEASE_ALL","current_reader":"B","old_at_start":true,"release32":["A","B"],"rep":0,"schedule":"RELEASE_ALL","young_after16":true}
+    ],
+    [
+      {"case":"f-r1-RELEASE_ALL","current_reader":"B","old_at_start":true,"release32":["A","B"],"rep":1,"schedule":"RELEASE_ALL","young_after16":true},
+      {"case":"f-r1-RELEASE_OLD_KEEP_YOUNG","current_reader":"A","old_at_start":true,"release32":["A"],"rep":1,"schedule":"RELEASE_OLD_KEEP_YOUNG","young_after16":true},
+      {"case":"f-r1-RELEASE_YOUNG_KEEP_OLD","current_reader":"B","old_at_start":true,"release32":["B"],"rep":1,"schedule":"RELEASE_YOUNG_KEEP_OLD","young_after16":true},
+      {"case":"f-r1-YOUNG_ONLY","current_reader":"B","old_at_start":false,"release32":[],"rep":1,"schedule":"YOUNG_ONLY","young_after16":true},
+      {"case":"f-r1-OLD_ONLY","current_reader":"A","old_at_start":true,"release32":[],"rep":1,"schedule":"OLD_ONLY","young_after16":false},
+      {"case":"f-r1-NO_READERS","current_reader":"NONE","old_at_start":false,"release32":[],"rep":1,"schedule":"NO_READERS","young_after16":false}
+    ]
+  ],
+  "capacity":2,
+  "formal_cases":12,
+  "formal_writes":768,
+  "issue":4116,
+  "journal_size_limit":16384,
+  "page_size":4096,
+  "wal_autocheckpoint":1,
+  "writes_per_case":64
+}

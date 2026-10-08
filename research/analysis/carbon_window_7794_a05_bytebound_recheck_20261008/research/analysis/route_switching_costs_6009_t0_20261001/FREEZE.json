@@ -1,0 +1,28 @@
+{
+  "schema": "route-switching-6009-freeze-v1",
+  "allocation": "ROUTE-SWITCHING-6009-T0-20261001-01",
+  "frozen_at_utc": "2026-10-01T12:03:27Z",
+  "main_sha": "b2e7221c3c374cacc7037515f2df1508e965ac81",
+  "branch": "research/online-route-switching-costs-6009-t0-20261001",
+  "path": "research/analysis/route_switching_costs_6009_t0_20261001/",
+  "candidate_command": "python -B research/analysis/route_switching_costs_6009_t0_20261001/candidate.py --out research/analysis/route_switching_costs_6009_t0_20261001/results/candidate-01/candidate.json",
+  "auditor_command": "python -B research/analysis/route_switching_costs_6009_t0_20261001/audit.py --candidate research/analysis/route_switching_costs_6009_t0_20261001/results/candidate-01/candidate.json --out research/analysis/route_switching_costs_6009_t0_20261001/results/candidate-01/audit.json",
+  "limits": {
+    "candidate_invocations_max": 1,
+    "independent_auditor_invocations_max": 1,
+    "retries": 0,
+    "scenarios": 5,
+    "tasks": 15,
+    "routes": ["A", "B", "C"],
+    "input_is_complete_future_sequence_to_policy": false,
+    "model_gui_live_input_or_external_effects": false,
+    "runtime_changes": false
+  },
+  "sha256": {
+    "PLAN.md": "83cbe891156348c6671a608b259a4fe951c6e43ed2b8cec2677ff5ff2b654ed5",
+    "scenarios.json": "46e8750b8d1d80c8799cb0abb32783bd1f65d97ddf70dd046a601beda8b63aa1",
+    "candidate.py": "cd131a821234a0e4435880bfd11e3a195500c5c9baf5e0aa762c506c93270abc",
+    "audit.py": "6ec14f3371275aec83ad7a0d6e96595cd9eb883e0af31fb42db5b85c59c8ada8"
+  },
+  "disposition": "HOST_ONLY_METHOD_T0_NO_CONTAINER_REPRODUCTION"
+}

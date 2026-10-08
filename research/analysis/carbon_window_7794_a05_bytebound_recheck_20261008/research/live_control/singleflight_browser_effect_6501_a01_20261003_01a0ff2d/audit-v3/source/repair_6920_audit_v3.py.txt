@@ -1,0 +1,25 @@
+import hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parent.parent;source=root/'work/repairs/6920-audit-v3'
+path=source/'audit_v3.py.txt';before=path.read_bytes()
+assert hashlib.sha256(before).hexdigest()=='400b782260daf3b0fe4ebd5d06b79057cf00d7dde277acc2eda1f64ee2f5df36'
+sep=b'\r\n' if b'\r\n' in before else b'\n'
+needle=b"            seen[request]=event['target']"+sep
+assert before.count(needle)==1
+lines=[
+    "            effect_read=reads.get(source_consumer['result']['read_id'],{}) if source_consumer else {}",
+    "            effect_return=effect_read.get('return',{})",
+    "            require(type(effect_return.get('seq')) is int and type(event.get('seq')) is int and",
+    "                    effect_return['seq']<event['seq'] and type(effect_return.get('ns')) is int and",
+    "                    type(event.get('ns')) is int and effect_return['ns']<=event['ns'],label+':server_return_before_effect')",
+]
+addition=sep.join(s.encode() for s in lines)+sep
+after=before.replace(needle,addition+needle).replace(b"'audit_revision':'6920-retained-v2'",b"'audit_revision':'6920-retained-v3'")
+assert after.replace(addition,b'').replace(b"'audit_revision':'6920-retained-v3'",b"'audit_revision':'6920-retained-v2'")==before
+path.write_bytes(after)
+record={'before_sha256':hashlib.sha256(before).hexdigest(),'after_sha256':hashlib.sha256(after).hexdigest(),
+        'before_bytes':len(before),'after_bytes':len(after),'line_endings_preserved':True,'exact_single_insertion_and_revision_only':True,
+        'test_sha256':hashlib.sha256((source/'regressions.py.txt').read_bytes()).hexdigest(),
+        'original_inputs_unmodified':True,'new_producer_or_formal_execution':False}
+(source/'FIX_BEFORE_FINAL.json').write_text(json.dumps(record,indent=2)+'\n',encoding='utf-8',newline='\n')
+print(json.dumps(record,indent=2))

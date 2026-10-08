@@ -1,0 +1,59 @@
+{
+  "schema": "relational-coordinate-bounds-6684-freeze-v1",
+  "issue": 6684,
+  "allocation": "relational-coordinate-bounds-6684-t0-20261002-06",
+  "supersedes_freeze_sha256": "e6330288107dbc8240b54d65e1ba8507ae6774c7a35e35f9530b1d918995bb9c",
+  "supersedes_retired_record_sha256": "1c5c225d42a8289e1120e2476879853093cfd4edd2de75302ffc03a2e0f8a368",
+  "branch": "research/relational-coordinate-bounds-6684-t0-20261002",
+  "baseline_main_sha": "5f1cc2624469dea4624e98062423e928da083ca4",
+  "source_commit": "80ebf70f8e3fad96e72108abf1115012af74863a",
+  "source_sha256": {
+    "research/analysis/relational_coordinate_bounds_6684_t0_20261002/candidate.py": "82653d463e08d19566bac5d00ebaaf9bfa04a9cfb8e72de0211653e49e979853",
+    "research/analysis/relational_coordinate_bounds_6684_t0_20261002/auditor.py": "ae4f7c804141360f2a70a2553d02d628ee846c8e7924340782dc499f29a9117d",
+    "research/analysis/relational_coordinate_bounds_6684_t0_20261002/runner.py": "3ae9951812d902c2f39ec5f1ab4acb38ba3a6007173b4bd8055e60acb48c6207",
+    "research/analysis/relational_coordinate_bounds_6684_t0_20261002/design.json": "4d9d1d8b69f448216367c2f71baeac9926caae7dda382c2ddea4432e34cce2ca",
+    "research/analysis/relational_coordinate_bounds_6684_t0_20261002/PREREGISTRATION.md": "3373091c8d2a5412dad0ff1a2dba62e648a47925efba19df3c19dc9a10e8be09",
+    "research/analysis/relational_coordinate_bounds_6684_t0_20261002/test_protocol.py": "abf9cab62779900eeaa4adce1be7993a065838598128de2172a3a032c8ae2873",
+    "research/analysis/relational_coordinate_bounds_6684_t0_20261002/README.md": "6940ecf67d002df16605a9281cddccaf8a2cef38bc304d2a397e09ee03336394",
+    ".github/workflows/relational-coordinate-bounds-6684.yml": "3e70353bca72628ce744d4efaef5ded4d2abb01c85264a60c0c69f08422672d9"
+  },
+  "frozen_input": "design.json",
+  "frozen_input_sha256": "4d9d1d8b69f448216367c2f71baeac9926caae7dda382c2ddea4432e34cce2ca",
+  "frozen_claim_scope": "finite synthetic integer-pixel coordinate model only; no GUI, runtime, action-authority, safety, or product claim",
+  "world_budget": {"maximum_per_case": 100000, "exact_counts": {
+    "CM_SAFE_WIDE_TRANSLATION": 36450,
+    "CM_SAFE_SMALL_HITBOX": 25,
+    "CM_SAFE_SCALED_OFFSET": 100,
+    "INDEPENDENT_SAFE_NO_GAIN": 729,
+    "INDEPENDENT_UNSAFE_NO_GAIN": 729,
+    "INDEPENDENT_FRAME_TRANSLATION_NO_GAIN": 81,
+    "CM_UNSAFE_SCALE_BOUNDARY": 50,
+    "CM_UNSAFE_ADJACENT_COLLATERAL": 225,
+    "CM_UNSAFE_INDEPENDENT_MEASUREMENT_ERROR": 60025
+  }, "total": 98414},
+  "authorized_formal_process_counts": {"candidate": 1, "auditor": 1, "retries": 0},
+  "commands": [
+    "python3 -B runner.py",
+    "python -B candidate.py --design design.json --out results/formal-01/candidate",
+    "python -B auditor.py --design design.json --candidate results/formal-01/candidate/candidate.json --out results/formal-01/audit"
+  ],
+  "execution": {
+    "mode": "local-host-cpu",
+    "container": false,
+    "reason": "This finite method-only fixture requires no GUI, Engine API, special isolation, runtime authority, or application effects. Two unrelated OrbStack containers were active at preparation time and remain untouched.",
+    "network_calls": "none by protocol; no model, GUI, user data, network, GPU, or OS input"
+  },
+  "prelaunch_parallel_guard": {
+    "requires_baseline_main_ancestor": true,
+    "allow_disjoint_main_advances": true,
+    "stop_on_protected_path_collisions": true,
+    "protected_paths": [
+      "docs/CURRENT_GOAL.md",
+      "ROADMAP.md",
+      "README.md",
+      "research/analysis/relational_coordinate_bounds_6684_t0_20261002",
+      ".github/workflows/relational-coordinate-bounds-6684.yml"
+    ]
+  },
+  "decision_gate": "PASS_METHOD_SCOPED only under PREREGISTRATION.md; false admission => FAIL_UNSOUND; no strict common-mode refusal reduction or any independent-control advantage => FAIL_NO_GAIN; missing provenance/enumeration => HOLD"
+}

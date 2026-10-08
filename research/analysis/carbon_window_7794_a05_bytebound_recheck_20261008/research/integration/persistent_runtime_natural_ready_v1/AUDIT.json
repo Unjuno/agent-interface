@@ -1,0 +1,19 @@
+{
+  "decision": "PASS_EXISTING_RUNTIME_READY_GATE_SCOPED",
+  "errors": [],
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "negative_controls": [
+    {"code":1,"elapsed_ms":2830.233942,"endpoint_lines":[],"name":"suppressed_ready","pass":true,"timed_out":false},
+    {"code":1,"elapsed_ms":1330.659396,"endpoint_lines":[],"name":"wrong_ready_authority","pass":true,"timed_out":false},
+    {"code":1,"elapsed_ms":3490.145097,"endpoint_lines":[],"name":"unrelated_early_record_only","pass":true,"timed_out":false}
+  ],
+  "rows": [
+    {"clock_count":0,"endpoint_wait_ms":454.451367,"id":"f00","policy":"endpoint_only","status":"timeout"},
+    {"clock_count":1,"endpoint_wait_ms":1204.76365,"id":"f01","policy":"runtime_ready_gate","status":"boundary"},
+    {"clock_count":1,"endpoint_wait_ms":1249.210346,"id":"f02","policy":"runtime_ready_gate","status":"boundary"},
+    {"clock_count":0,"endpoint_wait_ms":467.338846,"id":"f03","policy":"endpoint_only","status":"timeout"},
+    {"clock_count":0,"endpoint_wait_ms":464.942758,"id":"f04","policy":"endpoint_only","status":"timeout"},
+    {"clock_count":1,"endpoint_wait_ms":1345.011604,"id":"f05","policy":"runtime_ready_gate","status":"boundary"}
+  ]
+}

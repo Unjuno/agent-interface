@@ -1,0 +1,461 @@
+{
+  "cases": {
+    "cancelled_waiter": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "cancelled": 5
+        },
+        "decision_latency_ms": {
+          "cancelled": 5,
+          "survivor": 5
+        },
+        "per_caller": {
+          "cancelled": "CANCELLED_WAITER",
+          "survivor": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "cancelled": 5,
+          "survivor": 10
+        },
+        "decision_latency_ms": {
+          "cancelled": 5,
+          "survivor": 10
+        },
+        "per_caller": {
+          "cancelled": "CANCELLED_WAITER",
+          "survivor": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "cancelled": 5
+        },
+        "decision_latency_ms": {
+          "cancelled": 5,
+          "survivor": 5
+        },
+        "per_caller": {
+          "cancelled": "CANCELLED_WAITER",
+          "survivor": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 1
+      }
+    },
+    "contradictory_dependencies": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "WRONG_SHARED_TRUE"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "ADMISSIBLE_FALSE"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "ADMISSIBLE_FALSE"
+        },
+        "verifier_invocations": 2
+      }
+    },
+    "different_target": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "WRONG_SHARED_TRUE"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "ADMISSIBLE_FALSE"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "ADMISSIBLE_FALSE"
+        },
+        "verifier_invocations": 2
+      }
+    },
+    "disjoint_deadlines": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "early": 5
+        },
+        "decision_latency_ms": {
+          "early": 5,
+          "late": 5
+        },
+        "per_caller": {
+          "early": "DEADLINE_MISSED",
+          "late": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "early": 5,
+          "late": 10
+        },
+        "decision_latency_ms": {
+          "early": 5,
+          "late": 10
+        },
+        "per_caller": {
+          "early": "DEADLINE_MISSED",
+          "late": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "early": 5
+        },
+        "decision_latency_ms": {
+          "early": 5,
+          "late": 5
+        },
+        "per_caller": {
+          "early": "DEADLINE_MISSED",
+          "late": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 1
+      }
+    },
+    "equivalent_overlap": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "ADMISSIBLE_TRUE",
+          "b": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 1
+      }
+    },
+    "generation_flip": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "STALE_ON_RETURN",
+          "b": "STALE_ON_RETURN"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "per_caller": {
+          "a": "STALE_ON_RETURN",
+          "b": "STALE_ON_RETURN"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "STALE_ON_RETURN",
+          "b": "STALE_ON_RETURN"
+        },
+        "verifier_invocations": 1
+      }
+    },
+    "late_after_completion": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "first": 5,
+          "late": 11
+        },
+        "decision_latency_ms": {
+          "first": 5,
+          "late": 5
+        },
+        "per_caller": {
+          "first": "ADMISSIBLE_TRUE",
+          "late": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 2
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "first": 5,
+          "late": 11
+        },
+        "decision_latency_ms": {
+          "first": 5,
+          "late": 5
+        },
+        "per_caller": {
+          "first": "ADMISSIBLE_TRUE",
+          "late": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "first": 5,
+          "late": 11
+        },
+        "decision_latency_ms": {
+          "first": 5,
+          "late": 5
+        },
+        "per_caller": {
+          "first": "ADMISSIBLE_TRUE",
+          "late": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 2
+      }
+    },
+    "owner_failure": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "OWNER_FAILED",
+          "b": "OWNER_FAILED"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "per_caller": {
+          "a": "OWNER_FAILED",
+          "b": "OWNER_FAILED"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "OWNER_FAILED",
+          "b": "OWNER_FAILED"
+        },
+        "verifier_invocations": 1
+      }
+    },
+    "restart_aba": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "after_restart": 5
+        },
+        "decision_latency_ms": {
+          "after_restart": 5,
+          "before_restart": 5
+        },
+        "per_caller": {
+          "after_restart": "ADMISSIBLE_FALSE",
+          "before_restart": "WRONG_SHARED_FALSE"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "after_restart": 5,
+          "before_restart": 10
+        },
+        "decision_latency_ms": {
+          "after_restart": 5,
+          "before_restart": 10
+        },
+        "per_caller": {
+          "after_restart": "ADMISSIBLE_FALSE",
+          "before_restart": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "after_restart": 5,
+          "before_restart": 10
+        },
+        "decision_latency_ms": {
+          "after_restart": 5,
+          "before_restart": 10
+        },
+        "per_caller": {
+          "after_restart": "ADMISSIBLE_FALSE",
+          "before_restart": "ADMISSIBLE_TRUE"
+        },
+        "verifier_invocations": 2
+      }
+    },
+    "unknown_result": {
+      "naive_predicate_key": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "UNKNOWN",
+          "b": "UNKNOWN"
+        },
+        "verifier_invocations": 1
+      },
+      "no_coalescing": {
+        "completion_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 10
+        },
+        "per_caller": {
+          "a": "UNKNOWN",
+          "b": "UNKNOWN"
+        },
+        "verifier_invocations": 2
+      },
+      "scope_typed": {
+        "completion_ms": {
+          "a": 5
+        },
+        "decision_latency_ms": {
+          "a": 5,
+          "b": 5
+        },
+        "per_caller": {
+          "a": "UNKNOWN",
+          "b": "UNKNOWN"
+        },
+        "verifier_invocations": 1
+      }
+    }
+  },
+  "fixture_sha256": "42e5c55935497854fdc9eac0ef97cc6569bcbaa9455e88375d030cb7541dfbdf",
+  "schema": "scope-typed-singleflight-t0-candidate-v1"
+}

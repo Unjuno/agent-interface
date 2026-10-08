@@ -1,0 +1,184 @@
+{
+  "acquisition_brackets": 930,
+  "allocation_id": "pending-effect-frontier-calibration-01",
+  "base_commit": "a74c5cb704c17bc63e6d73aa98a4bac62d738c47",
+  "cases": 75,
+  "environment": {
+    "clock": {
+      "adjustable": false,
+      "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+      "monotonic": true,
+      "resolution": 1e-09
+    },
+    "concurrency": "one controller + one GUI process; serial trials",
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "cpu_clock": "not pinned / not calibrated",
+    "doom_episodes": 0,
+    "feedback": "trusted public application receipts; no screenshot grounding",
+    "input": "private Xvfb/Openbox/Tk/XTEST; not Agent Interface InputOwner",
+    "kernel": "6.18.44",
+    "model_calls": 0,
+    "python": "3.13.5",
+    "sqlite": "3.46.1"
+  },
+  "finite_effect_pairs_tested": 4096,
+  "gates": {
+    "all_75_case_audits": true,
+    "candidate_wrong_effects_zero": true,
+    "paired_median_ratio_at_most_0_8": true,
+    "six_frontier_pairs_do_two_independent_tasks_early": true,
+    "three_dropped_requests_remain_unknown": true,
+    "three_lost_ack_lookups_complete": true
+  },
+  "input_releases": 285,
+  "interpretation": "Scoped native-GUI calibration only; controls include intentional semantic failures. Structured effects/aliases/status are explicit extra contracts. Not runtime/model/Doom/general speed evidence.",
+  "paired_comparison": {
+    "frontier_ms": {
+      "max": 265.129677,
+      "median": 263.8664315,
+      "min": 263.122847,
+      "n": 6
+    },
+    "global_ms": {
+      "max": 469.365285,
+      "median": 467.778162,
+      "min": 467.602415,
+      "n": 6
+    },
+    "ratio": {
+      "max": 0.5648685266529672,
+      "median": 0.5635030491865116,
+      "min": 0.5625765969671552,
+      "n": 6
+    },
+    "reduction_ms": {
+      "max": 205.03749800000003,
+      "median": 204.27604599999998,
+      "min": 203.825716,
+      "n": 6
+    }
+  },
+  "pairs": [
+    {
+      "frontier_ms": 263.712516,
+      "global_ms": 467.616022,
+      "ratio": 0.5639509845537328,
+      "reduction_ms": 203.903506,
+      "repetition": 0,
+      "scenario": "delayed"
+    },
+    {
+      "frontier_ms": 263.122847,
+      "global_ms": 467.710261,
+      "ratio": 0.5625765969671552,
+      "reduction_ms": 204.58741400000002,
+      "repetition": 1,
+      "scenario": "delayed"
+    },
+    {
+      "frontier_ms": 265.129677,
+      "global_ms": 469.365285,
+      "ratio": 0.5648685266529672,
+      "reduction_ms": 204.23560799999996,
+      "repetition": 2,
+      "scenario": "delayed"
+    },
+    {
+      "frontier_ms": 264.020347,
+      "global_ms": 467.846063,
+      "ratio": 0.5643316635112947,
+      "reduction_ms": 203.825716,
+      "repetition": 0,
+      "scenario": "alias"
+    },
+    {
+      "frontier_ms": 264.168634,
+      "global_ms": 469.206132,
+      "ratio": 0.5630118960167383,
+      "reduction_ms": 205.03749800000003,
+      "repetition": 1,
+      "scenario": "alias"
+    },
+    {
+      "frontier_ms": 263.285931,
+      "global_ms": 467.602415,
+      "ratio": 0.5630551138192903,
+      "reduction_ms": 204.316484,
+      "repetition": 2,
+      "scenario": "alias"
+    }
+  ],
+  "pass_all": true,
+  "policies": {
+    "frontier": {
+      "cases": 15,
+      "correct_effects": 51,
+      "effects": 51,
+      "exact_complete": 9,
+      "independent_before_A_resolution": 24,
+      "input_releases": 54,
+      "lookups": 0,
+      "premature_dependent_reads": 0,
+      "visible_complete": 9,
+      "wrong_effects": 0
+    },
+    "frontier_lookup": {
+      "cases": 15,
+      "correct_effects": 54,
+      "effects": 54,
+      "exact_complete": 12,
+      "independent_before_A_resolution": 24,
+      "input_releases": 75,
+      "lookups": 18,
+      "premature_dependent_reads": 0,
+      "visible_complete": 12,
+      "wrong_effects": 0
+    },
+    "global_wait": {
+      "cases": 15,
+      "correct_effects": 39,
+      "effects": 39,
+      "exact_complete": 9,
+      "independent_before_A_resolution": 0,
+      "input_releases": 42,
+      "lookups": 0,
+      "premature_dependent_reads": 0,
+      "visible_complete": 9,
+      "wrong_effects": 0
+    },
+    "name_frontier": {
+      "cases": 15,
+      "correct_effects": 48,
+      "effects": 51,
+      "exact_complete": 6,
+      "independent_before_A_resolution": 24,
+      "input_releases": 54,
+      "lookups": 0,
+      "premature_dependent_reads": 3,
+      "visible_complete": 9,
+      "wrong_effects": 3
+    },
+    "release_only": {
+      "cases": 15,
+      "correct_effects": 42,
+      "effects": 57,
+      "exact_complete": 0,
+      "independent_before_A_resolution": 30,
+      "input_releases": 60,
+      "lookups": 0,
+      "premature_dependent_reads": 15,
+      "visible_complete": 9,
+      "wrong_effects": 15
+    }
+  },
+  "preregistration_commit": "734a07200b1bdd130dc3873838e459f6329fc10c",
+  "schema": "pending-effect-frontier-summary-v1",
+  "test_count_prefreeze": 39
+}

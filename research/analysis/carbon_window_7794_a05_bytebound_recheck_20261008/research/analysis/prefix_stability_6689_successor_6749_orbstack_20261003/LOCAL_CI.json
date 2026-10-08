@@ -1,0 +1,19 @@
+{
+  "workflow": ".github/workflows/analysis-index.yml",
+  "base_at_validation": "581aa10d619f8c83c4c8fadf602a691fd554d3cb",
+  "workflow_sha256_after_restoring_branch_source": "9e5679150f2ca30b32b112cade99a0cc7703820b47a3eb8b8aa4a5667f407f8f",
+  "frozen_provenance_workflow_sha256_used_for_test_run": "b19000e027e7379ef6c0122e3f8cfd0b2faacb4c54d985ab87d27c1be914f7c2",
+  "local_python": "Python 3.14.5",
+  "analysis_index_directories": 543,
+  "analysis_index_check": "PASS",
+  "unit_test_commands_passed": 18,
+  "unit_tests_passed": 109,
+  "result": "PASS_LOCAL_ANALYSIS_INDEX_CI",
+  "stdout_path": "execution/local_ci.stdout.log",
+  "stdout_sha256": "851f081add7e53076f34bb65bcdc4c697869f544feb68fa4956049cbabca549f",
+  "notes": [
+    "The fixed historical workflow source was temporarily restored to satisfy provenance-hash tests, then the branch workflow source was restored from the committed branch tip.",
+    "The branch adds the #6749 construction test as one of the 18 unit-test commands.",
+    "This host-local CI result does not assert GitHub Actions completion or product correctness."
+  ]
+}

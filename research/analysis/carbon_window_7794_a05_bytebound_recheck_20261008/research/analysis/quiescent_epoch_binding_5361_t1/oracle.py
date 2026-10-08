@@ -1,0 +1,9 @@
+EXPECTED={
+"inflight_old_completion":{"REVOKE_ONLY":(True,True),"EPOCH_BOUND":(False,True)},
+"fresh_new_epoch":{"REVOKE_ONLY":(True,True),"EPOCH_BOUND":(True,True)},
+"stale_replay":{"REVOKE_ONLY":(False,True),"EPOCH_BOUND":(False,True)},
+"wrong_authority_same_epoch":{"REVOKE_ONLY":(True,True),"EPOCH_BOUND":(False,True)},
+"expired_lease":{"REVOKE_ONLY":(True,True),"EPOCH_BOUND":(False,True)},
+"crashed_reader_unreported":{"REVOKE_ONLY":(True,True),"EPOCH_BOUND":(True,False)},
+"wrong_retired_authority_receipt":{"REVOKE_ONLY":(True,True),"EPOCH_BOUND":(True,False)},
+"reader_registered_after_snapshot":{"REVOKE_ONLY":(True,True),"EPOCH_BOUND":(True,False)}}

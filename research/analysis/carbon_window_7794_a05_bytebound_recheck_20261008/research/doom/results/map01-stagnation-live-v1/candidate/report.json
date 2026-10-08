@@ -1,0 +1,2460 @@
+{
+  "claim": "pre-formal overlapping inference feasibility",
+  "model": "gpt-5.6-luna",
+  "effort": "low",
+  "iterations": 40,
+  "decisions": [
+    {
+      "iteration": 0,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/001.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-0/temporal-sheet.png",
+      "model_image_sha256": "5b0effcc885115d152c3b5973c3a4cee48840e4a8f0743b2b7ef990954df2753",
+      "action": {
+        "assessment": "Temporal frames are unchanged; advance toward the corridor opening and interact if needed.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 112,
+        "reasoning_output_tokens": 58
+      },
+      "model_ns": 7287343900,
+      "model_session_id": "01a0a0a4-9e6a-7f71-937f-61a8d7121c02",
+      "controller_model_started_ns": 6985413645177,
+      "controller_model_ended_ns": 6992808706336,
+      "model_image_to_plan_accept_ns": 7820006362,
+      "fresh_observation_to_plan_accept_ns": 266108198,
+      "fresh_sequence_at_plan": 25,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 1,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/034.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-1/temporal-sheet.png",
+      "model_image_sha256": "dce440aea3fc0131f97aba6c0c9d6e606534f9eedfe0c4024792031008486b37",
+      "action": {
+        "assessment": "The player has entered a new chamber facing a marked doorway or lift; continue forward and interact.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9559,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 43
+      },
+      "model_ns": 6607241998,
+      "model_session_id": "01a0a0a4-9e6a-7f71-937f-61a8d7121c02",
+      "controller_model_started_ns": 6994380898596,
+      "controller_model_ended_ns": 7001096410410,
+      "model_image_to_plan_accept_ns": 7197912989,
+      "fresh_observation_to_plan_accept_ns": 153591531,
+      "fresh_sequence_at_plan": 57,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 2,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/066.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-2/temporal-sheet.png",
+      "model_image_sha256": "aab97d8fcff80825c4b985e6968f2217b3b29e5a8c8083eac16585ddff9c2117",
+      "action": {
+        "assessment": "A larger room is visible with a likely distant threat; advance while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10129,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 76,
+        "reasoning_output_tokens": 29
+      },
+      "model_ns": 6215660290,
+      "model_session_id": "01a0a0a4-9e6a-7f71-937f-61a8d7121c02",
+      "controller_model_started_ns": 7002612517183,
+      "controller_model_ended_ns": 7008929780544,
+      "model_image_to_plan_accept_ns": 6821706207,
+      "fresh_observation_to_plan_accept_ns": 84575410,
+      "fresh_sequence_at_plan": 88,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 3,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/095.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-3/temporal-sheet.png",
+      "model_image_sha256": "4e64ef572a543a973544995bf503fb703395ee2a8c5a3fdc238509bf1dcbf617",
+      "action": {
+        "assessment": "The player is pressed against a wall and has taken damage; retreat while firing to create space.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10674,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 91,
+        "reasoning_output_tokens": 30
+      },
+      "model_ns": 7178961484,
+      "model_session_id": "01a0a0a4-9e6a-7f71-937f-61a8d7121c02",
+      "controller_model_started_ns": 7010198348751,
+      "controller_model_ended_ns": 7017471880866,
+      "model_image_to_plan_accept_ns": 7728935417,
+      "fresh_observation_to_plan_accept_ns": 156389338,
+      "fresh_sequence_at_plan": 135,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 4,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/143.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-4/temporal-sheet.png",
+      "model_image_sha256": "5f3ff1317e4713daee9f4d199717f8ee0c666ab7a64f808ef74b8f13ff3f435c",
+      "action": {
+        "assessment": "Near a prominent door or switch; activate it, then advance cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 139,
+        "reasoning_output_tokens": 86
+      },
+      "model_ns": 7630616430,
+      "model_session_id": "01a0a0a5-1ef1-7811-a96d-a13e55f00851",
+      "controller_model_started_ns": 7018804847328,
+      "controller_model_ended_ns": 7026546144824,
+      "model_image_to_plan_accept_ns": 8217914647,
+      "fresh_observation_to_plan_accept_ns": 140316399,
+      "fresh_sequence_at_plan": 182,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 5,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/189.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-5/temporal-sheet.png",
+      "model_image_sha256": "7204a28d61171a8e9155e160dcb62cbf330142d7c2dbf0c1fbbf74e00b03491e",
+      "action": {
+        "assessment": "The door area is still blocked and contact damage is occurring; fire while backing away to create space.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          },
+          {
+            "action": "turn_left",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9586,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 169,
+        "reasoning_output_tokens": 99
+      },
+      "model_ns": 8512171200,
+      "model_session_id": "01a0a0a5-1ef1-7811-a96d-a13e55f00851",
+      "controller_model_started_ns": 7027811726585,
+      "controller_model_ended_ns": 7036414402910,
+      "model_image_to_plan_accept_ns": 9118058990,
+      "fresh_observation_to_plan_accept_ns": 348546663,
+      "fresh_sequence_at_plan": 218,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        },
+        {
+          "action": "turn_left",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 6,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/229.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-6/temporal-sheet.png",
+      "model_image_sha256": "3002ad68a2c11ddc77466d0d6046cc40791bc6bf2c8e967a4642fcf284ba4233",
+      "action": {
+        "assessment": "Stalled against the wall beside the door and taking heavy damage; break contact and reorient.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "retreat_fire",
+            "extent": "short"
+          },
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10224,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 43
+      },
+      "model_ns": 7371581757,
+      "model_session_id": "01a0a0a5-1ef1-7811-a96d-a13e55f00851",
+      "controller_model_started_ns": 7038173268099,
+      "controller_model_ended_ns": 7045637647767,
+      "model_image_to_plan_accept_ns": 7925235921,
+      "fresh_observation_to_plan_accept_ns": 271367744,
+      "fresh_sequence_at_plan": 267,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "turn_right",
+          "extent": "medium"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "medium"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "short"
+        },
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 7,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/279.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-7/temporal-sheet.png",
+      "model_image_sha256": "c6be681bffbd8beae35e63b1bc77c73e1201a1f14b0342063bc049a2c0c5488b",
+      "action": {
+        "assessment": "The player has broken into the adjacent corridor; continue forward while firing to suppress nearby threats.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "short"
+          },
+          {
+            "action": "turn_right",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10807,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 34
+      },
+      "model_ns": 7997245310,
+      "model_session_id": "01a0a0a5-1ef1-7811-a96d-a13e55f00851",
+      "controller_model_started_ns": 7047679727665,
+      "controller_model_ended_ns": 7055782060832,
+      "model_image_to_plan_accept_ns": 8647636287,
+      "fresh_observation_to_plan_accept_ns": 277568622,
+      "fresh_sequence_at_plan": 319,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "short"
+        },
+        {
+          "action": "turn_right",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "short"
+        },
+        {
+          "action": "turn_right",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 8,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/332.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-8/temporal-sheet.png",
+      "model_image_sha256": "2c035b11af91eaf382033434c6e14843ddc7d03d1a522a38265f7b16420fd5fb",
+      "action": {
+        "assessment": "Facing a wall/obstruction and taking damage; turn away and retreat while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "retreat_fire",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 177,
+        "reasoning_output_tokens": 118
+      },
+      "model_ns": 8546487361,
+      "model_session_id": "01a0a0a5-b830-71d0-b0b9-c53773b9b3f5",
+      "controller_model_started_ns": 7057846402113,
+      "controller_model_ended_ns": 7066466662845,
+      "model_image_to_plan_accept_ns": 9131707821,
+      "fresh_observation_to_plan_accept_ns": 91689790,
+      "fresh_sequence_at_plan": 374,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "retreat_fire",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 9,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/383.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-9/temporal-sheet.png",
+      "model_image_sha256": "0d63cf4959d50618097b709008e4dae6f34c5d2de5c6dcda15fbdafb87a646cd",
+      "action": {
+        "assessment": "Enemy is immediately ahead and health is critical; retreat while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "retreat_fire",
+            "extent": "medium"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9624,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 46
+      },
+      "model_ns": 8206039306,
+      "model_session_id": "01a0a0a5-b830-71d0-b0b9-c53773b9b3f5",
+      "controller_model_started_ns": 7068020273734,
+      "controller_model_ended_ns": 7076337659514,
+      "model_image_to_plan_accept_ns": 8823979360,
+      "fresh_observation_to_plan_accept_ns": 131398525,
+      "fresh_sequence_at_plan": 425,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "retreat_fire",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "retreat_fire",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 10,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/434.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-10/temporal-sheet.png",
+      "model_image_sha256": "c8ab045ee4ffc63c2ee3c4092fafd63aca9dc607ad82c6b5d18b746d9eb3e79a",
+      "action": {
+        "assessment": "The immediate threat appears down and the corridor is open; advance through the opening cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10194,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 81,
+        "reasoning_output_tokens": 33
+      },
+      "model_ns": 10311919892,
+      "model_session_id": "01a0a0a5-b830-71d0-b0b9-c53773b9b3f5",
+      "controller_model_started_ns": 7077947385099,
+      "controller_model_ended_ns": 7088340185491,
+      "model_image_to_plan_accept_ns": 10915601128,
+      "fresh_observation_to_plan_accept_ns": 271856995,
+      "fresh_sequence_at_plan": 486,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 11,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/493.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-11/temporal-sheet.png",
+      "model_image_sha256": "ba406697b987a21150039f265a48d562b4b396b051429d6553cef13b1facc7d4",
+      "action": {
+        "assessment": "At the closed AGMP door; activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10744,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 64,
+        "reasoning_output_tokens": 23
+      },
+      "model_ns": 6453502726,
+      "model_session_id": "01a0a0a5-b830-71d0-b0b9-c53773b9b3f5",
+      "controller_model_started_ns": 7089652654729,
+      "controller_model_ended_ns": 7096204493700,
+      "model_image_to_plan_accept_ns": 7032066843,
+      "fresh_observation_to_plan_accept_ns": 247195796,
+      "fresh_sequence_at_plan": 516,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 12,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/516.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-12/temporal-sheet.png",
+      "model_image_sha256": "8598deebe2672775a6eb2e1f8b77901e03cfb6a01858299f6eb1b7b5402bb911",
+      "action": {
+        "assessment": "Facing the ACM panel at close range with no visible threat; try activating the nearby door or switch.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 126,
+        "reasoning_output_tokens": 67
+      },
+      "model_ns": 7664173148,
+      "model_session_id": "01a0a0a6-4fba-7420-9ce6-ed9b9b1acdc7",
+      "controller_model_started_ns": 7096880384945,
+      "controller_model_ended_ns": 7104628306648,
+      "model_image_to_plan_accept_ns": 8179272673,
+      "fresh_observation_to_plan_accept_ns": 99851344,
+      "fresh_sequence_at_plan": 547,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 13,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/554.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-13/temporal-sheet.png",
+      "model_image_sha256": "a73fc88d17c56b8ad3b87629e1f0febc4b6ac42b1890a250b572b35df0f32a2d",
+      "action": {
+        "assessment": "The player is pressed against the ACM wall with no visible interaction change; back away and reorient toward the corridor.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "medium"
+          },
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9573,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 123,
+        "reasoning_output_tokens": 59
+      },
+      "model_ns": 7086536160,
+      "model_session_id": "01a0a0a6-4fba-7420-9ce6-ed9b9b1acdc7",
+      "controller_model_started_ns": 7105851261355,
+      "controller_model_ended_ns": 7113017168824,
+      "model_image_to_plan_accept_ns": 7665302309,
+      "fresh_observation_to_plan_accept_ns": 324607429,
+      "fresh_sequence_at_plan": 579,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "backward",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 14,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/589.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-14/temporal-sheet.png",
+      "model_image_sha256": "970e3e9569909a6802771170b8d04903cdadb54c3c6dda7707c12f2992d74675",
+      "action": {
+        "assessment": "A corridor is now visible beside the ACM panel; advance through it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10165,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 83,
+        "reasoning_output_tokens": 38
+      },
+      "model_ns": 6217315017,
+      "model_session_id": "01a0a0a6-4fba-7420-9ce6-ed9b9b1acdc7",
+      "controller_model_started_ns": 7114661224339,
+      "controller_model_ended_ns": 7120968282261,
+      "model_image_to_plan_accept_ns": 6784091164,
+      "fresh_observation_to_plan_accept_ns": 341532812,
+      "fresh_sequence_at_plan": 611,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 15,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/618.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-15/temporal-sheet.png",
+      "model_image_sha256": "18f3bb6cb1903a7c3650d47f74b195b8f2b130bb8089d65e839f99d358e232dd",
+      "action": {
+        "assessment": "The advance reached a close wall or panel; turn left to follow the visible passage.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10717,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 98,
+        "reasoning_output_tokens": 41
+      },
+      "model_ns": 6813275423,
+      "model_session_id": "01a0a0a6-4fba-7420-9ce6-ed9b9b1acdc7",
+      "controller_model_started_ns": 7122191887068,
+      "controller_model_ended_ns": 7129107106956,
+      "model_image_to_plan_accept_ns": 7373565666,
+      "fresh_observation_to_plan_accept_ns": 298354689,
+      "fresh_sequence_at_plan": 642,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 16,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/652.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-16/temporal-sheet.png",
+      "model_image_sha256": "0f753b06d24a74f6fa883af5331cb91c8ea1e49185f8b1f17ac65ac498230efc",
+      "action": {
+        "assessment": "Stalled against a wall; turn away and advance to reorient.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 107,
+        "reasoning_output_tokens": 53
+      },
+      "model_ns": 7515426616,
+      "model_session_id": "01a0a0a6-d3fa-70e1-b52c-037910aa00f5",
+      "controller_model_started_ns": 7130712702515,
+      "controller_model_ended_ns": 7138319798842,
+      "model_image_to_plan_accept_ns": 8008523514,
+      "fresh_observation_to_plan_accept_ns": 284486162,
+      "fresh_sequence_at_plan": 678,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 17,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/686.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-17/temporal-sheet.png",
+      "model_image_sha256": "3893d4a7e05346cdf35847f853fb151ddc59baa5e4560e5acc992a343446263d",
+      "action": {
+        "assessment": "Still pressed against the wall; make a stronger rightward correction, then move ahead.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9554,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 77,
+        "reasoning_output_tokens": 20
+      },
+      "model_ns": 7174226615,
+      "model_session_id": "01a0a0a6-d3fa-70e1-b52c-037910aa00f5",
+      "controller_model_started_ns": 7139585361708,
+      "controller_model_ended_ns": 7146849120019,
+      "model_image_to_plan_accept_ns": 7688101527,
+      "fresh_observation_to_plan_accept_ns": 283814535,
+      "fresh_sequence_at_plan": 711,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 15,
+        "lag": 2,
+        "normalized_mae": 0.03480255991285403,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 15,
+      "recovery_attempt": 0,
+      "original_commands": [
+        {
+          "action": "turn_right",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 18,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/732.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-18/temporal-sheet.png",
+      "model_image_sha256": "3635975bb5bf96fe77c8149f177d0a40fea6a3abf841f5d517f93cf7a6707d45",
+      "action": {
+        "assessment": "The turn freed the player into an open room; advance through it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10100,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 75,
+        "reasoning_output_tokens": 30
+      },
+      "model_ns": 6346446839,
+      "model_session_id": "01a0a0a6-d3fa-70e1-b52c-037910aa00f5",
+      "controller_model_started_ns": 7149970478019,
+      "controller_model_ended_ns": 7156412300778,
+      "model_image_to_plan_accept_ns": 6879342640,
+      "fresh_observation_to_plan_accept_ns": 271688075,
+      "fresh_sequence_at_plan": 753,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 19,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/760.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-19/temporal-sheet.png",
+      "model_image_sha256": "7668daaca1b5796fbbe15b6e989266699ec66d07205d1a5f6dbec41a0024a4b5",
+      "action": {
+        "assessment": "Entered the blue room and collected health; continue by veering right and advancing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10644,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 104,
+        "reasoning_output_tokens": 48
+      },
+      "model_ns": 7360681052,
+      "model_session_id": "01a0a0a6-d3fa-70e1-b52c-037910aa00f5",
+      "controller_model_started_ns": 7157699479554,
+      "controller_model_ended_ns": 7165159878894,
+      "model_image_to_plan_accept_ns": 7933528342,
+      "fresh_observation_to_plan_accept_ns": 299919531,
+      "fresh_sequence_at_plan": 784,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 20,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/794.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-20/temporal-sheet.png",
+      "model_image_sha256": "722c1d88d0b006969c4ba80dac067552581a8330b8ddd14a4819f895761ef4dd",
+      "action": {
+        "assessment": "In a blue-walled room with little temporal change; turn to find the exit and advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 135,
+        "reasoning_output_tokens": 76
+      },
+      "model_ns": 7640725394,
+      "model_session_id": "01a0a0a7-613a-7683-978c-4570e7d92743",
+      "controller_model_started_ns": 7166882255899,
+      "controller_model_ended_ns": 7174615735391,
+      "model_image_to_plan_accept_ns": 8296608057,
+      "fresh_observation_to_plan_accept_ns": 320325113,
+      "fresh_sequence_at_plan": 819,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 21,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/829.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-21/temporal-sheet.png",
+      "model_image_sha256": "c5bc678a5b2aa1e8e9678fa1c4c2fc63925674ed91448ff6b80d7752630a7c6d",
+      "action": {
+        "assessment": "Still facing the blue room wall with minimal progress; make a stronger rightward orientation correction, then advance briefly.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9582,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 94,
+        "reasoning_output_tokens": 32
+      },
+      "model_ns": 7621853741,
+      "model_session_id": "01a0a0a7-613a-7683-978c-4570e7d92743",
+      "controller_model_started_ns": 7176412438464,
+      "controller_model_ended_ns": 7184140674357,
+      "model_image_to_plan_accept_ns": 8393966366,
+      "fresh_observation_to_plan_accept_ns": 131004164,
+      "fresh_sequence_at_plan": 855,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 19,
+        "lag": 2,
+        "normalized_mae": 0.02939950980392157,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 19,
+      "recovery_attempt": 0,
+      "original_commands": [
+        {
+          "action": "turn_right",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 22,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/876.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-22/temporal-sheet.png",
+      "model_image_sha256": "0f28068c92b1dd4bcf28ba6e70a798380cb7f8ab1c5cc5745a6b12093a99c47e",
+      "action": {
+        "assessment": "The turn exposed the room edge and railing on the right; advance along this passage.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10145,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 82,
+        "reasoning_output_tokens": 34
+      },
+      "model_ns": 7133045396,
+      "model_session_id": "01a0a0a7-613a-7683-978c-4570e7d92743",
+      "controller_model_started_ns": 7187386803037,
+      "controller_model_ended_ns": 7194600253987,
+      "model_image_to_plan_accept_ns": 7832148288,
+      "fresh_observation_to_plan_accept_ns": 252840520,
+      "fresh_sequence_at_plan": 900,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 23,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/907.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-23/temporal-sheet.png",
+      "model_image_sha256": "9eab1ff8e7f675db2c1e3191bf5821bcad1557624b2215c446cb2014b52c82fc",
+      "action": {
+        "assessment": "Forward movement is stalled against the blue wall; turn left to seek the nearby opening.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10696,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 79,
+        "reasoning_output_tokens": 22
+      },
+      "model_ns": 9652253847,
+      "model_session_id": "01a0a0a7-613a-7683-978c-4570e7d92743",
+      "controller_model_started_ns": 7196033950818,
+      "controller_model_ended_ns": 7205768728679,
+      "model_image_to_plan_accept_ns": 10395908598,
+      "fresh_observation_to_plan_accept_ns": 144886450,
+      "fresh_sequence_at_plan": 939,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 19,
+        "lag": 4,
+        "normalized_mae": 0.029410403050108933,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 19,
+      "recovery_attempt": 1,
+      "original_commands": [
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_right",
+          "extent": "long"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 24,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/960.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-24/temporal-sheet.png",
+      "model_image_sha256": "036fcf983d3bcdf5964e8db5da9f123cf587ef069247c3ea60168464ead0f622",
+      "action": {
+        "assessment": "Facing a wall in a stalled corner; turn and advance to reorient.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_right",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_output_tokens": 72
+      },
+      "model_ns": 8899978211,
+      "model_session_id": "01a0a0a8-05a1-7fa1-93e5-7d6ba64f7c3c",
+      "controller_model_started_ns": 7209020911683,
+      "controller_model_ended_ns": 7218008353852,
+      "model_image_to_plan_accept_ns": 9615821065,
+      "fresh_observation_to_plan_accept_ns": 87518377,
+      "fresh_sequence_at_plan": 990,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 21,
+        "lag": 3,
+        "normalized_mae": 0.01275190631808279,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 19,
+      "recovery_attempt": 2,
+      "original_commands": [
+        {
+          "action": "turn_right",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 25,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1018.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-25/temporal-sheet.png",
+      "model_image_sha256": "e2bb559a8ce85cbe0d5dedf114b778fd6c349a7f8c224314c0ccc70900a04928",
+      "action": {
+        "assessment": "A doorway is now visible ahead; advance toward it and try opening it if needed.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          },
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9574,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 97,
+        "reasoning_output_tokens": 41
+      },
+      "model_ns": 6717642087,
+      "model_session_id": "01a0a0a8-05a1-7fa1-93e5-7d6ba64f7c3c",
+      "controller_model_started_ns": 7222082959894,
+      "controller_model_ended_ns": 7228882127754,
+      "model_image_to_plan_accept_ns": 7401260816,
+      "fresh_observation_to_plan_accept_ns": 47846760,
+      "fresh_sequence_at_plan": 1043,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 17,
+        "lag": 8,
+        "normalized_mae": 0.06094907407407407,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 15,
+      "recovery_attempt": 1,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_right",
+          "extent": "long"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 26,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1064.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-26/temporal-sheet.png",
+      "model_image_sha256": "ffbf96f4845c7a1d29c45104b6e0af4f5e620b52f05edf34b04f214e1e3b7eb7",
+      "action": {
+        "assessment": "At a wall-mounted blue control panel in the alcove; activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10140,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 53
+      },
+      "model_ns": 6913531740,
+      "model_session_id": "01a0a0a8-05a1-7fa1-93e5-7d6ba64f7c3c",
+      "controller_model_started_ns": 7232088346736,
+      "controller_model_ended_ns": 7239105873293,
+      "model_image_to_plan_accept_ns": 7583029388,
+      "fresh_observation_to_plan_accept_ns": 194198038,
+      "fresh_sequence_at_plan": 1089,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 27,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1087.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-27/temporal-sheet.png",
+      "model_image_sha256": "6868fef83e4a55fb92a8277fca63d0d4298b7baa44f96f624523634383b0d165",
+      "action": {
+        "assessment": "The view is pressed into a corner; turn back toward the corridor and move out.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10708,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 105,
+        "reasoning_output_tokens": 48
+      },
+      "model_ns": 7673756544,
+      "model_session_id": "01a0a0a8-05a1-7fa1-93e5-7d6ba64f7c3c",
+      "controller_model_started_ns": 7239798579989,
+      "controller_model_ended_ns": 7247559407075,
+      "model_image_to_plan_accept_ns": 7888219564,
+      "fresh_observation_to_plan_accept_ns": 72696554,
+      "fresh_sequence_at_plan": 1120,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 28,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1131.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-28/temporal-sheet.png",
+      "model_image_sha256": "5cd7f3ab93cddb1a2c30fff37761776634056e36c8a5b5bee05f4068503b9545",
+      "action": {
+        "assessment": "Facing the blue wall switch; activate it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "use",
+            "extent": "pulse"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 96,
+        "reasoning_output_tokens": 56
+      },
+      "model_ns": 7210578108,
+      "model_session_id": "01a0a0a8-a315-7002-926f-30f0f099cf3e",
+      "controller_model_started_ns": 7249307695568,
+      "controller_model_ended_ns": 7256614502490,
+      "model_image_to_plan_accept_ns": 7785301990,
+      "fresh_observation_to_plan_accept_ns": 354681039,
+      "fresh_sequence_at_plan": 1156,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "use",
+          "extent": "pulse"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 29,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1158.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-29/temporal-sheet.png",
+      "model_image_sha256": "f30ece0b3f23039c84cb2634843df2fd090cba7cafdef040e9c82d48d35eaf92",
+      "action": {
+        "assessment": "The blue panel appears non-interactive and the view is pressed into a corner; turn around to recover toward the nearby door.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9543,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 171,
+        "reasoning_output_tokens": 97
+      },
+      "model_ns": 8958473790,
+      "model_session_id": "01a0a0a8-a315-7002-926f-30f0f099cf3e",
+      "controller_model_started_ns": 7257267868275,
+      "controller_model_ended_ns": 7266306793141,
+      "model_image_to_plan_accept_ns": 9348313144,
+      "fresh_observation_to_plan_accept_ns": 241658305,
+      "fresh_sequence_at_plan": 1191,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 30,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1204.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-30/temporal-sheet.png",
+      "model_image_sha256": "e79338533d7226748af4c2ac0e3aef106ebdbe24acc04a85b3e58d891db573d3",
+      "action": {
+        "assessment": "The turn recovered the view toward the adjacent room; advance through the opening.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10183,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 103,
+        "reasoning_output_tokens": 57
+      },
+      "model_ns": 7543494159,
+      "model_session_id": "01a0a0a8-a315-7002-926f-30f0f099cf3e",
+      "controller_model_started_ns": 7268214037517,
+      "controller_model_ended_ns": 7275865119990,
+      "model_image_to_plan_accept_ns": 7935747868,
+      "fresh_observation_to_plan_accept_ns": 101639810,
+      "fresh_sequence_at_plan": 1231,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 31,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1236.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-31/temporal-sheet.png",
+      "model_image_sha256": "b5aad452aa836da0d9dac92fb7d62d8cc852f458d2df56d7b9d438de6e4ccf65",
+      "action": {
+        "assessment": "Forward movement is blocked by the blue-panel wall; sidestep left toward the visible room opening.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "strafe_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10755,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 91,
+        "reasoning_output_tokens": 30
+      },
+      "model_ns": 7781762407,
+      "model_session_id": "01a0a0a8-a315-7002-926f-30f0f099cf3e",
+      "controller_model_started_ns": 7276797291057,
+      "controller_model_ended_ns": 7284689478226,
+      "model_image_to_plan_accept_ns": 7558798641,
+      "fresh_observation_to_plan_accept_ns": 168546124,
+      "fresh_sequence_at_plan": 1263,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "strafe_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 32,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1272.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-32/temporal-sheet.png",
+      "model_image_sha256": "e3cdfc9eae75226f85f8630ddb877d92c8a3270bdd91769779f9dc6d952ded46",
+      "action": {
+        "assessment": "Stalled against a wall; turn left to reorient and advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 119,
+        "reasoning_output_tokens": 65
+      },
+      "model_ns": 7607706787,
+      "model_session_id": "01a0a0a9-3344-79e0-8c42-4bf9d30855ea",
+      "controller_model_started_ns": 7286150872581,
+      "controller_model_ended_ns": 7293865438238,
+      "model_image_to_plan_accept_ns": 8140131318,
+      "fresh_observation_to_plan_accept_ns": 116137738,
+      "fresh_sequence_at_plan": 1299,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 27,
+        "lag": 5,
+        "normalized_mae": 0.05341230936819172,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 27,
+      "recovery_attempt": 0,
+      "original_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 33,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1320.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-33/temporal-sheet.png",
+      "model_image_sha256": "4cda12d3f57555c8b5d1bf68434c3eb77764f228cabaecd974c180ad63a522bf",
+      "action": {
+        "assessment": "Movement is progressing along the corridor with no clear immediate threat.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9566,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 84,
+        "reasoning_output_tokens": 41
+      },
+      "model_ns": 6420207572,
+      "model_session_id": "01a0a0a9-3344-79e0-8c42-4bf9d30855ea",
+      "controller_model_started_ns": 7296885472740,
+      "controller_model_ended_ns": 7303389902011,
+      "model_image_to_plan_accept_ns": 6897519002,
+      "fresh_observation_to_plan_accept_ns": 73973695,
+      "fresh_sequence_at_plan": 1343,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 34,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1350.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-34/temporal-sheet.png",
+      "model_image_sha256": "fc93241e3e57a2414df668f0dd69022320830ce62074f4476ac43efedfe267be",
+      "action": {
+        "assessment": "The corridor opens ahead with a visible hostile area; advance while firing.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "advance_fire",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10119,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 81,
+        "reasoning_output_tokens": 35
+      },
+      "model_ns": 6700796975,
+      "model_session_id": "01a0a0a9-3344-79e0-8c42-4bf9d30855ea",
+      "controller_model_started_ns": 7304591619645,
+      "controller_model_ended_ns": 7311393620272,
+      "model_image_to_plan_accept_ns": 7195274874,
+      "fresh_observation_to_plan_accept_ns": 133706754,
+      "fresh_sequence_at_plan": 1374,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 32,
+        "lag": 2,
+        "normalized_mae": 0.05591639433551198,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 27,
+      "recovery_attempt": 1,
+      "original_commands": [
+        {
+          "action": "advance_fire",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_right",
+          "extent": "long"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 35,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1395.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-35/temporal-sheet.png",
+      "model_image_sha256": "464de07974da561ad0380424318f6617b0fc3d4376a84fc5d6428a7c40ccf352",
+      "action": {
+        "assessment": "Stalled against the right wall; turn toward the visible corridor opening and advance.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "short"
+          },
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10669,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 88,
+        "reasoning_output_tokens": 32
+      },
+      "model_ns": 6872203496,
+      "model_session_id": "01a0a0a9-3344-79e0-8c42-4bf9d30855ea",
+      "controller_model_started_ns": 7314329263020,
+      "controller_model_ended_ns": 7321307547061,
+      "model_image_to_plan_accept_ns": 7397536500,
+      "fresh_observation_to_plan_accept_ns": 93735423,
+      "fresh_sequence_at_plan": 1432,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 32,
+        "lag": 3,
+        "normalized_mae": 0.03187091503267974,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 27,
+      "recovery_attempt": 2,
+      "original_commands": [
+        {
+          "action": "turn_left",
+          "extent": "short"
+        },
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 36,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1460.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-36/temporal-sheet.png",
+      "model_image_sha256": "b4817d13452b85777b5a25223bfbabe61e0cd5693ebcda7909809d7daac2af53",
+      "action": {
+        "assessment": "Stalled against a wall; back away and reorient left.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "backward",
+            "extent": "medium"
+          },
+          {
+            "action": "turn_left",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 8978,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 95,
+        "reasoning_output_tokens": 41
+      },
+      "model_ns": 6699949058,
+      "model_session_id": "01a0a0a9-cb61-7ee3-b4eb-4ee1ea56e311",
+      "controller_model_started_ns": 7325162266728,
+      "controller_model_ended_ns": 7331942066686,
+      "model_image_to_plan_accept_ns": 7206716717,
+      "fresh_observation_to_plan_accept_ns": 89810717,
+      "fresh_sequence_at_plan": 1483,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 32,
+        "lag": 4,
+        "normalized_mae": 0.06217320261437908,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 27,
+      "recovery_attempt": 3,
+      "original_commands": [
+        {
+          "action": "backward",
+          "extent": "medium"
+        },
+        {
+          "action": "turn_left",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_right",
+          "extent": "long"
+        },
+        {
+          "action": "turn_right",
+          "extent": "long"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 37,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1511.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-37/temporal-sheet.png",
+      "model_image_sha256": "b5c30f26ffee58085469c97a7dac6635944bd7878de8d0dba69c10d2173bea56",
+      "action": {
+        "assessment": "Still pressed against the wall; rotate left farther, then advance cautiously.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "turn_left",
+            "extent": "medium"
+          },
+          {
+            "action": "forward",
+            "extent": "short"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 9542,
+        "cached_input_tokens": 7936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 86,
+        "reasoning_output_tokens": 32
+      },
+      "model_ns": 8826400558,
+      "model_session_id": "01a0a0a9-cb61-7ee3-b4eb-4ee1ea56e311",
+      "controller_model_started_ns": 7335800955345,
+      "controller_model_ended_ns": 7344711545578,
+      "model_image_to_plan_accept_ns": 9264490426,
+      "fresh_observation_to_plan_accept_ns": 115538575,
+      "fresh_sequence_at_plan": 1542,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": {
+        "prior_iteration": 35,
+        "lag": 2,
+        "normalized_mae": 0.05018927015250545,
+        "threshold": 0.065
+      },
+      "compiled_override": true,
+      "recovery_cluster_id": 27,
+      "recovery_attempt": 4,
+      "original_commands": [
+        {
+          "action": "turn_left",
+          "extent": "medium"
+        },
+        {
+          "action": "forward",
+          "extent": "short"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "backward",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "turn_left",
+          "extent": "long"
+        },
+        {
+          "action": "use",
+          "extent": "pulse"
+        },
+        {
+          "action": "forward",
+          "extent": "long"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 38,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1570.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-38/temporal-sheet.png",
+      "model_image_sha256": "8d5ce7f797f429cc2158aaa8fe864ee2dded4cc01d4c0c55facf49b393a3fbdd",
+      "action": {
+        "assessment": "The turn opened into a clear blue-lit corridor; advance through it.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10097,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 81,
+        "reasoning_output_tokens": 36
+      },
+      "model_ns": 7030292534,
+      "model_session_id": "01a0a0a9-cb61-7ee3-b4eb-4ee1ea56e311",
+      "controller_model_started_ns": 7348587720760,
+      "controller_model_ended_ns": 7355703536710,
+      "model_image_to_plan_accept_ns": 7506626135,
+      "fresh_observation_to_plan_accept_ns": 222545652,
+      "fresh_sequence_at_plan": 1593,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    },
+    {
+      "iteration": 39,
+      "source_image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/doom/map01-motor-stagnation-live-01/runtime/1600.png",
+      "model_image": "results-local/doom/map01-motor-stagnation-live-01/decision-39/temporal-sheet.png",
+      "model_image_sha256": "246551a53a6b7d7c1eb6a74f78ec44853166f4b7f3273a601f71b04472ea528e",
+      "action": {
+        "assessment": "The corridor is clear and movement is progressing; continue forward.",
+        "state": "active",
+        "commands": [
+          {
+            "action": "forward",
+            "extent": "medium"
+          }
+        ]
+      },
+      "usage": {
+        "input_tokens": 10647,
+        "cached_input_tokens": 9088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 69,
+        "reasoning_output_tokens": 26
+      },
+      "model_ns": 6583818398,
+      "model_session_id": "01a0a0a9-cb61-7ee3-b4eb-4ee1ea56e311",
+      "controller_model_started_ns": 7357031569701,
+      "controller_model_ended_ns": 7363705681331,
+      "model_image_to_plan_accept_ns": 7196612564,
+      "fresh_observation_to_plan_accept_ns": 236270870,
+      "fresh_sequence_at_plan": 1622,
+      "cover_terminal_before_plan": true,
+      "stagnation_revisit": null,
+      "compiled_override": false,
+      "recovery_cluster_id": null,
+      "recovery_attempt": null,
+      "original_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "compiled_commands": [
+        {
+          "action": "forward",
+          "extent": "medium"
+        }
+      ],
+      "plan_terminal": "completed"
+    }
+  ],
+  "score": {
+    "event": "post_control_score",
+    "map": "MAP01",
+    "skill": 1,
+    "map_exit": false,
+    "episode_finished": false,
+    "player_dead": false,
+    "wall_control_ns": 379603879946,
+    "death_count": 0,
+    "kill_count": 1,
+    "one_life_map_exit": false,
+    "episode_timeout_seconds": 600,
+    "reward": 0.0,
+    "scorer_refresh_calls_after_control": 1,
+    "emit_ns": 7364716283004
+  },
+  "model_session_span": 4,
+  "model_session_ids": [
+    "01a0a0a4-9e6a-7f71-937f-61a8d7121c02",
+    "01a0a0a5-1ef1-7811-a96d-a13e55f00851",
+    "01a0a0a5-b830-71d0-b0b9-c53773b9b3f5",
+    "01a0a0a6-4fba-7420-9ce6-ed9b9b1acdc7",
+    "01a0a0a6-d3fa-70e1-b52c-037910aa00f5",
+    "01a0a0a7-613a-7683-978c-4570e7d92743",
+    "01a0a0a8-05a1-7fa1-93e5-7d6ba64f7c3c",
+    "01a0a0a8-a315-7002-926f-30f0f099cf3e",
+    "01a0a0a9-3344-79e0-8c42-4bf9d30855ea",
+    "01a0a0a9-cb61-7ee3-b4eb-4ee1ea56e311"
+  ],
+  "motor_contract": "semantic commands compiled to <=450ms turns and <=900ms movement",
+  "stagnation_contract": "visual revisit at non-adjacent lag 2..8 and normalized grayscale MAE <=0.065 triggers bounded escalating recovery",
+  "stagnation_overrides": 10,
+  "game_continued_during_model_calls": true,
+  "model_wall_seconds": 298.985323326
+}

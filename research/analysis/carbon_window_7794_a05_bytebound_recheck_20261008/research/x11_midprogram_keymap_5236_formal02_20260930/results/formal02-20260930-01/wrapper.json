@@ -1,0 +1,50 @@
+{
+  "child_raw_available": false,
+  "command": [
+    "unshare",
+    "--user",
+    "--map-root-user",
+    "--mount",
+    "--fork",
+    "/usr/sbin/python",
+    "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal02_20260930/runner.py",
+    "--child",
+    "--child-output",
+    "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal02_20260930/results/formal02-20260930-01",
+    "--host-namespace",
+    "4026532221"
+  ],
+  "host_mount_ns_inode": 4026532221,
+  "host_socket_after": {
+    "device": 38,
+    "inode": 2,
+    "mode": 511
+  },
+  "host_socket_before": {
+    "device": 38,
+    "inode": 2,
+    "mode": 511
+  },
+  "host_socket_unchanged": true,
+  "returncode": 1,
+  "schema": "issue5236-formal02-wrapper-v1",
+  "source_manifest": {
+    "allocation": "issue5236-formal02-20260930-01",
+    "base_commit": "02bff58173426efc2288bd375f283a6500f80784",
+    "files": {
+      "research/x11_midprogram_keymap_5236_formal02_20260930/README.md": "d4ef6e283a0bc4e7d033d24d0b838e92c38f7a59",
+      "research/x11_midprogram_keymap_5236_formal02_20260930/audit.py": "da9911a4145429ca51d64bc6feb9002ca83b3ac7",
+      "research/x11_midprogram_keymap_5236_formal02_20260930/corruptions.py": "040424f97c4b3bc78c045d679bb69e2f1f99f532",
+      "research/x11_midprogram_keymap_5236_formal02_20260930/runner.py": "093da0b937325248419358ed320114587961b8e8",
+      "research/x11_midprogram_keymap_5236_formal02_20260930/test_formal.py": "598546258887e5421282fc2b9f022bf109594a64",
+      "runtime/backends/x11_v1/backend.py": "2fae5b34e932d53c0f9ee86931815123dc705300",
+      "runtime/backends/x11_v1/fixture_app.py": "11c30cf084744ffdba3b00df7637b5853c8571ac",
+      "runtime/backends/x11_v1/session.py": "4dbd6dd219e2ec7313cd32d3e4cb154e0efcfbb1"
+    },
+    "output_path": "research/x11_midprogram_keymap_5236_formal02_20260930/results/formal02-20260930-01"
+  },
+  "stderr": "Traceback (most recent call last):\n  File \"/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5243-terminate-reset-20260930/research/x11_midprogram_keymap_5236_formal02_20260930/runner.py\", line 19, in <module>\n    from runtime.backends.x11_v1.backend import X11Backend\nModuleNotFoundError: No module named 'runtime'\n",
+  "stdout": "",
+  "timeout": false,
+  "timeout_seconds": 180
+}

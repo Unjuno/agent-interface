@@ -1,0 +1,17 @@
+{
+  "cases": [
+    {"case_id":"no_attempt_complete","view":{"all_relevant_routes_monitored":true,"events":[],"self_claim":null}},
+    {"case_id":"denied_oracle","view":{"all_relevant_routes_monitored":true,"events":[{"target":"oracle","decision":"deny","response_bytes":false,"recipient":"candidate"}],"self_claim":null}},
+    {"case_id":"returned_oracle","view":{"all_relevant_routes_monitored":true,"events":[{"target":"oracle","decision":"allow","response_bytes":true,"recipient":"candidate"}],"self_claim":null}},
+    {"case_id":"returned_derivative","view":{"all_relevant_routes_monitored":true,"events":[{"target":"oracle_derivative","decision":"allow","response_bytes":true,"recipient":"candidate"}],"self_claim":null}},
+    {"case_id":"authorized_task","view":{"all_relevant_routes_monitored":true,"events":[{"target":"task","decision":"allow","response_bytes":true,"recipient":"candidate"}],"self_claim":null}},
+    {"case_id":"authorized_docs","view":{"all_relevant_routes_monitored":true,"events":[{"target":"docs","decision":"allow","response_bytes":true,"recipient":"candidate"}],"self_claim":null}},
+    {"case_id":"unknown_destination","view":{"all_relevant_routes_monitored":true,"events":[{"target":"unknown","decision":"allow","response_bytes":true,"recipient":"candidate"}],"self_claim":null}},
+    {"case_id":"missing_monitor","view":{"all_relevant_routes_monitored":false,"events":[],"self_claim":null}},
+    {"case_id":"mixed_legit_oracle","view":{"all_relevant_routes_monitored":true,"events":[{"target":"docs","decision":"allow","response_bytes":true,"recipient":"candidate"},{"target":"oracle","decision":"allow","response_bytes":true,"recipient":"candidate"}],"self_claim":null}},
+    {"case_id":"self_claim_clean_oracle","view":{"all_relevant_routes_monitored":true,"events":[{"target":"oracle","decision":"allow","response_bytes":true,"recipient":"candidate"}],"self_claim":"CLEAN"}},
+    {"case_id":"self_claim_contaminated_none","view":{"all_relevant_routes_monitored":true,"events":[],"self_claim":"CONTAMINATED"}},
+    {"case_id":"missing_return_evidence","view":{"all_relevant_routes_monitored":true,"events":[{"target":"oracle","decision":"allow","response_bytes":null,"recipient":"candidate"}],"self_claim":null}},
+    {"case_id":"unknown_recipient","view":{"all_relevant_routes_monitored":true,"events":[{"target":"oracle","decision":"allow","response_bytes":true,"recipient":"unknown"}],"self_claim":null}}
+  ]
+}

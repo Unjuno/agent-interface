@@ -1,0 +1,40 @@
+{
+  "allocation": "POST-SUCCESS-COLLATERAL-5593-T0-20261002-01",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/5593",
+  "base_main": "e3a57eeef93153483d2ce40d2ef8050c89945fcc",
+  "source_sha256": {
+    "PLAN.md": "2c2eb0b6fd2e9f8b0a0d83f7147c6c25b1a68d9e33bc56ac08f8657934f30cfa",
+    "README.md": "c73319e4d44ad47205cd53f1ecd9ba2498e472d26ce62a35cd805038e55235c5",
+    "fixture.json": "8cca9f8494815bc021a0852bb05ad31ec6babf02203896d02e0cd83663a9bf3e",
+    "candidate.py": "6614b9097e23dabce7f75ed606d9bd1f9bdfa6a3f96ff5f1f59e1915bb3bcdba",
+    "runner.py": "acc88d3efbbb3d9c5eb6d4fe2c0245b69abd00d7840d9e87fe2e0169ae0e7e94",
+    "independent_audit.py": "f04b09bc287bcefd86e9078335579e1fbf5aade2edb90c627ef186b38cc98cc9",
+    "test_candidate.py": "47202504540c77921d3ac5504b4af71452983129025a1e180d7fff759aa6e73b",
+    "test_audit.py": "c66b62fbf981a4dcd78fc7e532753e5cf32f8f81f75af6ac603a98a98f4a6013"
+  },
+  "image": {
+    "reference": "python@sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "local_tag_observed": "python:3.13.5-slim",
+    "digest_source": "docker image inspect before allocation",
+    "network": "none"
+  },
+  "construction": {
+    "command": "python3 -m unittest discover -s post_success_collateral_5593_work -p 'test_*.py' -v",
+    "passed": 10,
+    "failed": 0,
+    "corruption_controls_passed": 3,
+    "py_compile": "pass"
+  },
+  "formal_invocations": {"candidate": 1, "independent_auditor": 1, "retries": 0},
+  "container_policy": {
+    "read_only_root": true,
+    "source_mount": "read-only",
+    "output_mount": "runs/formal-01 only",
+    "cpus": 1,
+    "memory_mb": 256,
+    "pids_limit": 64,
+    "capabilities": "drop all",
+    "no_new_privileges": true
+  },
+  "scope": "Synthetic finite event-time accounting only; no application, task, model, GUI, physical input, or production route claim."
+}

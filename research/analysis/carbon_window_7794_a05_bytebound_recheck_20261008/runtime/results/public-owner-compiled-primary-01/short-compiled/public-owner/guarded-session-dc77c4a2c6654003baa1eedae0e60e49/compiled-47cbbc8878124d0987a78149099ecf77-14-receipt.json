@@ -1,0 +1,105 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "inkscape-single-method",
+  "method": "select-move-check-save",
+  "method_version": "1",
+  "session_scope": "native-x11:e4c02718471c4e01a2e834680eb5f44f",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_failed",
+  "completed_transitions": 1,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 35061935599898,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "8bb384760797dce3467baff34cf82d7a849858acba0559157fe721ac9cc775ee",
+      "predicates": {
+        "selected_shape": false,
+        "context_present": true,
+        "initial_shape": true,
+        "moved_shape": false,
+        "clean_title": true
+      }
+    },
+    {
+      "sequence": 7,
+      "captured_ns": 35062596384041,
+      "evidence_ref": "observation-7",
+      "evidence_digest": "89db9bfbfe92ed7093c67e411d86c8439c2545f8accebdacefa8b307771c8dc9",
+      "predicates": {
+        "selected_shape": false,
+        "context_present": true,
+        "initial_shape": true,
+        "moved_shape": false,
+        "clean_title": true
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "initial",
+      "to_state": "selected",
+      "action": "select",
+      "matched_conditions": {
+        "context_present": true,
+        "initial_shape": true,
+        "selected_shape": false,
+        "clean_title": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "observation-2",
+      "action_id": "action-d9de43654d3b418a888ceb70ed921a92",
+      "effect_ref": "compiled-47cbbc8878124d0987a78149099ecf77-7-execution",
+      "release_verified": true
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "initial",
+      "outcome": "action",
+      "action": "select",
+      "matched_conditions": {
+        "context_present": true,
+        "initial_shape": true,
+        "selected_shape": false,
+        "clean_title": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "select",
+      "status": "completed",
+      "action_id": "action-d9de43654d3b418a888ceb70ed921a92",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "select",
+      "status": "failed",
+      "evidence_ref": "observation-7",
+      "verifier": "compiled_predicate_condition"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "completed_transitions": 1
+    }
+  ],
+  "latest_evidence_ref": "observation-7",
+  "pending_effect": {
+    "action": "select",
+    "expected_effect": {
+      "selected_shape": true
+    },
+    "effect_ref": "compiled-47cbbc8878124d0987a78149099ecf77-7-execution"
+  },
+  "started_ns": 35061934348479,
+  "ended_ns": 35062672878565,
+  "elapsed_ns": 738530086,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

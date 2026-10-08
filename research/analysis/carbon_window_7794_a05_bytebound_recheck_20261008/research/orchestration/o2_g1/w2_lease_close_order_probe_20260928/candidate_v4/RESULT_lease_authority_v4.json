@@ -1,0 +1,39 @@
+{
+  "schema": "w2-lease-authority-finite-audit-v4",
+  "disposition": "PASS_FINITE_LEASE_AUTHORITY_OPEN_CLOSE_INTERVAL_POLICY_ONLY",
+  "source_main_snapshot": "a78dfcfcc0ffdd1864abd9170087e835b5467f91",
+  "v3_candidate_preserved_unchanged": true,
+  "fixture_sha256": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f",
+  "finite_domain": {
+    "edge_intervals": 21,
+    "open_interval_states": 24,
+    "open_state_breakdown": {
+      "missing_open_event": 1,
+      "bounded_intervals": 21,
+      "unknown_time": 1,
+      "invalid_time": 1
+    },
+    "close_interval_states": 24,
+    "close_lineage_relations": 4,
+    "terminal_interval_states": 24,
+    "combinations_checked": 1161216,
+    "candidate_oracle_mismatches": 0,
+    "contract_rule_mismatches": 0
+  },
+  "focused_boundary_tests": "7/7",
+  "combined_host_regression_tests": "33/33",
+  "complete_enumeration_passes": 3,
+  "followup_reverification": "After replacing a duplicate unknown-open state with a distinct missing-LEASE_OPEN state and selecting decisions by target event_id, reran the combined host suite (33/33) and full 1,161,216-combination domain; zero mismatches.",
+  "runtime": "Python 3.12.10 Windows host CPU",
+  "docker": {
+    "context": "desktop-linux",
+    "container_invoked": false,
+    "reason": "The serialized Docker CPU lane is currently leased to another named allocation; no transfer to this W2 work was authorized."
+  },
+  "interpretation": "The v3 candidate omission was that LEASE_OPEN existence and actuation lineage were checked but its timestamp was discarded. Candidate v4 checks edge/open ordering: wholly-before rejects; overlap or uncertain/invalid opening time holds; only an edge definitely after open proceeds to close checks. PROGRAM_TERMINAL remains separate from lease closure.",
+  "limits": [
+    "Finite synthetic integer-interval model only.",
+    "Candidate/oracle/expected-rule agreement is not runtime behavior, product safety, or contract completeness evidence.",
+    "No Docker/formal allocation, live authority, GUI, model, input emission, or task effect."
+  ]
+}

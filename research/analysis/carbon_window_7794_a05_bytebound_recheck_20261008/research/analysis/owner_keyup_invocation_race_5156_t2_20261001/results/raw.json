@@ -1,0 +1,1212 @@
+{
+  "allocation": "ISSUE-5156-MULTIPROCESS-CLAIM-T2-20261001-01",
+  "design": {
+    "arms": [
+      "baseline",
+      "exclusive"
+    ],
+    "candidate_effects": "inert unique receipt only",
+    "trials_per_arm": 20,
+    "workers_per_trial": 2
+  },
+  "docker_invocations": 0,
+  "environment": {
+    "filesystem_claim": "local workspace volume; verify mount/filesystem separately",
+    "os": "Windows-11-10.0.26200-SP0",
+    "process_start_method": "spawn",
+    "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]"
+  },
+  "executed_at_utc": "2026-09-30T19:16:10.343236+00:00",
+  "hypothesis": "O_CREAT|O_EXCL on a shared local NTFS allocation path admits one of two independent spawned processes after a synchronized clear precheck, where the unclaimed check admits both.",
+  "model_calls": 0,
+  "rows": [
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-30208",
+        "candidate-7272"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-7272",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-30208",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 0,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-16324",
+        "candidate-2908"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-16324",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-2908",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 1,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-19588",
+        "candidate-30108"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-30108",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-19588",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 2,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-18288",
+        "candidate-4104"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-4104",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-18288",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 3,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-30364",
+        "candidate-31656"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-30364",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-31656",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 4,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-16940",
+        "candidate-32032"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-16940",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-32032",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 5,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-31016",
+        "candidate-3180"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31016",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-3180",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 6,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-17944",
+        "candidate-30952"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-30952",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-17944",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 7,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-10576",
+        "candidate-26152"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-26152",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-10576",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 8,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-13828",
+        "candidate-4832"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-13828",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-4832",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 9,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-23676",
+        "candidate-29328"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-23676",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-29328",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 10,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-30628",
+        "candidate-6292"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-30628",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-6292",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 11,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-25148",
+        "candidate-28360"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-25148",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-28360",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 12,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-5100",
+        "candidate-8472"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-8472",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-5100",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 13,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-29120",
+        "candidate-31900"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31900",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-29120",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 14,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-22008",
+        "candidate-25504"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-22008",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-25504",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 15,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-15320",
+        "candidate-26584"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-26584",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-15320",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 16,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-16280",
+        "candidate-29728"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-29728",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-16280",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 17,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-31836",
+        "candidate-8112"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31836",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-8112",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 18,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 2,
+      "candidate_receipts": [
+        "candidate-10560",
+        "candidate-32092"
+      ],
+      "claim_exists": false,
+      "mode": "baseline",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-10560",
+          "status": 0
+        },
+        {
+          "candidate": true,
+          "receipt": "candidate-32092",
+          "status": 0
+        }
+      ],
+      "statuses": [
+        0,
+        0
+      ],
+      "trial": 19,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-31420"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31420",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 0,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-31304"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31304",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 1,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-25948"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-25948",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 2,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-31128"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31128",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 3,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-20564"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-20564",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 4,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-29832"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-29832",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 5,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-25688"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-25688",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 6,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-31816"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31816",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 7,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-30336"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-30336",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 8,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-30600"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-30600",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 9,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-31992"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31992",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 10,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-30472"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-30472",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 11,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-3280"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-3280",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 12,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-5396"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-5396",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 13,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-29792"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-29792",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 14,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-29812"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-29812",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 15,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-32448"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-32448",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 16,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-6352"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-6352",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 17,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-32404"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-32404",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 18,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    },
+    {
+      "candidate_count": 1,
+      "candidate_receipts": [
+        "candidate-31552"
+      ],
+      "claim_exists": true,
+      "mode": "exclusive",
+      "outcomes": [
+        {
+          "candidate": true,
+          "receipt": "candidate-31552",
+          "status": 0
+        },
+        {
+          "candidate": false,
+          "reason": "claim_contended",
+          "status": 2
+        }
+      ],
+      "statuses": [
+        0,
+        2
+      ],
+      "trial": 19,
+      "worker_exitcodes": [
+        0,
+        0
+      ]
+    }
+  ],
+  "schema": "issue5156_multiprocess_exclusive_claim_t2_v1",
+  "source_sha256": {
+    "PLAN.md": "8d2745e61bb939e20feb7ed04d56c4082766e20e662879e8fcdc314a3a9e047c",
+    "audit_mp_experiment.py": "f0cf831593c1bf0866e8bbe1326857cae3d7aa3c697b9d98ae3405b30c3075e7",
+    "run_mp_experiment.py": "948b1b138518415d13d696ad981e0e023caad1acf6362d4da1bceaa9b72505ce",
+    "test_mp_race.py": "7564ce4d77690fadf2d61297bfbd7d39621904f8fff3b159e4a4c71a1299f791"
+  },
+  "x11_input_invocations": 0
+}

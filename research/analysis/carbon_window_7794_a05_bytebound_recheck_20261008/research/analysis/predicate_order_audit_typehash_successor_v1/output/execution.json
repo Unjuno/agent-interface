@@ -1,0 +1,29 @@
+{
+  "execution_architecture": "aarch64",
+  "execution_python": "3.12.14 (main, Sep 19 2026, 01:11:14) [GCC 14.2.0]",
+  "formal_architecture_match": false,
+  "image": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "issue": 5006,
+  "legacy_bool_mutations_accepted": 6,
+  "manifest_negative_controls_rejected": 3,
+  "mutation_count": 6,
+  "raw_audit": {
+    "corruption_control_count": 5,
+    "corruption_controls": {
+      "cost_mutation": true,
+      "duplicate_state": true,
+      "mass_mutation": true,
+      "row_distribution_deleted": true,
+      "verdict_crossover": true
+    },
+    "corruption_controls_rejected": 5,
+    "distribution_count": 21,
+    "errors": [],
+    "first_cost_crossover_alpha": 0.7,
+    "row_count": 336,
+    "status": "PASS_DRIFT_BOUNDARY_MAPPED"
+  },
+  "raw_sha256": "5f48e0274f9fd800ac26af3dd70bd52171700b32ce159f3cdbe0f28c7ec35e7d",
+  "result": "PASS_AUDIT_BOUNDARY_REPAIRED_SCOPED",
+  "strict_type_gate_rejected": 6
+}

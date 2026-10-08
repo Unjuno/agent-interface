@@ -1,0 +1,9 @@
+# CI failure diagnosis — locally reproduced and corrected
+
+Workflow run: [Analysis Index #892](https://github.com/Unjuno/agent-interface/actions/runs/36305598624), failing job `analysis-index`, step `Check retained analytical results are indexed`.
+
+The failure was not from the new experiment source or evidence. The exact checker (blob `c3b14d5f0e62b103916d2c00b318dd1a527d35d1`) reported that two existing retained STOP directories were absent from the generated list: `stop_evidence_4678_audit_v1` and `stop_evidence_4678_revalidation_v2`. Both directories are present in the checked-out commit and contain `REPORT.md`; their outcomes remain unchanged.
+
+Per the local-Docker fallback, the same `check_index.py` from commit `4cd309f690df29f6e24567ec957929de3dd68221` was run under cached `python:3.12-slim-bookworm`, image ID `sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e`, linux/amd64. Network disabled, read-only root, 256 MB, one CPU. An isolated minimal fixture retained the exact 171-entry generated block plus the two missing names and produced the same two-directory failure. The documented `--write` refresh then yielded `analysis index refreshed: 173 retained result/failure directories`; a second read-only Docker invocation returned `analysis index OK: 173 retained result/failure directories indexed`.
+
+The PR refreshes only the generated block in `research/analysis/README.md`, adding those two existing directories in sorted order. No retained report, experiment source, data, or outcome was modified. GitHub Actions reruns on the updated PR head remain the final full-repository check.

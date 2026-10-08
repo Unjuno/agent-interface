@@ -1,0 +1,468 @@
+{
+  "rows": [
+    {
+      "case": "train-safe-redundant",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 9,
+      "deadline": 9,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "FIXED",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "train-safe-redundant",
+      "checks": [
+        "M"
+      ],
+      "cost": 1,
+      "deadline": 9,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "SELECTIVE",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "train-safe-redundant",
+      "checks": [
+        "M",
+        "X"
+      ],
+      "cost": 5,
+      "deadline": 9,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "VOI",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "train-hazard-critical",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 9,
+      "deadline": 9,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "FIXED",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "train-hazard-critical",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 9,
+      "deadline": 9,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "SELECTIVE",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "train-hazard-critical",
+      "checks": [
+        "M",
+        "X"
+      ],
+      "cost": 5,
+      "deadline": 9,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "VOI",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "train-ambiguous-informative",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 8,
+      "deadline": 8,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "FIXED",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "train-ambiguous-informative",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 8,
+      "deadline": 8,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "SELECTIVE",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "train-ambiguous-informative",
+      "checks": [
+        "M",
+        "X"
+      ],
+      "cost": 3,
+      "deadline": 8,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "VOI",
+      "split": "plan",
+      "stale": false
+    },
+    {
+      "case": "heldout-safe-after-cheap",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 8,
+      "deadline": 6,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "FIXED",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-safe-after-cheap",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 8,
+      "deadline": 6,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "SELECTIVE",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-safe-after-cheap",
+      "checks": [
+        "M",
+        "X"
+      ],
+      "cost": 3,
+      "deadline": 6,
+      "disposition": "ALLOW",
+      "gap": false,
+      "hazard": 0,
+      "loss": 0,
+      "policy": "VOI",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-hazard-after-cheap",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 8,
+      "deadline": 6,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "FIXED",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-hazard-after-cheap",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 8,
+      "deadline": 6,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "SELECTIVE",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-hazard-after-cheap",
+      "checks": [
+        "M",
+        "X"
+      ],
+      "cost": 3,
+      "deadline": 6,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "VOI",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-correlated-duplicate",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 5,
+      "deadline": 8,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "FIXED",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-correlated-duplicate",
+      "checks": [
+        "M",
+        "X",
+        "Y"
+      ],
+      "cost": 5,
+      "deadline": 8,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "SELECTIVE",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-correlated-duplicate",
+      "checks": [
+        "M",
+        "X"
+      ],
+      "cost": 3,
+      "deadline": 8,
+      "disposition": "BLOCK",
+      "gap": false,
+      "hazard": 1,
+      "loss": 0,
+      "policy": "VOI",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-stale",
+      "checks": [],
+      "cost": 0,
+      "deadline": 8,
+      "disposition": "YIELD",
+      "gap": false,
+      "hazard": 0,
+      "loss": 12,
+      "policy": "FIXED",
+      "split": "heldout",
+      "stale": true
+    },
+    {
+      "case": "heldout-stale",
+      "checks": [],
+      "cost": 0,
+      "deadline": 8,
+      "disposition": "YIELD",
+      "gap": false,
+      "hazard": 0,
+      "loss": 12,
+      "policy": "SELECTIVE",
+      "split": "heldout",
+      "stale": true
+    },
+    {
+      "case": "heldout-stale",
+      "checks": [],
+      "cost": 0,
+      "deadline": 8,
+      "disposition": "YIELD",
+      "gap": false,
+      "hazard": 0,
+      "loss": 12,
+      "policy": "VOI",
+      "split": "heldout",
+      "stale": true
+    },
+    {
+      "case": "heldout-ontology-gap",
+      "checks": [],
+      "cost": 0,
+      "deadline": 8,
+      "disposition": "YIELD",
+      "gap": true,
+      "hazard": 0,
+      "loss": 12,
+      "policy": "FIXED",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-ontology-gap",
+      "checks": [],
+      "cost": 0,
+      "deadline": 8,
+      "disposition": "YIELD",
+      "gap": true,
+      "hazard": 0,
+      "loss": 12,
+      "policy": "SELECTIVE",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-ontology-gap",
+      "checks": [],
+      "cost": 0,
+      "deadline": 8,
+      "disposition": "YIELD",
+      "gap": true,
+      "hazard": 0,
+      "loss": 12,
+      "policy": "VOI",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-deadline-infeasible",
+      "checks": [],
+      "cost": 0,
+      "deadline": 1,
+      "disposition": "YIELD",
+      "gap": false,
+      "hazard": 1,
+      "loss": 12,
+      "policy": "FIXED",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-deadline-infeasible",
+      "checks": [],
+      "cost": 0,
+      "deadline": 1,
+      "disposition": "YIELD",
+      "gap": false,
+      "hazard": 1,
+      "loss": 12,
+      "policy": "SELECTIVE",
+      "split": "heldout",
+      "stale": false
+    },
+    {
+      "case": "heldout-deadline-infeasible",
+      "checks": [],
+      "cost": 0,
+      "deadline": 1,
+      "disposition": "YIELD",
+      "gap": false,
+      "hazard": 1,
+      "loss": 12,
+      "policy": "VOI",
+      "split": "heldout",
+      "stale": false
+    }
+  ],
+  "schema": "voi-construction-probe-v1",
+  "summary": {
+    "heldout": {
+      "FIXED": {
+        "calls": 9,
+        "cost": 21,
+        "false_allows": 0,
+        "loss": 36,
+        "yields_stale_or_gap": 2
+      },
+      "SELECTIVE": {
+        "calls": 9,
+        "cost": 21,
+        "false_allows": 0,
+        "loss": 36,
+        "yields_stale_or_gap": 2
+      },
+      "VOI": {
+        "calls": 6,
+        "cost": 9,
+        "false_allows": 0,
+        "loss": 36,
+        "yields_stale_or_gap": 2
+      }
+    },
+    "plan": {
+      "FIXED": {
+        "calls": 9,
+        "cost": 26,
+        "false_allows": 0,
+        "loss": 0,
+        "yields_stale_or_gap": 0
+      },
+      "SELECTIVE": {
+        "calls": 7,
+        "cost": 18,
+        "false_allows": 0,
+        "loss": 0,
+        "yields_stale_or_gap": 0
+      },
+      "VOI": {
+        "calls": 6,
+        "cost": 13,
+        "false_allows": 0,
+        "loss": 0,
+        "yields_stale_or_gap": 0
+      }
+    }
+  }
+}

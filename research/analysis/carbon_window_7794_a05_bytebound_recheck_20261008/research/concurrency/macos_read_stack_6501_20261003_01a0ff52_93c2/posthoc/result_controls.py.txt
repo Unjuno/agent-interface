@@ -1,0 +1,122 @@
+"""Synchronised saved-byte mutations; never launch peer, sampler or producer."""
+import argparse
+import copy
+import datetime
+import hashlib
+import importlib.machinery
+import importlib.util
+import json
+from pathlib import Path
+import shutil
+
+ROOT = Path(__file__).resolve().parent
+ORIGINAL = ROOT.parent / 'macos-read-stack-formal-A01'
+PACKAGE = ROOT.parent / 'agent-interface-macos-stack/research/concurrency/macos_read_stack_6501_20261003_01a0ff52_93c2'
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def load(path):
+    loader = importlib.machinery.SourceFileLoader('saved_audit', str(path))
+    spec = importlib.util.spec_from_loader('saved_audit', loader)
+    module = importlib.util.module_from_spec(spec)
+    loader.exec_module(module)
+    return module
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--auditor', default=str(PACKAGE / 'audit.py.txt'))
+    parser.add_argument('--label', default='first')
+    args = parser.parse_args()
+    auditor_path = Path(args.auditor)
+    auditor = load(auditor_path)
+    original_raw = (ORIGINAL / 'result.json').read_bytes()
+    original = json.loads(original_raw)
+    positive = auditor.inspect(original, ORIGINAL)
+    base = ROOT / ('result-controls-' + args.label)
+    base.mkdir(exist_ok=False)
+    cases = ['wrong-sample-PID', 'wrong-native-name', 'worker-native-stub-missing', 'sample-after-actor',
+             'wrapper-native-done', 'harness-before-primary', 'final-FD-open', 'lost-roster-row',
+             'bool-ordinal', 'integer-primary-pool-state', 'integer-final-pool-state', 'bool-sampler-exit']
+    results = []
+    for label in cases:
+        directory = base / label
+        shutil.copytree(ORIGINAL, directory)
+        data = copy.deepcopy(original)
+        row = data['cases'][0]
+        if label in ('wrong-sample-PID', 'wrong-native-name', 'worker-native-stub-missing'):
+            p = directory / 'reader_close.sample.txt'
+            text = p.read_text()
+            if label == 'wrong-sample-PID':
+                text = text.replace('Python [' + str(row['peer_pid']) + ']', 'Python [' + str(row['peer_pid'] + 1) + ']', 1)
+            elif label == 'wrong-native-name':
+                text = text.replace(': ' + row['ready']['reader']['name'], ': wrong-owned-worker', 1)
+            else:
+                block = row['sample']['gate']['block']
+                altered = block.replace('read  (in libsystem_kernel.dylib)', 'not_read  (in libsystem_kernel.dylib)')
+                if block == altered:
+                    raise ValueError('control must actually change the selected native block')
+                text = text.replace(block, altered, 1)
+                row['sample']['gate']['block'] = altered
+            raw = text.encode()
+            p.write_bytes(raw)
+            row['sample']['bytes'], row['sample']['sha256'] = len(raw), sha(raw)
+        elif label == 'sample-after-actor':
+            row['sample']['ended_ns'] = row['actor_send_ns'] + 1
+        elif label == 'wrapper-native-done':
+            row = data['cases'][3]
+            row['primary']['primary']['future_done'] = True
+            row['primary']['primary']['future_running'] = False
+        elif label == 'harness-before-primary':
+            events = row['final']['events']
+            a = next(i for i, e in enumerate(events) if e['event'] == 'primary_snapshot')
+            b = next(i for i, e in enumerate(events) if e['event'] == 'harness_cleanup_start')
+            events[a]['event'], events[b]['event'] = events[b]['event'], events[a]['event']
+            row['primary']['events'] = copy.deepcopy(events[:b + 1])
+        elif label == 'final-FD-open':
+            row['final']['final']['reader_probe'] = {'state': 'OPEN', 'errno': None}
+        elif label == 'lost-roster-row':
+            data['cases'].pop()
+        elif label == 'bool-ordinal':
+            row['final']['events'][0]['ordinal'] = False
+            row['primary']['events'][0]['ordinal'] = False
+        elif label == 'integer-primary-pool-state':
+            row['primary']['primary']['executor_threads_alive'] = [1]
+        elif label == 'integer-final-pool-state':
+            row['final']['final']['executor_threads_alive'] = [0]
+        else:
+            row['sample']['exit_code'] = False
+        # Keep the relevant result/receipt and all literal IPC copies consistent,
+        # so semantic refusal cannot be explained by stale stream checksums.
+        for item in data['cases']:
+            raw = b''.join((json.dumps(item[k]) + '\n').encode() for k in ('ready', 'pre_actor', 'primary', 'final'))
+            (directory / (item['case'] + '.peer.stdout.log')).write_bytes(raw)
+            item['peer_stdout_bytes'], item['peer_stdout_sha256'] = len(raw), sha(raw)
+            (directory / (item['case'] + '.receipt.json')).write_text(json.dumps(item, indent=2) + '\n')
+        changed = (json.dumps(data, indent=2) + '\n').encode()
+        (directory / 'result.json').write_bytes(changed)
+        if data == original:
+            raise ValueError('ineffective copy: ' + label)
+        try:
+            output = auditor.inspect(data, directory)
+            rejected, reason = False, output['status']
+        except (ValueError, StopIteration) as exc:
+            rejected, reason = True, str(exc)
+        results.append({'label': label, 'rejected': rejected, 'reason': reason,
+                        'copy_sha256': sha(changed), 'copy_directory': str(directory),
+                        'IPC_and_receipt_copies_synchronised': True})
+    result = {'status': 'PASS_SAVED_RESULT_CONTROLS' if all(r['rejected'] for r in results) else 'FALSE_ACCEPTS_RETAINED',
+              'utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'auditor_source_sha256': sha(auditor_path.read_bytes()),
+              'raw_sha256': sha(original_raw), 'positive': positive, 'controls': results,
+              'formal_producer_reexecution': False, 'formal_primary_auditor_reexecution': False}
+    (ROOT / ('result-controls-' + args.label + '.json')).write_text(json.dumps(result, indent=2) + '\n')
+    print(json.dumps({'status': result['status'], 'controls': results}))
+    if result['status'] != 'PASS_SAVED_RESULT_CONTROLS':
+        raise SystemExit(1)
+
+
+if __name__ == '__main__':
+    main()

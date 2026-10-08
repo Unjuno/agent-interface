@@ -1,0 +1,57 @@
+{
+  "domains": {
+    "calc_final_wait": {
+      "held_input_occupancy": {
+        "duration_measured": false,
+        "status": "RELEASE_ONLY"
+      },
+      "task_outcome": {
+        "rows": 4,
+        "status": "SAVED_OUTPUT_VERIFIED_UNTIMED",
+        "verified_rows": 4
+      },
+      "useful_feedback": {
+        "extra_observations": 2,
+        "first_useful_time_identifiable": false,
+        "status": "OBSERVATION_COUNT_ONLY"
+      }
+    },
+    "doom_physical_r1": {
+      "held_input_occupancy": {
+        "continuous_map01_occupancy_duration_measured": false,
+        "max_censor_width_ms": 0.559054,
+        "paired_actuation_edges": 6,
+        "scope": "XTEST_OWNER_BRACKETS",
+        "status": "MEASURED_BOUNDED"
+      }
+    },
+    "doom_v38_v39": {
+      "held_input_occupancy": {
+        "runs": {
+          "v38": {
+            "hold_steps": 11,
+            "interval_width_ms": 990.987,
+            "lower_ms": 3048.89,
+            "precision_gate_passed": true,
+            "upper_ms": 4039.878
+          },
+          "v39": {
+            "hold_steps": 29,
+            "interval_width_ms": 2151.534,
+            "lower_ms": 6301.2,
+            "precision_gate_passed": false,
+            "upper_ms": 8452.733
+          }
+        },
+        "status": "INTERVAL_CENSORED"
+      },
+      "useful_feedback": {
+        "admitted_plans": 4,
+        "plan_bound_task_effects": 0,
+        "plans_with_state_feedback": 3,
+        "status": "PARTIAL_STATE_FEEDBACK_ONLY"
+      }
+    }
+  },
+  "schema": "r133-domain-coverage-vector-v1"
+}

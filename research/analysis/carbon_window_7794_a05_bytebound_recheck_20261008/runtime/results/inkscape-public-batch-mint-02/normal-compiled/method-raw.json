@@ -1,0 +1,213 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "inkscape-single-method",
+  "method": "select-move-check-save",
+  "method_version": "1",
+  "session_scope": "native-x11:0e5fe4f5b0694dfb916ef0ca11cfab52",
+  "outcome": "TASK_SUCCEEDED",
+  "reason": "method_complete",
+  "completed_transitions": 3,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 32959123731848,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "c8c768c802c0f14c12f9f2b5ba9da915a3bd2ea91c9e4d5cbc5142c6d7bf58e6",
+      "predicates": {
+        "selected_shape": false,
+        "context_present": true,
+        "initial_shape": true,
+        "moved_shape": false,
+        "clean_title": true
+      }
+    },
+    {
+      "sequence": 7,
+      "captured_ns": 32959371246016,
+      "evidence_ref": "observation-7",
+      "evidence_digest": "c890b3a3d5b6b6a32e5ce5e15f432ddc507d659a4a06e10ba1b6409f859535b4",
+      "predicates": {
+        "selected_shape": true,
+        "context_present": true,
+        "initial_shape": true,
+        "moved_shape": false,
+        "clean_title": true
+      }
+    },
+    {
+      "sequence": 10,
+      "captured_ns": 32959555882769,
+      "evidence_ref": "observation-10",
+      "evidence_digest": "aa8db284a89da80413c632cab2009a7456fe4e92fa84f85cd263aaee0a200705",
+      "predicates": {
+        "selected_shape": "unknown",
+        "context_present": true,
+        "initial_shape": false,
+        "moved_shape": true,
+        "clean_title": false
+      }
+    },
+    {
+      "sequence": 13,
+      "captured_ns": 32959731826838,
+      "evidence_ref": "observation-13",
+      "evidence_digest": "9d60a1b85c223537876c8b3587e28536f87e249a23c9ae6ab0d5acdf7ac1cfe0",
+      "predicates": {
+        "selected_shape": "unknown",
+        "context_present": true,
+        "initial_shape": false,
+        "moved_shape": true,
+        "clean_title": true
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "initial",
+      "to_state": "selected",
+      "action": "select",
+      "matched_conditions": {
+        "context_present": true,
+        "initial_shape": true,
+        "selected_shape": false,
+        "clean_title": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "observation-2",
+      "action_id": "action-70d84e42dc8c4b1a80fa4999327d4111",
+      "effect_ref": "compiled-ff08dfaebba9422dab83284b62c66344-7-execution",
+      "release_verified": true
+    },
+    {
+      "from_state": "selected",
+      "to_state": "moved",
+      "action": "move",
+      "matched_conditions": {
+        "context_present": true,
+        "initial_shape": true,
+        "selected_shape": true
+      },
+      "observation_sequence": 7,
+      "evidence_ref": "observation-7",
+      "action_id": "action-bf47b8114efd4bb29ca2543947b7d683",
+      "effect_ref": "compiled-ff08dfaebba9422dab83284b62c66344-17-execution",
+      "release_verified": true
+    },
+    {
+      "from_state": "moved",
+      "to_state": "done",
+      "action": "save",
+      "matched_conditions": {
+        "context_present": true,
+        "moved_shape": true
+      },
+      "observation_sequence": 10,
+      "evidence_ref": "observation-10",
+      "action_id": "action-5a2432ce4f9d40d68edb5f6284fff1a3",
+      "effect_ref": "compiled-ff08dfaebba9422dab83284b62c66344-27-execution",
+      "release_verified": true
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "initial",
+      "outcome": "action",
+      "action": "select",
+      "matched_conditions": {
+        "context_present": true,
+        "initial_shape": true,
+        "selected_shape": false,
+        "clean_title": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "select",
+      "status": "completed",
+      "action_id": "action-70d84e42dc8c4b1a80fa4999327d4111",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "select",
+      "status": "succeeded",
+      "evidence_ref": "observation-7"
+    },
+    {
+      "event": "branch_selected",
+      "state": "selected",
+      "outcome": "action",
+      "action": "move",
+      "matched_conditions": {
+        "context_present": true,
+        "initial_shape": true,
+        "selected_shape": true
+      },
+      "evidence_ref": "observation-7"
+    },
+    {
+      "event": "action_terminal",
+      "action": "move",
+      "status": "completed",
+      "action_id": "action-bf47b8114efd4bb29ca2543947b7d683",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "move",
+      "status": "succeeded",
+      "evidence_ref": "observation-10"
+    },
+    {
+      "event": "branch_selected",
+      "state": "moved",
+      "outcome": "action",
+      "action": "save",
+      "matched_conditions": {
+        "context_present": true,
+        "moved_shape": true
+      },
+      "evidence_ref": "observation-10"
+    },
+    {
+      "event": "action_terminal",
+      "action": "save",
+      "status": "completed",
+      "action_id": "action-5a2432ce4f9d40d68edb5f6284fff1a3",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "save",
+      "status": "succeeded",
+      "evidence_ref": "observation-13"
+    },
+    {
+      "event": "branch_selected",
+      "state": "done",
+      "outcome": "complete",
+      "action": null,
+      "matched_conditions": {
+        "moved_shape": true,
+        "clean_title": true
+      },
+      "evidence_ref": "observation-13"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "TASK_SUCCEEDED",
+      "reason": "method_complete",
+      "completed_transitions": 3
+    }
+  ],
+  "latest_evidence_ref": "observation-13",
+  "pending_effect": null,
+  "started_ns": 32959123312660,
+  "ended_ns": 32959757865074,
+  "elapsed_ns": 634552414,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

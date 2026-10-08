@@ -1,0 +1,14 @@
+{
+  "decision": "PASS_MAP01_IMPORT_DEPENDENCY_REPAIR_SCOPED",
+  "dependency": "openpyxl==3.1.5",
+  "container": "python:3.12-slim",
+  "install": "PASS",
+  "import_smoke": "PASS",
+  "py_compile": "PASS with PYTHONPYCACHEPREFIX=/tmp/pycache",
+  "initial_container_issue": "py_compile read-only /work mount could not create __pycache__; no source or dependency failure",
+  "construction_invocations": 0,
+  "formal_invocations": 0,
+  "gui_x11_model_task_input": 0,
+  "reruns": 0,
+  "tuning": 0
+}

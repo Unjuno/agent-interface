@@ -1,0 +1,15 @@
+{
+  "schema":"agent-interface.research-run.v1",
+  "issue":6113,
+  "disposition":"METHOD_PASS_SCOPED",
+  "scope":"eight authored finite table fixtures only; no route-population inference",
+  "source_base":"abd0ce6425e24934731b763ece83421d309535b5",
+  "invocations":[
+    {"program":"candidate.py","arguments":["public.json"],"count":1,"exit_code":0,"raw_output":"candidate.raw.json","sha256":"79cd0f367650f9d2ddcf126ca5522648c82d0779b22dd786c3640b7c9e0782a4"},
+    {"program":"audit.py","arguments":["public.json"],"count":1,"exit_code":0,"raw_output":"audit.raw.json","sha256":"9446b5ece2585db995dcbe25f103b2d5cef27aab4a078e0fd7091aadac390aaa"}
+  ],
+  "construction":"PASS 8/8 candidate/audit/truth dispositions; hard-event and missingness mutations refuse",
+  "method":"two-sided exact McNemar; Bonferroni simultaneous paired risk-difference bounds from four one-sided Clopper-Pearson limits; distribution-free paired median order-statistic interval",
+  "docker":{"engine_available":false,"container_used":false,"shared_backend_restarted":false,"limitation":"host execution; no isolation claim"},
+  "limitations":["authored tables and margins","no representative sample or justified population","no app-effect oracle calibration","not an integrated #57 result"]
+}

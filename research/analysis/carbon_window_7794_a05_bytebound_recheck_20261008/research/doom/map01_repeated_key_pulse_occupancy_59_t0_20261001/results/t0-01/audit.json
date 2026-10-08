@@ -1,0 +1,46 @@
+{
+  "auditor_imports_candidate": false,
+  "candidate_result": {
+    "intervals": [],
+    "reasons": [
+      "duplicate_or_invalid_key"
+    ],
+    "status": "UNKNOWN"
+  },
+  "checks": {
+    "allocation": true,
+    "candidate_fail_closed_duplicate_key": true,
+    "candidate_once_no_retry": true,
+    "candidate_source_identity": true,
+    "fixture_hash": true,
+    "independent_oracle_two_pulses": true,
+    "main_identity": true
+  },
+  "interpretation": "existing per-key identity cannot encode repeated occurrences; UNKNOWN is fail-closed, not a false duration estimate",
+  "oracle_error": null,
+  "oracle_occurrence_bounds": [
+    {
+      "action_id": "act-repeat-1",
+      "epoch": 9,
+      "key": "W",
+      "lower_ns": 20,
+      "press_request_ns": 100,
+      "pulse_id": "w-1",
+      "up_sample_ns": 141,
+      "upper_ns": 40
+    },
+    {
+      "action_id": "act-repeat-1",
+      "epoch": 9,
+      "key": "W",
+      "lower_ns": 20,
+      "press_request_ns": 200,
+      "pulse_id": "w-2",
+      "up_sample_ns": 241,
+      "upper_ns": 40
+    }
+  ],
+  "raw_sha256": "7efcceb24c8a267e1db7b1342efe90724787e1f4371ecf28a8c599cc0c1ee9cb",
+  "schema": "map01-repeated-key-pulse-occupancy-audit-v1",
+  "status": "PASS_REPRESENTATION_BOUNDARY_SCOPED"
+}

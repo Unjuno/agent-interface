@@ -1,0 +1,59 @@
+{
+  "child_raw_available": true,
+  "command": [
+    "unshare",
+    "--user",
+    "--map-root-user",
+    "--mount",
+    "--fork",
+    "/usr/sbin/python",
+    "-c",
+    "import runpy,sys; sys.path.insert(0,'/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5236-formal07-main-20261001'); sys.argv=['/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5236-formal07-main-20261001/research/x11_midprogram_keymap_5236_formal07_20261001/runner.py','--child','--child-output','/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5236-formal07-main-20261001/research/x11_midprogram_keymap_5236_formal07_20261001/results/formal07-20261001-01','--host-namespace','4026532393']; runpy.run_path('/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5236-formal07-main-20261001/research/x11_midprogram_keymap_5236_formal07_20261001/runner.py',run_name='__main__')"
+  ],
+  "fixture_preflight": {
+    "argv": [
+      "/usr/sbin/python",
+      "-c",
+      "import json,tkinter; from runtime.backends.x11_v1 import fixture_app; import _tkinter; print(json.dumps({'tkinter':tkinter.TkVersion,'tkinter_file':_tkinter.__file__,'fixture_import':fixture_app.__file__},sort_keys=True))"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "{\"fixture_import\": \"/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5236-formal07-main-20261001/runtime/backends/x11_v1/fixture_app.py\", \"tkinter\": 8.6, \"tkinter_file\": \"/usr/lib/python3.14/lib-dynload/_tkinter.cpython-314-x86_64-linux-gnu.so\"}\n"
+  },
+  "host_mount_ns_inode": 4026532393,
+  "host_socket_after": {
+    "device": 85,
+    "inode": 2,
+    "mode": 511
+  },
+  "host_socket_before": {
+    "device": 85,
+    "inode": 2,
+    "mode": 511
+  },
+  "host_socket_unchanged": true,
+  "python_executable": "/usr/sbin/python",
+  "repository_root": "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5236-formal07-main-20261001",
+  "returncode": 0,
+  "runner_path": "/mnt/c/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-2/scratch/issue5236-formal07-main-20261001/research/x11_midprogram_keymap_5236_formal07_20261001/runner.py",
+  "schema": "issue5236-formal07-wrapper-v1",
+  "source_manifest": {
+    "base_commit": "a7648fb47f16b15ac2fdb63075186aad1189859c",
+    "files": {
+      "research/x11_midprogram_keymap_5236_formal07_20261001/README.md": "d747fc1e236f6f97726e414719a1f4da31e2baa6",
+      "research/x11_midprogram_keymap_5236_formal07_20261001/audit.py": "f45bba5d28dd80c78113b34e16b486ba259c2ddf",
+      "research/x11_midprogram_keymap_5236_formal07_20261001/corruptions.py": "97630eae19f07f0bdf7a748500df693f618353fb",
+      "research/x11_midprogram_keymap_5236_formal07_20261001/runner.py": "75b382abd1702542772f8eb522a2bb9a4b2d1359",
+      "research/x11_midprogram_keymap_5236_formal07_20261001/test_formal.py": "b340745ca23ad15f00e18b38c2800509bc458b09",
+      "runtime/backends/x11_v1/backend.py": "0b168d6e8b840f39f21cdd35cdf6d959da53fbde",
+      "runtime/backends/x11_v1/fixture_app.py": "11c30cf084744ffdba3b00df7637b5853c8571ac",
+      "runtime/backends/x11_v1/session.py": "4dbd6dd219e2ec7313cd32d3e4cb154e0efcfbb1",
+      "runtime/core_v1/contract.py": "10786d38b98fc8988108230fe59ba8df9ed17cb4"
+    },
+    "output_relative": "research/x11_midprogram_keymap_5236_formal07_20261001/results/formal07-20261001-01"
+  },
+  "stderr": "",
+  "stdout": "",
+  "timeout": false,
+  "timeout_seconds": 180
+}

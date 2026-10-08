@@ -1,0 +1,6 @@
+Actual initial comment-preview command outcome: exit1.
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+UnicodeEncodeError: 'cp932' codec can't encode character '\u2014' in position 140: illegal multibyte sequence
+
+The failure occurred while printing decoded public comment text. No input file was changed. Later previews used ensure_ascii=True.

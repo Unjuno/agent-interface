@@ -1,0 +1,500 @@
+{
+  "allocation": "nrs4307-c7e4-docker-source-revalidation-c02",
+  "cache_env": {
+    "FONTCONFIG_CACHE": "/tmp/home/.cache/fontconfig",
+    "HOME": "/tmp/home",
+    "XDG_CACHE_HOME": "/tmp/home/.cache"
+  },
+  "cases": [
+    {
+      "case_json": {
+        "app_alive_after_cleanup": false,
+        "app_pid": 14,
+        "app_returncode": 0,
+        "depth": 2,
+        "display": ":10206",
+        "elapsed_ns": 461285507,
+        "error": null,
+        "final_exchange": 12,
+        "final_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "final_pointer_mask": 0,
+        "initial_exchange": 1,
+        "initial_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "keys": [
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 208821045441,
+            "char": "a",
+            "end_ns": 208821451575,
+            "focus_xid": 4194320,
+            "index": 0,
+            "keycode": 38,
+            "level": 0,
+            "phase": "prefix",
+            "press_sent": true,
+            "release_sent": true
+          },
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 208851073616,
+            "char": "a",
+            "end_ns": 208851436735,
+            "focus_xid": 4194332,
+            "index": 1,
+            "keycode": 38,
+            "level": 1,
+            "phase": "prefix",
+            "press_sent": true,
+            "release_sent": true
+          },
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 208916663803,
+            "char": "b",
+            "end_ns": 208917064032,
+            "focus_xid": 4194332,
+            "index": 2,
+            "keycode": 56,
+            "level": 1,
+            "phase": "suffix",
+            "press_sent": true,
+            "release_sent": true
+          },
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 208963660579,
+            "char": "b",
+            "end_ns": 208964058113,
+            "focus_xid": 4194320,
+            "index": 3,
+            "keycode": 56,
+            "level": 0,
+            "phase": "suffix",
+            "press_sent": true,
+            "release_sent": true
+          }
+        ],
+        "owned_socket_remaining": false,
+        "policy": "PER_FRAME_RECHECK",
+        "raw_hashes": {
+          "APP.jsonl": "b9cc35c43e035d8e0a8c17ab5a34a4d5a62652f54c82ea609bb79aed22c8b76f",
+          "APP.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "IPC.jsonl": "46aff13ffbace7b157dff528a977a2f1a830abdd24f77f0cc35724594aad71bd",
+          "XVFB.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "repository_formal_invocations": 0,
+        "saved": {
+          "0": {
+            "exchange": 2
+          },
+          "1": {
+            "exchange": 4
+          }
+        },
+        "scenario": "STABLE",
+        "schema": 1,
+        "server_alive_after_cleanup": false,
+        "server_pid": 10,
+        "server_returncode": 0,
+        "session": "nrs4307-c7e4-docker-c02-stable-candidate",
+        "source_hashes": {
+          "app.py": "1c173214d5e4af780c43d6182a0b30227f19ac19c3fe66ffd5a00e411926d28f",
+          "policy.py": "0148efd8c364d726f67eab7c0a043d3fd4e6a7c173adee6f71be3e75cdbeba85",
+          "run_case.py": "5dcfa2e117fcbf6dc42099447065d0366b4732e973890ce4b9ca838be9b249f3"
+        },
+        "stage": "CONSTRUCTION",
+        "status": "COMPLETED",
+        "steps": [
+          {
+            "after_exchange": 8,
+            "current_exchange": 7,
+            "decision": {
+              "cached_success_reused": false,
+              "checked_frame_id": "nrs4307-c7e4-docker-c02-stable-candidate:frame1",
+              "eligible": true,
+              "input_authority": false,
+              "verdict": "RESUME"
+            },
+            "effect_status": "TEXT_AB_ONLY",
+            "key_index": 2,
+            "level": 1,
+            "saved_exchange": 4
+          },
+          {
+            "after_exchange": 11,
+            "current_exchange": 10,
+            "decision": {
+              "cached_success_reused": false,
+              "checked_frame_id": "nrs4307-c7e4-docker-c02-stable-candidate:frame0",
+              "eligible": true,
+              "input_authority": false,
+              "verdict": "RESUME"
+            },
+            "effect_status": "TEXT_AB_ONLY",
+            "key_index": 3,
+            "level": 0,
+            "saved_exchange": 2
+          }
+        ],
+        "xauth": {
+          "returncode": 0,
+          "stderr": ""
+        },
+        "xtest_available": true
+      },
+      "command": [
+        "/usr/local/bin/python3",
+        "-B",
+        "/tmp/source/source/run_case.py",
+        "--out",
+        "/results/cases/nrs4307-c7e4-docker-c02-stable-candidate",
+        "--session",
+        "nrs4307-c7e4-docker-c02-stable-candidate",
+        "--depth",
+        "2",
+        "--scenario",
+        "STABLE",
+        "--policy",
+        "PER_FRAME_RECHECK",
+        "--phase",
+        "CONSTRUCTION"
+      ],
+      "policy": "PER_FRAME_RECHECK",
+      "returncode": 0,
+      "scenario": "STABLE",
+      "session": "nrs4307-c7e4-docker-c02-stable-candidate",
+      "stderr": "",
+      "stdout": "{\"session\": \"nrs4307-c7e4-docker-c02-stable-candidate\", \"status\": \"COMPLETED\", \"error\": null, \"policy\": \"PER_FRAME_RECHECK\", \"scenario\": \"STABLE\", \"depth\": 2}"
+    },
+    {
+      "case_json": {
+        "app_alive_after_cleanup": false,
+        "app_pid": 22,
+        "app_returncode": 0,
+        "depth": 2,
+        "display": ":3569",
+        "elapsed_ns": 337870542,
+        "error": null,
+        "final_exchange": 13,
+        "final_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "final_pointer_mask": 0,
+        "initial_exchange": 1,
+        "initial_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "keys": [
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 209241288240,
+            "char": "a",
+            "end_ns": 209241677046,
+            "focus_xid": 4194320,
+            "index": 0,
+            "keycode": 38,
+            "level": 0,
+            "phase": "prefix",
+            "press_sent": true,
+            "release_sent": true
+          },
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 209271419947,
+            "char": "a",
+            "end_ns": 209271784050,
+            "focus_xid": 4194332,
+            "index": 1,
+            "keycode": 38,
+            "level": 1,
+            "phase": "prefix",
+            "press_sent": true,
+            "release_sent": true
+          },
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 209348502314,
+            "char": "b",
+            "end_ns": 209348832968,
+            "focus_xid": 4194332,
+            "index": 2,
+            "keycode": 56,
+            "level": 1,
+            "phase": "suffix",
+            "press_sent": true,
+            "release_sent": true
+          },
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 209391551862,
+            "char": "b",
+            "end_ns": 209392047703,
+            "focus_xid": 4194320,
+            "index": 3,
+            "keycode": 56,
+            "level": 0,
+            "phase": "suffix",
+            "press_sent": true,
+            "release_sent": true
+          }
+        ],
+        "owned_socket_remaining": false,
+        "policy": "GLOBAL_SUCCESS_CACHE",
+        "raw_hashes": {
+          "APP.jsonl": "9b1c235dd3f41fb9ce6c18df2c66a222b9a5ebef5cc82b58977d52653591748c",
+          "APP.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "IPC.jsonl": "63ba62305e2f5c01bbb5fc09a4fe86e0916931322f90cd9428c470de5b6336d6",
+          "XVFB.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "repository_formal_invocations": 0,
+        "saved": {
+          "0": {
+            "exchange": 2
+          },
+          "1": {
+            "exchange": 4
+          }
+        },
+        "scenario": "ROOT_TARGET_REPLACED",
+        "schema": 1,
+        "server_alive_after_cleanup": false,
+        "server_pid": 18,
+        "server_returncode": 0,
+        "session": "nrs4307-c7e4-docker-c02-root-replaced-weak",
+        "source_hashes": {
+          "app.py": "1c173214d5e4af780c43d6182a0b30227f19ac19c3fe66ffd5a00e411926d28f",
+          "policy.py": "0148efd8c364d726f67eab7c0a043d3fd4e6a7c173adee6f71be3e75cdbeba85",
+          "run_case.py": "5dcfa2e117fcbf6dc42099447065d0366b4732e973890ce4b9ca838be9b249f3"
+        },
+        "stage": "CONSTRUCTION",
+        "status": "COMPLETED",
+        "steps": [
+          {
+            "after_exchange": 9,
+            "current_exchange": 8,
+            "decision": {
+              "cached_success_reused": false,
+              "checked_frame_id": "nrs4307-c7e4-docker-c02-root-replaced-weak:frame1",
+              "eligible": true,
+              "input_authority": false,
+              "verdict": "RESUME"
+            },
+            "effect_status": "TEXT_AB_ONLY",
+            "key_index": 2,
+            "level": 1,
+            "saved_exchange": 4
+          },
+          {
+            "after_exchange": 12,
+            "current_exchange": 11,
+            "decision": {
+              "cached_success_reused": true,
+              "checked_frame_id": "nrs4307-c7e4-docker-c02-root-replaced-weak:frame1",
+              "eligible": true,
+              "input_authority": false,
+              "verdict": "RESUME"
+            },
+            "effect_status": "WRONG_CONTINUATION_EFFECT",
+            "key_index": 3,
+            "level": 0,
+            "saved_exchange": 2
+          }
+        ],
+        "xauth": {
+          "returncode": 0,
+          "stderr": ""
+        },
+        "xtest_available": true
+      },
+      "command": [
+        "/usr/local/bin/python3",
+        "-B",
+        "/tmp/source/source/run_case.py",
+        "--out",
+        "/results/cases/nrs4307-c7e4-docker-c02-root-replaced-weak",
+        "--session",
+        "nrs4307-c7e4-docker-c02-root-replaced-weak",
+        "--depth",
+        "2",
+        "--scenario",
+        "ROOT_TARGET_REPLACED",
+        "--policy",
+        "GLOBAL_SUCCESS_CACHE",
+        "--phase",
+        "CONSTRUCTION"
+      ],
+      "policy": "GLOBAL_SUCCESS_CACHE",
+      "returncode": 0,
+      "scenario": "ROOT_TARGET_REPLACED",
+      "session": "nrs4307-c7e4-docker-c02-root-replaced-weak",
+      "stderr": "",
+      "stdout": "{\"session\": \"nrs4307-c7e4-docker-c02-root-replaced-weak\", \"status\": \"COMPLETED\", \"error\": null, \"policy\": \"GLOBAL_SUCCESS_CACHE\", \"scenario\": \"ROOT_TARGET_REPLACED\", \"depth\": 2}"
+    },
+    {
+      "case_json": {
+        "app_alive_after_cleanup": false,
+        "app_pid": 30,
+        "app_returncode": 0,
+        "depth": 2,
+        "display": ":9078",
+        "elapsed_ns": 316992403,
+        "error": null,
+        "final_exchange": 12,
+        "final_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "final_pointer_mask": 0,
+        "initial_exchange": 1,
+        "initial_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "keys": [
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 209660694191,
+            "char": "a",
+            "end_ns": 209661115073,
+            "focus_xid": 4194320,
+            "index": 0,
+            "keycode": 38,
+            "level": 0,
+            "phase": "prefix",
+            "press_sent": true,
+            "release_sent": true
+          },
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 209690720227,
+            "char": "a",
+            "end_ns": 209691343946,
+            "focus_xid": 4194332,
+            "index": 1,
+            "keycode": 38,
+            "level": 1,
+            "phase": "prefix",
+            "press_sent": true,
+            "release_sent": true
+          },
+          {
+            "after_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "before_keymap": "0000000000000000000000000000000000000000000000000000000000000000",
+            "begin_ns": 209764693165,
+            "char": "b",
+            "end_ns": 209764991129,
+            "focus_xid": 4194332,
+            "index": 2,
+            "keycode": 56,
+            "level": 1,
+            "phase": "suffix",
+            "press_sent": true,
+            "release_sent": true
+          }
+        ],
+        "owned_socket_remaining": false,
+        "policy": "PER_FRAME_RECHECK",
+        "raw_hashes": {
+          "APP.jsonl": "093df9bbe242fcf16139ce0adb22005e64d448267b11e83fb6450a0e714fe705",
+          "APP.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "IPC.jsonl": "48ff5843d6a84bfd7d7aa427c16bfa7c9c2e8805dd8752e4a0e6ae70dec8378d",
+          "XVFB.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "repository_formal_invocations": 0,
+        "saved": {
+          "0": {
+            "exchange": 2
+          },
+          "1": {
+            "exchange": 4
+          }
+        },
+        "scenario": "ROOT_TARGET_REPLACED",
+        "schema": 1,
+        "server_alive_after_cleanup": false,
+        "server_pid": 26,
+        "server_returncode": 0,
+        "session": "nrs4307-c7e4-docker-c02-root-replaced-candidate",
+        "source_hashes": {
+          "app.py": "1c173214d5e4af780c43d6182a0b30227f19ac19c3fe66ffd5a00e411926d28f",
+          "policy.py": "0148efd8c364d726f67eab7c0a043d3fd4e6a7c173adee6f71be3e75cdbeba85",
+          "run_case.py": "5dcfa2e117fcbf6dc42099447065d0366b4732e973890ce4b9ca838be9b249f3"
+        },
+        "stage": "CONSTRUCTION",
+        "status": "COMPLETED",
+        "steps": [
+          {
+            "after_exchange": 9,
+            "current_exchange": 8,
+            "decision": {
+              "cached_success_reused": false,
+              "checked_frame_id": "nrs4307-c7e4-docker-c02-root-replaced-candidate:frame1",
+              "eligible": true,
+              "input_authority": false,
+              "verdict": "RESUME"
+            },
+            "effect_status": "TEXT_AB_ONLY",
+            "key_index": 2,
+            "level": 1,
+            "saved_exchange": 4
+          },
+          {
+            "after_exchange": null,
+            "current_exchange": 11,
+            "decision": {
+              "cached_success_reused": false,
+              "checked_frame_id": "nrs4307-c7e4-docker-c02-root-replaced-candidate:frame0",
+              "eligible": false,
+              "input_authority": false,
+              "verdict": "REVALIDATE_TARGET"
+            },
+            "key_index": null,
+            "level": 0,
+            "saved_exchange": 2
+          }
+        ],
+        "xauth": {
+          "returncode": 0,
+          "stderr": ""
+        },
+        "xtest_available": true
+      },
+      "command": [
+        "/usr/local/bin/python3",
+        "-B",
+        "/tmp/source/source/run_case.py",
+        "--out",
+        "/results/cases/nrs4307-c7e4-docker-c02-root-replaced-candidate",
+        "--session",
+        "nrs4307-c7e4-docker-c02-root-replaced-candidate",
+        "--depth",
+        "2",
+        "--scenario",
+        "ROOT_TARGET_REPLACED",
+        "--policy",
+        "PER_FRAME_RECHECK",
+        "--phase",
+        "CONSTRUCTION"
+      ],
+      "policy": "PER_FRAME_RECHECK",
+      "returncode": 0,
+      "scenario": "ROOT_TARGET_REPLACED",
+      "session": "nrs4307-c7e4-docker-c02-root-replaced-candidate",
+      "stderr": "",
+      "stdout": "{\"session\": \"nrs4307-c7e4-docker-c02-root-replaced-candidate\", \"status\": \"COMPLETED\", \"error\": null, \"policy\": \"PER_FRAME_RECHECK\", \"scenario\": \"ROOT_TARGET_REPLACED\", \"depth\": 2}"
+    }
+  ],
+  "formal_invocations": 0,
+  "image_id": "sha256:7e4a3b6f3917baa9f153b4dfd011a4ea528a3d200a7a3d274aa9479900ee7b41",
+  "platform": "Linux-6.6.114.1-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+  "python": "3.11.16 (main, Sep 19 2026, 03:41:12) [GCC 12.2.0]",
+  "source_archive_sha256": "9d39d91744de2b74a8ac01a5612624401be882bdaa163228d9664e0bb3534c25",
+  "source_chunk_sha256": {
+    "SOURCE.00.b64": "dc4a070905b171b33472f719f6df94fa448447d6e7a9649f6b361d467ebfd325",
+    "SOURCE.01.b64": "8a4b1349c6eb9eb766184be588dc49c44fe74f56c9376ad85a94a0d38462a035",
+    "SOURCE.02.b64": "388c3d4d1e7bcdbd2d78739316a91884a8ed1ee5c15d4cdd1264d73405b23864"
+  },
+  "tk": 8.6,
+  "xauth_helper_sha256": "0c7bf8730507243ae2715e373c348ae7be76dc7d86bbb0f44acd8d2e92750b09",
+  "xlib": "(0, 33)"
+}

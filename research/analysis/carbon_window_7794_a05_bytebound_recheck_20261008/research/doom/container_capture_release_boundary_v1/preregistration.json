@@ -1,0 +1,23 @@
+{
+  "schema": "capture-release-boundary-development-prereg-v1",
+  "task_id": "container-capture-release-boundary-20260915-v1",
+  "base_commit": "8d7bd88197cd4553251d1c47bff5b94bad8c499c",
+  "source_sha256": "bda5f20934ddf5f03fda7a37de3d6bccf8b318292f14f3d3b4b94b99beadbf7f",
+  "question": "At a fixed 250 ms X11 hold deadline, does doing one full-frame capture before KeyRelease materially extend application-observed hold duration compared with sending KeyRelease before the same capture?",
+  "fixture": "Xvfb 1024x768x24 + Openbox + rendered Tk checkerboard + XTEST w key",
+  "conditions": {
+    "release_first": "at the 250 ms deadline send KeyRelease+sync, then take one full-frame Pillow ImageGrab",
+    "capture_first": "at the same deadline take one full-frame Pillow ImageGrab, then send KeyRelease+sync"
+  },
+  "pairs": 12,
+  "order": "balanced alternating within pair",
+  "primary_metric": "paired capture_first-minus-release_first application-observed press-to-release duration in ms",
+  "decision": {
+    "boundary_capture_cost_candidate": "median paired delta >= 5 ms OR p95 paired delta >= 10 ms",
+    "reject_as_tens_ms_explanation": "median paired delta < 5 ms AND p95 paired delta < 10 ms"
+  },
+  "secondary_descriptive": "compare paired delay with capture-first capture duration; no extra decision gate",
+  "retry": false,
+  "construction_smoke": "2 pairs only, excluded from formal aggregation; observed median delta 4.6682825 ms",
+  "scope": "development mechanism isolation only; no ViZDoom, gameplay efficacy, model, planner, renewal, or shared-runtime claim"
+}

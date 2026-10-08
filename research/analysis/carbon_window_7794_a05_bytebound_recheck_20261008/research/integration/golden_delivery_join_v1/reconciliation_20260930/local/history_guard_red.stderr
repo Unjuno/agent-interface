@@ -1,0 +1,17 @@
+test_exact_history_and_current_evidence_pass (__main__.HistoryIdentityTests.test_exact_history_and_current_evidence_pass) ... FAIL
+
+======================================================================
+FAIL: test_exact_history_and_current_evidence_pass (__main__.HistoryIdentityTests.test_exact_history_and_current_evidence_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/shared/golden-reconciliation-5284-v1/repo/.github/test_golden_adapter_history.py", line 47, in test_exact_history_and_current_evidence_pass
+    self.check()
+  File "/workspace/shared/golden-reconciliation-5284-v1/repo/.github/test_golden_adapter_history.py", line 37, in check
+    self.assertEqual(process.returncode, 0, process.stderr)
+AssertionError: 2 != 0 : /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3: can't open file '/workspace/shared/golden-reconciliation-5284-v1/repo/.github/check_golden_adapter_history.py': [Errno 2] No such file or directory
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+FAILED (failures=1)

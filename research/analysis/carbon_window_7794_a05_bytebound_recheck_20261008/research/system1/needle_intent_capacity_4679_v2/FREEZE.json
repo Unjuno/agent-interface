@@ -1,0 +1,57 @@
+{
+  "schema": "needle-intent-capacity.freeze.v1",
+  "issue": 4778,
+  "allocation": "needle-intent-capacity-4679-v2",
+  "branch": "research/needle-intent-capacity-4679-v2-20260927",
+  "path": "research/system1/needle_intent_capacity_4679_v2/",
+  "base_main_sha": "65d18a75e9a3ecb9b3f43d464cda3b2b00b747e6",
+  "source_commit": "c215a33c2bd78dfaac960cf47d3fbb0c30eb4446",
+  "formal_seeds": [4153201, 4153203, 4153207],
+  "derived_seeds": {
+    "held_out_state": [4153202, 4153204, 4153208],
+    "state_only_init": [4153211, 4153213, 4153217],
+    "intent_aware_init": [4153221, 4153223, 4153227]
+  },
+  "image": "needle-pilot05:local",
+  "image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "docker_version": "29.8.0",
+  "source_sha256": {
+    "audit.py": "859991d9e7496681bb786b9bca35ef2f7644180b5d108be636eea9f664935156",
+    "formal.py": "807610ad5e385915e21c1c61135c50a21bf18d1133dc167d49fbc32ab0483def",
+    "ISSUE_CONTRACT.md": "85b8a00c97453acf74c598e898940c62023d4d8478a80b8469818e4140a52fe7",
+    "PREREGISTRATION.md": "f04f64b8581f4c7a2dfe197ef038eb00a601fa4c1f2dbed5b1d48fba4eedc13e",
+    "README.md": "ab363f74cbc5a77d0ada91bf44d66537af3b3258e41e2fc37205cc5a4cb17575",
+    "runner.py": "96c460c0bf56da074dc1ca47a097a78ae68cb05fda5cd57081584fb1ce681ae7",
+    "test_construction.py": "2017180d7cf99a1c60586b5c29630eaa83c284ae5e984435c7ce560133e2e295"
+  },
+  "github_readback": {
+    "verified": true,
+    "main_sha": "65d18a75e9a3ecb9b3f43d464cda3b2b00b747e6",
+    "issue_body_sha256": "ebc5c67358db14689e5b086972018dfe1cf5af3495ecd2a4d530e11a54c647f3",
+    "files": [
+      {"path":"research/system1/needle_intent_capacity_4679_v2/audit.py","sha256":"859991d9e7496681bb786b9bca35ef2f7644180b5d108be636eea9f664935156","blob_sha":"d9d058e50e8c25bb4b88967668433026229a9d5c"},
+      {"path":"research/system1/needle_intent_capacity_4679_v2/formal.py","sha256":"807610ad5e385915e21c1c61135c50a21bf18d1133dc167d49fbc32ab0483def","blob_sha":"93944c4c216d42ab19a3bb1f1f06e72a200daa7b"},
+      {"path":"research/system1/needle_intent_capacity_4679_v2/ISSUE_CONTRACT.md","sha256":"85b8a00c97453acf74c598e898940c62023d4d8478a80b8469818e4140a52fe7","blob_sha":"cf353e1e11a80b88ac75770c82eadaa0aabc0455"},
+      {"path":"research/system1/needle_intent_capacity_4679_v2/PREREGISTRATION.md","sha256":"f04f64b8581f4c7a2dfe197ef038eb00a601fa4c1f2dbed5b1d48fba4eedc13e","blob_sha":"401434ec571739498cc347e307fc40a69e56606b"},
+      {"path":"research/system1/needle_intent_capacity_4679_v2/README.md","sha256":"ab363f74cbc5a77d0ada91bf44d66537af3b3258e41e2fc37205cc5a4cb17575","blob_sha":"138348e1721d136ca67bb0a43b936ffdc7d97994"},
+      {"path":"research/system1/needle_intent_capacity_4679_v2/runner.py","sha256":"96c460c0bf56da074dc1ca47a097a78ae68cb05fda5cd57081584fb1ce681ae7","blob_sha":"c5010800faf1170d964909fe38f6377f95b79583"},
+      {"path":"research/system1/needle_intent_capacity_4679_v2/test_construction.py","sha256":"2017180d7cf99a1c60586b5c29630eaa83c284ae5e984435c7ce560133e2e295","blob_sha":"8f7ca413029a2b86c60df579eb53549370050a5d"}
+    ]
+  },
+  "collision_audit": {
+    "formal_seeds": [4153201, 4153203, 4153207],
+    "issue_hits_other": [],
+    "pr_hits": [],
+    "branch_hits": [],
+    "commit_hits": [],
+    "main_code_exact_hits": [],
+    "timing_substring_false_positives": [
+      "4153202 occurs as an event timing value, not a seed constant",
+      "4153204 occurs inside a terminal timing integer, not a seed constant"
+    ]
+  },
+  "construction": {"tests_passed": 13, "tests_total": 13, "optimizer_steps": 0},
+  "formal_runs_at_freeze": 0
+}
+

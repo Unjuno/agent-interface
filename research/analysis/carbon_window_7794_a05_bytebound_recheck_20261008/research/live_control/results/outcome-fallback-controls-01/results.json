@@ -1,0 +1,501 @@
+[
+  {
+    "case": "pending",
+    "output": {
+      "result": {
+        "cursor": 9,
+        "authority": "none",
+        "task_success": null,
+        "continuation": null,
+        "state": "pending",
+        "reason": "pending",
+        "evidence": {
+          "event": "finalization_status",
+          "transport_request_id": "status:0855c9bee04c4f0ab608c20735ce5bcf",
+          "state": "pending",
+          "outcome": null
+        }
+      },
+      "transcript": [
+        {
+          "request": {
+            "after": 0,
+            "events": [
+              "effect_evidence",
+              "independent_evaluation"
+            ],
+            "timeout": 0,
+            "read_request_id": "submit"
+          },
+          "reply": {
+            "status": "timeout",
+            "cursor": 7,
+            "records": []
+          }
+        },
+        {
+          "request": {
+            "after": 7,
+            "events": [
+              "finalization_status"
+            ],
+            "timeout": 0,
+            "command": {
+              "op": "finalization_status"
+            },
+            "request_id": "status:0855c9bee04c4f0ab608c20735ce5bcf",
+            "read_request_id": "status:0855c9bee04c4f0ab608c20735ce5bcf"
+          },
+          "reply": {
+            "status": "boundary",
+            "cursor": 9,
+            "records": [
+              {
+                "event": "finalization_status",
+                "transport_request_id": "status:0855c9bee04c4f0ab608c20735ce5bcf",
+                "state": "pending",
+                "outcome": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": "available",
+    "output": {
+      "result": {
+        "cursor": 9,
+        "authority": "none",
+        "task_success": true,
+        "continuation": null,
+        "state": "evaluated",
+        "evidence": {
+          "event": "finalization_status",
+          "transport_request_id": "status:af4dd13341b44b1483db1ac9064f3244",
+          "state": "available",
+          "outcome": {
+            "final_program": "program",
+            "status": "finished",
+            "admission_closed": true,
+            "output_flushed": true,
+            "evaluation": {
+              "success": true
+            }
+          }
+        }
+      },
+      "transcript": [
+        {
+          "request": {
+            "after": 0,
+            "events": [
+              "effect_evidence",
+              "independent_evaluation"
+            ],
+            "timeout": 0,
+            "read_request_id": "submit"
+          },
+          "reply": {
+            "status": "timeout",
+            "cursor": 7,
+            "records": []
+          }
+        },
+        {
+          "request": {
+            "after": 7,
+            "events": [
+              "finalization_status"
+            ],
+            "timeout": 0,
+            "command": {
+              "op": "finalization_status"
+            },
+            "request_id": "status:af4dd13341b44b1483db1ac9064f3244",
+            "read_request_id": "status:af4dd13341b44b1483db1ac9064f3244"
+          },
+          "reply": {
+            "status": "boundary",
+            "cursor": 9,
+            "records": [
+              {
+                "event": "finalization_status",
+                "transport_request_id": "status:af4dd13341b44b1483db1ac9064f3244",
+                "state": "available",
+                "outcome": {
+                  "final_program": "program",
+                  "status": "finished",
+                  "admission_closed": true,
+                  "output_flushed": true,
+                  "evaluation": {
+                    "success": true
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": "wrong_program",
+    "output": {
+      "result": {
+        "cursor": 9,
+        "authority": "none",
+        "task_success": null,
+        "continuation": null,
+        "state": "needs_reconciliation",
+        "reason": "status_program_or_shape_mismatch",
+        "evidence": {
+          "event": "finalization_status",
+          "transport_request_id": "status:60dde3ee366a4abc970a0d4fff90f720",
+          "state": "available",
+          "outcome": {
+            "final_program": "other",
+            "status": "finished",
+            "admission_closed": true,
+            "output_flushed": true,
+            "evaluation": {
+              "success": true
+            }
+          }
+        }
+      },
+      "transcript": [
+        {
+          "request": {
+            "after": 0,
+            "events": [
+              "effect_evidence",
+              "independent_evaluation"
+            ],
+            "timeout": 0,
+            "read_request_id": "submit"
+          },
+          "reply": {
+            "status": "timeout",
+            "cursor": 7,
+            "records": []
+          }
+        },
+        {
+          "request": {
+            "after": 7,
+            "events": [
+              "finalization_status"
+            ],
+            "timeout": 0,
+            "command": {
+              "op": "finalization_status"
+            },
+            "request_id": "status:60dde3ee366a4abc970a0d4fff90f720",
+            "read_request_id": "status:60dde3ee366a4abc970a0d4fff90f720"
+          },
+          "reply": {
+            "status": "boundary",
+            "cursor": 9,
+            "records": [
+              {
+                "event": "finalization_status",
+                "transport_request_id": "status:60dde3ee366a4abc970a0d4fff90f720",
+                "state": "available",
+                "outcome": {
+                  "final_program": "other",
+                  "status": "finished",
+                  "admission_closed": true,
+                  "output_flushed": true,
+                  "evaluation": {
+                    "success": true
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": "wrong_query",
+    "output": {
+      "result": {
+        "cursor": 9,
+        "authority": "none",
+        "task_success": null,
+        "continuation": null,
+        "state": "needs_reconciliation",
+        "reason": "status_identity_mismatch"
+      },
+      "transcript": [
+        {
+          "request": {
+            "after": 0,
+            "events": [
+              "effect_evidence",
+              "independent_evaluation"
+            ],
+            "timeout": 0,
+            "read_request_id": "submit"
+          },
+          "reply": {
+            "status": "timeout",
+            "cursor": 7,
+            "records": []
+          }
+        },
+        {
+          "request": {
+            "after": 7,
+            "events": [
+              "finalization_status"
+            ],
+            "timeout": 0,
+            "command": {
+              "op": "finalization_status"
+            },
+            "request_id": "status:08f9d479e82a4054a2c5aa15790fff4d",
+            "read_request_id": "status:08f9d479e82a4054a2c5aa15790fff4d"
+          },
+          "reply": {
+            "status": "boundary",
+            "cursor": 9,
+            "records": [
+              {
+                "event": "finalization_status",
+                "transport_request_id": "other",
+                "state": "available",
+                "outcome": {
+                  "final_program": "program",
+                  "status": "finished",
+                  "admission_closed": true,
+                  "output_flushed": true,
+                  "evaluation": {
+                    "success": true
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": "status_timeout",
+    "output": {
+      "result": {
+        "cursor": 8,
+        "authority": "none",
+        "task_success": null,
+        "continuation": null,
+        "state": "pending",
+        "reason": "status_timeout"
+      },
+      "transcript": [
+        {
+          "request": {
+            "after": 0,
+            "events": [
+              "effect_evidence",
+              "independent_evaluation"
+            ],
+            "timeout": 0,
+            "read_request_id": "submit"
+          },
+          "reply": {
+            "status": "timeout",
+            "cursor": 7,
+            "records": []
+          }
+        },
+        {
+          "request": {
+            "after": 7,
+            "events": [
+              "finalization_status"
+            ],
+            "timeout": 0,
+            "command": {
+              "op": "finalization_status"
+            },
+            "request_id": "status:50098ff24ef04d6389c0a74dccdb199f",
+            "read_request_id": "status:50098ff24ef04d6389c0a74dccdb199f"
+          },
+          "reply": {
+            "status": "timeout",
+            "cursor": 8,
+            "records": []
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": "exception",
+    "output": {
+      "result": {
+        "state": "transport_or_protocol_error",
+        "task_success": null,
+        "authority": "none",
+        "continuation": null,
+        "error": {
+          "type": "TimeoutError",
+          "message": "injected socket timeout"
+        }
+      },
+      "transcript": [
+        {
+          "request": {
+            "after": 0,
+            "events": [
+              "effect_evidence",
+              "independent_evaluation"
+            ],
+            "timeout": 0,
+            "read_request_id": "submit"
+          },
+          "reply": {
+            "status": "timeout",
+            "cursor": 7,
+            "records": []
+          }
+        },
+        {
+          "request": {
+            "after": 7,
+            "events": [
+              "finalization_status"
+            ],
+            "timeout": 0,
+            "command": {
+              "op": "finalization_status"
+            },
+            "request_id": "status:0fecca24d7e44cfda6081a4286246420",
+            "read_request_id": "status:0fecca24d7e44cfda6081a4286246420"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": "batch_limit",
+    "output": {
+      "result": {
+        "cursor": 7,
+        "authority": "none",
+        "task_success": null,
+        "state": "pending",
+        "reason": "batch_limit",
+        "continuation": {
+          "after": 7,
+          "events": [
+            "effect_evidence",
+            "independent_evaluation"
+          ],
+          "timeout": 5,
+          "read_request_id": "submit"
+        }
+      },
+      "transcript": [
+        {
+          "request": {
+            "after": 0,
+            "events": [
+              "effect_evidence",
+              "independent_evaluation"
+            ],
+            "timeout": 0,
+            "read_request_id": "submit"
+          },
+          "reply": {
+            "status": "batch_limit",
+            "cursor": 7,
+            "records": []
+          }
+        }
+      ]
+    }
+  },
+  {
+    "case": "false_evaluation",
+    "output": {
+      "result": {
+        "cursor": 9,
+        "authority": "none",
+        "task_success": false,
+        "continuation": null,
+        "state": "evaluated",
+        "evidence": {
+          "event": "finalization_status",
+          "transport_request_id": "status:76a6f78c2f7445aabe4ae254fc4ec59e",
+          "state": "available",
+          "outcome": {
+            "final_program": "program",
+            "status": "finished",
+            "admission_closed": true,
+            "output_flushed": true,
+            "evaluation": {
+              "success": false
+            }
+          }
+        }
+      },
+      "transcript": [
+        {
+          "request": {
+            "after": 0,
+            "events": [
+              "effect_evidence",
+              "independent_evaluation"
+            ],
+            "timeout": 0,
+            "read_request_id": "submit"
+          },
+          "reply": {
+            "status": "timeout",
+            "cursor": 7,
+            "records": []
+          }
+        },
+        {
+          "request": {
+            "after": 7,
+            "events": [
+              "finalization_status"
+            ],
+            "timeout": 0,
+            "command": {
+              "op": "finalization_status"
+            },
+            "request_id": "status:76a6f78c2f7445aabe4ae254fc4ec59e",
+            "read_request_id": "status:76a6f78c2f7445aabe4ae254fc4ec59e"
+          },
+          "reply": {
+            "status": "boundary",
+            "cursor": 9,
+            "records": [
+              {
+                "event": "finalization_status",
+                "transport_request_id": "status:76a6f78c2f7445aabe4ae254fc4ec59e",
+                "state": "available",
+                "outcome": {
+                  "final_program": "program",
+                  "status": "finished",
+                  "admission_closed": true,
+                  "output_flushed": true,
+                  "evaluation": {
+                    "success": false
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,795 @@
+{
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "plan_sha256": "fa441b3875137f478d5010e8cef901686a75a65e96b76edc8a18c78ba4de6d7d",
+  "rows": [
+    {
+      "commands": [
+        "FINISH"
+      ],
+      "cost_ns": 350000000,
+      "cost_stage": "sample",
+      "ended_ns": 350000000,
+      "endpoint": "FINISH",
+      "initial_ns": 0,
+      "kind": "polling_finish",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 350000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 1,
+        "ended_ns": 350000000,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": true
+      },
+      "waits": [
+        {
+          "ns": 350000000,
+          "timeout_s": 0
+        }
+      ]
+    },
+    {
+      "commands": [
+        "FINISH"
+      ],
+      "cost_ns": 10000000,
+      "cost_stage": "sample",
+      "ended_ns": 10000000,
+      "endpoint": "FINISH",
+      "initial_ns": 0,
+      "kind": "polling_finish",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 10000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 1,
+        "ended_ns": 10000000,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": true
+      },
+      "waits": [
+        {
+          "ns": 10000000,
+          "timeout_s": 0.09
+        }
+      ]
+    },
+    {
+      "commands": [
+        "FINISH"
+      ],
+      "cost_ns": 350000000,
+      "cost_stage": "sink",
+      "ended_ns": 350000000,
+      "endpoint": "FINISH",
+      "initial_ns": 0,
+      "kind": "polling_finish",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 1,
+        "ended_ns": 350000000,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": true
+      },
+      "waits": [
+        {
+          "ns": 350000000,
+          "timeout_s": 0
+        }
+      ]
+    },
+    {
+      "commands": [
+        "FINISH"
+      ],
+      "cost_ns": 10000000,
+      "cost_stage": "sink",
+      "ended_ns": 10000000,
+      "endpoint": "FINISH",
+      "initial_ns": 0,
+      "kind": "polling_finish",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 1,
+        "ended_ns": 10000000,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": true
+      },
+      "waits": [
+        {
+          "ns": 10000000,
+          "timeout_s": 0.09
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 350000000,
+      "cost_stage": "sample",
+      "ended_ns": 350000000,
+      "endpoint": "eof",
+      "initial_ns": 0,
+      "kind": "polling_eof",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 350000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "ended_ns": 350000000,
+        "eof": true,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": false
+      },
+      "waits": [
+        {
+          "ns": 350000000,
+          "timeout_s": 0
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 10000000,
+      "cost_stage": "sample",
+      "ended_ns": 10000000,
+      "endpoint": "eof",
+      "initial_ns": 0,
+      "kind": "polling_eof",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 10000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "ended_ns": 10000000,
+        "eof": true,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": false
+      },
+      "waits": [
+        {
+          "ns": 10000000,
+          "timeout_s": 0.09
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 350000000,
+      "cost_stage": "sink",
+      "ended_ns": 350000000,
+      "endpoint": "eof",
+      "initial_ns": 0,
+      "kind": "polling_eof",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "ended_ns": 350000000,
+        "eof": true,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": false
+      },
+      "waits": [
+        {
+          "ns": 350000000,
+          "timeout_s": 0
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 10000000,
+      "cost_stage": "sink",
+      "ended_ns": 10000000,
+      "endpoint": "eof",
+      "initial_ns": 0,
+      "kind": "polling_eof",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "ended_ns": 10000000,
+        "eof": true,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": false
+      },
+      "waits": [
+        {
+          "ns": 10000000,
+          "timeout_s": 0.09
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 350000000,
+      "cost_stage": "sample",
+      "ended_ns": 350000000,
+      "endpoint": "cap",
+      "initial_ns": 0,
+      "kind": "polling_cap",
+      "period_ns": 100000000,
+      "reads": 0,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 350000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "ended_ns": 350000000,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": false
+      },
+      "waits": []
+    },
+    {
+      "commands": [],
+      "cost_ns": 10000000,
+      "cost_stage": "sample",
+      "ended_ns": 10000000,
+      "endpoint": "cap",
+      "initial_ns": 0,
+      "kind": "polling_cap",
+      "period_ns": 100000000,
+      "reads": 0,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 10000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "ended_ns": 10000000,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": false
+      },
+      "waits": []
+    },
+    {
+      "commands": [],
+      "cost_ns": 350000000,
+      "cost_stage": "sink",
+      "ended_ns": 350000000,
+      "endpoint": "cap",
+      "initial_ns": 0,
+      "kind": "polling_cap",
+      "period_ns": 100000000,
+      "reads": 0,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "ended_ns": 350000000,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": false
+      },
+      "waits": []
+    },
+    {
+      "commands": [],
+      "cost_ns": 10000000,
+      "cost_stage": "sink",
+      "ended_ns": 10000000,
+      "endpoint": "cap",
+      "initial_ns": 0,
+      "kind": "polling_cap",
+      "period_ns": 100000000,
+      "reads": 0,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "ended_ns": 10000000,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "samples": 1,
+        "started_ns": 0,
+        "stopped_by_command": false
+      },
+      "waits": []
+    },
+    {
+      "commands": [
+        "FINISH"
+      ],
+      "cost_ns": 350000000,
+      "cost_stage": "sample",
+      "ended_ns": 350000000,
+      "endpoint": "FINISH",
+      "initial_ns": 0,
+      "kind": "stdin_finish",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 350000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 1,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "sample_hz": 10.0,
+        "samples": 1
+      },
+      "waits": [
+        {
+          "ns": 350000000,
+          "timeout_s": 0
+        }
+      ]
+    },
+    {
+      "commands": [
+        "FINISH"
+      ],
+      "cost_ns": 10000000,
+      "cost_stage": "sample",
+      "ended_ns": 10000000,
+      "endpoint": "FINISH",
+      "initial_ns": 0,
+      "kind": "stdin_finish",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 10000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 1,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "sample_hz": 10.0,
+        "samples": 1
+      },
+      "waits": [
+        {
+          "ns": 10000000,
+          "timeout_s": 0.09
+        }
+      ]
+    },
+    {
+      "commands": [
+        "FINISH"
+      ],
+      "cost_ns": 350000000,
+      "cost_stage": "sink",
+      "ended_ns": 350000000,
+      "endpoint": "FINISH",
+      "initial_ns": 0,
+      "kind": "stdin_finish",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 1,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "sample_hz": 10.0,
+        "samples": 1
+      },
+      "waits": [
+        {
+          "ns": 350000000,
+          "timeout_s": 0
+        }
+      ]
+    },
+    {
+      "commands": [
+        "FINISH"
+      ],
+      "cost_ns": 10000000,
+      "cost_stage": "sink",
+      "ended_ns": 10000000,
+      "endpoint": "FINISH",
+      "initial_ns": 0,
+      "kind": "stdin_finish",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 1,
+        "eof": false,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "sample_hz": 10.0,
+        "samples": 1
+      },
+      "waits": [
+        {
+          "ns": 10000000,
+          "timeout_s": 0.09
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 350000000,
+      "cost_stage": "sample",
+      "ended_ns": 350000000,
+      "endpoint": "eof",
+      "initial_ns": 0,
+      "kind": "stdin_eof",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 350000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "eof": true,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "sample_hz": 10.0,
+        "samples": 1
+      },
+      "waits": [
+        {
+          "ns": 350000000,
+          "timeout_s": 0
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 10000000,
+      "cost_stage": "sample",
+      "ended_ns": 10000000,
+      "endpoint": "eof",
+      "initial_ns": 0,
+      "kind": "stdin_eof",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 10000000,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "eof": true,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "sample_hz": 10.0,
+        "samples": 1
+      },
+      "waits": [
+        {
+          "ns": 10000000,
+          "timeout_s": 0.09
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 350000000,
+      "cost_stage": "sink",
+      "ended_ns": 350000000,
+      "endpoint": "eof",
+      "initial_ns": 0,
+      "kind": "stdin_eof",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "eof": true,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "sample_hz": 10.0,
+        "samples": 1
+      },
+      "waits": [
+        {
+          "ns": 350000000,
+          "timeout_s": 0
+        }
+      ]
+    },
+    {
+      "commands": [],
+      "cost_ns": 10000000,
+      "cost_stage": "sink",
+      "ended_ns": 10000000,
+      "endpoint": "eof",
+      "initial_ns": 0,
+      "kind": "stdin_eof",
+      "period_ns": 100000000,
+      "reads": 1,
+      "receipts": [
+        {
+          "missed_periods_before": 0,
+          "payload": {
+            "inert_scorer_only": 17
+          },
+          "sample_finished_ns": 0,
+          "sample_started_ns": 0,
+          "scheduled_ns": 0,
+          "start_lateness_ns": 0
+        }
+      ],
+      "same_owner": true,
+      "stats": {
+        "commands": 0,
+        "eof": true,
+        "missed_sample_periods": 0,
+        "owner_thread_id": 8383774592,
+        "sample_hz": 10.0,
+        "samples": 1
+      },
+      "waits": [
+        {
+          "ns": 10000000,
+          "timeout_s": 0.09
+        }
+      ]
+    }
+  ],
+  "schema": "ordinary-terminal-accounting-diagnostic-v1",
+  "source_pins": {
+    "research/doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "research/doom/main_thread_scorer_polling_v1.py": "d58b9a1a52d5d537e5c2e692b3705736c2b16d537ec7948169cd57f27774691c",
+    "research/doom/map01_scorer_stdio_adapter_v1.py": "32f97c6c0d65820ea79be4136ecf83380f05ba3b9b7d248207a95f72a0f354dd"
+  }
+}

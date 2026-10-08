@@ -1,0 +1,24 @@
+# Preregistration — Issue #6645 T1b integration boundary check
+
+**Allocation:** `CGCG-6645-T1B-WSLC-REVALIDATION-20261003-01`  
+**Classification:** additive integration/boundary revalidation; not a replay or amendment of T1b's formal allocation.  
+**Frozen main:** `6d7ce9693caae8c123fda532da64888f6006dcb9`.  
+**Unique branch/path:** `research/6645-t1b-integration-revalidation-20261003` / `research/analysis/counterexample_guard_coverage_gate_6645_t1b_revalidation_20261003/`.
+
+## Question and H / T / D / C / U
+
+- **H:** The T1b candidate's gate decisions do not depend on row-ID text. Replacing the five original IDs with neutral IDs will leave both `gate_disabled` and `gate_enabled` outcomes equal to the retained T1b raw output, row by row.
+- **T:** Independently verify the original T1b package and its 30-file SHA256 manifest; confirm the candidate's decision function reads `surface_family`, `covered_predicates`, and `observations`, not `id`; change only IDs to `case_01`–`case_05`; invoke the unchanged candidate once; compare the emitted pairs against the frozen original raw. Run this bounded CPU check on WSLc with a cached digest-pinned Python image, `--pull never`, `--network none`, one CPU, a requested 128 MiB memory setting, a read-only source mount, and a distinct writable output mount.
+- **D:** `PASS_LABEL_INVARIANCE` only if all frozen inputs hash correctly, exactly five rows are reconstructed, only IDs changed, candidate invocation count is one for the WSLc command, every neutral ID is echoed in order, all ten decisions match the retained raw, candidate exits zero, and the independent audit has no errors. A failed runtime preflight stops before candidate launch; any candidate/auditor failure is retained without retry or scientific relabeling.
+- **C:** The original IDs encode `harmful`/`safe`, so an ID-based lookup or hidden-label shortcut would be a confound. Source-level field inspection plus a neutral-label intervention is the comparator. T1b's complete-family-registry assumption and all earlier scope limits remain unchanged.
+- **U:** Five finite synthetic rows cannot establish candidate behavior on other schemas, hidden unknowns, a live GUI/skill, real safety, latency, or product utility. This is not a same-fixture runtime benchmark: the prior formal T1b image ran on linux/arm64, while the local WSLc image is linux/amd64. The WSLc kernel reported a cgroup/swap limitation warning; no memory-cap enforcement or memory relief is claimed.
+
+## Frozen execution and stop rules
+
+The WSLc environment preflight is construction-only: it verifies a cached image, the read-only bind mount, Python startup, and the output mount. It does not invoke the candidate. After source and input hashes are frozen, execute the independent-audit CLI once under WSLc. That CLI invokes the unchanged candidate in one temporary directory containing only `candidate.py`, the relabelled fixture, and `contract.json`; it writes the candidate stdout/stderr, exit code, and audit JSON to the separate output mount. The repository/source mount is read-only. The audited checkout also contains the historical oracle/raw files, so this integration check makes no process-level oracle-isolation claim; the original T1b container isolation receipts remain the evidence for that property.
+
+If the candidate/audit command fails, preserve its first output and stop. No second candidate invocation, retry, hidden-label tuning, or modification of T1b files is allowed in this allocation. The WSLc `--memory` request is recorded as configuration only because the preflight warning prevents an enforcement claim.
+
+## Construction history (pre-freeze)
+
+Test-first development first confirmed the new CLI option was absent, then three native Windows construction test runs passed while the auditor/probe harness was developed. Each construction suite invoked the deterministic candidate once on the host; those runs are not part of the frozen WSLc probe and are not reported as a scientific result. The final WSLc command is the sole frozen integration probe; the report keeps runtime-specific counts separate.

@@ -1,0 +1,4122 @@
+{
+  "protocol": "issue5756-t0-v1",
+  "result_count": 25,
+  "results": [
+    {
+      "budget_remaining": 3,
+      "claim": {
+        "found": true,
+        "screen_id": "export_screen"
+      },
+      "cost": {
+        "api_calls": 9,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 2,
+        "observations": 4
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "decoy",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "decoy_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Report settings",
+            "screen_id": "decoy_screen"
+          }
+        },
+        {
+          "epoch": 1,
+          "from_screen": "decoy_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "decoy"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 1,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "target-menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "export_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 1,
+            "label": "Export report",
+            "screen_id": "export_screen"
+          }
+        }
+      ],
+      "final_screen": "export_screen",
+      "fixture_id": "misleading_epoch_recovery",
+      "policy": "scent_backtrack",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "decoy",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "decoy_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Report settings",
+            "screen_id": "decoy_screen"
+          }
+        },
+        {
+          "epoch": 1,
+          "from_screen": "decoy_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "decoy"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 1,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "target-menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "export_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 1,
+            "label": "Export report",
+            "screen_id": "export_screen"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 3,
+      "claim": {
+        "found": true,
+        "screen_id": "export_screen"
+      },
+      "cost": {
+        "api_calls": 9,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 2,
+        "observations": 4
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "decoy",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "decoy_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Report settings",
+            "screen_id": "decoy_screen"
+          }
+        },
+        {
+          "epoch": 1,
+          "from_screen": "decoy_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "decoy"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 1,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "target-menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "export_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 1,
+            "label": "Export report",
+            "screen_id": "export_screen"
+          }
+        }
+      ],
+      "final_screen": "export_screen",
+      "fixture_id": "misleading_epoch_recovery",
+      "policy": "exhaustive",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "decoy",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "decoy_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Report settings",
+            "screen_id": "decoy_screen"
+          }
+        },
+        {
+          "epoch": 1,
+          "from_screen": "decoy_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "decoy"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 1,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "target-menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "export_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 1,
+            "label": "Export report",
+            "screen_id": "export_screen"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 3,
+      "claim": {
+        "found": true,
+        "screen_id": "export_screen"
+      },
+      "cost": {
+        "api_calls": 9,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 2,
+        "observations": 4
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "decoy",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "decoy_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Report settings",
+            "screen_id": "decoy_screen"
+          }
+        },
+        {
+          "epoch": 1,
+          "from_screen": "decoy_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "decoy"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 1,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "target-menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "export_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 1,
+            "label": "Export report",
+            "screen_id": "export_screen"
+          }
+        }
+      ],
+      "final_screen": "export_screen",
+      "fixture_id": "misleading_epoch_recovery",
+      "policy": "strongest_cue",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "decoy",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "decoy_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Report settings",
+            "screen_id": "decoy_screen"
+          }
+        },
+        {
+          "epoch": 1,
+          "from_screen": "decoy_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "decoy"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 1,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "target-menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "export_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 1,
+            "label": "Export report",
+            "screen_id": "export_screen"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NOT_APPLICABLE_DIRECT_SEARCH_UNAVAILABLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "misleading_epoch_recovery",
+      "policy": "direct_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 3,
+      "claim": {
+        "found": true,
+        "screen_id": "export_screen"
+      },
+      "cost": {
+        "api_calls": 9,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 2,
+        "observations": 4
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "decoy",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "decoy_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Report settings",
+            "screen_id": "decoy_screen"
+          }
+        },
+        {
+          "epoch": 1,
+          "from_screen": "decoy_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "decoy"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 1,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "target-menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "export_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 1,
+            "label": "Export report",
+            "screen_id": "export_screen"
+          }
+        }
+      ],
+      "final_screen": "export_screen",
+      "fixture_id": "misleading_epoch_recovery",
+      "policy": "tree_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "decoy",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "decoy_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Report settings",
+            "screen_id": "decoy_screen"
+          }
+        },
+        {
+          "epoch": 1,
+          "from_screen": "decoy_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "decoy"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "decoy",
+                "label": "Reports",
+                "nearby": "export report archive",
+                "reversible": true,
+                "saliency": 90
+              },
+              {
+                "id": "target-menu",
+                "label": "Export",
+                "nearby": "CSV report",
+                "reversible": true,
+                "saliency": 5
+              },
+              {
+                "id": "unsafe",
+                "label": "Export report",
+                "nearby": "delete and submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 1,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "unsafe",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        },
+        {
+          "edge_id": "target-menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "export_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 1,
+            "label": "Export report",
+            "screen_id": "export_screen"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 7,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "eligibility": "NO_TARGET_CASE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_target",
+      "policy": "scent_backtrack",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 7,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "eligibility": "NO_TARGET_CASE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_target",
+      "policy": "exhaustive",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 7,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "eligibility": "NO_TARGET_CASE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_target",
+      "policy": "strongest_cue",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 11,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 1,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_TARGET_CASE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_target",
+      "policy": "direct_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 7,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 5,
+        "backtracks": 1,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 3
+      },
+      "eligibility": "NO_TARGET_CASE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_target",
+      "policy": "tree_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "settings",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "settings_screen"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Preferences",
+            "screen_id": "settings_screen"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "settings_screen",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "settings"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "settings",
+                "label": "Settings",
+                "nearby": "preferences",
+                "reversible": true,
+                "saliency": 20
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "scent_backtrack",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "exhaustive",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "strongest_cue",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "direct_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 10,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 2,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NO_SAFE_PATH",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "no_safe_path",
+      "policy": "tree_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "danger",
+                "label": "Export report",
+                "nearby": "irreversible submit",
+                "reversible": false,
+                "saliency": 100
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "danger",
+          "kind": "REFUSE_UNSAFE",
+          "screen_id": "root"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 0,
+      "claim": {
+        "found": false,
+        "screen_id": "deep_target"
+      },
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ],
+      "final_screen": "deep_target",
+      "fixture_id": "budget_exhaustion",
+      "policy": "scent_backtrack",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 0,
+      "claim": {
+        "found": false,
+        "screen_id": "deep_target"
+      },
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ],
+      "final_screen": "deep_target",
+      "fixture_id": "budget_exhaustion",
+      "policy": "exhaustive",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 0,
+      "claim": {
+        "found": false,
+        "screen_id": "deep_target"
+      },
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ],
+      "final_screen": "deep_target",
+      "fixture_id": "budget_exhaustion",
+      "policy": "strongest_cue",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 11,
+      "claim": {
+        "found": false,
+        "screen_id": "root"
+      },
+      "cost": {
+        "api_calls": 1,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 0,
+        "observations": 1
+      },
+      "eligibility": "NOT_APPLICABLE_DIRECT_SEARCH_UNAVAILABLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ],
+      "final_screen": "root",
+      "fixture_id": "budget_exhaustion",
+      "policy": "direct_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 0,
+      "claim": {
+        "found": false,
+        "screen_id": "deep_target"
+      },
+      "cost": {
+        "api_calls": 12,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 6,
+        "observations": 6
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ],
+      "final_screen": "deep_target",
+      "fixture_id": "budget_exhaustion",
+      "policy": "tree_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "a",
+                "label": "Archive",
+                "nearby": "old files",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "a",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "n1"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "b",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Archive",
+            "screen_id": "n1"
+          }
+        },
+        {
+          "edge_id": "b",
+          "kind": "NAVIGATE",
+          "screen_id": "n1",
+          "to_screen": "n2"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "c",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n2"
+          }
+        },
+        {
+          "edge_id": "c",
+          "kind": "NAVIGATE",
+          "screen_id": "n2",
+          "to_screen": "n3"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "d",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n3"
+          }
+        },
+        {
+          "edge_id": "d",
+          "kind": "NAVIGATE",
+          "screen_id": "n3",
+          "to_screen": "n4"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "e",
+                "label": "Other",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "More",
+            "screen_id": "n4"
+          }
+        },
+        {
+          "edge_id": "e",
+          "kind": "NAVIGATE",
+          "screen_id": "n4",
+          "to_screen": "n5"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "f",
+                "label": "More",
+                "nearby": "folders",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Other",
+            "screen_id": "n5"
+          }
+        },
+        {
+          "edge_id": "f",
+          "kind": "NAVIGATE",
+          "screen_id": "n5",
+          "to_screen": "deep_target"
+        }
+      ]
+    },
+    {
+      "budget_remaining": 1,
+      "claim": {
+        "found": true,
+        "screen_id": "result"
+      },
+      "cost": {
+        "api_calls": 11,
+        "backtracks": 2,
+        "forbidden_effects": 0,
+        "navigation": 3,
+        "observations": 6
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "tools"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "nested",
+                "label": "More",
+                "nearby": "",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Tools",
+            "screen_id": "tools"
+          }
+        },
+        {
+          "edge_id": "nested",
+          "kind": "NAVIGATE",
+          "screen_id": "tools",
+          "to_screen": "nested"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Other tools",
+            "screen_id": "nested"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "nested",
+          "kind": "BACKTRACK",
+          "to_screen": "tools",
+          "via_edge_id": "nested"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "nested",
+                "label": "More",
+                "nearby": "",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Tools",
+            "screen_id": "tools"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "tools",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "menu"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ],
+      "final_screen": "result",
+      "fixture_id": "direct_search_available",
+      "policy": "scent_backtrack",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "tools"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "nested",
+                "label": "More",
+                "nearby": "",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Tools",
+            "screen_id": "tools"
+          }
+        },
+        {
+          "edge_id": "nested",
+          "kind": "NAVIGATE",
+          "screen_id": "tools",
+          "to_screen": "nested"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Other tools",
+            "screen_id": "nested"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "nested",
+          "kind": "BACKTRACK",
+          "to_screen": "tools",
+          "via_edge_id": "nested"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "nested",
+                "label": "More",
+                "nearby": "",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Tools",
+            "screen_id": "tools"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "tools",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "menu"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 9,
+      "claim": {
+        "found": true,
+        "screen_id": "result"
+      },
+      "cost": {
+        "api_calls": 3,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 2
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ],
+      "final_screen": "result",
+      "fixture_id": "direct_search_available",
+      "policy": "exhaustive",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 1,
+      "claim": {
+        "found": true,
+        "screen_id": "result"
+      },
+      "cost": {
+        "api_calls": 11,
+        "backtracks": 2,
+        "forbidden_effects": 0,
+        "navigation": 3,
+        "observations": 6
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "tools"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "nested",
+                "label": "More",
+                "nearby": "",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Tools",
+            "screen_id": "tools"
+          }
+        },
+        {
+          "edge_id": "nested",
+          "kind": "NAVIGATE",
+          "screen_id": "tools",
+          "to_screen": "nested"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Other tools",
+            "screen_id": "nested"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "nested",
+          "kind": "BACKTRACK",
+          "to_screen": "tools",
+          "via_edge_id": "nested"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "nested",
+                "label": "More",
+                "nearby": "",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Tools",
+            "screen_id": "tools"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "tools",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "menu"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ],
+      "final_screen": "result",
+      "fixture_id": "direct_search_available",
+      "policy": "strongest_cue",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "menu",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "tools"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "nested",
+                "label": "More",
+                "nearby": "",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Tools",
+            "screen_id": "tools"
+          }
+        },
+        {
+          "edge_id": "nested",
+          "kind": "NAVIGATE",
+          "screen_id": "tools",
+          "to_screen": "nested"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Other tools",
+            "screen_id": "nested"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "nested",
+          "kind": "BACKTRACK",
+          "to_screen": "tools",
+          "via_edge_id": "nested"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "nested",
+                "label": "More",
+                "nearby": "",
+                "reversible": true,
+                "saliency": 1
+              }
+            ],
+            "epoch": 0,
+            "label": "Tools",
+            "screen_id": "tools"
+          }
+        },
+        {
+          "epoch": 0,
+          "from_screen": "tools",
+          "kind": "BACKTRACK",
+          "to_screen": "root",
+          "via_edge_id": "menu"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 9,
+      "claim": {
+        "found": true,
+        "screen_id": "result"
+      },
+      "cost": {
+        "api_calls": 3,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 2
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ],
+      "final_screen": "result",
+      "fixture_id": "direct_search_available",
+      "policy": "direct_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ]
+    },
+    {
+      "budget_remaining": 9,
+      "claim": {
+        "found": true,
+        "screen_id": "result"
+      },
+      "cost": {
+        "api_calls": 3,
+        "backtracks": 0,
+        "forbidden_effects": 0,
+        "navigation": 1,
+        "observations": 2
+      },
+      "eligibility": "ELIGIBLE",
+      "environment_events": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ],
+      "final_screen": "result",
+      "fixture_id": "direct_search_available",
+      "policy": "tree_search",
+      "trace": [
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [
+              {
+                "id": "direct",
+                "kind": "direct_search",
+                "label": "Search",
+                "nearby": "search commands",
+                "reversible": true,
+                "saliency": 2
+              },
+              {
+                "id": "menu",
+                "label": "Tools",
+                "nearby": "export report",
+                "reversible": true,
+                "saliency": 80
+              }
+            ],
+            "epoch": 0,
+            "label": "Home",
+            "screen_id": "root"
+          }
+        },
+        {
+          "edge_id": "direct",
+          "kind": "NAVIGATE",
+          "screen_id": "root",
+          "to_screen": "result"
+        },
+        {
+          "kind": "OBSERVE",
+          "observation": {
+            "edges": [],
+            "epoch": 0,
+            "label": "Export report",
+            "screen_id": "result"
+          }
+        }
+      ]
+    }
+  ],
+  "runtime": {
+    "gpu": false,
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "spec_sha256": "8368888dd6d9caac2f56ea8dd08cd57c7a786f19fa0ccbf324465f5ef4d30fab"
+}

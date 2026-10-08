@@ -1,0 +1,25 @@
+{
+  "completed_first_outcomes": 2,
+  "pool_with_successor": false,
+  "reason": "outer container execution limit killed orchestration after case-00/01 completed and case-02/03 began; no result.json for 02/03",
+  "rows": [
+    {
+      "arm": "session_listener",
+      "case": 0,
+      "finished": true,
+      "result_present": true,
+      "sha256": "29ad8d2c6ce99b5e2b4cc6730417535f507ef70b023e8155ee8964c9794221f8"
+    },
+    {
+      "arm": "session_no_listener",
+      "case": 1,
+      "finished": true,
+      "result_present": true,
+      "sha256": "b001172e3322565bf1e38900dd4b4517e1a5ed1c09c072240642c27b6d0c24d7"
+    },
+    {"case": 2, "finished": false, "result_present": false},
+    {"case": 3, "finished": false, "result_present": false}
+  ],
+  "status": "STOPPED_OUTER_TIMEOUT",
+  "task": "INKSCAPE-ATSPI-DISCOVERY-LISTENER-INTERACTION-20260916-029"
+}

@@ -1,0 +1,118 @@
+{
+  "arms": {
+    "adaptive": {
+      "offers": 8,
+      "safety_failures": 1,
+      "success_rate": 0.25,
+      "unknowns": 4,
+      "verified_non_successes": 1,
+      "verified_successes": 2
+    },
+    "fixed": {
+      "offers": 8,
+      "safety_failures": 0,
+      "success_rate": 0.375,
+      "unknowns": 0,
+      "verified_non_successes": 5,
+      "verified_successes": 3
+    }
+  },
+  "conditioning_warning": true,
+  "decision": "FAIL_SAFETY",
+  "denominators": {
+    "adaptive": 8,
+    "fixed": 8
+  },
+  "extra_rows": {
+    "adaptive": [],
+    "fixed": []
+  },
+  "fixture_id": "6367-primary-controls-v1",
+  "offers": {
+    "benefit-01": {
+      "adaptive": {
+        "classification": "VERIFIED_SUCCESS",
+        "eligible_success": true
+      },
+      "fixed": {
+        "classification": "VERIFIED_NON_SUCCESS",
+        "eligible_success": false
+      }
+    },
+    "missing-effect-01": {
+      "adaptive": {
+        "classification": "UNKNOWN_EFFECT_EVIDENCE",
+        "eligible_success": null
+      },
+      "fixed": {
+        "classification": "VERIFIED_NON_SUCCESS",
+        "eligible_success": false
+      }
+    },
+    "missing-occupancy-01": {
+      "adaptive": {
+        "classification": "UNKNOWN_PHYSICAL_OCCUPANCY",
+        "eligible_success": null
+      },
+      "fixed": {
+        "classification": "VERIFIED_NON_SUCCESS",
+        "eligible_success": false
+      }
+    },
+    "null-01": {
+      "adaptive": {
+        "classification": "VERIFIED_SUCCESS",
+        "eligible_success": true
+      },
+      "fixed": {
+        "classification": "VERIFIED_SUCCESS",
+        "eligible_success": true
+      }
+    },
+    "shift-01": {
+      "adaptive": {
+        "classification": "UNKNOWN_NONCOMPARABLE_CHALLENGE",
+        "eligible_success": null
+      },
+      "fixed": {
+        "classification": "VERIFIED_SUCCESS",
+        "eligible_success": true
+      }
+    },
+    "stale-cue-01": {
+      "adaptive": {
+        "classification": "INVALID_ADAPTATION_PROVENANCE",
+        "eligible_success": false
+      },
+      "fixed": {
+        "classification": "VERIFIED_NON_SUCCESS",
+        "eligible_success": false
+      }
+    },
+    "suppression-01": {
+      "adaptive": {
+        "classification": "VERIFIED_NON_SUCCESS",
+        "eligible_success": false
+      },
+      "fixed": {
+        "classification": "VERIFIED_SUCCESS",
+        "eligible_success": true
+      }
+    },
+    "unsafe-01": {
+      "adaptive": {
+        "classification": "FAIL_SAFETY",
+        "eligible_success": false
+      },
+      "fixed": {
+        "classification": "VERIFIED_NON_SUCCESS",
+        "eligible_success": false
+      }
+    }
+  },
+  "post_policy_diagnostic": {
+    "adaptive_triggered_opportunities": 6,
+    "adaptive_triggered_successes": 1,
+    "primary_estimand": "all_assigned_offers_policy_assignment"
+  }
+}

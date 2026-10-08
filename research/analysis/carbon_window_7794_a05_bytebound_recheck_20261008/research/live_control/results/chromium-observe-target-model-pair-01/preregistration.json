@@ -1,0 +1,42 @@
+{
+  "status": "preregistered_before_fresh_live_execution",
+  "study": "chromium-observe-target-model-pair-01",
+  "execution_order": [
+    {
+      "name": "changed-target",
+      "changed_target": true,
+      "seed": 991013
+    },
+    {
+      "name": "stable",
+      "changed_target": false,
+      "seed": 991013
+    }
+  ],
+  "common": "isolated Chromium X11, same seed/task/prompt, Luna-low, private-ID-backed save_form alias, no model image, empty workspace, project docs zero, user config/rules/plugins/shell/fast mode disabled",
+  "intervention": "after identical model return, changed-target navigates the same surface to about:blank; stable leaves the form unchanged; both capture fresh post-model observations before attempting the identical model action",
+  "promotion": "strict actions 2/2 with input range <=128; stable independently saves and uses14 durable calls; changed-target returns MISSING with zero target-click pointer admissions, needs_decision, verified release and no submission",
+  "failure_policy": "retain both first sessions; no retry, prompt, alias, box or order repair",
+  "codex_cli": "codex-cli 0.153.4",
+  "sources": {
+    "preregister_chromium_observe_target_model_pair_v1.py": "2b614189b6b8345b14f4fa4f49deeea91f1111fcc526d074d1f38dbd7c3e51db",
+    "run_chromium_observe_target_model_pair_v1.py": "39db71fb48ed16c9bad8661af42753e3b4fd52b74a122f74d5f40b2f778e60cf",
+    "target_handle_model_runner_v2.py": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+    "gui_action_responder_v1.txt": "3b17f47265d74237110a07eaa12ff56d49f533b82430192f667455e6cff68668",
+    "target_action_envelope_schema_v1.json": "99a7e6b164b1be453d5e03f86b51903a0055bcbd0c9cf4b08337eb751504de34",
+    "target_handle_chromium_socket_v4.py": "60b651afcca6a7e79da0379f3730e7a5431c67fb03d4cc7a0844a02842c37a2d",
+    "interactive_target_handle_chromium_v4.py": "021c579222cc766844db803af55ebefb93bb81e0f5dea9c2d1fad6bc3a2e55da",
+    "session_v32.py": "e505a198c5ca0d37035144fe20bc274e0713aa9d65f772b17884d8903029c1f0",
+    "observe_target_handle_v1.py": "2b7eacc6f30ce6d26e76168a50911c5765c1cb52cac100f09314dacb3803260b",
+    "session_v31.py": "4b0037faa8bb0776924eadec3b79e7403591e24ab6f5e7335a5c74197d097dcf",
+    "session_v30.py": "0e14fb65a86dbf29a17672a259c260dfd9c6b4d9487f7f7fc6fa53ecec38a63f",
+    "session_v29.py": "5ba53dbb56a46a8b2f45b115baf4f24d8df2178e5d8bb1d607e9135e17f1a231",
+    "scoped_target_handle_v3.py": "05da09752a051713dc9c344cd8b40a97718e2c07378dd28b258fc986b07f0dcb",
+    "scoped_target_handle_v2.py": "7c17069cde410098947719c604bb8e7d85144eacc854bd06c21d8db1a92f6646",
+    "durable_submit_v4.py": "a73db793a3238fb5ec6d3e9ecfbe61284ad44d3ebfea769bc531b99d61b1a22b",
+    "append_checkpoint_v1.py": "07e5eff9c704af3cf75e0dcb5e7b4c4d57b82e076e4ffafa320d08ee0af51741",
+    "received_continuation_v1.py": "7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a",
+    "received_exchange_v2.py": "59353e6d405dee5084870caf4d66aa5546c02771014e7c8f09ad1e7a7901c6c3"
+  },
+  "scope": "two fresh same-seed Chromium sessions and two Luna-low calls; one stable success plus one post-model target-loss refusal; no causal latency, monetary cost, broad token reduction, human-speed, unknown-app or default claim"
+}

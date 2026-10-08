@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+import argparse,json
+from pathlib import Path
+def main():
+ p=argparse.ArgumentParser(); p.add_argument('--fixture',required=True); p.add_argument('--out',required=True); a=p.parse_args()
+ f=json.loads(Path(a.fixture).read_text()); rows={}
+ for n,x in f['arms'].items():
+  tg=sum(x['phase_generations'].values()); total=tg+x['preflight_generations']; ff=sum(r=='reuse' for r in x['routes'])
+  rows[n]={'verified_tasks':x['verified_tasks'],'task_time_generations':tg,'total_generations':total,'tasks_per_task_time_generation':{'numerator':6,'denominator':tg,'decimal':6/tg},'tasks_per_total_generation':{'numerator':6,'denominator':total,'decimal':6/total},'frontier_free_task_time_count':ff,'frontier_free_task_time_fraction':{'numerator':ff,'denominator':6,'decimal':ff/6},'model_visible_images':x['model_visible_images'],'local_observations':x['local_observations'],'durable_calls':x['durable_calls'],'task6_wall_ns':x['task6_wall_ns'],'routes':x['routes']}
+ q,e,s=rows['plain'],rows['ephemeral'],rows['persistent']
+ gates={'tasks_six_all':all(r['verified_tasks']==6 for r in rows.values()),'task_time_generations_exact':[q['task_time_generations'],e['task_time_generations'],s['task_time_generations']]==[6,6,2],'persistent_tasks_per_task_gen_exact':s['tasks_per_task_time_generation']['denominator']==2,'controls_tasks_per_task_gen_exact':q['tasks_per_task_time_generation']['denominator']==e['tasks_per_task_time_generation']['denominator']==6,'persistent_tasks_per_total_gen_exact':s['tasks_per_total_generation']['denominator']==3,'controls_tasks_per_total_gen_exact':q['tasks_per_total_generation']['denominator']==e['tasks_per_total_generation']['denominator']==7,'frontier_free_exact':s['frontier_free_task_time_count']==4 and q['frontier_free_task_time_count']==0 and e['frontier_free_task_time_count']==0,'local_work_increase':s['local_observations']>q['local_observations'] and s['local_observations']>e['local_observations'] and s['durable_calls']>q['durable_calls'] and s['durable_calls']>e['durable_calls'],'wall_break_even_plain_task2':f['persistent_wall']['break_even_vs_plain_task']==2,'task6_wall_exact':[q['task6_wall_ns'],e['task6_wall_ns'],s['task6_wall_ns']]==[62754198912,80378859099,51627109593]}
+ d='PASS_USEFUL_WORK_PER_FRONTIER_BOUNDARY_RECONSTRUCTED_SCOPED' if all(gates.values()) else 'FAIL_INTEGRITY'
+ out={'schema':'useful_work_per_frontier_boundary_result_v1','decision':d,'formal_invocation':1,'formal_reruns':0,'source_blobs':f['source_blobs'],'rows':rows,'persistent_to_plain_task_time_generation_ratio':s['task_time_generations']/q['task_time_generations'],'persistent_to_ephemeral_task_time_generation_ratio':s['task_time_generations']/e['task_time_generations'],'persistent_wall':f['persistent_wall'],'gates':gates,'unit_separation':'planner generations, model-visible images, local observations, durable calls and wall time are heterogeneous and are not summed into one score'}
+ Path(a.out).write_text(json.dumps(out,indent=2,sort_keys=True)+'\n')
+if __name__=='__main__': main()

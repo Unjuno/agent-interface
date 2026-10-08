@@ -1,0 +1,15 @@
+{
+  "decision": "PASS_LIVE_TWO_TIER_FRESH_GATE_SCOPED",
+  "display": ":151",
+  "prepared": {"target_id": "2097155", "generation": 1},
+  "new_xid": "4194307",
+  "rows": [
+    {"policy":"TWO_TIER_FRESH_GATE","target":"2097155","admitted":false,"reason":"fresh_gate_mismatch","emissions":0},
+    {"policy":"DEPENDENCY_ONLY","target":"2097155","admitted":true,"reason":"admitted","native_status":"execution_failed","emissions":0,"effect":false},
+    {"policy":"TWO_TIER_FRESH_GATE","target":"4194307","admitted":false,"reason":"fresh_gate_mismatch","emissions":0}
+  ],
+  "model_calls": 0,
+  "network_calls": 0,
+  "image": "agent-interface-2994:20260920",
+  "image_digest": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c"
+}

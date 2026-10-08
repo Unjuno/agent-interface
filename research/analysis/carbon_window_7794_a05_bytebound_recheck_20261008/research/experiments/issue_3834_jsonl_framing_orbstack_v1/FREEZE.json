@@ -1,0 +1,37 @@
+{
+  "allocation": "issue-3834-jsonl-terminal-lf-orbstack-v1",
+  "base_commit": "c215b11fc9609ec02810a22317c926374f399858",
+  "platform": "linux/arm64",
+  "docker_engine": "OrbStack 29.4.0",
+  "image": "python:3.12-slim@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "network": "none",
+  "source_mount": "read-only",
+  "container_root": "read-only",
+  "expected": {
+    "formal_rows": 5,
+    "terminal_lf_removed_bytes": 1,
+    "parser_only": "valid_json_false_completion_risk",
+    "framing_aware_complete": false,
+    "recovery_dispatch_calls": 1,
+    "decision": "PASS_FRAMING_GUARD_SCOPED"
+  },
+  "sha256": {
+    "runtime/cli_v1/__main__.py": "62838bcc7262e6c3a4f8c937d033abb29651bd10102cea80a19f72539a2939b4",
+    "runtime/cli_v1/api.py": "78ab68218b7555d0c589f5848970c24a226e10dbd8fd7e9ef2b88e3af7e8796e",
+    "runtime/cli_v1/attempt.py": "637dd42eb7a06036165c7b60c59d4f150301c877f46146c2dd0dee07744db9f1",
+    "runtime/cli_v1/observe.py": "0c5e5eff2129cdb8719f8ecd0e94a9d95fcd0270a3238d6441c605ad022413d9",
+    "runtime/cli_v1/receipt.py": "ae6e7932bcef1c2d2c02e952277dc4c52f16e1a392d98e8652ef45097ff44a26",
+    "runtime/cli_v1/receipt_image.py": "4b99864eac19df75b4a0e2095e242eb0109e9581cc4914113227719607e41564",
+    "runtime/cli_v1/receipt_references.py": "b962508a17f4cf41588d8ebcdd56cdfc13fc65ad9b2ef744de4547111247389d",
+    "runtime/cli_v1/review.py": "05630175233f2ad1a6ed3ecf00a316a2b7dd45bde353ea4af4c13eb1f5c4e4c1",
+    "runtime/selector_v1/__init__.py": "66bc2fcb2797b108cd739b1c000352932dbdd7a16c186c1104cd8d26d0645881",
+    "runtime/selector_v1/selector.py": "7f3db522b2250fcd3d8960c87b1d87ad078bf1b2b565900b4210836f6b7ca764",
+    "runtime/motor_state_v1/__init__.py": "61e7dd102392a0655d7c633a01ffbaf96461255f99ff1572bd7eeab1237ca002",
+    "runtime/motor_state_v1/adapter.py": "4580ca919d5d7150fb4c11024d7fdb6e2feb726f1afdf5f5752f95fac147aa64",
+    "research/experiments/issue_3834_jsonl_framing_orbstack_v1/runner.py": "c0ea69a2ac88459b52423f25cf98513fe014009ddef85fd2cf574ec9ff4c3bee",
+    "research/experiments/issue_3834_jsonl_framing_orbstack_v1/audit.py": "b28ac7cd48ad18fc4a19f5ba1672d132be21be2e01f80b8037d4990a6ff3c48b",
+    "research/experiments/issue_3834_jsonl_framing_orbstack_v1/test_construction.py": "c8eb6d87bd67e6abae9c2a3c20a5c042e6790ce56ca40e3b28d7c0ab33a53dc1",
+    "research/experiments/issue_3834_jsonl_framing_orbstack_v1/validate_freeze.py": "51906c333a9fa28d48745c2c4c1d370f8f85121339c170fa45d3fcaf0dc7c326",
+    "research/experiments/issue_3834_jsonl_framing_orbstack_v1/PLAN.md": "13536ef136135a5063e883c8de345e6c5025454912db0761cfae9570dcce4975"
+  }
+}

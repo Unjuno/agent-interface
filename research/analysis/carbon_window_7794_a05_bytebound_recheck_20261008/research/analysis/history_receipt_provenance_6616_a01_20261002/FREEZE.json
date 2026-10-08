@@ -1,0 +1,30 @@
+{
+  "allocation_id": "HISTORY-RECEIPT-PROVENANCE-6616-A01-20261002",
+  "base_main": "9a327d0511f02c7b8ebd175e20f96a43028578ca",
+  "branch": "research/history-receipt-provenance-6616-successor-a01-20261002",
+  "candidate_invocations_max": 1,
+  "auditor_invocations_max": 1,
+  "retries": 0,
+  "runtime": {
+    "machine": "agent-interface-6576-tailid-parity-a03-20261002",
+    "engine": "OrbStack private Docker Engine",
+    "image": "python:3.12-slim@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+    "platform": "linux/arm64",
+    "network": "none",
+    "source_mount": "read-only",
+    "rootfs": "read-only",
+    "cpus": 1,
+    "memory_requested": "256m",
+    "pids_limit": 64,
+    "gpu": false
+  },
+  "sha256": {
+    "fixture.json": "499fc7b4b9c833082f4b7f952f13e0c5541b503cce261a8a6dfb5848454fc5f1",
+    "candidate.py": "2d721be6f2a68a767c61b08b7a86ad7ccb29bd87e2347d58f572e40576b05d32",
+    "audit.py": "dd25f688c499e03fe1f32a4c59302556e7e61f745c1f4ad4f3575c9f1402f5ae",
+    "test_construction.py": "7bab2d77c6ad8441ff8c4c40a428d6fc44919ee37ef4704c4680e278d5a9a37e"
+  },
+  "decision": "PASS_METHOD_SCOPED only if independent auditor reconstructs all five exact rows and counts, rejects output-without-receipt as completion and holds hash disagreement; otherwise FAIL_METHOD/HOLD.",
+  "formal_invocations_before_freeze": {"candidate": 0, "auditor": 0},
+  "formal_outputs_absent_at_freeze": true
+}

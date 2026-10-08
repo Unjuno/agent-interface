@@ -1,0 +1,43 @@
+{
+  "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "directed": {
+    "focus_mutation": {
+      "candidate": false,
+      "naive": true,
+      "oracle": false
+    },
+    "valid_stagger": {
+      "candidate": true,
+      "oracle": true,
+      "strict": false
+    }
+  },
+  "formal_invocations": 0,
+  "metrics": {
+    "candidate_cross_identity_generation_joins": 0,
+    "candidate_malformed_missing_future_joins": 0,
+    "candidate_oracle_mismatch": 0,
+    "candidate_stale_critical_joins": 0,
+    "category_counts": {
+      "CRITICAL_EXPIRED": 1000,
+      "GENERATION_MISMATCH": 1000,
+      "IDENTITY_MISMATCH": 1000,
+      "MALFORMED": 1000,
+      "VALID_SKEW": 1000,
+      "VALID_STRICT": 1000
+    },
+    "critical_expiry_rows": 1000,
+    "identity_generation_mismatch_rows": 2000,
+    "malformed_missing_future_rows": 1000,
+    "naive_stale_critical_joins": 1000,
+    "rows": 6000,
+    "seed": 4220260918001,
+    "valid_candidate_joins": 2000,
+    "valid_candidate_joins_rejected_by_strict": 1000
+  },
+  "phase": "construction",
+  "replacements": 0,
+  "reruns": 0,
+  "task": "OBSERVATION-EPOCH-BOUNDED-SKEW-R1-20260918-001",
+  "tuning": 0
+}

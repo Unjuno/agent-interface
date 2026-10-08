@@ -1,0 +1,130 @@
+{
+  "arms": {
+    "current": {
+      "authority_laundering": 0,
+      "branch_hit_rate": 0.75782,
+      "branch_hits": 75782,
+      "effect_correct": 100000,
+      "latency_ns": {
+        "mean": 25339146.94807,
+        "p50": 1000060.0,
+        "p95": 101500060.0
+      },
+      "n": 100000,
+      "planner_resumption_rate": 0.24218,
+      "planner_resumptions": 24218,
+      "prepare_compute_ns": {
+        "mean": 56.94807,
+        "p95": 61.0
+      },
+      "wrong_admissions": 0
+    },
+    "temporal": {
+      "authority_laundering": 0,
+      "branch_hit_rate": 0.87853,
+      "branch_hits": 87853,
+      "effect_correct": 100000,
+      "latency_ns": {
+        "mean": 13207824.77667,
+        "p50": 1000080.0,
+        "p95": 101500080.0
+      },
+      "n": 100000,
+      "planner_resumption_rate": 0.12147,
+      "planner_resumptions": 12147,
+      "prepare_compute_ns": {
+        "mean": 89.77667,
+        "p95": 100.0
+      },
+      "wrong_admissions": 0
+    },
+    "wait": {
+      "authority_laundering": 0,
+      "branch_hit_rate": 0.0,
+      "branch_hits": 0,
+      "effect_correct": 100000,
+      "latency_ns": {
+        "mean": 101500052.40664,
+        "p50": 101500050.0,
+        "p95": 101500051.0
+      },
+      "n": 100000,
+      "planner_resumption_rate": 1.0,
+      "planner_resumptions": 100000,
+      "prepare_compute_ns": {
+        "mean": 52.40664,
+        "p95": 51.0
+      },
+      "wrong_admissions": 0
+    }
+  },
+  "controls": {
+    "current": {
+      "expiry": {
+        "effects_correct": 20000,
+        "expired_admissions": 0,
+        "n": 20000
+      },
+      "forced_reversal": {
+        "effects_correct": 20000,
+        "n": 20000,
+        "pre_fallback_admissions": 0
+      },
+      "no_authority": {
+        "admissions": 0,
+        "effects": 0,
+        "n": 20000
+      }
+    },
+    "temporal": {
+      "expiry": {
+        "effects_correct": 20000,
+        "expired_admissions": 0,
+        "n": 20000
+      },
+      "forced_reversal": {
+        "effects_correct": 20000,
+        "n": 20000,
+        "pre_fallback_admissions": 0
+      },
+      "no_authority": {
+        "admissions": 0,
+        "effects": 0,
+        "n": 20000
+      }
+    },
+    "wait": {
+      "expiry": {
+        "effects_correct": 20000,
+        "expired_admissions": 0,
+        "n": 20000
+      },
+      "forced_reversal": {
+        "effects_correct": 20000,
+        "n": 20000,
+        "pre_fallback_admissions": 0
+      },
+      "no_authority": {
+        "admissions": 0,
+        "effects": 0,
+        "n": 20000
+      }
+    }
+  },
+  "fallback_base_ns": 101500000,
+  "formal_invocations": 1,
+  "grants_prepared_authority": false,
+  "hit_base_ns": 1000000,
+  "k": 2,
+  "planner_gap_ns": 100000000,
+  "primary_digest": "3a69f0f8caeb1752052876b1bc55b9cbbc905cd63b03aa28e9c03d9b171dcd70",
+  "reruns": 0,
+  "seed": 107420260918101,
+  "task": "TEMPORAL-SPECULATION-COMPOSITION-RUNG1-20260918-001",
+  "universe": [
+    -2,
+    -1,
+    1,
+    2
+  ]
+}

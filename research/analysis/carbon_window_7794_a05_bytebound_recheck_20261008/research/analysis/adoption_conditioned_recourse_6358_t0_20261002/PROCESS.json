@@ -1,0 +1,17 @@
+{
+  "schema": "adoption-conditioned-recourse-process-v2",
+  "issue": 6358,
+  "allocation": "ADOPTION-CONDITIONED-RECOURSE-6358-T0-HOST-20261002-01",
+  "owner_task": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "base_main": "44416db9decb5182b8119591580fc2a652b8cebb",
+  "branch": "research/adoption-conditioned-recourse-6358-t0-20261002",
+  "path": "research/analysis/adoption_conditioned_recourse_6358_t0_20261002/",
+  "runtime": "Windows AMD64 / CPython 3.11.9 / stdlib only",
+  "interpretation": "single deterministic cohort counterexample only; no causal/general policy effect",
+  "v1_superseded_construction": {"candidate_cli": 1, "auditor_cli": 1, "raw_paths": ["results/construction-smoke-01/candidate.raw.json", "results/construction-smoke-01/audit.raw.json"], "reused_as_v2_or_formal": false},
+  "v2_construction": {"candidate_cli": 0, "auditor_cli": 0, "unit_tests_passed": 16, "unit_tests_failed": 0, "raw_corruption_controls": 8, "json_validation": "PASS", "diff_check": "PASS", "formal": false},
+  "formal": {"candidate_launch_attempts": 1, "candidate_program_started": false, "candidate_invocations": 0, "independent_auditor_invocations": 0, "container_invocations": 0, "gpu_calls": 0, "retries": 0, "result": "STOP_RUNNER_REDIRECTION_DIRECTORY_MISSING", "output_path": "results/formal-01/STOP.json", "python_candidate_raw_exists": false, "output_path_exists": true},
+  "issue_refinement": {"cohort_analysis_comment": 5943195315, "public_private_comparator_comment": 5943274533},
+  "resource_mutations": {"docker": 0, "podman": 0, "wsl": 0},
+  "external_effects": {"network": false, "model": false, "gui": false, "human": false, "production_service": false}
+}

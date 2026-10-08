@@ -1,0 +1,142 @@
+{
+  "adapter_result": {
+    "authority_granted": false,
+    "cleanup_error": null,
+    "lifecycle": [
+      "dispatch"
+    ],
+    "native_status": "completed",
+    "partial_effects": [],
+    "program_completed": true,
+    "raw_dispatch": {
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "emissions": 21,
+          "ended_ns": 13535878971551,
+          "observations": [
+            {
+              "bytes": 288000,
+              "height": 180,
+              "sha256": "8c12cf3eec0e58f2aea719abf6f474ee0c2cb8cdfaaa6c085b01972974e8246b",
+              "width": 400
+            }
+          ],
+          "program_emissions": 21,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 13535878969651,
+              "verified": true
+            }
+          ],
+          "started_ns": 13535775496917
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "capture.frame",
+          "clock.monotonic",
+          "display.geometry",
+          "event.feedback",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "schema": "agent-interface/runtime-dispatch-result-v1",
+      "status": "returned"
+    },
+    "schema": "golden-v3-result-v2",
+    "status": "partial",
+    "task_success": null,
+    "usage": {}
+  },
+  "authority_granted": false,
+  "case": "partial",
+  "cleanup": "released",
+  "delivery": "confirmed",
+  "disposition": "PARTIAL",
+  "effect": "partial",
+  "events_path": "/tmp/gtk-formal-2801/partial/events.jsonl",
+  "formal_receipt": {
+    "authority_grants": 0,
+    "binding_revision": 1,
+    "case": "PARTIAL_COLLATERAL",
+    "cleanup": {
+      "release_verified": true,
+      "status": "clean"
+    },
+    "effect_receipt": {
+      "collateral": "fixture-label",
+      "saved": true,
+      "text": "partial"
+    },
+    "input_ledger": [
+      {
+        "key": "p",
+        "type": "key_press"
+      },
+      {
+        "key": "a",
+        "type": "key_press"
+      },
+      {
+        "key": "r",
+        "type": "key_press"
+      },
+      {
+        "key": "t",
+        "type": "key_press"
+      },
+      {
+        "key": "i",
+        "type": "key_press"
+      },
+      {
+        "key": "a",
+        "type": "key_press"
+      },
+      {
+        "key": "l",
+        "type": "key_press"
+      },
+      {
+        "key": "Control_L",
+        "type": "key_press"
+      },
+      {
+        "key": "s",
+        "type": "key_press"
+      },
+      {
+        "key": null,
+        "type": "partial_save"
+      }
+    ],
+    "observation_revision": 1,
+    "replay_count": 0,
+    "session_id": "gtk-matrix-partial",
+    "window_id": "2097155"
+  },
+  "independent_effect": {
+    "collateral": "fixture-label",
+    "saved": true,
+    "text": "partial"
+  },
+  "replay_allowed": false
+}

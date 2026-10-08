@@ -1,0 +1,28 @@
+{
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-06",
+  "command": [
+    "docker", "--context", "orbstack", "run", "--rm", "--network", "none",
+    "--read-only", "--tmpfs", "/tmp:rw,nosuid,size=512m", "--cpus=1",
+    "--memory=2g", "--pids-limit=512", "--shm-size=128m",
+    "-e", "DISPLAY=:97",
+    "-e", "ISSUE3311_ALLOCATION_ID=ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-06",
+    "-e", "PYTHONPATH=/src/research/live_control",
+    "-e", "XDG_CACHE_HOME=/tmp/cache", "-e", "XDG_CONFIG_HOME=/tmp/config",
+    "--mount", "type=bind,source=/private/tmp/unjuno-3311-formal05-main-20260928,target=/src,readonly",
+    "--mount", "type=bind,source=/private/tmp/unjuno-3311-formal05-main-20260928/research/integration/issue3311_intermediate_feedback_x11_v1/results/formal06,target=/out",
+    "-w", "/src", "--entrypoint", "python3.11",
+    "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+    "/src/research/integration/issue3311_intermediate_feedback_x11_v1/runner.py"
+  ],
+  "docker_engine": "29.4.0",
+  "formal_invocations": 1,
+  "formal_exit_code": 0,
+  "image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+  "image_platform": "linux/arm64",
+  "network": "none",
+  "other_containers_at_formal_launch": 0,
+  "preflight_invocations": 1,
+  "source_mount": "read-only",
+  "status": "RUNNER_EXIT_0",
+  "wall_time_seconds_from_cli": 8.961665
+}

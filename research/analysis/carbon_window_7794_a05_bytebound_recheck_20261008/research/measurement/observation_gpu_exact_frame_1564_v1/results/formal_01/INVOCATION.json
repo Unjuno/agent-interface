@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "allocation": "gpu-exact-frame-gate-1564-20260928-01",
+  "issue": 4957,
+  "freeze_sha256": "1c5c0f74e3fefb7b5a3e1977e2e5f467b2beba9a75fb3b537156cf003a90352c",
+  "branch": "research/observation-gpu-exact-frame-1564-20260928",
+  "branch_head_at_launch": "7a03556d3cc130c869e97bcc9a3ad5cab2fc6c90",
+  "latest_main_parent": "58386990aa73f3291556e613a43f50b72a5a6b32",
+  "runner_sha256": "5a82d825a25003336605d46598efd6fb998ef6d7d4a7ecc03a795bb4d65019a3",
+  "formal": {
+    "started_at": "2026-09-28T02:45:29.857014+09:00",
+    "exit_code": 0,
+    "decision": "REJECT_GPU_FOR_HOST_RESIDENT_EXACT_O1_SCOPED",
+    "command": "docker run --rm --pull=never --gpus all --network none --read-only --cpus=1 --memory=4g --pids-limit=64 --tmpfs /tmp:rw,nosuid,nodev,size=256m -e PYTHONDONTWRITEBYTECODE=1 -e NVIDIA_DRIVER_VERSION=581.57 --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\gpu-exact-frame-4957,target=/src,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\gpu-exact-frame-4957\\out,target=/out -w /out --entrypoint python sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac /src/run_benchmark.py",
+    "result_sha256": "682cef531e07d9c7245c566afa1d23f4abfa40f0ab34d1b66bae8c7d8178deee",
+    "stdout_sha256": "39561eacc5443d2f0a3730ff7c0542c630d47c3061d69a96dfbfa8f68d27316b",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "invocations": 1,
+    "retries": 0,
+    "model_loads": 0,
+    "inference_calls": 0,
+    "optimizer_steps": 0
+  },
+  "audit": {
+    "exit_code": 0,
+    "command": "docker run --rm --pull=never --network none --read-only --cpus=0.25 --memory=1g --pids-limit=32 --tmpfs /tmp:rw,nosuid,nodev,size=128m -e PYTHONDONTWRITEBYTECODE=1 --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\gpu-exact-frame-4957,target=/src,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\new-chat\\gpu-exact-frame-4957\\out,target=/raw,readonly --workdir /raw --entrypoint python sha256:01ea4e60b03e8a7d48644d0dce596bd2e42ab3815fdc52b0c7a6d4cbcf757dac /src/audit_result.py /raw/result.json",
+    "result": "PASS_RAW_RESULT_AUDIT",
+    "errors": [],
+    "result_sha256": "682cef531e07d9c7245c566afa1d23f4abfa40f0ab34d1b66bae8c7d8178deee",
+    "auditor_sha256": "f69305abdc43f2081d75b2fbbfc3c0d82addfc77abe079e96f365e82bb25d015",
+    "stdout_sha256": "7c1953b71d2d51ec92dc318cfb3585f324c1393e7aae555a4bcf202fa43c1d1e",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

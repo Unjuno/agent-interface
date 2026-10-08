@@ -1,0 +1,31 @@
+{
+  "label": "repaired",
+  "argv": [
+    "<user>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "research",
+    "-p",
+    "test_*workspace*.py",
+    "-v"
+  ],
+  "cwd": "<repo>",
+  "start_utc": "2026-10-03T03:00:41.028494+00:00",
+  "end_utc": "2026-10-03T03:00:47.313583+00:00",
+  "exit": 1,
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "environment_overrides": {
+    "PYTHONIOENCODING": "utf-8"
+  },
+  "source_sha256": {
+    "check_workspace_index.py": "545cbf2153b93fad873e5164258997e71669b27f831b17372108cc0dac2b31ae",
+    "test_check_workspace_index.py": "6ee5cf5a4064ee15b73fe0073b0d9910357d9292a85b3f3af88c31c5ece1d9d2",
+    "test_workspace_git_tree.py": "7a20c35e706a43845cf71259a69bff7616a2d896536a34e14369af7ddf010264"
+  },
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "3c7facd6b79e32ac7d01c726dcf81e817160b7de5c20c95198123e7537c94aa8"
+}

@@ -1,0 +1,46 @@
+{
+  "allocation_id": "ROUTE-DEADLINE-6059-T0-20261001-01",
+  "main_sha_at_freeze_and_preformal_recheck": "9371fda8617bdf49e7fbeebb04fa64a633712aaa",
+  "source_commit": "a505e29559aaba445f139853f29dc838d621158f",
+  "source_commit_parent": "9371fda8617bdf49e7fbeebb04fa64a633712aaa",
+  "main_at_publication_preflight": "152c1b499c16af0bd5a385eb0cd829cdcadaae7c",
+  "intervening_main_paths": [
+    "research/integration/navigation_readiness_2858_r0_k7p3_v1/ENVIRONMENT.json",
+    "research/integration/navigation_readiness_2858_r0_k7p3_v1/PLAN.md",
+    "research/integration/navigation_readiness_2858_r0_k7p3_v1/RECOVERY_STATUS.md",
+    "research/integration/navigation_readiness_2858_r0_k7p3_v1/SOURCE_SHA256.json",
+    "research/integration/navigation_readiness_2858_r0_k7p3_v1/source/audit.py",
+    "research/integration/navigation_readiness_2858_r0_k7p3_v1/source/controls.py",
+    "research/integration/navigation_readiness_2858_r0_k7p3_v1/source/run_case.py",
+    "research/integration/navigation_readiness_2858_r0_k7p3_v1/source/run_matrix.py"
+  ],
+  "candidate": {
+    "command": "python -B candidate.py --input scenarios.json --output formal/candidate.json",
+    "started_utc": "2026-10-01T13:08:51.2774833Z",
+    "ended_utc": "2026-10-01T13:08:51.4126430Z",
+    "elapsed_ms": 129.14,
+    "exit_code": 0,
+    "stdout": "candidate complete: 9 certificates",
+    "stdout_sha256": "D356EF35C404DE89A2178D562D96553CDD6CB112560A605D8D1CF10AE7FCE13B",
+    "stderr_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "output_sha256": "449F8A364F1144D075AE61D6DF667D5DB1182F15A4D67BD9D03313F0FC67C375"
+  },
+  "independent_auditor": {
+    "command": "python -B audit.py --input scenarios.json --certificates formal/candidate.json --output formal/audit.json",
+    "started_utc": "2026-10-01T13:08:51.4277711Z",
+    "ended_utc": "2026-10-01T13:08:51.5408498Z",
+    "elapsed_ms": 113.046,
+    "exit_code": 0,
+    "stdout": "audit PASS_METHOD_SCOPED: 9 cases; 0 errors",
+    "stdout_sha256": "0EDBDF8FE7241741386651AAA250BD8B6F263491B6C0156BA720F58725360E38",
+    "stderr_sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+    "report_sha256": "58A1C13E7D428BC354B5E4020B9C6A4C644B78AF4FB1D460D41ABAD04DDB0355"
+  },
+  "input_sha256": "EB4230E752669E9F3B680B5E684F25F481B5832D3629D4F790BE98445F07B567",
+  "runtime": {"python": "3.12.10", "platform": "Windows NT 10.0.26200.0", "dependencies": "Python standard library only"},
+  "trace_counts": {"cases": 9, "enumerated_traces": 120},
+  "disposition": "PASS_METHOD_SCOPED",
+  "scope_limit": "synthetic finite method fixture only; no product/agent-interface latency guarantee",
+  "publication_incident": "Initial evidence-staging commit used repository-root-relative output paths and overlaid an unrelated root report on the branch. Main was unaffected and no PR was opened. Final evidence tree is rebuilt from the exact source-freeze tree; the intermediate commit remains in branch history as a packaging failure.",
+  "container": "not used: Docker engine probe did not return; shared slot reserved by another allocation"
+}

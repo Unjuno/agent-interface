@@ -1,0 +1,35 @@
+"""Capture actual finite ordinary reviewer checks; never overwrite original results."""
+from datetime import datetime,timezone
+import hashlib,json,shutil,subprocess,sys
+from pathlib import Path
+root=Path(__file__).resolve().parent;out=root/'checks';out.mkdir(exist_ok=False)
+node=Path(shutil.which('node'));assert node.is_file()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def put(path,value):path.write_text(json.dumps(value,sort_keys=True,indent=2)+'\n',encoding='utf-8')
+source=json.loads((root/'EXPORT.json').read_bytes())
+for r in source['blobs']:assert sha((root/r['side']/r['path']).read_bytes())==r['sha256']
+put(out/'FREEZE.json',{'frozen_utc':datetime.now(timezone.utc).isoformat(),'head':source['head'],
+ 'proposal_digest':source['proposal_digest'],'node_binary_sha256':sha(node.read_bytes()),
+ 'node_version':subprocess.check_output([str(node),'--version']).decode().strip(),'python':sys.version,
+ 'source_manifest_sha256':sha((root/'EXPORT.json').read_bytes()),
+ 'independent_witness_sha256':sha((root/'independent.mjs').read_bytes()),
+ 'capture_source_sha256':sha(Path(__file__).read_bytes()),'original_formal_or_author_producer_invocations':0})
+jobs=[('affected-client',[str(node),'--test','--test-concurrency=1','--test-reporter=tap','runtime/host_v1/test_relay_client.mjs'],root/'source'),
+      ('independent-boundaries',[str(node),str(root/'independent.mjs'),str(root/'independent-live-first')],root)]
+for label,cmd,cwd in jobs:
+ started=datetime.now(timezone.utc).isoformat();timed_out=False
+ try:
+  p=subprocess.run(cmd,cwd=cwd,capture_output=True,timeout=30);stdout,stderr,code=p.stdout,p.stderr,p.returncode
+ except subprocess.TimeoutExpired as e:
+  stdout,stderr,code=e.stdout or b'',e.stderr or b'',None;timed_out=True
+ (out/(label+'.stdout.txt')).write_bytes(stdout);(out/(label+'.stderr.txt')).write_bytes(stderr)
+ put(out/(label+'.receipt.json'),{'command':cmd,'cwd':str(cwd),'started_utc':started,
+  'ended_utc':datetime.now(timezone.utc).isoformat(),'exit_code':code,'timed_out':timed_out,
+  'stdout_sha256':sha(stdout),'stdout_bytes':len(stdout),'stderr_sha256':sha(stderr),'stderr_bytes':len(stderr),
+  'scope':'ordinary affected/regression or reviewer-owned inert child boundary, no original producer/formal replay'})
+ assert not timed_out and code==0,(label,code,stderr.decode(errors='replace'),stdout[-3000:].decode(errors='replace'))
+ if label=='affected-client':assert b'# tests 17' in stdout and b'# pass 17' in stdout and b'# fail 0' in stdout
+ print(json.dumps({'check':label,'exit_code':code,'stdout_sha256':sha(stdout),'stderr_bytes':len(stderr)}),flush=True)
+for r in source['blobs']:assert sha((root/r['side']/r['path']).read_bytes())==r['sha256']
+put(out/'COMPLETION.json',{'ended_utc':datetime.now(timezone.utc).isoformat(),'status':'PASS_SCOPED',
+ 'actual_client_methods':17,'independent_cases':5,'source_and_raw_unchanged':True,'counted_vote_yet':False})

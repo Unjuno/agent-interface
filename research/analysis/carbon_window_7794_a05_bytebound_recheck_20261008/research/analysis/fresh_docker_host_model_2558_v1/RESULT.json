@@ -1,0 +1,28 @@
+{
+  "schema": "fresh-docker-host-model-v1",
+  "docker_allocation": "runtime/results-local/native-docker-model-loop-2558-v1",
+  "docker_status": "STOPPED_ASSISTANT_REQUEST_TIMEOUT",
+  "docker_observation": {
+    "image": "runtime/results-local/native-docker-model-loop-2558-v1/native-images/b6ebd650d7af4b0bbdf7c7f247ba5cb1.png",
+    "image_sha256": "039709a70f6e2269c33e8eb7425954114aaa4f871dc06b9dc27fc33e248c84db",
+    "window_id": 2097175,
+    "source_sequence": 1,
+    "release_verified": true,
+    "emissions": 0,
+    "task_success": null
+  },
+  "host_bridge": {
+    "status": "GROUNDING_READY_NON_AUTHORITATIVE",
+    "call_id": "01a0ba8e-cf2e-7e81-9ea5-5c117232a617",
+    "field_point": [130, 55],
+    "submit_point": [52, 101],
+    "usage": {"input_tokens": 14053, "output_tokens": 201, "reasoning_output_tokens": 86},
+    "runner_elapsed_ms": 8645.4528,
+    "authority_granted": 0,
+    "action_emitted": 0,
+    "task_success": "NOT_RUN"
+  },
+  "validation": {"docker_observation": "PASS", "release": "PASS", "compiled_contract": "PASS", "bridge": "PASS"},
+  "stop_reason": "native_result_self_use assistant request timeout or fixture exited before action emission",
+  "scope": "One fresh Docker observation crossed to the host-local model after the native assistant-request timeout; no GUI action or effect claim."
+}

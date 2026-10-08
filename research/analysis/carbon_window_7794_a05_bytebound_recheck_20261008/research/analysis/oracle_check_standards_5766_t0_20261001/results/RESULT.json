@@ -1,0 +1,22 @@
+{
+  "allocation": "ORACLE-CHECK-5766-T0-20261001-01",
+  "status": "FAIL_T0_CONTRACT",
+  "candidate": {"status":"CANDIDATE_COMPLETE","exit_code":0,"invocations":1,"rows":4},
+  "independent_auditor": {"reported":"FAIL_T0_CONTRACT","process_exit_code":0,"invocations":1,"base_errors":["deck_hash_mismatch","drift_interval_not_held"]},
+  "observations": {
+    "nominal": "ELIGIBLE_FOR_FURTHER_TASK_AUDIT",
+    "semantic_drift_unchanged_scorer": "ELIGIBLE_FOR_FURTHER_TASK_AUDIT (incorrect; raw table contains prediction/reference disagreement)",
+    "equivalent_version_change": "ELIGIBLE_FOR_FURTHER_TASK_AUDIT",
+    "out_of_coverage": "UNKNOWN_COVERAGE"
+  },
+  "mutation_controls": {"all_four_flagged_rejected":true,"accepted_as_valid":false,"reason":"the base audit failed, so mutation rows are not sufficient evidence of auditor sensitivity"},
+  "hypothesis_status": "NOT_DEMONSTRATED",
+  "H_PASS": false,
+  "T1": "not run",
+  "retry_count": 0,
+  "scope": "finite synthetic method construction only; no live application, user, GUI, model, GPU, task-effect, #12, #57, or #59 claim",
+  "preserved_defects": [
+    "candidate disposition compared scores with frozen labels instead of using postcheck semantic disagreement to hold the affected interval",
+    "auditor looked up freeze.deck_sha256 while FREEZE pins deck_canonical_sha256"
+  ]
+}

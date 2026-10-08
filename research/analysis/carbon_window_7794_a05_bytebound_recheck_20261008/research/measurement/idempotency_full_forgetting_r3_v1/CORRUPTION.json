@@ -1,0 +1,9 @@
+{
+  "all_rejected": true,
+  "tests": [
+    {"decision":"FAIL_INTEGRITY","errors":["observable_mismatch"],"name":"observable_leak","rejected":true},
+    {"decision":"FAIL_INTEGRITY","errors":["direct_policies_satisfying_both"],"name":"direct_counterexample","rejected":true},
+    {"decision":"FAIL_INTEGRITY","errors":["retry_duplicate_pairs"],"name":"retry_duplicate","rejected":true},
+    {"decision":"FAIL_INTEGRITY","errors":["outcome_digest_sha256"],"name":"digest","rejected":true}
+  ]
+}

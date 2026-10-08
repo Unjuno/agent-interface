@@ -1,0 +1,50 @@
+{
+  "schema": "map01_first_useful_feedback_posthoc_v1_publication",
+  "task": "MAP01-FIRST-USEFUL-FEEDBACK-POSTHOC-20260916-001",
+  "issue": 503,
+  "publication_base": "e2f3afadef75f8778a4e9f07b51f7c9329b23c76",
+  "decision": "SCHEMA_INSUFFICIENT_FIRST_USEFUL_FEEDBACK",
+  "source_git_blobs": {
+    "hud_independent.py": "69dfe4a25022c2c478df39fb24a05a266b5d64c8",
+    "analyze.py": "a30ab5ec23d79156520e64f7366d404a84a9b2dd",
+    "audit.py": "619cb371e0cdf76f7863abaeee0bf1d9fedfe4ae",
+    "test_audit.py": "dfcd3bd8feeb23e215876aba5dcb27caf2eec6f7",
+    "prereg.json": "8a7447eb885301dc20339821ce1a401e093d6102",
+    "FULL_ALLOCATION.json": "9bca6cfa1dafbbe800b0e993e107fdc97483deef"
+  },
+  "publication_git_blobs": {
+    "REPORT.md": "dddd317a58a880284a575b7aff89d926ef8a537c",
+    "decode_artifacts.py": "0f02b035cd83982484b9cca8eec2fe5a8b6fd1e5",
+    "result_summary.json": "bfdcd8c299a7dbe759977b346737bf592e3f4772",
+    "audit_result.json": "902acac39012a7bd40e01967e3569e0c1c148dab",
+    "negative_tests.jsonl": "a722b230a9fc21dbc3ca3f98f5a68403eae109c2"
+  },
+  "full_actions": {
+    "run_id": 35113241046,
+    "artifact_id": 10453815096,
+    "artifact_zip_sha256": "74f38f7a9e9c567fa9a41f5ded5c169cbc1e3ca7960da467e41bd79b5e408cbd",
+    "result_json_sha256": "931f93977a6e3cf32d0529af6113b135660defb46f38c9c3185d3638a0b9369e",
+    "audit_result_json_sha256": "56503b6b544477d4b65bb8d9fabc5b8fce87ed94256c509aeec9de803607f7be",
+    "negative_tests_jsonl_sha256": "88a7239b8ee0188c5f1e63c880ca0289f965d767bde297e36237a8212e9c9bbf",
+    "chunks": {
+      "full_artifact.part00.b64": "d39463807718b4f3d807f297e7c25a1820618c41",
+      "full_artifact.part01.b64": "aad81e885a7621dbfc41ccb9ee48e8ac901ba651",
+      "full_artifact.part02.b64": "383a0e3c98aac390791345c3fae3b660d6d9f867",
+      "full_artifact.part03.b64": "6a0cbd9d411cf39d540c4941a6c6f8332418caf2"
+    }
+  },
+  "construction_actions": {
+    "authoritative_run_id": 35112691129,
+    "artifact_id": 10453620009,
+    "artifact_zip_sha256": "4c6edaeb3a3d3084db9f4aec31423249f9c6d42d62acbe11c5ba11326962147b",
+    "chunks": {
+      "construction_artifact.part00.b64": "e84a7d933e6190f14f5aafedae627914c35a0ed5",
+      "construction_artifact.part01.b64": "42a5503e98c03c7f638b7e447d441ffce1cb3b26",
+      "construction_artifact.part02.b64": "4f5727167c582ce4e33b65a788df87dbf98a757b"
+    }
+  },
+  "retained_setup_failures": [35112289653, 35112655504],
+  "retention_note": "The Base64 chunks are the byte-exact anchors for the two GitHub Actions artifact ZIPs. Browsable summary JSON is supporting publication; decode_artifacts.py verifies the full ZIP and the full result/audit/negative-test member digests.",
+  "formal_retries": 0,
+  "new_live_model_gui_input_game_calls": 0
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "broker_path_serve_windows_4882_v1_freeze_v1",
+  "allocation": "broker-path-serve-windows-4882-20260928-05",
+  "frozen_before_runner": true,
+  "source_main": "5670372e20065d3d8286105ed4ea9615952b116f",
+  "production_broker": {
+    "path": "runtime/host_model_ipc_broker_v1.py",
+    "git_blob": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+    "snapshot_sha256": "245d7f318800be28335d58998e5a23d86bb37a391058f24dbdd882ff4da1e806",
+    "module_ast_matches_current_main": true
+  },
+  "candidate_lineage": {
+    "broker_path": "research/integration/broker_path_durable_fixture_4937_v1/broker_under_test.py",
+    "broker_git_blob": "30f8535dd082108b8c27ba277786a6c00bbcd052",
+    "resolver_path": "research/integration/broker_path_confinement_4876_v3/path_policy.py",
+    "resolver_git_blob": "cdd0e3d57e08a316fc9df6b55abca8c740db070d",
+    "resolver_module_ast_matches_pinned_source": true,
+    "candidate_delta": ["path_policy import", "host_path", "serve ValueError/FileNotFoundError rejection mapping"]
+  },
+  "environment": {
+    "platform": "Windows 11 Home 10.0.26200 / NTFS",
+    "python": "CPython 3.12.10",
+    "platform_id": "win32",
+    "docker": "not used; native Windows junction and broker path semantics are the treatment"
+  },
+  "files": {
+    "path_policy.py": "3209c4966e3f30a54c5fdd26e617c1e1bfce7c987b6245d5f2bbed7e828fb83e",
+    "upstream_path_policy.py": "3209c4966e3f30a54c5fdd26e617c1e1bfce7c987b6245d5f2bbed7e828fb83e",
+    "upstream_broker.py": "245d7f318800be28335d58998e5a23d86bb37a391058f24dbdd882ff4da1e806",
+    "broker_under_test.py": "b7e9e1b3024d4a52ef4be2b09c2f5b71986fdf30fd82a4ec434a0d87cabcbcf9",
+    "runner.py": "4cbde7bec76c0e83340c45e3f2ddffb5aa3b5dddffe7670ac0f502ca309983d0",
+    "audit.py": "e7ac8b33395d541751862dd5b4ce349ce583d61079b9d0e5ce255bfd09eeae1d",
+    "cleanup.py": "f77e003b4d09169fbc79efb2a63c99b400a75aa9b4892fba8d96a683f0eec940",
+    "test_schedule.py": "27a83bb0ca46d0a1d655743c82ec52c44ef297db603b06120cbf0ac424fbb621",
+    "test_provenance.py": "cbf05e2e0bb2464533705d3eac569f562323bd066b87d11a0d299085f56c7c05"
+  },
+  "fixture_free_preflight": {
+    "command": "python -B -m unittest -v test_schedule.py test_provenance.py",
+    "result": "3/3 passed",
+    "effects": "schedule shape and narrow source delta only; no files, junctions, or subprocess calls"
+  },
+  "matrix": {
+    "accepts": ["valid_repo", "valid_workspace", "schema_inside_junction", "image_inside_junction", "working_inside_junction"],
+    "rejections_per_field": ["traversal", "encoded_traversal", "absolute", "missing", "external_junction", "ambiguous_separator"],
+    "fields": ["schema", "image", "working"],
+    "expected_total": 23,
+    "expected_accept": 5,
+    "expected_reject": 18
+  },
+  "decision": {
+    "pass": "PASS_WINDOWS_SERVE_PATH_BOUNDARY_SCOPED",
+    "runner_invocations": 1,
+    "retries": 0,
+    "post_freeze_tuning": 0,
+    "separate_live_fixture_auditor_invocations": 1,
+    "corruption_controls": 3,
+    "cleanup_only_after_audit": true,
+    "setup_failure": "STOP_SETUP_JUNCTION_UNAVAILABLE",
+    "any_invalid_case_reaching_mock": "FAIL_WINDOWS_PATH_ESCAPE_REMAINS"
+  },
+  "controls": {
+    "subprocess_run": "in-process argument recorder; no process is spawned",
+    "filesystem": "only unique temporary repo/outside fixture and per-case IPC scratch",
+    "authority": "expected false on all 23 broker receipts",
+    "network": "none",
+    "model_or_cli": "0 calls",
+    "production_source_changes": 0
+  },
+  "scope_limits": [
+    "Candidate adapter in a copied current-main serve() module, not a production patch.",
+    "Native Windows/NTFS only, one host; no Linux/macOS parity claim.",
+    "Mocked subprocess does not read schema/image contents and proves no actual host CLI/model behavior.",
+    "No exploitability, symlink-race resistance, GUI/task effect, #3152 typed-vs-scalar outcome, or #57 efficiency claim."
+  ]
+}

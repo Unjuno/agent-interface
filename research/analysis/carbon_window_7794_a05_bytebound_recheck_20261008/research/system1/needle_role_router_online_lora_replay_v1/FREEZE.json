@@ -1,0 +1,68 @@
+{
+  "schema": "needle-role-router-freeze-v1",
+  "allocation": "needle-role-router-online-lora-replay-20260927-v1",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/4899",
+  "branch": "research/needle-role-router-online-lora-replay-v1-20260927",
+  "path": "research/system1/needle_role_router_online_lora_replay_v1",
+  "main_base_sha": "086233b30090d56b117a648226367a529dd553ad",
+  "docker_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "seeds": [736211, 736311, 736411],
+  "excluded_construction_seed": 736014,
+  "formal_orchestrations": 1,
+  "formal_retries": 0,
+  "source_sha256": {
+    "runner.py": "6dea29e2178ff48250d99f2d3e7aae8699d80f17837aaa2c3fb0422254a8676e",
+    "audit.py": "4b6c5106efa959182c5de2db6b889ec790a4486891c6b72cad433af4c2362bf2",
+    "test_construction.py": "238582783f6c3e0e3fae48adb139af092fb229cc715ab9f4da7b64223ae430f8",
+    "construction.py": "201891f76a0b016e535ac2e3e2fee4d5eb02fc8f4e299ea1a4bff80bd8f29eeb",
+    "construction_audit.py": "7c22f43537d216cdd0a932966c792c9b31ce5a54ddec7b78e23f3e4d26359384",
+    "formal.ps1": "0452bceb8f96990f876b6fabf36aa2d8482e77870aa26ea093b3310ebe23d75e",
+    "audit.ps1": "e9f9b71cccf9f22b5b58b97e8a0c57f0c3671116c6c9723676173a164069f9ee",
+    "construction.ps1": "e63f167c466a2f5a7b7fcf19c448b62f42fbd92924d8b70ef3580cb6221ac15a",
+    "construction_audit.ps1": "1006265f5062b9086d83a5e66fe4d01d73562c0ba98e857d52a8534b16dc1dff",
+    "README.md": "605eb0aaa51b19228bd047c67846da29caeec4cdabd2746e406584de11dac581",
+    "PREREGISTRATION.md": "b394fe279229384087463c11ceb8bdd1399ef0c87200f096aac2bcc6dab6a58f",
+    "CONSTRUCTION_REPORT.md": "1056597f6c343e60c71b06f210f3d088c6ba751bcad5b9491579a9dc82be3274",
+    "evidence/construction_r4/history/ENGINEERING_ATTEMPTS.md": "d94c14c3fb91f7a2bd4ecf9d346c6776e1223154bbe65011077541a5c2b1f916"
+  },
+  "source_git_blob_sha1": {
+    "runner.py": "1633cf300df349f94d333bfcbe38257b1657f009",
+    "audit.py": "c9c57cf08b582a856708f59bbdd23debb4975881",
+    "test_construction.py": "832b051c6e057c51d77703fabde98a2ea17660e5",
+    "construction.py": "2f25bef79c17554daddbc769d588ccf73c804f94",
+    "construction_audit.py": "9f58f109332d89cfa67393f8186fb6d2428de852",
+    "formal.ps1": "f6015aa3fe20de3a0631bd3c0c6c8c8779e3057c",
+    "audit.ps1": "8578eb27f5546a6e7cd04eb27052b1d8c527706c",
+    "construction.ps1": "b86bd4afadb6a7030b880b49e908802c2880a3ac",
+    "construction_audit.ps1": "f21ae5b7b02c77418bfba582eaf2d17c4202e4d3",
+    "README.md": "4897648be0596dc65fd44bba4443932cf8b289bc",
+    "PREREGISTRATION.md": "49aebce6f7771a2fbbac1fb4765f7b358f2618fe",
+    "CONSTRUCTION_REPORT.md": "54c61ac4c579bc5fae934a67b4722ca0079e3ee3",
+    "evidence/construction_r4/history/ENGINEERING_ATTEMPTS.md": "de7d824458bbfa8105717192f1e467e439fc74c9"
+  },
+  "construction_evidence": {
+    "seed": 736014,
+    "raw_bytes": 537401,
+    "raw_sha256": "ca38d07392a8ef5a9df3fdf3c252b24eea62d129648d2a12bc1e760f78d5d4e7",
+    "audit": "PASS_CONSTRUCTION_AUDIT",
+    "audit_errors": 0,
+    "test_count": 6,
+    "tests": "OK",
+    "dataset_sha256": {
+      "evidence/construction_r4/raw/construction_raw.json": "ca38d07392a8ef5a9df3fdf3c252b24eea62d129648d2a12bc1e760f78d5d4e7",
+      "evidence/construction_r4/CONSTRUCTION_INVOCATION.json": "f6a545704e076d6ddcbb3b849cf39f75b604991c8a92734f93198e163295e037",
+      "evidence/construction_r4/audit/CONSTRUCTION_AUDIT.json": "b903002d18e9454f7ce874637c31258e994fcec274a3fd77894bb8b6c270e9d7",
+      "evidence/construction_r4/audit/CONSTRUCTION_AUDIT_INVOCATION.json": "06643364f0acdcbdac32a736b0bbd480853f13356c2d262d4756bc435fc797b6",
+      "evidence/construction_r4/construction-tests.log": "4bb6550b420a0e5b27b6944366a88c9a28bda38b63c5238a417f56ca4948e30d",
+      "evidence/construction_r4.zip": "40ec7450cab6b55a12f8d2bbb3892b11399c6e5115554d864e776dc02cc57958"
+    },
+    "git_blob_sha1": {
+      "evidence/construction_r4/raw/construction_raw.json": "9739f8b631622166732896a5d1bac752d5098ffd",
+      "evidence/construction_r4/CONSTRUCTION_INVOCATION.json": "8a65121dadf150c67513e3f456692674bd32e263",
+      "evidence/construction_r4/audit/CONSTRUCTION_AUDIT.json": "5c1e9ec0a51fc9a630a87c0b6c4514faca213a53",
+      "evidence/construction_r4/audit/CONSTRUCTION_AUDIT_INVOCATION.json": "98e58512f03ac4ca9278b50d5b418196cb99b11f",
+      "evidence/construction_r4.zip": "3ab48e2778f7534a0130352dcd28ca8c593d6f90"
+    }
+  }
+}

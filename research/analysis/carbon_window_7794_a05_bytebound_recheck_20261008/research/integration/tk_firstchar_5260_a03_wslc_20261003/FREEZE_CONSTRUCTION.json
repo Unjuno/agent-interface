@@ -1,0 +1,63 @@
+{
+  "schema": "5260-a03-no-input-construction-freeze-v1",
+  "allocation": "5260-a03-wslc-no-input-construction01-20261003",
+  "owner_thread": "01a0b97a-cec4-7141-b37f-31f9f5565543",
+  "status": "FROZEN_CONSTRUCTION_ONLY_NO_INPUT",
+  "source_sha256": {
+    "readiness_once.py": "714a2cff123a40430e3a4087d63b1cb018e19120d9b570d70fd261cb0481e183",
+    "probe_app.py": "882e08560357bc60c5706c269f6ff51502d133d76bd37c12e5f3fe7dffcfb9a6",
+    "probe_epoch.py": "c0a789eae8b744413accdbdd8910e8dde7faeb21632f35620ef69603f26e5e54",
+    "test_readiness_once.py": "f8941c68f63428cb950386eb7bdb12075965afb4d7988cd56d977d8c8c36bab0"
+  },
+  "image_id": "sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+  "command": [
+    "C:\\Program Files\\WSL\\wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--name",
+    "ai-5260-a03-epoch-construction01-20261003",
+    "--network",
+    "none",
+    "--cpus",
+    "0.5",
+    "--memory",
+    "512M",
+    "--user",
+    "65534:65534",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a03_readiness_prepare_20261003:/experiment:ro",
+    "--env",
+    "DISPLAY=:97",
+    "--env",
+    "EXPERIMENT_IMAGE_ID=sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a03_results_20261003\\construction01-data:/out",
+    "sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "/usr/bin/python3",
+    "-B",
+    "/experiment/probe_epoch.py",
+    "/out"
+  ],
+  "host_launch": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a03_results_20261003\\construction01-launch",
+  "host_data": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a03_results_20261003\\construction01-data",
+  "budget": {
+    "container_invocations": 1,
+    "apps": 8,
+    "legacy": 4,
+    "fixed": 4,
+    "retries": 0,
+    "per_app_timeout_seconds": 10,
+    "input_events": 0,
+    "network": "none",
+    "user_desktop": false,
+    "gpu": 0,
+    "limits": "requested only; effective enforcement unproven"
+  },
+  "disposition": {
+    "complete": "CONSTRUCTION_ONLY; requires separate read-only cross-file validation",
+    "incomplete": "STOP_SETUP_OR_CHILD; retain first outcome, no automatic retry"
+  },
+  "parent": "A02 STOP_READINESS_CUSTODY_AFTER_PASS_AUDIT, PR#7065; old sources/results not modified"
+}

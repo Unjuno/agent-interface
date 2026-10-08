@@ -1,0 +1,37 @@
+{
+  "schema": "agent-interface/2907-public-mcp-root-replacement-audit-v1",
+  "decision": "HOLD_OLD_LAUNCHER_LIVENESS_UNVERIFIED",
+  "errors": [],
+  "formal_allocation": false,
+  "request_order": [
+    "observe",
+    "observe",
+    "observe",
+    "inspect_target"
+  ],
+  "checks": {
+    "baseline_observations": 3,
+    "replacement_xid_distinct": true,
+    "replacement_launcher_pid_distinct": true,
+    "replacement_owner_pid_distinct": true,
+    "old_window_gone": true,
+    "old_launcher_pid_present_after_wait": true,
+    "old_launcher_process_state_recorded": false,
+    "inspect_status": "needs_review",
+    "inspect_error": "ValueError('focused client is outside configured transient family')",
+    "review_id_present": false,
+    "dispatch_calls": 0,
+    "binding_revision_after": 1,
+    "target_after": 8388611,
+    "close_status": "closed",
+    "release_attempted": false,
+    "mcp_server_after_shutdown": []
+  },
+  "audit_history": [
+    "Construction01 preserved STOP_CALLER_RECEIPT_SHAPE: first public nested receipt did not match the runner's top-level expectation; no replacement was attempted.",
+    "Construction02 auditor v1 returned FAIL_RAW_AUDIT due to counting the inspect call among the three baseline observations; raw evidence unchanged.",
+    "Separate network-disabled, read-only Docker audit_v2 returned errors=[] and retained HOLD because old launcher PID liveness/state is ambiguous."
+  ],
+  "scope": "root-window replacement fails closed in one persistent public MCP session; old launcher termination unverified; not full #2907 integration"
+}
+

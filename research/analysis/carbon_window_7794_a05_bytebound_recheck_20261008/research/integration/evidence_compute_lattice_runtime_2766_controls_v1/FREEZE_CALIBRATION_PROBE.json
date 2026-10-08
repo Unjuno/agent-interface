@@ -1,0 +1,23 @@
+{
+  "schema": "issue-2766-calibration-source-binding-probe-freeze-v1",
+  "issue": 2766,
+  "successor_of": "research/integration/evidence_compute_lattice_runtime_2766_controls_v1/",
+  "intake_main": "e8b4071931df81b3408a5d0a91c7607c6323c9c9",
+  "frozen_raw_auditor_git_blob": "6c0b30bf11473546afd1e554a7f99cf9de24ba7b",
+  "retained_case": "formal/batch-0/06-active_run_low_p/result.json",
+  "retained_case_sha256": "feb52821f8530b5f6fa56874a608ab733cc8239127994965863cd1882f819a19",
+  "probe_test_sha256": "7667bc2c5491bfba78b6a4256b127371462df9989ccfc5c7b2ad2d57e71b6abd",
+  "H": "The frozen auditor accepts the original wrong_g mutation when only the copied decision g_ns increases by 999999999, despite disagreement with the retained calibration median; the RUN disposition remains mathematically correct.",
+  "T": "On a fresh copy of the retained raw case, record calibration.wait_measure.median_ns, mutate only decisions[0].g_ns, run the frozen audit across the retained 18-case raw set, and independently compare the decision input back to the calibration median. No formal runner invocation.",
+  "D": {
+    "gap_reproduced_if": "frozen audit errors=[] while decision.g_ns != calibration.wait_measure.median_ns",
+    "scope_label": "HOLD_CALIBRATION_SOURCE_BINDING_GAP",
+    "formal_rows_reexecuted": 0
+  },
+  "C": [
+    "The test changes only a copied result.json; retained raw bytes remain unchanged.",
+    "The raw auditor recomputes selector disposition but does not bind row-level g_ns to the calibration record.",
+    "The calibration record itself stores measured samples and medians, not full clock event pairs; this probe does not establish source-event authenticity."
+  ],
+  "U": "A bounded audit-lineage counterexample only. It is not a fresh runtime measurement, policy outcome, or proof that every calibration field lacks provenance."
+}

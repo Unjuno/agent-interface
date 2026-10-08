@@ -1,0 +1,83 @@
+{
+  "original_files": 265,
+  "original_file_bytes": 2118526,
+  "restored_byte_identical": true,
+  "formal_reruns": 0,
+  "checks": [
+    {
+      "name": "checksums",
+      "returncode": 0,
+      "stdout_sha256": "04c5b5b4a08f0a30e2aea8c2e33b230e344956187cce99e9d50ad6eb46c711f7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "units",
+      "returncode": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "d45e7122910dad28cd2d49d8f3f7e78c6336ca3d9f18b777d7a78b432e093f7c"
+    },
+    {
+      "name": "audit",
+      "returncode": 0,
+      "stdout_sha256": "f176f40c2369023a9b021d5bddb6c91ebdd1e0e68fea10dfd33b48817852efdf",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "controls",
+      "returncode": 0,
+      "stdout_sha256": "51510fb334de0a47121447a9654ffd39ecec39840dd4382c6034000c4311d84b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "refusals": [
+    {
+      "name": "missing_part",
+      "rejected": true,
+      "reason": "source is not a regular file"
+    },
+    {
+      "name": "corrupt_part",
+      "rejected": true,
+      "reason": "part integrity mismatch"
+    },
+    {
+      "name": "boolean_part_size",
+      "rejected": true,
+      "reason": "invalid bounded integer"
+    },
+    {
+      "name": "reordered_parts",
+      "rejected": true,
+      "reason": "part order or name mismatch"
+    },
+    {
+      "name": "duplicate_member",
+      "rejected": true,
+      "reason": "duplicate member"
+    },
+    {
+      "name": "parent_traversal",
+      "rejected": true,
+      "reason": "unsafe member name"
+    },
+    {
+      "name": "file_prefix_collision",
+      "rejected": true,
+      "reason": "file/directory prefix collision"
+    },
+    {
+      "name": "trailing_xz_bytes",
+      "rejected": true,
+      "reason": "truncated, oversized or trailing compressed data"
+    },
+    {
+      "name": "existing_destination",
+      "rejected": true,
+      "reason": "destination already exists"
+    }
+  ],
+  "audit_byte_identical": true,
+  "controls_byte_identical": true,
+  "unpacker_sha256": "cf5fd03f814bc9e8f689c9db5fce38bdcf68e62dd3a1d8674a6875451e875a77",
+  "scope": "Packaging and retained-byte checks only; same-author implementation, no new allocation or external review."
+}

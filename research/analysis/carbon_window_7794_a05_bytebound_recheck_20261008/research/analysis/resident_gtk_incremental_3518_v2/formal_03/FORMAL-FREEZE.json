@@ -1,0 +1,28 @@
+{
+  "issue": 3518,
+  "allocation_id": "issue3518-resident-gtk-incremental-03",
+  "stage": "completed",
+  "result": "PASS-narrow-synthetic-GTK-X11-gate",
+  "retry": false,
+  "matrix": {"cases": 8, "policies": 4, "rows": 32},
+  "candidate_transport_counts": [1, 1, 0, 0, 1, 1, 1, 1],
+  "candidate_task_effect_counts": [1, 1, 0, 0, 1, 1, 1, 0],
+  "evidence": {"raw_rows": 32, "raw_window_frames": 64, "verified_releases": 32, "verified_process_cleanup": 32, "independent_audit": "PASS"},
+  "environment": {
+    "runtime": "OrbStack Docker",
+    "image": "agent-interface-2972:20260920",
+    "image_id": "sha256:69bc215db0514ee1bc4f730cceb296ecef89e4418cea8d4b2fc2ca3101101e27",
+    "platform": "linux/arm64",
+    "network": "none",
+    "source_mount": "read-only",
+    "formal_model_calls": 0
+  },
+  "sha256": {
+    "runner.py": "2e721ce19a3da13c2635d32ca0f7f406162304f747411d40a5fbfb14aba084f3",
+    "fixture.py": "97467cc1685b7a7bfecda3a789f82b9e1174e75bbdf7db431d789d04159c2150",
+    "audit.py": "f5e73ea87f3b224ef0c670f5907ce5b4410c5dde537ca9506c85cc303bf3aa94",
+    "rows.json": "7ee16d706c85890563d0117aa31d1324ec25214651b611886797f95d2f070dc1",
+    "images.tar.gz": "14474dda0c72302e2460b879e0fe86e074f2a2c105dfa728527a681d9d5abb2c"
+  },
+  "predecessor_disposition": {"allocation_01": "STOP-preserved", "allocation_02": "HOLD-preserved"}
+}

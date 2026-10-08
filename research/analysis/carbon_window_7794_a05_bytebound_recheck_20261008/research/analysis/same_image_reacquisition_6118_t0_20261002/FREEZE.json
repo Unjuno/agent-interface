@@ -1,0 +1,52 @@
+{
+  "schema": "same-image-reacquisition-6118-t0-freeze-v1",
+  "allocation": "same-image-reacquisition-6118-t0-20261002-01",
+  "issue": 6118,
+  "base_main": "3adec9cdc2cff5ef68f19acd55c5823fcaad26df",
+  "candidate_runs": 1,
+  "auditor_runs": 1,
+  "retry_budget": 0,
+  "case_ids_in_order": [
+    "adequate-inferential-error",
+    "aliased-pixels",
+    "changed-world",
+    "same-bytes-new-epoch",
+    "high-confidence-trigger-miss",
+    "answer-anchoring",
+    "no-error-overhead"
+  ],
+  "source_sha256": {
+    "PROTOCOL.md": "ac65dcecb87448410288a2b825fee2d526196b88d85809b062b6f21ea387574f",
+    "candidate.py": "8d88ae7f3646be6742cc35c9fc9e6233f23acaaf4ce78ca20bec0e0369ad6caa",
+    "audit.py": "42d4a31c0cf28847453c486334c77f984e45780b3ff2530a37835f30a708a385",
+    "fixture.json": "43f97460644877fb94113aa7fdf1c30a4e86285be55b726949635b727cd94cf0",
+    "truth.json": "4db92a8af9a4b436dc6a35f72b4ba217ea47be0691fa6518ce9be63761fa78d3",
+    "test_method.py": "f6832de5597049774421ab13db7b0eaefbd24952233e0ac35828e207f9ed7db4"
+  },
+  "candidate_input": "fixture.json only; oracle truth is excluded",
+  "auditor_inputs": ["fixture.json", "truth.json", "results/formal-01/RAW.jsonl"],
+  "container": {
+    "runtime": "OrbStack-managed Docker Engine",
+    "engine": "29.4.0",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "scratch": "tmpfs /tmp, 32 MiB, noexec,nosuid",
+    "capabilities": "all dropped",
+    "no_new_privileges": true,
+    "pids_limit": 32,
+    "memory": "256 MiB",
+    "cpus": 0.5,
+    "candidate_output_mount": "dedicated results/formal-01, writable only for candidate container",
+    "auditor_raw_mount": "read-only",
+    "truth_mount": "auditor container only"
+  },
+  "decision": {
+    "pass": "PASS_METHOD_SCOPED iff seven exact unique cases, source/epoch/cost accounting, truth-specific controls, stale/uncertain YIELD boundaries, and action_authorized=false for every row all audit with zero errors and all six mutations are rejected by pre-run tests",
+    "fail": "FAIL_METHOD_SCOPED for any complete contradictory method row",
+    "stop": "STOP_INTEGRITY for missing/corrupt evidence or execution infrastructure failure"
+  },
+  "scope": "No-model synthetic method/accounting table only; cost units are not wall time or tokens; no image recognition, GUI, app state, task-effect, safety, or product claim"
+}

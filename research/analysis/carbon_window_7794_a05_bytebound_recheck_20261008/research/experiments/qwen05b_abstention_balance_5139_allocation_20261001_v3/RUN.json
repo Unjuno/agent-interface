@@ -1,0 +1,45 @@
+{
+  "schema": "qwen5139-cpu-dataset-run-v1",
+  "construction_id": "QWEN-SUPPORT-BALANCE-5139-20261001-03-CPU-CONSTRUCTION",
+  "owner_thread": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "main_sha": "45586e48258773e45d23d890117d387f4fff3998",
+  "candidate": {
+    "command": "python -B candidate.py",
+    "started_utc": "2026-10-01T11:26:48.673097+00:00",
+    "ended_utc": "2026-10-01T11:26:48.693198+00:00",
+    "exit_code": 0,
+    "invocations": 1,
+    "retries": 0,
+    "output": "formal-dataset.json",
+    "bytes": 806366,
+    "sha256": "2c4fc9c6da47da03df88c5d198752393282e6db1552fe228e8f4ccbd9a8262f1"
+  },
+  "audit": {
+    "command": "python -B audit.py --data formal-dataset.json --out AUDIT.json",
+    "process_separate_from_candidate": true,
+    "exit_code": 0,
+    "invocations": 1,
+    "decision": "PASS_DATASET_RECONSTRUCTION",
+    "discrepancies": 0,
+    "corruption_controls_rejected": 5,
+    "corruption_controls_total": 5,
+    "report_sha256": "721322d5d3c1ff49e955538d816aa318144bac54722d9523153cbe024f09b99d"
+  },
+  "tests": {
+    "current_main_tests": "11/11 passed",
+    "package_audit_tests": "2/2 passed",
+    "compile": "passed",
+    "git_diff_check": "passed"
+  },
+  "counts": {
+    "model_load": 0,
+    "tokenizer_load": 0,
+    "cuda": 0,
+    "docker_or_orbstack": 0,
+    "wsl": 0,
+    "fit": 0,
+    "adapter_write": 0,
+    "external_execution": 0
+  },
+  "historical_sad_cannon_attribution": "UNKNOWN"
+}

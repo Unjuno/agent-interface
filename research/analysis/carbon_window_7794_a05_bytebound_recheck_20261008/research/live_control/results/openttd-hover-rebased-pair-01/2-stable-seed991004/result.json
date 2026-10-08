@@ -1,0 +1,961 @@
+{
+  "index": 2,
+  "name": "stable",
+  "rehover_negative": false,
+  "seed": 991004,
+  "zoom_terminal": {
+    "event": "terminal",
+    "id": "durable-5eac2f15b0d84a1e86af8e376516c4d8",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 2,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 42557221031297,
+      "valid_until_ns": 42566925199944
+    },
+    "terminal_ns": 42557221067754,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 42557221070660
+  },
+  "source_before_hover": {
+    "event": "observation",
+    "id": "durable-0c598cb1b1c346a4abe5ba17b4dd5440",
+    "step": 1,
+    "sequence": 15,
+    "capture_ns": 42558690885549,
+    "context_ns": 42558695443188,
+    "context": [
+      [
+        "windows",
+        "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+      ],
+      [
+        "active_window",
+        10485762
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/openttd-hover-rebased-pair-01/2-stable-seed991004/runtime/015.png",
+    "image_reused": false,
+    "image_prepare_ns": 42645515,
+    "image_ready_ns": 42558774190961,
+    "input_focus_before": 10485762,
+    "input_focus_after": 10485762,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "capture_ms": 5.350349,
+    "wire_bytes": 288730,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emitted_ns": 42558782192810
+  },
+  "hover_steps": [
+    {
+      "op": "pointer_move",
+      "x": 432,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "observe"
+    },
+    {
+      "op": "pointer_move",
+      "x": 650,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "observe"
+    },
+    {
+      "op": "pointer_move",
+      "x": 820,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "observe"
+    }
+  ],
+  "hover_terminal": {
+    "event": "terminal",
+    "id": "durable-fa6ae9ac165140da981763e9ddec829c",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 9,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 42562401923245,
+      "valid_until_ns": 42578837238063
+    },
+    "terminal_ns": 42562402018170,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 42562402021468
+  },
+  "hover_readiness": {
+    "status": "READY",
+    "binding": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "evidence": [
+      {
+        "candidate_id": "subsidies",
+        "point": [
+          432,
+          51
+        ],
+        "meaning": "Display subsidies",
+        "dwell_sequence": 17,
+        "persistent_sequence": 18,
+        "tooltip_box": [
+          385,
+          75,
+          479,
+          87
+        ],
+        "tooltip_sha256": "24f16a6512cf722fd630e0df7e520a83f37afc79628728596640f75c94dfe292"
+      },
+      {
+        "candidate_id": "trains",
+        "point": [
+          650,
+          51
+        ],
+        "meaning": "Display list of company's trains",
+        "dwell_sequence": 20,
+        "persistent_sequence": 21,
+        "tooltip_box": [
+          551,
+          75,
+          749,
+          107
+        ],
+        "tooltip_sha256": "e3263ffdb7b6fa63ff7301eb8e2cfcd742f042a10cf4cc9550aebdaee4bce593"
+      },
+      {
+        "candidate_id": "roads",
+        "point": [
+          820,
+          51
+        ],
+        "meaning": "Build roads",
+        "dwell_sequence": 23,
+        "persistent_sequence": 24,
+        "tooltip_box": [
+          789,
+          75,
+          851,
+          87
+        ],
+        "tooltip_sha256": "a59e729851367b2be8a7d21f82f7d24e8879eb06cadab12eb60261d3b36df581"
+      }
+    ]
+  },
+  "hover_readiness_error": null,
+  "hover_pointer_admissions": [
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 432,
+        "y": 51
+      },
+      "admitted_ns": 42558897887949,
+      "input_ack_ns": 42558898003220,
+      "valid_until_ns": 42578837238063,
+      "surface": 10485762,
+      "id": "durable-fa6ae9ac165140da981763e9ddec829c",
+      "step": 0,
+      "emitted_ns": 42558898053286
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 650,
+        "y": 51
+      },
+      "admitted_ns": 42560070193837,
+      "input_ack_ns": 42560070349302,
+      "valid_until_ns": 42578837238063,
+      "surface": 10485762,
+      "id": "durable-fa6ae9ac165140da981763e9ddec829c",
+      "step": 3,
+      "emitted_ns": 42560070446087
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 820,
+        "y": 51
+      },
+      "admitted_ns": 42561231223327,
+      "input_ack_ns": 42561231341990,
+      "valid_until_ns": 42578837238063,
+      "surface": 10485762,
+      "id": "durable-fa6ae9ac165140da981763e9ddec829c",
+      "step": 6,
+      "emitted_ns": 42561231472070
+    }
+  ],
+  "presentation": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/openttd-hover-rebased-pair-01/2-stable-seed991004/hover-presentation.png",
+  "model": {
+    "typed": {
+      "op": "target_reference",
+      "candidate_id": "roads",
+      "point_space": "source_observation_pixels",
+      "point": {
+        "x": 820,
+        "y": 51
+      },
+      "motion_model": "surface_origin_translation"
+    },
+    "runtime_reference": {
+      "candidate_id": "roads",
+      "point": [
+        820,
+        51
+      ],
+      "coordinate_frame": "window_content",
+      "point_space": "source_observation_pixels",
+      "motion_model": "surface_origin_translation"
+    },
+    "contract_error": null,
+    "strict_contract_correct": true,
+    "usage": {
+      "input_tokens": 9935,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 111,
+      "reasoning_output_tokens": 63
+    },
+    "runner_ms": 6875.9887
+  },
+  "model_error": null,
+  "clear_steps": [
+    {
+      "op": "pointer_move",
+      "x": 1000,
+      "y": 180
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "observe"
+    }
+  ],
+  "clear_terminal": {
+    "event": "terminal",
+    "id": "durable-dce1d3452d4f4c1398c3871bc1940796",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 3,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 42571140512228,
+      "valid_until_ns": 42579901475147
+    },
+    "terminal_ns": 42571140575254,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 42571140579161
+  },
+  "clear_observation": {
+    "event": "observation",
+    "id": "durable-dce1d3452d4f4c1398c3871bc1940796",
+    "step": 2,
+    "sequence": 27,
+    "capture_ns": 42571034628183,
+    "context_ns": 42571040346864,
+    "context": [
+      [
+        "windows",
+        "0x00a00002  0 HPLaptop OpenTTD 13.4\n"
+      ],
+      [
+        "active_window",
+        10485762
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/openttd-hover-rebased-pair-01/2-stable-seed991004/runtime/027.png",
+    "image_reused": false,
+    "image_prepare_ns": 44066123,
+    "image_ready_ns": 42571123063355,
+    "input_focus_before": 10485762,
+    "input_focus_after": 10485762,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "capture_ms": 2.970252,
+    "wire_bytes": 287909,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emitted_ns": 42571127391982
+  },
+  "rebase": {
+    "status": "REBASABLE",
+    "point": [
+      820,
+      51
+    ],
+    "region_size": [
+      24,
+      14
+    ],
+    "box": [
+      808,
+      44,
+      24,
+      14
+    ],
+    "offset": [
+      12,
+      7
+    ],
+    "source_sequence": 15,
+    "current_sequence": 27,
+    "patch_sha256": "a2a5675570c583f7acdf1f545fd5ca706ccb367f58b89b688c4658e2b2e3b2e8",
+    "authority": "readiness evidence only; grants no input authority"
+  },
+  "rebase_error": null,
+  "mint_step": {
+    "op": "target_handle_mint_from_point",
+    "name": "road_construction_opener",
+    "coordinate_frame": "window_content",
+    "source_sequence": 15,
+    "point": [
+      820,
+      51
+    ],
+    "region_size": [
+      24,
+      14
+    ],
+    "ttl_ms": 60000,
+    "freshness_ms": 1000,
+    "search_radius": 0,
+    "allowed_transformations": [
+      "window_translation"
+    ]
+  },
+  "minted": {
+    "event": "target_handle_minted_from_point",
+    "id": "durable-b03b24dea3cc494ebe61cf31800e061f",
+    "step": 0,
+    "minted_ns": 42571402012339,
+    "handle": "road_construction_opener",
+    "name": "road_construction_opener",
+    "status": "VALID",
+    "created_sequence": 28,
+    "expires_ns": 42631402012339,
+    "allowed_transformations": [
+      "window_translation"
+    ],
+    "patch_sha256": "a2a5675570c583f7acdf1f545fd5ca706ccb367f58b89b688c4658e2b2e3b2e8",
+    "authority": "observational reference only; grants no input authority",
+    "reference_kind": "session_alias",
+    "private_registry_id_exposed": false,
+    "derivation": "centered_region_from_model_point",
+    "source_point": [
+      820,
+      51
+    ],
+    "source_sequence": 15,
+    "fresh_sequence": 28,
+    "derived_box": [
+      808,
+      44,
+      24,
+      14
+    ],
+    "derived_offset": [
+      12,
+      7
+    ],
+    "source_patch_sha256": "a2a5675570c583f7acdf1f545fd5ca706ccb367f58b89b688c4658e2b2e3b2e8",
+    "fresh_patch_sha256": "a2a5675570c583f7acdf1f545fd5ca706ccb367f58b89b688c4658e2b2e3b2e8",
+    "fresh_patch_exact": true,
+    "emitted_ns": 42571402783765
+  },
+  "mint_refusal": null,
+  "mint_terminal": {
+    "event": "terminal",
+    "id": "durable-b03b24dea3cc494ebe61cf31800e061f",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 42571420534279,
+      "valid_until_ns": null
+    },
+    "terminal_ns": 42571420567172,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 42571420570243
+  },
+  "rehover_evidence": null,
+  "rehover_terminal": null,
+  "surface_move": {
+    "event": "test_surface_moved",
+    "id": "durable-25642a66312048a49d2809068d3ed9c3",
+    "step": 0,
+    "before": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        129,
+        40,
+        1024,
+        720
+      ]
+    },
+    "after": {
+      "focus": 10485762,
+      "surface": 10485762,
+      "geometry": [
+        150,
+        68,
+        1024,
+        720
+      ]
+    },
+    "authority": "fault injection only; grants no input authority",
+    "emitted_ns": 42571545338210
+  },
+  "actual_surface_delta": [
+    21,
+    28
+  ],
+  "handle_check": {
+    "event": "target_handle_checked",
+    "id": "durable-96a9e39e0f684f1dadd966f27fd8635f",
+    "step": 0,
+    "checked_ns": 42571788547288,
+    "observation_sequence": 29,
+    "observation_capture_ns": 42571691479053,
+    "authority": "resolution only; ordinary admission remains required",
+    "eligible": true,
+    "status": "REVALIDATED",
+    "handle": "road_construction_opener",
+    "reason": "exact_region_match",
+    "name": "road_construction_opener",
+    "point": [
+      841,
+      79
+    ],
+    "observed_box": [
+      829,
+      72,
+      24,
+      14
+    ],
+    "binding_translation": [
+      21,
+      28
+    ],
+    "local_translation": [
+      0,
+      0
+    ],
+    "sequence": 29,
+    "valid_until_ns": 42572691479053,
+    "patch_sha256": "a2a5675570c583f7acdf1f545fd5ca706ccb367f58b89b688c4658e2b2e3b2e8",
+    "reference_kind": "session_alias",
+    "private_registry_id_exposed": false,
+    "emitted_ns": 42571789694459
+  },
+  "admission_revalidation": {
+    "event": "target_handle_revalidated",
+    "step": 0,
+    "eligible": true,
+    "status": "REVALIDATED",
+    "handle": "road_construction_opener",
+    "authority": "resolution only; ordinary admission remains required",
+    "reason": "exact_region_match",
+    "name": "road_construction_opener",
+    "point": [
+      841,
+      79
+    ],
+    "observed_box": [
+      829,
+      72,
+      24,
+      14
+    ],
+    "binding_translation": [
+      21,
+      28
+    ],
+    "local_translation": [
+      0,
+      0
+    ],
+    "sequence": 29,
+    "valid_until_ns": 42572691479053,
+    "patch_sha256": "a2a5675570c583f7acdf1f545fd5ca706ccb367f58b89b688c4658e2b2e3b2e8",
+    "reference_kind": "session_alias",
+    "private_registry_id_exposed": false,
+    "id": "durable-a6e729ed416e422399caef073cb00c22",
+    "resolved_ns": 42571925211833,
+    "emitted_ns": 42571925214638
+  },
+  "local_condition": {
+    "event": "local_target_guard_postcondition",
+    "id": "durable-a6e729ed416e422399caef073cb00c22",
+    "step": 4,
+    "sequence": 46,
+    "format": "local-target-guard-postcondition-outcome-v1",
+    "postcondition_id": "first-road-segment",
+    "reason": "met",
+    "continue_program": true,
+    "needs_decision": false,
+    "measurements": [
+      {
+        "sequence": 45,
+        "target_changed_pixels": [
+          78,
+          26,
+          56
+        ],
+        "target_changed_total": 160,
+        "guard_changed_pixels": [
+          0,
+          0
+        ],
+        "guard_changed_total": 0
+      },
+      {
+        "sequence": 46,
+        "target_changed_pixels": [
+          78,
+          26,
+          56
+        ],
+        "target_changed_total": 160,
+        "guard_changed_pixels": [
+          0,
+          0
+        ],
+        "guard_changed_total": 0
+      }
+    ],
+    "minimum_target_changed_pixels": 120,
+    "maximum_guard_changed_pixels": 20,
+    "pixel_delta_threshold": 24,
+    "sample_span_ms": 164.18245,
+    "semantic_effect_verified": false,
+    "task_success_verified": false,
+    "grants_input_authority": false,
+    "scope": "fixed-region visual condition for already admitted later steps only",
+    "emitted_ns": 42574776746810
+  },
+  "program_steps_started": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "program_pointer_admissions": [
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 841,
+        "y": 79
+      },
+      "admitted_ns": 42571948269305,
+      "input_ack_ns": 42571948368852,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 0,
+      "emitted_ns": 42571948422823
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 42571957921453,
+      "input_ack_ns": 42571958111873,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 0,
+      "emitted_ns": 42571958160649
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 730,
+        "y": 119
+      },
+      "admitted_ns": 42572123858606,
+      "input_ack_ns": 42572123958041,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 1,
+      "emitted_ns": 42572124019243
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 42572133073812,
+      "input_ack_ns": 42572133248404,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 1,
+      "emitted_ns": 42572133306954
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 726,
+        "y": 268
+      },
+      "admitted_ns": 42572318844367,
+      "input_ack_ns": 42572318942192,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 2,
+      "emitted_ns": 42572318993540
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 42572328854973,
+      "input_ack_ns": 42572329096798,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 2,
+      "emitted_ns": 42572329191312
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 694,
+        "y": 284
+      },
+      "admitted_ns": 42572640315761,
+      "input_ack_ns": 42572640428082,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 2,
+      "emitted_ns": 42572640465568
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 662,
+        "y": 300
+      },
+      "admitted_ns": 42572943136691,
+      "input_ack_ns": 42572943254851,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 2,
+      "emitted_ns": 42572943305940
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 754,
+        "y": 119
+      },
+      "admitted_ns": 42574805422073,
+      "input_ack_ns": 42574805594235,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 5,
+      "emitted_ns": 42574805650062
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 42574815994769,
+      "input_ack_ns": 42574816431104,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 5,
+      "emitted_ns": 42574816533518
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 662,
+        "y": 300
+      },
+      "admitted_ns": 42574984116776,
+      "input_ack_ns": 42574984234341,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 6,
+      "emitted_ns": 42574984286333
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "button_down",
+      "payload": 1,
+      "admitted_ns": 42574993454384,
+      "input_ack_ns": 42574993644338,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 6,
+      "emitted_ns": 42574993743075
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 694,
+        "y": 316
+      },
+      "admitted_ns": 42575303306947,
+      "input_ack_ns": 42575303410946,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 6,
+      "emitted_ns": 42575303451335
+    },
+    {
+      "event": "pointer_admission",
+      "operation": "move",
+      "payload": {
+        "x": 726,
+        "y": 332
+      },
+      "admitted_ns": 42575605763688,
+      "input_ack_ns": 42575605856417,
+      "valid_until_ns": 42601863567609,
+      "surface": 10485762,
+      "id": "durable-a6e729ed416e422399caef073cb00c22",
+      "step": 6,
+      "emitted_ns": 42575605894329
+    }
+  ],
+  "terminal": {
+    "event": "terminal",
+    "id": "durable-a6e729ed416e422399caef073cb00c22",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 8,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 42575839552953,
+      "valid_until_ns": 42601863567609
+    },
+    "terminal_ns": 42575839603536,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emitted_ns": 42575839606400
+  },
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "success": true,
+    "checks": {
+      "target_owned_roads": true,
+      "ordered_bidirectional_connections": true,
+      "forbidden_tiles_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": [],
+    "contract": {
+      "x": 44,
+      "y": 10,
+      "width": 64,
+      "target": [
+        684,
+        685,
+        686,
+        750,
+        814
+      ],
+      "forbidden": [
+        748,
+        749,
+        812,
+        813
+      ],
+      "owner": 0,
+      "guard": [
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        682,
+        683,
+        684,
+        685,
+        686,
+        687,
+        688,
+        746,
+        747,
+        748,
+        749,
+        750,
+        751,
+        752,
+        810,
+        811,
+        812,
+        813,
+        814,
+        815,
+        816,
+        874,
+        875,
+        876,
+        877,
+        878,
+        879,
+        880,
+        938,
+        939,
+        940,
+        941,
+        942,
+        943,
+        944
+      ]
+    },
+    "emitted_ns": 42576492044527
+  },
+  "bridge_exit_code": 0,
+  "durable_calls": 16,
+  "timing_ms": {
+    "hover_submit_to_return": 3613.318198,
+    "model_call_parent": 7087.648919,
+    "model_runner": 6875.9887,
+    "decision_start_to_evaluation_return": 17676.995347
+  }
+}

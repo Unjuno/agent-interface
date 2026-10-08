@@ -1,0 +1,15 @@
+{
+  "controls": [
+    {"errors":["denominator:41!=42"],"name":"drop_case","rejected":true},
+    {"errors":["process:formal-r1-DELIVERY_GC-NO_ACK_DISTINCT"],"name":"returncode","rejected":true},
+    {"errors":["identity:formal-r1-DELIVERY_GC-NO_ACK_DISTINCT"],"name":"identity","rejected":true},
+    {"errors":["authority:formal-r1-DELIVERY_GC-NO_ACK_DISTINCT"],"name":"authority","rejected":true},
+    {"errors":["candidate_unresolved:formal-r1-ACK_REFCOUNT_GC-NO_ACK_DISTINCT"],"name":"candidate_resolution","rejected":true},
+    {"errors":["candidate_unresolved:formal-r1-ACK_REFCOUNT_GC-NO_ACK_DISTINCT"],"name":"candidate_hash","rejected":true},
+    {"errors":["stale_accept:formal-r1-ACK_REFCOUNT_GC-STALE_EPOCH_ACK"],"name":"stale_accept","rejected":true},
+    {"errors":["over_accept:formal-r1-ACK_REFCOUNT_GC-OVER_PREFIX_ACK"],"name":"over_accept","rejected":true},
+    {"errors":["duplicate_nonidempotent:formal-r1-ACK_REFCOUNT_GC-DUPLICATE_ACK_PAGE1"],"name":"duplicate_status","rejected":true},
+    {"errors":["delivery_control_not_exposed:formal-r1-DELIVERY_GC-NO_ACK_DISTINCT"],"name":"control_hide_delivery","rejected":true}
+  ],
+  "rejected": 10
+}

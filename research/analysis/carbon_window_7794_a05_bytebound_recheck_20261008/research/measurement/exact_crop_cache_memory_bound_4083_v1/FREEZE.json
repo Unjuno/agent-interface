@@ -1,0 +1,68 @@
+{
+  "schema": "exact-crop-cache-memory-freeze-v1",
+  "allocation": "exact-crop-cache-memory-bound-4083-20260928-01",
+  "status": "PREFORMAL_SOURCE_AND_DECISION_GATE_ONLY",
+  "issue": 5254,
+  "successor_of": 4083,
+  "intake_main": "0a69b1e273b434c05950e528e08ffcec44823885",
+  "branch": "research/exact-crop-cache-memory-bound-4083-v1-20260928",
+  "additive_path": "research/measurement/exact_crop_cache_memory_bound_4083_v1/",
+  "source_git_blobs": {
+    "upstream/candidate.py": "993d983e05ddcd2a089cd8e63fa4a292b057b137",
+    "upstream/exact_crop_semantic_probe_v1.py": "22a5c022d613039b0386535304cbc432009699af",
+    "upstream/inkscape_selection_frame_probe_v1.py": "f4a68e95e6bbeb2896a00168f0c88282551be4e4"
+  },
+  "source_sha256": {
+    "study_formal.py": "4b60febeed9d4dd9e45df664f2605a45b9a18e7f52dc2cf39b2c19259639c3c4",
+    "audit_formal.py": "f7bc97715e11108f1e15bfb494b29d22059a17805d79b3c490a5d8b85dc210c1",
+    "upstream/candidate.py": "4690a84ec967a8f2c83d931bacf0d440148815f740853bc0390050856f7b4d33",
+    "upstream/exact_crop_semantic_probe_v1.py": "1e9d8405b562f4dcb6b305d486a3eefee1333f204e0c7ded13f3135a564de7cf",
+    "upstream/inkscape_selection_frame_probe_v1.py": "ef2d1fbba8738ea743d85fc6a711e20e9ddd04a22007feee4b94f64e2524f22b"
+  },
+  "formal_profile": {
+    "width_px": 800,
+    "height_px": 600,
+    "unique_image_versions": 64,
+    "revisit_order": "last 8 versions in ascending order",
+    "request_count": 72,
+    "cache_capacity_frames": 8,
+    "roi_xyxy_px": [40, 30, 100, 90],
+    "expected_max_retained_rgb_pixel_bytes": 11520000,
+    "expected_unbounded_retained_rgb_pixel_bytes": 92160000
+  },
+  "decision": {
+    "pass": "PASS_CACHE_MEMORY_BOUND_SCOPED",
+    "required": [
+      "72/72 bounded scores equal direct baseline objects",
+      "bounded retained RGB pixels never exceed 11520000 bytes",
+      "terminal frame entries are the last 8 artifact identities in LRU order",
+      "all 8 revisits are frame cache hits",
+      "crop entries never outlive their corresponding frame entry",
+      "independent raw-only audit errors empty and all 5 controls rejected"
+    ],
+    "failure": [
+      "FAIL_CACHE_SEMANTIC_MISMATCH",
+      "FAIL_CACHE_BOUND_BREACH",
+      "HOLD_CACHE_REVISIT_TRADEOFF",
+      "STOP_PROVENANCE_OR_RESOURCE"
+    ]
+  },
+  "container_gate": {
+    "context": "desktop-linux",
+    "image_config_digest": null,
+    "python_numpy_pillow_versions": null,
+    "status": "PENDING_EXACT_SHARED_LANE_ASSIGNMENT_AND_IMAGE_READBACK",
+    "formal_invocations": 0,
+    "allowed_only_after": "Issue #5085 posts exact owner, allocation, current-main, start/end and release/assignment; image digest and all source/gates are read back"
+  },
+  "execution_policy": {
+    "network": "none during runner and audit",
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "runner": "one fresh bounded container; 1 CPU, 512 MiB memory, 32 PIDs, no-new-privileges, temporary output only",
+    "audit": "one separate fresh container only after runner exit 0; raw read-only, separate output",
+    "retry_replacement_or_tuning": 0,
+    "no_gui_model_gpu_os_input": true
+  }
+}
+

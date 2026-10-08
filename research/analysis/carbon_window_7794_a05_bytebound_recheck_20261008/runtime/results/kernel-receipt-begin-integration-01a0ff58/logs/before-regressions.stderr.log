@@ -1,0 +1,65 @@
+test_duplicate_begin_does_not_replace_first_bound (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_duplicate_begin_does_not_replace_first_bound) ... ok
+test_original_identity_checks_remain_required (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_original_identity_checks_remain_required) ... ok
+test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) ... 
+  test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) (start=0) ... FAIL
+  test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) (start=199) ... FAIL
+  test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) (start=200) ... FAIL
+  test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) (start=299) ... FAIL
+test_receipt_without_successful_begin_is_refused (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_receipt_without_successful_begin_is_refused) ... ok
+test_refused_receipt_can_be_followed_by_current_receipt (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_refused_receipt_can_be_followed_by_current_receipt) ... FAIL
+test_refused_receipt_does_not_disable_verified_cancellation (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_refused_receipt_does_not_disable_verified_cancellation) ... FAIL
+test_rejected_first_begin_does_not_set_the_bound (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_rejected_first_begin_does_not_set_the_bound) ... ok
+test_same_tick_and_later_start_are_accepted (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_same_tick_and_later_start_are_accepted) ... ok
+
+======================================================================
+FAIL: test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) (start=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PRIVATE_WORK\receipt-adoption-v1\runtime\kernel\test_execution_begin_epoch.py", line 28, in test_prebegin_start_refused_without_consuming_any_state
+    with self.assertRaises(ContractError):
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) (start=199)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PRIVATE_WORK\receipt-adoption-v1\runtime\kernel\test_execution_begin_epoch.py", line 28, in test_prebegin_start_refused_without_consuming_any_state
+    with self.assertRaises(ContractError):
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) (start=200)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PRIVATE_WORK\receipt-adoption-v1\runtime\kernel\test_execution_begin_epoch.py", line 28, in test_prebegin_start_refused_without_consuming_any_state
+    with self.assertRaises(ContractError):
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_prebegin_start_refused_without_consuming_any_state (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_prebegin_start_refused_without_consuming_any_state) (start=299)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PRIVATE_WORK\receipt-adoption-v1\runtime\kernel\test_execution_begin_epoch.py", line 28, in test_prebegin_start_refused_without_consuming_any_state
+    with self.assertRaises(ContractError):
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_refused_receipt_can_be_followed_by_current_receipt (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_refused_receipt_can_be_followed_by_current_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PRIVATE_WORK\receipt-adoption-v1\runtime\kernel\test_execution_begin_epoch.py", line 47, in test_refused_receipt_can_be_followed_by_current_receipt
+    with self.assertRaises(ContractError):
+AssertionError: ContractError not raised
+
+======================================================================
+FAIL: test_refused_receipt_does_not_disable_verified_cancellation (runtime.kernel.test_execution_begin_epoch.ExecutionBeginEpochTests.test_refused_receipt_does_not_disable_verified_cancellation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "PRIVATE_WORK\receipt-adoption-v1\runtime\kernel\test_execution_begin_epoch.py", line 55, in test_refused_receipt_does_not_disable_verified_cancellation
+    with self.assertRaises(ContractError):
+AssertionError: ContractError not raised
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=6)

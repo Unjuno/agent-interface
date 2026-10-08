@@ -1,0 +1,47 @@
+{
+  "task": "TEMPORAL-BUFFER-X11-CAPTURE-OVERHEAD-20260918-001",
+  "issue": 1045,
+  "parent_issues": [1028, 1038],
+  "base": "c27d529ed7186d028071380a12f6bfff7cd1cbd7",
+  "branch": "research/temporal-buffer-x11-capture-overhead-20260918-001",
+  "reservation_commit": "2a5255aa0289d9a876301e9848b6fb8fb2d15ecb",
+  "formal_authorized": true,
+  "formal_invocation_budget": 1,
+  "formal_result_absent_at_freeze": true,
+  "formal_pairs": 6,
+  "warmup_ms": 300,
+  "measure_ms": 1500,
+  "fixture_callback_ms": 16,
+  "capture_period_ms": 50,
+  "capture_hz": 20,
+  "geometry": [320, 240],
+  "ring_age_ms": 500,
+  "construction_xauthority_repair": "pre-source-freeze only; first excluded attempt stopped before capture; formal IDs unused",
+  "construction_status": "PLUMBING_PASS_ONE_SHORT_PAIR",
+  "gates": {
+    "capture_count_min_each": 25,
+    "capture_dropped_slots_max_each": 1,
+    "capture_p95_ns_max": 10000000,
+    "capture_cpu_fraction_max_each": 0.2,
+    "ring_frame_multiple_max": 12,
+    "paired_count_ratio_p50_min": 0.97,
+    "paired_count_ratio_p50_max": 1.03,
+    "paired_p95_gap_increase_ns_p50_max": 2000000,
+    "candidate_minus_baseline_max_gap_ns_max_each": 10000000,
+    "baseline_severe_stall_ns": 100000000,
+    "baseline_severe_stall_count_hold": 2
+  },
+  "source_git_blobs": {
+    "PLAN.md": "e428a96f9af551edb4cb5c06852ed6b571bfa467",
+    "fixture.py": "0843f29618b0aa9010b22789f56d248bbeb8f7a4",
+    "runner.py": "28737c18d136992d8a485011de92e48dd9dcc9a1",
+    "audit.py": "0709f34a8b5dc0d4e223e92e1b3f4c4561a12e35"
+  },
+  "source_sha256": {
+    "PLAN.md": "385508500a4e7ab6fe1cd5340d020eb059153df582ffc161cd4b095f403a9434",
+    "fixture.py": "f98a6ebe24ec80668b4e45f9b0ebb6e452b60d91737b2edb544b596b7c9c525f",
+    "runner.py": "ee5bef2e47d9d48b5769d6eee9ae908480cc89c6e83746251ed8f0d8edbfb8bf",
+    "audit.py": "331b0a8fbb048e0a29c67e0b17e7c985817d73d06ab3548f2b147551b02a9e6b"
+  },
+  "reruns": 0
+}

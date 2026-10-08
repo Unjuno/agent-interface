@@ -1,0 +1,364 @@
+{
+  "a1_retained": "STOPPED_FORMAL_OUTER_TIMEOUT",
+  "allocation": "A2_SPLIT_DISPATCH",
+  "decision": "HOLD_LATENCY_OBJECTIVE_TRADEOFF_NOT_CLOSED",
+  "errors": [],
+  "formal_case_reruns": 0,
+  "formal_cases": 8,
+  "gates": {
+    "compute_better_pairs": 0,
+    "faster_pairs": 2,
+    "median_ordinary_loss_pp": -0.146484375,
+    "median_p95_reduction": 0.10069561704007418,
+    "median_stress_loss_pp": -0.0244140625,
+    "violations": [
+      "8891701:ordinary_accuracy",
+      "8891701:stress_accuracy",
+      "8891702:ordinary_accuracy",
+      "8891702:stress_accuracy",
+      "8891703:ordinary_accuracy",
+      "8891703:stress_accuracy",
+      "8891704:ordinary_accuracy",
+      "8891704:stress_accuracy"
+    ]
+  },
+  "rows": [
+    {
+      "arm": "ACCURACY_ONLY",
+      "case_id": "A2-8891701-ACCURACY_ONLY",
+      "lambda": 0.0,
+      "latency_ms": {
+        "decisions_per_s": 4601.662604066667,
+        "max": 0.520645,
+        "mean": 0.217312759765625,
+        "n": 1024,
+        "p50": 0.20486949999999998,
+        "p95": 0.27240765,
+        "p99": 0.29238299
+      },
+      "model_bytes": 3348604,
+      "ordinary": {
+        "accuracy": 0.7353515625,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1160,
+        "teacher_yield_n": 971,
+        "teacher_yield_to_exec": 175,
+        "teacher_yield_to_exec_rate": 0.18022657054582905
+      },
+      "params": 837151,
+      "peak_rss_kib": 346960,
+      "repeat_hash": "2b92fa989e97c69e34803ae4064e6343bf8fb9d333506920c912c776dddd751f",
+      "seed": 8891701,
+      "stress": {
+        "accuracy": 0.74072265625,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1243,
+        "teacher_yield_n": 1026,
+        "teacher_yield_to_exec": 156,
+        "teacher_yield_to_exec_rate": 0.15204678362573099
+      },
+      "train_ms": 6035.806783
+    },
+    {
+      "arm": "LATENCY_AWARE",
+      "case_id": "A2-8891701-LATENCY_AWARE",
+      "lambda": 0.15,
+      "latency_ms": {
+        "decisions_per_s": 4503.418527852802,
+        "max": 0.747824,
+        "mean": 0.22205353417968748,
+        "n": 1024,
+        "p50": 0.2031965,
+        "p95": 0.28286139999999993,
+        "p99": 0.41530477999999976
+      },
+      "model_bytes": 3348604,
+      "ordinary": {
+        "accuracy": 0.73828125,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1162,
+        "teacher_yield_n": 971,
+        "teacher_yield_to_exec": 171,
+        "teacher_yield_to_exec_rate": 0.17610710607621008
+      },
+      "params": 837151,
+      "peak_rss_kib": 347968,
+      "repeat_hash": "7bfdf572b097522612aeee0540645ecde4d31635f744d5944162eeb7626d3a8e",
+      "seed": 8891701,
+      "stress": {
+        "accuracy": 0.74072265625,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1251,
+        "teacher_yield_n": 1026,
+        "teacher_yield_to_exec": 152,
+        "teacher_yield_to_exec_rate": 0.14814814814814814
+      },
+      "train_ms": 6426.517464
+    },
+    {
+      "arm": "ACCURACY_ONLY",
+      "case_id": "A2-8891702-ACCURACY_ONLY",
+      "lambda": 0.0,
+      "latency_ms": {
+        "decisions_per_s": 4585.109165740238,
+        "max": 0.569286,
+        "mean": 0.21809731542968752,
+        "n": 1024,
+        "p50": 0.2021415,
+        "p95": 0.27601624999999996,
+        "p99": 0.3690290499999999
+      },
+      "model_bytes": 3348604,
+      "ordinary": {
+        "accuracy": 0.75439453125,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1217,
+        "teacher_yield_n": 1043,
+        "teacher_yield_to_exec": 164,
+        "teacher_yield_to_exec_rate": 0.15723873441994246
+      },
+      "params": 837151,
+      "peak_rss_kib": 347500,
+      "repeat_hash": "db3cf656617ab59a986a55cf37bfa6ea3d15372e1d75a28111d220f9c6bc7fe5",
+      "seed": 8891702,
+      "stress": {
+        "accuracy": 0.7275390625,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1226,
+        "teacher_yield_n": 1022,
+        "teacher_yield_to_exec": 176,
+        "teacher_yield_to_exec_rate": 0.17221135029354206
+      },
+      "train_ms": 6141.900368
+    },
+    {
+      "arm": "LATENCY_AWARE",
+      "case_id": "A2-8891702-LATENCY_AWARE",
+      "lambda": 0.15,
+      "latency_ms": {
+        "decisions_per_s": 3456.239155332413,
+        "max": 3.445722,
+        "mean": 0.289331830078125,
+        "n": 1024,
+        "p50": 0.21527200000000002,
+        "p95": 0.49890909999999966,
+        "p99": 2.308543409999999
+      },
+      "model_bytes": 3348604,
+      "ordinary": {
+        "accuracy": 0.75732421875,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1213,
+        "teacher_yield_n": 1043,
+        "teacher_yield_to_exec": 163,
+        "teacher_yield_to_exec_rate": 0.15627996164908917
+      },
+      "params": 837151,
+      "peak_rss_kib": 348516,
+      "repeat_hash": "8aa54a1fb65e8d878ed3f2dda260c165a9a3505e2993fe7572909e86dbd04582",
+      "seed": 8891702,
+      "stress": {
+        "accuracy": 0.7255859375,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1225,
+        "teacher_yield_n": 1022,
+        "teacher_yield_to_exec": 178,
+        "teacher_yield_to_exec_rate": 0.17416829745596868
+      },
+      "train_ms": 6221.023353
+    },
+    {
+      "arm": "ACCURACY_ONLY",
+      "case_id": "A2-8891703-ACCURACY_ONLY",
+      "lambda": 0.0,
+      "latency_ms": {
+        "decisions_per_s": 4005.4968403221005,
+        "max": 3.042155,
+        "mean": 0.2496569189453125,
+        "n": 1024,
+        "p50": 0.2086305,
+        "p95": 0.3947719999999999,
+        "p99": 0.6090955899999997
+      },
+      "model_bytes": 3348604,
+      "ordinary": {
+        "accuracy": 0.75732421875,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1173,
+        "teacher_yield_n": 1005,
+        "teacher_yield_to_exec": 164,
+        "teacher_yield_to_exec_rate": 0.16318407960199005
+      },
+      "params": 837151,
+      "peak_rss_kib": 348128,
+      "repeat_hash": "109948e0fcbdf1d3e2b95f13363e72f644af83ef5b1fc12bcf20ba787f9d2b6a",
+      "seed": 8891703,
+      "stress": {
+        "accuracy": 0.74462890625,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1199,
+        "teacher_yield_n": 1036,
+        "teacher_yield_to_exec": 178,
+        "teacher_yield_to_exec_rate": 0.1718146718146718
+      },
+      "train_ms": 6017.912784
+    },
+    {
+      "arm": "LATENCY_AWARE",
+      "case_id": "A2-8891703-LATENCY_AWARE",
+      "lambda": 0.15,
+      "latency_ms": {
+        "decisions_per_s": 4408.3243680543255,
+        "max": 0.959243,
+        "mean": 0.2268435615234375,
+        "n": 1024,
+        "p50": 0.205667,
+        "p95": 0.30011884999999994,
+        "p99": 0.44983616999999965
+      },
+      "model_bytes": 3348604,
+      "ordinary": {
+        "accuracy": 0.75244140625,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1179,
+        "teacher_yield_n": 1005,
+        "teacher_yield_to_exec": 166,
+        "teacher_yield_to_exec_rate": 0.16517412935323383
+      },
+      "params": 837151,
+      "peak_rss_kib": 348012,
+      "repeat_hash": "52e56dff6439037e56d3a8efab268dd6aece0436af99b8d21f9a47a3c3c92de5",
+      "seed": 8891703,
+      "stress": {
+        "accuracy": 0.7451171875,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1222,
+        "teacher_yield_n": 1036,
+        "teacher_yield_to_exec": 166,
+        "teacher_yield_to_exec_rate": 0.16023166023166024
+      },
+      "train_ms": 6496.437677
+    },
+    {
+      "arm": "ACCURACY_ONLY",
+      "case_id": "A2-8891704-ACCURACY_ONLY",
+      "lambda": 0.0,
+      "latency_ms": {
+        "decisions_per_s": 3719.9406229180795,
+        "max": 3.550308,
+        "mean": 0.2688214951171875,
+        "n": 1024,
+        "p50": 0.213603,
+        "p95": 0.5240924499999996,
+        "p99": 0.7294690699999998
+      },
+      "model_bytes": 3348604,
+      "ordinary": {
+        "accuracy": 0.7646484375,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1176,
+        "teacher_yield_n": 1045,
+        "teacher_yield_to_exec": 175,
+        "teacher_yield_to_exec_rate": 0.1674641148325359
+      },
+      "params": 837151,
+      "peak_rss_kib": 347492,
+      "repeat_hash": "979207d8eddb62a7522cbe0083c445beb214498d230ec26e10e450a65679fc1d",
+      "seed": 8891704,
+      "stress": {
+        "accuracy": 0.72802734375,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1201,
+        "teacher_yield_n": 1038,
+        "teacher_yield_to_exec": 196,
+        "teacher_yield_to_exec_rate": 0.18882466281310212
+      },
+      "train_ms": 6380.408559
+    },
+    {
+      "arm": "LATENCY_AWARE",
+      "case_id": "A2-8891704-LATENCY_AWARE",
+      "lambda": 0.15,
+      "latency_ms": {
+        "decisions_per_s": 3783.5676207204615,
+        "max": 3.129101,
+        "mean": 0.2643008134765625,
+        "n": 1024,
+        "p50": 0.21166400000000002,
+        "p95": 0.3972473999999994,
+        "p99": 1.6624644399999966
+      },
+      "model_bytes": 3348604,
+      "ordinary": {
+        "accuracy": 0.7646484375,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1174,
+        "teacher_yield_n": 1045,
+        "teacher_yield_to_exec": 176,
+        "teacher_yield_to_exec_rate": 0.16842105263157894
+      },
+      "params": 837151,
+      "peak_rss_kib": 348500,
+      "repeat_hash": "7761093c81f53359828b686b0944155752206bde5783745497c4aa8aa00683e2",
+      "seed": 8891704,
+      "stress": {
+        "accuracy": 0.7314453125,
+        "exit_counts": [0,2048,0,0],
+        "mean_depth": 2.0,
+        "mean_normalized_compute": 0.5,
+        "n": 2048,
+        "predicted_yield_n": 1195,
+        "teacher_yield_n": 1038,
+        "teacher_yield_to_exec": 195,
+        "teacher_yield_to_exec_rate": 0.18786127167630057
+      },
+      "train_ms": 6506.033075
+    }
+  ],
+  "task": "LOCAL-SYSTEM1-LATENCY-AWARE-EARLY-EXIT-20260917-001"
+}

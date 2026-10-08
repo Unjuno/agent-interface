@@ -1,0 +1,17 @@
+{
+  "allocation": "c318-privsep-06",
+  "base": "3c6f07f0660aee854d6b2d2d0f525fd9f451de68",
+  "branch": "research/libreoffice-privsep-commit-owner-3c6f07f",
+  "issue": 318,
+  "predecessor": "c318-privsep-05 INCOMPLETE / adversarial arm staging edit incorrect before direct writer attempt",
+  "scientific_intervention": "unprivileged GUI principal attempts direct open(target,'r+b') + write/truncate/fsync",
+  "only_change": "post-Calc-window setup settle 0.6s -> 1.5s; new displays/allocation identity",
+  "order": ["stable", "direct_write_attempt"],
+  "repetitions_per_arm": 1,
+  "pass_gate": "both staging saves and controller publications succeed; direct target write denied EACCES/EPERM before target mutation; release empty",
+  "source_sha256": {
+    "runner_v6_direct.py": "f7e54e9d9f4495ea8d13968cffe182accc84015573213bd77ae965b0b95c78fe",
+    "audit_v6_direct.py": "7fbc7394e5ccd10e139039f4a1519d1516f944b76b60a32b426b9978cf982e1c",
+    "score_xlsx.py": "1a176c9fef7ab61b5b615c1e191a539acad2eab65d4c1006c7911459b9f43978"
+  }
+}

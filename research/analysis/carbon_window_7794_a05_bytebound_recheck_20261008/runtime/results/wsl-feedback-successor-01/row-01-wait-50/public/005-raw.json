@@ -1,0 +1,73 @@
+{
+  "status": "target_reviewed",
+  "target": "app",
+  "previous_window_id": 8389124,
+  "window_id": 8390723,
+  "binding_revision": 2,
+  "evidence": {
+    "window_id": 8390723,
+    "focus_path": [
+      8390723
+    ],
+    "transient_chain": [
+      8390723,
+      8389124
+    ],
+    "family_root": 8389124,
+    "title": "Confirm File Format",
+    "wm_class": [
+      "libreoffice",
+      "libreoffice-calc"
+    ],
+    "geometry": [
+      386,
+      322,
+      507,
+      174
+    ]
+  },
+  "input_dispatched": false,
+  "authority_granted": false,
+  "note": "Selection committed; review image delivery and capture_consistency before input. On unavailable/changed evidence, inspect again; do not replay this review. Matching metadata is not a redraw acknowledgement or semantic completion. No lease issued.",
+  "observation_report": {
+    "schema": "agent-interface/runtime-observation-v1",
+    "observation_id": "2e9059a218764a759562a217a72e4654",
+    "side_effect_authority": false,
+    "input_dispatched": false,
+    "status": "returned",
+    "observation": {
+      "bytes": 4096000,
+      "sha256": "2a94d55184914aa0bf3d87ff39f5c66dfd649c4df77669d1bb253e7bc79be873",
+      "width": 1280,
+      "height": 800,
+      "target": "app",
+      "native_window_id": 8390723,
+      "frame": "screen_physical_px",
+      "region": [
+        0,
+        0,
+        1280,
+        800
+      ],
+      "capture_started_ns": 15487911346534,
+      "capture_ended_ns": 15487923359831,
+      "artifact": {
+        "mime_type": "image/png",
+        "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/wsl-feedback-successor-01/row-01-wait-50/public/images/0be7c0f5adaf483f8b5a7e078d4b2e63.png",
+        "sha256": "4312d819b42f66e1d9836488b84e7207ca52aef90a0c341dba57799d4f23a298",
+        "bytes": 77822,
+        "width": 1280,
+        "height": 800,
+        "source_raw_sha256": "2a94d55184914aa0bf3d87ff39f5c66dfd649c4df77669d1bb253e7bc79be873",
+        "timing_ns": {
+          "started": 15487925626500,
+          "converted": 15487926571056,
+          "encoded": 15487950393249,
+          "written": 15487950639550,
+          "hashed": 15487952858558
+        }
+      }
+    }
+  },
+  "capture_consistency": "matched"
+}

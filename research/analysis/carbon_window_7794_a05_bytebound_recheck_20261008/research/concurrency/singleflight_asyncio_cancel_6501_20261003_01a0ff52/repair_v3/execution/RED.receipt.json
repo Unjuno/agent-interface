@@ -1,0 +1,30 @@
+{
+  "classification": "ordinary retained-raw regression RED; no candidate/producer/formal run",
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "research/concurrency/singleflight_asyncio_cancel_6501_20261003_01a0ff52/repair_v3",
+    "-p",
+    "test_audit_v3.py",
+    "-v"
+  ],
+  "started_utc": "2026-10-03T03:46:32.846027+00:00",
+  "ended_utc": "2026-10-03T03:46:33.130253+00:00",
+  "exit_code": 1,
+  "streams": {
+    "stdout": {
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "redaction": "owned local repo path prefix only; exact original retained privately"
+    },
+    "stderr": {
+      "original_sha256": "33361da1b592de3d8f326b2429f307cb73cabf4559441442b715ff238d4174b9",
+      "public_sha256": "18da093a906435bb0531d2258463bcc8c7a3f2b2b212471d1ceb66847655f4ae",
+      "redaction": "owned local repo path prefix only; exact original retained privately"
+    }
+  }
+}

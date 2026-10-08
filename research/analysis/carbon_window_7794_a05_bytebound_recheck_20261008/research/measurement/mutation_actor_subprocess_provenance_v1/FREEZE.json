@@ -1,0 +1,32 @@
+{
+  "base": "dc89ec8b06d49fee48341c3961aa78b4c1930c62",
+  "branch": "research/mutation-actor-subprocess-provenance-20260918-001",
+  "construction": {
+    "child_cleanup": 32,
+    "false_self_credit": 0,
+    "fresh_child_processes": 32,
+    "mismatches": 0,
+    "records": 36,
+    "temporal_false_self_credit": 28
+  },
+  "formal_invocations": 0,
+  "issue": 1228,
+  "known_environment_note": "Python 3.13 emits DeprecationWarning for os.fork in a multi-threaded parent; no construction deadlock or cleanup failure observed.",
+  "records_per_transport": 1000,
+  "reruns": 0,
+  "source_files": {
+    "ROADMAP.md": {
+      "bytes": 866,
+      "sha256": "1e7b5366364e85ef1c8a1e71ed7e64fd7d2761bfc5b0f7c07c16d83bd6b392d8"
+    },
+    "experiment.py": {
+      "bytes": 7486,
+      "sha256": "df24c336e30a3698269de4d0dcc18548a51953d4ed6a60a9307dc03e5a9c162a"
+    }
+  },
+  "task": "MUTATION-ACTOR-SUBPROCESS-PROVENANCE-20260918-001",
+  "transports": [
+    "jsonl",
+    "socket"
+  ]
+}

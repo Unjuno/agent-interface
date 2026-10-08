@@ -1,0 +1,85 @@
+{
+  "task": "RETAINED-SYMBOL-REPRESENTATION-IDENTIFIABILITY-20260918-001",
+  "families": [
+    {
+      "id": "codec_1016",
+      "path": "research/measurement/evidence_bound_symbolizer_codec_v1/REPORT.md",
+      "git_blob": "b3512bfcbd9fb09a09ad520e3268b5a05f23b7f7",
+      "facts": {"model_calls": 0, "canonical_bytes": 10609, "compact_bytes": 8459},
+      "gates": {
+        "model_facing": false,
+        "same_task_fixture": true,
+        "same_underlying_semantic_evidence": true,
+        "same_definitions": true,
+        "same_model_effort": false,
+        "same_prompt_schema_except_representation": false,
+        "same_execution_policy": true,
+        "same_session_cache_treatment": true,
+        "independent_outcome_accounting": true,
+        "representation_only_difference": true,
+        "canonical_vs_compact_same_meaning": true
+      },
+      "reason": "Deterministic codec mechanics only; model_calls=0. Byte delta is not model-facing evidence."
+    },
+    {
+      "id": "integrated_persistent_chromium",
+      "path": "research/live_control/INTEGRATED_EFFICIENCY_LIVE_V1.md",
+      "git_blob": "9a2a4375026f055cdab688608091005692068dca",
+      "facts": {"plain_input_tokens": 63128, "persistent_input_tokens": 26563, "plain_generations": 7, "persistent_generations": 3},
+      "gates": {
+        "model_facing": true,
+        "same_task_fixture": true,
+        "same_underlying_semantic_evidence": false,
+        "same_definitions": false,
+        "same_model_effort": true,
+        "same_prompt_schema_except_representation": false,
+        "same_execution_policy": false,
+        "same_session_cache_treatment": false,
+        "independent_outcome_accounting": true,
+        "representation_only_difference": false,
+        "canonical_vs_compact_same_meaning": false
+      },
+      "reason": "Persistent arm changes model-boundary count, image generations, retained interface state and local continuation; not representation-only."
+    },
+    {
+      "id": "target_handle_model_abba",
+      "path": "research/live_control/TARGET_HANDLE_MODEL_LIVE_ABBA_V1.md",
+      "git_blob": "4b4768e11af93a897fa139f01b8fe494c4a17ff6",
+      "facts": {"coordinate_success": "2/2", "handle_success": "2/2", "coordinate_input": 9280, "handle_input": 8013},
+      "gates": {
+        "model_facing": true,
+        "same_task_fixture": true,
+        "same_underlying_semantic_evidence": false,
+        "same_definitions": false,
+        "same_model_effort": true,
+        "same_prompt_schema_except_representation": false,
+        "same_execution_policy": false,
+        "same_session_cache_treatment": true,
+        "independent_outcome_accounting": true,
+        "representation_only_difference": false,
+        "canonical_vs_compact_same_meaning": false
+      },
+      "reason": "Coordinate arm receives an image; handle arm is no-image symbolic reference and adds query/revalidation calls. Evidence modality and execution differ."
+    },
+    {
+      "id": "action_grounded_memory_ablation",
+      "path": "research/live_control/ACTION_GROUNDED_MEMORY_ABLATION_LIVE_V1.md",
+      "git_blob": "08fd6a91d7b71401e2c39941fa83c01119b739b4",
+      "facts": {"no_memory_correct": "3/3", "full_correct": "3/3", "crop_correct": "3/3", "full_input": 31791, "crop_input": 28188},
+      "gates": {
+        "model_facing": true,
+        "same_task_fixture": true,
+        "same_underlying_semantic_evidence": false,
+        "same_definitions": true,
+        "same_model_effort": true,
+        "same_prompt_schema_except_representation": false,
+        "same_execution_policy": true,
+        "same_session_cache_treatment": true,
+        "independent_outcome_accounting": true,
+        "representation_only_difference": false,
+        "canonical_vs_compact_same_meaning": false
+      },
+      "reason": "Arms change presence/content of historical Image 2 (none/full/crop), so underlying evidence set changes rather than only symbolic presentation."
+    }
+  ]
+}

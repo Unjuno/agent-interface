@@ -1,0 +1,1 @@
+First packaging verifier concatenated the manifest check and env assignment without a newline, causing SyntaxError before verification. Exact first verifier retained as verify.first.py.retained. Corrected only that newline; raw archive/source/tests unchanged.

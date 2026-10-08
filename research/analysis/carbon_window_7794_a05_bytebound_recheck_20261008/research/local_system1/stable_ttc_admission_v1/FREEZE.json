@@ -1,0 +1,48 @@
+{
+  "base": "0df9ab38bb6d6f736651927a2e5a908e3f6cef08",
+  "batch": 256,
+  "construction": {
+    "fake_logit_controls": "PASS_4_OF_4",
+    "formal_training_or_timing": 0,
+    "py_compile": "PASS"
+  },
+  "depth": 4,
+  "environment": {
+    "cpu_count": 5,
+    "numpy": "2.3.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.13.5",
+    "thread_env": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1"
+    },
+    "torch": "2.10.0+cpu"
+  },
+  "epochs": 8,
+  "eval_n": 4096,
+  "exec_conf": 0.9,
+  "formal_cases_executed": 0,
+  "formal_reruns": 0,
+  "formal_seeds": [
+    9081701,
+    9081702,
+    9081703,
+    9081704
+  ],
+  "predecessor_git_blob": "00b9653972c2c0594f8db6bb1cf56ad0f3dd9183",
+  "source_sha256": {
+    "PLAN.md": "dc1b5037e7ee6cce67f7fa57509b11688c5f6da34f68ec9cb6d94509e91109a2",
+    "prereg.json": "44710dcbc3677d8c738ce7f1eb4d55a7b878cfa2b67b6daa565898fe96132b9e",
+    "src/aggregate.py": "cd2f9c6e234ae60179d9fe11aba309e3ac5def2bb30a89502e4038c681dbe9d8",
+    "src/audit.py": "e8b45a898270ec7d03c72e9d60a2d04f06a5014a40331b9e78843a54d7ea8e61",
+    "src/stable_ttc.py": "db144be9cee152a50c8ddd5b2f1869b09168b759982570f9fb161ab181a1efb8",
+    "src/test_controls.py": "d6d85b41157a0e77be5f1e4c9740b6e2b44d974d61d4a22699898292a2825e13"
+  },
+  "task": "LOCAL-SYSTEM1-STABLE-TTC-ADMISSION-20260917-001",
+  "timing_n": 4096,
+  "train_n": 8192,
+  "warmup": 256,
+  "width": 256
+}

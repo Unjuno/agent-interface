@@ -1,0 +1,47 @@
+{
+  "audit_passed": true,
+  "retained_failures": {
+    "missing_preregistration_frame": true,
+    "pre_settle_false_stops": 2,
+    "fresh_target_focus_interruption": true
+  },
+  "archived_settle_aligned": {
+    "cases": 6,
+    "expected_reasons": 6,
+    "first_effects_met": 3,
+    "repeats_stopped": 2,
+    "guard_change_stopped": 1
+  },
+  "fresh_x11": {
+    "cases": 3,
+    "target_delta": [
+      24,
+      0
+    ],
+    "target_changed_pixels": 84,
+    "target_save_started": true,
+    "partial_delta": [
+      20,
+      0
+    ],
+    "partial_save_started": false,
+    "guard_delta": [
+      0,
+      -20
+    ],
+    "guard_changed_pixels": 450,
+    "guard_save_started": false,
+    "sample_spans_ms": [
+      92.475697,
+      95.403073,
+      90.828373
+    ],
+    "exact_frames": 28,
+    "all_terminal_releases_verified": true,
+    "fresh_initial_sources_identical": true,
+    "fresh_initial_source_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14"
+  },
+  "decision": "RETAIN_TARGET_GUARD_OPERATOR;_TRANSFER_ONLY_WITH_FRESH_OPENTTD_SETTLE_AND_INDEPENDENT_SCORE",
+  "scope": "six settle-aligned archived OpenTTD visual checks and one fresh scripted Inkscape three-way integration after retained failures; boxes are human-authored; no fresh OpenTTD input, model authorship, semantic success, speed, token or generalization claim",
+  "audit_sha256": "82a45e6083194c552f3312113c1f538d2f55a99580262f4b2eed1901cd424772"
+}

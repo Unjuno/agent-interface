@@ -1,0 +1,17 @@
+{
+  "schema": "failure-detector-async-preflight-stop-v1",
+  "disposition": "STOP_SOURCE_MANIFEST_MISMATCH",
+  "command": "python3 -B run_experiment.py --results results/t6-e1-01",
+  "stdout": "",
+  "stderr": "frozen source manifest mismatch; no candidate invocation\n",
+  "source_manifest_mismatch": {
+    "file": "candidate.py",
+    "expected_sha256": "fd916e83098b3ae4e2e9a408f34438c9bd10aad1f16b9410197da88e4fbb1f3c",
+    "actual_sha256": "fd916e83098b3ae4e2a9a408f34438c9bd10aad1f16b9410197da88e4fbb1f3c"
+  },
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "raw_created": false,
+  "source_scientific_result": false,
+  "corrective_action": "Preserved this STOP in its own results directory; corrected the manifest typo and will use a new directory for the one candidate/auditor execution."
+}

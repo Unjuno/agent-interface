@@ -1,0 +1,12 @@
+{
+  "operation": "local review packet publication helper",
+  "reported_exit_code": 1,
+  "first_error": "AssertionError at ordered changed-path comparison",
+  "cause": "Windows Path ordering is case-insensitive; Git name ordering is byte lexical. All 30 staged paths were correct additions.",
+  "repair": "Compare the actual complete set/count of paths and addition status, then verify every public artifact hash before commit",
+  "first_helper_source_preserved": true,
+  "producer_or_audit_replayed": false,
+  "remote_ref_or_main_updated_before_failure": false,
+  "started_utc": null,
+  "limit": "First helper did not retain a separate UTC/exit receipt; actual tool exit is preserved here"
+}

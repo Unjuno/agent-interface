@@ -1,0 +1,14 @@
+{
+  "experiment_id":"UNJUNO-7705-PREFERENCE-INPUT-T0-20261005-01",
+  "issue":7705,
+  "scope":"Finite synthetic menu/evaluator contract only; no participants, live routes, model, GUI, or product-performance evidence.",
+  "menu_cases":8,
+  "input_modes":["weights","classify","pairwise"],
+  "criteria":{"wait_ms":"ms minimize","actual_tokens":"tokens minimize","interruptions":"count minimize","recovery_minutes":"minutes minimize"},
+  "hard_gate":"Only routes with frozen eligible=true may be selected; hard-gate failure cannot be offset by objective values.",
+  "required_mutations":["change unit","omit criterion","reverse objective direction","promote hard-gate-failing route"],
+  "decision":"PASS_METHOD_SCOPED iff independent dominance, selection, typed outcomes and all four mutation rejections match the frozen menu; otherwise METHOD_FAIL_OR_INCONCLUSIVE.",
+  "candidate_invocations":1,
+  "auditor_invocations":1,
+  "retries":0
+}

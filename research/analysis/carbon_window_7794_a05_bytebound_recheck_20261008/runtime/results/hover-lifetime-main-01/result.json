@@ -1,0 +1,28 @@
+{
+  "source": "659177b7fab93fe00248516beabaa53c2836d8f2",
+  "scoped_result": "PASS hover / stale refusal / fresh save once",
+  "personal_trial": true,
+  "calls": 7,
+  "images": 4,
+  "extra_disk_previews": 1,
+  "saves": 1,
+  "protocol_tests": 337,
+  "harness_tests": 156,
+  "time_partition": {
+    "span": "first_send_to_last_reply",
+    "total_ms": 73198.73310000077,
+    "request_outstanding_ms": 1722.8900000024587,
+    "presentation_callbacks_ms": 6.407300001010299,
+    "other_host_intervals_ms": 71469.4357999973,
+    "scope": "Disjoint host-clock intervals only. Other includes orchestration, logging and caller gaps; not isolated model reasoning or wait."
+  },
+  "move_send_to_reply_ms": 251.17280000075698,
+  "scope": "Known Tk fixture, not matched speed, first useful feedback, semantic latency, human tempo or provider tokens/cost.",
+  "raw_files": 167,
+  "archive_sha256": "3328ff4853a11169a9c32b6dc991e92d15e30238413c95d65a316614f351744e",
+  "audit_sha256": "d41a250adbc4a1fbdc33f46a7c3af5079a30ccb5654e66a74f26bbbebd8f8e06",
+  "semantic_negatives": {
+    "normal": "duplicate save rejected",
+    "optimized": "duplicate save rejected"
+  }
+}

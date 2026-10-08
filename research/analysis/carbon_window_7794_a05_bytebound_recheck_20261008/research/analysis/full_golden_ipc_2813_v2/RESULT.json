@@ -1,0 +1,12 @@
+{
+  "schema": "full_golden_ipc_task1_successor_result_v1",
+  "issue": 2813,
+  "successor": "full_golden_ipc_2813_v2",
+  "status": "HOLD_DOCKER_UNAVAILABLE",
+  "entry_gate": "PASS_TASK1_ROUTE_PREFLIGHT",
+  "allocation": {"count": 0, "retry": false, "scope": "task-1 only"},
+  "docker": {"linux_engine_available": false, "daemon_probe": "docker version failed: dockerDesktopLinuxEngine pipe not found", "recovery_attempt": "wsl --shutdown then Docker Desktop restart", "backend_outcome": "Docker Desktop exited before engine publication"},
+  "execution": {"container_started": false, "ipc_request_created": false, "model_invoked": false, "gui_operations": 0, "authority_granted": false, "task_effect_claim": false},
+  "decision": "STOP_WITHOUT_TASK_EXECUTION",
+  "next": "Re-run one fresh allocation only after the Docker Linux engine probe succeeds; preserve this result."
+}

@@ -1,0 +1,14 @@
+{
+  "stage": "candidate",
+  "cli": "C:\\Program Files\\WSL\\wslc.exe",
+  "version": "wslc 3.0.1.0",
+  "container": "obs-injection-6575-t0-candidate",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "source": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-2\\semantic-affordance-6519-t0-wslc\\research\\analysis\\observation_injection_transform_6575_t0_v1\\formal_01_20261002\\candidate_source",
+  "input": null,
+  "output": "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-2\\semantic-affordance-6519-t0-wslc\\research\\analysis\\observation_injection_transform_6575_t0_v1\\formal_01_20261002\\candidate_output",
+  "command": "run --pull never --network none --cpus 1 --memory 1G --user 65534:65534 --name obs-injection-6575-t0-candidate --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-2\\semantic-affordance-6519-t0-wslc\\research\\analysis\\observation_injection_transform_6575_t0_v1\\formal_01_20261002\\candidate_source,target=/src,readonly --mount type=bind,source=C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\goal-unjuno-agent-interface-github-mcp-2\\semantic-affordance-6519-t0-wslc\\research\\analysis\\observation_injection_transform_6575_t0_v1\\formal_01_20261002\\candidate_output,target=/out --workdir /src python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python -B /src/candidate.py /out/candidate.raw.json",
+  "started_at_utc": "2026-10-02T06:10:31.8611530Z",
+  "finished_at_utc": "2026-10-02T06:10:32.3788152Z",
+  "exit_code": 0
+}

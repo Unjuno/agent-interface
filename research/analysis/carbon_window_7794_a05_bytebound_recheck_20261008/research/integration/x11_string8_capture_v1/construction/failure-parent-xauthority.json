@@ -1,0 +1,8 @@
+{
+  "classification": "EXCLUDED_CONSTRUCTION_HARNESS_FAILURE",
+  "formal_cases_started": 0,
+  "image_id": "sha256:f82bbd2c087056f324794ca9b0de64c16f0ecaf9a84f30bb0aba17b5b1833786",
+  "failure": "the parent process did not expose its per-case XAUTHORITY path while opening Python-Xlib and native libX11 clients",
+  "exception": "Xlib.error.DisplayConnectionError: Authorization required, but no authorization protocol specified",
+  "disposition": "preserved; corrected parent environment is scoped around both independent connections and restored in a finally block; no formal allocation consumed"
+}

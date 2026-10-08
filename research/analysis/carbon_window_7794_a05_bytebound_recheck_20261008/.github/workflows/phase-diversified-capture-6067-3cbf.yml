@@ -1,0 +1,31 @@
+name: 'Retained X11 phase evidence #6067'
+
+on:
+  pull_request:
+    paths:
+      - 'research/live_control/phase_diversified_capture_6067_t1_20261003_3cbf/**'
+      - '.github/workflows/phase-diversified-capture-6067-3cbf.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/live_control/phase_diversified_capture_6067_t1_20261003_3cbf/**'
+      - '.github/workflows/phase-diversified-capture-6067-3cbf.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  saved-only-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch immutable construction and final scientific source
+        run: git fetch --no-tags --depth=1 origin e2fbed6ef22e091a89c5f21590eb77634c08abf0 48ce12d529c1a9127e46eda4b33bcaaa278129a2
+      - name: Pure construction regressions, no native or formal replay
+        run: python -B -m unittest discover -s research/live_control/phase_diversified_capture_6067_t1_20261003_3cbf -p 'test_*.py' -v
+      - name: Retained terminal, source, environment and result custody
+        run: python -B research/live_control/phase_diversified_capture_6067_t1_20261003_3cbf/verify_evidence.py

@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "case": "optimized_positive",
+      "returncode": 0,
+      "stdout": "{\"status\": \"PASS_RETAINED_PUBLIC_SIX_TASK_PAIR\", \"files\": 411, \"source\": \"3161424cc31cca5dbac9659df4f262f831dd3572\", \"candidate_extra_observations\": 0, \"baseline_extra_observations\": 6, \"integration_spine\": \"HOLD_INTEGRATION_INCOMPLETE\", \"human_tempo\": \"UNMEASURED\", \"scope\": \"Byte consistency; frozen public six-task effect, release/capture/wait/image identity and primary review attribution. No authentication, independent semantic clock, guarded/recovery spine or dollar benefit proof.\"}"
+    },
+    {
+      "case": "corrupt_archive",
+      "rejected": true,
+      "reason": "archive hash"
+    },
+    {
+      "case": "missing_manifest_member",
+      "rejected": true,
+      "reason": "missing member"
+    },
+    {
+      "case": "wrong_independent_score",
+      "rejected": true,
+      "reason": "candidate-post: six-task independent score"
+    },
+    {
+      "case": "wrong_review_image",
+      "rejected": true,
+      "reason": "candidate-post: review attribution"
+    }
+  ],
+  "scope": "Verifier countercontrols only; no new application allocation or input."
+}

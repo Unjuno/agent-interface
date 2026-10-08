@@ -1,0 +1,44 @@
+{
+  "schema": "notification-sampling-reactivity-6657-t0-freeze-v1",
+  "issue": 6657,
+  "allocation": "NOTIFICATION-SAMPLING-REACTIVITY-6657-T0-20261002-01",
+  "main_sha": "4699966453e1e8ea781bdd91f7364aaa2ad07cad",
+  "branch": "research/notification-sampling-reactivity-6657-t0-20261002",
+  "path": "research/analysis/notification_sampling_reactivity_6657_t0_20261002/",
+  "source_sha256": {
+    "PLAN.md": "1dd3b30d361893fd87c1a9215c906d772804c9b8d3e694dbf2d71345b940fff2",
+    "fixture.json": "c2986f8b5cca5cbdd7616997c72ba4dc6650e31e0e886d6a2c08b524d15a38d1",
+    "candidate.py": "e87266b6c312543f12b5c1597652a526f81891a04b9672d99893e8f3358bbd71",
+    "audit.py": "1893fea6b083c66629caffde0ab39caab536ce6bfaa81534ec161d91d386b1cd",
+    "test_method.py": "501547e8dd98d9dcc9c356b1aa8afb83d1981fcbf377ee5c47a13f2fba0c4769"
+  },
+  "construction": {
+    "command": "python3 -B -m unittest discover -s research/analysis/notification_sampling_reactivity_6657_t0_20261002 -p 'test_*.py' -v",
+    "tests_passed": 6,
+    "exit_code": 0,
+    "formal_candidate_invocation": false,
+    "formal_auditor_invocation": false
+  },
+  "runtime": {
+    "host": "macOS Darwin 25.6.0 arm64",
+    "python": "3.14.5",
+    "mode": "native host CPU; no container",
+    "container_reason": "OrbStack inventory had active machines assigned to unrelated research; this standard-library finite method has no container-specific semantics",
+    "network": "not used",
+    "gui_model_participant_user_data_or_external_effect": false
+  },
+  "formal": {
+    "candidate_max": 1,
+    "auditor_max": 1,
+    "retries": 0,
+    "candidate_command": "python3 research/analysis/notification_sampling_reactivity_6657_t0_20261002/candidate.py research/analysis/notification_sampling_reactivity_6657_t0_20261002/fixture.json research/analysis/notification_sampling_reactivity_6657_t0_20261002/results/t0-01/raw.json",
+    "auditor_command": "python3 research/analysis/notification_sampling_reactivity_6657_t0_20261002/audit.py research/analysis/notification_sampling_reactivity_6657_t0_20261002/fixture.json research/analysis/notification_sampling_reactivity_6657_t0_20261002/results/t0-01/raw.json research/analysis/notification_sampling_reactivity_6657_t0_20261002/results/t0-01/audit.json",
+    "candidate_output": "results/t0-01/raw.json",
+    "auditor_output": "results/t0-01/audit.json",
+    "frozen_at_utc": "2026-10-02T12:47:43Z",
+    "formal_counts_at_freeze": {
+      "candidate": 0,
+      "auditor": 0
+    }
+  }
+}

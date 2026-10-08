@@ -1,0 +1,32 @@
+"""Finite abstract enumeration; no native I/O or candidate import."""
+import json
+
+rows = []
+for cancel_read in range(1, 16):
+    for budget in [0, 1, 4]:
+        pending = False
+        reads = 0
+        ack = False
+        while reads < 16:
+            if pending:
+                ack = True
+                break
+            batch_reads = 0
+            while reads < 16:
+                reads += 1
+                batch_reads += 1
+                if reads == cancel_read:
+                    pending = True
+                if budget and batch_reads == budget:
+                    break
+        rows.append({'cancel_read':cancel_read,'budget':budget,'reads':reads,'ack':ack,'pending':pending})
+for record in rows:
+    budget = record['budget']
+    if not budget:
+        assert record['reads'] == 16 and not record['ack'] and record['pending']
+    elif record['reads'] < 16:
+        assert record['ack'] and 0 <= record['reads'] - record['cancel_read'] < budget
+    else:
+        # The prospective native diagnostic guard wins at read16 before another poll.
+        assert record['pending'] and not record['ack']
+print(json.dumps({'classification':'finite abstract model, no native experiment','rows':rows},indent=2))

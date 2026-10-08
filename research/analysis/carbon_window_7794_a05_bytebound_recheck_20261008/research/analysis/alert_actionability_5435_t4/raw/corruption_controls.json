@@ -1,0 +1,31 @@
+{
+  "controls": {
+    "forged_actionable_miss_metric": {
+      "errors": [
+        "stream-00/SAFE_IDENTITY_BATCH: independent replay mismatch"
+      ],
+      "rejected": true
+    },
+    "hard_alert_suppression": {
+      "errors": [
+        "stream-00/SAFE_IDENTITY_BATCH: independent replay mismatch"
+      ],
+      "rejected": true
+    },
+    "missing_factorial_stream": {
+      "errors": [
+        "factorial or policy-stream total mismatch",
+        "summary decision mismatch"
+      ],
+      "rejected": true
+    },
+    "shifted_score_rewrite": {
+      "errors": [
+        "stream-01: event tape mismatch"
+      ],
+      "rejected": true
+    }
+  },
+  "rejected": 4,
+  "total": 4
+}

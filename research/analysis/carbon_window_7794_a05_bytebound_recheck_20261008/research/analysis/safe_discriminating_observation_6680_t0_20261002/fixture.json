@@ -1,0 +1,25 @@
+{
+  "schema": "safe-discriminating-observation-6680-fixture-v1",
+  "initial_alarm": "subthreshold-residual",
+  "pre_diagnosis_release_tick": 0,
+  "max_diagnostic_observations": 1,
+  "probe": {
+    "id": "read-only-residual-signature",
+    "admissible": true,
+    "effectful": false,
+    "lease_extension": false,
+    "response_sets": {
+      "H_OBSERVATION": ["path-anomaly", "ambiguous"],
+      "H_DYNAMICS": ["motion-anomaly", "ambiguous"],
+      "H_MIXED_UNKNOWN": ["ambiguous"]
+    }
+  },
+  "cases": [
+    {"id": "c01", "probe_admissible": true, "observed": "path-anomaly"},
+    {"id": "c02", "probe_admissible": true, "observed": "motion-anomaly"},
+    {"id": "c03", "probe_admissible": true, "observed": "ambiguous"},
+    {"id": "c04", "probe_admissible": false, "observed": null},
+    {"id": "c05", "probe_admissible": true, "observed": "unsupported"}
+  ],
+  "policies": ["always_reobserve", "always_reset", "immediate_yield", "bounded_diagnose"]
+}

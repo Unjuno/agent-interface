@@ -1,0 +1,72 @@
+{
+  "schema": "planner-blind-credential-entry-freeze-v1",
+  "allocation": "PLANNER-BLIND-CREDENTIAL-ENTRY-6515-T0-HOSTCPU-20261003-01",
+  "issue": 6515,
+  "base_main": "c33380b3b08792a331ee11f7aee05e3d41437e3e",
+  "branch": "research/planner-blind-credential-entry-6515-t0-20261003",
+  "path": "research/analysis/planner_blind_credential_entry_6515_t0_v1/",
+  "H": "A request-bound secret-entry policy distinguishes a safe current target from origin, staleness, replay, expiry, focus and route failures, preserves UNKNOWN absent independent effect evidence, and keeps modeled secret exposure out of planner/log outputs; ordinary planner-visible typing cannot satisfy non-disclosure. Whether an existing provider meets the same end-to-end contract remains untested.",
+  "T": {
+    "design": "finite no-secret policy table",
+    "cases": 15,
+    "profile_count": 5,
+    "formal_rows": 75,
+    "profiles": [
+      "actor_only_typing",
+      "visual_only_typing",
+      "documented_provider_profile",
+      "request_bound_broker",
+      "no_automation_manual"
+    ],
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "secret_bytes_or_real_handles": false,
+    "uses_network_gui_user_input_model": false
+  },
+  "D": {
+    "method_pass": "75/75 independently reconstructed rows, zero errors; broker refuses all wrong-origin, stale, replay, expired, wrong-scope and unsupported-path cases and skips already-satisfied authentication; provider unknowns are not filled in; unobservable/unattributable effects stay non-success; no modeled broker/provider secret exposure; manual fallback does not become autonomous; all 8 corruption controls rejected.",
+    "fail_method": "Any unsafe broker delivery, planner/log exposure claim error, false effect attribution, omitted/duplicate row, or accepted corruption control.",
+    "hold_unknown": "Ambiguous origin/effect/provider semantics remain UNKNOWN; actual provider/product behavior is outside T0."
+  },
+  "C": "Hand-authored Boolean state table and policy functions only; leakage indicators are not dynamic information-flow tracing; documented provider profile is not its executable.",
+  "U": "No real credential, byte-flow, covert-channel, provider, browser, OS, actual authentication, GUI, human, security guarantee, or product benefit claim.",
+  "sources": {
+    "PREREGISTRATION.md": "a375a8277a01de8dd475b7071bcb9c00f0469d0ae01c39af242a40d746eaa38b",
+    "fixture.json": "4cad8542fa4fc43e54a9a00b8168c32d629d6b3bbbb3f995f8f62eef1db44909",
+    "candidate.py": "d2394f5ed35c4b196b16b6a13d82c53441191bb447865baf9a7ebfbf62c1d7a1",
+    "audit.py": "f9fe8cb26c886033a6f11b0ac98db15a82a8f4df2918e08125668716cb473472",
+    "test_t0.py": "23fa925cd3cb5b11b6a2ae4908f7fbdf29fdb0d67deff7fcc268b4df09ebde11"
+  },
+  "construction": {
+    "command": "python3 -W error::ResourceWarning -B -m unittest -v test_t0",
+    "result": "PASS 7/7",
+    "py_compile": "PASS",
+    "fixture_json_parse": "PASS",
+    "separate_inline_construction_inputs": true
+  },
+  "runtime": {
+    "platform": "macOS Darwin 25.6.0 arm64",
+    "python": "CPython 3.14.5, standard library only",
+    "container": false,
+    "reason": "WSLc calls are prohibited in current #5085 pending shared bridge anomaly reconciliation; the shared Docker/OrbStack allocation is unassigned. Host CPU-only run avoids shared runtime activity.",
+    "resource_enforcement_claim": false
+  },
+  "external_comparator_basis": {
+    "name": "agent-browser documented authentication/security profile",
+    "url": "https://github.com/vercel-labs/agent-browser/blob/39a74c70d7759d5a6de7a22c04570bb626bbd081/docs/src/app/security/page.mdx",
+    "repository_commit": "39a74c70d7759d5a6de7a22c04570bb626bbd081",
+    "accessed": "2026-10-03",
+    "basis": "Published documentation only: secret separation from LLM context; origin checks/rechecks; visible/stable-field handling. Expiry, replay, embedded-origin and independent server-effect guarantees not inferred.",
+    "not_executed": true
+  },
+  "commands": {
+    "candidate": "python3 -B candidate.py fixture.json results/formal_01/candidate_raw.json",
+    "auditor": "python3 -B audit.py fixture.json results/formal_01/candidate_raw.json results/formal_01/audit_result.json",
+    "working_directory": "research/analysis/planner_blind_credential_entry_6515_t0_v1/",
+    "prelaunch_outputs_absent": [
+      "results/formal_01/candidate_raw.json",
+      "results/formal_01/audit_result.json"
+    ]
+  }
+}

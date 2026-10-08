@@ -1,0 +1,52 @@
+{
+  "schema": "agent-interface/text-post-preflight-keymap-race-audit-v1",
+  "result_id": "text-post-preflight-keymap-race-v1-20260916-01",
+  "audit_pass": true,
+  "checks_count": 15,
+  "checks_passed": 15,
+  "aggregate_sha256": "63a490fe53a1c7c29932e5891dccb8f3b28eb7cc8f8fa306087a01cbacb5049c",
+  "cases": [
+    {
+      "layout": "us",
+      "changed": false,
+      "actual": "@",
+      "accepted": true,
+      "error": null,
+      "emissions": 4,
+      "mutation_done_ns": null,
+      "first_forward_ns": 2648301099450,
+      "timing_proven": true,
+      "target_map_final": null,
+      "release_empty": true,
+      "passed": true
+    },
+    {
+      "layout": "de",
+      "changed": true,
+      "actual": "\"",
+      "accepted": true,
+      "error": null,
+      "emissions": 4,
+      "mutation_done_ns": 2650846223042,
+      "first_forward_ns": 2650846555409,
+      "timing_proven": true,
+      "target_map_final": true,
+      "release_empty": true,
+      "passed": true
+    },
+    {
+      "layout": "fr",
+      "changed": true,
+      "actual": "2",
+      "accepted": true,
+      "error": null,
+      "emissions": 4,
+      "mutation_done_ns": 2653528991758,
+      "first_forward_ns": 2653529663714,
+      "timing_proven": true,
+      "target_map_final": true,
+      "release_empty": true,
+      "passed": true
+    }
+  ]
+}

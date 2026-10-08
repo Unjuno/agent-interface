@@ -1,0 +1,19 @@
+{
+  "allocation": "5329-backward-slice-t0-20261001-02",
+  "base_commit": "24f6b7d5f9395105807f981d48db212e6692a6f4",
+  "runner_invocations": 1,
+  "runner_exit_code": 0,
+  "auditor_invocations": 1,
+  "auditor_exit_code": 0,
+  "rows": 4,
+  "corruptions_rejected": 4,
+  "runner_stdout": "{\"allocation\": \"5329-backward-slice-t0-20261001-02\", \"raw_sha256\": \"4693518956f2337ac7f9ae2134085c6df9069f498861c889b37935ef40acd16d\", \"rows\": 4}",
+  "auditor_stdout": "{\"corruptions\": [{\"name\": \"drop_freshness_from_slice\", \"rejected\": true, \"signals\": [\"retention\"]}, {\"name\": \"drop_control_edge\", \"rejected\": true, \"signals\": [\"retention\"]}, {\"name\": \"forge_oracle\", \"rejected\": true, \"signals\": [\"decision\"]}, {\"name\": \"erase_unknown_cause_edge\", \"rejected\": true, \"signals\": [\"retention\"]}], \"disposition\": \"PASS_METHOD_SCOPED\", \"errors\": [], \"raw_sha256\": \"4693518956f2337ac7f9ae2134085c6df9069f498861c889b37935ef40acd16d\", \"rows\": 4, \"schema\": \"issue5329-backward-slice-audit-v1\"}",
+  "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "network": "none",
+  "cpus": 1,
+  "memory": "256m",
+  "pids_limit": 64,
+  "timeout": false,
+  "retries": 0
+}

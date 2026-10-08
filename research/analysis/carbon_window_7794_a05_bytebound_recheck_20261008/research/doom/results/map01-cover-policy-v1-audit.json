@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "scope": "two sequential four-decision same-seed development probes; model outputs are nondeterministic",
+  "initial_descriptor_normalized_mae": 1.3616557734204794e-06,
+  "compiler_defect": {
+    "model_authored_policies": 4,
+    "visible_threat_policy_authored_and_used_next_iteration": true,
+    "threat_policy_compiled_steps": 16,
+    "threat_policy_compiled_duration_ms": 9640,
+    "ends_with_hold": true
+  },
+  "corrected": {
+    "model_authored_policies": 4,
+    "cover_programs": 6,
+    "cover_renewals": 2,
+    "all_programs_exactly_10000_ms_and_complete_cycles": true,
+    "uncovered_model_segments_ms": [
+      21.512053,
+      20.990171
+    ],
+    "max_uncovered_model_ms": 21.512053,
+    "usage": {
+      "input_tokens": 49360,
+      "cached_input_tokens": 35840,
+      "output_tokens": 408,
+      "reasoning_output_tokens": 76,
+      "uncached_input_tokens": 13520
+    },
+    "score": {
+      "map_exit": false,
+      "player_dead": false,
+      "death_count": 0,
+      "kill_count": 0
+    }
+  },
+  "same_seed_descriptive_usage": {
+    "renewal_only_input_tokens": 48661,
+    "cover_policy_input_tokens": 49360,
+    "input_token_delta": 699,
+    "input_token_delta_percent": 1.4364686299089602,
+    "allocation_limit": "sequential single samples with different model outputs; no causal token claim"
+  },
+  "decision": "retain corrected compiler and planner/runtime policy handoff; threat-policy execution needs a new run before gameplay interpretation"
+}

@@ -1,0 +1,36 @@
+{
+  "issue": 6048,
+  "allocation_id": "5478-json-format-gpu-6048-01-20261001-01",
+  "owner_thread": "01a0b990-3d17-72f1-a908-9a2072104ce5",
+  "status": "STOP_PREFLIGHT_RECEIPT_SCHEMA_MISMATCH",
+  "scientific_result": "NOT_EVALUATED",
+  "main_sha_at_run": "cc804427c14a5c98370b84f9d63809cb5ca0c0ca",
+  "branch_head": "957c5fda003ff831a678b44638746bfd994044df",
+  "window_start_utc": "2026-10-01T13:20:00Z",
+  "stopped_utc": "2026-10-01T13:26:54Z",
+  "preflight": {
+    "invocations": 1,
+    "exit_code": 0,
+    "errors": [],
+    "load_authorized": true,
+    "stdout_reported_receipt_written": true,
+    "persisted_receipt_has_receipt_written": false,
+    "sha256": "8bf8085df3db7327adc0f5015031b6ed020e80bf85f249c6e009d9631d677739"
+  },
+  "candidate_wrapper": {
+    "invocations": 1,
+    "exit_code": 1,
+    "stdout": "STOP: preflight failed; no model load",
+    "stderr": "",
+    "reason": "generate_one.py requires preflight receipt_written=true, but preflight.py did not persist that field"
+  },
+  "model_loads": 0,
+  "cuda_initializations_or_calls": 0,
+  "generation_calls": 0,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "model_sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+  "tokenizer_manifest_sha256": "b9d0e50a6671c2bef75da87d7191555a21db5c801bd7f6d5863f5262581b203e",
+  "input_sha256": "576d9739585c39fc22a986072937c10480a7dcb1881a53280c6a97d061ebca8e",
+  "release": "13:26:54Z; remainder of the exclusive slot returned in #5085 comment 5932427504"
+}

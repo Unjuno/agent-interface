@@ -1,0 +1,3 @@
+# Observation epoch join R0 (Issue #42)
+
+Finite analytical confirmation of explicit temporal composition. Across 27 timestamp assignments for image, focus, and UI tree: strict COHERENT accepts 3/27; bounded skew Δ=1 accepts 15/27; naive latest-per-field would compose 24 mixed-time cases. The candidate never labels a mixed-time assignment strict-coherent. Decision: PASS_OBSERVATION_EPOCH_JOIN_SEMANTICS_SCOPED. This does not establish semantic readiness, GUI correctness, model utility, or runtime latency. One construction arithmetic stop (expected 21 vs actual 15) was corrected before the formal invocation and is retained in the audit.

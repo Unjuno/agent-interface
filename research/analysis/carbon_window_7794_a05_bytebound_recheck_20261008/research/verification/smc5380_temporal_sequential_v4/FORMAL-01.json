@@ -1,0 +1,46 @@
+{
+  "schema": "smc5380-temporal-sequential-v4-formal-record",
+  "attempt": "FORMAL-01",
+  "allocation": "smc5380-temporal-sequential-v4-20260930-01",
+  "frozen_main": "0154e7533fb76a67578e0b2789aa42c32a511369",
+  "sources": {
+    "FREEZE.md": "b6a782f89b9fb289fff771ca4d41d99d728f57d5",
+    "smc_core.py": "f0d07ea839bc4e8b80bb9d10b9640e6c03e4aa55",
+    "run_t0.py": "8276bd4fb280b370956db20e6e6268fb04eb78d8",
+    "test_smc_core.py": "cb20c71a41e587f8fa3649e06e32663d1fae3e64",
+    "audit_t0.py": "9f64916fe96de99715d6c7021a9d2d9c3171e452",
+    "CONSTRUCTION-01.json": "318998471bfdcc44766e14fc5ecf6ceb48c992a2"
+  },
+  "runtime": {
+    "container": false,
+    "platform": "win32",
+    "python": "3.11.9"
+  },
+  "command": "PowerShell; python -B -c <in-memory bootstrap>; exact GitHub-readback smc_core.py + run_t0.py compiled in memory; runner.main() invoked exactly once",
+  "construction_tests": {
+    "command": "PowerShell; python -B -c <in-memory bootstrap>; exact GitHub-readback smc_core.py + test_smc_core.py compiled in memory",
+    "run": 9,
+    "passed": 9,
+    "failed": 0
+  },
+  "formal_runner_invocations": 1,
+  "raw_file": "RAW-01.json",
+  "raw_sha256": "3735f998ce4d947be141d99c0e63119c8280001881d86b7bf8ea46563e56c536",
+  "independent_audit": {
+    "file": "AUDIT-01.json",
+    "source_git_blob_sha": "9f64916fe96de99715d6c7021a9d2d9c3171e452",
+    "invocations": 1,
+    "calibration_replicates_recomputed": 4000,
+    "candidate_imported": false,
+    "errors": [],
+    "fixed_traces_recomputed": 100,
+    "integrity_pass": true,
+    "schema": "smc5380-temporal-sequential-v4-audit",
+    "sequential_strata_recomputed": 5,
+    "uniform_traces_recomputed": 1000
+  },
+  "disposition": "PASS_SMC_METHOD_CALIBRATION_SCOPED",
+  "decision_scope": "synthetic IID method calibration only; not deployed-system safety probability",
+  "raw_path": "research/verification/smc5380_temporal_sequential_v4/RAW-01.json",
+  "audit_path": "research/verification/smc5380_temporal_sequential_v4/AUDIT-01.json"
+}

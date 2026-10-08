@@ -1,0 +1,16 @@
+{
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-05",
+  "schema": "issue3311_interface_preflight_event_v1",
+  "status": "PASS_INTERFACE_VALIDATION_EXIT_CONFIRMED_STDOUT_CAPTURE_LOST",
+  "container_id": "069dc53936085048705a685b4d36a789d7ee07ebd56bcc4086a10533e0c5cef6",
+  "container_name": "clever_dijkstra",
+  "image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+  "docker_event": {"action": "die", "execDuration": "0", "exitCode": "0"},
+  "runner_sha256": "624d551eeda3d787d5dfb881af19c08cf79e08e439483eb5eac39271b9a7740f",
+  "runtime_sha256": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca",
+  "preflight_sha256": "931ae3773eeea196f0d7726247820c7a5ec0e075ed335a578a267642457ebb9f",
+  "gui_started": false,
+  "model_calls": 0,
+  "stdout": "not retained: wrapper omitted the nested exec_command session metadata/output after the daemon wait; no preflight rerun was made",
+  "interpretation": "The frozen preflight has assertions for AST unbound-name absence, actual runtime interface validation, 10000ms bound, two transitions, and the CONFIRMING branch. Its final JSON print is reachable only after all assertions. Docker's retained die event confirms exit 0 for the exact pinned image; the content of the emitted JSON itself is unavailable."
+}

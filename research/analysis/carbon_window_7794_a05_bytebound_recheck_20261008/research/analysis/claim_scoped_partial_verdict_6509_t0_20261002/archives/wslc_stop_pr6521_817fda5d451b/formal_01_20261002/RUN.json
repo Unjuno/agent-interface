@@ -1,0 +1,20 @@
+{
+  "schema": "issue-6509-t0-run-v1",
+  "allocation": "CLAIM-SCOPED-PARTIAL-VERDICT-6509-T0-20261002-01",
+  "status": "STOP_PROTOCOL_COMMAND_MISMATCH",
+  "started_at_utc": "2026-10-02T04:20:08Z",
+  "finished_at_utc": "2026-10-02T04:20:08Z",
+  "construction": {
+    "invocations": 1,
+    "exit_code": 0,
+    "tests_executed": false,
+    "container_id": "d6031c661294",
+    "stdout": "formal_01_20261002/construction/stdout.log",
+    "stderr": "formal_01_20261002/construction/stderr.log",
+    "stop_record": "formal_01_20261002/construction/STOP.json"
+  },
+  "candidate": {"invocations": 0, "status": "NOT_RUN"},
+  "auditor": {"invocations": 0, "status": "NOT_RUN"},
+  "retries": 0,
+  "conclusion": "No formal method result. Construction rung was consumed by a command that omitted the required test suite."
+}

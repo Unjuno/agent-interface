@@ -1,0 +1,33 @@
+{
+  "timestamp_utc": "2026-10-01T21:37:55Z",
+  "host": "Windows host CPU",
+  "allocation": "MAP01-HELD-INPUT-PRIOR-TABLE-RECONCILIATION-59-T1-20261002-01",
+  "parent_pr_head": "0032dfd4ab08343b81816a4e21192de345cca226",
+  "formal_comparator_invocations": 1,
+  "candidate_invocations": 0,
+  "original_auditor_invocations": 0,
+  "retry_count": 0,
+  "exit_code": 0,
+  "status": "PASS_PRIOR_TABLE_RECONCILED",
+  "checks": {
+    "completed_rows_expected": 38,
+    "completed_rows_matched": 38,
+    "exact_aggregate_fields_checked": 18,
+    "aggregate_tolerance_ms": 1e-9,
+    "interrupted_receipt_match": true,
+    "errors": []
+  },
+  "input_sha256": {
+    "candidate_v38": "55771151887660b4a264d9e788410e12e2e6e45ca4f4c9d96db1a5f93e85e5f1",
+    "candidate_v39": "49a47182f6d6f3fdb944224882be5716a0452b2cc88beee51b482ef915be5fc0",
+    "prior_table": "2aab450e687cce4b912a83d548b9ab76165ed1826110e7506468efe2891ef7df"
+  },
+  "output_sha256": "dfedd5a72e7a3e4c667336903465cdf3d08eb2004bc8ed6c3968110b110cf0b5",
+  "environment": {
+    "container_used": false,
+    "docker_service": "Stopped (Manual)",
+    "docker_reason": "Engine unavailable; no shared allocation was started or modified. Comparator is local read-only document reconciliation without container-dependent semantics.",
+    "network_model_gui_game_input_or_task_effect": false
+  },
+  "scope": "Checks retained #6198 candidate outputs against #6175's published posthoc table transcription only; does not independently validate absent #6175 original receipts."
+}

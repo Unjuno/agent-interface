@@ -1,0 +1,39 @@
+{
+  "comparison": {
+    "changed_normalized_lines": 0,
+    "eol_normalized_equal": true,
+    "normalized_line_count_v3": 64,
+    "normalized_line_count_v5": 64,
+    "parsed_records_equal": true,
+    "raw_byte_delta_v5_minus_v3": 64,
+    "raw_bytes_equal": false,
+    "record_count": 64,
+    "v5_matches_issue_4871_frozen_sha256": true
+  },
+  "files": {
+    "frozen_v5": {
+      "bytes": 270292,
+      "crlf_pairs": 64,
+      "final_lf": true,
+      "json_records": 64,
+      "lf_only": 0,
+      "path": "research/system1/typed_readout_precision_boundary_1014_v5/corpus.jsonl",
+      "sha256": "85b5bee5d5a69dab1ff0d094cdbad70d4cd66fcff505b36667978817ed30a49c"
+    },
+    "main_v3": {
+      "bytes": 270228,
+      "crlf_pairs": 0,
+      "final_lf": true,
+      "json_records": 64,
+      "lf_only": 64,
+      "path": "research/system1/typed_readout_decision_equivalence_1014_v3/corpus_source/corpus.jsonl",
+      "sha256": "c70d4ba3d06dec161fdc8d3f5e5312fbe3ff0af1c1a36cdcb0dc0e290efe27fd"
+    }
+  },
+  "hypothesis": "The #4871 frozen corpus hash mismatch is explained solely by LF versus CRLF serialization; parsed JSONL records are identical.",
+  "interpretation": "The original byte-hash STOP remains valid: byte identity failed. This audit shows the observed difference is line-ending-only; it does not rewrite that allocation or its STOP. The distinct #4912 v5 allocation already used the exact frozen bytes and has its own GPU construction result and raw-only audit.",
+  "main_sha": "12d15dd81c47e8af80abd3172d67d934452f36ca",
+  "schema": "typed-readout-corpus-eol-audit-v1",
+  "scope": "Read-only corpus provenance comparison only; no model, tokenizer, GPU/CUDA, Docker/OrbStack, or formal allocation.",
+  "status": "PASS_CORPUS_CONTENT_EQUAL_EOL_ONLY_SCOPED"
+}

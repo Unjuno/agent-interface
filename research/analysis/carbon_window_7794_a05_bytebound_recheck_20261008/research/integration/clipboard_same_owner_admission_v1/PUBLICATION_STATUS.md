@@ -1,0 +1,7 @@
+# Clipboard same-owner admission — publication STOP
+
+Disposition: `STOP_PUBLICATION_EVIDENCE_INCOMPLETE`. This retained path contains the original three source-capsule parts, the preformal correction record, and evidence parts 01/13–08/13 only. Evidence parts 09/13–13/13 and the complete raw-only audit package are absent. Do not infer or publish a formal PASS from the partial capsule; do not rerun or replace the consumed 27-case allocation.
+
+Recovery verification: concatenating the three exact source parts reconstructs a 10,596-byte XZ archive (SHA256 `034a6788db5babc5343056b5eef98365a1f3bedb36e22ddb0239bc2d976d75e3`). All four files in its FREEZE manifest match: `app.py`, `audit.py`, original `run.py`, and `supervise.py`. Applying the exact one-line `PREFORMAL_CORRECTION.json` transformation to the frozen `run.py` yields the recorded effective run hash `e9c60bdfbe58261c74e4ae9a7dc47504c21f9e5ef698b754e7ac3644f3b16cbb`. Python syntax compilation of the four frozen source files passed. These are source-integrity checks only, not formal execution or result validation.
+
+Preserve the eight available evidence chunks byte-for-byte as incomplete historical publication. A complete 27-case denominator, source/result binding, independent raw audit, and the remaining five parts are still required before any evidence-qualified integration. Keep Issue #3981 open; prior #2774/#1739 evidence and other branches are untouched.

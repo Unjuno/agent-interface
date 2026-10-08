@@ -1,0 +1,46 @@
+{
+  "allocation": "temporal-resume-control-map-cleanup-20260928-01",
+  "freeze_revision": 2,
+  "issue": 4926,
+  "base_main": "519f2c1bdb219697c2f5e92ae6c27714265d60e0",
+  "branch": "research/temporal-resume-control-map-cleanup-20260928-v1",
+  "path": "research/integration/temporal_stream_resume_audit_control_map_r2_v1/",
+  "output_path": "research/integration/temporal_stream_resume_audit_control_map_r2_v1/formal-01/",
+  "output_path_state_at_freeze": "absent",
+  "inputs": {
+    "issue_4447_evidence_commit": "de1064b335a6567c57817209485cf18d25d9e3f2",
+    "issue_4447_manifest_sha256": "1584edb3a45202b3e816d2a9735708265dae279fd4e18d8680fded7756cc3855",
+    "issue_4447_batch5_sha256": "14e38390c6c18547d6d5e6fcc62e1dc0827a57ca9d196a88f9d6fa32817e699e",
+    "issue_4447_source_parts_manifest_sha256": "daa3439e92b1b02a724c215b28ad4e4484958daa5428d89c990003e9252cd5d4",
+    "issue_4511_verifier_sha256": "a5fa59f118c46d2c01b555b32dbc3af57d80b2e0df1eea55961ef5ad994faac2",
+    "issue_4534_mutation_helper_sha256": "080233cbaa90156de1da948591e2c2b57b6b8ee9444eddab3229773d4fb15c46"
+  },
+  "frozen_sources": {
+    "PLAN.md": "69f53bfbdd24a0f084dc85b80bd349fa1c5fdd92d3f46bd6e84cc459f666a7ef",
+    "run_cleanup_audit.py": "9e2636dce38f85293e6401e768ff6e3a599ece21123053ba92bc142ef4a21c96",
+    "audit_raw.py": "90acb29ea9a915fba7877945a1556772de12a7e27bd7a15f00531cf90366e794",
+    "test_contract.py": "1631769bc0d7127231c9a00289228cfb566e310cda97cf02c90efa5461d82ec9"
+  },
+  "container": {
+    "engine": "OrbStack Docker Engine 29.4.0 linux/aarch64 host",
+    "image": "python:3.13.5-slim-bookworm",
+    "image_id": "sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419",
+    "requested_platform": "linux/amd64",
+    "pull": "never",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "limits": {
+      "cpus": 1,
+      "memory": "1g",
+      "pids": 64,
+      "tmpfs_tmp": "16m"
+    }
+  },
+  "invocation_limits": {
+    "runner": 1,
+    "independent_auditor": 1,
+    "retries": 0,
+    "temporal_scientific_case_reruns": 0,
+    "post_result_tuning": 0
+  }
+}

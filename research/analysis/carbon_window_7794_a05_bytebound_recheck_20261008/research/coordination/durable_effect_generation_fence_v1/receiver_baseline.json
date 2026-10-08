@@ -1,0 +1,32 @@
+{
+  "schema": "durable_effect_receiver_v1",
+  "policy": "idempotency_only",
+  "accepted_generation": 2,
+  "effect_count": 2,
+  "effects": [
+    {
+      "request_id": "cmd-old-010",
+      "generation": 1,
+      "fingerprint": "386247b2788cf4b418db8b42e5c817b45157f543944fc7b64ebd84a28ee7fcbd",
+      "payload": {"delta": 3}
+    },
+    {
+      "request_id": "cmd-new-010",
+      "generation": 2,
+      "fingerprint": "370b0caf95484b2277c78b3787b5c22e6536cad55dfd6be6a84a796ba1e87f95",
+      "payload": {"delta": 5}
+    }
+  ],
+  "receipts": {
+    "cmd-old-010": {
+      "generation": 1,
+      "fingerprint": "386247b2788cf4b418db8b42e5c817b45157f543944fc7b64ebd84a28ee7fcbd",
+      "outcome": "APPLIED"
+    },
+    "cmd-new-010": {
+      "generation": 2,
+      "fingerprint": "370b0caf95484b2277c78b3787b5c22e6536cad55dfd6be6a84a796ba1e87f95",
+      "outcome": "APPLIED"
+    }
+  }
+}

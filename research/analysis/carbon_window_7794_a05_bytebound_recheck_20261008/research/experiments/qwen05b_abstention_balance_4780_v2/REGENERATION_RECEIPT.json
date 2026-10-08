@@ -1,0 +1,37 @@
+{
+  "schema": "qwen05b-abstention-balance-input-regeneration-v1",
+  "issue": 5014,
+  "allocation": "qwen05b-abstention-balance-4780-20260928-02",
+  "construction_seed_excluded": 73194101,
+  "formal_seed": 73194109,
+  "transport": {
+    "path": "formal-dataset.json.gz.b64",
+    "github_git_blob_sha1": "8e3b20642bff714e49df676a92eadb40fbdd839f",
+    "local_git_blob_sha1": "8e3b20642bff714e49df676a92eadb40fbdd839f",
+    "transport_file_sha256": "112bfdb4a10b9d8f6584cc71f480482e8f14417004607e7e8d34344f5dcfdf23",
+    "transport_file_bytes": 62380,
+    "base64_decoded_gzip_bytes": 46784,
+    "round_trip_match": true
+  },
+  "reconstructed_input": {
+    "path": "formal-dataset.json",
+    "sha256": "cfcf89f19bc4bec7c8bbca80ee9ce4bc77d38dc239c3d6147b77fb7504c42d1d",
+    "bytes": 803673,
+    "generator_rebuild_match": true,
+    "support_pool_rows": 128,
+    "heldout_pool_rows": 256,
+    "heldout_rows": 64
+  },
+  "construction_excluded_input": {
+    "sha256": "7f022341d5e94c71b36861970414b62d0e47d55b058d635d17b687020ae9f22e",
+    "bytes": 803673,
+    "fit_invocations": 0
+  },
+  "rebuild_execution": {
+    "image_id": "sha256:63ce8205b5e0cf7daddac087d6c1bd5489d51e3af345cf923af925026bdd600c",
+    "network": "none",
+    "pull": "never",
+    "formal_seed_fit_invocations": 0,
+    "command": "python -B /src/make_dataset.py --seed 73194109 --out /out/rebuilt.json"
+  }
+}

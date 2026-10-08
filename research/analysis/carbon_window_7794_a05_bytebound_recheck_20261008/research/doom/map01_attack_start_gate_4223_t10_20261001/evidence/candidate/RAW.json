@@ -1,0 +1,332 @@
+{
+  "allocation": "MAP01-ATTACK-ONSET-STARTGATE-4223-T10-20261001-01",
+  "architecture": "x86_64",
+  "candidate_invocations": 1,
+  "child_argv": [
+    "/usr/local/bin/python",
+    "-B",
+    "/src/research/doom/session_map01_v13.py",
+    "--out",
+    "/out/runtime",
+    "--seed",
+    "992600",
+    "--timeout-seconds",
+    "60",
+    "--skill",
+    "1"
+  ],
+  "child_pid": 11,
+  "child_returncode": 0,
+  "child_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "child_stdout_sha256": "1b166cff70fcd6c499c03445a830f2036a2f5a0026f7de57121e615b6c15cd88",
+  "decision": "PASS_START_GATE_ONLY",
+  "elapsed_seconds": 4.349241,
+  "environment": {
+    "OBSTAC_CONSTRUCTION": "0",
+    "OBSTAC_DOCKER_CONTEXT": "default",
+    "OBSTAC_FREEZE_SHA256": "808a5a2885d6d01457ef54d1de7ba5ad7ca50dd475cad92e6672dc91d99bda49",
+    "OBSTAC_IMAGE_ID": "sha256:e096462b398defb30f1da172ca5b2b20cebe3c68d0b341ece7df2a3317c0839e",
+    "OBSTAC_PLATFORM": "linux/amd64",
+    "OBSTAC_RUNTIME_SOURCE_BASE": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+    "OBSTAC_SOURCE_COMMIT": "eafb113e1493b55cf22cd4ca8061325dfccb3465"
+  },
+  "events": [
+    {
+      "after_tic": 90,
+      "before_tic": 19,
+      "emit_ns": 278189258498,
+      "event": "clock_probe",
+      "no_advance_calls_during_wait": true,
+      "refresh_calls_before_control": 2,
+      "wall_seconds": 2.028265637000004
+    },
+    {
+      "bindings": {
+        "Down or s": "back",
+        "Left/Right": "turn",
+        "Shift_L": "run",
+        "Up or w": "forward",
+        "a/d": "strafe",
+        "e or Return": "use",
+        "space": "attack"
+      },
+      "command_contract": {
+        "accepted_attestation": "SHA-256 of canonical validated step JSON",
+        "coast": {
+          "duration_ms": "1-5000",
+          "input_authority": false,
+          "op": "coast",
+          "sample_ms": "50-1000"
+        },
+        "limits": {
+          "implicit_queue": false,
+          "steps": "1-16",
+          "total_hold_ms": 10000
+        },
+        "submit": {
+          "expected_sequence": "latest integer observation sequence",
+          "id": "new nonempty string",
+          "op": "submit",
+          "steps": [
+            {
+              "duration_ms": "1-5000",
+              "keys": [
+                "1-4 exact binding names"
+              ],
+              "op": "hold"
+            },
+            {
+              "op": "observe"
+            }
+          ],
+          "valid_until_ns": "runtime monotonic ns, at most 30s ahead"
+        }
+      },
+      "emit_ns": 278271233195,
+      "event": "ready",
+      "fixture": null,
+      "observation_contract": {
+        "early": "doom-typed-observation-v1 before transport/artifact publication",
+        "early_grants_input_authority": false,
+        "later": "exact full observation with matching epoch and RGB SHA-256",
+        "typed_signals": [
+          "health",
+          "ammo"
+        ]
+      },
+      "operations": [
+        "submit",
+        "cancel",
+        "clock",
+        "finish"
+      ],
+      "presentation": "full",
+      "prohibited": [
+        "pause",
+        "API action selection",
+        "automap",
+        "object labels",
+        "sector labels",
+        "save state"
+      ],
+      "release_contract": {
+        "early": "lease-bound input_released after independent owner verifies empty input",
+        "early_grants_input_authority": false,
+        "terminal": "program lifecycle closes separately after in-flight work and final cleanup"
+      },
+      "task": "Exit continuously advancing Freedoom MAP01"
+    },
+    {
+      "artifact_published": false,
+      "capture_ns": 278275869069,
+      "capture_to_typed_ready_ms": 8.454582,
+      "emit_ns": 278287290593,
+      "event": "typed_observation",
+      "frame_rgb_sha256": "c275d19e806e0956458e5ca1278d9c91d961a5445977a6c3991bc502640c4d3a",
+      "frame_size": [
+        1280,
+        800
+      ],
+      "grants_input_authority": false,
+      "id": "initial",
+      "pointer_binding": {
+        "focus": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ],
+        "surface": 6291472
+      },
+      "schema": "doom-typed-observation-v1",
+      "sequence": 1,
+      "signals": {
+        "ammo": {
+          "binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "capture_ns": 278275869069,
+          "format": "observable-signal-v1",
+          "sequence": 1,
+          "signal_id": "ammo",
+          "status": "observed",
+          "value": 50,
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        },
+        "health": {
+          "binding": {
+            "focus": 6291472,
+            "geometry": [
+              321,
+              180,
+              640,
+              480
+            ],
+            "surface": 6291472
+          },
+          "capture_ns": 278275869069,
+          "format": "observable-signal-v1",
+          "sequence": 1,
+          "signal_id": "health",
+          "status": "observed",
+          "value": 100,
+          "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+        }
+      },
+      "step": 0,
+      "typed_extraction_started_ns": 278281049061,
+      "typed_ready_ns": 278284323651
+    },
+    {
+      "artifact_ready_ns": 278323279378,
+      "capture_ms": 3.5909,
+      "capture_ns": 278275869069,
+      "capture_to_artifact_ready_ms": 47.410309,
+      "context": [
+        [
+          "windows",
+          "0x00600010  0 904d71d03f5e VIZDOOM 1.3.0 (ZDOOM 2.8.1+)\n"
+        ],
+        [
+          "active_window",
+          6291472
+        ]
+      ],
+      "context_ns": 278280408990,
+      "emit_ns": 278323296884,
+      "event": "observation",
+      "exact": true,
+      "focus_samples_match": true,
+      "frame_rgb_sha256": "c275d19e806e0956458e5ca1278d9c91d961a5445977a6c3991bc502640c4d3a",
+      "id": "initial",
+      "image": "/out/runtime/001.png",
+      "image_prepare_ns": 25077330,
+      "image_ready_ns": 278323203846,
+      "image_reused": false,
+      "input_focus_after": 6291472,
+      "input_focus_before": 6291472,
+      "pointer_binding": {
+        "focus": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ],
+        "surface": 6291472
+      },
+      "pointer_context_after": {
+        "focus": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ],
+        "surface": 6291472
+      },
+      "pointer_context_before": {
+        "focus": 6291472,
+        "geometry": [
+          321,
+          180,
+          640,
+          480
+        ],
+        "surface": 6291472
+      },
+      "semantic_completion": "unknown",
+      "sequence": 1,
+      "step": 0,
+      "typed_emit_return_ns": 278287475357,
+      "typed_ready_ns": 278284323651,
+      "wire_bytes": 112434
+    },
+    {
+      "command": {
+        "op": "finish"
+      },
+      "emit_ns": 278355540350,
+      "event": "command",
+      "received_ns": 278355536495
+    },
+    {
+      "death_count": 0,
+      "emit_ns": 278363211021,
+      "episode_finished": false,
+      "episode_timeout_seconds": 60,
+      "event": "post_control_score",
+      "kill_count": 0,
+      "map": "MAP01",
+      "map_exit": false,
+      "one_life_map_exit": false,
+      "player_dead": false,
+      "reward": 0.0,
+      "scorer_refresh_calls_after_control": 1,
+      "skill": 1,
+      "wall_control_ns": 39601292
+    }
+  ],
+  "failure": null,
+  "initial_observation_png_sha256": "3f339ccdec2cd3bd2c0fb3053847eb3ad781108272ed670cd5014448c9ed7678",
+  "input_admission_count": 0,
+  "openbox_pid": 10,
+  "openbox_returncode_after_cleanup": 0,
+  "openbox_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "openbox_stdout_sha256": "6f748c3cd02a858c087697c3afac639205c62b7b206558bd40d1bcbd98165a5c",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.36",
+  "post_control_score_count": 1,
+  "python": "3.13.5 (main, Jul 22 2025, 01:46:07) [GCC 12.2.0]",
+  "retry_count": 0,
+  "runtime_artifact_id": 10398313098,
+  "runtime_artifact_sha256": "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b",
+  "runtime_source_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "runtime_sources": {
+    "doom/doom_hud_signal_v1.py": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+    "doom/doom_hud_signal_v2.py": "c4d5269d258e57b3e04d024f8a3d8948c7bfb73f309f0ca6fe3cd6a44cc755ff",
+    "doom/doom_hud_signal_v3.py": "9bd6b7462adfa6c07f1ab0a0820280768ccb9eff14aca32956a14538c0acb6d7",
+    "doom/doom_retained_input_backend_v3.py": "cad7de4769e574f78663e8351a8c2f8c714d51dfa7f9c41bcfb9716f06bef309",
+    "doom/doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "doom/doom_typed_observation_v1.py": "7268d2ccd291096f2372fe5d624165a55205ebaf7085ccc0daff7870579b30d8",
+    "doom/doom_typed_release_backend_v1.py": "ceef50881dc0619ffee5b7ef551ce0851f2650c7371fc37775a80755f077d12f",
+    "doom/independent_progress_clock_v2.py": "3d906a7043f0d674bac3bd137952adeac11c77c9339bc38ef6ca37b05e0d1613",
+    "doom/main_thread_scorer_polling_v1.py": "0a82819748603b77726d3d7053da7f6cba5cf0a0d5bcd9a79f4272554cf6af0a",
+    "doom/map01_scorer_stdio_adapter_v1.py": "0ba57b240b37d04042915d243d149a1bb65ac689732dfc8e48fb60e880f0198a",
+    "doom/session_map01_v12.py": "92658baccea4c412196ecfa613a5f8ef8e6d0fb674762bcde5968222c31aba7f",
+    "doom/session_map01_v13.py": "1a6da676db9c6b2aa61ccf0f600a1565395e906736bb07a50b2006e100d7ca98",
+    "live_control/coast_backend_v1.py": "fbe2eb087d2ef17d5f00c9c15bf1e6d75010f708d19b52982cdf43573ca33009",
+    "live_control/executor_v11.py": "ec98b6e44ae820e6b2955c062f431c33a1d86e4a626ab60b4e72178508988676",
+    "live_control/executor_v12.py": "b81ad839318e3a53edfde4425f61947fbbc6e142a85348e0a1fe730b754fc74d",
+    "live_control/executor_v5.py": "a36d45bf17d4d174683d982fd83fff24c87149df79dc3f7c0f7235c59c742400",
+    "live_control/input_owner_v10.py": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b",
+    "live_control/input_owner_v5.py": "ee72de489aa8da2f5276ab44927c5c13df777336dd3a8b88b1a77be53e6e2ea7",
+    "live_control/input_transition_owner_v3.py": "5ffdbb3679451fefdc3836917d43d924f0f43c8082d21327207ecefbd87f5be6",
+    "live_control/lease.py": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f",
+    "live_control/lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+    "live_control/lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47",
+    "live_control/lease_release_v1.py": "b4b1521b5207ea14654463f769b05337685750e9040bed36a8acf006aa1d34ff",
+    "live_control/session_v10.py": "a3c480a73da0426f766edc17185bb973f5693ceb3592109a8b411b4eedf3de0d",
+    "live_control/session_v8.py": "508bc5441a08d7e403b1ec84cc08fd10d7d5f92f3f41549ef8af79f5b5de0943",
+    "live_control/session_v9.py": "6808a3232ae6dd8d8b3ea608cdcfe8fb858d47acbe87530dbb4e7b86e3d64ee0"
+  },
+  "runtime_sources_sha256": "01f35ffcc32595145dea3da60ac2d52030199413a981af69080130198b439d76",
+  "schema": "map01-attack-start-gate-raw-v1",
+  "sent_commands": [
+    {
+      "op": "finish"
+    }
+  ],
+  "vizdoom": "1.3.0",
+  "xvfb_pid": 7,
+  "xvfb_returncode_after_cleanup": 0,
+  "xvfb_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "xvfb_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

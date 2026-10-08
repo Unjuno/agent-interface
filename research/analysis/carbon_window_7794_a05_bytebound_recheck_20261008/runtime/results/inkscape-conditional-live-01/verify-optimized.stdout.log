@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "case": "positive-ordinary",
+      "outcome": "TASK_SUCCEEDED",
+      "local_method_ms": 433.038886,
+      "publication_to_helper_read_ms": 449.795324,
+      "publication_to_later_primary_review_declaration_ms": 9313.728367,
+      "semantic_model_latency": null,
+      "program_physical_emissions": 14,
+      "backend_cumulative_emissions_at_last_input": 14,
+      "saved_sha256": "90d605571886c3e07464c808c3f89669987bd939217579baa761706fa0e22403",
+      "saved_rectangles": [
+        {
+          "x": 31.525423,
+          "y": 36.610168,
+          "width": 111.86441,
+          "height": 61.016949
+        },
+        {
+          "x": 204.40678,
+          "y": 128.13559,
+          "width": 132.20338,
+          "height": 71.18644
+        }
+      ]
+    },
+    {
+      "case": "positive-compiled",
+      "outcome": "TASK_SUCCEEDED",
+      "local_method_ms": 446.911577,
+      "publication_to_helper_read_ms": 468.564022,
+      "publication_to_later_primary_review_declaration_ms": 11259.257356,
+      "semantic_model_latency": null,
+      "program_physical_emissions": 14,
+      "backend_cumulative_emissions_at_last_input": 14,
+      "saved_sha256": "90d605571886c3e07464c808c3f89669987bd939217579baa761706fa0e22403",
+      "saved_rectangles": [
+        {
+          "x": 31.525423,
+          "y": 36.610168,
+          "width": 111.86441,
+          "height": 61.016949
+        },
+        {
+          "x": 204.40678,
+          "y": 128.13559,
+          "width": 132.20338,
+          "height": 71.18644
+        }
+      ]
+    },
+    {
+      "case": "unknown-compiled",
+      "outcome": "SAFE_YIELD",
+      "local_method_ms": 295.418638,
+      "publication_to_helper_read_ms": 325.78179,
+      "publication_to_later_primary_review_declaration_ms": 11144.540288,
+      "semantic_model_latency": null,
+      "program_physical_emissions": 10,
+      "backend_cumulative_emissions_at_last_input": 10,
+      "saved_sha256": "1ed60353e3efda72ffa0509290ff9e3374745c5558db84360507493d687ad7b0",
+      "saved_rectangles": []
+    },
+    {
+      "case": "unknown-ordinary",
+      "outcome": "SAFE_YIELD",
+      "local_method_ms": 295.115813,
+      "publication_to_helper_read_ms": 326.237354,
+      "publication_to_later_primary_review_declaration_ms": 18807.053731,
+      "semantic_model_latency": null,
+      "program_physical_emissions": 10,
+      "backend_cumulative_emissions_at_last_input": 10,
+      "saved_sha256": "1ed60353e3efda72ffa0509290ff9e3374745c5558db84360507493d687ad7b0",
+      "saved_rectangles": []
+    }
+  ],
+  "commands": 12,
+  "input_programs": 6,
+  "primary_original_images": 8,
+  "local_method_captures": 10,
+  "all_native_captures": 14,
+  "scope": "finite retained bytes/independent SVG geometry. Timings descriptive; declaration proxy includes orchestration/reasoning, not ingestion/pure inference/semantic completion. No human or billing comparison."
+}

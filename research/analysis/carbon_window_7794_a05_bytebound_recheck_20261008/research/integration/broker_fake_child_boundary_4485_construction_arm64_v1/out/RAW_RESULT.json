@@ -1,0 +1,72 @@
+{
+  "allocation": "broker-fake-child-boundary-4485-arm64-construction-20260928-01",
+  "authority_requested": false,
+  "broker_command": [
+    "/usr/local/bin/python3",
+    "/input/host_model_ipc_broker_v1.py",
+    "--ipc",
+    "/out/case-exit-23/ipc",
+    "--repo",
+    "/out/case-exit-23/repo",
+    "--once"
+  ],
+  "broker_elapsed_ns": 1887893597,
+  "broker_process_exit": 23,
+  "broker_receipt": {
+    "authority_granted": false,
+    "boundary": "host-local-codex-exe",
+    "exited_ns": 48536494084728,
+    "request_id": "case-exit-23",
+    "returncode": 23,
+    "started_ns": 48536079866719,
+    "stderr": "fake child diagnostic\n"
+  },
+  "broker_stderr": "",
+  "broker_stdout": "",
+  "case": "ACTUAL_FAKE_CHILD_EXIT_23",
+  "container": {
+    "machine": "aarch64",
+    "platform": "Linux-7.0.14-orbstack-00380-ga7e0a2dc9535-aarch64-with-glibc2.36",
+    "python": "3.12.14"
+  },
+  "fake_child_call": {
+    "argv": [
+      "exec",
+      "--ignore-user-config",
+      "--ignore-rules",
+      "--ephemeral",
+      "--sandbox",
+      "read-only",
+      "--skip-git-repo-check",
+      "--json",
+      "--model",
+      "gpt-5.6-luna",
+      "-c",
+      "model_reasoning_effort=\"low\"",
+      "-c",
+      "project_doc_max_bytes=0",
+      "--output-schema",
+      "/out/case-exit-23/repo/schema.json",
+      "-C",
+      "/out/case-exit-23/repo",
+      "-"
+    ],
+    "intended_exit": 23,
+    "stdin": "frozen construction probe\n"
+  },
+  "fake_child_log_sha256": "9e80a6a8286e10b31ce4a5236a40e472f60c857ab662299bdfe440ba9b8323d4",
+  "issue": 5013,
+  "request": {
+    "prompt": "frozen construction probe",
+    "request_id": "case-exit-23",
+    "schema": "/repo/schema.json",
+    "working": "/repo"
+  },
+  "request_file_sha256": "9c16895854ddb5cecccf8ab8e500203d1c8d8129190751d96e83252ad347a0e4",
+  "response": "partial fake-child response\n",
+  "schema": "broker-fake-child-boundary-construction-raw-v1",
+  "scope": "one real local fake-child subprocess construction case; not the seven-case formal Issue #5013 allocation",
+  "source_git_blob": "5734f54f318db9ac5e96b2bed6f6bed105ac39ff",
+  "source_sha256_after": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c",
+  "source_sha256_before": "e44822269b921aa6327563b27e48a6d8ef4ebe35a182f50de541cf66fce6199c"
+}

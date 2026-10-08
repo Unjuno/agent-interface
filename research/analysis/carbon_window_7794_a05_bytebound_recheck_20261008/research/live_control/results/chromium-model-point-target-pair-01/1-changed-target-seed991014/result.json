@@ -1,0 +1,236 @@
+{
+  "index": 1,
+  "name": "changed-target",
+  "changed_target": true,
+  "seed": 991014,
+  "goal": {
+    "token": "t991014",
+    "a": 841,
+    "b": 869,
+    "dx": 24,
+    "url": "http://127.0.0.1:39767/",
+    "setup_readiness_captures": 0
+  },
+  "navigate_terminal": {
+    "event": "terminal",
+    "id": "durable-42887da06f844d28af382bb48471c51c",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 4,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 39572481563112,
+      "valid_until_ns": 39581555135978
+    },
+    "terminal_ns": 39572481636651,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 39572481639365
+  },
+  "typed_terminal": {
+    "event": "terminal",
+    "id": "durable-0dcc1c8a34444d949bf137de2542d81a",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 2,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 39572932547563,
+      "valid_until_ns": 39582534521645
+    },
+    "terminal_ns": 39572932580676,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 39572932583220
+  },
+  "source_observation": {
+    "event": "observation",
+    "id": "durable-393add50c958484b968d295a91ea0581",
+    "step": 0,
+    "sequence": 12,
+    "capture_ns": 39573058526371,
+    "context_ns": 39573062708232,
+    "context": [
+      [
+        "windows",
+        "0x00600003  0 HPLaptop AI FORM READY - Google Chrome for Testing\n"
+      ],
+      [
+        "active_window",
+        6291459
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results/chromium-model-point-target-pair-01/1-changed-target-seed991014/runtime/008.png",
+    "image_reused": true,
+    "image_prepare_ns": 1281990,
+    "image_ready_ns": 39573068455977,
+    "input_focus_before": 6291459,
+    "input_focus_after": 6291459,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291459,
+      "surface": 6291459,
+      "geometry": [
+        10,
+        10,
+        1050,
+        780
+      ]
+    },
+    "capture_ms": 6.448557,
+    "wire_bytes": 328,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "emit_started_ns": 39573074054164
+  },
+  "coordinate_model": {
+    "typed": {
+      "op": "pointer_click",
+      "target": {
+        "kind": "absolute",
+        "x": 270,
+        "y": 243,
+        "target_handle": "",
+        "dx": 0,
+        "dy": 0
+      },
+      "button": 1,
+      "duration_ms": 80
+    },
+    "strict_shape_correct": true,
+    "usage": {
+      "input_tokens": 9285,
+      "cached_input_tokens": 0,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 86,
+      "reasoning_output_tokens": 34
+    },
+    "runner_ms": 7153.1698
+  },
+  "model_point": [
+    270,
+    243
+  ],
+  "mint_step": {
+    "op": "target_handle_mint_from_point",
+    "name": "save_form",
+    "coordinate_frame": "window_content",
+    "source_sequence": 12,
+    "point": [
+      270,
+      243
+    ],
+    "region_size": [
+      24,
+      14
+    ],
+    "ttl_ms": 60000,
+    "freshness_ms": 1000,
+    "search_radius": 0,
+    "allowed_transformations": [
+      "window_translation"
+    ]
+  },
+  "fault_terminal": {
+    "event": "terminal",
+    "id": "durable-955abc21a9c44efc891d83766604eb5f",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 4,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 39581238055034,
+      "valid_until_ns": 39590539499210
+    },
+    "terminal_ns": 39581238088799,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 39581238091048
+  },
+  "minted": null,
+  "mint_refusal": {
+    "event": "target_handle_mint_from_point_refused",
+    "id": "durable-b11056883e444adbba6720cca15835d4",
+    "step": 0,
+    "reason": "source_patch_changed",
+    "handle_created": false,
+    "authority": "refusal only; grants no input authority",
+    "source_sequence": 12,
+    "current_sequence": 19,
+    "source_patch_sha256": "e6bf6b7e5d01e75023e9bd87a941d3de13c2104c02833ebdf2ecbf83819a27ab",
+    "current_patch_sha256": "966f82fbf808f6c30964347713717f9a070d87c246cc7d291e0b721b8b62b501",
+    "predicted_box": [
+      258,
+      236,
+      24,
+      14
+    ],
+    "emit_started_ns": 39581390477912
+  },
+  "mint_terminal": {
+    "event": "terminal",
+    "id": "durable-b11056883e444adbba6720cca15835d4",
+    "status": "needs_decision",
+    "error": null,
+    "steps_completed": 0,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 39581401204504,
+      "valid_until_ns": null
+    },
+    "terminal_ns": 39581401244439,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 39581401246818
+  },
+  "surface_move": null,
+  "handle_check": null,
+  "handle_model": null,
+  "admission_revalidation": null,
+  "target_action_pointer_admissions": [],
+  "click_terminal": null,
+  "independent_evaluation": {
+    "event": "independent_evaluation",
+    "success": false,
+    "actual": {
+      "error": "FileNotFoundError(2, 'No such file or directory')"
+    },
+    "known_ns": 39584453887769,
+    "emit_started_ns": 39584453895074
+  },
+  "actual": {},
+  "bridge_exit_code": 0,
+  "durable_calls": 10
+}

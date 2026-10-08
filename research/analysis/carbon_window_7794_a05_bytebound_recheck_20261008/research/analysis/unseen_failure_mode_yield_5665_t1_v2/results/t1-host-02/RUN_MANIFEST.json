@@ -1,0 +1,69 @@
+{
+  "schema": "issue5665-t1-run-manifest-v1",
+  "allocation": "issue5665-failure-mode-yield-t1-20261001-02",
+  "branch": "research/issue5665-failure-mode-yield-t1-20261001-02",
+  "base_main": "3ed5d7865daaaf202c59054c3545ade968446fc8",
+  "commands": {
+    "runner": "python run.py --out results/t1-host-02/raw.jsonl",
+    "auditor": "python audit.py results/t1-host-02/raw.jsonl"
+  },
+  "invocations": {
+    "runner": 1,
+    "auditor": 1
+  },
+  "exit_codes": {
+    "runner": 0,
+    "auditor": 0
+  },
+  "stdout": {
+    "runner": {
+      "path": "logs/runner.stdout.txt",
+      "bytes": 99,
+      "sha256": "9ffbae6aed53ec8664aad40ca8317543058346854ef8d3a3a70930afbe0f0a00"
+    },
+    "auditor": {
+      "path": "logs/audit.stdout.txt",
+      "bytes": 698,
+      "sha256": "58eeac5d518b99cf28662c6aeb80a95e2dd8a8f238f64a5b799d30dc74aafd10"
+    }
+  },
+  "stderr": {
+    "runner": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "auditor": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "source": {
+    "runner_sha256": "8ecfa3b3fd6009de70c5ba3854b8cf9f8c927d8a719f73cf9150c3e9d932d3c2",
+    "auditor_sha256": "cefb6efa1b7c67f6a6eca46e732dae9e564de9fbd698acccd5a407949a3ae6dd"
+  },
+  "raw": {
+    "format": "UTF-8 JSONL; transport retained as ordered Base64 chunks of one gzip stream",
+    "rows": 204,
+    "bytes": 4304789,
+    "sha256": "f497948e2d45e793b612b43265ef5b12d81479695a7b27cf7ba733e3d12573f2",
+    "gzip_bytes": 404235,
+    "gzip_sha256": "1c11d929ee3c5c6b2e08f6e0dc7a25d84df51f0880306b625fb509019681d431",
+    "base64_characters": 538980,
+    "base64_sha256": "e18cb1b8ddca44515e6b885ad95f0e2b87658d15f069ed30f9d22a997f673259",
+    "chunk_directory": "raw-jsonl-gzip-b64/",
+    "chunk_size": 30000,
+    "chunk_count": 18,
+    "last_chunk_characters": 28980,
+    "roundtrip_sha256_verified": true
+  },
+  "environment": {
+    "python": "CPython 3.11.9",
+    "platform": "Windows 10 host CPU",
+    "container": false,
+    "gpu": false,
+    "network": false,
+    "model": false,
+    "gui": false,
+    "task_input": false
+  }
+}

@@ -1,0 +1,926 @@
+{
+  "effect_independence_minimum": 2,
+  "metadata": {
+    "allocation": "dynamic-assurance-case-5332-t0-20260930-01",
+    "container_invocations": 0,
+    "external_effect_calls": 0,
+    "gui_or_input_actions": 0,
+    "issue": 5332,
+    "machine": "arm64",
+    "mode": "host-only-synthetic-t0",
+    "model_calls": 0,
+    "network_requests": 0,
+    "python": "3.14.5",
+    "release": "25.6.0",
+    "source_main": "bdd093f24c626c7ffadaa7ba2a6c8e408814675c",
+    "system": "Darwin"
+  },
+  "policies": [
+    "FLAT_RECEIPTS",
+    "STATIC_CASE",
+    "DYNAMIC_CASE",
+    "DEFEATER_AWARE",
+    "INDEPENDENCE_AWARE",
+    "COMPOSITE_DYNAMIC_CASE"
+  ],
+  "required_subclaims": [
+    "scope",
+    "protocol",
+    "freshness",
+    "causal_attribution",
+    "release"
+  ],
+  "rows": [
+    {
+      "authority_created": false,
+      "case_id": "BASELINE",
+      "external_effect_calls": 0,
+      "policy": "FLAT_RECEIPTS",
+      "reasons": [
+        "POSITIVE_RECEIPT_COUNT>=7"
+      ],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "BASELINE",
+      "external_effect_calls": 0,
+      "policy": "STATIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "BASELINE",
+      "external_effect_calls": 0,
+      "policy": "DYNAMIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "BASELINE",
+      "external_effect_calls": 0,
+      "policy": "DEFEATER_AWARE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "BASELINE",
+      "external_effect_calls": 0,
+      "policy": "INDEPENDENCE_AWARE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "BASELINE",
+      "external_effect_calls": 0,
+      "policy": "COMPOSITE_DYNAMIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DEPENDENCY_CHANGED",
+      "external_effect_calls": 0,
+      "policy": "FLAT_RECEIPTS",
+      "reasons": [
+        "POSITIVE_RECEIPT_COUNT>=7"
+      ],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DEPENDENCY_CHANGED",
+      "external_effect_calls": 0,
+      "policy": "STATIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DEPENDENCY_CHANGED",
+      "external_effect_calls": 0,
+      "policy": "DYNAMIC_CASE",
+      "reasons": [
+        "STALE:ev-causality",
+        "STALE:ev-effect-a",
+        "STALE:ev-effect-b",
+        "STALE:ev-freshness",
+        "STALE:ev-protocol",
+        "STALE:ev-release",
+        "STALE:ev-scope"
+      ],
+      "status": "STALE"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DEPENDENCY_CHANGED",
+      "external_effect_calls": 0,
+      "policy": "DEFEATER_AWARE",
+      "reasons": [
+        "STALE:ev-causality",
+        "STALE:ev-effect-a",
+        "STALE:ev-effect-b",
+        "STALE:ev-freshness",
+        "STALE:ev-protocol",
+        "STALE:ev-release",
+        "STALE:ev-scope"
+      ],
+      "status": "STALE"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DEPENDENCY_CHANGED",
+      "external_effect_calls": 0,
+      "policy": "INDEPENDENCE_AWARE",
+      "reasons": [
+        "STALE:ev-causality",
+        "STALE:ev-effect-a",
+        "STALE:ev-effect-b",
+        "STALE:ev-freshness",
+        "STALE:ev-protocol",
+        "STALE:ev-release",
+        "STALE:ev-scope"
+      ],
+      "status": "STALE"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DEPENDENCY_CHANGED",
+      "external_effect_calls": 0,
+      "policy": "COMPOSITE_DYNAMIC_CASE",
+      "reasons": [
+        "STALE:ev-causality",
+        "STALE:ev-effect-a",
+        "STALE:ev-effect-b",
+        "STALE:ev-freshness",
+        "STALE:ev-protocol",
+        "STALE:ev-release",
+        "STALE:ev-scope"
+      ],
+      "status": "STALE"
+    },
+    {
+      "authority_created": false,
+      "case_id": "MISSING_CAUSALITY",
+      "external_effect_calls": 0,
+      "policy": "FLAT_RECEIPTS",
+      "reasons": [
+        "POSITIVE_RECEIPT_COUNT>=7"
+      ],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "MISSING_CAUSALITY",
+      "external_effect_calls": 0,
+      "policy": "STATIC_CASE",
+      "reasons": [
+        "MISSING:causal_attribution"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "authority_created": false,
+      "case_id": "MISSING_CAUSALITY",
+      "external_effect_calls": 0,
+      "policy": "DYNAMIC_CASE",
+      "reasons": [
+        "MISSING:causal_attribution"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "authority_created": false,
+      "case_id": "MISSING_CAUSALITY",
+      "external_effect_calls": 0,
+      "policy": "DEFEATER_AWARE",
+      "reasons": [
+        "MISSING:causal_attribution"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "authority_created": false,
+      "case_id": "MISSING_CAUSALITY",
+      "external_effect_calls": 0,
+      "policy": "INDEPENDENCE_AWARE",
+      "reasons": [
+        "MISSING:causal_attribution"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "authority_created": false,
+      "case_id": "MISSING_CAUSALITY",
+      "external_effect_calls": 0,
+      "policy": "COMPOSITE_DYNAMIC_CASE",
+      "reasons": [
+        "MISSING:causal_attribution"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "authority_created": false,
+      "case_id": "CORRELATED_DUPLICATE",
+      "external_effect_calls": 0,
+      "policy": "FLAT_RECEIPTS",
+      "reasons": [
+        "POSITIVE_RECEIPT_COUNT>=7"
+      ],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "CORRELATED_DUPLICATE",
+      "external_effect_calls": 0,
+      "policy": "STATIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "CORRELATED_DUPLICATE",
+      "external_effect_calls": 0,
+      "policy": "DYNAMIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "CORRELATED_DUPLICATE",
+      "external_effect_calls": 0,
+      "policy": "DEFEATER_AWARE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "CORRELATED_DUPLICATE",
+      "external_effect_calls": 0,
+      "policy": "INDEPENDENCE_AWARE",
+      "reasons": [
+        "EFFECT_INDEPENDENCE_LT_2"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "authority_created": false,
+      "case_id": "CORRELATED_DUPLICATE",
+      "external_effect_calls": 0,
+      "policy": "COMPOSITE_DYNAMIC_CASE",
+      "reasons": [
+        "EFFECT_INDEPENDENCE_LT_2"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DIRECT_DEFEATER",
+      "external_effect_calls": 0,
+      "policy": "FLAT_RECEIPTS",
+      "reasons": [
+        "POSITIVE_RECEIPT_COUNT>=7"
+      ],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DIRECT_DEFEATER",
+      "external_effect_calls": 0,
+      "policy": "STATIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DIRECT_DEFEATER",
+      "external_effect_calls": 0,
+      "policy": "DYNAMIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DIRECT_DEFEATER",
+      "external_effect_calls": 0,
+      "policy": "DEFEATER_AWARE",
+      "reasons": [
+        "CURRENT_DEFEATER"
+      ],
+      "status": "CONFLICTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DIRECT_DEFEATER",
+      "external_effect_calls": 0,
+      "policy": "INDEPENDENCE_AWARE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "DIRECT_DEFEATER",
+      "external_effect_calls": 0,
+      "policy": "COMPOSITE_DYNAMIC_CASE",
+      "reasons": [
+        "CURRENT_DEFEATER"
+      ],
+      "status": "CONFLICTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "NEGATIVE_SUCCESSOR",
+      "external_effect_calls": 0,
+      "policy": "FLAT_RECEIPTS",
+      "reasons": [
+        "POSITIVE_RECEIPT_COUNT>=7"
+      ],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "NEGATIVE_SUCCESSOR",
+      "external_effect_calls": 0,
+      "policy": "STATIC_CASE",
+      "reasons": [],
+      "status": "SUPPORTED"
+    },
+    {
+      "authority_created": false,
+      "case_id": "NEGATIVE_SUCCESSOR",
+      "external_effect_calls": 0,
+      "policy": "DYNAMIC_CASE",
+      "reasons": [
+        "STALE:ev-causality",
+        "STALE:ev-effect-a",
+        "STALE:ev-effect-b",
+        "STALE:ev-freshness",
+        "STALE:ev-protocol",
+        "STALE:ev-release",
+        "STALE:ev-scope"
+      ],
+      "status": "STALE"
+    },
+    {
+      "authority_created": false,
+      "case_id": "NEGATIVE_SUCCESSOR",
+      "external_effect_calls": 0,
+      "policy": "DEFEATER_AWARE",
+      "reasons": [
+        "STALE:ev-causality",
+        "STALE:ev-effect-a",
+        "STALE:ev-effect-b",
+        "STALE:ev-freshness",
+        "STALE:ev-protocol",
+        "STALE:ev-release",
+        "STALE:ev-scope"
+      ],
+      "status": "STALE"
+    },
+    {
+      "authority_created": false,
+      "case_id": "NEGATIVE_SUCCESSOR",
+      "external_effect_calls": 0,
+      "policy": "INDEPENDENCE_AWARE",
+      "reasons": [
+        "STALE:ev-causality",
+        "STALE:ev-effect-a",
+        "STALE:ev-effect-b",
+        "STALE:ev-freshness",
+        "STALE:ev-protocol",
+        "STALE:ev-release",
+        "STALE:ev-scope"
+      ],
+      "status": "STALE"
+    },
+    {
+      "authority_created": false,
+      "case_id": "NEGATIVE_SUCCESSOR",
+      "external_effect_calls": 0,
+      "policy": "COMPOSITE_DYNAMIC_CASE",
+      "reasons": [
+        "STALE:ev-causality",
+        "STALE:ev-effect-a",
+        "STALE:ev-effect-b",
+        "STALE:ev-freshness",
+        "STALE:ev-protocol",
+        "STALE:ev-release",
+        "STALE:ev-scope"
+      ],
+      "status": "STALE"
+    }
+  ],
+  "scenario_inputs": {
+    "BASELINE": {
+      "current_revision": 1,
+      "evidence": [
+        {
+          "artifact_sha256": "f8e6b76b557e70750e001fc5d882ee47d0757623c594cbf17a55db82d567e17d",
+          "claim": "scope",
+          "defeats": null,
+          "evidence_id": "ev-scope",
+          "independence_domain": "scope-contract",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "19051db59adeefd7ba9b08e53308d6e77fb26a06d482141fbb26ba11bc435a47",
+          "claim": "protocol",
+          "defeats": null,
+          "evidence_id": "ev-protocol",
+          "independence_domain": "protocol-monitor",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "c99bd39899d90d8aefd9bd65777b53937f8ea4058d7eb692f82c2577fc14cd3a",
+          "claim": "freshness",
+          "defeats": null,
+          "evidence_id": "ev-freshness",
+          "independence_domain": "observation-ledger",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "a50ab60bf2b48bdcd90ef2551b227577d0ab0387a5bd03fb04d680347ecb1e93",
+          "claim": "causal_attribution",
+          "defeats": null,
+          "evidence_id": "ev-causality",
+          "independence_domain": "effect-oracle",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "81bbd429c567ea910d750c1d440469daa4597e4468794f056871aaab01d84e28",
+          "claim": "release",
+          "defeats": null,
+          "evidence_id": "ev-release",
+          "independence_domain": "release-receipt",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "53a0aceb5aac777afcdfe3f4479a25e5aee68670f4aee4c7a92bdadbf2c24f17",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-a",
+          "independence_domain": "effect-oracle-a",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "359bddc602c1c0a702258948afce4227e3413cd157d9c8feca0fdfa2037ceff8",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-b",
+          "independence_domain": "effect-oracle-b",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        }
+      ],
+      "history": []
+    },
+    "CORRELATED_DUPLICATE": {
+      "current_revision": 1,
+      "evidence": [
+        {
+          "artifact_sha256": "f8e6b76b557e70750e001fc5d882ee47d0757623c594cbf17a55db82d567e17d",
+          "claim": "scope",
+          "defeats": null,
+          "evidence_id": "ev-scope",
+          "independence_domain": "scope-contract",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "19051db59adeefd7ba9b08e53308d6e77fb26a06d482141fbb26ba11bc435a47",
+          "claim": "protocol",
+          "defeats": null,
+          "evidence_id": "ev-protocol",
+          "independence_domain": "protocol-monitor",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "c99bd39899d90d8aefd9bd65777b53937f8ea4058d7eb692f82c2577fc14cd3a",
+          "claim": "freshness",
+          "defeats": null,
+          "evidence_id": "ev-freshness",
+          "independence_domain": "observation-ledger",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "a50ab60bf2b48bdcd90ef2551b227577d0ab0387a5bd03fb04d680347ecb1e93",
+          "claim": "causal_attribution",
+          "defeats": null,
+          "evidence_id": "ev-causality",
+          "independence_domain": "effect-oracle",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "81bbd429c567ea910d750c1d440469daa4597e4468794f056871aaab01d84e28",
+          "claim": "release",
+          "defeats": null,
+          "evidence_id": "ev-release",
+          "independence_domain": "release-receipt",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "9b0c9c3487dad7629759f3b914501b4b30d202076e731b0983698b707a86ae9f",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-a",
+          "independence_domain": "shared-model-stack",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "afc79449c53f38fa17adf01e9d198957eb03ede8aef45ec6048ddeb356eb5613",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-b",
+          "independence_domain": "shared-model-stack",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        }
+      ],
+      "history": []
+    },
+    "DEPENDENCY_CHANGED": {
+      "current_revision": 2,
+      "evidence": [
+        {
+          "artifact_sha256": "2a89653b29394a91cb6b2c176d5ecbd0b228425d7bfbc965792b6877e1b790b9",
+          "claim": "scope",
+          "defeats": null,
+          "evidence_id": "ev-scope",
+          "independence_domain": "scope-contract",
+          "polarity": "SUPPORT",
+          "source_revision": 0
+        },
+        {
+          "artifact_sha256": "19051db59adeefd7ba9b08e53308d6e77fb26a06d482141fbb26ba11bc435a47",
+          "claim": "protocol",
+          "defeats": null,
+          "evidence_id": "ev-protocol",
+          "independence_domain": "protocol-monitor",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "c99bd39899d90d8aefd9bd65777b53937f8ea4058d7eb692f82c2577fc14cd3a",
+          "claim": "freshness",
+          "defeats": null,
+          "evidence_id": "ev-freshness",
+          "independence_domain": "observation-ledger",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "a50ab60bf2b48bdcd90ef2551b227577d0ab0387a5bd03fb04d680347ecb1e93",
+          "claim": "causal_attribution",
+          "defeats": null,
+          "evidence_id": "ev-causality",
+          "independence_domain": "effect-oracle",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "81bbd429c567ea910d750c1d440469daa4597e4468794f056871aaab01d84e28",
+          "claim": "release",
+          "defeats": null,
+          "evidence_id": "ev-release",
+          "independence_domain": "release-receipt",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "53a0aceb5aac777afcdfe3f4479a25e5aee68670f4aee4c7a92bdadbf2c24f17",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-a",
+          "independence_domain": "effect-oracle-a",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "359bddc602c1c0a702258948afce4227e3413cd157d9c8feca0fdfa2037ceff8",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-b",
+          "independence_domain": "effect-oracle-b",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        }
+      ],
+      "history": []
+    },
+    "DIRECT_DEFEATER": {
+      "current_revision": 1,
+      "evidence": [
+        {
+          "artifact_sha256": "f8e6b76b557e70750e001fc5d882ee47d0757623c594cbf17a55db82d567e17d",
+          "claim": "scope",
+          "defeats": null,
+          "evidence_id": "ev-scope",
+          "independence_domain": "scope-contract",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "19051db59adeefd7ba9b08e53308d6e77fb26a06d482141fbb26ba11bc435a47",
+          "claim": "protocol",
+          "defeats": null,
+          "evidence_id": "ev-protocol",
+          "independence_domain": "protocol-monitor",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "c99bd39899d90d8aefd9bd65777b53937f8ea4058d7eb692f82c2577fc14cd3a",
+          "claim": "freshness",
+          "defeats": null,
+          "evidence_id": "ev-freshness",
+          "independence_domain": "observation-ledger",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "a50ab60bf2b48bdcd90ef2551b227577d0ab0387a5bd03fb04d680347ecb1e93",
+          "claim": "causal_attribution",
+          "defeats": null,
+          "evidence_id": "ev-causality",
+          "independence_domain": "effect-oracle",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "81bbd429c567ea910d750c1d440469daa4597e4468794f056871aaab01d84e28",
+          "claim": "release",
+          "defeats": null,
+          "evidence_id": "ev-release",
+          "independence_domain": "release-receipt",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "53a0aceb5aac777afcdfe3f4479a25e5aee68670f4aee4c7a92bdadbf2c24f17",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-a",
+          "independence_domain": "effect-oracle-a",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "359bddc602c1c0a702258948afce4227e3413cd157d9c8feca0fdfa2037ceff8",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-b",
+          "independence_domain": "effect-oracle-b",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "418088957f2b40d144ead1f493cab9a716b4fef88bc6ef5bc398ed77068e9214",
+          "claim": "top",
+          "defeats": "SAFE_TO_RELEASE",
+          "evidence_id": "ev-refute",
+          "independence_domain": "negative-verifier",
+          "polarity": "REFUTE",
+          "source_revision": 1
+        }
+      ],
+      "history": []
+    },
+    "MISSING_CAUSALITY": {
+      "current_revision": 1,
+      "evidence": [
+        {
+          "artifact_sha256": "f8e6b76b557e70750e001fc5d882ee47d0757623c594cbf17a55db82d567e17d",
+          "claim": "scope",
+          "defeats": null,
+          "evidence_id": "ev-scope",
+          "independence_domain": "scope-contract",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "19051db59adeefd7ba9b08e53308d6e77fb26a06d482141fbb26ba11bc435a47",
+          "claim": "protocol",
+          "defeats": null,
+          "evidence_id": "ev-protocol",
+          "independence_domain": "protocol-monitor",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "c99bd39899d90d8aefd9bd65777b53937f8ea4058d7eb692f82c2577fc14cd3a",
+          "claim": "freshness",
+          "defeats": null,
+          "evidence_id": "ev-freshness",
+          "independence_domain": "observation-ledger",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "81bbd429c567ea910d750c1d440469daa4597e4468794f056871aaab01d84e28",
+          "claim": "release",
+          "defeats": null,
+          "evidence_id": "ev-release",
+          "independence_domain": "release-receipt",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "53a0aceb5aac777afcdfe3f4479a25e5aee68670f4aee4c7a92bdadbf2c24f17",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-a",
+          "independence_domain": "effect-oracle-a",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "359bddc602c1c0a702258948afce4227e3413cd157d9c8feca0fdfa2037ceff8",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-b",
+          "independence_domain": "effect-oracle-b",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "5ad48089fce84c4d9313705b04af5e0c5e6d15006f794993b0fe084cdc2780a4",
+          "claim": "UNRELATED",
+          "defeats": null,
+          "evidence_id": "ev-unrelated",
+          "independence_domain": "memo",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        }
+      ],
+      "history": []
+    },
+    "NEGATIVE_SUCCESSOR": {
+      "current_revision": 2,
+      "evidence": [
+        {
+          "artifact_sha256": "f8e6b76b557e70750e001fc5d882ee47d0757623c594cbf17a55db82d567e17d",
+          "claim": "scope",
+          "defeats": null,
+          "evidence_id": "ev-scope",
+          "independence_domain": "scope-contract",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "19051db59adeefd7ba9b08e53308d6e77fb26a06d482141fbb26ba11bc435a47",
+          "claim": "protocol",
+          "defeats": null,
+          "evidence_id": "ev-protocol",
+          "independence_domain": "protocol-monitor",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "c99bd39899d90d8aefd9bd65777b53937f8ea4058d7eb692f82c2577fc14cd3a",
+          "claim": "freshness",
+          "defeats": null,
+          "evidence_id": "ev-freshness",
+          "independence_domain": "observation-ledger",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "a50ab60bf2b48bdcd90ef2551b227577d0ab0387a5bd03fb04d680347ecb1e93",
+          "claim": "causal_attribution",
+          "defeats": null,
+          "evidence_id": "ev-causality",
+          "independence_domain": "effect-oracle",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "81bbd429c567ea910d750c1d440469daa4597e4468794f056871aaab01d84e28",
+          "claim": "release",
+          "defeats": null,
+          "evidence_id": "ev-release",
+          "independence_domain": "release-receipt",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "53a0aceb5aac777afcdfe3f4479a25e5aee68670f4aee4c7a92bdadbf2c24f17",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-a",
+          "independence_domain": "effect-oracle-a",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "359bddc602c1c0a702258948afce4227e3413cd157d9c8feca0fdfa2037ceff8",
+          "claim": "effect",
+          "defeats": null,
+          "evidence_id": "ev-effect-b",
+          "independence_domain": "effect-oracle-b",
+          "polarity": "SUPPORT",
+          "source_revision": 1
+        },
+        {
+          "artifact_sha256": "8eefe916a617c553982edd6c563ed7b775349b7ed45ca8339e37fb127cf4638f",
+          "claim": "top",
+          "defeats": "SAFE_TO_RELEASE",
+          "evidence_id": "ev-negative-successor",
+          "independence_domain": "successor-experiment",
+          "polarity": "REFUTE",
+          "source_revision": 2
+        }
+      ],
+      "history": [
+        {
+          "after_digest": "940ce3bd809d7143ed360df015bef26c99362855b17d3f8d4c94af8195bfc762",
+          "before_digest": "940ce3bd809d7143ed360df015bef26c99362855b17d3f8d4c94af8195bfc762",
+          "graph": {
+            "claim": "SAFE_TO_RELEASE",
+            "evidence": [
+              {
+                "artifact_sha256": "f8e6b76b557e70750e001fc5d882ee47d0757623c594cbf17a55db82d567e17d",
+                "claim": "scope",
+                "defeats": null,
+                "evidence_id": "ev-scope",
+                "independence_domain": "scope-contract",
+                "polarity": "SUPPORT",
+                "source_revision": 1
+              },
+              {
+                "artifact_sha256": "19051db59adeefd7ba9b08e53308d6e77fb26a06d482141fbb26ba11bc435a47",
+                "claim": "protocol",
+                "defeats": null,
+                "evidence_id": "ev-protocol",
+                "independence_domain": "protocol-monitor",
+                "polarity": "SUPPORT",
+                "source_revision": 1
+              },
+              {
+                "artifact_sha256": "c99bd39899d90d8aefd9bd65777b53937f8ea4058d7eb692f82c2577fc14cd3a",
+                "claim": "freshness",
+                "defeats": null,
+                "evidence_id": "ev-freshness",
+                "independence_domain": "observation-ledger",
+                "polarity": "SUPPORT",
+                "source_revision": 1
+              },
+              {
+                "artifact_sha256": "a50ab60bf2b48bdcd90ef2551b227577d0ab0387a5bd03fb04d680347ecb1e93",
+                "claim": "causal_attribution",
+                "defeats": null,
+                "evidence_id": "ev-causality",
+                "independence_domain": "effect-oracle",
+                "polarity": "SUPPORT",
+                "source_revision": 1
+              },
+              {
+                "artifact_sha256": "81bbd429c567ea910d750c1d440469daa4597e4468794f056871aaab01d84e28",
+                "claim": "release",
+                "defeats": null,
+                "evidence_id": "ev-release",
+                "independence_domain": "release-receipt",
+                "polarity": "SUPPORT",
+                "source_revision": 1
+              },
+              {
+                "artifact_sha256": "53a0aceb5aac777afcdfe3f4479a25e5aee68670f4aee4c7a92bdadbf2c24f17",
+                "claim": "effect",
+                "defeats": null,
+                "evidence_id": "ev-effect-a",
+                "independence_domain": "effect-oracle-a",
+                "polarity": "SUPPORT",
+                "source_revision": 1
+              },
+              {
+                "artifact_sha256": "359bddc602c1c0a702258948afce4227e3413cd157d9c8feca0fdfa2037ceff8",
+                "claim": "effect",
+                "defeats": null,
+                "evidence_id": "ev-effect-b",
+                "independence_domain": "effect-oracle-b",
+                "polarity": "SUPPORT",
+                "source_revision": 1
+              }
+            ],
+            "revision": 1
+          }
+        }
+      ]
+    }
+  },
+  "top_claim": "SAFE_TO_RELEASE"
+}

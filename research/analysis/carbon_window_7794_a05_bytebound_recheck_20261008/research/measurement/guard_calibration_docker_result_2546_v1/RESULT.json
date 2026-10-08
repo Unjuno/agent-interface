@@ -1,0 +1,34 @@
+{
+  "issue": 2546,
+  "source_lineage": "#1793/#1811",
+  "container": "python:3.12-slim-bookworm@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "construction_decision": "PASS_CONSTRUCTION_ELIGIBLE",
+  "formal_decision": "PASS_GUARD_POLICY_RECOVERABLE_X11_CALIBRATION_A3_SCOPED",
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "calibration": {
+    "c_y_stale_ms": 5.7845896015625,
+    "c_y_stale_bootstrap95_ms": [5.6335482119140625, 5.935139986132813],
+    "c_y_fresh_ms": 6.1010064453125,
+    "c_y_fresh_bootstrap95_ms": [5.9055614833984375, 6.302129724414063],
+    "c_f_ms": 9.7915694765625,
+    "c_f_bootstrap95_ms": [9.642037675195312, 9.938544966601562],
+    "s": 1.0,
+    "f": 0.0,
+    "negative_counts": {"c_y_stale": 0, "c_y_fresh": 0, "c_f": 0}
+  },
+  "heldout": {
+    "resolved_tiers": ["1/5", "1/2"],
+    "unknown_tiers": ["1/100", "1/20"],
+    "selector_disagreements": 0
+  },
+  "independent_audit": {
+    "pass": true,
+    "calibration_groups": 128,
+    "policy_rows": 2048,
+    "stale_noop_episodes": 336,
+    "errors": []
+  }
+}

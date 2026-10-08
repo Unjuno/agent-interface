@@ -1,0 +1,5 @@
+{
+  "status": "SUPERSEDED_BEFORE_INFERENCE",
+  "supersededFreeze": "GPU_PILOT_FREEZE_V3.json",
+  "reason": "Pre-inference review found the V3 streaming runner did not block the next model call until GitHub readback. No runner was invoked and no model calls were made under that freeze. Use GPU_PILOT_FREEZE_V3_1.json and capture_gpu_pilot_stream_v3_1.py only."
+}

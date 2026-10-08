@@ -1,0 +1,32 @@
+{
+  "schema": "ai-route-efficiency-multiverse-freeze-v1",
+  "allocation": "route-efficiency-multiverse-5827-t0-20261001-01",
+  "issue": 5827,
+  "branch": "research/route-efficiency-multiverse-5827-t0-20261001",
+  "path": "research/analysis/route_efficiency_multiverse_5827_t0_v1/",
+  "current_main_sha": "2776c9405c51ef279bf6fd6186b2b1531bbff31d",
+  "source_sha256": {
+    "PLAN.md": "3CD6D109D55227DB189A14ADD8BE60C821F8A83B90DA188D07D0AB4D91423387",
+    "fixtures.json": "6FEBE933FE41198BD2D176D564F4395AC585E36F9B39FF1B1C09655A9E5172D6",
+    "candidate.py": "22A0750BA9B660E60E2041B4C0A50B1B3A28190E069BF0F3CEC08167BF40A732",
+    "audit.py": "84242A34D8DA996E179F5CE1A1B6AC5C68791B8AA8C9F8C0144112C6F26BC3AB",
+    "test_construction.py": "A5C44617BF6F510B748DED9C397D4E01BCC1AD5E995A765C02739F57AF3E465B"
+  },
+  "construction": {
+    "command": "python -B -m unittest -v test_construction.py",
+    "exit": 0,
+    "tests": 7
+  },
+  "environment": {
+    "python": "CPython 3.12.10",
+    "platform": "Windows",
+    "container": false,
+    "reason": "Issue T0 is finite CPU-only ledger checking; Docker Desktop desktop-linux GET /_ping connected but received no bytes within bounded probe."
+  },
+  "protocol": {
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0,
+    "scope": "synthetic accounting method only; no route/product result"
+  }
+}

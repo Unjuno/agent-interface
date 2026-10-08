@@ -1,0 +1,35 @@
+{
+  "fixture_id": "CGCG-6645-T1B-CANDIDATE-v1",
+  "rows": [
+    {
+      "id": "valid_complete_coverage",
+      "surface_family": "document",
+      "covered_predicates": ["app_mode", "modal_occlusion", "target_freshness"],
+      "observations": {"app_mode": "document", "modal_occlusion": "none", "target_freshness": "current"}
+    },
+    {
+      "id": "known_stale_complete_coverage",
+      "surface_family": "document",
+      "covered_predicates": ["app_mode", "modal_occlusion", "target_freshness"],
+      "observations": {"app_mode": "document", "modal_occlusion": "none", "target_freshness": "stale"}
+    },
+    {
+      "id": "hidden_modal_harmful_incomplete_coverage",
+      "surface_family": "document",
+      "covered_predicates": ["app_mode", "target_freshness"],
+      "observations": {"app_mode": "document", "target_freshness": "current"}
+    },
+    {
+      "id": "hidden_modal_safe_incomplete_coverage",
+      "surface_family": "document",
+      "covered_predicates": ["app_mode", "target_freshness"],
+      "observations": {"app_mode": "document", "target_freshness": "current"}
+    },
+    {
+      "id": "unregistered_surface_family",
+      "surface_family": "future_surface",
+      "covered_predicates": ["app_mode", "target_freshness"],
+      "observations": {"app_mode": "document", "target_freshness": "current"}
+    }
+  ]
+}

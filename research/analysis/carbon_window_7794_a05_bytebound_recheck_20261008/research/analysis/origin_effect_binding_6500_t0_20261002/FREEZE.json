@@ -1,0 +1,40 @@
+{
+  "schema": "origin-effect-binding-6500-freeze-v1",
+  "allocation": "ORIGIN-EFFECT-BINDING-6500-ORB-T0-20261002-01",
+  "issue": 6500,
+  "source_commit": "a7941a435523a8026bb3dbd905cbada9e50891f6",
+  "intake_main": "4699966453e1e8ea781bdd91f7364aaa2ad07cad",
+  "source_sha256": {
+    "PREREGISTRATION.md": "694d8ee6fc10f0456c1c7eba99776950528a03e6ec848c181adb5647aecaaac2",
+    "CONSTRUCTION.md": "93d088d684a02e38c125ec793aa5fe76d745d535279847548999d0f7be7affb0",
+    "README.md": "8511e5d58db269a3e4608c9af74ec91102ea2f467bea6090e056183133e770a9",
+    "auditor.py": "29a4e2b1a11decefecc8d9b01a4f131d1ec5b82d6a0a497f1760bc714ff51e64",
+    "candidate.py": "4da50a64777ec5b5f875f5df3cab0d0c852100802b56381410a954cb32f57c85",
+    "design.json": "b99dc68e4b57f6dbdda91a5216276ec8ab977bb720f7c3d08c7188c6f25073ff",
+    "runner.py": "9bc987a7b0c00d45afedfcdfbb5a19ade6cf327994b95dc77cd7c0d7bafe1745",
+    "test_protocol.py": "4b8b06728b8266b477603fdd2bc858b29d2f3f9e59020ce31a90325ae44b149f",
+    "workflow": "de0c4896ff02eb7f1da58f99b2c3fbbfef6994f19b4a97a8e5243470f6d100d4"
+  },
+  "image": "python:3.12-slim-bookworm@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+  "image_id_platform": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e linux/arm64",
+  "construction": {
+    "first_host_result": "2 assertions failed before formal; embedded-origin mutation was a no-op on a None baseline; see CONSTRUCTION.md",
+    "corrected_host_tests": "8/8 PASS",
+    "corrected_orbstack_tests": "8/8 PASS",
+    "orbstack_container_id": "a277c078ede611e1667f33ee344d4c15f50c849ada25757fcd41346f2385bc30",
+    "network": "none",
+    "read_only_rootfs": true,
+    "memory_requested_bytes": 268435456,
+    "pids_limit": 64,
+    "cpus": 1,
+    "oom_killed": false,
+    "container_removed_after_inspection": true
+  },
+  "runtime": {"context": "orbstack", "pull": "never", "network": "none", "cpus": 1,
+    "memory": "256m", "pids_limit": 64, "read_only_rootfs": true,
+    "source_read_only": true, "output_separate_writable_mount": true},
+  "expected_rows": 24,
+  "expected_mutations": 6,
+  "formal_counts": {"candidate_containers": 1, "auditor_containers": 1, "retries": 0},
+  "decision_gate": "PASS_METHOD_SCOPED iff all 24 rows reconstruct, origin-bound admits both legitimate rows and none of the six nonlegitimate rows, missing process provenance is UNKNOWN, both comparators falsely admit at least one nonlegitimate case, and all six mutations are rejected. Otherwise FAIL_AUDIT or FAIL_METHOD. No real GUI/security claim."
+}

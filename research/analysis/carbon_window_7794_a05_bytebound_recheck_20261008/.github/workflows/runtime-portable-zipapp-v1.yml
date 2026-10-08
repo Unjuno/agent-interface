@@ -1,0 +1,88 @@
+name: Portable unified runtime zipapp v1
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'research/analysis/gpu_grounding_template_diversity_2912_v2/**'
+      - 'runtime/distribution_v2/**'
+      - 'runtime/host_v1/**'
+      - 'runtime/guarded_x11_v1/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/selector_v1/**'
+      - 'runtime/cli_v1/**'
+      - 'runtime/motor_state_v1/**'
+      - 'runtime/backends/x11_v1/**'
+      - 'runtime/backends/win32_v1/**'
+      - 'runtime/backends/quartz_v1/**'
+      - '.github/workflows/runtime-portable-zipapp-v1.yml'
+  pull_request:
+    paths:
+      - 'research/analysis/gpu_grounding_template_diversity_2912_v2/**'
+      - 'runtime/distribution_v2/**'
+      - 'runtime/host_v1/**'
+      - 'runtime/guarded_x11_v1/**'
+      - 'runtime/core_v1/**'
+      - 'runtime/selector_v1/**'
+      - 'runtime/cli_v1/**'
+      - 'runtime/motor_state_v1/**'
+      - 'runtime/backends/x11_v1/**'
+      - 'runtime/backends/win32_v1/**'
+      - 'runtime/backends/quartz_v1/**'
+      - '.github/workflows/runtime-portable-zipapp-v1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Enable Windows long paths
+        if: runner.os == 'Windows'
+        run: git config --global core.longpaths true
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime/distribution_v2
+            runtime/host_v1
+            runtime/guarded_x11_v1
+            runtime/core_v1
+            runtime/selector_v1
+            runtime/cli_v1
+            runtime/motor_state_v1
+            runtime/backends/x11_v1
+            runtime/backends/win32_v1
+            runtime/backends/quartz_v1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile distribution tooling
+        run: python -m compileall -q runtime/distribution_v2
+      - name: Run portable distribution tests
+        run: python -m unittest -v runtime.distribution_v2.test_distribution
+      - name: Build portable runtime artifact
+        shell: bash
+        run: |
+          mkdir -p out
+          python -m runtime.distribution_v2.build \
+            --root . \
+            --out out/agent-interface-runtime.pyz \
+            --manifest out/MANIFEST.json \
+            --sums out/SHA256SUMS \
+            --host-directory out/host
+          python out/agent-interface-runtime.pyz doctor
+          cat out/SHA256SUMS
+      - name: Upload platform construction artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portable-runtime-${{ matrix.os }}
+          path: out/
+          if-no-files-found: error
+          compression-level: 0

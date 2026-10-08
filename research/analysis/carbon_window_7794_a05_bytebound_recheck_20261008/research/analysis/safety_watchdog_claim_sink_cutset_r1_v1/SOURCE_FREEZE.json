@@ -1,0 +1,48 @@
+{
+  "task": "SAFETY-WATCHDOG-CLAIM-SINK-CUTSET-R1-20260919-001",
+  "issue": 1893,
+  "intake_base": "9accec73b289a9609542d7b5d530f4ff829598b0",
+  "branch": "research/watchdog-claim-sink-1893",
+  "source_freeze_head": "160ad65e15fc756827e2e55e1cb85d7877d3cf57",
+  "formal_invocations_before_freeze": 0,
+  "x11_reruns": 0,
+  "transport_repair": {
+    "occurred_before_formal": true,
+    "reason": "initial analyzer/audit text transport changed backslash escapes; remote blob mismatch detected by readback",
+    "repaired": true,
+    "scientific_rows_before_repair": 0
+  },
+  "files": {
+    "PLAN.md": {
+      "git_blob": "b2caea6806dc208bdd3a74d84d7c045e4b3e469e",
+      "sha256": "59cad89604f1da1d5a6493780d63a7b67cb9fff917d5596289c81c5739fa6144"
+    },
+    "analyze.py": {
+      "git_blob": "b6df5aac3e5ee5f2d5ec73b059ee5a94aeea5c1a",
+      "sha256": "b92826dc09c09b2c267b5c194f19c50a739c362c8ce4593a5a72db1972a37694"
+    },
+    "audit.py": {
+      "git_blob": "7f90cc4757ab60b5da7716f4018f1da51c2b8c05",
+      "sha256": "06590092a2c4ab9998e210238ee1b174b37a7944ed1410dd962008fb7c700b8b"
+    },
+    "pinned/watchdog.py": {
+      "git_blob": "8bfacbdd2ba46e1433e79c3144e1c754c058ec8c",
+      "sha256": "8c296923db25cd6ec5c948e55ebdad8b82e56fda8123ede4549534172417fe31"
+    },
+    "pinned/run_case.py": {
+      "git_blob": "9a9730ad38bbcc83714a97e66f3597785b646693",
+      "sha256": "5d477ef04719cc81671d4b5d79af23c2896f11e5ac4a5abed64d1016572a5a1c"
+    },
+    "pinned/run_case_a2.py": {
+      "git_blob": "3d4933020a9e2ef68ba5c3bcd85c5d74a19e44c5",
+      "sha256": "7f4df5cd664e0adbf188abde368f7b3783d570d08cd2e49f6f672efa7fc546a4"
+    }
+  },
+  "formal": {
+    "planned_invocations": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning": 0
+  },
+  "scope": "static source analysis only; no X11/live input rerun"
+}

@@ -1,0 +1,133 @@
+{
+  "status": "PASS_CLIPBOARD_AVAILABILITY_BOUNDARY_SCOPED",
+  "errors": [],
+  "findings": [
+    {
+      "id": "A01",
+      "admitted": true,
+      "deadline": "REPLY",
+      "saved_text": "Cedar",
+      "late_effect": false
+    },
+    {
+      "id": "A02",
+      "admitted": true,
+      "deadline": "REPLY",
+      "saved_text": "Cedar",
+      "late_effect": false
+    },
+    {
+      "id": "A03",
+      "admitted": true,
+      "deadline": "REPLY",
+      "saved_text": "",
+      "late_effect": false
+    },
+    {
+      "id": "A04",
+      "admitted": false,
+      "deadline": "REFUSED_BEFORE_INPUT",
+      "saved_text": "",
+      "late_effect": false
+    },
+    {
+      "id": "A05",
+      "admitted": true,
+      "deadline": "UNKNOWN_PENDING_EFFECT",
+      "saved_text": "Cedar",
+      "late_effect": true
+    },
+    {
+      "id": "A06",
+      "admitted": false,
+      "deadline": "REFUSED_BEFORE_INPUT",
+      "saved_text": "",
+      "late_effect": false
+    }
+  ],
+  "controls": [
+    {
+      "name": "window_float",
+      "target": "A05/window",
+      "target_rejected": true,
+      "errors": [
+        "A05/window",
+        "A05/focus-command"
+      ]
+    },
+    {
+      "name": "pid_boolean",
+      "target": "A01/pids",
+      "target_rejected": true,
+      "errors": [
+        "A01/pids"
+      ]
+    },
+    {
+      "name": "exit_boolean",
+      "target": "A03/exits",
+      "target_rejected": true,
+      "errors": [
+        "A03/exits"
+      ]
+    },
+    {
+      "name": "refusal_numeric",
+      "target": "A06/admission-bool",
+      "target_rejected": true,
+      "errors": [
+        "A06/admission-bool"
+      ]
+    },
+    {
+      "name": "late_order",
+      "target": "A05/late-effect-order",
+      "target_rejected": true,
+      "errors": [
+        "A05/late-effect-order"
+      ]
+    },
+    {
+      "name": "resume_before_deadline",
+      "target": "A05/stopped-order",
+      "target_rejected": true,
+      "errors": [
+        "A05/stopped-order"
+      ]
+    },
+    {
+      "name": "timeout_cleared",
+      "target": "A06/preflight-timeout",
+      "target_rejected": true,
+      "errors": [
+        "A06/preflight-timeout"
+      ]
+    },
+    {
+      "name": "pending_as_complete",
+      "target": "A05/pending-deadline",
+      "target_rejected": true,
+      "errors": [
+        "A05/pending-deadline"
+      ]
+    },
+    {
+      "name": "wrong_saved_text",
+      "target": "A05/saved-effect",
+      "target_rejected": true,
+      "errors": [
+        "A05/saved-effect"
+      ]
+    },
+    {
+      "name": "dropped_release",
+      "target": "A02/native-input-count",
+      "target_rejected": true,
+      "errors": [
+        "A02/deadline-prefix",
+        "A02/native-input-count"
+      ]
+    }
+  ],
+  "raw_sha256": "0ab8a94bfabf7f734e5bd8d6b206a1c9562bbeae51f69659d167b24555e01ddb"
+}

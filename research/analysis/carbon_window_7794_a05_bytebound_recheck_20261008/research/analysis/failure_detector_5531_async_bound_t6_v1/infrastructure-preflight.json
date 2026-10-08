@@ -1,0 +1,34 @@
+{
+  "schema": "host-container-preflight-v1",
+  "observed_utc": "2026-09-30T21:27:35Z",
+  "docker_contexts": {
+    "orbstack": "unix:///Users/taka/.orbstack/run/docker.sock",
+    "default": "unix:///var/run/docker.sock"
+  },
+  "checks": [
+    {
+      "command": "docker --context orbstack info --format '{{.ServerVersion}} {{.OSType}}/{{.Architecture}}'",
+      "method": "python subprocess timeout=4s",
+      "outcome": "TIMEOUT",
+      "note": "The probe's own child was terminated by the timeout wrapper; no other process was touched."
+    },
+    {
+      "command": "docker --context default info --format '{{.ServerVersion}} {{.OSType}}/{{.Architecture}}'",
+      "endpoint": "unix:///var/run/docker.sock",
+      "outcome": "EXIT_1; socket absent",
+      "note": "Read-only `test -S /var/run/docker.sock` reported socket-absent."
+    }
+  ],
+  "preexisting_process_observation": {
+    "active_or_stalled_docker_clients_seen": true,
+    "examples": [
+      {"pid": 71177, "elapsed": "01:39:41", "command": "docker --context orbstack ps --no-trunc"},
+      {"pid": 81253, "elapsed": "01:31:18", "command": "docker info --format ..."},
+      {"pid": 12448, "elapsed": "00:31:30", "command": "docker info --format ..."}
+    ],
+    "action": "No existing process was terminated or signaled."
+  },
+  "container_invocations": 0,
+  "shared_allocation_requested_or_consumed": false,
+  "disposition": "HOST_ONLY_EXACT_ENUMERATION; Docker unavailable and shared engine contention observed"
+}

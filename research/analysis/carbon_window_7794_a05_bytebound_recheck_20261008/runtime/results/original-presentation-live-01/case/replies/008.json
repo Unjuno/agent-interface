@@ -1,0 +1,143 @@
+{
+  "request": {
+    "op": "observe"
+  },
+  "started_ns": "37975855075646",
+  "ended_ns": "37975895204409",
+  "attempt": 4,
+  "isError": false,
+  "metadata": {
+    "operation": "guarded_observe",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "observed",
+    "input_dispatched": false,
+    "source": {
+      "sequence": 7,
+      "observation_id": "f52df8511a184570b0c8e13a385bd938",
+      "binding_revision": 0,
+      "capture_ns": 37975869116685,
+      "image_source": "exact_capture_rgb_handoff",
+      "pointer_binding": {
+        "focus": 2097171,
+        "surface": 2097171,
+        "geometry": [
+          0,
+          0,
+          480,
+          260
+        ]
+      },
+      "native": {
+        "bytes": 1228800,
+        "sha256": "ee6fd44114155ffeeafc7ed0b423a07ce076f8ef1c2edd4cefc8c450532c1d21",
+        "width": 640,
+        "height": 480,
+        "target": "app",
+        "native_window_id": 2097171,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "capture_started_ns": 37975869116685,
+        "capture_ended_ns": 37975870968464,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/original-presentation-live-01/case/calls/e806c073936245f2af6f8317cc4d93ea/images/639d535a8a8c465b811b46a0a533b245.png",
+          "sha256": "e892dc0d117abdece8ae0ffd74398146cd8431527d986cd23e8b6b840b13822c",
+          "bytes": 8243,
+          "width": 640,
+          "height": 480,
+          "source_raw_sha256": "ee6fd44114155ffeeafc7ed0b423a07ce076f8ef1c2edd4cefc8c450532c1d21",
+          "timing_ns": {
+            "started": 37975871689361,
+            "converted": 37975872155190,
+            "encoded": 37975876074354,
+            "written": 37975876302793,
+            "hashed": 37975876979611
+          }
+        }
+      },
+      "timing_ns": {
+        "started": 37975868508196,
+        "public_returned": 37975877025321,
+        "binding_checked": 37975877660278,
+        "artifact_verified": 37975877736193,
+        "decoded": 37975877740137
+      }
+    },
+    "observation_report": {
+      "schema": "agent-interface/runtime-observation-v1",
+      "status": "returned",
+      "observation_id": "f52df8511a184570b0c8e13a385bd938",
+      "observation": {
+        "bytes": 1228800,
+        "sha256": "ee6fd44114155ffeeafc7ed0b423a07ce076f8ef1c2edd4cefc8c450532c1d21",
+        "width": 640,
+        "height": 480,
+        "target": "app",
+        "native_window_id": 2097171,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "capture_started_ns": 37975869116685,
+        "capture_ended_ns": 37975870968464,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/original-presentation-live-01/case/calls/e806c073936245f2af6f8317cc4d93ea/images/639d535a8a8c465b811b46a0a533b245.png",
+          "sha256": "e892dc0d117abdece8ae0ffd74398146cd8431527d986cd23e8b6b840b13822c",
+          "bytes": 8243,
+          "width": 640,
+          "height": 480,
+          "source_raw_sha256": "ee6fd44114155ffeeafc7ed0b423a07ce076f8ef1c2edd4cefc8c450532c1d21",
+          "timing_ns": {
+            "started": 37975871689361,
+            "converted": 37975872155190,
+            "encoded": 37975876074354,
+            "written": 37975876302793,
+            "hashed": 37975876979611
+          }
+        }
+      },
+      "side_effect_authority": false,
+      "input_dispatched": false
+    },
+    "session": {
+      "session_id": "667734cc041f461c98de82b10e5c040e",
+      "mode": "guarded-x11",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 2097171
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "target": "app",
+      "observation_sequence": 7,
+      "review_required": false
+    },
+    "image_status": "image",
+    "call_directory": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/original-presentation-live-01/case/calls/e806c073936245f2af6f8317cc4d93ea",
+    "call_id": "e806c073936245f2af6f8317cc4d93ea"
+  },
+  "image_path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/original-presentation-live-01/case/primary-008.png",
+  "caller_state": {
+    "stopped": null
+  },
+  "presented_text": [
+    {
+      "schema": "agent-interface/mcp-result-status-v1",
+      "isError": false
+    },
+    "{\"operation\": \"guarded_observe\", \"task_success\": null, \"replay_allowed\": false, \"status\": \"observed\", \"input_dispatched\": false, \"source\": {\"sequence\": 7, \"observation_id\": \"f52df8511a184570b0c8e13a385bd938\", \"binding_revision\": 0, \"capture_ns\": 37975869116685, \"image_source\": \"exact_capture_rgb_handoff\", \"pointer_binding\": {\"focus\": 2097171, \"surface\": 2097171, \"geometry\": [0, 0, 480, 260]}, \"native\": {\"bytes\": 1228800, \"sha256\": \"ee6fd44114155ffeeafc7ed0b423a07ce076f8ef1c2edd4cefc8c450532c1d21\", \"width\": 640, \"height\": 480, \"target\": \"app\", \"native_window_id\": 2097171, \"frame\": \"screen_physical_px\", \"region\": [0, 0, 640, 480], \"capture_started_ns\": 37975869116685, \"capture_ended_ns\": 37975870968464, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"/var/tmp/agent-interface-evidence-storage-main/runtime/results/original-presentation-live-01/case/calls/e806c073936245f2af6f8317cc4d93ea/images/639d535a8a8c465b811b46a0a533b245.png\", \"sha256\": \"e892dc0d117abdece8ae0ffd74398146cd8431527d986cd23e8b6b840b13822c\", \"bytes\": 8243, \"width\": 640, \"height\": 480, \"source_raw_sha256\": \"ee6fd44114155ffeeafc7ed0b423a07ce076f8ef1c2edd4cefc8c450532c1d21\", \"timing_ns\": {\"started\": 37975871689361, \"converted\": 37975872155190, \"encoded\": 37975876074354, \"written\": 37975876302793, \"hashed\": 37975876979611}}}, \"timing_ns\": {\"started\": 37975868508196, \"public_returned\": 37975877025321, \"binding_checked\": 37975877660278, \"artifact_verified\": 37975877736193, \"decoded\": 37975877740137}}, \"observation_report\": {\"schema\": \"agent-interface/runtime-observation-v1\", \"status\": \"returned\", \"observation_id\": \"f52df8511a184570b0c8e13a385bd938\", \"observation\": {\"bytes\": 1228800, \"sha256\": \"ee6fd44114155ffeeafc7ed0b423a07ce076f8ef1c2edd4cefc8c450532c1d21\", \"width\": 640, \"height\": 480, \"target\": \"app\", \"native_window_id\": 2097171, \"frame\": \"screen_physical_px\", \"region\": [0, 0, 640, 480], \"capture_started_ns\": 37975869116685, \"capture_ended_ns\": 37975870968464, \"artifact\": {\"mime_type\": \"image/png\", \"path\": \"/var/tmp/agent-interface-evidence-storage-main/runtime/results/original-presentation-live-01/case/calls/e806c073936245f2af6f8317cc4d93ea/images/639d535a8a8c465b811b46a0a533b245.png\", \"sha256\": \"e892dc0d117abdece8ae0ffd74398146cd8431527d986cd23e8b6b840b13822c\", \"bytes\": 8243, \"width\": 640, \"height\": 480, \"source_raw_sha256\": \"ee6fd44114155ffeeafc7ed0b423a07ce076f8ef1c2edd4cefc8c450532c1d21\", \"timing_ns\": {\"started\": 37975871689361, \"converted\": 37975872155190, \"encoded\": 37975876074354, \"written\": 37975876302793, \"hashed\": 37975876979611}}}, \"side_effect_authority\": false, \"input_dispatched\": false}, \"session\": {\"session_id\": \"667734cc041f461c98de82b10e5c040e\", \"mode\": \"guarded-x11\", \"state\": \"open\", \"binding_revision\": 0, \"targets\": {\"app\": 2097171}, \"recovery_required\": false, \"error\": null, \"authority_granted\": false, \"restart_allowed\": false, \"target\": \"app\", \"observation_sequence\": 7, \"review_required\": false}, \"image_status\": \"image\", \"call_directory\": \"/var/tmp/agent-interface-evidence-storage-main/runtime/results/original-presentation-live-01/case/calls/e806c073936245f2af6f8317cc4d93ea\", \"call_id\": \"e806c073936245f2af6f8317cc4d93ea\"}"
+  ]
+}

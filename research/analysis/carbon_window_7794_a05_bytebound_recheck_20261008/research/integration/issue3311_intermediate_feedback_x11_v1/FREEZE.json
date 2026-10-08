@@ -1,0 +1,37 @@
+{
+  "allocation_id": "ISSUE3311-LOCAL-X11-INTERMEDIATE-FEEDBACK-20260928-01",
+  "issue": 3311,
+  "base_commit": "6906d6d9b5679604a5d997c89edd1b1789f849ed",
+  "hypothesis": "One live local Chromium/X11 task can use a fresh intermediate window observation after Save to select Confirm, complete one exact fixture submission, and refuse when the required intermediate state is not present.",
+  "test": {
+    "tasks": 1,
+    "task_token": "AI-3311-UNIT-01",
+    "route": ["observe_EDITING", "admit_and_click_Save", "observe_CONFIRMING", "admit_and_click_Confirm", "observe_SAVED", "independent_exact_submission_score"],
+    "runner_invocations": 1,
+    "retries": 0,
+    "negative_control": "Confirm admission is refused unless the active X11 window is the same fixture window and its current title is exactly CONFIRMING.",
+    "model_calls": 0,
+    "external_network": false
+  },
+  "container": {
+    "image": "issue-2849-task1-runtime:20260921",
+    "image_id": "sha256:dff1c7b56201b4c299883655d98aee3b3f8d7c0c6dd1e4ad6320b942fb5d17fb",
+    "platform": "linux/arm64",
+    "network": "none",
+    "source_mount": "read-only",
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 64
+  },
+  "runtime_source": {
+    "path": "research/live_control/compiled_gui_interface_v1.py",
+    "sha256": "93e47e1ab5ae3450bb4acf9ec9d21c9abc44ca93ffaee25683b22039d9a722ca"
+  },
+  "page_sha256": "ae253611acb9c2686dbafd471eacbe499d67470c88b0e23aad7a575731caca59",
+  "harness_sha256": {
+    "research/integration/issue3311_intermediate_feedback_x11_v1/runner.py": "815c633673efa8a8cb983a5953d93ebd418034455dca8a7fa928525a2424d845",
+    "research/integration/issue3311_intermediate_feedback_x11_v1/audit_raw.py": "4fa7a5ad9a4b0307d11ff17e8e8f2fb0415d60e2a299f189a7ea3f0d8a83f77b"
+  },
+  "stop_rule": "One run only. Stop on first launch, observation, admission, execution, effect, timeout, or audit failure. No rerun. Success requires exactly one matching server-side submission, runtime TASK_SUCCEEDED after two transitions, two fresh admissions, two successful independent stage checks, and verified terminal mouse release on both clicks.",
+  "scope_limit": "One synthetic Chromium fixture and title-based X11 observation. No provider/model, user data, matched baseline, multi-task reuse, measured economics, or #3311 six-task acceptance claim. Does not consume or replace issue #4710 formal-01."
+}

@@ -1,0 +1,6601 @@
+{
+  "schema": "edit49-native-v1",
+  "cases_sha256": "5f7c35b129b27d7e459e791d98eddf4a6dc2345ccca319ee0d961d459c0d3d12",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "platform": "Linux-7.0.5-orbstack-00330-ge3df4e19b0a0-dirty-aarch64-with-glibc2.39",
+  "backend_module": "/src/vendor/runtime/backends/x11_v1/backend.py",
+  "rows": [
+    {
+      "cell_id": "S01-plain-untyped",
+      "display": ":121",
+      "cell": {
+        "id": "S01",
+        "context": "PABCDZ",
+        "current": "PABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "S01-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 10,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        3,
+        5
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "PABCDZ",
+        "anchor": 3,
+        "position": 5,
+        "selected": "CD",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-1",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17247104026568
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17244104495277,
+        "ended_ns": 17244105405320,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17244105403904
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17244107882490
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "PABXZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "PABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "e6e0145d28c84d5812b9011f74cd84948e93b9619f4c4a92cfe45e1de76a6c8f",
+        "saved.txt": "8da48064ac01d6e19d63d82e22f44401472d60c3aaea2f2afa0680c4d502f16d",
+        "state.json": "3f568784a9f3fd828864db4563a76896968fc247b59455f7547539041e30bf27",
+        "widget.png": "6d6fcffae276b0df3d463cae6546c0bf8dc56115ff61490a9974dd93c1e714f8"
+      }
+    },
+    {
+      "cell_id": "S01-plain-typed",
+      "display": ":122",
+      "cell": {
+        "id": "S01",
+        "context": "PABCDZ",
+        "current": "PABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "S01-plain-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 16,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        3,
+        5
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "PABCDZ",
+        "anchor": 3,
+        "position": 5,
+        "selected": "CD",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-2",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17247282851151
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17244283210443,
+        "ended_ns": 17244285999530,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17244285998030
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17244286122114
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "PABXZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "PABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "c4a8687b2a2f57cc5809a1a1592981237d93e7f66edfee7aa8dfafe91bd806ab",
+        "saved.txt": "8da48064ac01d6e19d63d82e22f44401472d60c3aaea2f2afa0680c4d502f16d",
+        "state.json": "3f568784a9f3fd828864db4563a76896968fc247b59455f7547539041e30bf27",
+        "widget.png": "6d6fcffae276b0df3d463cae6546c0bf8dc56115ff61490a9974dd93c1e714f8"
+      }
+    },
+    {
+      "cell_id": "S01-rich-untyped",
+      "display": ":123",
+      "cell": {
+        "id": "S01",
+        "context": "PABCDZ",
+        "current": "PABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "S01-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 22,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        3,
+        5
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "PABCDZ",
+        "anchor": 3,
+        "position": 5,
+        "selected": "CD",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-3",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17247482379720
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17244482641929,
+        "ended_ns": 17244483540430,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17244483539555
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17244484370890
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "PABXZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "PABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "bc42fec4ac573a412631cc19ad3e919914857bfd901eeea2764835b421e43be5",
+        "saved.txt": "8da48064ac01d6e19d63d82e22f44401472d60c3aaea2f2afa0680c4d502f16d",
+        "state.json": "3f568784a9f3fd828864db4563a76896968fc247b59455f7547539041e30bf27",
+        "widget.png": "6d6fcffae276b0df3d463cae6546c0bf8dc56115ff61490a9974dd93c1e714f8"
+      }
+    },
+    {
+      "cell_id": "S01-rich-typed",
+      "display": ":124",
+      "cell": {
+        "id": "S01",
+        "context": "PABCDZ",
+        "current": "PABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "S01-rich-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 28,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        3,
+        5
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "PABCDZ",
+        "anchor": 3,
+        "position": 5,
+        "selected": "CD",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-4",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17247673081027
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17244673421403,
+        "ended_ns": 17244676270615,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17244676269532
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17244676372157
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "PABXZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "PABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "853bea89dea53bb46f9d906ffe9e135827de213f7f42f31ef7c1d5ab110b492d",
+        "saved.txt": "8da48064ac01d6e19d63d82e22f44401472d60c3aaea2f2afa0680c4d502f16d",
+        "state.json": "3f568784a9f3fd828864db4563a76896968fc247b59455f7547539041e30bf27",
+        "widget.png": "6d6fcffae276b0df3d463cae6546c0bf8dc56115ff61490a9974dd93c1e714f8"
+      }
+    },
+    {
+      "cell_id": "S02-plain-untyped",
+      "display": ":125",
+      "cell": {
+        "id": "S02",
+        "context": "😀ABCDZ",
+        "current": "😀ABCDZ",
+        "span": [
+          5,
+          3
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "S02-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 36,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "😀ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        5,
+        3
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "😀ABCDZ",
+        "anchor": 5,
+        "position": 3,
+        "selected": "BC",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-5",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17247882695527
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17244882956653,
+        "ended_ns": 17244883652779,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17244883651987
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17244883845737
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "😀AXDZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "😀AXDZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "d89cb9e18d40af4f618bbe16ea262350371907e69cc8bf7773ed22e6ae444475",
+        "saved.txt": "4c49aafc0311806b07d57662c5966e62ed85f85173be42efefde3aceee02af31",
+        "state.json": "7a433a002c4b59f4ebe1f6aed353a0996f2d55d73da541220b319172c80fa91f",
+        "widget.png": "7a1770061e1e01024b5a6c0756c351bf7de563f599b914a0f1f3f98c93c7521e"
+      }
+    },
+    {
+      "cell_id": "S02-plain-typed",
+      "display": ":126",
+      "cell": {
+        "id": "S02",
+        "context": "😀ABCDZ",
+        "current": "😀ABCDZ",
+        "span": [
+          5,
+          3
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "S02-plain-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 44,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "😀ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        6,
+        4
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "😀ABCDZ",
+        "anchor": 6,
+        "position": 4,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-6",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17248155140740
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17245155449574,
+        "ended_ns": 17245159758872,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17245159757330
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17245159894163
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "😀ABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "😀ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "c9f780d6501031a595e6bf51f5e6dddd7a3a09ed4749acd756be479816401663",
+        "saved.txt": "57c3c7b21a7dc472c5313b21a3abeea83c9e394f5327bf03e770e5af41e8982c",
+        "state.json": "46ed866f257b5f25ebcb19737469566e6d759a605282d150942f443ef71af79a",
+        "widget.png": "2f782dc14485e101449b514848e2b4dda4910defad453635b454ec6e69507a1c"
+      }
+    },
+    {
+      "cell_id": "S02-rich-untyped",
+      "display": ":127",
+      "cell": {
+        "id": "S02",
+        "context": "😀ABCDZ",
+        "current": "😀ABCDZ",
+        "span": [
+          5,
+          3
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "S02-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 52,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "😀ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        5,
+        3
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "😀ABCDZ",
+        "anchor": 5,
+        "position": 3,
+        "selected": "BC",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-7",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17248442282515
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17245442882016,
+        "ended_ns": 17245447151105,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17245447149230
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17245447472855
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "😀AXDZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "😀AXDZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "f4fd530f7ed88c9ace83467399f51081b6b645f2a55d2c67ef309208057f81c6",
+        "saved.txt": "4c49aafc0311806b07d57662c5966e62ed85f85173be42efefde3aceee02af31",
+        "state.json": "7a433a002c4b59f4ebe1f6aed353a0996f2d55d73da541220b319172c80fa91f",
+        "widget.png": "7a1770061e1e01024b5a6c0756c351bf7de563f599b914a0f1f3f98c93c7521e"
+      }
+    },
+    {
+      "cell_id": "S02-rich-typed",
+      "display": ":128",
+      "cell": {
+        "id": "S02",
+        "context": "😀ABCDZ",
+        "current": "😀ABCDZ",
+        "span": [
+          5,
+          3
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "S02-rich-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 58,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "😀ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        6,
+        4
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "😀ABCDZ",
+        "anchor": 6,
+        "position": 4,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-8",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17248674938964
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17245675170548,
+        "ended_ns": 17245678037427,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17245678036385
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17245678139927
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "😀ABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "😀ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "ed7b4fb1be825a7900af485b7a39d60e0c387cb00f374d0c77e4fbeb28abacee",
+        "saved.txt": "57c3c7b21a7dc472c5313b21a3abeea83c9e394f5327bf03e770e5af41e8982c",
+        "state.json": "46ed866f257b5f25ebcb19737469566e6d759a605282d150942f443ef71af79a",
+        "widget.png": "2f782dc14485e101449b514848e2b4dda4910defad453635b454ec6e69507a1c"
+      }
+    },
+    {
+      "cell_id": "S03-plain-untyped",
+      "display": ":129",
+      "cell": {
+        "id": "S03",
+        "context": "👩‍💻ABCDZ",
+        "current": "👩‍💻ABCDZ",
+        "span": [
+          5,
+          7
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "S03-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 64,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "👩‍💻ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 11,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        5,
+        7
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "👩‍💻ABCDZ",
+        "anchor": 5,
+        "position": 7,
+        "selected": "AB",
+        "qt_document_count": 11,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-9",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17248875703160
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17245875905619,
+        "ended_ns": 17245876789453,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17245876788203
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17245879348082
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "👩‍💻XCDZ",
+        "anchor": 6,
+        "position": 6,
+        "selected": "",
+        "qt_document_count": 10,
+        "has_selection": false,
+        "changes": [
+          "👩‍💻XCDZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "e2efb60d118bf1e111738128c7749fea90850a54c73726419b6740c15aacaccb",
+        "saved.txt": "b8c79cc11d257d8029902a3ecb91de0a374f70ec0d98a89ae76269636adab00e",
+        "state.json": "7997383f3f7bb82085ff2ae4497746069ca5f953dcb35b91ac7b4484654ca8f7",
+        "widget.png": "4746e4303e74a4abfce302a52604e87d8bbeed3f385cb4d92a913ecb5b9e641c"
+      }
+    },
+    {
+      "cell_id": "S03-plain-typed",
+      "display": ":130",
+      "cell": {
+        "id": "S03",
+        "context": "👩‍💻ABCDZ",
+        "current": "👩‍💻ABCDZ",
+        "span": [
+          5,
+          7
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "S03-plain-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 72,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "👩‍💻ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 11,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        7,
+        9
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "👩‍💻ABCDZ",
+        "anchor": 7,
+        "position": 9,
+        "selected": "CD",
+        "qt_document_count": 11,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-10",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17249107475941
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17246107757525,
+        "ended_ns": 17246111072613,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17246111071154
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17246111199946
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "👩‍💻ABXZ",
+        "anchor": 8,
+        "position": 8,
+        "selected": "",
+        "qt_document_count": 10,
+        "has_selection": false,
+        "changes": [
+          "👩‍💻ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "c44d36c4fec6e06872e5c0763370e80fd35669ab60bc4905d56874b8ecc608c7",
+        "saved.txt": "8390d72d4e629a273b17e2807a9d8f3f4ed15294083950132d898cd21b772d8f",
+        "state.json": "edab0954a30a1b27a96e1db1dc07a775e0cb73e0a460fe247a195083b58cf683",
+        "widget.png": "2987253783d47d55166de5abf4c295a47e8c0c7c843ec7e2aa2bd8237f7e05ac"
+      }
+    },
+    {
+      "cell_id": "S03-rich-untyped",
+      "display": ":131",
+      "cell": {
+        "id": "S03",
+        "context": "👩‍💻ABCDZ",
+        "current": "👩‍💻ABCDZ",
+        "span": [
+          5,
+          7
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "S03-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 80,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "👩‍💻ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 11,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        5,
+        7
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "👩‍💻ABCDZ",
+        "anchor": 5,
+        "position": 7,
+        "selected": "AB",
+        "qt_document_count": 11,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-11",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17249347093983
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17246347504234,
+        "ended_ns": 17246348215485,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17246348214360
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17246348421860
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "👩‍💻XCDZ",
+        "anchor": 6,
+        "position": 6,
+        "selected": "",
+        "qt_document_count": 10,
+        "has_selection": false,
+        "changes": [
+          "👩‍💻XCDZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "88feba3e8262d7a0d2f78db91d3413ee42d36e43328c1bba32f8e92dafc591c6",
+        "saved.txt": "b8c79cc11d257d8029902a3ecb91de0a374f70ec0d98a89ae76269636adab00e",
+        "state.json": "7997383f3f7bb82085ff2ae4497746069ca5f953dcb35b91ac7b4484654ca8f7",
+        "widget.png": "4746e4303e74a4abfce302a52604e87d8bbeed3f385cb4d92a913ecb5b9e641c"
+      }
+    },
+    {
+      "cell_id": "S03-rich-typed",
+      "display": ":132",
+      "cell": {
+        "id": "S03",
+        "context": "👩‍💻ABCDZ",
+        "current": "👩‍💻ABCDZ",
+        "span": [
+          5,
+          7
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "S03-rich-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 88,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "👩‍💻ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 11,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        7,
+        9
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "👩‍💻ABCDZ",
+        "anchor": 7,
+        "position": 9,
+        "selected": "CD",
+        "qt_document_count": 11,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-12",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17249574047882
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17246574405508,
+        "ended_ns": 17246575013884,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17246575012717
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17246575189051
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "👩‍💻ABXZ",
+        "anchor": 8,
+        "position": 8,
+        "selected": "",
+        "qt_document_count": 10,
+        "has_selection": false,
+        "changes": [
+          "👩‍💻ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "4b40960e129a70c75eee03efeacb8cbe1a0420309c01d920492eb5e65fef9dfd",
+        "saved.txt": "8390d72d4e629a273b17e2807a9d8f3f4ed15294083950132d898cd21b772d8f",
+        "state.json": "edab0954a30a1b27a96e1db1dc07a775e0cb73e0a460fe247a195083b58cf683",
+        "widget.png": "2987253783d47d55166de5abf4c295a47e8c0c7c843ec7e2aa2bd8237f7e05ac"
+      }
+    },
+    {
+      "cell_id": "S04-plain-untyped",
+      "display": ":133",
+      "cell": {
+        "id": "S04",
+        "context": "🇯🇵ABCDZ",
+        "current": "🇯🇵ABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "S04-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 94,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "🇯🇵ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 10,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "🇯🇵ABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "AB",
+        "qt_document_count": 10,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-13",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17249779163126
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17246779488127,
+        "ended_ns": 17246780167169,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17246780165919
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17246780296461
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "🇯🇵XCDZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 9,
+        "has_selection": false,
+        "changes": [
+          "🇯🇵XCDZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "2c546431f7f9b72af753234fa22889616f47a5819abcea023084247da3df8d75",
+        "saved.txt": "b7bd37c863c387c3ab88929e1fc427326f87e269f278307109d57f44b4a0a324",
+        "state.json": "f9d1cc6475a7f17d77db14d85acf2b3cb64d8f699121f238e0a7515639a72515",
+        "widget.png": "4746e4303e74a4abfce302a52604e87d8bbeed3f385cb4d92a913ecb5b9e641c"
+      }
+    },
+    {
+      "cell_id": "S04-plain-typed",
+      "display": ":134",
+      "cell": {
+        "id": "S04",
+        "context": "🇯🇵ABCDZ",
+        "current": "🇯🇵ABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "S04-plain-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 100,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "🇯🇵ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 10,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        6,
+        8
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "🇯🇵ABCDZ",
+        "anchor": 6,
+        "position": 8,
+        "selected": "CD",
+        "qt_document_count": 10,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-14",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17249982147826
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17246982504659,
+        "ended_ns": 17246998807682,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17246998805515
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17246998973807
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "🇯🇵ABXZ",
+        "anchor": 7,
+        "position": 7,
+        "selected": "",
+        "qt_document_count": 9,
+        "has_selection": false,
+        "changes": [
+          "🇯🇵ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "9fbe146d2b4397970047da6e830297ff1a926c7df691efc2a8e1152bf3e1f32a",
+        "saved.txt": "a8465463288d70d19146924b0665851ffd6df0a00608b1a98dd81718f6686106",
+        "state.json": "1a6032813419aeb16d2171826e85f716ac211bd44df4f8a871c0587d6d16c8b2",
+        "widget.png": "2987253783d47d55166de5abf4c295a47e8c0c7c843ec7e2aa2bd8237f7e05ac"
+      }
+    },
+    {
+      "cell_id": "S04-rich-untyped",
+      "display": ":135",
+      "cell": {
+        "id": "S04",
+        "context": "🇯🇵ABCDZ",
+        "current": "🇯🇵ABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "S04-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 106,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "🇯🇵ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 10,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "🇯🇵ABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "AB",
+        "qt_document_count": 10,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-15",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17250180121060
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17247180473560,
+        "ended_ns": 17247183138814,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17247183137605
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17247183335689
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "🇯🇵XCDZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 9,
+        "has_selection": false,
+        "changes": [
+          "🇯🇵XCDZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "1dbc0628deb026edad510973ef7d9c5a0f6f625492eb90379051cadedfd0b4d8",
+        "saved.txt": "b7bd37c863c387c3ab88929e1fc427326f87e269f278307109d57f44b4a0a324",
+        "state.json": "f9d1cc6475a7f17d77db14d85acf2b3cb64d8f699121f238e0a7515639a72515",
+        "widget.png": "4746e4303e74a4abfce302a52604e87d8bbeed3f385cb4d92a913ecb5b9e641c"
+      }
+    },
+    {
+      "cell_id": "S04-rich-typed",
+      "display": ":136",
+      "cell": {
+        "id": "S04",
+        "context": "🇯🇵ABCDZ",
+        "current": "🇯🇵ABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "S04-rich-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 112,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "🇯🇵ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 10,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        6,
+        8
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "🇯🇵ABCDZ",
+        "anchor": 6,
+        "position": 8,
+        "selected": "CD",
+        "qt_document_count": 10,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-16",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17250375697624
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17247376072749,
+        "ended_ns": 17247376545208,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17247376543833
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17247376750292
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "🇯🇵ABXZ",
+        "anchor": 7,
+        "position": 7,
+        "selected": "",
+        "qt_document_count": 9,
+        "has_selection": false,
+        "changes": [
+          "🇯🇵ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "ca439f22bff75bdb00a3e037916894c4f12e78ed9c6fe1f144ff9392a756c7c4",
+        "saved.txt": "a8465463288d70d19146924b0665851ffd6df0a00608b1a98dd81718f6686106",
+        "state.json": "1a6032813419aeb16d2171826e85f716ac211bd44df4f8a871c0587d6d16c8b2",
+        "widget.png": "2987253783d47d55166de5abf4c295a47e8c0c7c843ec7e2aa2bd8237f7e05ac"
+      }
+    },
+    {
+      "cell_id": "S05-plain-untyped",
+      "display": ":137",
+      "cell": {
+        "id": "S05",
+        "context": "éABCDZ",
+        "current": "éABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "S05-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 118,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "éABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "éABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-17",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17250649497005
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17247649827047,
+        "ended_ns": 17247652299342,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17247652297800
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17247652450342
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "éABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "éABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "d3ee96f05bc13f9e99ca3b5be1b56545f341ff7a6641a15dad7c7d19ea48bf30",
+        "saved.txt": "4ff12e38567500c6131eba42a00b7a4385e9f733f249a80f308b16339c4e5066",
+        "state.json": "c476db38083791a09d544cd97e438ca9ac505b6e12b6d194aa9f31df40abd271",
+        "widget.png": "1b7345e58d2d20d0fef7ebbd21aa02df184a092a8f39f2cda952ae53f414945b"
+      }
+    },
+    {
+      "cell_id": "S05-plain-typed",
+      "display": ":138",
+      "cell": {
+        "id": "S05",
+        "context": "éABCDZ",
+        "current": "éABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "S05-plain-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 126,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "éABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "éABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-18",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17250958751810
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17247959070311,
+        "ended_ns": 17247959810062,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17247959808770
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17247960055812
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "éABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "éABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "c613e2608d5f34950b1bec25938572217d6c0945acb2eaeccc37850676c8acc9",
+        "saved.txt": "4ff12e38567500c6131eba42a00b7a4385e9f733f249a80f308b16339c4e5066",
+        "state.json": "c476db38083791a09d544cd97e438ca9ac505b6e12b6d194aa9f31df40abd271",
+        "widget.png": "1b7345e58d2d20d0fef7ebbd21aa02df184a092a8f39f2cda952ae53f414945b"
+      }
+    },
+    {
+      "cell_id": "S05-rich-untyped",
+      "display": ":139",
+      "cell": {
+        "id": "S05",
+        "context": "éABCDZ",
+        "current": "éABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "S05-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 134,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "éABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "éABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-19",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17251264686570
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17248265092654,
+        "ended_ns": 17248265969071,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17248265967863
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17248268644575
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "éABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "éABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "21c51b887b5b96a1c052b64be252ac2686851c02966169cacdf4218453fe9b78",
+        "saved.txt": "4ff12e38567500c6131eba42a00b7a4385e9f733f249a80f308b16339c4e5066",
+        "state.json": "c476db38083791a09d544cd97e438ca9ac505b6e12b6d194aa9f31df40abd271",
+        "widget.png": "1b7345e58d2d20d0fef7ebbd21aa02df184a092a8f39f2cda952ae53f414945b"
+      }
+    },
+    {
+      "cell_id": "S05-rich-typed",
+      "display": ":140",
+      "cell": {
+        "id": "S05",
+        "context": "éABCDZ",
+        "current": "éABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "S05-rich-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 140,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "éABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "éABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-20",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17251548168464
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17248548671673,
+        "ended_ns": 17248549678841,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17248549677591
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17248552536429
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "éABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "éABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "b9f795b203bdfab07e5442a5a213c079c7ac20cec315a5e5375f3a8b9a74c0e2",
+        "saved.txt": "4ff12e38567500c6131eba42a00b7a4385e9f733f249a80f308b16339c4e5066",
+        "state.json": "c476db38083791a09d544cd97e438ca9ac505b6e12b6d194aa9f31df40abd271",
+        "widget.png": "1b7345e58d2d20d0fef7ebbd21aa02df184a092a8f39f2cda952ae53f414945b"
+      }
+    },
+    {
+      "cell_id": "S06-plain-untyped",
+      "display": ":141",
+      "cell": {
+        "id": "S06",
+        "context": "PABCDZ",
+        "current": "QPABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "S06-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 148,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "QPABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        3,
+        5
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "QPABCDZ",
+        "anchor": 3,
+        "position": 5,
+        "selected": "BC",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-21",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17251868116618
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17248868646494,
+        "ended_ns": 17248873020042,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17248873018583
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17248873183709
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "QPAXDZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "QPAXDZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "eec1bfeadce2a8bd3aa83b77ecf605d6a603e8893a62e143aec2730c48f7922a",
+        "saved.txt": "bf8a514e5014409e50fde03d060e3822342f51bc28fe5646514054b341b7a894",
+        "state.json": "ed5b59dd6ee74c995de8cb0f72d2c99ac5feffdf0f95ebf505cb9f25593d8eff",
+        "widget.png": "26e9456ec6edca82b7e3b6e0af5eea0f3fb9abcbdd8a409bfb37e99925c4e147"
+      }
+    },
+    {
+      "cell_id": "S06-plain-typed",
+      "display": ":142",
+      "cell": {
+        "id": "S06",
+        "context": "PABCDZ",
+        "current": "QPABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unicode_scalar",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "S06-plain-typed"
+      },
+      "outcome": "REFUSED_BEFORE_INPUT",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 154,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "QPABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "refusal": "STALE_SOURCE",
+      "execution": null,
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 1,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17249155698602
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "QPABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false,
+        "changes": []
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "09dabb32496b08565a37dc93031c75c1c5216a77072ceb15473caa5bd061b1b8",
+        "saved.txt": "d871b40b3627511e6a634046d3a2aa3144c9424e06f06fcc40cac857ca1f98f2",
+        "state.json": "9356ab2f098d093a181cda5497dd5c7148b8c9db26b5ba8e303b29abaf34d614",
+        "widget.png": "6f63d928692572adf1b6c9a2a6d794a5950ada0805bd84968fa95d5495dc1451"
+      }
+    },
+    {
+      "cell_id": "S06-rich-untyped",
+      "display": ":143",
+      "cell": {
+        "id": "S06",
+        "context": "PABCDZ",
+        "current": "QPABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "S06-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 160,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "QPABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        3,
+        5
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "QPABCDZ",
+        "anchor": 3,
+        "position": 5,
+        "selected": "BC",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-23",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17252443779503
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17249444264795,
+        "ended_ns": 17249447184883,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17249447182383
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17249447393091
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "QPAXDZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "QPAXDZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "86d0cd26b45c5729247bb2876d8b8179a54865ecfb203b0a978a55b0c0d6d715",
+        "saved.txt": "bf8a514e5014409e50fde03d060e3822342f51bc28fe5646514054b341b7a894",
+        "state.json": "ed5b59dd6ee74c995de8cb0f72d2c99ac5feffdf0f95ebf505cb9f25593d8eff",
+        "widget.png": "26e9456ec6edca82b7e3b6e0af5eea0f3fb9abcbdd8a409bfb37e99925c4e147"
+      }
+    },
+    {
+      "cell_id": "S06-rich-typed",
+      "display": ":144",
+      "cell": {
+        "id": "S06",
+        "context": "PABCDZ",
+        "current": "QPABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unicode_scalar",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "S06-rich-typed"
+      },
+      "outcome": "REFUSED_BEFORE_INPUT",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 166,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "QPABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "refusal": "STALE_SOURCE",
+      "execution": null,
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 1,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17249760215402
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "QPABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false,
+        "changes": []
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "d1518093e975d9fa721ccf06de68b28d2248d336abfba91a47f7f8ce62731be4",
+        "saved.txt": "d871b40b3627511e6a634046d3a2aa3144c9424e06f06fcc40cac857ca1f98f2",
+        "state.json": "9356ab2f098d093a181cda5497dd5c7148b8c9db26b5ba8e303b29abaf34d614",
+        "widget.png": "6f63d928692572adf1b6c9a2a6d794a5950ada0805bd84968fa95d5495dc1451"
+      }
+    },
+    {
+      "cell_id": "S07-plain-untyped",
+      "display": ":145",
+      "cell": {
+        "id": "S07",
+        "context": "PABCDZ",
+        "current": "PABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unknown",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "S07-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 174,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        3,
+        5
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "PABCDZ",
+        "anchor": 3,
+        "position": 5,
+        "selected": "CD",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-25",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17253001980155
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17250002253239,
+        "ended_ns": 17250002758365,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17250002757365
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17250002976615
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "PABXZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "PABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "ac8cb572799d959efaf553c44e55d105965edaae4cfb7fc6f70d445dfb1f2f3b",
+        "saved.txt": "8da48064ac01d6e19d63d82e22f44401472d60c3aaea2f2afa0680c4d502f16d",
+        "state.json": "3f568784a9f3fd828864db4563a76896968fc247b59455f7547539041e30bf27",
+        "widget.png": "6d6fcffae276b0df3d463cae6546c0bf8dc56115ff61490a9974dd93c1e714f8"
+      }
+    },
+    {
+      "cell_id": "S07-plain-typed",
+      "display": ":146",
+      "cell": {
+        "id": "S07",
+        "context": "PABCDZ",
+        "current": "PABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unknown",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "S07-plain-typed"
+      },
+      "outcome": "REFUSED_BEFORE_INPUT",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 180,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "refusal": "UNKNOWN_UNIT",
+      "execution": null,
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 1,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17250180726112
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": []
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "dddfe281c6acc4ce8ee03824adee24aa4ba227c0d4391313682fe4a53185e07e",
+        "saved.txt": "908a21a4a8d8586201d10e38043995e5027acb7aaf9b57d26ed21a504b390413",
+        "state.json": "a797330ee37e29e95b63cc174e9c8b498001d125f3bd7a3c37debfa1fd91d566",
+        "widget.png": "48ccc758dc2b1c8e94dc38b5a028d0ac8d4c76787306a0e588a1159fa41373ab"
+      }
+    },
+    {
+      "cell_id": "S07-rich-untyped",
+      "display": ":147",
+      "cell": {
+        "id": "S07",
+        "context": "PABCDZ",
+        "current": "PABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unknown",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "S07-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 186,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        3,
+        5
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "PABCDZ",
+        "anchor": 3,
+        "position": 5,
+        "selected": "CD",
+        "qt_document_count": 7,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-27",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17253366534704
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17250366758163,
+        "ended_ns": 17250367502622,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17250367501539
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17250369403125
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "PABXZ",
+        "anchor": 4,
+        "position": 4,
+        "selected": "",
+        "qt_document_count": 6,
+        "has_selection": false,
+        "changes": [
+          "PABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "da13c9aeb48698cd3c249f28b7b8a28b86e7532ed62826e84e1ae95b8e4558aa",
+        "saved.txt": "8da48064ac01d6e19d63d82e22f44401472d60c3aaea2f2afa0680c4d502f16d",
+        "state.json": "3f568784a9f3fd828864db4563a76896968fc247b59455f7547539041e30bf27",
+        "widget.png": "6d6fcffae276b0df3d463cae6546c0bf8dc56115ff61490a9974dd93c1e714f8"
+      }
+    },
+    {
+      "cell_id": "S07-rich-typed",
+      "display": ":148",
+      "cell": {
+        "id": "S07",
+        "context": "PABCDZ",
+        "current": "PABCDZ",
+        "span": [
+          3,
+          5
+        ],
+        "unit": "unknown",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "S07-rich-typed"
+      },
+      "outcome": "REFUSED_BEFORE_INPUT",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 194,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "refusal": "UNKNOWN_UNIT",
+      "execution": null,
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 1,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17250649353223
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "PABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": []
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "8525dfda4fd7f65526e84825d57ad30a62881cd3088ddd4e8abe69e2c73e504f",
+        "saved.txt": "908a21a4a8d8586201d10e38043995e5027acb7aaf9b57d26ed21a504b390413",
+        "state.json": "a797330ee37e29e95b63cc174e9c8b498001d125f3bd7a3c37debfa1fd91d566",
+        "widget.png": "48ccc758dc2b1c8e94dc38b5a028d0ac8d4c76787306a0e588a1159fa41373ab"
+      }
+    },
+    {
+      "cell_id": "S08-plain-untyped",
+      "display": ":149",
+      "cell": {
+        "id": "S08",
+        "context": "😀ABCDZ",
+        "current": "😀ABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "utf16",
+        "widget": "plain",
+        "arm": "untyped",
+        "cell_id": "S08-plain-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 200,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "😀ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "😀ABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-29",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17253850430587
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17250850665379,
+        "ended_ns": 17250851330629,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17250851329546
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17250853428299
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "😀ABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "😀ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "25418af41c0e2a4544e604eab451493fa0f95103b61cdc03719824877ccb8e58",
+        "saved.txt": "57c3c7b21a7dc472c5313b21a3abeea83c9e394f5327bf03e770e5af41e8982c",
+        "state.json": "46ed866f257b5f25ebcb19737469566e6d759a605282d150942f443ef71af79a",
+        "widget.png": "2f782dc14485e101449b514848e2b4dda4910defad453635b454ec6e69507a1c"
+      }
+    },
+    {
+      "cell_id": "S08-plain-typed",
+      "display": ":150",
+      "cell": {
+        "id": "S08",
+        "context": "😀ABCDZ",
+        "current": "😀ABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "utf16",
+        "widget": "plain",
+        "arm": "typed",
+        "cell_id": "S08-plain-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 208,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "😀ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "😀ABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-30",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17254070865852
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17251071181894,
+        "ended_ns": 17251073589522,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17251073588439
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17251073699231
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "😀ABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "😀ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "baaaa630edba855176a33180328374b2949e2c6377e908c445a34574bfe1bad3",
+        "saved.txt": "57c3c7b21a7dc472c5313b21a3abeea83c9e394f5327bf03e770e5af41e8982c",
+        "state.json": "46ed866f257b5f25ebcb19737469566e6d759a605282d150942f443ef71af79a",
+        "widget.png": "2f782dc14485e101449b514848e2b4dda4910defad453635b454ec6e69507a1c"
+      }
+    },
+    {
+      "cell_id": "S08-rich-untyped",
+      "display": ":151",
+      "cell": {
+        "id": "S08",
+        "context": "😀ABCDZ",
+        "current": "😀ABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "utf16",
+        "widget": "rich",
+        "arm": "untyped",
+        "cell_id": "S08-rich-untyped"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 216,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "😀ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "😀ABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-31",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17254281729562
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17251282028479,
+        "ended_ns": 17251299850962,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17251299850087
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17251299948712
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "😀ABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "😀ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "ecfb9707179c681bd7f3c046872bb2c2224977e7056239ace12833e5cf2f1b6a",
+        "saved.txt": "57c3c7b21a7dc472c5313b21a3abeea83c9e394f5327bf03e770e5af41e8982c",
+        "state.json": "46ed866f257b5f25ebcb19737469566e6d759a605282d150942f443ef71af79a",
+        "widget.png": "2f782dc14485e101449b514848e2b4dda4910defad453635b454ec6e69507a1c"
+      }
+    },
+    {
+      "cell_id": "S08-rich-typed",
+      "display": ":152",
+      "cell": {
+        "id": "S08",
+        "context": "😀ABCDZ",
+        "current": "😀ABCDZ",
+        "span": [
+          4,
+          6
+        ],
+        "unit": "utf16",
+        "widget": "rich",
+        "arm": "typed",
+        "cell_id": "S08-rich-typed"
+      },
+      "outcome": "INPUT_PROGRAM_RETURNED",
+      "ready": {
+        "kind": "ready",
+        "role": "edit_fixture",
+        "pid": 222,
+        "xid": 2097158,
+        "qt": "5.15.13",
+        "pyqt": "5.15.10",
+        "text": "😀ABCDZ",
+        "anchor": 0,
+        "position": 0,
+        "selected": "",
+        "qt_document_count": 8,
+        "has_selection": false
+      },
+      "manifest": {
+        "schema": "agent-interface/backend-v1",
+        "backend_id": "x11-v1",
+        "platform": {
+          "os": "linux",
+          "backend": "x11"
+        },
+        "capabilities": {
+          "accessibility.query": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "capture.frame": {
+            "state": "supported",
+            "detail": ""
+          },
+          "clipboard.read": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clipboard.write": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "clock.monotonic": {
+            "state": "supported",
+            "detail": ""
+          },
+          "display.geometry": {
+            "state": "supported",
+            "detail": ""
+          },
+          "event.feedback": {
+            "state": "supported",
+            "detail": "wait_update is a fixed delay; verify predicates are unsupported and refused; delay does not prove redraw or task effect"
+          },
+          "input.keyboard": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.pointer": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.release_all": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.scroll": {
+            "state": "supported",
+            "detail": ""
+          },
+          "input.text": {
+            "state": "supported",
+            "detail": "strict ASCII letters/digits/space/._- plus layout-checked :/"
+          },
+          "window.activate": {
+            "state": "unsupported",
+            "detail": "explicit EWMH activation; active-client/focus polling budget, not an X11 transport deadline or visible-pixel/task acknowledgement"
+          },
+          "window.enumerate": {
+            "state": "unsupported",
+            "detail": ""
+          },
+          "window.focus": {
+            "state": "supported",
+            "detail": ""
+          }
+        },
+        "coordinate_frames": [
+          "screen_physical_px",
+          "window_client"
+        ],
+        "clock": {
+          "unit": "ns",
+          "monotonic": true
+        },
+        "permissions": [
+          "x11-display-access"
+        ]
+      },
+      "lowered_span": [
+        4,
+        6
+      ],
+      "selection": {
+        "kind": "selected",
+        "text": "😀ABCDZ",
+        "anchor": 4,
+        "position": 6,
+        "selected": "CD",
+        "qt_document_count": 8,
+        "has_selection": true
+      },
+      "program": {
+        "schema": "agent-interface/program-v1",
+        "program_id": "edit49-32",
+        "source": {
+          "observation_seq": 1,
+          "binding_revision": 1
+        },
+        "authority": {
+          "lease_id": "private-fixture",
+          "expires_at_ns": 17254476475708
+        },
+        "terminal": {
+          "release_all_required": true
+        },
+        "ops": [
+          {
+            "op": "focus",
+            "target": "fixture"
+          },
+          {
+            "op": "text",
+            "text": "X"
+          },
+          {
+            "op": "release_all"
+          }
+        ]
+      },
+      "admission": {
+        "accepted": true,
+        "error": null,
+        "required_capabilities": [
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ]
+      },
+      "execution": {
+        "started_ns": 17251476658958,
+        "ended_ns": 17251479491629,
+        "emissions": 4,
+        "program_emissions": 4,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 17251479490254
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2
+        ]
+      },
+      "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "focus_xid": 2097158,
+      "final_release": {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 17251479593129
+      },
+      "saved_reply": {
+        "kind": "saved",
+        "text": "😀ABXZ",
+        "anchor": 5,
+        "position": 5,
+        "selected": "",
+        "qt_document_count": 7,
+        "has_selection": false,
+        "changes": [
+          "😀ABXZ"
+        ]
+      },
+      "app_exit": 0,
+      "xvfb_exit": 0,
+      "artifacts": {
+        "xvfb.stderr": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
+        "app.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+        "events.jsonl": "19640532293f4e9e1f9e0e55e943092e7d60e7c8bd389724aeb7b98665bef65d",
+        "saved.txt": "57c3c7b21a7dc472c5313b21a3abeea83c9e394f5327bf03e770e5af41e8982c",
+        "state.json": "46ed866f257b5f25ebcb19737469566e6d759a605282d150942f443ef71af79a",
+        "widget.png": "2f782dc14485e101449b514848e2b4dda4910defad453635b454ec6e69507a1c"
+      }
+    }
+  ]
+}

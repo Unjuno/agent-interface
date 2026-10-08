@@ -1,0 +1,22 @@
+{
+  "allocation": "needle-role-skill-cross-process-reload-v1",
+  "issue": 3890,
+  "predecessor_issue": 3780,
+  "formal_seeds": [3788, 3789, 3790],
+  "seeds": [3788, 3789, 3790],
+  "retired_seeds": [3781, 3782, 3783, 3787, 3791],
+  "runner_sha256": "a0e99b991a8a3ab9b2f4b6f4f22f7c705989447ce64a14738026fcd763b55abb",
+  "loader_sha256": "5ff6df91ea3929f68fe77ccd6156bdb1310d0fec86088489d8b99905a7c5854f",
+  "auditor_sha256": "4e53e241aa115202ce9ca2ce3a5b3df76599b80ad03290a61594bd6b0e35c3a0",
+  "preregistration_sha256": "b2ccbac02e0d759c662b955fb34127310ea87d2cbdfe72d91b356a750ffd3c7a",
+  "docker_image": "needle-pilot05:local",
+  "docker_image_id": "sha256:6ab7a93188dd60d3832a0be8b5266418e0de1253159c5c66e64562a85fd4a10e",
+  "platform": "linux/amd64",
+  "network": "none",
+  "cpu_limit": 1,
+  "memory_limit": "2g",
+  "source_mount": "read-only",
+  "output_mount": "dedicated writable per-seed directory",
+  "loader_containers_per_seed": 2,
+  "formal_runs_at_freeze": 0
+}

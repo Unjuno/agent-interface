@@ -1,0 +1,15 @@
+# Reconstruct #1826 exact full outputs from the frozen source.
+# Start in research/analysis/register_automaton_dynamic_identity_r0_v1.
+
+rm -rf formal_out
+mkdir -p formal_out
+python3 formal.py --out formal_out
+python3 audit.py formal_out/RESULT.json --out formal_out/AUDIT.json
+sha256sum formal_out/RESULT.json formal_out/AUDIT.json
+
+# Expected:
+# b602eab43821ce48748690ca33bf07ab4e41ecf097ce5bcf04164849feadac50  formal_out/RESULT.json
+# d52c5f32455278c049630b23a79c390e82f7a9868cd66f7d705c03d1866cba82  formal_out/AUDIT.json
+#
+# The retained formal invocation count remains 1; this command is for later audit/reconstruction,
+# not for reclassifying the frozen first formal outcome.

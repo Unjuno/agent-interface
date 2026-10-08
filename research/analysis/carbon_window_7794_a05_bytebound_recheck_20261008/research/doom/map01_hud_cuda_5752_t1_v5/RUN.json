@@ -1,0 +1,52 @@
+{
+  "schema": "map01-hud-cuda-run-v1",
+  "allocation": "GPU-HUD-CUDA-5752-20261001-05",
+  "issue": 5752,
+  "main_base": "c427c704404fc2b35ea9e06a57e61d239b77b369",
+  "branch": "research/gpu-hud-cuda-5752-20261001-05",
+  "evidence_path": "research/doom/map01_hud_cuda_5752_t1_v5/",
+  "candidate": {
+    "command": "python -B gpu_hud_runner.py --dataset .\\dataset.json --wad .\\data\\freedoom2.wad --out-dir .\\results\\t1-host-gpu-05",
+    "started_utc": "2026-10-01T10:23:42.9912452Z",
+    "ended_utc": "2026-10-01T10:25:08.8935435Z",
+    "exit_code": 0,
+    "invocations": 1
+  },
+  "auditor": {
+    "command": "python -B audit.py --raw results/t1-host-gpu-05/candidate_result.json --out results/t1-host-gpu-05/audit_result.json",
+    "started_utc": "2026-10-01T10:25:24.2950047Z",
+    "ended_utc": "2026-10-01T10:25:30.2597231Z",
+    "exit_code": 0,
+    "invocations": 1
+  },
+  "retry_count": 0,
+  "result": {
+    "candidate_disposition": "CUDA_EQUIVALENT",
+    "auditor_disposition": "PASS_CUDA_HUD_EQUIVALENCE_SPEED_SCOPED",
+    "rows": 23,
+    "signals_per_frame": 2,
+    "paired_timing_observations": 690,
+    "cpu_p50_ns": 37331150,
+    "cuda_p50_ns": 15916150,
+    "cuda_over_cpu_p50": 0.42635038031242006,
+    "gpu_cold_setup_ms": 1845.4534,
+    "audit_errors": 0,
+    "mutation_controls_rejected": 3
+  },
+  "host": {
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "CPython 3.11.9",
+    "torch": "2.5.1+cu121",
+    "cuda_runtime": "12.1",
+    "gpu": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "observed_candidate_pid": 16112,
+    "observed_gpu_samples": [
+      {"memory_mib": 207, "utilization_percent": 3},
+      {"memory_mib": 347, "utilization_percent": 0}
+    ]
+  },
+  "warnings": [
+    "PyTorch warned that the read-only NumPy image array passed to torch.from_numpy is non-writable; exact warning retained in candidate_console.log."
+  ],
+  "scope_limit": "Fixed 23-image HUD parity/speed only; does not establish threat recognition, action effect, live control, gameplay, survival, MAP01 exit, broad latency, human tempo, or Issue #59 completion."
+}

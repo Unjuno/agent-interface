@@ -1,0 +1,12 @@
+[
+ {"state":"SETUP_DOCTOR","input":{"runtime_available":true},"expected":{"status":"doctor_pass","authority_granted":false}},
+ {"state":"MODEL_ATTEMPT","input":{"call_id":"m-1","usage":{"input":120,"output":8},"usage_available":false},"expected":{"status":"model_failed","authority_granted":false,"usage_available":false}},
+ {"state":"OBSERVATION","input":{"sequence":7,"binding_revision":3},"expected":{"status":"observed","authority_granted":false}},
+ {"state":"GUARDED_DISPATCH","input":{"program":"p-1","fresh":true},"expected":{"status":"returned","program_completed":true,"authority_granted":false}},
+ {"state":"REFUSAL","input":{"reason":"stale_binding"},"expected":{"status":"refused","program_completed":false,"authority_granted":false}},
+ {"state":"USEFUL_EFFECT","input":{"effect":"save","task_success":true},"expected":{"status":"returned","program_completed":true,"task_success":true,"authority_granted":false}},
+ {"state":"STALE_INVALIDATION","input":{"sequence":8,"binding_revision":4},"expected":{"status":"invalidated","authority_granted":false}},
+ {"state":"REPAIR","input":{"method":"fresh_observation","program":"p-2"},"expected":{"status":"repaired","program_completed":true,"task_success":false,"authority_granted":false}},
+ {"state":"TERMINAL_RELEASE","input":{"released":true},"expected":{"status":"released","authority_granted":false}},
+ {"state":"CLEANUP_FAILURE","input":{"execution":{"emissions":2},"cleanup_error":"close failed"},"expected":{"status":"runtime_failed","program_completed":true,"task_success":false,"authority_granted":false}}
+]

@@ -1,0 +1,54 @@
+{
+  "allocation": "MAP01-OWNER-KEYUP-BRACKET-5156-20260928-01-CALLER-BOUNDARY",
+  "autonomous_release_callsites": [
+    205,
+    219
+  ],
+  "checks": {
+    "autonomous_expiry_cancel_focus_path_calls_local_release": true,
+    "autonomous_stop_path_calls_local_release": true,
+    "client_call_does_not_invoke_local_release": true,
+    "client_call_enqueues_and_waits": true,
+    "queued_release_close_path_calls_local_release": true,
+    "thread_exit_cleanup_calls_local_release": true,
+    "v3_timestamps_client_release_and_close_only": true,
+    "v3_timestamps_client_up_and_button_up": true,
+    "v3_wrapper_has_no_owner_loop_release_hook": true
+  },
+  "disposition": "PASS_AUTOMATIC_RELEASE_OUTSIDE_CALLER_BRACKET",
+  "finalizer_release_callsites": [
+    356
+  ],
+  "main_sha": "16421aefa2ec357b79e3fd3dc307b32955bc6fab",
+  "queued_release_callsites": [
+    261
+  ],
+  "release_callsites": [
+    {
+      "context": "owner_loop_stop_flag",
+      "line": 205,
+      "reason": "'stop_requested'"
+    },
+    {
+      "context": "owner_loop_expiry_cancel_focus",
+      "line": 219,
+      "reason": "'expired' if expired else 'surface_changed' if surface_changed else 'focus_changed' if changed else 'cancelled'"
+    },
+    {
+      "context": "queued_owner_operation",
+      "line": 261,
+      "reason": "op"
+    },
+    {
+      "context": "owner_thread_finalizer",
+      "line": 356,
+      "reason": "'thread_exit'"
+    }
+  ],
+  "schema": "owner-keyup-caller-boundary-result-v1",
+  "scope": "frozen source control flow only; no owner execution or X11 timing",
+  "source_blobs": {
+    "research/live_control/input_owner_v10.py": "341b3c01649943ddaad5f28431a792c4889cc36e",
+    "research/live_control/input_transition_owner_v3.py": "0ea631abcf6272f0538a9ef9198ad8069b47b464"
+  }
+}

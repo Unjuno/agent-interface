@@ -1,0 +1,54 @@
+{
+  "allocation": "inkscape-action-history-invalidation-20260916-a2",
+  "audit_errors": 0,
+  "audit_sha256": "8db549b46c52487030cb68b431015c96220792f81ff4d91f0feaed3b86414cb2",
+  "corruption_controls_rejected": "5/5",
+  "decision": "PASS_SELF_ACTION_HISTORY_INVALIDATION_SCOPED",
+  "formal_cases": 16,
+  "guard_counts": {
+    "bottom": 64,
+    "right": 176,
+    "top": 64
+  },
+  "guard_identical_cases": 16,
+  "guard_rgb_sha256": "45f96568c969d5fb1ff04769a469d45ecc79c27849da4e43dc9cd48e1abd6ee5",
+  "limits": [
+    "self-authored Tab receipt only; no external selection-change coverage",
+    "conservative invalidation; receipt is not semantic effect confirmation",
+    "one Inkscape 1.4/X11 fixture and 120 ms paint-lag boundary",
+    "no AT-SPI identity, atomic target binding, model, speed, rate, or production claim"
+  ],
+  "measured_id_replacements": 0,
+  "measured_id_reruns": 0,
+  "predecessor_allocation": "inkscape-action-history-invalidation-20260916-a1",
+  "predecessor_disposition": "INCOMPLETE_SUPERVISION_TIMEOUT_7_OF_16_PLUS_ONE_PARTIAL_NOT_POOLED",
+  "release_empty_cases": 16,
+  "schema": "inkscape_action_history_invalidation_result_v1",
+  "strata": {
+    "self_switch|current_guard_only": {
+      "admit": 4,
+      "n": 4,
+      "semantic_correct": 0,
+      "stop": 0
+    },
+    "self_switch|history_invalidate": {
+      "admit": 0,
+      "n": 4,
+      "semantic_correct": 4,
+      "stop": 4
+    },
+    "stable|current_guard_only": {
+      "admit": 4,
+      "n": 4,
+      "semantic_correct": 4,
+      "stop": 0
+    },
+    "stable|history_invalidate": {
+      "admit": 4,
+      "n": 4,
+      "semantic_correct": 4,
+      "stop": 0
+    }
+  },
+  "task": "INKSCAPE-ACTION-HISTORY-INVALIDATION-20260916-001"
+}

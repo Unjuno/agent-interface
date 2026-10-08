@@ -1,0 +1,71 @@
+{
+  "results": [
+    {
+      "id": 1,
+      "method": "call",
+      "presented_text": [
+        {
+          "schema": "agent-interface/mcp-result-status-v1",
+          "isError": false
+        },
+        "{\"schema\": \"agent-interface/execution-clock-v1\", \"monotonic_ns\": 42164502067710, \"clock\": \"time.monotonic_ns\", \"server_instance_id\": \"7de3a5bcde5d4719bb57baa2b228e717\", \"input_dispatched\": false, \"authority_granted\": false, \"lease_issued\": false, \"scope\": \"Clock sample only; not freshness, admission or task completion. Only comparable within this execution host clock domain.\"}"
+      ],
+      "images": [],
+      "attempt": 1,
+      "original_reply_path": "/var/tmp/agent-interface-evidence-storage-main/results-local/primary-exchange-01/exchange/original-reply-1.json",
+      "caller_state": {
+        "stopped": null
+      },
+      "next_id": 2
+    },
+    {
+      "id": 2,
+      "method": "call",
+      "presented_text": [
+        {
+          "schema": "agent-interface/mcp-result-status-v1",
+          "isError": true
+        },
+        "{\"schema\": \"agent-interface/static-program-validation-v1\", \"status\": \"invalid\", \"static_valid\": false, \"side_effect_authority\": false, \"runtime_admission\": \"not_evaluated\", \"backend_checked\": false, \"task_success\": null, \"error\": \"INVALID_PROGRAM\", \"detail\": \"program schema mismatch\", \"detail_source\": \"program_validation\", \"compilation\": null}"
+      ],
+      "images": [],
+      "attempt": 2,
+      "original_reply_path": "/var/tmp/agent-interface-evidence-storage-main/results-local/primary-exchange-01/exchange/original-reply-2.json",
+      "caller_state": {
+        "stopped": "unexpected MCP refusal"
+      },
+      "next_id": 3
+    },
+    {
+      "id": 4,
+      "method": "call",
+      "presented_text": [
+        {
+          "schema": "agent-interface/mcp-result-status-v1",
+          "isError": true
+        },
+        "Unknown tool: interface_close"
+      ],
+      "images": [],
+      "attempt": 3,
+      "original_reply_path": "/var/tmp/agent-interface-evidence-storage-main/results-local/primary-exchange-01/exchange/original-reply-4.json",
+      "caller_state": {
+        "stopped": "unexpected MCP refusal"
+      },
+      "next_id": 5
+    }
+  ],
+  "exit": {
+    "code": 0,
+    "signal": null
+  },
+  "state": {
+    "next_id": 5,
+    "busy": false,
+    "stopped": "Error: trial stopped: unexpected MCP refusal; inspect retained original files; never replay input",
+    "caller_state": {
+      "stopped": "unexpected MCP refusal"
+    }
+  },
+  "scope": "Actual packaged host/relay/public MCP; no GUI, input or speed comparison."
+}

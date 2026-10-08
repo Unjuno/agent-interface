@@ -1,0 +1,254 @@
+[
+    {
+        "Id": "ff5c9607fe78e15aea4adaeb40fdaccfdf144221be36dff0fe580c0a44f03a17",
+        "Created": "2026-10-02T17:50:05.438382169Z",
+        "Path": "python3",
+        "Args": [
+            "/observer.py"
+        ],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 1,
+            "Error": "",
+            "StartedAt": "2026-10-02T17:50:05.553826734Z",
+            "FinishedAt": "2026-10-02T17:50:08.452087417Z"
+        },
+        "Image": "sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27",
+        "ResolvConfPath": "/var/lib/docker/containers/ff5c9607fe78e15aea4adaeb40fdaccfdf144221be36dff0fe580c0a44f03a17/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/ff5c9607fe78e15aea4adaeb40fdaccfdf144221be36dff0fe580c0a44f03a17/hostname",
+        "HostsPath": "/var/lib/docker/containers/ff5c9607fe78e15aea4adaeb40fdaccfdf144221be36dff0fe580c0a44f03a17/hosts",
+        "LogPath": "/var/lib/docker/containers/ff5c9607fe78e15aea4adaeb40fdaccfdf144221be36dff0fe580c0a44f03a17/ff5c9607fe78e15aea4adaeb40fdaccfdf144221be36dff0fe580c0a44f03a17-json.log",
+        "Name": "/ai6147-t1-matrix-observer-20261003",
+        "RestartCount": 0,
+        "Driver": "overlayfs",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {
+                    "max-file": "5",
+                    "max-size": "20m"
+                }
+            },
+            "NetworkMode": "none",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": [
+                "ALL"
+            ],
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": true,
+            "SecurityOpt": [
+                "no-new-privileges"
+            ],
+            "Tmpfs": {
+                "/tmp": "rw,noexec,nosuid,size=32m"
+            },
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 8409579520,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 536870912,
+            "NanoCpus": 1000000000,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 1073741824,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": 64,
+            "Ulimits": [],
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6342-safe-stop-t0-orbstack-20261003/research/analysis/safe_probe_identifiability_6147_t1_orbstack_20261003/construction_smoke/run_08/x11",
+                    "Target": "/tmp/.X11-unix",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6342-safe-stop-t0-orbstack-20261003/research/analysis/safe_probe_identifiability_6147_t1_orbstack_20261003/construction_matrix_smoke.py",
+                    "Target": "/observer.py",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6342-safe-stop-t0-orbstack-20261003/research/analysis/safe_probe_identifiability_6147_t1_orbstack_20261003/inputs/formal_01/deck_adaptive.jsonl",
+                    "Target": "/deck.jsonl",
+                    "ReadOnly": true
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/acpi",
+                "/proc/asound",
+                "/proc/interrupts",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/sys/devices/virtual/powercap",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "Storage": {
+            "RootFS": {
+                "Snapshot": {
+                    "Name": "overlayfs"
+                }
+            }
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6342-safe-stop-t0-orbstack-20261003/research/analysis/safe_probe_identifiability_6147_t1_orbstack_20261003/construction_smoke/run_08/x11",
+                "Destination": "/tmp/.X11-unix",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6342-safe-stop-t0-orbstack-20261003/research/analysis/safe_probe_identifiability_6147_t1_orbstack_20261003/construction_matrix_smoke.py",
+                "Destination": "/observer.py",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/Users/taka/Documents/Codex/2026-10-03/agent-interface-6342-safe-stop-t0-orbstack-20261003/research/analysis/safe_probe_identifiability_6147_t1_orbstack_20261003/inputs/formal_01/deck_adaptive.jsonl",
+                "Destination": "/deck.jsonl",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "ff5c9607fe78",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "DISPLAY=:99",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "DEBIAN_FRONTEND=noninteractive",
+                "PYTHONUNBUFFERED=1"
+            ],
+            "Cmd": [
+                "/observer.py"
+            ],
+            "Image": "issue4466-gtk-pixel-stability@sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27",
+            "Volumes": null,
+            "WorkingDir": "/repo",
+            "Entrypoint": [
+                "python3"
+            ],
+            "Labels": {
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "NetworkSettings": {
+            "SandboxID": "",
+            "SandboxKey": "",
+            "Ports": {},
+            "Networks": {
+                "none": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "DriverOpts": null,
+                    "GwPriority": 0,
+                    "NetworkID": "be4d057ee3ffc26baf9220196f1b89ed6bef1d8bcc10973725f59293e4e88c31",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "MacAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        },
+        "ImageManifestDescriptor": {
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "digest": "sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27",
+            "size": 1397,
+            "platform": {
+                "architecture": "arm64",
+                "os": "linux"
+            }
+        }
+    }
+]

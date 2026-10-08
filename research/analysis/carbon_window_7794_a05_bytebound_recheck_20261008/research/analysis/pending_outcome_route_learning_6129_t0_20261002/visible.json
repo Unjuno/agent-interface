@@ -1,0 +1,82 @@
+{
+  "schema": "pending-route-visible-v1",
+  "update_time": 5,
+  "cases": [
+    {
+      "case_id": "fast_receipt_complete_case_inversion",
+      "attribution": "identified",
+      "censor_model": "outcome_dependent_possible",
+      "observation_window_ms": 5,
+      "attempts": [
+        {"id":"A1","route":"FAST_ACK","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"VERIFIED_SUCCESS","effect_ms":4,"obligation_id":"ob-A1"},
+        {"id":"A2","route":"FAST_ACK","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"VERIFIED_SUCCESS","effect_ms":4,"obligation_id":"ob-A2"},
+        {"id":"A3","route":"FAST_ACK","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-A3"},
+        {"id":"A4","route":"FAST_ACK","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-A4"},
+        {"id":"B1","route":"SLOW_EFFECT","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":9,"effect_status":"VERIFIED_SUCCESS","effect_ms":2,"obligation_id":"ob-B1"},
+        {"id":"B2","route":"SLOW_EFFECT","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":9,"effect_status":"VERIFIED_SUCCESS","effect_ms":2,"obligation_id":"ob-B2"},
+        {"id":"B3","route":"SLOW_EFFECT","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":9,"effect_status":"VERIFIED_FAILURE","effect_ms":3,"obligation_id":"ob-B3"},
+        {"id":"B4","route":"SLOW_EFFECT","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":9,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-B4"}
+      ]
+    },
+    {
+      "case_id": "equal_delay_null",
+      "attribution": "identified",
+      "censor_model": "none",
+      "observation_window_ms": 10,
+      "attempts": [
+        {"id":"C1","route":"ROUTE_C","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-C1"},
+        {"id":"C2","route":"ROUTE_C","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-C2"},
+        {"id":"C3","route":"ROUTE_C","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_FAILURE","effect_ms":4,"obligation_id":"ob-C3"},
+        {"id":"C4","route":"ROUTE_C","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_FAILURE","effect_ms":4,"obligation_id":"ob-C4"},
+        {"id":"D1","route":"ROUTE_D","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-D1"},
+        {"id":"D2","route":"ROUTE_D","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-D2"},
+        {"id":"D3","route":"ROUTE_D","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_FAILURE","effect_ms":4,"obligation_id":"ob-D3"},
+        {"id":"D4","route":"ROUTE_D","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_FAILURE","effect_ms":4,"obligation_id":"ob-D4"}
+      ]
+    },
+    {
+      "case_id": "known_window_noninformative_censoring",
+      "attribution": "identified",
+      "censor_model": "random_independent_of_outcome_known_window",
+      "observation_window_ms": 5,
+      "attempts": [
+        {"id":"E1","route":"ROUTE_E","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-E1"},
+        {"id":"E2","route":"ROUTE_E","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_FAILURE","effect_ms":4,"obligation_id":"ob-E2"},
+        {"id":"E3","route":"ROUTE_E","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_FAILURE","effect_ms":4,"obligation_id":"ob-E3"},
+        {"id":"E4","route":"ROUTE_E","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-E4"},
+        {"id":"F1","route":"ROUTE_F","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-F1"},
+        {"id":"F2","route":"ROUTE_F","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-F2"},
+        {"id":"F3","route":"ROUTE_F","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-F3"},
+        {"id":"F4","route":"ROUTE_F","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":2,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-F4"}
+      ]
+    },
+    {
+      "case_id": "informative_censoring_or_ambiguous_attribution",
+      "attribution": "ambiguous",
+      "censor_model": "outcome_dependent_or_route_interfered",
+      "observation_window_ms": 5,
+      "attempts": [
+        {"id":"G1","route":"ROUTE_G","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"VERIFIED_SUCCESS","effect_ms":3,"obligation_id":"ob-G1"},
+        {"id":"G2","route":"ROUTE_G","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-G2"},
+        {"id":"G3","route":"ROUTE_G","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-G3"},
+        {"id":"H1","route":"ROUTE_H","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":7,"effect_status":"VERIFIED_FAILURE","effect_ms":4,"obligation_id":"ob-H1"},
+        {"id":"H2","route":"ROUTE_H","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":7,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-H2"},
+        {"id":"H3","route":"ROUTE_H","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":7,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-H3"}
+      ]
+    },
+    {
+      "case_id": "all_pending_initial_period",
+      "attribution": "identified",
+      "censor_model": "known_window_still_open",
+      "observation_window_ms": 2,
+      "attempts": [
+        {"id":"I1","route":"ROUTE_I","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-I1"},
+        {"id":"I2","route":"ROUTE_I","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-I2"},
+        {"id":"I3","route":"ROUTE_I","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-I3"},
+        {"id":"J1","route":"ROUTE_J","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-J1"},
+        {"id":"J2","route":"ROUTE_J","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-J2"},
+        {"id":"J3","route":"ROUTE_J","eligible":true,"assignment_probability":"1/2","dispatch_ms":0,"receipt_ms":1,"effect_status":"PENDING","effect_ms":null,"obligation_id":"ob-J3"}
+      ]
+    }
+  ]
+}

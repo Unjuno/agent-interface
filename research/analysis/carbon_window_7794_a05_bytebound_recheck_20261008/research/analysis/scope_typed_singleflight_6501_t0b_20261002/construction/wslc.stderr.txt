@@ -1,0 +1,30 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+test_all_frozen_cases_are_present_once (test_candidate.ScopeTypedSingleflightTests.test_all_frozen_cases_are_present_once) ... ok
+test_arrival_before_completion_joins_but_after_completion_does_not (test_candidate.ScopeTypedSingleflightTests.test_arrival_before_completion_joins_but_after_completion_does_not) ... ok
+test_cancelling_one_waiter_does_not_cancel_another_or_grant_authority (test_candidate.ScopeTypedSingleflightTests.test_cancelling_one_waiter_does_not_cancel_another_or_grant_authority) ... ok
+test_each_waiter_enforces_its_own_deadline (test_candidate.ScopeTypedSingleflightTests.test_each_waiter_enforces_its_own_deadline) ... ok
+test_equivalent_overlapping_requests_share_one_read (test_candidate.ScopeTypedSingleflightTests.test_equivalent_overlapping_requests_share_one_read) ... ok
+test_every_frozen_scope_field_splits_non_equivalent_calls (test_candidate.ScopeTypedSingleflightTests.test_every_frozen_scope_field_splits_non_equivalent_calls) ... ok
+test_generation_change_before_return_makes_every_waiter_stale (test_candidate.ScopeTypedSingleflightTests.test_generation_change_before_return_makes_every_waiter_stale) ... ok
+test_late_request_after_completion_starts_a_fresh_read (test_candidate.ScopeTypedSingleflightTests.test_late_request_after_completion_starts_a_fresh_read) ... ok
+test_owner_failure_is_not_retried_or_upgraded (test_candidate.ScopeTypedSingleflightTests.test_owner_failure_is_not_retried_or_upgraded) ... ok
+test_restart_aba_with_reused_generation_number_is_distinct_scope (test_candidate.ScopeTypedSingleflightTests.test_restart_aba_with_reused_generation_number_is_distinct_scope) ... ok
+test_same_predicate_on_other_target_never_inherits_owner_result (test_candidate.ScopeTypedSingleflightTests.test_same_predicate_on_other_target_never_inherits_owner_result) ... ok
+test_unknown_and_contradictory_evidence_remain_per_caller (test_candidate.ScopeTypedSingleflightTests.test_unknown_and_contradictory_evidence_remain_per_caller) ... ok
+test_accepts_exact_candidate_artifact (test_auditor.RawOnlyAuditorTests.test_accepts_exact_candidate_artifact) ... ok
+test_rejects_changed_frozen_fixture_identity (test_auditor.RawOnlyAuditorTests.test_rejects_changed_frozen_fixture_identity) ... ok
+test_rejects_corrupted_latency (test_auditor.RawOnlyAuditorTests.test_rejects_corrupted_latency) ... ok
+test_rejects_dropped_waiter (test_auditor.RawOnlyAuditorTests.test_rejects_dropped_waiter) ... ok
+test_rejects_missing_frozen_case (test_auditor.RawOnlyAuditorTests.test_rejects_missing_frozen_case) ... ok
+test_rejects_naive_cross_target_safety_control_that_stops_failing (test_auditor.RawOnlyAuditorTests.test_rejects_naive_cross_target_safety_control_that_stops_failing) ... ok
+test_rejects_no_coalescing_baseline_that_hides_a_call (test_auditor.RawOnlyAuditorTests.test_rejects_no_coalescing_baseline_that_hides_a_call) ... ok
+test_rejects_unknown_result_upgraded_to_true (test_auditor.RawOnlyAuditorTests.test_rejects_unknown_result_upgraded_to_true) ... ok
+test_rejects_wrong_caller_decision (test_auditor.RawOnlyAuditorTests.test_rejects_wrong_caller_decision) ... ok
+test_rejects_wrong_scope_invocation_count (test_auditor.RawOnlyAuditorTests.test_rejects_wrong_scope_invocation_count) ... ok
+test_auditor_wrapper_emits_a_parseable_pass_receipt (test_wrappers.WrapperOutputTests.test_auditor_wrapper_emits_a_parseable_pass_receipt) ... ok
+test_candidate_wrapper_writes_valid_json_with_one_real_lf (test_wrappers.WrapperOutputTests.test_candidate_wrapper_writes_valid_json_with_one_real_lf) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 1.514s
+
+OK

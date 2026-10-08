@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "exactly_seven_cases": true,
+    "exit_23_propagated": true,
+    "fake_hash_matches_recorded": true,
+    "idle_externally_bounded": true,
+    "malformed_fails_closed": true,
+    "one_shot_processes_first_only": true,
+    "preflight_pass": true,
+    "timeout_typed_non_success": false,
+    "unavailable_typed_non_success": true,
+    "zero_process_exit_propagated": false,
+    "zero_receipt_is_zero": true
+  },
+  "errors": [
+    "zero_process_exit_propagated",
+    "timeout_typed_non_success"
+  ],
+  "raw_sha256": "d149992af141530fe97a54821e7694879d4f6745bf6e0ad982a8bca728dacad2",
+  "result": "FAIL_ZERO_EXIT_PROPAGATION",
+  "rows": 7
+}

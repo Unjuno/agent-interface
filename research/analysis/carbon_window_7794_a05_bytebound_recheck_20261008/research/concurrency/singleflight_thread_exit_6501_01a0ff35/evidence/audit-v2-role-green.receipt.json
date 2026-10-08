@@ -1,0 +1,25 @@
+{
+  "label": "audit-v2-role-green",
+  "argv": [
+    "python",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "test_audit_v2.AuditV2Tests.test_original_retained_data_passes",
+    "test_audit_v2.AuditV2Tests.test_each_schedule_requires_named_caller_roles"
+  ],
+  "start_utc": "2026-10-03T02:54:48.052327+00:00",
+  "end_utc": "2026-10-03T02:54:48.158497+00:00",
+  "exit_code": 0,
+  "stdout": {
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "redaction": "local path prefixes only"
+  },
+  "stderr": {
+    "original_sha256": "7ad4bd642101bf630a879f128a3dd1f8d665aafe5206378a154f5f128b658345",
+    "public_sha256": "7ad4bd642101bf630a879f128a3dd1f8d665aafe5206378a154f5f128b658345",
+    "redaction": "local path prefixes only"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "issue": 5315,
+  "allocation": "conformal-risk-5315-v01-20260930-01",
+  "status": "PASS_FINITE_SAMPLE_UNIT_SCOPED",
+  "issue_level_disposition": "HOLD_UNVERIFIED_FULL_RISK_CONTRACT",
+  "formal_invocations": 1,
+  "formal_reruns": 0,
+  "rows": 20000,
+  "sample_sizes": [4, 10],
+  "seed": 5315,
+  "alpha": 0.1,
+  "raw_sha256": "4ead9d0a552db86332a4c8ac08b9f6e01fcc1f6066e645ae15ead9c9395c8b37",
+  "receipt_sha256": "6401627c5777b6ee42a5ce7fd26457d2355854fc53095be4cd35d4750ce6a55a",
+  "audit_01": {
+    "status": "FAIL_AUDIT",
+    "sha256": "43ad5497b6699825e243c1928dd390af829125522235ed47d6803c2973efb0bb",
+    "failure": "mutation self-control was a no-op because it assigned true to an already-true singleton field"
+  },
+  "audit_02": {
+    "status": "PASS_FIRST_UNIT_SCOPED",
+    "sha256": "09cb37bd050b067dac83d0d988ad663c6d71facfb208c4fa3c8d1c5a4ea51c9c",
+    "row_errors": 0,
+    "mutation_controls": 3
+  },
+  "n10": {
+    "id_true_inclusion": {
+      "raw": 0.8053,
+      "plugin": 0.8125,
+      "split_conformal": 0.9025,
+      "split_conformal_expected": 0.9090909091
+    },
+    "shift_true_inclusion": {
+      "raw": 0.6468,
+      "plugin": 0.6746,
+      "split_conformal": 0.8261,
+      "split_conformal_expected": 0.8333333333
+    },
+    "known_shift_override": {
+      "true_inclusion": 1.0,
+      "singleton_rate": 0.0,
+      "mean_set_size": 2.0
+    }
+  },
+  "n4": {
+    "split_conformal_rank": 5,
+    "calibration_size": 4,
+    "true_inclusion": 1.0,
+    "singleton_rate": 0.0,
+    "mean_set_size": 2.0
+  },
+  "max_absolute_monte_carlo_error": 0.015,
+  "authority_or_external_effect_claim": false,
+  "issue_remains_open": true
+}

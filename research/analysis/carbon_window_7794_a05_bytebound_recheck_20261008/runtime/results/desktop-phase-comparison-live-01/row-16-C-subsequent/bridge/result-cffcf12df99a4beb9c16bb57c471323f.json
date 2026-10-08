@@ -1,0 +1,172 @@
+{
+  "status": "completed",
+  "admission": "accepted",
+  "required_capabilities": [
+    "clock.monotonic",
+    "event.feedback",
+    "input.keyboard",
+    "input.release_all",
+    "input.text",
+    "window.focus"
+  ],
+  "execution": {
+    "started_ns": 13582610565926,
+    "ended_ns": 13582940223334,
+    "emissions": 20,
+    "program_emissions": 20,
+    "observations": [],
+    "releases": [
+      {
+        "keys_down": [],
+        "buttons_down": [],
+        "verified": true,
+        "monotonic_ns": 13582940220215
+      }
+    ],
+    "waits": [
+      {
+        "operation_index": 3,
+        "requested_ms": 20,
+        "started_ns": 13582654004069,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 13582674209868
+      },
+      {
+        "operation_index": 5,
+        "requested_ms": 20,
+        "started_ns": 13582674772051,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 13582695029774
+      },
+      {
+        "operation_index": 8,
+        "requested_ms": 100,
+        "started_ns": 13582696430630,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 13582796587091
+      },
+      {
+        "operation_index": 10,
+        "requested_ms": 20,
+        "started_ns": 13582797185101,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 13582817346110
+      },
+      {
+        "operation_index": 12,
+        "requested_ms": 20,
+        "started_ns": 13582818011184,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 13582838261430
+      },
+      {
+        "operation_index": 15,
+        "requested_ms": 100,
+        "started_ns": 13582839270050,
+        "completed": true,
+        "kind": "fixed_delay",
+        "update_observed": null,
+        "ended_ns": 13582939643087
+      }
+    ],
+    "activations": [],
+    "completed_ops": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ]
+  },
+  "recovery_required": false,
+  "guard_checks": [
+    {
+      "stage": "before_admission",
+      "observation_sequence": 3,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "sheet_context",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "sheet_context",
+      "point": [
+        158,
+        223
+      ],
+      "observed_box": [
+        117,
+        215,
+        83,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 3,
+      "valid_until_ns": 13584064571370,
+      "patch_sha256": "90060cd72800f781b67e3cfc13023e197df261d9bb3d22626ccf45bb00a7684b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    },
+    {
+      "stage": "before_focus",
+      "observation_sequence": 4,
+      "eligible": true,
+      "status": "VALID",
+      "handle": "sheet_context",
+      "authority": "resolution only; ordinary admission remains required",
+      "reason": "exact_region_match",
+      "name": "sheet_context",
+      "point": [
+        158,
+        223
+      ],
+      "observed_box": [
+        117,
+        215,
+        83,
+        16
+      ],
+      "binding_translation": [
+        0,
+        0
+      ],
+      "local_translation": [
+        0,
+        0
+      ],
+      "sequence": 4,
+      "valid_until_ns": 13584110794268,
+      "patch_sha256": "90060cd72800f781b67e3cfc13023e197df261d9bb3d22626ccf45bb00a7684b",
+      "reference_kind": "session_alias",
+      "private_registry_id_exposed": false
+    }
+  ]
+}

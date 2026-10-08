@@ -1,0 +1,36 @@
+{
+  "kind": "act",
+  "steps": [
+    {
+      "op": "pointer_move",
+      "x": 675,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "pointer_move",
+      "x": 459,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    },
+    {
+      "op": "pointer_move",
+      "x": 843,
+      "y": 51
+    },
+    {
+      "op": "dwell_observe",
+      "delay_ms": 800
+    }
+  ],
+  "rationale": "Inspect three distinct toolbar regions to identify Build roads before opening construction controls.",
+  "intent": "inspect",
+  "expected_effect": "Tooltip strips identify the purposes of the three toolbar icons, allowing the road-construction control to be selected.",
+  "checkpoint": null
+}

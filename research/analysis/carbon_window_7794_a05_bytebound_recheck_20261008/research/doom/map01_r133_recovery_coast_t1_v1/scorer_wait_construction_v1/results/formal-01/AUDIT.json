@@ -1,0 +1,29 @@
+{
+  "errors": [],
+  "mutations": {
+    "controller_visible": {
+      "errors": [
+        "event_authority"
+      ],
+      "rejected": true
+    },
+    "event_after_wait": {
+      "errors": [
+        "event_outside_command_wait"
+      ],
+      "rejected": true
+    },
+    "omitted_event": {
+      "errors": [
+        "event_inventory"
+      ],
+      "rejected": true
+    }
+  },
+  "raw_errors": [],
+  "raw_sha256": "fd07dcb1da9810d3c842ee87889b3256068185bf808ae170b68fd5dd450e9cba",
+  "schema": "map01-scorer-command-wait-construction-audit-v1",
+  "scope": "host construction only; no MAP01, model, X11, Docker, plan/actuation binding, or causal efficacy claim",
+  "source_errors": [],
+  "status": "PASS_SCORER_EVENTS_RETAINED_DURING_COMMAND_WAIT_CONSTRUCTION"
+}

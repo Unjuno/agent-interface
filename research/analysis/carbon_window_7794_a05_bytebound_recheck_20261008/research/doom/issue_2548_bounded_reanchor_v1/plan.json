@@ -1,0 +1,11 @@
+{
+  "schema": "issue-2548-formal-plan-v1",
+  "cases": [
+    {"id":"c01-coast-guard-only","seed":254801,"arm":"coast","fresh_mode":"none","same_session":true,"budget":0},
+    {"id":"c02-drift-guard-only","seed":254802,"arm":"recovery","fresh_mode":"none","same_session":true,"budget":0},
+    {"id":"c03-drift-fresh-reanchor","seed":254803,"arm":"recovery","fresh_mode":"observe","same_session":true,"budget":1},
+    {"id":"c04-coast-fresh-reanchor","seed":254804,"arm":"coast","fresh_mode":"observe","same_session":true,"budget":1},
+    {"id":"c05-stale-reanchor","seed":254805,"arm":"recovery","fresh_mode":"none","same_session":true,"budget":1,"duplicate":true},
+    {"id":"c06-ambiguous-reanchor","seed":254806,"arm":"recovery","fresh_mode":"observe","same_session":true,"budget":1,"ambiguous":true}
+  ]
+}

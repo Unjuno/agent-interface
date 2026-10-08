@@ -1,0 +1,11 @@
+# Frozen T0 protocol — feasibility-gated mechanism attribution (#6100)
+
+## H / T / D / C / U
+
+- **H:** Exact feasible coalition tables should distinguish additivity, positive/negative 2-factor interaction, and a 3-factor context interaction that reverses baseline-only versus Shapley ranking. A two-factor rank reversal must not be asserted. Infeasible coalitions must remain missing/held, never be imputed as zero. Safety, effect, latency and tokens stay separate endpoints.
+- **T:** Five authored cases: additive 2-factor, positive interaction 2-factor, negative interaction 2-factor, 3-factor ranking reversal, and 2-factor family with one infeasible coalition. Ten attempt-level records per feasible coalition retain candidate-reported effect, independent effect oracle, safety event, latency and token count. A raw-only independent auditor recomputes feasible-arm completeness, endpoint summaries, interactions and exact Shapley values.
+- **D:** `PASS_METHOD_SCOPED` only if all feasible coalition rows/attempts are complete; both 2-factor interaction signs and additivity match the frozen table; the 3-factor baseline/Shapley ranking reversal matches exact arithmetic; 2-factor ranking differences agree; infeasible factorial returns `HOLD_NO_FEASIBLE_FACTORIAL` without zero imputation; all four mutation controls (label swap, omitted arm, effect-failure-to-slow-success relabel, safety scalarization) are rejected.
+- **C:** Authored deterministic potential-outcome fixture, not measured Agent Interface behavior. Success-rate is the sole declared scalar characteristic function used for illustrative attribution. Safety violations, latency and token fields remain separate and are never folded into that function.
+- **U:** No live model, GUI, app, task, mechanism intervention, causal attribution, route benefit, safety result, uncertainty interval, or transferable Shapley value. T0 validates arithmetic, feasibility handling and audit contracts only.
+
+Cases and exact values are frozen in `simulate.py`. Each feasible arm has 10 fixed attempt rows; the independent oracle outcome and candidate-reported label must agree. All values are exact integers/rational rates. No randomness or network is used. Any source/protocol/test change after `FREEZE.json` invalidates the official output.

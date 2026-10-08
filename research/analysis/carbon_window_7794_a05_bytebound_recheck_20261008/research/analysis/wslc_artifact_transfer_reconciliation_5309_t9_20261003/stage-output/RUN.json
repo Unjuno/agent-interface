@@ -1,0 +1,21 @@
+{
+  "record": "T9 offline retained artifact provenance audit",
+  "runtime": "Windows PowerShell invoking Python",
+  "python_version": "3.12.10",
+  "command": "python -B verify_artifact_transfer.py --input inputs/artifact_snapshots.json",
+  "formal_cli_validations": 1,
+  "retries": 0,
+  "candidate_runs": 0,
+  "wslc_invocations": 0,
+  "docker_invocations": 0,
+  "exit_code": 0,
+  "status": "PASS_ARTIFACT_TRANSFER_PROVENANCE_RECONCILED",
+  "captured_output_channel": "The execution tool returned a combined text field rather than separately measured stdout/stderr. No independent stderr byte count is claimed.",
+  "construction_rehearsal": {
+    "before_freeze": true,
+    "mutation_tests": 8,
+    "result": "PASS",
+    "formal_evidence": false,
+    "note": "The test suite setup also invoked the validator on the exact fixture once. This was disclosed in the preregistration and is not counted as the one formal frozen CLI invocation."
+  }
+}

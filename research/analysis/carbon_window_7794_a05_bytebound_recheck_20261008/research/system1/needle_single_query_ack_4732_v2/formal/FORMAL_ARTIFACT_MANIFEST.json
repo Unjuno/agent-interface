@@ -1,0 +1,26 @@
+{
+  "schema": "needle-single-query-ack-formal-artifacts-v2",
+  "allocation": "needle-single-query-ack-6911201-6911301-6911401-v2",
+  "docker_volume": "unjuno-needle-single-query-ack-4813-formal-v2",
+  "trainer_orchestrations": 1,
+  "auditor_invocations": 1,
+  "files": {
+    "audit/AUDIT.json": {"bytes": 1690, "sha256": "f9d564e896530f372d083a682851f97b0a7605ca3b76f3942ca8a0ede2563818"},
+    "training/6911201/run.json": {"bytes": 291492, "sha256": "126edb2bc4c84c69112fdbf13269ae9171f5e21c9692fc7a59cbe9efcf6558af", "encoding": "ordered UTF-8 parts of 10,000 characters; concatenate without separators"},
+    "training/6911201/worker-input.json": {"bytes": 86773, "sha256": "585e4f9004886d028849bd17ce2001dd6d28a307cae91b3888858c64fb220753"},
+    "training/6911301/run.json": {"bytes": 291812, "sha256": "8a6c217da838de03e6024c22680b4482ab803b98eab66fb498a468bb862cc758", "encoding": "ordered UTF-8 parts of 10,000 characters; concatenate without separators"},
+    "training/6911301/worker-input.json": {"bytes": 86789, "sha256": "4856d5542e4fd07116ba96d9815aaea4fdb73b19c63210c9c9724ba21495f2eb"},
+    "training/6911401/run.json": {"bytes": 291808, "sha256": "e172fa1bf0034dfa27ab66591e7ee68786db6111c30f0b83c37d8619fc3a319b", "encoding": "ordered UTF-8 parts of 10,000 characters; concatenate without separators"},
+    "training/6911401/worker-input.json": {"bytes": 86810, "sha256": "c9294e97a8463cb2fa4530d99f1225ef8ee5e66f17d1b6d99d223586a801c957"},
+    "volume-final/6911201/INLINE_512/snapshot.json": {"bytes": 2972, "sha256": "12dbe93f44b974bf216f2e4cf5bd9fa0eadf1fdefcab900a39af082e1a73140c"},
+    "volume-final/6911201/ONLINE_QUERY_ONLY/snapshot.json": {"bytes": 2972, "sha256": "12dbe93f44b974bf216f2e4cf5bd9fa0eadf1fdefcab900a39af082e1a73140c"},
+    "volume-final/6911301/INLINE_512/snapshot.json": {"bytes": 3017, "sha256": "93a759037fcedc199725a998a6401031ea81a9e6ba71f6dacbb8657efdb1a2dc"},
+    "volume-final/6911301/ONLINE_QUERY_ONLY/snapshot.json": {"bytes": 3017, "sha256": "93a759037fcedc199725a998a6401031ea81a9e6ba71f6dacbb8657efdb1a2dc"},
+    "volume-final/6911401/INLINE_512/snapshot.json": {"bytes": 3003, "sha256": "ad9fa8a9ab9286c9fb9166fdd50c212680246adf4b74584a82016d52cb1d967a"},
+    "volume-final/6911401/ONLINE_QUERY_ONLY/snapshot.json": {"bytes": 3003, "sha256": "ad9fa8a9ab9286c9fb9166fdd50c212680246adf4b74584a82016d52cb1d967a"}
+  },
+  "decision": "HOLD_LATENCY_BUDGET",
+  "integrity_errors": 0,
+  "checked_arm_arrivals": 72,
+  "corruption_controls_rejected": 5
+}

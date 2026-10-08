@@ -1,0 +1,20 @@
+name: Known postcondition boundary #3048
+on:
+  pull_request:
+    paths:
+      - 'research/verification/known_postcondition_boundary_v1/**'
+      - '.github/workflows/known-postcondition-boundary-3048.yml'
+permissions:
+  contents: read
+jobs:
+  formal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f research/verification/known_postcondition_boundary_v1/Dockerfile -t postcondition-3048 .
+      - run: mkdir -p out && docker run --rm -v "$GITHUB_WORKSPACE/out:/out" postcondition-3048
+      - uses: actions/upload-artifact@v4
+        with:
+          name: known-postcondition-boundary-3048
+          path: out
+          if-no-files-found: error

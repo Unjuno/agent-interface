@@ -1,0 +1,47 @@
+{
+  "cause": "query output contains variable-width whitespace accepted by a whitespace-tolerant parse but rejected by the runner's exact string equality; execution stopped before German map application or candidate planning",
+  "disposition": "PASS_AUDIT_CONFIRMED_HARNESS_STOP",
+  "errors": [],
+  "manifest_sha256": "196fae86bcd15993d76a217457f7aa2922bd94f1b623c9dde2d843da62621431",
+  "raw_sha256": "eced38b64c1c1e1f78c5bfd5dc30dcede5c5c9563f8bac73b71e29d4d98ed689",
+  "rows": [
+    {
+      "candidate_reached": false,
+      "case_id": "de-01",
+      "control_ok": true,
+      "parser_layout_ok": false,
+      "query_layout_us": true,
+      "status": "STOP_BASELINE",
+      "xvfb_reaped": true
+    },
+    {
+      "candidate_reached": false,
+      "case_id": "de-02",
+      "control_ok": true,
+      "parser_layout_ok": false,
+      "query_layout_us": true,
+      "status": "STOP_BASELINE",
+      "xvfb_reaped": true
+    },
+    {
+      "candidate_reached": false,
+      "case_id": "de-03",
+      "control_ok": true,
+      "parser_layout_ok": false,
+      "query_layout_us": true,
+      "status": "STOP_BASELINE",
+      "xvfb_reaped": true
+    },
+    {
+      "candidate_reached": false,
+      "case_id": "us-control",
+      "control_ok": true,
+      "parser_layout_ok": false,
+      "query_layout_us": true,
+      "status": "STOP_BASELINE",
+      "xvfb_reaped": true
+    }
+  ],
+  "runner_sha256": "ffe1b5d081775c511de50a0a626b6e43ff6f4e094069b3d40baa9e33b334246b",
+  "schema": "agent-interface/issue3791-baseline-stop-forensic-audit-v2"
+}

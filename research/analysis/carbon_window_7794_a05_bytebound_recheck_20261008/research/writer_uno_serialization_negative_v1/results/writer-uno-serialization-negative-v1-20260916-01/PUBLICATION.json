@@ -1,0 +1,41 @@
+{
+  "schema": "agent-interface/writer-uno-serialization-negative-publication-v1",
+  "result_id": "writer-uno-serialization-negative-v1-20260916-01",
+  "source_freeze": "749d4253aa9b8e8560919a8d245ef1c8431feeaf",
+  "disposition": "RETAIN_UNO_SERIALIZATION_NEGATIVE / REJECT_COMPARE_RECHECK_CONTROLLER_LOCK_AS_ATOMIC_CAS / HOLD_FIX_SELECTION",
+  "formal_reruns": 0,
+  "sessions": 9,
+  "artifacts": {
+    "REPORT.md": {
+      "bytes": 3179,
+      "sha256": "96595492dbe5c9c702bc93cd1498bf029f39297402f8015935bd9f6225a743ef"
+    },
+    "audit.json": {
+      "bytes": 1060,
+      "sha256": "8d21d5923aa0bb88cc26bd67b7bfefe769c4e333a373d07c9cb2e4b651cf7d88"
+    },
+    "formal-evidence.json.gz.b64": {
+      "bytes": 3105,
+      "sha256": "07a487e96588f34b3e65deedcc005ac908e2eeb5de62d2766c7982923282ea9d"
+    },
+    "source-check.json": {
+      "bytes": 1636,
+      "sha256": "dc9e12ecf231ebe9ae09d53ef0be1d5df2adb65678d8f14acd4c4c90f0e369c0"
+    },
+    "started.json": {
+      "bytes": 358,
+      "sha256": "7a01227d66175900bb4ea86c6d15ffdc3da0a24a55fba671fdabe6ec5659b55e"
+    },
+    "unittest.txt": {
+      "bytes": 273,
+      "sha256": "e1f453ca704eb1c2693efccecc009fec5798bb734787f461c24174326f20576b"
+    }
+  },
+  "publication_note": "GitHub canonical raw package is formal-evidence.json.gz.b64; it contains the complete aggregate and per-session receipts. The standalone live/aggregate.json remains locally hashed but is intentionally omitted from GitHub after a publication-time blob-identity mismatch; no substitute bytes are published.",
+  "local_only_artifacts": {
+    "live/aggregate.json": {
+      "bytes": 12197,
+      "sha256": "7c4a1068b7eb4e27d637ec03f8b179e7f3d6c684fc13159e9f8da9bf95d54e25"
+    }
+  }
+}

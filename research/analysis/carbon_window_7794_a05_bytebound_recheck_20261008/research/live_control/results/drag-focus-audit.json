@@ -1,0 +1,811 @@
+{
+  "boundary_checks": [
+    {
+      "case": "child_to_parent",
+      "held_and_moved": true
+    },
+    {
+      "case": "child_to_sibling",
+      "held_and_moved": true
+    },
+    {
+      "case": "keyboard_does_not_inherit_pointer_equivalence",
+      "rejected": true
+    },
+    {
+      "case": "foreign_focus",
+      "released": true
+    },
+    {
+      "case": "foreign_active_client_same_focus",
+      "released": true
+    },
+    {
+      "case": "mixed_keyboard_pointer_keeps_exact_focus",
+      "released": true
+    },
+    {
+      "case": "foreign_original_focus_not_rebound",
+      "rejected": true
+    },
+    {
+      "case": "geometry_still_required",
+      "rejected": true
+    }
+  ],
+  "feedback_cohorts": [
+    {
+      "cohort": "drag-feedback-01",
+      "exact_frames": 14,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 6926028105,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "case": "expiry_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 7703244002,
+          "tail_motion_absent": true,
+          "terminal": "expired"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "expired"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 9,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 10,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 11,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-02",
+      "exact_frames": 11,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 100958153644,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "error": "AssertionError()"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "needs_decision"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 8,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 9,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 10,
+          "red_bbox": [
+            608,
+            374,
+            655,
+            408
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-03",
+      "exact_frames": 9,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "error": "AssertionError()"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "needs_decision"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 9,
+          "red_bbox": [
+            63,
+            766,
+            113,
+            782
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-04",
+      "exact_frames": 9,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "error": "AssertionError()"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "needs_decision"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 9,
+          "red_bbox": [
+            63,
+            766,
+            113,
+            782
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-05",
+      "exact_frames": 15,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 213098400318,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "case": "expiry_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 214477046257,
+          "tail_motion_absent": true,
+          "terminal": "expired"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "expired"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 10,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 11,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 12,
+          "red_bbox": [
+            608,
+            374,
+            655,
+            408
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-06",
+      "exact_frames": 14,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 8359586873,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "case": "expiry_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 9737753079,
+          "tail_motion_absent": true,
+          "terminal": "expired"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "expired"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 9,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 10,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 11,
+          "red_bbox": [
+            608,
+            374,
+            655,
+            408
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-07",
+      "exact_frames": 15,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 27828842878,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "case": "expiry_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 29213254059,
+          "tail_motion_absent": true,
+          "terminal": "expired"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "expired"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 10,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 11,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 12,
+          "red_bbox": [
+            608,
+            374,
+            655,
+            408
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-08",
+      "exact_frames": 11,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 59133767477,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "error": "AssertionError()"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "needs_decision"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 8,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 9,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 10,
+          "red_bbox": [
+            608,
+            374,
+            655,
+            408
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-09",
+      "exact_frames": 11,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 15064473010,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "case": "expiry_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 15780243566,
+          "tail_motion_absent": true,
+          "terminal": "expired"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "expired"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 8,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 9,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 10,
+          "red_bbox": [
+            608,
+            374,
+            655,
+            408
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-10",
+      "exact_frames": 11,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 28017139373,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "case": "expiry_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 28732322773,
+          "tail_motion_absent": true,
+          "terminal": "expired"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "expired"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 8,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 9,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 10,
+          "red_bbox": [
+            608,
+            374,
+            655,
+            408
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "drag-feedback-11",
+      "exact_frames": 11,
+      "results": [
+        {
+          "case": "six_invalid_checkpoint_lists",
+          "rejected_before_input": true
+        },
+        {
+          "case": "completed_checkpoints",
+          "count": 3,
+          "release_verified": true
+        },
+        {
+          "case": "cancel_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 68985468690,
+          "tail_motion_absent": true,
+          "terminal": "cancelled"
+        },
+        {
+          "case": "expiry_while_output_blocked",
+          "released_before_output_resumed": true,
+          "release_observed_ns": 69700731706,
+          "tail_motion_absent": true,
+          "terminal": "expired"
+        }
+      ],
+      "terminals": [
+        {
+          "id": "select",
+          "status": "completed"
+        },
+        {
+          "id": "complete",
+          "status": "completed"
+        },
+        {
+          "id": "cancel",
+          "status": "cancelled"
+        },
+        {
+          "id": "expiry",
+          "status": "expired"
+        }
+      ],
+      "completed_drag_feedback": [
+        {
+          "point": 0,
+          "sequence": 8,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 1,
+          "sequence": 9,
+          "red_bbox": [
+            597,
+            374,
+            643,
+            408
+          ]
+        },
+        {
+          "point": 2,
+          "sequence": 10,
+          "red_bbox": [
+            608,
+            374,
+            655,
+            408
+          ]
+        }
+      ]
+    }
+  ]
+}

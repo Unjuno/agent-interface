@@ -1,0 +1,37 @@
+{
+  "schema": "arena-v0-coordinate-scale-freeze-v1",
+  "allocation": "arena-v0-coordinate-scale-4666-v1-20260928-01",
+  "issue": "Unjuno/agent-interface#4666",
+  "preregistration_comment": "https://github.com/Unjuno/agent-interface/issues/4666#issuecomment-5857731016",
+  "freeze_base_commit": "1d793ba6502fa6c780103c2246a92e8d164c914e",
+  "model": {
+    "name": "qwen2.5vl:7b",
+    "digest": "5ced39dfa4bac325dc183dd1e4febaa1c46b3ea28bce48896c8e69c1e79611cc",
+    "endpoint": "http://host.docker.internal:11434",
+    "temperature": 0,
+    "sampler_seed": 424242,
+    "num_predict": 128
+  },
+  "container": {
+    "image": "python@sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/arm64"
+  },
+  "difficulty": 0.35,
+  "construction_seed": 8866620,
+  "formal_seeds": [8866621, 8866622, 8866623, 8866624, 8866625, 8866626, 8866627, 8866628, 8866629, 8866630, 8866631, 8866632],
+  "coordinate_mapping": {
+    "normalized_x_to_pixel": "x_norm * (WIDTH - 1) = x_norm * 639",
+    "normalized_y_to_pixel": "y_norm * (HEIGHT - 1) = y_norm * 479",
+    "clip_out_of_range": false
+  },
+  "source_hashes": {
+    "research/procedural_control_arena_v0/engine.py": "3de14c8d46cc20b51f4bd371a6af66fe7cb6b6743e72e3eaa31943fdd94e2c34",
+    "research/procedural_control_arena_v0/target_localization_encoding_v1/renderer.py": "1de702ca13afd17ceb1ac17b8924fd2a6784620c966999c123b97bbc9fb85b99",
+    "research/procedural_control_arena_v0/target_coordinate_scale_4666_v1/README.md": "67f13067c37af9bf893cf2093a625be93321be76b9aef9abf603029be39195d0",
+    "research/procedural_control_arena_v0/target_coordinate_scale_4666_v1/PROTOCOL.md": "4b765b83e2b2beab97f718b2ca4c527c0c2611555c48580d1ab85e1e32ae3e8b",
+    "research/procedural_control_arena_v0/target_coordinate_scale_4666_v1/runner.py": "8797a6e377f854026f2a16f87b9c0b40a8fa8bec2fd0811a1d992fc7e8228275",
+    "research/procedural_control_arena_v0/target_coordinate_scale_4666_v1/audit.py": "d0dbd8bcfc0f6e5c44b4c901111f9dd017cbfa67cfd125d1e6020ea5ddb49657",
+    "research/procedural_control_arena_v0/target_coordinate_scale_4666_v1/test_coordinate_scale.py": "101f11872492ca7fde1bda4aec433872db30350d15e14eb04d1229d5b65d6572"
+  }
+}

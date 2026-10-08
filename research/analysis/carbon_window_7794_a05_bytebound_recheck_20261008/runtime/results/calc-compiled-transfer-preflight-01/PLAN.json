@@ -1,0 +1,26 @@
+{
+  "source": "a2f157397adcfdf490d010707a6a413c9a8c0562",
+  "historical_archive_sha256": "bfc1737093ce7e8d1e97b796d58aa7a0f95218153b3924aa48ff1e7524939064",
+  "historical_source": "443bcb63333c4614d9a6fee5cb3ca3f9f6ea9710",
+  "task": {
+    "A1": 731,
+    "A2": 864,
+    "format": "xlsx",
+    "retain_format_dialog": true
+  },
+  "phase": "read-only preallocation feasibility",
+  "command": [
+    "tesseract",
+    "stdin",
+    "stdout",
+    "--psm",
+    "11",
+    "tsv"
+  ],
+  "all_historical_PNGs": true,
+  "no_tuning_or_best_mode_selection": true,
+  "no_live_GUI_or_input": true,
+  "no_primary_image_forwarding": true,
+  "success_interpretation": "Exact digit tokens and boxes are OCR candidates only, not cell identity, input authority, correctness, fresh perception or task success. A fresh original frame must be primary-grounded before action.",
+  "frozen_before_OCR": true
+}

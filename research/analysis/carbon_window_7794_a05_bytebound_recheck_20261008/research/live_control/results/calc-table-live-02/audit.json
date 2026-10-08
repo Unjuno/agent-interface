@@ -1,0 +1,67 @@
+{
+  "audit_passed": true,
+  "audit_sha256": "f699f9cf178ace5a9c4477c18432fec1f81b78e17000b73ee70c428053e468a8",
+  "events": 59,
+  "socket_exchanges": 9,
+  "exact_frames": 13,
+  "selected_state_sizes": [
+    {
+      "stage": "enter",
+      "selected_rows_bytes": 5360,
+      "full_companion_bytes": 2568,
+      "observations": 6
+    },
+    {
+      "stage": "save",
+      "selected_rows_bytes": 2659,
+      "full_companion_bytes": 2169,
+      "observations": 3
+    },
+    {
+      "stage": "confirm",
+      "selected_rows_bytes": 2653,
+      "full_companion_bytes": 1699,
+      "observations": 3
+    }
+  ],
+  "actual": [
+    816,
+    345
+  ],
+  "workbook_sha256": "3daca6438e59ac9cad5682efb33a5297fb2a120aff011f756613413de73bc4da",
+  "initial_capture_to_gui_decision_seconds": 78.780021907,
+  "initial_capture_to_final_evaluation_seconds": 79.152713642,
+  "post_release": [
+    {
+      "id": "save",
+      "details": {
+        "captures": 2,
+        "sequences": [
+          9,
+          10
+        ],
+        "equal_sample_pair": false,
+        "error": null,
+        "authority": "none; no input or lease renewal",
+        "scope": "two samples 80ms apart; not readiness or semantic completion",
+        "elapsed_ms": 338.757551
+      }
+    },
+    {
+      "id": "confirm",
+      "details": {
+        "captures": 2,
+        "sequences": [
+          12,
+          13
+        ],
+        "equal_sample_pair": false,
+        "error": null,
+        "authority": "none; no input or lease renewal",
+        "scope": "two samples 80ms apart; not readiness or semantic completion",
+        "elapsed_ms": 335.629181
+      }
+    }
+  ],
+  "limits": "One actual familiar Calc task, natural modal transitions, manual recovery. No controlled A/B or forced fault injection; no model token or speed claim; no independent child-process inventory."
+}

@@ -1,0 +1,23 @@
+import hashlib
+import json
+import subprocess
+import sys
+from datetime import datetime,timezone
+from pathlib import Path
+
+root=Path(__file__).parent; original=root.parent/'temporal-goal-C02'
+pins=[]
+for path in [root/'audit-v3.py',root/'test_custody.py',root/'reproduce_v2.py',root/'freeze_and_audit.py',
+             original/'audit-v2.py',original/'FREEZE.json',original/'cases.json',original/'primary-C02/ui.jsonl',
+             original/'primary-C02/observer-final/raw.json']:
+    pins.append(dict(path=str(path),bytes=path.stat().st_size,sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
+record=dict(utc=datetime.now(timezone.utc).isoformat(),kind='post-result audit repair source, not a primary experiment freeze',
+    pins=pins,primary_replays=0,original_frozen_sources_changed=0,old_primary_table_consistency='HOLD_ORIGINAL_BINDING_TABLE_INCONSISTENT',
+    scope='typed16 fixture-event bijection plus20 complete UI mutation groups on the same copied retained data; current human variable erratum follows')
+with (root/'AUDIT_V3_SOURCE.json').open('x',encoding='utf-8') as h: json.dump(record,h,indent=2)
+argv=[sys.executable,'-B',str(root/'audit-v3.py'),'--run',str(original/'primary-C02'),'--cases',str(original/'cases.json'),'--output',str(root/'audit-03')]
+result=subprocess.run(argv,capture_output=True)
+(root/'audit-03/stdout.txt').write_bytes(result.stdout); (root/'audit-03/stderr.txt').write_bytes(result.stderr)
+(root/'audit-03/COMMAND.json').write_text(json.dumps(dict(argv=argv,started_utc=record['utc'],ended_utc=datetime.now(timezone.utc).isoformat(),
+    returncode=result.returncode,original_producer_replays=0),indent=2),encoding='utf-8')
+print(result.stdout.decode(),end=''); print(result.stderr.decode(),end='',file=sys.stderr);sys.exit(result.returncode)

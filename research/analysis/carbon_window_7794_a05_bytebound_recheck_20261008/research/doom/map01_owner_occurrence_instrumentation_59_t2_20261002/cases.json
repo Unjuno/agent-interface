@@ -1,0 +1,9 @@
+{
+  "schema": "map01-owner-instrumentation-cases-v1",
+  "allocation_id": "MAP01-OWNER-OCCURRENCE-INSTRUMENTATION-59-T2-20261002-01",
+  "upstream_owner_commit": "288d0498d11cf16657e523a04616bf4f49cd94f4",
+  "upstream_owner_blob_sha1": "c40db07e596b31557590cec5e90f6ab651573476",
+  "sequence": ["down:W", "up:W", "down:W", "up:W", "close"],
+  "expected_witness_stages": ["pre_down", "post_down", "post_up", "pre_down", "post_down", "post_up"],
+  "expected_key_down": [false, true, false, false, true, false]
+}

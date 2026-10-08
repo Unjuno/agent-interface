@@ -1,0 +1,36 @@
+{
+  "schema": "issue-experiment-freeze-v1",
+  "allocation_id": "issue3575-xres-guard-formal-04",
+  "issue": 3575,
+  "predecessor": "allocation-01 and allocation-02 STOP_BEFORE_INPUT; allocation-03 HOLD_AUDIT because p1 pixel bytes were not captured before p1 exited. All predecessor evidence is immutable.",
+  "main_sha": "c3abca57cb9d0e5cfea49794e35b33a84337959f",
+  "source_manifest_sha256": "09344719083872cbad3ea063ecd6258308ba2f831c4b18df7c716985bf0ad410",
+  "H": "A fully source-bound XRes incarnation guard reproduces fail-closed stale-alias refusal on a private Linux/Xvfb server when p1 and p2 demonstrably reuse the same XID, geometry and exact client-window bytes captured separately while each process is alive, but XRes LocalClientPID and contemporaneous /proc start ticks identify different process incarnations.",
+  "T": "One fresh allocation: observe/mint p1; query XRes identity and capture p1 window bytes while p1 is alive; exit p1; create p2; require same XID, geometry and byte-identical window content using the retained pre-exit p1 bytes versus a distinct post-reuse p2 read; query XRes; attempt stale alias once. Require refusal before bridge.click with zero emissions/effect. Only then run one fresh p2 alias positive control.",
+  "D": "Retain immutable raw bytes including capture and exit monotonic timestamps, XRes replies, p1 and p2 window byte arrays/hashes, guard decision, bridge-entry/emission counters, independent effect, release, cleanup and image manifest. Separate raw-only auditor must require p1 pixel capture timestamp < p1 exit observation < p2 start, verify pixel bytes/hashes, validate cleanup/releases, and detect corruptions.",
+  "C": "Private local Xvfb only; no remote-X11 or production/default-runtime claim. XRes PID is corroborative; missing/inconsistent PID or /proc start ticks fail closed. No changes to v1 or runtime defaults. No retries. Positive control is conditional on safe stale refusal.",
+  "U": "Whether the properly measured, fully source-bound allocation reproduces the scoped guard finding. Any PASS is one local allocation only and not production security, general visual-target reliability, or completion of #3311.",
+  "container": {
+    "engine": "OrbStack Docker",
+    "image_id": "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+    "platform": "linux/arm64",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only selected source directories",
+    "output_mount": "fresh isolated writable results directory",
+    "tmpfs": "/tmp:rw,nosuid,size=128m",
+    "x_server": "private Xvfb :89, screen 800x600x24, TCP disabled, access control enabled",
+    "xres_required": [1, 2],
+    "python": "3.11.2",
+    "python_xlib": "0.33",
+    "pillow": "9.4.0",
+    "invocation_sys_path": ["/app", "/app/research/live_control", "/app/research/live_control/x11_xres_incarnation_guard_3555_v2/harness", "/task"]
+  },
+  "decision_rules": {
+    "PASS_PROVENANCE_COMPLETE_XRES_GUARD_REPRODUCTION": "Source/freeze/image hashes verify before Xvfb/fixture; all XID/identity/geometry/independently captured pixel gates hold; stale alias is refused as PROCESS_INCARNATION_MISMATCH before bridge.click with zero emissions/effect; conditional fresh control succeeds with exact effect and verified empty release; process cleanup and independent raw/artifact audit pass.",
+    "STOP_BEFORE_INPUT": "Any freeze/source/image/XRes/identity prerequisite unavailable before stale-alias input; preserve outcome and stop.",
+    "FAIL_STALE_ALIAS_ADMITTED": "Stale alias reaches bridge/native input or produces any p2 effect; stop without fresh control.",
+    "HOLD_AUDIT": "Any raw lineage, independent reconstruction, timing, pixel provenance, release, or cleanup evidence incomplete."
+  },
+  "allocation_limits": {"formal_runner_invocations": 1, "stale_alias_decisions": 1, "positive_controls_max": 1, "retries": 0}
+}

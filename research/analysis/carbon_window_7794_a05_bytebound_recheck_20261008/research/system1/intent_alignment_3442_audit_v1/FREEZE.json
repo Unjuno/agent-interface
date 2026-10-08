@@ -1,0 +1,43 @@
+{
+  "allocation": "intent-aligned-system1-3442-audit-localdocker-01",
+  "base_main": "d158286a3d5a0a1f420fc09fb831add8ead43791",
+  "predecessor_commit": "61a5676a45844e789a49ea99bdcf0ddf7bd835dd",
+  "predecessor_git_blob_sha1": {
+    "CONSTRUCTION.md": "d581965652bd8a181f5037e8ce300f8ffc5c2663",
+    "PREREG.md": "910dc9efe8d9fc23cb0f5f938e9c51c459a50aff",
+    "runner.py": "68ba4578ee468351bac45414d57594dca0ba3337",
+    "audit.py": "263fd670569e77b61aac068f746eac40bb66d918",
+    "RESULT.json": "c0bbb3ec2f5e13267242325cc741fcdd904a0986",
+    "RESULT.md": "63d6845084d96ee3822098ae482a947e2755d197",
+    "README.md": "b4053a828254ec5af1d38351c459c2e1c3a0d9f2"
+  },
+  "predecessor_sha256": {
+    "runner.py": "83e59427cebcbffa3c7be76e89f4ffe483727cf4f87dc0efb54539b580724751",
+    "audit.py": "174697be81c436fe615fffff61a14f185024ba1306b71d47504faea999b83a53",
+    "RESULT.json": "0b76acac8b4160b9080476accfb0499b903342d67f8e9e8cb1360428dad019d7"
+  },
+  "new_source_sha256": {
+    "audit_stdlib.py": "447cb48671bbbeebeffd72cd4775d1f2dc54493c505c7e3f27f9bad7c1f0038d",
+    "test_audit_stdlib.py": "90c0dd7e3e150571ac1cd7d9e2616575375dab35a7a0dfbf7cbf50d939e8039c"
+  },
+  "environment": {
+    "docker_engine": "29.8.0",
+    "platform": "linux/amd64",
+    "image": "python:3.12-slim",
+    "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "tmpfs": "16m",
+    "memory": "256m",
+    "cpus": 2,
+    "pids_limit": 32,
+    "formal_timeout_seconds": 60
+  },
+  "formal_command": "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --tmpfs /tmp:rw,nosuid,nodev,size=16m --pids-limit 32 --memory 256m --cpus 2 --mount type=bind,source=C:/Users/junny/Documents/Codex/2026-09-19/goal-unjuno-agent-interface-github-mcp-3/work/issue-3849-intent-audit-v1/research/system1,target=/src,readonly --workdir /src/intent_alignment_3442_audit_v1 python:3.12-slim python -B audit_stdlib.py /src/intent_alignment_3442_pilot_01/RESULT.json 0b76acac8b4160b9080476accfb0499b903342d67f8e9e8cb1360428dad019d7",
+  "formal_invocations_allowed": 1,
+  "formal_invocations_before_freeze": 0,
+  "construction_docker": "6/6 tests passed; not a formal result",
+  "gpu_used": false,
+  "network_requests": 0
+}

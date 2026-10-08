@@ -1,0 +1,13 @@
+{
+  "schema":"agent_interface_golden_v3_formal_chromium_dependency_stop_v1",
+  "issue":2558,
+  "decision":"STOP_FORMAL_CHROMIUM_DEPENDENCY_FETCH",
+  "source_commit":"9c9d7cf2bea50e47638c63effa72a5059fdb4e58",
+  "required_sources_materialized":true,
+  "image_build":{"base":"python:3.12-slim-bookworm","arch":"aarch64","chromium_dependency_download_bytes":214000000,"completed":false,"elapsed_s":260},
+  "runtime_install":{"existing_image":"agent-interface-2558-orbstack:20260920","apt_packages":["chromium","xvfb","xauth"],"completed":false,"elapsed_s":124},
+  "official_allocation_started":false,
+  "model_calls":0,
+  "formal_metrics_counted":false,
+  "next":"cached arm64 Chromium image or working package mirror"
+}

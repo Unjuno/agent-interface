@@ -1,0 +1,330 @@
+{
+  "schema": "map01-cover-validity-replay-v1",
+  "status": "DEVELOPMENT_REPLAY_PASS",
+  "model_calls": 0,
+  "source_allocation": "map01-fixed-threat-v28-live-01",
+  "exact_observations_scanned": 70,
+  "observed_signals": 70,
+  "unknown_signals": 0,
+  "manually_reviewed_values": {
+    "1": 100,
+    "11": 97,
+    "37": 93,
+    "51": 87,
+    "60": 81,
+    "68": 79,
+    "70": 73
+  },
+  "reviewed_values_match": true,
+  "independent_cross_trace": {
+    "source_allocation": "map01-cover-threat-v23-live-02",
+    "exact_retained_decision_frames": 12,
+    "manually_reviewed_values_matched": 12,
+    "unknown_signals": 0,
+    "rows": [
+      {
+        "iteration": 0,
+        "sequence": 1,
+        "expected_health": 100,
+        "observed_health": 100,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "0156933de66d35afcce4bbf13d83962242c904069011ff8877318d5e4c8922cb"
+      },
+      {
+        "iteration": 1,
+        "sequence": 39,
+        "expected_health": 100,
+        "observed_health": 100,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "fd237c1b93fb55cf82289292c11dcb8f95d8fd48dd1fe4482387ec127710e4b9"
+      },
+      {
+        "iteration": 2,
+        "sequence": 78,
+        "expected_health": 100,
+        "observed_health": 100,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "7b7b7a5170aa4abdec8373dfdfcd0d0f72930a0d60b58086633154238c1b8373"
+      },
+      {
+        "iteration": 3,
+        "sequence": 119,
+        "expected_health": 100,
+        "observed_health": 100,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "bb56b0fb66ea6af6511e802d3988b1291b82e2546be67241b7c00be4ad21d821"
+      },
+      {
+        "iteration": 4,
+        "sequence": 162,
+        "expected_health": 97,
+        "observed_health": 97,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "487bd2060d2265e627c9912003fb10b3338b39d66ac7905aa669e7dd89d3f245"
+      },
+      {
+        "iteration": 5,
+        "sequence": 238,
+        "expected_health": 74,
+        "observed_health": 74,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "70683d386d4943c279e5b1bb08f69e2c058689dd7449f95d951f9d0541a6b64f"
+      },
+      {
+        "iteration": 6,
+        "sequence": 316,
+        "expected_health": 28,
+        "observed_health": 28,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "eaa1d0c45c808b2277105477d9344cb90490ded178bc8e3dcc8f33306e68f676"
+      },
+      {
+        "iteration": 7,
+        "sequence": 369,
+        "expected_health": 28,
+        "observed_health": 28,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "4ca819b8a500bee1ffa9d312e8eb9f1529919d73df5fa14b76d444424b026f2c"
+      },
+      {
+        "iteration": 8,
+        "sequence": 404,
+        "expected_health": 28,
+        "observed_health": 28,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "3e149203beca0171a813945482380fd819abf0f6a819e55217c64eb64fb3bc86"
+      },
+      {
+        "iteration": 9,
+        "sequence": 441,
+        "expected_health": 28,
+        "observed_health": 28,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "2f7f24999c1782e559178816b1a2f1a6f51b5a544d7a2808aa7467a7f3082927"
+      },
+      {
+        "iteration": 10,
+        "sequence": 487,
+        "expected_health": 28,
+        "observed_health": 28,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "097125bdfb785f27bec34a9447590359c255f37ec43c9e9058aff10774ba3806"
+      },
+      {
+        "iteration": 11,
+        "sequence": 533,
+        "expected_health": 28,
+        "observed_health": 28,
+        "status": "observed",
+        "exact": true,
+        "frame_sha256": "f6047fd0a2c27da12bf45f7fde2333961031f9b04197acfdac6c356f84f934f1"
+      }
+    ]
+  },
+  "health_transitions": [
+    {
+      "sequence": 1,
+      "health": 100,
+      "capture_ns": 24714947011681
+    },
+    {
+      "sequence": 11,
+      "health": 97,
+      "capture_ns": 24718113324128
+    },
+    {
+      "sequence": 33,
+      "health": 100,
+      "capture_ns": 24724156980225
+    },
+    {
+      "sequence": 36,
+      "health": 93,
+      "capture_ns": 24724500955540
+    },
+    {
+      "sequence": 51,
+      "health": 87,
+      "capture_ns": 24726510382434
+    },
+    {
+      "sequence": 60,
+      "health": 81,
+      "capture_ns": 24729289247170
+    },
+    {
+      "sequence": 68,
+      "health": 79,
+      "capture_ns": 24731750618320
+    },
+    {
+      "sequence": 70,
+      "health": 73,
+      "capture_ns": 24732244508162
+    }
+  ],
+  "candidate": {
+    "source_sequence": 37,
+    "source_health": 93,
+    "hard_minimum": 80,
+    "soft_transition_count": 2,
+    "latest_soft_event": {
+      "sequence": 60,
+      "signal": {
+        "format": "observable-signal-v1",
+        "status": "observed",
+        "signal_id": "health",
+        "value": 81,
+        "sequence": 60,
+        "capture_ns": 24729289247170,
+        "binding": {
+          "focus": 6291472,
+          "surface": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "slots": [
+          {
+            "slot": 0,
+            "digit": null,
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "second_score": 0.055762081784386616
+          },
+          {
+            "slot": 1,
+            "digit": 8,
+            "best_digit": 8,
+            "best_score": 0.9328358208955224,
+            "second_score": 0.34430379746835443
+          },
+          {
+            "slot": 2,
+            "digit": 1,
+            "best_digit": 1,
+            "best_score": 0.9591078066914498,
+            "second_score": 0.21144278606965175
+          }
+        ],
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "outcome": {
+        "format": "observable-signal-guard-outcome-v1",
+        "guard_id": "map01-health-development-1",
+        "signal_id": "health",
+        "status": "SOFT_CHANGED",
+        "reason": "within_validity_envelope",
+        "source_value": 93,
+        "current_value": 81,
+        "hard_minimum": 80,
+        "source_age_ms": 4720.457807,
+        "keep_existing_policy": true,
+        "requires_new_decision": false,
+        "grants_input_authority": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "semantic_change_identified": true,
+        "task_success_verified": false
+      }
+    },
+    "hard_event": {
+      "sequence": 68,
+      "signal": {
+        "format": "observable-signal-v1",
+        "status": "observed",
+        "signal_id": "health",
+        "value": 79,
+        "sequence": 68,
+        "capture_ns": 24731750618320,
+        "binding": {
+          "focus": 6291472,
+          "surface": 6291472,
+          "geometry": [
+            321,
+            180,
+            640,
+            480
+          ]
+        },
+        "slots": [
+          {
+            "slot": 0,
+            "digit": null,
+            "best_digit": 5,
+            "best_score": 0.058165548098434,
+            "second_score": 0.055762081784386616
+          },
+          {
+            "slot": 1,
+            "digit": 7,
+            "best_digit": 7,
+            "best_score": 0.9342105263157895,
+            "second_score": 0.3586387434554974
+          },
+          {
+            "slot": 2,
+            "digit": 9,
+            "best_digit": 9,
+            "best_score": 0.9301075268817204,
+            "second_score": 0.31413612565445026
+          }
+        ],
+        "evidence": "hash-bound WAD glyph foreground exact-match",
+        "wad_sha256": "a8772e088847032510d97ba2312406a6998f21cbab44d4ff10696faa9c0ecd4b"
+      },
+      "outcome": {
+        "format": "observable-signal-guard-outcome-v1",
+        "guard_id": "map01-health-development-1",
+        "signal_id": "health",
+        "status": "HARD_INVALIDATED",
+        "reason": "below_hard_minimum",
+        "source_value": 93,
+        "current_value": 79,
+        "hard_minimum": 80,
+        "source_age_ms": 7181.828957,
+        "keep_existing_policy": false,
+        "requires_new_decision": true,
+        "grants_input_authority": false,
+        "may_only_preserve_or_reduce_existing_authority": true,
+        "semantic_change_identified": true,
+        "task_success_verified": false
+      }
+    },
+    "grants_new_input_authority": false
+  },
+  "baseline_first_change_sequence": 51,
+  "candidate_hard_sequence": 68,
+  "additional_exact_samples_before_hard_stop": 17,
+  "baseline_change_to_candidate_hard_ms": 5240.235886,
+  "extraction_ms": {
+    "median": 8.827549999999999,
+    "p95": 10.477464999999999,
+    "max": 35.8993
+  },
+  "source_sha256": {
+    "research/doom/doom_hud_signal_v1.py": "eecb889ad76fd3d23dfc32ae8c804ecbb32efc7b4d9ac5174ce4aefa7c70514c",
+    "research/live_control/observable_signal_guard_v1.py": "82afbb0c55bd704a91917d301f74f8fc791fcd307bc12c86d3bfe3d187e48479",
+    "research/doom/results/map01-fixed-threat-v28-live-01/report.json": "746b8282c7cf4224bbc6e7624a777bb81afd19b80c07d0a1c2628a116f7fb8be",
+    "research/doom/results/map01-fixed-threat-v28-live-01/runtime/events.jsonl": "5be74bb0c3bc9f321760f8b7c7dfacd9c86f5f4ecc0ffdce032e20780ffee0dc",
+    "research/doom/results/map01-cover-threat-v23-live-02/audit.json": "43e1be855a7a274f7be29dd5b69aaa6373dd5f5de5a0bcb3732a41a2088e5363",
+    "research/doom/results/map01-cover-threat-v23-live-02/decision-frame-index.json": "1a8913ce2f8459441f34035da37e31935f06fe42ecf1ae9483a944f8b21b461e",
+    "research/doom/results/map01-cover-threat-v23-live-02/runtime/events.jsonl": "709941354310ba93d42eb1ab3a585185ac76780655bfefca2c3a5f6d62a0a494"
+  },
+  "interpretation": "typed direction separates pickup/soft loss/hard floor while preserving one-way authority",
+  "limits": "posthoc floor selected after inspecting one retained trace; counterfactual planner completion, survival, latency, token or general accuracy is not established"
+}

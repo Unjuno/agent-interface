@@ -1,0 +1,112 @@
+{
+  "allocation_id": "6003-t0-host-20261001-01",
+  "issue": 6003,
+  "main_sha": "5759a6e65b8b5e7487fb2ad61f53bb531aeaf512",
+  "scope": "host-only CPU synthetic construction; not disposable-container T0",
+  "decision": "Choose which next bounded research experiment to run under a fixed resource budget.",
+  "hypotheses": ["capture_latency", "capture_staleness", "verifier_gap", "escape_unknown"],
+  "baseline_actions": {
+    "nominal": "CAPTURE",
+    "capture_lean": "CAPTURE",
+    "verify_lean": "VERIFY",
+    "escape_lean": "NEITHER"
+  },
+  "hard_sentinel": {"id": "safety-sentinel", "cost": 1, "mandatory": true},
+  "budget": 4,
+  "selector_fixture": {
+    "experiments": [
+      {
+        "id": "A-cheap-irrelevant",
+        "cost": 1,
+        "outcomes": {
+          "nominal": [
+            {"id": "a", "p": 0.25, "next_action": "CAPTURE"},
+            {"id": "b", "p": 0.25, "next_action": "CAPTURE"},
+            {"id": "c", "p": 0.25, "next_action": "CAPTURE"},
+            {"id": "d", "p": 0.25, "next_action": "CAPTURE"}
+          ],
+          "capture_lean": [
+            {"id": "a", "p": 0.25, "next_action": "CAPTURE"},
+            {"id": "b", "p": 0.25, "next_action": "CAPTURE"},
+            {"id": "c", "p": 0.25, "next_action": "CAPTURE"},
+            {"id": "d", "p": 0.25, "next_action": "CAPTURE"}
+          ],
+          "verify_lean": [
+            {"id": "a", "p": 0.25, "next_action": "VERIFY"},
+            {"id": "b", "p": 0.25, "next_action": "VERIFY"},
+            {"id": "c", "p": 0.25, "next_action": "VERIFY"},
+            {"id": "d", "p": 0.25, "next_action": "VERIFY"}
+          ],
+          "escape_lean": [
+            {"id": "a", "p": 0.25, "next_action": "NEITHER"},
+            {"id": "b", "p": 0.25, "next_action": "NEITHER"},
+            {"id": "c", "p": 0.25, "next_action": "NEITHER"},
+            {"id": "d", "p": 0.25, "next_action": "NEITHER"}
+          ]
+        }
+      },
+      {
+        "id": "B-robust-reversal",
+        "cost": 3,
+        "outcomes": {
+          "nominal": [
+            {"id": "switch", "p": 0.6, "next_action": "VERIFY"},
+            {"id": "same", "p": 0.3, "next_action": "CAPTURE"},
+            {"id": "infrastructure_STOP", "p": 0.1, "next_action": "STOP"}
+          ],
+          "capture_lean": [
+            {"id": "switch", "p": 0.6, "next_action": "VERIFY"},
+            {"id": "same", "p": 0.3, "next_action": "CAPTURE"},
+            {"id": "infrastructure_STOP", "p": 0.1, "next_action": "STOP"}
+          ],
+          "verify_lean": [
+            {"id": "switch", "p": 0.6, "next_action": "CAPTURE"},
+            {"id": "same", "p": 0.3, "next_action": "VERIFY"},
+            {"id": "infrastructure_STOP", "p": 0.1, "next_action": "STOP"}
+          ],
+          "escape_lean": [
+            {"id": "switch", "p": 0.6, "next_action": "CAPTURE"},
+            {"id": "same", "p": 0.3, "next_action": "NEITHER"},
+            {"id": "infrastructure_STOP", "p": 0.1, "next_action": "STOP"}
+          ]
+        }
+      },
+      {
+        "id": "C-prior-sensitive",
+        "cost": 2,
+        "outcomes": {
+          "nominal": [
+            {"id": "switch", "p": 0.34, "next_action": "VERIFY"},
+            {"id": "same", "p": 0.33, "next_action": "CAPTURE"},
+            {"id": "infrastructure_STOP", "p": 0.33, "next_action": "STOP"}
+          ],
+          "capture_lean": [
+            {"id": "switch", "p": 0.8, "next_action": "VERIFY"},
+            {"id": "same", "p": 0.1, "next_action": "CAPTURE"},
+            {"id": "infrastructure_STOP", "p": 0.1, "next_action": "STOP"}
+          ],
+          "verify_lean": [
+            {"id": "switch", "p": 0.1, "next_action": "CAPTURE"},
+            {"id": "same", "p": 0.8, "next_action": "VERIFY"},
+            {"id": "infrastructure_STOP", "p": 0.1, "next_action": "STOP"}
+          ],
+          "escape_lean": [
+            {"id": "switch", "p": 0.45, "next_action": "CAPTURE"},
+            {"id": "same", "p": 0.45, "next_action": "NEITHER"},
+            {"id": "infrastructure_STOP", "p": 0.1, "next_action": "STOP"}
+          ]
+        }
+      }
+    ]
+  },
+  "control": "null-decision-value: preserve all outcome probabilities and costs but set every non-STOP next_action equal to that scenario's baseline action; no experiment then changes the downstream choice.",
+  "expected": {
+    "feasible": ["A-cheap-irrelevant", "B-robust-reversal", "C-prior-sensitive"],
+    "cheapest": "A-cheap-irrelevant",
+    "nominal_entropy": "A-cheap-irrelevant",
+    "robust_reversal": "B-robust-reversal",
+    "nominal_entropy_prefers_C_over_B": true,
+    "capture_lean_entropy_prefers_B_over_C": true,
+    "null_control": "UNRANKABLE"
+  }
+}

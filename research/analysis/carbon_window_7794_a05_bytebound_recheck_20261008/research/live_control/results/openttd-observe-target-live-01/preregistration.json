@@ -1,0 +1,56 @@
+{
+  "status": "preregistered_before_fresh_openttd_execution",
+  "study": "openttd-observe-target-live-01",
+  "seed": 991004,
+  "task": "build the complete five-tile guarded L from A through B to C",
+  "handle": {
+    "alias": "road_construction_opener",
+    "box": [
+      812,
+      43,
+      16,
+      16
+    ],
+    "offset": [
+      8,
+      8
+    ],
+    "coordinate_frame": "window_content"
+  },
+  "combined_boundary": "capture one exact fresh observation, resolve the alias on that same identity, then revalidate again during later input admission",
+  "primary_endpoint": "local first-segment target/guard condition met; continuation starts; independent target roads, ordered connections, forbidden row and surrounding guard checks all true",
+  "failure_policy": "retain first allocation; no rerun, region or coordinate repair",
+  "sources": {
+    "preregister_openttd_observe_target_live_v1.py": "83867266830ee4ce5ab7421fcd058866d4aa971f1ddd165119f3c38efb4caa9c",
+    "run_openttd_observe_target_live_v1.py": "1eb8b8cceb276129694d1f07d7d595b4a1c221b644f99ba7c9a2ee5a83729ccf",
+    "pointer_socket_entry_v17.py": "f78d94089cf49cbc7b38e2aacb4e6aa1999e43dcceab070124f3dd367044ada5",
+    "event_socket_v11.py": "e6988e4f586b1554c40a4969fbb428143cc7e10213bf303cf800d679f9e7e96c",
+    "session_v32.py": "e505a198c5ca0d37035144fe20bc274e0713aa9d65f772b17884d8903029c1f0",
+    "observe_target_handle_v1.py": "2b7eacc6f30ce6d26e76168a50911c5765c1cb52cac100f09314dacb3803260b",
+    "session_v31.py": "4b0037faa8bb0776924eadec3b79e7403591e24ab6f5e7335a5c74197d097dcf",
+    "session_v30.py": "0e14fb65a86dbf29a17672a259c260dfd9c6b4d9487f7f7fc6fa53ecec38a63f",
+    "session_v29.py": "5ba53dbb56a46a8b2f45b115baf4f24d8df2178e5d8bb1d607e9135e17f1a231",
+    "session_v28.py": "719dfe24da98443413cbc4b7535ce8b7a5e7a59d3cd282b7e7d16afd009b849a",
+    "session_v26.py": "b1530a4872766edbb205db3fa944d7957ff56e82ad2e422dc751a0e407543be7",
+    "scoped_target_handle_v3.py": "05da09752a051713dc9c344cd8b40a97718e2c07378dd28b258fc986b07f0dcb",
+    "scoped_target_handle_v2.py": "7c17069cde410098947719c604bb8e7d85144eacc854bd06c21d8db1a92f6646",
+    "local_target_guard_postcondition_v1.py": "c28509ff0ae060f6a1410f559bb100662a2cec9b37479a628d3d4d3df61dbf06",
+    "session_v25.py": "3f6c0a6c973bc66c69681456bfedce9362f563d9460000e78217b63148bab057",
+    "session_v24.py": "193c389b053f90dcc07b869c29cfcb77c4272525eb873239112cb2d696037ae1",
+    "local_displacement_postcondition_v1.py": "03ceb1dda1c64de76a8968c825e3731eea038158e84cfe8f541cfc12dc45566d",
+    "visual_anchor.py": "98275ec4781976ee566872915b3e5403f9c548fac5b37f091b9a66f2329ada7b",
+    "executor_v4.py": "a0e4edf33a4faca8a388ce99594d3c42e2a32f6f800ea0f4905bb5465c1e9395",
+    "durable_submit_v4.py": "a73db793a3238fb5ec6d3e9ecfbe61284ad44d3ebfea769bc531b99d61b1a22b",
+    "append_checkpoint_v1.py": "07e5eff9c704af3cf75e0dcb5e7b4c4d57b82e076e4ffafa320d08ee0af51741",
+    "received_continuation_v1.py": "7890589fbbc808b914cc6fefa43408cf727bb3b29a7fc8962451bb7a90d5027a",
+    "received_exchange_v2.py": "59353e6d405dee5084870caf4d66aa5546c02771014e7c8f09ad1e7a7901c6c3",
+    "openttd_task/interactive_l_observe_target_v1.py": "9e7cb2f05fde56e37fc50c6a41868d10aa6cbfe39ea2787a6af279edc584a9db",
+    "openttd_task/interactive_l_target_guard_v2.py": "afe3b872a6a20d7f288018122c9128a3c548c61c4ae3aafb4e6c747fc3c3503b",
+    "openttd_task/guarded_l_score_v1.py": "a7f73814928df2d718f9681699cafd2380d184c0ab8abf72454af661e23c4b84",
+    "openttd_task/observer_l_v1/common.nut": "007f8bd7d2901a6231c6942f8a1a8e1ff4fd92a490dae13fa3b0cfdc96ebaade",
+    "openttd_task/observer_l_v1/main.nut": "06213c30d7505a256dff4ac7719d6504d4ed4202b8a6eb7877bcac7b7e6ffbb3",
+    "openttd_task/observer_l_v1/info.nut": "a35f2791257b13d1f0ebb44572513858b26a7bbe0e77e0a32cf9f0eed1abc735",
+    "openttd_task/results/l-geometry-02/baseline.sav": "88faddae21bd6a24406165941ed02c6746eda8b2cb744747790af6eba786371f"
+  },
+  "scope": "one fresh scripted seed991004 OpenTTD X11 cross-domain integration with independent engine score; development-known geometry; no model, token, latency distribution, human-speed or generalization claim"
+}

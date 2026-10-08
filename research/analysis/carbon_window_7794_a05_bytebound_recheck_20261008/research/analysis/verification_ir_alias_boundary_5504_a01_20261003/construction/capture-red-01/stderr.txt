@@ -1,0 +1,51 @@
+test_attempt_is_recorded_before_launch_and_nonzero_exit_preserved (test_capture.CaptureTests.test_attempt_is_recorded_before_launch_and_nonzero_exit_preserved) ... [Errno 2] No such file or directory: 'C:\\Users\\junny\\AppData\\Local\\Temp\\a01-capture-ojp4jw1v\\attempt\\receipt.json'FAIL
+test_interrupted_wait_retains_actual_child_streams_and_attempt (test_capture.CaptureTests.test_interrupted_wait_retains_actual_child_streams_and_attempt) ... Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\__main__.py", line 18, in <module>
+    main(module=None)
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\main.py", line 105, in __init__
+    self.runTests()
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\main.py", line 281, in runTests
+    self.result = testRunner.run(self.test)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\runner.py", line 240, in run
+    test(result)
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\suite.py", line 122, in run
+    test(result)
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\suite.py", line 122, in run
+    test(result)
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\suite.py", line 122, in run
+    test(result)
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\case.py", line 690, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\case.py", line 634, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\unittest\case.py", line 589, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_capture.py", line 37, in test_interrupted_wait_retains_actual_child_streams_and_attempt
+    code = self.call(output, command)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_capture.py", line 18, in call
+    return capture_run.main()
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\capture_run.py", line 43, in main
+    stdout, stderr = process.communicate(timeout=args.timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1228, in communicate
+    sts = self.wait(timeout=self._remaining_time(endtime))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\junny\Documents\Codex\2026-10-03\agent-interface-6645-t1b-revalidation-lf\research\analysis\verification_ir_alias_boundary_5504_a01_20261003\test_capture.py", line 29, in wait_then_interrupt
+    raise KeyboardInterrupt("controlled interruption after child completed")
+KeyboardInterrupt: controlled interruption after child completed

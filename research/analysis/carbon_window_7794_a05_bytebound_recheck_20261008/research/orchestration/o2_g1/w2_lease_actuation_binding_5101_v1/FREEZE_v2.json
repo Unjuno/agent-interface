@@ -1,0 +1,24 @@
+{
+  "schema": "w2-lease-actuation-binding-construction-freeze-v2",
+  "successor_to": "FREEZE.json / RESULT.json construction v1; those records remain unchanged",
+  "issue": 5116,
+  "source_main": "bd892a39cf1d33d9b658a6e4817f1f3ec4a32074",
+  "source_blobs": {
+    "measurement_contract": "21d750311c643643823b0f7ea129050738a21791",
+    "event_schema": "ebc424d2df631aa74c6d9aee4699c595a27ed589",
+    "trace_fixture": "0a49a00567c25766495cd332be50f6c2946781f7",
+    "frozen_verifier": "d8f4221811b160e5714d2d6e4154c82af94d633e",
+    "frozen_auditor": "1942546e60ad7e6cb56b9a383830033db14d0397"
+  },
+  "fixture_sha256": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f",
+  "candidate_sha256": "a3590b3a1637fb2ed2d3c74019d06535e919e5f52c5491f22cdc3de0845b40e3",
+  "independent_oracle_sha256": "94421e50cf3d90e5c8b13858563357a7b954cb39820441fe30a7394e21ee9160",
+  "test_file": "test_binding_v2.py",
+  "test_sha256": "a93bd58f6bf9a0d7c14ed3b556e30bf6a4512650ba7c0be86ebf3267b3c81726",
+  "protocol": {
+    "original_fixture_mutated": false,
+    "lease_open_actuation_semantics": "one scalar actuation_id binds exactly that actuation; a second actuation under the same lease is not inferred or admitted",
+    "extra_control": "one lease-open scalar A4 with input edges for A4 and A5; A4 matches, A5 is rejected",
+    "container_or_formal_invocation": false
+  }
+}

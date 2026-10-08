@@ -1,0 +1,17 @@
+{
+  "task": "SAFE-PROBE-MINIMAX-VERSION-SPACE-R0-20260919-001",
+  "issue": 1836,
+  "formal_invocations": 1,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "formal_result_sha256": "cf0aeb1409bd26eeb1f2dec3c0ba899a09753f833103fc5b08e4d13cbb2cbc4f",
+  "primary_audit_sha256": "c08934d82a70ba8323f786df9cfb5645e1d59875c72f9eecd42f2cd28957997c",
+  "independent_audit_sha256": "dd9c2a33bd435b64b1b0c1088b080a14208fbc6ff3c2983c8cd87d8b5689f5b1",
+  "source_git_blobs": {
+    "formal.py": "4be5e1ca2c717caa710d3e79ab753df40b5dab72",
+    "audit.py": "0576c8b932bd696ab9dcf1c57cdd7d056ece30d9",
+    "independent_audit.py": "89781e865ba000ace5d41066002fd4fcd98c0f83"
+  },
+  "outer_timeout_note": "The combined shell command hit the 45s outer tool limit after FORMAL_RESULT.json and primary audit had already been fully written. No formal rerun occurred. Independent audit was then executed read-only against the retained formal result."
+}

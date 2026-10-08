@@ -1,0 +1,43 @@
+{
+  "after": 4,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 5,
+  "request_id": "program:5a469539babd4f7e82d28d36163965fe",
+  "read_request_id": "program:5a469539babd4f7e82d28d36163965fe",
+  "command": {
+    "op": "submit",
+    "id": "drain-enter-991074",
+    "expected_sequence": 1,
+    "valid_until_ns": 40905846336,
+    "decision_evidence": {
+      "delivery_id": "delivery:2",
+      "observation_sequence": 1,
+      "producer": "assistant"
+    },
+    "steps": [
+      {
+        "op": "text",
+        "text": "111"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "text",
+        "text": "499"
+      },
+      {
+        "op": "key",
+        "key": "Return"
+      },
+      {
+        "op": "chord",
+        "modifier": "Control_L",
+        "key": "s"
+      }
+    ]
+  }
+}

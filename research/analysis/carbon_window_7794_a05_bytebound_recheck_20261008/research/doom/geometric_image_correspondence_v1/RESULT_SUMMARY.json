@@ -1,0 +1,111 @@
+{
+  "decision": "PASS_GEOMETRIC_IMAGE_CORRESPONDENCE_SCOPED",
+  "formal_reruns": 0,
+  "full_result_in_evidence_archive": true,
+  "full_result_sha256": "a65fbb5c53762d4376cc1cc23594a849f0b2fad3f560befb919e109130f0fe9d",
+  "gates": {
+    "candidate_goal_disposition_exact": true,
+    "candidate_shift_within_1px_all_identifiable": true,
+    "formal_reruns_zero": true,
+    "low_texture_not_false_aligned": true,
+    "raw_mae_false_mismatch_exposed": true,
+    "unrelated_not_false_aligned": true
+  },
+  "selected_rows": {
+    "aligned_brightness": {
+      "authored_goal": true,
+      "authored_shift_px": 0,
+      "geom": {
+        "best_ncc": 0.9999714561031121,
+        "goal": true,
+        "margin": 0.9100369197352709,
+        "shift_px": 0,
+        "status": "IDENTIFIED"
+      },
+      "id": "aligned_brightness",
+      "raw_goal": false,
+      "raw_mae": 0.06830950435729848
+    },
+    "aligned_patch": {
+      "authored_goal": true,
+      "authored_shift_px": 0,
+      "geom": {
+        "best_ncc": 0.8861804782491701,
+        "goal": true,
+        "margin": 0.815258362984834,
+        "shift_px": 0,
+        "status": "IDENTIFIED"
+      },
+      "id": "aligned_patch",
+      "raw_goal": false,
+      "raw_mae": 0.04530841503267974
+    },
+    "low_texture_control": {
+      "authored_goal": null,
+      "authored_shift_px": null,
+      "geom": {
+        "best_ncc": null,
+        "goal": null,
+        "margin": null,
+        "shift_px": null,
+        "status": "UNKNOWN"
+      },
+      "id": "low_texture_control",
+      "raw_goal": true,
+      "raw_mae": 0.0
+    },
+    "near_goal_plus2": {
+      "authored_goal": true,
+      "authored_shift_px": 2,
+      "geom": {
+        "best_ncc": 0.9996456345202422,
+        "goal": true,
+        "margin": 0.9041985676236207,
+        "shift_px": 2,
+        "status": "IDENTIFIED"
+      },
+      "id": "near_goal_plus2",
+      "raw_goal": false,
+      "raw_mae": 0.16342703227124183
+    },
+    "off_goal_plus10_patch": {
+      "authored_goal": false,
+      "authored_shift_px": 10,
+      "geom": {
+        "best_ncc": 0.9348634084667506,
+        "goal": false,
+        "margin": 0.8020428128509297,
+        "shift_px": 10,
+        "status": "IDENTIFIED"
+      },
+      "id": "off_goal_plus10_patch",
+      "raw_goal": false,
+      "raw_mae": 0.19554959831154684
+    },
+    "unrelated_control": {
+      "authored_goal": null,
+      "authored_shift_px": null,
+      "geom": {
+        "best_ncc": 0.2937053481483899,
+        "goal": null,
+        "margin": 0.19108829765390795,
+        "shift_px": null,
+        "status": "UNKNOWN"
+      },
+      "id": "unrelated_control",
+      "raw_goal": false,
+      "raw_mae": 0.1677835648148148
+    }
+  },
+  "summary": {
+    "control_false_accepts": [],
+    "goal_mismatches": [],
+    "identifiable_shift_errors": [],
+    "raw_false_mismatch_cases": [
+      "aligned_brightness",
+      "aligned_patch",
+      "near_goal_plus2"
+    ]
+  },
+  "task": "MAP01-GEOMETRIC-IMAGE-CORRESPONDENCE-20260917-001"
+}

@@ -1,0 +1,28 @@
+{
+  "decision": "HOLD_REUSE_BENEFIT_UNMEASURED",
+  "docker": {
+    "base": "python:3.12-slim-bookworm",
+    "network": "none",
+    "formal_invocations": 1,
+    "formal_rows": 12,
+    "formal_rows_sha256": "69d54d36fba48c984d667b34fbc6ad2af83ddf4c88c282ece59b4d0694387e62",
+    "audit_decision": "PASS_CHROMIUM_GUARDED_MACRO_COMPILATION_SCOPED",
+    "audit_errors": []
+  },
+  "source_hashes": {
+    "FREEZE.json": "aac170d0e754f35cd8771e9a89d5fa2820bcd77c0853c83780df21b678ad7e98",
+    "fixture.json": "824d61e2ff3a5cc325140aba3fdacec3c11524178f493e60df9906a862f6f5a2",
+    "prereg.json": "654747f6380f8e5fc4b567933e5ed090b8b915feecfa2535310b9e2d4597b9eb",
+    "formal_runner.py": "e343a7db477e8ac353cae05ad097268f56d39ef6edd58d01bae5f6c58cc2cf50",
+    "audit.py": "0b6f3a5c20dbd845f19a657a5a7efc9a7fb2cdf79e0d2b41a84b4457e8a5e7c1"
+  },
+  "missing_for_3174": [
+    "real Chromium launch/restart",
+    "session/resource reusable receipt",
+    "receipt transplant and invalidation during model wait",
+    "fresh final gate immediately before effect",
+    "independent live Chromium effect"
+  ],
+  "model_calls": 0,
+  "network_calls": 0
+}

@@ -1,0 +1,18 @@
+{
+  "candidate_false_rejects": 0,
+  "candidate_stale_writes": 0,
+  "cases": 60,
+  "decision": "RETAIN_TREE_REVALIDATE_CURRENT_OID_CAS",
+  "exact_old_semantic_same_false_rejects": 10,
+  "freeze_commit": "dae9660145d49528b434130677cdf6385900a2ab",
+  "schema": "git-tree-guard-result-v1",
+  "task": "O3-GIT-TREE-GUARD-20260916-002",
+  "cells": {
+    "exact_old:semantic_different": {"n":10,"correct":10,"rejects":10,"final_B":0,"final_D":10},
+    "exact_old:semantic_same": {"n":10,"correct":0,"rejects":10,"final_B":0,"final_D":0},
+    "exact_old:stable": {"n":10,"correct":10,"rejects":0,"final_B":10,"final_D":0},
+    "tree_current_cas:semantic_different": {"n":10,"correct":10,"rejects":10,"final_B":0,"final_D":10},
+    "tree_current_cas:semantic_same": {"n":10,"correct":10,"rejects":0,"final_B":10,"final_D":0},
+    "tree_current_cas:stable": {"n":10,"correct":10,"rejects":0,"final_B":10,"final_D":0}
+  }
+}

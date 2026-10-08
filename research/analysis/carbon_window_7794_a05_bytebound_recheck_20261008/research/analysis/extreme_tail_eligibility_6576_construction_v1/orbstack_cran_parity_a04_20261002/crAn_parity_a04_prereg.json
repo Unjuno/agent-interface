@@ -1,0 +1,24 @@
+{
+  "experiment_id": "6576-tailid-cran-parity-a04",
+  "seed_list": [65769911, 65769912, 65769913, 65769914, 65769915, 65769916],
+  "n": 400,
+  "threshold_probability": 0.9,
+  "confidence": 0.9999,
+  "candidate_fraction_of_tail": 0.05,
+  "comparison": [
+    "R TailID candidate-selection indices versus Python tailid_sensitive_upper candidate indices on byte-identical numeric text samples",
+    "R ismev 1.43 MLE scale and shape versus Python port fit_gpd_parameters for each base/refit state",
+    "R TailID upper sensitive indices versus Python port sensitive original indices",
+    "R quantile/threshold and confidence intervals versus Python calculations"
+  ],
+  "acceptance": {
+    "candidate_indices_exact": true,
+    "sensitive_indices_exact": true,
+    "threshold_abs_tolerance": 1e-10,
+    "scale_rel_tolerance": 1e-5,
+    "shape_abs_tolerance": 1e-5,
+    "conf_interval_abs_tolerance": 1e-5,
+    "all_fits_converged": true
+  },
+  "separation": "Implementation-parity only; not a rerun or substitute for formal six-case T0 allocation."
+}

@@ -1,0 +1,20 @@
+{
+  "schema":"unjuno-experiment-run-v1",
+  "issue":6129,
+  "allocation":"T0-02",
+  "disposition":"PASS_METHOD_SCOPED",
+  "full_issue_t0":"NOT_COMPLETE; successor allocation required for independent complete-case inversion reconstruction and policy comparison",
+  "executor":"OrbStack Docker Engine 29.4.0",
+  "image":"python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform":"linux/arm64",
+  "policy":{"network":"none","rootfs":"read-only","source":"read-only","cpus":0.5,"memory_mib":256,"pids":32,"cap_drop":"ALL","no_new_privileges":true},
+  "invocations":{"candidate":1,"auditor":1,"retries":0},
+  "candidate_exit":0,
+  "auditor_exit":0,
+  "audit":{"status":"PASS_METHOD_SCOPED","reconstructed_cases":7,"errors":[]},
+  "local_tests":"8 passed",
+  "candidate_sha256":"f8c9946361136165090b340aa7a3f5ac4c7785c045ac3a65df2ef7f7b9989b3a",
+  "audit_sha256":"294d5e96325b43ba2ff8c39f59f845b5e982cb173ba23e62dc6643c4fdf0038e",
+  "limitations":["No independent endpoint inversion reconstruction in this allocation","No empirical censoring assumption validation","No empirical route/task/product/safety/causal claim","No live or T1 authorization"],
+  "stop_reason":"The exact eight-attempt inversion and baseline-vs-pending-aware policy comparison require a distinct frozen successor allocation."
+}

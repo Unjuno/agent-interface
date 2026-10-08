@@ -1,0 +1,42 @@
+{
+  "argv": [
+    "C:\\Program Files\\WSL\\wslc.exe",
+    "run",
+    "--rm",
+    "--pull",
+    "never",
+    "--name",
+    "ai-5260-a03-epoch-construction01-20261003",
+    "--network",
+    "none",
+    "--cpus",
+    "0.5",
+    "--memory",
+    "512M",
+    "--user",
+    "65534:65534",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a03_readiness_prepare_20261003:/experiment:ro",
+    "--env",
+    "DISPLAY=:97",
+    "--env",
+    "EXPERIMENT_IMAGE_ID=sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "--volume",
+    "C:\\Users\\junny\\Documents\\Codex\\2026-09-19\\unjuno-agent-interface-x20\\_research_5260_a03_results_20261003\\construction01-data:/out",
+    "sha256:217851fe68e7340cd6301e6d1a1bd79d2c7b6cb4d13eb444a06fabaf0fde3417",
+    "/usr/bin/python3",
+    "-B",
+    "/experiment/probe_epoch.py",
+    "/out"
+  ],
+  "exit_code": 0,
+  "finished_utc": "2026-10-03T13:30:31.766234+00:00",
+  "launch_error": null,
+  "output_sha256": {
+    "attempt.json": "3e455487cb46f0859d440cbc6bc6cd321bfe44cb5a6e4a8962b00ce756c4991a",
+    "stderr.bin": "2562006e62622bcf41c809d627cdc2c6250516b8cf1c9ccd28072c331fcc4096",
+    "stdout.bin": "bc04fa9ad17c94bbc4e7fa890f8accce82d0ff450f69e515a1faaa29437d22d4"
+  },
+  "started_utc": "2026-10-03T13:30:18.234878+00:00",
+  "wall_seconds": 13.530240199994296
+}

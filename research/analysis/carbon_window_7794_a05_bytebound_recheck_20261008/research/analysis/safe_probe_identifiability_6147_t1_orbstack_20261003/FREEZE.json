@@ -1,0 +1,98 @@
+{
+  "allocation_id": "AI-6147-T1-ORB-X11-20261003-01",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6147",
+  "status_at_freeze": "FORMAL_NOT_STARTED",
+  "frozen_at": "2026-10-03",
+  "base_main_sha": "1fad501936732da64834ce49e1ddc40a516ad1f8",
+  "branch": "research/safe-aliased-probe-6147-t1-orbstack-20261003",
+  "path": "research/analysis/safe_probe_identifiability_6147_t1_orbstack_20261003",
+  "predecessors_preserved": [
+    "T0 A01 source-only preparation",
+    "T0 A02 STOP_CANDIDATE_RUNTIME_ERROR / NOT_EVALUATED",
+    "T0 A03 FAIL_AUDIT_CONTROL_COVERAGE",
+    "T0 A04 post-probe terminal effect audit",
+    "T0 A05 convergence-to-Z audit"
+  ],
+  "formal_invocations_at_freeze": {
+    "candidate": 0,
+    "auditor": 0,
+    "retries": 0,
+    "planned_candidate": 3,
+    "planned_auditor": 1,
+    "retry_policy": "none"
+  },
+  "matrix": {
+    "arms": ["adaptive", "no_probe", "one_step"],
+    "trials_per_arm": 10,
+    "total_trials": 30,
+    "hidden_states_per_arm": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+    "public_context_fields": ["trial_index", "family"],
+    "candidate_hidden_inputs": false,
+    "adaptive_safe_sequence": ["P", "Q"],
+    "unsafe_probe": "U",
+    "harness_reset": "F12 between cases, excluded from policy probe/effect accounting"
+  },
+  "decision": {
+    "pass": "H_PASS_SCOPED only for complete raw replay, all safety gates, all five rejected corruption controls, A/B adaptive effect advantage, current-terminal stale yielding, and I/J convergence-to-Z without initial identity claim.",
+    "fail": "H_FAIL_SCOPED for an eligible complete trial set that does not meet the declared effect/safety hypothesis.",
+    "stop": "STOP/NOT_EVALUATED for setup, resource, runtime, incomplete raw, or independent-audit execution failure.",
+    "retry": false
+  },
+  "engine": {
+    "context": "orbstack",
+    "version": "29.4.0",
+    "platform": "linux/aarch64",
+    "image": "issue4466-gtk-pixel-stability@sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27",
+    "image_platform": "linux/arm64",
+    "image_pull": "forbidden; --pull=never"
+  },
+  "container_limits": {
+    "network": "none",
+    "rootfs": "read-only",
+    "cpu": "1",
+    "memory_bytes": 536870912,
+    "pids": 64,
+    "capabilities": "all dropped",
+    "no_new_privileges": true,
+    "tmpfs": {
+      "fixture": "/tmp:rw,noexec,nosuid,size=64m",
+      "candidate_and_auditor": "/tmp:rw,noexec,nosuid,size=32m"
+    },
+    "observed_memory_swap_max_bytes": 536870912,
+    "swap_disabled": false
+  },
+  "candidate_mounts": [
+    "candidate.py:read-only",
+    "policy.py:read-only",
+    "model.json:read-only",
+    "inputs/formal_01/contexts_<arm>.jsonl:read-only",
+    "X11 UNIX socket:read-only"
+  ],
+  "candidate_excluded_mounts": ["fixture.py", "inputs/formal_01/deck_<arm>.jsonl", "oracle logs", "builder source"],
+  "construction_gates": {
+    "orb_gui_matrix_run_10": "PASS_CONSTRUCTION_ONLY; 10/10 rendered terminal signals and expected in-memory fixture receipts; observer=0, fixture=0, OOMKilled=false",
+    "pinned_container_tests_run_12": "PASS_CONSTRUCTION_ONLY; 13/13 including all five frozen raw-mutation controls",
+    "host_tests": "PASS_CONSTRUCTION_ONLY; 13/13 after adding an explicit five-mutation regression",
+    "py_compile": "PASS",
+    "shell_syntax": "PASS",
+    "formal_raw_path_at_freeze": "absent"
+  },
+  "local_ci_on_base_main": {
+    "python": "3.14.5 on macOS arm64",
+    "analysis_index_workflow_equivalent": "18 suites, 109 tests, all passed after restoring the workflow's pinned provenance source during its two hash-bound geometry tests; the original main workflow file was restored byte-identically afterward",
+    "analysis_index_unit_suite": "17/17",
+    "analysis_index": "550 retained result directories; PASS",
+    "workspace_index_unit_suite": "21/21",
+    "workspace_index": "156 top-level research directories reachable; PASS",
+    "public_navigation": "26 documents / 1559 repository-relative links; PASS",
+    "workflow_sha256_restored": "9e5679150f2ca30b32b112cade99a0cc7703820b47a3eb8b8aa4a5667f407f8f"
+  },
+  "parallel_conflict_check": {
+    "active_worktree_6505": "separate additive branch/path; untouched",
+    "existing_container": "unjuno-native-ci-6092 remained running and untouched; not mounted, stopped, or reused",
+    "wslc": "not invoked; repository coordination records its shared bridge attribution HOLD",
+    "target_branch": "local branch additive; remote exact-name branch search found no match"
+  },
+  "source_manifest": "SHA256SUMS.txt (frozen source and input identities; verify immediately before formal launch)",
+  "scope": "deterministic authored Xvfb GUI fixture only; no real application, user input/data, model, GPU, external effect, product, or broad GUI claim"
+}

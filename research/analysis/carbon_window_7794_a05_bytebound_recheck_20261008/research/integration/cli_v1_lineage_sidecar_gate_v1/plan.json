@@ -1,0 +1,10 @@
+{
+  "task": "CLI-V1-LINEAGE-SIDECAR-GATE-20260917-001",
+  "base": "1a529d2b593eb246846cfa14f27ec7617b7fe966",
+  "api_blob": "58e5489796959f120d973b595f36ed3d808533b3",
+  "core_blob": "a16620b65d22757ca9160d68feb1381306cc6ac3",
+  "policies": ["raw_cli", "sidecar_gate"],
+  "scenarios": ["direct_current", "hint_stale_numeric", "hint_laundered_current_numeric", "hint_exact_revalidated", "wrong_point_sidecar", "wrong_source_sidecar", "forged_receipt_role", "stale_revalidation", "expired_lease", "missing_pointer_capability", "invalid_current_request"],
+  "formal_invocations": 1,
+  "formal_rerun_budget": 0
+}

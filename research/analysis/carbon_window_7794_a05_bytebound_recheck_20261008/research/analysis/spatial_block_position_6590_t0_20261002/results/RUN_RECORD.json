@@ -1,0 +1,48 @@
+{
+  "schema": "spatial-block-position-6590-t0-run-record-v1",
+  "allocation": "spatial-block-position-6590-t0-20261002-01",
+  "freeze_commit": "1a123dc3c64f1e32cfe0cd86bd27026dbac5a072",
+  "branch_for_results": "research/spatial-block-qualification-6590-results-successor-20261002",
+  "scientific_base_main_sha": "49144844b482026c33fcfbde7e2fd5f7bdc7762c",
+  "execution": {
+    "environment": "host-only, macOS arm64; exact frozen protocol",
+    "python": "CPython 3.14.5",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "started_utc": "2026-10-02T07:01:36.149896000Z",
+    "finished_utc": "2026-10-02T07:02:21.212634000Z",
+    "candidate": {
+      "invocations": 1,
+      "exit_code": 0,
+      "command": "python3 -B research/analysis/spatial_block_position_6590_t0_20261002/candidate.py --fixture research/analysis/spatial_block_position_6590_t0_20261002/fixture.json --output research/analysis/spatial_block_position_6590_t0_20261002/results/raw.json",
+      "stdout_file": "candidate.stdout.json",
+      "stderr_file": "candidate.stderr.txt"
+    },
+    "auditor": {
+      "invocations": 1,
+      "exit_code": 0,
+      "command": "python3 -B research/analysis/spatial_block_position_6590_t0_20261002/auditor.py --fixture research/analysis/spatial_block_position_6590_t0_20261002/fixture.json --raw research/analysis/spatial_block_position_6590_t0_20261002/results/raw.json --output research/analysis/spatial_block_position_6590_t0_20261002/results/AUDIT.json",
+      "stdout_file": "auditor.stdout.json",
+      "stderr_file": "auditor.stderr.txt"
+    },
+    "retries": 0,
+    "network_calls": 0,
+    "model_fits": 0,
+    "gpu": false,
+    "gui_or_effects": 0,
+    "container_used": false,
+    "container_reason": "The exact public freeze defines host-only execution because WSLc is absent and the shared OrbStack container is owned by another active task without release. The running container was inspected but not entered, modified, stopped, or reused."
+  },
+  "decision": "METHOD_PASS",
+  "scope": "Synthetic no-model finite method-control only; not evidence for the issue-level T1 hypothesis or real GUI/model performance.",
+  "artifact_sha256": {
+    "fixture.json": "994543631f5fb73c27da12cf826bf03d5a203cdc9a1e03d7a8acd593fd9ae7f5",
+    "candidate.py": "b53a161c69815a443396f6ec7046b62b8900878755e1bf11c540791a1112606a",
+    "auditor.py": "e403c51aa09cbfd3764fc5b89ba1270814477912aaa1a8ab59e999809d0d4ce0",
+    "raw.json": "2c17f34a78591dc12039a8bd1f639a30496c8825742321b1e4c63ba487c58a59",
+    "AUDIT.json": "3f55304b2d9291bb30cd329b23a5506248d35eff85e858ff2f7055a545d1a5c6",
+    "candidate.stdout.json": "021096bc76d9dd2ae133180bad18b54d4d3a8a0879a1fddeaf9248e7bfdb3777",
+    "candidate.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "auditor.stdout.json": "504ddb641657049a0cf68b6ac025db292adf5353e8a8d8122a5a53658dfc9e7f",
+    "auditor.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

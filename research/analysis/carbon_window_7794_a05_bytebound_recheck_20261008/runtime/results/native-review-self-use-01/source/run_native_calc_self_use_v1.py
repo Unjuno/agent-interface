@@ -1,0 +1,128 @@
+"""Primary-assistant Calc transfer using existing setup, bridge and scorer."""
+import argparse
+import json
+from pathlib import Path
+import shutil
+import time
+import traceback
+
+from run_native_six_task_self_use_v1 import PrivateSession, suite
+from native_handle_bridge_v1 import NativeHandleBridge
+
+
+def paced_text_tail(ops, gap_ms):
+    """Explicit research policy compiled to ordinary native text/wait ops."""
+    if type(gap_ms) is not int or gap_ms not in (0, 2, 10):
+        raise ValueError('supported text gaps are 0, 2, 10 ms')
+    if gap_ms == 0:
+        return list(ops)
+    result = []
+    for op in ops:
+        if op.get('op') != 'text' or not op.get('text'):
+            result.append(op)
+            continue
+        for i, ch in enumerate(op['text']):
+            if i:
+                result.append({'op': 'wait_update', 'timeout_ms': gap_ms})
+            result.append(dict(op, text=ch))
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--seed', type=int, default=991084)
+    parser.add_argument('--text-gap-ms', type=int, choices=(0, 2, 10), default=0)
+    parser.add_argument('--probe-old-target', action='store_true')
+    args = parser.parse_args()
+    out = args.out.resolve()
+    out.mkdir(parents=True, exist_ok=False)
+    session = bridge = output = None
+    goal = None
+    rows = []
+
+    def save(name, value):
+        (out/name).write_text(json.dumps(value, indent=2)+'\n')
+
+    try:
+        session = PrivateSession()
+        goal, output, _ = suite.prepare(session, 'calc', args.seed, '')
+        save('goal.json', goal)
+        save('text-policy.json', {'gap_ms': args.text_gap_ms, 'default_changed': False})
+        window = int(next(line.split()[0] for line in session.windows().splitlines()
+                          if 'sheet.xlsx' in line), 16)
+        bridge = NativeHandleBridge(session.name, {'app': window}, 'app', out/'bridge')
+        source = bridge.observe()
+        for stage in range(1, 5):
+            windows = session.windows()
+            save(f'source-{stage}.json', source)
+            save(f'windows-{stage}.json', windows)
+            request = out/f'request-{stage}.json'
+            print(json.dumps({'stage': stage, 'goal': goal,
+                'source_sequence': source['sequence'], 'image': source['native']['artifact']['path'],
+                'windows': windows, 'request_file': str(request)}), flush=True)
+            deadline = time.monotonic()+300
+            while not request.exists():
+                if time.monotonic() > deadline:
+                    raise TimeoutError('primary-assistant decision timeout')
+                time.sleep(.05)
+            decision = json.loads(request.read_text())
+            if decision['source_sequence'] != source['sequence']:
+                raise ValueError('decision must refer to exact presented source')
+            if decision.get('finish') is True:
+                break
+            started = time.monotonic_ns()
+            alias = f'target_{stage}'
+            offset = bridge.mint(alias, source['sequence'], decision['point'], region_size=(24, 14))
+            result = bridge.click(alias, offset,
+                                  tail=paced_text_tail(decision.get('tail', []), args.text_gap_ms))
+            row = {'stage': stage, 'result': result, 'started_ns': started}
+            rows.append(row)
+            save('actions.json', rows)
+            if result['status'] != 'completed':
+                raise RuntimeError('native action '+result['status']+'; no replay')
+            # Same feedback contract as Chromium. Focus changes return a fresh
+            # image needing review, not a guessed dialog confirmation.
+            row['feedback'] = bridge.feedback(decision['expected_title'], timeout_ms=2000)
+            row['ended_ns'] = time.monotonic_ns()
+            save('actions.json', rows)
+            focus = bridge.backend.d.get_input_focus().focus
+            window = getattr(focus, 'id', None)
+            if not window:
+                raise RuntimeError('no focused window for explicit next-stage review')
+            row['window_review'] = bridge.review_window(window)
+            if row['window_review']['status'] != 'reviewed':
+                save('actions.json', rows)
+                raise RuntimeError('window review failed; no automatic input or replay')
+            source = row['window_review']['observation']
+            if args.probe_old_target:
+                before = bridge.backend.emissions
+                stale = bridge.click(alias, offset)
+                row['old_target_probe'] = {'result': stale,
+                                           'emissions': bridge.backend.emissions-before}
+                if stale['status'] != 'refused' or row['old_target_probe']['emissions']:
+                    save('actions.json', rows)
+                    raise RuntimeError('old target survived window review')
+            row['through_review_ns'] = time.monotonic_ns()
+            save('actions.json', rows)
+            print(json.dumps({'stage': stage, 'feedback_status': row['feedback']['status'],
+                              'window_review': row['window_review']}), flush=True)
+        else:
+            raise RuntimeError('bounded action stages exhausted without explicit finish')
+        save('evaluation.json', suite.evaluate('calc', output, goal))
+        print(json.dumps({'evaluation': json.loads((out/'evaluation.json').read_text())}), flush=True)
+    except Exception:
+        (out/'error.txt').write_text(traceback.format_exc())
+        raise
+    finally:
+        if output is not None and output.exists():
+            shutil.copyfile(output, out/'sheet.xlsx')
+        if bridge is not None:
+            bridge.close()
+        if session is not None:
+            session.close()
+            save('cleanup.json', [{'pid': p.pid, 'returncode': p.poll()} for p in session.procs])
+
+
+if __name__ == '__main__':
+    main()

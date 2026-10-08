@@ -1,0 +1,32 @@
+{
+  "task": "USEFUL-CONTROL-DUAL-EDGE-CENSORING-20260917-001",
+  "issue": 985,
+  "base": "b488c44c49059b6cf1385ecd43b32a16ce7a9fd5",
+  "formal_authorized": true,
+  "formal_invocations_before_freeze": 0,
+  "formal_invocation_budget": 1,
+  "formal_rerun_budget": 0,
+  "replacement_budget": 0,
+  "tuning_budget": 0,
+  "seed_small": 98520260917001,
+  "seed_multi": 98520260917002,
+  "small_cases": 30000,
+  "multi_cases": 50000,
+  "realizations_per_multi": 4,
+  "live_model_gui_input_authority": false,
+  "consumes_issue_869_authority": false,
+  "source_sha256": {
+    "PLAN.md": "2d6ec40ba19c731c8391204abeed9c14087abdb7717fc7eb09a9c30c2d3b0d00",
+    "dual_edge_contract.py": "19a8fff7edb4adb78a12fd66efdc35df6493ed1e026e9fcc9d526cf4250b3eb7",
+    "test_dual_edge.py": "6fb8a242fa0acb7b6cea6cc90cf258f6b247ea1a2108233c8535c169c613cf55",
+    "audit_oracle.py": "320ef226c51babc493a93417106b54da37709b9d7c1cd2eb0afe679395b08472",
+    "formal_runner.py": "9e25e3e5539a515f68c47a8c57a0456cd1a7c60533e1c6738adbbd79968ad57f",
+    "audit.py": "6c45b170dcabe85a1e238c1d46a0ec7a34a91dbaf158553b82c8c8b611b63af3"
+  },
+  "construction": {
+    "fuzz_cases": 100000,
+    "fuzz_result": "PASS",
+    "exhaustive_oracle_cases": 50000,
+    "exhaustive_oracle_result": "PASS"
+  }
+}

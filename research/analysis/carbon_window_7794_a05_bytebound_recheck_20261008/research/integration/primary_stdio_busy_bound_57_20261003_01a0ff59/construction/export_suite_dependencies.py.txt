@@ -1,0 +1,14 @@
+import hashlib, json, subprocess
+from pathlib import Path
+
+root=Path(__file__).resolve().parent/'repo'
+artifact=root/'research/integration/primary_stdio_busy_bound_57_20261003_01a0ff59'
+paths=['runtime/integration_checks/host_timing.py','research/live_control/test_native_relay_client_v1.mjs','research/live_control/test_relay_host_timeline_v1.mjs','research/live_control/native_relay_client_v1.mjs','research/live_control/relay_host_timeline_v1.mjs','.github/workflows/native-mcp-v1.yml']
+pins=[]
+for path in paths:
+    data=subprocess.check_output(['git','-C',str(root),'show',f'HEAD:{path}'])
+    dest=root/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(data)
+    pins.append({'path':path,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest(),'blob_oid':subprocess.check_output(['git','-C',str(root),'rev-parse',f'HEAD:{path}']).decode().strip()})
+(artifact/'SUITE_DEPENDENCIES.json').write_text(json.dumps({'reason':'first whole-host check had one missing sparse-export read-only timing dependency; retained exit1 log unchanged','sources':pins},indent=2,sort_keys=True)+'\n',encoding='utf-8',newline='\n')
+(artifact/'construction'/'export_suite_dependencies.py.txt').write_bytes(Path(__file__).read_bytes())
+print(json.dumps({'exported':pins}))

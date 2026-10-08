@@ -1,0 +1,53 @@
+{
+  "allocation": "MAP01-V6-RUNNER-CLOCK-CANCEL-59-T3S-20261002-01",
+  "auditor_sha256": "093e05d377879e217c9d3f35451346e092e5ec03bdff1e71a73599a4677e8ef0",
+  "base_commit": "279679a33f6029c6e13eca6be51890d8bebb25e7",
+  "candidate_sha256": "e14d278a722704cce977dcfe0f42b89bc4e2e7b25451b0e5bebc11d9d3ee4883",
+  "environment": {
+    "docker_reason": "shared Docker Desktop unavailable and #5085 shared-slot release not present; host CPU explicitly permitted by #6242",
+    "docker_used": false,
+    "platform": "macOS 26.6.2 arm64",
+    "python": "3.14.5"
+  },
+  "preregistration_sha256": "67ea9e121c88e8d9e893dc27984a7764f451bc12f203e7b1e24dd1ecbba6ccfa",
+  "procedure": {
+    "candidate_invocations": 1,
+    "cases": [
+      {
+        "clock_delay_ms": 400,
+        "lease_ms": 2000,
+        "name": "A-clock-before-cancel-within-lease",
+        "planner_wait_ms": 600
+      },
+      {
+        "clock_delay_ms": 1600,
+        "lease_ms": 1500,
+        "name": "B-lease-before-clock-return",
+        "planner_wait_ms": 600
+      }
+    ],
+    "construction_smokes": 1,
+    "independent_audits": 1,
+    "pass_gate": "PASS_RUNNER_CLOCK_DELAY_SCOPED only when source and code hashes match; A release 350-2000ms after timer and within 50ms after clock/cancel with matched cancel; B verified release within 50ms of lease deadline before clock return and late cancel unmatched; all receipt/timing/source-order checks pass. Otherwise preserve FAIL/HOLD/STOP, no retries.",
+    "retries": 0
+  },
+  "schema": "map01-v6-runner-clock-cancel-freeze-v1",
+  "source_manifest": {
+    "executor": {
+      "git_blob": "e0a31884307eeac405094a624e3a63222acc656f",
+      "path": "research/live_control/executor_v10.py",
+      "sha256": "e55f82e6f15c39914a4213873d39386205a792c98b54d0cf54be0812c69ecb2e"
+    },
+    "lease": {
+      "git_blob": "b9dac6bb4063928354733d79bf371909a288a3d1",
+      "path": "research/live_control/lease.py",
+      "sha256": "e71f9850d3999a31fcb86c00f9ef7a8ba19bae8d3a8bdc11bf7bd620817a535f"
+    },
+    "v6_runner": {
+      "git_blob": "10344582ffa2ce339bc48dd8d680512a71f4eddc",
+      "path": "research/doom/map01_recovery_cover_mechanism_v6_runner.py",
+      "sha256": "9790becf98104b3a956c73bee945266a8517e41c2396c1a8b29c924e14d26012"
+    }
+  },
+  "tests_sha256": "cff7097cca315c4c08d098bffaa7c641c8cb2a8c5f5f6f0189fa38c95fb63a26"
+}

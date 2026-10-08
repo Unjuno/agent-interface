@@ -1,0 +1,85 @@
+{
+  "schema": "safe-discriminating-observation-6680-formal-run-v1",
+  "issue": 6680,
+  "allocation": "SAFE-DISCRIMINATING-OBSERVATION-6680-ORB-A01-20261003-01",
+  "predecessor_allocation": "SAFE-DISCRIMINATING-OBSERVATION-6680-T0-20261002-01",
+  "predecessor_disposition_preserved": "HOLD_RESOURCE_BEFORE_FORMAL_START",
+  "main_sha": "c33380b3b08792a331ee11f7aee05e3d41437e3e",
+  "branch": "research/safe-discriminating-observation-6680-t0-20261002",
+  "branch_head_at_formal_start": "66f379c4103e4f4cecd20dd710b76960bec7f724",
+  "preregistration_url": "https://github.com/Unjuno/agent-interface/issues/6680#issuecomment-5959408389",
+  "runtime": {
+    "orbstack_version": "2.2.3",
+    "vm_name": "research-6680-a01-20261003",
+    "vm_id": "01M3YZKZDHBR66GGW2AEW667GX",
+    "os": "Ubuntu 24.04 noble",
+    "architecture": "linux/arm64",
+    "vm_cpu_limit": 1,
+    "vm_memory_limit_mib": 1536,
+    "docker_engine": "29.1.3",
+    "docker_architecture": "aarch64",
+    "cgroup_driver": "systemd",
+    "cgroup_version": 2,
+    "pre_run_container_count": 0,
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_architecture": "linux/arm64"
+  },
+  "frozen_input_sha256": {
+    "temporal_candidate.py": "a2edee3964f28e2e9044e2a06f3acbb911ad0168a48f36f69e7522600d2157f4",
+    "temporal_auditor.py": "cb75345d519e9c32ac425a4f9785973a1779d032b01bbbf01b67d57dd6a6b2ef",
+    "temporal_fixture.json": "aaa3ff20a97f27489105d4c9125993eaf8f4c50c95cd2081f5487ccbef109ec8",
+    "temporal_oracle.json": "b735853126d38f37a4a62498e46ed89878fcc36727920aed87d74d4b3d043a23"
+  },
+  "formal_invocations": {
+    "candidate": {
+      "count": 1,
+      "container_id": "45f62a9cee06d00ddb48d32ac9e3365a7402a81446ed48d43d8653793f73f84d",
+      "started_at_utc": "2026-10-02T19:03:24.475886054Z",
+      "finished_at_utc": "2026-10-02T19:03:24.764654465Z",
+      "exit_code": 0,
+      "oom_killed": false,
+      "output": "formal_a01_orbstack_20261003/candidate.raw.json",
+      "output_bytes": 7151,
+      "output_sha256": "bd14e74b03246d306e89f1f042842914ba468798449877c0e80a2f6a4f803020",
+      "stdout_sha256": "22fb5492b1ff996a5ca3a9e73e9c5f65a96417068e09b048c86738d5a49e2d5e"
+    },
+    "independent_auditor": {
+      "count": 1,
+      "container_id": "caf5115ebf3149a6509961169d9423c33ffbf56d4024fcc18463d4481ff1505b",
+      "started_at_utc": "2026-10-02T19:03:38.747677255Z",
+      "finished_at_utc": "2026-10-02T19:03:39.071052625Z",
+      "exit_code": 0,
+      "oom_killed": false,
+      "output": "formal_a01_orbstack_20261003/audit.json",
+      "output_bytes": 5700,
+      "output_sha256": "30ad9893a9ef5a6581fdcc7f17a8ef23ac91bfd1f2d095ea55cbbc2f37d56267",
+      "stdout_sha256": "30ad9893a9ef5a6581fdcc7f17a8ef23ac91bfd1f2d095ea55cbbc2f37d56267"
+    },
+    "retries": 0,
+    "replacements": 0
+  },
+  "audit": {
+    "status": "PASS_METHOD_SCOPED",
+    "rows": 20,
+    "errors": 0,
+    "bounded_diagnose_wrong_recoveries_identifiable": 0,
+    "bounded_diagnose_repeated_residuals_identifiable": 0,
+    "bounded_diagnose_useful_effects_identifiable": 2,
+    "always_reobserve_wrong_recoveries_identifiable": 1,
+    "always_reset_wrong_recoveries_identifiable": 1,
+    "always_reobserve_repeated_residuals_identifiable": 1,
+    "always_reset_repeated_residuals_identifiable": 1,
+    "immediate_yield_wrong_recoveries_identifiable": 0,
+    "immediate_yield_useful_effects_identifiable": 0,
+    "diagnose_yielded_without_probe_for": ["c03_mixed", "c04_ineligible_probe", "c05_unsupported_observation"],
+    "worst_case_release_latency_ticks": 0,
+    "immediate_yield_release_latency_ticks": 0
+  },
+  "construction_suite": "28/28 passed before formal allocation; construction-only, not pooled",
+  "formal_scope": "deterministic authored finite method only; no live GUI, model, natural failure-rate, user-benefit, runtime safety, or product claim",
+  "identical_to_construction_hashes": {
+    "candidate_raw_matches_temporal_v4_construction": true,
+    "audit_matches_temporal_v4_construction": true,
+    "interpretation": "expected deterministic byte identity; a fresh execution receipt, not independent scientific replication"
+  }
+}

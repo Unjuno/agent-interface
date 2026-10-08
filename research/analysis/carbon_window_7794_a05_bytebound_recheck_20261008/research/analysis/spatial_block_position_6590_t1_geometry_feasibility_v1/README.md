@@ -1,0 +1,5 @@
+# #6590 T1 pre-fit geometry feasibility — OrbStack successor
+
+This is a no-fit preflight for the still-open #6590 model T1. It enumerates the original 40×30 image geometry and five frozen training-support centers to determine whether four spatial blocks can each provide the minimum of eight distinct interior target centers without positive-patch overlap with any training-support patch.
+
+During construction, before this allocation was frozen, the host candidate emitted 6/6/3/3 qualifying centers. That exploratory result is retained in `preformal/` and is known in advance: the OrbStack run below is an independent-runtime reproduction/audit, not a blind preregistered confirmation. The model candidate is intentionally not invoked. If the independent audit reproduces the counts, the issue-level visual-model T1 remains stopped pending a separately justified larger canvas/support design and a new freeze. Prior #4752/#4814 data and the T0/overlap-mutation outputs are not modified or reused as observations.

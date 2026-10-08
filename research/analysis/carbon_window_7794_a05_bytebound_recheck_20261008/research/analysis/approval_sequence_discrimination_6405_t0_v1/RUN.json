@@ -1,0 +1,35 @@
+{
+  "allocation": "APPROVAL-SEQUENCE-DISCRIMINATION-6405-T0-20261002-01",
+  "base_main": "d7e8a932da27e7f271920de409b079fedc75dee1",
+  "candidate": {
+    "container": "approval-6405-candidate-t0-20261002-01",
+    "exit_code": 0,
+    "completed_at_utc": "2026-10-02T01:50:58Z",
+    "stdout": "{\"candidate\": \"PASS_GENERATED\", \"fixture_sha256\": \"389461addce17469271f1279a36d2961dc8d8982aba772e52ed3e068cad2be01\", \"rows\": 27}",
+    "stderr": "",
+    "command": "docker run --rm --pull=never --platform linux/amd64 --name approval-6405-candidate-t0-20261002-01 --network none --cpus 1 --memory 512m --pids-limit 64 --read-only --tmpfs /tmp:rw,nosuid,nodev,size=32m --user 65534:65534 -v <package>:/study:ro -v <results/t0-01>:/out:rw -w /study --entrypoint python map01-attack-start-gate-4223-t8:20261001 /study/candidate.py --out /out/raw.json"
+  },
+  "auditor": {
+    "container": "approval-6405-auditor-t0-20261002-01",
+    "exit_code": 0,
+    "completed_at_utc": "2026-10-02T01:51:21Z",
+    "stdout": "{\"audit\": \"PASS_METHOD_SCOPED\", \"errors\": [], \"mutation_controls_rejected\": {\"omitted_field\": true, \"overbroad_batch\": true, \"prior_receipt_reuse\": true, \"stale_highlight\": true, \"swapped_recipient\": true}, \"raw_sha256\": \"e7c9b610315d5d221cac41a089fc83f5d476934f3a469d26eb57177a77d8b9aa\", \"scope\": \"finite scripted fixture only; no human behavior or real authority\"}",
+    "command": "docker run --rm --pull=never --platform linux/amd64 --name approval-6405-auditor-t0-20261002-01 --network none --cpus 1 --memory 512m --pids-limit 64 --read-only --tmpfs /tmp:rw,nosuid,nodev,size=32m --user 65534:65534 -v <package>:/study:ro -v <results/t0-01>:/out:rw -w /study --entrypoint python map01-attack-start-gate-4223-t8:20261001 /study/auditor.py --raw /study/results/t0-01/raw.json --fixture /study/fixture.json --out /out/audit.json"
+  },
+  "image": {
+    "reference": "map01-attack-start-gate-4223-t8:20261001",
+    "id": "sha256:d8c51b45569cc4fdf0f5d82ae285c3fbb20fae8525d6fab0cebadca171b3bebe",
+    "platform": "linux/amd64"
+  },
+  "host": "OrbStack 2.2.3; macOS arm64 with linux/amd64 emulation",
+  "network": "disabled",
+  "retries": 0,
+  "formal_candidate_invocations": 1,
+  "independent_auditor_invocations": 1,
+  "participant_or_live_effect": false,
+  "fixture_file_sha256": "ceb0c1be45971d22a57ec685b0130774a4b32a1f943bcedbce080dd051a644a8",
+  "fixture_canonical_json_sha256": "389461addce17469271f1279a36d2961dc8d8982aba772e52ed3e068cad2be01",
+  "raw_sha256": "e7c9b610315d5d221cac41a089fc83f5d476934f3a469d26eb57177a77d8b9aa",
+  "audit_json_sha256": "295177892082d0daac2c45e2b22cf1ca166c2ede1696551c2805337c4883115a",
+  "auditor_reported_raw_sha256": "e7c9b610315d5d221cac41a089fc83f5d476934f3a469d26eb57177a77d8b9aa"
+}

@@ -1,0 +1,78 @@
+name: MAP01 attack-onset T9 startup gate (one-shot Docker)
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - "research/doom/map01_attack_start_gate_4223_t9_20261001/**"
+      - ".github/workflows/map01-attack-start-gate-4223-t9.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: map01-attack-start-gate-t9-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  startup-gate:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Record runner and allocation context
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/map01-t9
+          {
+            uname -a
+            docker version
+            docker context ls
+          gh --version
+          } > work/map01-t9/host-environment.txt 2>&1
+          sha256sum --check research/doom/map01_attack_start_gate_4223_t9_20261001/SOURCE_SHA256SUMS.txt
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/10398313098" \
+            --jq '{id,name,size_in_bytes,expired,workflow_run}' > work/map01-t9/artifact-metadata.json
+          jq -e '.id == 10398313098 and .expired == false and .workflow_run.head_sha == "ff2bbb5e200e2bf8ee2295ad97ca9dd0f158a371"' \
+            work/map01-t9/artifact-metadata.json
+          LIVE_MAIN_SHA="$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)"
+          FROZEN_MAIN_SHA="$(jq -r .base_main research/doom/map01_attack_start_gate_4223_t9_20261001/FREEZE.json)"
+          printf 'live_main=%s\nfrozen_main=%s\n' "$LIVE_MAIN_SHA" "$FROZEN_MAIN_SHA" \
+            > work/map01-t9/main-freeze-gate.txt
+          git fetch --no-tags origin main:refs/remotes/origin/main
+          git merge-base --is-ancestor "$FROZEN_MAIN_SHA" origin/main
+          git diff --name-only "$FROZEN_MAIN_SHA"..origin/main > work/map01-t9/main-drift-paths.txt
+          if grep -Eq '^(README.md|docs/CURRENT_GOAL.md|ROADMAP.md|research/doom/map01_attack_onset_phase_|research/doom/map01_v12_attack_task_effect_live_v1/)' work/map01-t9/main-drift-paths.txt; then
+            echo "STOP_MAIN_DRIFT_TOUCHES_RESEARCH_SCOPE" >&2
+            exit 1
+          fi
+      - name: Download and verify immutable offline runtime artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/10398313098/zip" > work/map01-t9/offline-runtime.zip
+          echo "522763418610ea10e57e55615fa71e76445200b9f86d208820ea97c77c234f0b  work/map01-t9/offline-runtime.zip" | sha256sum --check
+      - name: Build pinned runtime and run one candidate plus independent auditor
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python3 research/doom/map01_attack_start_gate_4223_t9_20261001/orchestrate.py \
+            --artifact work/map01-t9/offline-runtime.zip \
+            --out work/map01-t9/evidence \
+            --source-commit "${{ github.event.pull_request.head.sha }}"
+      - name: Upload complete execution evidence, including STOPs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: map01-attack-start-gate-t9-${{ github.run_id }}
+          path: work/map01-t9/
+          if-no-files-found: error
+          retention-days: 90

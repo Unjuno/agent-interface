@@ -1,0 +1,6 @@
+{
+  "case_id": "RECOVERED_MODAL_EXACT",
+  "expected": "REBINDED_DISMISS",
+  "prompt": "Case ID: RECOVERED_MODAL_EXACT\nTyped evidence (JSON):\n{\"current_surface\":{\"app\":\"Inkscape\",\"kind\":\"Save-As transient\",\"id\":\"modal-1\",\"freshness\":\"fresh\",\"modal_count\":1},\"recovery\":{\"status\":\"observed\",\"authority\":\"none\",\"task_input_granted\":false},\"request\":{\"id\":\"request-1\",\"created_after_recovery\":true,\"target_surface_id\":\"modal-1\",\"target_transient_for\":\"main-1\"},\"current_recheck\":{\"status\":\"matched\",\"surface_id\":\"modal-1\",\"transient_for\":\"main-1\"},\"effect\":{\"status\":\"known\",\"safe_to_dismiss\":true,\"document_modified\":false}}\nReturn only the required JSON object.",
+  "error": "The request was canceled due to the configured HttpClient.Timeout of 240 seconds elapsing."
+}

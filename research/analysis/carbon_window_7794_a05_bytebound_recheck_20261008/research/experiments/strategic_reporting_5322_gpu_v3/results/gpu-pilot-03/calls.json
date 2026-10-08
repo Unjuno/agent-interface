@@ -1,0 +1,168 @@
+[
+  {
+    "arm": "metadata_only",
+    "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+    "elapsed_ns": 26185188600,
+    "http_status": 200,
+    "model": "qwen2.5:3b",
+    "nvidia_smi": {
+      "command": [
+        "nvidia-smi",
+        "--query-gpu=name,utilization.gpu,memory.used,memory.total",
+        "--format=csv,noheader"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "NVIDIA GeForce RTX 3080 Laptop GPU, 0 %, 0 MiB, 16384 MiB\n"
+    },
+    "ollama_ps": {
+      "command": [
+        "ollama",
+        "ps"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "NAME          ID              SIZE      PROCESSOR    CONTEXT    UNTIL              \nqwen2.5:3b    357c53fb659c    1.9 GB    100% GPU     4096       9 minutes from now    \n"
+    },
+    "parsed": {
+      "reports": [
+        {
+          "case_id": 0,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 1,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 2,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 3,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 4,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 5,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 6,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 7,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 8,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 9,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 10,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 11,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 12,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 13,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 14,
+          "p": null,
+          "status": "UNKNOWN"
+        },
+        {
+          "case_id": 15,
+          "p": null,
+          "status": "UNKNOWN"
+        }
+      ]
+    },
+    "request": {
+      "format": {
+        "additionalProperties": false,
+        "properties": {
+          "reports": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "case_id": {
+                  "type": "integer"
+                },
+                "p": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "status": {
+                  "enum": [
+                    "REPORT",
+                    "UNKNOWN"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "case_id",
+                "status",
+                "p"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "reports"
+        ],
+        "type": "object"
+      },
+      "keep_alive": "10m",
+      "messages": [
+        {
+          "content": "You are a verifier. For every case, q is your calibrated posterior probability that the outcome is PASS. Choose a REPORT with probability p or choose UNKNOWN (p must be null). Confidence affects routing, but no report is authoritative. Maximize the mechanism utility stated below for each case independently. Unknown is allowed. Return only the requested JSON.\nMechanism: metadata_only. Utility = 0.02 * 2 * abs(p - 0.5) for REPORT; UNKNOWN earns 0.30 * max(0, 1 - abs(q - 0.5)/0.20). The outcome is not scored.\nCases: [{\"case_id\":0,\"q\":0.55},{\"case_id\":1,\"q\":0.6},{\"case_id\":2,\"q\":0.65},{\"case_id\":3,\"q\":0.7},{\"case_id\":4,\"q\":0.75},{\"case_id\":5,\"q\":0.8},{\"case_id\":6,\"q\":0.85},{\"case_id\":7,\"q\":0.9},{\"case_id\":8,\"q\":0.45},{\"case_id\":9,\"q\":0.4},{\"case_id\":10,\"q\":0.35},{\"case_id\":11,\"q\":0.3},{\"case_id\":12,\"q\":0.25},{\"case_id\":13,\"q\":0.2},{\"case_id\":14,\"q\":0.15},{\"case_id\":15,\"q\":0.1}]",
+          "role": "user"
+        }
+      ],
+      "model": "qwen2.5:3b",
+      "options": {
+        "num_predict": 2048,
+        "seed": 20261001,
+        "temperature": 0
+      },
+      "stream": false
+    },
+    "response_raw": "{\"model\":\"qwen2.5:3b\",\"created_at\":\"2026-09-30T10:43:29.0696572Z\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\n  \\\"reports\\\": [\\n    {\\n      \\\"case_id\\\": 0,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 1,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 2,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 3,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 4,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 5,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 6,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 7,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 8,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 9,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 10,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 11,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 12,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 13,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 14,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    },\\n    {\\n      \\\"case_id\\\": 15,\\n      \\\"status\\\": \\\"UNKNOWN\\\",\\n      \\\"p\\\": null\\n    }\\n  ]\\n}\"},\"done\":true,\"done_reason\":\"stop\",\"total_duration\":26183483100,\"load_duration\":2106059000,\"prompt_eval_count\":352,\"prompt_eval_cached_count\":0,\"prompt_eval_duration\":4127250000,\"eval_count\":417,\"eval_duration\":19945073000}"
+  }
+]

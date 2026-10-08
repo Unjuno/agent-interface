@@ -1,0 +1,56 @@
+{
+  "format": "input-state-table-v1",
+  "source_sha256": "24fa7251e218479376f39c39af96a2969095d60943758db3fbf3d7cbb98e3447",
+  "table": {
+    "common_state": {
+      "owner_id": "d53bd55a88e249bb99ad3010dc5b5b7c",
+      "owned_buttons": [],
+      "owned_keycodes": [],
+      "physical_pointer_mask": 0,
+      "pointer": [
+        640,
+        400
+      ],
+      "focus": 8390836,
+      "cancel_requested": false
+    },
+    "common_observation": {
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "owner_revision_unchanged": false
+    },
+    "observations": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          5
+        ],
+        "sequence": 8,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 21,
+              "sample_started_ns": 45183013952,
+              "sample_finished_ns": 45183445171,
+              "active_lease_deadline_ns": 75053468297,
+              "active_lease_time_valid": true
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 22,
+              "sample_started_ns": 45278035712,
+              "sample_finished_ns": 45278304947,
+              "active_lease_deadline_ns": null,
+              "active_lease_time_valid": false
+            }
+          }
+        }
+      }
+    ]
+  },
+  "coverage": "Four named input-state fields of every exchange observation; all other fields/events/images remain in the original report and receipt.",
+  "authority": "none; historical values only; no attention cleared, lease renewed, or task success inferred"
+}

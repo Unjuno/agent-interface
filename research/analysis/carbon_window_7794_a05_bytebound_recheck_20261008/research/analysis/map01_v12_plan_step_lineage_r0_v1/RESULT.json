@@ -1,0 +1,148 @@
+{
+  "authority_expansions": 0,
+  "base": "7f02687f8136ea6a390fc800900937adc227969c",
+  "case_digest_sha256": "62911a49e6b77b5b8fee19a742ca2a0239e4f6aa321b8402ea7587344e28ce26",
+  "decision": "PASS_MAP01_V12_PLAN_STEP_LINEAGE_R0_SCOPED",
+  "elapsed_ns": 4248396363,
+  "exhaustive_cases": 4096,
+  "exhaustive_mismatches": 0,
+  "fixed_controls": {
+    "authority_true": {
+      "candidate": "RELEASE_AUTHORITY",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "duplicate_actuation": {
+      "candidate": "DUPLICATE_ACTUATION_ID",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "duplicate_position": {
+      "candidate": "BATCH_POSITION_MISMATCH",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "identifier_mismatch": {
+      "candidate": "BATCH_CONTEXT_MISMATCH",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "intent_mismatch": {
+      "candidate": "MAP01_PHYSICAL_LINEAGE_MISMATCH",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "inverted_edges": {
+      "candidate": "PHYSICAL_EDGE_ORDER_AMBIGUOUS",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "key_mismatch": {
+      "candidate": "MAP01_PHYSICAL_LINEAGE_MISMATCH",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "missing_actuation": {
+      "candidate": "PHYSICAL_EDGE_LINEAGE",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "nonordinary": {
+      "candidate": "RELEASE_UNVERIFIED_RELEASE",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "owner_mismatch": {
+      "candidate": "MAP01_PHYSICAL_LINEAGE_MISMATCH",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "source_drift": {
+      "candidate": "SOURCE_IDENTITY_DRIFT",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "step_mismatch": {
+      "candidate": "BATCH_CONTEXT_MISMATCH",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "unconfirmed_down": {
+      "candidate": "INCOMPLETE_PHYSICAL_EVIDENCE",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "unconfirmed_up": {
+      "candidate": "INCOMPLETE_PHYSICAL_EVIDENCE",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "unverified_batch": {
+      "candidate": "RELEASE_UNVERIFIED_RELEASE",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "up_outside_rpc": {
+      "candidate": "UP_NOT_WITHIN_RELEASE_RPC",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "v3_claims_physical": {
+      "candidate": "RELEASE_V3_PHYSICAL_AUTHORITY",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "v3_only": {
+      "candidate": "KEY_SET_MISMATCH",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    },
+    "valid_one": {
+      "candidate": "BOUND_MAP01_PHYSICAL_BATCH",
+      "oracle": true,
+      "pass_": true,
+      "want": true
+    },
+    "valid_two": {
+      "candidate": "BOUND_MAP01_PHYSICAL_BATCH",
+      "oracle": true,
+      "pass_": true,
+      "want": true
+    },
+    "wrong_pair_set": {
+      "candidate": "KEY_SET_MISMATCH",
+      "oracle": false,
+      "pass_": true,
+      "want": false
+    }
+  },
+  "issue": 1907,
+  "primary_invocations": 1,
+  "random_accepted": 22456,
+  "random_cases": 100000,
+  "random_mismatches": 0,
+  "random_seed": 190720260919001,
+  "reruns": 0,
+  "task": "MAP01-V12-PLAN-STEP-LINEAGE-R0-20260919-001",
+  "timestamp_changes": 0,
+  "tuning": 0,
+  "v3_only_accepted": 0
+}

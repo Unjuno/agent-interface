@@ -1,0 +1,23 @@
+{
+  "allocation_id": "issue3610-proxy-effect-unit-formal-01",
+  "issue": 3610,
+  "decision": "STOP_AFTER_FIXTURE_START_BEFORE_STATE_OBSERVATION",
+  "formal_invocations": 1,
+  "retries": 0,
+  "planned_rows": 28,
+  "started_rows": 28,
+  "completed_observation_rows": 0,
+  "row_errors": 28,
+  "cause": "TypeError: wait_state() got an unexpected keyword argument 'pid_hint'",
+  "failure_boundary": "Xvfb and GTK fixture were started in each row, then the runner failed while calling wait_state before state resolution, screenshot capture, operation emission, or task-effect observation.",
+  "emissions": 0,
+  "input_acknowledgements": 0,
+  "fixture_task_effects": 0,
+  "cleanup": {
+    "all_fixture_processes_reaped": true,
+    "all_xvfb_processes_reaped": true,
+    "all_x_sockets_disappeared": true
+  },
+  "raw_sha256": "4cddcbe9f3cb9e686fcf8dd183be7b997de2357e53f1113294a410e1982d7dc8",
+  "audit_scope": "STOP-boundary verification only; the 28-row task/effect hypothesis was not tested and no PASS/FAIL about proxy safety is inferred."
+}

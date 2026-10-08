@@ -1,0 +1,1 @@
+The v2 verifier accepts a formal decision only after checking the immutable raw bundle manifest and every per-case events.jsonl hash. It does not rerun the GUI allocation. It is intentionally narrower than a broad desktop claim.

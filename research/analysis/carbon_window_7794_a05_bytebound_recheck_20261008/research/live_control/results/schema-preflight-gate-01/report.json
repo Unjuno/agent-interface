@@ -1,0 +1,175 @@
+{
+  "negative_gate": {
+    "accepted": false,
+    "results": [
+      {
+        "name": "world-receipt-oneof",
+        "result": {
+          "compatibility_key": "8707dc468d2757e69e3979ccc5a96040242ae3fad6a2baa993e2114c1d65075c",
+          "identity": {
+            "schema_sha256": "d85b97811f9f5ce4cc70ed69e8636b2b445211df73800c77017d25cff79709fe",
+            "requested_model": "gpt-5.6-luna",
+            "requested_effort": "low",
+            "runner_sha256": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+            "instructions_sha256": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef",
+            "cli_entry_sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+            "cli_version": "codex-cli 0.153.4",
+            "node_version": "v24.6.0",
+            "request_shape": "target_handle_model_runner_v2:handle:no-image:output-schema"
+          },
+          "schema": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/mindustry_world_target_contract_schema_v1.json",
+          "local_schema_status": "VALID",
+          "local_schema_error": null,
+          "cache_hit": false,
+          "endpoint_status": "ENDPOINT_INCOMPATIBLE",
+          "endpoint_error": {
+            "type": "turn.failed",
+            "error": {
+              "message": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_json_schema\",\n    \"message\": \"Invalid schema for response_format 'codex_output_schema': In context=(), 'oneOf' is not permitted.\",\n    \"param\": \"text.format.schema\"\n  },\n  \"status\": 400\n}"
+            }
+          },
+          "usage": null,
+          "model_call_performed": true,
+          "elapsed_ms": 3625.99296,
+          "cost": null,
+          "scope": "actual no-GUI endpoint compatibility call; no semantic-quality or task claim"
+        }
+      }
+    ],
+    "model_calls": 1,
+    "fresh_usage_records": 0,
+    "authority": "schema compatibility only; grants no GUI or input authority"
+  },
+  "positive_gate": {
+    "accepted": true,
+    "results": [
+      {
+        "name": "flat-candidate",
+        "result": {
+          "compatibility_key": "3d9a09b7ebf78f933924bee95edad9670c842b4cf21d8df49933e02d81ecf97c",
+          "identity": {
+            "schema_sha256": "7647d1bcddfba66d41077041d6545b168576128b9a9a7c44f66c6792de860962",
+            "requested_model": "gpt-5.6-luna",
+            "requested_effort": "low",
+            "runner_sha256": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+            "instructions_sha256": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef",
+            "cli_entry_sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+            "cli_version": "codex-cli 0.153.4",
+            "node_version": "v24.6.0",
+            "request_shape": "target_handle_model_runner_v2:handle:no-image:output-schema"
+          },
+          "schema": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/bounded_visual_target_contract_schema_v3.json",
+          "local_schema_status": "VALID",
+          "local_schema_error": null,
+          "cache_hit": true,
+          "endpoint_status": "ENDPOINT_COMPATIBLE",
+          "endpoint_error": null,
+          "usage": null,
+          "cached_first_observation": {
+            "usage": {
+              "input_tokens": 7886,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 40,
+              "reasoning_output_tokens": 0
+            },
+            "elapsed_ms": 6862.077988,
+            "observed_at_unix_ns": 1789371568412926944
+          },
+          "model_call_performed": false,
+          "cost": null,
+          "scope": "compatibility cache reuse; no fresh endpoint or semantic-quality claim"
+        }
+      },
+      {
+        "name": "anchor-receipt",
+        "result": {
+          "compatibility_key": "d673b6dee8f288ab3a98460f748f81e468d928f4b32332c0b72d04134767fdb3",
+          "identity": {
+            "schema_sha256": "56c01ff17461f1f219a219589c822607c6513f4a13fe1ea4743b2abf9c2c6510",
+            "requested_model": "gpt-5.6-luna",
+            "requested_effort": "low",
+            "runner_sha256": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+            "instructions_sha256": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef",
+            "cli_entry_sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+            "cli_version": "codex-cli 0.153.4",
+            "node_version": "v24.6.0",
+            "request_shape": "target_handle_model_runner_v2:handle:no-image:output-schema"
+          },
+          "schema": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/anchor_evidence_contract_schema_v1.json",
+          "local_schema_status": "VALID",
+          "local_schema_error": null,
+          "cache_hit": true,
+          "endpoint_status": "ENDPOINT_COMPATIBLE",
+          "endpoint_error": null,
+          "usage": null,
+          "cached_first_observation": {
+            "usage": {
+              "input_tokens": 7863,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 106,
+              "reasoning_output_tokens": 49
+            },
+            "elapsed_ms": 5981.821443,
+            "observed_at_unix_ns": 1789371574902911590
+          },
+          "model_call_performed": false,
+          "cost": null,
+          "scope": "compatibility cache reuse; no fresh endpoint or semantic-quality claim"
+        }
+      },
+      {
+        "name": "typed-world-receipt",
+        "result": {
+          "compatibility_key": "dd429a3b621fbe4d72f30ec4a68cfa850a8f2866709769d1445e0102361178af",
+          "identity": {
+            "schema_sha256": "0802a56a35902d19788a1abf0961920d5341746b2180782299b764f9a41d0a10",
+            "requested_model": "gpt-5.6-luna",
+            "requested_effort": "low",
+            "runner_sha256": "db7f28c611fe12d648edab3e9fbd54afa89f6764c80b2be9f2642063b31baaf2",
+            "instructions_sha256": "fd2785852cd55d2a742fba02f3f214839c912a016e9782339e1eb888d2cfb4ef",
+            "cli_entry_sha256": "61b0194f3bb6534439c8d26a3ed57d0805f84b884588b761795323eeb92fcf70",
+            "cli_version": "codex-cli 0.153.4",
+            "node_version": "v24.6.0",
+            "request_shape": "target_handle_model_runner_v2:handle:no-image:output-schema"
+          },
+          "schema": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/benchmark_discovery/mindustry_world_target_contract_schema_v3.json",
+          "local_schema_status": "VALID",
+          "local_schema_error": null,
+          "cache_hit": true,
+          "endpoint_status": "ENDPOINT_COMPATIBLE",
+          "endpoint_error": null,
+          "usage": null,
+          "cached_first_observation": {
+            "usage": {
+              "input_tokens": 7925,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 94,
+              "reasoning_output_tokens": 32
+            },
+            "elapsed_ms": 5695.78172,
+            "observed_at_unix_ns": 1789371581128803250
+          },
+          "model_call_performed": false,
+          "cost": null,
+          "scope": "compatibility cache reuse; no fresh endpoint or semantic-quality claim"
+        }
+      }
+    ],
+    "model_calls": 0,
+    "fresh_usage_records": 0,
+    "authority": "schema compatibility only; grants no GUI or input authority"
+  },
+  "checks": {
+    "negative_refused": true,
+    "negative_is_remaining_oneof": true,
+    "negative_fresh_request_without_usage": true,
+    "positive_accepted": true,
+    "positive_all_cache_hits": true
+  },
+  "passed": true,
+  "decision": "RETAIN_SCHEMA_AUTHORITY_GATE_V1",
+  "scope": "schema authority ordering only; no GUI, semantic task quality, speed, token saving or human-tempo claim"
+}

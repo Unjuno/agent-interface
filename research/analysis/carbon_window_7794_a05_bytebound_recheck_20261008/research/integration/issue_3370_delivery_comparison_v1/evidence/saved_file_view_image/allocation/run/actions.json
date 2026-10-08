@@ -1,0 +1,353 @@
+[
+  {
+    "stage": 1,
+    "interaction": "click",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "clock.monotonic",
+        "display.geometry",
+        "event.feedback",
+        "input.keyboard",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 56125432526532,
+        "ended_ns": 56125985306007,
+        "emissions": 43,
+        "program_emissions": 43,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 56125985304132
+          }
+        ],
+        "waits": [
+          {
+            "operation_index": 4,
+            "requested_ms": 50,
+            "started_ns": 56125558410606,
+            "completed": true,
+            "kind": "fixed_delay",
+            "update_observed": null,
+            "ended_ns": 56125618507681
+          },
+          {
+            "operation_index": 23,
+            "requested_ms": 50,
+            "started_ns": 56125624531021,
+            "completed": true,
+            "kind": "fixed_delay",
+            "update_observed": null,
+            "ended_ns": 56125675009442
+          },
+          {
+            "operation_index": 25,
+            "requested_ms": 300,
+            "started_ns": 56125678567422,
+            "completed": true,
+            "kind": "fixed_delay",
+            "update_observed": null,
+            "ended_ns": 56125985058634
+          }
+        ],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            389
+          ],
+          "observed_box": [
+            588,
+            382,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 56126890115607,
+          "patch_sha256": "a2f5992aee9cec16c64944e23301b242f95e859e48ba34eb3d34b35b30d45d66",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            389
+          ],
+          "observed_box": [
+            588,
+            382,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 56126932691531,
+          "patch_sha256": "a2f5992aee9cec16c64944e23301b242f95e859e48ba34eb3d34b35b30d45d66",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 4,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            389
+          ],
+          "observed_box": [
+            588,
+            382,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 56126972714470,
+          "patch_sha256": "a2f5992aee9cec16c64944e23301b242f95e859e48ba34eb3d34b35b30d45d66",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 5,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "target_1",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "target_1",
+          "point": [
+            600,
+            389
+          ],
+          "observed_box": [
+            588,
+            382,
+            24,
+            14
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 56127015173311,
+          "patch_sha256": "a2f5992aee9cec16c64944e23301b242f95e859e48ba34eb3d34b35b30d45d66",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "started_ns": 56125387369831,
+    "feedback": {
+      "status": "matched",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "shape.svg - Inkscape",
+      "rejected_titles": [],
+      "samples": [
+        {
+          "known_ns": 56125986367543,
+          "title": "shape.svg - Inkscape",
+          "binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              17,
+              1280,
+              783
+            ]
+          }
+        }
+      ],
+      "started_ns": 56125986179877,
+      "observation": {
+        "sequence": 6,
+        "binding_revision": 0,
+        "capture_ns": 56125986458126,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            17,
+            1280,
+            783
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "6d48a206d045c68620873e2453ff019b43278da42040ef5ff347b57f6bfb3d32",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 56125986458126,
+          "capture_ended_ns": 56125989922189,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/evidence/saved_file_view_image/allocation/run/bridge/images/1ab336a5f751456586a8ef13e55b2b51.png",
+            "sha256": "7e729f8ddaa308699a3dcb2bf8f2ec6d8850a87bb537c833e51b5a8a7534477f",
+            "bytes": 57867,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "6d48a206d045c68620873e2453ff019b43278da42040ef5ff347b57f6bfb3d32"
+          }
+        }
+      },
+      "title": "shape.svg - Inkscape",
+      "after_title": "shape.svg - Inkscape",
+      "ended_ns": 56126026890895
+    },
+    "ended_ns": 56126027172602,
+    "window_review": {
+      "status": "reviewed",
+      "authority_granted": false,
+      "input_dispatched": false,
+      "previous_scope": "native-x11:054195f369914dc3ac6afbfec3de4d5a",
+      "previous_binding_revision": 0,
+      "binding_revision": 1,
+      "scope": "native-x11:b86825ba346748668f27e2b512260bb7",
+      "previous_window_id": 6291463,
+      "requested_window_id": 6291463,
+      "started_ns": 56126028161263,
+      "observation": {
+        "sequence": 7,
+        "binding_revision": 1,
+        "capture_ns": 56126028272762,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            17,
+            1280,
+            783
+          ]
+        },
+        "native": {
+          "bytes": 4096000,
+          "sha256": "6d48a206d045c68620873e2453ff019b43278da42040ef5ff347b57f6bfb3d32",
+          "width": 1280,
+          "height": 800,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1280,
+            800
+          ],
+          "capture_started_ns": 56126028272762,
+          "capture_ended_ns": 56126031751701,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/evidence/saved_file_view_image/allocation/run/bridge/images/8458b7cc13884d1aaf0f935eb6036f99.png",
+            "sha256": "7e729f8ddaa308699a3dcb2bf8f2ec6d8850a87bb537c833e51b5a8a7534477f",
+            "bytes": 57867,
+            "width": 1280,
+            "height": 800,
+            "source_raw_sha256": "6d48a206d045c68620873e2453ff019b43278da42040ef5ff347b57f6bfb3d32"
+          }
+        }
+      },
+      "ended_ns": 56126068634282
+    },
+    "through_review_ns": 56126068883198
+  }
+]

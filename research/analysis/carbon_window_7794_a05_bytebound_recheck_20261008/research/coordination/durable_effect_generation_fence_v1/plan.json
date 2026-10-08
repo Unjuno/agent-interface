@@ -1,0 +1,25 @@
+{
+  "task_id": "COORD-DURABLE-EFFECT-GENERATION-FENCE-20260916-010",
+  "base": "9558313ed704804031733031f9e9443ddffc54de",
+  "question": "Does a receiver-side generation equality gate reject delayed old-generation effects after reclaim while preserving idempotent current-generation application?",
+  "accepted_generation": 2,
+  "policies": ["idempotency_only", "generation_fenced"],
+  "requests": [
+    "delayed_old",
+    "current_new",
+    "exact_replay",
+    "same_id_changed_payload"
+  ],
+  "baseline_sequence": ["delayed_old", "current_new", "exact_replay"],
+  "fenced_sequence": ["delayed_old", "current_new", "exact_replay", "same_id_changed_payload"],
+  "gates": {
+    "baseline_old_effect_required_as_negative_control": true,
+    "fenced_old_effect_count": 0,
+    "fenced_final_effect_count": 1,
+    "fenced_replay_new_effects": 0,
+    "fenced_conflict_new_effects": 0
+  },
+  "no_retries": true,
+  "no_context_semantic_factor": true,
+  "no_crash_recovery_factor": true
+}

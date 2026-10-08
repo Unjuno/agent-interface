@@ -1,0 +1,91 @@
+{
+  "status": "FAIL_FINITE_REFERENCE_AGREEMENT_GATE",
+  "evidence_status": "PASS_SAVED_OUTPUT_PROVENANCE_RUNTIME_AND_ARITHMETIC",
+  "selected": "red",
+  "counts": {
+    "pilot": {
+      "gray": {
+        "exact": 0,
+        "blank": 7,
+        "wrong_nonempty": 7,
+        "n": 14
+      },
+      "red": {
+        "exact": 4,
+        "blank": 1,
+        "wrong_nonempty": 9,
+        "n": 14
+      },
+      "red_excess": {
+        "exact": 3,
+        "blank": 7,
+        "wrong_nonempty": 4,
+        "n": 14
+      }
+    },
+    "evaluation": {
+      "gray": {
+        "exact": 0,
+        "blank": 111,
+        "wrong_nonempty": 93,
+        "n": 204
+      },
+      "red": {
+        "exact": 63,
+        "blank": 17,
+        "wrong_nonempty": 124,
+        "n": 204
+      }
+    }
+  },
+  "gate": {
+    "exact_at_least_95_percent": false,
+    "nonempty_wrong_at_most_1_percent": false,
+    "gain_at_least_25_percentage_points": true
+  },
+  "evaluation_fractions": {
+    "exact": 0.3088235294117647,
+    "wrong_nonempty": 0.6078431372549019,
+    "gain": 0.3088235294117647
+  },
+  "latency_ms": {
+    "gray": {
+      "median": 72.64960400000001,
+      "p95_nearest_rank": 86.841698,
+      "max": 148.775512
+    },
+    "red": {
+      "median": 72.2690815,
+      "p95_nearest_rank": 83.41681,
+      "max": 133.687998
+    }
+  },
+  "engine": {
+    "python": "3.12.3",
+    "pillow": "10.2.0",
+    "tesseract": "tesseract 5.3.4\n leptonica-1.82.0\n  libgif 5.2.1 : libjpeg 8d (libjpeg-turbo 2.1.5) : libpng 1.6.43 : libtiff 4.5.1 : zlib 1.3 : libwebp 1.3.2 : libopenjp2 2.5.0\n Found NEON\n Found OpenMP 201511\n Found libarchive 3.7.2 zlib/1.3 liblzma/5.4.5 bz2lib/1.0.8 liblz4/1.9.4 libzstd/1.5.5\n Found libcurl/8.5.0 OpenSSL/3.0.13 zlib/1.3 brotli/1.1.0 zstd/1.5.5 libidn2/2.3.7 libpsl/0.21.2 (+libidn2/2.3.7) libssh/0.10.6/openssl/zlib nghttp2/1.59.0 librtmp/2.3 OpenLDAP/2.6.10\n",
+    "traineddata_sha256": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2"
+  },
+  "evidence_sha256": {
+    "FREEZE.json": "c33591df6893e48aa7c1020d951cb8bb5f0a1efe6001b9bf5018eb056bd78ed5",
+    "SELECTION.json": "9b830c463f18ffa7c7f2db4ef38db0e2be64ba6e3f4be0fe507f712e3c8af678",
+    "runs/pilot_candidate/raw.json": "930dde793e92dbcb789fe839ff14745f4d39a3e8b4050ed680e3ea2a609c18b5",
+    "runs/pilot_auditor/audit.json": "0d506a43f009b2a29745ae26552dea5ffb4b5419d6e8158f2811c3bec70d5d50",
+    "CHALLENGE_pilot.json": "d3ca4e0b0af4ff2784d8247f5f4f495187a2dea934548a864ddcdcb9e7e2888a",
+    "runs/pilot_candidate/receipt.json": "910db79cc65033eac694ce92745534ae8eeac264c30ae0a62e70c9ec1e0634a0",
+    "runs/pilot_auditor/receipt.json": "e5a01a6f739957da80463beab9d9c1f723b4fe20c368343063eb59b17f171de6",
+    "runs/evaluation_candidate/raw.json": "5609f3d30de9a7f28f35af707773fe5197d16a4edfa7da2233cfccdb6148429d",
+    "runs/evaluation_auditor/audit.json": "883899f747c35776136ac535b675aac2eb939a05644e009883be6af347d14b63",
+    "CHALLENGE_evaluation.json": "3524617266d7692dcc607d28f68db4021dd22ed67ecf04b477fd8099f31baf16",
+    "runs/evaluation_candidate/receipt.json": "a31ebe4eeb27e7ae29c317755f68601a041ed6949d4051fb3c6fcbb8ffe9d185",
+    "runs/evaluation_auditor/receipt.json": "c631ac91cd27e4a0e1abcdad0f5469f2e126754e0045862cfa54a2f66f3a2163"
+  },
+  "derivation_sha256": "73bbc0c737dd3daa2745dfdd787d37ee540c037a16afd544cd15b8ffd570a632",
+  "scope": {
+    "reference_ground_truth_independent": false,
+    "held_out_episodes": false,
+    "live_game_or_input": false,
+    "independent_useful_onset_established": false,
+    "issue_59_live_gate_closed": false
+  }
+}

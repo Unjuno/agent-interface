@@ -1,0 +1,47 @@
+{
+  "schema": "issue-6580-t0-freeze-v1",
+  "allocation": "MODEL-AMBIGUITY-LIFETIME-6580-T0-20261002-01",
+  "base_main_sha": "f891ccb0fabac44f43a0d05edfce5fac050e66f0",
+  "branch": "research/model-ambiguity-lifetime-6580-t0-wslc-20261002",
+  "runtime": {
+    "cli": "C:\\Program Files\\WSL\\wslc.exe",
+    "version": "wslc 3.0.1.0",
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_requested": "1G",
+    "user": "65534:65534",
+    "gpu": false,
+    "docker": false,
+    "podman": false
+  },
+  "denominator": {
+    "lifetime_rules": 3,
+    "move_orders": 2,
+    "evidence_states": 2,
+    "rows": 12,
+    "negative_control_rows": 6,
+    "history_count": 56,
+    "frozen_corruption_controls": 7
+  },
+  "formal_invocations": {"construction": 0, "candidate": 0, "auditor": 0},
+  "files": {
+    "README.md": "14f78684a38ca632bcbfcc9737dbeb2001f3d771635852cd54a8b196e20fb0aa",
+    "candidate.py": "b279c4a9699359aa4aacd7e876f1ccdf2314d2e5e18b523c28f4d0c74e2655bb",
+    "auditor.py": "cb402a0b86d3b10f1e5b2efbf8f9c67900d16b3d348326a9d3e231e4be64f68f",
+    "test_protocol.py": "a185c236769a7638ce3ceb397636dc7925b136859587970cec3fbfad988e7cf8",
+    "formal_01_20261002/PREREGISTRATION.md": "ce53f0082f03709018a4dc65cdd895e4afade6d1da1c460cb1e773a861f1ffde",
+    "formal_01_20261002/runner.ps1": "7549802b587306332d9c2aa16fd57ac7bf8e380bec09932470fa377101bbbde2"
+  },
+  "staged_sources": {
+    "candidate_source/candidate.py": "b279c4a9699359aa4aacd7e876f1ccdf2314d2e5e18b523c28f4d0c74e2655bb",
+    "audit_source/auditor.py": "cb402a0b86d3b10f1e5b2efbf8f9c67900d16b3d348326a9d3e231e4be64f68f"
+  },
+  "output_directories": [
+    "formal_01_20261002/construction",
+    "formal_01_20261002/candidate_output",
+    "formal_01_20261002/audit_input",
+    "formal_01_20261002/audit_output"
+  ]
+}

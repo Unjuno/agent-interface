@@ -1,0 +1,44 @@
+{
+  "allocation": "staggered-start-claim-3946-20260922-01",
+  "audit_command": "/opt/pyvenv/bin/python /mnt/data/issue3946/study/audit.py /mnt/data/issue3946/formal-01",
+  "base_main": "b2457b746a6df06f6536585dfe2ab937aff639f4",
+  "branch": "research/staggered-start-claim-20260922",
+  "constraints": {
+    "docker_cli": null,
+    "external_effects": 0,
+    "gui": 0,
+    "models": 0,
+    "network_calls": 0,
+    "provided_container_only": true
+  },
+  "construction": {
+    "audit_errors": 0,
+    "cases": 18,
+    "excluded": true,
+    "mutation_controls": "12/12",
+    "raw_sha256": "e9d48be36deb42f9addf5569b6d38f2f9ef04a124604cbeaffb96a367cfe287d"
+  },
+  "controls_command": "/opt/pyvenv/bin/python /mnt/data/issue3946/study/test_audit.py /mnt/data/issue3946/formal-01",
+  "formal_command": "/opt/pyvenv/bin/python /mnt/data/issue3946/study/run.py --out /mnt/data/issue3946/formal-01",
+  "formal_invocations": 1,
+  "formal_output": "/mnt/data/issue3946/formal-01",
+  "formal_reruns": 0,
+  "frozen_utc": "2026-09-21T19:28:37.299838+00:00",
+  "git_blobs": {
+    "ENVIRONMENT.json": "cfbe566d656f489eef2d2abb1a1a0e14a4cee5bb",
+    "PREREGISTRATION.md": "a41a845017a6dc2162b7cf59201fee8c655ca862",
+    "audit.py": "f8461b40e1413d28d5697c7c464ef15b177dd090",
+    "run.py": "57346cf4a55fe89b1c150252ea2d986e4493dcdc",
+    "test_audit.py": "7a5c89b3304732c7897225a5bd8ba13a358c537e",
+    "worker.py": "0b32121bfd1aaaf9769fe7cf4ef54487593b43a6"
+  },
+  "issue": 3946,
+  "sha256": {
+    "ENVIRONMENT.json": "7b988d0f2edb11dfc6df23cc03c1255dc5c47d1b7504ebcf7081e1945c3d87a0",
+    "PREREGISTRATION.md": "37ee6f51d571770eeba5414b59df802a929640dd6c9e93f770036def022719a3",
+    "audit.py": "2f50c26310ed5c61486e160d419798bc8375443ebaf088dbc50637149e9c6904",
+    "run.py": "4f34045795b28f1ad0ca3e874a96fa4fea8894064cd314cda11b6862448e3318",
+    "test_audit.py": "b71f0b2d3cc1920b727cdf9543c0329d255249faa09979b5ff9d91937fd46b06",
+    "worker.py": "9e8e3c4213e55fad7859271f37e4141865f0144d8954ee1fcf90cc4cc1d91f54"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema":"unjuno-experiment-run-v1",
+  "issue":6129,
+  "allocation":"T0-03",
+  "disposition":"PASS_METHOD_SCOPED",
+  "source_main_commit":"981ba1ee20259ff36465d25aceef62fd3554a7e9",
+  "executor":"OrbStack Docker Engine 29.4.0; client 29.5.2",
+  "image":"python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform":"linux/arm64",
+  "container_policy":{"network":"none","rootfs":"read-only","source_and_input_mounts":"read-only","output_mount":"separate writable directory","cpus":0.5,"memory_mib":256,"pids":32,"cap_drop":"ALL","no_new_privileges":true},
+  "invocations":{"candidate":1,"independent_auditor":1,"retries":0},
+  "candidate_exit":0,
+  "auditor_exit":0,
+  "audit":{"status":"PASS_METHOD_SCOPED","reconstructed_cases":7,"complete_case_rates":{"A":"0","B":"1/2"},"deadline_rates":{"A":"3/4","B":"1/2"},"errors":[]},
+  "local_tests":"9 passed",
+  "sha256":{"candidate":"49f938ded1f8ff393e875550e0f994075378d9b16dc7c4ad7e0d836b08339d20","audit":"cbcf82fc3f836f7d471aaea727e2f0d1c85fbebec876a96836430db3f854b4b9","auditor_stdout":"2c4dd7485f7ee02fa942e47a58bcadfe861efc1f22d849be3f2e28f173731915","tests_stderr":"035ab04c8da605eb486e6c715eb09bc4d3c41726718b6bf54580f6cda60f4fed"},
+  "repository_wide_local_ci":"NOT_RUN: source snapshot has no .git",
+  "obstac":"NOT_AVAILABLE_IN_SESSION; used OrbStack Docker",
+  "limitations":["Synthetic finite fixture only","Censor mechanism is an authored assumption","No live route, model, GUI, human or user-data experiment","No empirical or causal claim","No T1 authorization"],
+  "stop_reason":"T0 method controls exhausted; next T1 rung requires a separately authorized and identifiable empirical workload."
+}

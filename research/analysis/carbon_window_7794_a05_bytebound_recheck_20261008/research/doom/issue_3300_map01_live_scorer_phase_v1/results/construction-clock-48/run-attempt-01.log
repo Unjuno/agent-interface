@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/probe48.py", line 91, in <module>
+    if __name__=='__main__': main()
+                             ^^^^^^
+  File "/probe48.py", line 60, in main
+    disasm=verify_disassembly()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/probe48.py", line 21, in verify_disassembly
+    if not obj.is_file() or not exe.is_file(): raise RuntimeError('STOP_ENGINE_ARTIFACT_NOT_FOUND')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: STOP_ENGINE_ARTIFACT_NOT_FOUND

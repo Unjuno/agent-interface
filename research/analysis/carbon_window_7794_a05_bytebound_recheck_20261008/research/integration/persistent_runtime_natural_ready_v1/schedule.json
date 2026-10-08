@@ -1,0 +1,15 @@
+{
+  "task": "PERSISTENT-RUNTIME-NATURAL-READY-GATE-20260917-001",
+  "setup_delay_ms": 300,
+  "read_timeout_ms": 150,
+  "cases": [
+    {"id":"f00","policy":"endpoint_only"},
+    {"id":"f01","policy":"runtime_ready_gate"},
+    {"id":"f02","policy":"runtime_ready_gate"},
+    {"id":"f03","policy":"endpoint_only"},
+    {"id":"f04","policy":"endpoint_only"},
+    {"id":"f05","policy":"runtime_ready_gate"}
+  ],
+  "formal_invocations": 1,
+  "rerun_budget": 0
+}

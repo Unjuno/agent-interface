@@ -1,0 +1,28 @@
+{
+  "allocation_id": "LONG-HORIZON-SERVICE-DEBT-6613-ORB-A01-20261002-01",
+  "base_main": "aec152dca5d9a28d916761421a74c703600df683",
+  "branch": "research/service-debt-deadline-6613-orbstack-a01-20261002",
+  "formal_invocations": {"candidate": 0, "auditor": 0, "retry": 0},
+  "formal_seed_range": [10000, 10031],
+  "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "image_platform": "linux/arm64",
+  "limits": {"cpus": "1", "memory": "256m", "pids": 64, "network": "none", "pull": "never", "read_only_root": true, "cap_drop": "ALL", "no_new_privileges": true},
+  "sources": {
+    "PROTOCOL.md": "3fa9749ff1f92734202275c6f5f8480cf931c316a77c5c0c4a0d8c12615541a4",
+    "fixture.json": "1d9f14e1b7fd81e6854d469cc566108d4f2118793a5d29638229dd440a6dacb2",
+    "candidate.py": "d2ea6162487eb7bdb1f91f373629b22be0285478c3cb28b08e23a169ae6c4b57",
+    "auditor.py": "b07423ed3fec60acfe3952674238afa82dfae2ff3958a8628563e19248fd38e7",
+    "test_experiment.py": "717491b542cadaea56bd9dab8c60a2c677b402b8839bb03eacce658092ef8bc3"
+  },
+  "construction": {
+    "seed_range": [0, 3],
+    "candidate_invocations": 1,
+    "auditor_invocations": 1,
+    "result": "PASS_RAW_REPLAY / FAIL_HYPOTHESIS",
+    "excluded_from_formal": true
+  },
+  "commands": {
+    "candidate": "python -B /input/candidate.py /input/fixture.json /output/candidate_raw.json",
+    "auditor": "python -B /input/auditor.py /input/fixture.json /input/candidate_raw.json /output/audit.json"
+  }
+}

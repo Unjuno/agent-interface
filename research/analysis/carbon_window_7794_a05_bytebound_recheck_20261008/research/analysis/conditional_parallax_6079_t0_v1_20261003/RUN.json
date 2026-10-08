@@ -1,0 +1,39 @@
+{
+  "allocation_id": "CONDITIONAL-PARALLAX-6079-T0-20261003-01",
+  "disposition": "PASS_CONDITIONAL_IDENTIFIABILITY_SCOPED",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "pairs": 9,
+    "distinguished": 3,
+    "unknown": 6,
+    "stdout_sha256": "bfdf898305e02dfa38e0eaba8251461ca135ec00fc27f7f3ad8ef8afb4b57163",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "output_sha256": "6278a245cd47af458a52c40200208c3387b3fe74e8655192352bfa0bf43b7110",
+    "timing": "Candidate start timestamp was not captured: the pre-run date command used an unsupported macOS option and failed before candidate execution. First successful post-candidate UTC sample: 2026-10-02T16:53:37Z. No duration is claimed."
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "base_errors": [],
+    "mutation_controls_rejected": 4,
+    "mutation_controls_total": 4,
+    "stdout_sha256": "d912e8793ecf32a10fe0ce7d21afb21b3b86cb49431c49dd91e7e41984163c0c",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "output_sha256": "a1b4eb218d3346b22c99e0586ef62ea1e4a5b0ac168bac0c7d45877ff7996bc6",
+    "observed_utc": "2026-10-02T16:53:55Z"
+  },
+  "main_drift_after_formal_run": {
+    "new_main": "b7300488efd4d27b874785bd024929c886484048",
+    "intervening_commits": [
+      "6230c49595",
+      "b7300488ef"
+    ],
+    "paths": [
+      "research/doom/task_effect_source_boundary_1839_successor_v1/**"
+    ],
+    "overlap_with_allocation_path": false,
+    "freeze_identity_changed": false
+  },
+  "scope": "Synthetic PGM-only host CPU experiment. No container, model, network, GUI, game, OS input, GPU, or shared runtime. No contact, safety, live-YIELD, product, or MAP01 claim."
+}

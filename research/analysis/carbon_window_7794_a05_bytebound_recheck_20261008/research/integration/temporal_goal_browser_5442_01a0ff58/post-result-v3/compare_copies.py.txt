@@ -1,0 +1,15 @@
+import importlib.util
+import json
+from datetime import datetime,timezone
+from pathlib import Path
+
+root=Path(__file__).parent
+spec=importlib.util.spec_from_file_location('audit_v3',root/'audit-v3.py'); module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+records=[]
+for name in ['one_duplicate_one_omitted','sixteen_duplicates_one_actual_event']:
+    data=json.loads((root/(name+'.copied.json')).read_bytes())
+    try: module.audit(data)
+    except ValueError as error: records.append(dict(copy=name,rejected=True,reason=str(error)))
+    else: raise ValueError('retained formerly accepted copy still passes')
+result=dict(utc=datetime.now(timezone.utc).isoformat(),same_copies=records,primary_replays=0)
+(root/'V3_SAME_COPIES_RESULT.json').write_text(json.dumps(result,indent=2),encoding='utf-8');print(json.dumps(result))

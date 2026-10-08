@@ -1,0 +1,3 @@
+# Amendment 03: PID 1 signal handling
+
+Before the final pressure candidate, correct the interpretation of earlier stop attempts: no-handler Python PID 1 candidates timed out at 10 seconds and exited 137 in both the 640 MiB pressure arm and the 32 MiB no-pressure arm. This is confounded by Linux PID namespace init signal semantics and is not WSLc failure evidence. Final comparison uses a candidate that installs a SIGTERM handler, logs signal 15, and exits 0. The same 32 MiB no-pressure control was verified before the final 640 MiB pressure arm. All other frozen resource bounds and time limits remain unchanged. See https://man7.org/linux/man-pages/man7/pid_namespaces.7.html and issue #6669 comments.

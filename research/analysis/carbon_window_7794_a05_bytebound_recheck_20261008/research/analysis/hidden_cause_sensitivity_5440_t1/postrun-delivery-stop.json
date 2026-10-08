@@ -1,0 +1,41 @@
+{
+  "schema": "hidden-cause-sensitivity-t1-postrun-delivery-stop-v1",
+  "run_id": 36717250281,
+  "run_url": "https://github.com/Unjuno/agent-interface/actions/runs/36717250281",
+  "run_commit": "32db1c3fdc6e50dd6d64c3d6886e503c94144fd6",
+  "overall_workflow_conclusion": "failure",
+  "scientific_container_step": "success",
+  "image_pull_step": "success",
+  "candidate_invocations": 1,
+  "independent_audit": {
+    "disposition": "PASS_T1_SYNTHETIC_SENSITIVITY_GATE",
+    "errors": [],
+    "vertices_evaluated": 128,
+    "mutation_controls": {
+      "forged_abstention": true,
+      "omitted_row": true,
+      "status_flip": true,
+      "summary_count": true
+    }
+  },
+  "failed_postrun_step": {
+    "name": "Record run outcomes and hash receipt",
+    "error": "Permission denied appending execution-status.json SHA to container-owned SHA256SUMS in /home/runner/work/_temp/sensitivity-output/SHA256SUMS",
+    "status_json_written": true,
+    "execution_status_sha256": "3562d39baa343efe275fb131e03876ffbb9a97e5e247a570c60bd56663c8f11f"
+  },
+  "artifact": {
+    "id": 11096253405,
+    "name": "issue-5440-t1-container-output",
+    "sha256": "62977afc051311bd4f0325ee00ce15b92b65753bed05f0e45400f0814be5f104",
+    "downloaded_and_verified": true
+  },
+  "raw_sha256": "73fd273ee89a3c2cd8741622831aeee15184068fcefdcaaaee00c7ce2b733708",
+  "audit_sha256": "a5ced8ce7588d88c410dc9434f9bc059cbcdab9d4e7e83b9fbae29b44286557c",
+  "manifest_verification": {
+    "entries": 10,
+    "passed": 10
+  },
+  "disposition": "PASS_T1_SYNTHETIC_SCIENTIFIC_GATE_WITH_POSTRUN_DELIVERY_STOP",
+  "retry": "No candidate rerun. Repair only the post-run receipt path; perform an audit-only final-head verification."
+}

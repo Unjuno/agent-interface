@@ -1,0 +1,9 @@
+# Primary host callback failure, guarded brief trial 02
+
+Frozen seed 991332, full six-task scope. Attempt 7 omitted the required offset while requesting keyboard navigation through browser_context. MCP returned a plain-text Pydantic validation error before entering the tool. The custom host callback incorrectly used unconditional JSON.parse, which raised SyntaxError. Ordered instrumentation retained the reply and presentation_started, omitted presentation_callbacks_completed, and blocked later actions. No replay occurred.
+
+This is an assistant argument error followed by an experimental host renderer error, not evidence that guarded brief projection failed. The callback failure still imposes a real recovery cost and must not be excluded from usability assessment. The next trial will pass all text blocks unchanged to the host instead of parsing/projecting them, and supply the required [12,12] offset for keyboard navigation. This changes host presentation conditions; do not compare model latency/tokens to earlier projected-host runs as matched trials.
+
+Transport was explicitly closed (exit 0), triggering server lifespan cleanup. Retained owner close verifies empty keys/buttons. Fixture terminal exit was 0. Tracked GUI child return codes were 0, 1, 0; this is terminal cleanup, not a claim that every child exited successfully. Independent evaluation reports exactly one correct submission for task-1 and five missing tasks. Full six-task success is false. The first task's input and Save responses used brief presentation.
+
+Run python3 -O verify.py to validate archived file identity, raw schema refusal, ordered callback failure, independent incomplete evaluation, and verified release. Contract logs are retained from the unchanged implementation's earlier checks, not rerun GUI evidence.

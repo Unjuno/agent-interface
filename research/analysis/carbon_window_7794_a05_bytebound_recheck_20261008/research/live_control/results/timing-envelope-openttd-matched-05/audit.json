@@ -1,0 +1,315 @@
+{
+  "audit_passed": true,
+  "preregistered": true,
+  "negative_control": {
+    "audit_passed": true,
+    "model_calls": 0,
+    "durable_input_calls": 0,
+    "runtime_exact_frames": 1,
+    "failure_mode": "visual_verify_false_positive",
+    "independent_checks": {
+      "target_owned_roads": false,
+      "bidirectional_connections": false,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "save_sha256": "2cfdb42ee2f3d1b44e89920387a2299b44072801198cbc76ff88a7609c6c12f7",
+    "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+    "supervisor_wall_ms": 4781.2277
+  },
+  "fixed_astra_new_geometry": {
+    "arm": "fixed-astra",
+    "audit_passed": true,
+    "hard_success": true,
+    "failure_mode": null,
+    "model_turns": [
+      {
+        "turn": 1,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 15780,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 110,
+          "reasoning_output_tokens": 0
+        },
+        "runner_wall_ms": 14114.277
+      },
+      {
+        "turn": 2,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16725,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 61,
+          "reasoning_output_tokens": 0
+        },
+        "runner_wall_ms": 7557.8624
+      },
+      {
+        "turn": 3,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16309,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 52,
+          "reasoning_output_tokens": 0
+        },
+        "runner_wall_ms": 8065.2497
+      },
+      {
+        "turn": 4,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16107,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 127,
+          "reasoning_output_tokens": 34
+        },
+        "runner_wall_ms": 10938.0123
+      },
+      {
+        "turn": 5,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16597,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 199,
+          "reasoning_output_tokens": 99
+        },
+        "runner_wall_ms": 12481.576
+      },
+      {
+        "turn": 6,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "act",
+        "usage": {
+          "input_tokens": 16214,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 118,
+          "reasoning_output_tokens": 32
+        },
+        "runner_wall_ms": 9703.0273
+      },
+      {
+        "turn": 7,
+        "model": "gpt-6-astra",
+        "effort": "medium",
+        "kind": "verify",
+        "usage": {
+          "input_tokens": 16445,
+          "cached_input_tokens": 13056,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 134,
+          "reasoning_output_tokens": 79
+        },
+        "runner_wall_ms": 11554.3791
+      }
+    ],
+    "model_wait_total_ms": 75421.2477,
+    "proposal_to_useful_feedback_ms": [
+      3721.4884,
+      1645.0888,
+      822.6162,
+      2668.7552,
+      1584.9567,
+      1589.5358
+    ],
+    "proposal_to_useful_feedback_total_ms": 12032.4411,
+    "initial_observation_to_semantic_completion_ms": 89096.6304,
+    "initial_to_completion_uncertainty_ms": 50.0,
+    "input_tokens_total": 114177,
+    "cached_input_tokens_total": 65280,
+    "output_tokens_total": 801,
+    "reasoning_output_tokens_total": 244,
+    "runtime_exact_frames": 32,
+    "contact_sheets": 4,
+    "durable_calls": 24,
+    "append_records": 49,
+    "save_sha256": "2cfdb42ee2f3d1b44e89920387a2299b44072801198cbc76ff88a7609c6c12f7",
+    "task": "Build a straight road connecting only the three ground tiles from A to C. Keep the adjacent row marked X free of roads and preserve surrounding roads/ownership. Use visual GUI controls.",
+    "initial_geometry": [
+      129,
+      40,
+      1024,
+      720
+    ],
+    "missing_endpoints": [
+      "os_injection",
+      "provider_first_token",
+      "provider_request_received",
+      "runtime_receipt"
+    ],
+    "independent_checks": {
+      "target_owned_roads": true,
+      "bidirectional_connections": true,
+      "forbidden_row_clear": true,
+      "surrounding_road_owner_unchanged": true
+    },
+    "changed_surrounding_tiles": []
+  },
+  "geometry_transfer": {
+    "seed": 991002,
+    "contract": {
+      "x": 17,
+      "y": 7,
+      "width": 64,
+      "target": [
+        465,
+        466,
+        467
+      ],
+      "forbidden": [
+        529,
+        530,
+        531
+      ],
+      "owner": 0,
+      "guard": [
+        335,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        591,
+        592,
+        593,
+        594,
+        595,
+        596,
+        597,
+        655,
+        656,
+        657,
+        658,
+        659,
+        660,
+        661
+      ]
+    },
+    "old_target_tiles": [
+      678,
+      679,
+      680
+    ],
+    "model_drag": {
+      "op": "pointer_drag",
+      "points": [
+        {
+          "x": 737,
+          "y": 250
+        },
+        {
+          "x": 673,
+          "y": 282
+        }
+      ],
+      "duration_ms": 600
+    },
+    "prior_model_drag": {
+      "op": "pointer_drag",
+      "points": [
+        {
+          "x": 673,
+          "y": 383
+        },
+        {
+          "x": 641,
+          "y": 399
+        },
+        {
+          "x": 609,
+          "y": 415
+        }
+      ],
+      "duration_ms": 600
+    },
+    "different_save": true,
+    "different_target_tiles": true,
+    "different_drag_points": true
+  },
+  "contextual_unpaired_comparison": {
+    "initial_observation_to_semantic_completion_ms": {
+      "prior_geometry": 92376.9389,
+      "new_geometry": 89096.6304,
+      "delta": -3280.308499999999
+    },
+    "model_wait_total_ms": {
+      "prior_geometry": 79681.4686,
+      "new_geometry": 75421.2477,
+      "delta": -4260.220899999986
+    },
+    "proposal_to_useful_feedback_total_ms": {
+      "prior_geometry": 10604.8412,
+      "new_geometry": 12032.4411,
+      "delta": 1427.5998999999993
+    },
+    "input_tokens_total": {
+      "prior_geometry": 97729,
+      "new_geometry": 114177,
+      "delta": 16448
+    },
+    "runtime_exact_frames": {
+      "prior_geometry": 28,
+      "new_geometry": 32,
+      "delta": 4
+    },
+    "contact_sheets": {
+      "prior_geometry": 3,
+      "new_geometry": 4,
+      "delta": 1
+    },
+    "durable_calls": {
+      "prior_geometry": 20,
+      "new_geometry": 24,
+      "delta": 4
+    },
+    "model_turns": {
+      "prior_geometry": 6,
+      "new_geometry": 7,
+      "delta": 1
+    }
+  },
+  "scope": "one new save/map/target-screen-position episode; no general route, latency distribution, human comparison or speedup claim",
+  "audit_sha256": "f66bf39b68a90291cb41a9d3602f44eb84a8c043a16b9b05458171ecc19a9cd5",
+  "shared_audit_dependency_sha256": "658d17953531750d52f49847a31e7d960f9628a8ca8cfe77ec83a1f6fe6c30b4"
+}

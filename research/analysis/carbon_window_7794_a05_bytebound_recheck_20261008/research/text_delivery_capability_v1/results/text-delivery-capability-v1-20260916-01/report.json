@@ -1,0 +1,13 @@
+{
+  "schema":"agent-interface/text-delivery-capability-model-v1",
+  "evidence_cases":[
+    {"name":"ascii_transparent","selected":"direct_keys","expected":"direct_keys","passed":true},
+    {"name":"unicode_transparent","selected":null,"expected":null,"passed":true},
+    {"name":"unicode_clipboard_declared","selected":"clipboard_utf8","expected":"clipboard_utf8","passed":true},
+    {"name":"unicode_global_mutation_only","selected":null,"expected":null,"passed":true}
+  ],
+  "exhaustive_cases_checked":4096,
+  "safety_violations":[],
+  "passed":true,
+  "scope":"offline candidate capability negotiation only; no shared contract/runtime/native support claim"
+}

@@ -1,0 +1,71 @@
+name: Issue 5322 formal simulation
+
+on:
+  push:
+    branches:
+      - research/issue5322-incentive-reporting-20260930-01
+    paths:
+      - research/experiments/strategic_reporting_5322_v1/START_FORMAL.txt
+
+permissions:
+  contents: read
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    container: python:3.12-slim
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Retain invocation provenance
+        shell: sh
+        run: |
+          mkdir -p research/experiments/strategic_reporting_5322_v1/results
+          python -c 'import json,platform,os;print(json.dumps({"python":platform.python_version(),"platform":platform.platform(),"runner_os":os.getenv("RUNNER_OS"),"workflow_sha":os.getenv("GITHUB_SHA"),"container":"python:3.12-slim"},sort_keys=True))' > research/experiments/strategic_reporting_5322_v1/results/environment.json
+      - name: Construction tests
+        shell: sh
+        run: |
+          cd research/experiments/strategic_reporting_5322_v1
+          python -B -m py_compile simulator.py audit.py gate.py test_simulator.py
+          python -B -m unittest -v test_simulator.py
+      - name: One formal simulation invocation
+        shell: sh
+        run: |
+          cd research/experiments/strategic_reporting_5322_v1
+          python -B simulator.py --output results/formal-01
+          python -B audit.py results/formal-01/raw.jsonl results/formal-01/summary.json --output results/formal-01/AUDIT.json
+          python -B gate.py results/formal-01/summary.json results/formal-01/AUDIT.json --output results/formal-01/DECISION.json
+      - name: Retain results if execution reaches output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: issue-5322-formal-01
+          path: research/experiments/strategic_reporting_5322_v1/results/
+          if-no-files-found: warn
+  publish:
+    needs: execute
+    if: always() && needs.execute.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: issue-5322-formal-01
+          path: research/experiments/strategic_reporting_5322_v1/results/
+      - name: Commit immutable result bundle
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/experiments/strategic_reporting_5322_v1/results/
+          git diff --cached --quiet && { echo "No experiment artifacts were produced"; exit 1; }
+          git commit -m "Record Issue #5322 formal simulation results"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

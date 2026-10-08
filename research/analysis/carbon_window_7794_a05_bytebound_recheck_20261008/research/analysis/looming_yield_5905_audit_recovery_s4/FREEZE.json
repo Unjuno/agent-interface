@@ -1,0 +1,33 @@
+{
+  "allocation": "VISUAL-EQUIV-5905-S4-20261001-AUDIT-01",
+  "issue": 6030,
+  "predecessor_allocation": "VISUAL-EQUIV-5905-S3-20261001-01",
+  "predecessor_stop": "STOP_AUDIT_INPUT_FORMAT / NOT_EVALUATED",
+  "base_main_sha": "bd8d22dad415f3ab3f67298173113d6f1f22cd65",
+  "branch": "research/looming-audit-recovery-5905-s4-20261001",
+  "artifact_path": "research/analysis/looming_yield_5905_audit_recovery_s4/",
+  "source_and_input_sha256": {
+    "PREREG.md": "108BA7C09765DD021D32D4D472A7522B67387763F1077E01736B8E16948BACBC",
+    "audit.py": "E3962CBAD51A65097FC8DC9745ED35816F8A12B67C7E58889290B26AF9FA1FE5",
+    "test_io.py": "5A8FABB5E6D811E4BFC91F6AEC47579848F0557B0115709627A1E747CDBFA546",
+    "candidate.py": "B2EB0050AE7DA78464C5F20617707D0160C77BB03EB14D437660C1CAAE29A95C",
+    "observer_input.jsonl.gz": "4C485DDDEEFD206F3CF3676E7495CB9609FE9AB4EFF5B493DD83866D678B1470",
+    "truth.json": "F25EF2DC08190A7C7CBFCC5A9BB97E6819653FDF3EDF9EEDBC8A77D6756E2F0B",
+    "candidate.jsonl": "FC900DC159087B6A07EABCDF5433E43F0CCBD8DF41EE31C2F8C3E74B81ABF4B0"
+  },
+  "construction": {
+    "python": "3.12.10",
+    "host": "Windows x86_64",
+    "dependencies": "Python standard library only",
+    "py_compile": "PASS",
+    "two_format_reader_tests": "PASS (2/2)",
+    "formal_candidate_invocations": 0,
+    "formal_auditor_invocations": 0
+  },
+  "execution_environment": {
+    "container": false,
+    "reason": "Audit-only bounded standard-library operation; Docker Desktop daemon unresponsive and shared slot reserved.",
+    "network": "not used",
+    "model_provider_gui_os_input_gpu": "not used"
+  }
+}

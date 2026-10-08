@@ -1,0 +1,27 @@
+{
+  "assumption_async_intent_before_relevance_publication": true,
+  "deterministic_output_cases": [
+    {
+      "output_for_identical_input": "SUPPRESS",
+      "satisfies_W0_nontrivial_suppression": true,
+      "satisfies_W1_safety": false,
+      "satisfies_both": false
+    },
+    {
+      "output_for_identical_input": "FORWARD",
+      "satisfies_W0_nontrivial_suppression": false,
+      "satisfies_W1_safety": true,
+      "satisfies_both": false
+    }
+  ],
+  "exists_relevance_only_output_satisfying_both": false,
+  "necessity_claim": "additional intent/currentness discriminator OR atomic intent+relevance publication is necessary for useful W0 suppression and W1 safety",
+  "pass": true,
+  "relevance_only_inputs_identical": true,
+  "required_decisions": {
+    "W0": "SUPPRESS",
+    "W1": "FORWARD"
+  },
+  "x_inside_new_B": true,
+  "x_outside_old_A": true
+}

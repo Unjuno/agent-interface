@@ -1,0 +1,22 @@
+{
+  "allocation": "5749-preference-gate-t0-20261001-01",
+  "deadline_budget": 2,
+  "query_cost": 1,
+  "regret_threshold": 1,
+  "preference_profiles": {
+    "AB": {"A": 2, "B": 0, "C": 1},
+    "BA": {"A": 0, "B": 2, "C": 1}
+  },
+  "cases": [
+    {"id":"explicit", "state":"specified", "choice_version":1, "admissible":["A","B"], "rankings":["AB"], "authorized_default":"A", "forbidden":[], "query_cost":1, "deadline_budget":2, "response":"AB", "response_version":1, "framing_answers":[], "neutral_explanation":false, "expected":"ACT", "expected_action":"A"},
+    {"id":"ambiguous-answer-ab", "state":"specified", "choice_version":4, "admissible":["A","B"], "rankings":["AB","BA"], "authorized_default":"A", "forbidden":[], "query_cost":1, "deadline_budget":2, "response":"AB", "response_version":4, "framing_answers":[], "neutral_explanation":false, "expected":"ASK_THEN_ACT", "expected_action":"A"},
+    {"id":"ambiguous-answer-ba", "state":"specified", "choice_version":4, "admissible":["A","B"], "rankings":["AB","BA"], "authorized_default":"A", "forbidden":[], "query_cost":1, "deadline_budget":2, "response":"BA", "response_version":4, "framing_answers":[], "neutral_explanation":false, "expected":"ASK_THEN_ACT", "expected_action":"B"},
+    {"id":"robust-c", "state":"specified", "choice_version":2, "admissible":["A","B","C"], "rankings":["AB","BA"], "authorized_default":null, "forbidden":[], "query_cost":1, "deadline_budget":2, "response":null, "response_version":null, "framing_answers":[], "neutral_explanation":false, "expected":"ACT", "expected_action":"C"},
+    {"id":"no-default-deadline", "state":"specified", "choice_version":5, "admissible":["A","B"], "rankings":["AB","BA"], "authorized_default":null, "forbidden":[], "query_cost":3, "deadline_budget":2, "response":"AB", "response_version":5, "framing_answers":[], "neutral_explanation":false, "expected":"YIELD", "expected_action":null},
+    {"id":"no-response", "state":"specified", "choice_version":6, "admissible":["A","B"], "rankings":["AB","BA"], "authorized_default":"A", "forbidden":[], "query_cost":1, "deadline_budget":2, "response":null, "response_version":null, "framing_answers":[], "neutral_explanation":false, "expected":"YIELD", "expected_action":null},
+    {"id":"stale-answer", "state":"specified", "choice_version":8, "admissible":["A","B"], "rankings":["AB","BA"], "authorized_default":"A", "forbidden":[], "query_cost":1, "deadline_budget":2, "response":"BA", "response_version":7, "framing_answers":[], "neutral_explanation":false, "expected":"YIELD", "expected_action":null},
+    {"id":"hard-forbidden", "state":"specified", "choice_version":9, "admissible":["A","B"], "rankings":["AB","BA"], "authorized_default":"A", "forbidden":["A"], "query_cost":1, "deadline_budget":2, "response":"AB", "response_version":9, "framing_answers":[], "neutral_explanation":false, "expected":"ACT", "expected_action":"B"},
+    {"id":"constructing", "state":"constructing", "choice_version":10, "admissible":["A","B"], "rankings":[], "authorized_default":null, "forbidden":[], "query_cost":1, "deadline_budget":2, "response":"BA", "response_version":10, "framing_answers":[], "neutral_explanation":true, "expected":"SCOPED_SELECTION", "expected_action":"B"},
+    {"id":"framing-sensitive", "state":"specified", "choice_version":11, "admissible":["A","B"], "rankings":["AB","BA"], "authorized_default":"A", "forbidden":[], "query_cost":1, "deadline_budget":2, "response":"AB", "response_version":11, "framing_answers":["AB","BA"], "neutral_explanation":false, "expected":"HOLD_FRAMING_SENSITIVE", "expected_action":null}
+  ]
+}

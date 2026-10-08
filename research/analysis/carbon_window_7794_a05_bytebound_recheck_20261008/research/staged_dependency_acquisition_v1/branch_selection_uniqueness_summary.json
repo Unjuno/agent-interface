@@ -1,0 +1,22 @@
+{
+  "schema": "branch-selection-uniqueness-v1",
+  "independent_two_branch": {
+    "rows": 2904,
+    "selected_truth": {"correct": 2040, "stale_accept": 864, "false_reject": 0},
+    "exact_raw": {"correct": 2208, "stale_accept": 0, "false_reject": 696},
+    "unique_selection": {"correct": 2904, "stale_accept": 0, "false_reject": 0}
+  },
+  "mutually_exclusive_two_branch": {
+    "rows": 77,
+    "selected_truth": {"correct": 77, "stale_accept": 0, "false_reject": 0},
+    "exact_raw": {"correct": 45, "stale_accept": 0, "false_reject": 32},
+    "unique_selection": {"correct": 77, "stale_accept": 0, "false_reject": 0}
+  },
+  "overlapping_same_variable": {
+    "rows": 66,
+    "selected_truth": {"correct": 48, "stale_accept": 18, "false_reject": 0},
+    "exact_raw": {"correct": 48, "stale_accept": 0, "false_reject": 18},
+    "unique_selection": {"correct": 66, "stale_accept": 0, "false_reject": 0}
+  },
+  "decision": "RETAIN unique branch-selection identity; selected-predicate truth is sufficient only when mutual exclusivity is independently established"
+}

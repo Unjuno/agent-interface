@@ -1,0 +1,10 @@
+{
+  "stage": "delivery-family-first",
+  "projection_not_native_stream": true,
+  "exit_code": 1,
+  "error": "original-data assertion failed before writing the family result",
+  "candidate_sha256": "34afa7aa269d3ba2495a00263d6a76f660e35ca58f9fca203363045781992754",
+  "diagnosis": "for kind,records in waiter_events overwrote the outer condition kind; mixed/generation expectations changed unintentionally",
+  "repair": "rename only that new loop variable to event_kind; preserve the test definitions and original raw",
+  "native_times_unavailable": true
+}

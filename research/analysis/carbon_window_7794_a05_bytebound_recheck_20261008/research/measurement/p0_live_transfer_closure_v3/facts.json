@@ -1,0 +1,28 @@
+{
+  "task": "P0-PHYSICAL-USEFUL-TRACE-LIVE-TRANSFER-CLOSURE-20260918-003",
+  "issue": 1282,
+  "base": "fb02fb3699d1e84f0a250e58d46891be0e4d2b8e",
+  "parent_1100": {
+    "blob": "8610f51208056978d457afc435a52136862a4497",
+    "decision": "PASS_P0_CURRENT_GAP_LOCALIZED_SCOPED",
+    "remaining_live_gates": [
+      "LIVE_PHYSICAL_EDGE_TRANSFER",
+      "LIVE_CAUSAL_EFFECT_SAMPLE"
+    ]
+  },
+  "live_1276": {
+    "blob": "ac545b439f123232a131f0cc6294f740ae3b2a76",
+    "decision": "PASS_INPUT_OWNER_V12_LIVE_CAUSAL_X11_SCOPED",
+    "formal_invocations": 1,
+    "reruns": 0,
+    "sessions": 12,
+    "baseline_application_ok": 6,
+    "candidate_application_ok": 6,
+    "terminal_up": 12,
+    "candidate_physical_composed": 6,
+    "exceptions": 0,
+    "evidence_class": "LIVE_PHYSICAL_RECEIPT",
+    "is_live_task_effect": false
+  },
+  "cross_process_clock_axis_proven": false
+}

@@ -1,0 +1,34 @@
+{
+  "allocation_id": "MAP01-OWNER-CLEANUP-NULL-AUDIT-59-T0-20261002-01",
+  "freeze_sha256": "93bc0c39f609c3f67085de826fedfe56e32a9efdf25ecfec3641f9a48b9601c9",
+  "environment": "local CPython 3.14; standard-library JSON only",
+  "container": "NOT USED: deterministic source-bound JSON audit; no platform/runtime claim under test",
+  "construction": {
+    "command": "python3 -m unittest -v test_candidate test_audit",
+    "result": "PASS 13/13",
+    "formal_invocation_count": 0
+  },
+  "formal": {
+    "candidate_command": "python3 candidate.py",
+    "candidate_exit_code": 0,
+    "candidate_invocations": 1,
+    "candidate_result": "PASS_OWNER_OCCURRENCE_BOUNDARY_SCOPED",
+    "candidate_result_sha256": "e13020ea58f0a33a66673120b241bbc73ac82c4c766a0791019ad73941024e08",
+    "auditor_command": "python3 audit.py",
+    "auditor_exit_code": 0,
+    "auditor_invocations": 1,
+    "audit_result": "PASS_AUDIT_OWNER_BOUNDARY_SCOPED",
+    "audit_result_sha256": "f872813136fc36b8e481c951ab6bf99129b4f3daf0a7a9120af882e326ee1b06",
+    "retries": 0
+  },
+  "inputs": {
+    "predecessor_raw_sha256": "ef314b78732b918f88a2a5223957f3ee003a044129dac9f907d9eb812fcdffd4",
+    "predecessor_audit_sha256": "bfde606b17dd12cbfbfe27fc061230a0b2d4f2fb35b589efd6c9c704b0882b31",
+    "pinned_owner_source_commit": "288d0498d11cf16657e523a04616bf4f49cd94f4",
+    "pinned_owner_source_git_blob": "c40db07e596b31557590cec5e90f6ab651573476",
+    "pinned_owner_source_sha256": "14333b8e8450950bcdb60fa7055f7a7d4b279438ab44fbb8d14eb2f45fad057c"
+  },
+  "interpretation": "The retained fake-Xlib T0 trace has two ordered W admissions without interval IDs; an explicit-up bracket key W and owner-lease-cleanup bracket key null share owner/intent/keycode 25. Only one terminal empty keymap snapshot exists. The old T0 FAIL_AUDIT is unchanged.",
+  "scope_limit": "No X server, physical input, per-occurrence physical occupancy, application effect, useful feedback, safety, matched recovery, or MAP01 result is established.",
+  "verification": "python3 -m py_compile candidate.py audit.py test_candidate.py test_audit.py exited 0"
+}

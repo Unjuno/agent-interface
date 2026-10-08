@@ -1,0 +1,46 @@
+{
+  "baseline": {
+    "audit_pass": true,
+    "decision": "PASS_TEMPORAL_SPECULATION_K1_BUDGET_SCOPED",
+    "errors": []
+  },
+  "controls": [
+    {
+      "adds_error": true,
+      "errors": [
+        "current_hits"
+      ],
+      "mutation": "current_hits"
+    },
+    {
+      "adds_error": true,
+      "errors": [
+        "temporal_hits"
+      ],
+      "mutation": "temporal_hits"
+    },
+    {
+      "adds_error": true,
+      "errors": [
+        "formal_invocations"
+      ],
+      "mutation": "formal_invocations"
+    },
+    {
+      "adds_error": true,
+      "errors": [
+        "forbidden_actions"
+      ],
+      "mutation": "authority_grants"
+    },
+    {
+      "adds_error": true,
+      "errors": [
+        "live_effect"
+      ],
+      "mutation": "live_effect"
+    }
+  ],
+  "rejected": 5,
+  "total": 5
+}

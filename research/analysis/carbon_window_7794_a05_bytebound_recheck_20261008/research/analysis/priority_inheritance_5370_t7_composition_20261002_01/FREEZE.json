@@ -1,0 +1,47 @@
+{
+  "allocation_id": "5370-COMPOSED-BOUNDED-PI-T7-20261002-01",
+  "issue": 6723,
+  "parent_issue": 5370,
+  "frozen_at_utc": "2026-10-02T13:17:52Z",
+  "base_commit": "376f402ce4bdf9c80caee3cc71c263e28f0a514c",
+  "branch": "research/5370-composed-bounded-inheritance-t7-20261002",
+  "package_path": "research/analysis/priority_inheritance_5370_t7_composition_20261002_01/",
+  "runtime": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "kernel": "7.0.14-orbstack-00380-ga7e0a2dc9535",
+    "platform": "linux/arm64",
+    "host_cpus": 10,
+    "host_memory_bytes": 16819609600,
+    "image": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "image_id": "sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "network": "none",
+    "source_mount": "read-only",
+    "rootfs": "read-only",
+    "configured_cpus": 0.25,
+    "configured_memory_bytes": 268435456,
+    "configured_pids_limit": 32,
+    "capabilities": "all dropped",
+    "no_new_privileges": true,
+    "resource_enforcement_claim": false
+  },
+  "invocation_budget": {
+    "candidate_max": 1,
+    "independent_auditor_max": 1,
+    "formal_retries": 0,
+    "candidate_before_freeze": 0,
+    "formal_candidate_before_run": 0,
+    "formal_auditor_before_run": 0
+  },
+  "sha256": {
+    "candidate.py": "3b6bb9a9a16ce47303fa5828f68dcf1ee0b8792c41c3ed52f5768397aefd3ee1",
+    "auditor.py": "b8513ee01a9965abbe80373bbb00ca9a76f887ccebf738eeb33720981468195e",
+    "scenarios.json": "fdde7f32b8edd95bfcedd4b3431897d56b23681b4c1668cea7fa4cb40401508e",
+    "test_construction.py": "54c5f1cfe43eb29a0708c9e3b0182a1465e4ae7e16469e4a3fcc17811bd37b1f",
+    "PROTOCOL.md": "f17299c293ede3f76930dc360094db8a2b6c1c7366ddb57d79f1e0c6dfd76ecd",
+    "README.md": "8634d5526979ed9fc52f7df33e063b92f0e8c33d9a6cc5c17a01668b35260377"
+  },
+  "formal_commands": {
+    "candidate": "docker create --pull=never --network=none --read-only --cpus=0.25 --memory=268435456 --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges --mount source=<PACKAGE>,target=/src,readonly --mount source=<CANDIDATE_OUTPUT>,target=/out python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /src/candidate.py --scenarios /src/scenarios.json --out /out/RAW.json",
+    "auditor": "docker create --pull=never --network=none --read-only --cpus=0.25 --memory=268435456 --pids-limit=32 --cap-drop=ALL --security-opt=no-new-privileges --mount source=<PACKAGE>,target=/src,readonly --mount source=<RAW_INPUT>,target=/input,readonly --mount source=<AUDIT_OUTPUT>,target=/out python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f python /src/auditor.py --freeze /src/FREEZE.json --scenarios /src/scenarios.json --raw /input/RAW.json --out /out/AUDIT.json"
+  }
+}

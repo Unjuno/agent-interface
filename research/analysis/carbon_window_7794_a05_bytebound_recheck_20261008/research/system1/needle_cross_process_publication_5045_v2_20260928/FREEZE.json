@@ -1,0 +1,99 @@
+{
+  "schema": "needle-cross-process-publication-freeze-v2",
+  "allocation": "needle-cross-process-publication-5045-v2-20260928-01",
+  "issue": 5066,
+  "predecessor_issue": 5045,
+  "branch": "research/needle-cross-process-publication-5045-v2-20260928",
+  "path": "research/system1/needle_cross_process_publication_5045_v2_20260928/",
+  "base_main_sha": "c6c28b23ca665eecaf7f8bc12771aa8ac212ec57",
+  "input": {
+    "path": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json",
+    "git_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
+    "sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "bytes": 15279,
+    "generation": 3788
+  },
+  "candidate": {
+    "generation": 3789,
+    "construction": "exact source package; only generation and inert provenance allocation/predecessor metadata change; digest recomputed",
+    "training": false
+  },
+  "image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+  "platform": "linux/amd64",
+  "docker_context": "desktop-linux",
+  "network": "none",
+  "pull_policy": "never",
+  "root_read_only": true,
+  "source_mount_read_only": true,
+  "output_mount": "fresh unique writable directory",
+  "limits": {
+    "cpus": 0.25,
+    "memory": "256m",
+    "pids_limit": 32,
+    "shm_size": "32m",
+    "cap_drop": "ALL",
+    "no_new_privileges": true
+  },
+  "schedule": {
+    "publisher_processes": 1,
+    "fresh_reader_processes_per_arm": 4,
+    "reader_lifetimes_total": 8,
+    "arms": [
+      "validated same-directory os.replace",
+      "diagnostic in-place truncate and rewrite"
+    ],
+    "phases": [
+      "atomic_before_validation",
+      "atomic_candidate_ready_unpublished",
+      "atomic_after_publish",
+      "invalid_candidate_refused",
+      "diagnostic_before_write",
+      "diagnostic_partial_write",
+      "diagnostic_after_write"
+    ],
+    "queries_per_phase": 4,
+    "query_total": 28,
+    "dispatches": 0,
+    "authority_granted": false
+  },
+  "formal_orchestrations": 1,
+  "preflight_command": "python -B formal.py --preflight-only --output <new-absolute-path>",
+  "host_command_template": "python -B formal.py --output <new-absolute-path>",
+  "container_commands": [
+    "docker run --rm --pull=never --platform linux/amd64 --network none --read-only --cpus 0.25 --memory 256m --pids-limit 32 --shm-size 32m --cap-drop ALL --security-opt no-new-privileges --mount type=bind,source=<repository-root>,target=/src,readonly --mount type=bind,source=<fresh-output>,target=/out -e FROZEN_IMAGE_ID=<image-id> <image-id> python /src/research/system1/needle_cross_process_publication_5045_v2_20260928/runner.py",
+    "same frozen Docker options and mounts, then python /src/research/system1/needle_cross_process_publication_5045_v2_20260928/audit.py"
+  ],
+  "source_sha256": {
+    "PLAN.md": "dca05294dc21b3f99f6951111e252c0c145099849aa128abd1375186acc959ed",
+    "protocol.py": "07abf2da45b50bb025ab6055fa92f9e630461cec46197f2a413f8bc89609ac5b",
+    "runner.py": "721b16f2f284ef91ac6aaab1ffbe23be4008fdcc291a234af65c090a64cc4edf",
+    "audit.py": "1cdaefa4769e4f3f4c2864f437bbd20915100dc7e6b97c78f8c3350fb93d3b37",
+    "formal.py": "fd1324fe9c2e9550cdc12cea9d9e3b9b58e43aad1d5233cd4abfbc0e0bf2ddaa",
+    "test_protocol.py": "ac51b23f0362bc2345cad87713b40d95179095f31c81a4c9ef4ec4939f98f858",
+    "test_audit.py": "2548958d21cacec59a2e28fbda8856c50a76e763c4de63409ad9d903b07d34ce",
+    "test_formal.py": "968474ae105294b0595150570e31d2c1b8a860436a69380551acfdac35277ed5"
+  },
+  "source_git_blobs": {
+    "PLAN.md": "ab06d0408bd23f941416fddb56d6d712bf7bf273",
+    "protocol.py": "21fbe888ee2b7aaadcb6b1ed72574b7b66122146",
+    "runner.py": "af21dbffa9102cec6d245be8b6a004af498ec97d",
+    "audit.py": "eb66dbbd38c4ceea26f920d4aa3a21aacfd6f0ac",
+    "formal.py": "802b08d77df5ae00fd1e848d2f86b41b9559fe1c",
+    "test_protocol.py": "07de9ef7cc04a67a9bd265251bd55fbee06e3ec9",
+    "test_audit.py": "24b237f506c74d08768ffdf714eac6e41444883f",
+    "test_formal.py": "666958313694124edca054ef50d05dc4eb88d9de"
+  },
+  "test_record": {
+    "command": "python -B -m unittest -v test_protocol.py test_audit.py test_formal.py",
+    "host": "Windows CPython; exact version to be recorded before run",
+    "regression_cases": "actual registered freeze; nested-key mutation; wrong image; wrong seed digest; source hash mismatch; preexisting output directory; --preflight-only must not invoke Docker or create output"
+  },
+  "pre_freeze_corrections": [
+    "The initial draft FREEZE.json commit omitted the final 9 from image_id. The actual-freeze CLI integration test detected the mismatch before output creation or any Docker invocation. The corrected complete image ID is recorded here; the prior GitHub commit remains in branch history. No formal allocation was invoked or consumed.",
+    "A new CLI assertion detected that successful --preflight-only (SystemExit(0)) was misleadingly logged as an orchestration error because BaseException was caught. Catch narrowed to Exception and the updated regression requires empty stderr; fixed before formal execution."
+  ],
+  "pre_run_gate": "Wait for the coordinated #5036 consumed-allocation disposition and the separately authorized, bounded Mindustry asset materialization/smoke container to finish. Immediately before formal, require current desktop-linux inventory plus explicit slot release; idle utilization alone is not release.",
+  "retry_policy": "One formal orchestration only; after any formal invocation or output creation preserve exact result and never retry this allocation. V1 #5045 remains immutable and is not a retry target.",
+  "freeze_file_self_hash": "omitted to avoid self-reference; GitHub file blob identity and branch commit are authoritative"
+}
+

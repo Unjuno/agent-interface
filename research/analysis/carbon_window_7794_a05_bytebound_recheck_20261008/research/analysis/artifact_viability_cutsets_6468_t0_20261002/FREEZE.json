@@ -1,0 +1,25 @@
+{
+  "allocation": "6468-T0-ARTIFACT-VIABILITY-20261002-01",
+  "frozen_utc": "2026-10-02T03:20:46Z",
+  "repository": "Unjuno/agent-interface",
+  "main_sha": "f4fcea6a67f1d8695626447d97ae697fa454a04e",
+  "runtime": "Windows CPython 3.12.10",
+  "execution_policy": "single formal candidate invocation followed by single independent auditor invocation; no retries",
+  "formal_candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "construction_candidate_invocations": 2,
+  "construction_audit_invocations": 1,
+  "fixture_sha256": "55dc26d2a1fefdd9104e1dc4695ae8bec4c012a01164849559a3b9d19beb0888",
+  "fixture_canonical_sha256": "2dd9b730b6b4643dd9222ad604b9e31e075a3b49d7f9ff7b284ddc74f9f3290a",
+  "candidate_sha256": "c820d916d29915198bebcc25d844416e3f23a9a64ecafb1a5a3e61ed50864639",
+  "auditor_sha256": "3bbfc160caef50cb038102ab02e97a4ea2f9add429d056b2bacd9da2041badb8",
+  "test_contract_sha256": "850d8869e349ba92e4958a45d35852f777ef2cc9499c47f4fddb04beb9898493",
+  "test_auditor_sha256": "b9739b815b95136e28a627fc48744ff787d5760e155b90d1ed3dfaaafebe830a",
+  "construction_v1_raw_sha256": "155a3cbdbb3eb88534f53024522248a5e6a4e30f47cd5983c0368fd886445825",
+  "construction_v2_raw_sha256": "2cf74c7a53dbb536564e3ac40b3964ad4b863d76d1142601b615019b13a6a5d6",
+  "decision_gate": {
+    "pass": "two planted partial inversions, required/cosmetic/unknown/no-inversion controls and all 12 rows reconstruct; all five mutations rejected; and at least one dependency-vs-strict decision differs correctly",
+    "subsumed": "all dependency and strict TaskContract decisions match; report cut sets as diagnostic-only",
+    "fail": "any wrong score/status/denominator/oracle, undetected mutation, or independent-audit discrepancy"
+  }
+}

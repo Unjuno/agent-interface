@@ -1,0 +1,58 @@
+{
+  "schema": "reopen-increment-development-decision-v1",
+  "task_id": "container-reopen-increment-20260915-v1",
+  "environment": {
+    "python": "3.13.5",
+    "kernel": "6.18.44",
+    "machine": "x86_64"
+  },
+  "result": {
+    "schema": "reopen-increment-development-v1",
+    "pairs": 12,
+    "summary": {
+      "write_only": {
+        "n": 12,
+        "app_hold_median_ms": 265.48438250000004,
+        "app_hold_p95_ms": 272.6653467,
+        "pipeline_median_ms": 15.175481,
+        "capture_median_ms": 3.2581085,
+        "write_fsync_median_ms": 11.6727265,
+        "reopen_median_ms": 0.00032050000000000004,
+        "deadline_to_up_median_ms": 15.6603715
+      },
+      "with_reopen": {
+        "n": 12,
+        "app_hold_median_ms": 271.11960899999997,
+        "app_hold_p95_ms": 273.1662736,
+        "pipeline_median_ms": 20.7180085,
+        "capture_median_ms": 3.277336,
+        "write_fsync_median_ms": 11.202767000000001,
+        "reopen_median_ms": 6.294386,
+        "deadline_to_up_median_ms": 21.2315745
+      }
+    },
+    "paired_with_reopen_minus_write_only_app_hold_ms": {
+      "median": 5.373113499999988,
+      "p95": 8.683175299999988,
+      "min": -1.846570999999983,
+      "max": 8.994559999999979
+    },
+    "with_reopen_reopen_ms": {
+      "median": 6.294386,
+      "p95": 6.903092999999999
+    }
+  },
+  "decision": "REOPEN_INCREMENT_CANDIDATE",
+  "thresholds": {
+    "median_ms": 5.0,
+    "p95_ms": 10.0
+  },
+  "first_outcome_retained": true,
+  "retry_count": 0,
+  "source_sha256": "c2deb84b4bf45d8aca84b2d914d9e97aae016a27155367fd5d713ac7e40cf95f",
+  "preregistration_sha256": "8bc36d67b05386f070447f0a4800174c4e42dcc7eac6775a5b4b4cd9746d9a4c",
+  "result_sha256": "509f4520c9334721bdf8bfc45c4237189a5306a5b418f40b97f86f6076c94701",
+  "raw_case_count": 24,
+  "next": "Preserve raw capture timing but move PNG persistence/reopen after physical release; compare capture-release-publish versus capture-publish-release.",
+  "claim_boundary": "Rendered Xvfb/Tk/XTEST development fixture only."
+}

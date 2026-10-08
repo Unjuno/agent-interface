@@ -1,0 +1,31 @@
+{
+  "decision": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "full_model_global_sufficient_cue_set_exists": false,
+  "independent_preimage_state_ids": [
+    "ready_complex",
+    "ready_simple",
+    "unobservable_safe_alias"
+  ],
+  "mutation_controls": {
+    "drop_forbidden_prefix_accepts_duplicate": true,
+    "drop_release_gate_accepts_release_blocked": true,
+    "drop_termination_gate_accepts_late_completion": true,
+    "existential_success_accepts_unreliable_state": true,
+    "pixels_only_merges_ready_and_duplicate": true
+  },
+  "outcome_count": 13,
+  "scope": "finite declared simulator only; no real GUI, authority, or product claim",
+  "state_count": 10,
+  "unobservable_alias_decision": "UNKNOWN_NOT_OBSERVABLE",
+  "verified_stratum_minimum_sufficient_cue_sets": [
+    [
+      "pixels",
+      "generation_fresh",
+      "already_committed_fresh",
+      "release_available",
+      "termination_bounded",
+      "effect_contract_reliable"
+    ]
+  ]
+}

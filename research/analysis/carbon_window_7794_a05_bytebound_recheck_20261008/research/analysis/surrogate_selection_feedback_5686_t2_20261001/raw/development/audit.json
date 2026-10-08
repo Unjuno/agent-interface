@@ -1,0 +1,42 @@
+{
+  "attempt_count": 192,
+  "candidate_raw_sha256": "655da10fe994db0ed8e120eed69d29c64810393972e53a0578323eee95d26573",
+  "errors": [],
+  "results": {
+    "observation_shift": {
+      "coverage": 0.25,
+      "disposition": "REJECT_SELECTION_COVERAGE_OR_ENDPOINT_REGRESSION",
+      "endpoint_utility": 2.25,
+      "safety_failures": 0,
+      "selected_by_endpoint": "balanced",
+      "selected_by_intermediate": "metric_drop"
+    },
+    "safety_regression": {
+      "coverage": 1.0,
+      "disposition": "REJECT_NONCOMPENSABLE_SAFETY_REGRESSION",
+      "endpoint_utility": 10.0,
+      "safety_failures": 4,
+      "selected_by_endpoint": "balanced",
+      "selected_by_intermediate": "reckless"
+    },
+    "selection_overfit": {
+      "coverage": 1.0,
+      "disposition": "HOLD_METRIC_SELECTION_EFFECT_NOT_REPLICATED",
+      "endpoint_utility": 8.0,
+      "safety_failures": 0,
+      "selected_by_endpoint": "balanced",
+      "selected_by_intermediate": "lucky"
+    },
+    "stable": {
+      "coverage": 1.0,
+      "disposition": "SCOPED_SELECTION_CONCORDANCE",
+      "endpoint_utility": 9.0,
+      "safety_failures": 0,
+      "selected_by_endpoint": "balanced",
+      "selected_by_intermediate": "balanced"
+    }
+  },
+  "scope": "finite authored selection controls only; no empirical surrogate validated",
+  "status": "PASS_SELECTION_FEEDBACK_GATE_SCOPED",
+  "world_count": 4
+}

@@ -1,0 +1,50 @@
+{
+  "allocation": "typed-mode-4844-risk-calibration-20260928-01",
+  "issue": 5198,
+  "disposition": "STOP_AUDITOR_IMPLEMENTATION_DEFECT",
+  "scientific_decision": null,
+  "formal_runner_invocations": 1,
+  "formal_auditor_invocations": 1,
+  "retries": 0,
+  "replacement_seeds": 0,
+  "pooling": false,
+  "source_commit": "668b888a47ddfbb1a50e1dd9ff3a386836b22484",
+  "freeze_sha256": "abfc648a7599af3e041eceb5b8817a8a088bd91368d318f9b87a40f21b2963bd",
+  "main_at_launch": "317071858f3bc9e0d3d90330095b90c9835dc591",
+  "seeds": {"train": 67010231, "calibration": 67010232, "test": 67010233},
+  "docker": {
+    "context": "desktop-linux",
+    "engine": "28.5.1",
+    "platform": "linux/amd64",
+    "image_config_digest": "sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a",
+    "network": "none",
+    "root_source_read_only": true,
+    "cpus": 1,
+    "memory_bytes": 536870912,
+    "pids_limit": 32,
+    "no_new_privileges": true
+  },
+  "runner": {
+    "container_id": "1f3f920f12dae45876a38098ecdca8c2b8413dcdf02c2d025e333e88c9f36663",
+    "created": "2026-09-28T05:25:20.284371749Z",
+    "exit_code": 0,
+    "rows": 4800,
+    "raw_bytes": 2794446,
+    "raw_sha256": "b55b8d9e58497c47ef5a2152d1236d27fdb6918a018cbeebf2a75f0b5f709470",
+    "command": "docker --context desktop-linux run --cidfile <out>/runner/container.id --pull=never --network none --read-only --cpus=1 --memory=512m --pids-limit=32 --security-opt=no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=32m --mount type=bind,source=<experiment-source>,target=/src,readonly --mount type=bind,source=<out>/runner,target=/out -e PYTHONDONTWRITEBYTECODE=1 sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a python /src/experiment.py"
+  },
+  "auditor": {
+    "container_id": "f5ce71743b7cb13cb2142230fa20a80612f7bcb2843e1cf9762aa8a2a6855d61",
+    "created": "2026-09-28T05:26:17.042215475Z",
+    "exit_code": 1,
+    "pass": false,
+    "errors": ["independent_reconstruction_mismatch"],
+    "corruption_controls_rejected": 16,
+    "corruption_controls_total": 16,
+    "raw_sha256_verified": "b55b8d9e58497c47ef5a2152d1236d27fdb6918a018cbeebf2a75f0b5f709470",
+    "command": "docker --context desktop-linux run --cidfile <out>/auditor/container.id --pull=never --network none --read-only --cpus=1 --memory=512m --pids-limit=32 --security-opt=no-new-privileges --tmpfs /tmp:rw,noexec,nosuid,size=32m --mount type=bind,source=<experiment-source>,target=/src,readonly --mount type=bind,source=<out>/runner/result.json,target=/in/result.json,readonly --mount type=bind,source=<out>/auditor,target=/audit -e PYTHONDONTWRITEBYTECODE=1 sha256:1aaa65a85fda306ffb8b910824d4e93bdce61e212c7e87168123ea3073b41a1a python /src/audit.py /in/result.json <raw-sha256>"
+  },
+  "audit_failure_diagnosis": "The auditor compares json.loads output (arrays become lists) directly with a reconstructed Python object containing tuples for feature vectors and config arrays, causing an unconditional equality mismatch. No fix/retry/post-hoc audit was run.",
+  "external_output_root": "C:/Users/junny/Documents/Codex/2026-09-19/unjuno-agent-interface-x20/typed-mode-calibration-v5-formal-01",
+  "evidence_directory": "research/experiments/typed_mode_generalization_4844_calibration_v5/formal/allocation-01"
+}

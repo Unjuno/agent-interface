@@ -1,0 +1,46 @@
+{
+  "disposition": "PASS_METHOD_SCOPED",
+  "errors": [],
+  "limits": "deterministic logical-time model only; no speech/audio, human intention, GUI, model, physical input, or real latency evidence",
+  "metrics": {
+    "final_only_stable_latency_ticks": 6,
+    "input_count_by_arm": {
+      "final_only": 6,
+      "naive_provisional": 9,
+      "version_bound_read_only": 6
+    },
+    "stable_latency_saving_ticks": 3,
+    "unsafe_provisional_input_count_by_arm": {
+      "final_only": 0,
+      "naive_provisional": 9,
+      "version_bound_read_only": 0
+    },
+    "verified_effect_count_by_arm": {
+      "final_only": 5,
+      "naive_provisional": 8,
+      "version_bound_read_only": 5
+    },
+    "version_bound_stable_latency_ticks": 3
+  },
+  "mutation_controls": {
+    "cancel_as_undo": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "old_epoch": {
+      "error_count": 1,
+      "rejected": true
+    },
+    "partial_as_final": {
+      "error_count": 3,
+      "rejected": true
+    },
+    "speaker_merge": {
+      "error_count": 4,
+      "rejected": true
+    }
+  },
+  "passed": true,
+  "raw_rows": 30,
+  "schema": "revision-timed-cutover-audit-v1"
+}

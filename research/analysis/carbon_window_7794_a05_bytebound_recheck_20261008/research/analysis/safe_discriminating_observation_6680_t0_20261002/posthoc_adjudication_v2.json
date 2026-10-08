@@ -1,0 +1,25 @@
+{
+  "coverage_rows": 20,
+  "errors": [
+    "diagnosis consumed a probe without a preregistered discriminating prior or admissible observation",
+    "an arm consumed an ineligible, unsupported, or unsafe probe",
+    "fixed reobserve arm did not respect the shared probe eligibility gate",
+    "fixed reobserve arm action differs from its frozen policy/eligibility",
+    "an arm consumed an ineligible, unsupported, or unsafe probe",
+    "fixed reobserve arm did not respect the shared probe eligibility gate",
+    "fixed reobserve arm action differs from its frozen policy/eligibility"
+  ],
+  "identifiable_counts": {
+    "always_reobserve_post_recovery_residuals": 1,
+    "always_reobserve_wrong_recoveries": 1,
+    "always_reset_post_recovery_residuals": 1,
+    "always_reset_wrong_recoveries": 1,
+    "bounded_diagnose_post_recovery_residuals": 0,
+    "bounded_diagnose_useful_effects": 2,
+    "bounded_diagnose_wrong_recoveries": 0,
+    "immediate_yield_useful_effects": 0,
+    "immediate_yield_wrong_recoveries": 0
+  },
+  "interpretation": "The D gates are met only for this deterministic authored fixture; this is not empirical causal evidence or formal container execution.",
+  "status": "FAIL_PREREGISTERED_GATE"
+}

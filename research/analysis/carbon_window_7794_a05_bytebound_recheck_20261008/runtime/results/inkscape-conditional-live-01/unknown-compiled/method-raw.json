@@ -1,0 +1,99 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "inkscape-conditional",
+  "method": "draw-check-save",
+  "method_version": "1",
+  "session_scope": "4c52f47ca890414ea1af4845c4f734d9",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_unavailable",
+  "completed_transitions": 1,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 23192223368843,
+      "evidence_ref": "method-observation-1",
+      "evidence_digest": "b34444dd9697fe6dd104ef13f5f9fe9c372ad8e44d1781f9056bbbf1f271cb50",
+      "predicates": {
+        "target_present": true,
+        "rectangles": false,
+        "clean_title": true
+      }
+    },
+    {
+      "sequence": 3,
+      "captured_ns": 23192473165475,
+      "evidence_ref": "method-observation-2",
+      "evidence_digest": "94554350222e3be5a7ff566cf71725d3c814c92a92467ea61f3882b3dd86ae00",
+      "predicates": {
+        "target_present": true,
+        "rectangles": "unknown",
+        "clean_title": false
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "blank",
+      "to_state": "drawn",
+      "action": "draw",
+      "matched_conditions": {
+        "target_present": true,
+        "rectangles": false,
+        "clean_title": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "method-observation-1",
+      "action_id": "draw-1",
+      "effect_ref": "method-dispatch-1",
+      "release_verified": true
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "blank",
+      "outcome": "action",
+      "action": "draw",
+      "matched_conditions": {
+        "target_present": true,
+        "rectangles": false,
+        "clean_title": true
+      },
+      "evidence_ref": "method-observation-1"
+    },
+    {
+      "event": "action_terminal",
+      "action": "draw",
+      "status": "completed",
+      "action_id": "draw-1",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "draw",
+      "status": "unavailable",
+      "evidence_ref": "method-observation-2",
+      "verifier": "compiled_predicate_condition"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_unavailable",
+      "completed_transitions": 1
+    }
+  ],
+  "latest_evidence_ref": "method-observation-2",
+  "pending_effect": {
+    "action": "draw",
+    "expected_effect": {
+      "rectangles": true
+    },
+    "effect_ref": "method-dispatch-1"
+  },
+  "started_ns": 23192213532033,
+  "ended_ns": 23192508564307,
+  "elapsed_ns": 295032274,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

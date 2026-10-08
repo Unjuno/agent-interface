@@ -1,0 +1,33 @@
+{
+  "schema": "post-success-changeability-fixture-v1",
+  "initial_contract": {
+    "spreadsheet": {"visible_cells": {"A1": 2, "A2": 3, "TOTAL": 5}, "untouched": {"B1": "KEEP"}, "required_structure": null},
+    "drawing": {"visible_elements": [{"id": "title", "text": "ALPHA"}, {"id": "body", "text": "KEEP"}], "untouched": {"footer": "KEEP"}, "required_structure": null}
+  },
+  "routes": {
+    "flat": {"initial_cost": 1},
+    "structured": {"initial_cost": 3}
+  },
+  "followup_distribution": {"none": 0.4, "structural_edit": 0.4, "raster_patch": 0.2},
+  "followups": {
+    "none": {"kind": "none", "followup_cost": {"flat": 0, "structured": 0}},
+    "spreadsheet_structural_edit": {"kind": "spreadsheet_source_increment", "followup_cost": {"flat": 9, "structured": 1}, "cell": "A2", "from": 3, "to": 4, "expected_total": 6},
+    "drawing_structural_edit": {"kind": "drawing_title_replace", "followup_cost": {"flat": 8, "structured": 1}, "element_id": "title", "from": "ALPHA", "to": "BETA"},
+    "spreadsheet_raster_patch": {"kind": "raster_pixel_patch", "followup_cost": {"flat": 1, "structured": 4}, "pixel": [1, 1], "from": "white", "to": "blue"},
+    "drawing_raster_patch": {"kind": "raster_pixel_patch", "followup_cost": {"flat": 1, "structured": 4}, "pixel": [1, 1], "from": "white", "to": "blue"}
+  },
+  "cases": [
+    {"case_id": "spreadsheet-none", "family": "spreadsheet", "followup": "none"},
+    {"case_id": "spreadsheet-structural-edit", "family": "spreadsheet", "followup": "spreadsheet_structural_edit"},
+    {"case_id": "spreadsheet-raster-patch", "family": "spreadsheet", "followup": "spreadsheet_raster_patch"},
+    {"case_id": "drawing-none", "family": "drawing", "followup": "none"},
+    {"case_id": "drawing-structural-edit", "family": "drawing", "followup": "drawing_structural_edit"},
+    {"case_id": "drawing-raster-patch", "family": "drawing", "followup": "drawing_raster_patch"}
+  ],
+  "corruption_controls": [
+    "require_editability_initially_reject_flat",
+    "unrelated_content_mutation_rejected",
+    "false_formula_witness_rejected",
+    "pixels_do_not_prove_native_editability"
+  ]
+}

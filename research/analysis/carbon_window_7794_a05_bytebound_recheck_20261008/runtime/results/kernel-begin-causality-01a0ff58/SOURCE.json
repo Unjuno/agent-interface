@@ -1,0 +1,28 @@
+{
+  "policy_version": "FINAL-v5",
+  "worker_id": "01a0ff58-480b-7d50-9eee-0bce12250476",
+  "experiment_kind": "ordinary engineering construction, no formal allocation",
+  "source_commit": "3116528f3abe0fec72cfc1b5b2b5b4b05538512e",
+  "source_files": {
+    "runtime/kernel/__init__.py": {
+      "git_blob": "a8b5bdde62e451b75a9cbf4bf13511aa909cfc6c",
+      "sha256": "442574155c148cd8f6851e164f8d9362c816a0a09bfd31b8f896e96a55553813"
+    },
+    "runtime/kernel/backend.py": {
+      "git_blob": "01b75af9141d285b8510c7715b7cc7eed96a6d2c",
+      "sha256": "b0991a015cd5e5cbba7a22963922310c99b9c793f56c6eaeb12eb5e384223668"
+    },
+    "runtime/kernel/contracts.py": {
+      "git_blob": "3d24fb5b28ae7812c71c6c1fedd3439d1473f0b8",
+      "sha256": "cd37284c15d01f2fde446d53ba161b4bc6224dfb0137324101f3d2eef8884ef8"
+    },
+    "runtime/kernel/lifecycle.py": {
+      "git_blob": "0735f1b2bc4f8c8c66a16cd0687a8b631c99f0b3",
+      "sha256": "63789e8d76a5e312f3c283289ca84c2e8d250fe783a0a4711b3e7811935680ee"
+    }
+  },
+  "pre_result_plan_sha256": "3c92f188966ec3ade2686f8fd736b9ad1bc5636cb182eace5be8c919a9c0ec0a",
+  "scope": "accepted begin lower bound only; no original #5216 rerun",
+  "expected_rows_per_arm": 216,
+  "expected_total_rows": 432
+}

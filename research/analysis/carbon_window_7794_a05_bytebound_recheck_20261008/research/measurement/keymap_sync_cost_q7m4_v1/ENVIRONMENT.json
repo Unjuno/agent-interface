@@ -1,0 +1,35 @@
+{
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "clock_frequency_control": "uncontrolled",
+  "cpu_max": "400000 100000\n",
+  "cpuinfo_snapshot": "processor\t: 0\nvendor_id\t: GenuineIntel\ncpu family\t: 6\nmodel\t\t: 106\nmodel name\t: Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz\nstepping\t: 6\nmicrocode\t: 0x1\ncpu MHz\t\t: 2793.436\ncache size\t: 49152 KB\nphysical id\t: 0\nsiblings\t: 5\ncore id\t\t: 0\ncpu cores\t: 5\napicid\t\t: 0\ninitial apicid\t: 0\nfpu\t\t: yes\nfpu_exception\t: yes\ncpuid level\t: 21\nwp\t\t: yes\nflags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch cpuid_fault fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm avx512f avx512dq rdseed adx smap clflushopt avx512cd avx512bw avx512vl xsaveopt xsavec xsaves arat umip md_clear arch_capabilities\nbugs\t\t: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa mmio_stale_data gds bhi spectre_v2_user its its_native_only\nbogomips\t: 5586.87\nclflush size\t: 64\ncache_alignment\t: 64\naddress sizes\t: 46 bits physical, 48 bits virtual\npower management:",
+  "docker_image_identity": null,
+  "experiment_network": "none; private X Unix socket only",
+  "files": {
+    "/opt/pyvenv/bin/python": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1",
+    "/usr/bin/Xvfb": "4efd5850f0d98c587195ef77be92916dd1578fb725ddd1b2d95d232042813c5e",
+    "/usr/bin/gcc": "a23ecab8ff08f09ad8c80602c2c5df7f49e09c25905cb8975902e101bf72635f",
+    "/usr/lib/x86_64-linux-gnu/libX11.so.6": "b03e563b316b8b53c7988f0ee91d6656cc425538e00947a8b14482d179e80099",
+    "/usr/lib/x86_64-linux-gnu/libXtst.so.6": "90289665882c7f141ef6ac4853c17ac473d8644576db5d86961433ed3c586eac"
+  },
+  "gcc": "gcc (Debian 14.2.0-19) 14.2.0",
+  "libc": [
+    "glibc",
+    "2.41"
+  ],
+  "monotonic": "namespace(implementation='clock_gettime(CLOCK_MONOTONIC)', monotonic=True, adjustable=False, resolution=1e-09)",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "process_time": "namespace(implementation='clock_gettime(CLOCK_PROCESS_CPUTIME_ID)', monotonic=True, adjustable=False, resolution=1e-09)",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "tools": {
+    "Xvfb": "/usr/bin/Xvfb",
+    "docker": null,
+    "gh": null
+  }
+}

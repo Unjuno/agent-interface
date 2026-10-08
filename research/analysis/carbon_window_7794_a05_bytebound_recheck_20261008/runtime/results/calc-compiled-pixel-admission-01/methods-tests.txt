@@ -1,0 +1,129 @@
+test_boolean_is_not_exact_visible_text (test_methods.AdmissionTests.test_boolean_is_not_exact_visible_text) ... ERROR
+test_correct_intermediate_cells_select_save_but_do_not_certify_saved_effect (test_methods.AdmissionTests.test_correct_intermediate_cells_select_save_but_do_not_certify_saved_effect) ... ERROR
+test_unknown_intermediate_cell_stops_before_save (test_methods.AdmissionTests.test_unknown_intermediate_cell_stops_before_save) ... ERROR
+test_wrong_intermediate_cell_stops_before_save (test_methods.AdmissionTests.test_wrong_intermediate_cell_stops_before_save) ... ERROR
+
+======================================================================
+ERROR: test_boolean_is_not_exact_visible_text (test_methods.AdmissionTests.test_boolean_is_not_exact_visible_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/test_methods.py", line 33, in test_boolean_is_not_exact_visible_text
+    b,r=self.exercise([True,'529'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/test_methods.py", line 16, in exercise
+    return b,methods.run(b,refs,{'A1':[1,1,2,2],'A2':[2,2,3,3]})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/methods.py", line 63, in run
+    raw=compiled.run(bridge,interface,bindings,perceive=perceive,verify_effect=verify)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 187, in run
+    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled).execute_method()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 163, in execute_method
+    result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/compiled_gui.py", line 221, in run
+    raw = adapters["observe"]({"state": state,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 62, in observe
+    predicates = self.perceive(copy.deepcopy(native), image.copy()) if associated else {}
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/methods.py", line 40, in perceive
+    rows=read_cells(rgb,regions,bridge.out/('calc-reading-'+str(count)))
+                                ^^^^^^^^^^
+AttributeError: 'Bridge' object has no attribute 'out'
+
+======================================================================
+ERROR: test_correct_intermediate_cells_select_save_but_do_not_certify_saved_effect (test_methods.AdmissionTests.test_correct_intermediate_cells_select_save_but_do_not_certify_saved_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/test_methods.py", line 18, in test_correct_intermediate_cells_select_save_but_do_not_certify_saved_effect
+    b,r=self.exercise(['317','529'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/test_methods.py", line 16, in exercise
+    return b,methods.run(b,refs,{'A1':[1,1,2,2],'A2':[2,2,3,3]})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/methods.py", line 63, in run
+    raw=compiled.run(bridge,interface,bindings,perceive=perceive,verify_effect=verify)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 187, in run
+    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled).execute_method()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 163, in execute_method
+    result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/compiled_gui.py", line 221, in run
+    raw = adapters["observe"]({"state": state,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 62, in observe
+    predicates = self.perceive(copy.deepcopy(native), image.copy()) if associated else {}
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/methods.py", line 40, in perceive
+    rows=read_cells(rgb,regions,bridge.out/('calc-reading-'+str(count)))
+                                ^^^^^^^^^^
+AttributeError: 'Bridge' object has no attribute 'out'
+
+======================================================================
+ERROR: test_unknown_intermediate_cell_stops_before_save (test_methods.AdmissionTests.test_unknown_intermediate_cell_stops_before_save)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/test_methods.py", line 29, in test_unknown_intermediate_cell_stops_before_save
+    b,r=self.exercise([None,'529'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/test_methods.py", line 16, in exercise
+    return b,methods.run(b,refs,{'A1':[1,1,2,2],'A2':[2,2,3,3]})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/methods.py", line 63, in run
+    raw=compiled.run(bridge,interface,bindings,perceive=perceive,verify_effect=verify)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 187, in run
+    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled).execute_method()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 163, in execute_method
+    result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/compiled_gui.py", line 221, in run
+    raw = adapters["observe"]({"state": state,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 62, in observe
+    predicates = self.perceive(copy.deepcopy(native), image.copy()) if associated else {}
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/methods.py", line 40, in perceive
+    rows=read_cells(rgb,regions,bridge.out/('calc-reading-'+str(count)))
+                                ^^^^^^^^^^
+AttributeError: 'Bridge' object has no attribute 'out'
+
+======================================================================
+ERROR: test_wrong_intermediate_cell_stops_before_save (test_methods.AdmissionTests.test_wrong_intermediate_cell_stops_before_save)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/test_methods.py", line 25, in test_wrong_intermediate_cell_stops_before_save
+    b,r=self.exercise(['318','529'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/test_methods.py", line 16, in exercise
+    return b,methods.run(b,refs,{'A1':[1,1,2,2],'A2':[2,2,3,3]})
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/methods.py", line 63, in run
+    raw=compiled.run(bridge,interface,bindings,perceive=perceive,verify_effect=verify)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 187, in run
+    return _Adapter(bridge,interface,bindings,perceive,verify_effect,cancelled).execute_method()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 163, in execute_method
+    result = run_graph(self.interface, {'observe':self.observe,'admit':self.admit,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/core_v1/compiled_gui.py", line 221, in run
+    raw = adapters["observe"]({"state": state,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/guarded_x11_v1/compiled.py", line 62, in observe
+    predicates = self.perceive(copy.deepcopy(native), image.copy()) if associated else {}
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/var/tmp/agent-interface-evidence-storage-main/runtime/results/calc-compiled-pixel-admission-01/methods.py", line 40, in perceive
+    rows=read_cells(rgb,regions,bridge.out/('calc-reading-'+str(count)))
+                                ^^^^^^^^^^
+AttributeError: 'Bridge' object has no attribute 'out'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.006s
+
+FAILED (errors=4)

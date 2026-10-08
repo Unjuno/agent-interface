@@ -1,0 +1,44 @@
+{
+  "task": "CONCURRENT-FAST-DECISION-T2-RAW-RECEIVE-LINEARIZATION-A10-20260918-013",
+  "issue": 1465,
+  "base": "c2826ec7cfb2aceaf55c9ef0e6fe1e9ed301692c",
+  "branch": "research/t2-raw-receive-linearization-a10-1465",
+  "formal_invocations": 0,
+  "reruns": 0,
+  "replacements": 0,
+  "tuning": 0,
+  "remote_readback_git_blobs": {
+    "PLAN.md": "f0447503c61d07ce9ac04bfd6758d714e601416a",
+    "candidate.py": "2faa24e5cfff087ec169748d3c0511158e7f07ef",
+    "runner.py": "4b4263dd4ff8a4209f80be034445a8a8018c2e13",
+    "audit.py": "954117cfc444bf2c95417c84c90bfab9f22bce2f",
+    "independent_audit.py": "5888b4f9d7a101700ed21ddc30e6dfb4fdc97256",
+    "REPORT.md": "04830905d892f2f4e14379d6f10e3a6a787dcd64",
+    "construction.json.gz.b64": "edc03f0f1303781b356fb78142b4724874c2e7ca",
+    "construction_manifest.json": "8f692444bd4ea0618c931f92e07797c10c4f2385",
+    "construction_audit_v1_failed.json": "eec0bc82cc11fdaeb6683ea13bd845c02444da14",
+    "construction_audit_v2.json": "04cbcec0b54293382b882ed3ebdf2a2aff49ca41",
+    "construction_independent_audit.json": "0bf6e96aa68d764e423647faf9ca7a4a57e1204c",
+    "stress500_summary.json": "d152bf2252e189584a58ef73e5fb04a5962095f3"
+  },
+  "local_sha256": {
+    "PLAN.md": "ac7f5e52829dfd6a96295d9b83b2b534158007d8c1d26410dcf8663e67843949",
+    "candidate.py": "cbf5c7b0c1b8a7f2c79eaca085f42624931888d6c3801aea083f010990db8d12",
+    "runner.py": "481f6aa43004fae9ac009b190166b0f83e6817e5ccc70acf52f9fda5431e6e39",
+    "audit.py": "f20b39ef18d6ab068c02780038e608ba1928ee78effb2859935ab690c78d5ab3",
+    "independent_audit.py": "48da06763b87a1dc8e6b61293cd2846a6942c65e99ca284cbf0de23133a3e558",
+    "REPORT.md": "92c64792caf8e5b7e83a059f4b6cc74cb1efe2fa42245a480792f0d30c448078",
+    "construction.json.gz.b64": "522e4460c906e3313306565eafc4def65cb97b23f7397616006b8153ddbd144d",
+    "construction_manifest.json": "59b691f16b73f4923a0975dd2c1a3894cac3bdab8c1eeb1eb3f030df5796a43c",
+    "construction_audit_v1_failed.json": "93515a7cb310f5f664271ac75a32d289db21b059a333c9d927603b854dfdb445",
+    "construction_audit_v2.json": "bccdaac51e18ddfd80ef329724d21c3c76ca00cd43db629b21fc6031d0548e45",
+    "construction_independent_audit.json": "81ec251176a6ed5aceb2f6b5aabd795a6d308b22c1e93da257e7c90c07d2e2fe",
+    "stress500_summary.json": "d08d329368b2a93124312c11cfe30ab301a647bf4c485819eb8b39eb870c0653"
+  },
+  "retained_raw_sha256": {
+    "construction.json": "56207941e2958c51a732882c4fb5a03270754fbe65aa4827e3d6a603dda5342c",
+    "stress500.json": "e9fb3294a09d1d5d7ad906dc75612b51702c5e070e82010b6a8c32e26e5df5cd"
+  },
+  "retained_preformal_defect": "first construction audit corruption-control expected one exact failure class; raw construction was not rerun; corrected auditor only generalized mutation rejection and re-audited the same raw",
+  "status": "SOURCE_FROZEN_PREFORMAL_FORMAL0"
+}

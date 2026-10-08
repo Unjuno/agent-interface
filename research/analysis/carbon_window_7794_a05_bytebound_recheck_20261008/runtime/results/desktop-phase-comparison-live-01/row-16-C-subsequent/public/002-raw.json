@@ -1,0 +1,184 @@
+{
+  "compiled_result": {
+    "receipt": {
+      "format": "compiled-gui-runtime-receipt-v1",
+      "interface_id": "calc-pixel-admission",
+      "method": "enter-read-save-yield",
+      "method_version": "1",
+      "session_scope": "native-x11:ba50f8eb64c04ea692c8b5e9f5816aa7",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 2,
+      "frontier_model_resumptions": 0,
+      "observations": [
+        {
+          "sequence": 2,
+          "captured_ns": 13582285891854,
+          "evidence_ref": "observation-2",
+          "evidence_digest": "4950055170240ed4758f967e5c1c10d255332eb312505a0d0b465f83bd5d57bd",
+          "predicates": {
+            "present": true,
+            "main_focus": true,
+            "handoff": false
+          }
+        },
+        {
+          "sequence": 5,
+          "captured_ns": 13582941398775,
+          "evidence_ref": "observation-5",
+          "evidence_digest": "54253242e1d455da6cd6b4406bed103419caa08c50aeaffa771295b42fa81228",
+          "predicates": {
+            "present": true,
+            "main_focus": true,
+            "handoff": false,
+            "cells_match": true
+          }
+        }
+      ],
+      "transitions": [
+        {
+          "from_state": "start",
+          "to_state": "filled",
+          "action": "enter",
+          "matched_conditions": {
+            "present": true,
+            "main_focus": true
+          },
+          "observation_sequence": 2,
+          "evidence_ref": "observation-2",
+          "action_id": "action-9e29d94fcf19456ab3f9c853bc408b7b",
+          "effect_ref": "compiled-e726feaba7524197a6de8bf32257503a-7-execution",
+          "release_verified": true
+        },
+        {
+          "from_state": "filled",
+          "to_state": "handoff",
+          "action": "save",
+          "matched_conditions": {
+            "cells_match": true,
+            "present": true,
+            "main_focus": true
+          },
+          "observation_sequence": 5,
+          "evidence_ref": "observation-5",
+          "action_id": "action-5aa0cd8ea1ba41d6a983a553ef0ed806",
+          "effect_ref": "compiled-e726feaba7524197a6de8bf32257503a-17-execution",
+          "release_verified": true
+        }
+      ],
+      "critical_events": [
+        {
+          "event": "branch_selected",
+          "state": "start",
+          "outcome": "action",
+          "action": "enter",
+          "matched_conditions": {
+            "present": true,
+            "main_focus": true
+          },
+          "evidence_ref": "observation-2"
+        },
+        {
+          "event": "action_terminal",
+          "action": "enter",
+          "status": "completed",
+          "action_id": "action-9e29d94fcf19456ab3f9c853bc408b7b",
+          "release_verified": true
+        },
+        {
+          "event": "effect_checked",
+          "action": "enter",
+          "status": "succeeded",
+          "evidence_ref": "observation-5"
+        },
+        {
+          "event": "branch_selected",
+          "state": "filled",
+          "outcome": "action",
+          "action": "save",
+          "matched_conditions": {
+            "cells_match": true,
+            "present": true,
+            "main_focus": true
+          },
+          "evidence_ref": "observation-5"
+        },
+        {
+          "event": "action_terminal",
+          "action": "save",
+          "status": "completed",
+          "action_id": "action-5aa0cd8ea1ba41d6a983a553ef0ed806",
+          "release_verified": true
+        },
+        {
+          "event": "runtime_finished",
+          "outcome": "SAFE_YIELD",
+          "reason": "association_changed",
+          "completed_transitions": 2
+        }
+      ],
+      "latest_evidence_ref": "observation-5",
+      "pending_effect": {
+        "action": "save",
+        "expected_effect": {
+          "handoff": true
+        },
+        "effect_ref": "compiled-e726feaba7524197a6de8bf32257503a-17-execution"
+      },
+      "started_ns": 13582285545170,
+      "ended_ns": 13583250180146,
+      "elapsed_ns": 964634976,
+      "input_authority": "admission_per_action_only",
+      "raw_evidence_retention": "adapter_responsibility_unverified"
+    },
+    "image_path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-live-01/row-16-C-subsequent/bridge/images/31180f32b8ef4bb3b8d4c75db455fc47.png",
+    "image_sha256": "312b06c83521d85a0f45cf0b46fcbef9b55e727ad19ae80983be94b50985a022",
+    "focused_candidate": 8390765,
+    "task_success": null,
+    "scope": "graph mechanics; independent saved task still unscored"
+  },
+  "outcome": "SAFE_YIELD",
+  "reason": "association_changed",
+  "confirmed_completed_inputs": [
+    "enter",
+    "save"
+  ],
+  "changed_dependency_refused": false,
+  "task_success": null,
+  "replay_allowed": false,
+  "started_ns": 13582284470949,
+  "ended_ns": 13583387680357,
+  "final_capture": {
+    "bytes": 4096000,
+    "sha256": "d663b45ca0e68f26451e5fc89e61202ff53873390a1ffcc143f9e800373a3af0",
+    "width": 1280,
+    "height": 800,
+    "target": "app",
+    "native_window_id": 8389124,
+    "frame": "screen_physical_px",
+    "region": [
+      0,
+      0,
+      1280,
+      800
+    ],
+    "capture_started_ns": 13583353282955,
+    "capture_ended_ns": 13583356387526,
+    "artifact": {
+      "mime_type": "image/png",
+      "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/desktop-phase-comparison-live-01/row-16-C-subsequent/public-method-2/images/95e9151f0db440ea86b143a8e63930b2.png",
+      "sha256": "9232aa2e8da3766c1f0aa5718eb874e06afbf1296e4d560d9a9b782143a2dc86",
+      "bytes": 76539,
+      "width": 1280,
+      "height": 800,
+      "source_raw_sha256": "d663b45ca0e68f26451e5fc89e61202ff53873390a1ffcc143f9e800373a3af0",
+      "timing_ns": {
+        "started": 13583358491499,
+        "converted": 13583359321025,
+        "encoded": 13583382097848,
+        "written": 13583382724430,
+        "hashed": 13583384972714
+      }
+    }
+  }
+}

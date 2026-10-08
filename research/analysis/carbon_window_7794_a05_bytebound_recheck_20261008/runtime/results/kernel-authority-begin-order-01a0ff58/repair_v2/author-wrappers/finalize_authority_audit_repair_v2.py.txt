@@ -1,0 +1,132 @@
+import ast
+from collections import Counter
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+import platform
+import sys
+
+root=Path(__file__).resolve().parent
+package=root/'agent-interface/runtime/results/kernel-authority-begin-order-01a0ff58'
+out=package/'repair_v2'
+private=root/'authority-audit-repair-v2-private'
+before=json.loads((out/'BEFORE_BASELINE.json').read_text())
+freeze=json.loads((out/'FINAL_FREEZE.json').read_text())
+for name,digest in before['original_56_sha256'].items():
+    assert hashlib.sha256((package/name).read_bytes()).hexdigest()==digest,name
+for name,digest in freeze['final_source_sha256'].items():
+    assert hashlib.sha256((out/name).read_bytes()).hexdigest()==digest,name
+receipts={}
+for label,expected in [('RED',1),('OLD_ROW1',0),('OLD_ROW100',0),('GREEN',0),('OPTIMIZED',0),('AUDIT_V2',0),('V2_ROW1',1),('V2_ROW100',1)]:
+    receipt=json.loads((private/label/'receipt.json').read_text())
+    assert receipt['actual_child_exit']==expected,(label,receipt)
+    for stream in ('stdout','stderr'):
+        assert hashlib.sha256((private/label/(stream+'.txt')).read_bytes()).hexdigest()==receipt[stream+'_sha256']
+        public=json.loads((out/'logs'/(label+'.receipt.json')).read_text())
+        assert hashlib.sha256((out/'logs'/(label+'.'+stream+'.txt')).read_bytes()).hexdigest()==public['published_'+stream+'_sha256']
+    receipts[label]={k:receipt[k] for k in ('pid','started_utc','ended_utc','actual_child_exit','stdout_sha256','stderr_sha256')}
+audit_bytes=(private/'AUDIT_V2/stdout.txt').read_bytes()
+audit=json.loads(audit_bytes)
+assert audit['decision']=='PASS_ORDER_MEMORY_SCOPED' and audit['errors']==[] and audit['control_gate'] is True
+assert len(audit['controls'])==19 and all(c['effective'] and c['refused'] for c in audit['controls'])
+for label,index in [('V2_ROW1',1),('V2_ROW100',100)]:
+    result=json.loads((private/label/'stdout.txt').read_bytes())
+    assert result['decision']=='HOLD_ORDER_EVIDENCE' and result['errors']==[f'{index}:error_message']
+for label in ('GREEN','OPTIMIZED'):
+    stderr=(private/label/'stderr.txt').read_text()
+    assert 'Ran 8 tests' in stderr and stderr.endswith('OK\n')
+raw=json.loads((package/'matrix.raw.json').read_bytes())
+assert hashlib.sha256((package/'matrix.raw.json').read_bytes()).hexdigest()==freeze['raw_sha256']
+source_names={'baseline':'source/lifecycle.py.txt','observation_floor':'observation_floor_lifecycle.py.txt','authorization_floor':'authorization_floor_lifecycle.py.txt'}
+join={}
+for arm,name in source_names.items():
+    payload=(package/name).read_bytes()
+    module=ast.parse(payload)
+    cls=next(n for n in module.body if isinstance(n,ast.ClassDef) and n.name=='RequestLifecycle')
+    begin=next(n for n in cls.body if isinstance(n,ast.FunctionDef) and n.name=='begin_execution')
+    guards=[]
+    for node in begin.body:
+        if isinstance(node,ast.If):
+            raise_node=node.body[0]
+            assert isinstance(raise_node,ast.Raise) and isinstance(raise_node.exc,ast.Call)
+            assert isinstance(raise_node.exc.func,ast.Name) and raise_node.exc.func.id=='ContractError'
+            reason=raise_node.exc.args[0].value
+            guards.append({'source_line':node.lineno,'condition':ast.unparse(node.test),'message':reason})
+    expect=['execution requires active authority','execution has already begun','now_ns must be nonnegative integer']
+    if arm=='observation_floor':expect+=['execution precedes observation capture']
+    if arm=='authorization_floor':expect+=['execution precedes accepted authorization']
+    expect+=['authority expired before execution','execution request changed bound target or authority']
+    assert [g['message'] for g in guards]==expect
+    counts=Counter(r['error_message'] for r in raw['rows'] if r['arm']==arm and not r['accepted'])
+    assert set(counts).issubset(set(expect))
+    join[arm]={'frozen_source':name,'sha256':hashlib.sha256(payload).hexdigest(),'begin_guards_in_order':guards,'actual_original_refusal_cause_counts':dict(counts)}
+def write(name,value):
+    text=value if isinstance(value,str) else json.dumps(value,indent=2)+'\n'
+    (out/name).write_text(text,encoding='utf-8',newline='\n')
+write('SOURCE_REASON_JOIN.json',{'method':'stdlib AST inspection only; no copied source execution','sources':join,'preconditions':'Frozen before-state is active authority/empty request, row times are strict nonnegative ints; all75 refusal causes come from candidate floor/expiry/request guards.'})
+(out/'AUDIT_V2.json').write_bytes(audit_bytes)
+(out/'author-wrappers').mkdir()
+for name in ('prepare_authority_audit_repair_v2.py','install_authority_reason_audit_v2.py','invoke_authority_audit_repair_v2.py','finalize_authority_audit_repair_v2.py'):
+    (out/'author-wrappers'/(name+'.txt')).write_bytes((root/name).read_bytes())
+result={'recorded_utc':datetime.now(timezone.utc).isoformat(),'decision':audit['decision'],'audit_version':'refusal-cause-v2','original_raw_sha256':freeze['raw_sha256'],'original_raw_rows':108,'captured_refusal_causes_joined':75,'accepted':audit['accepted'],'before_grant_accepted':audit['before_grant_accepted'],'effective_controls':19,'eight_regressions_normal_exit':0,'eight_regressions_optimized_exit':0,'first_red_expected_assertion_failures':6,'first_red_exit':1,'old_exact_two_copy_exits':[0,0],'new_exact_two_copy_exits':[1,1],'new_exact_two_copy_errors':['1:error_message','100:error_message'],'v2_audit_sha256':hashlib.sha256(audit_bytes).hexdigest(),'actual_children':receipts,'all_original_56_files_unchanged':True,'all_final_frozen_sources_unchanged':True,'environment':{'python':platform.python_version(),'implementation':platform.python_implementation(),'os':platform.system(),'machine':platform.machine(),'dependencies':'stdlib only'},'qualification':'Original unchanged AUDIT.json/RESULT.json are first historical outputs; original auditor did not verify captured refusal cause. V2 completes the limited finite source-reason gate, not native authority/clock/task proof. The original108-row information contrast remains supported.','publication_state':'private v2 finalized; new commit/proposal/content votes not yet obtained','formal_allocations':0,'producer_or_kernel_replays':0,'main_sends':0,'new_workers':0}
+write('RESULT.json',result)
+write('README.md', '''# Refusal-cause audit correction v2
+
+This additive report qualifies the unchanged original audit/report in the
+parent folder. Reviewer5399138499 found that original audit_retained.py accepted
+nonempty but source-impossible captured refusal messages. The two complete
+copied108-row files here have exactly the reviewer's hashes and change only
+row1/error_message or row100/error_message. Both old standalone CLIs exit0 with
+the original PASS stdout hash. Original8 cause checks produce6 expected
+assertion failures before the new auditor is constructed. Those first results,+all original56 files, original source/raw and the first PASS are preserved.
+
+The new standalone audit_reasons_v2.py imports neither producer nor kernel.
+It adds exact source reason/guard-priority checks for the validated finite
+fixture cells: candidate floor before expiry, expiry before request mismatch.
+SOURCE_REASON_JOIN.json reads the three frozen sources via AST without executing
+them and records literal guards/order and the75 actual captured refusal causes.
+All108 original complete rows pass; total acceptances16/12/5 and before-grant
+acceptances11/7/0 are unchanged. All19 effective copied-data controls refuse.
+Eight cause regression methods pass normally and with Python-O. The two full
+wrong-cause copies exit1 under v2, with only1:error_message or100:error_message
+in the top-level audit errors. Their CLI control_gate is false because the
+original-record corruption set includes a no-op on an already corrupted input;
+the all19-effective gate applies to the unchanged original record only.
+
+AUDIT_V2.json is the exact first v2 CLI stdout. RESULT.json, FINAL_FREEZE.json,
+BEFORE_BASELINE.json, REVIEWER_WITNESSES.json and logs/ retain hashes, original
+commands with owned path prefixes redacted, actual child PIDs/start/end/exits
+and stream identities. Private unredacted originals remain with the author.
+Published stream hashes are separately checked; actual receipts do not pretend
+published redacted stderr has the same bytes. Final ordinary author wrappers
+are .py.txt: the invoker's HOME-prefix publication handling was added after
+the first three children, and their public receipts were reconstructed from
+unchanged original streams. Measured child/auditor/test sources stay frozen.
+
+Use v2 as the completed finite cause-consistency check. This is the same
+author's separate data oracle, not independent authorship. Independent reviewer
+reconstruction supports the original information contrast. Chosen typed
+sequential same-clock caller chronology remains distinct from valid-from lease
+authority or physical clock truth. Truthful monotonic caller remains a simpler
+no-added-state alternative. No source promotion, backend/input, concurrency,
+task-effect or performance result follows. No producer, matrix, kernel suite,
+candidate or formal allocation was replayed for this ordinary data repair.
+Original runtime/default/workflow and historical HOLD remain unchanged.
+
+The root SHA256SUMS still describes its original55 target files; this folder's
+SHA256SUMS separately covers every v2 target. All changes are additive under
+the owned results namespace. No test-discovery entry or workflow is added;
+check_audit_v2.py/audit_reasons_v2.py have explicit guarded CLI entrypoints.
+Publication and new exact-head votes are separate from the finite v2 PASS.
+'''.replace('results,\\+all','results, all'))
+# Avoid source-editor escape notation leaking into the explanatory paragraph.
+readme=(out/'README.md').read_text()
+readme=readme.replace('results,\\+all','results, all').replace('results,\\\n+all','results,\nall')
+(out/'README.md').write_text(readme,encoding='utf-8',newline='\n')
+manifest=[]
+for p in sorted(out.rglob('*')):
+    if p.is_file() and p.name!='SHA256SUMS':manifest.append(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.relative_to(out).as_posix())
+write('SHA256SUMS','\n'.join(manifest)+'\n')
+for name,digest in before['original_56_sha256'].items():assert hashlib.sha256((package/name).read_bytes()).hexdigest()==digest,name
+print(json.dumps({'v2_files':len(manifest)+1,'v2_manifest_entries':len(manifest),'original_preserved':56,'captured_refusal_causes':75,'all19_controls':True,'eight_normal_and_optimized':True,'v2_audit_sha256':result['v2_audit_sha256'],'source_reason_counts':{arm:data['actual_original_refusal_cause_counts'] for arm,data in join.items()}}))

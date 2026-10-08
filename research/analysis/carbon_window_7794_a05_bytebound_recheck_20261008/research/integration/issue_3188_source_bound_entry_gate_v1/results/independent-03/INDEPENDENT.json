@@ -1,0 +1,23 @@
+{
+  "auditor_v1_discrepancy": [
+    "v1 enumerated the lowest-order bit fastest, unlike the frozen candidate's itertools.product row order",
+    "v1 counted vectors but omitted five controls from the rows aggregate"
+  ],
+  "corruption_controls_rejected": {
+    "expected_class": true,
+    "row_count": true,
+    "source_hash": true,
+    "summary_count": true,
+    "vector_bit": true
+  },
+  "errors": [],
+  "raw_sha256": "8460a9ca79611929cbd6d2f6930067a06c6f177e7da3287ad07d1b7f483cb324",
+  "status": "PASS_INDEPENDENT_AUDIT",
+  "summary": {
+    "authorize": 1,
+    "controls": 5,
+    "current": "HOLD",
+    "rows": 37,
+    "vectors": 32
+  }
+}

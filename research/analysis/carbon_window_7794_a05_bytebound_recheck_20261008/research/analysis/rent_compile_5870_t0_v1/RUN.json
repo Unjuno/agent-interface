@@ -1,0 +1,38 @@
+{
+  "allocation": "RENT-COMPILE-5870-T0-20261001-01",
+  "freeze_commit": "f0abf4948757f080cbad5de009bec5f8927da9b7",
+  "source_main": "da7770df8bd896738a8a7e0ccc8ea45e10b3e645",
+  "host": "Microsoft Windows 11 Home 10.0.26200; CPython 3.12.10",
+  "containerized": false,
+  "container_reason": "Docker Desktop CLI installed; com.docker.service Stopped/Manual; read-only Engine lookup timed out; no inventory obtained.",
+  "candidate": {
+    "command": "python -B candidate.py",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "{\"rows\": 181, \"sha256\": \"4e1930fdafb5be5fe4592482927df65efa822911b56f450bac778b2d768719ed\", \"status\": \"CANDIDATE_COMPLETE\"}",
+    "raw_path": "raw.jsonl",
+    "raw_sha256": "4e1930fdafb5be5fe4592482927df65efa822911b56f450bac778b2d768719ed",
+    "created_utc": "2026-10-01T07:31:56.9023309Z"
+  },
+  "auditor": {
+    "command": "python -B audit.py raw.jsonl",
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout": "{\"configs\": 6, \"controls_rejected\": 4, \"errors\": 0, \"status\": \"FAIL_ONLINE_VALUE_PURE_CASE\"}",
+    "audit_path": "audit.json",
+    "audit_sha256": "bd4de3772962d11232066077e92a509e0522a0fe7807e0508d5325a6e79366c2",
+    "created_utc": "2026-10-01T07:32:02.3856844Z",
+    "errors": 0,
+    "corruption_controls_rejected": 4,
+    "corruption_controls_total": 4,
+    "scientific_result": "FAIL_ONLINE_VALUE_PURE_CASE"
+  },
+  "local_checks": {
+    "command": "python -B -m unittest -v test_construction.py",
+    "before_freeze": "5 passed",
+    "after_formal_run": "5 passed",
+    "ast_json_check": "AST_OK / JSON_OK",
+    "network_model_gui_input_gpu": false
+  },
+  "scope": "Finite host-only cost arithmetic; no invalidation, empirical route costs, user task, or live interface claim."
+}

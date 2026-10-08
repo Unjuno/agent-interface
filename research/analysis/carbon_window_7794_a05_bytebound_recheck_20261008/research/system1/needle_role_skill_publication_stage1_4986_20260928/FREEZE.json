@@ -1,0 +1,82 @@
+{
+  "schema": "issue4986-stage1-freeze-v1",
+  "issue": 4986,
+  "allocation": "needle-role-skill-active-candidate-boundary-stage1-v1",
+  "base_main_sha": "2dadbde96a3774614f0dff8b51f95dbef9d05716",
+  "branch": "research/needle-role-skill-publication-stage1-4986-20260928",
+  "path": "research/system1/needle_role_skill_publication_stage1_4986_20260928/",
+  "hypothesis": "Same-directory atomic replace after validation yields only complete role-skill generations to readers; in-place diagnostic exposes a torn package; invalid digest leaves ACTIVE byte-identical.",
+  "input": {
+    "source_path": "research/needle_role_skill_reload_3780_v1/formal/seed-3788/builder/skill.json",
+    "github_blob": "45b80150dac503f4eb6f3cb5d82f9afa2c587107",
+    "normalized_sha256": "2e7bff5a2c6ffd35935c5e3c88d08cb686fb736d332c8d5cdb24bb1b67dc873a",
+    "normalized_bytes": 15279,
+    "mounted_local_sha256": "a36a3391df3765e77fc894c213d5be2f029e6cc68e664985c23c628b15ad4e2d",
+    "mounted_local_bytes": 15280,
+    "normalization": "strip exactly one terminal LF if present; runner verifies normalized SHA-256",
+    "baseline_generation": 3788,
+    "candidate_generation": 3789,
+    "candidate_delta": "generation and provenance.seed only; all tensors identical"
+  },
+  "schedule": {
+    "readers": 4,
+    "implementation": "threads in one process; one publisher",
+    "queries_per_reader": 5,
+    "phase_order": [
+      "baseline",
+      "safe_staged_before_publish",
+      "safe_after_publish",
+      "unsafe_mid_write_diagnostic",
+      "unsafe_after_write"
+    ],
+    "total_observations": 20,
+    "validation_delay_ms": 10
+  },
+  "decision": {
+    "pass": "PASS_ATOMIC_PUBLICATION_CONSTRUCTION_SCOPED iff 20/20 raw observations reconstruct; safe reads match expected complete generation; unsafe midpoint is incomplete/invalid; complete diagnostic write equals candidate; invalid candidate rejects with exact equal ACTIVE before/after SHA; runner and independent audit have zero errors.",
+    "pre_run": "typed STOP; no retry",
+    "audit_failure": "STOP_INDEPENDENT_AUDIT"
+  },
+  "confounders": [
+    "single process with four threads",
+    "one host and Docker Desktop linux/amd64 bind mount",
+    "one 15 KB synthetic JSON package",
+    "fixed injected 10 ms validation-to-publication delay",
+    "no crash/power-loss/cross-process model"
+  ],
+  "limits": [
+    "No model inference or training",
+    "No real-time fine-tuning or Needle competence claim",
+    "No natural-language role routing or task utility",
+    "No runtime authority, production safety, performance or deployment claim"
+  ],
+  "runtime": {
+    "engine": "Docker 29.8.0",
+    "engine_platform": "linux/x86_64",
+    "image": "python@sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "container_platform": "linux/amd64",
+    "network": "none",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "cpus": 0.25,
+    "memory": "256m",
+    "pids_limit": 32,
+    "tmpfs": "/tmp 16m",
+    "runner_invocations": 1,
+    "auditor_invocations": 1,
+    "retries": 0
+  },
+  "sources": {
+    "runner": {
+      "local_sha256": "19CBC5CBD7E6E4633E520913F3FD9A5E7C2C7BEEB274783D25CBE479F1186F75",
+      "github_blob_sha": "036ab65fa839d175d70c83ca376199f05c8ee372",
+      "readback_matches_local": true
+    },
+    "auditor": {
+      "local_sha256": "F69E06B82474A955FFBCF803D5E84B0439B7E2818C68ECFD6B937EB35E965463",
+      "github_blob_sha": "f1f67730873ab37dea7ae7155e192e1a48b0c7cf",
+      "readback_matches_local": true
+    },
+    "pre_run_syntax": "Python ast.parse passed for both source files; no runner/audit behavior executed"
+  }
+}

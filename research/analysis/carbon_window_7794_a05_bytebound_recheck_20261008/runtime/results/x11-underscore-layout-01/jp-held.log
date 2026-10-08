@@ -1,0 +1,21 @@
+{"display": ":99", "mapping": {"colon": {"code": 48, "levels": [58, 42, 58, 42]}, "apostrophe": {"code": 16, "levels": [55, 39, 55, 39]}, "underscore": {"code": 97, "levels": [92, 95, 92, 95]}}}
+test_supported_punctuation_has_exact_independent_effect (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_supported_punctuation_has_exact_independent_effect) ... FAIL
+
+======================================================================
+FAIL: test_supported_punctuation_has_exact_independent_effect (runtime.backends.x11_v1.test_integration.X11IntegrationTests.test_supported_punctuation_has_exact_independent_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/var/tmp/agent-interface-integrated-main/runtime/backends/x11_v1/test_integration.py", line 169, in test_supported_punctuation_has_exact_independent_effect
+    self.assertEqual(json.loads(self.effect.read_text()), {"saved": True, "text": payload})
+AssertionError: {'saved': True, 'text': 'http://127.0.0.1:8765/a-.= A'} != {'saved': True, 'text': 'http://127.0.0.1:8765/a-._ A'}
+- {'saved': True, 'text': 'http://127.0.0.1:8765/a-.= A'}
+?                                                   ^
+
++ {'saved': True, 'text': 'http://127.0.0.1:8765/a-._ A'}
+?                                                   ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.258s
+
+FAILED (failures=1)

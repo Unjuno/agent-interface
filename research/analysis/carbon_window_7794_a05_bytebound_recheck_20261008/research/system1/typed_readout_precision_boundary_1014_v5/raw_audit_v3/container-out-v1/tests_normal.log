@@ -1,0 +1,14 @@
+COMMAND=["/usr/local/bin/python", "-B", "-m", "unittest", "-v", "test_audit_v2"]
+EXIT=0
+STDOUT:
+
+STDERR:
+test_digest_gate_rejects_non_exact_bytes (test_audit_v2.AuditV2Tests.test_digest_gate_rejects_non_exact_bytes) ... ok
+test_self_consistent_raw_mutation_is_rejected_by_byte_pin (test_audit_v2.AuditV2Tests.test_self_consistent_raw_mutation_is_rejected_by_byte_pin) ... ok
+test_valid_fixture_and_corruption_controls (test_audit_v2.AuditV2Tests.test_valid_fixture_and_corruption_controls) ... ok
+test_wrong_allocation_fails_with_explicit_exception (test_audit_v2.AuditV2Tests.test_wrong_allocation_fails_with_explicit_exception) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK

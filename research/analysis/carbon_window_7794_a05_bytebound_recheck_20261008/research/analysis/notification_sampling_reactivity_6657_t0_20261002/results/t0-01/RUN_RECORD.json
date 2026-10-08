@@ -1,0 +1,32 @@
+{
+  "schema": "notification-sampling-reactivity-6657-t0-run-v1",
+  "allocation": "NOTIFICATION-SAMPLING-REACTIVITY-6657-T0-20261002-01",
+  "issue": 6657,
+  "main_sha": "4699966453e1e8ea781bdd91f7364aaa2ad07cad",
+  "branch": "research/notification-sampling-reactivity-6657-t0-20261002",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "command": "python3 research/analysis/notification_sampling_reactivity_6657_t0_20261002/candidate.py research/analysis/notification_sampling_reactivity_6657_t0_20261002/fixture.json research/analysis/notification_sampling_reactivity_6657_t0_20261002/results/t0-01/raw.json",
+    "stdout": "{\"allocation\": \"NOTIFICATION-SAMPLING-REACTIVITY-6657-T0-20261002-01\", \"arms\": 4, \"ticks\": 60}\n",
+    "raw_sha256": "3eb7fa579c4b7b18c0e6eafbf483d417e9acdcbd954fdebe13f390c95ac0ba4c"
+  },
+  "independent_auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "command": "python3 research/analysis/notification_sampling_reactivity_6657_t0_20261002/audit.py research/analysis/notification_sampling_reactivity_6657_t0_20261002/fixture.json research/analysis/notification_sampling_reactivity_6657_t0_20261002/results/t0-01/raw.json research/analysis/notification_sampling_reactivity_6657_t0_20261002/results/t0-01/audit.json",
+    "stdout": "{\"checkin_conditioned_fractions\": {\"milestone_reactive\": 0.5714285714285714, \"milestone_visible_nonreactive_control\": 0.8, \"noisy_status_reactive\": 0.9090909090909091, \"silent\": 0.8}, \"clock_time_no_progress_fraction\": 0.8, \"gates\": {\"all_clock_ticks_counted\": true, \"checkin_and_clock_frames_can_differ\": true, \"exact_random_epoch_expectation_matches_truth\": true, \"gap_rows_complete\": true, \"mutation_controls_rejected\": true, \"nonreactive_control_matches_silence\": true, \"notification_reactive_schedules_differ\": true, \"raw_reconstruction_exact\": true}, \"mutation_controls\": {\"epoch_schedule_leak_rejected\": true, \"longest_gap_omission_rejected\": true}, \"scope\": \"finite scripted estimator-separation method only; no human or notification-causality inference\", \"status\": \"PASS_METHOD_SCOPED\"}\n",
+    "audit_sha256": "0d6eb32c7a855ae10937fdf3570e6a906bff4e91d0b3fcaa54be3922dcd5c54b"
+  },
+  "construction_tests": {
+    "tests_passed": 6,
+    "exit_code": 0,
+    "command": "python3 -B -m unittest discover -s research/analysis/notification_sampling_reactivity_6657_t0_20261002 -p 'test_*.py' -v"
+  },
+  "retries": 0,
+  "replacements": 0,
+  "host": "Darwin 25.6.0 arm64; Python 3.14.5",
+  "container": "not used; finite standard-library method, shared OrbStack machines left untouched",
+  "external_effects": false,
+  "result": "PASS_METHOD_SCOPED"
+}

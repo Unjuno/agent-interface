@@ -1,0 +1,76 @@
+{
+  "decision": "PASS_CONSTRUCTION_ONLY_CPU_COST_COMPARISON",
+  "errors": [],
+  "formal_allocation": false,
+  "limitations": [
+    "Process CPU / wall time is a coarse CPU-cost outcome, not a bound on per-tic scheduling perturbation or event timestamp error.",
+    "Passive API tic advanced from 1 to 2 in one control session; this makes snapshot progression variable across fresh episodes, and uninstrumented engine tic rate is not independently observed.",
+    "Pair00 pilot raw field `engine_entry_hz` used counter ticks as nanoseconds; the audit ignores that mislabeled field and derives an approximate VIZtime delta per measured wall interval from the retained range. Future rows use `engine_viztime_rate_hz`.",
+    "Four paired construction pairs do not constitute the frozen 120-row phase allocation."
+  ],
+  "median_cpu_wall_difference": -0.00011016371095389898,
+  "pairs": [
+    {
+      "control_cpu_wall_ratio": 0.006614040805975013,
+      "control_passive_api_tics": [
+        1
+      ],
+      "difference": 0.0015668021101502656,
+      "instrumented_cpu_wall_ratio": 0.008180842916125279,
+      "instrumented_engine_viztime_rate_hz": 35.59916323075562,
+      "instrumented_entry_count": 215,
+      "instrumented_passive_api_tics": [
+        1
+      ],
+      "pair": 0,
+      "relative_cpu_increase": 0.236890299910887
+    },
+    {
+      "control_cpu_wall_ratio": 0.01053374048484336,
+      "control_passive_api_tics": [
+        1
+      ],
+      "difference": -0.0006552950916942565,
+      "instrumented_cpu_wall_ratio": 0.009878445393149103,
+      "instrumented_engine_viztime_rate_hz": 35.653664601163186,
+      "instrumented_entry_count": 215,
+      "instrumented_passive_api_tics": [
+        1
+      ],
+      "pair": 1,
+      "relative_cpu_increase": -0.062209154728763094
+    },
+    {
+      "control_cpu_wall_ratio": 0.011493051757699076,
+      "control_passive_api_tics": [
+        2
+      ],
+      "difference": 0.0004349676697864586,
+      "instrumented_cpu_wall_ratio": 0.011928019427485535,
+      "instrumented_engine_viztime_rate_hz": 35.4771445059792,
+      "instrumented_entry_count": 214,
+      "instrumented_passive_api_tics": [
+        1
+      ],
+      "pair": 2,
+      "relative_cpu_increase": 0.03784614208276564
+    },
+    {
+      "control_cpu_wall_ratio": 0.012046704313101517,
+      "control_passive_api_tics": [
+        1
+      ],
+      "difference": -0.0012609261452449522,
+      "instrumented_cpu_wall_ratio": 0.010785778167856565,
+      "instrumented_engine_viztime_rate_hz": 35.61267094865035,
+      "instrumented_entry_count": 215,
+      "instrumented_passive_api_tics": [
+        1
+      ],
+      "pair": 3,
+      "relative_cpu_increase": -0.1046698011732237
+    }
+  ],
+  "rows": 8,
+  "schema": "issue3453-construction-clock49-audit-v1"
+}

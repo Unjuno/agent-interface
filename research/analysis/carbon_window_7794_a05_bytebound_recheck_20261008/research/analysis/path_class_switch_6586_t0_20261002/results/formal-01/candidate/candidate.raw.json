@@ -1,0 +1,313 @@
+{
+  "input_sha256": "84e5d9674076c3c7c4062b6d42fdf8f3c8a601efa5496edf7daeadb22cb36c5e",
+  "rows": [
+    {
+      "case_id": "blocked_class_positive",
+      "class_claim": null,
+      "cost_used": 4,
+      "decision": "NOVELTY_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_b",
+        "BLOCKED",
+        "TRY_ROUTE:upper_c",
+        "BLOCKED",
+        "BUDGET_STOP"
+      ],
+      "policy": "coverage",
+      "reached_goal": false,
+      "revisits": 2,
+      "route_attempts": [
+        "upper_b",
+        "upper_c"
+      ],
+      "route_id": null
+    },
+    {
+      "case_id": "blocked_class_positive",
+      "class_claim": null,
+      "cost_used": 6,
+      "decision": "BACKTRACK_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_b",
+        "BLOCKED",
+        "BACKTRACK_SHARED_PREFIX",
+        "TRY_ROUTE:upper_c",
+        "BLOCKED",
+        "BACKTRACK_SHARED_PREFIX",
+        "BUDGET_STOP"
+      ],
+      "policy": "backtrack",
+      "reached_goal": false,
+      "revisits": 2,
+      "route_attempts": [
+        "upper_b",
+        "upper_c"
+      ],
+      "route_id": null
+    },
+    {
+      "case_id": "blocked_class_positive",
+      "class_claim": "LOWER",
+      "cost_used": 6,
+      "decision": "SCOPED_SWITCH",
+      "events": [
+        "CLASS_BLOCK_CONFIRMED",
+        "SELECT_DISTINCT_CLASS",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "class_aware",
+      "reached_goal": true,
+      "revisits": 0,
+      "route_attempts": [
+        "lower_a"
+      ],
+      "route_id": "lower_a"
+    },
+    {
+      "case_id": "shared_prefix_ambiguous",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "NOVELTY_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "coverage",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "shared_prefix_ambiguous",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "BACKTRACK_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "backtrack",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "shared_prefix_ambiguous",
+      "class_claim": null,
+      "cost_used": 0,
+      "decision": "UNKNOWN_CLASS",
+      "events": [
+        "PREFIX_AMBIGUOUS",
+        "YIELD"
+      ],
+      "policy": "class_aware",
+      "reached_goal": false,
+      "revisits": 0,
+      "route_attempts": [],
+      "route_id": null
+    },
+    {
+      "case_id": "same_class_deceptive_branch",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "NOVELTY_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "coverage",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "same_class_deceptive_branch",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "BACKTRACK_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "backtrack",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "same_class_deceptive_branch",
+      "class_claim": null,
+      "cost_used": 0,
+      "decision": "NO_DISTINCT_CLASS_SWITCH",
+      "events": [
+        "SAME_CLASS_CONTROL",
+        "YIELD"
+      ],
+      "policy": "class_aware",
+      "reached_goal": false,
+      "revisits": 0,
+      "route_attempts": [],
+      "route_id": null
+    },
+    {
+      "case_id": "geometry_revision",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "NOVELTY_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "coverage",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "geometry_revision",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "BACKTRACK_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "backtrack",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "geometry_revision",
+      "class_claim": null,
+      "cost_used": 0,
+      "decision": "REOBSERVE",
+      "events": [
+        "INVALIDATE_EMBEDDING",
+        "YIELD"
+      ],
+      "policy": "class_aware",
+      "reached_goal": false,
+      "revisits": 0,
+      "route_attempts": [],
+      "route_id": null
+    },
+    {
+      "case_id": "false_class_cue",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "NOVELTY_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "coverage",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "false_class_cue",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "BACKTRACK_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "backtrack",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "false_class_cue",
+      "class_claim": null,
+      "cost_used": 0,
+      "decision": "UNKNOWN_CLASS",
+      "events": [
+        "CUE_UNSUPPORTED",
+        "YIELD"
+      ],
+      "policy": "class_aware",
+      "reached_goal": false,
+      "revisits": 0,
+      "route_attempts": [],
+      "route_id": null
+    },
+    {
+      "case_id": "single_class_graph",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "NOVELTY_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "coverage",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "single_class_graph",
+      "class_claim": null,
+      "cost_used": 5,
+      "decision": "BACKTRACK_SEARCH",
+      "events": [
+        "TRY_ROUTE:upper_a",
+        "SUBGOAL_REACHED"
+      ],
+      "policy": "backtrack",
+      "reached_goal": true,
+      "revisits": 1,
+      "route_attempts": [
+        "upper_a"
+      ],
+      "route_id": "upper_a"
+    },
+    {
+      "case_id": "single_class_graph",
+      "class_claim": null,
+      "cost_used": 0,
+      "decision": "SAFE_YIELD",
+      "events": [
+        "NO_ALTERNATIVE_CLASS",
+        "YIELD"
+      ],
+      "policy": "class_aware",
+      "reached_goal": false,
+      "revisits": 0,
+      "route_attempts": [],
+      "route_id": null
+    }
+  ],
+  "schema": "path-class-switch-candidate-raw-v1"
+}

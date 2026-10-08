@@ -1,0 +1,40 @@
+{
+  "schema": "human-return-resumption-successor-freeze-v1",
+  "issue": 6492,
+  "allocation": "HUMAN-RETURN-RESUMPTION-6492-T0-20261002-02",
+  "predecessor": "HUMAN-RETURN-RESUMPTION-6492-T0-20261002-01",
+  "source_base_main": "e97d21bb6142b3ed0be00744671d3b16f5cde5bb",
+  "branch_head_at_freeze": "e97d21bb6142b3ed0be00744671d3b16f5cde5bb",
+  "created_utc": "2026-10-02T03:45:37Z",
+  "package_source_manifest_sha256": "f09c9af8050215cff4299a42a8f7af64d61039aaddfdba3106e7792f2db05a7a",
+  "successor_manifest_sha256": "TO_BE_RECOMPUTED",
+  "successor_preregistration_sha256": "31562d584df2dc83036685ab6e4825576cfcfca5cee702ad00ecc323d122ffae",
+  "auditor_controls_sha256": "1ec4931d139e1bde91bebaa72b0e9daadf309d09fa6ab2d162b5b04b2928c0b6",
+  "control_test_sha256": "72cd537c5b7f98b0fe5138e1715b325c4e2d50f886852d7f7e11eb91a84b199b",
+  "max_invocations": {"candidate": 1, "independent_auditor": 1, "retries": 0},
+  "fixture_rows": 24,
+  "fixture_sha256": "f2dc10f43fa5f5486150b101213ef1b99e359050900eee92b3786f77b1cea96d",
+  "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "platform": "linux/arm64",
+  "engine": "OrbStack Docker Engine 29.4.0",
+  "runtime_requests": {
+    "network": "none",
+    "cpus": 1,
+    "memory": "512m",
+    "pids_limit": 64,
+    "user": "501:20",
+    "rootfs": "read-only",
+    "source": "read-only mount",
+    "output": "separate read-write mount",
+    "gpu": false,
+    "process_isolation": "separate ephemeral containers"
+  },
+  "stop_conditions": [
+    "branch HEAD differs from latest origin/main at immediate start gate",
+    "frozen source hash or image identity differs",
+    "formal output path already exists",
+    "candidate/auditor nonzero exit or missing result",
+    "post-freeze package source edits"
+  ],
+  "outcome_scope": "synthetic T0 protocol-method validity only"
+}

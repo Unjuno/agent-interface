@@ -1,0 +1,1220 @@
+{
+  "ordinal": 0,
+  "mode": "path",
+  "seed": 203,
+  "passed": false,
+  "checks": {
+    "coherent_valid_admission": true,
+    "client_registered_before_submit": true,
+    "program_attested": true,
+    "false_then_true": true,
+    "independent_success": true,
+    "completed_empty_release": true,
+    "first_feedback_limit": false,
+    "two_client_exchanges": true
+  },
+  "goal": {
+    "token": "t000203",
+    "a": 192,
+    "b": 143,
+    "dx": 30,
+    "setup_readiness_captures": 3
+  },
+  "candidate": {
+    "schema": "inkscape-red-target-plan-v1",
+    "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "roi": [
+      520,
+      330,
+      720,
+      470
+    ],
+    "target": {
+      "bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "red_pixels": 1645,
+      "center": [
+        619,
+        390
+      ]
+    },
+    "action": {
+      "op": "pointer_click",
+      "x": 619,
+      "y": 390,
+      "duration_ms": 80
+    },
+    "grants_input_authority": false
+  },
+  "binding_attempts": [
+    {
+      "schema": "pointer-binding-readiness-v1",
+      "status": "READY",
+      "observation_id": "admission-0",
+      "sequence": 2,
+      "binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "evaluated_ns": 44331049424060,
+      "may_submit_pointer_input": true,
+      "grants_input_authority": false
+    }
+  ],
+  "admission_observation": {
+    "event": "observation",
+    "id": "admission-0",
+    "step": 0,
+    "sequence": 2,
+    "capture_ns": 44331021087684,
+    "context_ns": 44331026990171,
+    "context": [
+      [
+        "windows",
+        "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+      ],
+      [
+        "active_window",
+        6291463
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/001.png",
+    "image_reused": true,
+    "image_prepare_ns": 2866906,
+    "image_ready_ns": 44331036193991,
+    "input_focus_before": 6291464,
+    "input_focus_after": 6291464,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 2.977117,
+    "wire_bytes": 276,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "runtime_emit_ns": 44331049367107
+  },
+  "validation": {
+    "schema": "inkscape-red-target-validation-v1",
+    "status": "VALID_CURRENT",
+    "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "fresh_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "source_target": {
+      "bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "red_pixels": 1645,
+      "center": [
+        619,
+        390
+      ]
+    },
+    "fresh_target": {
+      "bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "red_pixels": 1645,
+      "center": [
+        619,
+        390
+      ]
+    },
+    "action": {
+      "op": "pointer_click",
+      "x": 619,
+      "y": 390,
+      "duration_ms": 80
+    },
+    "action_may_proceed_to_admission": true,
+    "requires_new_decision": false,
+    "grants_input_authority": false
+  },
+  "pre_score": {
+    "schema": "inkscape-visible-selection-score-v2",
+    "success": false,
+    "reason": "selection_handles_missing",
+    "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "scored_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "expected_target": {
+      "bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "red_pixels": 1645,
+      "center": [
+        619,
+        390
+      ]
+    },
+    "observed_support": {
+      "bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "red_pixels": 1645
+    },
+    "edge_delta": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "red_coverage_ratio": 1.0,
+    "edge_tolerance": 1,
+    "coverage_minimum": 0.8,
+    "zones": {
+      "left": [
+        578,
+        355,
+        596,
+        426
+      ],
+      "right": [
+        643,
+        355,
+        661,
+        426
+      ],
+      "top": [
+        596,
+        355,
+        643,
+        373
+      ],
+      "bottom": [
+        596,
+        408,
+        643,
+        426
+      ]
+    },
+    "dark_pixels": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0
+    },
+    "per_side_minimum": 10,
+    "target_identity_valid": true,
+    "selection_handles_visible": false,
+    "grants_input_authority": false
+  },
+  "action_id": "matched-selection-01-path",
+  "program": [
+    {
+      "op": "pointer_click",
+      "x": 619,
+      "y": 390,
+      "duration_ms": 80
+    },
+    {
+      "op": "observe"
+    }
+  ],
+  "registration": null,
+  "client_registered_ns": 44331110661305,
+  "submit_ns": 44331110851944,
+  "accepted": {
+    "event": "accepted",
+    "id": "matched-selection-01-path",
+    "steps": 2,
+    "program_sha256": "6de2c6b597e0dd293e869de1a396883c060fc6e5ce1a74574680af1080c11c52",
+    "intent_token": "63404133208f4218a44a059ce161c633",
+    "valid_until_ns": 44336110852856,
+    "accepted_ns": 44331110966118,
+    "runtime_emit_ns": 44331110967282
+  },
+  "client": {
+    "feedback": [
+      {
+        "boundary": {
+          "event": "observation",
+          "id": "matched-selection-01-path",
+          "step": 0,
+          "sequence": 3,
+          "capture_ns": 44331202974466,
+          "context_ns": 44331211234181,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/003.png",
+          "image_reused": false,
+          "image_prepare_ns": 30854545,
+          "image_ready_ns": 44331264814069,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 6.257273,
+          "wire_bytes": 5976,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "runtime_emit_ns": 44331278805699
+        },
+        "score": {
+          "schema": "inkscape-visible-selection-score-v2",
+          "success": false,
+          "reason": "selection_handles_missing",
+          "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+          "scored_image_sha256": "d8b1e79f0e6c02b1641db9d8e5183291686a1bedb61f6032701bf93dc6924d7b",
+          "expected_target": {
+            "bbox": [
+              596,
+              373,
+              643,
+              408
+            ],
+            "red_pixels": 1645,
+            "center": [
+              619,
+              390
+            ]
+          },
+          "observed_support": {
+            "bbox": [
+              596,
+              373,
+              643,
+              408
+            ],
+            "red_pixels": 1645
+          },
+          "edge_delta": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "red_coverage_ratio": 1.0,
+          "edge_tolerance": 1,
+          "coverage_minimum": 0.8,
+          "zones": {
+            "left": [
+              578,
+              355,
+              596,
+              426
+            ],
+            "right": [
+              643,
+              355,
+              661,
+              426
+            ],
+            "top": [
+              596,
+              355,
+              643,
+              373
+            ],
+            "bottom": [
+              596,
+              408,
+              643,
+              426
+            ]
+          },
+          "dark_pixels": {
+            "left": 0,
+            "right": 0,
+            "top": 0,
+            "bottom": 0
+          },
+          "per_side_minimum": 10,
+          "target_identity_valid": true,
+          "selection_handles_visible": false,
+          "grants_input_authority": false
+        },
+        "score_started_ns": 44331280029944,
+        "score_completed_ns": 44331330024985,
+        "semantic_ready_ns": 44331330024985
+      },
+      {
+        "boundary": {
+          "event": "observation",
+          "id": "matched-selection-01-path",
+          "step": 1,
+          "sequence": 4,
+          "capture_ns": 44331284698312,
+          "context_ns": 44331290234657,
+          "context": [
+            [
+              "windows",
+              "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+            ],
+            [
+              "active_window",
+              6291463
+            ]
+          ],
+          "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/004.png",
+          "image_reused": false,
+          "image_prepare_ns": 24502133,
+          "image_ready_ns": 44331334779085,
+          "input_focus_before": 6291464,
+          "input_focus_after": 6291464,
+          "focus_samples_match": true,
+          "pointer_binding": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_before": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "pointer_context_after": {
+            "focus": 6291464,
+            "surface": 6291463,
+            "geometry": [
+              0,
+              19,
+              1280,
+              781
+            ]
+          },
+          "capture_ms": 3.480889,
+          "wire_bytes": 18619,
+          "exact": true,
+          "semantic_completion": "unknown",
+          "runtime_emit_ns": 44331347462215
+        },
+        "score": {
+          "schema": "inkscape-visible-selection-score-v2",
+          "success": true,
+          "reason": "target_identity_and_selection_handles_visible",
+          "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+          "scored_image_sha256": "fcf4a8bdcb3b768bea4130568b9ec4619147006f7ebefbf8db11ec7c96d72a79",
+          "expected_target": {
+            "bbox": [
+              596,
+              373,
+              643,
+              408
+            ],
+            "red_pixels": 1645,
+            "center": [
+              619,
+              390
+            ]
+          },
+          "observed_support": {
+            "bbox": [
+              597,
+              374,
+              643,
+              408
+            ],
+            "red_pixels": 1564
+          },
+          "edge_delta": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "red_coverage_ratio": 0.9507598784194529,
+          "edge_tolerance": 1,
+          "coverage_minimum": 0.8,
+          "zones": {
+            "left": [
+              578,
+              355,
+              596,
+              426
+            ],
+            "right": [
+              643,
+              355,
+              661,
+              426
+            ],
+            "top": [
+              596,
+              355,
+              643,
+              373
+            ],
+            "bottom": [
+              596,
+              408,
+              643,
+              426
+            ]
+          },
+          "dark_pixels": {
+            "left": 197,
+            "right": 197,
+            "top": 67,
+            "bottom": 67
+          },
+          "per_side_minimum": 10,
+          "target_identity_valid": true,
+          "selection_handles_visible": true,
+          "grants_input_authority": false
+        },
+        "score_started_ns": 44331347874268,
+        "score_completed_ns": 44331381891071,
+        "semantic_ready_ns": 44331381891071
+      }
+    ],
+    "exchanges": [
+      {
+        "request": {
+          "after": 0,
+          "events": [
+            "observation",
+            "terminal"
+          ],
+          "timeout": 3,
+          "action_id": "matched-selection-01-path",
+          "request_id": "matched-01-path-0"
+        },
+        "client_started_ns": 44331110048879,
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "observation",
+              "id": "initial",
+              "step": 0,
+              "sequence": 1,
+              "capture_ns": 44330929814304,
+              "context_ns": 44330935394034,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/001.png",
+              "image_reused": false,
+              "image_prepare_ns": 30536579,
+              "image_ready_ns": 44330982059403,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 4.604807,
+              "wire_bytes": 67754,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "runtime_emit_ns": 44330993248591
+            },
+            {
+              "event": "observation",
+              "id": "admission-0",
+              "step": 0,
+              "sequence": 2,
+              "capture_ns": 44331021087684,
+              "context_ns": 44331026990171,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/001.png",
+              "image_reused": true,
+              "image_prepare_ns": 2866906,
+              "image_ready_ns": 44331036193991,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 2.977117,
+              "wire_bytes": 276,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "runtime_emit_ns": 44331049367107
+            },
+            {
+              "event": "accepted",
+              "id": "matched-selection-01-path",
+              "steps": 2,
+              "program_sha256": "6de2c6b597e0dd293e869de1a396883c060fc6e5ce1a74574680af1080c11c52",
+              "intent_token": "63404133208f4218a44a059ce161c633",
+              "valid_until_ns": 44336110852856,
+              "accepted_ns": 44331110966118,
+              "runtime_emit_ns": 44331110967282
+            },
+            {
+              "event": "step_started",
+              "id": "matched-selection-01-path",
+              "step": 0,
+              "operation": "pointer_click",
+              "issued_ns": 44331111117959,
+              "runtime_emit_ns": 44331111118898
+            },
+            {
+              "event": "pointer_admission",
+              "operation": "move",
+              "payload": {
+                "x": 619,
+                "y": 390
+              },
+              "admitted_ns": 44331112409113,
+              "input_ack_ns": 44331112596865,
+              "valid_until_ns": 44336110852856,
+              "surface": 6291463,
+              "id": "matched-selection-01-path",
+              "step": 0,
+              "runtime_emit_ns": 44331112668312
+            },
+            {
+              "event": "pointer_admission",
+              "operation": "button_down",
+              "payload": 1,
+              "admitted_ns": 44331114065158,
+              "input_ack_ns": 44331114243708,
+              "valid_until_ns": 44336110852856,
+              "surface": 6291463,
+              "id": "matched-selection-01-path",
+              "step": 0,
+              "runtime_emit_ns": 44331114311632
+            },
+            {
+              "event": "observation",
+              "id": "matched-selection-01-path",
+              "step": 0,
+              "sequence": 3,
+              "capture_ns": 44331202974466,
+              "context_ns": 44331211234181,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/003.png",
+              "image_reused": false,
+              "image_prepare_ns": 30854545,
+              "image_ready_ns": 44331264814069,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 6.257273,
+              "wire_bytes": 5976,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "runtime_emit_ns": 44331278805699
+            }
+          ],
+          "cursor": 7,
+          "cursor_returned_ns": 44331279547534,
+          "authority": "none",
+          "request_id": "matched-01-path-0",
+          "server_response_ns": 44331279551933
+        },
+        "client_returned_ns": 44331279963104,
+        "response_bytes": 4151
+      },
+      {
+        "request": {
+          "after": 7,
+          "events": [
+            "observation",
+            "terminal"
+          ],
+          "timeout": 3,
+          "action_id": "matched-selection-01-path",
+          "request_id": "matched-01-path-1"
+        },
+        "client_started_ns": 44331330040159,
+        "reply": {
+          "status": "boundary",
+          "records": [
+            {
+              "event": "step_completed",
+              "id": "matched-selection-01-path",
+              "step": 0,
+              "completed_ns": 44331278948368,
+              "runtime_emit_ns": 44331278949337
+            },
+            {
+              "event": "step_started",
+              "id": "matched-selection-01-path",
+              "step": 1,
+              "operation": "observe",
+              "issued_ns": 44331278973727,
+              "runtime_emit_ns": 44331278974710
+            },
+            {
+              "event": "observation",
+              "id": "matched-selection-01-path",
+              "step": 1,
+              "sequence": 4,
+              "capture_ns": 44331284698312,
+              "context_ns": 44331290234657,
+              "context": [
+                [
+                  "windows",
+                  "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+                ],
+                [
+                  "active_window",
+                  6291463
+                ]
+              ],
+              "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/004.png",
+              "image_reused": false,
+              "image_prepare_ns": 24502133,
+              "image_ready_ns": 44331334779085,
+              "input_focus_before": 6291464,
+              "input_focus_after": 6291464,
+              "focus_samples_match": true,
+              "pointer_binding": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_before": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "pointer_context_after": {
+                "focus": 6291464,
+                "surface": 6291463,
+                "geometry": [
+                  0,
+                  19,
+                  1280,
+                  781
+                ]
+              },
+              "capture_ms": 3.480889,
+              "wire_bytes": 18619,
+              "exact": true,
+              "semantic_completion": "unknown",
+              "runtime_emit_ns": 44331347462215
+            }
+          ],
+          "cursor": 10,
+          "cursor_returned_ns": 44331347631613,
+          "authority": "none",
+          "request_id": "matched-01-path-1",
+          "server_response_ns": 44331347635296
+        },
+        "client_returned_ns": 44331347850694,
+        "response_bytes": 1477
+      }
+    ],
+    "completed_ns": 44331381894302
+  },
+  "observations": [
+    {
+      "event": "observation",
+      "id": "matched-selection-01-path",
+      "step": 0,
+      "sequence": 3,
+      "capture_ns": 44331202974466,
+      "context_ns": 44331211234181,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/003.png",
+      "image_reused": false,
+      "image_prepare_ns": 30854545,
+      "image_ready_ns": 44331264814069,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 6.257273,
+      "wire_bytes": 5976,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "runtime_emit_ns": 44331278805699
+    },
+    {
+      "event": "observation",
+      "id": "matched-selection-01-path",
+      "step": 1,
+      "sequence": 4,
+      "capture_ns": 44331284698312,
+      "context_ns": 44331290234657,
+      "context": [
+        [
+          "windows",
+          "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+        ],
+        [
+          "active_window",
+          6291463
+        ]
+      ],
+      "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/004.png",
+      "image_reused": false,
+      "image_prepare_ns": 24502133,
+      "image_ready_ns": 44331334779085,
+      "input_focus_before": 6291464,
+      "input_focus_after": 6291464,
+      "focus_samples_match": true,
+      "pointer_binding": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_before": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "pointer_context_after": {
+        "focus": 6291464,
+        "surface": 6291463,
+        "geometry": [
+          0,
+          19,
+          1280,
+          781
+        ]
+      },
+      "capture_ms": 3.480889,
+      "wire_bytes": 18619,
+      "exact": true,
+      "semantic_completion": "unknown",
+      "runtime_emit_ns": 44331347462215
+    }
+  ],
+  "useful_observation": {
+    "event": "observation",
+    "id": "matched-selection-01-path",
+    "step": 1,
+    "sequence": 4,
+    "capture_ns": 44331284698312,
+    "context_ns": 44331290234657,
+    "context": [
+      [
+        "windows",
+        "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+      ],
+      [
+        "active_window",
+        6291463
+      ]
+    ],
+    "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/results-local/live_control/matched-semantic-delivery-live-01/arm-01-path/004.png",
+    "image_reused": false,
+    "image_prepare_ns": 24502133,
+    "image_ready_ns": 44331334779085,
+    "input_focus_before": 6291464,
+    "input_focus_after": 6291464,
+    "focus_samples_match": true,
+    "pointer_binding": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_before": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "pointer_context_after": {
+      "focus": 6291464,
+      "surface": 6291463,
+      "geometry": [
+        0,
+        19,
+        1280,
+        781
+      ]
+    },
+    "capture_ms": 3.480889,
+    "wire_bytes": 18619,
+    "exact": true,
+    "semantic_completion": "unknown",
+    "runtime_emit_ns": 44331347462215
+  },
+  "independent_score": {
+    "schema": "inkscape-visible-selection-score-v2",
+    "success": true,
+    "reason": "target_identity_and_selection_handles_visible",
+    "source_image_sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "scored_image_sha256": "fcf4a8bdcb3b768bea4130568b9ec4619147006f7ebefbf8db11ec7c96d72a79",
+    "expected_target": {
+      "bbox": [
+        596,
+        373,
+        643,
+        408
+      ],
+      "red_pixels": 1645,
+      "center": [
+        619,
+        390
+      ]
+    },
+    "observed_support": {
+      "bbox": [
+        597,
+        374,
+        643,
+        408
+      ],
+      "red_pixels": 1564
+    },
+    "edge_delta": [
+      1,
+      1,
+      0,
+      0
+    ],
+    "red_coverage_ratio": 0.9507598784194529,
+    "edge_tolerance": 1,
+    "coverage_minimum": 0.8,
+    "zones": {
+      "left": [
+        578,
+        355,
+        596,
+        426
+      ],
+      "right": [
+        643,
+        355,
+        661,
+        426
+      ],
+      "top": [
+        596,
+        355,
+        643,
+        373
+      ],
+      "bottom": [
+        596,
+        408,
+        643,
+        426
+      ]
+    },
+    "dark_pixels": {
+      "left": 197,
+      "right": 197,
+      "top": 67,
+      "bottom": 67
+    },
+    "per_side_minimum": 10,
+    "target_identity_valid": true,
+    "selection_handles_visible": true,
+    "grants_input_authority": false
+  },
+  "reconciliations": [],
+  "terminal": {
+    "event": "terminal",
+    "id": "matched-selection-01-path",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 2,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 44331348386323,
+      "valid_until_ns": 44336110852856
+    },
+    "interruption": null,
+    "decision_reason": null,
+    "terminal_ns": 44331348484913,
+    "semantic_completion": "program status only; task scoring is separate",
+    "runtime_emit_ns": 44331348486971
+  },
+  "metrics_ms": {
+    "admission_to_first_capture_ms": 92.008348,
+    "admission_to_first_feedback_ms": 219.058867,
+    "admission_to_useful_capture_ms": 173.732194,
+    "admission_to_semantic_ready_ms": 270.924953,
+    "capture_to_semantic_ready_ms": 97.192759,
+    "semantic_ready_to_terminal_ms": -33.406158,
+    "client_exchanges": 2,
+    "response_bytes": 5628,
+    "first_path_score_ms": 49.995041,
+    "useful_path_score_ms": 34.016803
+  },
+  "model_calls": 0
+}

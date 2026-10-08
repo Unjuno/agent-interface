@@ -1,0 +1,67 @@
+{
+  "allocation": "GPU-SUPERVISOR-TRANSFER-BREAK-EVEN-4972-20261001-03",
+  "assigned_window_utc": "2026-10-01T09:25:00Z/2026-10-01T09:31:00Z",
+  "audit_errors": [],
+  "auditor_exit_code": 1,
+  "auditor_invocations": 1,
+  "auditor_result_sha256": "b6328bd209bcdd7f52abf33354428c777d6bb82e714e010a6f0902c6de014df2",
+  "base_main_sha": "3d6ffc76d535309cf3820ed33cb9327354f03648",
+  "branch": "research/gpu-supervisor-transfer-breakeven-4972-a03-20261001",
+  "candidate_exit_code": 0,
+  "candidate_invocations": 1,
+  "candidate_sha256": "972553b6e64b15c83f4c6e6fc574290dfb3ad87f4868af5588ce25926b5ccf71",
+  "corruption_controls_rejected": {
+    "drop_timing_sample": true,
+    "duplicate_pair": true,
+    "flip_cuda_hint": true,
+    "unsafe_admission": false,
+    "wrong_source_hash": true
+  },
+  "dataset_sha256": "30cf278a2680659744e1407536c1e94b2d7c97785daf5d188e7c0ba2a4f991d6",
+  "disposition": "HOLD_INTEGRITY",
+  "environment": {
+    "cuda_runtime": "12.1",
+    "device": "NVIDIA GeForce RTX 3080 Laptop GPU",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.5.1+cu121"
+  },
+  "execution": "Windows host; no container, Docker CLI, WSL, model/provider, network, GUI, game, or OS input",
+  "freeze_sha256": "c46b80ef9e3fcc1a2c918b89731b928d1559bec0b44b6355c1b359dab372da95",
+  "issue": 5882,
+  "p50_ns": {
+    "1": {
+      "cpu": 1900.0,
+      "cuda_end_to_end": 247650.0
+    },
+    "1024": {
+      "cpu": 175550.0,
+      "cuda_end_to_end": 864800.0
+    },
+    "16": {
+      "cpu": 5200.0,
+      "cuda_end_to_end": 248250.0
+    },
+    "256": {
+      "cpu": 46050.0,
+      "cuda_end_to_end": 395200.0
+    },
+    "4": {
+      "cpu": 2700.0,
+      "cuda_end_to_end": 243200.0
+    },
+    "64": {
+      "cpu": 12900.0,
+      "cuda_end_to_end": 277350.0
+    }
+  },
+  "path": "research/analysis/gpu_supervisor_transfer_breakeven_4972_a03_20261001/",
+  "preflight_observed_utc": "2026-10-01T09:28:37Z",
+  "raw_manifest": "raw_evidence.manifest.json",
+  "raw_storage_note": "Raw candidate and auditor bytes are base64-sharded; see raw_evidence.manifest.json and pointer files.",
+  "reason": "Independent audit reported zero raw/parity errors but the frozen unsafe_admission corruption control was not rejected; no retry or auditor repair was attempted.",
+  "retries": 0,
+  "schema": "gpu-supervisor-transfer-break-even-run-receipt-v1",
+  "timing_status": "DESCRIPTIVE_ONLY_UNDER_HOLD"
+}
+

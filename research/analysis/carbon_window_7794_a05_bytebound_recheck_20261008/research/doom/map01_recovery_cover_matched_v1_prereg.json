@@ -1,0 +1,77 @@
+{
+  "schema": "map01-recovery-cover-matched-v1-prereg",
+  "base_commit": "a0abe6cf31bd68a416c02fa417baab3704533bfc",
+  "task_id": "O4-PH48-RECOVERY-COVER-MATCHED-001",
+  "status": "FROZEN_CONSTRUCTION_ONLY_NO_LIVE_LEASE",
+  "objective": "Measure whether an explicitly bounded recovery-cover arm reduces no-held-input planner-wait time relative to unauthored coast without increasing stale-authority violations or harmful independent outcomes.",
+  "arms": [
+    {"name": "COAST_CONTROL", "planner_wait_fallback": "unauthored_empty_coast", "input_authority": "none"},
+    {"name": "BOUNDED_RECOVERY", "planner_wait_fallback": "explicit_recovery_cover", "input_authority": "separately_admitted_bounded_program"}
+  ],
+  "matched_constraints": {
+    "same_initial_fixture": true,
+    "same_map_seed_schedule": true,
+    "same_model": true,
+    "same_model_prompt_schema": true,
+    "same_resolution": true,
+    "same_game_speed": true,
+    "same_observation_path": true,
+    "same_input_backend": true,
+    "same_independent_scorer_contract": true,
+    "same_release_telemetry_contract": true,
+    "arm_difference_only": "planner_wait_fallback"
+  },
+  "required_instrumentation": {
+    "owner_release_telemetry": "required",
+    "independent_progress_clock_v2": "required",
+    "planner_wait_intervals": "required",
+    "held_input_intervals": "required",
+    "controller_visible_scorer_events": false,
+    "same_monotonic_clock_or_explicit_mapping": true
+  },
+  "recovery_authority": {
+    "must_be_explicit": true,
+    "must_have_expiry": true,
+    "must_have_observable_guard": true,
+    "must_bind_source_observation": true,
+    "must_not_rebase_budget_silently": true,
+    "must_cancel_on_guard_failure": true,
+    "must_verify_empty_release": true,
+    "max_single_lease_ms": 1500
+  },
+  "primary_metrics": [
+    "planner_wait_ns",
+    "held_input_lower_bound_ns",
+    "held_input_upper_bound_ns",
+    "no_held_input_lower_bound_ns",
+    "no_held_input_upper_bound_ns",
+    "first_positive_independent_progress_ns",
+    "first_negative_independent_progress_ns",
+    "verified_release_latency_ns",
+    "stale_authority_admissions",
+    "release_failures"
+  ],
+  "hard_gates": {
+    "stale_authority_admissions": 0,
+    "release_failures": 0,
+    "controller_visible_privileged_scorer_events": 0,
+    "all_accepted_programs_have_terminal_release": true
+  },
+  "decision_rule": {
+    "PASS": "All hard gates pass; bounded recovery has strictly lower no-held-input upper bound in at least one matched planner-wait interval; no matched interval has a new negative independent scorer event attributable before the corresponding coast event; at least one recovery interval has acknowledged held input before planner completion.",
+    "FAIL": "Any hard gate fails, or recovery admits stale authority, or release is unverifiable, or the recovery arm produces an earlier matched harmful independent event while not producing an earlier positive event.",
+    "UNCERTAIN": "Instrumentation cannot align clocks, held-input bounds overlap too broadly to establish direction, or no matched interval exposes recovery input before planner completion.",
+    "HOLD": "Safety passes but evidence is too sparse for promotion; retain result and redesign only the measurement or exposure condition."
+  },
+  "execution_policy": {
+    "no_retry_same_allocation": true,
+    "retain_first_outcome": true,
+    "do_not_overwrite_results": true,
+    "live_execution_requires_separate_formal_lease": true,
+    "results_path": "research/doom/results/map01-recovery-cover-matched-live-v1"
+  },
+  "product_hunt_claim_boundary": {
+    "allowed_if_pass": "A bounded local controller can continue explicitly authorized input during some planner waits and still revoke/release on stale evidence in this matched MAP01 test.",
+    "forbidden": ["human-level reaction time", "general DOOM competence", "general speedup", "causal model-quality improvement", "MAP01 clear unless independently observed"]
+  }
+}

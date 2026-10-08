@@ -1,0 +1,179 @@
+{
+  "adapter_result": {
+    "authority_granted": false,
+    "cleanup_error": null,
+    "lifecycle": [
+      "dispatch"
+    ],
+    "native_status": "completed",
+    "partial_effects": [],
+    "program_completed": true,
+    "raw_dispatch": {
+      "result": {
+        "admission": "accepted",
+        "execution": {
+          "completed_ops": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "emissions": 39,
+          "ended_ns": 23576572746322,
+          "observations": [
+            {
+              "bytes": 288000,
+              "height": 180,
+              "sha256": "41d5db1defd8370a77ce618d4242bc232df0dc8fe8032fa78f128d8b4c43d20e",
+              "width": 400
+            }
+          ],
+          "program_emissions": 39,
+          "releases": [
+            {
+              "buttons_down": [],
+              "keys_down": [],
+              "monotonic_ns": 23576572744614,
+              "verified": true
+            }
+          ],
+          "started_ns": 23576463979590
+        },
+        "recovery_required": false,
+        "required_capabilities": [
+          "capture.frame",
+          "clock.monotonic",
+          "display.geometry",
+          "event.feedback",
+          "input.keyboard",
+          "input.pointer",
+          "input.release_all",
+          "input.text",
+          "window.focus"
+        ],
+        "status": "completed"
+      },
+      "schema": "agent-interface/runtime-dispatch-result-v1",
+      "status": "returned"
+    },
+    "schema": "golden-v3-result-v2",
+    "status": "partial",
+    "task_success": null,
+    "usage": {}
+  },
+  "authority_granted": false,
+  "case": "cleanup_failure",
+  "cleanup": "failed",
+  "delivery": "confirmed",
+  "disposition": "YIELD",
+  "effect": "useful",
+  "events_path": "/out/allocation-a1/cleanup_failure/events.jsonl",
+  "formal_receipt": {
+    "authority_grants": 0,
+    "binding_revision": 1,
+    "case": "TERMINAL_CLEANUP_FAILURE",
+    "cleanup": {
+      "failure_reason": "fixture_release_ack_timeout",
+      "release_verified": true,
+      "status": "failed"
+    },
+    "delivery": null,
+    "effect_receipt": {
+      "saved": true,
+      "text": "cleanup_failure"
+    },
+    "input_ledger": [
+      {
+        "key": "c",
+        "type": "key_press"
+      },
+      {
+        "key": "l",
+        "type": "key_press"
+      },
+      {
+        "key": "e",
+        "type": "key_press"
+      },
+      {
+        "key": "a",
+        "type": "key_press"
+      },
+      {
+        "key": "n",
+        "type": "key_press"
+      },
+      {
+        "key": "u",
+        "type": "key_press"
+      },
+      {
+        "key": "p",
+        "type": "key_press"
+      },
+      {
+        "key": "Shift_L",
+        "type": "key_press"
+      },
+      {
+        "key": "underscore",
+        "type": "key_press"
+      },
+      {
+        "key": "f",
+        "type": "key_press"
+      },
+      {
+        "key": "a",
+        "type": "key_press"
+      },
+      {
+        "key": "i",
+        "type": "key_press"
+      },
+      {
+        "key": "l",
+        "type": "key_press"
+      },
+      {
+        "key": "u",
+        "type": "key_press"
+      },
+      {
+        "key": "r",
+        "type": "key_press"
+      },
+      {
+        "key": "e",
+        "type": "key_press"
+      },
+      {
+        "key": "Control_L",
+        "type": "key_press"
+      },
+      {
+        "key": "s",
+        "type": "key_press"
+      },
+      {
+        "key": null,
+        "type": "save"
+      }
+    ],
+    "observation_revision": 1,
+    "replay_allowed": false,
+    "replay_count": 0,
+    "session_id": "gtk-matrix-cleanup_failure",
+    "window_id": "2097155"
+  },
+  "independent_effect": {
+    "saved": true,
+    "text": "cleanup_failure"
+  },
+  "replay_allowed": false
+}

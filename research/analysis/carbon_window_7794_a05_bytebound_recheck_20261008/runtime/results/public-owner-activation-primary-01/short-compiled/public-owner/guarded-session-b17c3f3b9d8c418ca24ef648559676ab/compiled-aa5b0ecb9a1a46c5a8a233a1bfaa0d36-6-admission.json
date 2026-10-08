@@ -1,0 +1,38 @@
+{
+  "request": {
+    "interface_id": "inkscape-single-method",
+    "session_scope": "native-x11:b6b669def01d4d65b5961f3f796a7fe8",
+    "action": "select",
+    "operation": "select_rectangle",
+    "symbol": {
+      "kind": "target_reference",
+      "target_reference": "rectangle",
+      "identity_predicate": "initial_shape",
+      "dependencies": [
+        "context_present",
+        "initial_shape"
+      ]
+    },
+    "observation": {
+      "sequence": 3,
+      "captured_ns": 1674726484202,
+      "surface": "x11-window-6291463",
+      "predicates": {
+        "selected_shape": false,
+        "context_present": true,
+        "initial_shape": true,
+        "moved_shape": false,
+        "clean_title": true
+      },
+      "evidence_ref": "observation-3",
+      "evidence_digest": "c8c768c802c0f14c12f9f2b5ba9da915a3bd2ea91c9e4d5cbc5142c6d7bf58e6"
+    }
+  },
+  "result": {
+    "eligible": true,
+    "status": "revalidated",
+    "authorization": "d86daf14be814ceb8544479084ff3a24",
+    "expected_sequence": 3,
+    "valid_until_ns": 1676226484202
+  }
+}

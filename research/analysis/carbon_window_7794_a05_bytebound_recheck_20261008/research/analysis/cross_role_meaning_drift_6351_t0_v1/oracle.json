@@ -1,0 +1,19 @@
+{
+  "schema":"issue6351.oracle.v1",
+  "rules":{
+    "dispatch":"read dispatch only; ACCEPTED is not physical release or effect",
+    "effect_owner":"read release, effect, and every unresolved child; never infer task completion from dispatch",
+    "verifier":"VERIFIED only when verification=VERIFIED and conflict=false; conflict or UNKNOWN remains UNKNOWN/CONFLICT",
+    "hard_invariants":["ACCEPTED != RELEASED", "RELEASED != application effect", "TARGET_MATCH != verified task completion unless verification=VERIFIED", "unresolved child remains visible", "conflict cannot become PASS"]
+  },
+  "expected":{
+    "dispatch_only":{"planner":"DISPATCH_ACCEPTED","owner":"RELEASE_UNKNOWN_EFFECT_NONE","verifier":"NOT_VERIFIED"},
+    "released_no_effect":{"planner":"DISPATCH_ACCEPTED","owner":"RELEASED_EFFECT_NONE","verifier":"NOT_VERIFIED"},
+    "verified_effect":{"planner":"DISPATCH_ACCEPTED","owner":"RELEASED_TARGET_MATCH_NO_CHILD","verifier":"VERIFIED"},
+    "wrong_target":{"planner":"DISPATCH_ACCEPTED","owner":"RELEASED_WRONG_TARGET","verifier":"CONTRADICTED"},
+    "delayed_effect":{"planner":"DISPATCH_ACCEPTED","owner":"RELEASED_EFFECT_PENDING","verifier":"UNKNOWN"},
+    "child_unresolved":{"planner":"DISPATCH_ACCEPTED","owner":"RELEASED_TARGET_MATCH_CHILD_UNRESOLVED","verifier":"VERIFIED_WITH_CHILD_OBLIGATION"},
+    "explicit_unknown":{"planner":"DISPATCH_UNKNOWN","owner":"RELEASE_UNKNOWN_EFFECT_UNKNOWN","verifier":"UNKNOWN"},
+    "contradictory_receipts":{"planner":"DISPATCH_ACCEPTED_CONFLICT_FLAG","owner":"CONFLICT_PRESERVED","verifier":"CONFLICT_NOT_PASS"}
+  }
+}

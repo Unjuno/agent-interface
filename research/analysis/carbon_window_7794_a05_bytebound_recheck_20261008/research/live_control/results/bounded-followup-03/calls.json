@@ -1,0 +1,270 @@
+[
+  {
+    "request": {
+      "after": 0,
+      "events": [
+        "clock"
+      ],
+      "timeout": 2,
+      "command": {
+        "op": "clock"
+      },
+      "request_id": "9508bd134f8e4f1cb50911e81c6ad8e0"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "clock",
+            "transport_request_id": "9508bd134f8e4f1cb50911e81c6ad8e0"
+          },
+          "fixture_emitted_ns": 79692550579
+        },
+        {
+          "event": "clock",
+          "runtime_ns": 79694678739,
+          "sequence": 1,
+          "fixture_emitted_ns": 79694681450
+        }
+      ],
+      "cursor": 2,
+      "returned_ns": 79704300680,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "9508bd134f8e4f1cb50911e81c6ad8e0",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "started_ns": 79627602553,
+    "returned_ns": 79704562134
+  },
+  {
+    "request": {
+      "after": 2,
+      "events": [
+        "input_stopped",
+        "terminal"
+      ],
+      "timeout": 2,
+      "action_id": "fault",
+      "command": {
+        "op": "submit",
+        "id": "fault",
+        "steps": [
+          {
+            "op": "fault"
+          },
+          {
+            "op": "tail"
+          }
+        ],
+        "expected_sequence": 1,
+        "valid_until_ns": 84694678739
+      },
+      "request_id": "428cf42fb30345308e062bc29fa22fac"
+    },
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "expected_sequence": 1,
+            "id": "fault",
+            "op": "submit",
+            "steps": [
+              {
+                "op": "fault"
+              },
+              {
+                "op": "tail"
+              }
+            ],
+            "transport_request_id": "428cf42fb30345308e062bc29fa22fac",
+            "valid_until_ns": 84694678739
+          },
+          "fixture_emitted_ns": 79705163899
+        },
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 2,
+          "valid_until_ns": 84694678739,
+          "accepted_ns": 79712511417,
+          "fixture_emitted_ns": 79712512696
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 79723534287,
+          "fixture_emitted_ns": 79723535851
+        },
+        {
+          "event": "input_stopped",
+          "id": "fault",
+          "decision_reason": "focus_changed",
+          "interruption": {
+            "intent_token": "aca98f3f1a2b41c1be38c82d4f74e8e7",
+            "record": {
+              "event": "owner_release",
+              "reason": "focus_changed",
+              "verified": true
+            }
+          },
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          },
+          "stopped_ns": 79731719974,
+          "followup": "two passive observations; terminal follows; no further program steps",
+          "fixture_emitted_ns": 79731722057
+        }
+      ],
+      "cursor": 6,
+      "returned_ns": 79742823950,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "428cf42fb30345308e062bc29fa22fac",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "started_ns": 79704608010,
+    "returned_ns": 79742989871
+  },
+  {
+    "request": {
+      "after": 6,
+      "events": [
+        "terminal"
+      ],
+      "action_id": "fault",
+      "timeout": 0.4
+    },
+    "started_ns": 79828522027,
+    "reply": {
+      "status": "timeout",
+      "records": [],
+      "cursor": 6,
+      "returned_ns": 80229254769,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    },
+    "returned_ns": 80229607830
+  },
+  {
+    "request": {
+      "after": 6,
+      "events": [
+        "terminal"
+      ],
+      "action_id": "fault",
+      "timeout": 0.4
+    },
+    "started_ns": 80238591611,
+    "reply": {
+      "status": "boundary",
+      "records": [
+        {
+          "event": "observation",
+          "id": "fault",
+          "sequence": 2,
+          "fixture_emitted_ns": 80425620156
+        },
+        {
+          "event": "observation",
+          "id": "fault",
+          "sequence": 3,
+          "fixture_emitted_ns": 80515751280
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "verified": true,
+            "keys_down": [],
+            "buttons_down": []
+          },
+          "interruption": {
+            "intent_token": "aca98f3f1a2b41c1be38c82d4f74e8e7",
+            "record": {
+              "event": "owner_release",
+              "reason": "focus_changed",
+              "verified": true
+            }
+          },
+          "decision_reason": "focus_changed",
+          "post_release_observation": {
+            "captures": 2,
+            "sequences": [
+              2,
+              3
+            ],
+            "equal_sample_pair": true,
+            "error": null,
+            "stopped": false,
+            "authority": "none; no input or lease renewal",
+            "scope": "up to two samples with 80ms waits before capture; not readiness or semantic completion",
+            "elapsed_ms": 776.791009
+          },
+          "terminal_ns": 80519058757,
+          "semantic_completion": "program status only; task scoring is separate",
+          "fixture_emitted_ns": 80519062259
+        }
+      ],
+      "cursor": 9,
+      "returned_ns": 80529192079,
+      "authority": "none",
+      "acknowledgement": "not implied"
+    },
+    "returned_ns": 80529467508
+  },
+  {
+    "request": {
+      "after": 9,
+      "events": [
+        "terminal"
+      ],
+      "timeout": 0.1,
+      "command": {
+        "op": "finish"
+      },
+      "request_id": "42326cd3ebd34f9da66d3fbee68a9138"
+    },
+    "reply": {
+      "status": "closed",
+      "records": [
+        {
+          "event": "command",
+          "command": {
+            "op": "finish",
+            "transport_request_id": "42326cd3ebd34f9da66d3fbee68a9138"
+          },
+          "fixture_emitted_ns": 80537173172
+        }
+      ],
+      "cursor": 10,
+      "returned_ns": 80543681854,
+      "authority": "none",
+      "acknowledgement": "not implied",
+      "command_receipt": {
+        "request_id": "42326cd3ebd34f9da66d3fbee68a9138",
+        "replayed": false,
+        "state": "stdin_flushed"
+      }
+    },
+    "started_ns": 80536458802,
+    "returned_ns": 80543923803
+  }
+]

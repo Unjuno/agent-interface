@@ -1,0 +1,6 @@
+"""Revision 2; compose with the unchanged, frozen C01 supplement."""
+from boundary_audit import audit as previous_audit
+
+
+def audit(raw):
+    return previous_audit(raw)

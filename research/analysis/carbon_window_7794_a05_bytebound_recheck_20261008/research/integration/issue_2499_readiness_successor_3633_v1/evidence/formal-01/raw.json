@@ -1,0 +1,514 @@
+{
+  "allocation_id": "issue3633-readiness-identity-v4-formal-01",
+  "apps": [
+    "inkscape",
+    "libreoffice",
+    "chromium"
+  ],
+  "cleanup": {
+    "chromium": {
+      "pid": 118,
+      "reaped": true,
+      "returncode": 0,
+      "start_ticks": null
+    },
+    "inkscape": {
+      "pid": 11,
+      "reaped": true,
+      "returncode": -15,
+      "start_ticks": null
+    },
+    "libreoffice": {
+      "pid": 66,
+      "reaped": true,
+      "returncode": 255,
+      "start_ticks": null
+    },
+    "x_socket_absent": true,
+    "xvfb": {
+      "pid": 8,
+      "reaped": true,
+      "returncode": 0,
+      "start_ticks": null
+    }
+  },
+  "decision": "PASS_READINESS_IDENTITY_V4_SCOPED",
+  "display": ":141",
+  "filters": {
+    "chromium": {
+      "fields": [
+        "title",
+        "wm_class"
+      ],
+      "needle": "chromium"
+    },
+    "inkscape": {
+      "fields": [
+        "title",
+        "wm_class"
+      ],
+      "needle": "inkscape"
+    },
+    "libreoffice": {
+      "fields": [
+        "title",
+        "wm_class"
+      ],
+      "needle": "libreoffice calc"
+    }
+  },
+  "forbidden_operations": {
+    "focus": 0,
+    "geometry": 0,
+    "input": 0,
+    "model": 0,
+    "network": 0
+  },
+  "processes": [
+    {
+      "app": "inkscape",
+      "pid": 11,
+      "start_ticks": "6014298"
+    },
+    {
+      "app": "libreoffice",
+      "pid": 66,
+      "start_ticks": "6014353"
+    },
+    {
+      "app": "chromium",
+      "pid": 118,
+      "start_ticks": "6014404"
+    }
+  ],
+  "raw_sha256": "2cbba7489555d241ea3a6fe136e73fccde267726092a33d438e424ce42d55bf7",
+  "readiness": {
+    "admitted": true,
+    "reason": "admitted"
+  },
+  "repeated": {
+    "chromium": {
+      "display": ":141",
+      "pid": 118,
+      "probe_returncodes": [
+        0,
+        0,
+        0
+      ],
+      "title": "about:blank - Chromium",
+      "window_id": 10485763,
+      "wm_class": "WM_CLASS(STRING) = \"chromium (/tmp/issue3633-a3_linfi/chrome)\", \"Chromium\""
+    },
+    "inkscape": {
+      "display": ":141",
+      "pid": 11,
+      "probe_returncodes": [
+        0,
+        0,
+        0
+      ],
+      "title": "Inkscape 1.2.2 (b0a8486541, 2022-12-01)",
+      "window_id": 2097159,
+      "wm_class": "WM_CLASS(STRING) = \"org.inkscape.Inkscape\", \"Inkscape\""
+    },
+    "libreoffice": {
+      "display": ":141",
+      "pid": 95,
+      "probe_returncodes": [
+        0,
+        0,
+        0
+      ],
+      "title": "Untitled 1 - LibreOffice Calc",
+      "window_id": 6292261,
+      "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+    }
+  },
+  "selected": {
+    "chromium": {
+      "display": ":141",
+      "pid": 118,
+      "probe_returncodes": [
+        0,
+        0,
+        0
+      ],
+      "title": "about:blank - Chromium",
+      "window_id": 10485763,
+      "wm_class": "WM_CLASS(STRING) = \"chromium (/tmp/issue3633-a3_linfi/chrome)\", \"Chromium\""
+    },
+    "inkscape": {
+      "display": ":141",
+      "pid": 11,
+      "probe_returncodes": [
+        0,
+        0,
+        0
+      ],
+      "title": "Inkscape 1.2.2 (b0a8486541, 2022-12-01)",
+      "window_id": 2097159,
+      "wm_class": "WM_CLASS(STRING) = \"org.inkscape.Inkscape\", \"Inkscape\""
+    },
+    "libreoffice": {
+      "display": ":141",
+      "pid": 95,
+      "probe_returncodes": [
+        0,
+        0,
+        0
+      ],
+      "title": "Untitled 1 - LibreOffice Calc",
+      "window_id": 6292261,
+      "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+    }
+  },
+  "snapshots": {
+    "chromium": [
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 1293,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 11,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Inkscape 1.2.2 (b0a8486541, 2022-12-01)",
+        "window_id": 2097159,
+        "wm_class": "WM_CLASS(STRING) = \"org.inkscape.Inkscape\", \"Inkscape\""
+      },
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 2097160,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 95,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Untitled 1 - LibreOffice Calc",
+        "window_id": 6292261,
+        "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+      },
+      {
+        "display": ":141",
+        "pid": 95,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Tip of the Day: 1/225",
+        "window_id": 6292535,
+        "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+      },
+      {
+        "display": ":141",
+        "pid": 118,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "about:blank - Chromium",
+        "window_id": 10485763,
+        "wm_class": "WM_CLASS(STRING) = \"chromium (/tmp/issue3633-a3_linfi/chrome)\", \"Chromium\""
+      }
+    ],
+    "formal_first": [
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 1293,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 11,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Inkscape 1.2.2 (b0a8486541, 2022-12-01)",
+        "window_id": 2097159,
+        "wm_class": "WM_CLASS(STRING) = \"org.inkscape.Inkscape\", \"Inkscape\""
+      },
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 2097160,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 95,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Untitled 1 - LibreOffice Calc",
+        "window_id": 6292261,
+        "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+      },
+      {
+        "display": ":141",
+        "pid": 95,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Tip of the Day: 1/225",
+        "window_id": 6292535,
+        "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+      },
+      {
+        "display": ":141",
+        "pid": 118,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "about:blank - Chromium",
+        "window_id": 10485763,
+        "wm_class": "WM_CLASS(STRING) = \"chromium (/tmp/issue3633-a3_linfi/chrome)\", \"Chromium\""
+      }
+    ],
+    "formal_second": [
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 1293,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 11,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Inkscape 1.2.2 (b0a8486541, 2022-12-01)",
+        "window_id": 2097159,
+        "wm_class": "WM_CLASS(STRING) = \"org.inkscape.Inkscape\", \"Inkscape\""
+      },
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 2097160,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 95,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Untitled 1 - LibreOffice Calc",
+        "window_id": 6292261,
+        "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+      },
+      {
+        "display": ":141",
+        "pid": 95,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Tip of the Day: 1/225",
+        "window_id": 6292535,
+        "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+      },
+      {
+        "display": ":141",
+        "pid": 118,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "about:blank - Chromium",
+        "window_id": 10485763,
+        "wm_class": "WM_CLASS(STRING) = \"chromium (/tmp/issue3633-a3_linfi/chrome)\", \"Chromium\""
+      }
+    ],
+    "inkscape": [
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 1293,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 11,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Inkscape 1.2.2 (b0a8486541, 2022-12-01)",
+        "window_id": 2097159,
+        "wm_class": "WM_CLASS(STRING) = \"org.inkscape.Inkscape\", \"Inkscape\""
+      },
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 2097160,
+        "wm_class": "WM_CLASS:  not found."
+      }
+    ],
+    "libreoffice": [
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 1293,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 11,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Inkscape 1.2.2 (b0a8486541, 2022-12-01)",
+        "window_id": 2097159,
+        "wm_class": "WM_CLASS(STRING) = \"org.inkscape.Inkscape\", \"Inkscape\""
+      },
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "",
+        "window_id": 2097160,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": null,
+        "probe_returncodes": [
+          0,
+          1,
+          0
+        ],
+        "title": "LibreOffice",
+        "window_id": 4194305,
+        "wm_class": "WM_CLASS:  not found."
+      },
+      {
+        "display": ":141",
+        "pid": 95,
+        "probe_returncodes": [
+          0,
+          0,
+          0
+        ],
+        "title": "Untitled 1 - LibreOffice Calc",
+        "window_id": 6292261,
+        "wm_class": "WM_CLASS(STRING) = \"libreoffice\", \"libreoffice-calc\""
+      }
+    ]
+  },
+  "unit_gate": {
+    "command": [
+      "/usr/bin/python3",
+      "-m",
+      "unittest",
+      "research.integration.mixed_app_identity_2666.test_identity_gate"
+    ],
+    "returncode": 0,
+    "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n",
+    "stdout": ""
+  },
+  "xauth_add": {
+    "argv": [
+      "xauth",
+      "-f",
+      "/tmp/issue3633-a3_linfi/Xauthority",
+      "add",
+      ":141",
+      ".",
+      "0123456789abcdef0123456789abcdef"
+    ],
+    "returncode": null,
+    "stderr": "FileNotFoundError(2, 'No such file or directory')",
+    "stdout": ""
+  }
+}

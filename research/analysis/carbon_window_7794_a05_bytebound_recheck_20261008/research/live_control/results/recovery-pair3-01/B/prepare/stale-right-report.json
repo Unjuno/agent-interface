@@ -1,0 +1,61 @@
+{
+  "state": "needs_reconciliation",
+  "exchanges": [
+    {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 5,
+        "request_id": "clock-c811711ad3cf4c8dad963a2024555ce9",
+        "command": {
+          "op": "clock"
+        }
+      },
+      "started_ns": 27554270503,
+      "returned_ns": 27569475482,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "clock-12d6dc675aa34ed09d6cd009315a5993"
+            },
+            "emitted_ns": 27320301863
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 27323507700,
+            "sequence": 1,
+            "emitted_ns": 27323521063
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 27565381937,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "clock-c811711ad3cf4c8dad963a2024555ce9",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    }
+  ],
+  "program_sent": false,
+  "source_image": {
+    "status": "image",
+    "sequence": 1,
+    "capture_ns": 5653513950,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair3-01/B/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "26d83e73f783fdcf07ebbd13b7cc8f1eafcb46466bffb4295b7b194a0887c896",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "reason": "own command echo required",
+  "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies"
+}

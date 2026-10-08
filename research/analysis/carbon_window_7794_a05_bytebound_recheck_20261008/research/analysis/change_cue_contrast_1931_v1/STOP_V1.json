@@ -1,0 +1,19 @@
+{
+  "allocation": "change-cue-contrast-4436-v1",
+  "disposition": "STOP_FORMAL_ENVIRONMENT_API_MISMATCH",
+  "formal_invocations": 1,
+  "scientific_rows": 0,
+  "reruns": 0,
+  "replacement_within_allocation": 0,
+  "error_type": "TypeError",
+  "error": "gzip.open() got an unexpected keyword argument 'mtime'",
+  "failing_call": "gzip.open(raw_path, 'wt', newline='', encoding='utf-8', compresslevel=9, mtime=0)",
+  "python": "3.13.5",
+  "observed_gzip_open_signature": "(filename, mode='rb', compresslevel=9, encoding=None, errors=None, newline=None)",
+  "observed_gzip_GzipFile_signature": "(filename=None, mode=None, compresslevel=9, fileobj=None, mtime=None)",
+  "formal_dir_created": true,
+  "formal_files_created": 0,
+  "formal_stdout_bytes": 0,
+  "scientific_claim": null,
+  "next_action": "same Issue, separately frozen allocation v2 changing only gzip writer API compatibility"
+}

@@ -1,0 +1,17 @@
+{
+  "allocation": "PERSISTENCE-GATED-OPTIONAL-THROTTLE-6650-CONTROL-REPLAY-20261002-02",
+  "candidate_runs": 0,
+  "independent_auditor_runs": 1,
+  "retries": 0,
+  "command": "docker run --rm --name unjuno-6650-control-replay-audit02 --network none --read-only --cpus=0.5 --memory=536870912 --pids-limit=64 --cap-drop=ALL --security-opt=no-new-privileges --mount type=bind,src=$PWD,dst=/src,readonly --mount type=bind,src=$PWD/research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01/formal_02,dst=/out --workdir /src --env PYTHONDONTWRITEBYTECODE=1 python@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0 python3 research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01/auditor_02.py /src/research/analysis/persistence_gated_throttle_6650_control_replay_20261002_01 /out/AUDIT.json",
+  "exit": 0,
+  "result": "PASS_AUDIT_REPLAY_SCOPED",
+  "container_id": "4a40ce2cf157ae32db1773b3f68a76254ffbf69697bc11e548741b5a432ab873",
+  "runtime": "OrbStack Docker Engine 29.4.0; Linux 7.0.14-orbstack-00380-ga7e0a2dc9535; linux/arm64; Python 3.13.15",
+  "image": "python@sha256:8d9d0b8bcf6506481eae4907c18f5e3e7902e629f5f6d684f9e7c32e85e3ddf0",
+  "audit": {"policy_replays": 36, "mismatches": 0, "mutation_controls": 9, "rejected_mutations": 9},
+  "raw_sha256": "8022a834d4e5e32e9af01438dbc3ea57312addb06ed714126e28eee77e3faca6",
+  "fixture_sha256": "4d190dff60ae3aac92c1dc9e348f39b0e6f321d2fdf5cca022479c4ff8037087",
+  "docker_events": "docker-events.jsonl",
+  "resource_diagnostic": "container-runtime.txt (separate diagnostic container; cgroup v2 values are observations, not a general enforcement claim)"
+}

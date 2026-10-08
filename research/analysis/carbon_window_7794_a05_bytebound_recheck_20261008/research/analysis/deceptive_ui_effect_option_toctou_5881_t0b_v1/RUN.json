@@ -1,0 +1,21 @@
+{
+  "allocation": "AI-5881-T0B-20261002-01",
+  "base_main_commit": "69a1bf509eb432e5e3c0c294d05ad7671d86adb6",
+  "formal": true,
+  "retries": 0,
+  "invocations": {
+    "candidate": {"count": 1, "exit_code": 0, "rows": 24},
+    "effect_simulator": {"count": 1, "exit_code": 0, "rows": 24},
+    "unit_tests": {"count": 1, "exit_code": 0, "passed": 10, "failed": 0},
+    "independent_auditor": {"count": 1, "exit_code": 0, "errors": 0, "disposition": "METHOD_PASS_SCOPED_WITH_RESIDUAL_RACE"}
+  },
+  "result": {
+    "pre_admission_unauthorized_addons": {"TARGET_ONLY": 4, "FRESH_EFFECT_BOUNDARY": 0},
+    "all_case_unauthorized_addons": {"PLAIN": 5, "TARGET_ONLY": 5, "FRESH_EFFECT_BOUNDARY": 1},
+    "fresh_gate_residual_post_admission_races": 1,
+    "authorized_deceptive_optin_completed": true
+  },
+  "container": {"used": false, "reason": "Docker Desktop service and WSL distro stopped; Ubuntu Engine socket absent"},
+  "scope": "synthetic method only; non-atomic read-to-click residual explicitly retained"
+}
+

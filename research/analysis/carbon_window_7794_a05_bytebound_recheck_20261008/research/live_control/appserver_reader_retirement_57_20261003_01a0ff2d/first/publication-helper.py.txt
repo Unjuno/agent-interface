@@ -1,0 +1,237 @@
+import ast, hashlib, json, os, subprocess
+from datetime import datetime, timezone
+from pathlib import Path
+
+root = Path(__file__).resolve().parent.parent
+repo = root / 'work/agent-interface'
+private = root / 'work/repairs/appserver-journal-close-02'
+out = root / 'outputs/appserver-journal-close-02'
+public = root / 'work/publication/journal-close-02'
+public.mkdir(exist_ok=False)
+prefix = 'research/live_control/appserver_reader_retirement_57_20261003_01a0ff2d/'
+parent = '31f10e660d2e7e13d8fe05c9a56d3f3c5e71f324'
+review_base = 'dd6f54bf540ffe10b17696b8a933ff6c92fd3bc1'
+branch = 'fix/appserver-journal-close-01a0ff2d-20261003'
+index = root / 'work/private-index-appserver-journal-close-02'
+if index.exists():
+    raise ValueError('private index already exists')
+env = dict(os.environ, GIT_INDEX_FILE=str(index), GIT_NO_LAZY_FETCH='1')
+receipts = []
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+def git(label, *args, data=None):
+    argv = ['git', '-c', 'maintenance.auto=false', '-c', 'gc.auto=0', *args]
+    begin = datetime.now(timezone.utc).isoformat()
+    process = subprocess.Popen(argv, cwd=repo, env=env, stdin=subprocess.PIPE if data is not None else subprocess.DEVNULL,
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate(data, timeout=60)
+    for stream, value in [('stdout', stdout), ('stderr', stderr)]:
+        (out / (label + '.' + stream)).write_bytes(value)
+    receipts.append({'label': label, 'argv': argv, 'pid': process.pid, 'start_utc': begin,
+                     'end_utc': datetime.now(timezone.utc).isoformat(), 'exit_code': process.returncode,
+                     'stdout_bytes': len(stdout), 'stdout_sha256': sha(stdout), 'stderr_bytes': len(stderr), 'stderr_sha256': sha(stderr)})
+    (out / 'PUBLICATION_GIT_RECEIPTS.json').write_text(json.dumps(receipts, indent=2) + '\n', encoding='utf-8')
+    if process.returncode != 0:
+        raise RuntimeError((label, process.returncode, stderr[:1000]))
+    return stdout
+
+client = (private / 'codex_app_server_client_v2.py').read_bytes()
+old_tests = (private / 'test_appserver_journal_close_01a0ff2d.py').read_bytes()
+new_tests = (private / 'test_appserver_reader_retirement_01a0ff2d.py').read_bytes()
+if sha(client) != '9a1e4a31ae281e33f3e576dac4b78458e439c3b1d358afd9f9d2c64d7c1a5eb2':
+    raise ValueError('final client differs')
+freeze = json.loads((out / 'FREEZE_BEFORE_RED.json').read_bytes())
+if sha(old_tests) != freeze['adapted_test_sha256'] or sha(new_tests) != freeze['new_test_sha256']:
+    raise ValueError('frozen tests differ')
+for stage in ('green-normal', 'green-optimized'):
+    r = json.loads((out / stage / 'receipt.json').read_bytes())
+    if r['exit_code'] != 0 or r['identities']['codex_app_server_client_v2.py']['sha256'] != sha(client):
+        raise ValueError('final source/test evidence differs')
+before_native = git('native-before', 'show', parent + ':runtime/integration_checks/native.py')
+old = b"'test_appserver_journal_close_01a0ff2d']"
+new = b"'test_appserver_journal_close_01a0ff2d', 'test_appserver_reader_retirement_01a0ff2d']"
+if before_native.count(old) != 1:
+    raise ValueError('protocol insertion point differs')
+after_native = before_native.replace(old, new, 1)
+def suites(data):
+    node = next(n for n in ast.parse(data).body if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'SUITES' for t in n.targets))
+    return ast.literal_eval(node.value)
+first, second = suites(before_native), suites(after_native)
+if second['protocol'] != first['protocol'] + ['test_appserver_reader_retirement_01a0ff2d'] or any(second[k] != first[k] for k in first if k != 'protocol'):
+    raise ValueError('native selection scope differs')
+before_readme = git('readme-before', 'show', parent + ':research/live_control/README.md')
+after_readme = before_readme.rstrip(b'\n') + b'\n\n- [Reader retirement and late-frame custody repair](appserver_reader_retirement_57_20261003_01a0ff2d/README.md): close reports a live reader before closing the journal; preserves earlier mutex/None semantics and all first failures.\n'
+home = str(Path.home())
+replacements = {home: '<OWN_HOME>', home.replace('\\', '/'): '<OWN_HOME>', json.dumps(home)[1:-1]: '<OWN_HOME>'}
+def scrub(value):
+    if isinstance(value, str):
+        for old, new in replacements.items():
+            value = value.replace(old, new)
+        return value
+    if isinstance(value, dict):
+        return {k: scrub(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [scrub(v) for v in value]
+    return value
+projections = []
+def add(name, original):
+    data = (json.dumps(scrub(json.loads(original)), indent=2) + '\n').encode() if name.endswith('.json') else scrub(original.decode('utf-8')).encode()
+    target = public / name
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(data)
+    projections.append({'path': name, 'original_bytes': len(original), 'original_sha256': sha(original),
+                        'public_bytes': len(data), 'public_sha256': sha(data), 'changed': data != original,
+                        'projection': 'Own home spellings and JSON formatting only; original stream receipt hashes retain original meaning'})
+for relative in ['FREEZE_BEFORE_RED.json', 'FIX_BEFORE_GREEN.json']:
+    add('evidence/' + relative, (out / relative).read_bytes())
+for stage in ('red', 'green-normal', 'green-optimized'):
+    for path in sorted((out / stage).rglob('*')):
+        if path.is_file():
+            add('evidence/' + path.relative_to(out).as_posix(), path.read_bytes())
+for name, data in [('v1-client.py.txt', (private / 'v1-client.py.txt').read_bytes()),
+                   ('v2-client.py.txt', client), ('v1-test.py.txt', (private / 'v1-test.py.txt').read_bytes()),
+                   ('v2-mutex-test.py.txt', old_tests), ('v2-reader-test.py.txt', new_tests),
+                   ('native-before.py.txt', before_native), ('native-after.py.txt', after_native)]:
+    add('source/' + name, data)
+for name in ['prepare_appserver_reader_retirement_v2.py', 'run_appserver_reader_retirement_v2.py', 'repair_appserver_reader_retirement_v2.py']:
+    add('helpers/' + name + '.txt', (root / 'work' / name).read_bytes())
+pid_summary = json.loads((out / 'POST_OWNED_PID_OBSERVATION.json').read_bytes())
+generation = json.loads((out / 'POST_PRESENT_PID_GENERATION.json').read_bytes())
+pid_summary['present_pid_qualification'] = {'pid': 33504, 'current_name': generation['generation']['Name'],
+    'created_utc': generation['generation']['CreationDate'], 'recorded_transport_terminal_before_utc': '2026-10-03T09:50:40.068831+00:00',
+    'interpretation': 'Current process is a later pwsh.exe generation, not recorded Python transport. No unrelated private command/identity is published; no termination sent.'}
+(public / 'OWNED_PID_STATUS.json').write_text(json.dumps(pid_summary, indent=2) + '\n', encoding='utf-8')
+assist = root / 'outputs/6955-reader-retirement-assist'
+for name in ['ANALYSIS.md', 'final-saved-review.json', 'data-source-receipt.json',
+             'inspection-first-error.txt', 'decode_and_compare.py', 'review_final_saved.py',
+             'final-saved-review-receipt.json', 'final-saved-review.stdout.log', 'final-saved-review.stderr.log']:
+    path = assist / name
+    if path.is_file():
+        add('same-author-assistance/' + (name + '.txt' if name.endswith('.py') else name), path.read_bytes())
+(public / 'PROJECTIONS.json').write_text(json.dumps({'files': projections, 'scope': 'Originals stay privately retained; projected streams are joined by these two separate identities, not original-hash authentication of redacted bytes'}, indent=2) + '\n', encoding='utf-8')
+(public / '.gitattributes').write_text('** -text whitespace=-cr-at-eol,-blank-at-eof\n*.log binary\n', encoding='utf-8')
+(public / 'README.md').write_text('''# Reader retirement and late-frame custody repair
+
+After parent exit, `join(timeout)` can time out with the stdout reader still live.
+V1 closes the journal anyway: a valid late frame then raises ValueError while
+recording and never reaches the cache. V2 adds one actual `is_alive()` check after
+join and before journal handling. It raises TimeoutError on incomplete reader
+retirement and leaves the journal open. Once the writer releases stdout, the real
+reader records and caches its frame; a separate bounded close completes.
+
+This follows b04b's concrete witness5967690163/advisory5967736791. Their original
+descendant cells are not replayed. The new ordinary fixture uses an exited harmless
+parent and a separately owned harmless writer retaining the same OS pipe. Both
+actual Popen handles belong to this driver; no arbitrary descendant-kill claim.
+Python's documented join contract requires checking is_alive after timed join:
+https://docs.python.org/3.12/library/threading.html#threading.Thread.join
+
+Actual Windows11 build26200 / CPython3.12.10, three necessary commands:
+
+| Stage | Methods | Exit | Result |
+| --- | ---: | ---: | --- |
+| First RED, V1 source | 3 | 1 | healthy EOF passes; journal ValueError loses frame; no-journal incorrectly returns normally |
+| V2 normal | 10 | 0 | prior seven plus three new reader cases pass |
+| V2 -O | 10 | 0 | same unchanged definitions pass without assert-dependent production guard |
+
+Full actual argv/source/test/native PID/UTC/exits/raw streams and23 case rows are
+retained. Five new-fixture transport invocations in RED and eight per final command
+(21 total, max2 simultaneous) are ordinary repair phases, not independent formal
+trials. All recorded transport process waits ended0, readers/callers retired, and
+driver pipes closed. A late targeted PID-number check found20 absent and one later
+pwsh.exe generation; the recorded Python child had already exited. There was no
+termination of the unrelated generation. Thread error metadata and original test
+traceback are preserved; no separate full reader-exception traceback was captured.
+
+The earlier journal-mutex acquisition, same journal-close exception/finally release,
+explicit None mode and all other client methods remain unchanged. The old fake
+RetiredReader adds only is_alive()->False; its seven assertions/methods remain
+AST-identical. The native protocol selector appends the new reader module exactly
+once, retaining the mutex module and all other selections. Both modules were tested
+directly in the dedicated directory; the full native/hosted suite was not rerun.
+
+This observes one notification route. Response-cache preservation is unchanged-
+source inference; live-reader/already-closed-journal guard ordering is source
+reasoning, not an extra native case. None is interface/contract preservation, not
+measurement of an unbounded wait. The freeze's monotonic clock is GetTickCount64,
+resolution15.625ms; checkpoints/configured phase budgets are not hard wall deadlines.
+No guaranteed termination of arbitrary descendants, complete pipe/OS/journal-I/O
+deadline, input release, Codex/model/game/GUI/formal task or efficiency result.
+
+Prior105-path V1 tree and its101-file evidence package remain preserved as ancestry;
+V1's mutex-only vote is historical and does not approve this changed V2 contract.
+Snapshot/helpers end .txt; evidence lives in an inert namespace. Fresh exact V2
+content review and actual-current nonauthor combination/live authority/ownership/
+requirements/cancellation checks precede any expected-old forward main update.
+Votes/application sends remain outside this source tree. Main writes0.
+''', encoding='utf-8')
+manifest = {'schema': 'appserver-reader-retirement-v2-public-evidence', 'parent': parent,
+            'review_base': review_base, 'client_sha256': sha(client), 'methods': 10, 'saved_rows': 23,
+            'formal_or_peer_replay': False, 'files': []}
+for path in sorted(public.rglob('*')):
+    if path.is_file():
+        data = path.read_bytes()
+        manifest['files'].append({'path': path.relative_to(public).as_posix(), 'bytes': len(data), 'sha256': sha(data)})
+(public / 'MANIFEST.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+changes = {'research/live_control/codex_app_server_client_v2.py': client,
+           'research/live_control/test_appserver_journal_close_01a0ff2d.py': old_tests,
+           'research/live_control/test_appserver_reader_retirement_01a0ff2d.py': new_tests,
+           'runtime/integration_checks/native.py': after_native, 'research/live_control/README.md': after_readme}
+for path in sorted(public.rglob('*')):
+    if path.is_file():
+        changes[prefix + path.relative_to(public).as_posix()] = path.read_bytes()
+git('read-parent', 'read-tree', parent)
+oids = {}
+for i, (name, data) in enumerate(sorted(changes.items())):
+    oid = git('hash-%03d' % i, 'hash-object', '-w', '--stdin', data=data).decode().strip()
+    oids[name] = oid
+cache_info = b''.join(('100644 ' + oids[name] + '\t' + name + '\0').encode() for name in sorted(changes))
+git('update-index', 'update-index', '-z', '--index-info', data=cache_info)
+tree = git('write-tree', 'write-tree', '--missing-ok').decode().strip()
+head = git('commit', 'commit-tree', tree, '-p', parent, data=b'fix(client): preserve late frames until reader retires [skip ci]\n').decode().strip()
+delta_paths = git('delta-paths', 'diff', '--name-only', '-z', '--no-renames', parent, head).split(b'\0')[:-1]
+if [p.decode() for p in delta_paths] != sorted(changes):
+    raise ValueError('unexpected parent delta')
+git('forward-history', 'merge-base', '--is-ancestor', parent, head)
+git('diff-check', '--attr-source=' + head, 'diff', '--check', review_base, head)
+all_paths = git('all-paths', 'diff', '--name-only', '-z', '--no-renames', review_base, head).split(b'\0')[:-1]
+tree_data = git('all-images-tree', 'ls-tree', '-r', '-z', head, '--', *[p.decode() for p in all_paths])
+entries = []
+for row in tree_data.split(b'\0'):
+    if row:
+        meta, name = row.split(b'\t', 1)
+        mode, kind, oid = meta.decode().split()
+        if kind != 'blob' or mode != '100644':
+            raise ValueError('unexpected image kind/mode')
+        entries.append({'path': name.decode(), 'mode': mode, 'oid': oid})
+blob_data = git('all-blob-bytes', 'cat-file', '--batch', data=b''.join((e['oid'] + '\n').encode() for e in entries))
+cursor = 0
+for entry in entries:
+    end = blob_data.index(b'\n', cursor)
+    oid, kind, size_text = blob_data[cursor:end].decode().split()
+    size = int(size_text)
+    value = blob_data[end+1:end+1+size]
+    cursor = end + 2 + size
+    if oid != entry['oid'] or kind != 'blob' or hashlib.sha1(b'blob ' + str(size).encode() + b'\0' + value).hexdigest() != oid:
+        raise ValueError('blob framing/identity differs')
+    if entry['path'] in changes and value != changes[entry['path']]:
+        raise ValueError('written image differs')
+    entry.update(bytes=size, sha256=sha(value))
+if cursor != len(blob_data) or sorted(e['path'] for e in entries) != [p.decode() for p in all_paths]:
+    raise ValueError('full image coverage differs')
+v1 = json.loads((root / 'outputs/appserver-journal-close-01/PUBLICATION.json').read_bytes())
+images = {e['path']: e for e in entries}
+old_prefix = v1['prefix']
+for entry in v1['images']:
+    if entry['path'].startswith(old_prefix) and images[entry['path']] != entry:
+        raise ValueError('old proof image changed')
+record = {'head': head, 'tree': tree, 'parent': parent, 'review_base': review_base, 'branch': branch,
+          'prefix': prefix, 'changed_paths': len(entries), 'v2_delta_paths': len(changes),
+          'new_package_files': len(manifest['files']) + 1, 'manifest_targets': len(manifest['files']),
+          'projection_targets': len(projections), 'images': entries,
+          'old101_proof_images_unchanged': True, 'all_actual_git_images_read_back': True,
+          'diff_check_exit': 0, 'protocol_addition_once': True, 'native_full_suite_run': False,
+          'main_sends': 0, 'private_index': str(index)}
+(out / 'PUBLICATION.json').write_text(json.dumps(record, indent=2) + '\n', encoding='utf-8')
+git('local-owned-ref', 'update-ref', 'refs/heads/' + branch, head, parent)
+print(json.dumps({k: v for k, v in record.items() if k not in ('images', 'private_index')}, indent=2))

@@ -1,0 +1,627 @@
+{
+  "success": true,
+  "scope": "synthetic; no X11 or model performance claim",
+  "cases": [
+    {
+      "cause": "focus_changed",
+      "explicit": "",
+      "release_ok": true,
+      "events": [
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 1,
+          "valid_until_ns": 37324913872,
+          "accepted_ns": 32325069208
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 32325391608
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "verified": true
+          },
+          "interruption": {
+            "intent_token": "48d71ea95a91406cb5f77240d3cc0428",
+            "record": {
+              "event": "owner_release",
+              "reason": "focus_changed",
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": []
+            }
+          },
+          "decision_reason": "focus_changed",
+          "terminal_ns": 32325673643,
+          "semantic_completion": "program status only; task scoring is separate"
+        },
+        {
+          "event": "accepted",
+          "id": "fresh",
+          "steps": 1,
+          "valid_until_ns": 37324913872,
+          "accepted_ns": 32325915415
+        },
+        {
+          "event": "step_started",
+          "id": "fresh",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 32326282194
+        },
+        {
+          "event": "step_completed",
+          "id": "fresh",
+          "step": 0,
+          "completed_ns": 32326289173
+        },
+        {
+          "event": "terminal",
+          "id": "fresh",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32326388043,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ]
+    },
+    {
+      "cause": "surface_changed",
+      "explicit": "",
+      "release_ok": true,
+      "events": [
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 1,
+          "valid_until_ns": 37326509131,
+          "accepted_ns": 32326563229
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 32326865883
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "verified": true
+          },
+          "interruption": {
+            "intent_token": "4de285f99b434093a77565e0af3d2aea",
+            "record": {
+              "event": "owner_release",
+              "reason": "surface_changed",
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": []
+            }
+          },
+          "decision_reason": "surface_changed",
+          "terminal_ns": 32327049828,
+          "semantic_completion": "program status only; task scoring is separate"
+        },
+        {
+          "event": "accepted",
+          "id": "fresh",
+          "steps": 1,
+          "valid_until_ns": 37326509131,
+          "accepted_ns": 32327183412
+        },
+        {
+          "event": "step_started",
+          "id": "fresh",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 32327373400
+        },
+        {
+          "event": "step_completed",
+          "id": "fresh",
+          "step": 0,
+          "completed_ns": 32327378885
+        },
+        {
+          "event": "terminal",
+          "id": "fresh",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32327547337,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ]
+    },
+    {
+      "cause": "focus_changed",
+      "explicit": "explicit-detail",
+      "release_ok": true,
+      "events": [
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 1,
+          "valid_until_ns": 37327647145,
+          "accepted_ns": 32327780762
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 32328258824
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "verified": true
+          },
+          "interruption": {
+            "intent_token": "31a20b61d4734791b5f7abb3c909eba0",
+            "record": {
+              "event": "owner_release",
+              "reason": "focus_changed",
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": []
+            }
+          },
+          "decision_reason": "explicit-detail",
+          "terminal_ns": 32328439755,
+          "semantic_completion": "program status only; task scoring is separate"
+        },
+        {
+          "event": "accepted",
+          "id": "fresh",
+          "steps": 1,
+          "valid_until_ns": 37327647145,
+          "accepted_ns": 32328622650
+        },
+        {
+          "event": "step_started",
+          "id": "fresh",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 32328896584
+        },
+        {
+          "event": "step_completed",
+          "id": "fresh",
+          "step": 0,
+          "completed_ns": 32328900866
+        },
+        {
+          "event": "terminal",
+          "id": "fresh",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32328986455,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ]
+    },
+    {
+      "cause": null,
+      "explicit": "",
+      "release_ok": true,
+      "events": [
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 1,
+          "valid_until_ns": 37329095476,
+          "accepted_ns": 32329155098
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 32329427669
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32329602633,
+          "semantic_completion": "program status only; task scoring is separate"
+        },
+        {
+          "event": "accepted",
+          "id": "fresh",
+          "steps": 1,
+          "valid_until_ns": 37329095476,
+          "accepted_ns": 32329756389
+        },
+        {
+          "event": "step_started",
+          "id": "fresh",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 32329917346
+        },
+        {
+          "event": "step_completed",
+          "id": "fresh",
+          "step": 0,
+          "completed_ns": 32329919839
+        },
+        {
+          "event": "terminal",
+          "id": "fresh",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32330002286,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ]
+    },
+    {
+      "cause": "expired",
+      "explicit": "",
+      "release_ok": true,
+      "events": [
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 1,
+          "valid_until_ns": 37330091830,
+          "accepted_ns": 32330149882
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 32330441093
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "verified": true
+          },
+          "interruption": {
+            "intent_token": "11e5acdbddb641e68def6d9c510f34f5",
+            "record": {
+              "event": "owner_release",
+              "reason": "expired",
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": []
+            }
+          },
+          "decision_reason": null,
+          "terminal_ns": 32330588107,
+          "semantic_completion": "program status only; task scoring is separate"
+        },
+        {
+          "event": "accepted",
+          "id": "fresh",
+          "steps": 1,
+          "valid_until_ns": 37330091830,
+          "accepted_ns": 32330694229
+        },
+        {
+          "event": "step_started",
+          "id": "fresh",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 32330804751
+        },
+        {
+          "event": "step_completed",
+          "id": "fresh",
+          "step": 0,
+          "completed_ns": 32330807403
+        },
+        {
+          "event": "terminal",
+          "id": "fresh",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32330931301,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ]
+    },
+    {
+      "cause": "cancelled",
+      "explicit": "",
+      "release_ok": true,
+      "events": [
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 1,
+          "valid_until_ns": 37331060673,
+          "accepted_ns": 32331150143
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 32331279447
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "verified": true
+          },
+          "interruption": {
+            "intent_token": "b96719d57b2148c0b08d2ce2cf9ee62b",
+            "record": {
+              "event": "owner_release",
+              "reason": "cancelled",
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": []
+            }
+          },
+          "decision_reason": null,
+          "terminal_ns": 32331567191,
+          "semantic_completion": "program status only; task scoring is separate"
+        },
+        {
+          "event": "accepted",
+          "id": "fresh",
+          "steps": 1,
+          "valid_until_ns": 37331060673,
+          "accepted_ns": 32331759350
+        },
+        {
+          "event": "step_started",
+          "id": "fresh",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 32332030010
+        },
+        {
+          "event": "step_completed",
+          "id": "fresh",
+          "step": 0,
+          "completed_ns": 32332034038
+        },
+        {
+          "event": "terminal",
+          "id": "fresh",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32332158501,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ]
+    },
+    {
+      "cause": "stop_requested",
+      "explicit": "",
+      "release_ok": true,
+      "events": [
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 1,
+          "valid_until_ns": 37332325022,
+          "accepted_ns": 32332362576
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 32332543420
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "needs_decision",
+          "error": null,
+          "steps_completed": 0,
+          "release": {
+            "verified": true
+          },
+          "interruption": {
+            "intent_token": "dd98fd487a7f40dd83f83238939f36d9",
+            "record": {
+              "event": "owner_release",
+              "reason": "stop_requested",
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": []
+            }
+          },
+          "decision_reason": null,
+          "terminal_ns": 32332646340,
+          "semantic_completion": "program status only; task scoring is separate"
+        },
+        {
+          "event": "accepted",
+          "id": "fresh",
+          "steps": 1,
+          "valid_until_ns": 37332325022,
+          "accepted_ns": 32332777096
+        },
+        {
+          "event": "step_started",
+          "id": "fresh",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 32332984698
+        },
+        {
+          "event": "step_completed",
+          "id": "fresh",
+          "step": 0,
+          "completed_ns": 32332989943
+        },
+        {
+          "event": "terminal",
+          "id": "fresh",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32333051626,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ]
+    },
+    {
+      "cause": "focus_changed",
+      "explicit": "",
+      "release_ok": false,
+      "events": [
+        {
+          "event": "accepted",
+          "id": "fault",
+          "steps": 1,
+          "valid_until_ns": 37333157172,
+          "accepted_ns": 32333214942
+        },
+        {
+          "event": "step_started",
+          "id": "fault",
+          "step": 0,
+          "operation": "fault",
+          "issued_ns": 32333396205
+        },
+        {
+          "event": "terminal",
+          "id": "fault",
+          "status": "failed",
+          "error": "input release not verified",
+          "steps_completed": 0,
+          "release": {
+            "verified": false
+          },
+          "interruption": {
+            "intent_token": "423eff825247406b9cb22d877284efe8",
+            "record": {
+              "event": "owner_release",
+              "reason": "focus_changed",
+              "verified": true,
+              "keys_down": [],
+              "buttons_down": []
+            }
+          },
+          "decision_reason": null,
+          "terminal_ns": 32333571350,
+          "semantic_completion": "program status only; task scoring is separate"
+        },
+        {
+          "event": "accepted",
+          "id": "fresh",
+          "steps": 1,
+          "valid_until_ns": 37333157172,
+          "accepted_ns": 32333809740
+        },
+        {
+          "event": "step_started",
+          "id": "fresh",
+          "step": 0,
+          "operation": "observe",
+          "issued_ns": 32334043711
+        },
+        {
+          "event": "step_completed",
+          "id": "fresh",
+          "step": 0,
+          "completed_ns": 32334047803
+        },
+        {
+          "event": "terminal",
+          "id": "fresh",
+          "status": "completed",
+          "error": null,
+          "steps_completed": 1,
+          "release": {
+            "verified": true
+          },
+          "interruption": null,
+          "decision_reason": null,
+          "terminal_ns": 32334207039,
+          "semantic_completion": "program status only; task scoring is separate"
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "probe_terminal_reason_v1.py": "6fa9197c8298168c175a5d828664a2c8e8acb1488d52c4b398b6e5e12ac4ac8c",
+    "executor_v6.py": "2769ce2b7647479e5103003779909e752ed5f60c98c8763179f2cad4ff27f9b9",
+    "lease_cause_v1.py": "800880125308a91aaf7ff49bc6f01ca33782e4161b79e3af4a944f517081d918",
+    "lease_cause_v2.py": "6a61cabc540841f76ed518c4e0d49869f6600ed73f14ed030344d64ad3805a47"
+  }
+}

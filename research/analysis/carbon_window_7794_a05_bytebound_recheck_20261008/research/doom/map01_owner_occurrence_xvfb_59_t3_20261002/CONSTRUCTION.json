@@ -1,0 +1,57 @@
+{
+  "allocation_id": "MAP01-OWNER-OCCURRENCE-XVFB-59-T3-20261002-01",
+  "classification": "TDD construction; excluded from one-shot candidate/auditor allocation",
+  "environment": "WSL Ubuntu Python 3.12.3; Xvfb 21.x; python-xlib real connection; no Docker",
+  "construction_attempts": [
+    {
+      "stage": "shared-tmp-first-setup",
+      "command": "python3 -B -m unittest discover -s research/doom/map01_owner_occurrence_xvfb_59_t3_20261002/tests -v",
+      "outcome": "ENVIRONMENT_SETUP_ERROR",
+      "detail": "Xvfb did not allocate a display within 5s; shared /tmp/.X11-unix mode was not 1777 and display :100 was already owned by another process. No existing display was contacted."
+    },
+    {
+      "stage": "explicit-display-diagnostic",
+      "command": "timeout 2s Xvfb :153 -screen 0 640x480x24 -nolisten tcp -ac",
+      "outcome": "STOP_X11_SOCKET_BIND",
+      "detail": "Xvfb reported /tmp/.X11-unix permission mode failure and failed to bind its Unix socket. The shared directory and other X server were not changed."
+    },
+    {
+      "stage": "RED-upstream-owner",
+      "source": "unchanged pinned #5630 InputOwner",
+      "command": "unshare --user --map-root-user --mount --fork ... python3 -B -m unittest discover -s research/doom/map01_owner_occurrence_xvfb_59_t3_20261002/tests -v",
+      "outcome": "EXPECTED_ASSERTION_FAILURE",
+      "failure": "expected 6 per-occurrence XQueryKeymap witnesses; observed 0"
+    },
+    {
+      "stage": "RED-T2-real-Xlib",
+      "source": "T2 instrumented owner before T3 normalization",
+      "outcome": "ASSERTION_FAILURE_DETECTED_RETURN_TYPE_MISMATCH",
+      "failure": "six witnesses were present, but all key_down fields were null because Python-Xlib returns a list of 32 integers, not bytes"
+    },
+    {
+      "stage": "GREEN-T3-list-normalization",
+      "source": "T3 isolated owner copy converting a valid 32-integer Xlib bitmap to bytes",
+      "outcome": "PASS",
+      "tests": "1/1"
+    },
+    {
+      "stage": "RED-raw-auditor-contract",
+      "source": "independent auditor not yet implemented",
+      "outcome": "EXPECTED_ASSERTION_FAILURE",
+      "tests": "3/3 exposed missing validator"
+    },
+    {
+      "stage": "GREEN-raw-auditor-contract",
+      "source": "raw-only audit_payload plus literal synthetic positive and mutation cases",
+      "outcome": "PASS",
+      "tests": "3/3 including bitmap-bit and cross-occurrence release mutations"
+    }
+  ],
+  "isolation": "An unprivileged user+mount namespace with private tmpfs /tmp and private Unix X socket directory allowed Xvfb to start without changing shared /tmp or using another display.",
+  "candidate_invocations": 0,
+  "auditor_invocations": 0,
+  "retries": 0,
+  "physical_input": false,
+  "application_effect": false,
+  "game_or_model": false
+}

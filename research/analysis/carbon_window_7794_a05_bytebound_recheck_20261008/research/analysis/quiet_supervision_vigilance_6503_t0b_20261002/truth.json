@@ -1,0 +1,38 @@
+{
+  "oracle_version": "6503-t0b-oracle-v1",
+  "default": {
+    "event_class": "routine",
+    "anomaly_present": false,
+    "visibility": "visible",
+    "source_state": "current",
+    "effect_state": "no_effect_due",
+    "required_safe_action": "continue",
+    "mandatory_stop": false
+  },
+  "overrides": {
+    "early-01": {"event_class":"verified_success","anomaly_present":false,"source_state":"current","effect_state":"verified_saved","required_safe_action":"continue","mandatory_stop":false},
+    "early-04": {"event_class":"wrong_target","anomaly_present":true,"visibility":"visible","source_state":"target_mismatch","effect_state":"not_committed","onset_ms":4000,"expiry_ms":8000,"required_safe_action":"stop_and_verify","mandatory_stop":false},
+    "early-05": {"event_class":"benign_visual_change","anomaly_present":false,"visibility":"visible","source_state":"current","effect_state":"no_effect_due","required_safe_action":"continue","mandatory_stop":false},
+    "early-10": {"event_class":"source_version_update","anomaly_present":false,"visibility":"visible","source_state":"version_advanced","effect_state":"no_effect_due","required_safe_action":"verify_source","mandatory_stop":false},
+    "middle-03": {"event_class":"ambiguous_effect","anomaly_present":true,"visibility":"visible","source_state":"current","effect_state":"ambiguous_pending","onset_ms":15000,"expiry_ms":19000,"required_safe_action":"verify_effect","mandatory_stop":false},
+    "middle-09": {"event_class":"provenance_recheck","anomaly_present":false,"visibility":"visible","source_state":"current","effect_state":"no_effect_due","required_safe_action":"continue","mandatory_stop":false},
+    "middle-10": {"event_class":"benign_visual_change","anomaly_present":false,"visibility":"visible","source_state":"current","effect_state":"no_effect_due","required_safe_action":"continue","mandatory_stop":false},
+    "late-02": {"event_class":"source_version_update","anomaly_present":false,"visibility":"visible","source_state":"changed_since_last_review","effect_state":"no_effect_due","required_safe_action":"verify_source","mandatory_stop":false},
+    "late-03": {"event_class":"uncaptured_anomaly","anomaly_present":true,"visibility":"not_captured","source_state":"unobserved","effect_state":"unknown","onset_ms":27000,"expiry_ms":31000,"required_safe_action":"unscorable_no_evidence","mandatory_stop":false},
+    "late-05": {"event_class":"verified_success","anomaly_present":false,"source_state":"current","effect_state":"verified_saved","required_safe_action":"continue","mandatory_stop":false},
+    "late-09": {"event_class":"hard_stop","anomaly_present":true,"visibility":"explicit_hard_alert","source_state":"gated","effect_state":"not_committed","onset_ms":33000,"expiry_ms":37000,"required_safe_action":"stop_and_verify","mandatory_stop":true},
+    "late-10": {"event_class":"benign_visual_change","anomaly_present":false,"visibility":"visible","source_state":"current","effect_state":"no_effect_due","required_safe_action":"continue","mandatory_stop":false},
+    "late-11": {"event_class":"ambiguous_effect","anomaly_present":true,"visibility":"visible","source_state":"current","effect_state":"receipt_pending","onset_ms":35000,"expiry_ms":39000,"required_safe_action":"verify_effect","mandatory_stop":false}
+  },
+  "scoring_vectors": {
+    "default": {"response_ms":null,"reported_anomaly":false,"safe_action":null,"active_time_ms":0,"provenance":"synthetic-script"},
+    "overrides": {
+      "early-04/A": {"response_ms":4300,"reported_anomaly":true,"safe_action":"stop_and_verify","active_time_ms":300,"provenance":"synthetic-script"},
+      "middle-03/A": {"response_ms":21000,"reported_anomaly":true,"safe_action":"verify_effect","active_time_ms":420,"provenance":"synthetic-script"},
+      "early-05/A": {"response_ms":5200,"reported_anomaly":true,"safe_action":"stop_and_verify","active_time_ms":180,"provenance":"synthetic-script"},
+      "late-03/A": {"response_ms":null,"reported_anomaly":false,"safe_action":null,"active_time_ms":0,"provenance":"synthetic-script"},
+      "late-09/A": {"response_ms":33500,"reported_anomaly":true,"safe_action":"stop_and_verify","active_time_ms":250,"provenance":"synthetic-script","prompted_by_hard_alert":true},
+      "early-01/C": {"response_ms":1300,"reported_anomaly":false,"safe_action":"continue","active_time_ms":90,"provenance":"synthetic-script"}
+    }
+  }
+}

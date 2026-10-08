@@ -1,0 +1,99 @@
+{
+  "admissions": [
+    {
+      "admitted_ns": 90102067894300,
+      "event": "input_admission",
+      "input_ack_ns": 90102067898100,
+      "key": "W",
+      "valid_until_ns": 90112067851900
+    },
+    {
+      "admitted_ns": 90102067989800,
+      "event": "input_admission",
+      "input_ack_ns": 90102067991900,
+      "key": "W",
+      "valid_until_ns": 90112067851900
+    }
+  ],
+  "allocation_id": "MAP01-OWNER-OCCURRENCE-BINDING-59-T1-20261002-01",
+  "candidate_invocations": 1,
+  "cases_sha256": "f2b6d97933cdf3d43d35d1b97daecc9144fe0cbfc5f36adda3ea9d33e14d9bd0",
+  "fake_keymap_queries": [
+    {
+      "keys_down": []
+    }
+  ],
+  "fake_server_events": [
+    {
+      "detail": 25,
+      "event": "KeyPress",
+      "monotonic_ns": 90102067896600
+    },
+    {
+      "detail": 25,
+      "event": "KeyRelease",
+      "monotonic_ns": 90102067946800
+    },
+    {
+      "detail": 25,
+      "event": "KeyPress",
+      "monotonic_ns": 90102067991300
+    },
+    {
+      "detail": 25,
+      "event": "KeyRelease",
+      "monotonic_ns": 90102068023900
+    }
+  ],
+  "fake_server_final_keys_down": [],
+  "main_sha": "9ac1024e66b2fe72064e7719a5dec2ba026b32d7",
+  "owner_id": "d2f5c67610d34bb5af3e652c3309daa4",
+  "owner_records": [
+    {
+      "event": "owner_key_release_bracket",
+      "grants_input_authority": false,
+      "intent_token": "intent-repeat-w",
+      "key": "W",
+      "keycode": 25,
+      "owner_id": "d2f5c67610d34bb5af3e652c3309daa4",
+      "physical_key_up_claimed": false,
+      "reason": "explicit_up",
+      "request_returned_ns": 90102067947500,
+      "request_started_ns": 90102067944700,
+      "schema": "owner-key-release-bracket-v1",
+      "shared_sync_returned_ns": 90102067947700,
+      "timing_valid": true,
+      "trigger_class": "explicit_up"
+    },
+    {
+      "event": "owner_key_release_bracket",
+      "grants_input_authority": false,
+      "intent_token": "intent-repeat-w",
+      "key": "W",
+      "keycode": 25,
+      "owner_id": "d2f5c67610d34bb5af3e652c3309daa4",
+      "physical_key_up_claimed": false,
+      "reason": "explicit_up",
+      "request_returned_ns": 90102068024200,
+      "request_started_ns": 90102068023100,
+      "schema": "owner-key-release-bracket-v1",
+      "shared_sync_returned_ns": 90102068024400,
+      "timing_valid": true,
+      "trigger_class": "explicit_up"
+    },
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "reason": "close",
+      "valid_until_ns": 90112067851900,
+      "verified": true,
+      "verified_ns": 90102068070700
+    }
+  ],
+  "owner_source_commit": "288d0498d11cf16657e523a04616bf4f49cd94f4",
+  "owner_source_sha256": "14333b8e8450950bcdb60fa7055f7a7d4b279438ab44fbb8d14eb2f45fad057c",
+  "retries": 0,
+  "schema": "map01-owner-occurrence-binding-raw-v1",
+  "scope": "unchanged InputOwner Python path with in-process fake Xlib transport"
+}

@@ -1,0 +1,63 @@
+{
+  "all_controls_rejected": true,
+  "audit": "issue_5329_v2_raw_only_mutation_target_correction",
+  "controls": [
+    {
+      "name": "drop_row",
+      "rejected": true
+    },
+    {
+      "name": "force_release_pass",
+      "rejected": true
+    },
+    {
+      "name": "corrupt_bytes",
+      "rejected": true
+    },
+    {
+      "name": "erase_required_field",
+      "rejected": true
+    }
+  ],
+  "disposition": "PASS_FINITE_CONTRACT_ONLY",
+  "errors": [],
+  "raw_sha256_expected": "ABBFD07E541DAE643EAC7FE42DD630B1A55CCDA75A52C66444A35CC1CC4AD705",
+  "row_count": 360,
+  "summary": {
+    "ADVERSARIAL_COMPRESSION": {
+      "bytes": 3951,
+      "decision_mismatches": 68,
+      "rows": 72,
+      "unknowns": 72,
+      "unsafe_passes": 0
+    },
+    "DECISION_SUFFICIENT": {
+      "bytes": 4971,
+      "decision_mismatches": 0,
+      "rows": 72,
+      "unknowns": 4,
+      "unsafe_passes": 0
+    },
+    "FIXED_SUMMARY": {
+      "bytes": 5094,
+      "decision_mismatches": 44,
+      "rows": 72,
+      "unknowns": 48,
+      "unsafe_passes": 0
+    },
+    "LABEL_ONLY": {
+      "bytes": 2766,
+      "decision_mismatches": 51,
+      "rows": 72,
+      "unknowns": 48,
+      "unsafe_passes": 5
+    },
+    "RAW_TRACE": {
+      "bytes": 11808,
+      "decision_mismatches": 0,
+      "rows": 72,
+      "unknowns": 4,
+      "unsafe_passes": 0
+    }
+  }
+}

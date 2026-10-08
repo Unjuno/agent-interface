@@ -1,0 +1,51 @@
+{
+  "base_main_sha": "c45e1947e498dce08abfb27e459e610054a0602e",
+  "checks": {
+    "clean_sigterm": false,
+    "host_socket_unchanged": true,
+    "mount_private_tmpfs": true,
+    "namespace_bound": true,
+    "readiness": true
+  },
+  "child_mount_ns": "mnt:[4026532241]",
+  "decision": "STOP",
+  "errors": [],
+  "finished_utc": "2026-09-30T08:00:30.642617+00:00",
+  "forced_kill": true,
+  "host_socket_after": {
+    "device": 38,
+    "exists": true,
+    "file_type": "socket",
+    "inode": 13,
+    "mode": 49663
+  },
+  "host_socket_before": {
+    "device": 38,
+    "exists": true,
+    "file_type": "socket",
+    "inode": 13,
+    "mode": 49663
+  },
+  "launcher_pid": 289,
+  "log_sha256": "74ef22b0039d648ff8db4ee68b3742e2267d6dcd8f96d95b5810e3a5989279eb",
+  "mountinfo_line": "834 833 0:131 / /tmp/.X11-unix rw,nosuid,nodev,relatime - tmpfs tmpfs rw",
+  "preflight": {
+    "Xvfb": "/usr/sbin/Xvfb",
+    "mount": "/usr/sbin/mount",
+    "unshare": "/usr/sbin/unshare"
+  },
+  "process_group": 289,
+  "readiness": {
+    "display": ":97",
+    "height": 480,
+    "probe": "inside-private-mount-namespace",
+    "width": 640
+  },
+  "schema": "x11-private-xvfb-5286-v1",
+  "sigterm_sent": true,
+  "started_utc": "2026-09-30T08:00:25.458459+00:00",
+  "wrapper_mount_ns": "mnt:[4026532221]",
+  "xvfb_exit_code": -9,
+  "xvfb_pid": 296,
+  "xvfb_proc_mount_ns": "mnt:[4026532241]"
+}

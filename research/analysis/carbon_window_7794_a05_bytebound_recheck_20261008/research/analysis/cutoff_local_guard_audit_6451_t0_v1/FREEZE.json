@@ -1,0 +1,47 @@
+{
+  "schema": "cutoff-local-rd-t0-freeze-v1",
+  "allocation": "CUTOFF-LOCAL-GUARD-AUDIT-6451-T0-20261002-01",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6451",
+  "intake_main_commit": "67ebd3016af9ed99a5cb40a39d4d753871f51d75",
+  "formal_invocation_cap": {"candidate": 1, "auditor": 1},
+  "formal_retries_allowed": 0,
+  "construction_suite_methods": 6,
+  "runtime": {
+    "platform": "Windows 11 x86_64",
+    "python": "CPython 3.12.10",
+    "dependencies": "Python standard library only",
+    "network": false,
+    "gui": false,
+    "model": false,
+    "container": false
+  },
+  "source_sha256": {
+    "cases.json": "18E9C9714FDA5FD863CEE9622652B58A7577256806475CC311990EA612554166",
+    "candidate.py": "8947B850706FA294DCA23334707A86C91EAFC731934C748706DC423D6BEDF3F4",
+    "auditor.py": "A64DFA402289CA8300D529A630FEDA81AA5E9C15921D55A1AD3FA61D1097478C",
+    "test_method.py": "500E40FF62E7D346E7449106F0DD40661392D8AFE72F7DB4504AFC34329AB04F"
+  },
+  "frozen_cases": [
+    "valid_sharp_cutoff",
+    "smooth_zero_effect",
+    "sorting_bunching",
+    "coincident_focus_transition",
+    "coarse_timestamp_heaping",
+    "treatment_noncompliance"
+  ],
+  "expected_decisions": [
+    "ESTIMATE_LOCAL",
+    "ESTIMATE_LOCAL",
+    "REFUSE_SORTING",
+    "REFUSE_COINCIDENT_TRANSITION",
+    "REFUSE_TIMESTAMP_HEAPING",
+    "ESTIMATE_LOCAL_FUZZY"
+  ],
+  "frozen_expected_effects": {
+    "valid_sharp_cutoff": 2.0,
+    "smooth_zero_effect": 0.0,
+    "treatment_noncompliance_first_stage": 0.5,
+    "treatment_noncompliance_fuzzy_effect": 2.0
+  },
+  "scope": "Synthetic method validation only; no optional GUI threshold, live causal effect, GUI authority, model behavior, or global guard policy is evaluated."
+}

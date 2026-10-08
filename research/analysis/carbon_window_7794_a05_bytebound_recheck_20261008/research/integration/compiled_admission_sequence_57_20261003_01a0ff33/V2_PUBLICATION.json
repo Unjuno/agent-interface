@@ -1,0 +1,44 @@
+{
+  "schema": "compiled-admission-audit-v2-publication",
+  "prior_head": "82bf35dba0c709370e18d3ccacef434818879ba5",
+  "prior_manifest_sha256": "860e097886b579563066e00269d282fec8e1f9f4393534288327e1f3edd2df3f",
+  "original_auditor_sha256": "bd5fdff4ffe50a36821888cb65ee50c42ef81c18a45f56039f31a5d835ca4654",
+  "auditor_v2_sha256": "25cda64796d1706a1e4ecb8130bc5d71cabba9ddebcce64ff7af734cf146bca6",
+  "tests_v2_sha256": "0f951089f3c7248b96ae86e4453c453595b11c74ce50b65f6aa14fdd0f26fc94",
+  "immutable_raw": {
+    "before.json": "49351cb9f105632b08e6aa95908fb2dea4ced09d182fda9e4bf2161ff78b5546",
+    "after.json": "6b4169b5fe325c3b3b35b1ef6507525f825f1be72fabd061e54b0c4f30e61e70"
+  },
+  "corruption_controls": 1236,
+  "numeric_alias_controls": 1215,
+  "red_disposition": "1198 failed corruption assertions; 6 errors: 5 malformed shapes plus new optional source-pin API unsupported by initial v1 copy",
+  "initial_draft_auditor": "exact copy of retained audit.py; its original source remains available",
+  "records": [
+    {
+      "check": "audit-v2-red",
+      "original_receipt_sha256": "1eca061e5f3f7a58c356dbc4409b717cf7b4522346a97af96a2755cd30aeac80",
+      "public_receipt_sha256": "3dfe33becd148e87e33ed0cf50a25758a01bf83f2764a333391c4a6a63791ceb"
+    },
+    {
+      "check": "audit-v2-green",
+      "original_receipt_sha256": "7fd6f4fbe426d4b5877dd247c9dc711b16836025ff42d8eb8fe5a5fdd84771ac",
+      "public_receipt_sha256": "7f5939d14f690d6be2a9f6b395dc664dbd167cc1ae1049d4d1f8fe1559919813"
+    },
+    {
+      "check": "audit-v2-optimized",
+      "original_receipt_sha256": "4b95529cb231ca7c7bfabcbd0431c76c63b0fe305e08aac1f10f873c3e315e63",
+      "public_receipt_sha256": "b1e205ac806343eb9b3b125f9094f9c7f28b1022f5a6efb4c1131ed2456b1a49"
+    },
+    {
+      "check": "audit-v2-before",
+      "original_receipt_sha256": "0331c323903d450cb02580f1dae5eb8e2b73fd8849bd77c1e7413e0bc843515a",
+      "public_receipt_sha256": "e2064c90fb1515e11423393d5c465affc6be8626de9113f63158df4e9349e1c5"
+    },
+    {
+      "check": "audit-v2-after",
+      "original_receipt_sha256": "ddd943e036dbf5f3cf6b3bd80a9f379eab81b7dcb565941433aef4f98375e601",
+      "public_receipt_sha256": "407a0b361467f49cb8cea5b421a6959224bf02d13454befe2ad3174337b184e8"
+    }
+  ],
+  "original_private_copies_readback": true
+}

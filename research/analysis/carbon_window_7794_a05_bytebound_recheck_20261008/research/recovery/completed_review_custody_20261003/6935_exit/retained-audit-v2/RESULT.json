@@ -1,0 +1,155 @@
+{
+  "ended_utc": "2026-10-03T05:42:07.395346+00:00",
+  "result": {
+    "copied_semantic_controls": [
+      {
+        "control": "omitted_endpoint",
+        "reason": "five distinct endpoint directories",
+        "rejected": true
+      },
+      {
+        "control": "duplicate_endpoint_identity",
+        "reason": "unique directories",
+        "rejected": true
+      },
+      {
+        "control": "request_bool_alias",
+        "reason": "typed request identity",
+        "rejected": true
+      },
+      {
+        "control": "reply_float_alias",
+        "reason": "typed reply counters",
+        "rejected": true
+      },
+      {
+        "control": "terminal_bool_alias",
+        "reason": "typed actual terminal",
+        "rejected": true
+      },
+      {
+        "control": "erased_first_fault",
+        "reason": "first fault retained",
+        "rejected": true
+      },
+      {
+        "control": "fabricated_red_exit",
+        "reason": "first missing terminal outcome retained",
+        "rejected": true
+      },
+      {
+        "control": "additional_retry_request",
+        "reason": "no retry attempt",
+        "rejected": true
+      }
+    ],
+    "coverage": {
+      "green-first": [
+        "healthy-occupied-exit",
+        "occupied-reply",
+        "occupied-exit",
+        "invalid-json",
+        "wrong-id"
+      ],
+      "red-first": [
+        "wrong-id",
+        "occupied-exit",
+        "occupied-reply",
+        "invalid-json",
+        "healthy-occupied-exit"
+      ]
+    },
+    "first_composition_tool_projection_qualification": "Original full traceback in author tool transcript and exact UTC unavailable; saved descriptive projection checked, not original full traceback custody.",
+    "first_missing_exits": 3,
+    "green_new_terminal_receipts": 3,
+    "historical_cases": 10,
+    "limit": "Saved endpoint bytes only; double-error return field is covered by pinned test assertions, not a separate captured parent outcome.",
+    "original_producer_or_formal_invocations": 0,
+    "original_source_test_stream_joins": true,
+    "receipts": [
+      {
+        "directory": "affected",
+        "end_utc": "2026-10-03T05:05:47.277367+00:00",
+        "exit": 1,
+        "metrics": {
+          "cancelled": 0,
+          "fail": 2,
+          "pass": 190,
+          "skipped": 0,
+          "tests": 192
+        },
+        "start_utc": "2026-10-03T05:05:44.724335+00:00"
+      },
+      {
+        "directory": "affected-v2",
+        "end_utc": "2026-10-03T05:07:07.949128+00:00",
+        "exit": 0,
+        "metrics": {
+          "cancelled": 0,
+          "fail": 0,
+          "pass": 192,
+          "skipped": 0,
+          "tests": 192
+        },
+        "start_utc": "2026-10-03T05:07:05.193933+00:00"
+      },
+      {
+        "directory": "composed-v3",
+        "end_utc": "2026-10-03T05:12:22.809395+00:00",
+        "exit": 0,
+        "metrics": {
+          "cancelled": 0,
+          "fail": 0,
+          "pass": 200,
+          "skipped": 0,
+          "tests": 200
+        },
+        "start_utc": "2026-10-03T05:12:15.025251+00:00"
+      },
+      {
+        "directory": "composition-setup-v2",
+        "end_utc": "2026-10-03T05:11:01.737951+00:00",
+        "exit": 1,
+        "metrics": null,
+        "start_utc": "2026-10-03T05:10:57.392479+00:00"
+      },
+      {
+        "directory": "composition-setup-v3",
+        "end_utc": "2026-10-03T05:12:22.813404+00:00",
+        "exit": 0,
+        "metrics": null,
+        "start_utc": "2026-10-03T05:12:12.667158+00:00"
+      },
+      {
+        "directory": "green-first",
+        "end_utc": "2026-10-03T05:04:38.794587+00:00",
+        "exit": 0,
+        "metrics": {
+          "cancelled": 0,
+          "fail": 0,
+          "pass": 17,
+          "skipped": 0,
+          "tests": 17
+        },
+        "start_utc": "2026-10-03T05:04:37.850841+00:00"
+      },
+      {
+        "directory": "red-first",
+        "end_utc": "2026-10-03T05:04:07.903698+00:00",
+        "exit": 1,
+        "metrics": {
+          "cancelled": 0,
+          "fail": 4,
+          "pass": 13,
+          "skipped": 0,
+          "tests": 17
+        },
+        "start_utc": "2026-10-03T05:04:06.977850+00:00"
+      }
+    ],
+    "red_and_green_occupied_exit_slots": 4,
+    "typed_semantic_errors": 0
+  },
+  "started_utc": "2026-10-03T05:42:07.378074+00:00",
+  "status": "PASS_RAW_ONLY_SCOPED"
+}

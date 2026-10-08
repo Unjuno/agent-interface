@@ -1,0 +1,139 @@
+{
+  "passed": true,
+  "records": [
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "row_schedule"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "049da30fc3a5ce99081058083f20ebaffb4411ea4a047ab5495fe15c53500681",
+      "name": "missing_row"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "rejection_started_operation",
+          "profile_count_rejected_close",
+          "profile_total"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "9741df65fcbd651f129d55ab6d5755e4ba54a4abecd36c582038ec54b8828f3c",
+      "name": "forged_invoke_count"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "rejection_started_operation"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "539361d6e08f1360b5bede95eef533d440c110e8eb512284ac327af51d78748e",
+      "name": "rejected_artifact"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "replacement_executor_unproven"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "7789a7f8ddfbca34b98cf8f013f7809280c8cc1bca36e5e1a1d907f192fe73ae",
+      "name": "unhealthy_replacement"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "native_tripwire"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "caec811e20749644672885f3dad7b0606bbe2684c21112f45398719c239cbc0f",
+      "name": "native_tripwire"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "source_changed"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "412c2271bff863835f10bdd9644df37998950aa589a1a2b2d303ea1a797990ce",
+      "name": "source_change"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "public_close_calls"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "d21487be1632da45efe2fef26273ed9edd05b03c70a0a110367e649c8eeb2b40",
+      "name": "wrong_close_count"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "unexpected_recovery_result"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "7b180528c3566488c5d73d84feb6f65e6724efc2164820ef6a5dd68a922b26d2",
+      "name": "false_recovery_success"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "healthy_control_healthy_close"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "dc27285c5495658b36271e566319538abd2f95f28560fcda188f83adf5b09cb4",
+      "name": "nonboolean_authority"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "executor_rejection_not_exposed"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "3ba30816e80cfec631b403a712af15f4acf06507860b75fc4e70a3a28caa5f35",
+      "name": "wrong_rejection"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "missing_profile"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "0deebcdf9799b58df1a689343c5b2bf0a90865d8eece8c7602bf24930b4bc19c",
+      "name": "missing_profile"
+    },
+    {
+      "audit": {
+        "disposition": "STOP_INTEGRITY",
+        "errors": [
+          "profile_count_healthy_close"
+        ]
+      },
+      "changed": true,
+      "input_sha256": "553b7623e4b2c5afad8643dff34a34382e493485bde3a0af373affdbafcd518b",
+      "name": "wrong_profile_operation"
+    }
+  ]
+}

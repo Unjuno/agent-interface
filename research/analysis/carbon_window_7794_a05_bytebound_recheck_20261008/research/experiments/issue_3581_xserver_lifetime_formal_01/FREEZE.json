@@ -1,0 +1,27 @@
+{
+  "allocation_id": "issue3580-xserver-lifetime-formal-01",
+  "issue": 3581,
+  "source_commit": "61311817969251b814cb00b568a75c91a3591d3e",
+  "source_manifest_sha256": "bf2c917fa6cadd42aac285ab8c786442bb537d1b27867556b0222f1a52b4e3f0",
+  "container": {
+    "image_id": "sha256:fa36aca92a682831d72b7e49bf05a9c6e31e68eadb06f3d2728360ceb1e9f6cb",
+    "platform": "linux/arm64",
+    "network": "none",
+    "filesystem": "read-only except fresh /evidence"
+  },
+  "formal_invocations": 1,
+  "reruns": 0,
+  "display": ":149",
+  "matrix": {
+    "repetitions": 4,
+    "generations_per_repetition": 2,
+    "rows": 16,
+    "policies": ["CURRENT_TYPED", "LIFETIME_BOUND"],
+    "negative_controls": 28
+  },
+  "authority": "observation-only; zero task input/action admission",
+  "runner": "python -B /candidate/lifetime_experiment.py",
+  "audit": "python -B /candidate/audit_v2.py (separate audit-only container after raw is retained)",
+  "mounts": ["/candidate:ro", "/freeze.json:ro", "/source_manifest.json:ro", "/evidence:rw"],
+  "acceptance": "See Issue #3572 D. Do not rerun or tune this allocation; any STOP/HOLD is retained as-is."
+}

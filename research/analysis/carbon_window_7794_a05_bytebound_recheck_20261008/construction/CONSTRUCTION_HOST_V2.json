@@ -1,0 +1,31 @@
+{
+  "schema": "broker-timeout-start-host-construction-v2",
+  "issue": 5074,
+  "allocation": "broker-fake-child-timeout-start-20260928-01",
+  "disposition": "PASS_HOST_CONSTRUCTION_ONLY",
+  "timestamp_local": "2026-09-28 Asia/Tokyo",
+  "base_main": "b3af4e85f8bf7d41da5251b1728a6ddab34c3476",
+  "branch": "research/broker-fake-child-timeout-start-5074-v4",
+  "additive_path": "research/integration/broker_fake_child_timeout_start_5074_v2/",
+  "command": "python -B -m unittest discover -s work\\issue5074v4\\construction -p 'test_*.py' -v",
+  "exit_code": 0,
+  "tests_passed": 14,
+  "tests_total": 14,
+  "receipt_audit": {
+    "total_formal_corruption_controls": 16,
+    "in_memory_controls_rejected": 14,
+    "receipt_network_cpu_audit_command_and_ownership_mutations_rejected": true,
+    "raw_receipt_must_equal_retained_receipt_bytes": true,
+    "receipt_source_hash_map_must_match_frozen_bundle": true
+  },
+  "scope": "host-side construction harness, frozen-source and invocation-receipt auditor tests only",
+  "docker_used_in_this_run": false,
+  "broker_mounted_or_invoked": false,
+  "formal_cases_invoked": 0,
+  "formal_allocation_consumed": false,
+  "limitations": [
+    "does not validate the final source bundle inside the pinned Docker image",
+    "does not execute the broker or any formal case",
+    "does not establish a scientific PASS or FAIL"
+  ]
+}

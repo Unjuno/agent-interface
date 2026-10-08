@@ -1,0 +1,132 @@
+{
+  "audit_passed": true,
+  "source_pointer_geometry": [
+    129,
+    40,
+    1024,
+    720
+  ],
+  "target_pointer_geometry": [
+    1,
+    40,
+    1280,
+    720
+  ],
+  "window_origin_delta": [
+    -128,
+    0
+  ],
+  "studies": {
+    "global_positive_128_failure": {
+      "passed": false,
+      "cases": {
+        "repeat": {
+          "reason": "target_not_reached",
+          "target_changed_totals": [
+            0,
+            0
+          ],
+          "guard_changed_totals": [
+            0,
+            0
+          ],
+          "continuation_started": false,
+          "independent_success": false,
+          "drag_issued_to_condition_ms": 2572.614418,
+          "exact_frames": 34
+        },
+        "target": {
+          "reason": "target_not_reached",
+          "target_changed_totals": [
+            14,
+            14
+          ],
+          "guard_changed_totals": [
+            0,
+            0
+          ],
+          "continuation_started": false,
+          "independent_success": false,
+          "drag_issued_to_condition_ms": 2522.561037,
+          "exact_frames": 29
+        }
+      },
+      "exact_frames": 63
+    },
+    "global_negative_128_failure": {
+      "passed": false,
+      "cases": {
+        "target": {
+          "reason": "guard_changed",
+          "target_changed_totals": [
+            286,
+            286
+          ],
+          "guard_changed_totals": [
+            132,
+            132
+          ],
+          "continuation_started": false,
+          "independent_success": false,
+          "drag_issued_to_condition_ms": 2545.48637,
+          "exact_frames": 31
+        },
+        "repeat": {
+          "reason": "target_not_reached",
+          "target_changed_totals": [
+            0,
+            0
+          ],
+          "guard_changed_totals": [
+            0,
+            0
+          ],
+          "continuation_started": false,
+          "independent_success": false,
+          "drag_issued_to_condition_ms": 2577.269894,
+          "exact_frames": 36
+        }
+      },
+      "exact_frames": 67
+    },
+    "frame_specific_success": {
+      "passed": true,
+      "cases": {
+        "repeat": {
+          "reason": "target_not_reached",
+          "target_changed_totals": [
+            0,
+            0
+          ],
+          "guard_changed_totals": [
+            1,
+            1
+          ],
+          "continuation_started": false,
+          "independent_success": false,
+          "drag_issued_to_condition_ms": 2579.081579,
+          "exact_frames": 34
+        },
+        "target": {
+          "reason": "met",
+          "target_changed_totals": [
+            168,
+            168
+          ],
+          "guard_changed_totals": [
+            1,
+            1
+          ],
+          "continuation_started": true,
+          "independent_success": true,
+          "drag_issued_to_condition_ms": 2600.039345,
+          "exact_frames": 33
+        }
+      },
+      "exact_frames": 67
+    }
+  },
+  "total_exact_frames": 197,
+  "decision": "RETAIN_FRAME-SPECIFIC_TRANSFORM;_REPLICATE_ON_A_SECOND_RESOLUTION_OR_WINDOW_POSITION",
+  "scope": "two retained fresh failures and one fresh corrected pair on seed991004; resolution transfer only, no model, unseen task, human, token or broad transform claim"
+}

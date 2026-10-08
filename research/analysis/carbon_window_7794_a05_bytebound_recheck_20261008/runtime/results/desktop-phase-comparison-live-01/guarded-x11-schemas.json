@@ -1,0 +1,464 @@
+{
+  "meta": null,
+  "nextCursor": null,
+  "tools": [
+    {
+      "name": "interface_close",
+      "title": null,
+      "description": "Close this owned connection, retaining cleanup evidence; never reopen.\n\n            Busy refuses while an operation runs. Retained results remain readable.\n            Release/close failures are separate from prior task outcomes.\n            ",
+      "inputSchema": {
+        "properties": {},
+        "title": "interface_closeArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_clock",
+      "title": null,
+      "description": "Read this execution host's monotonic clock without input or authority.\n\n        Use only on this live server connection when authoring an already\n        authorized absolute expiry; this call issues no lease or source sequence.\n        Transport/presentation time consumes the remaining deadline. Do not add\n        elapsed Windows time, renew a retained sample, or reuse it after server\n        replacement/suspend. No backend is opened and no action result is created.\n        ",
+      "inputSchema": {
+        "properties": {},
+        "title": "interface_clockArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_validate",
+      "title": null,
+      "description": "Check a draft program's static syntax/expansion without input or a backend.\n\n        Optional; not a prerequisite for dispatch. Does not check live capability,\n        freshness, lease expiry or task success, and grants no runtime admission.\n        No action call ID or retained result is created. Invalid programs return\n        static_valid=false; correct the draft explicitly rather than retrying input.\n        A nesting-limit input error returns static_valid=null, not a validity verdict.\n        ",
+      "inputSchema": {
+        "properties": {
+          "program": {
+            "additionalProperties": true,
+            "title": "Program",
+            "type": "object"
+          }
+        },
+        "required": [
+          "program"
+        ],
+        "title": "interface_validateArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_guarded_activate_window",
+      "title": null,
+      "description": "Explicitly activate the registered target through ordinary admission.\n\n        Requires exact target window ID, latest delivered source sequence,\n        current binding revision and caller-supplied expiry on interface_clock's\n        host clock. EWMH activation must be supported by the window manager.\n        Sends no text/click. Success is a momentary focus\n        check, not visual or task confirmation. After admitted or uncertain\n        activation, explicitly review the window with guarded_review_window,\n        review its image, then mint a new alias and choose a new action.\n        Timeout is a polling budget, not a blocking X11 deadline; the WM may\n        apply the request later. No replay or lease renewal. Unverified input\n        cleanup blocks activation. This does not clear a caller's STOP policy.\n        review_after_activation=true explicitly requests window review and its\n        exact image in this same reply, only after completed activation with\n        verified neutral release. Default false retains the separate-review\n        path. Review the returned image before fresh grounding or any editing.\n        Failed activation never triggers review or retry; a failed review keeps\n        the activation receipt and requires a new caller decision.\n        ",
+      "inputSchema": {
+        "properties": {
+          "window_id": {
+            "title": "Window Id",
+            "type": "integer"
+          },
+          "source_sequence": {
+            "title": "Source Sequence",
+            "type": "integer"
+          },
+          "current_binding_revision": {
+            "title": "Current Binding Revision",
+            "type": "integer"
+          },
+          "expires_at_ns": {
+            "title": "Expires At Ns",
+            "type": "integer"
+          },
+          "timeout_ms": {
+            "maximum": 2000,
+            "minimum": 0,
+            "title": "Timeout Ms",
+            "type": "integer"
+          },
+          "review_after_activation": {
+            "default": false,
+            "title": "Review After Activation",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "window_id",
+          "source_sequence",
+          "current_binding_revision",
+          "expires_at_ns",
+          "timeout_ms"
+        ],
+        "title": "interface_guarded_activate_windowArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_guarded_observe",
+      "title": null,
+      "description": "Capture the full screen on the configured X11 connection; send no input.\n\n        Returns a source.sequence and image for explicit grounding. Capture is\n        not a redraw or task-completion acknowledgement. No implicit polling.\n        observation_refs=true references exact duplicate native image metadata at\n        source.native within this response; image delivery is unchanged.\n        ",
+      "inputSchema": {
+        "properties": {
+          "observation_refs": {
+            "default": false,
+            "title": "Observation Refs",
+            "type": "boolean"
+          }
+        },
+        "title": "interface_guarded_observeArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_guarded_mint",
+      "title": null,
+      "description": "Name an explicitly image-grounded point from an exact delivered source.\n\n        point=[screen_x,screen_y]; region_size=[width,height], each 4..96 pixels.\n        Flat source regions refuse. Returns alias, offset and finite lifetime\n        in this execution host's monotonic clock; compare with interface_clock.\n        Lifetime does not guarantee fresh pixels or admission; retained lookup\n        never renews it. After a pause, explicitly observe/review and ground a\n        new alias if needed. Creates no input or semantic identity guarantee.\n        ",
+      "inputSchema": {
+        "properties": {
+          "alias": {
+            "title": "Alias",
+            "type": "string"
+          },
+          "source_sequence": {
+            "title": "Source Sequence",
+            "type": "integer"
+          },
+          "point": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Point",
+            "type": "array"
+          },
+          "region_size": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Region Size",
+            "type": "array"
+          }
+        },
+        "required": [
+          "alias",
+          "source_sequence",
+          "point",
+          "region_size"
+        ],
+        "title": "interface_guarded_mintArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_guarded_mint_many",
+      "title": null,
+      "description": "Register 1..8 explicit points from one already delivered image, without input.\n\n        Each reference has alias, point=[screen_x,screen_y], region_size=[width,height].\n        Aliases must be unique; all syntax is validated before minting. This is\n        sequential registration, not an action queue or atomic transaction.\n        On failure, earlier minted references remain; failed_alias_state is unknown\n        because registration may precede persistence failure. Later aliases are\n        unattempted. Inspect the result; do not replay or reuse the failed alias.\n        Each later input still requires fresh visual guards and ordinary admission.\n        Each successful reference includes its own finite lifetime in this host's\n        monotonic clock. Reading retained results does not renew that deadline.\n        ",
+      "inputSchema": {
+        "$defs": {
+          "GroundedReference": {
+            "additionalProperties": false,
+            "description": "An explicit point from the shared delivered source, never an action.",
+            "properties": {
+              "alias": {
+                "pattern": "^[a-z][a-z0-9_]{0,31}$",
+                "title": "Alias",
+                "type": "string"
+              },
+              "point": {
+                "items": {
+                  "type": "integer"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "title": "Point",
+                "type": "array"
+              },
+              "region_size": {
+                "items": {
+                  "maximum": 96,
+                  "minimum": 4,
+                  "type": "integer"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "title": "Region Size",
+                "type": "array"
+              }
+            },
+            "required": [
+              "alias",
+              "point",
+              "region_size"
+            ],
+            "title": "GroundedReference",
+            "type": "object"
+          }
+        },
+        "properties": {
+          "source_sequence": {
+            "title": "Source Sequence",
+            "type": "integer"
+          },
+          "references": {
+            "items": {
+              "$ref": "#/$defs/GroundedReference"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "References",
+            "type": "array"
+          }
+        },
+        "required": [
+          "source_sequence",
+          "references"
+        ],
+        "title": "interface_guarded_mint_manyArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_guarded_input",
+      "title": null,
+      "description": "Use a scoped alias once through fresh pixel guards and ordinary input admission.\n\n        tail uses text, key_chord, wait_update or observe operations, within the\n        existing expanded program limit. keyboard emits no pointer click.\n        move emits guarded pointer motion without pressing; its tail permits\n        only wait_update and observe. Hover can change pixels. Review its fresh\n        image and explicitly mint a new reference before a later click; no\n        automatic re-grounding, click or replay follows motion.\n        The five-second guarded lease includes typing/waits. Expiry stops later\n        presses, interrupts waits and attempts release; partial effects remain.\n        Blocking X11 calls are not preempted; no hard real-time bound is promised.\n        observe_after captures once immediately after the result; it adds no\n        redraw wait. Capture failure retains the input result without replay.\n        feedback explicitly waits for expected_title or a rejected title after\n        completed input with verified neutral release. Its timeout_ms is 0..10000;\n        observe_after must be true. The returned image is the cue capture, without\n        an extra immediate capture. Pending/rejected/unstable cues return\n        needs_review while retaining the original result. Title matching grants\n        no authority and is not durable task completion; a title may predate input.\n        No replay, new alias, lease renewal or automatic next action follows.\n        Inspect result/release separately from feedback and semantic completion.\n        detail=brief summarizes known normal exact-match guard details only.\n        Failures/unknown shapes remain full; full retrieval never replays input.\n        observation_refs=true additionally replaces exact duplicate image metadata\n        with a local source.native reference. The reference layer is lossless;\n        brief guard summaries remain lossy. Defaults keep the existing full shape.\n        ",
+      "inputSchema": {
+        "$defs": {
+          "InputFeedback": {
+            "additionalProperties": false,
+            "description": "Caller-selected read-only title cue; never input authority or a task score.",
+            "properties": {
+              "expected_title": {
+                "minLength": 1,
+                "title": "Expected Title",
+                "type": "string"
+              },
+              "rejected_titles": {
+                "items": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "title": "Rejected Titles",
+                "type": "array"
+              },
+              "timeout_ms": {
+                "default": 2000,
+                "maximum": 10000,
+                "minimum": 0,
+                "title": "Timeout Ms",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "expected_title"
+            ],
+            "title": "InputFeedback",
+            "type": "object"
+          }
+        },
+        "properties": {
+          "alias": {
+            "title": "Alias",
+            "type": "string"
+          },
+          "offset": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Offset",
+            "type": "array"
+          },
+          "tail": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Tail",
+            "type": "array"
+          },
+          "interaction": {
+            "default": "click",
+            "enum": [
+              "click",
+              "keyboard",
+              "move"
+            ],
+            "title": "Interaction",
+            "type": "string"
+          },
+          "observe_after": {
+            "default": true,
+            "title": "Observe After",
+            "type": "boolean"
+          },
+          "detail": {
+            "default": "full",
+            "enum": [
+              "full",
+              "brief"
+            ],
+            "title": "Detail",
+            "type": "string"
+          },
+          "observation_refs": {
+            "default": false,
+            "title": "Observation Refs",
+            "type": "boolean"
+          },
+          "feedback": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/InputFeedback"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          }
+        },
+        "required": [
+          "alias",
+          "offset",
+          "tail"
+        ],
+        "title": "interface_guarded_inputArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_guarded_review_window",
+      "title": null,
+      "description": "Explicitly review a focused window and revoke every old alias.\n\n        Sends no input; even a failed review revokes prior references. A successful\n        review returns a fresh source/image for new aliases. This is the native\n        bridge's focused-window contract, not authenticated application identity\n        or the transient-family inspection contract of persistent-x11 mode.\n        ",
+      "inputSchema": {
+        "properties": {
+          "window_id": {
+            "title": "Window Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "window_id"
+        ],
+        "title": "interface_guarded_review_windowArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    },
+    {
+      "name": "interface_results",
+      "title": null,
+      "description": "List this server's calls or reread one retained result. Never dispatch or observe.\n\n        A finished worker is not proof of task success. Unknown calls are not replayed.\n        This registry lasts only for this server process; no restart recovery is implied.\n        Set include_image=false to inspect metadata without resending a retained image.\n        detail=brief projects normal guarded checks or supported successful paced\n        public dispatches with compact/report_refs. detail=summary summarizes\n        known successful public dispatches, including nonpaced programs.\n        Full is the default; failures\n        and unsupported reports stay full. Retrieval never replays input.\n        observation_refs=true replaces an exact duplicate observation with a local\n        reference to source.native; expand_guarded_observation restores the view.\n        It changes no image, capture, authority, or retained raw report.\n        report_refs requires compact=true and a v3 receipt decoder.\n        In v3, read the full report at receipt.source.raw_report in this response;\n        the report reference requires no additional tool call.\n        ",
+      "inputSchema": {
+        "properties": {
+          "call_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Call Id"
+          },
+          "before_call_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Before Call Id"
+          },
+          "compact": {
+            "default": false,
+            "title": "Compact",
+            "type": "boolean"
+          },
+          "include_image": {
+            "default": true,
+            "title": "Include Image",
+            "type": "boolean"
+          },
+          "report_refs": {
+            "default": false,
+            "title": "Report Refs",
+            "type": "boolean"
+          },
+          "detail": {
+            "default": "full",
+            "enum": [
+              "full",
+              "brief",
+              "summary"
+            ],
+            "title": "Detail",
+            "type": "string"
+          },
+          "observation_refs": {
+            "default": false,
+            "title": "Observation Refs",
+            "type": "boolean"
+          }
+        },
+        "title": "interface_resultsArguments",
+        "type": "object",
+        "additionalProperties": false
+      },
+      "outputSchema": null,
+      "icons": null,
+      "annotations": null,
+      "meta": null,
+      "execution": null
+    }
+  ]
+}

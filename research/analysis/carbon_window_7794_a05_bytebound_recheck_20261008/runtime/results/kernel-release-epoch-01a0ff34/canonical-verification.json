@@ -1,0 +1,61 @@
+{
+  "canonical_source_sha256": "884331ccfc5d4694bf88c1086c09ec435963848c44d76c591c27fe38b3b42969",
+  "fixed_original_sha256": "8e1d6e2706545e41d871b7a5660472929c63ed3eae397ec1130c510c66f3bfb6",
+  "baseline_original_sha256": "f3287cb43ac7f557db7d35b754109432a1dcc9952a389784978963d28260ef9c",
+  "representation_note": "Initial fixed tested source mixed CRLF/LF; exact source retained as .txt. Final source normalized to canonical LF and reverified as ordinary regression.",
+  "commands": [
+    {
+      "label": "canonical-kernel",
+      "argv": [
+        "python",
+        "-m",
+        "unittest",
+        "runtime.kernel.test_kernel",
+        "runtime.kernel.test_release_epoch",
+        "-v"
+      ],
+      "started_utc": "2026-10-03T00:55:41.240227+00:00",
+      "ended_utc": "2026-10-03T00:55:41.349056+00:00",
+      "exit_code": 0
+    },
+    {
+      "label": "canonical-kernel-optimized",
+      "argv": [
+        "python",
+        "-O",
+        "-m",
+        "unittest",
+        "runtime.kernel.test_kernel",
+        "runtime.kernel.test_release_epoch",
+        "-v"
+      ],
+      "started_utc": "2026-10-03T00:55:41.349992+00:00",
+      "ended_utc": "2026-10-03T00:55:41.468447+00:00",
+      "exit_code": 0
+    },
+    {
+      "label": "canonical-matrix",
+      "argv": [
+        "python",
+        "runtime/results/kernel-release-epoch-01a0ff34/probe.py",
+        "fixed",
+        "runtime/results/kernel-release-epoch-01a0ff34/fixed-canonical.json"
+      ],
+      "started_utc": "2026-10-03T00:55:41.469448+00:00",
+      "ended_utc": "2026-10-03T00:55:41.619668+00:00",
+      "exit_code": 0
+    },
+    {
+      "label": "canonical-audit",
+      "argv": [
+        "python",
+        "runtime/results/kernel-release-epoch-01a0ff34/audit.py",
+        "runtime/results/kernel-release-epoch-01a0ff34/fixed-canonical.json",
+        "runtime/results/kernel-release-epoch-01a0ff34/fixed-canonical-audit.json"
+      ],
+      "started_utc": "2026-10-03T00:55:41.620671+00:00",
+      "ended_utc": "2026-10-03T00:55:41.694331+00:00",
+      "exit_code": 0
+    }
+  ]
+}

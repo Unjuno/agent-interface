@@ -1,0 +1,785 @@
+{
+  "assigned_count": 36,
+  "input_sha256": {
+    "scenarios.json": "9d4247b017517a8339841add1fa88cbfd789dd1910112e97a783fa49a08c8ebb"
+  },
+  "rows": [
+    {
+      "bound_sources": {
+        "a1": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a1"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "save-report",
+      "policy": "transcript_order",
+      "row_id": "clean-single::transcript_order",
+      "scenario_id": "clean-single",
+      "source_generations": {
+        "a1": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a1": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a1"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "save-report",
+      "policy": "cluster_only",
+      "row_id": "clean-single::cluster_only",
+      "scenario_id": "clean-single",
+      "source_generations": {
+        "a1": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a1": {
+          "authenticated": true,
+          "basis": "authenticated_ptt_turn",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a1"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "save-report",
+      "policy": "authenticated_ptt",
+      "row_id": "clean-single::authenticated_ptt",
+      "scenario_id": "clean-single",
+      "source_generations": {
+        "a1": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a1": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a1"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "save-report",
+      "policy": "segment_principal_gate",
+      "row_id": "clean-single::segment_principal_gate",
+      "scenario_id": "clean-single",
+      "source_generations": {
+        "a1": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a2": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "B"
+        }
+      },
+      "contributing_segment_ids": [
+        "a2"
+      ],
+      "disposition": "WRONG_PRINCIPAL",
+      "effect_id": "send-report",
+      "policy": "transcript_order",
+      "row_id": "overlap-negation::transcript_order",
+      "scenario_id": "overlap-negation",
+      "source_generations": {
+        "a2": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a2": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a2"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "send-report",
+      "policy": "cluster_only",
+      "row_id": "overlap-negation::cluster_only",
+      "scenario_id": "overlap-negation",
+      "source_generations": {
+        "a2": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a2": {
+          "authenticated": false,
+          "basis": "ptt_unavailable_or_mixed",
+          "principal": "UNKNOWN"
+        }
+      },
+      "contributing_segment_ids": [
+        "a2"
+      ],
+      "disposition": "SOURCE_UNKNOWN",
+      "effect_id": "send-report",
+      "policy": "authenticated_ptt",
+      "row_id": "overlap-negation::authenticated_ptt",
+      "scenario_id": "overlap-negation",
+      "source_generations": {
+        "a2": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a2": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a2"
+      ],
+      "disposition": "YIELD_MIXED_PRINCIPAL_CONTEXT",
+      "effect_id": "send-report",
+      "policy": "segment_principal_gate",
+      "row_id": "overlap-negation::segment_principal_gate",
+      "scenario_id": "overlap-negation",
+      "source_generations": {
+        "a2": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "b3": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "b3"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "delete-record",
+      "policy": "transcript_order",
+      "row_id": "wrong-principal-command::transcript_order",
+      "scenario_id": "wrong-principal-command",
+      "source_generations": {
+        "b3": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "b3": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "b3"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "delete-record",
+      "policy": "cluster_only",
+      "row_id": "wrong-principal-command::cluster_only",
+      "scenario_id": "wrong-principal-command",
+      "source_generations": {
+        "b3": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "b3": {
+          "authenticated": true,
+          "basis": "authenticated_ptt_turn",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "b3"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "delete-record",
+      "policy": "authenticated_ptt",
+      "row_id": "wrong-principal-command::authenticated_ptt",
+      "scenario_id": "wrong-principal-command",
+      "source_generations": {
+        "b3": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "b3": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "B"
+        }
+      },
+      "contributing_segment_ids": [
+        "b3"
+      ],
+      "disposition": "WRONG_PRINCIPAL",
+      "effect_id": "delete-record",
+      "policy": "segment_principal_gate",
+      "row_id": "wrong-principal-command::segment_principal_gate",
+      "scenario_id": "wrong-principal-command",
+      "source_generations": {
+        "b3": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a4": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a4"
+      ],
+      "disposition": "NON_ACTIONABLE_QUOTED",
+      "effect_id": "send-payment",
+      "policy": "transcript_order",
+      "row_id": "quoted-command::transcript_order",
+      "scenario_id": "quoted-command",
+      "source_generations": {
+        "a4": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a4": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a4"
+      ],
+      "disposition": "NON_ACTIONABLE_QUOTED",
+      "effect_id": "send-payment",
+      "policy": "cluster_only",
+      "row_id": "quoted-command::cluster_only",
+      "scenario_id": "quoted-command",
+      "source_generations": {
+        "a4": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a4": {
+          "authenticated": true,
+          "basis": "authenticated_ptt_turn",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a4"
+      ],
+      "disposition": "NON_ACTIONABLE_QUOTED",
+      "effect_id": "send-payment",
+      "policy": "authenticated_ptt",
+      "row_id": "quoted-command::authenticated_ptt",
+      "scenario_id": "quoted-command",
+      "source_generations": {
+        "a4": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a4": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a4"
+      ],
+      "disposition": "NON_ACTIONABLE_QUOTED",
+      "effect_id": "send-payment",
+      "policy": "segment_principal_gate",
+      "row_id": "quoted-command::segment_principal_gate",
+      "scenario_id": "quoted-command",
+      "source_generations": {
+        "a4": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a5": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a5"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "unlock-door",
+      "policy": "transcript_order",
+      "row_id": "stale-replay::transcript_order",
+      "scenario_id": "stale-replay",
+      "source_generations": {
+        "a5": "turn-0"
+      }
+    },
+    {
+      "bound_sources": {
+        "a5": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a5"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "unlock-door",
+      "policy": "cluster_only",
+      "row_id": "stale-replay::cluster_only",
+      "scenario_id": "stale-replay",
+      "source_generations": {
+        "a5": "turn-0"
+      }
+    },
+    {
+      "bound_sources": {
+        "a5": {
+          "authenticated": false,
+          "basis": "ptt_unavailable_or_mixed",
+          "principal": "UNKNOWN"
+        }
+      },
+      "contributing_segment_ids": [
+        "a5"
+      ],
+      "disposition": "SOURCE_UNKNOWN",
+      "effect_id": "unlock-door",
+      "policy": "authenticated_ptt",
+      "row_id": "stale-replay::authenticated_ptt",
+      "scenario_id": "stale-replay",
+      "source_generations": {
+        "a5": "turn-0"
+      }
+    },
+    {
+      "bound_sources": {
+        "a5": {
+          "authenticated": false,
+          "basis": "segment_source_unverified",
+          "principal": "UNKNOWN"
+        }
+      },
+      "contributing_segment_ids": [
+        "a5"
+      ],
+      "disposition": "SOURCE_UNKNOWN",
+      "effect_id": "unlock-door",
+      "policy": "segment_principal_gate",
+      "row_id": "stale-replay::segment_principal_gate",
+      "scenario_id": "stale-replay",
+      "source_generations": {
+        "a5": "turn-0"
+      }
+    },
+    {
+      "bound_sources": {
+        "a6": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a6"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "open-report",
+      "policy": "transcript_order",
+      "row_id": "cluster-switch::transcript_order",
+      "scenario_id": "cluster-switch",
+      "source_generations": {
+        "a6": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a6": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "B"
+        }
+      },
+      "contributing_segment_ids": [
+        "a6"
+      ],
+      "disposition": "WRONG_PRINCIPAL",
+      "effect_id": "open-report",
+      "policy": "cluster_only",
+      "row_id": "cluster-switch::cluster_only",
+      "scenario_id": "cluster-switch",
+      "source_generations": {
+        "a6": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a6": {
+          "authenticated": true,
+          "basis": "authenticated_ptt_turn",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a6"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "open-report",
+      "policy": "authenticated_ptt",
+      "row_id": "cluster-switch::authenticated_ptt",
+      "scenario_id": "cluster-switch",
+      "source_generations": {
+        "a6": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a6": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a6"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "open-report",
+      "policy": "segment_principal_gate",
+      "row_id": "cluster-switch::segment_principal_gate",
+      "scenario_id": "cluster-switch",
+      "source_generations": {
+        "a6": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "u7": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "u7"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "approve-transfer",
+      "policy": "transcript_order",
+      "row_id": "cluster-without-auth::transcript_order",
+      "scenario_id": "cluster-without-auth",
+      "source_generations": {
+        "u7": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "u7": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "u7"
+      ],
+      "disposition": "ACTIONABLE",
+      "effect_id": "approve-transfer",
+      "policy": "cluster_only",
+      "row_id": "cluster-without-auth::cluster_only",
+      "scenario_id": "cluster-without-auth",
+      "source_generations": {
+        "u7": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "u7": {
+          "authenticated": false,
+          "basis": "ptt_unavailable_or_mixed",
+          "principal": "UNKNOWN"
+        }
+      },
+      "contributing_segment_ids": [
+        "u7"
+      ],
+      "disposition": "SOURCE_UNKNOWN",
+      "effect_id": "approve-transfer",
+      "policy": "authenticated_ptt",
+      "row_id": "cluster-without-auth::authenticated_ptt",
+      "scenario_id": "cluster-without-auth",
+      "source_generations": {
+        "u7": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "u7": {
+          "authenticated": false,
+          "basis": "segment_source_unverified",
+          "principal": "UNKNOWN"
+        }
+      },
+      "contributing_segment_ids": [
+        "u7"
+      ],
+      "disposition": "SOURCE_UNKNOWN",
+      "effect_id": "approve-transfer",
+      "policy": "segment_principal_gate",
+      "row_id": "cluster-without-auth::segment_principal_gate",
+      "scenario_id": "cluster-without-auth",
+      "source_generations": {
+        "u7": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a8": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        },
+        "b8": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a8",
+        "b8"
+      ],
+      "disposition": "WRONG_PRINCIPAL",
+      "effect_id": "shared-publish",
+      "policy": "transcript_order",
+      "row_id": "joint-without-grant::transcript_order",
+      "scenario_id": "joint-without-grant",
+      "source_generations": {
+        "a8": "turn-1",
+        "b8": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a8": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "A"
+        },
+        "b8": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "B"
+        }
+      },
+      "contributing_segment_ids": [
+        "a8",
+        "b8"
+      ],
+      "disposition": "YIELD_JOINT_AUTHORITY",
+      "effect_id": "shared-publish",
+      "policy": "cluster_only",
+      "row_id": "joint-without-grant::cluster_only",
+      "scenario_id": "joint-without-grant",
+      "source_generations": {
+        "a8": "turn-1",
+        "b8": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a8": {
+          "authenticated": false,
+          "basis": "ptt_unavailable_or_mixed",
+          "principal": "UNKNOWN"
+        },
+        "b8": {
+          "authenticated": false,
+          "basis": "ptt_unavailable_or_mixed",
+          "principal": "UNKNOWN"
+        }
+      },
+      "contributing_segment_ids": [
+        "a8",
+        "b8"
+      ],
+      "disposition": "SOURCE_UNKNOWN",
+      "effect_id": "shared-publish",
+      "policy": "authenticated_ptt",
+      "row_id": "joint-without-grant::authenticated_ptt",
+      "scenario_id": "joint-without-grant",
+      "source_generations": {
+        "a8": "turn-1",
+        "b8": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a8": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "A"
+        },
+        "b8": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "B"
+        }
+      },
+      "contributing_segment_ids": [
+        "a8",
+        "b8"
+      ],
+      "disposition": "YIELD_JOINT_AUTHORITY",
+      "effect_id": "shared-publish",
+      "policy": "segment_principal_gate",
+      "row_id": "joint-without-grant::segment_principal_gate",
+      "scenario_id": "joint-without-grant",
+      "source_generations": {
+        "a8": "turn-1",
+        "b8": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a9": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        },
+        "b9": {
+          "authenticated": false,
+          "basis": "transcript_order",
+          "principal": "A"
+        }
+      },
+      "contributing_segment_ids": [
+        "a9",
+        "b9"
+      ],
+      "disposition": "WRONG_PRINCIPAL",
+      "effect_id": "shared-publish",
+      "policy": "transcript_order",
+      "row_id": "joint-authorized::transcript_order",
+      "scenario_id": "joint-authorized",
+      "source_generations": {
+        "a9": "turn-1",
+        "b9": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a9": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "A"
+        },
+        "b9": {
+          "authenticated": false,
+          "basis": "diarization_cluster",
+          "principal": "B"
+        }
+      },
+      "contributing_segment_ids": [
+        "a9",
+        "b9"
+      ],
+      "disposition": "ACTIONABLE_JOINT",
+      "effect_id": "shared-publish",
+      "policy": "cluster_only",
+      "row_id": "joint-authorized::cluster_only",
+      "scenario_id": "joint-authorized",
+      "source_generations": {
+        "a9": "turn-1",
+        "b9": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a9": {
+          "authenticated": false,
+          "basis": "ptt_unavailable_or_mixed",
+          "principal": "UNKNOWN"
+        },
+        "b9": {
+          "authenticated": false,
+          "basis": "ptt_unavailable_or_mixed",
+          "principal": "UNKNOWN"
+        }
+      },
+      "contributing_segment_ids": [
+        "a9",
+        "b9"
+      ],
+      "disposition": "SOURCE_UNKNOWN",
+      "effect_id": "shared-publish",
+      "policy": "authenticated_ptt",
+      "row_id": "joint-authorized::authenticated_ptt",
+      "scenario_id": "joint-authorized",
+      "source_generations": {
+        "a9": "turn-1",
+        "b9": "turn-1"
+      }
+    },
+    {
+      "bound_sources": {
+        "a9": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "A"
+        },
+        "b9": {
+          "authenticated": true,
+          "basis": "authenticated_segment_session",
+          "principal": "B"
+        }
+      },
+      "contributing_segment_ids": [
+        "a9",
+        "b9"
+      ],
+      "disposition": "ACTIONABLE_JOINT",
+      "effect_id": "shared-publish",
+      "policy": "segment_principal_gate",
+      "row_id": "joint-authorized::segment_principal_gate",
+      "scenario_id": "joint-authorized",
+      "source_generations": {
+        "a9": "turn-1",
+        "b9": "turn-1"
+      }
+    }
+  ],
+  "schema": "principal-binding-candidate-v1"
+}

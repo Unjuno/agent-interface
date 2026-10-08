@@ -1,0 +1,36 @@
+{
+  "task": "OBSERVATION-SOURCE-ROLE-COMPOSITION-20260918-001",
+  "base": "0186dbe6a7a3674c1fd591a7ed7e472e01e0746e",
+  "parents": {
+    "issue_615": {
+      "decision": "PASS_REANCHOR_RECEIPT_SCOPED",
+      "main_result_git_blob": "59473497f79d197f817eae3489b19c989e35dbcd",
+      "candidate_cases": 3,
+      "same_post_sequence_cases": 3,
+      "no_input_authority_receipts": 3,
+      "extra_observation_programs_total": 0
+    },
+    "issue_629": {
+      "decision": "PASS_REANCHOR_PLANNER_ADMISSION_SCOPED",
+      "main_result_git_blob": "31d3e3d34f85aa1e491c61becce4902701476b14",
+      "canonical_reanchor_receipt_sha256": "6afe34e25fde1996812e2b5d1a3c26320f51496a7a265dc8ea86b0dd53e52f68",
+      "matching_completed_fresh_planner_decision_eligible": true,
+      "matching_completed_grants_input_authority": false,
+      "matching_completed_grants_semantic_authority": false,
+      "matching_completed_old_action_authority_reused": false,
+      "ordinary_executor_admission_required": true
+    },
+    "issue_721": {
+      "decision": "PASS_TERMINAL_SOURCE_REUSE_SCOPED",
+      "result_comment_id": 5702992376,
+      "freeze_sha256": "7820f8ee774d7a986ea986aa31ab204907504395a00b52239767acf92a69a68d",
+      "formal_summary_sha256": "d579b7d875142d4cbd4417feb1020d6de71e54ec8fb5e6903f135e5b57dec9be",
+      "reuse_terminal_source_cases": 6,
+      "role": "TERMINAL_EVIDENCE",
+      "currentness_asserted": false,
+      "grants_input_authority": false,
+      "recapture_role": "NEW_CURRENT_PLANNER_CONTEXT",
+      "raw_packet_status": "complete 79-file packet not located through current-main code search in this intake; no raw-frame replay or historical frame digest is claimed here"
+    }
+  }
+}

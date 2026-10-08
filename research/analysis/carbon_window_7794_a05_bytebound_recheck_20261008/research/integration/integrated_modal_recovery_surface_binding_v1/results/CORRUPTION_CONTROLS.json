@@ -1,0 +1,88 @@
+{
+  "controls": [
+    {
+      "decision": "FAIL_INTEGRITY_OR_CONTRACT",
+      "errors": [
+        "f01:stale_escape"
+      ],
+      "name": "stale_surface_escape",
+      "rejected": true
+    },
+    {
+      "decision": "FAIL_INTEGRITY_OR_CONTRACT",
+      "errors": [
+        "f01:receipt_copy:fresh_modal:bound",
+        "f01:authority:fresh_modal:bound"
+      ],
+      "name": "authority_escalation",
+      "rejected": true
+    },
+    {
+      "decision": "FAIL_INTEGRITY_OR_CONTRACT",
+      "errors": [
+        "f01:transient",
+        "f01:current_copy:stale_main:coarse",
+        "f01:current_copy:stale_main:bound",
+        "f01:current_copy:fresh_modal:coarse",
+        "f01:receipt_copy:fresh_modal:coarse",
+        "f01:current_copy:fresh_modal:bound",
+        "f01:receipt_copy:fresh_modal:bound"
+      ],
+      "name": "transient_relation_corruption",
+      "rejected": true
+    },
+    {
+      "decision": "FAIL_INTEGRITY_OR_CONTRACT",
+      "errors": [
+        "row_count",
+        "matrix_unique",
+        "r04:missing:fresh_modal"
+      ],
+      "name": "missing_row",
+      "rejected": true
+    },
+    {
+      "decision": "FAIL_INTEGRITY_OR_CONTRACT",
+      "errors": [
+        "f01:case_sha:stale_main:coarse"
+      ],
+      "name": "case_hash_corruption",
+      "rejected": true
+    }
+  ],
+  "controls_rejected": 5,
+  "controls_total": 5,
+  "source_rehash": {
+    "PLAN.md": {
+      "got": "5b3a8ed17f088b20de8372740650419e9cc85fbc3c0d6c148e63c03d05b89051",
+      "match": true,
+      "want": "5b3a8ed17f088b20de8372740650419e9cc85fbc3c0d6c148e63c03d05b89051"
+    },
+    "fixture.json": {
+      "got": "2fb5134396c4de983bed00f86a26997f56390f84d0c2c24435516dae54128aaa",
+      "match": true,
+      "want": "2fb5134396c4de983bed00f86a26997f56390f84d0c2c24435516dae54128aaa"
+    },
+    "src/audit.py": {
+      "got": "d5ce6779d6ffa25dd1d5db570f7f38a6442bafa8e7367f7f4c7da60025970d05",
+      "match": true,
+      "want": "d5ce6779d6ffa25dd1d5db570f7f38a6442bafa8e7367f7f4c7da60025970d05"
+    },
+    "src/runner.py": {
+      "got": "334bc22ea7e9713bf058f35304206e182ddff13ff9d206db96908cb3fd04d96c",
+      "match": true,
+      "want": "334bc22ea7e9713bf058f35304206e182ddff13ff9d206db96908cb3fd04d96c"
+    },
+    "src/test_controls.py": {
+      "got": "dbcc7c0eaff8b6ee42d9b8dda796879f8fd89d992c30ae9d3cb84402ffd5e13f",
+      "match": true,
+      "want": "dbcc7c0eaff8b6ee42d9b8dda796879f8fd89d992c30ae9d3cb84402ffd5e13f"
+    },
+    "src/validator.py": {
+      "got": "4010cf4cef4566125fa2391c495434fb1a33275928a68dd8ff78ec208eebe4ed",
+      "match": true,
+      "want": "4010cf4cef4566125fa2391c495434fb1a33275928a68dd8ff78ec208eebe4ed"
+    }
+  },
+  "source_rehash_exact": true
+}

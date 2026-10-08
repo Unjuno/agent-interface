@@ -1,0 +1,57 @@
+name: Runtime Win32 v1
+
+on:
+  push:
+    branches:
+      - integration/runtime-win32-v1-20260917
+    paths:
+      - 'runtime/core_v1/**'
+      - 'runtime/backends/win32_v1/**'
+      - 'runtime/guarded_win32_v1/**'
+      - 'runtime/guarded_x11_v1/**'
+      - 'runtime/distribution_v2/**'
+      - '.github/workflows/runtime-win32-v1.yml'
+  pull_request:
+    paths:
+      - 'runtime/core_v1/**'
+      - 'runtime/backends/win32_v1/**'
+      - 'runtime/guarded_win32_v1/**'
+      - 'runtime/guarded_x11_v1/**'
+      - 'runtime/distribution_v2/**'
+      - '.github/workflows/runtime-win32-v1.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  native-win32:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout frozen core and Win32 candidate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            runtime/core_v1
+            runtime/backends/win32_v1
+            runtime/guarded_win32_v1
+            runtime/guarded_x11_v1
+            runtime/distribution_v2
+          sparse-checkout-cone-mode: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile exact source
+        run: python -m compileall -q runtime/core_v1 runtime/backends/win32_v1 runtime/guarded_win32_v1 runtime/guarded_x11_v1 runtime/distribution_v2
+      - name: Install guarded API test dependency
+        run: python -m pip install Pillow==10.2.0
+      - name: Run guarded Win32 unit and recovery tests
+        run: python -m unittest discover -s runtime/guarded_win32_v1 -t . -v
+      - name: Run frozen pure helpers
+        run: python -m unittest -v runtime.backends.win32_v1.test_integration.PureWin32HelperTests
+      - name: Run session recovery classification
+        run: python -m unittest -v runtime.backends.win32_v1.test_integration.Win32SessionRecoveryTests
+      - name: Run frozen native Win32 integration
+        run: python -m unittest -v runtime.backends.win32_v1.test_integration.Win32IntegrationTests

@@ -1,0 +1,37 @@
+{
+  "schema": "agent-interface/exposed-success-ledger-v1",
+  "fixture_id": "6367-primary-controls-v1",
+  "schedule_generation": "schedule-6367-v1",
+  "offers": [
+    {"offer_id":"benefit-01","challenge_id":"cue-01","challenge_generation":1},
+    {"offer_id":"null-01","challenge_id":"cue-02","challenge_generation":1},
+    {"offer_id":"suppression-01","challenge_id":"cue-03","challenge_generation":1},
+    {"offer_id":"shift-01","challenge_id":"cue-04","challenge_generation":1},
+    {"offer_id":"stale-cue-01","challenge_id":"cue-05","challenge_generation":2},
+    {"offer_id":"missing-effect-01","challenge_id":"cue-06","challenge_generation":1},
+    {"offer_id":"missing-occupancy-01","challenge_id":"cue-07","challenge_generation":1},
+    {"offer_id":"unsafe-01","challenge_id":"cue-08","challenge_generation":1}
+  ],
+  "arms": {
+    "fixed": {
+      "benefit-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-01","response":"continued","effect":{"independent":true,"success":false},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "null-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-02","response":"continued","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "suppression-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-03","response":"continued","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "shift-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-04","response":"continued","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "stale-cue-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-05","response":"continued","effect":{"independent":true,"success":false},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "missing-effect-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-06","response":"continued","effect":{"independent":true,"success":false},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "missing-occupancy-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-07","response":"continued","effect":{"independent":true,"success":false},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "unsafe-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-08","response":"continued","effect":{"independent":true,"success":false},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}}
+    },
+    "adaptive": {
+      "benefit-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-01","response":"adapted","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":15,"up_ms":35},"release":{"verified_neutral":true},"adaptation":{"triggered":true,"cue_generation":1,"fresh":true},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "null-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-02","response":"continued","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":20,"up_ms":40},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "suppression-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-03","response":"no_response","effect":{"independent":true,"success":false},"deadline_met":false,"occupancy":{"qualified":true,"down_ms":0,"up_ms":0},"release":{"verified_neutral":true},"adaptation":{"triggered":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "shift-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-04-shifted","response":"adapted_after_shift","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":15,"up_ms":35},"release":{"verified_neutral":true},"adaptation":{"triggered":true,"cue_generation":1,"fresh":true},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "stale-cue-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-05","response":"adapted_on_stale_cue","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":15,"up_ms":35},"release":{"verified_neutral":true},"adaptation":{"triggered":true,"cue_generation":1,"fresh":false},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "missing-effect-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-06","response":"adapted","effect":{"independent":false,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":15,"up_ms":35},"release":{"verified_neutral":true},"adaptation":{"triggered":true,"cue_generation":1,"fresh":true},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "missing-occupancy-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-07","response":"adapted","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":false,"down_ms":null,"up_ms":null},"release":{"verified_neutral":true},"adaptation":{"triggered":true,"cue_generation":1,"fresh":true},"safety":{"forbidden_effect":false,"release_violation":false}},
+      "unsafe-01":{"source_generation":"schedule-6367-v1","challenge_id":"cue-08","response":"adapted","effect":{"independent":true,"success":true},"deadline_met":true,"occupancy":{"qualified":true,"down_ms":15,"up_ms":35},"release":{"verified_neutral":false},"adaptation":{"triggered":true,"cue_generation":1,"fresh":true},"safety":{"forbidden_effect":true,"release_violation":true}}
+    }
+  }
+}

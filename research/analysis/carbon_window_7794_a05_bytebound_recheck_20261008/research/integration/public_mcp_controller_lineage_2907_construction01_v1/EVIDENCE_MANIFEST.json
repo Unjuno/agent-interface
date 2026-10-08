@@ -1,0 +1,78 @@
+{
+  "schema": "agent-interface/evidence-manifest-v1",
+  "allocation": "public-mcp-controller-lineage-2907-construction04",
+  "repo_base": "ca0ed9cd81c4d4333c651122c42bfdf48be53c5c",
+  "image_id": "sha256:b2b42660e35475baf5ef7a546a8c6901c39f04f69266cd9eebfe49c7ed49ea09",
+  "files": [
+    {
+      "path": "construction_v3.py.b64",
+      "bytes": 8422,
+      "sha256": "cdf7a51eadebbe9114e6c5dbf90ce882a1463e163fbd1693f7e0620101a5230c",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "audit_v1.py.b64",
+      "bytes": 4206,
+      "sha256": "4c3a2ffeb1d14d471dde80882baecdfa477a2a4f3cdbf28946e9ff5de5646562",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "construction04/lineage.json.b64",
+      "bytes": 6029,
+      "sha256": "5699c022ddfac9877ea6f06da270ed07f168e9b2f86942e65930ca1b48ebbb39",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "audit04/audit.json.b64",
+      "bytes": 1362,
+      "sha256": "36f11bb45739858cbd337fc300f151c227e160a76ec31a9cf548bce9ce681bea",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "construction04/images/01-inkscape.png.b64",
+      "bytes": 228,
+      "sha256": "b7adbfd93fc97a4eeeb76516e6477e819553601ed653466345a25d963e60fbc9",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "construction04/images/02-calc.png.b64",
+      "bytes": 1260,
+      "sha256": "0a97a9387f096eeab11c60153580ab66a53ba1482726935e9b9d515f93be00c9",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "construction04/images/03-chromium.png.b64",
+      "bytes": 10191,
+      "sha256": "f9e88a2632511187324674cd7ac27cc95d3f5d0c43f4b7d97606e13c6e0bdab6",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "construction01/lineage.json.b64",
+      "bytes": 160,
+      "sha256": "d52d18fe5625904f5ad4c96fb00c620a62cba79bfe1f03a5e0e3b1628b359b6f",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "construction03/lineage.json.b64",
+      "bytes": 6088,
+      "sha256": "b52cb8c1af5b74c81efe79f6baec28b29fb909109a417ada357bb4284923170d",
+      "encoding": "base64-exact"
+    },
+    {
+      "path": "construction_v2.py.b64",
+      "bytes": 8070,
+      "sha256": "ef2ffbc7204b322f74ad742b76065fe638675676233d0afa337983d7dd75bb4e",
+      "encoding": "base64-exact"
+    }
+  ],
+  "audited_git_blobs": {
+    "runtime/cli_v1/api.py": "6318f0d2fe0b0533d694175e2521eb86946dbed1",
+    "runtime/cli_v1/observe.py": "08460ae506afcd0f9ad89b91064d121c55c5b419",
+    "runtime/backends/x11_v1/backend.py": "965443ae5b0f92eab62adfb4aaa00b8963f34679",
+    "runtime/backends/x11_v1/session.py": "e973b2f3f827951634344a320cd833a80a899d9e",
+    "runtime/core_v1/contract.py": "87154518107e4231a6f8ec06e976d2856b375d1d"
+  },
+  "audit_decision": "PASS_RAW_AUDIT",
+  "audit_errors": [],
+  "scope": "construction only; not formal #2907 integration"
+}

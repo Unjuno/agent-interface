@@ -1,0 +1,34 @@
+{
+  "schema": "authority-ended-live-delivery-race-prereg-v1",
+  "runtime_source_base": "9e6d5ecdbb5440fd5df1883161f2c63b2c3bb245",
+  "fixture": "map01-threat-contact-v2",
+  "seed": 994200,
+  "model_calls": 0,
+  "formal_sessions": 1,
+  "retry_count_allowed": 0,
+  "first_action": {"key": "Shift_L", "requested_ms": 2000, "authority_ms": 600},
+  "race_exposure": {
+    "trigger": "first live authority_ended event before first terminal",
+    "early_receipt_uses": "verified expired interruption release + empty physical input + no post_authority observation",
+    "required_rejection": "post-authority observation required",
+    "early_input_forbidden": true
+  },
+  "after_terminal": {
+    "require_one_post_authority_capture": true,
+    "observe_only_required": true,
+    "require_current_sequence_strictly_greater_than_post_sequence": true,
+    "second_action": {"key": "Shift_L", "duration_ms": 80}
+  },
+  "hard_gates": [
+    "early authority_ended event exposes verified expired release and empty keys/buttons but no post-authority observation",
+    "early gate attempt rejects specifically because post-authority observation is required",
+    "zero input admissions after first verified expiry release through early rejection and first terminal",
+    "first terminal authority_ended includes exactly one valid bounded post-authority observation",
+    "observe-only produces current_sequence > post_sequence and gate revalidates",
+    "zero input admissions after first release before second submit",
+    "exactly one second-action input admission; second terminal completed with verified empty release",
+    "strict five-field independent final scorer agreement"
+  ],
+  "decision": "PASS_RACE_GATE only if every hard gate passes; otherwise retain first failure and stop",
+  "scope": "real ViZDoom/X11 delivery-order semantics only; no model, gameplay-efficacy, or hard-real-time claim"
+}

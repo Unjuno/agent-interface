@@ -1,0 +1,48 @@
+{
+  "status": "PASS_GUARDED_PRIMARY_STDIO",
+  "source": "f3fc1cc739e3109f7df19524a1e8a9a6e36db122",
+  "metrics": {
+    "public_requests": 4,
+    "primary_commands": 7,
+    "raw_stream_records": 9,
+    "delivered_images": 2,
+    "primary_image_views": 2,
+    "native_captures": 6,
+    "input_programs": 1,
+    "save_effects": 1,
+    "app_acknowledgments": 1,
+    "app_ack_delay_ms": 3001.234551,
+    "saved_capture_after_ack_ms": 35.15168,
+    "input_request_to_file_presentation_ms": 3125.966365,
+    "input_file_presentation_to_review_ms": 15512.344680999988,
+    "host_first_send_to_close_ms": 74599.717362
+  },
+  "counterexamples": [
+    {
+      "name": "duplicate-save",
+      "rejected": true,
+      "reason": "single independent task-bound Save/ack"
+    },
+    {
+      "name": "unverified-close",
+      "rejected": true,
+      "reason": "explicit neutral public close"
+    },
+    {
+      "name": "missing-input-release",
+      "rejected": true,
+      "reason": "neutral input release"
+    },
+    {
+      "name": "changed-image-hash",
+      "rejected": true,
+      "reason": "native/file/descriptor identity"
+    },
+    {
+      "name": "stream-terminal-control",
+      "rejected": true,
+      "reason": "raw JSON stream has no terminal rendering"
+    }
+  ],
+  "scope": "One authored primary GUI case, not general model speed/token/authority proof"
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "tiny-visual-extent-readout-cuda-freeze-v1",
+  "issue": 4847,
+  "allocation": "tiny-visual-extent-readout-4817-cuda-20260927-02",
+  "base_main": "f02ff3234003edc9ae72104a015135aa0da23650",
+  "source_path": "research/analysis/tiny_visual_extent_readout_4817_v2/",
+  "source_blob_ids": {
+    "prepare_py": "d96e1d795259134264eea6a055a5b39776687203",
+    "models_py": "aa89afe49ff9523f9e342ced99e7ed9894ec5230",
+    "run_py": "0c27a90e16d196d2d673cad93253ab2ac5e3380d",
+    "audit_numpy2_py": "f1454936bf9ac975a71f7a11a14b57a54cc0d029",
+    "controls_numpy2_py": "52c2a6b2cab24e6195a30fec54d2a7271a725419"
+  },
+  "cuda_runner_blob": "bd6a3d16f643b822a3d7b9d8daeac70d0ed239d3",
+  "cpu_auditor_blob": "765085f1701d6c90f4d77ed595747f56e138d66e",
+  "image_id": "sha256:831247999fbf7e08f61b3e39f6d77ee434f38f6f07f769d00db451e853878067",
+  "image": "pytorch/pytorch:2.5.1-cuda12.1-cudnn9-runtime",
+  "env": {
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8"
+  },
+  "data_seed": 89100471,
+  "init_seed": 89100472,
+  "fd_seed": 89100473,
+  "steps": 1000,
+  "lr": 0.2,
+  "threshold": 0.75,
+  "formal_fits": 0,
+  "construction_fits": 2
+}

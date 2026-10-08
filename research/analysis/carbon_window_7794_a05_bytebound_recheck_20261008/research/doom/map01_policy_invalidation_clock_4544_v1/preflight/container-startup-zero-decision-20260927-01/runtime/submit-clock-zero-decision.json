@@ -1,0 +1,67 @@
+{
+  "sample_count": 3,
+  "same_session": true,
+  "offset_lower_ns": -739145590658,
+  "offset_upper_ns": -739144305255,
+  "uncertainty_width_ns": 1285403,
+  "host_sent_ns": 11572582909250,
+  "runtime_sent_ns": 10833437318592,
+  "executor_accepted_ns": 10833446549137,
+  "acceptance_minus_translated_send_ns": 9230545,
+  "samples": [
+    {
+      "host_send_ns": 11572580185250,
+      "runtime_ns": 10833435879995,
+      "host_receive_ns": 11572581114958,
+      "offset_lower_ns": -739145234963,
+      "offset_upper_ns": -739144305255
+    },
+    {
+      "host_send_ns": 11572581117583,
+      "runtime_ns": 10833436638002,
+      "host_receive_ns": 11572581856375,
+      "offset_lower_ns": -739145218373,
+      "offset_upper_ns": -739144479581
+    },
+    {
+      "host_send_ns": 11572581857958,
+      "runtime_ns": 10833437311925,
+      "host_receive_ns": 11572582902583,
+      "offset_lower_ns": -739145590658,
+      "offset_upper_ns": -739144546033
+    }
+  ],
+  "accepted": {
+    "event": "accepted",
+    "id": "v7-zero-decision-observe-only",
+    "steps": 1,
+    "program_sha256": "236e05f5e6fd23b5f8e7ace2c4af847c4fc31d9a311adb53ef364326770752fb",
+    "intent_token": "086667cb3299470081bf5bb2e8696b1f",
+    "valid_until_ns": 10858436737271,
+    "accepted_ns": 10833446549137,
+    "emit_ns": 10833446550762
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "v7-zero-decision-observe-only",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 10833490700385,
+      "valid_until_ns": null
+    },
+    "interruption": null,
+    "decision_reason": null,
+    "terminal_ns": 10833490723886,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_ns": 10833490724927
+  },
+  "input_authority": "observe_only",
+  "model_turns": 0
+}

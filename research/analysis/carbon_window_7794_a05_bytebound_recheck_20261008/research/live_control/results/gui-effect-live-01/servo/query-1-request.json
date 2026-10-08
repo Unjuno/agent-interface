@@ -1,0 +1,43 @@
+{
+  "after": 4,
+  "events": [
+    "terminal"
+  ],
+  "timeout": 15,
+  "action_id": "servo",
+  "request_id": "program-f877832a55ce4b1f8c5bd3148a8e8959",
+  "command": {
+    "op": "submit",
+    "id": "servo",
+    "steps": [
+      {
+        "op": "pointer_servo",
+        "source_sequence": 1,
+        "box": [
+          592,
+          369,
+          56,
+          44
+        ],
+        "target_delta": [
+          20,
+          0
+        ],
+        "points": [
+          {
+            "x": 618,
+            "y": 391
+          },
+          {
+            "x": 628,
+            "y": 391
+          }
+        ],
+        "duration_ms": 100,
+        "max_corrections": 3
+      }
+    ],
+    "expected_sequence": 1,
+    "valid_until_ns": 51350825689
+  }
+}

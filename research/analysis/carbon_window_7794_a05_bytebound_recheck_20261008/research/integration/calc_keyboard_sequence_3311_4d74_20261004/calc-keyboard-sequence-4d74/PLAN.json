@@ -1,0 +1,69 @@
+{
+  "allocation": "CALC-KEYBOARD-SEQUENCE-3311-4D74-G22-20261004",
+  "issue": 3311,
+  "source_main": "8c66c43918c7b8ac4b3daf929e07b163ba306d81",
+  "predecessor": "G21 preserved HOME pre-input STOP, no pooling/regrading",
+  "image": "sha256:f649ccab8aec3b94e451c6b0037e60fca72d7d7559381f8cd4aa98530b786c55",
+  "rows": [
+    {
+      "index": 0,
+      "route": "keyboard",
+      "click_wait_ms": 0
+    }
+  ],
+  "source_hashes": {
+    "blank.fods": "2590e38ac7d9db852dfb0eb6c1aeb80edda1f0fd68ca7c62b9f4197df7da010c",
+    "driver_once.py": "ebd1ef43d84fcd3a392eb09730565bb321c29269bbb216c01e7d7b380a777eee",
+    "producer.py": "1c08f9658ee51f72f40dbf962a726f230a1b64196f9e3c3fbbfe65727917b5ce",
+    "saved_oracle.py": "92def4221091e3d788ce24340d7a3f0f6e2e4dbe9b732164dc97605975f6de0d",
+    "sources/runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "sources/runtime/backends/x11_v1/capture_artifacts.py": "965fb1f190b6f7292546d2a59f20a0ed95a4a8f4ddc6d0d1979e51312f88033a",
+    "sources/runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
+    "sources/runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
+    "sources/runtime/core_v1/contract.py": "1709078c2a144d78ab61a9bc59fbb9973c120b9a58101c079d69db65d43a66b1",
+    "sources/runtime/core_v1/platform_probe.py": "4b373544e163f88cb74f7a739fd2246ae975b26705d609f01280e9480a16582e",
+    "sources/runtime/core_v1/__init__.py": "5284bc097858ceeb4793ffc0b88427c8dc693c893e43e1d244aa4be9fcfa7da0"
+  },
+  "model_calls": 0,
+  "hypothesis": "A finite after-click delay may avoid first-character routing into the prior selected cell; mechanism is unobserved and outcome can be inconclusive",
+  "scope": "fresh model-free diagnostic, not original formal replay/comparison completion/default promotion",
+  "stop": "stop infrastructure, source pin, priming effect, native receipt or physical neutral failure; trial saved-effect failures retained as data; fixed8 rows, no extension",
+  "H": "Known standard Calc keyboard navigation can overwrite one numeric row for six sequential tasks despite one actual window relocation, without pointer coordinates or model calls.",
+  "T": "One fresh private Calc session; Ctrl+Home then Down for each task; relocate same window before task4; stop on first incorrect complete saved effect. No retries.",
+  "D": "All six exact six-cell saved effects and formula, actual changed geometry, completed receipts and neutral physical input. Any wrong effect is FAIL and later tasks censored.",
+  "C": "Known application and authored tasks; static source stamps; model-free reference does not establish same-model efficiency, semantic invalidation, general GUI reliability or current-main whole-bundle qualification.",
+  "U": "Private WSLc Xvfb only, CPU1 requested/512MiB requested; actual cgroup samples retained; no GPU/shared display/network/model. Cleanup parent waits not global descendant proof.",
+  "intake_main": "b88986df5be3fdc4784ad990b2bfa30beda1c8fd",
+  "tasks": [
+    {
+      "index": 0,
+      "a": 23,
+      "b": 29
+    },
+    {
+      "index": 1,
+      "a": 37,
+      "b": 41
+    },
+    {
+      "index": 2,
+      "a": 43,
+      "b": 53
+    },
+    {
+      "index": 3,
+      "a": 59,
+      "b": 61
+    },
+    {
+      "index": 4,
+      "a": 67,
+      "b": 71
+    },
+    {
+      "index": 5,
+      "a": 73,
+      "b": 83
+    }
+  ]
+}

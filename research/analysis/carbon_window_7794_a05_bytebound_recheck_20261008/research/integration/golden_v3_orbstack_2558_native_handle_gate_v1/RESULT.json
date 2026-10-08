@@ -1,0 +1,14 @@
+{
+  "schema":"agent_interface_golden_v3_fresh_orbstack_native_handle_gate_v1",
+  "issue":2558,
+  "decision":"PASS_FRESH_NATIVE_HANDLE_EFFECT_AND_FAIL_CLOSED_GUARD",
+  "container":{"context":"orbstack","docker_server":"29.4.0","architecture":"aarch64","display":"private Xvfb"},
+  "model":{"model":"gpt-5.6-luna","effort":"low","input_tokens":16142,"output_tokens":195,"reasoning_output_tokens":80,"field":{"x":210,"y":145},"submit":{"x":132,"y":190}},
+  "fresh_effect":{"saved":true,"text":"docker2558-handle","action_to_scored_effect_ms":154.205206,"release_verified":true},
+  "visual_target_revalidation":true,
+  "continuation_input_replayed":false,
+  "focus_change_guard":{"status":"refused","error":"SCOPE_MISMATCH","input_dispatched":false,"emissions_delta":0},
+  "authority_granted":false,
+  "full_golden_route":false,
+  "claims":[]
+}

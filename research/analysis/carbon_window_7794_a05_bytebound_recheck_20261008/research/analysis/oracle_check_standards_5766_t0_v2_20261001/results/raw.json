@@ -1,0 +1,350 @@
+{
+  "candidate_source_sha256": "c10ed5855eaea0eb22b22fffcfa9bf701e3113433ea01bb1c7cacbf985d6c781",
+  "deck_sha256": "206025aaa1ebd60eb8aaf9526c4e127fb12dad5809482843272fc6738bf9e36c",
+  "freeze_id": "ORACLE-CHECK-5766-T0-20261001-02",
+  "reference_lock_sha256": "00e27992e979340a35cb2bba9728d023bacde4bd6d985761cf7319e2a5f66ca0",
+  "results": [
+    {
+      "app_profile": "app-v1",
+      "candidate_event": {
+        "id": "in_coverage",
+        "kind": "positive",
+        "prediction": "PASS"
+      },
+      "coverage_declared": true,
+      "disposition": "ELIGIBLE_FOR_FURTHER_TASK_AUDIT",
+      "postcheck": {
+        "deck_id": "oracle-check-standards-t0-v1",
+        "rows": [
+          {
+            "case_id": "positive",
+            "frozen_label": "PASS",
+            "independent_reference": "PASS",
+            "prediction": "PASS"
+          },
+          {
+            "case_id": "wrong_target",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "collateral",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unsaved",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unknown",
+            "frozen_label": "UNKNOWN",
+            "independent_reference": "UNKNOWN",
+            "prediction": "UNKNOWN"
+          }
+        ]
+      },
+      "precheck": {
+        "deck_id": "oracle-check-standards-t0-v1",
+        "rows": [
+          {
+            "case_id": "positive",
+            "frozen_label": "PASS",
+            "independent_reference": "PASS",
+            "prediction": "PASS"
+          },
+          {
+            "case_id": "wrong_target",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "collateral",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unsaved",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unknown",
+            "frozen_label": "UNKNOWN",
+            "independent_reference": "UNKNOWN",
+            "prediction": "UNKNOWN"
+          }
+        ]
+      },
+      "scenario": "nominal",
+      "scorer_hash_unchanged_from_v1": true,
+      "scorer_sha256": "9aba2c7ceabb510fcd1fb8f9e56375c88a90c3652105d3a8d9eaf3d4768c2a6c",
+      "scorer_version": "v1"
+    },
+    {
+      "app_profile": "app-v2-semantic-drift",
+      "candidate_event": {
+        "id": "in_coverage",
+        "kind": "positive",
+        "prediction": "PASS"
+      },
+      "coverage_declared": true,
+      "disposition": "HOLD_ORACLE_DRIFT",
+      "postcheck": {
+        "deck_id": "oracle-check-standards-t0-v1",
+        "rows": [
+          {
+            "case_id": "positive",
+            "frozen_label": "PASS",
+            "independent_reference": "FAIL",
+            "prediction": "PASS"
+          },
+          {
+            "case_id": "wrong_target",
+            "frozen_label": "FAIL",
+            "independent_reference": "PASS",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "collateral",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unsaved",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unknown",
+            "frozen_label": "UNKNOWN",
+            "independent_reference": "UNKNOWN",
+            "prediction": "UNKNOWN"
+          }
+        ]
+      },
+      "precheck": {
+        "deck_id": "oracle-check-standards-t0-v1",
+        "rows": [
+          {
+            "case_id": "positive",
+            "frozen_label": "PASS",
+            "independent_reference": "PASS",
+            "prediction": "PASS"
+          },
+          {
+            "case_id": "wrong_target",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "collateral",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unsaved",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unknown",
+            "frozen_label": "UNKNOWN",
+            "independent_reference": "UNKNOWN",
+            "prediction": "UNKNOWN"
+          }
+        ]
+      },
+      "scenario": "semantic_drift_unchanged_scorer",
+      "scorer_hash_unchanged_from_v1": true,
+      "scorer_sha256": "9aba2c7ceabb510fcd1fb8f9e56375c88a90c3652105d3a8d9eaf3d4768c2a6c",
+      "scorer_version": "v1"
+    },
+    {
+      "app_profile": "app-v2-equivalent-schema",
+      "candidate_event": {
+        "id": "in_coverage",
+        "kind": "positive",
+        "prediction": "PASS"
+      },
+      "coverage_declared": true,
+      "disposition": "ELIGIBLE_FOR_FURTHER_TASK_AUDIT",
+      "postcheck": {
+        "deck_id": "oracle-check-standards-t0-v1",
+        "rows": [
+          {
+            "case_id": "positive",
+            "frozen_label": "PASS",
+            "independent_reference": "PASS",
+            "prediction": "PASS"
+          },
+          {
+            "case_id": "wrong_target",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "collateral",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unsaved",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unknown",
+            "frozen_label": "UNKNOWN",
+            "independent_reference": "UNKNOWN",
+            "prediction": "UNKNOWN"
+          }
+        ]
+      },
+      "precheck": {
+        "deck_id": "oracle-check-standards-t0-v1",
+        "rows": [
+          {
+            "case_id": "positive",
+            "frozen_label": "PASS",
+            "independent_reference": "PASS",
+            "prediction": "PASS"
+          },
+          {
+            "case_id": "wrong_target",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "collateral",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unsaved",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unknown",
+            "frozen_label": "UNKNOWN",
+            "independent_reference": "UNKNOWN",
+            "prediction": "UNKNOWN"
+          }
+        ]
+      },
+      "scenario": "equivalent_version_change",
+      "scorer_hash_unchanged_from_v1": false,
+      "scorer_sha256": "f0694c8ad5bb0a582554c18775396b522b8edc4b010a977e38f9f091d41a912d",
+      "scorer_version": "v2"
+    },
+    {
+      "app_profile": "app-v1",
+      "candidate_event": {
+        "id": "outside_coverage",
+        "kind": "multiwindow",
+        "prediction": "PASS"
+      },
+      "coverage_declared": false,
+      "disposition": "UNKNOWN_COVERAGE",
+      "postcheck": {
+        "deck_id": "oracle-check-standards-t0-v1",
+        "rows": [
+          {
+            "case_id": "positive",
+            "frozen_label": "PASS",
+            "independent_reference": "PASS",
+            "prediction": "PASS"
+          },
+          {
+            "case_id": "wrong_target",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "collateral",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unsaved",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unknown",
+            "frozen_label": "UNKNOWN",
+            "independent_reference": "UNKNOWN",
+            "prediction": "UNKNOWN"
+          }
+        ]
+      },
+      "precheck": {
+        "deck_id": "oracle-check-standards-t0-v1",
+        "rows": [
+          {
+            "case_id": "positive",
+            "frozen_label": "PASS",
+            "independent_reference": "PASS",
+            "prediction": "PASS"
+          },
+          {
+            "case_id": "wrong_target",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "collateral",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unsaved",
+            "frozen_label": "FAIL",
+            "independent_reference": "FAIL",
+            "prediction": "FAIL"
+          },
+          {
+            "case_id": "unknown",
+            "frozen_label": "UNKNOWN",
+            "independent_reference": "UNKNOWN",
+            "prediction": "UNKNOWN"
+          }
+        ]
+      },
+      "scenario": "out_of_coverage",
+      "scorer_hash_unchanged_from_v1": true,
+      "scorer_sha256": "9aba2c7ceabb510fcd1fb8f9e56375c88a90c3652105d3a8d9eaf3d4768c2a6c",
+      "scorer_version": "v1"
+    }
+  ],
+  "run_order": [
+    "precheck",
+    "candidate_event",
+    "postcheck"
+  ],
+  "schema": "oracle-check-t0-raw-v1"
+}

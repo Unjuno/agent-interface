@@ -1,0 +1,117 @@
+"""One finite owned-process sampling capability check, excluded from formal data."""
+import datetime
+import hashlib
+import json
+import os
+from pathlib import Path
+import selectors
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parent
+
+
+def utc():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def sha(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def main():
+    if (ROOT / 'C01-result.json').exists():
+        raise RuntimeError('C01 already retained; do not overwrite or restart it.')
+    before = {'utc': utc(), 'mode': 'excluded ordinary method construction', 'claim': 5966980175,
+              'python': sys.version, 'executable': sys.executable, 'executable_sha256': sha(sys.executable),
+              'child_source_sha256': sha(ROOT / 'construction_child.py'),
+              'supervisor_source_sha256': sha(__file__), 'sampler': '/usr/bin/sample',
+              'sampler_sha256': sha('/usr/bin/sample'), 'duration_seconds': 1, 'interval_ms': 10,
+              'sampler_timeout_seconds': 5, 'readiness_timeout_seconds': 2,
+              'no_pipe_cancellation_comparison': True, 'formal_runs': 0, 'maximum_report_bytes': 1_048_576}
+    (ROOT / 'C01-before.json').write_text(json.dumps(before, indent=2) + '\n')
+    child = subprocess.Popen([sys.executable, '-B', '-u', str(ROOT / 'construction_child.py')],
+                             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    ready_bytes = b''
+    readiness = None
+    sampler = None
+    sample_result = None
+    error = None
+    cleanup = None
+    try:
+        os.set_blocking(child.stdout.fileno(), False)
+        with selectors.DefaultSelector() as selector:
+            selector.register(child.stdout, selectors.EVENT_READ)
+            deadline = time.monotonic() + 2
+            while b'\n' not in ready_bytes:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0 or not selector.select(remaining):
+                    raise TimeoutError('owned child readiness')
+                chunk = os.read(child.stdout.fileno(), 4096)
+                if not chunk:
+                    raise RuntimeError('child ended before readiness')
+                ready_bytes += chunk
+                if len(ready_bytes) > 16384:
+                    raise RuntimeError('bounded readiness exceeded')
+        readiness = json.loads(ready_bytes.split(b'\n', 1)[0])
+        if readiness['pid'] != child.pid or readiness['ppid'] != os.getpid():
+            raise RuntimeError('owned PID-parent identity mismatch')
+        os.set_blocking(child.stdout.fileno(), True)
+        report = ROOT / 'C01.sample.txt'
+        argv = ['/usr/bin/sample', str(child.pid), '1', '10', '-file', str(report)]
+        sampler = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        started = utc()
+        try:
+            stdout, stderr = sampler.communicate(timeout=5)
+        except subprocess.TimeoutExpired:
+            sampler.kill()
+            stdout, stderr = sampler.communicate(timeout=2)
+            raise RuntimeError('owned sampler exceeded construction watchdog')
+        (ROOT / 'C01.sample.stdout.log').write_bytes(stdout)
+        (ROOT / 'C01.sample.stderr.log').write_bytes(stderr)
+        raw = report.read_bytes() if report.exists() else b''
+        sample_result = {'argv': argv, 'pid': sampler.pid, 'owned_target_pid': child.pid,
+                         'started_utc': started, 'ended_utc': utc(), 'exit_code': sampler.returncode,
+                         'report_bytes': len(raw), 'report_sha256': hashlib.sha256(raw).hexdigest(),
+                         'stdout_sha256': hashlib.sha256(stdout).hexdigest(),
+                         'stderr_sha256': hashlib.sha256(stderr).hexdigest(),
+                         'target_still_live_after_sample': child.poll() is None}
+        if sampler.returncode != 0 or not raw or len(raw) > 1_048_576:
+            raise RuntimeError('sampler capability/size gate refused')
+    except Exception as exc:
+        error = {'type': type(exc).__name__, 'message': str(exc)}
+    finally:
+        if sampler is not None and sampler.poll() is None:
+            sampler.kill()
+            sampler.communicate(timeout=2)
+        if child.poll() is None:
+            try:
+                remainder, child_error = child.communicate(input=b'EXIT\n', timeout=2)
+                cleanup = {'method': 'owned cooperative stop', 'child_exit': child.returncode,
+                           'stdout': remainder.decode(errors='replace'), 'stderr': child_error.decode(errors='replace')}
+            except subprocess.TimeoutExpired:
+                child.terminate()
+                remainder, child_error = child.communicate(timeout=2)
+                cleanup = {'method': 'owned forced terminate after cleanup timeout', 'child_exit': child.returncode,
+                           'stdout': remainder.decode(errors='replace'), 'stderr': child_error.decode(errors='replace')}
+        else:
+            remainder, child_error = child.communicate(timeout=2)
+            cleanup = {'method': 'already terminal', 'child_exit': child.returncode,
+                       'stdout': remainder.decode(errors='replace'), 'stderr': child_error.decode(errors='replace')}
+        for pipe in (child.stdin, child.stdout, child.stderr):
+            if pipe is not None:
+                pipe.close()
+    result = {'status': 'STOP_CONSTRUCTION' if error else 'SAMPLER_CAPABILITY_OBSERVED',
+              'utc': utc(), 'before': before, 'driver_pid': os.getpid(), 'child_pid': child.pid,
+              'ready': readiness, 'ready_bytes_hex': ready_bytes.hex(), 'sample': sample_result,
+              'error': error, 'cleanup': cleanup, 'owned_pipes_closed': all(p.closed for p in
+                  (child.stdin, child.stdout, child.stderr)), 'no_comparative_OS_cell': True,
+              'formal_runs': 0, 'kernel_read_entry_not_tested': True}
+    (ROOT / 'C01-result.json').write_text(json.dumps(result, indent=2) + '\n')
+    print(json.dumps(result, sort_keys=True))
+    raise SystemExit(1 if error else 0)
+
+
+if __name__ == '__main__':
+    main()

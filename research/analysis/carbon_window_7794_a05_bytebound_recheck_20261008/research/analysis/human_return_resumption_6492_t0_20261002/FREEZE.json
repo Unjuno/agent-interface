@@ -1,0 +1,53 @@
+{
+  "schema": "human-return-resumption-freeze-v1",
+  "issue": 6492,
+  "allocation": "HUMAN-RETURN-RESUMPTION-6492-T0-20261002-01",
+  "source_base_main": "df2e5c6f3ca7288f5a054195f8a746d1ab4ead54",
+  "branch": "research/human-return-resumption-6492-t0-20261002",
+  "created_utc": "2026-10-02T03:39:33Z",
+  "formal_invocations_max": {
+    "candidate": 1,
+    "independent_auditor": 1,
+    "retries": 0
+  },
+  "fixture": {
+    "scenarios": 6,
+    "arms_per_scenario": 4,
+    "rows": 24,
+    "sha256": "f2dc10f43fa5f5486150b101213ef1b99e359050900eee92b3786f77b1cea96d"
+  },
+  "image": {
+    "reference": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "platform": "linux/arm64",
+    "engine": "OrbStack Docker Engine 29.4.0"
+  },
+  "runtime_contract": {
+    "network": "none",
+    "cpus_requested": 1,
+    "memory_requested": "512m",
+    "pids_limit_requested": 64,
+    "user": "501:20",
+    "rootfs": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "separate read-write directory",
+    "gpu": false,
+    "candidate_and_auditor": "separate ephemeral containers"
+  },
+  "sha256": {
+    "build_fixture.py": "fe227ff41e12e136535e2d045b0fb1aa279ba0899715b6ed0c1470c7d78f26a3",
+    "candidate.py": "fc5fdb14bfe7f1641a2b4881ed717f736b156970429de48e97aed4bbbb1b81f4",
+    "audit.py": "f14bb841b7d23676960b4d8ec7c2467acae5eabe85944839a3cd24d63979a0b0",
+    "test_t0.py": "378aef65ca7074c9ba525222a17563503b2e466cd1e3f1cec515963efa1d6a7a",
+    "fixture.json": "f2dc10f43fa5f5486150b101213ef1b99e359050900eee92b3786f77b1cea96d",
+    "PREREGISTRATION.md": "a74dcc3692887284f2cac94a2d9807be4691630f7fd841e8e576b738cf4bee5d",
+    "CONSTRUCTION_ORBSTACK_TEST.log": "04e556946c7599c74a656ce5c1ca330a0a1862cabffc8fe76a0a8c36a050f2a4"
+  },
+  "stop_conditions": [
+    "main advances before formal candidate launch",
+    "source, fixture, or pinned image identity differs",
+    "output path exists before launch",
+    "candidate or auditor exits nonzero or output is missing",
+    "any source edit after freeze"
+  ],
+  "outcome_scope": "synthetic T0 method validity only; no human or product effect"
+}

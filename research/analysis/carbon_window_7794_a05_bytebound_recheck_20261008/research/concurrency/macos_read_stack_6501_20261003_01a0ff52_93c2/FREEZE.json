@@ -1,0 +1,108 @@
+{
+  "policy_version": "FINAL-v5",
+  "worker_id": "01a0ff52-93c2-7272-9fbc-2d01287bc6aa",
+  "allocation": "6501-MACOS-NATIVE-READ-STACK-A01-20261003-01a0ff52-93c2",
+  "frozen_utc": "2026-10-03T08:45:48.585424+00:00",
+  "source_base": "e5270c7bfe50911225afc6c3b5273021331b2bb1",
+  "inputs": [
+    {
+      "path": "C01-before.json",
+      "bytes": 888,
+      "sha256": "c4d976667ad747ba6d25658c5ea8c696b516406ab5ca9d064249d16f33d6fe40"
+    },
+    {
+      "path": "C01-result.json",
+      "bytes": 2682,
+      "sha256": "37ee74d236a40e662179ba493c94f0fbb2da8aa1d4f2dbdf246f4aec16f6c635"
+    },
+    {
+      "path": "C01.sample.stderr.log",
+      "bytes": 230,
+      "sha256": "b3c16be7c227cf845cb2e8a9dde413ec11fbffb290b75bb484e99b31fcbca450"
+    },
+    {
+      "path": "C01.sample.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "C01.sample.txt",
+      "bytes": 75559,
+      "sha256": "6417e7e4e0eaf072d702076da1685d9e03ebeb342ea0e8e88b7636e158ea84e0"
+    },
+    {
+      "path": "PREPARATION.json",
+      "bytes": 1638,
+      "sha256": "667eeacee1da8979941f9e3048c63615c725276a30923c79a6eca7a213844c1a"
+    },
+    {
+      "path": "PROTOCOL.md",
+      "bytes": 6964,
+      "sha256": "01511a601a527b30af34732c169bf8e98bb295bcdeae6d7db8f3a0bf317f1de3"
+    },
+    {
+      "path": "audit.py.txt",
+      "bytes": 11352,
+      "sha256": "97b60c5ec69752b08c591ab360d0131769e2298a287a22d53f925f297f307de0"
+    },
+    {
+      "path": "construction.py.txt",
+      "bytes": 6154,
+      "sha256": "e00bfdf395de6783a58317b75c1cbdcbcff8a284609a75391c61cf92df87b686"
+    },
+    {
+      "path": "construction_child.py.txt",
+      "bytes": 933,
+      "sha256": "8436617d6d7ab0669a5078d9311c35dbcc427f798d6c5d648f4e34c6f4ea945f"
+    },
+    {
+      "path": "driver.py.txt",
+      "bytes": 9844,
+      "sha256": "e8bf1220e5e3be1555efb196516afbd33c02e1292195c05066ea4a5d90f5414d"
+    },
+    {
+      "path": "environment.json",
+      "bytes": 6028,
+      "sha256": "31acdf25e1ef1d83b4e23176166d4fea19d79d6a00bcab7917a263b9389d3c97"
+    },
+    {
+      "path": "peer.py.txt",
+      "bytes": 5445,
+      "sha256": "da7ab1936d8785b2bcb76b870ef0ba56d8970922525f49b04934156db3899e34"
+    },
+    {
+      "path": "reader-controls-first.json",
+      "bytes": 1811,
+      "sha256": "a662bcd89859e08bc2a88f601b8a8d7673b869c330ba557703e7b4c978ff53e9"
+    },
+    {
+      "path": "reader_controls.py.txt",
+      "bytes": 4039,
+      "sha256": "7b715c7d719bad4da9b53d0b56c720e605484f7219fe0f77f8a76a6b0f7e8054"
+    },
+    {
+      "path": "runner.py.txt",
+      "bytes": 3481,
+      "sha256": "d41228382c1395802cfac9ee5c650cb170b471fda8f2939e7463d3061d51abac"
+    },
+    {
+      "path": "stack_reader.py.txt",
+      "bytes": 2095,
+      "sha256": "44ab8f286ac8e16f797ef0a7be53565e6b92b28fde366c8209da8fef71624716"
+    }
+  ],
+  "cases": [
+    "reader_close",
+    "normal_D",
+    "writer_EOF",
+    "wrapper_cancel"
+  ],
+  "required_weight": 20,
+  "post_actor_ns": 250000000,
+  "new_sensing_condition": true,
+  "formal_producer_invocations_at_freeze": 0,
+  "formal_primary_auditor_invocations_at_freeze": 0,
+  "formal_retries": 0,
+  "output": "@WORKSPACE@/work/macos-read-stack-formal-A01",
+  "kernel_trace": false
+}

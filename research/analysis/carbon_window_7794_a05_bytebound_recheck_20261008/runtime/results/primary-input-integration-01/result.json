@@ -1,0 +1,57 @@
+{
+  "classification": "FAILED_PRIMARY_TRIAL; not adoption evidence",
+  "source": "648b9aeae926fecd34f3d022755857cc511d6c24",
+  "seed": 1001059,
+  "returned_calls": 48,
+  "completed_program_calls": [
+    4,
+    8,
+    10,
+    13,
+    16,
+    18,
+    20,
+    23,
+    26,
+    29,
+    31,
+    34,
+    38
+  ],
+  "independent_score": {
+    "schema": "integrated_efficiency_oracle_v1",
+    "known_ns": 2755230294590,
+    "success": false,
+    "record_count": 3,
+    "exact_counts": {
+      "task-1": 1,
+      "task-2": 1,
+      "task-3": 1,
+      "task-4": 0,
+      "task-5": 0,
+      "task-6": 0
+    },
+    "unexpected": [],
+    "duplicates": {},
+    "missing": [
+      "task-4",
+      "task-5",
+      "task-6"
+    ]
+  },
+  "controls": [
+    39,
+    41,
+    42
+  ],
+  "window_review_call": 40,
+  "unexpected_refusal_call": 47,
+  "public_close_call": 48,
+  "direct_arm": "not launched after guarded STOP",
+  "frozen_hashes_verified": 12,
+  "transport_exit": {
+    "code": 0,
+    "signal": null
+  },
+  "new_helper_gui_self_use": "not yet measured"
+}

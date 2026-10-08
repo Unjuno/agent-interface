@@ -1,0 +1,75 @@
+import re
+from pathlib import Path
+
+
+_IMAGE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:/-]*@(sha256:[0-9a-f]{64})\Z")
+_PLATFORM = "linux/amd64"
+_WORKDIR_NAME = "owner_keyup_formal_x11_5156_20261001_06"
+_ALLOCATION = "MAP01-OWNER-KEYUP-BRACKET-5156-20261001-06"
+_FROZEN_MAIN = "9fc98feb617c26fe1baa7ecc4decd43b69df8601"
+_IMAGE_REF = (
+    "agent-interface-issue4712-onset:20260927@"
+    "sha256:f41b02e63fc3964f9bb831167ae42bce6d6ffa50fbda122d22deaa39736637bb"
+)
+
+
+def _validated_paths(workdir, results_dir, image, platform):
+    image_match = _IMAGE.fullmatch(image) if isinstance(image, str) else None
+    if image_match is None:
+        raise ValueError("image must be a repository reference pinned by a full sha256 digest")
+    if image != _IMAGE_REF:
+        raise ValueError("image must match the frozen locally cached X11 candidate reference")
+    if platform != _PLATFORM:
+        raise ValueError(f"allocation requires platform {_PLATFORM}")
+
+    workdir = Path(workdir)
+    if not workdir.is_absolute():
+        raise ValueError("workdir must be absolute")
+    if (workdir.name != _WORKDIR_NAME or workdir.parent.name != "live_control"
+            or workdir.parent.parent.name != "research"):
+        raise ValueError("workdir must be this allocation's dedicated research directory")
+    if not workdir.is_dir():
+        raise ValueError("workdir must exist as a directory before launch")
+    expected_results = workdir / "results" / "formal-01"
+    results_dir = Path(results_dir)
+    if not results_dir.is_absolute() or results_dir.resolve(strict=False) != expected_results.resolve(strict=False):
+        raise ValueError("results directory must be this allocation's formal-01 output directory")
+    if not results_dir.is_dir():
+        raise ValueError("results directory must exist before bind mounting")
+    return workdir.resolve(strict=False).as_posix(), results_dir.resolve(strict=False).as_posix(), image_match.group(1)
+
+
+def _base_argv(source, results, image):
+    return [
+        "docker", "--context", "desktop-linux", "run", "--rm", "--pull=never", "--platform=linux/amd64",
+        "--network", "none", "--cpus=1", "--memory=512m", "--pids-limit=64",
+        "--read-only", "--tmpfs", "/tmp:rw,noexec,nosuid,size=32m",
+        "--cap-drop=ALL", "--security-opt=no-new-privileges",
+        "--mount", f"type=bind,source={source},target=/src,readonly",
+        "--mount", f"type=bind,source={results},target=/results",
+        "--entrypoint", "/bin/sh", image,
+    ]
+
+
+def build_command(workdir, results_dir, image, platform):
+    """Build, but never execute, the one-shot Docker argv for Allocation 06."""
+    source, results, digest = _validated_paths(workdir, results_dir, image, platform)
+    script = (
+        'python3 -c "import Xlib; from Xlib import display"'
+        " && command -v xvfb-run >/dev/null"
+        " && command -v timeout >/dev/null"
+        f" && FORMAL_ALLOCATION={_ALLOCATION}"
+        f" FORMAL_FROZEN_MAIN={_FROZEN_MAIN}"
+        f" FORMAL_IMAGE_DIGEST={digest}"
+        f" FORMAL_PLATFORM={_PLATFORM}"
+        " FORMAL_V11_DIR=/src/dependencies"
+        " exec timeout --signal=TERM --kill-after=2s 300s xvfb-run -a python3 /src/run_formal_x11.py /results/raw.jsonl"
+    )
+    return _base_argv(source, results, image) + ["-ceu", script]
+
+
+def build_audit_command(workdir, results_dir, image, platform):
+    """Build the isolated audit argv; caller must gate it on successful runner exit."""
+    source, results, _ = _validated_paths(workdir, results_dir, image, platform)
+    script = "exec timeout --signal=TERM --kill-after=2s 120s python3 /src/audit_formal_x11.py /results/raw.jsonl /src/EXPECTED.json /results/audit.json"
+    return _base_argv(source, results, image) + ["-ceu", script]

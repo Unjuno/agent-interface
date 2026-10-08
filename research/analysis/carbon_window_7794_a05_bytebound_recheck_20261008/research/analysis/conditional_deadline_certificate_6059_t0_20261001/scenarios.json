@@ -1,0 +1,90 @@
+{
+  "allocation_id": "ROUTE-DEADLINE-6059-T0-20261001-01",
+  "model": "finite deterministic method fixture; times are abstract ticks",
+  "scenarios": [
+    {
+      "id": "bounded_serial_pass",
+      "deadline": 5,
+      "stages": [
+        {"lower": 1, "upper": 2, "guarantee": "proven"},
+        {"lower": 1, "upper": 2, "guarantee": "proven"}
+      ],
+      "exact": {"kind": "serial", "ranges": [[1, 2], [1, 2]]},
+      "expected": "CERTIFIED_DEADLINE_MET"
+    },
+    {
+      "id": "burst_local_pass_path_unknown",
+      "deadline": 8,
+      "local_deadline": 4,
+      "queue_topology": "two_queue_fifo_burst",
+      "stages": [
+        {"lower": 1, "upper": 3, "guarantee": "proven"},
+        {"lower": 1, "upper": 3, "guarantee": "proven"}
+      ],
+      "exact": {"kind": "two_queue_burst", "ranges": [[1, 3], [1, 3], [1, 3], [1, 3]]},
+      "expected": "UNKNOWN_UPPER_BOUND_EXCEEDS_DEADLINE"
+    },
+    {
+      "id": "sound_lower_bound_impossible",
+      "deadline": 5,
+      "stages": [
+        {"lower": 3, "upper": 4, "guarantee": "proven"},
+        {"lower": 3, "upper": 4, "guarantee": "proven"}
+      ],
+      "sound_lower_bound": {"ticks": 6, "source": "independent_proof"},
+      "exact": {"kind": "serial", "ranges": [[3, 4], [3, 4]]},
+      "expected": "CERTIFIED_DEADLINE_IMPOSSIBLE"
+    },
+    {
+      "id": "shared_resource_invalidates_composition",
+      "deadline": 4,
+      "stages": [
+        {"lower": 1, "upper": 2, "guarantee": "proven", "resource": "cpu"},
+        {"lower": 1, "upper": 2, "guarantee": "proven", "resource": "cpu"}
+      ],
+      "shared_resource_interference": {"resource": "cpu", "ticks": 5},
+      "exact": {"kind": "serial_with_interference", "ranges": [[1, 2], [1, 2]], "interference": 5},
+      "expected": "UNKNOWN_SHARED_RESOURCE_CONTENTION"
+    },
+    {
+      "id": "bounded_timeout_and_cancellation",
+      "deadline": 6,
+      "stages": [
+        {"lower": 1, "upper": 2, "guarantee": "proven"},
+        {"unbounded": true, "guarantee": "none", "timeout": 3, "cancellation_upper": 1, "typed_terminal": true}
+      ],
+      "exact": {"kind": "timeout_terminal", "prefix_range": [1, 2], "runtime_values": [1, 2, 7], "timeout": 3, "cancellation_range": [0, 1]},
+      "expected": "CERTIFIED_DEADLINE_MET"
+    },
+    {
+      "id": "unbounded_stage_unknown",
+      "deadline": 10,
+      "stages": [{"lower": 0, "upper": null, "guarantee": "none", "unbounded": true}],
+      "exact": {"kind": "unbounded", "completion_values": [1, 5, 20]},
+      "expected": "UNKNOWN_UNBOUNDED_STAGE"
+    },
+    {
+      "id": "missing_service_guarantee_unknown",
+      "deadline": 10,
+      "stages": [{"lower": 1, "upper": 2, "guarantee": "empirical_only"}],
+      "exact": {"kind": "serial", "ranges": [[1, 2]]},
+      "expected": "UNKNOWN_NO_SERVICE_GUARANTEE"
+    },
+    {
+      "id": "invalid_assumption_unknown",
+      "deadline": 10,
+      "assumptions_valid": false,
+      "stages": [{"lower": 1, "upper": 2, "guarantee": "proven"}],
+      "exact": {"kind": "serial", "ranges": [[1, 2]]},
+      "expected": "UNKNOWN_ASSUMPTION_VIOLATED"
+    },
+    {
+      "id": "empirical_lower_bound_cannot_prove_impossible",
+      "deadline": 5,
+      "stages": [{"lower": 6, "upper": 8, "guarantee": "empirical_only"}],
+      "sound_lower_bound": {"ticks": 6, "source": "empirical_percentile"},
+      "exact": {"kind": "serial", "ranges": [[1, 8]]},
+      "expected": "UNKNOWN_NO_SERVICE_GUARANTEE"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "allocation": "needle-lora-3441-pilot-03-skill-router",
+  "outcome": "SCOPED_SYNTHETIC_SKILL_ROUTING_PASS",
+  "source_sha256": "BA70DBB0C65A1AAF9DFA1F0BFDCBF4247FC01F9409386F49A77B552BD4404505",
+  "device": {"name":"NVIDIA GeForce RTX 3080 Laptop GPU","memory_mib":16384,"torch":"2.5.1+cu121","cuda":"12.1","execution":"Windows host; Docker daemon unavailable"},
+  "allocation_parameters":{"seed":3442,"features":8,"hidden":16,"classes":4,"support_rows":16,"heldout_per_skill":4096,"rank":2,"adapt_steps":120},
+  "measurements":{
+    "pretrain_ms":588.637,
+    "update_ms":150.0391,
+    "global_adapter_accuracy":{"old":0.03271484375,"new":0.95654296875},
+    "routed_accuracy":{"old_base":0.95654296875,"new_named_adapter":0.95654296875},
+    "rollback_new_skill_accuracy":0.018798828125,
+    "snapshot_bytes":3208,
+    "initial_snapshot_sha256":"181d28378f3233acb9cc811385291d1712e0528a78320c8d13cb23437370dbbd",
+    "learned_snapshot_sha256":"1291536b750a5e6071b46a98f0e8f6290ce62e46298477ab9bc68b33c58bcb27",
+    "router_dispatch_only_p50_of_five_200_call_block_means_ms":0.000165,
+    "router_dispatch_block_means_ms":[0.000221,0.000165,0.000166,0.000161,0.000165]
+  },
+  "checks":{"unknown_skill":"YIELD","stale_epoch":"YIELD","wrong_adapter_version":"YIELD","missing_adapter_metadata":"YIELD","snapshot_roundtrip_exact":true,"rollback_completed":true,"base_immutable":true},
+  "limitations":["single synthetic seed/task","dispatcher-only timing excludes inference and model loading","no GUI, vision, real action authority, concurrent writes, or crash-consistency test","host run is not container verification"]
+}

@@ -1,0 +1,40 @@
+{
+  "allocation": "6501-BROWSER-EFFECT-NATIVE-20261003-01a0ff2d-A01",
+  "base": "332da58a9b6b825c384a142dfb59d7ed2b8b774e",
+  "source_sha256": {
+    "broker.cjs": "e02321dda9b1c40a4c1f42f68069d8fd48470e93656cc21601a0849bfe2e3fc6",
+    "candidate.cjs": "e3640ab360854472a0edbcb44b883e955a47ad2e79b97d7ac473e0a08a5337d9",
+    "fixture.py": "c10e93773c458ea491d9594f1d69a9863890197a9c24c4bac49ea3272b9f0ea5",
+    "runner.py": "59ab0db44f146ac380d2302f6d6437fa665537f31cd722634f78214f5496a3ae",
+    "audit.py": "72c28c19ab5ba55c3fae581e5eebaf61335a87264e3a0f0abe4576f419bc447a",
+    "fixtures.json": "d9f98cd32a4d80c5b8da8d0d81832c9df6fa32d974af198d91f0b6dd85ffe7b4",
+    "construction_check.cjs": "7436d2f8d09296c6514052820acb35c3b47ee5ae65c728bef4dd2e16f24f8380",
+    "PROTOCOL.md": "f209e96d328604abf4d355b802e4e932a73ec52f748542c161c7e1da9a115d98",
+    "environment.json": "21f79e6655ac1f3428d608f334969859af2ef663c28a6217bff5d39d324ab149",
+    "PLAYWRIGHT_FILES.json": "3d945bdbb7088da92194c4af62e427d148ee348f376cc4faf88100ccb4fd1e91"
+  },
+  "environment": {
+    "schema": "6501-browser-environment-v1",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "node": "v24.19.0",
+    "playwright": "1.62.1",
+    "browser": "154.0.8037.93",
+    "binaries_sha256": {
+      "python.exe": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+      "python312.dll": "9a0e3435aaa680d868150f87ab3e388ad2eebc22f87e036155c7b4eda8cd2120",
+      "node.exe": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237",
+      "chrome.exe": "1e9412868bbc9faff92d129babd17331e7ceab0702cc07db02a34f3438ae04f2",
+      "chrome.dll": "3a4c451878fc9fef50a84463d06724ad09e54b6bce03d74285c3544eb1947fd3"
+    },
+    "playwright_files": 173,
+    "playwright_tree_sha256": "62e0284064bf6c49eec61b5bc6ec2f48a82ea74680d1067262dcedb43aa855ab",
+    "limitations": "Selected executables/main DLLs plus full Playwright package trees; not all OS/transitive browser system DLLs or clock provenance"
+  },
+  "candidate_cap": 1,
+  "auditor_cap": 1,
+  "retries": 0,
+  "conditions": 15,
+  "waiters": 30,
+  "scope": "Owned authored DOM/HTTP effect transfer; no old producer/formal replay or shared live lane"
+}

@@ -1,0 +1,24 @@
+{
+  "allocation": "consent-scoped-preparation-5793-t0-docker-20261001-01",
+  "base_main": "8ba30d5bf79358afdd5e6c7359d4b132be6f33ed",
+  "image": "agent-interface-readiness-a3:local-20260927",
+  "image_id": "sha256:a89e10813abd763a71b88055d51737d5e827fe3b5e473a583156b65eef20105f",
+  "docker_engine": "29.8.0",
+  "platform": "linux/amd64",
+  "python": "3.12.14",
+  "network": "none",
+  "cpus": 1,
+  "memory_mib": 256,
+  "pids_limit": 64,
+  "formal_candidate_invocations": 1,
+  "independent_auditor_invocations": 1,
+  "formal_reruns": 0,
+  "construction_tests": "python -m unittest -v test_probe; 5 passed before freeze",
+  "sha256": {
+    "PLAN.md": "f673d79ec799545ac289eb4a6164ffeb971cb5e557ccd637954ee6df6e6a2b8c",
+    "candidate.py": "cb84fc808fbccbc9376708c987d290c764566206b31f83a60eee65732f8e144b",
+    "audit.py": "88d318705df3bb49f74f4679cdfa8d6de31fb92c6ae141faf66064b7cf9b2d88",
+    "test_probe.py": "08208a251e5feee22d117d3acb328d41aa75bc6b012bf80c52a55169cdc84bdf"
+  },
+  "construction_output_sha256": "af585f38b74cf265882df05d1f861cc9047fb6d9a8b97236f9f3a02bbad280ea"
+}

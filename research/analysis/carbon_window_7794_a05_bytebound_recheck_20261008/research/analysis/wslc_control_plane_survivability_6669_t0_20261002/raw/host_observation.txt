@@ -1,0 +1,45 @@
+# Read-only WSL environment snapshot (normalized terminal rendering)
+
+Date: 2026-10-02
+No elevation, container start/stop, image operation, stress load, or host configuration change was performed.
+
+## Commands and observations
+
+`wsl --list --verbose`
+
+```text
+NAME          STATE     VERSION
+Arch Linux    Running   2
+```
+
+`wslc --version`
+
+```text
+3.0.1.0
+```
+
+`wsl --version` (Windows terminal returned UTF-16 text, rendered here as normalized fields)
+
+```text
+WSL version: 3.0.1.0
+Kernel version: 6.18.40.1-1
+WSLg version: 1.0.79
+MSRDC version: 1.2.7214
+Direct3D version: 1.611.1-81528511
+DXCore version: 10.0.26200.1-240331-1435.ge-release
+Windows version: 10.0.26200.9457
+```
+
+`wsl -d archlinux -- sh -lc 'uname -a; cat /proc/self/cgroup; grep cgroup /proc/self/mountinfo; cat /sys/fs/cgroup/cgroup.controllers; cat /sys/fs/cgroup/cgroup.subtree_control; cat /sys/fs/cgroup/memory.max; cat /sys/fs/cgroup/cpu.max'`
+
+```text
+Linux sub 6.18.40.1-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Fri Jul 31 22:12:15 UTC 2026 x86_64 GNU/Linux
+0::/non-systemd
+165 156 0:24 / /sys/fs/cgroup rw,nosuid,nodev,noexec,relatime shared:23 - cgroup2 cgroup2 rw,nsdelegate
+cpuset cpu io memory hugetlb pids rdma
+cpu memory pids
+max
+max 100000
+```
+
+A quiet all-container identifier listing was used only as inventory and did not provide status labels in its output. IDs are omitted here because ownership is unknown. No container was inspected, started, stopped or modified; no WSLc guest cgroup state was obtained.

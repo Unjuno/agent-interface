@@ -1,0 +1,21 @@
+{
+  "task":"OBSERVATION-GATING-O3-MANIPULATE-SUPPORT-UNION-20260919-001",
+  "issue":1897,
+  "decision":"STOP_PREFORMAL_FULL_CORPUS_CONSUMED_NO_FORMAL",
+  "scientific_disposition":"NONE",
+  "formal_invocations":0,
+  "reruns":0,
+  "replacements":0,
+  "tuning":0,
+  "cause":"The intended directed construction implementation accidentally enumerated the complete 3-phase x 16-state x 16-state = 768-row scientific corpus before source freeze. The complete outcome therefore became visible preformal. A later frozen execution of the same corpus would be an unauthorized rerun, so no formal allocation is permitted under this Issue.",
+  "consumed_preformal_rows":768,
+  "observed_exploratory_counts":{
+    "presentation_only_false_suppressions":112,
+    "candidate_false_suppressions":0,
+    "candidate_safe_suppressions":112,
+    "candidate_false_forwards":178,
+    "global_false_forwards":242
+  },
+  "poolable":false,
+  "successor_rule":"Do not rerun the same 768-row allocation merely to obtain a PASS. Any successor must ask a materially new question or use this result only as exploratory design input."
+}

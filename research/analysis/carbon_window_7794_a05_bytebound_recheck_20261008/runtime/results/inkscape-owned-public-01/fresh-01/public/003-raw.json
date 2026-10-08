@@ -1,0 +1,138 @@
+{
+  "schema": "agent-interface/runtime-dispatch-result-v1",
+  "status": "returned",
+  "result": {
+    "status": "completed",
+    "admission": "accepted",
+    "required_capabilities": [
+      "capture.frame",
+      "clock.monotonic",
+      "display.geometry",
+      "event.feedback",
+      "input.keyboard",
+      "input.release_all",
+      "window.focus"
+    ],
+    "execution": {
+      "started_ns": 19559507046510,
+      "ended_ns": 19559635885641,
+      "emissions": 14,
+      "program_emissions": 4,
+      "observations": [
+        {
+          "bytes": 2800000,
+          "sha256": "c0f946445934fe83a393073250eb5a004a63c760fb93cccb68e3b772ea48b34b",
+          "width": 1000,
+          "height": 700,
+          "target": "app",
+          "native_window_id": 6291463,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1000,
+            700
+          ],
+          "capture_started_ns": 19559608932419,
+          "capture_ended_ns": 19559612784910,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/inkscape-owned-public-01/fresh-01/public/images/39446285f22b47a598051f0f5b26e38d.png",
+            "sha256": "8229bbc24d92eadeea18cc744cc72633a0cb820845fb7807e1d0b2c8052af2ca",
+            "bytes": 47137,
+            "width": 1000,
+            "height": 700,
+            "source_raw_sha256": "c0f946445934fe83a393073250eb5a004a63c760fb93cccb68e3b772ea48b34b",
+            "timing_ns": {
+              "started": 19559614354705,
+              "converted": 19559615223920,
+              "encoded": 19559633078727,
+              "written": 19559633284164,
+              "hashed": 19559635063404
+            }
+          },
+          "operation_index": 3
+        }
+      ],
+      "releases": [
+        {
+          "keys_down": [],
+          "buttons_down": [],
+          "verified": true,
+          "monotonic_ns": 19559635882736
+        }
+      ],
+      "waits": [
+        {
+          "operation_index": 2,
+          "requested_ms": 100,
+          "started_ns": 19559508637998,
+          "completed": true,
+          "kind": "fixed_delay",
+          "update_observed": null,
+          "ended_ns": 19559608917379
+        }
+      ],
+      "activations": [],
+      "completed_ops": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "recovery_required": false
+  },
+  "normalization": {
+    "kind": "explicit_observation_region",
+    "source_program": {
+      "schema": "agent-interface/program-v1",
+      "program_id": "owned-inkscape-save",
+      "source": {
+        "observation_seq": 2,
+        "binding_revision": 1
+      },
+      "authority": {
+        "lease_id": "owned-inkscape-save",
+        "expires_at_ns": 19561480237952
+      },
+      "terminal": {
+        "release_all_required": true
+      },
+      "ops": [
+        {
+          "op": "focus",
+          "target": "app"
+        },
+        {
+          "op": "key_chord",
+          "keys": [
+            "CTRL",
+            "S"
+          ]
+        },
+        {
+          "op": "wait_update",
+          "timeout_ms": 100
+        },
+        {
+          "op": "observe",
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            1000,
+            700
+          ]
+        },
+        {
+          "op": "release_all"
+        }
+      ]
+    },
+    "source_operation_indices": [
+      3
+    ]
+  }
+}

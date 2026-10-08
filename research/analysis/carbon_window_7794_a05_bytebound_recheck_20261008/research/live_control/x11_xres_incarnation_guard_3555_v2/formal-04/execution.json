@@ -1,0 +1,36 @@
+{
+  "allocation_id": "issue3575-xres-guard-formal-04",
+  "formal_invocation_count": 1,
+  "docker_context": "orbstack",
+  "docker_argv_shape": [
+    "docker", "run", "--rm", "--platform", "linux/arm64", "--network", "none",
+    "--read-only", "--workdir", "/tmp", "--tmpfs", "/tmp:rw,nosuid,size=128m",
+    "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
+    "-e", "DISPLAY=:89",
+    "-e", "OBSTAC_SOURCE_COMMIT=c3abca57cb9d0e5cfea49794e35b33a84337959f",
+    "-e", "OBSTAC_IMAGE_ID=sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+    "-e", "OBSTAC_FREEZE_SHA256=f3b4055f11795e962eb1bf59cf83de7c9cd3b5daa0206b6814ad560e4090b440",
+    "-v", "<checkout>/research/live_control:/app/research/live_control:ro",
+    "-v", "<checkout>/runtime:/app/runtime:ro",
+    "-v", "<checkout>/research/live_control/x11_xres_incarnation_guard_3555_v2/allocation-04/harness:/task:ro",
+    "-v", "<checkout>/research/live_control/x11_xres_incarnation_guard_3555_v2/allocation-04/source_manifest.json:/source_manifest.json:ro",
+    "-v", "<checkout>/research/live_control/x11_xres_incarnation_guard_3555_v2/allocation-04/FREEZE.json:/freeze.json:ro",
+    "-v", "<checkout>/research/live_control/x11_xres_incarnation_guard_3555_v2/formal-04:/results:rw",
+    "sha256:e47cbddc70722a816758a4a1c27cf2a38071c889670be98bf3eacdc9fff17916",
+    "/bin/sh", "-lc",
+    "Xvfb :89 -screen 0 800x600x24 -nolisten tcp; wait for xdpyinfo; run python3 -B with sys.path ['/app','/app/research/live_control','/app/research/live_control/x11_xres_incarnation_guard_3555_v2/harness','/task']; write runner stdout/stderr and Xvfb log under /results"
+  ],
+  "environment": {
+    "x_server": "Xvfb :89 -screen 0 800x600x24 -nolisten tcp",
+    "x_server_ready_gate": "xdpyinfo -display :89",
+    "runner": "/task/xres_guard_formal_3575.py",
+    "runner_stdout": "container.stdout",
+    "runner_stderr": "container.stderr",
+    "xvfb_log": "xvfb.log",
+    "output_root": "/results",
+    "network": "none",
+    "source_mounts": "read-only",
+    "result_mount": "dedicated writable path, initially empty"
+  },
+  "raw_sha256": "cc6b54ed81c7893052f49a3b428fe3ba61e9c915bc0fe86beaca69372f168b34"
+}

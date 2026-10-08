@@ -1,0 +1,82 @@
+{
+  "batch": "one case per launcher/container invocation",
+  "binaries": {
+    "Xvfb": {
+      "path": "/usr/bin/Xvfb",
+      "resolved": "/usr/bin/Xvfb",
+      "sha256": "4efd5850f0d98c587195ef77be92916dd1578fb725ddd1b2d95d232042813c5e"
+    },
+    "openbox": {
+      "path": "/usr/bin/openbox",
+      "resolved": "/usr/bin/openbox",
+      "sha256": "632991416cf7c9161ff30ab089190fdd7ec62dc5048e8f138bf03b42089e6a14"
+    },
+    "python": {
+      "path": "/opt/pyvenv/bin/python",
+      "resolved": "/opt/pyvenv/bin/python",
+      "sha256": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1"
+    },
+    "python3": {
+      "path": "/opt/pyvenv/bin/python3",
+      "resolved": "/opt/pyvenv/bin/python3",
+      "sha256": "17b78e0a93175e86f9ac03141924fd7a7f0c0c52e66b34bfa0de20ffef989df1"
+    }
+  },
+  "clock": {
+    "adjustable": false,
+    "implementation": "clock_gettime(CLOCK_MONOTONIC)",
+    "monotonic": true,
+    "resolution": 1e-09
+  },
+  "container_image_attested": false,
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+  "debian_packages": {
+    "command": [
+      "dpkg-query",
+      "-W",
+      "xvfb",
+      "openbox",
+      "python3-xlib"
+    ],
+    "returncode": 1,
+    "stderr": "dpkg-query: no packages found matching python3-xlib\n",
+    "stdout": "openbox\t3.6.1-12+b2\nxvfb\t2:21.1.16-1.3+deb13u1\n"
+  },
+  "display": "private authenticated TCP-disabled Xvfb 320x240x24; bare or Openbox",
+  "docker": null,
+  "executable": "/opt/pyvenv/bin/python",
+  "experimental_external_network": false,
+  "frequency_controlled": false,
+  "gh": null,
+  "machine": "x86_64",
+  "model_calls": 0,
+  "orbstack": null,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "xlib_distribution_version": null,
+  "xlib_module_version": [
+    0,
+    15
+  ],
+  "xlib_modules": {
+    "Xlib": {
+      "path": "/opt/pyvenv/lib/python3.13/site-packages/Xlib/__init__.py",
+      "sha256": "2799b37f544bfadf7173eb64649ac2c7d2fbe1cf6fd8a8bba35b3da0836a9893"
+    },
+    "Xlib.display": {
+      "path": "/opt/pyvenv/lib/python3.13/site-packages/Xlib/display.py",
+      "sha256": "30b6672bd549392978674c318c363bd4a9a2d91974658b514632aaa8c4f1490f"
+    },
+    "Xlib.protocol.display": {
+      "path": "/opt/pyvenv/lib/python3.13/site-packages/Xlib/protocol/display.py",
+      "sha256": "7b855cf34a82c556567a8115e3e8668e85834f9e1044eea31911a6547e157f95"
+    }
+  }
+}

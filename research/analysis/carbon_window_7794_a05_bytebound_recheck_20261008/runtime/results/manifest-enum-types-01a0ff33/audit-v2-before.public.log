@@ -1,0 +1,89 @@
+test_original_audit_characterization_exposes_all_scalar_blind_spots (test_audit_matrix_v2.AuditScalarTypesTests.test_original_audit_characterization_exposes_all_scalar_blind_spots) ... ok
+test_v2_accepts_both_unmodified_records (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_accepts_both_unmodified_records) ... ok
+test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) ... 
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='accepted_false_to_int') ... FAIL
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='accepted_true_to_int') ... FAIL
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='ready_false_to_int') ... FAIL
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='valid_true_to_int') ... FAIL
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='input_false_to_int') ... FAIL
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='input_true_to_int') ... FAIL
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='input_int_to_float') ... FAIL
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='accepted_true_to_float') ... FAIL
+  test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='ready_false_to_float') ... FAIL
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='accepted_false_to_int')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='accepted_true_to_int')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='ready_false_to_int')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='valid_true_to_int')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='input_false_to_int')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='input_true_to_int')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='input_int_to_float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='accepted_true_to_float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_v2_rejects_each_scalar_type_corruption (test_audit_matrix_v2.AuditScalarTypesTests.test_v2_rejects_each_scalar_type_corruption) (name='ready_false_to_float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<checkout>\runtime\results\manifest-enum-types-01a0ff33\test_audit_matrix_v2.py", line 55, in test_v2_rejects_each_scalar_type_corruption
+    self.assertTrue(self.v2.verify(raw, self.fixtures, False, self.source))
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.069s
+
+FAILED (failures=9)

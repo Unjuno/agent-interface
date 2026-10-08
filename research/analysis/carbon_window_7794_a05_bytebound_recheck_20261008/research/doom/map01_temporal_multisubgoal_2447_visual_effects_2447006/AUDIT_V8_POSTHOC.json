@@ -1,0 +1,49 @@
+{
+  "case": "issue2447-visual-effects-construction-2447006",
+  "decision": "PASS_CONSTRUCTION_INSTRUMENTATION",
+  "drop_effect": {
+    "after_sector_z": [36, -128.0],
+    "before_sector_z": [165, -64.0],
+    "transition_observed": true
+  },
+  "errors": [],
+  "formal_rows": 0,
+  "phase": {
+    "drop_pair_indices": [6, 7],
+    "eligible_pairs": 8,
+    "raw_frame_recompute_matches": true
+  },
+  "retries": 0,
+  "schema": "issue2447-visual-effects-audit-v2",
+  "scope": "One construction episode and instrumentation check only; not a comparison study, issue acceptance, safety estimate, or task-completion claim.",
+  "turns": [
+    {
+      "before_matches_fresh_receipt": true,
+      "binding_matches_setup": true,
+      "key": "Right",
+      "name": "next_subgoal",
+      "ordered_observation_action_release_images": true,
+      "release_verified_empty": true,
+      "visual_flow": {
+        "median_dx_px": -80.13836669921875,
+        "median_dy_px": -0.280303955078125,
+        "status": "MEASURED",
+        "valid_tracks": 223
+      }
+    },
+    {
+      "before_matches_fresh_receipt": true,
+      "binding_matches_setup": true,
+      "key": "Left",
+      "name": "third_subgoal",
+      "ordered_observation_action_release_images": true,
+      "release_verified_empty": true,
+      "visual_flow": {
+        "median_dx_px": 69.41590881347656,
+        "median_dy_px": 0.0668182373046875,
+        "status": "MEASURED",
+        "valid_tracks": 210
+      }
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "format": "input-state-table-v1",
+  "source_sha256": "3336c7c5a34c347ee4244c8eac03b6116cf31718f89b24c04b2e2c18368c3848",
+  "table": {
+    "common_state": {
+      "owner_id": "d53bd55a88e249bb99ad3010dc5b5b7c",
+      "owned_buttons": [],
+      "owned_keycodes": [],
+      "physical_pointer_mask": 0,
+      "pointer": [
+        640,
+        400
+      ],
+      "focus": 8389124,
+      "active_lease_deadline_ns": 59970498549,
+      "active_lease_time_valid": true,
+      "cancel_requested": false
+    },
+    "common_observation": {
+      "input_state_scope": "historical samples around capture/publication; not atomic or current at delivery",
+      "owner_revision_unchanged": true
+    },
+    "observations": [
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          6
+        ],
+        "sequence": 2,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 6,
+              "sample_started_ns": 30102611052,
+              "sample_finished_ns": 30102792522
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 6,
+              "sample_started_ns": 30183686543,
+              "sample_finished_ns": 30183849035
+            }
+          }
+        }
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          10
+        ],
+        "sequence": 3,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 8,
+              "sample_started_ns": 30234185168,
+              "sample_finished_ns": 30234465827
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 8,
+              "sample_started_ns": 30305528210,
+              "sample_finished_ns": 30305839669
+            }
+          }
+        }
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          16
+        ],
+        "sequence": 4,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 14,
+              "sample_started_ns": 30385954952,
+              "sample_finished_ns": 30386110318
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 14,
+              "sample_started_ns": 30453777571,
+              "sample_finished_ns": 30453926897
+            }
+          }
+        }
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          20
+        ],
+        "sequence": 5,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 16,
+              "sample_started_ns": 30504541832,
+              "sample_finished_ns": 30504769354
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 16,
+              "sample_started_ns": 30583423556,
+              "sample_finished_ns": 30583586742
+            }
+          }
+        }
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          23
+        ],
+        "sequence": 6,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 16,
+              "sample_started_ns": 30619906772,
+              "sample_finished_ns": 30620238626
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 16,
+              "sample_started_ns": 30697805871,
+              "sample_finished_ns": 30698036542
+            }
+          }
+        }
+      },
+      {
+        "path": [
+          "exchanges",
+          1,
+          "reply",
+          "records",
+          24
+        ],
+        "sequence": 7,
+        "fields": {
+          "input_state_before": {
+            "delta": {
+              "revision": 16,
+              "sample_started_ns": 30730414315,
+              "sample_finished_ns": 30730850551
+            }
+          },
+          "input_state_after": {
+            "delta": {
+              "revision": 16,
+              "sample_started_ns": 30780342184,
+              "sample_finished_ns": 30780866513
+            }
+          }
+        }
+      }
+    ]
+  },
+  "coverage": "Four named input-state fields of every exchange observation; all other fields/events/images remain in the original report and receipt.",
+  "authority": "none; historical values only; no attention cleared, lease renewed, or task success inferred"
+}

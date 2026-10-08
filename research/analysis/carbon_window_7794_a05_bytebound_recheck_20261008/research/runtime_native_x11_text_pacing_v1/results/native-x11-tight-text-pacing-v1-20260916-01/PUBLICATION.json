@@ -1,0 +1,38 @@
+{
+  "schema": "agent-interface/native-x11-tight-text-pacing-publication-v2",
+  "source_freeze": "48030f5829690bdd3209d05974e390d88e7742a9",
+  "result_id": "native-x11-tight-text-pacing-v1-20260916-01",
+  "published": [
+    "REPORT.md",
+    "aggregate.json",
+    "formal-evidence.json.gz.b64",
+    "outputs/00ms.xlsx",
+    "outputs/12ms.xlsx",
+    "outputs/01ms.xlsx",
+    "SHA256SUMS"
+  ],
+  "formal_evidence": {
+    "decoded_json_sha256": "380cd3c1de5f64c107a6270c5bd1d5a45a1fdc2ad0714cbe0a77cb7741832181",
+    "gzip_base64_sha256": "82126706c92ea24a8f1ea7b8ed0a360094e7b87eecef279e88b3f519803037c6",
+    "decode": "base64 decode, then gzip decompress"
+  },
+  "xlsx_outputs": {
+    "00ms": {
+      "sha256": "6d58db5c50fdd7613cc72232fe4da9c7c3d4fd21447db19d4e16ba271d894895",
+      "bytes": 6220,
+      "git_blob": "758d1ec3dcfa3f1e9392a5083a01f597e4aec873"
+    },
+    "12ms": {
+      "sha256": "8be1c2151db021e9f177bd5158a4c2efcdb0ffae802226690bbe6de990431b20",
+      "bytes": 6240,
+      "git_blob": "7aab6a7fe56b13ea9ab897780f51a4917078142a"
+    },
+    "01ms": {
+      "sha256": "0b084b6bfb5596cf73d40c33c0c7e67bcffa5dad6f44d71e1bd583471dd127c6",
+      "bytes": 6238,
+      "git_blob": "006aef6823b51e3d8f04fa581795d7e51b516a8e"
+    }
+  },
+  "formal_reruns": 0,
+  "note": "All decision-relevant receipts are recoverable from formal-evidence.json.gz.b64 and all three XLSX outputs are published as exact binary Git blobs. GUI profile/log noise remains local."
+}

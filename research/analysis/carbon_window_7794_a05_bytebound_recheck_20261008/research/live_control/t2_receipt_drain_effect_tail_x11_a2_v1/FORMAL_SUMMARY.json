@@ -1,0 +1,39 @@
+{
+  "audit": {
+    "disposition": "HOLD_EFFECT_TAIL_AFTER_ACTUATION_DRAIN",
+    "errors": [],
+    "pass": true,
+    "rows": 32,
+    "sha256": "81abf37ef590c8462208413f878903d2d8396c1b7319a381e7c8bd18d701d491"
+  },
+  "audit_sha256": "fd4e3d4693958b1b1484b5ac252d933db9b8c853abf579b8049dcc305f65243c",
+  "batch_sha256": [
+    "b7de106e4e58fa4c00e746dba9450ea0f98b85436fef32d6f908268c23a76013",
+    "704488d0ef92db5d50ddf9e966b7299497d97f2b1b94e7a1f2217788a7817651",
+    "60d4422406459676b4b4ca8275c44a68967601d669aa0617150f2f193cbb1ac9",
+    "46ee95aaf45b07fc83b3306946b52253a359e5a433d9cfd768d7e3a919d7ebf7"
+  ],
+  "batches": 4,
+  "cases": 32,
+  "effect_tail_ms": {
+    "drain_all": {"max": 4.002464, "min": 0.286988, "p50": 1.8678885},
+    "drain_delay_0": {"max": 0.630798, "min": 0.286988, "n": 8, "p50": 0.3709475},
+    "drain_delay_3": {"max": 4.002464, "min": 3.104979, "n": 8, "p50": 3.4163865},
+    "immediate": {"max": 12.670059, "min": 3.752847, "p50": 8.445413}
+  },
+  "formal_invocations": 1,
+  "formal_result_gzip_sha256": "df612f0a58ab60b543b09a9c017065a57bb65f7aaffde461fee7fe40fcbe2028",
+  "formal_result_sha256": "81abf37ef590c8462208413f878903d2d8396c1b7319a381e7c8bd18d701d491",
+  "pairs": 16,
+  "replacements": 0,
+  "reruns": 0,
+  "summary": {
+    "arms": {
+      "ACTUATION_RECEIPT_DRAIN": {"effect_after_handback": 16, "effect_correct": 16, "handback_delay_ms_max": 8.605675, "handback_delay_ms_p50": 6.3809715, "local_completion_after_handback": 0, "n": 16, "physical_guaranteed_after_handback": 0, "physical_possible_after_handback": 0, "terminal_released": 16},
+      "IMMEDIATE_TRANSFER": {"effect_after_handback": 16, "effect_correct": 16, "handback_delay_ms_max": 0.0, "handback_delay_ms_p50": 0.0, "local_completion_after_handback": 16, "n": 16, "physical_guaranteed_after_handback": 16, "physical_possible_after_handback": 16, "terminal_released": 16}
+    },
+    "disposition": "HOLD_EFFECT_TAIL_AFTER_ACTUATION_DRAIN"
+  },
+  "task": "T2-LIVE-X11-RECEIPT-DRAIN-EFFECT-TAIL-A2-20260918-002",
+  "tuning": 0
+}

@@ -1,0 +1,17 @@
+{
+  "fixture_id": "SKILL-REGISTRY-TOPK-STARVATION-751-T0-20261002-01",
+  "retrieval_k": 2,
+  "scan_budget": 6,
+  "eligibility_values": ["ALLOW", "HARD_INCOMPATIBLE", "OUT_OF_ENVELOPE", "REVALIDATION_REQUIRED", "UNKNOWN"],
+  "cases": [
+    {"case_id":"valid_rank_1","skills":[["s1","ALLOW"],["s2","HARD_INCOMPATIBLE"],["s3","OUT_OF_ENVELOPE"],["s4","REVALIDATION_REQUIRED"],["s5","HARD_INCOMPATIBLE"],["s6","OUT_OF_ENVELOPE"],["s7","HARD_INCOMPATIBLE"]]},
+    {"case_id":"valid_rank_k_2","skills":[["s1","OUT_OF_ENVELOPE"],["s2","ALLOW"],["s3","HARD_INCOMPATIBLE"],["s4","HARD_INCOMPATIBLE"],["s5","REVALIDATION_REQUIRED"],["s6","OUT_OF_ENVELOPE"],["s7","HARD_INCOMPATIBLE"]]},
+    {"case_id":"valid_rank_k_plus_1","skills":[["s1","HARD_INCOMPATIBLE"],["s2","REVALIDATION_REQUIRED"],["s3","ALLOW"],["s4","OUT_OF_ENVELOPE"],["s5","HARD_INCOMPATIBLE"],["s6","OUT_OF_ENVELOPE"],["s7","REVALIDATION_REQUIRED"]]},
+    {"case_id":"valid_rank_budget_edge_6","skills":[["s1","HARD_INCOMPATIBLE"],["s2","OUT_OF_ENVELOPE"],["s3","HARD_INCOMPATIBLE"],["s4","REVALIDATION_REQUIRED"],["s5","OUT_OF_ENVELOPE"],["s6","ALLOW"],["s7","HARD_INCOMPATIBLE"]]},
+    {"case_id":"valid_beyond_budget_7","skills":[["s1","HARD_INCOMPATIBLE"],["s2","OUT_OF_ENVELOPE"],["s3","REVALIDATION_REQUIRED"],["s4","HARD_INCOMPATIBLE"],["s5","OUT_OF_ENVELOPE"],["s6","REVALIDATION_REQUIRED"],["s7","ALLOW"]]},
+    {"case_id":"no_eligible_skill","skills":[["s1","HARD_INCOMPATIBLE"],["s2","OUT_OF_ENVELOPE"],["s3","REVALIDATION_REQUIRED"],["s4","HARD_INCOMPATIBLE"],["s5","OUT_OF_ENVELOPE"],["s6","REVALIDATION_REQUIRED"],["s7","HARD_INCOMPATIBLE"]]},
+    {"case_id":"unknown_before_valid_rank_3","skills":[["s1","UNKNOWN"],["s2","OUT_OF_ENVELOPE"],["s3","ALLOW"],["s4","HARD_INCOMPATIBLE"],["s5","REVALIDATION_REQUIRED"],["s6","OUT_OF_ENVELOPE"],["s7","HARD_INCOMPATIBLE"]]},
+    {"case_id":"unknown_only","skills":[["s1","UNKNOWN"],["s2","HARD_INCOMPATIBLE"],["s3","OUT_OF_ENVELOPE"],["s4","REVALIDATION_REQUIRED"],["s5","HARD_INCOMPATIBLE"],["s6","OUT_OF_ENVELOPE"],["s7","REVALIDATION_REQUIRED"]]}
+  ]
+}
+

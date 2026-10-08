@@ -1,0 +1,156 @@
+{
+  "C": "Typed application receipts may not be available in real GUIs; dishonest/incorrect no-effect receipt invalidates safety; waiting may sacrifice task completion; Doom movement repetition is not transaction duplication.",
+  "D": "All cases must pass frozen expected class/input/effect/release checks. Candidate duplicates=0; lost/silent remain UNKNOWN; no second input on stale/no receipt; reject_once has two inputs but one effect. Unsafe comparator expected duplicates in delayed/lost/stale. Stop on first failed case; retain failure, no same-allocation retry.",
+  "H": "At 100ms, release/timeout alone cannot distinguish a delayed/lost commit from no effect. An attempt-bound final-no-effect fence suppresses duplicate appends without claiming success for absent feedback.",
+  "T": "20 unittest methods, 216 deterministic three-receipt sequences; separate two-case construction smoke; then 24 fresh native GUI cases, six conditions x two arms x two counterbalanced blocks.",
+  "U": "No rate or speedup estimate. One fixture, deliberate delays, two cases per cell; same host clock, scheduler/TTY/filesystem jitter, 3ms nominal polling. No calibrated combined uncertainty.",
+  "allocation": "pending-effect-native-01",
+  "base_commit": "120a1b8de6d515d75c2200ca3acc310a124fb373",
+  "construction": "smoke-01 retained setup failure before input; smoke-02 two immediate cases PASS. Sources changed afterward only for per-allocation session identity and four pre-input admission tests.",
+  "parameters": {
+    "delayed_commit_ms": 240,
+    "hold_ms": 25,
+    "maximum_inputs": 2,
+    "normal_commit_ms": 30,
+    "rejection_ms": 20,
+    "retry_after_ms": 100,
+    "stale_receipt_ms": 25,
+    "window_ms": 500
+  },
+  "schedule": [
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 0,
+      "mode": "immediate"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 0,
+      "mode": "immediate"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 0,
+      "mode": "delayed"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 0,
+      "mode": "delayed"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 0,
+      "mode": "lost_feedback"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 0,
+      "mode": "lost_feedback"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 0,
+      "mode": "stale_feedback"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 0,
+      "mode": "stale_feedback"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 0,
+      "mode": "reject_once"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 0,
+      "mode": "reject_once"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 0,
+      "mode": "silent"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 0,
+      "mode": "silent"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 1,
+      "mode": "delayed"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 1,
+      "mode": "delayed"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 1,
+      "mode": "lost_feedback"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 1,
+      "mode": "lost_feedback"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 1,
+      "mode": "stale_feedback"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 1,
+      "mode": "stale_feedback"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 1,
+      "mode": "reject_once"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 1,
+      "mode": "reject_once"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 1,
+      "mode": "silent"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 1,
+      "mode": "silent"
+    },
+    {
+      "arm": "OUTCOME_FENCE",
+      "block": 1,
+      "mode": "immediate"
+    },
+    {
+      "arm": "TIMEOUT_RETRY",
+      "block": 1,
+      "mode": "immediate"
+    }
+  ],
+  "schema": "pending-effect-development-plan-v1",
+  "scope": "new development calibration, not reserved MAP01 formal allocation",
+  "smoke_sha256": {
+    "smoke-01.zip": "1a910cc9c8d64dd21a7e14dd58ff1289a4b2712016fe34d5646716351df10449",
+    "smoke-02.zip": "6046bc41433508f141e38b7ecd714ab94fc1c196c736f073de546a101ad66f4e"
+  },
+  "sources": {
+    "fence.py": "d721a7fe204aeaf5a0ea36e2483d25deb5964e0c52713ef7bce8aacbf2b93f8a",
+    "fixture.py": "e128a4230875689e3a1cb249f0ca1746a376f214509c90fff22d570780f53f58",
+    "private_desktop.py": "335305131c8ef8b33e77b20f09e4f2a4677f06e56597bcfc6552629d8709d888",
+    "probe.py": "890dadef4123d96b81d080b9c9b5433f47574e46b45bcb5f9dda175341c6ea81",
+    "test_fence.py": "2b58f20cb78ec621163afe6796acf22b5edaf4101a4a60a9bde8d5f294e06d99",
+    "test_probe.py": "688dc9b613b00998c332d22047ea65520dba0ab8ec3f6b2e2fcacf55d91d14fe"
+  }
+}

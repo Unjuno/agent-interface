@@ -1,0 +1,25 @@
+{
+  "schema": "feedback-necessity-host-freeze-v1",
+  "issue": 5927,
+  "allocation": "FEEDBACK-NECESSITY-5927-HOST-CONSTRUCTION-20261001-01",
+  "base_main": "3d6ffc76d535309cf3820ed33cb9327354f03648",
+  "execution_class": "HOST_ONLY_CONSTRUCTION_NOT_ISSUE_T0",
+  "python": "CPython 3.12",
+  "dependencies": "standard library only",
+  "inputs": ["cases.json"],
+  "sha256": {
+    "cases.json": "1868c4a36ab5055a8f0fe50aa593cd544b7c865c7d8da1ac0ac8bfd1e0f232ca",
+    "feedback_necessity.py": "b92859d2e454662507bc14edcfe25291b0b099084ac3a5ef255fe11a6ea89592",
+    "audit_feedback_necessity.py": "79e55f60d22d17960ae3a9857cde3a7071f68612c7d5ee61f1c7cdff6d5499ad",
+    "fixtures.py": "a56961483e8b63d688250f79ce5dccc48c57aa385e5349974d7623bbea48ef7a",
+    "test_feedback_necessity.py": "befc58fd9ab40e7a481b8632444d1d71fd7de39cfcf96390b455b6cd493452fd"
+  },
+  "hypothesis": "A fresh distinguishing exchange is necessary only when transcript-equivalent worlds have no common safe-progress action.",
+  "decision": {
+    "positive_case": "minimum_exchanges=1",
+    "null_case": "minimum_exchanges=0",
+    "mutations": "all rejected"
+  },
+  "retry_policy": "one candidate invocation, one independent raw audit if candidate exits zero, zero retries",
+  "excluded": ["docker", "orbstack", "network", "gpu", "model", "gui", "game", "os_input", "task_effect"]
+}

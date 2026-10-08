@@ -1,0 +1,233 @@
+{
+  "row_count": 12,
+  "rows": [
+    {
+      "arm": "nominal_repertoire",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 20,
+        "release_lane_available": true,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "COVERED"
+      },
+      "scenario_id": "spare_capacity",
+      "task_attainable": true
+    },
+    {
+      "arm": "capacity_aware",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 20,
+        "release_lane_available": true,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "COVERED"
+      },
+      "scenario_id": "spare_capacity",
+      "task_attainable": true
+    },
+    {
+      "arm": "reserved_safety_lane",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 20,
+        "release_lane_available": true,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "COVERED"
+      },
+      "scenario_id": "spare_capacity",
+      "task_attainable": true
+    },
+    {
+      "arm": "nominal_repertoire",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 120,
+        "release_lane_available": false,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "COVERED"
+      },
+      "scenario_id": "shared_saturation",
+      "task_attainable": true
+    },
+    {
+      "arm": "capacity_aware",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 120,
+        "release_lane_available": false,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "SAFE_STOP_ONLY",
+        "threat_requires_replan": "NO_RESPONSE"
+      },
+      "scenario_id": "shared_saturation",
+      "task_attainable": false
+    },
+    {
+      "arm": "reserved_safety_lane",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 120,
+        "release_lane_available": false,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "NO_RESPONSE"
+      },
+      "scenario_id": "shared_saturation",
+      "task_attainable": false
+    },
+    {
+      "arm": "nominal_repertoire",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 40,
+        "now_ms": 50,
+        "planner_busy_until_ms": 50,
+        "release_lane_available": true,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "COVERED"
+      },
+      "scenario_id": "expired_lease",
+      "task_attainable": true
+    },
+    {
+      "arm": "capacity_aware",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 40,
+        "now_ms": 50,
+        "planner_busy_until_ms": 50,
+        "release_lane_available": true,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "NO_RESPONSE"
+      },
+      "scenario_id": "expired_lease",
+      "task_attainable": false
+    },
+    {
+      "arm": "reserved_safety_lane",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": false,
+        "lease_expires_ms": 40,
+        "now_ms": 50,
+        "planner_busy_until_ms": 50,
+        "release_lane_available": true,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "NO_RESPONSE"
+      },
+      "scenario_id": "expired_lease",
+      "task_attainable": false
+    },
+    {
+      "arm": "nominal_repertoire",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": true,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 120,
+        "release_lane_available": false,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "COVERED"
+      },
+      "scenario_id": "handoff_not_accepted",
+      "task_attainable": true
+    },
+    {
+      "arm": "capacity_aware",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": true,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 120,
+        "release_lane_available": false,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "SAFE_STOP_ONLY",
+        "threat_requires_replan": "NO_RESPONSE"
+      },
+      "scenario_id": "handoff_not_accepted",
+      "task_attainable": false
+    },
+    {
+      "arm": "reserved_safety_lane",
+      "authority_effect_applied": false,
+      "facts": {
+        "handoff_accepted": false,
+        "handoff_offered": true,
+        "lease_expires_ms": 100,
+        "now_ms": 10,
+        "planner_busy_until_ms": 120,
+        "release_lane_available": false,
+        "threat_deadline_ms": 80
+      },
+      "outcomes": {
+        "stuck_input_requires_release": "COVERED",
+        "threat_requires_replan": "NO_RESPONSE"
+      },
+      "scenario_id": "handoff_not_accepted",
+      "task_attainable": false
+    }
+  ]
+}

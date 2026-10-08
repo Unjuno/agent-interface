@@ -1,0 +1,26 @@
+{
+  "issue": 5516,
+  "allocation": "5516-branch-readiness-context-t12-20261001-01",
+  "status": "FROZEN_HOST_FINITE_SEMANTICS_BEFORE_CANDIDATE",
+  "frozen_at_utc": "2026-09-30T19:38:53Z",
+  "base_sha": "e32ace71fa1158ca8d5eec13fe620a1a51c1ff00",
+  "python": "CPython 3.14.5",
+  "network": false,
+  "container": false,
+  "candidate_invocations_before_freeze": 0,
+  "candidate_invocations_allowed": 1,
+  "construction_tests_before_freeze": "4/4 PASS after pre-freeze correction; initial prototype 3/3 FAIL retained in CONSTRUCTION_NOTES.md",
+  "source_sha256": {
+    "candidate.py": "2c086e6e6816f50f97602a9de98f8a8675f2253ed5b839af58136ef776630bce",
+    "audit.py": "551f8f43082e7e1909439231c8e5189952dfc9f6d769ed0a6fe0cd4443740755",
+    "corruption_controls.py": "30c492e52417b0aab1d73f9753eb1a08351667133720cb400d44448e305e6454",
+    "test_t12.py": "90a99c89361c61088d1e7b708a7525cebf0b3e249d74444c661a168e395b738d"
+  },
+  "expected_cases": {
+    "positive_control": {"trace_equal": true, "bisimilar": true},
+    "branch_readiness_split": {"trace_equal": true, "bisimilar": false},
+    "visible_label_mismatch": {"trace_equal": false, "bisimilar": false}
+  },
+  "corruption_controls": 7,
+  "no_retry": true
+}

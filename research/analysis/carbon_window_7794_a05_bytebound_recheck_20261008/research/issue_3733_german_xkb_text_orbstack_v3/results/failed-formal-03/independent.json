@@ -1,0 +1,61 @@
+{
+  "allocation": "issue3733-german-xkb-text-orbstack-formal-03",
+  "artifact_files_checked": 29,
+  "auditor_sha256": "399c46203b8b644e8f03cf1cdf31a91c4ea37addfe202b66b26684998041547a",
+  "candidate_findings": [
+    "row_0_event_trace_mismatch",
+    "row_0_receiver_text_mismatch",
+    "row_0_emission_count",
+    "row_1_event_trace_mismatch",
+    "row_1_receiver_text_mismatch",
+    "row_1_emission_count",
+    "row_2_event_trace_mismatch",
+    "row_2_receiver_text_mismatch",
+    "row_2_emission_count",
+    "row_3_event_trace_mismatch",
+    "row_3_receiver_text_mismatch",
+    "row_3_emission_count"
+  ],
+  "corruption_challenges": [
+    {
+      "name": "wrong_candidate_source",
+      "rejected": true
+    },
+    {
+      "name": "drop_final_row",
+      "rejected": true
+    },
+    {
+      "name": "wrong_receiver_text",
+      "rejected": true
+    },
+    {
+      "name": "unsupported_preflight_emission",
+      "rejected": true
+    }
+  ],
+  "disposition": "FAIL_GERMAN_XKB_TEXT_DELIVERY",
+  "formal_raw_sha256": "773881be66156edffd762817ba4a72ed79ac8d2f821ec864f08786198700e27e",
+  "integrity_errors": [],
+  "rows": [
+    {
+      "case_id": "de-00",
+      "status": "FAIL_RECEIVER_TEXT_OR_EVENT_COUNT"
+    },
+    {
+      "case_id": "de-01",
+      "status": "FAIL_RECEIVER_TEXT_OR_EVENT_COUNT"
+    },
+    {
+      "case_id": "de-02",
+      "status": "FAIL_RECEIVER_TEXT_OR_EVENT_COUNT"
+    },
+    {
+      "case_id": "us-control",
+      "status": "FAIL_RECEIVER_TEXT_OR_EVENT_COUNT"
+    }
+  ],
+  "runner_sha256": "2f95d7e117d4fbf064da384f1e40ac6688991e922a0496dff0bccea8a9199099",
+  "source_files_checked": 17,
+  "source_manifest_sha256": "097f9faf4072d6bf511be618c67984cb7a7f9dce804062364813d2879d9a3dd8"
+}

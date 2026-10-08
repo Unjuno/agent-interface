@@ -1,0 +1,49 @@
+{
+  "schema": "agent-interface/program-v1",
+  "program_id": "navigate-task-1",
+  "source": {
+    "observation_seq": 1,
+    "binding_revision": 0
+  },
+  "authority": {
+    "lease_id": "native-navigation",
+    "expires_at_ns": 561936783941
+  },
+  "terminal": {
+    "release_all_required": true
+  },
+  "ops": [
+    {
+      "op": "focus",
+      "target": "browser"
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "CTRL",
+        "l"
+      ]
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "text",
+      "text": "http://127.0.0.1:41465/task/1"
+    },
+    {
+      "op": "wait_update",
+      "timeout_ms": 100
+    },
+    {
+      "op": "key_chord",
+      "keys": [
+        "ENTER"
+      ]
+    },
+    {
+      "op": "release_all"
+    }
+  ]
+}

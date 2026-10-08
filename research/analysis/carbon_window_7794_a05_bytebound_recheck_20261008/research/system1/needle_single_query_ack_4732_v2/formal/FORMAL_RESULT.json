@@ -1,0 +1,19 @@
+{
+  "schema": "needle-single-query-ack-formal-result-v2",
+  "allocation": "needle-single-query-ack-6911201-6911301-6911401-v2",
+  "disposition": "HOLD_LATENCY_BUDGET",
+  "trainer_orchestrations": 1,
+  "independent_auditor_invocations": 1,
+  "checked_seeds": 3,
+  "checked_arm_arrivals": 72,
+  "integrity_errors": 0,
+  "corruption_controls_rejected": 5,
+  "latency_gate": {"query_only_p95_ms_max": 60, "ratio_max": 0.5},
+  "seeds": [
+    {"seed": 6911201, "arm_order": ["INLINE_512", "ONLINE_QUERY_ONLY"], "inline_p95_ms": 26.554375, "query_only_p95_ms": 23.654741, "ratio": 0.890803907077459},
+    {"seed": 6911301, "arm_order": ["ONLINE_QUERY_ONLY", "INLINE_512"], "inline_p95_ms": 20.862897, "query_only_p95_ms": 19.40639, "ratio": 0.9301867329355074},
+    {"seed": 6911401, "arm_order": ["INLINE_512", "ONLINE_QUERY_ONLY"], "inline_p95_ms": 18.598477, "query_only_p95_ms": 22.291022, "ratio": 1.1985401815428223}
+  ],
+  "interpretation": "Absolute query-only p95 <=60 ms passed for every seed, but ratio <=0.5 failed for every seed. Integrity exact; retain latency-budget HOLD. No learning-quality or task-authority claim.",
+  "scope": "synthetic CPU Needle adapter, local Docker durable snapshot/ack path only"
+}

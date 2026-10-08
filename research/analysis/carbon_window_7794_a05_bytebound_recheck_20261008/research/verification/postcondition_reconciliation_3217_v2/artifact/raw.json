@@ -1,0 +1,1892 @@
+[
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:old",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:old",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:old",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": false
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": false
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": false
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:partial",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:partial",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:partial",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:pixel",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:pixel",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:pixel",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "sha256:new",
+      "kind": "file_digest",
+      "observed": "sha256:new",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-file_digest",
+      "target_observed": true
+    },
+    "kind": "file_digest",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "800x600",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "800x600",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "800x600",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": false
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": false
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": false
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x600",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x600",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x600",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "1024x768",
+      "kind": "window_geometry",
+      "observed": "1024x768",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-window_geometry",
+      "target_observed": true
+    },
+    "kind": "window_geometry",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "valid",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "valid",
+    "verifier": {
+      "reason": "exact_typed_effect",
+      "verdict": "PASS_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "dirty",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "dirty",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "dirty",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "no_effect",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "no_effect",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "stale",
+      "sequence": 3,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "stale",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": false
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": false
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "wrong_target",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": false
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "wrong_target",
+    "verifier": {
+      "reason": "wrong_target",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saving",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saving",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saving",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "partial",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "partial",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "ambiguous",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "ambiguous",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": false,
+      "scenario": "missing_receipt",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "missing_receipt",
+    "verifier": {
+      "reason": "missing_or_ambiguous_receipt",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "malformed",
+      "sequence": 3,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "malformed",
+    "verifier": {
+      "reason": "stale_observation",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 0,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": true,
+      "receipt": true,
+      "scenario": "pixel_only",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 0,
+    "scenario": "pixel_only",
+    "verifier": {
+      "reason": "effect_mismatch",
+      "verdict": "FAIL_POSTCONDITION"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "RICH_AGENT_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_FIRST",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  },
+  {
+    "evidence": {
+      "expected": "saved",
+      "kind": "typed_state",
+      "observed": "saved",
+      "pixel_changed": false,
+      "receipt": true,
+      "scenario": "cleanup_failure",
+      "sequence": 7,
+      "target": "target-typed_state",
+      "target_observed": true
+    },
+    "kind": "typed_state",
+    "policy": "DETERMINISTIC_ONLY_FOR_KNOWN",
+    "rich_agent_calls": 1,
+    "scenario": "cleanup_failure",
+    "verifier": {
+      "reason": "cleanup_failure",
+      "verdict": "ESCALATE_RICH_AGENT"
+    }
+  }
+]

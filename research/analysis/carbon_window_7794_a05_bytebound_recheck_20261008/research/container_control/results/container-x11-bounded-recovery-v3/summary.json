@@ -1,0 +1,45 @@
+{
+  "claim_scope": "container X11 mechanics only; fixed simulated planner wait; not a model or DOOM efficacy claim",
+  "cover_budget_s": 0.24,
+  "decisions_per_arm": 6,
+  "formal_mechanics_pass": true,
+  "pair_results": [
+    {
+      "coast": {"balanced_app_key_events": true,"center_ms": 0.0,"control_duration_ms": 2800.884189,"decision_count": 6,"guard_events": 0,"guard_to_app_release_ms": [],"max_abs_x": 0.6561376698599999,"press_count": 6,"release_count": 6,"stale_repress_before_planner": 0,"terminal_empty": true,"unsafe_ms": 649.194679,"visual_decoder_error_max": 0.01702351632000032},
+      "recovery": {"balanced_app_key_events": true,"center_ms": 1236.877649,"control_duration_ms": 2806.189413,"decision_count": 6,"guard_events": 0,"guard_to_app_release_ms": [],"max_abs_x": 0.6008943145799999,"press_count": 6,"release_count": 6,"stale_repress_before_planner": 0,"terminal_empty": true,"unsafe_ms": 357.16672,"visual_decoder_error_max": 0.02026186658235324}
+    },
+    {
+      "coast": {"balanced_app_key_events": true,"center_ms": 0.0,"control_duration_ms": 2798.77384,"decision_count": 6,"guard_events": 0,"guard_to_app_release_ms": [],"max_abs_x": 0.6472195781200003,"press_count": 6,"release_count": 6,"stale_repress_before_planner": 0,"terminal_empty": true,"unsafe_ms": 681.834763,"visual_decoder_error_max": 0.016056560044705348},
+      "recovery": {"balanced_app_key_events": true,"center_ms": 1040.559021,"control_duration_ms": 2807.458389,"decision_count": 6,"guard_events": 1,"guard_to_app_release_ms": [0.309483],"max_abs_x": 0.6294728309800001,"press_count": 7,"release_count": 7,"stale_repress_before_planner": 0,"terminal_empty": true,"unsafe_ms": 504.309974,"visual_decoder_error_max": 0.01790158855882329}
+    },
+    {
+      "coast": {"balanced_app_key_events": true,"center_ms": 0.0,"control_duration_ms": 2793.328677,"decision_count": 6,"guard_events": 0,"guard_to_app_release_ms": [],"max_abs_x": 0.6588954581600002,"press_count": 6,"release_count": 6,"stale_repress_before_planner": 0,"terminal_empty": true,"unsafe_ms": 649.706312,"visual_decoder_error_max": 0.015074115912941222},
+      "recovery": {"balanced_app_key_events": true,"center_ms": 1119.8886,"control_duration_ms": 2791.364898,"decision_count": 6,"guard_events": 0,"guard_to_app_release_ms": [],"max_abs_x": 0.6010504769199997,"press_count": 6,"release_count": 6,"stale_repress_before_planner": 0,"terminal_empty": true,"unsafe_ms": 356.820413,"visual_decoder_error_max": 0.008833585401764495}
+    }
+  ],
+  "paired_recovery_minus_coast": {"center_ms": [1236.877649,1040.559021,1119.8886],"center_ms_median": 1119.8886,"unsafe_ms": [-292.02795899999995,-177.52478899999994,-292.88589900000005],"unsafe_ms_median": -292.02795899999995},
+  "pairs": 3,
+  "planner_wait_s": 0.34,
+  "raw_sha256": {
+    "pair-00-0-coast/controller.jsonl": "a361e4dbac5e99cc9ce53473fd5a3a2f1186b95f007559c34df518658cdf5987",
+    "pair-00-0-coast/input.jsonl": "e798d6e17e0487f5d0641ee49aea499860c9ddf89ff8842d8f54d6c6ca72e4dd",
+    "pair-00-0-coast/score.jsonl": "e5839069aef450497366ee23bd6a374cbe9a74266e58473184a5d925f7d7e27b",
+    "pair-00-1-recovery/controller.jsonl": "1ff295fb3f61b4deb3e01c3f7b49379a96d283daf2b57b7f6d73ba799bcaad2c",
+    "pair-00-1-recovery/input.jsonl": "f802bd3db95c282f71c06df9cd68d0b98756333c2aa343c0b22ffd9aeebce138",
+    "pair-00-1-recovery/score.jsonl": "b0a7bdbbe26cd77468939c796f132bd51164fc33cfbc6506303157d02e89fc36",
+    "pair-01-0-recovery/controller.jsonl": "5dddd5d9d9542a58e3215ada729fa50b4515c6a2dc7e6edc64ed8bd8ee9197d7",
+    "pair-01-0-recovery/input.jsonl": "62110f66b50c88a78d205dbbc9acde74bc0da311cd1556eaea27e9daf5ca43c9",
+    "pair-01-0-recovery/score.jsonl": "902b7e5f864e963a2e8e01be70089dbe4a0e470c634aa3094f340b35e08d7bb8",
+    "pair-01-1-coast/controller.jsonl": "79d63df09f0040822620f162350ea221d7340e20ce665ee0fd1f76b85ddae6a9",
+    "pair-01-1-coast/input.jsonl": "1bac55bbfa3b6f262494b7f98704366a271558a203b74973db6530430242cdd3",
+    "pair-01-1-coast/score.jsonl": "4aac54fa3bb848872a84c86773a73cac075012dc217cb3f651bc3b852ae3017f",
+    "pair-02-0-coast/controller.jsonl": "2293738942706ecbfe91054bb9443269d0d4f05b67ecc0b6114637b0eef623de",
+    "pair-02-0-coast/input.jsonl": "70e3c97b63433e6346e1e0ed8feb226dbf629215722cbd45d7c96892f677bad7",
+    "pair-02-0-coast/score.jsonl": "c8b7874e720f3ea19092a46c33ff40b6080757a054a1282503a4e2c517efbb8e",
+    "pair-02-1-recovery/controller.jsonl": "f6c27bfd468d3c5af74daed27df5ea6a1bc60707aaab25cf33e09a9dc5397abd",
+    "pair-02-1-recovery/input.jsonl": "9d88a3ab8eedbaa2432803676648d36ed38eb3f39c229435632ac69329a7ec38",
+    "pair-02-1-recovery/score.jsonl": "0578f90fd75b7b47c29a57623f5ce134f5b4fdf0213b1b81da310ae52ede3a36"
+  },
+  "safety": {"all_key_events_balanced": true,"all_terminal_empty": true,"guard_event_total": 1,"guard_to_app_release_ms": [0.309483],"guard_to_app_release_ms_max": 0.309483,"guard_to_app_release_ms_median": 0.309483,"stale_repress_total": 0,"visual_decoder_error_max": 0.02026186658235324},
+  "schema": "container-x11-bounded-recovery-v3"
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "stop-evidence-4678-revalidation-freeze-v1",
+  "issue": 4795,
+  "allocation": "stop-evidence-4678-revalidation-4795-20260927-01",
+  "branch": "research/stop-evidence-4678-revalidate-4795-20260927",
+  "base_main": "5df0b2742c6d232529a50f5ca1a04724e1c32086",
+  "snapshot": {
+    "path": "research/analysis/stop_evidence_4678_audit_v1/FROZEN_BUNDLE.json",
+    "git_blob": "4e64d884466c28fc982b10256f6fa2bdb086498c",
+    "source_commit": "4fa120496342b9f955a6e6789d78ab308cc2c5a2"
+  },
+  "auditor": {
+    "path": "research/analysis/stop_evidence_4678_revalidation_v2/audit.py",
+    "git_blob": "77549f7aa43fd333c083bd33d2a11f868922915d"
+  },
+  "formal_invocations": 0,
+  "decision_order": "source/input integrity before checksum/scientific classification",
+  "container": {
+    "image": "python:3.12-slim-bookworm",
+    "image_id": "sha256:392307d22300de8b5986851a12d9176dfc0fc073e65bf6523ebd7dcbeb23564e",
+    "platform": "linux/amd64",
+    "network": "none",
+    "read_only": true,
+    "cpus": 1,
+    "memory": "512m",
+    "pids_limit": 64,
+    "gpu": false
+  }
+}

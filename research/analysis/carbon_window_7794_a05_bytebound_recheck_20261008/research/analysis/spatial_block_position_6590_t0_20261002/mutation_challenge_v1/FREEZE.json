@@ -1,0 +1,44 @@
+{
+  "schema": "spatial-block-position-6590-overlap-mutation-freeze-v1",
+  "issue": 6590,
+  "allocation": "spatial-block-position-6590-overlap-mutation-20261002-01",
+  "frozen_at_utc": "2026-10-02T07:11:26Z",
+  "scientific_base_main_sha": "ce89f11fcff33b83de4a9b9ded7b89bf764b5f09",
+  "pre_freeze_source_commit": "ce89f11fcff33b83de4a9b9ded7b89bf764b5f09",
+  "branch": "research/spatial-block-6590-overlap-mutation-container-v1",
+  "package_path": "research/analysis/spatial_block_position_6590_t0_20261002/mutation_challenge_v1/",
+  "hypothesis": "A single row reassigned to a different spatial block while retaining its coordinate creates an actual train/heldout position overlap; the split summary reports it and the raw-only auditor fails closed on the mutation.",
+  "H_T_D_C_U": {
+    "H": "For the frozen 8x8/four-block synthetic fixture, reassigning one b00 row at (0,0) to b01 causes at least one b01 block-holdout position overlap and the top-level auditor returns HOLD_AUDIT_INTEGRITY.",
+    "T": "Run the existing 12,800-row candidate once and clean raw-only auditor once, then one frozen mutation challenge that changes only that row's block_id, inspects the split summary, and invokes the auditor once on mutated raw.",
+    "D": "MUTATION_PASS only if clean audit is METHOD_PASS with no errors, the mutated split summary reports position_overlap_count >= 1, and corrupted raw returns HOLD_AUDIT_INTEGRITY with exactly one row_reconstruction error. Else FAIL_METHOD; execution/provenance failure is STOP.",
+    "C": "The top-level rejection may be due to the frozen row reconstruction mismatch rather than an explicit leakage rejection. Require the lower-level split summary overlap and top-level fail-closed outcome together.",
+    "U": "Synthetic corruption-control only; no learned model, real spatial dependence, GUI, human, calibration, safety, authority, or issue-level T1 hypothesis is tested."
+  },
+  "execution": {
+    "engine": "OrbStack Docker Engine API; isolated new container per command",
+    "image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+    "pull": "never",
+    "network": "none",
+    "root_filesystem": "read-only with 16MiB noexec/nosuid /tmp",
+    "source_mount": "read-only",
+    "output_mount": "dedicated allocation directory only",
+    "candidate_invocations": 1,
+    "clean_auditor_invocations": 1,
+    "mutation_auditor_invocations": 1,
+    "retries": 0,
+    "model_fits": 0,
+    "gpu": false,
+    "gui_or_effects": 0,
+    "network_calls": 0
+  },
+  "frozen_source_sha256": {
+    "research/analysis/spatial_block_position_6590_t0_20261002/fixture.json": "994543631f5fb73c27da12cf826bf03d5a203cdc9a1e03d7a8acd593fd9ae7f5",
+    "research/analysis/spatial_block_position_6590_t0_20261002/candidate.py": "b53a161c69815a443396f6ec7046b62b8900878755e1bf11c540791a1112606a",
+    "research/analysis/spatial_block_position_6590_t0_20261002/auditor.py": "e403c51aa09cbfd3764fc5b89ba1270814477912aaa1a8ab59e999809d0d4ce0",
+    "research/analysis/spatial_block_position_6590_t0_20261002/mutation_challenge_v1/README.md": "05b339f9a1810ab017bbc1c532e374c703a5592245296042fd84c2208beac984",
+    "research/analysis/spatial_block_position_6590_t0_20261002/mutation_challenge_v1/RUN_PROTOCOL.md": "c8bab78b26993c412a8f60ba2dc57358236443a859e9114d32151bba8abedc6f",
+    "research/analysis/spatial_block_position_6590_t0_20261002/mutation_challenge_v1/challenge.py": "b1802893722764271740b3d7b0e3277e020d0ee406699e81ef1eaa44751e7bfd",
+    "research/analysis/spatial_block_position_6590_t0_20261002/mutation_challenge_v1/test_challenge.py": "a7bea06652a94f625759ebf04e04ca5a6a0a3608c64b658f0c231076211187b5"
+  }
+}

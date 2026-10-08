@@ -1,0 +1,1 @@
+Reused exact cached #6916 native image; no new build or ABI claim. Fresh image inspection at 2026-10-03T04:46:34.338038+00:00. Original Dockerfile/source at21be64324057d8186fe321923fba6181e6b9cb55: research/analysis/clipboard_formats_36_x11_transfer_01a0ff51/Dockerfile. No host/shared native clipboard socket.

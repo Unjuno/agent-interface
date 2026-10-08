@@ -1,0 +1,21 @@
+test_button_probe_failure_preserves_only_unresolved_tracking (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_button_probe_failure_preserves_only_unresolved_tracking) ... ok
+test_core_refusal_does_not_attempt_backend_execution_or_cleanup (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_core_refusal_does_not_attempt_backend_execution_or_cleanup) ... ok
+test_emission_error_cannot_become_verified_even_if_readback_is_up (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_emission_error_cannot_become_verified_even_if_readback_is_up) ... ok
+test_execution_error_survives_unexpected_cleanup_exception (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_execution_error_survives_unexpected_cleanup_exception) ... ok
+test_failed_prefix_and_cleanup_receipt_reach_session_without_tail (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_failed_prefix_and_cleanup_receipt_reach_session_without_tail) ... ok
+test_key_probe_failure_is_unknown_and_other_probes_continue (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_key_probe_failure_is_unknown_and_other_probes_continue) ... ok
+test_known_down_input_is_not_forgotten (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_known_down_input_is_not_forgotten) ... ok
+test_multiple_faults_all_survive_without_retries (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_multiple_faults_all_survive_without_retries) ... ok
+test_null_button_event_does_not_skip_next_button (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_null_button_event_does_not_skip_next_button) ... ok
+test_null_first_key_event_does_not_skip_other_inputs (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_null_first_key_event_does_not_skip_other_inputs) ... ok
+test_pointer_creation_failure_does_not_skip_next_button (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_pointer_creation_failure_does_not_skip_next_button) ... ok
+test_post_error_keeps_event_release_and_other_input_cleanup (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_post_error_keeps_event_release_and_other_input_cleanup) ... ok
+test_preflight_error_keeps_original_detail_and_cleanup_failure (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_preflight_error_keeps_original_detail_and_cleanup_failure) ... ok
+test_success_releases_and_verifies_all_tracked_inputs (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_success_releases_and_verifies_all_tracked_inputs) ... ok
+test_unverified_terminal_cleanup_cannot_complete_session (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_unverified_terminal_cleanup_cannot_complete_session) ... ok
+test_verified_terminal_cleanup_still_completes_session (runtime.backends.quartz_v1.test_release_faults.QuartzReleaseFaultTests.test_verified_terminal_cleanup_still_completes_session) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.006s
+
+OK

@@ -1,0 +1,23 @@
+{
+  "schema": "decision-sufficiency-analytic-freeze-v1",
+  "issue": 5329,
+  "intake_main": "4439161abd6f8ccf276babc1c39c43428394e773",
+  "scope": "finite deterministic contract equivalence only; no stochastic or environment claim",
+  "container": "not used: exact finite oracle is analytically enumerable; Docker is reserved for environment-dependent residual after a distinct exact lane assignment",
+  "expected_rows": 360,
+  "source_sha256": {
+    "traces.json": "C33CC9AA027A42001D35169F3BF782AF978DBFA435FD7139AD66AE689C792D34",
+    "analyze.py": "4FF9B91E706B4E3AFBB1B32A77323306E4A5F4E1D795FA956B315827974FF063",
+    "independent_audit.py": "0020092D5E86821A24D96FFED6C86F15B353F33498D6316726C6886C32C75A5B"
+  },
+  "policies": ["LABEL_ONLY", "RAW_TRACE", "FIXED_SUMMARY", "DECISION_SUFFICIENT", "ADVERSARIAL_COMPRESSION"],
+  "gate": {
+    "decision_sufficient_mismatches": 0,
+    "decision_sufficient_bytes_less_than_raw": true,
+    "label_only_unsafe_release_passes": "greater than zero to expose the weak-baseline counterexample",
+    "adversarial_compression_mismatches": "greater than zero; required omission returns UNKNOWN",
+    "independent_audit_errors": 0,
+    "mutation_controls_rejected": "4/4"
+  },
+  "retry_policy": "One exact enumeration and one separate independent audit; preserve any failure without modifying the frozen inputs or gates."
+}

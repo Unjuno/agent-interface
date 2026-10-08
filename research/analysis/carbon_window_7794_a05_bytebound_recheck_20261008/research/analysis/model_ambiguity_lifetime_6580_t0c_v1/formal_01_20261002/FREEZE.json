@@ -1,0 +1,39 @@
+{
+  "allocation": "MODEL-AMBIGUITY-EXHAUSTIVE-6580-T0C-20261002-01",
+  "base_main": "49144844b482026c33fcfbde7e2fd5f7bdc7762c",
+  "branch": "research/model-ambiguity-exhaustive-6580-t0c-wslc-20261002",
+  "files": {
+    "README.md": "396594be16b3ba39bb83f4dc19cc9879dec50e85f3b2b6b2360c5c8890573923",
+    "auditor.py": "97fcec2ae8e950fdccb811f8126930822707a181863e2d05b958274d7fc9cfb7",
+    "candidate.py": "a72866b091d4498dfe82405a50817a89b8106d87e9b3eeabb075d66d98ab9673",
+    "test_protocol.py": "ff36cc6dc0d5f3f6744bb8dd3f94e18360f9f2e9723ca0d1d3b7d9173e7cccca"
+  },
+  "staged_sources": {
+    "candidate_source/candidate.py": "a72866b091d4498dfe82405a50817a89b8106d87e9b3eeabb075d66d98ab9673",
+    "candidate_source/auditor.py": "97fcec2ae8e950fdccb811f8126930822707a181863e2d05b958274d7fc9cfb7",
+    "candidate_source/test_protocol.py": "ff36cc6dc0d5f3f6744bb8dd3f94e18360f9f2e9723ca0d1d3b7d9173e7cccca",
+    "audit_source/auditor.py": "97fcec2ae8e950fdccb811f8126930822707a181863e2d05b958274d7fc9cfb7"
+  },
+  "preregistration_sha256": "56e1bb648e4e4927c1af84a0459f1be2869cef494a37e3a52b7b2be46a26c929",
+  "runtime": {
+    "cli": "wslc",
+    "version": "3.0.1.0",
+    "image": "python@sha256:1ae5b32b33f502335ed9f5ee7afa4387192e9566b1328fc66da836c77c1cfb65",
+    "pull": "never",
+    "network": "none",
+    "cpus": 1,
+    "memory_requested": "1G",
+    "user": "65534:65534"
+  },
+  "formal_invocation_cap": {
+    "construction": 1,
+    "candidate": 1,
+    "auditor": 1,
+    "retry_policy": "none"
+  },
+  "formal_invocations_completed_at_freeze": {
+    "construction": 0,
+    "candidate": 0,
+    "auditor": 0
+  }
+}

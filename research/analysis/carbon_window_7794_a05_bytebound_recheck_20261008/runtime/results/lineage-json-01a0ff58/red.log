@@ -1,0 +1,151 @@
+test_current_lineage_delegates_once (runtime.cli_v1.test_lineage_freshness.DirectLineageFreshnessTests.test_current_lineage_delegates_once) ... ok
+test_stale_binding_rejected_before_dispatch (runtime.cli_v1.test_lineage_freshness.DirectLineageFreshnessTests.test_stale_binding_rejected_before_dispatch) ... ok
+test_stale_observation_rejected_before_dispatch (runtime.cli_v1.test_lineage_freshness.DirectLineageFreshnessTests.test_stale_observation_rejected_before_dispatch) ... ok
+test_boolean_false_cannot_match_zero_coordinate (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_boolean_false_cannot_match_zero_coordinate) ... FAIL
+test_current_runtime_numbers_cannot_match_integer_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_current_runtime_numbers_cannot_match_integer_receipt) ... FAIL
+test_identical_json_with_different_key_order_delegates_once (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_identical_json_with_different_key_order_delegates_once) ... ok
+test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) ... 
+  test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) (field='observation_seq') ... FAIL
+  test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) (field='binding_revision') ... FAIL
+  test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) (field='x') ... FAIL
+  test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) (field='y') ... FAIL
+test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) ... 
+  test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) (field='point', value=[10.0, 20]) ... FAIL
+  test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) (field='point', value=[10, 20.0]) ... FAIL
+  test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) (field='observation_seq', value=7.0) ... FAIL
+  test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) (field='binding_revision', value=3.0) ... FAIL
+
+======================================================================
+FAIL: test_boolean_false_cannot_match_zero_coordinate (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_boolean_false_cannot_match_zero_coordinate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 66, in test_boolean_false_cannot_match_zero_coordinate
+    self.check_refusal(program, receipt, sidecar, 'SIDECAR_RECEIPT_MISMATCH')
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_current_runtime_numbers_cannot_match_integer_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_current_runtime_numbers_cannot_match_integer_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 58, in test_current_runtime_numbers_cannot_match_integer_receipt
+    self.check_refusal(program, receipt, sidecar, 'STALE_OBSERVATION', observation=7.0)
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) (field='observation_seq')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 54, in test_program_source_and_point_cannot_change_number_representation
+    self.check_refusal(program, receipt, sidecar, error)
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) (field='binding_revision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 54, in test_program_source_and_point_cannot_change_number_representation
+    self.check_refusal(program, receipt, sidecar, error)
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) (field='x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 54, in test_program_source_and_point_cannot_change_number_representation
+    self.check_refusal(program, receipt, sidecar, error)
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_program_source_and_point_cannot_change_number_representation (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_program_source_and_point_cannot_change_number_representation) (field='y')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 54, in test_program_source_and_point_cannot_change_number_representation
+    self.check_refusal(program, receipt, sidecar, error)
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) (field='point', value=[10.0, 20])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 42, in test_sidecar_number_representation_cannot_match_receipt
+    self.check_refusal(program, receipt, sidecar, 'SIDECAR_RECEIPT_MISMATCH')
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) (field='point', value=[10, 20.0])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 42, in test_sidecar_number_representation_cannot_match_receipt
+    self.check_refusal(program, receipt, sidecar, 'SIDECAR_RECEIPT_MISMATCH')
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) (field='observation_seq', value=7.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 42, in test_sidecar_number_representation_cannot_match_receipt
+    self.check_refusal(program, receipt, sidecar, 'SIDECAR_RECEIPT_MISMATCH')
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+======================================================================
+FAIL: test_sidecar_number_representation_cannot_match_receipt (runtime.cli_v1.test_lineage_json_identity.LineageJsonIdentityTests.test_sidecar_number_representation_cannot_match_receipt) (field='binding_revision', value=3.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 42, in test_sidecar_number_representation_cannot_match_receipt
+    self.check_refusal(program, receipt, sidecar, 'SIDECAR_RECEIPT_MISMATCH')
+  File "<workspace>\runtime\cli_v1\test_lineage_json_identity.py", line 29, in check_refusal
+    self.assertEqual(result['status'], 'lineage_rejected')
+AssertionError: 'delegated' != 'lineage_rejected'
+- delegated
++ lineage_rejected
+
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.003s
+
+FAILED (failures=10)

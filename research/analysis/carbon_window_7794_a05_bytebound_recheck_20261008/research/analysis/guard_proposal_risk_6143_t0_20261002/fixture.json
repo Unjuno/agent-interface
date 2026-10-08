@@ -1,0 +1,22 @@
+{
+  "schema": "guard-proposal-risk-fixture-v1",
+  "max_proposals_per_episode": 2,
+  "worlds": [
+    {"true_harmful": true, "weight": "3/4"},
+    {"true_harmful": false, "weight": "1/4"}
+  ],
+  "guard_confusion": {
+    "true_positive_reject": "3/4",
+    "false_positive_reject": "1/4"
+  },
+  "policies": {
+    "conservative_risky_probability": "1/4",
+    "compensated_risky_probability": "3/4",
+    "protective_risky_probability": "0"
+  },
+  "harm_materiality_margin": "1/10",
+  "work_cost": {
+    "per_proposal_model_work_units": "1",
+    "wall_time_claim": false
+  }
+}

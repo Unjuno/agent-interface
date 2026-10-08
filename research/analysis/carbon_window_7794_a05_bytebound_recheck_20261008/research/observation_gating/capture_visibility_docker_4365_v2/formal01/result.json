@@ -1,0 +1,1593 @@
+{
+  "allocation": "capture-visibility-docker-4365-20260927-02",
+  "allowed_capture_error_gate": true,
+  "assessor_clear": 4,
+  "assessor_unknown": 8,
+  "capture_attempts": 24,
+  "capture_errors": 0,
+  "conditions": [
+    "CLEAR",
+    "SIBLING_HALF",
+    "SIBLING_FULL",
+    "CHILD_HALF",
+    "CHILD_FULL",
+    "RESTORED"
+  ],
+  "image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+  "producer_gate_candidate": true,
+  "rows": [
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "CLEAR_PARENT_REGION_SCOPED",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 0
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/00_clear_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151487741314,
+          "capture_started_ns": 29151487559864,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/00_clear_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151497153553,
+          "capture_started_ns": 29151496944841,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 0,
+      "children": [],
+      "condition": "CLEAR",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":140",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 1,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 0,
+      "visibility_events": [
+        0
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/00_clear_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "UNKNOWN",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 1
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/01_sibling_half_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "a8ffdea8e40c1ff6dce4d1742d487dab35b5832b0b96499c57ee3b5abeefdac3",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151609815098,
+          "capture_started_ns": 29151609547679,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "a8ffdea8e40c1ff6dce4d1742d487dab35b5832b0b96499c57ee3b5abeefdac3",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/01_sibling_half_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "7a414f8af67809379761684f05b80030e0d262fb5067635371c1aaf64740954b",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151619241321,
+          "capture_started_ns": 29151618903687,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "7a414f8af67809379761684f05b80030e0d262fb5067635371c1aaf64740954b",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 1,
+      "children": [],
+      "condition": "SIBLING_HALF",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":141",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 1,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 1,
+      "visibility_events": [
+        0,
+        1
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/01_sibling_half_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "UNKNOWN",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 2
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/02_sibling_full_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "850a1df984d1e2fd24028ef52537d96bbe65fdb8a6f5704174ad170c3db9977c",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151733952506,
+          "capture_started_ns": 29151733746116,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "850a1df984d1e2fd24028ef52537d96bbe65fdb8a6f5704174ad170c3db9977c",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/02_sibling_full_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "5c9b37300155c1f3338bc88f17d69c51fb248b0de0155630962ca6504d789bba",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151742512678,
+          "capture_started_ns": 29151742324240,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "5c9b37300155c1f3338bc88f17d69c51fb248b0de0155630962ca6504d789bba",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 2,
+      "children": [],
+      "condition": "SIBLING_FULL",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":142",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 1,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 2,
+      "visibility_events": [
+        0,
+        2
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/02_sibling_full_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "UNKNOWN",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [
+          {
+            "class": 1,
+            "map_state": 2,
+            "rect": [
+              60,
+              0,
+              60,
+              80
+            ]
+          }
+        ],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 0
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/03_child_half_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "9be4e9af85b8ac44b3a02429c79d9ca2f30d8d9240dbe7a87584199efae333c6",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151863145437,
+          "capture_started_ns": 29151862983913,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "9be4e9af85b8ac44b3a02429c79d9ca2f30d8d9240dbe7a87584199efae333c6",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/03_child_half_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "9be4e9af85b8ac44b3a02429c79d9ca2f30d8d9240dbe7a87584199efae333c6",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151869360026,
+          "capture_started_ns": 29151869132009,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "9be4e9af85b8ac44b3a02429c79d9ca2f30d8d9240dbe7a87584199efae333c6",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 3,
+      "children": [
+        {
+          "class": 1,
+          "map_state": 2,
+          "rect": [
+            60,
+            0,
+            60,
+            80
+          ],
+          "xid": 2097153
+        }
+      ],
+      "condition": "CHILD_HALF",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":143",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 1,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 0,
+      "visibility_events": [
+        0
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/03_child_half_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "UNKNOWN",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [
+          {
+            "class": 1,
+            "map_state": 2,
+            "rect": [
+              0,
+              0,
+              120,
+              80
+            ]
+          }
+        ],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 0
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/04_child_full_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "93ee2a8532d6bab8c079f45b9941ff584f3b44b53ae4b0446fe54c1fb7139b6c",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151977065215,
+          "capture_started_ns": 29151976935626,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "93ee2a8532d6bab8c079f45b9941ff584f3b44b53ae4b0446fe54c1fb7139b6c",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/04_child_full_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "93ee2a8532d6bab8c079f45b9941ff584f3b44b53ae4b0446fe54c1fb7139b6c",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29151983158623,
+          "capture_started_ns": 29151982611366,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "93ee2a8532d6bab8c079f45b9941ff584f3b44b53ae4b0446fe54c1fb7139b6c",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 4,
+      "children": [
+        {
+          "class": 1,
+          "map_state": 2,
+          "rect": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "xid": 2097153
+        }
+      ],
+      "condition": "CHILD_FULL",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":144",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 1,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 0,
+      "visibility_events": [
+        0
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/04_child_full_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "CLEAR_PARENT_REGION_SCOPED",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [
+          {
+            "class": 1,
+            "map_state": 0,
+            "rect": [
+              0,
+              0,
+              120,
+              80
+            ]
+          }
+        ],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 0
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/05_restored_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152093717853,
+          "capture_started_ns": 29152093567939,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/05_restored_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152102260185,
+          "capture_started_ns": 29152102048937,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 5,
+      "children": [
+        {
+          "class": 1,
+          "map_state": 0,
+          "rect": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "xid": 2097153
+        }
+      ],
+      "condition": "RESTORED",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":145",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 1,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 0,
+      "visibility_events": [
+        0
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/05_restored_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "CLEAR_PARENT_REGION_SCOPED",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 0
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/06_clear_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152215599900,
+          "capture_started_ns": 29152215115239,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/06_clear_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152226454002,
+          "capture_started_ns": 29152226268136,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 6,
+      "children": [],
+      "condition": "CLEAR",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":146",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 2,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 0,
+      "visibility_events": [
+        0
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/06_clear_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "UNKNOWN",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 1
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/07_sibling_half_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "a8ffdea8e40c1ff6dce4d1742d487dab35b5832b0b96499c57ee3b5abeefdac3",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152333587796,
+          "capture_started_ns": 29152333419173,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "a8ffdea8e40c1ff6dce4d1742d487dab35b5832b0b96499c57ee3b5abeefdac3",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/07_sibling_half_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "7a414f8af67809379761684f05b80030e0d262fb5067635371c1aaf64740954b",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152337904328,
+          "capture_started_ns": 29152337722428,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "7a414f8af67809379761684f05b80030e0d262fb5067635371c1aaf64740954b",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 7,
+      "children": [],
+      "condition": "SIBLING_HALF",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":147",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 2,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 1,
+      "visibility_events": [
+        0,
+        1
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/07_sibling_half_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "UNKNOWN",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 2
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/08_sibling_full_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "850a1df984d1e2fd24028ef52537d96bbe65fdb8a6f5704174ad170c3db9977c",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152448373116,
+          "capture_started_ns": 29152448168651,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "850a1df984d1e2fd24028ef52537d96bbe65fdb8a6f5704174ad170c3db9977c",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/08_sibling_full_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "5c9b37300155c1f3338bc88f17d69c51fb248b0de0155630962ca6504d789bba",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152454777334,
+          "capture_started_ns": 29152454597241,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "5c9b37300155c1f3338bc88f17d69c51fb248b0de0155630962ca6504d789bba",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 8,
+      "children": [],
+      "condition": "SIBLING_FULL",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":148",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 2,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 2,
+      "visibility_events": [
+        0,
+        2
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/08_sibling_full_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "UNKNOWN",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [
+          {
+            "class": 1,
+            "map_state": 2,
+            "rect": [
+              60,
+              0,
+              60,
+              80
+            ]
+          }
+        ],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 0
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/09_child_half_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "9be4e9af85b8ac44b3a02429c79d9ca2f30d8d9240dbe7a87584199efae333c6",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152561787862,
+          "capture_started_ns": 29152561657178,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "9be4e9af85b8ac44b3a02429c79d9ca2f30d8d9240dbe7a87584199efae333c6",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/09_child_half_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "9be4e9af85b8ac44b3a02429c79d9ca2f30d8d9240dbe7a87584199efae333c6",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152567444091,
+          "capture_started_ns": 29152567236918,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "9be4e9af85b8ac44b3a02429c79d9ca2f30d8d9240dbe7a87584199efae333c6",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 9,
+      "children": [
+        {
+          "class": 1,
+          "map_state": 2,
+          "rect": [
+            60,
+            0,
+            60,
+            80
+          ],
+          "xid": 2097153
+        }
+      ],
+      "condition": "CHILD_HALF",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":149",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 2,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 0,
+      "visibility_events": [
+        0
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/09_child_half_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "UNKNOWN",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [
+          {
+            "class": 1,
+            "map_state": 2,
+            "rect": [
+              0,
+              0,
+              120,
+              80
+            ]
+          }
+        ],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 0
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/10_child_full_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "93ee2a8532d6bab8c079f45b9941ff584f3b44b53ae4b0446fe54c1fb7139b6c",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152680714814,
+          "capture_started_ns": 29152680575376,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "93ee2a8532d6bab8c079f45b9941ff584f3b44b53ae4b0446fe54c1fb7139b6c",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/10_child_full_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "93ee2a8532d6bab8c079f45b9941ff584f3b44b53ae4b0446fe54c1fb7139b6c",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152686323810,
+          "capture_started_ns": 29152686194811,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "93ee2a8532d6bab8c079f45b9941ff584f3b44b53ae4b0446fe54c1fb7139b6c",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 10,
+      "children": [
+        {
+          "class": 1,
+          "map_state": 2,
+          "rect": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "xid": 2097153
+        }
+      ],
+      "condition": "CHILD_FULL",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":150",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 2,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 0,
+      "visibility_events": [
+        0
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/10_child_full_xvfb.log"
+    },
+    {
+      "allocation": "capture-visibility-docker-4365-20260927-02",
+      "assessment": {
+        "input_authority": false,
+        "status": "CLEAR_PARENT_REGION_SCOPED",
+        "task_success": null
+      },
+      "assessment_input": {
+        "children": [
+          {
+            "class": 1,
+            "map_state": 0,
+            "rect": [
+              0,
+              0,
+              120,
+              80
+            ]
+          }
+        ],
+        "coverage_complete": true,
+        "map_state": 2,
+        "region": [
+          0,
+          0,
+          120,
+          80
+        ],
+        "visibility": 0
+      },
+      "attempted": true,
+      "captures": [
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/11_restored_screen_physical_px.raw",
+            "scanline_pad": 32,
+            "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152797026814,
+          "capture_started_ns": 29152796833397,
+          "frame": "screen_physical_px",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            43,
+            57,
+            120,
+            80
+          ],
+          "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        },
+        {
+          "artifact": {
+            "bits_per_pixel": 32,
+            "byte_order": 0,
+            "bytes": 38400,
+            "depth": 24,
+            "masks": [
+              16711680,
+              65280,
+              255
+            ],
+            "path": "raw/11_restored_window_client.raw",
+            "scanline_pad": 32,
+            "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+            "true_color": true
+          },
+          "bytes": 38400,
+          "capture_ended_ns": 29152801547020,
+          "capture_started_ns": 29152801386695,
+          "frame": "window_client",
+          "height": 80,
+          "native_window_id": 2097152,
+          "region": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "sha256": "521c39d6d0a330a908c62f23cd93d99403034bfea7cfa2777379d55bbeb10a88",
+          "status": "CAPTURED",
+          "target": "target",
+          "width": 120
+        }
+      ],
+      "case_index": 11,
+      "children": [
+        {
+          "class": 1,
+          "map_state": 0,
+          "rect": [
+            0,
+            0,
+            120,
+            80
+          ],
+          "xid": 2097153
+        }
+      ],
+      "condition": "RESTORED",
+      "container_expected_image_id": "sha256:acf83a1dfafd43c44d81e2f28f85fc844fa43dc73f36b689a862dd924f9235d0",
+      "coverage_complete": true,
+      "display": ":151",
+      "map_state": 2,
+      "parent_geometry": [
+        43,
+        57,
+        120,
+        80
+      ],
+      "parent_xid": 2097152,
+      "replicate": 2,
+      "screen_geometry": [
+        640,
+        480
+      ],
+      "server_alive_before_cleanup": true,
+      "status": "COMPLETE",
+      "visibility": 0,
+      "visibility_events": [
+        0
+      ],
+      "x_socket_absent_after_cleanup": true,
+      "xauth_exit": 0,
+      "xauthority_removed_after_cleanup": true,
+      "xvfb_exit_code": 0,
+      "xvfb_log_path": "logs/11_restored_xvfb.log"
+    }
+  ],
+  "schema": "capture-visibility-docker-4835-result-v1",
+  "sessions_complete": 12,
+  "sessions_total": 12
+}

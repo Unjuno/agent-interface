@@ -1,0 +1,52 @@
+{
+  "allocation": "belief-external-transition-5368-t0-hostcpu-20261003-a01",
+  "issue": 5368,
+  "frozen_base_main": "3729d6825e67b7276b58d40ef6c125e4a3b441bf",
+  "frozen_source_commit": "537e673240169a0703aaad273ae7ac37949e8766",
+  "commands": [
+    {"command": "python -B runner.py", "invocations": 1, "exit_code": 0, "stdout": "empty"},
+    {"command": "python -B audit.py", "invocations": 1, "exit_code": 0, "stdout": "empty"}
+  ],
+  "execution": {
+    "host": "Microsoft Windows 11 Home build 26200",
+    "python": "3.12.10",
+    "scope": "host CPU; standard library; 9 finite cases",
+    "wslc": "not invoked; #5085 coordination hold remains; container idleness is not allocation",
+    "docker_desktop_cli": "unavailable in this shell",
+    "gpu": "not used",
+    "network_isolation": "not enforced at OS level; source runner and auditor perform local file I/O only; GitHub network was used for checkout before freeze",
+    "model_gui_input_or_effect": "not used",
+    "preflight_free_physical_memory_gb": 1.49,
+    "wslc_cached_image_inspected_not_run": "python@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f"
+  },
+  "construction": {"command": "python -B -m unittest -v test_construction.py", "runs": ["6/6 PASS; 0.010 s", "6/6 PASS; 0.006 s"], "candidate_or_auditor_invoked": false},
+  "audit": {
+    "status": "PASS_METHOD_SCOPED",
+    "rows_expected": 9,
+    "rows_received": 9,
+    "candidate_admissions": 2,
+    "unsafe_admissions": 0,
+    "sticky_false_admissions": 7,
+    "age_safe_control_refusals": 2,
+    "admitted_safe_controls": 2,
+    "mutation_controls_detected": "4/4",
+    "errors": [],
+    "authority_or_effect_emitted": false
+  },
+  "source_sha256": {
+    "README.md": "2607381d6f2b97e83bb5ea141c5a244510501ea39fa1e7d6b14d5e2024120002",
+    "CONSTRUCTION.md": "f1b5ba3eb156b36367b04e556b3b9884d5fda757f6835d154695085267add751",
+    "fixture.json": "cbdcf96771291e4889fbb1d8b4777f0210ddc9f64457ee48e5fec31aeb8b2420",
+    "candidate.py": "51646ed62c3eb47c7bb38b8023ebe1fcc3cdf809002e09ee201427bfe6364a4b",
+    "runner.py": "72b9424e267514cf2f1e4f6fbe91a0b73e92dca8af694bd22c813c1006c22aea",
+    "audit.py": "eede51ff282657cea78569d70cbf2f1efa29f0add6500ab046b15b289aa7c77d",
+    "test_construction.py": "dce85512ef252285feb3cc7ac431ef234518e6129e0d65b4c059667f09dc7262",
+    "FREEZE.json": "976861f142e7af1f497421879c7c7c61c4e9f94747c674de9ae634924982b901"
+  },
+  "raw_sha256": {
+    "formal_raw.jsonl": "6030a0b9e2e1607a824cc1815e4e92a4c4047715aeaa4fcbe11cb0de3a15d532",
+    "sticky_baseline.jsonl": "1307417697b3e20e7b49be1872f08fe75943feaf00253a796b5d1805ae8eba07",
+    "age_baseline.jsonl": "5f39a2e4a914c8e6a65f177fbc20f857285d0bbfbae0c730820223548ee75716",
+    "audit.json": "86fd66f63b012b7eed8387d0ef7f4e8c5406215a612d45d9817b74f875c43be6"
+  }
+}

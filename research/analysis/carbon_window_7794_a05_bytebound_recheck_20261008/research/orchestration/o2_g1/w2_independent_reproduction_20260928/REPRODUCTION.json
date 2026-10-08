@@ -1,0 +1,56 @@
+{
+  "schema": "o2-g1-w2-independent-reproduction-v1",
+  "scope": "source-only synthetic contract reproduction; not runtime/game efficacy",
+  "source_commit": "2b4891d99e3b938d1595d75ec978eb2e4ce6f5bf",
+  "source_directory": "research/orchestration/o2_g1/w2_measurement_v2_20260927",
+  "container": {
+    "context": "desktop-linux",
+    "engine": "28.5.1",
+    "requested_image": "python:3.12-slim-bookworm",
+    "local_image": "python:3.12-slim",
+    "local_image_id": "sha256:2f17fc044b579bab302c2e8054d3a686e2cb9a83de48e70534b94cd8ebbe06a9",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "source_mount": "read-only",
+    "output_mount": "writable",
+    "limits": {
+      "cpus": 1,
+      "memory": "512m",
+      "pids": 32
+    },
+    "command": "sh /src/run_validation.sh",
+    "note": "Requested historical tag absent locally; did not pull. Local cached image digest matched frozen source record."
+  },
+  "input_sha256": {
+    "trace-cases.json": "6a693f06b1b4be15a8da35ec3aaf806d7fb3601091c8ef638c516069d1b4e95f",
+    "verify_contract.py": "6bf7c2c2fc4b221a51ddd8a615777ddf11617c4ece4a03465e3bbbbf3b724c35",
+    "audit_contract.py": "f00677e91ceb3a67bddff0d941e076649c8da759f422c3a193725b2e897eacb7",
+    "run_validation.sh": "1555551996d041ae067f356717b06b9eb5b961fe4f5802f7a04f76101465142a",
+    "event-schema.json": "3ca91926d9e362e02dd0272a03b67e2d65b46199bcfb1bb8f55c29cfe92f6d76"
+  },
+  "verification_sha256": "e38e1c028cab44eb691f574c803155c998336bf4d164d362a9775658c4188e18",
+  "audit_sha256": "f3e5bbc9a934212a42dc7c933a2b66067e69c0708f56fdb3f3c242539f8a44be",
+  "outcome": {
+    "verification": "PASS_MEASUREMENT_CONTRACT_CONSTRUCTION_SCOPED",
+    "cases": "8/8",
+    "audit": "PASS_RAW_TRACE_AUDIT_SCOPED",
+    "numeric_reconstructions": 5,
+    "mutation_controls_rejected": "7/7",
+    "mismatches": 0,
+    "overlap_union_ns": 58,
+    "naive_overlapping_sum_ns": 76
+  },
+  "limits": [
+    "synthetic traces only",
+    "no external JSON Schema meta-validator",
+    "no live/game/model/input effect",
+    "no recovery efficacy"
+  ],
+  "failed_attempt": {
+    "stage": "initial image invocation",
+    "network": "disabled; no pull attempted",
+    "cause": "python:3.12-slim-bookworm tag was not cached locally",
+    "resolution": "used cached python:3.12-slim after confirming its image digest equals the digest frozen in RUN_RECORD.json"
+  }
+}
+

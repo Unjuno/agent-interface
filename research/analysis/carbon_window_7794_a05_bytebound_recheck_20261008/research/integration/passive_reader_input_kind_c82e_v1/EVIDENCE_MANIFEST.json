@@ -1,0 +1,91 @@
+{
+  "allocation": "input-kind-c82e-20260922-01",
+  "construction-01/RAW.json": {
+    "gzip_bytes": 3158,
+    "gzip_git_blob": "ec3d5b94d5cdba54ab3d546be8320aca361810af",
+    "gzip_sha256": "eb4a64b748f9a0c568f0f8aac3978b107d04ab8df933a16f6a8e4d2802f40ee4",
+    "parts": [
+      {
+        "bytes": 1500,
+        "git_blob": "ebbb2e7d974334e7bc6d239d692be7ad6a496bb4",
+        "path": "evidence/construction.gz.part00",
+        "sha256": "750f4924a25edf23ff860ab667100d168584f6cc5cc2f71e2a2872357049034e"
+      },
+      {
+        "bytes": 1500,
+        "git_blob": "22b457c45510762446eb31a06f896f46004b5c3d",
+        "path": "evidence/construction.gz.part01",
+        "sha256": "bd861755e8d5b402feaea43f43b9b5bf623ab2037a923cffa4ee417762e0431e"
+      },
+      {
+        "bytes": 158,
+        "git_blob": "34fe247f6c62fd6585b6d2cc68b4d18e3ca807a6",
+        "path": "evidence/construction.gz.part02",
+        "sha256": "fc5311cd8bc38c8d6d8e2d19022cfab186cd0fcbfe3523e36b35d06d630274c9"
+      }
+    ],
+    "raw_bytes": 29840,
+    "raw_sha256": "e3977c6ff53ade51e1c8906588d994fbce7198f1d39b4c73f696a7de621642cf"
+  },
+  "formal-01/RAW.json": {
+    "gzip_bytes": 6063,
+    "gzip_git_blob": "d8ccdc987b49680c490c9fa0ae10bec5eb84b4e2",
+    "gzip_sha256": "8b69da42015d3f656d7f56fbcf61807181adb34839076e8b73344c8c52ab40f4",
+    "parts": [
+      {
+        "bytes": 1500,
+        "git_blob": "def83e12e5824456bfc7263df9b3af19802b1ad4",
+        "path": "evidence/formal.gz.part00",
+        "sha256": "a0f09744090c3efe9c7aa510b90889cecb2e245b12c45d449f8375636636452f"
+      },
+      {
+        "bytes": 1500,
+        "git_blob": "2d5639ec8d3c8b1d41afa0c18a5c866df2cede0f",
+        "path": "evidence/formal.gz.part01",
+        "sha256": "e3b54d70b7c3c98e358739e3f484e726378ee9ee19cc9bacfa79a021fc222054"
+      },
+      {
+        "bytes": 1500,
+        "git_blob": "f980040272c032ea63732eef017e0746f264a5d7",
+        "path": "evidence/formal.gz.part02",
+        "sha256": "aeaf9004f3526d0932def5368d48c183d5e02707a07961fbcfe55e910b56f087"
+      },
+      {
+        "bytes": 1500,
+        "git_blob": "3c95a8357e69e03435e72e1652ed169e87076f62",
+        "path": "evidence/formal.gz.part03",
+        "sha256": "6b5902629425c4c801d5f9ee1930b2f979f31a10873b0f92a78b02bea917fbd6"
+      },
+      {
+        "bytes": 63,
+        "git_blob": "1954122d6d0cb173ca810d054a972f799f5917bc",
+        "path": "evidence/formal.gz.part04",
+        "sha256": "302330d29cfce9f3048affd30c129ce3ce3e335442f44ffe318b041ec1966c06"
+      }
+    ],
+    "raw_bytes": 89269,
+    "raw_sha256": "b9e512737490b97097442bb1aec40f51dacb16c25358f6c2720a110090cdae34"
+  },
+  "transport_failures": [
+    {
+      "disposition": "REJECTED_HASH_MISMATCH; never attached to tree/branch; experiment not rerun",
+      "expected_whole_formal_gzip_blob": "d8ccdc987b49680c490c9fa0ae10bec5eb84b4e2",
+      "operation": "unreferenced create_blob attempt",
+      "returned_blob": "cae99aa46b00e1ba641ee5f17882c10b1bcc14f3"
+    },
+    {
+      "disposition": "REJECTED_HASH_MISMATCH; never attached to tree/branch; exact local part resent and matched; experiment not rerun",
+      "expected_blob": "3c95a8357e69e03435e72e1652ed169e87076f62",
+      "operation": "unreferenced create_blob attempt",
+      "part": "formal.gz.part03",
+      "returned_blob": "269f86f1df3891f85bd270ef0d85e8a9f5b5bf7e"
+    },
+    {
+      "disposition": "REJECTED_HASH_MISMATCH; never attached to tree/branch; exact local part resent and matched; experiment not rerun",
+      "expected_blob": "ebbb2e7d974334e7bc6d239d692be7ad6a496bb4",
+      "operation": "unreferenced create_blob attempt",
+      "part": "construction.gz.part00",
+      "returned_blob": "fe7c0acfd15b6b3270dbd99fbd3db0599e4bafc6"
+    }
+  ]
+}

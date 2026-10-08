@@ -1,0 +1,22 @@
+{
+  "schema":"issue59-x11-callback-effect-freeze-v1",
+  "allocation_id":"ISSUE59-X11-CALLBACK-EFFECT-T2-20261002-01",
+  "issue":59,
+  "main_sha":"8d9b496dd23b72bf73ca06756e23c329f5489735",
+  "candidate_sha256":"b0073439f5bd297fd9cbcd2a54eb3a56438b0e3bfdffea308f769f11e9c9f3e6",
+  "fixture_sha256":"9a9e1db545bd0ce349ffaf0d9a9228eaa9ad4e8417f714bb362c2d1fa10187fe",
+  "auditor_sha256":"0bce81ed83683e6703adf7029ab13ed88bbcf323bc10e06e5af8eab62d452ef7",
+  "plan_sha256":"f2ccbdd1b21b5970fc13297f77c1c538b93578f82b5de5b1d4629487b2e27022",
+  "test_sha256":"a2febca8763c42331e60340e4fbe288904fe18849f9bd79521764f4865966084",
+  "image":"map01-attack-onset-phase-a2:20260927-r2",
+  "image_digest":"sha256:fc3022d265f465748e0a39491e28f8447d0066266e00d2a8a9144e866bf148ed6",
+  "platform":"linux/amd64 (OrbStack on arm64 host; emulated)",
+  "limits":{"network":"none","cpus":1,"memory_mib":768,"pids_limit":96,"root_filesystem":"read-only","tmpfs":"/tmp:rw,noexec,nosuid,size=96m","security_opt":"no-new-privileges"},
+  "candidate_invocations":1,
+  "independent_auditor_invocations":1,
+  "retries":0,
+  "pass_gate":"A positive control produces at least two callback increments; A gets the transfer initiating press; while B is focused and global W remains down, each B W KeyPress links to one unique counter increment with before/after +1, B focus, and 32-byte keymap W-down evidence.",
+  "fail_gate":"Well-formed positive control but no B callback effect during the held transfer interval.",
+  "stop_gate":"Missing positive control, bad source/image identity, missing event/effect linkage, audit error, or incomplete Xvfb cleanup.",
+  "scope":"synthetic private Xvfb/XTEST client counter only; no actual app, game, MAP01, safety or efficacy claim"
+}

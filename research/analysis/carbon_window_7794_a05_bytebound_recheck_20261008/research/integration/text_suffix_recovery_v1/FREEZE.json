@@ -1,0 +1,27 @@
+{
+  "allocation": "text-suffix-recovery-20260922-01",
+  "base_main": "e4c2e58122aa138e421048d8e86ec18259143b9e",
+  "batch_count": 2,
+  "case_count": 48,
+  "cases_per_batch": 24,
+  "commands": [
+    "python -B source/supervise.py --batch 0",
+    "python -B source/supervise.py --batch 1"
+  ],
+  "created_utc": "2026-09-21T22:17:05Z",
+  "issue": 4040,
+  "source_upstream_git_blob": "9cae101a219348077668c8fc086acf8e13154afe",
+  "sources": {
+    "ENVIRONMENT.json": "04640814e6f8b0f12be43d99048542e0cb632bedff38ca4146b6e49fd1ba93bf",
+    "PLAN.md": "7de7714b9a94845ed173c0a9ec6f77e33df63839045eb45d5ca9fdb2601606d8",
+    "source/audit.py": "32d9be307bf72e4cbaf1b763c4098fef269703a564690841a73637fdd6dfd2cf",
+    "source/backend_slice.py": "569fe8b1a928e51f1c8e64247abc4308b6d6ecaccb414f0163ba01f8e5520f59",
+    "source/extract_backend.py": "3dde69495b576da1f505a9ad4fcd5046dc396bcab98972caea9e5d8d4ed8d0c7",
+    "source/fixture.py": "4de9a95de07d0be7416d8a06380d8b90dc3a561650cee84f8e825f41c541a045",
+    "source/policy.py": "12f0609183b8e77e07d10d6c7b4869bcacda2fbcfa97f629b74699c60feb4889",
+    "source/run_batch.py": "630a9d782703e4b83ffdbda2a3fbc6aa2858b19d7dcd8a42c7d98c7c085f4db4",
+    "source/supervise.py": "6f88c03545a90611a8828930581f58fd26d4dca8cfaf821d62eb2ee7c60e675c",
+    "source/test_policy.py": "50bad0e12605434be5a66f70687bc459c70d0a40228ebfa65124fbed72903579",
+    "source/upstream_backend.py": "3429a422e61ecb8b1f1f278540d0696842d8197d7967803e01bc8d9453bcb4a8"
+  }
+}

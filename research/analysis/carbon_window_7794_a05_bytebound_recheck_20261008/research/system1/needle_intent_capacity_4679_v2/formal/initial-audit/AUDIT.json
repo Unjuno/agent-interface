@@ -1,0 +1,50 @@
+{
+  "controls_valid": false,
+  "corruption_controls": {
+    "architecture": true,
+    "heldout_label": true,
+    "heldout_state": true,
+    "invalid_intent": true,
+    "model_weight": true,
+    "prediction": true,
+    "schema": true,
+    "seed": true,
+    "train_label": true,
+    "train_state": true
+  },
+  "corruption_controls_rejected": 10,
+  "decision": "STOP_AUDIT_INTEGRITY",
+  "errors": [
+    "4153201:allocation",
+    "4153203:allocation",
+    "4153207:allocation",
+    "negative_control_or_teacher_discriminator"
+  ],
+  "narrow_core_fail_seed_count": 3,
+  "narrow_pass_all_seeds": true,
+  "schema": "needle-intent-capacity.audit.v1",
+  "seeds": [
+    {
+      "arms": {},
+      "errors": [
+        "allocation"
+      ],
+      "seed": 4153201
+    },
+    {
+      "arms": {},
+      "errors": [
+        "allocation"
+      ],
+      "seed": 4153203
+    },
+    {
+      "arms": {},
+      "errors": [
+        "allocation"
+      ],
+      "seed": 4153207
+    }
+  ],
+  "wide_pass_all_seeds": true
+}

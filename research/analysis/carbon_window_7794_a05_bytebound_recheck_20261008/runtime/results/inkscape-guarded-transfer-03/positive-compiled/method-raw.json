@@ -1,0 +1,101 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "inkscape-guarded-transfer",
+  "method": "move-check-save",
+  "method_version": "1",
+  "session_scope": "native-x11:e401aaf4e8b144e2a698d0e05cdd424e",
+  "outcome": "SAFE_YIELD",
+  "reason": "effect_failed",
+  "completed_transitions": 1,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 25650937220975,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "c8c768c802c0f14c12f9f2b5ba9da915a3bd2ea91c9e4d5cbc5142c6d7bf58e6",
+      "predicates": {
+        "context_present": true,
+        "initial_shape": true,
+        "moved_shape": false,
+        "clean_title": true
+      }
+    },
+    {
+      "sequence": 5,
+      "captured_ns": 25651132123706,
+      "evidence_ref": "observation-5",
+      "evidence_digest": "5fbe6f2878adf5061306f65bfb31ce6ad6fddedbfa77857ca1561214d60ffda1",
+      "predicates": {
+        "context_present": true,
+        "initial_shape": true,
+        "moved_shape": false,
+        "clean_title": true
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "initial",
+      "to_state": "moved",
+      "action": "move",
+      "matched_conditions": {
+        "context_present": true,
+        "initial_shape": true,
+        "clean_title": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "observation-2",
+      "action_id": "action-d914bea88c91409aa25e8b190f8cc752",
+      "effect_ref": "compiled-6a17268e497b4695856e5b8b09383409-7-execution",
+      "release_verified": true
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "initial",
+      "outcome": "action",
+      "action": "move",
+      "matched_conditions": {
+        "context_present": true,
+        "initial_shape": true,
+        "clean_title": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "move",
+      "status": "completed",
+      "action_id": "action-d914bea88c91409aa25e8b190f8cc752",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "move",
+      "status": "failed",
+      "evidence_ref": "observation-5",
+      "verifier": "compiled_predicate_condition"
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "effect_failed",
+      "completed_transitions": 1
+    }
+  ],
+  "latest_evidence_ref": "observation-5",
+  "pending_effect": {
+    "action": "move",
+    "expected_effect": {
+      "moved_shape": true
+    },
+    "effect_ref": "compiled-6a17268e497b4695856e5b8b09383409-7-execution"
+  },
+  "started_ns": 25650936652265,
+  "ended_ns": 25651157467472,
+  "elapsed_ns": 220815207,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

@@ -1,0 +1,21 @@
+{
+  "allocation": "SAFETY-BACKPRESSURE-ENDOGENOUS-DEMAND-5372-T1-20261001-02",
+  "predecessor_allocation": "SAFETY-BACKPRESSURE-ENDOGENOUS-DEMAND-5372-T1-20261001-01",
+  "predecessor_disposition": "STOP_HARNESS_IMAGE_IDENTITY_STRING_MISMATCH; candidate never started; no retry",
+  "predecessor_run": "https://github.com/Unjuno/agent-interface/actions/runs/36816862155",
+  "intake_main": "f3bf21e7d0191455596c89bd14609155407848ad",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/5372",
+  "matrix_cells": 16,
+  "container_image": "python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f",
+  "candidate_command": "python -B /candidate.py /simulate_original.py",
+  "auditor_command": "python -B /audit.py /input/candidate.jsonl /audit_original.py",
+  "network": "disabled",
+  "root_filesystem": "read-only",
+  "resources": {"cpus": 1, "memory_mib": 256, "pids": 64},
+  "candidate_runs": 1,
+  "auditor_runs": 1,
+  "formal_retry_policy": "none",
+  "arm": "ubuntu-24.04-arm",
+  "canonical_digest_comparison": "compare RepoDigest suffix after @ to pinned SHA-256 only",
+  "frozen_config_sha256": "72ce67e2df0ea60de401b460cec051b2bf9a6848464cf91b0dd58791322ace66"
+}

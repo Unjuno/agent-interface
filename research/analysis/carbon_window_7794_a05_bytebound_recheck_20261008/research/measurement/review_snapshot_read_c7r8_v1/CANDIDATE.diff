@@ -1,0 +1,69 @@
+--- receipt_image.py
++++ snapshot_image.py
+@@ -6,7 +6,7 @@
+ from pathlib import Path
+ 
+ 
+-def select_image(batch,run_directory):
++def select_image_bytes(batch,run_directory):
+     root=Path(run_directory).resolve(strict=True)
+     if not isinstance(batch,dict) or not isinstance(batch.get('records'),list):raise ValueError('record batch required')
+     candidates=[]
+@@ -18,7 +18,7 @@
+         if obs is None:continue
+         if not isinstance(obs,dict) or type(obs.get('sequence'))is not int or obs['sequence']<1:raise ValueError('invalid observation sequence')
+         candidates.append(obs)
+-    if not candidates:return dict(status='no_observation',authority='none')
++    if not candidates:return dict(status='no_observation',authority='none'), None
+     newest=max(obs['sequence'] for obs in candidates)
+     selected=[obs for obs in candidates if obs['sequence']==newest]
+     references=[]
+@@ -33,5 +33,6 @@
+         references.append((path,obs['capture_ns']))
+     if len(set(references))!=1:raise ValueError('conflicting newest observation references')
+     path,captured=references[0]
+-    return dict(status='image',sequence=newest,capture_ns=captured,path=str(path),relative_path=str(path.relative_to(root)),
+-                sha256=hashlib.sha256(path.read_bytes()).hexdigest(),authority='none',freshness='historical referenced capture; no new observation')
++    payload = path.read_bytes()
++    return (dict(status='image',sequence=newest,capture_ns=captured,path=str(path),relative_path=str(path.relative_to(root)),
++                sha256=hashlib.sha256(payload).hexdigest(),authority='none',freshness='historical referenced capture; no new observation'), payload)
+
+--- review.py
++++ snapshot_review.py
+@@ -5,7 +5,7 @@
+ from pathlib import Path
+ 
+ from .receipt import receipt_view, receipt_bytes
+-from .receipt_image import select_image
++from .snapshot_image import select_image_bytes
+ 
+ 
+ def review(report_path, run_directory, *, compact=False, report_refs=False):
+@@ -184,7 +184,7 @@
+                 raise ValueError('runtime capture identity mismatch')
+             # Public captures do not carry an exchange sequence.
+             # Use a local singleton selector index; never expose it as sequence.
+-            selected = select_image({'records': [{'event': 'observation',
++            selected, image_bytes = select_image_bytes({'records': [{'event': 'observation',
+                 'sequence': 1, 'capture_ns': native.get('capture_started_ns'),
+                 'image': artifact.get('path')}]}, run_directory)
+             selected.pop('sequence')
+@@ -197,7 +197,7 @@
+             if selected['sha256'] != artifact.get('sha256'):
+                 raise ValueError('runtime image sha256 mismatch')
+         else:
+-            selected = select_image(report, run_directory)
++            selected, image_bytes = select_image_bytes(report, run_directory)
+         if selected['status'] != 'image':
+             result['image_status'] = 'no_observation'
+             return result
+@@ -206,9 +206,6 @@
+             for field in ('sequence', 'capture_ns', 'path', 'sha256'):
+                 if recorded.get(field) != selected.get(field):
+                     raise ValueError('report image identity mismatch: ' + field)
+-        image_bytes = Path(selected['path']).read_bytes()
+-        if hashlib.sha256(image_bytes).hexdigest() != selected['sha256']:
+-            raise ValueError('image changed during review')
+         if not image_bytes.startswith(b'\x89PNG\r\n\x1a\n'):
+             raise ValueError('referenced file is not a PNG')
+         result['image'] = {'type': 'image', 'mimeType': 'image/png',

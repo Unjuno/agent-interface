@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "all_attempts_authority_neutral": true,
+    "case_set_exact": true,
+    "every_mandatory_row_has_omission_control": true,
+    "frozen_ontology_encodes_risk_escalation": false,
+    "high_consequence_proxy_rejects_missing_effect_safeguards": true,
+    "independent_attempt_decisions_match": true,
+    "input_hashes_match": true,
+    "required_policy_matches_frozen_oracle": true
+  },
+  "counts": {
+    "attempts": 51,
+    "cases": 10,
+    "error_kinds": {
+      "changed-mandatory-contract": 5,
+      "deadline-infeasible": 1,
+      "extra-nonoptional": 1,
+      "missing-mandatory": 32
+    },
+    "independently_accepted": 12,
+    "independently_rejected": 39,
+    "omission_controls": 31
+  },
+  "disposition": "FAIL_AUDIT_DISAGREEMENT",
+  "parent_formal_sha256": "a1c9f38ffeea5a8bbd700fa59a1482330bf685d4b8e696f1199e95d53e053b30",
+  "parent_oracle_sha256": "1aabc735af4d1feb00771f55e5d029a3f9b8c917a628ab8ce86ae1c10c9277a0",
+  "raw_sha256": "78d6cdd142191a05b70c09e78cdace80a8413613737bba58a6f8311cb96dd2b5",
+  "schema": "verification_coverage_5269_audit.v1"
+}

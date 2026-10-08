@@ -1,0 +1,22 @@
+{
+  "decision": "HOLD_KERNEL_LIFECYCLE_EVIDENCE_INCOMPLETE",
+  "native": {
+    "status": "STOP_KERNEL_LIFECYCLE_INFRASTRUCTURE",
+    "reason": "Xvfb executable unavailable on macOS host before matrix start",
+    "matrix_started": false
+  },
+  "container": {
+    "status": "completed",
+    "image": "agent-interface-2994:20260920",
+    "image_digest": "sha256:167fd6184cac8729ccfea407938943384d64fe2999e7319bed3587638fa94b7c",
+    "network": "none",
+    "cases": ["useful","unavailable","guarded","no_effect","partial","stale_repair","ambiguous","cleanup_failure"],
+    "actual_dispositions": ["SUCCESS","YIELD","YIELD","NONE","PARTIAL","YIELD","YIELD","YIELD"],
+    "expected_dispositions": ["SUCCESS","YIELD","YIELD","NONE","PARTIAL","YIELD","YIELD","YIELD"],
+    "formal_receipt_order_ok": true,
+    "independent_gate_all_classified": true,
+    "scorer_matches": true
+  },
+  "model_calls": 0,
+  "network_calls": 0
+}

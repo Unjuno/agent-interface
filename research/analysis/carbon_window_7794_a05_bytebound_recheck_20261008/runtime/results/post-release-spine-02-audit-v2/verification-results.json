@@ -1,0 +1,23 @@
+{
+  "source_head": "eb67ab07b427677b8fefb8cc540dbd06f26af460",
+  "legacy_natural": "PASS on this WSL enumeration",
+  "legacy_forced_ascending": "ValueError: analysis mismatch; exit1",
+  "corrected_normal": "PASS 617 members",
+  "corrected_optimized": "PASS 617 members",
+  "regression": "Forward/reverse actual archive same result; 1 test OK",
+  "controls": {
+    "archive_corruption": "archive hash",
+    "wrong_independent_score": "independent effect failure",
+    "wrong_review_image": "review image mismatch",
+    "refusal_emitted_input": "refusal emitted input",
+    "missing_member": "missing member"
+  },
+  "integration_gate": "HOLD_INTEGRATION_INCOMPLETE",
+  "unchanged_hashes": {
+    "raw.tar.gz": "6639d9a146f9e46e6875e06a0742215881efdc3b7571f48d45c7afb4adfaf739",
+    "manifest.json": "6f79e8f1f5643d12a0f1e8b8c7237f22354b0137fe5fdef04e4b35268d114c12",
+    "analysis.json": "c8e1f8b8258fa477244e5a80484bc675066ea379d4a2a7469f92f8506b4f4be3",
+    "analyze.py": "30b4ae77dcef1658652485cc38a76aeb0140e7f73a4ab83c1ffdc7a9f654fad8",
+    "verify.py": "e104b1d5ab3b76c0a176e67be70bdee0ddfd7d61f930a8aead1c92f471255549"
+  }
+}

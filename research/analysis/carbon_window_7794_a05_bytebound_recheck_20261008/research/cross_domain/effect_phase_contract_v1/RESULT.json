@@ -1,0 +1,16 @@
+{
+  "by_cell": {
+    "direct:correct": {"effects_present":10,"legacy_truth":10,"n":10,"phase_truth":10},
+    "direct:wrong": {"effects_present":10,"legacy_truth":0,"n":10,"phase_truth":10},
+    "stageable:correct": {"effects_present":10,"legacy_truth":10,"n":10,"phase_truth":10},
+    "stageable:wrong": {"effects_present":0,"legacy_truth":10,"n":10,"phase_truth":10}
+  },
+  "cases": 40,
+  "decision": "RETAIN_PHASE_DISTINCTION_SCOPED",
+  "key_finding": "stageable verification failure can be pre-effect/no-effect; direct verification failure can occur after a durable wrong effect",
+  "legacy_truth_total": 30,
+  "limits": ["authored wrong behavior","local SQLite/file fixture","no compensation test","no natural fault-rate claim","not current product baseline comparison"],
+  "phase_truth_total": 40,
+  "schema": "effect-phase-contract-result-v1",
+  "task": "EFFECT-PHASE-CONTRACT-20260916-001"
+}

@@ -1,0 +1,18 @@
+{
+  "allocation_id": "AI-6147-T2-ORB-X11-20261003-02",
+  "issue": "https://github.com/Unjuno/agent-interface/issues/6147",
+  "predecessor": {"allocation_id": "AI-6147-T1-ORB-X11-20261003-01", "status": "STOP_NOT_EVALUATED", "path": "research/analysis/safe_probe_identifiability_6147_t1_orbstack_20261003", "candidate_exit": 1, "cause": "Xlib ConnectionClosedError at Display.close after fixture exit", "auditor_invocations": 0, "retry": false},
+  "base_main_sha": "511ff52b05ed852e9ebd03e20ee1f2b766ab0e04",
+  "branch": "research/safe-aliased-probe-6147-t1-orbstack-20261003",
+  "path": "research/analysis/safe_probe_identifiability_6147_t2_orbstack_20261003",
+  "status_at_freeze": "CONSTRUCTION_BEFORE_FORMAL",
+  "formal_invocations_at_freeze": {"candidate": 0, "auditor": 0, "retries": 0, "planned_candidate": 3, "planned_auditor": 1, "retry_policy": "none"},
+  "construction_only_before_formal": {"lifecycle_race_reproduction": "PASS_CONSTRUCTION_ONLY; adaptive candidate=10 rows/exit 0, fixture=44 oracle events/exit 0; both OOMKilled=false", "container_unit_tests": "PASS_CONSTRUCTION_ONLY; 16/16", "host_unit_tests": "PASS_CONSTRUCTION_ONLY; 16/16", "formal_invocations": 0, "prior_construction_test_issue": "first host discovery could not import Xlib; lifecycle contract was isolated in stdlib-only lifecycle.py and host/container suites then passed"},
+  "matrix": {"arms": ["adaptive", "no_probe", "one_step"], "trials_per_arm": 10, "total_trials": 30, "states_per_arm": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], "unsafe_probe": "U", "formal_raw_path": "raw/formal_02"},
+  "decision": {"pass": "H_PASS_SCOPED only after all candidate and fixture exits, 30 complete rows, independent raw-only audit with zero errors, all T1 semantic/safety gates, and all five mutation controls rejected", "fail": "H_FAIL_SCOPED only for a complete eligible independently audited semantic violation", "stop": "STOP/NOT_EVALUATED on any incomplete arm, runtime/setup/resource/cleanup/auditor failure", "retry": false},
+  "engine": {"context": "orbstack", "version": "29.4.0", "platform": "linux/aarch64", "image": "issue4466-gtk-pixel-stability@sha256:7c202113e519666007d7f6a74fa4a9854ed7cec62c07c1e80631474e69af7a27", "image_platform": "linux/arm64", "image_pull": "forbidden"},
+  "container_limits": {"network": "none", "rootfs": "read-only", "cpu": 1, "memory_bytes": 536870912, "pids": 64, "capabilities": "all dropped", "no_new_privileges": true, "swap_disabled": false},
+  "local_checks_on_updated_main": {"base_sha": "511ff52b05ed852e9ebd03e20ee1f2b766ab0e04", "analysis_index": "PASS on pristine base before unindexed local T1/T2 additions; 551 indexed directories", "analysis_index_unit_tests": "PASS, 17/17", "t1_experiment_tests": "PASS, 13/13", "updated_t2_experiment_tests": "PASS construction-only, 16/16"},
+  "parallel_conflict_check": {"active_6505_worktree": "separate additive branch/path, untouched", "remote_exact_branch": "no match at last inventory", "existing_container": "unjuno-native-ci-6092 untouched", "previous_t1_named_containers": "removed by runner cleanup"},
+  "scope": "same deterministic authored Xvfb fixture only; no real app, user workflow/data, network, model, GPU, external effects or production authority"
+}

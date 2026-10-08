@@ -1,0 +1,85 @@
+{
+  "allocation": "TEMPORAL-CONTRACT-X11-PROPERTYNOTIFY-R1-20260922-002",
+  "issue": 1786,
+  "base_main": "74d0ebb63c880fc5818bc4bbe6bb0c6b08579d39",
+  "branch": "research/issue-1786-propertynotify-live-20260922-v2",
+  "publication_path": "research/live_control/temporal_contract_x11_propertynotify_20260922_v2",
+  "formal_status": "FROZEN_BEFORE_FORMAL",
+  "source_sha256": {
+    "monitor.py": "a0ba7d82aa452b6f4e2ad53b77cba1776dd4865ce6f24111002994c99d4f0ffb",
+    "case_runner.py": "535a53175d4f2ada4d1e313c76a7a1836d5e1c091ea72cbfc4a983a331f8d48f",
+    "case_worker.py": "c92e288ea1142de6d8e7485fe776251657445722c2a970a1e71dc2a83c5b8dc8",
+    "supervise.py": "e27095a8938476af465b9fe9227ea07699ec3d49663fe85f9470e982db8ade77",
+    "audit.py": "601d2ffccf1b02903fc7fc90bf4321c04e31e22d08caaae56470f25120df35d6"
+  },
+  "historical_runner_sha256": "099fe2de9c53f72c4b395c82f3408274f7bf1698cc9ca32d735abf968173aa98",
+  "construction_04": {
+    "decision": "PASS_CONSTRUCTION_ELIGIBLE",
+    "cases": 3,
+    "worker_exits": [
+      0,
+      0,
+      0
+    ],
+    "result_sha256": "90188c73af89c5cbf1d0a2896a3f73e4d22062e6d8e4575aaed61dc21963f3ef",
+    "audit_sha256": "5f895d47debc753616678c42d3598ccc44cf381f4aa22421332069ab4cb6a7a6"
+  },
+  "environment": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python_version": "3.13.5",
+    "python_xlib_version": "0.15",
+    "tk_version": "8.6",
+    "xvfb_path": "/usr/bin/Xvfb",
+    "xvfb_sha256": "4efd5850f0d98c587195ef77be92916dd1578fb725ddd1b2d95d232042813c5e"
+  },
+  "formal": {
+    "schedule": [
+      "POSITIVE",
+      "EXPIRE",
+      "NO_RESTART",
+      "POSITIVE",
+      "EXPIRE",
+      "NO_RESTART",
+      "POSITIVE",
+      "EXPIRE",
+      "NO_RESTART",
+      "POSITIVE",
+      "EXPIRE",
+      "NO_RESTART"
+    ],
+    "cases": 12,
+    "delta_ms": 80,
+    "case_worker_timeout_s": 6,
+    "expected": {
+      "POSITIVE": "SATISFIED",
+      "EXPIRE": "EXPIRED",
+      "NO_RESTART": "EXPIRED"
+    },
+    "command": "python3 -B supervise.py --phase formal --out FORMAL_RESULT_01.json --root formal-20260922-002 --progress FORMAL_PROGRESS_01.json",
+    "audit_command": "python3 -B audit.py FORMAL_RESULT_01.json --out FORMAL_AUDIT_01.json",
+    "formal_invocations_planned": 1,
+    "reruns": 0,
+    "replacements": 0,
+    "tuning": 0
+  },
+  "decision": {
+    "pass": "PASS_TEMPORAL_CONTRACT_X11_PROPERTYNOTIFY_SCOPED only if all 12 rows complete, expected atom sequence exact, X server timestamps nondecreasing, candidate=independent oracle, POSITIVE 4/4 SATISFIED, EXPIRE 4/4 EXPIRED, NO_RESTART 4/4 EXPIRED, task_input_events=0, source/process/cleanup/audit integrity and corruption controls pass.",
+    "scientific_fail": "FAIL_X11_TEMPORAL_MONITOR_TRANSFER for a complete interpretable wrong terminal.",
+    "integrity_fail": "FAIL_MEASUREMENT_INTEGRITY for missing/duplicate/misidentified event, timestamp regression, source/process/raw contradiction.",
+    "stop_hold": "STOP/HOLD for incomplete process/source/evidence; never upgraded by partial numeric effects."
+  },
+  "constraints": [
+    "Private Xvfb/Tk/python-xlib PropertyNotify only",
+    "No XTEST/keyboard/pointer/task input",
+    "No model/provider/network/user desktop/shared runtime mutation",
+    "X server timestamp not compared numerically with Python monotonic clock"
+  ],
+  "unknowns": [
+    "cross-backend transfer",
+    "semantic application-effect readiness",
+    "model/task utility",
+    "token/latency benefit",
+    "wrap/reconnect behavior",
+    "production integration"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "allocation": "AUDIT-COMPLETION-5895-T0-ISOLATED-ORB-20261001-01",
+  "issue": 5895,
+  "disposition": "STOP_GUEST_BOOT_CONTROL_UNAVAILABLE",
+  "scientific_hypothesis_evaluated": false,
+  "candidate_invocations": 0,
+  "independent_auditor_invocations": 0,
+  "target_cases_invoked": 0,
+  "retry_count": 0,
+  "start_main": "4b7fe7837e4ee8c0d035ebfbf52baf014f042295",
+  "target_pr": 5630,
+  "target_pr_head": "288d0498d11cf16657e523a04616bf4f49cd94f4",
+  "guest": {
+    "name": "obs-auditor-completion-5895-20261001",
+    "id": "01M3VB1X7H2APS1MN0871NQRNG",
+    "distribution": "Ubuntu 24.04",
+    "architecture": "amd64",
+    "isolated": true,
+    "isolated_network": true,
+    "ssh_agent_forwarding": false,
+    "host_mounts": 0,
+    "cpu_limit": 1,
+    "memory_mib": 2048,
+    "disk_limit_gib": 8
+  },
+  "failed_gate": "Guest reported running, but initial console-setup/systemd-update-done jobs remained pending and bounded orbctl run commands did not return. In-guest Docker daemon, image, source, and empty output checks were not possible.",
+  "scope": "Execution-substrate STOP only; no inference about frozen target auditor behavior or formal X11 behavior.",
+  "next_action": "Preserve this allocation; do not retry. Recover/diagnose guest boot/control channel under a fresh allocation and window before any candidate invocation."
+}

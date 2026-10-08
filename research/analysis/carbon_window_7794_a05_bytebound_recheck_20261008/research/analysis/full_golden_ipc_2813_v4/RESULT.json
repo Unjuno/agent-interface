@@ -1,0 +1,12 @@
+{
+  "schema": "full_golden_ipc_task1_successor_result_v1",
+  "issue": 2813,
+  "successor": "full_golden_ipc_2813_v4",
+  "status": "HOLD_SCHEMA_PREFLIGHT_HOST_BROKER_PATH",
+  "entry_gate": "PASS_TASK1_ROUTE_PREFLIGHT",
+  "allocation": {"count": 1, "retry": false, "scope": "task-1 only", "container_started": true, "ipc_request_created": true},
+  "stop_reason": "The host broker was started without an explicit CODEX_EXE path; the host executable could not resolve the container working path, so schema preflight refused the response.",
+  "execution": {"schema_preflight_reached": true, "model_invoked": false, "gui_operations": 0, "authority_granted": false, "task_effect_claim": false},
+  "decision": "STOP_BEFORE_TASK_EXECUTION",
+  "next": "Use a fresh successor allocation with CODEX_EXE pinned to the verified local Codex executable; do not retry this allocation."
+}

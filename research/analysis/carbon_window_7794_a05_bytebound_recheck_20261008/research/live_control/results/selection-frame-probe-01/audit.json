@@ -1,0 +1,24 @@
+{
+  "schema": "selection-frame-probe-audit-v1",
+  "passed": true,
+  "checks": {
+    "sources": true,
+    "first_report_pass": true,
+    "exact_order": true,
+    "balanced_samples": true,
+    "semantic_equivalence": true,
+    "first_false_second_true": true,
+    "metrics_recomputed": true,
+    "frozen_thresholds": true,
+    "zero_model": true
+  },
+  "metrics": {
+    "path_median_ms": 34.695506,
+    "frame_median_ms": 2.319728,
+    "path_p95_ms": 42.364648,
+    "frame_p95_ms": 2.629731,
+    "median_advantage_ms": 32.375778000000004,
+    "median_ratio": 0.06685961000251732
+  },
+  "scope": "offline matched timing on two retained exact Inkscape feedback frames; existing path/Pillow pixel-loop scorer versus already-reconstructed frame/numpy ROI probe; semantic equivalence and exact-frame artifact reconciliation required; no live input, model, token, task-success, general speedup or human-tempo claim"
+}

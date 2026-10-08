@@ -1,0 +1,243 @@
+{
+  "id": "A02",
+  "case": {
+    "id": "A02",
+    "target": "plain",
+    "plain": "Cedar",
+    "html": "<p>Cedar</p>",
+    "owner_state": "healthy",
+    "policy": "read_before_input"
+  },
+  "display": ":101",
+  "commands": [
+    {
+      "argv": [
+        "xdotool",
+        "windowfocus",
+        "--sync",
+        "6291462"
+      ],
+      "pid": 27,
+      "timeout_s": 3,
+      "timeout": false,
+      "exit": 0,
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "start_ns": 13080955924316,
+      "end_ns": 13080959508405
+    },
+    {
+      "argv": [
+        "xclip",
+        "-selection",
+        "clipboard",
+        "-target",
+        "text/plain",
+        "-out"
+      ],
+      "pid": 28,
+      "timeout_s": 0.5,
+      "timeout": false,
+      "exit": 0,
+      "stdout_hex": "4365646172",
+      "stderr_hex": "",
+      "start_ns": 13080963892620,
+      "end_ns": 13080967459541
+    },
+    {
+      "argv": [
+        "xdotool",
+        "key",
+        "--clearmodifiers",
+        "ctrl+v"
+      ],
+      "pid": 29,
+      "timeout_s": 3,
+      "timeout": false,
+      "exit": 0,
+      "stdout_hex": "",
+      "stderr_hex": "",
+      "start_ns": 13080967537166,
+      "end_ns": 13081004133094
+    }
+  ],
+  "signals": [],
+  "exits": {
+    "consumer": 0,
+    "owner": 0,
+    "xvfb": 0
+  },
+  "owner_ready": {
+    "role": "owner",
+    "platform": "xcb"
+  },
+  "consumer_ready": {
+    "role": "consumer",
+    "platform": "xcb",
+    "window": 6291462
+  },
+  "pids": {
+    "xvfb": 18,
+    "owner": 21,
+    "consumer": 23
+  },
+  "baseline_dump": {
+    "op": "dump",
+    "text": ""
+  },
+  "baseline": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13080963428244
+  },
+  "admission": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13080963890411
+  },
+  "preflight": {
+    "argv": [
+      "xclip",
+      "-selection",
+      "clipboard",
+      "-target",
+      "text/plain",
+      "-out"
+    ],
+    "pid": 28,
+    "timeout_s": 0.5,
+    "timeout": false,
+    "exit": 0,
+    "stdout_hex": "4365646172",
+    "stderr_hex": "",
+    "start_ns": 13080963892620,
+    "end_ns": 13080967459541
+  },
+  "admitted": true,
+  "before_input": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13080967535375
+  },
+  "paste": {
+    "argv": [
+      "xdotool",
+      "key",
+      "--clearmodifiers",
+      "ctrl+v"
+    ],
+    "pid": 29,
+    "timeout_s": 3,
+    "timeout": false,
+    "exit": 0,
+    "stdout_hex": "",
+    "stderr_hex": "",
+    "start_ns": 13080967537166,
+    "end_ns": 13081004133094
+  },
+  "reply_start_ns": 13081004161094,
+  "deadline_dump": {
+    "op": "dump",
+    "text": "Cedar"
+  },
+  "deadline_outcome": "REPLY",
+  "deadline_ns": 13081008143016,
+  "deadline_events": [
+    {
+      "kind": "ipc_command",
+      "phase": "setup",
+      "monotonic_ns": 13080959606363,
+      "op": "dump"
+    },
+    {
+      "kind": "ipc_command",
+      "phase": "setup",
+      "monotonic_ns": 13080963497702,
+      "op": "phase"
+    },
+    {
+      "kind": "key_press",
+      "phase": "paste",
+      "monotonic_ns": 13080970959463,
+      "key": 16777249,
+      "modifiers": 67108864
+    },
+    {
+      "kind": "key_press",
+      "phase": "paste",
+      "monotonic_ns": 13080977609056,
+      "key": 86,
+      "modifiers": 67108864
+    },
+    {
+      "kind": "text_changed",
+      "phase": "paste",
+      "monotonic_ns": 13080978714474,
+      "text": "Cedar"
+    },
+    {
+      "kind": "key_release",
+      "phase": "paste",
+      "monotonic_ns": 13080986577527,
+      "key": 16777249,
+      "modifiers": 0
+    },
+    {
+      "kind": "key_release",
+      "phase": "paste",
+      "monotonic_ns": 13080995351123,
+      "key": 86,
+      "modifiers": 0
+    },
+    {
+      "kind": "ipc_command",
+      "phase": "paste",
+      "monotonic_ns": 13081004224469,
+      "op": "dump"
+    }
+  ],
+  "deadline_server": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081008297683
+  },
+  "final_dump": {
+    "op": "dump",
+    "text": "Cedar"
+  },
+  "probe": {
+    "op": "probe",
+    "key_releases": [
+      16777249,
+      86
+    ]
+  },
+  "effect_server": {
+    "owner": 4194308,
+    "focus": 6291462,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081011873147
+  },
+  "status": "RECORDED",
+  "cleanup_server": {
+    "owner": 0,
+    "focus": 543,
+    "keymap_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "at_ns": 13081071083231
+  },
+  "artifact_sha256": {
+    "case.json": "276985e54aa7b1f20b962510ef24461793a74baf573471463f83e61bfae3ecea",
+    "consumer.events.jsonl": "922093cd89fd284bc91cecfe54a993c3527f05c01f5af414f5e42c52b9809a29",
+    "consumer.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+    "document.html": "608d0d457c2c7e88f726800be718a7426435fa6094dc5f6e2e4cd5f6aa4088ee",
+    "owner.events.jsonl": "6c88dd59815fe7814ee2d77fee4b77b635fadab9d32568e772f6331f96628fdd",
+    "owner.stderr": "293366de426441d567ee4a1add2b76715f0b8200d539dc3872951fd56e8ef69a",
+    "text.txt": "4529950e3cce03a46b67c9e1164cd14aaf51d864d4b05e942d7f86af604ce75c",
+    "window.png": "6fdac6dbd65edfdf12d827cfde1715fd7d7c6618086ad9de97be70e040c376d0",
+    "xvfb.stderr": "b987a262609a3720f450ab6815ed90b2069dd47b7b012959ca19c325aebf5d55"
+  }
+}

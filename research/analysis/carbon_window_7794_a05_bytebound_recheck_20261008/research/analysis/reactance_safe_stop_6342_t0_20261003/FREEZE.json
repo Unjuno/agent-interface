@@ -1,0 +1,52 @@
+{
+  "schema": "issue6342-safe-stop-t0-freeze-v1",
+  "issue": 6342,
+  "allocation_id": "REACTANCE-SAFE-STOP-6342-T0-ORB-20261003-01",
+  "base_main_sha": "43f7cd88d91af05036fae2100ec4e155c59e105c",
+  "branch": "research/reactance-safe-stop-6342-t0-orbstack-20261003",
+  "evidence_path": "research/analysis/reactance_safe_stop_6342_t0_20261003/",
+  "hypothesis_scope": "Method-only card-contract parity; no human-behavior hypothesis is tested at T0.",
+  "input_sha256": {
+    "PREREGISTRATION.md": "0cc749da9ccabbdac08536af1d992e87722dfd74d379eaac66f7fcedb01484f9",
+    "REVIEW_RUBRIC.md": "62e7f9cb3eb7d057ecee2ce154ba7e0f255cb956ce6c374b272fac7981329ddc",
+    "cards.json": "9a3241df1a1acd5140634894cab78626b669ccfd8c00161f955e61329c769a7b",
+    "render_cards.py": "72e787c46d852ccb96c5e0524fad1008944d72769e4a2cf7704f8855b1732faa",
+    "audit_cards.py": "94f83a96e774324b6b6ae4ee832c0f2a1aac2a2b04d25e9bcd9fff4905a9641c",
+    "test_construction.py": "59c4135476c74601636a2f5b23f6e468b2e2c0fe25e5c5ad3ba67292047fbfad"
+  },
+  "frozen_design": {
+    "case_ids": ["uncertain_save_delivery", "stale_target", "partial_edit", "verified_success_control"],
+    "arms": ["directive", "autonomy_supportive"],
+    "expected_treatment_cards": 8,
+    "negative_control_ids": ["mutation_permits_forbidden_retry", "mutation_claims_unverified_success"],
+    "construction_test_count": 6,
+    "candidate_invocations_max": 1,
+    "auditor_invocations_max": 1,
+    "retries": 0,
+    "participant_count": 0,
+    "human_reviewer_required_for_full_pass": true
+  },
+  "runtime": {
+    "engine": "OrbStack Docker Engine 29.4.0",
+    "platform": "linux/arm64",
+    "image": "python@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b",
+    "pull": "never",
+    "network": "none",
+    "read_only_rootfs": true,
+    "read_only_input": true,
+    "cpus": 1,
+    "memory_bytes_configured": 268435456,
+    "pids_limit": 64,
+    "cap_drop": ["ALL"],
+    "security_options": ["no-new-privileges"],
+    "uid_gid": "1000:1000",
+    "unrelated_running_container": "unjuno-native-ci-6092",
+    "unrelated_container_touched": false
+  },
+  "decision_gates": {
+    "full_pass": "All structural checks and negative controls pass and a separate blinded reviewer finds no change in permission, urgency, evidence claim or success implication.",
+    "fail": "Any false-success/unsafe-retry mutation is accepted or the independent structural audit finds a contract error.",
+    "hold": "Structural checks pass but separate semantic review is unavailable, or any card is ambiguous.",
+    "scope_limit": "No participant behavior, reactance, comprehension, safety effect, GUI, audio, model, runtime or product outcome."
+  }
+}

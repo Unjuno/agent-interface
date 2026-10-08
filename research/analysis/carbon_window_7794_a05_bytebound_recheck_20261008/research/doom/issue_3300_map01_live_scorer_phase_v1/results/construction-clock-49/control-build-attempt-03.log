@@ -1,0 +1,49 @@
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.control
+#1 transferring dockerfile: 856B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/agent-interface-map01-clock-counter-v1:20260920
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 32B done
+#4 DONE 0.0s
+
+#5 [1/4] FROM docker.io/library/agent-interface-map01-clock-counter-v1:20260920@sha256:fdf45a138d5b025499f6808ae0b8a04a12d2ad4643e6618f913a85e1cfe64e17
+#5 resolve docker.io/library/agent-interface-map01-clock-counter-v1:20260920@sha256:fdf45a138d5b025499f6808ae0b8a04a12d2ad4643e6618f913a85e1cfe64e17
+#5 resolve docker.io/library/agent-interface-map01-clock-counter-v1:20260920@sha256:fdf45a138d5b025499f6808ae0b8a04a12d2ad4643e6618f913a85e1cfe64e17 0.0s done
+#5 DONE 0.0s
+
+#6 [2/4] RUN git -C /tmp/vizdoom-src apply -R /tmp/vizdoom-tic-counter-v1.patch     && test -z "$(git -C /tmp/vizdoom-src status --porcelain)"     && test "$(git -C /tmp/vizdoom-src rev-parse HEAD)" =        c8e0a31182d98c6f40a65674283e736b851e8e59     && python -m pip uninstall -y vizdoom     && python -m pip install --no-cache-dir --force-reinstall /tmp/vizdoom-src     && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+#6 CACHED
+
+#7 [3/4] RUN objdump -d "$(python -c 'import vizdoom,os; print(os.path.dirname(vizdoom.__file__)+"/vizdoom")')"     > /tmp/control-disassembly.txt     && ! grep -qE '\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\b' /tmp/control-disassembly.txt
+#7 0.113   File "<string>", line 1
+#7 0.113     import vizdoom,os; print(os.path.dirname(vizdoom.__file__)+\"/vizdoom\")
+#7 0.113                                                                 ^
+#7 0.113 SyntaxError: unexpected character after line continuation character
+#7 0.115 objdump: '': No such file
+#7 ERROR: process "/bin/sh -c objdump -d \"$(python -c 'import vizdoom,os; print(os.path.dirname(vizdoom.__file__)+\\\"/vizdoom\\\")')\"     > /tmp/control-disassembly.txt     && ! grep -qE '\\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\\b' /tmp/control-disassembly.txt" did not complete successfully: exit code: 1
+------
+ > [3/4] RUN objdump -d "$(python -c 'import vizdoom,os; print(os.path.dirname(vizdoom.__file__)+"/vizdoom")')"     > /tmp/control-disassembly.txt     && ! grep -qE '\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\b' /tmp/control-disassembly.txt:
+0.113   File "<string>", line 1
+0.113     import vizdoom,os; print(os.path.dirname(vizdoom.__file__)+\"/vizdoom\")
+0.113                                                                 ^
+0.113 SyntaxError: unexpected character after line continuation character
+0.115 objdump: '': No such file
+------
+Dockerfile.control:9
+--------------------
+   8 |         && python -c 'import vizdoom; print(vizdoom.__version__, vizdoom.__file__)'
+   9 | >>> RUN objdump -d "$(python -c 'import vizdoom,os; print(os.path.dirname(vizdoom.__file__)+\"/vizdoom\")')" \
+  10 | >>>     > /tmp/control-disassembly.txt \
+  11 | >>>     && ! grep -qE '\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\b' /tmp/control-disassembly.txt
+  12 |     COPY probe49.py /probe49.py
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c objdump -d \"$(python -c 'import vizdoom,os; print(os.path.dirname(vizdoom.__file__)+\\\"/vizdoom\\\")')\"     > /tmp/control-disassembly.txt     && ! grep -qE '\\bmrs[[:space:]]+x0,[[:space:]]*cntvct_el0\\b' /tmp/control-disassembly.txt" did not complete successfully: exit code: 1

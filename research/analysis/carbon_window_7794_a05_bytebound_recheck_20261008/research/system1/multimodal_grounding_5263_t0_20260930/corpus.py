@@ -1,0 +1,16 @@
+CASES = [
+    {"case_id": "c01", "category": "unambiguous", "intent": "Identify the enabled Publish control in Project Atlas."},
+    {"case_id": "c02", "category": "unambiguous", "intent": "Identify the disabled Archive control in Project Borealis."},
+    {"case_id": "c03", "category": "similar_distractor", "intent": "Identify Publish in Project Atlas, not the same-labeled control in another project."},
+    {"case_id": "c04", "category": "similar_distractor", "intent": "Identify Save draft in Project Borealis, not Save now."},
+    {"case_id": "c05", "category": "missing_target", "intent": "Find Delete in Project Atlas."},
+    {"case_id": "c06", "category": "missing_target", "intent": "Find Archive in Project Borealis."},
+    {"case_id": "c07", "category": "ambiguous_target", "intent": "Identify the Publish control in Project Atlas."},
+    {"case_id": "c08", "category": "ambiguous_target", "intent": "Identify the Review control in Project Borealis."},
+    {"case_id": "c09", "category": "changed_layout", "intent": "Identify the enabled Save control in Project Atlas."},
+    {"case_id": "c10", "category": "changed_layout", "intent": "Identify the enabled Archive control in Project Borealis."},
+    {"case_id": "c11", "category": "state_effect", "intent": "Report whether Project Atlas has saved the report."},
+    {"case_id": "c12", "category": "state_effect", "intent": "Report the synchronization state of Project Borealis."},
+    {"case_id": "c13", "category": "unsupported_novel", "intent": "Determine whether Project Atlas export meets the new blue-hexagon certification standard."},
+    {"case_id": "c14", "category": "unsupported_novel", "intent": "Identify the latest eligible action in Project Borealis from its unlabeled symbol."},
+]

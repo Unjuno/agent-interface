@@ -1,0 +1,689 @@
+{
+  "request": {
+    "op": "input",
+    "alias": "save",
+    "offset": [
+      12,
+      12
+    ],
+    "feedback": {
+      "expected_title": "SAVED-1001069",
+      "rejected_titles": [
+        "REJECTED-1001069"
+      ],
+      "timeout_ms": 1000
+    }
+  },
+  "started_ns": "27571688989280",
+  "ended_ns": "27572791686924",
+  "attempt": 3,
+  "isError": true,
+  "metadata": {
+    "operation": "guarded_input",
+    "task_success": null,
+    "replay_allowed": false,
+    "status": "needs_review",
+    "result": {
+      "status": "completed",
+      "admission": "accepted",
+      "required_capabilities": [
+        "display.geometry",
+        "input.pointer",
+        "input.release_all",
+        "window.focus"
+      ],
+      "execution": {
+        "started_ns": 27571725602544,
+        "ended_ns": 27571753570435,
+        "emissions": 3,
+        "program_emissions": 3,
+        "observations": [],
+        "releases": [
+          {
+            "keys_down": [],
+            "buttons_down": [],
+            "verified": true,
+            "monotonic_ns": 27571753568251
+          }
+        ],
+        "waits": [],
+        "activations": [],
+        "completed_ops": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "recovery_required": false,
+      "guard_checks": [
+        {
+          "stage": "before_admission",
+          "observation_sequence": 2,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "save",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "save",
+          "point": [
+            360,
+            172
+          ],
+          "observed_box": [
+            348,
+            160,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 2,
+          "valid_until_ns": 27573215613255,
+          "patch_sha256": "ef25a77c631664011b4aae6c26ab70811ed34a39dee03587a8c68e75da96c310",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_focus",
+          "observation_sequence": 3,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "save",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "save",
+          "point": [
+            360,
+            172
+          ],
+          "observed_box": [
+            348,
+            160,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 3,
+          "valid_until_ns": 27573225907035,
+          "patch_sha256": "ef25a77c631664011b4aae6c26ab70811ed34a39dee03587a8c68e75da96c310",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_move",
+          "observation_sequence": 4,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "save",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "save",
+          "point": [
+            360,
+            172
+          ],
+          "observed_box": [
+            348,
+            160,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 4,
+          "valid_until_ns": 27573235989045,
+          "patch_sha256": "ef25a77c631664011b4aae6c26ab70811ed34a39dee03587a8c68e75da96c310",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        },
+        {
+          "stage": "before_press",
+          "observation_sequence": 5,
+          "eligible": true,
+          "status": "VALID",
+          "handle": "save",
+          "authority": "resolution only; ordinary admission remains required",
+          "reason": "exact_region_match",
+          "name": "save",
+          "point": [
+            360,
+            172
+          ],
+          "observed_box": [
+            348,
+            160,
+            24,
+            24
+          ],
+          "binding_translation": [
+            0,
+            0
+          ],
+          "local_translation": [
+            0,
+            0
+          ],
+          "sequence": 5,
+          "valid_until_ns": 27573245534576,
+          "patch_sha256": "ef25a77c631664011b4aae6c26ab70811ed34a39dee03587a8c68e75da96c310",
+          "reference_kind": "session_alias",
+          "private_registry_id_exposed": false
+        }
+      ]
+    },
+    "feedback_status": "cue_returned",
+    "feedback": {
+      "status": "pending",
+      "task_success": null,
+      "authority_granted": false,
+      "input_dispatched": false,
+      "expected_title": "SAVED-1001069",
+      "rejected_titles": [
+        "REJECTED-1001069"
+      ],
+      "samples": [
+        {
+          "known_ns": 27571754815977,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27571805968054,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27571857374440,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27571908704551,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27571960272800,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572011075784,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572062228200,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572113664248,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572165222977,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572216575313,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572267796799,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572319459644,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572370476722,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572421821210,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572473806200,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572525376588,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572576685225,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572628043963,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572679450113,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572730644469,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        },
+        {
+          "known_ns": 27572755101585,
+          "title": "PENDING-1001069",
+          "binding": {
+            "focus": 2097171,
+            "surface": 2097171,
+            "geometry": [
+              0,
+              0,
+              480,
+              260
+            ]
+          }
+        }
+      ],
+      "started_ns": 27571754021794,
+      "observation": {
+        "sequence": 6,
+        "observation_id": "783a2ceda393484e96932f36737e240c",
+        "binding_revision": 0,
+        "capture_ns": 27572755542192,
+        "image_source": "exact_capture_rgb_handoff",
+        "pointer_binding": {
+          "focus": 2097171,
+          "surface": 2097171,
+          "geometry": [
+            0,
+            0,
+            480,
+            260
+          ]
+        },
+        "native": {
+          "bytes": 1228800,
+          "sha256": "25e6780189363e311fbf25a9012f0a8e90035e2477b62e6b659619f12ca93eb3",
+          "width": 640,
+          "height": 480,
+          "target": "app",
+          "native_window_id": 2097171,
+          "frame": "screen_physical_px",
+          "region": [
+            0,
+            0,
+            640,
+            480
+          ],
+          "capture_started_ns": 27572755542192,
+          "capture_ended_ns": 27572759342433,
+          "artifact": {
+            "mime_type": "image/png",
+            "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/feedback-primary-presentation-01/02-pending/calls/60f11ab4952041feaf19896220cb57f5/images/b44715bc9eaa4a6db943af93a0d03248.png",
+            "sha256": "efb9c87c3948a0c3399b2f475226550980cc92880bf97dcd13e9e36736d88e14",
+            "bytes": 8400,
+            "width": 640,
+            "height": 480,
+            "source_raw_sha256": "25e6780189363e311fbf25a9012f0a8e90035e2477b62e6b659619f12ca93eb3",
+            "timing_ns": {
+              "started": 27572760150895,
+              "converted": 27572760419607,
+              "encoded": 27572764309266,
+              "written": 27572764644671,
+              "hashed": 27572765292051
+            }
+          }
+        },
+        "timing_ns": {
+          "started": 27572755186985,
+          "public_returned": 27572765343521,
+          "binding_checked": 27572766126410,
+          "artifact_verified": 27572766209966,
+          "decoded": 27572766212696
+        }
+      },
+      "title": "PENDING-1001069",
+      "after_title": "PENDING-1001069",
+      "ended_ns": 27572767233489
+    },
+    "source": {
+      "sequence": 6,
+      "observation_id": "783a2ceda393484e96932f36737e240c",
+      "binding_revision": 0,
+      "capture_ns": 27572755542192,
+      "image_source": "exact_capture_rgb_handoff",
+      "pointer_binding": {
+        "focus": 2097171,
+        "surface": 2097171,
+        "geometry": [
+          0,
+          0,
+          480,
+          260
+        ]
+      },
+      "native": {
+        "bytes": 1228800,
+        "sha256": "25e6780189363e311fbf25a9012f0a8e90035e2477b62e6b659619f12ca93eb3",
+        "width": 640,
+        "height": 480,
+        "target": "app",
+        "native_window_id": 2097171,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "capture_started_ns": 27572755542192,
+        "capture_ended_ns": 27572759342433,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/feedback-primary-presentation-01/02-pending/calls/60f11ab4952041feaf19896220cb57f5/images/b44715bc9eaa4a6db943af93a0d03248.png",
+          "sha256": "efb9c87c3948a0c3399b2f475226550980cc92880bf97dcd13e9e36736d88e14",
+          "bytes": 8400,
+          "width": 640,
+          "height": 480,
+          "source_raw_sha256": "25e6780189363e311fbf25a9012f0a8e90035e2477b62e6b659619f12ca93eb3",
+          "timing_ns": {
+            "started": 27572760150895,
+            "converted": 27572760419607,
+            "encoded": 27572764309266,
+            "written": 27572764644671,
+            "hashed": 27572765292051
+          }
+        }
+      },
+      "timing_ns": {
+        "started": 27572755186985,
+        "public_returned": 27572765343521,
+        "binding_checked": 27572766126410,
+        "artifact_verified": 27572766209966,
+        "decoded": 27572766212696
+      }
+    },
+    "observation_report": {
+      "schema": "agent-interface/runtime-observation-v1",
+      "status": "returned",
+      "observation_id": "783a2ceda393484e96932f36737e240c",
+      "observation": {
+        "bytes": 1228800,
+        "sha256": "25e6780189363e311fbf25a9012f0a8e90035e2477b62e6b659619f12ca93eb3",
+        "width": 640,
+        "height": 480,
+        "target": "app",
+        "native_window_id": 2097171,
+        "frame": "screen_physical_px",
+        "region": [
+          0,
+          0,
+          640,
+          480
+        ],
+        "capture_started_ns": 27572755542192,
+        "capture_ended_ns": 27572759342433,
+        "artifact": {
+          "mime_type": "image/png",
+          "path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/feedback-primary-presentation-01/02-pending/calls/60f11ab4952041feaf19896220cb57f5/images/b44715bc9eaa4a6db943af93a0d03248.png",
+          "sha256": "efb9c87c3948a0c3399b2f475226550980cc92880bf97dcd13e9e36736d88e14",
+          "bytes": 8400,
+          "width": 640,
+          "height": 480,
+          "source_raw_sha256": "25e6780189363e311fbf25a9012f0a8e90035e2477b62e6b659619f12ca93eb3",
+          "timing_ns": {
+            "started": 27572760150895,
+            "converted": 27572760419607,
+            "encoded": 27572764309266,
+            "written": 27572764644671,
+            "hashed": 27572765292051
+          }
+        }
+      },
+      "side_effect_authority": false,
+      "input_dispatched": false
+    },
+    "session": {
+      "session_id": "f399ab48b2c54fcfacfd2dc554eac0ec",
+      "mode": "guarded-x11",
+      "state": "open",
+      "binding_revision": 0,
+      "targets": {
+        "app": 2097171
+      },
+      "recovery_required": false,
+      "error": null,
+      "authority_granted": false,
+      "restart_allowed": false,
+      "target": "app",
+      "observation_sequence": 6,
+      "review_required": false
+    },
+    "image_status": "image",
+    "call_directory": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/feedback-primary-presentation-01/02-pending/calls/60f11ab4952041feaf19896220cb57f5",
+    "call_id": "60f11ab4952041feaf19896220cb57f5",
+    "presentation": {
+      "requested": "brief",
+      "returned": "full",
+      "reason": "critical_or_unsupported_result"
+    }
+  },
+  "image_path": "/var/tmp/agent-interface-evidence-storage-main/runtime/results/feedback-primary-presentation-01/02-pending/primary-004.png",
+  "caller_state": {
+    "stopped": "unexpected MCP refusal"
+  }
+}

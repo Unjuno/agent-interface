@@ -1,0 +1,131 @@
+{
+  "format": "compiled-gui-runtime-receipt-v1",
+  "interface_id": "calc-pixel-admission",
+  "method": "enter-read-save-yield",
+  "method_version": "1",
+  "session_scope": "native-x11:ba50f8eb64c04ea692c8b5e9f5816aa7",
+  "outcome": "SAFE_YIELD",
+  "reason": "association_changed",
+  "completed_transitions": 2,
+  "frontier_model_resumptions": 0,
+  "observations": [
+    {
+      "sequence": 2,
+      "captured_ns": 13582285891854,
+      "evidence_ref": "observation-2",
+      "evidence_digest": "4950055170240ed4758f967e5c1c10d255332eb312505a0d0b465f83bd5d57bd",
+      "predicates": {
+        "present": true,
+        "main_focus": true,
+        "handoff": false
+      }
+    },
+    {
+      "sequence": 5,
+      "captured_ns": 13582941398775,
+      "evidence_ref": "observation-5",
+      "evidence_digest": "54253242e1d455da6cd6b4406bed103419caa08c50aeaffa771295b42fa81228",
+      "predicates": {
+        "present": true,
+        "main_focus": true,
+        "handoff": false,
+        "cells_match": true
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "from_state": "start",
+      "to_state": "filled",
+      "action": "enter",
+      "matched_conditions": {
+        "present": true,
+        "main_focus": true
+      },
+      "observation_sequence": 2,
+      "evidence_ref": "observation-2",
+      "action_id": "action-9e29d94fcf19456ab3f9c853bc408b7b",
+      "effect_ref": "compiled-e726feaba7524197a6de8bf32257503a-7-execution",
+      "release_verified": true
+    },
+    {
+      "from_state": "filled",
+      "to_state": "handoff",
+      "action": "save",
+      "matched_conditions": {
+        "cells_match": true,
+        "present": true,
+        "main_focus": true
+      },
+      "observation_sequence": 5,
+      "evidence_ref": "observation-5",
+      "action_id": "action-5aa0cd8ea1ba41d6a983a553ef0ed806",
+      "effect_ref": "compiled-e726feaba7524197a6de8bf32257503a-17-execution",
+      "release_verified": true
+    }
+  ],
+  "critical_events": [
+    {
+      "event": "branch_selected",
+      "state": "start",
+      "outcome": "action",
+      "action": "enter",
+      "matched_conditions": {
+        "present": true,
+        "main_focus": true
+      },
+      "evidence_ref": "observation-2"
+    },
+    {
+      "event": "action_terminal",
+      "action": "enter",
+      "status": "completed",
+      "action_id": "action-9e29d94fcf19456ab3f9c853bc408b7b",
+      "release_verified": true
+    },
+    {
+      "event": "effect_checked",
+      "action": "enter",
+      "status": "succeeded",
+      "evidence_ref": "observation-5"
+    },
+    {
+      "event": "branch_selected",
+      "state": "filled",
+      "outcome": "action",
+      "action": "save",
+      "matched_conditions": {
+        "cells_match": true,
+        "present": true,
+        "main_focus": true
+      },
+      "evidence_ref": "observation-5"
+    },
+    {
+      "event": "action_terminal",
+      "action": "save",
+      "status": "completed",
+      "action_id": "action-5aa0cd8ea1ba41d6a983a553ef0ed806",
+      "release_verified": true
+    },
+    {
+      "event": "runtime_finished",
+      "outcome": "SAFE_YIELD",
+      "reason": "association_changed",
+      "completed_transitions": 2
+    }
+  ],
+  "latest_evidence_ref": "observation-5",
+  "pending_effect": {
+    "action": "save",
+    "expected_effect": {
+      "handoff": true
+    },
+    "effect_ref": "compiled-e726feaba7524197a6de8bf32257503a-17-execution"
+  },
+  "started_ns": 13582285545170,
+  "ended_ns": 13583250180146,
+  "elapsed_ns": 964634976,
+  "input_authority": "admission_per_action_only",
+  "raw_evidence_retention": "adapter_responsibility_unverified"
+}

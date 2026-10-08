@@ -1,0 +1,13 @@
+# Result — A02 mutable release-record custody
+
+**Disposition: FAIL_CANDIDATE_RECEIPT_CUSTODY** (the preregistered H was reproduced; the candidate did not preserve a final confirmed per-key receipt).
+
+On current-main's fake-Xlib harness, using the exact PR #7829 bridge/owner source pair, both deterministic schedules passed all assertions. In each, the owner appended a mutable `owner_release` record with `verified=false`; its per-key F8 row was `PHYSICAL_SAMPLE_UNAVAILABLE` because only the post-release per-key sample failed. The bridge consumed that row before aggregate reconciliation. The aggregate query then succeeded and mutated the same record to `verified=true`, with no keys down. The actual candidate exit barrier and final drain did not revisit the consumed record. Exactly one emitted receipt remained `PHYSICAL_SAMPLE_UNAVAILABLE`; there was no duplicate and no false `CONFIRMED_PHYSICAL_UP`. Fake physical state was empty.
+
+The first schedule exercises the cancel/expiry exit barrier. The second covers the newly identified cross-product: a non-cancelled, unexpired `DecisionRequired`/focus-invalid exit, followed by Executor's `release_all` composition. It ended at a verified `needs_decision` terminal, but the one context/actuation-matched release receipt remained unconfirmed. The second schedule uses a test-side release-barrier stub because the fake superclass does not itself define `release_all`; candidate bridge and owner bytes remain unchanged.
+
+This is distinct from PR #7829's pending-expiry terminal interleave: the expiry barrier clears/validates aggregate state but does not repair custody of a per-key receipt already emitted from a mutable record. It supports the specific review concern on PR #7829 and shows that this candidate does not close the broader receipt-custody lifecycle under this schedule.
+
+The two new custody schedules and all 12 existing PR #7829 candidate regressions were executed in network-disabled, one-CPU, 1 GiB containers from pinned image `python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f` (`linux/arm64`). Exact source identities are in `SOURCE_LOCK.json`; commands and successful summaries are in `CONTAINER_EXECUTION.txt`.
+
+**Scope:** deterministic fake-display candidate-mechanics evidence only. No real X11, application effect, useful feedback, bounded recovery, gameplay, safety, latency, live allocation, or Issue #59 exit criterion is established. This result must not be used to claim physical key-up receipt confirmation: the retained row explicitly says its per-key sample was unavailable.

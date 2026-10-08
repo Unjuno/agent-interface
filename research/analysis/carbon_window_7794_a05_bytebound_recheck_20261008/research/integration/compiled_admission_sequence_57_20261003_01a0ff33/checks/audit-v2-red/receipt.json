@@ -1,0 +1,36 @@
+{
+  "command": [
+    "${USER_HOME}\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "research/integration/compiled_admission_sequence_57_20261003_01a0ff33",
+    "-p",
+    "test_audit_v2.py",
+    "-v"
+  ],
+  "started_utc": "2026-10-03T01:35:13.017197+00:00",
+  "ended_utc": "2026-10-03T01:35:15.189980+00:00",
+  "exit_code": 1,
+  "logs": {
+    "stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "redacted": false
+    },
+    "stderr": {
+      "sha256": "b9f322118e3b57e7146b36b9a96d8b6dfc04738d9e7249fab9bd4a3a4d1fd193",
+      "bytes": 1096206,
+      "original_sha256": "ce8dc8cfc9243d020bd34cb0693e3804e87a45f327462a10dfb36d4b9dae81cd",
+      "original_bytes": 1171226,
+      "redacted": true
+    }
+  },
+  "cwd": "${CHECKOUT}",
+  "derivation": "Public receipt/log copies; original bytes copied privately and read back unchanged before redaction. Cwd supplied by retained runner ROOT definition.",
+  "source_receipt_sha256": "1eca061e5f3f7a58c356dbc4409b717cf7b4522346a97af96a2755cd30aeac80"
+}

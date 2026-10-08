@@ -1,0 +1,52 @@
+# Selection-aware shadow audit T1 — finite construction
+
+## H — hypothesis
+
+On a finite labeled capture frame, delivered-only prevalence can diverge from full-frame truth under event-dependent suppression, while an exact positive-inclusion-probability shadow estimator recovers the target in design expectation. A label-independent selection null must calibrate in expectation. A target stratum with inclusion probability zero and a transient outside the capture grid must be explicitly not estimable.
+
+## T — experiment
+
+Issue #5681 T1; frozen design from Issue comment #5922739514. The finite frame contains four cases:
+
+1. Event-dependent gate: N=8, four positive transitions suppressed with independent audit probability π=1/2, and four negative transitions delivered with π=1. Enumerate all 2⁴=16 audit draws.
+2. Label-independent null: N=8, four positive and four negative labels; all units receive independent Bernoulli audit with π=1/2. Enumerate all 2⁸=256 draws.
+3. Zero inclusion: four positive suppressed units with π=0 and four negative delivered units with π=1; refuse a numeric recovery estimate.
+4. Out-of-frame transient: an additional labeled transition between captures is not part of the N=8 frame and is refused as not estimable.
+
+The candidate exhaustively enumerates exact rational design probabilities and Horvitz–Thompson prevalence for every draw. The independent raw-only auditor re-derives the scenario frame and expectation without importing candidate code, validates all rows and draws, and applies nine corruption controls, including attempts to emit numeric estimates for the zero-support and out-of-frame cases. It consumes only the candidate JSON.
+
+## D — decision
+
+`METHOD_PASS_SCOPED` only if event-dependent delivered prevalence differs from full-frame truth; both positive-support cases have exact HT design expectation equal to truth; the null calibrates; π=0 has no numeric estimate; the transient is excluded/refused; the raw-only audit and all seven corruption controls pass. Any malformed or incomplete table fails closed. No T2 empirical or GUI claim follows.
+
+## C — confounders
+
+The synthetic table has exact full-source labels, so weighting is unnecessary for this construction's truth; the test checks estimator algebra and refusal boundaries, not practical efficiency. The null isolates selection independent of labels. Candidate/auditor implementation errors remain possible despite independent code and mutations.
+
+## U — limitations
+
+Hand-authored finite frame, independent Bernoulli design, exact labels; no temporal dependence, label noise, hidden state, real capture process, GUI, action authority, or empirical prevalence. It establishes neither GUI safety nor T2 empirical selection bias. T0 `HOLD_NO_ELIGIBLE_SOURCE` and prior A1 results remain unchanged.
+
+## Execution controls
+
+- Branch: `research/selection-aware-shadow-audit-5681-t1-20261001`
+- Additive evidence path: `research/analysis/selection_aware_shadow_audit_5681_t1_v1/`
+- Original allocation request `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ORB-20261001-01` for 04:20–04:35 UTC was withdrawn before start and remains unconsumed; candidate=0, auditor=0.
+
+## Execution-route amendment — isolated local daemon allocation #02 (withdrawn)
+
+H/T/D/C/U and the finite construction above are unchanged. Allocation `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ISOLATED-ORB-20261001-02` was assigned for 04:20–05:20 UTC by #5085 comment #5924304367, then withdrawn before start after a Windows-host task incorrectly attributed its context to this allocation (#5085 comment #5924475005). Preserve that history; do not reuse #02.
+
+## Execution-route amendment — isolated local daemon allocation #03
+
+The exact owner is Codex thread `01a0b988-6457-7b11-bc58-f721eea051cf` on host `local` (macOS OrbStack), disambiguated in #5085 comment #5924529665. New allocation `SELECTION-AWARE-SHADOW-AUDIT-5681-T1-ISOLATED-ORB-20261001-03` is assigned for 2026-10-01 04:20–05:20 UTC by that queue comment; Issue record: #5681 comment #5924546434. H/T/D/C/U and finite construction are unchanged. Assignment is not execution permission until the fresh exact start gate passes.
+
+- Use a newly created OrbStack isolated Ubuntu 24.04 machine named `obs-audit-t1-5681-20261001`, capped at 1 CPU, 2 GiB memory, and 16 GiB disk; no host filesystem mount or SSH-agent forwarding. Install a distinct Docker daemon inside the guest; never use or inspect the shared macOS `orbstack` Docker endpoint for this allocation.
+- This reduces engine-state and host-integration collisions but is not a separate kernel boundary: OrbStack Linux machines and containers share the OrbStack Linux VM/kernel. The workload is benign, finite synthetic arithmetic.
+- Resolve and pin the Python OCI image digest and platform, plus exact engine/package versions, before candidate execution. Use only separate candidate and raw-only auditor containers, each network-disabled, read-only except designated output, 1 CPU, at most 512 MiB, and at most 64 PIDs. Transfer the source and result bundle with OrbStack file-transfer commands rather than a host filesystem mount.
+- Fresh queue, main/source freeze, isolated daemon, pinned image/platform, and empty output path are mandatory. Any conflict, drift, ambiguous resource boundary, bootstrap failure, or failed audit precondition is STOP before scientific candidate; do not retry the consumed allocation. Candidate=0/auditor=0 on pre-candidate STOP. Only a completed candidate followed by its independent raw-only audit can support `METHOD_PASS_SCOPED`.
+- After the bounded execution, retain the evidence bundle and isolated machine, stop that task-owned machine, rerun local CI, then batch-push and open a PR for review/merge. No result is claimed by this plan amendment.
+
+## Allocation #03 execution STOP
+
+The candidate container was invoked once, but the command used `runpy` to call `build()` and print a Python dictionary instead of invoking the candidate CLI that emits JSON to the designated output file. The rendered output began with a Python dict representation. No raw candidate JSON was saved, so the raw-only auditor could not be run. Treat candidate invocation count as 1 and auditor count as 0; do not rerun either under allocation #03. The outcome is `STOP_CANDIDATE_COMMAND_DIVERGENCE`, not a scientific FAIL and not `METHOD_PASS_SCOPED`. See `STOP.md` for the exact command and preserved limits. Local CI may run only as source validation and cannot repair or replace the consumed formal invocation.

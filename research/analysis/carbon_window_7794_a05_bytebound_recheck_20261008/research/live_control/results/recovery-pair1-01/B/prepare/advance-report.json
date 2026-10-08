@@ -1,0 +1,513 @@
+{
+  "state": "terminal",
+  "exchanges": [
+    {
+      "request": {
+        "after": 2,
+        "events": [
+          "clock"
+        ],
+        "timeout": 5,
+        "request_id": "clock-9f6f95fddb644c1ca4f320fe73279d3e",
+        "command": {
+          "op": "clock"
+        }
+      },
+      "started_ns": 96426127449,
+      "returned_ns": 96475369811,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "op": "clock",
+              "transport_request_id": "clock-9f6f95fddb644c1ca4f320fe73279d3e"
+            },
+            "received_ns": 96448044526,
+            "emit_started_ns": 96448057521
+          },
+          {
+            "event": "clock",
+            "runtime_ns": 96458431559,
+            "sequence": 1,
+            "emit_started_ns": 96458441778
+          }
+        ],
+        "cursor": 4,
+        "returned_ns": 96468817028,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "clock-9f6f95fddb644c1ca4f320fe73279d3e",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    },
+    {
+      "request": {
+        "after": 4,
+        "events": [
+          "terminal"
+        ],
+        "timeout": 15,
+        "action_id": "advance",
+        "request_id": "program-90007c18bfab45beb547e66ad7c76947",
+        "command": {
+          "op": "submit",
+          "id": "advance",
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "expected_sequence": 1,
+          "valid_until_ns": 126458431559
+        }
+      },
+      "started_ns": 96481502026,
+      "returned_ns": 96621630247,
+      "reply": {
+        "status": "boundary",
+        "records": [
+          {
+            "event": "command",
+            "command": {
+              "expected_sequence": 1,
+              "id": "advance",
+              "op": "submit",
+              "steps": [
+                {
+                  "op": "observe"
+                }
+              ],
+              "transport_request_id": "program-90007c18bfab45beb547e66ad7c76947",
+              "valid_until_ns": 126458431559
+            },
+            "received_ns": 96501329027,
+            "emit_started_ns": 96501333492
+          },
+          {
+            "event": "accepted",
+            "id": "advance",
+            "steps": 1,
+            "valid_until_ns": 126458431559,
+            "accepted_ns": 96511362236,
+            "emit_started_ns": 96511364909
+          },
+          {
+            "event": "step_started",
+            "id": "advance",
+            "step": 0,
+            "operation": "observe",
+            "issued_ns": 96520965508,
+            "emit_started_ns": 96520967784
+          },
+          {
+            "event": "observation",
+            "id": "advance",
+            "step": 0,
+            "sequence": 2,
+            "capture_ns": 96539582130,
+            "context_ns": 96546834181,
+            "context": [
+              [
+                "windows",
+                "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+              ],
+              [
+                "active_window",
+                6291463
+              ]
+            ],
+            "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/001.png",
+            "image_reused": true,
+            "image_prepare_ns": 4706620,
+            "image_ready_ns": 96564148461,
+            "input_focus_before": 6291464,
+            "input_focus_after": 6291464,
+            "focus_samples_match": true,
+            "pointer_binding": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_before": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "pointer_context_after": {
+              "focus": 6291464,
+              "surface": 6291463,
+              "geometry": [
+                0,
+                19,
+                1280,
+                781
+              ]
+            },
+            "capture_ms": 6.748563,
+            "wire_bytes": 269,
+            "exact": true,
+            "semantic_completion": "unknown",
+            "emit_started_ns": 96580415940
+          },
+          {
+            "event": "step_completed",
+            "id": "advance",
+            "step": 0,
+            "completed_ns": 96588845483,
+            "emit_started_ns": 96588848217
+          },
+          {
+            "event": "terminal",
+            "id": "advance",
+            "status": "completed",
+            "error": null,
+            "steps_completed": 1,
+            "release": {
+              "event": "owner_release",
+              "reason": "release",
+              "verified": true,
+              "buttons_down": [],
+              "keys_down": [],
+              "verified_ns": 96602403696,
+              "valid_until_ns": null
+            },
+            "terminal_ns": 96602452225,
+            "semantic_completion": "program status only; task scoring is separate",
+            "emit_started_ns": 96602455625
+          }
+        ],
+        "cursor": 10,
+        "returned_ns": 96615635203,
+        "authority": "none",
+        "acknowledgement": "not implied",
+        "command_receipt": {
+          "request_id": "program-90007c18bfab45beb547e66ad7c76947",
+          "replayed": false,
+          "state": "stdin_flushed"
+        }
+      }
+    }
+  ],
+  "program_sent": true,
+  "source_image": {
+    "status": "image",
+    "sequence": 1,
+    "capture_ns": 62496882429,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "last_reply": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "advance",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "transport_request_id": "program-90007c18bfab45beb547e66ad7c76947",
+          "valid_until_ns": 126458431559
+        },
+        "received_ns": 96501329027,
+        "emit_started_ns": 96501333492
+      },
+      {
+        "event": "accepted",
+        "id": "advance",
+        "steps": 1,
+        "valid_until_ns": 126458431559,
+        "accepted_ns": 96511362236,
+        "emit_started_ns": 96511364909
+      },
+      {
+        "event": "step_started",
+        "id": "advance",
+        "step": 0,
+        "operation": "observe",
+        "issued_ns": 96520965508,
+        "emit_started_ns": 96520967784
+      },
+      {
+        "event": "observation",
+        "id": "advance",
+        "step": 0,
+        "sequence": 2,
+        "capture_ns": 96539582130,
+        "context_ns": 96546834181,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/001.png",
+        "image_reused": true,
+        "image_prepare_ns": 4706620,
+        "image_ready_ns": 96564148461,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 6.748563,
+        "wire_bytes": 269,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 96580415940
+      },
+      {
+        "event": "step_completed",
+        "id": "advance",
+        "step": 0,
+        "completed_ns": 96588845483,
+        "emit_started_ns": 96588848217
+      },
+      {
+        "event": "terminal",
+        "id": "advance",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 96602403696,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 96602452225,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 96602455625
+      }
+    ],
+    "cursor": 10,
+    "returned_ns": 96615635203,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-90007c18bfab45beb547e66ad7c76947",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "terminal": {
+    "event": "terminal",
+    "id": "advance",
+    "status": "completed",
+    "error": null,
+    "steps_completed": 1,
+    "release": {
+      "event": "owner_release",
+      "reason": "release",
+      "verified": true,
+      "buttons_down": [],
+      "keys_down": [],
+      "verified_ns": 96602403696,
+      "valid_until_ns": null
+    },
+    "terminal_ns": 96602452225,
+    "semantic_completion": "program status only; task scoring is separate",
+    "emit_started_ns": 96602455625
+  },
+  "image": {
+    "status": "image",
+    "sequence": 2,
+    "capture_ns": 96539582130,
+    "path": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/001.png",
+    "relative_path": "001.png",
+    "sha256": "0534b1405724627cf8e0916e0e50cbe8613d4765be71c05ea7bb2fd55c23ab14",
+    "authority": "none",
+    "freshness": "historical referenced capture; no new observation"
+  },
+  "continuation_batch": {
+    "status": "boundary",
+    "records": [
+      {
+        "event": "command",
+        "command": {
+          "expected_sequence": 1,
+          "id": "advance",
+          "op": "submit",
+          "steps": [
+            {
+              "op": "observe"
+            }
+          ],
+          "transport_request_id": "program-90007c18bfab45beb547e66ad7c76947",
+          "valid_until_ns": 126458431559
+        },
+        "received_ns": 96501329027,
+        "emit_started_ns": 96501333492
+      },
+      {
+        "event": "accepted",
+        "id": "advance",
+        "steps": 1,
+        "valid_until_ns": 126458431559,
+        "accepted_ns": 96511362236,
+        "emit_started_ns": 96511364909
+      },
+      {
+        "event": "step_started",
+        "id": "advance",
+        "step": 0,
+        "operation": "observe",
+        "issued_ns": 96520965508,
+        "emit_started_ns": 96520967784
+      },
+      {
+        "event": "observation",
+        "id": "advance",
+        "step": 0,
+        "sequence": 2,
+        "capture_ns": 96539582130,
+        "context_ns": 96546834181,
+        "context": [
+          [
+            "windows",
+            "0x00600007  0 HPLaptop shape.svg - Inkscape\n"
+          ],
+          [
+            "active_window",
+            6291463
+          ]
+        ],
+        "image": "/mnt/c/Users/junny/Documents/New project/agent-interface/research/live_control/results-local/recovery-pair1-01/B/runtime/001.png",
+        "image_reused": true,
+        "image_prepare_ns": 4706620,
+        "image_ready_ns": 96564148461,
+        "input_focus_before": 6291464,
+        "input_focus_after": 6291464,
+        "focus_samples_match": true,
+        "pointer_binding": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_before": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "pointer_context_after": {
+          "focus": 6291464,
+          "surface": 6291463,
+          "geometry": [
+            0,
+            19,
+            1280,
+            781
+          ]
+        },
+        "capture_ms": 6.748563,
+        "wire_bytes": 269,
+        "exact": true,
+        "semantic_completion": "unknown",
+        "emit_started_ns": 96580415940
+      },
+      {
+        "event": "step_completed",
+        "id": "advance",
+        "step": 0,
+        "completed_ns": 96588845483,
+        "emit_started_ns": 96588848217
+      },
+      {
+        "event": "terminal",
+        "id": "advance",
+        "status": "completed",
+        "error": null,
+        "steps_completed": 1,
+        "release": {
+          "event": "owner_release",
+          "reason": "release",
+          "verified": true,
+          "buttons_down": [],
+          "keys_down": [],
+          "verified_ns": 96602403696,
+          "valid_until_ns": null
+        },
+        "terminal_ns": 96602452225,
+        "semantic_completion": "program status only; task scoring is separate",
+        "emit_started_ns": 96602455625
+      }
+    ],
+    "cursor": 10,
+    "returned_ns": 96615635203,
+    "authority": "none",
+    "acknowledgement": "not implied",
+    "command_receipt": {
+      "request_id": "program-90007c18bfab45beb547e66ad7c76947",
+      "replayed": false,
+      "state": "stdin_flushed"
+    }
+  },
+  "authority": "none; clock refresh does not refresh image; ordinary v9 admission applies"
+}
