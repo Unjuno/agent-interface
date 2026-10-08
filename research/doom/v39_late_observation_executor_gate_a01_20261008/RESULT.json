@@ -1,0 +1,24 @@
+{
+  "schema": "issue59-v39-late-observation-executor-gate-a01",
+  "main_commit": "bfcc14e08fbfe5f2f04cd0237d13559e5d62538b",
+  "source_sha256": {
+    "map01_overlap_controller_v39.py": "02a6289390837bb97198c98fe03c41c775d829bf6606fc4c11085630b3de0793",
+    "session_map01_v12.py": "97d60f64ae6dc075fd7b18a452813c90d7c5d366d71e324905c17d74604585b2",
+    "doom_typed_coast_backend_v1.py": "fda541e12414d6c77b41787eaf208e8dae6b462846ad401d4c7b235b8ae2b079",
+    "executor_v12.py": "e78440263866dd06eaf868e902ae50b08aa2b634f086bfbd412f6c338ccea2b2"
+  },
+  "scenario": {
+    "controller_latest_sequence": 1,
+    "late_typed_observation_sequence": 2,
+    "producer_backend_sequence_at_submit": 2,
+    "executor_expected_sequence": 1
+  },
+  "exact_executor_method_result": {
+    "rejected": true,
+    "reason": "latest observation sequence required before input",
+    "accepted_or_input_events": 0
+  },
+  "controller_rejection_disposition": "RuntimeError(accepted); escapes execute_segment to controller failure cleanup; no automatic fresh plan in this branch",
+  "decision": "PASS_FAIL_CLOSED_NO_STALE_EXECUTOR_ADMISSION; SESSION_CONTINUITY_NOT_ESTABLISHED",
+  "scope": "Synthetic late-event schedule; exact current-main Executor.submit AST. No full Doom backend, queue process, GUI, model, OS input, game, or live threat/recovery run."
+}
