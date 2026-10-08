@@ -1,0 +1,124 @@
+"""Independent exhaustive truth-table/transitive-closure oracle; import no producer."""
+import ast,copy,datetime,hashlib,json,math,os,pathlib
+ROOT=pathlib.Path(__file__).resolve().parent
+def need(v,msg):
+    if not v:raise ValueError(msg)
+def pairs(rows):
+    out={}
+    for k,v in rows:need(k not in out,'duplicate JSON key');out[k]=v
+    return out
+def number(s):
+    f=float(s);need(math.isfinite(f),'nonfinite float');return f
+def strict(b):return json.loads(b,object_pairs_hook=pairs,parse_float=number,parse_constant=lambda x:(_ for _ in ()).throw(ValueError('nonfinite JSON')))
+def load(n):return strict((ROOT/n).read_bytes())
+PINS=load('SOURCE_PINS.json');SPEC=load('SPEC.json')
+PCS=['SNAP','SCAN','MATCH_CHECK','MISSING','FALSE_CHECK','DONE_MATCH','DONE_TIMEOUT']
+PATTERNS=[(None,None),(0,None),(None,0),(0,0),(1,0)]
+UNIVERSE={(pc,q,s) for pc in PCS for q,s in PATTERNS}
+def table(policy):
+    edges=set()
+    for pc,q,s in UNIVERSE:
+        if pc.startswith('DONE_'):continue
+        start=(pc,q,s)
+        # Truth table over equality patterns. No producer canonicalizer or step routine.
+        if policy=='baseline':target=('DONE_TIMEOUT',q,s) if q is None else ('DONE_MATCH',None,s);event='A_ATOMIC_TIMEOUT' if q is None else 'A_ATOMIC_MATCH'
+        elif pc=='SNAP':target=('SCAN',None,None) if q is None else ('SCAN',0,0);event='A_SNAPSHOT'
+        elif pc=='SCAN':target=('FALSE_CHECK' if s is None else 'MATCH_CHECK',q,s);event='A_EMPTY_SCAN' if s is None else 'A_TRUE_SCAN'
+        elif pc=='MATCH_CHECK':target=('DONE_MATCH',None,s) if q==s else ('MISSING',q,s);event='A_MATCH_REMOVE' if q==s else 'A_SELECTED_MISSING'
+        elif pc=='MISSING':target=('DONE_TIMEOUT' if policy=='retry_guard' else 'SNAP',q,s);event='A_MISSING_TIMEOUT' if policy=='retry_guard' else 'A_MISSING_RETRY'
+        elif policy=='outside' and q!=s:target=('SNAP',q,s);event='A_CHANGED_RETRY'
+        else:target=('DONE_TIMEOUT',q,s);event='A_FALSE_TIMEOUT'
+        edges.add((start,target,'A',event))
+        if q is None:edges.add((start,(pc,0 if s is None else 1,s),'R','R_FRESH_APPEND'))
+        else:edges.add((start,(pc,None,s),'B','B_CONSUME'))
+    reachable={('SNAP',0,None)}
+    while True:
+        new=reachable|{t for s,t,_,_ in edges if s in reachable}
+        if new==reachable:break
+        reachable=new
+    return reachable,{e for e in edges if e[0] in reachable}
+def state(s):
+    need(set(s)=={'pc','q','snap'},'state keys')
+    for k in ['q','snap']:need(s[k] is None or type(s[k]) is int and s[k] in [0,1],'typed handle')
+    t=(s['pc'],s['q'],s['snap']);need(t in UNIVERSE,'canonical equality pattern');return t
+def semantic(m):
+    need(m['source_pins']==PINS,'full source pins');need(m['decision']=='PASS_SCOPED_SELECTED_MISSING_COUNTEREXAMPLE','restricted decision');need(m['allocation']==SPEC['id'],'allocation')
+    need([g['policy'] for g in m['graphs']]==SPEC['policies'],'policy coverage');summaries=[]
+    for g in m['graphs']:
+        states=[state(s) for s in g['states']];need(len(set(states))==len(states),'duplicate state');need(type(g['initial']) is int and states[g['initial']]==('SNAP',0,None),'initial')
+        edges=[]
+        for e in g['edges']:
+            need(set(e)=={'from','to','actor','event'} and all(type(e[k]) is int and 0<=e[k]<len(states) for k in ['from','to']),'typed edge')
+            edges.append((e['from'],e['to'],e['actor'],e['event']))
+        need(len(edges)==len(set(edges)),'duplicate transition');rs,re=table(g['policy']);actual={(states[i],states[j],role,event) for i,j,role,event in edges};need(set(states)==rs and actual==re,'complete independent relation')
+        n=len(states);reach=[[i==j for j in range(n)] for i in range(n)]
+        for i,j,_,_ in edges:reach[i][j]=True
+        for k in range(n):
+            for i in range(n):
+                if reach[i][k]:
+                    for j in range(n):reach[i][j]=reach[i][j] or reach[k][j]
+        a=any(role=='A' and reach[j][i] for i,j,role,_ in edges);all3=False
+        for i in range(n):
+            component={j for j in range(n) if reach[i][j] and reach[j][i] and not states[j][0].startswith('DONE_')}
+            internal=[(role,event) for u,v,role,event in edges if u in component and v in component]
+            all3=all3 or ({role for role,_ in internal}=={'A','B','R'} and {'A_TRUE_SCAN','A_SELECTED_MISSING'}.issubset({event for _,event in internal}))
+        expected=g['policy'] in ['outside','false_deadline_first']
+        need(a==expected and all3==expected and type(g['A_progress_cycle']) is bool and g['A_progress_cycle']==a and type(g['all3_progress_cycle']) is bool and g['all3_progress_cycle']==all3,'cycle decision')
+        callbacks=0
+        if all3:
+            l=g['lasso'];cursor=l['start'];roles=set()
+            for e in l['edges']:
+                need((e['from'],e['to'],e['actor'],e['event']) in edges and e['from']==cursor and not states[cursor][0].startswith('DONE_'),'saved lasso edge/adjacency');cursor=e['to'];roles.add(e['actor']);callbacks+=int(e['event']=='A_TRUE_SCAN')
+            need(cursor==l['start'] and roles=={'A','B','R'} and callbacks>=1 and any(e['event']=='A_SELECTED_MISSING' for e in l['edges']),'matching progress witness')
+        else:need(g['lasso'] is None,'no fair lasso')
+        # Max A-steps across arbitrary finite B/R insertions if there is no A cycle.
+        bound=None
+        if not a:
+            distances=[None]*n;distances[g['initial']]=0
+            for _ in range(n):
+                changed=False
+                for i,j,role,_ in edges:
+                    if distances[i] is not None:
+                        v=distances[i]+int(role=='A')
+                        if distances[j] is None or distances[j]<v:distances[j]=v;changed=True
+                if not changed:break
+            bound=max(v for v in distances if v is not None)
+            need(bound==(1 if g['policy']=='baseline' else 4),'conditional A-step bound')
+        summaries.append(dict(policy=g['policy'],states=n,edges=len(edges),A_progress_cycle=a,all3_progress_cycle=all3,witness_true_callbacks=callbacks,max_A_steps_to_terminal_if_A_progresses=bound))
+    return summaries
+def source_check():
+    sources={p:(ROOT/(p+'.py.txt')).read_bytes() for p in SPEC['policies']}
+    for p,data in sources.items():need(len(data)==PINS[p]['bytes'] and hashlib.sha256(data).hexdigest()==PINS[p]['sha256'],'source bytes')
+    trees={p:ast.parse(b) for p,b in sources.items()};functions={}
+    for p,t in trees.items():
+        c=next(n for n in t.body if isinstance(n,ast.ClassDef) and n.name=='CodexAppServerClient');f=next(n for n in c.body if isinstance(n,ast.FunctionDef) and n.name=='wait_notification');functions[p]=f;c.body.remove(f)
+    need(len({ast.dump(t) for t in trees.values()})==1,'all other current ASTs unchanged');need(len({ast.dump(f.args) for f in functions.values()})==1,'signature unchanged')
+    segments={p:ast.get_source_segment(sources[p].decode(),f) for p,f in functions.items()}
+    outside=segments['outside'];deadline=segments['false_deadline_first'];guard=segments['retry_guard']
+    need(outside.index('if selected_missing:')<outside.index('remaining = deadline -'),'original missing before expiry')
+    need(deadline.index('if selected_missing:')<deadline.index('remaining = deadline -'),'false-only correction still missing before expiry')
+    need(guard.index('if selected_missing:')<guard.index('remaining = deadline -')<guard.index('current = tuple(self._notifications)'),'guard missing deadline inserted')
+    node=functions['retry_guard'];missing=next(n for n in ast.walk(node) if isinstance(n,ast.If) and isinstance(n.test,ast.Name) and n.test.id=='selected_missing');need(len(missing.body)==3 and isinstance(missing.body[0],ast.Assign) and isinstance(missing.body[1],ast.If) and isinstance(missing.body[1].body[0],ast.Raise) and isinstance(missing.body[2],ast.Continue),'missing timeout before continue')
+    changed=next(n for n in ast.walk(node) if isinstance(n,ast.If) and isinstance(n.test,ast.BoolOp));need(len(changed.body)==3 and isinstance(changed.body[0],ast.Assign) and isinstance(changed.body[1],ast.If) and isinstance(changed.body[2],ast.Continue),'changed timeout before continue')
+    # Match removal precedes every new timeout guard; no initial present-match priority changed.
+    need(guard.index('return message')<guard.index('if selected_missing:'),'present match return priority')
+    return {'source_images':4,'other_methods_and_module_AST_unchanged':True,'present_match_precedes_guard':True,'source_execution':0}
+def main():
+    freeze=load('FREEZE.json')
+    for n,p in freeze['inputs'].items():b=(ROOT/n).read_bytes();need(len(b)==p['bytes'] and hashlib.sha256(b).hexdigest()==p['sha256'],'frozen input join')
+    source=source_check();model=load('MODEL.json');summary=semantic(model)
+    mutants=[('missing_B',lambda m:m['graphs'][1]['edges'].pop(next(i for i,e in enumerate(m['graphs'][1]['edges']) if e['actor']=='B'))),('duplicate_edge',lambda m:m['graphs'][1]['edges'].append(copy.deepcopy(m['graphs'][1]['edges'][0]))),('Boolean_handle',lambda m:m['graphs'][1]['states'][0].update(q=True)),('cycle_false',lambda m:m['graphs'][2].update(A_progress_cycle=False)),('fairness_false',lambda m:m['graphs'][1].update(all3_progress_cycle=False)),('lasso_actor',lambda m:m['graphs'][2]['lasso']['edges'][0].update(actor='R' if m['graphs'][2]['lasso']['edges'][0]['actor']!='R' else 'B')),('missing_retry_erased',lambda m:m['graphs'][2]['edges'].pop(next(i for i,e in enumerate(m['graphs'][2]['edges']) if e['event']=='A_MISSING_RETRY'))),('present_match_erased',lambda m:m['graphs'][3]['edges'].pop(next(i for i,e in enumerate(m['graphs'][3]['edges']) if e['event']=='A_MATCH_REMOVE'))),('forged_source_pin',lambda m:m['source_pins']['retry_guard'].update(sha256='0'*64)),('forged_decision',lambda m:m.update(decision='PASS_PRODUCTION_DEADLINE'))]
+    rejected=[]
+    for name,mutate in mutants:
+        copied=copy.deepcopy(model);mutate(copied);need(copied!=model,'effective semantic mutation')
+        try:semantic(copied)
+        except ValueError as e:rejected.append(dict(name=name,reason=str(e)))
+        else:raise ValueError('accepted semantic corruption '+name)
+    parser=[]
+    for name,b in [('duplicate',b'{"x":1,"x":2}'),('NaN',b'{"x":NaN}'),('infinity',b'{"x":1e999}'),('malformed',b'{"x":')]:
+        try:strict(b)
+        except ValueError as e:parser.append(dict(name=name,reason=str(e)))
+        else:raise ValueError('accepted malformed sample')
+    result=dict(schema='selected-missing-independent-saved-audit-v1',decision=model['decision'],passed=True,source_check=source,graphs=summary,semantic_refusals=rejected,parser_refusals=parser,model_sha256=hashlib.sha256((ROOT/'MODEL.json').read_bytes()).hexdigest(),checker_sha256=hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),pid=os.getpid(),native_calls=0,source_calls=0,limits=SPEC['limits'])
+    (ROOT/'AUDIT.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
+if __name__=='__main__':main()
