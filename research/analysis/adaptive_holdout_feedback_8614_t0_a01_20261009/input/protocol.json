@@ -1,0 +1,23 @@
+{
+  "protocol_id":"AHF-8614-v1",
+  "families":["null","planted"],
+  "validation_cases":48,
+  "confirmatory_cases":256,
+  "candidate_variants":128,
+  "true_effect":0.20,
+  "baseline_mean":0.50,
+  "shared_case_halfwidth":0.08,
+  "candidate_case_halfwidth":0.18,
+  "reusable_noise_sigma":0.05,
+  "reusable_answer_bounds":[0.0,1.0],
+  "query_composition_budget":16,
+  "rounds":[1,4,8,16],
+  "false_superiority_margin":0.02,
+  "confirmatory_confidence_z":1.96,
+  "required_reusable_optimism_fractional_reduction":0.20,
+  "maximum_planted_power_loss":0.10,
+  "minimum_reusable_planted_power":0.70,
+  "lockbox_null_coverage_bounds":[0.90,0.99],
+  "safety_gates":{"unsafe_attempt":0,"gate_regression":0,"integrity_failure":0},
+  "seed_namespace":"formal seeds are explicit in fixture.json; construction seeds are disjoint"
+}

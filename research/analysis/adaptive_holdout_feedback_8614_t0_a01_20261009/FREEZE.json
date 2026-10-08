@@ -1,0 +1,41 @@
+{
+  "allocation_id": "8614-T0-A01-20261009",
+  "branch": "research/8614-adaptive-holdout-t0-a01-20261009",
+  "commands": [
+    "python3 src/candidate.py input/fixture.json raw/candidate.json",
+    "python3 src/auditor.py input/fixture.json raw/candidate.json audit/audit.json"
+  ],
+  "decision_rules": {
+    "FAIL": "Preserve the exact auditor FAIL/UNCERTAIN/HOLD disposition; do not rerun or replace this allocation.",
+    "PASS": "PASS_ADAPTIVE_FEEDBACK_METHOD_SCOPED only if auditor reconstructs all 13,312 rows, exact gates match in every arm, full release optimism increases with horizon, reusable median optimism is at least 20% lower than both full and aggregate at 16 queries, null false-superiority is lower than full, reusable planted discovery power >=0.70 and within 0.10 of full, and one-shot null lockbox coverage lies in [0.90,0.99]."
+  },
+  "expected_runs": 13312,
+  "families": [
+    "null",
+    "planted"
+  ],
+  "file_sha256": {
+    "construction/attempt_02/audit.json": "ae221a07bfe08298e5ae7b56f0fac275ef6ff6459f3f77f5ccac74d10a893377",
+    "construction/attempt_02/candidate.json": "2da0d2ba3bfd8c8995a561715601fc3a6bf07fca6b2ea417d97dc7ef9fadfbfd",
+    "construction/attempt_02/fixture.json": "b6078c809040fd309282430395ada9d6263bcd13b37d6a7c0c4ccb2bc1701526",
+    "input/fixture.json": "ec44c204bff6186a240087dbf01292f35955c8b079635de88e4347de9995b5be",
+    "input/protocol.json": "16293a696911ce885db117b9c8bb89776728159476274bbbadaa7a34dd4e1e71",
+    "src/auditor.py": "8bdd87ad473d6c529133b57af2720714521c185be1b3b0a7e5d59d9d8b54793f",
+    "src/candidate.py": "d381d8f60fb0ea3adf6958d27f56109facd64497b156c441fd2b15f2bd855ad4"
+  },
+  "formal_replicates_per_family": 512,
+  "formal_seed_range_inclusive": [
+    41001,
+    41512
+  ],
+  "frozen_utc": "2026-10-08T20:02:15Z",
+  "no_retry": true,
+  "protocol_id": "AHF-8614-v1",
+  "runtime": {
+    "machine": "arm64",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.5 (main, May 10 2026, 10:21:34) [Clang 21.0.0 (clang-2100.0.123.102)]"
+  },
+  "selector_channel_split": "selector_transcript contains only turn, variant, and released values; audit_trace and confirmation truth are auditor-only.",
+  "source_main_commit": "771e8696b66deb18b4b3baf14e1ab8e2bc537edf"
+}
