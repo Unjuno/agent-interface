@@ -1,0 +1,37 @@
+{
+  "schema": "v39-post8736-current-main-regression-a03-freeze-v1",
+  "allocation_id": "V39-CURRENT-MAIN-REGRESSION-A03-FFE5292-20261009",
+  "tested_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "parent_replay": {
+    "pr": 8731,
+    "head": "50f0293b18107ee456f201adde24162a756cb1d3",
+    "tested_commit": "b4046798ed8902745a36e8fda091204233bb06d3",
+    "note": "A03 is a fresh exact-current-main replay of the same suite; prior PR evidence remains immutable and is not overwritten."
+  },
+  "runtime": {
+    "python": "CPython 3.12.14",
+    "path": "/Users/taka/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "platform": "macOS arm64"
+  },
+  "test_modules": [
+    "research.doom.test_map01_overlap_controller_v39",
+    "research.doom.test_map01_overlap_controller_v39_dual_signal",
+    "research.doom.test_map01_overlap_controller_v39_cover_terminal",
+    "research.doom.test_map01_v39_pending_observation_drain",
+    "research.doom.test_session_map01_v15",
+    "research.live_control.test_executor_v13",
+    "research.live_control.test_input_owner_v12_explicit_up_cancel"
+  ],
+  "static_import_closure": {
+    "source": "PR #8731 SOURCE_CLOSURE.json",
+    "file_count": 73,
+    "current_main_missing_paths": 0,
+    "current_main_changed_blob_ids": 0
+  },
+  "scope": {
+    "source_and_fake_x_regression_only": true,
+    "game_model_vm_gui_or_native_input": false,
+    "live_allocation": false,
+    "formal_pass": false
+  }
+}
