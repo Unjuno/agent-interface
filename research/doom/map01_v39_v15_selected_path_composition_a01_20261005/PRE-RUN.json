@@ -1,0 +1,63 @@
+{
+  "schema": "v39-v15-selected-path-composition-a01-freeze-v1",
+  "prereg_comment": 5986926684,
+  "branch": "research/v39-v15-selected-path-composition-a01-20261005",
+  "base_commit": "f60752d0fb71595363a80977636ca74c1fd10b21",
+  "source_bindings": [
+    {
+      "path": "research/doom/map01_overlap_controller_v39.py",
+      "git_blob": "cdf61eec2c030d7456b34a58907e9c43d5d72084",
+      "selector_lines": "585-597 (session_command)"
+    },
+    {
+      "path": "research/doom/session_map01_v15.py",
+      "git_blob": "f71ca01426a703e4160c9403395fed03416c772e",
+      "sha256": "661b3ac311f72517670a8fe37bc2901e9479963af9cdb0a219ed83ea48601724"
+    },
+    {
+      "path": "research/doom/doom_owner_thread_release_batch_backend_v1.py",
+      "git_blob": "f249ef036a9ec56740961af4aee375a28d9e133f",
+      "sha256": "925e9499cc46682f739ab5a754979aeeeac26c75217b22b0ac3b054926392cc9"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v4.py",
+      "git_blob": "02c23c34e9382650a46e80d75fe49d5409153b75",
+      "sha256": "dce08b87532dcaeac85b22be8820a4d30064fed458ae438d5ae956eeae2a70c3"
+    },
+    {
+      "path": "research/live_control/input_transition_owner_v3.py",
+      "git_blob": "7d990a654804ba3ed7d406baee40c31b6cb27375",
+      "sha256": "b6fc1c92c34bbb82f7542c303acf2004dfc7d99f471aa328cafbc710e7aec456"
+    },
+    {
+      "path": "research/live_control/input_owner_v12.py",
+      "git_blob": "3addfe06a9d5116ec3b3d42b2ffe139885872adc",
+      "sha256": "cbfe57373a029aa7d0ae9e70e6cf99806262f8565e27a4415d060bdf73702d9a"
+    },
+    {
+      "path": "research/live_control/input_owner_v10.py",
+      "git_blob": "341b3c01649943ddaad5f28431a792c4889cc36e",
+      "sha256": "ceae7d9983cd0ba13a35e01ce2ce7dbbf03a0397b23ddc123b0110b4d4de670b"
+    },
+    {
+      "path": "research/live_control/executor_v13.py",
+      "git_blob": "b9510765f34907bcfdbf25a5700e9d31d17c76b7",
+      "sha256": "5c54927e5087af42006c712ec906e2ec69e9155586730dee494dd3b5d43ced9a"
+    }
+  ],
+  "candidate_sha256": "c3b59a39262a8d9fa76877089142c2fe09ef35c218c233ad2160517cc3c857ce",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "runtime": {
+    "os": "Windows",
+    "python": "3.11.9",
+    "container": false,
+    "live_input": false
+  },
+  "boundaries": {
+    "actual": "pinned V39 session_command function, current V15 wrapper, release-batch Backend v1, owner transition V4/V3, InputOwner V12/V10, Executor V13 class body",
+    "stubbed": "the typed backend's game-facing parent, Xlib/device, V12 controller main and DoomGame instance",
+    "not_exercised": "full V39 controller process/game loop, real X, physical keyboard, application effect, threat response, latency, feedback usefulness, recovery efficacy, gameplay"
+  }
+}
