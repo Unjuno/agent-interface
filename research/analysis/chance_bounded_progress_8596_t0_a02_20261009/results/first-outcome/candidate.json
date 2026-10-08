@@ -1,0 +1,771 @@
+{
+  "allocation": "UNJUNO-8596-CHANCE-BOUNDED-PROGRESS-T0-A02-20261009",
+  "cases": {
+    "geometric_high": {
+      "curve": [
+        {
+          "all_miss_probability_at_max_endpoint": "1/4",
+          "endpoint_rows": [
+            {
+              "p_vector": [
+                "1/2"
+              ],
+              "path_count": 2,
+              "reachability": "1/2"
+            },
+            {
+              "p_vector": [
+                "3/4"
+              ],
+              "path_count": 2,
+              "reachability": "3/4"
+            }
+          ],
+          "horizon": 1,
+          "lower": "1/2",
+          "lower_meets_threshold": false,
+          "midpoint_meets_threshold": false,
+          "midpoint_probability": "5/8",
+          "sure_by_horizon": false,
+          "upper": "3/4"
+        },
+        {
+          "all_miss_probability_at_max_endpoint": "1/16",
+          "endpoint_rows": [
+            {
+              "p_vector": [
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 4,
+              "reachability": "3/4"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "3/4"
+              ],
+              "path_count": 4,
+              "reachability": "7/8"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "1/2"
+              ],
+              "path_count": 4,
+              "reachability": "7/8"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "3/4"
+              ],
+              "path_count": 4,
+              "reachability": "15/16"
+            }
+          ],
+          "horizon": 2,
+          "lower": "3/4",
+          "lower_meets_threshold": false,
+          "midpoint_meets_threshold": true,
+          "midpoint_probability": "55/64",
+          "sure_by_horizon": false,
+          "upper": "15/16"
+        },
+        {
+          "all_miss_probability_at_max_endpoint": "1/64",
+          "endpoint_rows": [
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 8,
+              "reachability": "7/8"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "3/4"
+              ],
+              "path_count": 8,
+              "reachability": "15/16"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "3/4",
+                "1/2"
+              ],
+              "path_count": 8,
+              "reachability": "15/16"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "3/4",
+                "3/4"
+              ],
+              "path_count": 8,
+              "reachability": "31/32"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 8,
+              "reachability": "15/16"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "1/2",
+                "3/4"
+              ],
+              "path_count": 8,
+              "reachability": "31/32"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "3/4",
+                "1/2"
+              ],
+              "path_count": 8,
+              "reachability": "31/32"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "3/4",
+                "3/4"
+              ],
+              "path_count": 8,
+              "reachability": "63/64"
+            }
+          ],
+          "horizon": 3,
+          "lower": "7/8",
+          "lower_meets_threshold": true,
+          "midpoint_meets_threshold": true,
+          "midpoint_probability": "485/512",
+          "sure_by_horizon": false,
+          "upper": "63/64"
+        },
+        {
+          "all_miss_probability_at_max_endpoint": "1/256",
+          "endpoint_rows": [
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "15/16"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/2",
+                "3/4"
+              ],
+              "path_count": 16,
+              "reachability": "31/32"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "3/4",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "31/32"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "3/4",
+                "3/4"
+              ],
+              "path_count": 16,
+              "reachability": "63/64"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "3/4",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "31/32"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "3/4",
+                "1/2",
+                "3/4"
+              ],
+              "path_count": 16,
+              "reachability": "63/64"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "3/4",
+                "3/4",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "63/64"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "3/4",
+                "3/4",
+                "3/4"
+              ],
+              "path_count": 16,
+              "reachability": "127/128"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "1/2",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "31/32"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "1/2",
+                "1/2",
+                "3/4"
+              ],
+              "path_count": 16,
+              "reachability": "63/64"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "1/2",
+                "3/4",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "63/64"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "1/2",
+                "3/4",
+                "3/4"
+              ],
+              "path_count": 16,
+              "reachability": "127/128"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "3/4",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "63/64"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "3/4",
+                "1/2",
+                "3/4"
+              ],
+              "path_count": 16,
+              "reachability": "127/128"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "3/4",
+                "3/4",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "127/128"
+            },
+            {
+              "p_vector": [
+                "3/4",
+                "3/4",
+                "3/4",
+                "3/4"
+              ],
+              "path_count": 16,
+              "reachability": "255/256"
+            }
+          ],
+          "horizon": 4,
+          "lower": "15/16",
+          "lower_meets_threshold": true,
+          "midpoint_meets_threshold": true,
+          "midpoint_probability": "4015/4096",
+          "sure_by_horizon": false,
+          "upper": "255/256"
+        }
+      ],
+      "kind": "geometric_interval",
+      "marker_visible_to_policy": false,
+      "p_max": "3/4",
+      "p_min": "1/2",
+      "threshold": "4/5",
+      "universal_finite_sure_bound": false
+    },
+    "geometric_wide": {
+      "curve": [
+        {
+          "all_miss_probability_at_max_endpoint": "1/2",
+          "endpoint_rows": [
+            {
+              "p_vector": [
+                "1/4"
+              ],
+              "path_count": 2,
+              "reachability": "1/4"
+            },
+            {
+              "p_vector": [
+                "1/2"
+              ],
+              "path_count": 2,
+              "reachability": "1/2"
+            }
+          ],
+          "horizon": 1,
+          "lower": "1/4",
+          "lower_meets_threshold": false,
+          "midpoint_meets_threshold": false,
+          "midpoint_probability": "3/8",
+          "sure_by_horizon": false,
+          "upper": "1/2"
+        },
+        {
+          "all_miss_probability_at_max_endpoint": "1/4",
+          "endpoint_rows": [
+            {
+              "p_vector": [
+                "1/4",
+                "1/4"
+              ],
+              "path_count": 4,
+              "reachability": "7/16"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/2"
+              ],
+              "path_count": 4,
+              "reachability": "5/8"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/4"
+              ],
+              "path_count": 4,
+              "reachability": "5/8"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 4,
+              "reachability": "3/4"
+            }
+          ],
+          "horizon": 2,
+          "lower": "7/16",
+          "lower_meets_threshold": false,
+          "midpoint_meets_threshold": false,
+          "midpoint_probability": "39/64",
+          "sure_by_horizon": false,
+          "upper": "3/4"
+        },
+        {
+          "all_miss_probability_at_max_endpoint": "1/8",
+          "endpoint_rows": [
+            {
+              "p_vector": [
+                "1/4",
+                "1/4",
+                "1/4"
+              ],
+              "path_count": 8,
+              "reachability": "37/64"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/4",
+                "1/2"
+              ],
+              "path_count": 8,
+              "reachability": "23/32"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/2",
+                "1/4"
+              ],
+              "path_count": 8,
+              "reachability": "23/32"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 8,
+              "reachability": "13/16"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/4",
+                "1/4"
+              ],
+              "path_count": 8,
+              "reachability": "23/32"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/4",
+                "1/2"
+              ],
+              "path_count": 8,
+              "reachability": "13/16"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/4"
+              ],
+              "path_count": 8,
+              "reachability": "13/16"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 8,
+              "reachability": "7/8"
+            }
+          ],
+          "horizon": 3,
+          "lower": "37/64",
+          "lower_meets_threshold": false,
+          "midpoint_meets_threshold": false,
+          "midpoint_probability": "387/512",
+          "sure_by_horizon": false,
+          "upper": "7/8"
+        },
+        {
+          "all_miss_probability_at_max_endpoint": "1/16",
+          "endpoint_rows": [
+            {
+              "p_vector": [
+                "1/4",
+                "1/4",
+                "1/4",
+                "1/4"
+              ],
+              "path_count": 16,
+              "reachability": "175/256"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/4",
+                "1/4",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "101/128"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/4",
+                "1/2",
+                "1/4"
+              ],
+              "path_count": 16,
+              "reachability": "101/128"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/4",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "55/64"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/2",
+                "1/4",
+                "1/4"
+              ],
+              "path_count": 16,
+              "reachability": "101/128"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/2",
+                "1/4",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "55/64"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/2",
+                "1/2",
+                "1/4"
+              ],
+              "path_count": 16,
+              "reachability": "55/64"
+            },
+            {
+              "p_vector": [
+                "1/4",
+                "1/2",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "29/32"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/4",
+                "1/4",
+                "1/4"
+              ],
+              "path_count": 16,
+              "reachability": "101/128"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/4",
+                "1/4",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "55/64"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/4",
+                "1/2",
+                "1/4"
+              ],
+              "path_count": 16,
+              "reachability": "55/64"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/4",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "29/32"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/4",
+                "1/4"
+              ],
+              "path_count": 16,
+              "reachability": "55/64"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/4",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "29/32"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/2",
+                "1/4"
+              ],
+              "path_count": 16,
+              "reachability": "29/32"
+            },
+            {
+              "p_vector": [
+                "1/2",
+                "1/2",
+                "1/2",
+                "1/2"
+              ],
+              "path_count": 16,
+              "reachability": "15/16"
+            }
+          ],
+          "horizon": 4,
+          "lower": "175/256",
+          "lower_meets_threshold": false,
+          "midpoint_meets_threshold": true,
+          "midpoint_probability": "3471/4096",
+          "sure_by_horizon": false,
+          "upper": "15/16"
+        }
+      ],
+      "kind": "geometric_interval",
+      "marker_visible_to_policy": false,
+      "p_max": "1/2",
+      "p_min": "1/4",
+      "threshold": "4/5",
+      "universal_finite_sure_bound": false
+    },
+    "rare_disturbance_safe_yield": {
+      "adversarial_worst_case_lower": "5425/8192",
+      "hard_safety": "PASS",
+      "kind": "geometric_with_trigger",
+      "marker_visible_to_policy": false,
+      "policy_disposition": "SAFE_YIELD",
+      "stochastic_bounds": {
+        "lower": "5425/8192",
+        "upper": "465/512"
+      },
+      "threshold": "4/5",
+      "trigger_outcomes": [
+        "SAFE_YIELD"
+      ],
+      "trigger_probability": "1/32",
+      "universal_finite_sure_bound": false
+    },
+    "rare_disturbance_unsafe": {
+      "adversarial_worst_case_lower": "0/1",
+      "hard_safety": "FAIL",
+      "kind": "geometric_with_trigger",
+      "marker_visible_to_policy": false,
+      "policy_disposition": "SAFE_YIELD",
+      "stochastic_bounds": {
+        "lower": "5425/8192",
+        "upper": "465/512"
+      },
+      "threshold": "4/5",
+      "trigger_outcomes": [
+        "SAFE_YIELD",
+        "UNSAFE"
+      ],
+      "trigger_probability": "1/32",
+      "universal_finite_sure_bound": false
+    },
+    "same_mean_delay": {
+      "arms": {
+        "benign": {
+          "mean_opportunities": "2/1",
+          "probability_after_deadline": "0/1",
+          "probability_by_deadline": "1/1",
+          "support": [
+            {
+              "first_marker_opportunity": 2,
+              "probability": "1/1"
+            }
+          ]
+        },
+        "rare_tail": {
+          "mean_opportunities": "2/1",
+          "probability_after_deadline": "1/10",
+          "probability_by_deadline": "9/10",
+          "support": [
+            {
+              "first_marker_opportunity": 1,
+              "probability": "9/10"
+            },
+            {
+              "first_marker_opportunity": 11,
+              "probability": "1/10"
+            }
+          ]
+        }
+      },
+      "deadline": 4,
+      "deadline_probabilities_differ": true,
+      "kind": "delay_support_comparison",
+      "marker_visible_to_policy": false,
+      "means_equal": true
+    },
+    "unmodeled_delay": {
+      "kind": "unknown",
+      "marker_visible_to_policy": false,
+      "numeric_probability_reported": false,
+      "status": "NOT_IDENTIFIABLE"
+    }
+  },
+  "discriminator": {
+    "high_interval_has_universal_finite_bound": false,
+    "high_interval_lower_meets_threshold": true,
+    "horizon": 4,
+    "same_mean_but_tail_differs": true,
+    "threshold": "4/5",
+    "unknown_has_no_probability": true,
+    "unsafe_case_hard_safety_fails": true,
+    "wide_lower_meets_threshold": false,
+    "wide_midpoint_meets_threshold": true
+  },
+  "horizons": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "primary_horizon": 4
+}
