@@ -8,6 +8,13 @@ invocation. However, that freeze had not been committed to Git before the
 candidate/auditor were run. The repository's commit-before-run custody gate was
 therefore missed. A later Git commit cannot retroactively satisfy that order.
 
+The freeze manifest also names a preregistration file as `README.md`; that file
+was renamed to `REPORT.md` after the run and its exact pre-run bytes are not
+separately preserved under the original path. Its recorded digest remains in
+`FREEZE.json`, but cannot be revalidated against a same-path retained file.
+This is included in the custody HOLD rather than silently treating the later
+edited report as the frozen preregistration.
+
 The first-run candidate output and independent audit are preserved byte-for-byte
 as `candidate_raw.json` and `audit.json`. The audit reports 66 rows checked,
 zero replay errors, and a method-level PASS; that internal audit disposition
