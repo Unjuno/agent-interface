@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8630 T0 A01 joint observation/action/recovery budget](joint_opportunity_budget_8630_t0_a01_20261009/REPORT.md) — `FAIL_METHOD`: candidate and independent enumerator agree, but the frozen weak-signal policy gate fails (observe+recover 0.755 vs no-observe+recover 0.750). First outputs preserved; no rerun. Synthetic exact-model result only.
+
 - [Issue #8629 T0 A01 candidate entrypoint failure](epistemic_action_8629_t0_a01_20261008/FORMAL_FAILURE.md) — `HOLD_CANDIDATE_ENTRYPOINT_NAMEERROR`: frozen host-CPU candidate exited 1 before output because `select_action` was undefined; the single auditor then rejected empty stdin. Exact one-shot logs retained, retries 0; no scientific rows or hypothesis inference. Follow-up needs a new allocation and CLI integration test.
 
 - [Issue #8635 T0 A01 CLI-repair successor construction](epistemic_action_8635_t0_a01_20261008/README.md) — candidate and raw-only auditor CLI integration tests pass; construction suite 22/22 normal and `-O`. Formal WSLc execution remains 0/0 under the shared-runtime coordination HOLD; this is not a scientific result.
@@ -736,6 +738,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`issue_5504_cegar_t0_v1/`](issue_5504_cegar_t0_v1/)
 - [`issue_7042_x11_input_recovery_scope_t0_20261004/`](issue_7042_x11_input_recovery_scope_t0_20261004/)
 - [`joint_authority_5805_t0_exploratory/`](joint_authority_5805_t0_exploratory/)
+- [`joint_opportunity_budget_8630_t0_a01_20261009/`](joint_opportunity_budget_8630_t0_a01_20261009/)
 - [`justification_bound_action_safe_r1_v1/`](justification_bound_action_safe_r1_v1/)
 - [`justification_graph_invalidation_r0_v1/`](justification_graph_invalidation_r0_v1/)
 - [`justification_graph_truth_maintenance_r0_v1/`](justification_graph_truth_maintenance_r0_v1/)
