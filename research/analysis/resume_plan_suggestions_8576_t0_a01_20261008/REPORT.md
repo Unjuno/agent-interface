@@ -12,7 +12,7 @@ This is a method result about a small authored contract schema. It does not show
 
 - Freeze commit: `091e33a15fd8c27d73fb4acd0496df79457f8e77`; frozen base main: `28b6f0fc0dd3cf6d798d97ee608a409ce773e409`.
 - Runtime: Microsoft WSLc 3.0.1.0; cached `python:3.12-slim`, image ID `sha256:9e87977b867847e186d066f531ef783b006d582a985c341c269446088d90f2c4`; Python 3.12.14; linux/amd64; `--network none`; no Docker Desktop.
-- Candidate and auditor ran sequentially in one fresh `--rm` container from the frozen checkout. Candidate exit 0 wrote `results/candidate_raw.json` (4,808 bytes); only then auditor exit 0 wrote `results/audit.json` (1,306 bytes).
+- Candidate and auditor ran sequentially in one fresh `--rm` container from the frozen checkout. Candidate exit 0 wrote `results/candidate_raw.json` (4,858 bytes); only then auditor exit 0 wrote `results/audit.json` (959 bytes).
 - Audit: `PASS_METHOD_SCOPED`, 12/12 cases, zero reconstruction errors, six mutations rejected.
 - Construction: 3 tests passed normally and under `python -O`, each in WSLc with a read-only bind. A preformal malformed-graph RED test caught a duplicate-checkpoint validation defect; after the candidate fix, focused and full construction tests passed. No formal output was produced during construction.
 - Baseline repository analysis-index tests passed 22/22. The separate workspace index initially exposed the pre-existing `outputs/` namespace omission on the frozen main base; PR #8588 carries that additive repair. This did not affect the experiment or its audit.
