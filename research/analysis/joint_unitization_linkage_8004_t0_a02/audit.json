@@ -1,0 +1,925 @@
+{
+  "hypothesis_disposition": "H_PASS_SCOPED",
+  "joint_interaction": {
+    "joint_boundary_linkage_independent_sources": {
+      "boundary_width": 0,
+      "joint_changes_decision_without_one_factor": true,
+      "joint_width": 1,
+      "linkage_width": 0
+    },
+    "joint_boundary_linkage_shared_AB": {
+      "boundary_width": 0,
+      "joint_changes_decision_without_one_factor": true,
+      "joint_width": 1,
+      "linkage_width": 0
+    }
+  },
+  "limitation": "The authored oracle fixture validates only finite unitization/linkage bookkeeping; no natural-trace model or safety inference.",
+  "linkage_diagnostics": {
+    "clean_unique_ids:exact": {
+      "fragmented_truth_events": 0,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e1"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:ca",
+            "B:cb",
+            "C:cc"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:da",
+            "B:db"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:ea",
+            "C:ec"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:fb"
+          ]
+        }
+      ],
+      "mixed_truth_components": 0
+    },
+    "joint_boundary_linkage_independent_sources:merged_ambiguous": {
+      "fragmented_truth_events": 1,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e8"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_gap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1",
+            "e2"
+          ],
+          "mixed_latent_events": true,
+          "nodes": [
+            "A:a_pair",
+            "B:b_right",
+            "C:c_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_stable",
+            "C:c_stable"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7b"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e5"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7c"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e9"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_censored"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e6"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_only"
+          ]
+        }
+      ],
+      "mixed_truth_components": 1
+    },
+    "joint_boundary_linkage_independent_sources:merged_hard": {
+      "fragmented_truth_events": 1,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e8"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_gap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1",
+            "e2"
+          ],
+          "mixed_latent_events": true,
+          "nodes": [
+            "A:a_pair",
+            "B:b_left",
+            "C:c_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_stable",
+            "C:c_stable"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7b"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_right"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e5"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7c"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e9"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_censored"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e6"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_only"
+          ]
+        }
+      ],
+      "mixed_truth_components": 1
+    },
+    "joint_boundary_linkage_independent_sources:split_ambiguous": {
+      "fragmented_truth_events": 0,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e8"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_gap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_left",
+            "B:b_left",
+            "C:c_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_right",
+            "B:b_right"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_stable",
+            "C:c_stable"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7b"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e5"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7c"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e9"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_censored"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e6"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_only"
+          ]
+        }
+      ],
+      "mixed_truth_components": 0
+    },
+    "joint_boundary_linkage_independent_sources:split_hard": {
+      "fragmented_truth_events": 1,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e8"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_gap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_left",
+            "B:b_left",
+            "C:c_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_right"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_stable",
+            "C:c_stable"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7b"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_right"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e5"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7c"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e9"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_censored"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e6"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_only"
+          ]
+        }
+      ],
+      "mixed_truth_components": 0
+    },
+    "joint_boundary_linkage_shared_AB:merged_ambiguous": {
+      "fragmented_truth_events": 1,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e8"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_gap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1",
+            "e2"
+          ],
+          "mixed_latent_events": true,
+          "nodes": [
+            "A:a_pair",
+            "B:b_right",
+            "C:c_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_stable",
+            "C:c_stable"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7b"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e5"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7c"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e9"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_censored"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e6"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_only"
+          ]
+        }
+      ],
+      "mixed_truth_components": 1
+    },
+    "joint_boundary_linkage_shared_AB:merged_hard": {
+      "fragmented_truth_events": 1,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e8"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_gap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1",
+            "e2"
+          ],
+          "mixed_latent_events": true,
+          "nodes": [
+            "A:a_pair",
+            "B:b_left",
+            "C:c_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_stable",
+            "C:c_stable"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7b"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_right"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e5"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7c"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e9"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_censored"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e6"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_only"
+          ]
+        }
+      ],
+      "mixed_truth_components": 1
+    },
+    "joint_boundary_linkage_shared_AB:split_ambiguous": {
+      "fragmented_truth_events": 0,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e8"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_gap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_left",
+            "B:b_left",
+            "C:c_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_right",
+            "B:b_right"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_stable",
+            "C:c_stable"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7b"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e5"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7c"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e9"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_censored"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e6"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_only"
+          ]
+        }
+      ],
+      "mixed_truth_components": 0
+    },
+    "joint_boundary_linkage_shared_AB:split_hard": {
+      "fragmented_truth_events": 1,
+      "groups": [
+        {
+          "latent_event_ids": [
+            "e8"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_gap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e1"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_left",
+            "B:b_left",
+            "C:c_left"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_right"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e3"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "A:a_stable",
+            "C:c_stable"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e4"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7b"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e2"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "B:b_right"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e5"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_only"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e7c"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "C:c_overlap"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e9"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_censored"
+          ]
+        },
+        {
+          "latent_event_ids": [
+            "e6"
+          ],
+          "mixed_latent_events": false,
+          "nodes": [
+            "D:d_only"
+          ]
+        }
+      ],
+      "mixed_truth_components": 0
+    }
+  },
+  "method_disposition": "PASS_METHOD_SCOPED",
+  "mutation_controls": {
+    "add_false_match": "REJECTED",
+    "count_split_as_independent_failures": "REJECTED",
+    "delete_plausible_match": "REJECTED",
+    "drop_censored_opportunity": "REJECTED",
+    "forced_consensus_segmentation": "REJECTED",
+    "unidentified_to_zero_unseen": "REJECTED"
+  },
+  "oracle_summary": {
+    "clean_unique_ids": {
+      "all_channel_unobserved_truth_count": 0,
+      "captured_opportunities_by_channel": {
+        "A": 3,
+        "B": 3,
+        "C": 2,
+        "D": 0
+      },
+      "latent_event_count": 4
+    },
+    "joint_boundary_linkage_independent_sources": {
+      "all_channel_unobserved_truth_count": 1,
+      "captured_opportunities_by_channel": {
+        "A": 4,
+        "B": 4,
+        "C": 4,
+        "D": 2
+      },
+      "latent_event_count": 11
+    },
+    "joint_boundary_linkage_shared_AB": {
+      "all_channel_unobserved_truth_count": 1,
+      "captured_opportunities_by_channel": {
+        "A": 4,
+        "B": 4,
+        "C": 4,
+        "D": 2
+      },
+      "latent_event_count": 11
+    }
+  },
+  "pass": true,
+  "scenario_count": 3
+}

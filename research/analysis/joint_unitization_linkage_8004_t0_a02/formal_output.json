@@ -1,0 +1,1306 @@
+{
+  "all_channel_unobserved_count_estimate": null,
+  "population_size_estimate": null,
+  "protocol": "issue-8004-t0-a02-v1",
+  "scenario_count": 3,
+  "scenarios": [
+    {
+      "analysis_sets": {
+        "clean": {
+          "combination_ids": [
+            "exact"
+          ],
+          "decision": "AT_OR_ABOVE_THRESHOLD",
+          "flagged": false,
+          "lower": 3,
+          "threshold": 3,
+          "upper": 3,
+          "values": [
+            3
+          ]
+        }
+      },
+      "combinations": [
+        {
+          "accepted_edge_ids": [
+            "clean-e1-ab",
+            "clean-e1-ac",
+            "clean-e2-ab",
+            "clean-e3-ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 1,
+            "2": 2,
+            "3": 1
+          },
+          "censored_record_ids": [],
+          "combination_id": "exact",
+          "decision": "AT_OR_ABOVE_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:ca",
+                "B:cb",
+                "C:cc"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "B"
+              ],
+              "nodes": [
+                "A:da",
+                "B:db"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:ea",
+                "C:ec"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:fb"
+              ]
+            }
+          ],
+          "linkage_id": "exact",
+          "missing_intervals": [],
+          "multi_channel_overlap_count": 3,
+          "observed_linkage_component_count": 4,
+          "raw_record_count": 8,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "exact"
+        }
+      ],
+      "joint_interaction": null,
+      "scenario_id": "clean_unique_ids",
+      "source_dependence_groups": {
+        "A": "independent-A",
+        "B": "independent-B",
+        "C": "independent-C",
+        "D": "independent-D"
+      }
+    },
+    {
+      "analysis_sets": {
+        "boundary_only": {
+          "combination_ids": [
+            "merged_hard",
+            "split_hard"
+          ],
+          "decision": "BELOW_THRESHOLD",
+          "flagged": false,
+          "lower": 2,
+          "threshold": 3,
+          "upper": 2,
+          "values": [
+            2,
+            2
+          ]
+        },
+        "joint": {
+          "combination_ids": [
+            "merged_hard",
+            "split_hard",
+            "merged_ambiguous",
+            "split_ambiguous"
+          ],
+          "decision": "UNIDENTIFIED",
+          "flagged": true,
+          "lower": 2,
+          "threshold": 3,
+          "upper": 3,
+          "values": [
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        "linkage_only": {
+          "combination_ids": [
+            "merged_hard",
+            "merged_ambiguous"
+          ],
+          "decision": "BELOW_THRESHOLD",
+          "flagged": false,
+          "lower": 2,
+          "threshold": 3,
+          "upper": 2,
+          "values": [
+            2,
+            2
+          ]
+        }
+      },
+      "combinations": [
+        {
+          "accepted_edge_ids": [
+            "m_ab_left",
+            "m_ac_left",
+            "stable_ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 8,
+            "2": 1,
+            "3": 1
+          },
+          "censored_record_ids": [
+            "d_censored"
+          ],
+          "combination_id": "merged_hard",
+          "decision": "BELOW_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_gap"
+              ]
+            },
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:a_pair",
+                "B:b_left",
+                "C:c_left"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:a_stable",
+                "C:c_stable"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_right"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_censored"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_only"
+              ]
+            }
+          ],
+          "linkage_id": "hard",
+          "missing_intervals": [
+            {
+              "channel": "D",
+              "end": 53,
+              "reason": "telemetry_gap",
+              "start": 48
+            }
+          ],
+          "multi_channel_overlap_count": 2,
+          "observed_linkage_component_count": 10,
+          "raw_record_count": 14,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "merged"
+        },
+        {
+          "accepted_edge_ids": [
+            "s_ab_left",
+            "s_ac_left",
+            "stable_ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 9,
+            "2": 1,
+            "3": 1
+          },
+          "censored_record_ids": [
+            "d_censored"
+          ],
+          "combination_id": "split_hard",
+          "decision": "BELOW_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_gap"
+              ]
+            },
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:a_left",
+                "B:b_left",
+                "C:c_left"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_right"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:a_stable",
+                "C:c_stable"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_right"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_censored"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_only"
+              ]
+            }
+          ],
+          "linkage_id": "hard",
+          "missing_intervals": [
+            {
+              "channel": "D",
+              "end": 53,
+              "reason": "telemetry_gap",
+              "start": 48
+            }
+          ],
+          "multi_channel_overlap_count": 2,
+          "observed_linkage_component_count": 11,
+          "raw_record_count": 14,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "split"
+        },
+        {
+          "accepted_edge_ids": [
+            "m_ab_right",
+            "m_ac_left",
+            "stable_ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 8,
+            "2": 1,
+            "3": 1
+          },
+          "censored_record_ids": [
+            "d_censored"
+          ],
+          "combination_id": "merged_ambiguous",
+          "decision": "BELOW_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_gap"
+              ]
+            },
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:a_pair",
+                "B:b_right",
+                "C:c_left"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:a_stable",
+                "C:c_stable"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_left"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_censored"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_only"
+              ]
+            }
+          ],
+          "linkage_id": "ambiguous",
+          "missing_intervals": [
+            {
+              "channel": "D",
+              "end": 53,
+              "reason": "telemetry_gap",
+              "start": 48
+            }
+          ],
+          "multi_channel_overlap_count": 2,
+          "observed_linkage_component_count": 10,
+          "raw_record_count": 14,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "merged"
+        },
+        {
+          "accepted_edge_ids": [
+            "s_ab_left",
+            "s_ab_right",
+            "s_ac_left",
+            "stable_ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 7,
+            "2": 2,
+            "3": 1
+          },
+          "censored_record_ids": [
+            "d_censored"
+          ],
+          "combination_id": "split_ambiguous",
+          "decision": "AT_OR_ABOVE_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_gap"
+              ]
+            },
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:a_left",
+                "B:b_left",
+                "C:c_left"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "B"
+              ],
+              "nodes": [
+                "A:a_right",
+                "B:b_right"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:a_stable",
+                "C:c_stable"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_censored"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_only"
+              ]
+            }
+          ],
+          "linkage_id": "ambiguous",
+          "missing_intervals": [
+            {
+              "channel": "D",
+              "end": 53,
+              "reason": "telemetry_gap",
+              "start": 48
+            }
+          ],
+          "multi_channel_overlap_count": 3,
+          "observed_linkage_component_count": 10,
+          "raw_record_count": 14,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "split"
+        }
+      ],
+      "joint_interaction": {
+        "boundary_width": 0,
+        "joint_changes_decision_without_one_factor": true,
+        "joint_width": 1,
+        "linkage_width": 0
+      },
+      "scenario_id": "joint_boundary_linkage_independent_sources",
+      "source_dependence_groups": {
+        "A": "independent-A",
+        "B": "independent-B",
+        "C": "independent-C",
+        "D": "independent-D"
+      }
+    },
+    {
+      "analysis_sets": {
+        "boundary_only": {
+          "combination_ids": [
+            "merged_hard",
+            "split_hard"
+          ],
+          "decision": "BELOW_THRESHOLD",
+          "flagged": false,
+          "lower": 2,
+          "threshold": 3,
+          "upper": 2,
+          "values": [
+            2,
+            2
+          ]
+        },
+        "joint": {
+          "combination_ids": [
+            "merged_hard",
+            "split_hard",
+            "merged_ambiguous",
+            "split_ambiguous"
+          ],
+          "decision": "UNIDENTIFIED",
+          "flagged": true,
+          "lower": 2,
+          "threshold": 3,
+          "upper": 3,
+          "values": [
+            2,
+            2,
+            2,
+            3
+          ]
+        },
+        "linkage_only": {
+          "combination_ids": [
+            "merged_hard",
+            "merged_ambiguous"
+          ],
+          "decision": "BELOW_THRESHOLD",
+          "flagged": false,
+          "lower": 2,
+          "threshold": 3,
+          "upper": 2,
+          "values": [
+            2,
+            2
+          ]
+        }
+      },
+      "combinations": [
+        {
+          "accepted_edge_ids": [
+            "m_ab_left",
+            "m_ac_left",
+            "stable_ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 8,
+            "2": 1,
+            "3": 1
+          },
+          "censored_record_ids": [
+            "d_censored"
+          ],
+          "combination_id": "merged_hard",
+          "decision": "BELOW_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_gap"
+              ]
+            },
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:a_pair",
+                "B:b_left",
+                "C:c_left"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:a_stable",
+                "C:c_stable"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_right"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_censored"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_only"
+              ]
+            }
+          ],
+          "linkage_id": "hard",
+          "missing_intervals": [
+            {
+              "channel": "D",
+              "end": 53,
+              "reason": "telemetry_gap",
+              "start": 48
+            }
+          ],
+          "multi_channel_overlap_count": 2,
+          "observed_linkage_component_count": 10,
+          "raw_record_count": 14,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "merged"
+        },
+        {
+          "accepted_edge_ids": [
+            "s_ab_left",
+            "s_ac_left",
+            "stable_ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 9,
+            "2": 1,
+            "3": 1
+          },
+          "censored_record_ids": [
+            "d_censored"
+          ],
+          "combination_id": "split_hard",
+          "decision": "BELOW_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_gap"
+              ]
+            },
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:a_left",
+                "B:b_left",
+                "C:c_left"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_right"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:a_stable",
+                "C:c_stable"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_right"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_censored"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_only"
+              ]
+            }
+          ],
+          "linkage_id": "hard",
+          "missing_intervals": [
+            {
+              "channel": "D",
+              "end": 53,
+              "reason": "telemetry_gap",
+              "start": 48
+            }
+          ],
+          "multi_channel_overlap_count": 2,
+          "observed_linkage_component_count": 11,
+          "raw_record_count": 14,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "split"
+        },
+        {
+          "accepted_edge_ids": [
+            "m_ab_right",
+            "m_ac_left",
+            "stable_ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 8,
+            "2": 1,
+            "3": 1
+          },
+          "censored_record_ids": [
+            "d_censored"
+          ],
+          "combination_id": "merged_ambiguous",
+          "decision": "BELOW_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_gap"
+              ]
+            },
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:a_pair",
+                "B:b_right",
+                "C:c_left"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:a_stable",
+                "C:c_stable"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_left"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_censored"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_only"
+              ]
+            }
+          ],
+          "linkage_id": "ambiguous",
+          "missing_intervals": [
+            {
+              "channel": "D",
+              "end": 53,
+              "reason": "telemetry_gap",
+              "start": 48
+            }
+          ],
+          "multi_channel_overlap_count": 2,
+          "observed_linkage_component_count": 10,
+          "raw_record_count": 14,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "merged"
+        },
+        {
+          "accepted_edge_ids": [
+            "s_ab_left",
+            "s_ab_right",
+            "s_ac_left",
+            "stable_ac"
+          ],
+          "all_channel_unobserved_status": "NOT_ESTIMATED",
+          "capture_history_histogram": {
+            "1": 7,
+            "2": 2,
+            "3": 1
+          },
+          "censored_record_ids": [
+            "d_censored"
+          ],
+          "combination_id": "split_ambiguous",
+          "decision": "AT_OR_ABOVE_THRESHOLD",
+          "groups": [
+            {
+              "channel_count": 1,
+              "channels": [
+                "A"
+              ],
+              "nodes": [
+                "A:a_gap"
+              ]
+            },
+            {
+              "channel_count": 3,
+              "channels": [
+                "A",
+                "B",
+                "C"
+              ],
+              "nodes": [
+                "A:a_left",
+                "B:b_left",
+                "C:c_left"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "B"
+              ],
+              "nodes": [
+                "A:a_right",
+                "B:b_right"
+              ]
+            },
+            {
+              "channel_count": 2,
+              "channels": [
+                "A",
+                "C"
+              ],
+              "nodes": [
+                "A:a_stable",
+                "C:c_stable"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "B"
+              ],
+              "nodes": [
+                "B:b_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_only"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "C"
+              ],
+              "nodes": [
+                "C:c_overlap"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_censored"
+              ]
+            },
+            {
+              "channel_count": 1,
+              "channels": [
+                "D"
+              ],
+              "nodes": [
+                "D:d_only"
+              ]
+            }
+          ],
+          "linkage_id": "ambiguous",
+          "missing_intervals": [
+            {
+              "channel": "D",
+              "end": 53,
+              "reason": "telemetry_gap",
+              "start": 48
+            }
+          ],
+          "multi_channel_overlap_count": 3,
+          "observed_linkage_component_count": 10,
+          "raw_record_count": 14,
+          "rejected_conflict_edge_ids": [],
+          "segmentation_id": "split"
+        }
+      ],
+      "joint_interaction": {
+        "boundary_width": 0,
+        "joint_changes_decision_without_one_factor": true,
+        "joint_width": 1,
+        "linkage_width": 0
+      },
+      "scenario_id": "joint_boundary_linkage_shared_AB",
+      "source_dependence_groups": {
+        "A": "shared-pipeline-1",
+        "B": "shared-pipeline-1",
+        "C": "independent-C",
+        "D": "independent-D"
+      }
+    }
+  ],
+  "scope": "Finite authored assignment sensitivity only; no posterior probability or live failure-rate estimate."
+}

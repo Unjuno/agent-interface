@@ -1,0 +1,296 @@
+{
+  "protocol": "issue-8004-t0-a02-oracle-v1",
+  "scenarios": [
+    {
+      "latent_events": [
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "CAPTURED",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e1"
+        },
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "CAPTURED",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e2"
+        },
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "OBSERVED_ZERO",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e3"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "CAPTURED",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e4"
+        }
+      ],
+      "record_to_event": {
+        "ca": "e1",
+        "cb": "e1",
+        "cc": "e1",
+        "da": "e2",
+        "db": "e2",
+        "ea": "e3",
+        "ec": "e3",
+        "fb": "e4"
+      },
+      "scenario_id": "clean_unique_ids"
+    },
+    {
+      "latent_events": [
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "CAPTURED",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e1"
+        },
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "CAPTURED",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e2"
+        },
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "OBSERVED_ZERO",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e3"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "CAPTURED",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e4"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e5"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "OBSERVED_ZERO",
+            "D": "CAPTURED"
+          },
+          "event_id": "e6"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "CAPTURED",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e7b"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e7c"
+        },
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "OBSERVED_ZERO",
+            "C": "OBSERVED_ZERO",
+            "D": "MISSING"
+          },
+          "event_id": "e8"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "OBSERVED_ZERO",
+            "D": "RIGHT_CENSORED_CAPTURED"
+          },
+          "event_id": "e9"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e10"
+        }
+      ],
+      "record_to_event": {
+        "a_gap": "e8",
+        "a_left": "e1",
+        "a_right": "e2",
+        "a_stable": "e3",
+        "b_left": "e1",
+        "b_only": "e4",
+        "b_overlap": "e7b",
+        "b_right": "e2",
+        "c_left": "e1",
+        "c_only": "e5",
+        "c_overlap": "e7c",
+        "c_stable": "e3",
+        "d_censored": "e9",
+        "d_only": "e6"
+      },
+      "scenario_id": "joint_boundary_linkage_independent_sources"
+    },
+    {
+      "latent_events": [
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "CAPTURED",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e1"
+        },
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "CAPTURED",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e2"
+        },
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "OBSERVED_ZERO",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e3"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "CAPTURED",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e4"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e5"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "OBSERVED_ZERO",
+            "D": "CAPTURED"
+          },
+          "event_id": "e6"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "CAPTURED",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e7b"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "CAPTURED",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e7c"
+        },
+        {
+          "channel_status": {
+            "A": "CAPTURED",
+            "B": "OBSERVED_ZERO",
+            "C": "OBSERVED_ZERO",
+            "D": "MISSING"
+          },
+          "event_id": "e8"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "OBSERVED_ZERO",
+            "D": "RIGHT_CENSORED_CAPTURED"
+          },
+          "event_id": "e9"
+        },
+        {
+          "channel_status": {
+            "A": "OBSERVED_ZERO",
+            "B": "OBSERVED_ZERO",
+            "C": "OBSERVED_ZERO",
+            "D": "OBSERVED_ZERO"
+          },
+          "event_id": "e10"
+        }
+      ],
+      "record_to_event": {
+        "a_gap": "e8",
+        "a_left": "e1",
+        "a_right": "e2",
+        "a_stable": "e3",
+        "b_left": "e1",
+        "b_only": "e4",
+        "b_overlap": "e7b",
+        "b_right": "e2",
+        "c_left": "e1",
+        "c_only": "e5",
+        "c_overlap": "e7c",
+        "c_stable": "e3",
+        "d_censored": "e9",
+        "d_only": "e6"
+      },
+      "scenario_id": "joint_boundary_linkage_shared_AB"
+    }
+  ]
+}
