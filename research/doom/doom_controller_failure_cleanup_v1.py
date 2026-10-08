@@ -167,6 +167,9 @@ class ControllerFailureCleanup:
             if not empty_release(release):
                 return False
             accepted_token=accepted_by_id[identifier].get('intent_token')
+            if ('intent_token' in accepted_by_id[identifier] and
+                    (type(accepted_token) is not str or not accepted_token)):
+                return False
             if 'intent_token' in release and release.get('intent_token') not in (None, accepted_token):
                 return False
             admissions=admissions_by_id[identifier]

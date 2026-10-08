@@ -22,14 +22,13 @@ class RetiredReader:
 
 
 class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
-    def run_cleanup(self, release_token=OMIT_TOKEN, extra_events=(), status="failed"):
+    def run_cleanup(self, release_token=OMIT_TOKEN, extra_events=(), status="failed",
+                    accepted_token="accepted-lease"):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)
-            accepted = {
-                "event": "accepted",
-                "id": "source-refresh-0",
-                "intent_token": "accepted-lease",
-            }
+            accepted = {"event": "accepted", "id": "source-refresh-0"}
+            if accepted_token is not OMIT_TOKEN:
+                accepted["intent_token"] = accepted_token
             release = {
                 "verified": True,
                 "keys_down": [],
@@ -66,6 +65,16 @@ class ControllerFailureCleanupReleaseIdentityTests(unittest.TestCase):
     def test_release_without_optional_token_keeps_legacy_id_binding(self):
         receipt = self.run_cleanup()
         self.assertTrue(receipt["input_release_verified_empty"])
+
+    def test_malformed_present_accepted_token_is_not_certified_empty(self):
+        for accepted_token in (None, 7, "", [], {}):
+            with self.subTest(accepted_token=accepted_token):
+                receipt = self.run_cleanup(accepted_token=accepted_token)
+                self.assertFalse(receipt["input_releases_verified_empty"])
+
+    def test_absent_accepted_token_keeps_legacy_id_binding(self):
+        receipt = self.run_cleanup(accepted_token=OMIT_TOKEN)
+        self.assertTrue(receipt["input_releases_verified_empty"])
 
 
     def test_cancelled_without_admission_accepts_empty_terminal_without_lease_token(self):
