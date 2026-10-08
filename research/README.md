@@ -6,6 +6,12 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8406 T0 A01, companion to #7418: [episodic-memory consolidation schedule fixture](analysis/consolidation_schedule_7418_t0_a01_20261008/REPORT.md) — `PASS_T0_METHOD_SCOPED`: four schedules and 24 source-bound snapshots independently reconstructed; no model, GUI, task-effect, or cadence-benefit claim.
+
+- Issue #8397 T0 A02: [state-conditioned observation-omission fixture](analysis/observation_omission_regret_8397_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED` on eight finite traces; pre-decision and post-completion omission preserve authored effects with fewer delivered observations, while a transition-crossing omission incurs wrong-target recovery. No model, GUI, or runtime claim.
+
+- Issue #8500 T0 A01: [rejected-analogy memory finite method test](analysis/analogy_rejection_8500_t0_a01_20261008/RESULT.md) — `PASS_METHOD_SCOPED`; candidate/auditor once each, 84 rows, 5/5 mutations rejected. Hand-authored deterministic fixture only; no model/product or Docker/WSLc comparison.
+
 - Issue #59 client custody, PR #7275: [additive packet-integrity recheck](doom/client_custody_private_e0cc_20261004/RECHECK_20261008.md) — Exact 47-member packet integrity verified; the saved peer/candidate code is not rerun. Source-owner and application gates remain HOLD.
 
 - Issue #6358 C01: [private service-capacity transfer](integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) — 24 synthetic requests across six arms; explicit static routing matches ample-capacity effects under the authored held-slot fixture. No production congestion, latency, task-effect, or H_PASS claim.
@@ -284,6 +290,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 
 ### Recent direct-root evidence
+- [Issue #8471 T0 A01/A02](analysis/switched_dwell_stability_8471_t0_a01_20261008/REPORT.md) — finite exact-rational switched-mode enumeration and independent audit: 4,096 rows, 1,248 non-Schur-stable products, 129 finite-envelope crossings; A02 independently verifies 20/20 abstract emergency overrides and rejects 3/3 mutations. Method-scoped only; no runtime/safety claim.
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 frozen construction probe and independent audit for lease-expiry and causal timestamp receipt boundaries; scoped contract evidence only.
 - [`route_occupancy_5674_construction_v1/`](route_occupancy_5674_construction_v1/) — Issue #5674 finite synthetic Markov construction; empirical route/task hypothesis remains untested.
 - [`trace_reduction_5666_construction_v1/`](trace_reduction_5666_construction_v1/) — Issue #5666 host-only synthetic construction check; no independent replay, model, GUI, or authority result.

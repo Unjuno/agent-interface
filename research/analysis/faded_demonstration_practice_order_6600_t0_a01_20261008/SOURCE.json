@@ -1,0 +1,21 @@
+{
+  "format": "practice-order-6600-source-v1",
+  "allocation": "FADED-PRACTICE-ORDER-6600-T0-A01-20261008",
+  "variants": ["A", "B", "C"],
+  "task_ids": ["A1", "A2", "B1", "B2", "C1", "C2"],
+  "blocked_order": ["A1", "A2", "B1", "B2", "C1", "C2"],
+  "mixed_order": ["A1", "B1", "C1", "A2", "B2", "C2"],
+  "assessment_history": {
+    "baseline_screen": "neutral_non-task; same in both arms",
+    "intervening_task_test": "none",
+    "first_delayed_assessment": "D1"
+  },
+  "tasks": {
+    "A1": {"variant_id": "A", "demonstrated_fact_ids": ["fact-A"], "support_offer_id": "support-A1", "hint_profile": "H1", "stop_available": true, "skip_available": true},
+    "A2": {"variant_id": "A", "demonstrated_fact_ids": ["fact-A"], "support_offer_id": "support-A2", "hint_profile": "H1", "stop_available": true, "skip_available": true},
+    "B1": {"variant_id": "B", "demonstrated_fact_ids": ["fact-B"], "support_offer_id": "support-B1", "hint_profile": "H1", "stop_available": true, "skip_available": true},
+    "B2": {"variant_id": "B", "demonstrated_fact_ids": ["fact-B"], "support_offer_id": "support-B2", "hint_profile": "H1", "stop_available": true, "skip_available": true},
+    "C1": {"variant_id": "C", "demonstrated_fact_ids": ["fact-C"], "support_offer_id": "support-C1", "hint_profile": "H1", "stop_available": true, "skip_available": true},
+    "C2": {"variant_id": "C", "demonstrated_fact_ids": ["fact-C"], "support_offer_id": "support-C2", "hint_profile": "H1", "stop_available": true, "skip_available": true}
+  }
+}
