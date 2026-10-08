@@ -1,0 +1,37 @@
+{
+  "classification": "CONSTRUCTION_ONLY_MAIN_LOOP_DISPATCH",
+  "main_commit": "d75fc90ee598cc91b09e19adf0722ffcdf17d9ec",
+  "case_count": 1,
+  "normal": "PASS",
+  "optimized": "PASS",
+  "mutation_controls": {
+    "omit_latest_observation_update": "CAUGHT_FAIL",
+    "omit_cancel_before_interrupt": "CAUGHT_FAIL"
+  },
+  "typed_invalidation": {
+    "sequence": 11,
+    "reason": "health:below_hard_minimum"
+  },
+  "timeline": [
+    "typed_invalidation_returned_by_main_wait",
+    "executor_cancel_write",
+    "executor_cancel_flush",
+    "planner_interrupt_request",
+    "paired_full_observation_consumed_by_cancel_wait",
+    "verified_empty_terminal_consumed",
+    "fresh_source_selected_sequence_11"
+  ],
+  "terminal_release": {
+    "verified": true,
+    "keys_down": [],
+    "buttons_down": []
+  },
+  "source_refresh_status": "already_observed",
+  "fresh_source_sequence": 11,
+  "stale_answer": {
+    "status": "completed",
+    "answer_eligible": false,
+    "answer": null
+  },
+  "scope": "No live timing, GUI/input, physical release, feedback, recovery efficacy, or task effect claim."
+}

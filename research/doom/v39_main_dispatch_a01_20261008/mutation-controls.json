@@ -1,0 +1,14 @@
+[
+  {
+    "mutation": "omit_latest_observation_update",
+    "expected": "FAIL",
+    "observed_exit": 1,
+    "assertion": "latest full observation was lost"
+  },
+  {
+    "mutation": "omit_cancel_before_interrupt",
+    "expected": "FAIL",
+    "observed_exit": 1,
+    "assertion": "cancel callback argument missing at fake planner boundary"
+  }
+]

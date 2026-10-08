@@ -1,0 +1,26 @@
+{
+  "experiment_id": "issue59-v39-main-dispatch-a01-20261008",
+  "classification": "CONSTRUCTION_ONLY_MAIN_LOOP_DISPATCH",
+  "repository": "Unjuno/agent-interface",
+  "main_commit": "d75fc90ee598cc91b09e19adf0722ffcdf17d9ec",
+  "source_files": {
+    "research/doom/map01_overlap_controller_v39.py": "f7b66279d87ebc3704ccef1b6a5ce646611c890b",
+    "research/doom/doom_source_refresh_v1.py": "6b5add0fa29865de64afcfa1da4a272d9a216e8d",
+    "research/live_control/observable_signal_guard_v2.py": "c0955f976e3a0af6ce926f22cee4a5ddf70ef543",
+    "research/live_control/persistent_planner_adapter_v2.py": "879736562aa5c0637319616c9f01df22af087b15"
+  },
+  "environment": {
+    "python": "3.11.9",
+    "pillow": "10.2.0",
+    "host": "Windows, offline synthetic harness"
+  },
+  "commands": [
+    "python test_main_dispatch.py",
+    "python -O test_main_dispatch.py"
+  ],
+  "retries": 0,
+  "model_or_app_server": false,
+  "game_or_gui": false,
+  "os_input": false,
+  "allocation_id": null
+}
