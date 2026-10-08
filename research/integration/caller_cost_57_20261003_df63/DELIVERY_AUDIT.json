@@ -1,0 +1,70 @@
+{
+  "utc": "2026-10-03T15:05:23.032015+00:00",
+  "tested_base": "b4ff90d974c2cd4142eaceee156a74a9aa3109a8",
+  "delivery_base": "d55a1f517a3a889998b82e6d3a359e9f88b82d4e",
+  "dependency_images_unchanged": [
+    "README.md",
+    "ROADMAP.md",
+    "docs/CURRENT_GOAL.md",
+    "docs/WORKER_QUICKSTART.md",
+    "docs/RESEARCH_METHOD.md",
+    "docs/ISSUE_FAILURE_CLASSIFICATION.md",
+    "runtime/integration_checks/native.py",
+    "research/live_control/adaptive_acquisition_caller_v3.py",
+    "research/live_control/test_adaptive_acquisition_caller_v3.py"
+  ],
+  "portable_test_only_optional_trace_sink": true,
+  "catalogue_only_once_append": true,
+  "source": {
+    "bytes": 23911,
+    "sha256": "2d30e8294086d1a2b4833088a4db7e589abad876992f893024ace0a089fbf6eb"
+  },
+  "portable_test": {
+    "bytes": 4490,
+    "sha256": "457ce6c9f8076a6ef5f523c8f1fdac81ff921409f9c52f9839913e387061fddf"
+  },
+  "catalogue": {
+    "bytes": 4640,
+    "sha256": "877923b012e6f4ad80c4980e9a3337b2f22601c76ffe72b9b42a963f7ee7914a"
+  },
+  "normal_optimized_without_TRACE_OUTPUT": {
+    "delivery-normal": {
+      "pid": 40464,
+      "supervisor_pid": 46696,
+      "start_utc": "2026-10-03T14:56:40.936485+00:00",
+      "end_utc": "2026-10-03T14:56:41.027362+00:00",
+      "exit_code": 0,
+      "guard_expired": false,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 3233,
+        "sha256": "26fe5a9b52211efeb5736f3089c8a2fc5817babbec1f499ade4b0d56c890ec81"
+      },
+      "freeze_unchanged": true,
+      "model_native_gui_calls": 0
+    },
+    "delivery-optimized": {
+      "pid": 37464,
+      "supervisor_pid": 46696,
+      "start_utc": "2026-10-03T14:56:41.027362+00:00",
+      "end_utc": "2026-10-03T14:56:41.120490+00:00",
+      "exit_code": 0,
+      "guard_expired": false,
+      "stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "bytes": 3233,
+        "sha256": "26fe5a9b52211efeb5736f3089c8a2fc5817babbec1f499ade4b0d56c890ec81"
+      },
+      "freeze_unchanged": true,
+      "model_native_gui_calls": 0
+    }
+  },
+  "ordinary_source_tests_rerun": false,
+  "formal_native_model_gui_replays": 0
+}

@@ -1,0 +1,34 @@
+{
+  "utc_before_spawn": "2026-10-03T14:56:40.936485+00:00",
+  "command": [
+    "<PYTHON_RUNTIME>\\python.exe",
+    "-m",
+    "unittest",
+    "-v",
+    "test_adaptive_acquisition_cost_coverage",
+    "test_adaptive_acquisition_caller_v3"
+  ],
+  "cwd": "<TASK_ROOT>\\candidate",
+  "TRACE_OUTPUT": "absent; portable os.devnull sink",
+  "freeze": {
+    "adaptive_acquisition_caller_v3.py": {
+      "bytes": 23911,
+      "sha256": "2d30e8294086d1a2b4833088a4db7e589abad876992f893024ace0a089fbf6eb"
+    },
+    "test_adaptive_acquisition_caller_v3.py": {
+      "bytes": 13351,
+      "sha256": "99e231fe9ed1c16b278785900213ec7e6272040df1a84df0ae8062f9860da693"
+    },
+    "test_adaptive_acquisition_cost_coverage.py": {
+      "bytes": 4490,
+      "sha256": "457ce6c9f8076a6ef5f523c8f1fdac81ff921409f9c52f9839913e387061fddf"
+    },
+    "test_caller_cost_coverage.py": {
+      "bytes": 4474,
+      "sha256": "28f94e109e37b468670548d1cf8b306ca61a23d0154c721fd04470de521c3778"
+    }
+  },
+  "tests": 21,
+  "guard_seconds": 10,
+  "supervisor_pid": 46696
+}
