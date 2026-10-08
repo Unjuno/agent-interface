@@ -50,7 +50,6 @@ DISABLED_FEATURES = [
 DISABLED_MCPS = ["blender", "chrome-devtools", "node_repl", "playwright", "puppeteer"]
 WAD = REPO / "_vizdoom/vizdoom/freedoom2.wad"
 MAX_AUTHORED_HEALTH_LOSS = 20
-COMPLETED_TURN_DRAIN_EVENT_LIMIT = 256
 
 
 def reusable_cover(decisions):
@@ -754,22 +753,18 @@ def temporal_sheet(sources, target):
 
 
 def drain_pending_observation_events(incoming, observation_monitor, terminal_id):
-    """Drain a bounded completion backlog, including events produced while draining."""
+    """Process events already queued when a planner future becomes done."""
     latest = None
     terminal = None
     invalidation = None
-    drained_event_count = 0
     event_types = (getattr(observation_monitor, "event_types", {"observation"})
                    if observation_monitor is not None else set())
-    # A row processed here can synchronously trigger production of a later
-    # observation. Drain that row too, but cap work so a live producer cannot
-    # starve completed planner dispatch indefinitely.
-    for _ in range(COMPLETED_TURN_DRAIN_EVENT_LIMIT):
+    # Snapshot the finite backlog so a live producer cannot make this drain unbounded.
+    for _ in range(incoming.qsize()):
         try:
             row = incoming.get_nowait()
         except queue.Empty:
             break
-        drained_event_count += 1
         if row.get("event") == "observation":
             latest = row
         if (invalidation is None and observation_monitor is not None and
@@ -777,22 +772,7 @@ def drain_pending_observation_events(incoming, observation_monitor, terminal_id)
             invalidation = observation_monitor.observe(row)
         if row.get("event") == "terminal" and row.get("id") == terminal_id:
             terminal = row
-    return {
-        "latest": latest,
-        "terminal": terminal,
-        "invalidation": invalidation,
-        "drained_event_count": drained_event_count,
-        "backlog_pending": not incoming.empty(),
-    }
-
-
-def require_completed_turn_drain_complete(drained):
-    """Refuse a completed planner answer if its bounded event drain was incomplete."""
-    if drained["backlog_pending"]:
-        raise RuntimeError(
-            "planner completed while observation backlog remained after "
-            f"bounded drain ({drained['drained_event_count']} events); "
-            "refusing planner answer")
+    return {"latest": latest, "terminal": terminal, "invalidation": invalidation}
 
 
 def main():
@@ -1020,7 +1000,6 @@ def main():
                             planner_interrupt,current_terminal=cancel_invalidated_cover(
                                 planner,planner_handle,process,wait,current_cover)
                             cover_terminals.append(current_terminal)
-                    require_completed_turn_drain_complete(drained)
                 planner_result=future.result()
                 failure_cleanup.set_stage("planner_result_validation")
                 planner_terminal_observed_ns=time.perf_counter_ns()

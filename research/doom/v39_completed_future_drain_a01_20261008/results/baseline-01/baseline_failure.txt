@@ -1,0 +1,24 @@
+test_continuously_refilled_queue_hits_a_finite_fail_closed_bound (test_map01_completed_future_drain_v1.CompletedFutureDrainTests.test_continuously_refilled_queue_hits_a_finite_fail_closed_bound) ... ERROR
+test_event_arriving_during_drain_invalidates_answer_before_replan (test_map01_completed_future_drain_v1.CompletedFutureDrainTests.test_event_arriving_during_drain_invalidates_answer_before_replan) ... FAIL
+
+======================================================================
+ERROR: test_continuously_refilled_queue_hits_a_finite_fail_closed_bound (test_map01_completed_future_drain_v1.CompletedFutureDrainTests.test_continuously_refilled_queue_hits_a_finite_fail_closed_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\agent-interface-stale-replan-current-main-e923\research\doom\v39_completed_future_drain_a01_20261008\results\baseline-01\source\test_map01_completed_future_drain_v1.py", line 104, in test_continuously_refilled_queue_hits_a_finite_fail_closed_bound
+    self.assertEqual(drained["drained_event_count"],
+                     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'drained_event_count'
+
+======================================================================
+FAIL: test_event_arriving_during_drain_invalidates_answer_before_replan (test_map01_completed_future_drain_v1.CompletedFutureDrainTests.test_event_arriving_during_drain_invalidates_answer_before_replan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\agent-interface-stale-replan-current-main-e923\research\doom\v39_completed_future_drain_a01_20261008\results\baseline-01\source\test_map01_completed_future_drain_v1.py", line 48, in test_event_arriving_during_drain_invalidates_answer_before_replan
+    self.assertEqual(drained["latest"]["sequence"], 12)
+AssertionError: 11 != 12
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (failures=1, errors=1)
