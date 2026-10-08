@@ -38,7 +38,9 @@ class AuditLiveV3Tests(unittest.TestCase):
             (runtime / "scorer-events.jsonl").write_text("".join(json.dumps(r) + "\n" for r in (scorer or [])))
             with mock.patch.object(auditor, "ROOT", root), redirect_stdout(io.StringIO()):
                 result = auditor.main()
-            return json.loads((root / result_name).read_text()), result
+            output = root / result_name
+            self.assertTrue(output.is_file(), "auditor must retain its result file")
+            return json.loads(output.read_text()), result
 
     def valid_case(self, *, admitted=False, release=True, decision_time=150,
                    guard_receive=145, scorer_time=175, guard=True):
@@ -194,6 +196,21 @@ class AuditLiveV3Tests(unittest.TestCase):
         audit, _ = self.run_audit(events, decisions, scorer)
         self.assertEqual(audit["status"], "HOLD")
         self.assertFalse(audit["checks"]["hard_health_guard_exposed"])
+
+    def test_unhashable_identity_event_ids_fail_closed_and_write_audit(self):
+        for event_name in ("cancel_requested", "input_admission",
+                           "input_release_transition", "input_released", "terminal"):
+            with self.subTest(event=event_name):
+                events, decisions, scorer = self.valid_case(admitted=True)
+                row = next(row for row in events if row["event"] == event_name)
+                row["id"] = []
+                audit, return_code = self.run_audit(events, decisions, scorer)
+                self.assertEqual(return_code, 1)
+                self.assertEqual(audit["status"], "FAIL")
+                self.assertFalse(audit["formal_pass"])
+                self.assertFalse(audit["checks"]["all_relevant_event_ids_valid"])
+                self.assertFalse(audit["checks"]["all_matched_cancellations_closed_empty"])
+                self.assertEqual(audit["counts"]["malformed_event_id_rows"], 1)
 
 
 if __name__ == "__main__":

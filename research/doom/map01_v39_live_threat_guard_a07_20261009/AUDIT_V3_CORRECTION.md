@@ -16,11 +16,18 @@
 
 ```text
 python3 -B -m unittest test_audit_live_v3 -v
-Ran 15 tests ... OK
+Ran 16 tests ... OK
 python3 -B -O -m unittest test_audit_live_v3 -v
-Ran 15 tests ... OK
+Ran 16 tests ... OK
 python3 -B -m py_compile audit_live_v3.py test_audit_live_v3.py
 git diff --check
 ```
 
 The counterexample is preserved as `test_input_admitted_after_cancel_cannot_pass_custody`; the original v2 false-PASS was reproduced before introducing v3. No live output was read or changed during this correction.
+
+
+## Malformed event-ID fail-closed follow-up
+
+A review of the exact v3 head found that an unhashable ID (for example, `[]`) in `cancel_requested`, `input_released`, or `terminal` raised from `Counter`/`defaultdict` before `AUDIT_V3.json` could be written. The v3 auditor now validates IDs for all five identity-bearing families it reconciles (`cancel_requested`, `input_admission`, `input_release_transition`, `input_released`, and `terminal`) before any indexing. Malformed rows are excluded from the reconciliation maps, the aggregate custody gate deterministically returns `FAIL`, and the additive audit output is retained with `all_relevant_event_ids_valid=false` and `malformed_event_id_rows` recorded.
+
+`test_unhashable_identity_event_ids_fail_closed_and_write_audit` mutates each of the five event families and asserts exit code 1, a written audit file, `status=FAIL`, and the explicit malformed-ID diagnostic. The complete suite passes 16/16 normally and under optimized Python. No saved A07 allocation or `AUDIT_V3.json` was opened, rerun, or modified; `formal_pass` remains false.
