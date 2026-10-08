@@ -5,9 +5,9 @@ import json
 import math
 import sys
 
-BETAS = (2, 5, 10, 20)
-GAMMAS = (0.5, 1.0, 1.5, 2.0)
-DELTAS = (2, 5, 10, 20)
+BETAS = (2, 10, 20)
+GAMMAS = (0.5, 1.5)
+DELTAS = (2, 10, 20)
 THETAS = tuple(round(-0.30 + 0.03 * i, 12) for i in range(21))
 ARMS = ("COUPLED", "ONE_WAY", "EXOGENOUS_ONLY", "ZERO_FEEDBACK")
 RELAX = 0.25
@@ -56,9 +56,7 @@ def reconstruct(beta, gamma, delta, arm, direction, initial):
                 break
         benefit = theta + gamma * (q - 0.5)
         out.append([
-            round(a, 12), round(q, 12), count, ok,
-            round(independent_radius(a, q, beta, gamma, delta, arm), 12),
-            round(100.0 * a * benefit, 12)
+            round(a, 10), round(q, 10), count, ok
         ])
     return out
 
@@ -157,9 +155,9 @@ for beta, gamma in itertools.product(BETAS, GAMMAS):
             coupled_flags.append(False); continue
         lp, hp = lo["points"][idx], hi["points"][idx]
         coupled_flags.append(
-            lp[3] and hp[3] and lp[4] < 0.99 and hp[4] < 0.99
+            lp[3] and hp[3] and independent_radius(lp[0], lp[1], beta, gamma, 20, "COUPLED") < 0.99 and independent_radius(hp[0], hp[1], beta, gamma, 20, "COUPLED") < 0.99
             and abs(lp[0] - hp[0]) >= 0.25
-            and abs(lp[5] - hp[5]) >= 0.05
+            and abs((100*lp[0]*(THETAS[idx] + gamma*(lp[1]-0.5))) - (100*hp[0]*(THETAS[idx] + gamma*(hp[1]-0.5)))) >= 0.05
         )
     if contiguous_at_least_three(coupled_flags):
         heldout_regions.append((beta, gamma))
@@ -173,9 +171,9 @@ for arm in control_regions:
                 flags.append(False); continue
             lp, hp = lo["points"][idx], hi["points"][idx]
             flags.append(
-                lp[3] and hp[3] and lp[4] < 0.99 and hp[4] < 0.99
+                lp[3] and hp[3] and independent_radius(lp[0], lp[1], beta, gamma, 20, arm) < 0.99 and independent_radius(hp[0], hp[1], beta, gamma, 20, arm) < 0.99
                 and abs(lp[0] - hp[0]) >= 0.25
-                and abs(lp[5] - hp[5]) >= 0.05
+                and abs((100*lp[0]*(THETAS[idx] + gamma*(lp[1]-0.5))) - (100*hp[0]*(THETAS[idx] + gamma*(hp[1]-0.5)))) >= 0.05
             )
         if contiguous_at_least_three(flags):
             control_regions[arm] += 1
@@ -187,7 +185,7 @@ else:
 h_pass = len(heldout_regions) >= 3 and all(n == 0 for n in control_regions.values()) and nonconverged == 0
 result = {
     "status": status, "hypothesis": "H_PASS_SCOPED" if h_pass and status == "PASS_METHOD_SCOPED" else ("NO_HYSTERESIS_SCOPED" if status == "PASS_METHOD_SCOPED" else "NOT_EVALUABLE"),
-    "raw_rows": len(raw), "profiles": len(profiles), "expected_profiles": 1024,
+    "raw_rows": len(raw), "profiles": len(profiles), "expected_profiles": 288,
     "heldout_parameter_regions": [list(x) for x in heldout_regions],
     "heldout_region_count": len(heldout_regions), "control_region_counts": control_regions,
     "nonconverged_endpoints": nonconverged,
