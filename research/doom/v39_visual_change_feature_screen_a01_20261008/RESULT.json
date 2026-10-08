@@ -1,0 +1,196 @@
+{
+  "schema": "issue59-visual-change-feature-screen-a01-v1",
+  "disposition": "EXPLORATORY_FEATURE_SCREEN_ONLY",
+  "input_provenance": {
+    "prior_timeline_schema": "issue59-current-main-retained-visual-threat-timeline-v1",
+    "prior_episode": "map01-v39-coast-liveness-live-01",
+    "frame_sequences": [
+      166,
+      180,
+      190,
+      200,
+      210,
+      218
+    ],
+    "labels_source": "single_reviewer_pixel_annotations in copied prior timeline JSON"
+  },
+  "fixed_feature_definitions": {
+    "scene_crop": {
+      "viewport_xyxy": [
+        322,
+        181,
+        960,
+        583
+      ],
+      "upper_scene_height": 322
+    },
+    "warm": "R >= 110 and R > 1.15*G and G > 1.10*B",
+    "red": "R >= 120 and R > 1.40*G and R > 1.30*B",
+    "adjacent_frame_change": "normalized RGB MAE and fraction with max-channel absolute delta > 40",
+    "candidate_threshold": 0.005
+  },
+  "frames": {
+    "166": {
+      "png_sha256": "8c5e9c02dbc988693ec2126e92d9a2867d0f77ca9223e69356bcc6132b4b99d3",
+      "dimensions": [
+        1280,
+        800
+      ],
+      "game_viewport_xyxy": [
+        322,
+        181,
+        960,
+        583
+      ],
+      "scene_height_pixels": 322,
+      "single_reviewer_annotation": "No enemy visibly occupying central passage.",
+      "warm_pixel_count": 189,
+      "warm_pixel_fraction": 0.0009199945481804553,
+      "red_pixel_count": 78,
+      "red_pixel_fraction": 0.00037968028972526724
+    },
+    "180": {
+      "png_sha256": "7200e195e5c5a6bb1a859f4b3a73b6f6fdc6f5ff0baa1af0a5ef64e8c48de7a6",
+      "dimensions": [
+        1280,
+        800
+      ],
+      "game_viewport_xyxy": [
+        322,
+        181,
+        960,
+        583
+      ],
+      "scene_height_pixels": 322,
+      "single_reviewer_annotation": "Small enemy visible in central opening; health 55.",
+      "warm_pixel_count": 116,
+      "warm_pixel_fraction": 0.000564652738565782,
+      "red_pixel_count": 40,
+      "red_pixel_fraction": 0.00019470784088475242
+    },
+    "190": {
+      "png_sha256": "e0942ccc712d7f862849120c0d4a13373c7e8d2866f3797bc5acfcebc6ec7d48",
+      "dimensions": [
+        1280,
+        800
+      ],
+      "game_viewport_xyxy": [
+        322,
+        181,
+        960,
+        583
+      ],
+      "scene_height_pixels": 322,
+      "single_reviewer_annotation": "Enemy close in left foreground; health 55.",
+      "warm_pixel_count": 573,
+      "warm_pixel_fraction": 0.0027891898206740787,
+      "red_pixel_count": 55,
+      "red_pixel_fraction": 0.0002677232812165346
+    },
+    "200": {
+      "png_sha256": "0e6b6570944c3e0c60ca3eff5e84bc9371187cd8cea6a7d237e66cc06645483c",
+      "dimensions": [
+        1280,
+        800
+      ],
+      "game_viewport_xyxy": [
+        322,
+        181,
+        960,
+        583
+      ],
+      "scene_height_pixels": 322,
+      "single_reviewer_annotation": "Enemy in central passage; health equals the 51 hard floor.",
+      "warm_pixel_count": 110,
+      "warm_pixel_fraction": 0.0005354465624330692,
+      "red_pixel_count": 48,
+      "red_pixel_fraction": 0.0002336494090617029
+    },
+    "210": {
+      "png_sha256": "33751e024d00058ce6cfa6404fad5804af96072e835f0818b18b01f5c4706831",
+      "dimensions": [
+        1280,
+        800
+      ],
+      "game_viewport_xyxy": [
+        322,
+        181,
+        960,
+        583
+      ],
+      "scene_height_pixels": 322,
+      "single_reviewer_annotation": "Enemy visible with bright attack/muzzle effect; health 51.",
+      "warm_pixel_count": 2085,
+      "warm_pixel_fraction": 0.01014914620611772,
+      "red_pixel_count": 970,
+      "red_pixel_fraction": 0.004721665141455247
+    },
+    "218": {
+      "png_sha256": "c711f3c36ff56778378a0f82275474615aac9879c2f61ce0d8d4ae8270e5a448",
+      "dimensions": [
+        1280,
+        800
+      ],
+      "game_viewport_xyxy": [
+        322,
+        181,
+        960,
+        583
+      ],
+      "scene_height_pixels": 322,
+      "single_reviewer_annotation": "Enemy and red damage/blood effect; health 48.",
+      "warm_pixel_count": 1375,
+      "warm_pixel_fraction": 0.006693082030413365,
+      "red_pixel_count": 4867,
+      "red_pixel_fraction": 0.023691076539652252
+    }
+  },
+  "transitions": [
+    {
+      "from_sequence": 166,
+      "to_sequence": 180,
+      "normalized_rgb_mae": 0.11303897961892494,
+      "pixel_fraction_max_channel_delta_gt_40": 0.25404992309040286
+    },
+    {
+      "from_sequence": 180,
+      "to_sequence": 190,
+      "normalized_rgb_mae": 0.15871578471014047,
+      "pixel_fraction_max_channel_delta_gt_40": 0.42797270196070797
+    },
+    {
+      "from_sequence": 190,
+      "to_sequence": 200,
+      "normalized_rgb_mae": 0.17149273593404468,
+      "pixel_fraction_max_channel_delta_gt_40": 0.49524912868241205
+    },
+    {
+      "from_sequence": 200,
+      "to_sequence": 210,
+      "normalized_rgb_mae": 0.08834551402679104,
+      "pixel_fraction_max_channel_delta_gt_40": 0.15550828481862963
+    },
+    {
+      "from_sequence": 210,
+      "to_sequence": 218,
+      "normalized_rgb_mae": 0.11310395858856923,
+      "pixel_fraction_max_channel_delta_gt_40": 0.25024825249712807
+    }
+  ],
+  "decision": {
+    "warm_delta_166_to_180": -0.0003553418096146733,
+    "warm_candidate_threshold_met": false,
+    "red_effect_positive_sequences_vs_166": [
+      218
+    ],
+    "false_alarm_rate_estimable": false,
+    "detector_validated": false
+  },
+  "limits": [
+    "Six selected frames from one episode; one reviewer supplied all visual labels.",
+    "Only frame 166 is annotated enemy-absent; there are no balanced harmless-motion controls.",
+    "No threshold fitting, temporal sampling analysis, live capture timing, false-interrupt estimate, or task effect.",
+    "Pixel features can respond to camera motion, scenery, animation, lighting, and damage effects.",
+    "This record does not authorize or implement a runtime guard or live allocation."
+  ]
+}

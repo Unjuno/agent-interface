@@ -1,0 +1,13 @@
+{
+  "schema": "issue59-visual-change-feature-screen-a01-audit-v1",
+  "status": "PASS_INDEPENDENT_RECOUNT",
+  "checks": {
+    "result_recomputed_from_six_hash_verified_pngs": true,
+    "mutation_corrupt_warm_count_detected": true,
+    "mutation_corrupt_input_hash_detected": true,
+    "single_negative_frame_scope_retained": true,
+    "runtime_guard_not_claimed": true
+  },
+  "auditor_method": "separate integer-ratio threshold implementation and pixelwise transition recount using Pillow",
+  "scope": "offline six-frame feature arithmetic and file integrity only; not label validation or detector efficacy"
+}
