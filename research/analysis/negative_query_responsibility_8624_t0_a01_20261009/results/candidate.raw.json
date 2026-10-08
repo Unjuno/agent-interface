@@ -1,0 +1,775 @@
+{
+  "allocation": "8624-T0-A01-20261009",
+  "case_count": 7,
+  "cases": [
+    {
+      "case_id": "monotone_positive_control",
+      "minimal_outcome_flip_sets": [
+        [
+          0
+        ],
+        [
+          1
+        ]
+      ],
+      "minimal_positive_supports": [
+        [
+          0,
+          1
+        ]
+      ],
+      "outcome": 1,
+      "prime_analysis": {
+        "causal_results": {
+          "noise": {
+            "actual_cause": false,
+            "current_literal": "!noise",
+            "minimum_contingencies": [],
+            "minimum_contingency_size": null,
+            "responsibility": "0"
+          },
+          "region_scanned": {
+            "actual_cause": true,
+            "current_literal": "region_scanned",
+            "minimum_contingencies": [
+              []
+            ],
+            "minimum_contingency_size": 0,
+            "responsibility": "1/1"
+          },
+          "visible": {
+            "actual_cause": true,
+            "current_literal": "visible",
+            "minimum_contingencies": [
+              []
+            ],
+            "minimum_contingency_size": 0,
+            "responsibility": "1/1"
+          }
+        },
+        "current_outcome_terms": [
+          [
+            "visible",
+            "region_scanned"
+          ]
+        ],
+        "limit": 100000,
+        "opposite_outcome_terms": [
+          [
+            "!region_scanned"
+          ],
+          [
+            "!visible"
+          ]
+        ],
+        "status": "COMPLETE"
+      },
+      "prime_cube_scan_bound": 27,
+      "robustness_radius": 1,
+      "role": "positive monotone support control",
+      "signed_facts": [
+        {
+          "fact": "visible",
+          "literal": "visible",
+          "present": true
+        },
+        {
+          "fact": "region_scanned",
+          "literal": "region_scanned",
+          "present": true
+        },
+        {
+          "fact": "noise",
+          "literal": "!noise",
+          "present": false
+        }
+      ],
+      "truth_table_rows": 8
+    },
+    {
+      "case_id": "negative_absent_prerequisite_with_contingency",
+      "minimal_outcome_flip_sets": [
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "minimal_positive_supports": [
+        [
+          0
+        ]
+      ],
+      "outcome": 0,
+      "prime_analysis": {
+        "causal_results": {
+          "eligible": {
+            "actual_cause": true,
+            "current_literal": "!eligible",
+            "minimum_contingencies": [
+              [
+                "highRisk"
+              ],
+              [
+                "reviewed"
+              ]
+            ],
+            "minimum_contingency_size": 1,
+            "responsibility": "1/2"
+          },
+          "highRisk": {
+            "actual_cause": true,
+            "current_literal": "highRisk",
+            "minimum_contingencies": [
+              [
+                "eligible"
+              ]
+            ],
+            "minimum_contingency_size": 1,
+            "responsibility": "1/2"
+          },
+          "reviewed": {
+            "actual_cause": true,
+            "current_literal": "!reviewed",
+            "minimum_contingencies": [
+              [
+                "eligible"
+              ]
+            ],
+            "minimum_contingency_size": 1,
+            "responsibility": "1/2"
+          },
+          "violation": {
+            "actual_cause": false,
+            "current_literal": "!violation",
+            "minimum_contingencies": [],
+            "minimum_contingency_size": null,
+            "responsibility": "0"
+          }
+        },
+        "current_outcome_terms": [
+          [
+            "!eligible"
+          ],
+          [
+            "highRisk",
+            "!reviewed"
+          ],
+          [
+            "violation"
+          ]
+        ],
+        "limit": 100000,
+        "opposite_outcome_terms": [
+          [
+            "eligible",
+            "!violation",
+            "!highRisk"
+          ],
+          [
+            "eligible",
+            "!violation",
+            "reviewed"
+          ]
+        ],
+        "status": "COMPLETE"
+      },
+      "prime_cube_scan_bound": 81,
+      "robustness_radius": 2,
+      "role": "negative query with absent prerequisite and present exception",
+      "signed_facts": [
+        {
+          "fact": "eligible",
+          "literal": "!eligible",
+          "present": false
+        },
+        {
+          "fact": "violation",
+          "literal": "!violation",
+          "present": false
+        },
+        {
+          "fact": "highRisk",
+          "literal": "highRisk",
+          "present": true
+        },
+        {
+          "fact": "reviewed",
+          "literal": "!reviewed",
+          "present": false
+        }
+      ],
+      "truth_table_rows": 16
+    },
+    {
+      "case_id": "present_exception_direct_cause",
+      "minimal_outcome_flip_sets": [
+        [
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "minimal_positive_supports": [
+        [
+          0
+        ]
+      ],
+      "outcome": 0,
+      "prime_analysis": {
+        "causal_results": {
+          "eligible": {
+            "actual_cause": false,
+            "current_literal": "eligible",
+            "minimum_contingencies": [],
+            "minimum_contingency_size": null,
+            "responsibility": "0"
+          },
+          "highRisk": {
+            "actual_cause": true,
+            "current_literal": "highRisk",
+            "minimum_contingencies": [
+              []
+            ],
+            "minimum_contingency_size": 0,
+            "responsibility": "1/1"
+          },
+          "reviewed": {
+            "actual_cause": true,
+            "current_literal": "!reviewed",
+            "minimum_contingencies": [
+              []
+            ],
+            "minimum_contingency_size": 0,
+            "responsibility": "1/1"
+          },
+          "violation": {
+            "actual_cause": false,
+            "current_literal": "!violation",
+            "minimum_contingencies": [],
+            "minimum_contingency_size": null,
+            "responsibility": "0"
+          }
+        },
+        "current_outcome_terms": [
+          [
+            "!eligible"
+          ],
+          [
+            "highRisk",
+            "!reviewed"
+          ],
+          [
+            "violation"
+          ]
+        ],
+        "limit": 100000,
+        "opposite_outcome_terms": [
+          [
+            "eligible",
+            "!violation",
+            "!highRisk"
+          ],
+          [
+            "eligible",
+            "!violation",
+            "reviewed"
+          ]
+        ],
+        "status": "COMPLETE"
+      },
+      "prime_cube_scan_bound": 81,
+      "robustness_radius": 1,
+      "role": "negative query with present exception and absent release condition",
+      "signed_facts": [
+        {
+          "fact": "eligible",
+          "literal": "eligible",
+          "present": true
+        },
+        {
+          "fact": "violation",
+          "literal": "!violation",
+          "present": false
+        },
+        {
+          "fact": "highRisk",
+          "literal": "highRisk",
+          "present": true
+        },
+        {
+          "fact": "reviewed",
+          "literal": "!reviewed",
+          "present": false
+        }
+      ],
+      "truth_table_rows": 16
+    },
+    {
+      "case_id": "same_support_flip_different_responsibility",
+      "minimal_outcome_flip_sets": [
+        [
+          0
+        ]
+      ],
+      "minimal_positive_supports": [
+        [
+          0
+        ]
+      ],
+      "outcome": 0,
+      "prime_analysis": {
+        "causal_results": {
+          "p": {
+            "actual_cause": true,
+            "current_literal": "!p",
+            "minimum_contingencies": [
+              []
+            ],
+            "minimum_contingency_size": 0,
+            "responsibility": "1/1"
+          },
+          "q": {
+            "actual_cause": true,
+            "current_literal": "!q",
+            "minimum_contingencies": [
+              [
+                "p",
+                "r"
+              ]
+            ],
+            "minimum_contingency_size": 2,
+            "responsibility": "1/3"
+          },
+          "r": {
+            "actual_cause": true,
+            "current_literal": "!r",
+            "minimum_contingencies": [
+              [
+                "p",
+                "q"
+              ]
+            ],
+            "minimum_contingency_size": 2,
+            "responsibility": "1/3"
+          }
+        },
+        "current_outcome_terms": [
+          [
+            "!p"
+          ],
+          [
+            "!q",
+            "r"
+          ],
+          [
+            "q",
+            "!r"
+          ]
+        ],
+        "limit": 100000,
+        "opposite_outcome_terms": [
+          [
+            "p",
+            "!q",
+            "!r"
+          ],
+          [
+            "p",
+            "q",
+            "r"
+          ]
+        ],
+        "status": "COMPLETE"
+      },
+      "prime_cube_scan_bound": 27,
+      "robustness_radius": 1,
+      "role": "negative query where support and nearest flip summaries miss contingent causes",
+      "signed_facts": [
+        {
+          "fact": "p",
+          "literal": "!p",
+          "present": false
+        },
+        {
+          "fact": "q",
+          "literal": "!q",
+          "present": false
+        },
+        {
+          "fact": "r",
+          "literal": "!r",
+          "present": false
+        }
+      ],
+      "truth_table_rows": 8
+    },
+    {
+      "case_id": "same_support_flip_independent_response",
+      "minimal_outcome_flip_sets": [
+        [
+          0
+        ]
+      ],
+      "minimal_positive_supports": [
+        [
+          0
+        ]
+      ],
+      "outcome": 0,
+      "prime_analysis": {
+        "causal_results": {
+          "p": {
+            "actual_cause": true,
+            "current_literal": "!p",
+            "minimum_contingencies": [
+              []
+            ],
+            "minimum_contingency_size": 0,
+            "responsibility": "1/1"
+          },
+          "q": {
+            "actual_cause": false,
+            "current_literal": "!q",
+            "minimum_contingencies": [],
+            "minimum_contingency_size": null,
+            "responsibility": "0"
+          },
+          "r": {
+            "actual_cause": false,
+            "current_literal": "!r",
+            "minimum_contingencies": [],
+            "minimum_contingency_size": null,
+            "responsibility": "0"
+          }
+        },
+        "current_outcome_terms": [
+          [
+            "!p"
+          ]
+        ],
+        "limit": 100000,
+        "opposite_outcome_terms": [
+          [
+            "p"
+          ]
+        ],
+        "status": "COMPLETE"
+      },
+      "prime_cube_scan_bound": 27,
+      "robustness_radius": 1,
+      "role": "paired negative query with same support and flip summaries but no q/r causes",
+      "signed_facts": [
+        {
+          "fact": "p",
+          "literal": "!p",
+          "present": false
+        },
+        {
+          "fact": "q",
+          "literal": "!q",
+          "present": false
+        },
+        {
+          "fact": "r",
+          "literal": "!r",
+          "present": false
+        }
+      ],
+      "truth_table_rows": 8
+    },
+    {
+      "case_id": "unit_robustness_large_named_contingency",
+      "minimal_outcome_flip_sets": [
+        [
+          0
+        ]
+      ],
+      "minimal_positive_supports": [
+        [
+          0
+        ]
+      ],
+      "outcome": 0,
+      "prime_analysis": {
+        "causal_results": {
+          "gate": {
+            "actual_cause": true,
+            "current_literal": "!gate",
+            "minimum_contingencies": [
+              []
+            ],
+            "minimum_contingency_size": 0,
+            "responsibility": "1/1"
+          },
+          "s1": {
+            "actual_cause": true,
+            "current_literal": "!s1",
+            "minimum_contingencies": [
+              [
+                "gate",
+                "s2",
+                "s3"
+              ]
+            ],
+            "minimum_contingency_size": 3,
+            "responsibility": "1/4"
+          },
+          "s2": {
+            "actual_cause": true,
+            "current_literal": "!s2",
+            "minimum_contingencies": [
+              [
+                "gate",
+                "s1",
+                "s3"
+              ]
+            ],
+            "minimum_contingency_size": 3,
+            "responsibility": "1/4"
+          },
+          "s3": {
+            "actual_cause": true,
+            "current_literal": "!s3",
+            "minimum_contingencies": [
+              [
+                "gate",
+                "s1",
+                "s2"
+              ]
+            ],
+            "minimum_contingency_size": 3,
+            "responsibility": "1/4"
+          }
+        },
+        "current_outcome_terms": [
+          [
+            "!gate"
+          ],
+          [
+            "!s1",
+            "s2"
+          ],
+          [
+            "!s1",
+            "s3"
+          ],
+          [
+            "!s2",
+            "s3"
+          ],
+          [
+            "s1",
+            "!s2"
+          ],
+          [
+            "s1",
+            "!s3"
+          ],
+          [
+            "s2",
+            "!s3"
+          ]
+        ],
+        "limit": 100000,
+        "opposite_outcome_terms": [
+          [
+            "gate",
+            "!s1",
+            "!s2",
+            "!s3"
+          ],
+          [
+            "gate",
+            "s1",
+            "s2",
+            "s3"
+          ]
+        ],
+        "status": "COMPLETE"
+      },
+      "prime_cube_scan_bound": 81,
+      "robustness_radius": 1,
+      "role": "negative answer with radius one and size-three contingency for s1",
+      "signed_facts": [
+        {
+          "fact": "gate",
+          "literal": "!gate",
+          "present": false
+        },
+        {
+          "fact": "s1",
+          "literal": "!s1",
+          "present": false
+        },
+        {
+          "fact": "s2",
+          "literal": "!s2",
+          "present": false
+        },
+        {
+          "fact": "s3",
+          "literal": "!s3",
+          "present": false
+        }
+      ],
+      "truth_table_rows": 16
+    },
+    {
+      "case_id": "dense_parity_complexity_control",
+      "minimal_outcome_flip_sets": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          5
+        ],
+        [
+          6
+        ],
+        [
+          7
+        ],
+        [
+          8
+        ],
+        [
+          9
+        ],
+        [
+          10
+        ]
+      ],
+      "minimal_positive_supports": [
+        [
+          0
+        ],
+        [
+          1
+        ],
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ],
+        [
+          5
+        ],
+        [
+          6
+        ],
+        [
+          7
+        ],
+        [
+          8
+        ],
+        [
+          9
+        ],
+        [
+          10
+        ]
+      ],
+      "outcome": 0,
+      "prime_analysis": {
+        "causal_results": null,
+        "current_outcome_terms": null,
+        "limit": 100000,
+        "opposite_outcome_terms": null,
+        "reason": "complete_cube_scan_bound_exceeds_frozen_budget",
+        "status": "UNKNOWN_TOO_LARGE"
+      },
+      "prime_cube_scan_bound": 177147,
+      "robustness_radius": 1,
+      "role": "parity response whose explicit prime families exceed the frozen scan budget",
+      "signed_facts": [
+        {
+          "fact": "x00",
+          "literal": "!x00",
+          "present": false
+        },
+        {
+          "fact": "x01",
+          "literal": "!x01",
+          "present": false
+        },
+        {
+          "fact": "x02",
+          "literal": "!x02",
+          "present": false
+        },
+        {
+          "fact": "x03",
+          "literal": "!x03",
+          "present": false
+        },
+        {
+          "fact": "x04",
+          "literal": "!x04",
+          "present": false
+        },
+        {
+          "fact": "x05",
+          "literal": "!x05",
+          "present": false
+        },
+        {
+          "fact": "x06",
+          "literal": "!x06",
+          "present": false
+        },
+        {
+          "fact": "x07",
+          "literal": "!x07",
+          "present": false
+        },
+        {
+          "fact": "x08",
+          "literal": "!x08",
+          "present": false
+        },
+        {
+          "fact": "x09",
+          "literal": "!x09",
+          "present": false
+        },
+        {
+          "fact": "x10",
+          "literal": "!x10",
+          "present": false
+        }
+      ],
+      "truth_table_rows": 2048
+    }
+  ],
+  "errors": [],
+  "main_sha": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "schema": "negative-query-responsibility-candidate-v1",
+  "source_hashes": {
+    "auditor.py": "dffe4ef210275ce40633e92c380aa9bbdebf2aa2b03d03ca1277fb416c3185f8",
+    "candidate.py": "575407e5e27371e98e0dae7932594b5715bae094d248189609ecb25ff9827619",
+    "model.json": "7e2f500c8ffe48a1b855d918c3d6ed6129193e39252ed357a54fa251bfac23f1"
+  },
+  "status": "CANDIDATE_COMPLETE"
+}

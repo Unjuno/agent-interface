@@ -1,0 +1,12 @@
+Non-gating pre-freeze environment probe; not part of the scientific hypothesis.
+
+Command: docker --context orbstack info --format '{{.Name}} {{.ServerVersion}}'
+Result: orbstack 29.4.0
+
+Command: docker --context orbstack image ls --format '{{.Repository}}:{{.Tag}}'
+Result: ERROR: blob sha256:390273a02a77007c74c7699cb4d2853624102b6fbca0cf18e904a457a6110c9b expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/390273a02a77007c74c7699cb4d2853624102b6fbca0cf18e904a457a6110c9b: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/390273a02a77007c74c7699cb4d2853624102b6fbca0cf18e904a457a6110c9b: operation not supported
+
+Command: docker --context orbstack run --rm --pull=always python:3.12-slim python --version
+Result: ERROR: failed to lease content: rpc error: code = Unknown desc = blob sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f expected at /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: open /var/lib/docker/containerd/daemon/io.containerd.content.v1.content/blobs/sha256/f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f: operation not supported
+
+Interpretation: The frozen T0 requires no container boundary, Engine API, GUI, model, external data, or user data. The repository protocol uses OrbStack when an isolated container is required; this optional probe failure does not block the host standard-library T0 and does not authorize any repair, prune, or reset of shared OrbStack state. No Docker workload was created.
