@@ -1,0 +1,24 @@
+{
+  "allocation_id": "issue8648-c02-20261009",
+  "freeze_commit": "a2e83af4de22dbe0ad1dcb37b51eaeee01e37153",
+  "freeze_sha256": "85a0dfc788993984ae02decc0f828ca5bbb505bdefb01981bf7ca6279ebd3324",
+  "started_utc": "2026-10-08T23:36:41Z",
+  "candidate": {
+    "command": "/run/current-system/sw/bin/python3.12 candidate.py > results/formal-01/RAW.jsonl",
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "auditor": {
+    "command": "/run/current-system/sw/bin/python3.12 audit.py < results/formal-01/RAW.jsonl > results/formal-01/AUDIT.json",
+    "invocations": 1,
+    "retries": 0,
+    "exit_code": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "finished_utc": "2026-10-08T23:36:41Z",
+  "raw_sha256": "1aba5d9f10ebccc85799db0892ebe239cfc2c64cf8203ecfff100edaa0e18aa6",
+  "raw_bytes": 247839,
+  "auditor_sha256": "720f39eaee782ff152b43c333ffddfbeead6ca630fef3066f4162bfdf03e337c"
+}
