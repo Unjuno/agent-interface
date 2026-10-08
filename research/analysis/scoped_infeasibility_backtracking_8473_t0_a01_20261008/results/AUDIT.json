@@ -1,0 +1,30 @@
+{
+  "case_count": 4,
+  "errors": [
+    "mutation control failed"
+  ],
+  "fixture_sha256": "c0f6eb4812dda1e5dfbd86cc71d6cc33b9a9dfc1ec4b564d1a0df148125872de",
+  "mutation_controls": {
+    "delete_available_alternative": true,
+    "global_overgeneralization": true,
+    "omit_blocker": false,
+    "reuse_after_generation_change": true,
+    "timeout_as_infeasible": true
+  },
+  "oracle_feasible_plans": {
+    "focus-unavailable-with-recovery": [
+      "refocus-then-type"
+    ],
+    "occluded-with-rearrangement": [
+      "rearrange-then-open"
+    ],
+    "transient-stale-then-feasible": [
+      "same-action-after-refresh"
+    ],
+    "truly-infeasible": []
+  },
+  "passed": false,
+  "policy_rows": 12,
+  "raw_sha256": "ad651cbae72263dec0368ef6a812d799aa23353fd9a57ced2cbdfb5b2ac6ec51",
+  "schema": "scoped-infeasibility-audit-v1"
+}
