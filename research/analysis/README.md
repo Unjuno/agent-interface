@@ -1,6 +1,6 @@
 # Analytical research
 
-- [Issue #7650 T0 A01/A02 machine-gate audit chain](crosslingual_visual_injection_7650_t0_a01_20261008/REPORT.md) — A01's initial ledger result is qualified `HOLD_AUDITOR_ROW_BINDING_GAP`; read-only A02 passes per-row UID binding and 7/7 metadata mutations on the exact predecessor raw. Full Issue T0 remains HOLD: no bilingual semantic adjudication or pixel review.
+- [Issue #7650 T0 A01/A02 machine-gate audit chain](crosslingual_visual_injection_7650_t0_a01_20261008/REPORT.md) — Preserve A01's recorded `PASS_MACHINE_GATE_SCOPED` as history; review found it insufficient for row-to-UID binding, which read-only A02 passes with 7/7 metadata controls on the exact raw. Full Issue T0 remains HOLD: no bilingual semantic adjudication or pixel review.
 
 - [Issue #6600 practice-order discriminator T0 A01](faded_demonstration_practice_order_6600_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: fixed-dose blocked/mixed six-task ledgers independently reconstructed; 6/6 mutations rejected. Host-only stdlib method evidence; no participants or learning claim.
 
