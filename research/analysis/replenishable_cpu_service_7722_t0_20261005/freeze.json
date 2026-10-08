@@ -1,0 +1,35 @@
+{
+  "allocation_id": "CPU-CONTROL-7722-T0-20261005-01",
+  "auditor_invocations": 1,
+  "candidate_invocations": 1,
+  "cpu_request": "1",
+  "created_utc": "2026-10-04T18:02:59+00:00",
+  "gpu": "none",
+  "image": "python@sha256:dddfd7e07f9d15aeeca61529320492139d21cac7f0070c00609243e51e4e0016",
+  "image_architecture": "amd64",
+  "image_id": "sha256:414a398990af718f018ff9c23cea0e7489b7986eb54f2b1d7cc874c99ebc7364",
+  "issue": 7722,
+  "memory_enforcement": "unverified; preserve emitted warnings",
+  "memory_request": "256m",
+  "network": "none",
+  "protocol_sha256": "6b73542a38518e37eec7eae4e47f03610e09b6b5f8d7f534456abfa65ce2c857",
+  "retries": 0,
+  "runtime": "WSLc",
+  "seed_method": "CPython random.Random(seed).randint(400,600), one RNG instance per seed",
+  "source_base": "3dbbda05eb8d5067ee2c2969615e472a0f20f562",
+  "source_hashes": {
+    "auditor_sha256": "fbc58e9f90c318250d880bdfe506a301fefdf45471192234d0f59864e7cdb052",
+    "candidate_sha256": "6a6757a3e613d96d3a515d5b1cd9fd33e27d8dd5b824e3c2eb05969979757616",
+    "cases_sha256": "7b189031a67e46854434c4fc0376847e555cea92fa3916f1eb475aa450f4ddc5",
+    "freeze_builder_sha256": "e2c8aca511410d37e0facf943ef33d23a920e6149c1ae383f7e90b2fb5eb55fc",
+    "protocol_sha256": "6b73542a38518e37eec7eae4e47f03610e09b6b5f8d7f534456abfa65ce2c857"
+  },
+  "source_names": {
+    "auditor": "auditor.py",
+    "candidate": "candidate.py",
+    "cases": "cases.json",
+    "freeze_builder": "freeze_builder.py",
+    "protocol": "PROTOCOL.md"
+  },
+  "wslc_version": "3.0.1.0"
+}
