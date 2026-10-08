@@ -6,6 +6,9 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8624 T0 A02: [negative-query responsibility method](analysis/negative_query_responsibility_8624_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`; 2,120 assignments across seven authored systems independently reconstructed. A01's candidate-exit STOP remains unchanged; dense parity prime analysis explicitly refused at the frozen budget. No live GUI or product claim.
+- Issue #8624 T0 A01: [candidate execution STOP](analysis/negative_query_responsibility_8624_t0_a01_20261009/REPORT.md) — output was emitted, then frozen CLI exited 1; auditor invocation count 0. Preserved without retry or relabeling.
+
 - Issue #8157 A06: [preserved posthoc score-audit STOP](vision/interval_ttc_bounded_error_v1/results/POSTHOC_A06_INDEPENDENT_SCORE_AUDIT/RESCUE_QUALIFICATION.md) — the scorer stopped before parsing raw JSONL because the A06/A04 manifest keysets differ; no score was produced and A02 remains unscorable.
 
 - Issue #8259: [release-batch alias cleanup evidence rescue](doom/release_batch_alias_rescue_8259_20261009/README.md) — nine preserved fake-X/private-Xvfb experiment packages and a separate measurement-publication custody record; scoped construction only, with first STOP/FAIL outcomes retained. No live/game claim.

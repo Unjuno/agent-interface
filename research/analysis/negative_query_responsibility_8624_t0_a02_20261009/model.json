@@ -1,0 +1,728 @@
+{
+  "schema": "negative-query-responsibility-model-v1",
+  "intervention_semantics": "toggle-membership-in-finite-mutable-universe",
+  "query_endpoint": "Goal",
+  "cases": [
+    {
+      "id": "monotone_positive_control",
+      "role": "positive monotone support control",
+      "universe": [
+        "visible",
+        "region_scanned",
+        "noise"
+      ],
+      "observed": [
+        "visible",
+        "region_scanned"
+      ],
+      "rules": [
+        {
+          "head": "Goal",
+          "stratum": 1,
+          "positive": [
+            "visible",
+            "region_scanned"
+          ],
+          "negative": []
+        }
+      ]
+    },
+    {
+      "id": "negative_absent_prerequisite_with_contingency",
+      "role": "negative query with absent prerequisite and present exception",
+      "universe": [
+        "eligible",
+        "violation",
+        "highRisk",
+        "reviewed"
+      ],
+      "observed": [
+        "highRisk"
+      ],
+      "rules": [
+        {
+          "head": "blocked",
+          "stratum": 1,
+          "positive": [
+            "violation"
+          ],
+          "negative": []
+        },
+        {
+          "head": "blocked",
+          "stratum": 1,
+          "positive": [
+            "highRisk"
+          ],
+          "negative": [
+            "reviewed"
+          ]
+        },
+        {
+          "head": "Goal",
+          "stratum": 2,
+          "positive": [
+            "eligible"
+          ],
+          "negative": [
+            "blocked"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "present_exception_direct_cause",
+      "role": "negative query with present exception and absent release condition",
+      "universe": [
+        "eligible",
+        "violation",
+        "highRisk",
+        "reviewed"
+      ],
+      "observed": [
+        "eligible",
+        "highRisk"
+      ],
+      "rules": [
+        {
+          "head": "blocked",
+          "stratum": 1,
+          "positive": [
+            "violation"
+          ],
+          "negative": []
+        },
+        {
+          "head": "blocked",
+          "stratum": 1,
+          "positive": [
+            "highRisk"
+          ],
+          "negative": [
+            "reviewed"
+          ]
+        },
+        {
+          "head": "Goal",
+          "stratum": 2,
+          "positive": [
+            "eligible"
+          ],
+          "negative": [
+            "blocked"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "same_support_flip_different_responsibility",
+      "role": "negative query where support and nearest flip summaries miss contingent causes",
+      "universe": [
+        "p",
+        "q",
+        "r"
+      ],
+      "observed": [],
+      "rules": [
+        {
+          "head": "Goal",
+          "stratum": 1,
+          "positive": [
+            "p"
+          ],
+          "negative": [
+            "q",
+            "r"
+          ]
+        },
+        {
+          "head": "Goal",
+          "stratum": 1,
+          "positive": [
+            "p",
+            "q",
+            "r"
+          ],
+          "negative": []
+        }
+      ]
+    },
+    {
+      "id": "same_support_flip_independent_response",
+      "role": "paired negative query with same support and flip summaries but no q/r causes",
+      "universe": [
+        "p",
+        "q",
+        "r"
+      ],
+      "observed": [],
+      "rules": [
+        {
+          "head": "Goal",
+          "stratum": 1,
+          "positive": [
+            "p"
+          ],
+          "negative": []
+        }
+      ]
+    },
+    {
+      "id": "unit_robustness_large_named_contingency",
+      "role": "negative answer with radius one and size-three contingency for s1",
+      "universe": [
+        "gate",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "observed": [],
+      "rules": [
+        {
+          "head": "Some",
+          "stratum": 1,
+          "positive": [
+            "s1"
+          ],
+          "negative": []
+        },
+        {
+          "head": "Some",
+          "stratum": 1,
+          "positive": [
+            "s2"
+          ],
+          "negative": []
+        },
+        {
+          "head": "Some",
+          "stratum": 1,
+          "positive": [
+            "s3"
+          ],
+          "negative": []
+        },
+        {
+          "head": "Missing",
+          "stratum": 1,
+          "positive": [],
+          "negative": [
+            "s1"
+          ]
+        },
+        {
+          "head": "Missing",
+          "stratum": 1,
+          "positive": [],
+          "negative": [
+            "s2"
+          ]
+        },
+        {
+          "head": "Missing",
+          "stratum": 1,
+          "positive": [],
+          "negative": [
+            "s3"
+          ]
+        },
+        {
+          "head": "None",
+          "stratum": 2,
+          "positive": [],
+          "negative": [
+            "Some"
+          ]
+        },
+        {
+          "head": "All",
+          "stratum": 2,
+          "positive": [],
+          "negative": [
+            "Missing"
+          ]
+        },
+        {
+          "head": "Goal",
+          "stratum": 3,
+          "positive": [
+            "gate",
+            "None"
+          ],
+          "negative": []
+        },
+        {
+          "head": "Goal",
+          "stratum": 3,
+          "positive": [
+            "gate",
+            "All"
+          ],
+          "negative": []
+        }
+      ]
+    },
+    {
+      "id": "dense_parity_complexity_control",
+      "role": "parity response whose explicit prime families exceed the frozen scan budget",
+      "universe": [
+        "x00",
+        "x01",
+        "x02",
+        "x03",
+        "x04",
+        "x05",
+        "x06",
+        "x07",
+        "x08",
+        "x09",
+        "x10"
+      ],
+      "observed": [],
+      "rules": [
+        {
+          "head": "even00",
+          "stratum": 1,
+          "positive": [],
+          "negative": []
+        },
+        {
+          "head": "odd00",
+          "stratum": 1,
+          "positive": [
+            "x00"
+          ],
+          "negative": [
+            "x00"
+          ]
+        },
+        {
+          "head": "even01",
+          "stratum": 2,
+          "positive": [
+            "even00"
+          ],
+          "negative": [
+            "x00"
+          ]
+        },
+        {
+          "head": "odd01",
+          "stratum": 2,
+          "positive": [
+            "even00",
+            "x00"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd01",
+          "stratum": 2,
+          "positive": [
+            "odd00"
+          ],
+          "negative": [
+            "x00"
+          ]
+        },
+        {
+          "head": "even01",
+          "stratum": 2,
+          "positive": [
+            "odd00",
+            "x00"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even02",
+          "stratum": 3,
+          "positive": [
+            "even01"
+          ],
+          "negative": [
+            "x01"
+          ]
+        },
+        {
+          "head": "odd02",
+          "stratum": 3,
+          "positive": [
+            "even01",
+            "x01"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd02",
+          "stratum": 3,
+          "positive": [
+            "odd01"
+          ],
+          "negative": [
+            "x01"
+          ]
+        },
+        {
+          "head": "even02",
+          "stratum": 3,
+          "positive": [
+            "odd01",
+            "x01"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even03",
+          "stratum": 4,
+          "positive": [
+            "even02"
+          ],
+          "negative": [
+            "x02"
+          ]
+        },
+        {
+          "head": "odd03",
+          "stratum": 4,
+          "positive": [
+            "even02",
+            "x02"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd03",
+          "stratum": 4,
+          "positive": [
+            "odd02"
+          ],
+          "negative": [
+            "x02"
+          ]
+        },
+        {
+          "head": "even03",
+          "stratum": 4,
+          "positive": [
+            "odd02",
+            "x02"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even04",
+          "stratum": 5,
+          "positive": [
+            "even03"
+          ],
+          "negative": [
+            "x03"
+          ]
+        },
+        {
+          "head": "odd04",
+          "stratum": 5,
+          "positive": [
+            "even03",
+            "x03"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd04",
+          "stratum": 5,
+          "positive": [
+            "odd03"
+          ],
+          "negative": [
+            "x03"
+          ]
+        },
+        {
+          "head": "even04",
+          "stratum": 5,
+          "positive": [
+            "odd03",
+            "x03"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even05",
+          "stratum": 6,
+          "positive": [
+            "even04"
+          ],
+          "negative": [
+            "x04"
+          ]
+        },
+        {
+          "head": "odd05",
+          "stratum": 6,
+          "positive": [
+            "even04",
+            "x04"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd05",
+          "stratum": 6,
+          "positive": [
+            "odd04"
+          ],
+          "negative": [
+            "x04"
+          ]
+        },
+        {
+          "head": "even05",
+          "stratum": 6,
+          "positive": [
+            "odd04",
+            "x04"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even06",
+          "stratum": 7,
+          "positive": [
+            "even05"
+          ],
+          "negative": [
+            "x05"
+          ]
+        },
+        {
+          "head": "odd06",
+          "stratum": 7,
+          "positive": [
+            "even05",
+            "x05"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd06",
+          "stratum": 7,
+          "positive": [
+            "odd05"
+          ],
+          "negative": [
+            "x05"
+          ]
+        },
+        {
+          "head": "even06",
+          "stratum": 7,
+          "positive": [
+            "odd05",
+            "x05"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even07",
+          "stratum": 8,
+          "positive": [
+            "even06"
+          ],
+          "negative": [
+            "x06"
+          ]
+        },
+        {
+          "head": "odd07",
+          "stratum": 8,
+          "positive": [
+            "even06",
+            "x06"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd07",
+          "stratum": 8,
+          "positive": [
+            "odd06"
+          ],
+          "negative": [
+            "x06"
+          ]
+        },
+        {
+          "head": "even07",
+          "stratum": 8,
+          "positive": [
+            "odd06",
+            "x06"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even08",
+          "stratum": 9,
+          "positive": [
+            "even07"
+          ],
+          "negative": [
+            "x07"
+          ]
+        },
+        {
+          "head": "odd08",
+          "stratum": 9,
+          "positive": [
+            "even07",
+            "x07"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd08",
+          "stratum": 9,
+          "positive": [
+            "odd07"
+          ],
+          "negative": [
+            "x07"
+          ]
+        },
+        {
+          "head": "even08",
+          "stratum": 9,
+          "positive": [
+            "odd07",
+            "x07"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even09",
+          "stratum": 10,
+          "positive": [
+            "even08"
+          ],
+          "negative": [
+            "x08"
+          ]
+        },
+        {
+          "head": "odd09",
+          "stratum": 10,
+          "positive": [
+            "even08",
+            "x08"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd09",
+          "stratum": 10,
+          "positive": [
+            "odd08"
+          ],
+          "negative": [
+            "x08"
+          ]
+        },
+        {
+          "head": "even09",
+          "stratum": 10,
+          "positive": [
+            "odd08",
+            "x08"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even10",
+          "stratum": 11,
+          "positive": [
+            "even09"
+          ],
+          "negative": [
+            "x09"
+          ]
+        },
+        {
+          "head": "odd10",
+          "stratum": 11,
+          "positive": [
+            "even09",
+            "x09"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd10",
+          "stratum": 11,
+          "positive": [
+            "odd09"
+          ],
+          "negative": [
+            "x09"
+          ]
+        },
+        {
+          "head": "even10",
+          "stratum": 11,
+          "positive": [
+            "odd09",
+            "x09"
+          ],
+          "negative": []
+        },
+        {
+          "head": "even11",
+          "stratum": 12,
+          "positive": [
+            "even10"
+          ],
+          "negative": [
+            "x10"
+          ]
+        },
+        {
+          "head": "odd11",
+          "stratum": 12,
+          "positive": [
+            "even10",
+            "x10"
+          ],
+          "negative": []
+        },
+        {
+          "head": "odd11",
+          "stratum": 12,
+          "positive": [
+            "odd10"
+          ],
+          "negative": [
+            "x10"
+          ]
+        },
+        {
+          "head": "even11",
+          "stratum": 12,
+          "positive": [
+            "odd10",
+            "x10"
+          ],
+          "negative": []
+        },
+        {
+          "head": "Goal",
+          "stratum": 13,
+          "positive": [
+            "odd11"
+          ],
+          "negative": []
+        }
+      ]
+    }
+  ]
+}

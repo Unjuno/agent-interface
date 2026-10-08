@@ -1,0 +1,11 @@
+# Issue #8624 T0 A02 result
+
+**Disposition: PASS_METHOD_SCOPED.** The separately frozen candidate and independent raw-only auditor each ran once, with no retries. The auditor reconstructed all 2,120 assignments across seven rule systems and returned zero errors. Candidate stdout is 17,181 bytes; exact candidate and audit hashes and invocation evidence are in RUN_RECORD.json and SHA256SUMS.txt. A01's earlier STOP remains intact in its separate package and commit.
+
+The monotone control agrees with positive support reasoning. In the absent-prerequisite case, the currently absent eligible fact is a cause of the negative answer with a minimum contingency of size one; independently, the present high-risk and absent reviewed facts are also causes under size-one contingencies. The direct present-exception case yields zero-size contingencies for the present high-risk blocker and absent reviewed release condition.
+
+The paired three-fact negative-query models have the same minimal positive support `{p}` and the same nearest outcome-flip set `{p}`. In the exception model, absent `q` and `r` are still causes with minimum contingency size two and responsibility `1/3`; in the independent model, neither is a cause. This confirms that those two summaries alone do not reconstruct the tested responsibility result in this fixture.
+
+The four-fact all-or-none selection case has robustness radius one, while each selected fact `s1`–`s3` needs a minimum contingency of size three (responsibility `1/4`). The eleven-fact parity case has a complete prime-cube scan bound of 177,147 against the frozen 100,000 limit. The candidate explicitly returns `UNKNOWN_TOO_LARGE` and emits no truncated prime families or responsibility rows for that analysis. The independent auditor separately exhausts its 2,048 states and all single-fact candidate contingencies, confirming that toggling any parity fact at the all-zero state is directly pivotal and that the radius is one. Those auditor-only values do not convert the candidate's over-budget result into a completed prime analysis.
+
+The result is limited to these authored deterministic rules and their declared mutable universes. It does not establish screenshot completeness, real absence semantics, GUI query freshness, live causation, causal frequency, runtime authority, safety, or user/product benefit.
