@@ -74,6 +74,36 @@ def record(arm: str, case_id: str = "C01") -> dict:
 
 
 class FormalAuditTest(unittest.TestCase):
+    def test_rejects_boolean_for_integer_json_evidence(self):
+        samples = []
+        sample = record("current")
+        sample["before"]["lockmask"] = False
+        samples.append((sample, "initial LockMask exact integer"))
+
+        sample = record("current")
+        sample["before"]["keymap"][0] = False
+        samples.append((sample, "initial keymap exact integer bytes"))
+
+        sample = record("current")
+        sample["response"]["result"]["execution"]["completed_ops"][0] = False
+        samples.append((sample, "completed operation indices exact integers"))
+
+        sample = record("guard-interposed")
+        actor = json.loads(sample["actor"]["stdout"])
+        actor["accepted"] = True
+        sample["actor"]["stdout"] = json.dumps(actor)
+        samples.append((sample, "actor state exact integers"))
+
+        sample = record("guard-interposed")
+        actor = json.loads(sample["actor"]["stdout"])
+        actor["ack_ns"] = True
+        sample["actor"]["stdout"] = json.dumps(actor)
+        samples.append((sample, "actor ACK timestamp exact integer"))
+
+        for sample, message in samples:
+            with self.subTest(message=message):
+                self.assertIn(message, audit_record(sample["case_id"], sample["arm"], sample))
+
     def test_observed_v1_c01_journal_is_valid_for_v2_event_rules(self):
         raw_path = (Path(__file__).resolve().parents[1] / "caps_text_check_to_xtest_successor_v1" /
                     "formal_runs" / "run_20261008_a01" / "C01" / "probe" / "record.json")
@@ -243,11 +273,15 @@ class FormalAuditTest(unittest.TestCase):
             self.assertEqual(result["status"], "PASS")
             controls = mutation_controls(root)
             self.assertEqual(controls["status"], "PASS")
-            self.assertEqual(len(controls["controls"]), 19)
+            self.assertEqual(len(controls["controls"]), 23)
             self.assertTrue(controls["controls"]["value_and_exit_before_input"]["rejected"])
             self.assertTrue(controls["controls"]["release_before_press"]["rejected"])
             self.assertTrue(controls["controls"]["final_value_before_character_press"]["rejected"])
             self.assertTrue(controls["controls"]["wrong_current_main_candidate_patch"]["rejected"])
+            self.assertTrue(controls["controls"]["boolean_lockmask_and_keymap_integer_fields"]["rejected"])
+            self.assertTrue(controls["controls"]["boolean_completed_operation_index"]["rejected"])
+            self.assertTrue(controls["controls"]["boolean_actor_state"]["rejected"])
+            self.assertTrue(controls["controls"]["boolean_actor_ack_timestamp"]["rejected"])
 
 
 if __name__ == "__main__":

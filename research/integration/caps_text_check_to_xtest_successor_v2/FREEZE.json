@@ -3,7 +3,7 @@
   "issue": "Unjuno/agent-interface#8328",
   "status": "PROTOCOL_DRAFT_NOT_ALLOCATED",
   "source_base": {
-    "ref": "4c203d797cd3e33168bd9177fea8e0d6ef605c6b",
+    "ref": "f72cd82d62c9d9f3860d4fa40980c56618bf5aaf",
     "backend_path": "runtime/backends/x11_v1/backend.py",
     "backend_sha256": "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126",
     "candidate_backend_sha256": "e885806c649acafe3550b55f2d88e070a59428008a9356fa60ce0699d4d118bb",
@@ -115,7 +115,11 @@
     "value and exit events moved before key input",
     "KeyRelease moved before matching KeyPress while retaining monotonic timestamps",
     "final Entry value moved before its character KeyPress while retaining monotonic timestamps",
-    "wrong current-main candidate patch identity"
+    "wrong current-main candidate patch identity",
+    "JSON boolean substituted for integer LockMask and keymap evidence",
+    "JSON boolean substituted for completed operation index",
+    "JSON boolean substituted for actor transition state",
+    "JSON boolean substituted for actor ACK timestamp"
   ],
   "scope_limits": [
     "one VM, Xvfb/Tk Entry, XKB map, and source closure only",
@@ -140,5 +144,5 @@
     "disposition": "STOP due to auditor predicate counting modifier KeyPress char=\"\" as payload and not requiring balanced KeyRelease keycodes; no remaining cases were run and none of that allocation is reused.",
     "raw_record_sha256": "899f1fa5883c0563f458aae42da7f56ab3157c4c5699d71c9ea06c91a84289e3"
   },
-  "audit_event_contract": "Require an exact-integer nondecreasing monotonic timestamp for every Entry journal row in recorded order. Compare payload against nonempty KeyPress.char fields. Require one progressive Entry value prefix after each corresponding character KeyPress and before its KeyRelease, and exactly one final exit row after all input. Independently require exact-integer keycode multiset balance and valid per-key chronology: no duplicate down, orphan release, or key left down, including modifiers."
+  "audit_event_contract": "Require exact JSON integers (never booleans) for LockMask/keymap bytes, completed-operation indices, keycodes, timestamps, actor state and actor ACK time. Require an exact-integer nondecreasing monotonic timestamp for every Entry journal row in recorded order. Compare payload against nonempty KeyPress.char fields. Require one progressive Entry value prefix after each corresponding character KeyPress and before its KeyRelease, and exactly one final exit row after all input. Independently require exact-integer keycode multiset balance and valid per-key chronology: no duplicate down, orphan release, or key left down, including modifiers."
 }

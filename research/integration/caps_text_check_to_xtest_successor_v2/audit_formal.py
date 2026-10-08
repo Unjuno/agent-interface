@@ -14,7 +14,7 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "8f7251645e4eaaf54fe0601807ea27d347857db9b5f93864100de1cf79c5fe19"
+FROZEN_PLAN_SHA256 = "9ecd9012f4f4ee206b9a1a9ba6afd009df6efcca2f59b0c905f3a1fb07ea35d8"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
 EXPECTED_XVFB_STDERR_SHA256 = FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]
 
@@ -36,29 +36,41 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
         if not condition:
             errors.append(message)
 
+    def neutral_keymap(value: object) -> bool:
+        return (type(value) is list and len(value) == 32 and
+                all(type(byte) is int and 0 <= byte <= 255 for byte in value) and
+                value == [0] * 32)
+
     require(record.get("kind") == "formal-public-dispatch-case", "kind")
     require(record.get("study_id") == "caps-text-query-xtest-a02-20261008", "study id")
     require(record.get("case_id") == case_id, "case id")
     require(record.get("arm") == arm, "arm")
     require(record.get("main_backend_sha256") == "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126", "main backend identity")
-    require(record.get("before", {}).get("lockmask") == 0, "initial LockMask")
-    require(record.get("before", {}).get("keymap") == [0] * 32, "initial keymap neutrality")
-    require(record.get("after", {}).get("lockmask") == expected_lock, "final LockMask")
-    require(record.get("after", {}).get("keymap") == [0] * 32, "final keymap release")
+    before = record.get("before", {})
+    after = record.get("after", {})
+    require(type(before.get("lockmask")) is int and before.get("lockmask") == 0,
+            "initial LockMask exact integer")
+    require(neutral_keymap(before.get("keymap")), "initial keymap exact integer bytes")
+    require(type(after.get("lockmask")) is int and after.get("lockmask") == expected_lock,
+            "final LockMask exact integer")
+    require(neutral_keymap(after.get("keymap")), "final keymap exact integer bytes")
     require(record.get("app_after", {}).get("value") == expected_value, "Entry value")
     require(record.get("response", {}).get("result", {}).get("status") == "completed", "dispatch status")
     execution = record.get("response", {}).get("result", {}).get("execution", {})
-    require(execution.get("completed_ops") == [0, 1, 2], "completed operation sequence")
+    completed_ops = execution.get("completed_ops")
+    require(type(completed_ops) is list and all(type(op) is int for op in completed_ops) and
+            completed_ops == [0, 1, 2], "completed operation indices exact integers")
     releases = execution.get("releases", [])
     require(bool(releases) and releases[-1].get("verified") is True and
             releases[-1].get("keys_down") == [] and releases[-1].get("buttons_down") == [],
             "verified neutral release receipt")
-    require(record.get("app", {}).get("exit") == 0, "app exit")
+    require(type(record.get("app", {}).get("exit")) is int and
+            record.get("app", {}).get("exit") == 0, "app exit exact integer")
     require(not record.get("errors"), "record errors")
     require(record.get("app", {}).get("ready", {}).get("window") is not None, "fixture window identity")
     server = record.get("display_server", {})
     require(server.get("display") == record.get("display"), "Xvfb display identity")
-    require(isinstance(server.get("pid"), int) and server["pid"] > 0, "Xvfb PID")
+    require(type(server.get("pid")) is int and server["pid"] > 0, "Xvfb PID")
     require(any("Xvfb" in arg for arg in server.get("argv", [])) and
             "-nolisten" in server.get("argv", []) and "tcp" in server.get("argv", []), "Xvfb argv/isolation")
     events = record.get("entry_events", [])
@@ -132,11 +144,15 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
         presses = [e for e in events if e.get("event") == "KeyPress"]
         require(actor.get("exit") == 0, "actor exit")
         require(not actor.get("stderr"), "actor stderr")
-        require(isinstance(actor.get("pid"), int) and actor["pid"] not in
+        require(type(actor.get("pid")) is int and actor["pid"] not in
                 (record.get("driver_pid"), record.get("app", {}).get("pid")), "separate actor process")
-        require(actor_doc.get("candidate_sample") == 0 and actor_doc.get("pre_lock") == 0, "actor sampled/pre-lock state")
-        require(actor_doc.get("accepted") == 1 and actor_doc.get("post_lock") == 1, "actor mutation state")
-        require(bool(presses) and actor_doc.get("ack_ns", 2**63) < presses[0].get("ns", -1), "ACK before first KeyPress")
+        actor_state = {"candidate_sample": 0, "pre_lock": 0, "accepted": 1, "post_lock": 1}
+        require(all(type(actor_doc.get(name)) is int for name in actor_state) and
+                all(actor_doc.get(name) == expected for name, expected in actor_state.items()),
+                "actor state exact integers")
+        require(type(actor_doc.get("ack_ns")) is int, "actor ACK timestamp exact integer")
+        require(bool(presses) and actor_doc.get("ack_ns", 2**63) < presses[0].get("ns", -1),
+                "ACK before first KeyPress")
     else:
         require("actor" not in record, "unexpected actor")
     require(not (record.get("app", {}).get("stderr") or record.get("app_stderr")), "app stderr")
@@ -331,6 +347,10 @@ def mutation_controls(root: Path) -> dict:
         "wrong_study": lambda r: r.update(study_id="other"),
         "wrong_freeze": lambda r: r.update(freeze_sha256="wrong"),
         "missing_backend_source": lambda r: r["runtime_imports"].pop("runtime.backends.x11_v1.backend"),
+        "boolean_lockmask_and_keymap_integer_fields": lambda r: (
+            r["before"].update(lockmask=False), r["before"]["keymap"].__setitem__(0, False)),
+        "boolean_completed_operation_index": lambda r: r["response"]["result"]["execution"][
+            "completed_ops"].__setitem__(0, False),
     }
     def move_value_and_exit_before_input(record: dict) -> None:
         terminal = [e for e in record["entry_events"] if e.get("event") in ("value", "exit")]
@@ -384,6 +404,18 @@ def mutation_controls(root: Path) -> dict:
     actor_doc["post_lock"] = 0
     actor_state["actor"]["stdout"] = json.dumps(actor_doc)
     outcomes["mutation_not_observed"] = audit_record("I01", "guard-interposed", actor_state)
+    boolean_actor_state = deepcopy(interposed)
+    actor_doc = json.loads(boolean_actor_state["actor"]["stdout"])
+    actor_doc["accepted"] = True
+    boolean_actor_state["actor"]["stdout"] = json.dumps(actor_doc)
+    outcomes["boolean_actor_state"] = audit_record(
+        "I01", "guard-interposed", boolean_actor_state)
+    boolean_actor_timestamp = deepcopy(interposed)
+    actor_doc = json.loads(boolean_actor_timestamp["actor"]["stdout"])
+    actor_doc["ack_ns"] = True
+    boolean_actor_timestamp["actor"]["stdout"] = json.dumps(actor_doc)
+    outcomes["boolean_actor_ack_timestamp"] = audit_record(
+        "I01", "guard-interposed", boolean_actor_timestamp)
     actor_exit = deepcopy(interposed)
     actor_exit["actor"]["exit"] = 1
     outcomes["actor_nonzero_exit"] = audit_record("I01", "guard-interposed", actor_exit)
