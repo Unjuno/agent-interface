@@ -952,6 +952,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`schema_equivalence_6210_t0_20261002/`](schema_equivalence_6210_t0_20261002/)
 - [`scope_typed_singleflight_6501_t0_20261002/`](scope_typed_singleflight_6501_t0_20261002/)
 - [`scope_typed_singleflight_6501_t0b_20261002/`](scope_typed_singleflight_6501_t0b_20261002/)
+- [`scoped_infeasibility_backtracking_8473_t0_a01_20261008/`](scoped_infeasibility_backtracking_8473_t0_a01_20261008/)
 - [`scoped_nogood_gui_plan_8473_t0_a01_20261008/`](scoped_nogood_gui_plan_8473_t0_a01_20261008/)
 - [`scoped_nogood_gui_plan_8473_t0_a02_20261008/`](scoped_nogood_gui_plan_8473_t0_a02_20261008/)
 - [`selection_aware_shadow_audit_5681_t0_v1/`](selection_aware_shadow_audit_5681_t0_v1/)
