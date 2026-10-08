@@ -34,6 +34,7 @@ For claims and scientific disposition, start with the top-level [research index]
 - Issue #8397 T0 A02: [state-conditioned observation-omission fixture](analysis/observation_omission_regret_8397_t0_a02_20261008/REPORT.md) — `PASS_METHOD_SCOPED` on eight finite traces; pre-decision and post-completion omission preserve authored effects with fewer delivered observations, while a transition-crossing omission incurs wrong-target recovery. No model, GUI, or runtime claim.
 
 - Issue #8500 T0 A01: [rejected-analogy memory finite method test](analysis/analogy_rejection_8500_t0_a01_20261008/RESULT.md) — `PASS_METHOD_SCOPED`; candidate/auditor once each, 84 rows, 5/5 mutations rejected. Hand-authored deterministic fixture only; no model/product or Docker/WSLc comparison.
+- Issue #8500 T0 A02: [equal-check successor](analysis/analogy_rejection_8500_t0_a02_20261009/REPORT.md) — `PASS_METHOD_SCOPED`; 72 rows independently reconstructed, 5/5 mutations rejected, structured invalid proposals 0/6 vs 6/6 in both controls, valid recall 12/12 in every arm. Hand-authored deterministic scorer only; no human, model, literature-discovery, or product claim.
 
 - Issue #8569 A01: [prevention-conditioned recovery demand](analysis/prevention_conditioned_recovery_8569_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`; exact synthetic probabilities independently reconstructed, 4/4 scoring mutations rejected, with a conditional recovery-ranking reversal. No GUI, live recovery, or empirical reliability claim.
 

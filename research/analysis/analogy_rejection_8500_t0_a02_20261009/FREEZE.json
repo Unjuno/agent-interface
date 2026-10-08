@@ -1,0 +1,29 @@
+{
+  "schema": "analogy-rejection-8500-a02-freeze-v1",
+  "allocation": "ANALOGY-REJECTION-8500-T0-A02-20261009",
+  "issue": 8500,
+  "source_commit": "a6343bb76e4dc0a4afa32a29c8a485a617faeff8",
+  "candidate_command": "sh run_candidate_once.sh",
+  "auditor_command": "sh run_auditor_once.sh",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "retries": 0,
+  "runtime": "macOS host CPython 3.14.5; Python standard library only",
+  "container": "Not required by this finite deterministic scorer; no container used",
+  "formal_role_order": ["candidate", "independent_raw_only_auditor"],
+  "preconditions": [
+    "Candidate and auditor source plus fixture, truth, protocol, wrappers, and construction history committed on the additive A02 branch",
+    "Issue preregistration posted before either formal command",
+    "Remote main still equals source_commit",
+    "Every frozen input/source hash verified immediately before invocation",
+    "Construction suite passed 4/4 before freeze"
+  ],
+  "decision_rules": {
+    "pass": "PASS_METHOD_SCOPED only if common checks and all budgets match, structured invalid proposals are fewer than both controls, all changed-envelope controls reopen, recall is no lower than either control, independent audit has zero errors, and all five mutations are rejected",
+    "fail": "FAIL_METHOD for audit errors/missed mutations; FAIL_NEGATIVE_SUPPRESSION if a changed-envelope positive is not proposed",
+    "hold": "HOLD_VERIFIER_ACCESS_MISMATCH for any cross-arm verifier, exposure, lookup, review-slot, or context-budget mismatch",
+    "no_incremental_value": "NO_INCREMENTAL_VALUE if integrity gates pass but the preregistered comparative advantage is absent"
+  },
+  "scope": "Finite hand-authored deterministic method fixture only; no inference about human cognition, real-agent behavior, open-literature discovery, scientific validity, or product benefit",
+  "formal_evidence": false
+}
