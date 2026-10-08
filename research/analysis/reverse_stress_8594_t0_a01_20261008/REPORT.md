@@ -38,12 +38,12 @@ Four independently applied mutations to **copies** of the official raw were reje
 - Predeclared source SHA-256: `spec.json aed41e0cff8eab71f2594536c0463e076b5c4d2fb3f1f59135b8b608444d1f24`, `candidate.py 58082adb2029231578066cc1ed90360388baa58c2a95436e9d9b4a7e7a671a3d`, `audit.py 201f471429989652f3d268a7de43f5eebb59447967701697978998cb17af3748`.
 - Raw candidate SHA-256: `2fc8d77357540782230521e9053d4b6c1f05064b71905c71a4895ac6a74c534c`.
 - Raw audit SHA-256: `8065d0d25e1fd9002ab786698006fd756a928f090744c7a935505fae45389b70`.
-- Reproducible evidence archive: `bundle-a01.tar.gz` SHA-256 `ef43163ef12c2a596e38e051330aa14ac42244d802cc614343adbd58a76a4bea`, containing exact scripts/spec/raw/stdout/stderr/exit codes/hashes. Binary Git blob must match before treating publication as complete.
+- Reproducible evidence archive: `bundle-a01.tar.xz` SHA-256 `c31cb1d9145f80e9f225a8e7bade382ecf46a2d1c6e47a2f6e3dfaf1fafa9172`, containing exact scripts/spec/raw/stdout/stderr/exit codes/hashes. Published binary Git blob SHA-1: `25394f0d8bd39dbca22a4c926fe31fda324cb1ff`; verify archive SHA-256 after checkout.
 
 Reproduce from extracted archive:
 
 ```bash
-tar -xzf bundle-a01.tar.gz
+tar -xJf bundle-a01.tar.xz
 python3 candidate.py --spec spec.json --out new_candidate.json
 python3 audit.py --spec spec.json --candidate-source candidate.py --input new_candidate.json --out new_audit.json
 ```
