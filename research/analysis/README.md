@@ -1,5 +1,7 @@
 # Analytical research
 
+- [Issue #8502 T0 A03 corrected paired-cutpoint successor](measurement_invariance_8502_t0_a03_20261008/RESULT.md) — `PASS_METHOD_SCOPED`: fresh five-case seed set independently reconstructed with zero errors; 6/6 mutations rejected. This is synthetic method evidence only; A01 `FAIL_METHOD` and A02 `FAIL_AUDIT_ONLY` remain unchanged, with no human-workload comparability claim.
+
 - [Issue #8502 T0 A02 audit-only result](measurement_invariance_8502_t0_a02_20261008/RESULT.md) — `FAIL_AUDIT_ONLY`: saved-data reconstruction emitted the five fixture labels and rejected six controls, but A02's own README source digest was frozen incorrectly; do not promote its diagnostic map.
 
 - [Issue #8502 T0 A01 result](measurement_invariance_8502_t0_a01_20261008/RESULT.md) — `FAIL_METHOD`: candidate output emitted the five planned labels, but the frozen independent auditor miscomputed the between-group threshold difference for F02. No `METHOD_PASS_SCOPED` or human-workload conclusion.
