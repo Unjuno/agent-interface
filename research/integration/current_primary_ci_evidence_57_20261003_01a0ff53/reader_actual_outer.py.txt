@@ -1,0 +1,7 @@
+import datetime,json,pathlib,subprocess,hashlib
+W=pathlib.Path("<OWN_WORKSPACE>/work/current-primary-ci-entry-v3")
+cmd=['/opt/homebrew/opt/python@3.14/bin/python3.14','-I','-B',str(W/'read_entry_saved.py')]
+start=datetime.datetime.now(datetime.timezone.utc).isoformat();p=subprocess.run(cmd,capture_output=True);end=datetime.datetime.now(datetime.timezone.utc).isoformat()
+(W/'saved-reader.stdout.txt').write_bytes(p.stdout);(W/'saved-reader.stderr.txt').write_bytes(p.stderr)
+r={'command':cmd,'started_utc':start,'ended_utc':end,'actual_exit':p.returncode,'helper_sha256':hashlib.sha256((W/'read_entry_saved.py').read_bytes()).hexdigest(),'stdout_bytes':len(p.stdout),'stdout_sha256':hashlib.sha256(p.stdout).hexdigest(),'stderr_bytes':len(p.stderr),'stderr_sha256':hashlib.sha256(p.stderr).hexdigest(),'runtime_replays':0}
+(W/'SAVED_READER_RECEIPT.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r));print(p.stdout.decode());print(p.stderr.decode());raise SystemExit(p.returncode)
