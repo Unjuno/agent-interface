@@ -1,5 +1,6 @@
 # Analytical research
 
+- [Issue #8589 T0 A01 effect-aware selective recovery](recovery_validity_effect_replay_8589_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: 8/8 cases independently reconstructed, 5/5 mutations rejected, zero dispatches; synthetic DAG only, no GUI/runtime/effect-dispatch claim.
 - [Issue #8583 T0 A01 principal-stratum bounds](principal_stratum_bounds_8583_t0_a01_20261008/REPORT.md) — `PASS_METHOD_SCOPED`: four finite synthetic cases exactly reconstructed, 5/5 candidate mutations rejected; WSLc CPU method evidence only, no empirical causal or product claim.
 
 - [Issue #8488 PSI-triggered work-shedding T0 A01](psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — `HOLD_DEADLINE_SEMANTICS_MISMATCH`: strict-bound raw recheck gives fixed 4 / queue 3 / free-memory 4 / PSI 1 primary misses, so the zero-miss gate fails. The original `NO_RESIDUAL` reading is withdrawn; no runtime/container claim.
@@ -946,6 +947,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`recovery_sentinel_5776_t0_integrity_audit_v1/`](recovery_sentinel_5776_t0_integrity_audit_v1/)
 - [`recovery_sentinel_5776_t0_v1/`](recovery_sentinel_5776_t0_v1/)
 - [`recovery_sentinel_5776_t0_v2/`](recovery_sentinel_5776_t0_v2/)
+- [`recovery_validity_effect_replay_8589_t0_a01_20261008/`](recovery_validity_effect_replay_8589_t0_a01_20261008/)
 - [`register_automaton_dynamic_identity_r0_v1/`](register_automaton_dynamic_identity_r0_v1/)
 - [`relation_first_real_corpus_8073_a01_20261007/`](relation_first_real_corpus_8073_a01_20261007/)
 - [`relational_coordinate_bounds_6684_t0_20261002/`](relational_coordinate_bounds_6684_t0_20261002/)
@@ -1259,4 +1261,3 @@ The checker compares the generated block against every child directory with a re
 # Issue #57 — Firecrawl compiled release-boundary evidence
 
 - [T01/I01 preserved remote-browser archive](../integration/firecrawl_compiled_release_57_20261003_2f23/README.md) — T01 finite provider-reported app effect only; I01's add effect is retained separately from zero completed transitions and missing release telemetry. I01 disposition remains `HOLD_RELEASE_TELEMETRY` / `UNVERIFIED`; never replay the action from the completion counter. Historical tasks were not rerun during rescue.
-
