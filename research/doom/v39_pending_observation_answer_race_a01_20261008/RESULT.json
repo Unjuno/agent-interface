@@ -9,11 +9,13 @@
     "queued_event_skipped_by_outer_loop": true
   },
   "patched_helper": {
-    "tests_passed": 3,
+    "tests_passed": 4,
     "hard_crossing_invalidates": true,
     "queued_terminal_retained": true,
     "soft_observation_preserves_answer_path": true,
-    "empty_queue_returns_without_wait": true
+    "empty_queue_returns_without_wait": true,
+    "integration_call_order_check": true,
+    "completed_future_discard_branch_precedes_eligibility_check": true
   },
   "integration": "When drain reports invalidation, the existing controller invalidation path cancels any still-active cover and the existing planner-result branch discards the answer.",
   "scope": "Focused source-boundary construction only; no production event-frequency, live, or efficacy claim."
