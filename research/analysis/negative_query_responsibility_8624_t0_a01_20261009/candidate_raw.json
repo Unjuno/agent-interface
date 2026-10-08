@@ -1,0 +1,407 @@
+{
+  "rows": [
+    {
+      "actual_causes": {},
+      "case_id": "monotone_positive_control",
+      "enumerated_worlds": 32,
+      "epoch": 7,
+      "explanation_complete": true,
+      "minimal_positive_match_supports": [
+        [
+          "candidate",
+          "covered",
+          "enabled",
+          "scope_ok",
+          "visible"
+        ]
+      ],
+      "minimum_flip_sets": [],
+      "outcome": "MATCH",
+      "positive_eligibility_supports": [
+        [
+          "candidate",
+          "covered",
+          "enabled",
+          "scope_ok",
+          "visible"
+        ]
+      ],
+      "robustness_radius": null,
+      "scope": "dialog/main",
+      "signed_facts": [
+        "candidate=true",
+        "covered=true",
+        "enabled=true",
+        "scope_ok=true",
+        "visible=true"
+      ],
+      "status": "READY"
+    },
+    {
+      "actual_causes": {
+        "candidate": {
+          "contingencies": [
+            []
+          ],
+          "literal": false,
+          "minimum_contingency": 0,
+          "responsibility": 1.0
+        }
+      },
+      "case_id": "absent_prerequisite",
+      "enumerated_worlds": 64,
+      "epoch": 8,
+      "explanation_complete": true,
+      "minimal_positive_match_supports": [],
+      "minimum_flip_sets": [
+        [
+          "candidate"
+        ]
+      ],
+      "outcome": "NO_MATCH",
+      "positive_eligibility_supports": [],
+      "robustness_radius": 1,
+      "scope": "dialog/main",
+      "signed_facts": [
+        "candidate=false",
+        "covered=true",
+        "enabled=true",
+        "modal=false",
+        "scope_ok=true",
+        "visible=true"
+      ],
+      "status": "READY"
+    },
+    {
+      "actual_causes": {
+        "modal": {
+          "contingencies": [
+            []
+          ],
+          "literal": true,
+          "minimum_contingency": 0,
+          "responsibility": 1.0
+        }
+      },
+      "case_id": "present_exception",
+      "enumerated_worlds": 64,
+      "epoch": 9,
+      "explanation_complete": true,
+      "minimal_positive_match_supports": [],
+      "minimum_flip_sets": [
+        [
+          "modal"
+        ]
+      ],
+      "outcome": "NO_MATCH",
+      "positive_eligibility_supports": [
+        [
+          "candidate",
+          "covered",
+          "enabled",
+          "scope_ok",
+          "visible"
+        ]
+      ],
+      "robustness_radius": 1,
+      "scope": "dialog/main",
+      "signed_facts": [
+        "candidate=true",
+        "covered=true",
+        "enabled=true",
+        "modal=true",
+        "scope_ok=true",
+        "visible=true"
+      ],
+      "status": "READY"
+    },
+    {
+      "actual_causes": {
+        "exception": {
+          "contingencies": [
+            [
+              "prereq_a",
+              "prereq_b"
+            ]
+          ],
+          "literal": true,
+          "minimum_contingency": 2,
+          "responsibility": 0.3333333333333333
+        },
+        "prereq_a": {
+          "contingencies": [
+            [
+              "exception",
+              "prereq_b"
+            ]
+          ],
+          "literal": false,
+          "minimum_contingency": 2,
+          "responsibility": 0.3333333333333333
+        },
+        "prereq_b": {
+          "contingencies": [
+            [
+              "exception",
+              "prereq_a"
+            ]
+          ],
+          "literal": false,
+          "minimum_contingency": 2,
+          "responsibility": 0.3333333333333333
+        },
+        "quick_path": {
+          "contingencies": [
+            []
+          ],
+          "literal": false,
+          "minimum_contingency": 0,
+          "responsibility": 1.0
+        }
+      },
+      "case_id": "contingency_only_exception",
+      "enumerated_worlds": 512,
+      "epoch": 10,
+      "explanation_complete": true,
+      "minimal_positive_match_supports": [],
+      "minimum_flip_sets": [
+        [
+          "quick_path"
+        ]
+      ],
+      "outcome": "NO_MATCH",
+      "positive_eligibility_supports": [
+        [
+          "candidate",
+          "covered",
+          "enabled",
+          "scope_ok",
+          "visible"
+        ]
+      ],
+      "robustness_radius": 1,
+      "scope": "dialog/main",
+      "signed_facts": [
+        "candidate=true",
+        "covered=true",
+        "enabled=true",
+        "exception=true",
+        "prereq_a=false",
+        "prereq_b=false",
+        "quick_path=false",
+        "scope_ok=true",
+        "visible=true"
+      ],
+      "status": "READY"
+    },
+    {
+      "actual_causes": {},
+      "case_id": "same_positive_support_no_exception",
+      "enumerated_worlds": 64,
+      "epoch": 11,
+      "explanation_complete": true,
+      "minimal_positive_match_supports": [
+        [
+          "candidate",
+          "covered",
+          "enabled",
+          "scope_ok",
+          "visible"
+        ]
+      ],
+      "minimum_flip_sets": [],
+      "outcome": "MATCH",
+      "positive_eligibility_supports": [
+        [
+          "candidate",
+          "covered",
+          "enabled",
+          "scope_ok",
+          "visible"
+        ]
+      ],
+      "robustness_radius": null,
+      "scope": "dialog/main",
+      "signed_facts": [
+        "candidate=true",
+        "covered=true",
+        "enabled=true",
+        "modal=false",
+        "scope_ok=true",
+        "visible=true"
+      ],
+      "status": "READY"
+    },
+    {
+      "actual_causes": {
+        "modal": {
+          "contingencies": [
+            []
+          ],
+          "literal": true,
+          "minimum_contingency": 0,
+          "responsibility": 1.0
+        }
+      },
+      "case_id": "same_positive_support_with_exception",
+      "enumerated_worlds": 64,
+      "epoch": 12,
+      "explanation_complete": true,
+      "minimal_positive_match_supports": [],
+      "minimum_flip_sets": [
+        [
+          "modal"
+        ]
+      ],
+      "outcome": "NO_MATCH",
+      "positive_eligibility_supports": [
+        [
+          "candidate",
+          "covered",
+          "enabled",
+          "scope_ok",
+          "visible"
+        ]
+      ],
+      "robustness_radius": 1,
+      "scope": "dialog/main",
+      "signed_facts": [
+        "candidate=true",
+        "covered=true",
+        "enabled=true",
+        "modal=true",
+        "scope_ok=true",
+        "visible=true"
+      ],
+      "status": "READY"
+    },
+    {
+      "actual_causes": {
+        "exception": {
+          "contingencies": [
+            [
+              "prereq_a",
+              "prereq_b"
+            ]
+          ],
+          "literal": true,
+          "minimum_contingency": 2,
+          "responsibility": 0.3333333333333333
+        },
+        "prereq_a": {
+          "contingencies": [
+            [
+              "exception",
+              "prereq_b"
+            ]
+          ],
+          "literal": false,
+          "minimum_contingency": 2,
+          "responsibility": 0.3333333333333333
+        },
+        "prereq_b": {
+          "contingencies": [
+            [
+              "exception",
+              "prereq_a"
+            ]
+          ],
+          "literal": false,
+          "minimum_contingency": 2,
+          "responsibility": 0.3333333333333333
+        },
+        "quick_path": {
+          "contingencies": [
+            []
+          ],
+          "literal": false,
+          "minimum_contingency": 0,
+          "responsibility": 1.0
+        }
+      },
+      "case_id": "robustness_vs_contingency",
+      "enumerated_worlds": 512,
+      "epoch": 13,
+      "explanation_complete": true,
+      "minimal_positive_match_supports": [],
+      "minimum_flip_sets": [
+        [
+          "quick_path"
+        ]
+      ],
+      "outcome": "NO_MATCH",
+      "positive_eligibility_supports": [
+        [
+          "candidate",
+          "covered",
+          "enabled",
+          "scope_ok",
+          "visible"
+        ]
+      ],
+      "robustness_radius": 1,
+      "scope": "dialog/main",
+      "signed_facts": [
+        "candidate=true",
+        "covered=true",
+        "enabled=true",
+        "exception=true",
+        "prereq_a=false",
+        "prereq_b=false",
+        "quick_path=false",
+        "scope_ok=true",
+        "visible=true"
+      ],
+      "status": "READY"
+    },
+    {
+      "actual_causes": {},
+      "case_id": "dense_budget_control",
+      "enumerated_worlds": 0,
+      "epoch": 14,
+      "explanation_complete": false,
+      "minimal_positive_match_supports": [],
+      "minimum_flip_sets": [],
+      "outcome": "NO_MATCH",
+      "positive_eligibility_supports": [],
+      "robustness_radius": null,
+      "scope": "dialog/main",
+      "signed_facts": [
+        "a=true",
+        "b=true",
+        "c=true",
+        "d=true",
+        "e=true",
+        "f=true",
+        "g=true",
+        "h=true",
+        "i=false",
+        "j=true"
+      ],
+      "status": "UNKNOWN_TOO_LARGE"
+    },
+    {
+      "actual_causes": {},
+      "case_id": "incomplete_scope_control",
+      "enumerated_worlds": 0,
+      "epoch": 15,
+      "explanation_complete": false,
+      "minimal_positive_match_supports": [],
+      "minimum_flip_sets": [],
+      "outcome": "UNKNOWN",
+      "positive_eligibility_supports": [],
+      "robustness_radius": null,
+      "scope": "dialog/partial",
+      "signed_facts": [
+        "candidate=false",
+        "covered=false",
+        "enabled=true",
+        "modal=false",
+        "scope_ok=true",
+        "visible=true"
+      ],
+      "status": "UNKNOWN_INCOMPLETE"
+    }
+  ],
+  "schema": "negative-query-responsibility-candidate-v1"
+}
