@@ -1,11 +1,12 @@
-# Issue #8636 T0 A02 — corrected focal-shift audit taxonomy
+# Issue #8636 T0 A02 — corrected focal-shift audit allocation
 
-A fresh finite synthetic validation allocation for the rotation-feature idea. It preserves A01's `HOLD_UNCERTAIN` and first audit failure, while correcting only the focal-shift YIELD classification and using a disjoint seed set. See `PROTOCOL.md` for exact H/T/D/C/U and changed conditions.
+This fresh allocation preserves A01's `HOLD_UNCERTAIN` and uses a disjoint seed set to test the rotation-feature fixture under a corrected focal-shift audit taxonomy. The formal auditor stopped before summary generation; disposition remains `HOLD_UNCERTAIN`.
 
-- `FREEZE.json`: current-main base, A01 lineage, frozen inputs/source hashes, and one-pass run ledger.
-- `candidate.py`, `runner.py`, `auditor.py`: fixed candidate and renderer plus independent corrected raw-only auditor.
-- `test_construction.py`: construction regression tests, including the retained A01 focal-shift counterexample.
-- `results/a02-outcome/`: one candidate output and one independent audit, including raw PPM frames and exact stdout/exit records.
-- `REPORT.md`, `FORMAL_RUN.md`, `SHA256SUMS.txt`: result, commands, custody, and integrity manifest.
+- `PROTOCOL.md`, `FREEZE.json`, `FREEZE_AMENDMENT.md`: pre-registered delta, base and source hashes.
+- `candidate.py`, `runner.py`, `auditor.py`, `test_construction.py`: source and regression checks.
+- `results/a02-first-outcome.tar.gz`: byte-verified first candidate output.
+- `results/candidate.*`, `results/auditor.*`: exact stdout, timestamps, and exit codes.
+- `FORMAL_FAILURE.md`, `FORMAL_RUN.md`, `REPORT.md`: first outcome, custody, and limits.
+- `SHA256SUMS.txt`: package integrity manifest.
 
-This is CPU-only synthetic evidence. It does not support live GUI/game, task-effect, physical release, user, runtime, product, or safety claims.
+Do not rerun this consumed allocation. A01 remains separate and unchanged. No live GUI/game or product claim is made.
