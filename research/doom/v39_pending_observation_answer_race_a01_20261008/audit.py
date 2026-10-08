@@ -10,6 +10,7 @@ checks={
  'patched_cases_are_tested':r['patched_helper']['tests_passed']==4 and r['patched_helper']['integration_call_order_check'] and r['patched_helper']['completed_future_discard_branch_precedes_eligibility_check'] and all(r['patched_helper'][k] for k in ('hard_crossing_invalidates','queued_terminal_retained','soft_observation_preserves_answer_path','empty_queue_returns_without_wait')),
  'test_output_records_all_four_passes':t.count(' ... ok')==4 and 'OK' in t,
  'initial_update_audit_failure_preserved':json.loads((p/'AUDIT_UPDATE_INITIAL_FAILURE.json').read_text(encoding='utf-8'))['status']=='FAIL_AUDIT',
+ 'mainline_retest_is_pinned_and_limited':r['mainline_retest']['controller_git_blob']=='f7b66279d87ebc3704ccef1b6a5ce646611c890b' and r['mainline_retest']['test_git_blob']=='af01126e613c6b1c51e218cab6f199eb56e57efe' and 'failed before collection' in t and 'exact drain_pending_observation_events AST' in t and not r['mainline_retest']['full_controller_imported'],
  'limitations_retained':'No live' in (p/'README.md').read_text(encoding='utf-8') and 'not a measured production race frequency' in f['scope_limits'][0],
 }
 out={'status':'PASS' if all(checks.values()) else 'FAIL','checks':checks}
