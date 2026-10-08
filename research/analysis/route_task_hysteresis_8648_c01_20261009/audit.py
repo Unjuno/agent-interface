@@ -86,7 +86,7 @@ def key(x):
     return (x.get("beta"), x.get("gamma"), x.get("delta"), x.get("arm"),
             x.get("direction"), x.get("initial"))
 keys = [key(x) for x in profiles]
-if len(profiles) != 1024 or len(set(keys)) != 1024 or set(keys) != expected_keys:
+if len(profiles) != 288 or len(set(keys)) != 288 or set(keys) != expected_keys:
     errors.append("profile identity/cardinality mismatch")
 lookup = {}
 for row in profiles:
@@ -112,7 +112,7 @@ for row in profiles:
         errors.append(f"trajectory reconstruction mismatch: {k}")
 
 # Five mutation probes are applied only in memory to a representative supported row.
-probe_key = (20, 2.0, 20, "COUPLED", "UP", "HIGH")
+probe_key = (20, 1.5, 20, "COUPLED", "UP", "HIGH")
 probe = lookup.get(probe_key)
 mutations_rejected = 0
 def accepts(row):
