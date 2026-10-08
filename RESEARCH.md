@@ -1,5 +1,9 @@
 # Issue #8592 T0 A03 — bounded DPOR validation (2026-10-08)
 
+# Issue #8318 — duplicate allocation STOP custody (2026-10-07)
+
+`STOP_DUPLICATE_ALLOCATION_ALREADY_CONSUMED`: a later candidate/auditor execution reused #8317's allocation. Its output is archived separately as custody evidence only and does not repair, replace, or pool with #8317's `HOLD_AUDITOR_COVERAGE`. No scientific inference follows. See [archival qualification](research/analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_8318/ARCHIVAL_QUALIFICATION.md), [STOP record](research/analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_8318/DUPLICATE_ALLOCATION_STOP.md), and [Issue #8318](https://github.com/Unjuno/agent-interface/issues/8318).
+
 # Issue #8313 — matched-context integrity T0 A01 (2026-10-07)
 
 `HOLD_AUDITOR_COVERAGE`: the frozen candidate and independent raw-only auditor each ran once with zero retries; the auditor returned raw PASS, and four hash-refreshed corruption controls were rejected. Post-run review found that the auditor does not prove complete baseline-record equality or exact common serialized bytes outside the history slot. Preserve the first result; no repair or rerun. This is not evidence of model behavior or proactive interference. See [report](research/analysis/proactive_interference_5947_t0_a01_20261007/REPORT.md), [post-run review](research/analysis/proactive_interference_5947_t0_a01_20261007/POSTRUN_REVIEW.md), [Issue #8313](https://github.com/Unjuno/agent-interface/issues/8313), and parent [Issue #5947](https://github.com/Unjuno/agent-interface/issues/5947).

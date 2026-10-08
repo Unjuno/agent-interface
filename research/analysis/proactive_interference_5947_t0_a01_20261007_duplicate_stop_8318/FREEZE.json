@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "allocation_id": "5947-MULTI-UPDATE-PROVENANCE-T0-A01-20261007",
+  "issue": 8313,
+  "parent_issue": 5947,
+  "base_commit": "798ac5ad709168ff1d27b115f10f4f96b126bb71",
+  "branch": "research/5947-matched-context-t0-a01-20261007",
+  "package_path": "research/analysis/proactive_interference_5947_t0_a01_20261007",
+  "image": "python:3.14-alpine@sha256:f6a589d43c42b9e7f7dc67a12d37132491f362859a5d750607710cc56da3bc72",
+  "platform": "linux/arm64",
+  "network": "none",
+  "resources": {
+    "cpus": 1,
+    "memory": "128m",
+    "pids_limit": 32
+  },
+  "mounts": {
+    "package_source": "read-only at /study",
+    "candidate_output": "read-write at /candidate-out",
+    "auditor_input": "read-only at /raw",
+    "auditor_output": "read-write at /audit-out"
+  },
+  "formal_budget": {
+    "candidate": 1,
+    "auditor": 1,
+    "retries": 0
+  },
+  "candidate_command": "python /study/candidate.py /study/fixture.json /candidate-out/raw.json",
+  "auditor_command": "python /study/audit.py /study/fixture.json /raw/raw.json /audit-out/audit.json",
+  "outputs": {
+    "raw": "results/candidate/raw.json",
+    "audit": "results/auditor/audit.json"
+  },
+  "source_sha256": {
+    "fixture.json": "b2638b5c3f3ebc83b84b94aaa8ce9a3ba9b5766d46e64148ae823a8036e58333",
+    "candidate.py": "be85d72e1881dd70500208b09bf2ef91b1478c055c164fc09e9f0e35b1f35600",
+    "audit.py": "6f74518f4d37509b03b1a1645ba1141d40fb1e613be5c7330c9175f0524798bc",
+    "test_construction.py": "8ce4d2ed162f47c3c9acb2b4e804caf8c73da998f2cb4ed2acd3d35acf7de27b"
+  },
+  "construction_checks": {
+    "host_unittest": "python3 -m unittest -v test_construction.py",
+    "container_unittest": "python -m unittest -v test_construction.py",
+    "index": "python3 research/analysis/check_index.py"
+  },
+  "formal_invocation_counts_at_freeze": {
+    "candidate": 0,
+    "auditor": 0
+  },
+  "preformal_launcher_incident": "One construction-only container test launch omitted the workdir and failed ModuleNotFoundError for candidate import; candidate/auditor CLIs were not invoked. Corrected construction-only run with -w /study passed 10/10. This is not a formal allocation invocation.",
+  "stop_rule": "Any occupied formal output, identity mismatch, nonzero formal exit, missing digest, audit error, or count mismatch ends the allocation. Preserve first outputs/logs; no retries or overwrites.",
+  "limits": "Synthetic fixture provenance only; no model calls, GUI, user data, task effect, or execution authority."
+}

@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8318: [duplicate-allocation STOP custody record](analysis/proactive_interference_5947_t0_a01_20261007_duplicate_stop_8318/ARCHIVAL_QUALIFICATION.md) — the repeated allocation is preserved separately and explicitly does not replace or pool with #8317's `HOLD_AUDITOR_COVERAGE`.
+
 - Issue #8313 T0 A01: [matched-context integrity fixture](analysis/proactive_interference_5947_t0_a01_20261007/REPORT.md) — `HOLD_AUDITOR_COVERAGE`; first-run evidence preserved without repair or rerun. No model/interference claim.
 
 - Issue #8604 T0 A03: [WSLc byte-reproducibility transfer](analysis/handoff_choice_complexity_8604_t0_a03_wslc_20261008/REPORT.md) — `PASS_TRANSFER_SCOPED`; candidate and audit outputs reproduce A02 byte-for-byte under WSLc. cgroup/swap warning retained; resource-limit enforcement not established. No human, latency, or product inference.
