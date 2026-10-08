@@ -1,0 +1,7 @@
+import hashlib,json
+from pathlib import Path
+r=Path(__file__).resolve().parent
+source=(r.parent/'caller-cost-57-df63-i12/candidate/adaptive_acquisition_caller_v3.py').read_bytes()
+if hashlib.sha256(source).hexdigest()!='2d30e8294086d1a2b4833088a4db7e589abad876992f893024ace0a089fbf6eb':raise ValueError('fixed7120source')
+(r/'baseline').mkdir(exist_ok=False);(r/'baseline/adaptive_acquisition_caller_v3.py').write_bytes(source)
+(r/'PLAN.json').write_text(json.dumps(dict(kind='new ordinary inert repair regression, not peer/formal replay',source_sha256=hashlib.sha256(source).hexdigest(),cases=['positive_overflow','max_overflow','huge_mixed','finite_sum','finite_credit','unknown','zero_cost'],expected_source_first='3failures/4passes, preserveactual; no realprovider',model_requests=0,GUI=0,guard_seconds=10),indent=2)+'\n',encoding='utf-8')

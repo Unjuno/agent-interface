@@ -1,0 +1,12 @@
+import ast,difflib,hashlib,json
+from pathlib import Path
+root=Path(__file__).resolve().parent;path=root/'candidate/adaptive_acquisition_caller_v3.py';raw=path.read_bytes()
+red=json.loads((root/'first-red/RESULT.json').read_bytes());assert red['exit_code']==1 and red['guard_expired'] is False
+assert raw==(root/'baseline/adaptive_acquisition_caller_v3.py').read_bytes()
+old=b'"cost": sum(costs) if len(costs) == len(model_calls) else None,'
+new=b'"cost": sum(costs) if len(costs) == len(attempts) else None,'
+assert raw.count(old)==1;repaired=raw.replace(old,new);ast.parse(repaired);path.write_bytes(repaired)
+patch=''.join(difflib.unified_diff(raw.decode().splitlines(keepends=True),repaired.decode().splitlines(keepends=True),fromfile='a/research/live_control/adaptive_acquisition_caller_v3.py',tofile='b/research/live_control/adaptive_acquisition_caller_v3.py'))
+(root/'source.patch.txt').write_text(patch,encoding='utf-8',newline='\n')
+result={'baseline':{'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()},'candidate':{'bytes':len(repaired),'sha256':hashlib.sha256(repaired).hexdigest()},'delta':'cost availability compares completed cost coverage to all attempts, not only completed model calls','first_red_retained':True}
+(root/'REPAIR.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8');print(json.dumps(result))
