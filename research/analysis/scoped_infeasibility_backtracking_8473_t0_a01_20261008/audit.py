@@ -25,8 +25,25 @@ def exhaustive_labels(fixture):
     return {c["id"]: [p["id"] for p in c["plans"] if oracle_plan(c, p)] for c in fixture["cases"]}
 
 
-def audit(fixture, raw):
+def fixture_errors(fixture):
     errors = []
+    for case in fixture["cases"]:
+        failure = case["failure"]
+        plan = next((p for p in case["plans"] if any(s["target"] == failure["target"] for s in p["steps"])), None)
+        if plan is None:
+            errors.append(f"failure target has no grounded plan {case['id']}")
+            continue
+        step = next(s for s in plan["steps"] if s["target"] == failure["target"])
+        missing = [c for c in step["requires"] if case["truth"].get(c) is not True]
+        if failure["condition"] not in missing or failure["surface"] != step["surface"]:
+            errors.append(f"failure reason not independently grounded {case['id']}")
+        if failure["kind"] == "timeout" or fixture["controls"]["unknown"]["promote_to_impossible"]:
+            errors.append(f"unknown promoted to infeasibility {case['id']}")
+    return errors
+
+
+def audit(fixture, raw):
+    errors = fixture_errors(fixture)
     labels = exhaustive_labels(fixture)
     rows = {(r["case"], r["policy"]): r for r in raw["rows"]}
     for case in fixture["cases"]:
@@ -64,19 +81,23 @@ def mutations(fixture, raw):
     results = {}
     omitted = copy.deepcopy(fixture)
     omitted["cases"][0]["failure"]["condition"] = "focus:canvas"
-    blocker_step = omitted["cases"][0]["plans"][0]["steps"][0]
-    actual_missing = next(c for c in blocker_step["requires"] if fixture["cases"][0]["truth"].get(c) is not True)
-    results["omit_blocker"] = omitted["cases"][0]["failure"]["condition"] != actual_missing
-    generalized = copy.deepcopy(fixture)
-    generalized["cases"][0]["failure"]["target"] = "*"
-    generalized["cases"][0]["failure"]["surface"] = "*"
-    results["global_overgeneralization"] = generalized["cases"][0]["failure"]["target"] != fixture["cases"][0]["failure"]["target"]
-    old_key = ("open-target", "panel-C", "canvas", fixture["cases"][3]["generation"])
-    new_key = old_key[:3] + (old_key[3] + 1,)
-    results["reuse_after_generation_change"] = old_key != new_key
+    results["omit_blocker"] = any("not independently grounded" in e for e in fixture_errors(omitted))
+    baseline_errors, _ = audit(fixture, raw)
+    assert not baseline_errors, "unmutated baseline must audit before mutation checks"
+    def corrupt_scoped(case_id, reason):
+        changed = copy.deepcopy(raw)
+        row = next(r for r in changed["rows"] if r["case"] == case_id and r["policy"] == "SCOPED_NOGOOD")
+        row["selected"], row["outcome"] = None, "NO_PLAN"
+        row["rows"].append({"event": "pruned", "reason": reason, "plan": "mutated-alternative"})
+        return changed
+    generalized_raw = corrupt_scoped("occluded-with-rearrangement", "global_blacklist")
+    results["global_overgeneralization"] = any("pruned feasible alternatives" in e for e in audit(fixture, generalized_raw)[0])
+    stale_raw = corrupt_scoped("transient-stale-then-feasible", "stale_scoped_nogood")
+    results["reuse_after_generation_change"] = any("pruned feasible alternatives" in e for e in audit(fixture, stale_raw)[0])
     timeout = copy.deepcopy(fixture)
     timeout["controls"]["unknown"]["promote_to_impossible"] = True
-    results["timeout_as_infeasible"] = timeout["controls"]["unknown"]["promote_to_impossible"] is not fixture["controls"]["unknown"]["promote_to_impossible"]
+    timeout_raw = corrupt_scoped("occluded-with-rearrangement", "timeout")
+    results["timeout_as_infeasible"] = any("unknown promoted" in e for e in fixture_errors(timeout)) and any("timeout treated" in e for e in audit(fixture, timeout_raw)[0])
     fake = copy.deepcopy(raw)
     for row in fake["rows"]:
         if row["case"] == "occluded-with-rearrangement" and row["policy"] == "SCOPED_NOGOOD":
