@@ -1,0 +1,70 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A03-20261009",
+  "issue": 8668,
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "active_logical_action": "click-17",
+  "prior_operation_id": "click-17-attempt-1",
+  "active_operation_id": "click-17-attempt-2",
+  "active_attempt": 2,
+  "phases": ["PROPOSED", "ADMITTED", "QUEUED", "EMITTED", "CONSUMED"],
+  "post_emit_effect_states": [false, true],
+  "retry_requested": [false, true],
+  "neutral_release_observed": [false, true],
+  "receipt_timelines": {
+    "none": [],
+    "stale_effect": [["prior", "EFFECT_CONFIRMED"]],
+    "stale_cancel": [["prior", "CANCEL_CONFIRMED"]],
+    "current_effect": [["active", "EFFECT_CONFIRMED"]],
+    "current_cancel": [["active", "CANCEL_CONFIRMED"]],
+    "stale_cancel_then_current_effect": [["prior", "CANCEL_CONFIRMED"], ["active", "EFFECT_CONFIRMED"]],
+    "current_effect_then_stale_cancel": [["active", "EFFECT_CONFIRMED"], ["prior", "CANCEL_CONFIRMED"]],
+    "stale_effect_then_current_cancel": [["prior", "EFFECT_CONFIRMED"], ["active", "CANCEL_CONFIRMED"]],
+    "current_cancel_then_stale_effect": [["active", "CANCEL_CONFIRMED"], ["prior", "EFFECT_CONFIRMED"]],
+    "current_effect_replayed": [["active", "EFFECT_CONFIRMED"], ["active", "EFFECT_CONFIRMED"]],
+    "stale_effect_replayed": [["prior", "EFFECT_CONFIRMED"], ["prior", "EFFECT_CONFIRMED"]],
+    "current_effect_then_current_cancel": [["active", "EFFECT_CONFIRMED"], ["active", "CANCEL_CONFIRMED"]],
+    "current_cancel_then_current_effect": [["active", "CANCEL_CONFIRMED"], ["active", "EFFECT_CONFIRMED"]],
+    "same_id_stale_effect": [["prior_reused", "EFFECT_CONFIRMED"]],
+    "same_id_stale_cancel": [["prior_reused", "CANCEL_CONFIRMED"]],
+    "same_id_stale_then_current_effect": [["prior_reused", "EFFECT_CONFIRMED"], ["active", "EFFECT_CONFIRMED"]],
+    "current_effect_then_same_id_stale": [["active", "EFFECT_CONFIRMED"], ["prior_reused", "EFFECT_CONFIRMED"]]
+  },
+  "required_invariants": [
+    "a receipt for the prior attempt never changes active-attempt status",
+    "matching the logical operation id without matching the attempt is insufficient",
+    "only an EFFECT_CONFIRMED receipt bound to the active operation id and attempt confirms the active effect",
+    "only an active-attempt CANCEL_CONFIRMED receipt before EMITTED permits retry",
+    "a delayed active-attempt CANCEL_CONFIRMED after EMITTED leaves UNKNOWN and cannot permit retry",
+    "contradictory effect and cancel receipts for one active attempt produce CONFLICT_UNKNOWN in either arrival order",
+    "neutral input release never proves semantic cancellation or authorizes retry",
+    "post-EMITTED unresolved state is UNKNOWN and never authorizes duplicate retry",
+    "duplicate receipt delivery is idempotent"
+  ],
+  "hypothesis": "A latest-receipt comparator that ignores operation identity will falsely complete or unsafely retry at least one enumerated schedule; strict operation-id and attempt binding will avoid all stale-receipt misattribution while preserving valid active receipts and safe pre-emission retries.",
+  "method_pass": "Independent raw-only reconstruction matches every schedule and decision; strict policy has zero stale-ACK influence, false completion, false cancellation, or unsafe retry; valid active effect/cancel receipts retain their intended decisions; late cancel receipts and contradictory ACK pairs remain unresolved with no retry; neutral release never changes operation status; and every frozen mutation control is rejected.",
+  "hypothesis_support": "The faulty comparator misclassifies at least one schedule and strict binding removes all such misclassifications without losing any valid active receipt or safe retry.",
+  "mutation_controls": [
+    "accept an earlier operation-id receipt as active completion",
+    "accept a reused operation-id receipt from the wrong attempt",
+    "accept a stale cancellation receipt as retry authority",
+    "collapse contradictory active-attempt ACKs to completion",
+    "collapse contradictory active-attempt ACKs to cancellation and retry",
+    "let neutral release prove semantic cancellation",
+    "reapply a duplicate active receipt",
+    "admit retry while active effect is committed",
+    "drop a valid active effect acknowledgement"
+  ],
+  "HTDCU": {
+    "H": "For a non-idempotent GUI-like action retried as a distinct attempt, an identity-blind receipt reducer will falsely complete an active attempt or authorize an unsafe retry from an older or contradictory ACK; binding both operation ID and attempt will remove those errors while preserving valid active ACKs and safe pre-emission retries.",
+    "T": "Enumerate all valid combinations of five lifecycle phases, post-emission committed/uncommitted state, 17 named receipt timelines including reused operation IDs, both contradictory active-ACK orders, retry request, neutral-release observation, and one no-input control. Compare an identity-blind phase-aware reducer with an operation-ID-and-attempt-bound reducer; reconstruct raw schedules and decisions independently and apply nine frozen decision mutations.",
+    "D": {
+      "METHOD_PASS_SCOPED": "Independent schedule and decision reconstruction agrees on every row; strict policy has zero false completion, false cancellation, stale-ACK influence, unsafe retry, or unresolved contradictory-ACK retry; valid current ACK decisions are preserved; all nine mutations are rejected.",
+      "SUPPORT_FOR_ID_ATTEMPT_BINDING_SCOPED": "The identity-blind comparator makes at least one false completion, false cancellation, or unsafe retry, and strict binding removes all such errors without losing any valid active ACK or safe retry.",
+      "NO_INCREMENTAL_VALUE_SCOPED": "The identity-blind comparator and strict reducer make the same status and retry decision for every enumerated schedule.",
+      "FAIL_METHOD": "Any stale ACK changes active status, a neutral release proves semantic cancellation, a contradictory receipt pair is resolved as completed/canceled or permits retry, or a retry can duplicate an unresolved/committed operation.",
+      "HOLD_MODEL_UNIDENTIFIABLE": "Operation identity, attempt boundary, lifecycle phase, or ACK semantics cannot be specified for a later backend transfer."
+    },
+    "C": "If a real backend guarantees globally unique operation IDs per dispatched attempt and emits only one authoritative terminal ACK per operation, the attempt and contradictory-ACK cases may be defensive rather than observed failure modes. The finite model does not establish those backend guarantees.",
+    "U": "This is authored finite-model evidence only. It does not measure race frequency or prove OS/backend behavior, GUI effect, task completion, latency, token benefit, portability, production safety, or a generic cancellation guarantee."
+  }
+}

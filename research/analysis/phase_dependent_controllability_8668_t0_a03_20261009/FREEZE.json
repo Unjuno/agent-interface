@@ -1,0 +1,53 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A03-20261009",
+  "auditor_command": "/usr/bin/sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B auditor.py < run-01/candidate.json > run-01/audit.json 2> run-01/auditor.stderr",
+  "auditor_invocations_if_candidate_exit_zero": 1,
+  "auditor_nonzero_rule": "Preserve first audit output and HOLD/FAIL; do not retry candidate or auditor.",
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "branch": "research/8668-stale-ack-a03-20261009",
+  "candidate_command": "/usr/bin/sandbox-exec -p '(version 1) (deny network*) (allow default)' python3 -B candidate.py > run-01/candidate.json 2> run-01/candidate.stderr",
+  "candidate_invocations_after_freeze": 1,
+  "candidate_nonzero_rule": "Preserve first stdout/stderr and STOP; do not invoke auditor or retry candidate.",
+  "construction_is_nonformal": true,
+  "execution_environment": {
+    "container_preflight": {
+      "blob_sha256": "c496fe61337ebef922bbd35d18f3a4d0f30c1524c0fc08fbcfff7b5c68d54643",
+      "command": "docker images --format '{{.Repository}}:{{.Tag}} {{.ID}}'",
+      "context": "orbstack",
+      "error": "operation not supported; no image was listed and no container was started",
+      "result": "STOP_ORBSTACK_CONTAINERD_CONTENT_BLOB_READ_UNSUPPORTED",
+      "server_version": "29.4.0"
+    },
+    "host": "macOS Darwin 27.0 arm64",
+    "host_memory_bytes": 68719476736,
+    "loopback_probe": "PermissionError EPERM; no connection succeeded",
+    "network_profile": "(version 1) (deny network*) (allow default)",
+    "orb_stack_vm_bytes": 16808173568,
+    "orb_stack_vm_cpus": 10,
+    "python": "CPython 3.14.5",
+    "scope": "Host-only finite-model evidence. This is not container or backend evidence."
+  },
+  "issue": 8668,
+  "pre_run_construction_tests": {
+    "candidate_oracle_schedule_count": 317,
+    "candidate_oracle_schedule_order_equal": true,
+    "frozen_decision_mutations": 9,
+    "normal": "python3 -B -m unittest discover -s research/analysis/phase_dependent_controllability_8668_t0_a03_20261009 -p 'test_*.py' -v",
+    "normal_passed": 12,
+    "optimized": "python3 -B -O -m unittest discover -s research/analysis/phase_dependent_controllability_8668_t0_a03_20261009 -p 'test_*.py' -v",
+    "optimized_passed": 12
+  },
+  "pre_run_repository_checks": {
+    "analysis_index": "PASS; 842 retained result/failure directories indexed",
+    "git_diff_check": "PASS",
+    "research_workspace_index": "PASS; 163 top-level directories reachable"
+  },
+  "source_sha256": {
+    "PREFLIGHT.md": "5807be2aa0442aafbad9d358969283bca9b86fe47327a595a012d207b76b2b46",
+    "README.md": "b77f2954af6c43807cf5648b2902ba6bbea42799c3a7af3405c0c0a4f8bdc2cd",
+    "auditor.py": "618703387b48b6eef4ddec4f3d24edd71a5e7927a45efd6dff44fc13ea40f757",
+    "candidate.py": "158a9883312801234108b63b85a47f3fcd976360a7084213565afd60c92d9537",
+    "design.json": "63f7a476b0e89dfe28f84a9980f5d4c47281aeb47529e4ebf2e547f7af1fec87",
+    "test_model.py": "9ca0b1c0194fca24bb62d71eafe354c3a36d06360b1a4436e1b0f0547e99ae8c"
+  }
+}

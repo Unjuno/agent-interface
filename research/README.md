@@ -316,6 +316,7 @@ A directory existing here does **not** mean its mechanism is promoted. Negative 
 
 
 ### Recent direct-root evidence
+- [Issue #8668 T0 A03 operation-bound stale acknowledgements](analysis/phase_dependent_controllability_8668_t0_a03_20261009/REPORT.md) — `PASS_METHOD_SCOPED`; independent audit reconstructed 317/317 finite schedules and rejected 9/9 mutations. A03 supports only its operation-ID/attempt subhypothesis; A02's broader stale-ACK HOLD remains, and no container/backend/GUI/product claim is made.
 - [Issue #8488 PSI-triggered shedding T0 A01](analysis/psi_work_shedding_8488_t0_a01_20261008/REPORT.md) — post-run review found an exclusive-deadline semantics mismatch; disposition is `HOLD_DEADLINE_SEMANTICS_MISMATCH` and the original `NO_RESIDUAL` interpretation is withdrawn. See the [append-only correction](analysis/psi_work_shedding_8488_t0_a01_20261008/SEMANTICS_CORRECTION.md); no runtime/container/production claim.
 - [Issue #8471 T0 A01/A02](analysis/switched_dwell_stability_8471_t0_a01_20261008/REPORT.md) — finite exact-rational switched-mode enumeration and independent audit: 4,096 rows, 1,248 non-Schur-stable products, 129 finite-envelope crossings; A02 independently verifies 20/20 abstract emergency overrides and rejects 3/3 mutations. Method-scoped only; no runtime/safety claim.
 - [`kernel_receipt_time_5215_20260928/`](kernel_receipt_time_5215_20260928/) — Issue #5215 frozen construction probe and independent audit for lease-expiry and causal timestamp receipt boundaries; scoped contract evidence only.

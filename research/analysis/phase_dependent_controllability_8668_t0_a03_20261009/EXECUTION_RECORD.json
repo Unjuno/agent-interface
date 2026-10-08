@@ -1,0 +1,51 @@
+{
+  "allocation": "PHASE-CONTROL-DELAYS-8668-T0-A03-20261009",
+  "base_commit": "ffe5292b3164a3eb7e2b5d18eaadcbafdcd2b385",
+  "branch": "research/8668-stale-ack-a03-20261009",
+  "freeze_commit": "9132f99c3834576a2a7727f39a8b518d9a8edd58",
+  "freeze_sha256": "456a191bbca3ae8e4052570969234368f463217058ef2d8401574b075e77e19d",
+  "candidate": {
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_path": "run-01/candidate.json",
+    "stdout_bytes": 281349,
+    "stdout_sha256": "95c248d033eda47a62be118f1594a4f8f06521abf365bdc433c2e7d08fb4e541",
+    "stderr_path": "run-01/candidate.stderr",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "auditor": {
+    "invocations": 1,
+    "exit_code": 0,
+    "stdout_path": "run-01/audit.json",
+    "stdout_bytes": 506,
+    "stdout_sha256": "39ad5f91624ef74a028029aa3c1af287196d98815b1e516bfef917f6a369a268",
+    "stderr_path": "run-01/auditor.stderr",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "retries": 0,
+  "candidate_rows": 317,
+  "auditor_rows": 317,
+  "audit_errors": [],
+  "mutation_controls": {
+    "rejected": 9,
+    "total": 9
+  },
+  "result_counters": {
+    "identity_blind_false_completions": 32,
+    "identity_blind_unsafe_retries": 12,
+    "strict_false_completions": 0,
+    "strict_false_cancellations": 0,
+    "strict_unsafe_retries": 0,
+    "contradictory_ack_gate_failures": 0,
+    "neutral_release_aborts": 0,
+    "schedules_with_status_or_retry_difference": 88
+  },
+  "audit_method_gate": "PASS_METHOD_SCOPED",
+  "auditor_decision_label": "SUPPORT_FOR_PHASE_REFINEMENT_SCOPED",
+  "normalized_A03_disposition": "SUPPORT_FOR_ID_ATTEMPT_BINDING_SCOPED",
+  "normalized_disposition_record": "DECISION_LABEL_RECLASSIFICATION.json",
+  "execution_observation_utc": "2026-10-08T21:11:16Z",
+  "scope": "Host-only finite model under network-deny sandbox; no backend, GUI, application, OS-input, model, or product evidence."
+}
