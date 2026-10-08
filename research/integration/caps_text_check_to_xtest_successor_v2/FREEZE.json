@@ -3,14 +3,17 @@
   "issue": "Unjuno/agent-interface#8328",
   "status": "PROTOCOL_DRAFT_NOT_ALLOCATED",
   "source_base": {
-    "ref": "d6b3376aaabb6738dbf8e6a8184fe10e66aa937d",
+    "ref": "4c203d797cd3e33168bd9177fea8e0d6ef605c6b",
     "backend_path": "runtime/backends/x11_v1/backend.py",
-    "backend_sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
-    "candidate_backend_sha256": "1862b9cff0bfcb11027c816ce5b269e3bc1d515c0dc6a094059bb26928fc265d",
+    "backend_sha256": "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126",
+    "candidate_backend_sha256": "e885806c649acafe3550b55f2d88e070a59428008a9356fa60ce0699d4d118bb",
     "predecessor_candidate_patch": "research/integration/caps_text_boundary_k8n4_v1/study/candidate.patch",
     "predecessor_candidate_patch_sha256": "86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65",
-    "fixture_instrumentation_patch": "research/integration/caps_text_check_to_xtest_successor_v2/barrier_instrumentation.patch",
-    "fixture_instrumentation_sha256": "3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e"
+    "fixture_instrumentation_patch": "research/integration/caps_text_check_to_xtest_successor_v2/current_main_barrier_instrumentation.patch",
+    "fixture_instrumentation_sha256": "80f620a3b06ddf9595c1dd5d1aa80c98ce9e317bf9990262d8b556a81dfeafb3",
+    "current_main_candidate_patch": "research/integration/caps_text_check_to_xtest_successor_v2/current_main_candidate.patch",
+    "current_main_candidate_patch_sha256": "3a338bb599fa6b9f3ab83abfdf86dd96f127346c8ded1db8100a947409d1918f",
+    "preinstrumentation_candidate_backend_sha256": "3f71258e3d2542fb49e9729a286281b9fceefa6eea3257e6a5cbf756b9077708"
   },
   "hypothesis": "After the #8255 per-text LockMask query and before its first XTEST request, a separate XKB client can set Caps Lock and make the first requested lowercase character arrive uppercase while dispatch reports completed.",
   "treatment_arms": [
@@ -111,7 +114,8 @@
     "nonempty actor stderr",
     "value and exit events moved before key input",
     "KeyRelease moved before matching KeyPress while retaining monotonic timestamps",
-    "final Entry value moved before its character KeyPress while retaining monotonic timestamps"
+    "final Entry value moved before its character KeyPress while retaining monotonic timestamps",
+    "wrong current-main candidate patch identity"
   ],
   "scope_limits": [
     "one VM, Xvfb/Tk Entry, XKB map, and source closure only",

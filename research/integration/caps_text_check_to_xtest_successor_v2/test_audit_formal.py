@@ -21,7 +21,7 @@ def record(arm: str, case_id: str = "C01") -> dict:
         "case_id": case_id,
         "repo_head": "frozen-study-snapshot",
         "arm": arm,
-        "main_backend_sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+        "main_backend_sha256": "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126",
         "before": {"lockmask": 0, "keymap": [0] * 32},
         "after": {"lockmask": lock, "keymap": [0] * 32},
         "app_after": {"value": value},
@@ -65,7 +65,8 @@ def record(arm: str, case_id: str = "C01") -> dict:
         event["ns"] = 100 + index
     if arm.startswith("guard-"):
         result.update(predecessor_patch_sha256="86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65",
-                      barrier_patch_sha256="3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e")
+                      current_main_candidate_patch_sha256=FROZEN_PLAN["source_base"]["current_main_candidate_patch_sha256"],
+                      barrier_patch_sha256=FROZEN_PLAN["source_base"]["fixture_instrumentation_sha256"])
     if arm == "guard-interposed":
         result["actor"] = {"pid": 1236, "exit": 0, "stderr": "", "stdout": json.dumps({
             "candidate_sample": 0, "pre_lock": 0, "accepted": 1, "post_lock": 1, "ack_ns": 10})}
@@ -175,6 +176,12 @@ class FormalAuditTest(unittest.TestCase):
         bad["actor"]["stdout"] = json.dumps(actor)
         self.assertTrue(audit_record("I01", "guard-interposed", bad))
 
+    def test_rejects_wrong_current_main_candidate_patch_identity(self):
+        sample = record("guard-stable", "G01")
+        sample["current_main_candidate_patch_sha256"] = "wrong"
+        self.assertIn("current-main candidate patch identity",
+                      audit_record("G01", "guard-stable", sample))
+
     def test_complete_frozen_schedule_and_mutations(self):
         with tempfile.TemporaryDirectory(prefix="caps-formal-audit-") as tmp:
             root = Path(tmp)
@@ -236,10 +243,11 @@ class FormalAuditTest(unittest.TestCase):
             self.assertEqual(result["status"], "PASS")
             controls = mutation_controls(root)
             self.assertEqual(controls["status"], "PASS")
-            self.assertEqual(len(controls["controls"]), 18)
+            self.assertEqual(len(controls["controls"]), 19)
             self.assertTrue(controls["controls"]["value_and_exit_before_input"]["rejected"])
             self.assertTrue(controls["controls"]["release_before_press"]["rejected"])
             self.assertTrue(controls["controls"]["final_value_before_character_press"]["rejected"])
+            self.assertTrue(controls["controls"]["wrong_current_main_candidate_patch"]["rejected"])
 
 
 if __name__ == "__main__":

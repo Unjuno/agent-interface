@@ -22,9 +22,10 @@ import traceback
 from Xlib import X, display
 
 
-MAIN_BACKEND_SHA256 = "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db"
+MAIN_BACKEND_SHA256 = "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126"
 PREDECESSOR_PATCH = Path("research/integration/caps_text_boundary_k8n4_v1/study/candidate.patch")
-BARRIER_PATCH = Path("research/integration/caps_text_check_to_xtest_successor_v2/barrier_instrumentation.patch")
+CURRENT_CANDIDATE_PATCH = Path("research/integration/caps_text_check_to_xtest_successor_v2/current_main_candidate.patch")
+BARRIER_PATCH = Path("research/integration/caps_text_check_to_xtest_successor_v2/current_main_barrier_instrumentation.patch")
 FREEZE_FILE = Path("research/integration/caps_text_check_to_xtest_successor_v2/FREEZE.json")
 HOOK_ENV = "AGENT_INTERFACE_CAPS_BARRIER_SOCKET"
 
@@ -117,7 +118,7 @@ def prepare_guard(repo: Path, out: Path) -> Path:
     candidate = out / "guard_source"
     candidate.mkdir()
     shutil.copytree(repo / "runtime", candidate / "runtime")
-    for rel in (PREDECESSOR_PATCH, BARRIER_PATCH):
+    for rel in (CURRENT_CANDIDATE_PATCH, BARRIER_PATCH):
         subprocess.run(["git", "apply", str(repo / rel)], cwd=candidate, check=True)
     return candidate
 
@@ -173,12 +174,15 @@ def main() -> int:
             source = prepare_guard(repo, out)
             record["candidate_backend_sha256"] = sha256(source / "runtime/backends/x11_v1/backend.py")
             record["predecessor_patch_sha256"] = sha256(repo / PREDECESSOR_PATCH)
+            record["current_main_candidate_patch_sha256"] = sha256(repo / CURRENT_CANDIDATE_PATCH)
             record["barrier_patch_sha256"] = sha256(repo / BARRIER_PATCH)
             frozen_source = freeze["source_base"]
             if record["candidate_backend_sha256"] != frozen_source["candidate_backend_sha256"]:
                 raise RuntimeError("#8255 candidate backend differs from frozen identity")
             if record["predecessor_patch_sha256"] != frozen_source["predecessor_candidate_patch_sha256"]:
                 raise RuntimeError("#8255 candidate patch differs from frozen identity")
+            if record["current_main_candidate_patch_sha256"] != frozen_source["current_main_candidate_patch_sha256"]:
+                raise RuntimeError("current-main candidate patch differs from frozen identity")
             if record["barrier_patch_sha256"] != frozen_source["fixture_instrumentation_sha256"]:
                 raise RuntimeError("fixture instrumentation differs from frozen identity")
         sys.path.insert(0, str(source))

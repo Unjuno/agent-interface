@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -13,7 +14,7 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "48969b57f1be88ab8a9d8bcd039271978cd0488cc17384b724dce38b34406eb7"
+FROZEN_PLAN_SHA256 = "8f7251645e4eaaf54fe0601807ea27d347857db9b5f93864100de1cf79c5fe19"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
 EXPECTED_XVFB_STDERR_SHA256 = FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]
 
@@ -36,10 +37,10 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
             errors.append(message)
 
     require(record.get("kind") == "formal-public-dispatch-case", "kind")
-    require(record.get("study_id") == "caps-text-query-xtest-a01-20261007", "study id")
+    require(record.get("study_id") == "caps-text-query-xtest-a02-20261008", "study id")
     require(record.get("case_id") == case_id, "case id")
     require(record.get("arm") == arm, "arm")
-    require(record.get("main_backend_sha256") == "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db", "main backend identity")
+    require(record.get("main_backend_sha256") == "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126", "main backend identity")
     require(record.get("before", {}).get("lockmask") == 0, "initial LockMask")
     require(record.get("before", {}).get("keymap") == [0] * 32, "initial keymap neutrality")
     require(record.get("after", {}).get("lockmask") == expected_lock, "final LockMask")
@@ -61,14 +62,56 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
     require(any("Xvfb" in arg for arg in server.get("argv", [])) and
             "-nolisten" in server.get("argv", []) and "tcp" in server.get("argv", []), "Xvfb argv/isolation")
     events = record.get("entry_events", [])
+    event_times = [event.get("ns") for event in events]
+    require(all(type(ns) is int for ns in event_times) and
+            event_times == sorted(event_times), "Entry event chronology")
     presses = [e for e in events if e.get("event") == "KeyPress"]
     key_releases = [e for e in events if e.get("event") == "KeyRelease"]
-    require([e.get("char") for e in presses] == list(expected_value), "exact Entry KeyPress sequence")
-    require(len(key_releases) >= len(presses) == 3, "Entry KeyRelease count")
-    require(any(e.get("event") == "value" and e.get("value") == expected_value for e in events),
-            "Entry value-change journal")
-    require(any(e.get("event") == "exit" and e.get("value") == expected_value for e in events),
-            "fixture exit value")
+    character_presses = [e for e in presses if e.get("char")]
+    require([e.get("char") for e in character_presses] == list(expected_value),
+            "exact Entry character sequence")
+    pressed_codes = [e.get("keycode") for e in presses]
+    released_codes = [e.get("keycode") for e in key_releases]
+    require(all(type(code) is int for code in pressed_codes + released_codes) and
+            Counter(pressed_codes) == Counter(released_codes),
+            "Entry KeyPress/KeyRelease keycode balance")
+    held_codes: set[int] = set()
+    key_chronology_ok = True
+    for event in events:
+        kind = event.get("event")
+        if kind not in ("KeyPress", "KeyRelease"):
+            continue
+        code = event.get("keycode")
+        if type(code) is not int:
+            key_chronology_ok = False
+            continue
+        if kind == "KeyPress":
+            if code in held_codes:
+                key_chronology_ok = False
+            held_codes.add(code)
+        else:
+            if code not in held_codes:
+                key_chronology_ok = False
+            else:
+                held_codes.remove(code)
+    require(key_chronology_ok and not held_codes, "Entry per-key chronology")
+    value_rows = [(i, e) for i, e in enumerate(events) if e.get("event") == "value"]
+    expected_prefixes = [expected_value[:i] for i in range(1, len(expected_value) + 1)]
+    require([e.get("value") for _, e in value_rows] == expected_prefixes,
+            "Entry value progression")
+    causal_value_order = len(value_rows) == len(character_presses)
+    for (press_i, press), (value_i, _) in zip(
+            [(i, e) for i, e in enumerate(events) if e.get("event") == "KeyPress" and e.get("char")],
+            value_rows):
+        release_i = next((i for i, e in enumerate(events)
+                          if i > press_i and e.get("event") == "KeyRelease" and
+                          e.get("keycode") == press.get("keycode")), -1)
+        causal_value_order = causal_value_order and press_i < value_i < release_i
+    require(causal_value_order, "Entry value event after character KeyPress")
+    exit_rows = [(i, e) for i, e in enumerate(events) if e.get("event") == "exit"]
+    require(len(exit_rows) == 1 and exit_rows[0][0] == len(events) - 1 and
+            exit_rows[0][1].get("value") == expected_value,
+            "fixture exit after input")
     program = record.get("program", {})
     require(program.get("ops") == [{"op": "focus", "target": "entry"},
                                      {"op": "text", "text": "aB2"},
@@ -97,6 +140,10 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
     else:
         require("actor" not in record, "unexpected actor")
     require(not (record.get("app", {}).get("stderr") or record.get("app_stderr")), "app stderr")
+    if arm.startswith("guard-"):
+        require(record.get("current_main_candidate_patch_sha256") ==
+                FROZEN_PLAN["source_base"]["current_main_candidate_patch_sha256"],
+                "current-main candidate patch identity")
     imports = record.get("runtime_imports", {})
     require("runtime.cli_v1.api" in imports, "public dispatch source identity")
     require("runtime.backends.x11_v1.backend" in imports, "backend source identity")
@@ -153,7 +200,7 @@ def audit(root: Path) -> tuple[list[str], dict]:
     if index:
         if index.get("schema") != "caps-text-query-xtest-formal-index-v1":
             errors.append("raw index schema")
-        if index.get("study_id") != "caps-text-query-xtest-a01-20261007":
+        if index.get("study_id") != "caps-text-query-xtest-a02-20261008":
             errors.append("raw index study id")
         if index.get("status") != "COMPLETE":
             errors.append("raw index incomplete")
@@ -239,7 +286,9 @@ def audit(root: Path) -> tuple[list[str], dict]:
         if arm.startswith("guard-"):
             if record.get("predecessor_patch_sha256") != "86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65":
                 errors.append(f"{case_id}: predecessor patch identity")
-            if record.get("barrier_patch_sha256") != "3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e":
+            if record.get("current_main_candidate_patch_sha256") != FROZEN_PLAN["source_base"]["current_main_candidate_patch_sha256"]:
+                errors.append(f"{case_id}: current-main candidate patch identity")
+            if record.get("barrier_patch_sha256") != FROZEN_PLAN["source_base"]["fixture_instrumentation_sha256"]:
                 errors.append(f"{case_id}: barrier patch identity")
         rows.append({"case_id": case_id, "arm": arm, "record_sha256": digest,
                      "entry": record.get("app_after", {}).get("value"),
@@ -256,7 +305,7 @@ def audit(root: Path) -> tuple[list[str], dict]:
         require_map = {name for _, name in SCHEDULE}
         if set(seen_hashes) != require_map:
             errors.append("arm coverage")
-        if seen_hashes.get("current") != ["6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db"] * 3:
+        if seen_hashes.get("current") != ["c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126"] * 3:
             errors.append("current executed backend identity")
         if (not seen_hashes.get("guard-stable") or
                 len(set(seen_hashes["guard-stable"] + seen_hashes.get("guard-interposed", []))) != 1):
@@ -283,6 +332,39 @@ def mutation_controls(root: Path) -> dict:
         "wrong_freeze": lambda r: r.update(freeze_sha256="wrong"),
         "missing_backend_source": lambda r: r["runtime_imports"].pop("runtime.backends.x11_v1.backend"),
     }
+    def move_value_and_exit_before_input(record: dict) -> None:
+        terminal = [e for e in record["entry_events"] if e.get("event") in ("value", "exit")]
+        record["entry_events"] = terminal + [
+            e for e in record["entry_events"] if e.get("event") not in ("value", "exit")
+        ]
+    def move_release_before_press(record: dict) -> None:
+        events = record["entry_events"]
+        press_index = next(i for i, event in enumerate(events)
+                           if event.get("event") == "KeyPress" and event.get("char"))
+        press = events[press_index]
+        release_index = next(i for i, event in enumerate(events)
+                             if event.get("event") == "KeyRelease" and
+                             event.get("keycode") == press.get("keycode"))
+        release = events[release_index]
+        release["ns"] = press["ns"]
+        press["ns"] += 1
+        events.pop(release_index)
+        events.insert(press_index, release)
+    def move_final_value_before_character_press(record: dict) -> None:
+        events = record["entry_events"]
+        value_index = next(i for i, event in enumerate(events)
+                           if event.get("event") == "value" and
+                           event.get("value") == EXPECTED[record["arm"]][0])
+        press_index = next(i for i, event in enumerate(events)
+                           if event.get("event") == "KeyPress" and event.get("char") ==
+                           EXPECTED[record["arm"]][0][-1])
+        value = events.pop(value_index)
+        press_index -= value_index < press_index
+        value["ns"] = events[press_index]["ns"] - 1
+        events.insert(press_index, value)
+    mutations["value_and_exit_before_input"] = move_value_and_exit_before_input
+    mutations["release_before_press"] = move_release_before_press
+    mutations["final_value_before_character_press"] = move_final_value_before_character_press
     outcomes = {}
     for name, mutate in mutations.items():
         sample = deepcopy(original)
@@ -308,6 +390,10 @@ def mutation_controls(root: Path) -> dict:
     actor_stderr = deepcopy(interposed)
     actor_stderr["actor"]["stderr"] = "injected"
     outcomes["actor_stderr"] = audit_record("I01", "guard-interposed", actor_stderr)
+    candidate_patch = deepcopy(interposed)
+    candidate_patch["current_main_candidate_patch_sha256"] = "wrong"
+    outcomes["wrong_current_main_candidate_patch"] = audit_record(
+        "I01", "guard-interposed", candidate_patch)
     escaped = [name for name, errors in outcomes.items() if not errors]
     if escaped:
         raise AssertionError(f"effective mutation controls escaped: {escaped}")

@@ -22,10 +22,11 @@ import traceback
 from Xlib import X, display
 
 
-MAIN_BACKEND_SHA256 = "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db"
+MAIN_BACKEND_SHA256 = "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126"
 PREDECESSOR_PATCH = Path("research/integration/caps_text_boundary_k8n4_v1/study/candidate.patch")
-BARRIER_PATCH = Path("research/integration/caps_text_check_to_xtest_successor_v1/barrier_instrumentation.patch")
-FREEZE_FILE = Path("research/integration/caps_text_check_to_xtest_successor_v1/FREEZE.json")
+CURRENT_CANDIDATE_PATCH = Path("research/integration/caps_text_check_to_xtest_successor_v2/current_main_candidate.patch")
+BARRIER_PATCH = Path("research/integration/caps_text_check_to_xtest_successor_v2/current_main_barrier_instrumentation.patch")
+FREEZE_FILE = Path("research/integration/caps_text_check_to_xtest_successor_v2/FREEZE.json")
 HOOK_ENV = "AGENT_INTERFACE_CAPS_BARRIER_SOCKET"
 
 
@@ -117,7 +118,7 @@ def prepare_guard(repo: Path, out: Path) -> Path:
     candidate = out / "guard_source"
     candidate.mkdir()
     shutil.copytree(repo / "runtime", candidate / "runtime")
-    for rel in (PREDECESSOR_PATCH, BARRIER_PATCH):
+    for rel in (CURRENT_CANDIDATE_PATCH, BARRIER_PATCH):
         subprocess.run(["git", "apply", str(repo / rel)], cwd=candidate, check=True)
     return candidate
 
@@ -139,12 +140,12 @@ def main() -> int:
     if sha256(baseline_backend) != MAIN_BACKEND_SHA256:
         raise RuntimeError("current-main backend identity differs from preregistered source")
     freeze = json.loads((repo / FREEZE_FILE).read_text(encoding="utf-8"))
-    if freeze.get("status") != "FROZEN_NOT_STARTED":
+    if args.mode == "formal" and freeze.get("status") != "FROZEN_NOT_STARTED":
         raise RuntimeError("formal plan is not frozen-not-started")
 
     record = {
         "kind": f"{args.mode}-public-dispatch-case",
-        "study_id": "caps-text-query-xtest-a01-20261007",
+        "study_id": "caps-text-query-xtest-a02-20261008",
         "case_id": args.case_id,
         "arm": args.arm,
         "network_boundary": network_boundary() if args.mode == "formal" else None,
@@ -173,12 +174,15 @@ def main() -> int:
             source = prepare_guard(repo, out)
             record["candidate_backend_sha256"] = sha256(source / "runtime/backends/x11_v1/backend.py")
             record["predecessor_patch_sha256"] = sha256(repo / PREDECESSOR_PATCH)
+            record["current_main_candidate_patch_sha256"] = sha256(repo / CURRENT_CANDIDATE_PATCH)
             record["barrier_patch_sha256"] = sha256(repo / BARRIER_PATCH)
             frozen_source = freeze["source_base"]
             if record["candidate_backend_sha256"] != frozen_source["candidate_backend_sha256"]:
                 raise RuntimeError("#8255 candidate backend differs from frozen identity")
             if record["predecessor_patch_sha256"] != frozen_source["predecessor_candidate_patch_sha256"]:
                 raise RuntimeError("#8255 candidate patch differs from frozen identity")
+            if record["current_main_candidate_patch_sha256"] != frozen_source["current_main_candidate_patch_sha256"]:
+                raise RuntimeError("current-main candidate patch differs from frozen identity")
             if record["barrier_patch_sha256"] != frozen_source["fixture_instrumentation_sha256"]:
                 raise RuntimeError("fixture instrumentation differs from frozen identity")
         sys.path.insert(0, str(source))

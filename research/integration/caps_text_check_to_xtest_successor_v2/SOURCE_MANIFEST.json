@@ -1,7 +1,7 @@
 {
-  "candidate_backend_sha256": "1862b9cff0bfcb11027c816ce5b269e3bc1d515c0dc6a094059bb26928fc265d",
-  "current_main_backend_sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
-  "current_main_ref": "d6b3376aaabb6738dbf8e6a8184fe10e66aa937d",
+  "candidate_backend_sha256": "e885806c649acafe3550b55f2d88e070a59428008a9356fa60ce0699d4d118bb",
+  "current_main_backend_sha256": "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126",
+  "current_main_ref": "4c203d797cd3e33168bd9177fea8e0d6ef605c6b",
   "expected_imports": {
     "current": {
       "runtime.backends.x11_v1": {
@@ -10,7 +10,7 @@
       },
       "runtime.backends.x11_v1.backend": {
         "path": "runtime/backends/x11_v1/backend.py",
-        "sha256": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db"
+        "sha256": "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126"
       },
       "runtime.backends.x11_v1.session": {
         "path": "runtime/backends/x11_v1/session.py",
@@ -56,7 +56,7 @@
       },
       "runtime.backends.x11_v1.backend": {
         "path": "runtime/backends/x11_v1/backend.py",
-        "sha256": "1862b9cff0bfcb11027c816ce5b269e3bc1d515c0dc6a094059bb26928fc265d"
+        "sha256": "e885806c649acafe3550b55f2d88e070a59428008a9356fa60ce0699d4d118bb"
       },
       "runtime.backends.x11_v1.session": {
         "path": "runtime/backends/x11_v1/session.py",
@@ -98,25 +98,28 @@
   },
   "files": {
     "research/integration/caps_text_boundary_k8n4_v1/study/candidate.patch": "86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65",
-    "research/integration/caps_text_check_to_xtest_successor_v2/FREEZE.json": "25fe9ad273ccc850e9ae99e3deb3f28b0418c313a409fa32af00137122bdcf9e",
-    "research/integration/caps_text_check_to_xtest_successor_v2/README.md": "639151d3dd1fe53c30a8faed24fd7bb00ed5a0416ea1b1832b16657d79fbb45e",
+    "research/integration/caps_text_check_to_xtest_successor_v2/FREEZE.json": "8f7251645e4eaaf54fe0601807ea27d347857db9b5f93864100de1cf79c5fe19",
+    "research/integration/caps_text_check_to_xtest_successor_v2/README.md": "438dcb30cd3085930877e5e569223fb661f2b96bd8b014f9e36a7b85361a56d4",
     "research/integration/caps_text_check_to_xtest_successor_v2/XVFB_EXPECTED_STDERR.txt": "f172a1b0f5cf2a0d462c51dfc335af1a1dfc8e873cb66f61d018c8b1b35fe416",
     "research/integration/caps_text_check_to_xtest_successor_v2/app_fixture.py": "b5e125239e34fdc4bd732bfd547907b3898f62846320a4f027648fd0734bdec9",
-    "research/integration/caps_text_check_to_xtest_successor_v2/audit_formal.py": "27473e61c76b84dbbf06da8f8aba83d44e40a6b0b4474ae8b103cfde1b233833",
+    "research/integration/caps_text_check_to_xtest_successor_v2/audit_formal.py": "3810c6bb3e779d1589bbc0931a2259c27cb87fdb9781ee1f1ae003f5daaa865b",
     "research/integration/caps_text_check_to_xtest_successor_v2/barrier_instrumentation.patch": "3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e",
     "research/integration/caps_text_check_to_xtest_successor_v2/construction_probe.py": "5f625cf4d41b942d5d9863b209ee979272ea5c00e64628d27c2aec93f473dc47",
+    "research/integration/caps_text_check_to_xtest_successor_v2/current_main_barrier_instrumentation.patch": "80f620a3b06ddf9595c1dd5d1aa80c98ce9e317bf9990262d8b556a81dfeafb3",
+    "research/integration/caps_text_check_to_xtest_successor_v2/current_main_candidate.patch": "3a338bb599fa6b9f3ab83abfdf86dd96f127346c8ded1db8100a947409d1918f",
     "research/integration/caps_text_check_to_xtest_successor_v2/lock_actor.py": "ff90a4ccaedd221cc93223e85cb0ff98013e2bc6037a10f01ad55ccdb5da0af9",
-    "research/integration/caps_text_check_to_xtest_successor_v2/public_dispatch_probe.py": "c0a0a59abff9c8a08a05f233ec3ed133c7f73bfaf895905e07a5e64f3791556f",
+    "research/integration/caps_text_check_to_xtest_successor_v2/public_dispatch_probe.py": "146424dc0334a1d2b43552abcd8d2c5c93fd277b1eef84c9a966fca1f56cd8db",
     "research/integration/caps_text_check_to_xtest_successor_v2/run_formal.py": "f90e79d114c99e03b1196f0ff0f4baf767ec9f69cf4b7a0fd01a9d787a1836a7",
     "research/integration/caps_text_check_to_xtest_successor_v2/run_formal_once.sh": "85f7c47d56f827d22bf6fea4d55ae07f237e6b2d36f6c7099507026daa7f8ebe",
-    "research/integration/caps_text_check_to_xtest_successor_v2/test_audit_formal.py": "c4ce27ab0c256e3781e054006c2369171570e20c556dbc2a78f491c0c3f38257",
+    "research/integration/caps_text_check_to_xtest_successor_v2/test_audit_formal.py": "bfc19a324f763265ac3700eb39c46b4b8946ca0cb05eac159ec8a673a5c5d08c",
     "research/integration/caps_text_check_to_xtest_successor_v2/test_lock_actor.py": "d529e10a8061999e3711b6409f4185dce00f56dc85222b8aad615a4320cfccc0",
     "research/integration/caps_text_check_to_xtest_successor_v2/test_public_dispatch_probe.py": "18f238e934b45cabfc19b4b8308d50d57201fbffcca68d008faa743d5e0253e7"
   },
   "issue": "Unjuno/agent-interface#8328",
+  "preinstrumentation_candidate_backend_sha256": "3f71258e3d2542fb49e9729a286281b9fceefa6eea3257e6a5cbf756b9077708",
   "runtime_closure": {
     "runtime/backends/x11_v1/__init__.py": "50a6767fca7c7a81fc1a5e606de60b6660c4e8045ad0b66902d50c4a4493de6b",
-    "runtime/backends/x11_v1/backend.py": "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db",
+    "runtime/backends/x11_v1/backend.py": "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126",
     "runtime/backends/x11_v1/session.py": "b81ca9b3a2c1d692e314ed8435db481cb6cc22ff6ad974148482787545c5bb62",
     "runtime/cli_v1/__init__.py": "8832365589e82ecba394d10ae11a381f146edfb68b981551ccbae8b95e4ac967",
     "runtime/cli_v1/api.py": "47d4413b5633b334e21e158ffe5c4155b5ec3f24dd7c942f1e7ba91361632ca6",

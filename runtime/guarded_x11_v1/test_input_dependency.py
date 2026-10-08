@@ -131,6 +131,8 @@ class InputDependencyTests(unittest.TestCase):
 
     def test_refusal_after_modifier_preserves_prefix_and_release(self):
         backend=object.__new__(_GuardedBackend);backend.owner=self.b;backend.emissions=0
+        backend.held_keycodes={}
+        backend._keycode=Mock(side_effect={'CTRL':1,'s':2}.__getitem__)
         backend.preflight=Mock();backend._refresh_keyboard_mapping=Mock(return_value=False)
         held=[];emitted=[]
         def emit(key,down):

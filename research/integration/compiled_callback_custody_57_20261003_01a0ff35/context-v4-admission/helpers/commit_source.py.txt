@@ -1,0 +1,64 @@
+"""Commit only the verified three-path own repair, preserving all old evidence."""
+from pathlib import Path
+import datetime
+import hashlib
+import json
+import os
+import subprocess
+
+here = Path(__file__).resolve().parent
+root = here.parent / "agent-interface-compiled-custody"
+git = r"C:\Program Files\Git\cmd\git.exe"
+old = "a58ffc635cc25d4acae6c80bbb49fc21e039817d"
+branch = "refs/heads/fix/compiled-callback-custody-01a0ff35-20261003"
+paths = ["runtime/core_v1/compiled_gui.py", "runtime/core_v1/COMPILED_GUI.md", "runtime/core_v1/test_compiled_admission_custody_01a0ff35.py"]
+def run(*args, data=None, env=None):
+    result = subprocess.run([git, "-C", str(root), *args], input=data, capture_output=True, env=env, timeout=120)
+    if result.returncode:
+        raise RuntimeError((args, result.returncode, result.stderr.decode("utf-8", "replace")))
+    return result.stdout
+def check(value, detail):
+    if not value:
+        raise RuntimeError(detail)
+
+check(run("status", "--porcelain") == b"", "own tree not clean")
+check(run("symbolic-ref", "HEAD").decode().strip() == branch, "different own branch")
+check(run("rev-parse", "HEAD").decode().strip() == old, "local own ref changed")
+check(run("ls-remote", "origin", branch).decode().split()[0] == old, "remote own ref changed")
+for stage in ("green-04", "optimized-02"):
+    receipt = json.loads((here / "runs" / stage / "RESULT.json").read_text())
+    check(receipt["exit_code"] == 0 and receipt["source_sha256"] == "3e2605f0a58fd744fa14487c4eef4f1bc8bc6b4657796fd067219ebce8d6b3f2" and receipt["test_sha256"] == "e61819105a5c1765e4a2cbc1eda49083e4cc5e089984fb5c5c766ee2cbf89c00", "final receipt mismatch")
+before = run("show", old + ":runtime/core_v1/compiled_gui.py")
+after = (here / "green/runtime/core_v1/compiled_gui.py").read_bytes()
+addition = b"        # Keep returned fields private before validating and calling adapters.\n        admission = admission.copy()\n"
+check(after.count(addition) == 1 and after.replace(addition, b"", 1) == before, "extra production delta")
+index = here / "source.index"
+check(not index.exists(), "index already exists")
+env = os.environ.copy()
+env["GIT_INDEX_FILE"] = str(index)
+run("read-tree", old, env=env)
+entries = []
+for path in paths:
+    raw = (here / "green" / path).read_bytes()
+    oid = run("hash-object", "-w", "--stdin", data=raw).decode().strip()
+    run("update-index", "--add", "--cacheinfo", "100644," + oid + "," + path, env=env)
+    entries.append({"path": path, "oid": oid, "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()})
+tree = run("write-tree", env=env).decode().strip()
+check(sorted(run("diff-tree", "--no-commit-id", "--name-only", "-r", old, tree).decode().splitlines()) == sorted(paths), "extra source paths")
+intent = {"operation": "own local source commit and explicit expected-old branch advance", "expected_old": old,
+          "branch": branch, "tree": tree, "entries": entries,
+          "started_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(), "scope": "one scalar admission snapshot plus regression/doc; no main"}
+with (here / "source-commit.intent.json").open("x", encoding="utf-8") as file:
+    json.dump(intent, file, indent=2)
+    file.write("\n")
+commit = run("commit-tree", tree, "-p", old, data=b"fix(compiled): retain validated admission return custody [skip ci]\n").decode().strip()
+run("read-tree", "-m", "-u", old, commit)
+run("update-ref", branch, commit, old)
+check(run("rev-parse", "HEAD").decode().strip() == commit and run("status", "--porcelain") == b"", "own source readback")
+for row in entries:
+    check(run("show", commit + ":" + row["path"]) == (here / "green" / row["path"]).read_bytes(), "committed source mismatch")
+record = {**intent, "source_commit": commit, "ended_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(), "clean_readback": True}
+with (here / "source-commit.readback.json").open("x", encoding="utf-8") as file:
+    json.dump(record, file, indent=2)
+    file.write("\n")
+print(json.dumps(record, sort_keys=True))

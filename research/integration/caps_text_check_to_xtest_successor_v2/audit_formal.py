@@ -14,7 +14,7 @@ SCHEDULE = [("C01", "current"), ("G01", "guard-stable"), ("I01", "guard-interpos
             ("C03", "current"), ("G03", "guard-stable"), ("I03", "guard-interposed")]
 EXPECTED = {"current": ("aB2", 0), "guard-stable": ("aB2", 0),
             "guard-interposed": ("Ab2", 1)}
-FROZEN_PLAN_SHA256 = "25fe9ad273ccc850e9ae99e3deb3f28b0418c313a409fa32af00137122bdcf9e"
+FROZEN_PLAN_SHA256 = "8f7251645e4eaaf54fe0601807ea27d347857db9b5f93864100de1cf79c5fe19"
 FROZEN_PLAN = json.loads((Path(__file__).resolve().parent / "FREEZE.json").read_text())
 EXPECTED_XVFB_STDERR_SHA256 = FROZEN_PLAN["environment"]["expected_xvfb_stderr_sha256"]
 
@@ -40,7 +40,7 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
     require(record.get("study_id") == "caps-text-query-xtest-a02-20261008", "study id")
     require(record.get("case_id") == case_id, "case id")
     require(record.get("arm") == arm, "arm")
-    require(record.get("main_backend_sha256") == "6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db", "main backend identity")
+    require(record.get("main_backend_sha256") == "c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126", "main backend identity")
     require(record.get("before", {}).get("lockmask") == 0, "initial LockMask")
     require(record.get("before", {}).get("keymap") == [0] * 32, "initial keymap neutrality")
     require(record.get("after", {}).get("lockmask") == expected_lock, "final LockMask")
@@ -140,6 +140,10 @@ def audit_record(case_id: str, arm: str, record: dict) -> list[str]:
     else:
         require("actor" not in record, "unexpected actor")
     require(not (record.get("app", {}).get("stderr") or record.get("app_stderr")), "app stderr")
+    if arm.startswith("guard-"):
+        require(record.get("current_main_candidate_patch_sha256") ==
+                FROZEN_PLAN["source_base"]["current_main_candidate_patch_sha256"],
+                "current-main candidate patch identity")
     imports = record.get("runtime_imports", {})
     require("runtime.cli_v1.api" in imports, "public dispatch source identity")
     require("runtime.backends.x11_v1.backend" in imports, "backend source identity")
@@ -282,7 +286,9 @@ def audit(root: Path) -> tuple[list[str], dict]:
         if arm.startswith("guard-"):
             if record.get("predecessor_patch_sha256") != "86913be26400e2ac74b051df4bc9505a97fff60fc5dc652cab04caa4b4af9d65":
                 errors.append(f"{case_id}: predecessor patch identity")
-            if record.get("barrier_patch_sha256") != "3dee9d60273a5100612f17514e0d06f3cb5b279e8c4c8eae01aa7fa3d89f370e":
+            if record.get("current_main_candidate_patch_sha256") != FROZEN_PLAN["source_base"]["current_main_candidate_patch_sha256"]:
+                errors.append(f"{case_id}: current-main candidate patch identity")
+            if record.get("barrier_patch_sha256") != FROZEN_PLAN["source_base"]["fixture_instrumentation_sha256"]:
                 errors.append(f"{case_id}: barrier patch identity")
         rows.append({"case_id": case_id, "arm": arm, "record_sha256": digest,
                      "entry": record.get("app_after", {}).get("value"),
@@ -299,7 +305,7 @@ def audit(root: Path) -> tuple[list[str], dict]:
         require_map = {name for _, name in SCHEDULE}
         if set(seen_hashes) != require_map:
             errors.append("arm coverage")
-        if seen_hashes.get("current") != ["6ba5ea5d4e8fc797fc26a19879cffcfd00926606f53b0ef76fbff5f6b5f779db"] * 3:
+        if seen_hashes.get("current") != ["c4bd1c2ccda7db43a4a62efc866547f21e2d11c0d795834f1f8e1d6b32f63126"] * 3:
             errors.append("current executed backend identity")
         if (not seen_hashes.get("guard-stable") or
                 len(set(seen_hashes["guard-stable"] + seen_hashes.get("guard-interposed", []))) != 1):
@@ -384,6 +390,10 @@ def mutation_controls(root: Path) -> dict:
     actor_stderr = deepcopy(interposed)
     actor_stderr["actor"]["stderr"] = "injected"
     outcomes["actor_stderr"] = audit_record("I01", "guard-interposed", actor_stderr)
+    candidate_patch = deepcopy(interposed)
+    candidate_patch["current_main_candidate_patch_sha256"] = "wrong"
+    outcomes["wrong_current_main_candidate_patch"] = audit_record(
+        "I01", "guard-interposed", candidate_patch)
     escaped = [name for name, errors in outcomes.items() if not errors]
     if escaped:
         raise AssertionError(f"effective mutation controls escaped: {escaped}")
