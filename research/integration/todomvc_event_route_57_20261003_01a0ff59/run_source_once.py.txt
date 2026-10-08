@@ -1,0 +1,32 @@
+import datetime,hashlib,json,pathlib,subprocess,sys
+root=pathlib.Path(__file__).resolve().parent
+stamp=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+freeze=json.loads((root/'FREEZE.json').read_text(encoding='utf-8'))
+def pins():
+    for name,pin in freeze['files'].items():
+        data=(root/name).read_bytes()
+        if len(data)!=pin['bytes'] or hashlib.sha256(data).hexdigest()!=pin['sha256']:raise ValueError(('changed frozen file',name))
+    if hashlib.sha256(pathlib.Path(freeze['node']).read_bytes()).hexdigest()!=freeze['node_sha256']:raise ValueError('node changed')
+pins()
+with (root/'SOURCE_SEND_INTENT.json').open('x',encoding='utf-8') as f:json.dump({'started_utc':stamp(),'attempt':1,'kind':'new ordinary source child, no browser'},f)
+def run(name,argv):
+    start=stamp();p=subprocess.Popen(argv,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    timed_out=False
+    try:stdout,stderr=p.communicate(timeout=15)
+    except subprocess.TimeoutExpired:
+        timed_out=True;p.kill();stdout,stderr=p.communicate()
+    end=stamp()
+    folder=root/name;folder.mkdir()
+    for label,data in [('stdout',stdout),('stderr',stderr)]:
+        if len(data)>65536:raise ValueError('stream cap exceeded, full bytes still held')
+        (folder/(label+'.log')).write_bytes(data)
+    receipt={'argv':argv,'pid':p.pid,'start_utc':start,'end_utc':end,'exit':p.returncode,'timed_out':timed_out,
+       'reaped':p.poll() is not None,'pipes_drained':True,'streams':{k:{'bytes':len(v),'sha256':hashlib.sha256(v).hexdigest()} for k,v in [('stdout',stdout),('stderr',stderr)]}}
+    (folder/'receipt.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({'kind':name,'pid':p.pid,'exit':p.returncode,'timeout':timed_out,'stdout':stdout.decode('utf-8','replace')}))
+    pins()
+    return receipt
+science=run('source-first',[freeze['node'],str(root/'source-route.js')])
+if science['exit']!=0 or science['timed_out']:sys.exit(1)
+audit=run('audit-first',[sys.executable,str(root/'audit_source_route.py')])
+sys.exit(0 if audit['exit']==0 and not audit['timed_out'] else 1)

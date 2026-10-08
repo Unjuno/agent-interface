@@ -1,0 +1,94 @@
+import copy,datetime,hashlib,json,pathlib
+root=pathlib.Path(__file__).resolve().parent
+plan=json.loads((root/'PLAN.json').read_text(encoding='utf-8'))
+original=json.loads((root/'RAW_SOURCE_ROUTE.json').read_text(encoding='utf-8'))
+packet_bytes=(root/'decoded-packet.json').read_bytes()
+if hashlib.sha256(packet_bytes).hexdigest()!='5b83583a2664c91119b8044997833f797ea08474f16436650cec0b830221f5c0':raise ValueError('original public packet pin')
+packet=json.loads(packet_bytes)
+members=packet['members']
+if len(members)!=79 or len({x['path'] for x in members})!=79:raise ValueError('original member cardinality')
+for member in members:
+    data=member['text'].encode('utf-8')
+    if type(member['bytes']) is not int or len(data)!=member['bytes'] or hashlib.sha256(data).hexdigest()!=member['sha256']:raise ValueError('original member bytes')
+lookup={x['path']:x for x in members}
+parent=json.loads(lookup['unit/UI_RAW.json']['text'])
+parent_inputs=json.loads(lookup['unit/INPUTS.json']['text'])
+parent_lines=[json.loads(x) for x in lookup['unit/UI_EVENTS.jsonl']['text'].splitlines()]
+if parent_lines!=parent['events']:raise ValueError('original event/raw join')
+if parent['status']!='STOP_FIRST_STOCK_OUTCOME' or parent['error']!='Error: STOP_UNEXPECTED_STOCK_ROWS':raise ValueError('original first STOP')
+if [x['stage'] for x in parent['events']]!=['initial','fill1','add1']:raise ValueError('original prefix')
+for x in parent['events']:
+    if x['dom']['rows']!=[] or x['dom']['counter']!='0 items left':raise ValueError('original absent visible effect')
+if parent['events'][1]['dom']['input']!=parent_inputs['titles'][0] or parent['events'][2]['dom']['input']!=parent_inputs['titles'][0]:raise ValueError('original retained value')
+if parent['action_counts']!={'fill':1,'blur':1,'edit_open':0,'complete':0,'filter':0,'reload':0}:raise ValueError('original no retry')
+function=json.loads(lookup['unit/EXECUTED_FUNCTIONS.json']['text'])
+if hashlib.sha256(lookup['unit/run-stock.js.txt']['text'].strip().encode()).hexdigest()!=function['sha256']:raise ValueError('original actor-function source join')
+def fail(message): raise ValueError(message)
+def equal(actual,expected,message):
+    if json.dumps(actual,sort_keys=True,ensure_ascii=True)!=json.dumps(expected,sort_keys=True,ensure_ascii=True):fail(message)
+def verify(raw):
+    equal(raw['schema'],'unchanged-stock-source-event-route','schema')
+    equal(raw['status'],'SOURCE_EVENT_ROUTE_CONFIRMED','source status')
+    equal(raw['plan_sha256'],hashlib.sha256((root/'PLAN.json').read_bytes()).hexdigest(),'plan pin')
+    equal(raw['sources'],plan['sources'],'source pins')
+    if type(raw['pid']) is not int or raw['pid']<=0:fail('pid')
+    if len(raw['rows'])!=8:fail('row count')
+    for row,cell in zip(raw['rows'],plan['cells']):
+        equal(row['case'],cell['name'],'case')
+        equal(row['value'],cell['value'],'value')
+        equal(row['events'],cell['events'],'events')
+        regs=row['registrations']
+        if len({r['id'] for r in regs})!=len(regs):fail('registration duplicate')
+        new=[r for r in regs if r['target']=='.new-todo']
+        if len(new)!=1:fail('newTodo listener cardinality')
+        equal(new[0]['type'],'change','newTodo listener type')
+        equal(new[0]['capture'],False,'newTodo capture type')
+        state=cell['value']; items=[]; clear_count=0
+        if len(row['trace'])!=len(cell['events']):fail('trace cardinality')
+        for step,event in zip(row['trace'],cell['events']):
+            equal(step['event'],event,'trace event')
+            equal(step['input_before'],state,'input before')
+            deliver=event['target']=='new' and event['type']=='change'
+            equal(step['delivered_handler_ids'],[new[0]['id']] if deliver else [],'delivered identity')
+            if deliver and state.strip():
+                items.append({'title':state.strip(),'completed':False,'id':len(items)+1})
+                state='';clear_count+=1
+            equal(step['input_after'],state,'input after')
+        equal(row['items'],items,'exact saved items')
+        equal(row['counts'],{'active':len(items),'completed':0,'total':len(items)},'typed counts')
+        equal(row['input_after'],state,'terminal input')
+        equal(len(items),cell['expected_count'],'predeclared endpoint')
+        if type(row['initial_render_count']) is not int or row['initial_render_count']<1:fail('render boundary')
+        subsequent=row['renders'][row['initial_render_count']:]
+        equal(sum(r['command']=='clearNewTodo' for r in subsequent),clear_count,'clear source path')
+        shows=[r['parameter'] for r in subsequent if r['command']=='showEntries']
+        equal(shows,[items] if items else [],'recording render items')
+    return [{'case':r['case'],'items':r['items'],'input_after':r['input_after']} for r in raw['rows']]
+rows=verify(original)
+controls=[]
+def control(name,mutate):
+    x=copy.deepcopy(original);mutate(x)
+    if json.dumps(x,sort_keys=True,ensure_ascii=True)==json.dumps(original,sort_keys=True,ensure_ascii=True):fail('ineffective control: '+name)
+    control_path=root/'controls-v2'/f'{len(controls)+1:02d}.json'
+    with control_path.open('x',encoding='utf-8',newline='\n') as f:json.dump(x,f,ensure_ascii=False,indent=2);f.write('\n')
+    try:verify(x)
+    except (ValueError,KeyError,TypeError):controls.append({'name':name,'rejected':True});return
+    fail('accepted corruption: '+name)
+control('invent absent change',lambda x:x['rows'][0]['trace'][0]['delivered_handler_ids'].append(0))
+control('Boolean count alias',lambda x:x['rows'][4]['counts'].__setitem__('total',True))
+control('wrong created title',lambda x:x['rows'][4]['items'][0].__setitem__('title','wrong'))
+control('Boolean completed alias',lambda x:x['rows'][4]['items'][0].__setitem__('completed',0))
+control('wrong target delivers change',lambda x:x['rows'][2]['trace'][0]['delivered_handler_ids'].append(0))
+control('erase genuine handler entry',lambda x:x['rows'][4]['trace'][0].__setitem__('delivered_handler_ids',[]))
+control('fabricate cleared negative input',lambda x:x['rows'][0].__setitem__('input_after',''))
+control('drop last row',lambda x:x['rows'].pop())
+control('duplicate row',lambda x:x['rows'].__setitem__(1,copy.deepcopy(x['rows'][0])))
+control('erase source clear',lambda x:x['rows'][4].__setitem__('renders',[r for r in x['rows'][4]['renders'] if r['command']!='clearNewTodo']))
+out={'schema':'independent-saved-source-event-route-reduction','rows':rows,'controls':controls,
+     'raw_sha256':hashlib.sha256((root/'RAW_SOURCE_ROUTE.json').read_bytes()).hexdigest(),
+     'source_executions':0,'original_public_members_joined':79,'parent_first_stop_preserved':True,
+     'parent_actor_source_sha256':function['sha256'],'parent_native_event_delivery_observed':False,
+     'ended_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+     'limits':'Explicit source-level event delivery and recording render sink. No observed real browser change/dirty-value semantics, native DOM/render/task/durability or SDK fault attribution.'}
+with (root/'AUDIT_SOURCE_ROUTE_V2.json').open('x',encoding='utf-8',newline='\n') as f:json.dump(out,f,indent=2,ensure_ascii=False);f.write('\n')
+print(json.dumps({'rows':len(rows),'controls_rejected':len(controls),'source_replays':0}))
