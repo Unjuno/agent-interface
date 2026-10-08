@@ -6,6 +6,8 @@ For claims and scientific disposition, start with the top-level [research index]
 
 ## Start here
 
+- Issue #8500 T0 A01: [rejected-analogy memory finite method test](analysis/analogy_rejection_8500_t0_a01_20261008/RESULT.md) — `PASS_METHOD_SCOPED`; candidate/auditor once each, 84 rows, 5/5 mutations rejected. Hand-authored deterministic fixture only; no model/product or Docker/WSLc comparison.
+
 - Issue #59 client custody, PR #7275: [additive packet-integrity recheck](doom/client_custody_private_e0cc_20261004/RECHECK_20261008.md) — Exact 47-member packet integrity verified; the saved peer/candidate code is not rerun. Source-owner and application gates remain HOLD.
 
 - Issue #6358 C01: [private service-capacity transfer](integration/recovery_capacity_6358_01a0ff58_c01/REPORT.md) — 24 synthetic requests across six arms; explicit static routing matches ample-capacity effects under the authored held-slot fixture. No production congestion, latency, task-effect, or H_PASS claim.
