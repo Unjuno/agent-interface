@@ -1,0 +1,20 @@
+{
+  "schema": "issue8566-reconcile-alias-a01-optimized-unit-audit-freeze-v1",
+  "audit_invocation": 1,
+  "candidate_rerun": false,
+  "unit_test_rerun": false,
+  "auditor": "optimized_unit_audit.py",
+  "auditor_sha256": "762be30f0d4b8436bdb2512065fe2f31a4d7fa10e00fcc42964bfa33c84cb06f",
+  "runner": "run_unit_suite_optimized.py",
+  "runner_sha256": "1e2e096d55618d241b62b7005bc74a2d233729d89c61494fb1ebf50ca612451b",
+  "unit_test_sha256": "2936162c2942a6de7a31c50cf130422d4cb0305e89c1ac08bf51fdcb34d19d00",
+  "candidate_source_sha256": "fbe3d85b1777a92595faa556a580417ba42a7ce1b8b8b65de98fb2e9bf983441",
+  "baseline_log_sha256": "2abe8e9d78370976c6c37b4dc68e3cec3685bcf8aca4558c8e9dae36e2206265",
+  "candidate_log_sha256": "d650b4ef5cae4ab25db087dd13c8ccadb6d9fe7dc47e0d30bc703bb3b5f19112",
+  "command": "wslc run --rm --pull never --network none --memory 1G --cpus 1 --volume <source-dir>:/src:ro --volume <run-dir>:/work --workdir /work --entrypoint python agent-interface/native-suite-wslc-a08:20261004 /work/optimized_unit_audit.py",
+  "runtime": "wslc 3.0.1.0; agent-interface/native-suite-wslc-a08:20261004 (image ID 1b4a8bd7c0fe); CPython 3.12.14",
+  "network": "none",
+  "cpu_limit_requested": 1,
+  "memory_limit_requested": "1G",
+  "memory_enforcement_note": "WSL reports swap/cgroup swap-limit unsupported; no swap limit claimed."
+}

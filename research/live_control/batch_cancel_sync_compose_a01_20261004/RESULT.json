@@ -1,0 +1,29 @@
+{
+  "schema": "batch-cancel-sync-composition-a01-result-v1",
+  "status": "PASS_SYNTHETIC_COMPOSITION",
+  "candidate_exit": 0,
+  "auditor_v1_exit": 1,
+  "auditor_v2_exit": 0,
+  "mutation_controls_passed": 3,
+  "scope": "Fake-Xlib source composition only",
+  "batch_release": {
+    "cancel_during_sync_reclassified": true,
+    "verified_empty": true,
+    "per_key_interval_count": 2,
+    "release_sync_delta": 1
+  },
+  "explicit_up": {
+    "cancel_requested_after_sync": true,
+    "server_sync_completed": true
+  },
+  "candidate_reruns": 0,
+  "orb_stack_container_run": false,
+  "live_game_or_gui_run": false,
+  "raw_trace_sha256": "93f9911948d4928a2efda44b93ddbd86c9435ec3f0480d87b5e2c413d9cb1674",
+  "limitations": [
+    "No real X server, physical input, application, game, model, useful feedback, recovery, or performance measurement.",
+    "The intervals bound fake-input request start through one synthetic sync return only; they do not establish physical key-up time.",
+    "OrbStack content-store failure prevented the requested container path; this result is host synthetic, not container validation.",
+    "The first frozen auditor failed its raw-schema check. Versioned audit v2 retained the same decision criteria and accepted the unchanged raw after three mutation controls passed."
+  ]
+}

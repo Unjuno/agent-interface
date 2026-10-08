@@ -1,0 +1,18 @@
+{
+  "schema": "issue7367-completeness-boundary-a01-record-v1",
+  "recorded_at_local": "2026-10-05T03:38:20+09:00",
+  "base_main_commit": "0c4be66bcaac697f1019916e3d8ada889abd5ced",
+  "branch": "research/7367-usegraph-completeness-a01-20261005",
+  "method": "deterministic host-side contract probe using the frozen A01 candidate",
+  "formal_preregistration": false,
+  "protocol_selection": "The H/T/D, omitted-consumer counterfactual, and honest-unknown control were stated in commentary before running the candidate.",
+  "source_mutation": "none; the main-pinned A01 workload, freeze, and candidate source were read-only inputs",
+  "external_effects": "none",
+  "model_calls": 0,
+  "gui_or_input": 0,
+  "containers": 0,
+  "retries": 0,
+  "result": "COMPLETENESS_CONTRACT_GAP_DEMONSTRATED",
+  "audit": "PASS_COUNTEREXAMPLE_SCOPED",
+  "interpretation": "The caller-supplied completeness assertion is an external precondition. This does not falsify the liveness algorithm under a truly complete graph."
+}

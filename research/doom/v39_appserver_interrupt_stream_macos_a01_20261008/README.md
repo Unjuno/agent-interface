@@ -1,0 +1,25 @@
+# App Server pending-stream cancellation on macOS — A01
+
+## Result
+
+**The frozen candidate gate failed, and the environment is held for unexpected egress.** On macOS arm64 with installed Codex App Server `0.146.1` (binary SHA-256 `35d248101b211d6248ad4e6b8c1d441fe81236da87afb9f3e9ea51a049e9f179`), the server accepted `turn/interrupt` and completed the matching turn as `interrupted` about **1.079 ms** after the interrupt was sent. The loopback mock observed **no TCP EOF/reset during the fixed two-second window** before releasing its held response. The interrupt RPC acknowledgement arrived about 12.578 ms after send; the response gate was released about 2.004 s after acknowledgement. One Responses POST reached `127.0.0.1`; the mock recorded no errors; App Server exited 0. The runner exited 1 because the preregistered stream-close criterion was not met.
+
+This differs from the Windows x64 / Codex 0.160.0 construction in [PR #8077/A02](https://github.com/Unjuno/agent-interface/pull/8077), which observed a pending local HTTP request disconnect before release. It is a one-host/version portability result, not a general cross-platform conclusion. The earlier macOS turn-admission probe [PR #8382/A01](https://github.com/Unjuno/agent-interface/pull/8382) did not inspect the provider socket.
+
+**Unexpected startup egress:** despite a fresh `CODEX_HOME`, an allowlisted process environment, no credential environment variables, and a loopback model endpoint, App Server stderr records a request to `https://chatgpt.com/backend-api/plugins/featured?platform=codex` returning `401 Unauthorized`. Request headers were not captured, so their authorization state is unknown. A separate curated-plugin `git ls-remote` sync failed because the local Xcode license was not accepted; no completed Git network request is established. These events contaminate a strict zero-egress claim and may confound this one transport observation. The correct overall disposition is therefore **`AUDIT_VALID_OBSERVED_FAIL_WITH_ENVIRONMENT_HOLD`**, not an isolated-product FAIL. No retry was made.
+
+## H/T/D/C/U
+
+- **H:** The older macOS App Server 0.146.1 closes a pending Responses socket on `turn/interrupt` before the mock releases its response, as reported on Windows 0.160.0 in PR #8077/A02.
+- **T:** One candidate run. A fresh temporary `CODEX_HOME`, read-only thread sandbox, credential-free allowlisted process environment, and loopback-only mock were used. The mock sent `response.created`, held the stream, and watched the accepted socket for EOF/reset. The runner sent the matching interrupt and observed for 2 seconds without starting another turn, then released the response and performed bounded cleanup.
+- **D:** PASS required accepted interrupt, socket EOF/reset before release, matching `interrupted` completion, one loopback Responses request, no mock errors, and zero App Server exit. The candidate's FAIL is preserved. The independent v2 auditor confirms the observed FAIL and records an environment HOLD due to unexpected plugin metadata egress.
+- **C:** The observed turn status and provider socket are separate states. The interrupted turn completed promptly, but the mock socket did not close during the pre-release window. The startup metadata request is unrelated to model inference but could have influenced this one run.
+- **U:** One bounded probe on one build. A loopback connection result does not prove remote-provider inference or billing cancellation. The external request headers were not retained. This does not establish behavior on other versions, V39 cancellation safety, model quality, useful live feedback, physical input release, recovery, progress, terminal outcome, or gameplay. Issue #59's private live lane remains unassigned.
+
+## Evidence and reproduction
+
+`FREEZE.json` and `PRE_RUN_SHA256SUMS` bind the candidate, v1 auditor, plan, CLI binary, host/runtime, and empty output directory before execution. The frozen candidate ran once with `python3 run_a01.py --out-dir results/a01`. V1 audit failure is retained in `results/a01/audit.json`; v2 re-audits the raw summary and correctly returns `AUDIT_VALID_OBSERVED_FAIL_WITH_ENVIRONMENT_HOLD` in 11 checks, with four mutation controls in its self-test. Run it with `python3 audit_a01_v2.py results/a01`; run auditor controls with `python3 audit_a01_v2.py --self-test`.
+
+The raw App Server stderr remains local-only as `results/a01/private_app_server_stderr.txt`; the committed `app_server_stderr_redacted.json` is a whitelist summary with a hash of those 1,109 bytes. It preserves the external endpoint/status while omitting local paths. The HTTP request body was not stored; only its SHA-256 and loopback peer were retained. No user credential environment variables were passed, but request headers for the plugin metadata call were not observed.
+
+The native macOS App Server binary is the subject under test, so using a Linux container would change the tested client. No game, external model/provider, GUI, OS input, or private live allocation was used; the only model endpoint was the local mock. No runtime/controller code changed.

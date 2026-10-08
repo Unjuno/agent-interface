@@ -1,0 +1,34 @@
+{
+  "allocation": "GUI-MEMORY-CONSOLIDATION-SCHEDULE-8406-T1-A13-SCHEMA-CONSTRAINED-20261008",
+  "issue": 8406,
+  "predecessor": "T1 A12 FAIL_METHOD with 18 transition errors; raw preserved separately",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "formal_model_calls_observed": 390,
+  "formal_retries": 0,
+  "terminal_disposition": "FAIL_METHOD_BATCH2_CONFLICT_OMISSION",
+  "raw_path": "results/FORMAL_T1_A13/RAW.jsonl",
+  "seeds": [
+    5301,
+    5302,
+    5303
+  ],
+  "expected_calls": 390,
+  "model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "private_model_store": "/tmp/unjuno-8406-t1-a13-ollama-store",
+  "candidate_exit_code": 0,
+  "auditor_exit_code": 0,
+  "auditor_status": "FAIL_METHOD",
+  "auditor_decision": "FAIL_METHOD",
+  "auditor_errors": 6,
+  "schema_diagnostic": {
+    "claim_count": 126,
+    "invalid_kind_count": 0,
+    "status": "PASS_ENUM_ONLY"
+  },
+  "result_path": "RESULTS.md",
+  "stop_path": "STOP.md",
+  "raw_sha256": "502b28d5405ed3b1d40bba8f41be6c6245ebd68ed4edf83fa300efa88555979c",
+  "audit_sha256": "8230ebef9a1a945fbc8d261e8a10f655c2d9aa4995f8cfc59f47ba0cec6f654b",
+  "preflight_sha256": "56796d7077573ea2482f0f5d6fc195cab8d8f92032b5c75f72b5ec1eb2184369"
+}

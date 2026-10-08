@@ -1,0 +1,12 @@
+{
+  "allocation": "8473-SCOPED-INFEASIBILITY-T0-A03-20261008-01",
+  "predecessors": ["A01_STOP_AUDITOR_MUTATION_CONTROL; no A01 outputs changed or rerun", "A02_STOP_AUDITOR_MUTATION_CONTROL; no A02 outputs changed or rerun"],
+  "base_main": "eeec9a355adc82ccd4cace8ea36f145a60c8805f",
+  "scope_delta": "same frozen candidate and fixture; independent audit assertion now compares the mutated grounded condition with the actual missing precondition derived from the independent truth assignment",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "decision": "same scoped PASS/FAIL gates as A01; first passing audit pair is A03, prior failures remain preserved",
+  "final_auditor_sha256": "d7effb078a3be9f9307e1058b59fd0699ab1b4499a29cd6df113d1ee3b358dd7",
+  "host": "Darwin arm64; CPython 3.14.5; no dependencies/network",
+  "container_status": "Host-only per A01 documented content-store STOP"
+}
