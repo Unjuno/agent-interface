@@ -1,0 +1,46 @@
+wsl: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+{
+  "experiment": "V39_LEGACY_TRANSITION_A04",
+  "baseline_commit": "46bed14701c6ba7d509c620bf6f582c84993f949",
+  "baseline_source_sha256": "14e6c6c4872b25529210a670b85b7bbf00b7ad88cc917812d9bda4865186be4f",
+  "candidate_source_sha256": "46788cd6725b9d0135acc86b54ed4022dddb0e8e7a76bdbf39e5cbfa1b1f9049",
+  "test_sha256": "51ed277a8989b95bcfae0549456c7a85f5c31d7452f8f501ea30d6be55ebfe27",
+  "fixture_sha256": "ad0b1c29da4b626e9be27e8716cdabfbb25ac49dcf0abd4bda4bd2f7a9f84e4e",
+  "methods": [
+    "test_input_edge_receipt_rejects_duplicate_adapter_rows",
+    "test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge"
+  ],
+  "subcases": [
+    "duplicate_up_as_legacy_transition",
+    "only_legacy_transition_up"
+  ]
+}
+BASELINE
+test_input_edge_receipt_rejects_duplicate_adapter_rows (builtins.A03UnknownOuterEventTests.test_input_edge_receipt_rejects_duplicate_adapter_rows) ... ok
+test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A03UnknownOuterEventTests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) ...
+  test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A03UnknownOuterEventTests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) (case='duplicate_up_as_legacy_transition') ... FAIL
+
+======================================================================
+FAIL: test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A03UnknownOuterEventTests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) (case='duplicate_up_as_legacy_transition')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/src/research/doom/test_map01_v39_typed_state_feedback.py", line 777, in test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge
+    self.assertEqual(adapter_receipts[0]["status"],
+AssertionError: 'adapter_edge_brackets_paired' != 'adapter_edge_receipt_incomplete'
+- adapter_edge_brackets_paired
++ adapter_edge_receipt_incomplete
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.009s
+
+FAILED (failures=1)
+
+CANDIDATE
+test_input_edge_receipt_rejects_duplicate_adapter_rows (builtins.A03UnknownOuterEventTests.test_input_edge_receipt_rejects_duplicate_adapter_rows) ... ok
+test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge (builtins.A03UnknownOuterEventTests.test_input_edge_receipt_rejects_legacy_transition_with_adapter_edge) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.009s
+
+OK
