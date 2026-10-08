@@ -1,0 +1,302 @@
+{
+  "consolidation_mapping_fields": {
+    "common_success": [
+      "kind",
+      "key",
+      "value",
+      "source_ids"
+    ],
+    "rare_exception": [
+      "kind",
+      "key",
+      "value",
+      "source_ids"
+    ]
+  },
+  "context_present_on_contextual_claims": false,
+  "contextual_episodes": {
+    "ep01": {
+      "app": "editor",
+      "mode": "draft",
+      "surface": "standard"
+    },
+    "ep02": {
+      "app": "editor",
+      "mode": "draft",
+      "surface": "standard"
+    },
+    "ep03": {
+      "app": "editor",
+      "mode": "publish",
+      "surface": "standard"
+    }
+  },
+  "correct_by_arm": {
+    "batch_2": 9,
+    "episodic_only": 15,
+    "per_episode": 3,
+    "terminal": 3
+  },
+  "diagnostic": "A16 applicability-scope gap",
+  "evidence_limited_correct_by_arm": {
+    "batch_2": 3,
+    "episodic_only": 15,
+    "per_episode": 0,
+    "terminal": 15
+  },
+  "evidence_limited_scoring_rule": "For q_common_save, episodic_only retains the source episodes and uses the registered oracle; for every summary arm, require UNKNOWN because no summary claim carries the editor/draft/standard applicability context requested by the query. Descriptive posthoc sensitivity only; not the preregistered endpoint.",
+  "examples": {
+    "batch_2/prefix-4": {
+      "oracle": {
+        "answer": "draft_saved",
+        "classification": "SUPPORTED",
+        "source_ids": [
+          "src-01",
+          "src-02"
+        ]
+      },
+      "response": {
+        "answer": null,
+        "classification": "CONFLICT",
+        "source_ids": [
+          "src-01",
+          "src-03"
+        ]
+      },
+      "seed": 5601,
+      "visible_claims": [
+        {
+          "id": "ep01",
+          "key": "exact_effect",
+          "kind": "verified_pattern",
+          "source_ids": [
+            "src-01"
+          ],
+          "value": "draft_saved"
+        },
+        {
+          "id": "ep02",
+          "key": "exact_effect",
+          "kind": "verified_pattern",
+          "source_ids": [
+            "src-02"
+          ],
+          "value": "draft_saved"
+        },
+        {
+          "id": "ep03",
+          "key": "effects",
+          "kind": "forbidden_effect_exception",
+          "source_ids": [
+            "src-03"
+          ],
+          "value": "effect=no_external_effect; forbidden=publish"
+        },
+        {
+          "id": "ep04",
+          "key": "revision-r7-mode",
+          "kind": "fact_observation",
+          "source_ids": [
+            "src-04"
+          ],
+          "value": "draft"
+        }
+      ]
+    },
+    "per_episode/prefix-1": {
+      "oracle": {
+        "answer": null,
+        "classification": "UNKNOWN",
+        "source_ids": []
+      },
+      "response": {
+        "answer": "draft_saved",
+        "classification": "SUPPORTED",
+        "source_ids": [
+          "src-01"
+        ]
+      },
+      "seed": 5601,
+      "visible_claims": [
+        {
+          "id": "ep01",
+          "key": "exact_effect",
+          "kind": "verified_pattern",
+          "source_ids": [
+            "src-01"
+          ],
+          "value": "draft_saved"
+        }
+      ]
+    },
+    "per_episode/prefix-3": {
+      "oracle": {
+        "answer": "draft_saved",
+        "classification": "SUPPORTED",
+        "source_ids": [
+          "src-01",
+          "src-02"
+        ]
+      },
+      "response": {
+        "answer": null,
+        "classification": "CONFLICT",
+        "source_ids": [
+          "src-01",
+          "src-03"
+        ]
+      },
+      "seed": 5601,
+      "visible_claims": [
+        {
+          "id": "ep01",
+          "key": "exact_effect",
+          "kind": "verified_pattern",
+          "source_ids": [
+            "src-01"
+          ],
+          "value": "draft_saved"
+        },
+        {
+          "id": "ep02",
+          "key": "exact_effect",
+          "kind": "verified_pattern",
+          "source_ids": [
+            "src-02"
+          ],
+          "value": "draft_saved"
+        },
+        {
+          "id": "ep03",
+          "key": "effects",
+          "kind": "forbidden_effect_exception",
+          "source_ids": [
+            "src-03"
+          ],
+          "value": "effect=no_external_effect; forbidden=publish"
+        }
+      ]
+    },
+    "terminal/prefix-6": {
+      "oracle": {
+        "answer": "draft_saved",
+        "classification": "SUPPORTED",
+        "source_ids": [
+          "src-01",
+          "src-02"
+        ]
+      },
+      "response": {
+        "answer": null,
+        "classification": "CONFLICT",
+        "source_ids": [
+          "src-04",
+          "src-05"
+        ]
+      },
+      "seed": 5601,
+      "visible_claims": [
+        {
+          "id": "ep01",
+          "key": "exact_effect",
+          "kind": "verified_pattern",
+          "source_ids": [
+            "src-01"
+          ],
+          "value": "draft_saved"
+        },
+        {
+          "id": "ep02",
+          "key": "exact_effect",
+          "kind": "verified_pattern",
+          "source_ids": [
+            "src-02"
+          ],
+          "value": "draft_saved"
+        },
+        {
+          "id": "ep03",
+          "key": "effects",
+          "kind": "forbidden_effect_exception",
+          "source_ids": [
+            "src-03"
+          ],
+          "value": "effect=no_external_effect; forbidden=publish"
+        },
+        {
+          "id": "ep04",
+          "key": "revision-r7-mode",
+          "kind": "fact_observation",
+          "source_ids": [
+            "src-04"
+          ],
+          "value": "draft"
+        },
+        {
+          "id": "ep05",
+          "key": "revision-r7-mode",
+          "kind": "fact_observation",
+          "source_ids": [
+            "src-05"
+          ],
+          "value": "published"
+        },
+        {
+          "id": "conflict:revision-r7-mode",
+          "key": "revision-r7-mode",
+          "kind": "conflict",
+          "source_ids": [
+            "src-04",
+            "src-05"
+          ],
+          "value": "UNKNOWN"
+        },
+        {
+          "id": "ep06",
+          "key": "revision-r8-mode",
+          "kind": "history_delta",
+          "source_ids": [
+            "src-06-baseline",
+            "src-06-current"
+          ],
+          "value": "draft->published"
+        }
+      ]
+    }
+  },
+  "interpretation": "The frozen mapping and auditor check effect/value/source provenance, but do not preserve or validate app/mode/surface applicability. The query oracle uses the ledger's contextual labels while consolidated arms receive context-free claims. This is a limitation of A16's faithfulness and answerability measurement; it does not alter the frozen PASS_METHOD outcome or establish real GUI behavior.",
+  "q_common_save_classification_prefixes_3_to_6": {
+    "batch_2": {
+      "CONFLICT": 9,
+      "FORBIDDEN": 0,
+      "INVALID": 0,
+      "SUPPORTED": 3,
+      "UNKNOWN": 0
+    },
+    "episodic_only": {
+      "CONFLICT": 0,
+      "FORBIDDEN": 0,
+      "INVALID": 0,
+      "SUPPORTED": 12,
+      "UNKNOWN": 0
+    },
+    "per_episode": {
+      "CONFLICT": 12,
+      "FORBIDDEN": 0,
+      "INVALID": 0,
+      "SUPPORTED": 0,
+      "UNKNOWN": 0
+    },
+    "terminal": {
+      "CONFLICT": 3,
+      "FORBIDDEN": 0,
+      "INVALID": 0,
+      "SUPPORTED": 0,
+      "UNKNOWN": 9
+    }
+  },
+  "query_family": "q_common_save",
+  "raw_sha256_actual": "5d88e0a1cdfe05a99c5e2e42189fc47be611d7abf237e52fb5e556e3069881dd",
+  "raw_sha256_expected": "5d88e0a1cdfe05a99c5e2e42189fc47be611d7abf237e52fb5e556e3069881dd",
+  "total_per_arm": 18
+}
