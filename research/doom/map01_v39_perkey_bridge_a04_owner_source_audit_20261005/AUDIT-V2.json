@@ -1,0 +1,41 @@
+{
+  "actuation_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:g1:F8",
+  "application_effect_observed": false,
+  "audit_run_id": "v39-perkey-bridge-a04-owner-source-audit-20261005",
+  "audit_source_sha256": "86afd6e9ef6b180695751eb0eb59838a24f169592a982e54d8322b91d19c66be",
+  "authority_granted": false,
+  "candidate_freeze_sha256": "b564a34d8a9cc315a35e741a7514cf5c12653e5ce07b66424dfdff076220213b",
+  "candidate_raw_sha256": "5ddcc3f0e21f61058db940e1b4df14aae9f0f4304224be610a6d87c2cca93a87",
+  "candidate_result_sha256": "05204e84585aecf80ca2564777319f029123a519fc9eb6e642815daea3632eb9",
+  "event_count": 2,
+  "matching_per_key_release_rows": 1,
+  "raw_owner_release_records": 1,
+  "run_id": "v39-perkey-bridge-a02-cleanup-forwarding-20261005-02",
+  "schema": "map01-v39-perkey-bridge-a04-owner-source-audit-v2",
+  "scope": "raw owner-source join and bracket audit for one retained fake-display cleanup trace",
+  "status": "PASS_OWNER_SOURCE_BOUND_EXACT_TYPE_AUDIT",
+  "strict_consumer_result": {
+    "application_effect_observed": false,
+    "authority_granted": false,
+    "down_state_interval_ns": [
+      162198123653400,
+      162198123657700
+    ],
+    "hold_duration_lower_bound_ns": 15531500,
+    "hold_duration_upper_bound_ns": 15545100,
+    "schema": "map01_v39_perkey_sample_bracket_consumer_v1",
+    "scope": "fake-display sample-bracketed key-state duration; not exact physical/game occupancy",
+    "source_pair": {
+      "actuation_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:g1:F8",
+      "intent_token": "intent-v39-a02",
+      "key": "F8",
+      "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+      "program_id": "v39-perkey-bridge-a02-cleanup-forwarding-20261005-02",
+      "step": 3
+    },
+    "up_state_interval_ns": [
+      162198139189200,
+      162198139198500
+    ]
+  }
+}

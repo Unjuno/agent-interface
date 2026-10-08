@@ -1,0 +1,25 @@
+{
+  "bridge_raw_function_sha256": "a3a2d1d1853b30b15aa293febe76916917f87a4f890ce992a2d2e1f6e236a150",
+  "bridge_source_pr": null,
+  "candidate_invocations_allowed": 1,
+  "cleanup_owner_source_head": "0525b97350568f85d23d0c214f3bb83c376ae2f4",
+  "cleanup_owner_source_pr": 7769,
+  "decision": "PASS_GAP_REPRODUCED only if owner cleanup independently confirms the same actuation up bracket and verified neutral fake display, while bridge emits no matching confirmed up event and projector returns incomplete/null up interval. Any mismatch is FAIL; inability to execute is STOP.",
+  "hypothesis": "V39 backend telemetry drops asynchronous per-key owner cleanup measurements when cancellation releases a held key before the sequential up call returns.",
+  "main_commit": "8c45935e065ec36f8d42b7d4e59224900d5a83d2",
+  "output_path": "results/a01",
+  "projector_function_sha256": "b97141302ceae04e4a27acd182452299b28c484baa7d71cb6d2635cfc6513762",
+  "projector_source_head": "5cbaa4fb2c08f4cf968e81f5fbbcd51aa939760b",
+  "projector_source_pr": 7602,
+  "python_version": "3.14.5",
+  "run_id": "MAP01-V39-CLEANUP-TELEMETRY-BRIDGE-A01-20261005",
+  "schema": "map01_v39_cleanup_telemetry_bridge_freeze_v1",
+  "scope": "Host-side fake-display construction. No live GUI, game, OS input, model, task effect, recovery, threat response, or MAP01 progress.",
+  "sources": {
+    "bridge.py": "7df6e70dae63a48793ba4f7ff4424764820f4eb3db879abdadede9d62bba6412",
+    "controller_v39_projector.py": "0b21934dd7c541d06cda8b95113542d4319b289f2cd687b9da6f1d3f2e5c637d",
+    "input_owner_v13.py": "9c07b5143cbce965be709202377a311f25986f59963257faa9ee345d87e341ef",
+    "test_input_owner_v12.py": "b4d234142bd079a736425a9e5e0b9c4edf693074a58df9ec07dce27d0b6380f9"
+  },
+  "test": "One fake-display key-down through exact V39 bridge raw method; cancel lease; retain V13 owner-thread cleanup record; issue the later up through same bridge; feed only emitted backend rows to exact current PR projector."
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "map01-v39-perkey-bridge-a05-preflight-stop-v1",
+  "observed_at_utc": "2026-10-04T23:15:50Z",
+  "run_id": "MAP01-V39-PERKEY-BRIDGE-A05-OUT-OF-ORDER-20261005",
+  "status": "STOP_BEFORE_CANDIDATE_CASES",
+  "reason": "The container command passed a relative output path under the read-only /src source mount instead of the writable /results mount. run_candidate.py failed at its initial output-directory creation before loading the frozen bridge or executing any test case.",
+  "candidate_cases_executed": 0,
+  "candidate_logic_invoked": false,
+  "freeze_sha256_at_attempt": "64702e96f8d80b97411a735480380c9130ba4630e91d633651f18d3630799386",
+  "image": "python:3.12.11-slim@sha256:47ae396f09c1303b8653019811a8498470603d7ffefc29cb07c88f1f8cb3d19f",
+  "recovery": "Preserve this STOP. Freeze the corrected absolute output path and use a new unique output directory before the first candidate case run."
+}

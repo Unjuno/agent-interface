@@ -1,0 +1,239 @@
+{
+  "candidate_finished_ns": 162198139631300,
+  "candidate_started_ns": 162198123615700,
+  "events": [
+    {
+      "admitted_ns": 162198123650400,
+      "event": "input_admission",
+      "id": "v39-perkey-bridge-a02-cleanup-forwarding-20261005-02",
+      "input_ack_ns": 162198123656600,
+      "intent_token": "intent-v39-a02",
+      "key": "F8",
+      "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+      "physical_key_measurement": {
+        "actuation_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:g1:F8",
+        "adapter_edge": {
+          "actuation_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:g1:F8",
+          "edge": "down",
+          "grants_input_authority": false,
+          "intent_token": "intent-v39-a02",
+          "interval": [
+            162198123653400,
+            162198123657700
+          ],
+          "key": "F8",
+          "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "application_consumption_observed": false,
+        "bracket": {
+          "application_consumption_observed": false,
+          "grants_input_authority": false,
+          "intent_token": "intent-v39-a02",
+          "key": "F8",
+          "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+          "physical_down_interval": [
+            162198123653400,
+            162198123657700
+          ],
+          "press_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:r1:down:74",
+          "status": "CONFIRMED_PHYSICAL_DOWN"
+        },
+        "classification": "CONFIRMED_PHYSICAL_DOWN",
+        "edge": "down",
+        "grants_input_authority": false,
+        "identity_status": "MINTED",
+        "post_sample": {
+          "available": true,
+          "down": true,
+          "error": null,
+          "finished_ns": 162198123657700,
+          "started_ns": 162198123656700
+        },
+        "pre_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 162198123653400,
+          "started_ns": 162198123650900
+        },
+        "press_request_ns": 162198123654600,
+        "sync_return_ns": 162198123656600
+      },
+      "step": 3,
+      "valid_until_ns": 162208123603800
+    },
+    {
+      "application_consumption_observed": false,
+      "event": "input_release_measurement",
+      "grants_input_authority": false,
+      "id": "v39-perkey-bridge-a02-cleanup-forwarding-20261005-02",
+      "intent_token": "intent-v39-a02",
+      "key": "F8",
+      "owner_cleanup_record": {
+        "buttons_down": [],
+        "event": "owner_release",
+        "keys_down": [],
+        "per_key_release_measurements": [
+          {
+            "actuation_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:g1:F8",
+            "application_consumption_observed": false,
+            "bracket": {
+              "application_consumption_observed": false,
+              "cleanup_reason": "cancelled",
+              "grants_input_authority": false,
+              "intent_token": "intent-v39-a02",
+              "key": "F8",
+              "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+              "physical_up_interval": [
+                162198139189200,
+                162198139198500
+              ],
+              "release_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:r2:cleanup-up:74",
+              "status": "CONFIRMED_PHYSICAL_UP"
+            },
+            "classification": "CONFIRMED_PHYSICAL_UP",
+            "edge": "up",
+            "grants_input_authority": false,
+            "identity_status": "RETIRED",
+            "key": "F8",
+            "keycode": 74,
+            "post_sample": {
+              "available": true,
+              "down": false,
+              "error": null,
+              "finished_ns": 162198139198500,
+              "started_ns": 162198139196700
+            },
+            "pre_sample": {
+              "available": true,
+              "down": true,
+              "error": null,
+              "finished_ns": 162198139189200,
+              "started_ns": 162198139184000
+            },
+            "release_attempted": true,
+            "release_request_ns": 162198139190600,
+            "sync_return_ns": 162198139196200
+          }
+        ],
+        "reason": "cancelled",
+        "valid_until_ns": 162208123603800,
+        "verified": true,
+        "verified_ns": 162198139220000
+      },
+      "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+      "physical_key_measurement": {
+        "actuation_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:g1:F8",
+        "adapter_edge": {
+          "actuation_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:g1:F8",
+          "edge": "up",
+          "grants_input_authority": false,
+          "intent_token": "intent-v39-a02",
+          "interval": [
+            162198139189200,
+            162198139198500
+          ],
+          "key": "F8",
+          "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+          "status": "CONFIRMED_PHYSICAL_UP"
+        },
+        "application_consumption_observed": false,
+        "bracket": {
+          "application_consumption_observed": false,
+          "cleanup_reason": "cancelled",
+          "grants_input_authority": false,
+          "intent_token": "intent-v39-a02",
+          "key": "F8",
+          "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+          "physical_up_interval": [
+            162198139189200,
+            162198139198500
+          ],
+          "release_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:r2:cleanup-up:74",
+          "status": "CONFIRMED_PHYSICAL_UP"
+        },
+        "classification": "CONFIRMED_PHYSICAL_UP",
+        "edge": "up",
+        "grants_input_authority": false,
+        "identity_status": "RETIRED",
+        "key": "F8",
+        "keycode": 74,
+        "post_sample": {
+          "available": true,
+          "down": false,
+          "error": null,
+          "finished_ns": 162198139198500,
+          "started_ns": 162198139196700
+        },
+        "pre_sample": {
+          "available": true,
+          "down": true,
+          "error": null,
+          "finished_ns": 162198139189200,
+          "started_ns": 162198139184000
+        },
+        "release_attempted": true,
+        "release_request_ns": 162198139190600,
+        "sync_return_ns": 162198139196200
+      },
+      "step": 3
+    }
+  ],
+  "fake_physical_keys": [],
+  "owner_records": [
+    {
+      "buttons_down": [],
+      "event": "owner_release",
+      "keys_down": [],
+      "per_key_release_measurements": [
+        {
+          "actuation_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:g1:F8",
+          "application_consumption_observed": false,
+          "bracket": {
+            "application_consumption_observed": false,
+            "cleanup_reason": "cancelled",
+            "grants_input_authority": false,
+            "intent_token": "intent-v39-a02",
+            "key": "F8",
+            "owner_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc",
+            "physical_up_interval": [
+              162198139189200,
+              162198139198500
+            ],
+            "release_id": "1cbdacf5da2a42e0b67bd26ddd5fe9fc:r2:cleanup-up:74",
+            "status": "CONFIRMED_PHYSICAL_UP"
+          },
+          "classification": "CONFIRMED_PHYSICAL_UP",
+          "edge": "up",
+          "grants_input_authority": false,
+          "identity_status": "RETIRED",
+          "key": "F8",
+          "keycode": 74,
+          "post_sample": {
+            "available": true,
+            "down": false,
+            "error": null,
+            "finished_ns": 162198139198500,
+            "started_ns": 162198139196700
+          },
+          "pre_sample": {
+            "available": true,
+            "down": true,
+            "error": null,
+            "finished_ns": 162198139189200,
+            "started_ns": 162198139184000
+          },
+          "release_attempted": true,
+          "release_request_ns": 162198139190600,
+          "sync_return_ns": 162198139196200
+        }
+      ],
+      "reason": "cancelled",
+      "valid_until_ns": 162208123603800,
+      "verified": true,
+      "verified_ns": 162198139220000
+    }
+  ],
+  "run_id": "v39-perkey-bridge-a02-cleanup-forwarding-20261005-02"
+}
