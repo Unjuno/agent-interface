@@ -1,0 +1,10 @@
+Frozen sequence:
+
+1. Create fresh isolated OrbStack guest with selected bundle and output mounts:
+orb create --isolated --isolate-network --mount /private/tmp/agent-interface-59-xlib-pending-a01/research/doom/xlib_query_keymap_prefetch_diag_a02_20261005/bundle-transfer:/mnt/diag-bundle --mount /private/tmp/agent-interface-59-xlib-pending-a01/research/doom/xlib_query_keymap_prefetch_diag_a02_20261005/results:/mnt/diag-results -a arm64 ubuntu:noble map01-v39-xlib-prefetch-a02-20261005
+
+2. In guest verify the bundle archive SHA, extract it into $HOME/xlib-query-prefetch-a02, then verify SHA256SUMS.
+
+3. Run setup_guest.sh once as explicit root: `orb run -u root -m map01-v39-xlib-prefetch-a02-20261005 bash -lc 'set +e; cd "$HOME/xlib-query-prefetch-a02"; bash setup_guest.sh > /mnt/diag-results/A02-setup.log 2>&1; status=$?; printf "%s\n" "$status" > /mnt/diag-results/A02-setup.exit; exit "$status"'`. This writes an actual exit receipt without a pipeline. Setup failure is STOP; candidate stays uninvoked. It pins the exact Python-Xlib and Xvfb package versions.
+
+4. Run run_candidate.sh once. It runs one two-edge candidate, then the raw-only auditor only after candidate exit 0. No retries.

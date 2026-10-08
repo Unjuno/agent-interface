@@ -1,0 +1,10 @@
+Frozen sequence:
+
+1. Create fresh isolated OrbStack guest with selected bundle and output mounts:
+orb create --isolated --isolate-network --mount <bundle-transfer>:/mnt/diag-bundle --mount <results>:/mnt/diag-results -a arm64 ubuntu:noble map01-v39-xlib-prefetch-a01-20261005
+
+2. In guest verify the bundle archive SHA, extract it into $HOME/xlib-query-prefetch-a01, then verify SHA256SUMS.
+
+3. Run setup_guest.sh once. It pins the exact Python-Xlib and Xvfb package versions; setup failure is STOP and candidate is not invoked.
+
+4. Run run_candidate.sh once. It runs one two-edge candidate, then the raw-only auditor only after candidate exit 0. No retries.

@@ -1,0 +1,3 @@
+# Posthoc V2 expectations
+
+This additive auditor rechecks retained A05 raw; it is not part of the original freeze and does not upgrade the preregistered evidence decision. The fixed keycode 38 follows the frozen candidate's keysym `a` in this pinned Xvfb fixture. The window ID 2097152 was observed in the raw and added after the run as an integrity assertion; it was not preregistered. Mutations of keycode or window ID are serialized, SHA-256 is recomputed from those exact mutated bytes, and V2 rejects them. The post-run window pin is not independent evidence that the runtime protocol required that ID. Candidate raw and the original V1 audit remain unchanged.
