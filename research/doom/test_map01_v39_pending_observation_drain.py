@@ -10,7 +10,8 @@ from executor_v12 import Executor as ExecutorV12
 from map01_overlap_controller_v39 import (
     MAX_PENDING_OBSERVATION_EVENTS, DoomCoverSignalPairMonitor,
     drain_pending_observation_events, recover_pending_observation_backlog,
-    recover_stale_cover_submission, settle_pending_observation_backlog)
+    recover_stale_cover_submission, settle_pending_observation_backlog,
+    submit_initial_cover_with_recovery)
 
 
 class Monitor:
@@ -77,6 +78,32 @@ class PendingObservationDrainTests(unittest.TestCase):
         self.assertEqual(result["latest"]["sequence"], 13)
         self.assertEqual(result["cover_policy"], "discarded_until_fresh_plan")
         self.assertEqual(result["invalidation"]["reason"], "health:below_hard_minimum")
+
+    def test_stale_initial_cover_uses_pre_submit_sequence_when_ack_updates_latest(self):
+        latest = {"sequence": 10}
+        events = []
+        monitor = Monitor()
+        rejected = {"event": "rejected", "id": "cover-0",
+                    "reason": "latest observation sequence required before input"}
+
+        def submit():
+            events.extend([
+                {"event": "typed_observation", "sequence": 11},
+                {"event": "observation", "sequence": 12, "image": "frame-12"},
+            ])
+            latest.update(sequence=12, image="frame-12")
+            return rejected
+
+        result = submit_initial_cover_with_recovery(
+            submit, identifier="cover-0", latest_reader=lambda: latest,
+            event_log=events, incoming=queue.Queue(), wait=lambda predicate: self.fail(
+                "already received fresh observation must not trigger another wait"),
+            observation_monitor=monitor)
+
+        self.assertEqual(result["submitted_sequence"], 10)
+        self.assertEqual(result["latest"]["sequence"], 12)
+        self.assertEqual(result["ack"], rejected)
+        self.assertEqual(monitor.seen, [11, 12])
 
     def test_queued_hard_crossing_precedes_completed_answer(self):
         incoming = queue.Queue()

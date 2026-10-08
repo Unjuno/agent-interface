@@ -853,6 +853,31 @@ def recover_stale_cover_submission(rejected, *, identifier, expected_sequence,
             "cover_policy": "discarded_until_fresh_plan"}
 
 
+def submit_initial_cover_with_recovery(submit, *, identifier, latest_reader,
+                                       event_log, incoming, wait,
+                                       observation_monitor):
+    """Bind stale-cover recovery to the exact sequence sent before its ACK wait."""
+    source = latest_reader()
+    if type(source) is not dict or type(source.get("sequence")) is not int:
+        raise ValueError("initial cover requires a source observation")
+    submitted_sequence = source["sequence"]
+    event_start = len(event_log)
+    ack = submit()
+    if type(ack) is not dict or ack.get("event") not in ("accepted", "rejected"):
+        raise ValueError("initial cover submit returned an invalid acknowledgement")
+    if ack["event"] == "accepted":
+        return {"ack": ack, "latest": latest_reader(),
+                "submitted_sequence": submitted_sequence,
+                "recovery": None}
+    recovery = recover_stale_cover_submission(
+        ack, identifier=identifier, expected_sequence=submitted_sequence,
+        consumed_events=event_log[event_start:], latest=latest_reader(),
+        incoming=incoming, wait=wait,
+        observation_monitor=observation_monitor)
+    return {"ack": ack, "submitted_sequence": submitted_sequence,
+            **recovery}
+
+
 def recover_stale_executor_rejection(rejected, *, identifier,
                                      expected_sequence, controller_received_ns,
                                      latest, incoming, wait,
@@ -1018,19 +1043,15 @@ def main():
                 if accepted["event"]!="accepted":return accepted
                 cover_ids.append(identifier);return accepted
             failure_cleanup.set_stage("cover_program_admission")
-            cover_event_start=len(all_events)
-            cover_ack=submit_cover(cover)
+            cover_result = submit_initial_cover_with_recovery(
+                lambda:submit_cover(cover), identifier=cover,
+                latest_reader=lambda:latest, event_log=all_events,
+                incoming=incoming, wait=wait,
+                observation_monitor=validity_monitor)
+            cover_ack=cover_result["ack"]
             if cover_ack["event"] == "rejected":
-                if cover_ack.get("reason") != \
-                        "latest observation sequence required before input":
-                    raise RuntimeError(cover_ack)
-                cover_submission_recovery = recover_stale_cover_submission(
-                    cover_ack, identifier=cover,
-                    expected_sequence=latest["sequence"],
-                    consumed_events=all_events[cover_event_start:],
-                    latest=latest, incoming=incoming, wait=wait,
-                    observation_monitor=validity_monitor)
-                latest = cover_submission_recovery["latest"]
+                cover_submission_recovery = cover_result
+                latest = cover_result["latest"]
                 cover = None
                 cover_semantic=[];cover_validity_semantic=None
                 cover_policy_source_iteration=None;cover_steps=[]
