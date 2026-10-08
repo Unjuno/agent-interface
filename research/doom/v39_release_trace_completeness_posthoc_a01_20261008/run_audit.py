@@ -31,10 +31,23 @@ def load_inputs():
     owner_events = json.loads(loaded[owner_path])
     report = json.loads(loaded[report_path])
     prior_audit = json.loads(loaded[audit_path])
-    return events, owner_events, report, prior_audit
+    sources_path = next(path for path in paths if path.endswith("runtime/sources.json"))
+    prereg_path = next(path for path in paths if path.endswith("prereg.json"))
+    sources = json.loads(loaded[sources_path])
+    prereg = json.loads(loaded[prereg_path])
+    source_lineage = {
+        "controller_sha256": prereg["source_sha256"]["research/doom/map01_overlap_controller_v39.py"],
+        "executor": "ExecutorV12",
+        "executor_v12_sha256": sources["live_control/executor_v12.py"],
+        "owner_executor": "ExecutorV11",
+        "executor_v11_sha256": sources["live_control/executor_v11.py"],
+        "owner_input_owner_v10_sha256": sources["live_control/input_owner_v10.py"],
+        "executor_v13_in_historical_run": False,
+    }
+    return events, owner_events, report, prior_audit, source_lineage
 
 
-def analyze(events, owner_events, report, prior_audit):
+def analyze(events, owner_events, report, prior_audit, source_lineage):
     def unique_id_map(event_name):
         rows = [row for row in events if row.get("event") == event_name]
         identifiers = [row.get("id") for row in rows]
@@ -117,11 +130,12 @@ def analyze(events, owner_events, report, prior_audit):
         raise ValueError("unexpected retained task outcome")
     event_types = {row.get("event") for row in events}
     return {
-        "schema": "map01-v39-release-trace-completeness-result-v2",
+        "schema": "map01-v39-release-trace-completeness-result-v3",
         "status": "PASS_TRACE_RECONCILIATION_WITH_EARLY_EVENT_GAP",
         "main_commit": MAIN,
         "allocation_id": FREEZE["allocation_id"],
         "prior_audit_formal_pass": prior_audit["formal_pass"],
+        "live_run_source_lineage": dict(source_lineage),
         "accepted_terminal_ids_match": True,
         "cancel_requests": len(cancels),
         "cancelled_terminals_with_empty_verified_release": len(cancellation_rows),
@@ -159,10 +173,10 @@ def analyze(events, owner_events, report, prior_audit):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=HERE / "RESULT.json")
+    parser.add_argument("--output", type=Path, default=HERE / "RESULT_V3.json")
     args = parser.parse_args()
-    events, owner_events, report, prior_audit = load_inputs()
-    result = analyze(events, owner_events, report, prior_audit)
+    events, owner_events, report, prior_audit, source_lineage = load_inputs()
+    result = analyze(events, owner_events, report, prior_audit, source_lineage)
     output = args.output if args.output.is_absolute() else HERE / args.output
     if output.exists():
         raise SystemExit(f"refusing to overwrite {output}")

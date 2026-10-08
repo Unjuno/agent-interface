@@ -29,6 +29,11 @@
       "git_blob": "5971e036dc4a860f515e1b357169899f9effa97d",
       "sha256": "f02e48e0eede9cb33e9ff4865abd20b6081d2cba4068b2cab8e137465b374770",
       "bytes": 5958
+    },
+    "research/doom/results/map01-v39-coast-liveness-live-01/runtime/sources.json": {
+      "git_blob": "b6b45d75dee2db14dde6f37321cd401b287e4472",
+      "sha256": "3bb0fe420f21b682c5739d1e6d1e0ae6996847fceaa5818f0f17a3219437c5f8",
+      "bytes": 2058
     }
   },
   "decision_rule": "PASS_TRACE_RECONCILIATION only when all cancel requests match one cancelled terminal with a verified empty terminal release, and every active interruption receipt is empty, verified and time-ordered. Report early-release event coverage separately; its absence is an observed gap, not a failed release.",

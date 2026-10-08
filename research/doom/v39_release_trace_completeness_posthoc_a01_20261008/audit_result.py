@@ -11,7 +11,7 @@ except ImportError:  # direct script execution from this directory
 HERE = Path(__file__).resolve().parent
 
 
-def validate(result, events, owner_events, report):
+def validate(result, events, owner_events, report, source_lineage):
     def unique_ids(event_name):
         identifiers = [row.get("id") for row in events if row.get("event") == event_name]
         if (any(not isinstance(identifier, str) or not identifier for identifier in identifiers) or
@@ -67,7 +67,7 @@ def validate(result, events, owner_events, report):
     expected_coverage = {"numerator": len(set(active_interrupted) & set(early)),
                          "denominator": len(active_interrupted)}
     expected = {
-        "schema": "map01-v39-release-trace-completeness-result-v2",
+        "schema": "map01-v39-release-trace-completeness-result-v3",
         "status": "PASS_TRACE_RECONCILIATION_WITH_EARLY_EVENT_GAP",
         "accepted_terminal_ids_match": True,
         "cancel_requests": len(cancels),
@@ -77,6 +77,7 @@ def validate(result, events, owner_events, report):
         "active_interruption_coverage": expected_coverage,
         "active_interruption_receipts_with_input_released_event": expected_coverage["numerator"],
         "input_release_event_rows": len(early),
+        "live_run_source_lineage": source_lineage,
         "input_release_unverified_event_rows": len(unverified),
         "owner_release_has_per_key_timestamps": any(
             any(key in item for key in ("per_key", "key_release_ns", "keyup_ns"))
@@ -85,6 +86,8 @@ def validate(result, events, owner_events, report):
     for key, value in expected.items():
         if result.get(key) != value:
             raise ValueError(f"result mismatch for {key}: {result.get(key)!r} != {value!r}")
+    if result.get("live_run_source_lineage") != source_lineage:
+        raise ValueError("result historical executor lineage differs from frozen sources")
     expected_rows = []
     for identifier in active_interrupted:
         cancel = next(row for row in cancels if row["id"] == identifier)
@@ -124,17 +127,17 @@ def validate(result, events, owner_events, report):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--result", type=Path, default=HERE / "RESULT.json")
-    parser.add_argument("--output", type=Path, default=HERE / "AUDIT.json")
+    parser.add_argument("--result", type=Path, default=HERE / "RESULT_V3.json")
+    parser.add_argument("--output", type=Path, default=HERE / "AUDIT_V3.json")
     args = parser.parse_args()
     result_path = args.result if args.result.is_absolute() else HERE / args.result
     output = args.output if args.output.is_absolute() else HERE / args.output
     result = json.loads(result_path.read_text(encoding="utf-8"))
-    events, owner_events, report, _prior = load_inputs()
-    validate(result, events, owner_events, report)
+    events, owner_events, report, _prior, source_lineage = load_inputs()
+    validate(result, events, owner_events, report, source_lineage)
     if output.exists():
         raise SystemExit(f"refusing to overwrite {output}")
-    audit = {"schema": "map01-v39-release-trace-completeness-audit-v2",
+    audit = {"schema": "map01-v39-release-trace-completeness-audit-v3",
              "status": "PASS_INDEPENDENT_RAW_RECONCILIATION",
              "checks": {"accepted_terminal_identity": True,
                         "all_cancelled_terminals_empty": True,
@@ -142,6 +145,7 @@ def main():
                         "active_release_latency_and_identity": True,
                         "early_event_coverage_matches_raw": True,
                         "unverified_release_events_separate": True,
+                        "historical_executor_lineage_pinned": True,
                         "task_outcome_matches_report": True,
                         "per_key_timestamps_absent": True},
              "result_sha256": __import__("hashlib").sha256(
