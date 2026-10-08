@@ -289,6 +289,3 @@ if __name__ == "__main__":
                            encoding="utf-8", newline="\n")
     print(json.dumps({"status": result["status"], "case_count": len(result["cases"]),
                       "event_count": len(raw)}, separators=(",", ":")))
-
-
-
