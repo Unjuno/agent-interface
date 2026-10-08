@@ -1,0 +1,20 @@
+{
+  "auditor_correction": "A01 runner records one frozen_runner_invocations plus 1 baseline and 3 successor evaluations; it does not emit candidate_invocations. Audit checks the recorded counters rather than requiring an absent field. Raw candidate run was not repeated.",
+  "checks": {
+    "baseline_false_accept_reproduced": true,
+    "candidate_and_case_hashes_match": true,
+    "candidate_gate_matches_observations": true,
+    "frozen_allocation_once_no_retry": true,
+    "frozen_source_head": true,
+    "input_hash_reconciles": true,
+    "matched_token_positive_preserved": true,
+    "mismatched_token_rejected": true,
+    "missing_token_rejected": true,
+    "monotonic_run_bracket": true,
+    "parent_source_hashes_match": true,
+    "scope_not_promoted": true
+  },
+  "errors": [],
+  "schema": "scorer-intent-token-binding-a01-independent-audit-v1",
+  "status": "PASS_RAW_AUDIT"
+}
