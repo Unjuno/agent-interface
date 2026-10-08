@@ -4,8 +4,9 @@ Disposition on current main: `HOLD_UNVERIFIED_RAW`. Preserve the submitted A04 f
 
 ## Evidence and limits
 
-- Source draft: PR #8284, head `0ac1368b7520f75208bfc793f9dab228586f1b4e`; the current-main successor must preserve the exact published package bytes and this qualification separately.
+- Source draft: PR #8284, head `0ac1368b7520f75208bfc793f9dab228586f1b4e`. The original branch `research/6576-runtime-envelope-a04-20261006` ended at `26297fd212179493743aedfa65ba90f81351f94d`; its 21 unique A04 commits are listed in `SOURCE_LINEAGE.md`.
 - `RAW_PROVENANCE.md` records that the executed 90-row `formal/RAW.jsonl` was 2,925,419 bytes with SHA-256 `b5fe935cd03e00b32972353d9860071b9faabc9e038521f69a74512a6ea4f98a`, but also explicitly says `remote_raw_complete=false`. The file is absent from both the source branch and PR tree.
+- The original branch history contains only a deleted `EVIDENCE.b64.part-00` transfer fragment, not the complete archive. Its 20,023 bytes hash to `d978b630a59f027e90ce67fd6910e8e97529732520dc8be38ae922d09fdd17f5`, not the declared part hash; decoding fails, and parts 01–08 are absent. It is preserved as `.unverified` with details in `FRAGMENT_PROVENANCE.md`; it cannot recover the formal raw.
 - The frozen `audit.py` has a syntax error in its output newline literal. `AUDIT_REPAIR.md` records the exact source hash and that the additive repaired copy was only checked for syntax/`--help`; the audit was not rerun.
 - The published `candidate.py` also has an unterminated string literal at line 102 and fails `py_compile`. `RAW_PROVENANCE.md` attributes the absent raw to candidate SHA-256 `c403b4750b4eaccfbc2d97b2b38dbe77611fac4e3460a0d410576ed97e44abd3`, whereas the published candidate bytes hash to `4ed72f7bf3f37c4ac00861de09ee7d569954488ed8a0994fda92a258cb00643f`. Thus the available candidate source is not the recorded raw generator source.
 - `SHA256SUMS.source` records an `audit.py` hash that differs from the exact source bytes. This mismatch is documented and unresolved.
