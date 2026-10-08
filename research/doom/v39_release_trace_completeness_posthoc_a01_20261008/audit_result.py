@@ -12,12 +12,35 @@ HERE = Path(__file__).resolve().parent
 
 
 def validate(result, events, owner_events, report):
-    accepted = {row["id"] for row in events if row.get("event") == "accepted"}
-    terminals = {row["id"] for row in events if row.get("event") == "terminal"}
+    def unique_ids(event_name):
+        identifiers = [row.get("id") for row in events if row.get("event") == event_name]
+        if (any(not isinstance(identifier, str) or not identifier for identifier in identifiers) or
+                len(identifiers) != len(set(identifiers))):
+            raise ValueError(f"source {event_name} event IDs are not unique")
+        return set(identifiers)
+
+    accepted = unique_ids("accepted")
+    terminals = unique_ids("terminal")
     cancels = [row for row in events if row.get("event") == "cancel_requested"]
+    cancel_ids = [row.get("id") for row in cancels]
+    if (any(not isinstance(identifier, str) or not identifier for identifier in cancel_ids) or
+            len(cancel_ids) != len(set(cancel_ids))):
+        raise ValueError("source cancel_requested event IDs are not unique")
+    release_events = [row for row in events if row.get("event") in
+                      ("input_released", "input_release_unverified")]
+    release_ids = [row.get("id") for row in release_events]
+    if (any(not isinstance(identifier, str) or not identifier for identifier in release_ids) or
+            len(release_ids) != len(set(release_ids))):
+        raise ValueError("source release event IDs are not unique")
+    early = {row["id"]: row for row in release_events
+             if row.get("event") == "input_released"}
+    unverified = {row["id"]: row for row in release_events
+                  if row.get("event") == "input_release_unverified"}
+    if set(early) & set(unverified):
+        raise ValueError("source ID has both verified and unverified release events")
+    if set(release_ids) - terminals:
+        raise ValueError("source release event has no terminal")
     held = {row["id"] for row in events if row.get("event") == "keys_held"}
-    early = {row["id"]: row for row in events if row.get("event") in
-             ("input_released", "input_release_unverified")}
     if accepted != terminals:
         raise ValueError("source accepted/terminal IDs differ")
     by_id = {row["id"]: row for row in events if row.get("event") == "terminal"}
@@ -44,6 +67,7 @@ def validate(result, events, owner_events, report):
     expected_coverage = {"numerator": len(set(active_interrupted) & set(early)),
                          "denominator": len(active_interrupted)}
     expected = {
+        "schema": "map01-v39-release-trace-completeness-result-v2",
         "status": "PASS_TRACE_RECONCILIATION_WITH_EARLY_EVENT_GAP",
         "accepted_terminal_ids_match": True,
         "cancel_requests": len(cancels),
@@ -53,6 +77,7 @@ def validate(result, events, owner_events, report):
         "active_interruption_coverage": expected_coverage,
         "active_interruption_receipts_with_input_released_event": expected_coverage["numerator"],
         "input_release_event_rows": len(early),
+        "input_release_unverified_event_rows": len(unverified),
         "owner_release_has_per_key_timestamps": any(
             any(key in item for key in ("per_key", "key_release_ns", "keyup_ns"))
             for item in owner_events),
@@ -71,6 +96,7 @@ def validate(result, events, owner_events, report):
             "prior_keys_held_event": True,
             "interruption_owner_release": True,
             "input_release_event": identifier in early,
+            "input_release_unverified_event": identifier in unverified,
             "cancel_requested_ns": cancel["requested_ns"],
             "terminal_ns": terminal["terminal_ns"],
             "terminal_owner_verified_ns": terminal["release"]["verified_ns"],
@@ -108,13 +134,14 @@ def main():
     validate(result, events, owner_events, report)
     if output.exists():
         raise SystemExit(f"refusing to overwrite {output}")
-    audit = {"schema": "map01-v39-release-trace-completeness-audit-v1",
+    audit = {"schema": "map01-v39-release-trace-completeness-audit-v2",
              "status": "PASS_INDEPENDENT_RAW_RECONCILIATION",
              "checks": {"accepted_terminal_identity": True,
                         "all_cancelled_terminals_empty": True,
                         "active_interruption_receipt_order": True,
                         "active_release_latency_and_identity": True,
                         "early_event_coverage_matches_raw": True,
+                        "unverified_release_events_separate": True,
                         "task_outcome_matches_report": True,
                         "per_key_timestamps_absent": True},
              "result_sha256": __import__("hashlib").sha256(

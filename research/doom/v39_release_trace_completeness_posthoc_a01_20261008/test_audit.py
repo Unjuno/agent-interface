@@ -49,6 +49,39 @@ class RetainedReleaseTraceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate(result, self.events, self.owner, self.report)
 
+    def test_unverified_release_event_does_not_count_as_verified_coverage(self):
+        events = copy.deepcopy(self.events)
+        row = next(row for row in events if row.get("event") == "input_released")
+        row["event"] = "input_release_unverified"
+        result = analyze(events, self.owner, self.report, self.prior)
+        self.assertEqual(result["active_interruption_coverage"],
+                         {"numerator": 0, "denominator": 3})
+        self.assertEqual(result["input_release_event_rows"], 0)
+        self.assertEqual(result["input_release_unverified_event_rows"], 1)
+        self.assertTrue(validate(result, events, self.owner, self.report))
+
+    def test_duplicate_cancel_id_is_rejected(self):
+        events = copy.deepcopy(self.events)
+        cancel_indices = [i for i, row in enumerate(events)
+                          if row.get("event") == "cancel_requested"]
+        events[cancel_indices[-1]] = copy.deepcopy(events[cancel_indices[0]])
+        with self.assertRaisesRegex(ValueError, "cancel_requested event IDs"):
+            analyze(events, self.owner, self.report, self.prior)
+
+    def test_duplicate_release_id_is_rejected(self):
+        events = copy.deepcopy(self.events)
+        release = next(row for row in events if row.get("event") == "input_released")
+        events.append(copy.deepcopy(release))
+        with self.assertRaisesRegex(ValueError, "release event IDs"):
+            analyze(events, self.owner, self.report, self.prior)
+
+    def test_release_event_without_terminal_is_rejected(self):
+        events = copy.deepcopy(self.events)
+        release = next(row for row in events if row.get("event") == "input_released")
+        release["id"] = "unknown-program"
+        with self.assertRaisesRegex(ValueError, "without a terminal"):
+            analyze(events, self.owner, self.report, self.prior)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

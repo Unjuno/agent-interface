@@ -20,6 +20,8 @@ For the three interrupted receipts, cancel-request to owner-empty verification s
 
 The result therefore identifies a telemetry-coverage boundary to examine in a future versioned live run: distinguish per-program early release publication from terminal-only cleanup evidence, and add per-key release measurements if the runtime can retain them without disrupting input-up ordering. This package does not change production code.
 
+The v2 auditor counts only `input_released` as verified early-release coverage; `input_release_unverified` is reported separately. Event IDs for accepted programs, terminals, cancellation requests, and release events must be unique, and release events must reference a terminal. Mutation tests cover these distinctions. The retained input still has one verified early-release event and zero unverified release events.
+
 ## Reproduction
 
 From the repository root, run a reproduction into fresh output names (the scripts refuse to overwrite existing results):

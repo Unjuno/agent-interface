@@ -35,11 +35,35 @@ def load_inputs():
 
 
 def analyze(events, owner_events, report, prior_audit):
-    accepted = {row["id"]: row for row in events if row.get("event") == "accepted"}
-    terminals = {row["id"]: row for row in events if row.get("event") == "terminal"}
+    def unique_id_map(event_name):
+        rows = [row for row in events if row.get("event") == event_name]
+        identifiers = [row.get("id") for row in rows]
+        if (any(not isinstance(identifier, str) or not identifier for identifier in identifiers) or
+                len(identifiers) != len(set(identifiers))):
+            raise ValueError(f"{event_name} event IDs must be nonempty and unique")
+        return {row["id"]: row for row in rows}
+
+    accepted = unique_id_map("accepted")
+    terminals = unique_id_map("terminal")
     cancels = [row for row in events if row.get("event") == "cancel_requested"]
-    release_rows = {row["id"]: row for row in events
-                    if row.get("event") in ("input_released", "input_release_unverified")}
+    cancel_ids = [row.get("id") for row in cancels]
+    if (any(not isinstance(identifier, str) or not identifier for identifier in cancel_ids) or
+            len(cancel_ids) != len(set(cancel_ids))):
+        raise ValueError("cancel_requested event IDs must be nonempty and unique")
+    release_events = [row for row in events
+                      if row.get("event") in ("input_released", "input_release_unverified")]
+    release_ids = [row.get("id") for row in release_events]
+    if (any(not isinstance(identifier, str) or not identifier for identifier in release_ids) or
+            len(release_ids) != len(set(release_ids))):
+        raise ValueError("release event IDs must be nonempty and unique")
+    release_rows = {row["id"]: row for row in release_events
+                    if row.get("event") == "input_released"}
+    unverified_release_rows = {row["id"]: row for row in release_events
+                               if row.get("event") == "input_release_unverified"}
+    if set(release_rows) & set(unverified_release_rows):
+        raise ValueError("an ID cannot have both verified and unverified release events")
+    if set(release_ids) - set(terminals):
+        raise ValueError("release event references an ID without a terminal")
     held_ids = {row["id"] for row in events if row.get("event") == "keys_held"}
     interrupted = []
     cancellation_rows = []
@@ -60,6 +84,7 @@ def analyze(events, owner_events, report, prior_audit):
             "prior_keys_held_event": active,
             "interruption_owner_release": cause is not None,
             "input_release_event": early is not None,
+            "input_release_unverified_event": identifier in unverified_release_rows,
             "cancel_requested_ns": cancel.get("requested_ns"),
             "terminal_ns": terminal.get("terminal_ns"),
             "terminal_owner_verified_ns": terminal_release.get("verified_ns"),
@@ -92,7 +117,7 @@ def analyze(events, owner_events, report, prior_audit):
         raise ValueError("unexpected retained task outcome")
     event_types = {row.get("event") for row in events}
     return {
-        "schema": "map01-v39-release-trace-completeness-result-v1",
+        "schema": "map01-v39-release-trace-completeness-result-v2",
         "status": "PASS_TRACE_RECONCILIATION_WITH_EARLY_EVENT_GAP",
         "main_commit": MAIN,
         "allocation_id": FREEZE["allocation_id"],
@@ -115,6 +140,7 @@ def analyze(events, owner_events, report, prior_audit):
             "max": max(row["cancel_to_owner_verified_ms"] for row in interrupted),
         },
         "input_release_event_rows": len(release_rows),
+        "input_release_unverified_event_rows": len(unverified_release_rows),
         "per_key_release_measurement_events": len(event_types.intersection(
             {"input_release_measurement", "input_release_transition"})),
         "owner_release_has_per_key_timestamps": any(
