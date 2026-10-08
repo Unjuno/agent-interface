@@ -1,0 +1,57 @@
+{
+  "candidate_sha256": "1c32d9a70d65a540a8f71b136c5364a2c882b11be82e810119d10fc93e5e025f",
+  "coverage": {
+    "mixed_occ": {
+      "episodes": 4,
+      "episodes_with_all_16_pairs": 4
+    },
+    "order_only": {
+      "episodes": 1,
+      "episodes_with_all_16_pairs": 1
+    }
+  },
+  "cross_reset_pairs_credited": 0,
+  "episode_counts": {
+    "context_only": 4,
+    "exhaustive": 128,
+    "mixed_occ": 4,
+    "order_only": 1
+  },
+  "errors": [],
+  "model_sha256": "23e41ac29e0e2a2186bda36107d89400cb883bd296b94d3def8f5b6364351dd3",
+  "mutant_detection": {
+    "context_only": {
+      "context_only": true,
+      "joint": false,
+      "order_only": false
+    },
+    "exhaustive": {
+      "context_only": true,
+      "joint": true,
+      "order_only": true
+    },
+    "mixed_occ": {
+      "context_only": true,
+      "joint": true,
+      "order_only": true
+    },
+    "order_only": {
+      "context_only": false,
+      "joint": false,
+      "order_only": true
+    }
+  },
+  "mutation_controls": {
+    "collapse_context_strata": "reconstruction equality rejects context collapse",
+    "credit_cross_reset_pair": "episode-local oracle rejects boundary credit",
+    "drop_episode": "reconstruction equality rejects deletion"
+  },
+  "negative_control_unsafe_effect": false,
+  "row_counts": {
+    "context_only": 4,
+    "exhaustive": 256,
+    "mixed_occ": 32,
+    "order_only": 8
+  },
+  "status": "PASS"
+}

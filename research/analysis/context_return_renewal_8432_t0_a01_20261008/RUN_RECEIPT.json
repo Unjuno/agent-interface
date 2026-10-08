@@ -1,0 +1,41 @@
+{
+  "allocation_id": "8432-context-return-method-t0-a01",
+  "candidate_invocations": 1,
+  "auditor_invocations": 1,
+  "candidate_exit_code": 0,
+  "candidate_stdout": {
+    "status": "MATERIALIZED_ONCE",
+    "episodes": 18,
+    "model_calls": 0,
+    "gui_calls": 0,
+    "external_network_calls": 0,
+    "raw_sha256": "8e448a60072da2e53822da417d32446c4910a262b3da56c92c55a2af296eaa2f"
+  },
+  "raw_observed_episode_count": 9,
+  "raw_history_treatment_counts": {
+    "chronological": 3,
+    "context_tagged": 3,
+    "none": 3
+  },
+  "matched_episode_count_observed": 6,
+  "auditor_exit_code": 1,
+  "auditor_failure": "ValueError: expected 12 matched episodes",
+  "auditor_stdout": "",
+  "auditor_created_AUDIT_json": false,
+  "runtime": {
+    "platform": "Ubuntu on WSL",
+    "wsl_package_version": "3.0.1",
+    "python": "3.12.3",
+    "docker_used": false
+  },
+  "scope_counts": {
+    "model_calls": 0,
+    "gui_calls": 0,
+    "external_network_calls": 0,
+    "game_calls": 0,
+    "os_input_calls": 0
+  },
+  "interpretation": "T0 method gate failed. Candidate materialized nine episodes (three treatments × three tracks); only six are matched treatments. The frozen D/auditor require twelve matched episodes, a target not supported by the three declared tracks and three declared treatments. The candidate stdout's episodes=18 is inconsistent with its RAW.json. No behavioral claim is made.",
+  "stop_rule": "First result is final; no retries or edits to frozen candidate/auditor/protocol."
+}
+

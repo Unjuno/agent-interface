@@ -1,0 +1,5 @@
+Status: Candidate and independent audit passed; two mutation-test assertions failed before their intended checks.
+
+Observed failure: the tests changed the raw `events` argument but left `result["events"]` unchanged. `validate_result` correctly rejected the mismatched raw/result pair first, so the assertions for the wrong-signal and cancel-order mutations were never reached. The terminal mutation likewise only tested the raw/result mismatch.
+
+Correction: each mutation now updates both the mutated event stream and its embedded result copy, allowing the auditor to reach and reject the specific mutated claim. The candidate was not rerun; only the auditor's test fixtures are corrected.
