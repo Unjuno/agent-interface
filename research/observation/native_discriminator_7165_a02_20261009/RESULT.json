@@ -1,0 +1,26 @@
+{
+  "issue": 7165,
+  "allocation": "DISCRIMINATOR-CONTEXT-7165-A02-20261009-01",
+  "formal_first_status": "HOLD_AUDITOR_RUNTIME_ERROR",
+  "candidate_runs": 1,
+  "candidate_exit": 0,
+  "candidate_rows": 2304,
+  "candidate_raw_sha256": "f84194bb80767e345e4735ad5a1b2290b2a94c7449b5d97aefae47eadeadfb6d",
+  "auditor_runs": 1,
+  "auditor_exit": 1,
+  "auditor_exception": "KeyError: 'fresh' during the first mutation control",
+  "saved_review_runs": 1,
+  "saved_review_exit": 0,
+  "saved_review_status": "PASS_RAW_RECONSTRUCTION_V2",
+  "saved_review_rows": 2304,
+  "saved_review_unique_rows": 2304,
+  "route_counts": {
+    "fresh_full_fallback": 2302,
+    "targeted_current_complete": 2
+  },
+  "decision_counts": {"A": 256, "B": 256, "UNKNOWN": 1792},
+  "mutation_controls_detected": 7,
+  "formal_retry": false,
+  "memory_efficiency_promotion": "REFUSED; no memory-specific reduction measured or established",
+  "scope": "finite authored contract only; no native GUI, runtime, model, task-effect, or user-benefit claim"
+}
