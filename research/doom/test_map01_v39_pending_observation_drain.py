@@ -77,6 +77,25 @@ class PendingObservationDrainTests(unittest.TestCase):
                                   "invalidation": None})
         self.assertEqual(monitor.seen, [])
 
+    def test_snapshot_drain_leaves_events_arriving_after_entry_queued(self):
+        incoming = queue.Queue()
+        incoming.put({"event": "observation", "sequence": 30})
+
+        class EnqueueDuringObserve(Monitor):
+            def observe(self, row):
+                self.seen.append(row["sequence"])
+                incoming.put({"event": "observation", "sequence": 31})
+                return None
+
+        monitor = EnqueueDuringObserve()
+        result = drain_pending_observation_events(incoming, monitor, "cover-4")
+
+        self.assertEqual(monitor.seen, [30])
+        self.assertEqual(result["latest"]["sequence"], 30)
+        self.assertEqual(incoming.qsize(), 1)
+        self.assertEqual(incoming.get_nowait()["sequence"], 31)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
