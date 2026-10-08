@@ -16,6 +16,8 @@ if actual != manifest:
 freeze=json.loads((ROOT/"GUARD_FREEZE.json").read_text(encoding="utf-8"))
 for name,digest in freeze["prior_a01_inputs"].items():
     if actual.get(name)!=digest: raise SystemExit(f"freeze input mismatch: {name}")
-if actual[freeze["runtime_guard"]["snapshot"]]!=freeze["runtime_guard"]["sha256"]:
-    raise SystemExit("guard source snapshot mismatch")
+for source_key in ("runtime_guard", "action_gate_source"):
+    identity=freeze[source_key]
+    if actual[identity["snapshot"]]!=identity["sha256"]:
+        raise SystemExit(f"{source_key} snapshot mismatch")
 print(json.dumps({"verified":True,"files":len(actual),"bytes":sum((ROOT/k).stat().st_size for k in actual)},sort_keys=True))

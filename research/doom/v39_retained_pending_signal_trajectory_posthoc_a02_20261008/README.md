@@ -18,6 +18,14 @@ The exact guard replayed 130 observations across the three authored windows with
 
 A01's inputs and outputs are copied unchanged so the closed README-only PR #8543 can be replaced by a complete, reproducible package. `GUARD_FREEZE.json` binds the new rule-path replay to the current-main guard blob and all prior A01 inputs.
 
+
+
+## Follow-up: action-gate replay
+
+The same retained report contains five model answers with action-validity snapshots. Re-evaluating them with the exact current-main action-validity function reproduces all five recorded outcomes. Two answers are rejected before executor admission: decision 1 source/current health 97/85 with an 8-point action loss limit, while the still-valid cover floor is 85; decision 2 source/current 85/73 with a 6-point limit. Decision 2 received the prior soft-event summary from decision 1, but its returned action was still rejected as stale; neither rejected answer has an executor admission or effect receipt. Decisions 0, 3, and 4 are admitted controls.
+
+This is evidence of a freshness/liveness gap in this retained episode, not proof that the authored actions were useful or that the action contract should be weakened. Any recovery mechanism must retain current-evidence checks and needs a fresh live test before runtime changes.
+
 ## Reproduction
 
 Use a new output directory on a volume with enough free space; the script refuses to overwrite an existing directory or any retained A01/A02 artifact:
@@ -27,4 +35,4 @@ python -B verify_package.py
 python -B run_package.py --out-dir D:\codex-research\v39-pending-trajectory-replay-output
 ```
 
-This reconstructs the A01 result and audit, regenerates the guard replay, compares all three against retained outputs, and runs the unit tests under normal and optimized Python. The output directory receives only replay outputs and test logs.
+This reconstructs the A01 result and audit, regenerates the guard and action-gate replays, compares all retained outputs, and runs the unit tests under normal and optimized Python. The output directory receives only replay outputs and test logs.

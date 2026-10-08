@@ -23,24 +23,29 @@ def main():
 
     from analyze import reconstruct
     from audit import audit
-    from guard_replay import compute
+    from guard_replay import compute as compute_guard
+    from action_gate_replay import compute as compute_action_gate
 
     result = reconstruct(ROOT)
     write_json(out / "RESULT.replay.json", result)
     audited = audit(ROOT, out / "RESULT.replay.json")
     write_json(out / "AUDIT.replay.json", audited)
-    guard = compute()
+    guard = compute_guard()
     write_json(out / "GUARD_REPLAY.replay.json", guard)
+    action_gate = compute_action_gate()
+    write_json(out / "ACTION_GATE_REPLAY.replay.json", action_gate)
 
     retained = {
         "RESULT.json": json.loads((ROOT / "RESULT.json").read_text(encoding="utf-8")),
         "AUDIT.json": json.loads((ROOT / "AUDIT.json").read_text(encoding="utf-8")),
         "GUARD_REPLAY.json": json.loads((ROOT / "GUARD_REPLAY.json").read_text(encoding="utf-8")),
+        "ACTION_GATE_REPLAY.json": json.loads((ROOT / "ACTION_GATE_REPLAY.json").read_text(encoding="utf-8")),
     }
     produced = {
         "RESULT.json": result,
         "AUDIT.json": audited,
         "GUARD_REPLAY.json": guard,
+        "ACTION_GATE_REPLAY.json": action_gate,
     }
     if produced != retained:
         raise ValueError("fresh reconstruction differs from a retained candidate or audit")
@@ -64,6 +69,7 @@ def main():
         "fresh_result_matches_retained": True,
         "fresh_audit_matches_retained": True,
         "fresh_guard_replay_matches_retained": True,
+        "fresh_action_gate_replay_matches_retained": True,
         "normal_tests": "PASS",
         "optimized_tests": "PASS",
         "output_directory": str(out),
