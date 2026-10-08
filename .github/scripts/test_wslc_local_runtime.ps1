@@ -63,39 +63,7 @@ try {
 
     $containerId = (Get-Content -LiteralPath $cidPath -Raw).Trim()
     if ($containerId -notmatch '^[0-9a-fA-F]{64}$') {
-        throw 'WSLc probe wrote a missing or malformed container ID receipt.'
-    }
-
-    # Query only this run's exact container ID; never enumerate unrelated shared containers.
-    $matchingContainers = & $wslc.Source container list --all --filter "id=$containerId" --format json
-    if ($LASTEXITCODE -ne 0) {
-        throw "Could not verify WSLc cleanup for this run's container ID (exit code $LASTEXITCODE)."
-    }
-    $listing = ($matchingContainers -join "`n").Trim()
-    if ($listing -notmatch '^\[\s*\]$') {
-        try {
-            $listedContainers = ConvertFrom-Json -InputObject $listing -ErrorAction Stop
-        }
-        catch {
-            throw 'The scoped WSLc cleanup query did not return valid empty-array JSON; cleanup is unverified.'
-        }
-        if ($null -eq $listedContainers -or @($listedContainers).Count -gt 0) {
-            throw 'The scoped WSLc cleanup query did not return an empty JSON array; cleanup is unverified.'
-        }
-    }
-
-    Write-Output 'WSLc local runtime probe: PASS'
-    Write-Output "Image: $image"
-    Write-Output 'Network: none; memory: 512M; CPUs: 1; source mount: read-only; cleanup: verified'
-    Write-Output 'Note: WSL may report that swap/cgroup memory limits are unavailable; this probe does not test swap isolation or peak-memory enforcement.'
-}
-finally {
-    if (Test-Path -LiteralPath $probePath) {
-        Remove-Item -LiteralPath $probePath -Recurse -Force
-    }
-}
-) {
-        throw 'WSLc probe wrote a missing or malformed container ID receipt.'
+        throw 'WSLc probe wrote a missing or malformed full container ID receipt.'
     }
 
     # Query only this run's exact container ID; never enumerate unrelated shared containers.
