@@ -1,0 +1,18 @@
+{
+  "seed": 858101,
+  "development_cases": 24,
+  "fresh_cases": 256,
+  "candidates": 16,
+  "rounds": 16,
+  "unsafe_candidate": 15,
+  "feedback_cells": ["FULL_RELEASE", "CONTROLLED"],
+  "access_cells": ["SEALED", "RAW_BYPASS"],
+  "hard_veto_rule": "candidate 15 is rejected immediately in every cell; exact veto never clipped or hidden",
+  "fresh_lock_rule": "no selector-visible fresh cohort outcome before the candidate lock event; independent auditor computes fresh score post-lock",
+  "controlled_sealed_rule": "the selector receives only a Boolean incumbent-improvement response per proposal",
+  "raw_bypass_rule": "the selector receives per-case development outcomes through issue-cache; this separate route is logged",
+  "post_lock_rule": "all raw truth may be published after candidate lock",
+  "route_inventory": ["feedback-broker", "artifact_store", "issue-cache", "task_docs", "unmonitored-external-copy"],
+  "selection_rule": "iterate candidate ids 0..15 once; accept an improvement unless the hard-veto applies",
+  "analysis": "finite exact summaries only; no p-values or population inference"
+}

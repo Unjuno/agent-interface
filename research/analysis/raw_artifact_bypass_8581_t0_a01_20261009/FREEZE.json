@@ -1,0 +1,21 @@
+{
+  "allocation": "RAW-ARTIFACT-BYPASS-8581-T0-A01-20261009",
+  "issue": 8581,
+  "frozen_main": "4758a95cd4a0aaa78e9cdc9d774f298d4ccf0e36",
+  "branch": "research/8581-feedback-bypass-a01-20261009",
+  "package": "research/analysis/raw_artifact_bypass_8581_t0_a01_20261009",
+  "frozen_at_utc": "2026-10-09",
+  "runtime": "CPython 3.14.5; stdlib only; macOS ARM64 host CPU; no container, network, model, GUI, or shared runtime",
+  "sha256": {
+    "design.json": "4543c0f070ad7ef6a89820f60e40a49ad463b2fcfc7b520ef653fd7a1d3da354",
+    "protocol.json": "55d2971e426ece6a33e7cb8b5ab74e7170baa9cc0341d565387963cac889c7bd",
+    "candidate.py": "a278c917cf3be6cede58bcaa4a280046d03b1d314f952242dd1cd4fd04a69637",
+    "auditor.py": "4174139069e517d259a1fd68a03c3b8063e66d6171e9b746370af37f0878945c",
+    "test_model.py": "afbe93022c84c9cf878b008fdfd9dafe3aa8e935c070120d761d5b0cf4cda0a1"
+  },
+  "candidate_invocations": 0,
+  "formal_auditor_invocations": 0,
+  "retry_policy": "one candidate invocation; only on exit 0, one independent auditor invocation; preserve first outcome; no retry",
+  "construction": "py_compile and two deterministic model-boundary unit tests passed before freeze",
+  "fresh_cohort": "candidate code has no fresh-label generation or fresh-score path; independent auditor computes fresh score only after reconstructed lock"
+}
