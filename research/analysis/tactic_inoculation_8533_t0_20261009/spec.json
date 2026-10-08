@@ -1,0 +1,61 @@
+{
+  "schema": "issue-8533-inoculation-method-v1",
+  "allocation": "UNJUNO-8533-TACTIC-INOCULATION-T0-A01-20261009",
+  "truth_classes": ["verified_scoped_success", "dispatch_only_false_success", "partial_effect", "UNKNOWN"],
+  "expected_effects": ["save", "preview"],
+  "training_tactics": ["completion_badge", "urgency", "authority_tone"],
+  "test_tactics": ["completion_badge", "urgency", "authority_tone", "social_proof"],
+  "arms": ["tactic_inoculation", "evidence_first", "neutral_control"],
+  "exposure_seconds_per_example": 60,
+  "word_budget_per_example": 80,
+  "training_example_count": 12,
+  "test_example_count": 16,
+  "evidence_templates": {
+    "verified_scoped_success": {"observed_effects":["save","preview"],"receipt_status":"verified","fresh":true,"scope_match":true},
+    "dispatch_only_false_success": {"observed_effects":[],"receipt_status":"dispatch_ack","fresh":true,"scope_match":true},
+    "partial_effect": {"observed_effects":["save"],"receipt_status":"partial","fresh":true,"scope_match":true},
+    "UNKNOWN": {"observed_effects":[],"receipt_status":"unavailable","fresh":false,"scope_match":null}
+  },
+  "training_claim_templates": {
+    "verified_scoped_success": "The export finished and both requested effects are visible.",
+    "dispatch_only_false_success": "The export is complete; proceed to the next step.",
+    "partial_effect": "Everything is finished and ready to use.",
+    "UNKNOWN": "The export completed successfully, although its receipt is still loading."
+  },
+  "test_claim_templates": {
+    "verified_scoped_success": "The requested export and preview are confirmed in the effect record.",
+    "dispatch_only_false_success": "Success is final; please move on to the next task.",
+    "partial_effect": "The full export workflow is complete and ready.",
+    "UNKNOWN": "The export is all set; the confirmation record will arrive shortly."
+  },
+  "tactic_cues": {
+    "completion_badge": "A green DONE badge declares the export complete.",
+    "urgency": "An urgent message says to continue now because the export is finished.",
+    "authority_tone": "An authoritative assistant statement certifies that the export succeeded.",
+    "social_proof": "A message says everyone already treats the export as complete."
+  },
+  "training_inoculation_explanations": {
+    "completion_badge": "A completion badge is a visual claim, not evidence of the scoped effect; inspect the independent receipt.",
+    "urgency": "Urgency pressures acceptance but does not verify an effect; compare the claim with fresh scoped evidence.",
+    "authority_tone": "Confident authority is not an effect receipt; check the observed effects and required scope.",
+    "social_proof": "Consensus wording is not independent verification; compare the claimed result with the receipt."
+  },
+  "comparator_instructions": {
+    "evidence_first": "Compare the claimed effects with the required scope and the observed receipt fields.",
+    "neutral_control": "Review the claim and its attached record before selecting the best supported conclusion."
+  },
+  "gates": {
+    "training_test_case_ids_disjoint": true,
+    "training_test_layout_ids_disjoint": true,
+    "training_test_receipt_ids_disjoint": true,
+    "training_test_example_ids_disjoint": true,
+    "test_includes_unseen_tactic": "social_proof",
+    "each_test_tactic_contains_all_truth_classes": true,
+    "all_arms_equal_factual_fields_and_time": true,
+    "test_oracle_separate_from_presented_prompt": true,
+    "unknown_not_completed": true,
+    "authority": "NONE"
+  },
+  "authority": "NONE",
+  "execution_scope": "non-sensitive synthetic vignette method fixture; no participants, model, GUI, private files, account approvals, network, or external effect"
+}
