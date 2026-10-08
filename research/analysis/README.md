@@ -371,6 +371,7 @@ This compact list is generated from child directories that contain `REPORT.md` o
 - [`artifact_changeability_6610_6624_t0_20261002/`](artifact_changeability_6610_6624_t0_20261002/)
 - [`artifact_viability_cutsets_6468_t0_20261002/`](artifact_viability_cutsets_6468_t0_20261002/)
 - [`artifact_viability_cutsets_6468_t0b_20261002/`](artifact_viability_cutsets_6468_t0b_20261002/)
+- [`ascertainment_5826_wslc_transfer_a02_20261008/`](ascertainment_5826_wslc_transfer_a02_20261008/)
 - [`assay_sensitivity_5850_t0_v1/`](assay_sensitivity_5850_t0_v1/)
 - [`assistive_cue_noninterference_5800_t0_v1/`](assistive_cue_noninterference_5800_t0_v1/)
 - [`attention_budgeting_successor_1940_v1/`](attention_budgeting_successor_1940_v1/)
