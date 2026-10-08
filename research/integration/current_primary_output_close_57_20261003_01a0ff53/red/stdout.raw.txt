@@ -1,0 +1,92 @@
+TAP version 13
+# Subtest: silent close rejects returned write and retains accepted work
+not ok 1 - silent close rejects returned write and retains accepted work
+  ---
+  duration_ms: 5.649708
+  type: 'test'
+  location: '<OWN_WORKSPACE>/work/current-primary-output-close-v4/source/runtime/host_v1/test_primary_output_close.mjs:17:39'
+  failureType: 'testCodeFailure'
+  error: |-
+    closed write must settle before its withheld callback is released
+    + actual - expected
+    
+    + 'pending'
+    - 'rejected'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'rejected'
+  actual: 'pending'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file://<OWN_WORKSPACE>/work/current-primary-output-close-v4/source/runtime/host_v1/test_primary_output_close.mjs:46:10)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: silent close rejects busy write and retains accepted work
+not ok 2 - silent close rejects busy write and retains accepted work
+  ---
+  duration_ms: 1.867167
+  type: 'test'
+  location: '<OWN_WORKSPACE>/work/current-primary-output-close-v4/source/runtime/host_v1/test_primary_output_close.mjs:17:39'
+  failureType: 'testCodeFailure'
+  error: |-
+    closed write must settle before its withheld callback is released
+    + actual - expected
+    
+    + 'pending'
+    - 'rejected'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'rejected'
+  actual: 'pending'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file://<OWN_WORKSPACE>/work/current-primary-output-close-v4/source/runtime/host_v1/test_primary_output_close.mjs:46:10)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+# Subtest: completed write remains successful after later close
+ok 3 - completed write remains successful after later close
+  ---
+  duration_ms: 1.065209
+  type: 'test'
+  ...
+# Subtest: callback error remains the same first object after close
+ok 4 - callback error remains the same first object after close
+  ---
+  duration_ms: 1.194166
+  type: 'test'
+  ...
+# Subtest: already destroyed output rejects without another write call
+not ok 5 - already destroyed output rejects without another write call
+  ---
+  duration_ms: 1.179916
+  type: 'test'
+  location: '<OWN_WORKSPACE>/work/current-primary-output-close-v4/source/runtime/host_v1/test_primary_output_close.mjs:70:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file://<OWN_WORKSPACE>/work/current-primary-output-close-v4/source/runtime/host_v1/test_primary_output_close.mjs:78:10)
+    async Test.run (node:internal/test_runner/test:1404:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:969:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 2
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 77.023917

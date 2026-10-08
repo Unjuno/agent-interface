@@ -1,0 +1,53 @@
+✔ silent close rejects returned write and retains accepted work (5.157959ms)
+✔ silent close rejects busy write and retains accepted work (2.660375ms)
+✔ completed write remains successful after later close (2.030291ms)
+✔ callback error remains the same first object after close (1.971541ms)
+✔ already destroyed output rejects without another write call (1.489167ms)
+✔ whole owner reconciles original request on silent returned close (64.345792ms)
+✔ whole owner reconciles original request on silent busy close (59.185542ms)
+✔ numbered commands return exact file/text descriptors with no image encoding (3.166167ms)
+✔ commands arriving while outstanding are rejected rather than queued (2.169792ms)
+✔ EOF waits for the already committed command without replaying it (0.551209ms)
+✔ malformed JSON is refused without invoking exchange or consuming a command (0.452291ms)
+✔ command error reports uncertainty and state without retry (0.390166ms)
+✔ output failure rejects the stream owner after one completed command (0.786666ms)
+✔ config refuses unknown routes and fields before starting a host (0.19025ms)
+✔ terminal output refuses before starting a relay or allocating its evidence (0.17925ms)
+✔ startup output failure keeps original exception, closes one relay and never writes again (52.433917ms)
+✔ failed review is correlated to its consumed command without a host call or replay (2.2435ms)
+STARTUP_EXCHANGE_WITNESS {"phase":"healthy","root":"/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/primary-startup-exchange-8lTDZQ","hookCalls":1,"errorObserved":false,"statuses":["ready","terminal"],"rows":[{"schema":"agent-interface/primary-stdio-v1","status":"ready","state":{"next_id":1,"busy":false,"stopped":null,"caller_state":{"stopped":null}}},{"schema":"agent-interface/primary-stdio-v1","status":"terminal","exit":{"code":0,"signal":null},"state":{"next_id":1,"busy":false,"stopped":null,"caller_state":{"stopped":null}}}],"hostExit":{"code":0,"signal":null},"fixtureStart":{"pid":32361,"ppid":32360},"fixtureExit":{"pid":32361,"code":0,"bytes":0},"childAbsent":true,"listeners":{"input":0,"output":0}}
+STARTUP_EXCHANGE_WITNESS {"phase":"fault","root":"/var/folders/pz/8_nc5kp109z8f36jl0172xzw0000gn/T/primary-startup-exchange-snF19U","hookCalls":1,"errorObserved":true,"statuses":[],"rows":[],"hostExit":{"code":0,"signal":null},"fixtureStart":{"pid":32363,"ppid":32362},"fixtureExit":{"pid":32363,"code":0,"bytes":0},"childAbsent":true,"listeners":{"input":0,"output":0}}
+✔ pre-admission envelope error keeps requested id distinct from unconsumed next id (0.627375ms)
+✔ malformed command identity stays bounded and does not become a valid correlation (0.326583ms)
+✔ input read failure waits for an accepted command and preserves its result (56.992459ms)
+✔ input read failure before a command rejects through the owned transport path (52.969542ms)
+✔ whole owner retains ready_input failure and observes its original relay exit (99.869458ms)
+✔ whole owner retains ready_output failure and observes its original relay exit (100.665125ms)
+✔ whole owner retains terminal_output failure and observes its original relay exit (102.843417ms)
+✔ startup exchange creation healthy control publishes ready and terminal (103.719709ms)
+✔ startup exchange creation failure never publishes ready (105.0485ms)
+✔ first busy failure survives later input error (65.55825ms)
+✔ first busy failure survives later output error (60.257ms)
+✔ illegal-ff (3.79675ms)
+✔ incomplete-e3-in-string (0.540708ms)
+✔ lone-continuation (0.513709ms)
+✔ overlong-slash (0.530916ms)
+✔ utf8-surrogate (0.465375ms)
+✔ incomplete-byte-at-EOF (0.651375ms)
+✔ ordinary-ascii-is-unchanged (0.6585ms)
+✔ split-valid-multibyte-survives-byte-boundaries (0.960292ms)
+✔ literal-replacement-character-is-valid (0.624083ms)
+✔ already-decoded-text-caller-is-preserved (0.591542ms)
+✔ existing-malformed-JSON-is-refused-without-consuming (0.580333ms)
+✔ accepted-same-promise-finishes-before-malformed-byte-rejection (1.440791ms)
+✔ unaccepted-valid-prefix-in-corrupted-chunk-is-refused (0.492792ms)
+✔ existing-BOM-JSON-refusal-is-preserved (0.452ms)
+✔ owned-validation-listeners-retire-and-foreign-observers-stay (0.417375ms)
+ℹ tests 43
+ℹ suites 0
+ℹ pass 43
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 755.212417
